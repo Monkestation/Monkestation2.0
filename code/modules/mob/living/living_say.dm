@@ -253,18 +253,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//monkestation edit
 	///Play a sound to indicate we just spoke
-	if(client && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		var/ending = copytext_char(message, -1)
-		var/sound/speak_sound
-		if(HAS_TRAIT(src, TRAIT_HELIUM))
-			speak_sound = sound('monkestation/sound/effects/helium_squeak.ogg')
-		else if(ending == "?")
-			speak_sound = voice_type2sound[voice_type]["?"]
-		else if(ending == "!")
-			speak_sound = voice_type2sound[voice_type]["!"]
-		else
-			speak_sound = voice_type2sound[voice_type][voice_type]
-		playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+	// if(client && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
+	// 	var/ending = copytext_char(message, -1)
+	// 	var/sound/speak_sound
+	// 	if(HAS_TRAIT(src, TRAIT_HELIUM))
+	// 		speak_sound = sound('monkestation/sound/effects/helium_squeak.ogg')
+	// 	else if(ending == "?")
+	// 		speak_sound = voice_type2sound[voice_type]["?"]
+	// 	else if(ending == "!")
+	// 		speak_sound = voice_type2sound[voice_type]["!"]
+	// 	else
+	// 		speak_sound = voice_type2sound[voice_type][voice_type]
+	// 	playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 	//monkestation edit end
 
 	if(succumbed)
@@ -364,6 +364,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		is_speaker_whispering = TRUE
 
 	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
+
+	bark(message_raw, listening)
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
