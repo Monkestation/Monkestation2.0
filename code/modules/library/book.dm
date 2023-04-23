@@ -150,6 +150,9 @@
 	ui_interact(user)
 
 /obj/item/book/attackby(obj/item/attacking_item, mob/user, params)
+	if(burn_paper_product_attackby_check(attacking_item, user))
+		return
+
 	if(istype(attacking_item, /obj/item/pen))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
@@ -222,7 +225,7 @@
 				computer.inventory_update()
 				user.balloon_alert(user, "book added to inventory")
 
-	else if((istype(attacking_item, /obj/item/knife) || attacking_item.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
+	else if(((attacking_item.sharpness & SHARP_EDGED) || (attacking_item.tool_behaviour == TOOL_KNIFE) || (attacking_item.tool_behaviour == TOOL_WIRECUTTER)) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))
 		if(do_after(user, 30, target = src))
 			to_chat(user, span_notice("You carve out the pages from [book_data.title]! You didn't want to read it anyway."))
@@ -240,4 +243,4 @@
 				return
 		return
 	else
-		..()
+		return ..()
