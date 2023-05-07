@@ -11,11 +11,8 @@ export interface DropdownEntry {
   value: string | number | Enumerator;
 }
 
-export type DropdownRequiredProps = {
+type DropdownUniqueProps = {
   options: string[] | DropdownEntry[];
-};
-
-export type DropdownOptionalProps = {
   icon?: string;
   iconRotation?: number;
   clipSelectedText?: boolean;
@@ -32,8 +29,6 @@ export type DropdownOptionalProps = {
   buttons?: boolean;
   displayHeight?: string;
 };
-
-export type DropdownUniqueProps = DropdownRequiredProps & DropdownOptionalProps;
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
 
@@ -80,13 +75,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     open: false,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selected: props.selected,
-      open: props.open,
-    };
+  constructor() {
+    super();
 
     this.handleClick = () => {
       if (this.state.open) {
