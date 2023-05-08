@@ -14615,6 +14615,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/starboard)
 "eDV" = (
@@ -32953,6 +32956,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"kcg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/maintenance/starboard)
 "kcl" = (
 /obj/machinery/computer/records/medical{
 	dir = 4
@@ -36192,6 +36202,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/components/trinary/mixer/flipped,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lfU" = (
@@ -71613,11 +71624,11 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/surgery,
 /obj/item/razor,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "woJ" = (
@@ -120647,7 +120658,7 @@ fLD
 lDu
 kcS
 iuV
-kcS
+kcg
 eDx
 kcS
 lwQ
