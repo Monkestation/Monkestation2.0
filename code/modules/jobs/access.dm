@@ -35,6 +35,10 @@
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
 	else if(check_access(accessor.get_active_held_item()) && !istype(accessor.get_active_held_item(), /obj/item/card/id/fake_card))
 		return TRUE
+	//if they are carying a card that has access, that works
+	else if(isliving(accessor))
+		var/mob/living/being = accessor
+		if(check_access(being.get_idcard(TRUE)))
 	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor

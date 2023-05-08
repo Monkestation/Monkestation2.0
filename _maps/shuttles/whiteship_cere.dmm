@@ -137,9 +137,14 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
+=======
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/preopen{
+>>>>>>> 2068ea9ab53 (Crate, Closet Refactors & Access Secured Stuff  (#74754))
 	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -156,8 +161,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /obj/item/pickaxe,
@@ -192,8 +196,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /obj/item/storage/bag/ore,
@@ -268,10 +271,16 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
+=======
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/preopen{
+>>>>>>> 2068ea9ab53 (Crate, Closet Refactors & Access Secured Stuff  (#74754))
 	name = "spare equipment crate"
 	},
 /obj/machinery/light/directional/south,

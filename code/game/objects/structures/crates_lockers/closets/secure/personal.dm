@@ -1,8 +1,13 @@
 /obj/structure/closet/secure_closet/personal
-	desc = "It's a secure locker for personnel. The first card swiped gains control."
+	desc = "It's a secure locker for personnel. The first person to open this closet gains control."
 	name = "personal closet"
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
-	var/registered_name = null
+	card_reader_installed = TRUE
+
+/obj/structure/closet/secure_closet/personal/Initialize(mapload)
+	. = ..()
+	var/static/list/choices = list("Personal")
+	access_choices = choices
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
