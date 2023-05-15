@@ -2693,7 +2693,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "aBo" = (
