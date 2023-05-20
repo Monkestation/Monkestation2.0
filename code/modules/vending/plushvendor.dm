@@ -29,7 +29,7 @@
 			"icon" = "star",
 			"products" = list(
 				/obj/item/toy/plush/lizard_plushie/green = 1,
-				/obj/item/toy/plush/space_lizard_plushie = 1,
+				/obj/item/toy/plush/lizard_plushie/space/green = 1,
 				/obj/item/toy/plush/awakenedplushie = 1,
 				/obj/item/toy/plush/goatplushie = 1,
 				/obj/item/toy/plush/rouny = 1,
