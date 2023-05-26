@@ -20183,6 +20183,15 @@
 	dir = 8
 	},
 /area/cruiser_dock)
+"bKh" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/space/basic,
+/area/space)
 "bKY" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -20504,6 +20513,15 @@
 	dir = 1
 	},
 /area/cruiser_dock)
+"lbk" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/lattice,
+/turf/open/floor/carpet/royalblue,
+/area/centcom/central_command_areas/admin)
 "lbs" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 4
@@ -20671,6 +20689,15 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
+"qkw" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet/royalblue,
+/area/centcom/central_command_areas/admin)
 "qwj" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 1
@@ -20826,6 +20853,15 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"uUI" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "uYh" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -47405,10 +47441,10 @@ aaa
 aaa
 aaa
 aaa
+uUI
 aaa
 aaa
-aaa
-aaa
+bKh
 aaa
 aaa
 aaa
@@ -50489,10 +50525,10 @@ auo
 aOn
 aTQ
 aAS
-ahD
+lbk
 aAS
 ahD
-ahD
+qkw
 ahD
 agB
 aPp

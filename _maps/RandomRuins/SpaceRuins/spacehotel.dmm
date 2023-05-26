@@ -297,9 +297,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/purple,
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/lone,
@@ -503,9 +501,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet/orange,
@@ -900,9 +896,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -1326,9 +1320,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/table/wood/fancy/cyan,
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/red,
@@ -2171,9 +2163,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/purple,
@@ -3418,9 +3408,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/directional/north,
 /obj/item/reagent_containers/cup/glass/mug/tea,
@@ -3867,9 +3855,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
@@ -4053,9 +4039,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/red,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/machinery/button/door/directional/north{
 	id = "a2";
 	name = "privacy button";
@@ -4160,9 +4144,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/table/wood/fancy/orange,
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
@@ -4255,9 +4237,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/red,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "OT" = (
@@ -4467,9 +4447,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/table/wood/fancy/cyan,
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -4595,9 +4573,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/lone,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
