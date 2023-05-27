@@ -23,6 +23,7 @@
 #define CHANNEL_SQUEAK 1004
 #define CHANNEL_MOB_EMOTES 1003
 #define CHANNEL_SILICON_EMOTES 1002
+#define CHANNEL_ELEVATOR 1001
 // monkestation end
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
@@ -78,7 +79,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1002 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 1001 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 

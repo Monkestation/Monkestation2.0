@@ -7478,6 +7478,9 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_cargo_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "bmX" = (
@@ -20049,6 +20052,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_lower_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_lower_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
 "fju" = (
@@ -30693,6 +30699,9 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_dorm_lift"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_dorm_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
@@ -76426,6 +76435,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_upper_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/service)
 "wAr" = (
@@ -78082,6 +78094,9 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_sci_lift"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)

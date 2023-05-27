@@ -61,6 +61,8 @@
 	var/skip_starting_sounds = FALSE
 	/// If true, plays directly to provided atoms instead of from them.
 	var/direct
+	/// Sound channel to play on, random if not provided
+	var/sound_channel
 
 /datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE, _channel = 0) //monkestation edit
 	if(!mid_sounds)
@@ -99,6 +101,7 @@
  * * null_parent - Whether or not we should set the parent to null (useful when destroying the `looping_sound` itself). Defaults to FALSE.
  */
 /datum/looping_sound/proc/stop(null_parent = FALSE)
+	stop_current()
 	if(null_parent)
 		set_parent(null)
 	if(!timer_id)
@@ -236,6 +239,13 @@
 		play(start_sound, start_volume)
 		start_wait = start_length
 	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+
+/// Stops sound playing on current channel, if specified
+/datum/looping_sound/proc/stop_current()
+	if(!sound_channel || !ismob(parent))
+		return
+	var/mob/mob_parent = parent
+	mob_parent.stop_sound_channel(sound_channel)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
