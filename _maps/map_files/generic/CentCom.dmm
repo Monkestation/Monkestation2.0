@@ -20929,6 +20929,27 @@
 	},
 /turf/closed/indestructible/syndicate,
 /area/cruiser_dock)
+"vOp" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/kitchen)
 "vPF" = (
 /obj/structure/chair/plastic{
 	dir = 4
@@ -65899,7 +65920,7 @@ amQ
 amQ
 amQ
 amQ
-amQ
+vOp
 amQ
 amQ
 amQ
