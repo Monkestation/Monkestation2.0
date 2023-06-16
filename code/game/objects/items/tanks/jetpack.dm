@@ -92,7 +92,7 @@
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
 	if(disabled)
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED) & JETPACK_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
@@ -101,7 +101,7 @@
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
-	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	set_stabilizers(FALSE)
 	update_icon(UPDATE_ICON_STATE)
