@@ -24,7 +24,6 @@
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
-
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80
