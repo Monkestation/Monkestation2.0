@@ -66,7 +66,10 @@
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/survivalcapsule(src)
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		new /obj/item/survivalcapsule/bathroom(src)
+	else
+		new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
 	new /obj/item/fishing_hook/rescue(src) //Monkestation Edit
 

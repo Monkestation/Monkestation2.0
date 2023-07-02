@@ -53,6 +53,10 @@
 	item_path = /obj/item/survivalcapsule
 	cost_per_order = 400
 
+/datum/orderable_item/survival/bathroom
+	item_path = /obj/item/survivalcapsule/bathroom
+	cost_per_order = 400
+
 /datum/orderable_item/survival/medkit_basic
 	item_path = /obj/item/storage/medkit/regular
 	cost_per_order = 400
