@@ -64,7 +64,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
           as="span"
           style={{
             'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-          }}>
+          }}
+        >
           {innerLabel}
         </Box>
       </Tooltip>
@@ -80,7 +81,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
         !labelWrap && 'LabeledList__label--nowrap',
       ])}
-      verticalAlign={verticalAlign}>
+      verticalAlign={verticalAlign}
+    >
       {innerLabel}
     </Box>
   );
