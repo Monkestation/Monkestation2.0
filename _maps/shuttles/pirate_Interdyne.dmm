@@ -202,26 +202,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"aJ" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/computer/operating,
-/obj/machinery/defibrillator_mount/charging{
-	pixel_y = 28
-	},
-/obj/item/disk/surgery/brainwashing{
-	name = "Interdyne Brainwashing Protocol Surgery Disk";
-	pixel_x = -8
-	},
-/obj/item/disk/surgery/sleeper_protocol{
-	name = "Interdyne Sleeper Protocal Surgery Disk";
-	pixel_x = 1
-	},
-/obj/item/disk/surgery/forgottenship{
-	name = "Interdyne Advanced Surgery Procedures Disk";
-	pixel_x = 9
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "aK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	cyclelinkeddir = 666666;
@@ -320,17 +300,6 @@
 /obj/item/storage/box/syndie_kit/chemical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"bk" = (
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/suit_storage_unit/medical,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
-/obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "bl" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -352,15 +321,6 @@
 	name = "Interdyne Chem Pen"
 	},
 /obj/item/defibrillator/compact/combat/loaded,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"br" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/suit_storage_unit/medical,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
-/obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
@@ -437,19 +397,6 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"bQ" = (
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
-	dir = 4
-	},
-/obj/machinery/suit_storage_unit/medical,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
-/obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "bX" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -508,6 +455,12 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"gO" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/suit_storage_unit/interdyne,
+/obj/item/screwdriver/nuke,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "gY" = (
@@ -710,6 +663,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
+"Dz" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/interdyne,
+/obj/item/screwdriver/nuke,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "DD" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
@@ -717,16 +678,6 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"En" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/light/small/blacklight/directional/south,
-/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
-	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
-	},
-/obj/item/wrench/medical,
-/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ED" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -758,6 +709,26 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"Jc" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/interdyne,
+/obj/item/screwdriver/nuke,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Jt" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/light/small/blacklight/directional/south,
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
+	},
+/obj/item/wrench/medical,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "JT" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -852,6 +823,26 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/mirror/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"XR" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/computer/operating,
+/obj/machinery/defibrillator_mount/charging{
+	pixel_y = 28
+	},
+/obj/item/disk/surgery/brainwashing{
+	name = "Interdyne Brainwashing Protocol Surgery Disk";
+	pixel_x = -8
+	},
+/obj/item/disk/surgery/sleeper_protocol{
+	name = "Interdyne Sleeper Protocal Surgery Disk";
+	pixel_x = 1
+	},
+/obj/item/disk/surgery/forgottenship{
+	name = "Interdyne Advanced Surgery Procedures Disk";
+	pixel_x = 9
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 
@@ -952,7 +943,7 @@ Ks
 aj
 aj
 aI
-En
+Jt
 aj
 yi
 aj
@@ -1030,9 +1021,9 @@ fY
 VF
 bl
 aj
-bQ
-bk
-br
+Jc
+Dz
+gO
 aj
 "}
 (11,1,1) = {"
@@ -1059,7 +1050,7 @@ aO
 ne
 aj
 aj
-aJ
+XR
 aS
 aj
 SD
