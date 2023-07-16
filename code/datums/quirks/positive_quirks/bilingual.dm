@@ -14,7 +14,7 @@
 		return
 	var/datum/language/language_type
 	if(wanted_language == "Random")
-		language_type = pick(GLOB.roundstart_languages)
+		language_type = pick(GLOB.uncommon_roundstart_languages)
 	else if(wanted_language)
 		language_type = GLOB.language_types_by_name[wanted_language]
 	if(!language_type || quirk_holder.has_language(language_type))

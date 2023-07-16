@@ -100,7 +100,7 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/speaking_machine
 
 	///see code/__DEFINES/stat.dm
 	var/machine_stat = NONE
@@ -363,8 +363,12 @@
 		return
 	use_energy(7.5 KILO JOULES / severity)
 	new /obj/effect/temp_visual/emp(loc)
-	if(prob(70/severity))
-		set_active_language(get_random_spoken_language())
+	if(!prob(70/severity))
+		return
+	if(!length(GLOB.uncommon_roundstart_languages))
+		return
+	remove_all_languages(source = LANGUAGE_EMP)
+	grant_random_uncommon_language(source = LANGUAGE_EMP)
 
 /**
  * Opens the machine.
