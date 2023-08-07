@@ -15,6 +15,7 @@
 	else
 		..()
 
+/// Attempt to grant control of a mob to ghosts before spawning it in. if spawn_anyway_if_no_player = TRUE, we spawn the mob even if there's no ghosts
 /datum/shuttle_event/simple_spawner/player_controlled/proc/try_grant_ghost_control(spawn_type)
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		ghost_alert_string + " (Warning: you will not be able to return to your body!)",
@@ -43,6 +44,7 @@
 	spawn_anyway_if_no_player = FALSE
 	ghost_alert_string = "Would you like to be an alien queen shot at the shuttle?"
 	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
 
 	role_type = ROLE_ALIEN
 
@@ -59,6 +61,7 @@
 	spawn_anyway_if_no_player = TRUE
 	ghost_alert_string = "Would you like to be a space carp to pester the emergency shuttle?"
 	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
 
 	role_type = ROLE_SENTIENCE
 
