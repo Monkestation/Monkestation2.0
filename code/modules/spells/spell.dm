@@ -141,7 +141,9 @@
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return FALSE
-	if(!is_valid_target(target))
+	if(target == owner)
+		target = get_caster_from_target(target)
+	if(isnull(target) || !is_valid_target(target))
 		return FALSE
 
 	return Activate(target)
@@ -211,10 +213,6 @@
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
-			return FALSE
-
-		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
-		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
 			return FALSE
 
 	return TRUE
