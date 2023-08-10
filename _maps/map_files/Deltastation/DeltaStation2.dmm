@@ -5818,6 +5818,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/robotics/lab)
+"bqa" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/cassette_library,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "bqf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7936,18 +7943,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
-"bOT" = (
-/obj/effect/turf_decal/trimline/dark_red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/vehicle/ridden/battering_ram{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "bOU" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -43785,13 +43780,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"khZ" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/cassette_library,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "kic" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -48393,6 +48381,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
+"lpb" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Laundromat"
+	},
+/turf/open/floor/iron,
+/area/station/commons/dorms/laundry)
 "lpq" = (
 /obj/structure/sign/directions/evac{
 	pixel_x = 32;
@@ -53502,14 +53503,6 @@
 /obj/effect/spawner/random/engineering/material,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
-"mAd" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/status_display/ai/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/sofa/right/brown,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mAh" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53862,18 +53855,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
-"mDO" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Laundromat"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/commons/dorms/laundry)
 "mDR" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /obj/machinery/firealarm/directional/east,
@@ -55414,13 +55395,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"mWD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mWE" = (
 /obj/structure/table/wood,
 /obj/structure/cassette_rack/prefilled{
@@ -61768,20 +61742,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/grimey,
 /area/station/service/lawoffice)
-"oAn" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/camera/directional/north{
-	c_tag = "Library - Fore Starboard";
-	dir = 9;
-	name = "library camera"
-	},
-/obj/machinery/bookbinder,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "oAo" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -63491,6 +63451,13 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
+"oWG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "oWP" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 8
@@ -66072,6 +66039,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"pCF" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Laundromat"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/dorms/laundry)
 "pCQ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/reagent_dispensers/fueltank,
@@ -66283,19 +66262,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
-"pEM" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/glass_large{
-	name = "Laundromat"
-	},
-/turf/open/floor/iron,
-/area/station/commons/dorms/laundry)
 "pEP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -69760,6 +69726,14 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
+"qun" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/right/brown,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "quA" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -87114,6 +87088,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"uAu" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/north{
+	c_tag = "Library - Fore Starboard";
+	dir = 9;
+	name = "library camera"
+	},
+/obj/machinery/bookbinder,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "uAv" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -87759,6 +87747,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai)
+"uJL" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/vehicle/ridden/battering_ram{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "uJN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -149797,7 +149797,7 @@ dfZ
 fcx
 dgZ
 dfZ
-khZ
+bqa
 nHY
 ukv
 nHY
@@ -150054,7 +150054,7 @@ fQi
 lDI
 ehg
 dfZ
-oAn
+uAu
 nHY
 ukv
 nHY
@@ -150311,7 +150311,7 @@ ptI
 kHk
 eAA
 dfZ
-mWD
+oWG
 nHY
 phX
 lLJ
@@ -150568,7 +150568,7 @@ mOy
 mEh
 qEj
 dfZ
-mAd
+qun
 rop
 oQd
 nHY
@@ -151847,14 +151847,14 @@ pFO
 arL
 mVW
 cLm
-mDO
+pCF
 eJb
 oNy
 oNy
 vjz
 jcl
 cTc
-pEM
+lpb
 pLm
 vTd
 nyq
@@ -155935,7 +155935,7 @@ hyQ
 pDt
 pDt
 otJ
-bOT
+uJL
 wTu
 nNB
 lQh
