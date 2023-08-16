@@ -3424,7 +3424,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "nM" = (
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Medical Bay"
 	},
 /obj/structure/cable,
