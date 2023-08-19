@@ -2562,7 +2562,6 @@
 	opacity = FALSE
 	assemblytype = /obj/structure/door_assembly/multi_tile/glass
 	glass = TRUE
-	bound_width = 64 // 2x1
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"
