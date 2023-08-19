@@ -51,6 +51,8 @@ type SuitStatus = {
   ai_name: string;
   has_pai: boolean;
   is_ai: boolean;
+  link_id: string;
+  link_call: string;
 };
 
 type UserStatus = {
@@ -334,6 +336,8 @@ const SuitStatusSection = (props) => {
     ai_name,
     has_pai,
     is_ai,
+    link_id,
+    link_call,
   } = data.suit_status;
   const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
@@ -394,6 +398,19 @@ const SuitStatusSection = (props) => {
             color={locked ? 'good' : 'default'}
             content={locked ? 'Locked' : 'Unlocked'}
             onClick={() => act('lock')}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="MODLink">
+          <Button
+            icon={'wifi'}
+            color={link_call ? 'good' : 'default'}
+            disabled={!link_id}
+            content={
+              link_call
+                ? 'Calling (' + link_call + ')'
+                : 'Call (' + link_id + ')'
+            }
+            onClick={() => act('call')}
           />
         </LabeledList.Item>
         {!!open && (
