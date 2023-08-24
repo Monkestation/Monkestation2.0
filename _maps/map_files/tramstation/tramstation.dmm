@@ -21230,7 +21230,7 @@
 /area/ruin/powered/clownplanet)
 "fBK" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/effect/landmark/tram/tramstation/central,
+/obj/effect/landmark/tram/platform/tramstation/central,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
@@ -38974,6 +38974,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "laz" = (
@@ -39538,7 +39539,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "lkr" = (
-/obj/effect/landmark/tram/tramstation/west,
+/obj/effect/landmark/tram/platform/tramstation/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "lkv" = (
@@ -56349,7 +56350,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qyI" = (
-/obj/effect/landmark/tram/tramstation/east,
+/obj/effect/landmark/tram/platform/tramstation/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "qyK" = (
@@ -61878,6 +61879,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ski" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
 "skt" = (

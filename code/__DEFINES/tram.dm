@@ -20,3 +20,7 @@
 #define HILBERT_PORT 1
 #define HILBERT_CENTRAL 2
 #define HILBERT_STARBOARD 3
+
+/// Tram navigation directions
+#define OUTBOUND 1
+#define INBOUND -1
