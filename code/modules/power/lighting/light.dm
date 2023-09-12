@@ -121,6 +121,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
@@ -719,6 +720,11 @@
 	var/obj/item/light/tube = drop_light_tube()
 	tube?.burn()
 	return
+
+/obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	break_light_tube()
+	return TRUE
 
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER

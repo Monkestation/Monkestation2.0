@@ -147,6 +147,7 @@
 
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	register_context()
 
 /obj/machinery/power/floodlight/add_context(
@@ -266,6 +267,11 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/power/floodlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	atom_break(ENERGY) // technically,
+	return TRUE
+
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()
 	if(!.)
@@ -274,7 +280,8 @@
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
-	new /obj/item/light/tube(loc)
+	var/obj/item/light/tube/our_light = new(loc)
+	our_light.shatter()
 
 	qdel(src)
 
