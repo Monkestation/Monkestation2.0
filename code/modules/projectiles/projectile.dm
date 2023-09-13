@@ -343,7 +343,6 @@
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(living_target.is_blind())
 				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
-		living_target.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
