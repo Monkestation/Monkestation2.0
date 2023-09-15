@@ -173,7 +173,7 @@
 /obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
 	set_light_on(FALSE)
 	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/kinetic_crusher/update_icon_state()
 	if(!override_twohandedsprite)
