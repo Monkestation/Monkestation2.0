@@ -176,6 +176,7 @@
 
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
+
 	set_wires(get_wires())
 	if(glass)
 		airlock_material = "glass"
@@ -194,12 +195,28 @@
 
 	diag_hud_set_electrified()
 
-	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
-
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
-	return INITIALIZE_HINT_LATELOAD
+	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
+
+	RegisterSignal(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))
+
+/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas, traitor_bug = FALSE) //monkestation edit: adds traitor_bug
+	SIGNAL_HANDLER
+
+	if(!is_station_level(z) || critical_machine)
+		return //Skip doors in critical positions, such as the SM chamber.
+
+	for(var/area_type in grey_tide_areas)
+		if(!istype(get_area(src), area_type))
+			continue
+//monkestation edit start
+		if(traitor_bug)
+			INVOKE_ASYNC(src, PROC_REF(traitor_bug_tide))
+		else
+//monkestation edit end
+			INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/door/airlock/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
