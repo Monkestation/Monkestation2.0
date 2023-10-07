@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
 
 #define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
