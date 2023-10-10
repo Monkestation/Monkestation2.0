@@ -11,17 +11,22 @@
 	anchored = TRUE
 	pixel_x = -16
 	resistance_flags = FIRE_PROOF
+	/// is the fireplace lit?
 	var/lit = FALSE
-
+	/// the amount of fuel for the fire
 	var/fuel_added = 0
+	/// how much time is left before fire runs out of fuel
 	var/flame_expiry_timer
+	/// the looping sound effect that is played while burning
+	var/datum/looping_sound/burning/burning_loop
 
 /obj/structure/fireplace/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	burning_loop = new(src)
 
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(burning_loop)
 	. = ..()
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
@@ -139,6 +144,8 @@
 		return max(0, fuel_added)
 
 /obj/structure/fireplace/proc/ignite()
+	START_PROCESSING(SSobj, src)
+	burning_loop.start()
 	lit = TRUE
 	desc = "A large stone brick fireplace, warm and cozy."
 	flame_expiry_timer = world.time + fuel_added
@@ -147,6 +154,8 @@
 	adjust_light()
 
 /obj/structure/fireplace/proc/put_out()
+	STOP_PROCESSING(SSobj, src)
+	burning_loop.stop()
 	lit = FALSE
 	update_appearance()
 	adjust_light()
