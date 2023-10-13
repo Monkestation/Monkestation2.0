@@ -26,6 +26,7 @@
 	var/charge = 0
 	///Maximum charge in cell units
 	var/maxcharge = STANDARD_CELL_CHARGE
+	var/maxcharge = STANDARD_CELL_CHARGE
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
@@ -33,7 +34,7 @@
 	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/corrupted = FALSE
 	///how much power is given every tick in a recharger
-	var/chargerate = 100
+	var/chargerate = STANDARD_CELL_CHARGE * 0.1
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -53,7 +54,7 @@
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
-	rating = max(round(maxcharge / 10000, 1), 1)
+	rating = max(round(maxcharge / (STANDARD_CELL_CHARGE * 10), 1), 1)
 	if(!charge)
 		charge = maxcharge
 	if(empty)
@@ -84,7 +85,7 @@
 	. = COMPONENT_ITEM_CHARGED
 
 	if(prob(80))
-		maxcharge -= 200
+		maxcharge -= STANDARD_CELL_CHARGE * 0.2
 
 	if(maxcharge <= 1) // Div by 0 protection
 		maxcharge = 1
@@ -458,8 +459,8 @@
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
-	maxcharge = STANDARD_CELL_CHARGE * 10
-	chargerate = STANDARD_CELL_RATE * 0.5
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return
@@ -495,7 +496,7 @@
 	grind_results = null
 
 /obj/item/stock_parts/cell/inducer_supply
-	maxcharge = STANDARD_CELL_CHARGE * 10
+	maxcharge = STANDARD_CELL_CHARGE * 5
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN
