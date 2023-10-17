@@ -24,6 +24,7 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_TRANSPORT "transport"
 #define INVESTIGATE_WIRES "wires"
 #define INVESTIGATE_NANITES "nanites"
 #define INVESTIGATE_ARTIFACT "artifact"
@@ -55,6 +56,7 @@
 #define LOG_CLONING (1 << 22)
 #define LOG_MECHCOMP (1 << 23)
 #define LOG_BLACKMARKET (1 << 24)
+#define LOG_TRANSPORT (1 << 25) // todo: fix this
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -115,6 +117,7 @@
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_TRANSPORT "transport"
 #define LOG_CATEGORY_VIRUS "virus"
 #define LOG_CATEGORY_FLOXY "floxy"
 #define LOG_CATEGORY_CAVE_GENERATION "cave-generation"

@@ -147,7 +147,6 @@
 #define WIRE_LAYER 2.044
 #define GLASS_FLOOR_LAYER 2.046
 #define TRAM_RAIL_LAYER 2.047
-#define TRAM_FLOOR_LAYER 2.048
 #define ABOVE_OPEN_TURF_LAYER 2.049
 
 //WALL_PLANE layers
@@ -174,6 +173,9 @@
 // Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
+#define TRAM_STRUCTURE_LAYER 2.57
+#define TRAM_FLOOR_LAYER 2.58
+#define TRAM_WALL_LAYER 2.59
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
@@ -212,6 +214,7 @@
 // GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
+#define TRAM_SIGNAL_LAYER 4.26
 // WALL_PLANE_UPPER layers
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
