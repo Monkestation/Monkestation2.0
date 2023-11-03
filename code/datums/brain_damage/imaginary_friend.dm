@@ -79,8 +79,7 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
+
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -114,10 +113,11 @@
 	else
 		INVOKE_ASYNC(src, PROC_REF(setup_friend))
 
-	join = new
-	join.Grant(src)
-	hide = new
-	hide.Grant(src)
+	var/static/list/grantable_actions = list(
+		/datum/action/innate/imaginary_join,
+		/datum/action/innate/imaginary_hide,
+	)
+	grant_actions_by_list(grantable_actions)
 
 	if(!owner.imaginary_group)
 		owner.imaginary_group = list(owner)

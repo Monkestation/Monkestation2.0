@@ -130,14 +130,6 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 /// Determines if something can receive healing from a xeno
 #define TRAIT_XENO_HEAL_AURA "trait_xeno_heal_aura"
 
-/// Takes in a typepath of a `/datum/action` and adds it to `src`.
-/// Only useful if you want to add the action and never desire to reference it again ever.
-#define GRANT_ACTION(typepath) do {\
-	var/datum/action/_ability = new typepath(src);\
-	_ability.Grant(src);\
-} while (FALSE)
-
-
 /// Whenever we need to check if a mob is currently inside of soulcatcher.
 #define COMSIG_SOULCATCHER_CHECK_SOUL "soulcatcher_check_soul"
 

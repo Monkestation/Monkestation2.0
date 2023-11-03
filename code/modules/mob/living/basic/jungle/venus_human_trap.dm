@@ -173,9 +173,11 @@
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/vine_tangle/tangle = new(src)
-	tangle.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, tangle)
+	AddElement(/datum/element/lifesteal, 5)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/vine_tangle = BB_TARGETTED_ACTION,
+	)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!(istate & ISTATE_HARM))
