@@ -361,9 +361,7 @@ multiple modular subtrees with behaviors
 				break
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(LAZYACCESS(planned_behaviors, current_behavior))
-			continue
+	for(var/datum/ai_behavior/forgotten_behavior as anything in current_behaviors - planned_behaviors)
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[type]
 		if(stored_arguments)
@@ -392,6 +390,38 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
 	behavior_cooldowns[behavior] = new_cooldown
+
+/// Decides on the behavior to run next, if you find one run it
+/datum/ai_controller/proc/decide_on_behavior()
+	if(!able_to_run || !length(current_behaviors))
+		return
+
+	var/datum/ai_behavior/next_behavior
+	var/lowest_delay = INFINITY
+	for(var/datum/ai_behavior/potential as anything in current_behaviors)
+		var/delay = behavior_cooldowns[potential.type]
+		if(delay >= lowest_delay)
+			continue
+		lowest_delay = delay
+		next_behavior = potential
+		// If we've found something that wants to run NOW
+		// Then it takes priority and runs immediately
+		if(lowest_delay <= world.time)
+			break
+
+	if(lowest_delay <= world.time + world.tick_lag)
+		fire_on_process = TRUE
+		START_PROCESSING(SSai_idle, src)
+		currently_queued_behavior = next_behavior
+		return
+
+	if(fire_on_process)
+		STOP_PROCESSING(SSai_idle, src)
+		fire_on_process = FALSE
+	if(next_behavior)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next_behavior), max(lowest_delay - world.time, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		currently_queued_id = id
+		currently_queued_behavior = next_behavior
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
@@ -424,7 +454,7 @@ multiple modular subtrees with behaviors
 
 	var/process_flags = behavior.perform(arglist(arguments))
 	if(process_flags & AI_BEHAVIOR_DELAY)
-		behavior_cooldowns[behavior] = world.time + behavior.get_cooldown(src)
+		behavior_cooldowns[behavior.type] = world.time + behavior.get_cooldown(src)
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		arguments[1] = src
 		arguments[2] = FALSE
@@ -437,8 +467,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/CancelActions()
 	if(!LAZYLEN(current_behaviors))
 		return
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
