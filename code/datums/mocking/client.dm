@@ -26,35 +26,25 @@
 	var/hotkeys
 	var/tgui_say
 	var/typing_indicators
-	var/datum/interaction_mode/imode
-	var/context_menu_requires_shift = FALSE
 
-	///these persist between logins/logouts during the same round.
-	var/datum/persistent_client/persistent_client
-	var/reconnecting = FALSE
+/datum/client_interface/New()
+	..()
+	var/static/mock_client_uid = 0
+	mock_client_uid++
+
+	src.key = "[key]_[mock_client_uid]"
+	ckey = ckey(key)
+
+#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather bad
+	GLOB.directory[ckey] = src
+#endif
+
+/datum/client_interface/Destroy(force, ...)
+	GLOB.directory -= ckey
+	return ..()
 
 /datum/client_interface/proc/IsByondMember()
 	return FALSE
 
-/datum/client_interface/New(key)
-	..()
-	if(key)
-		src.key = key
-		ckey = ckey(key)
-		if(GLOB.persistent_clients_by_ckey[ckey])
-			reconnecting = TRUE
-			persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		else
-			persistent_client = new(ckey)
-			persistent_client.byond_version = world.byond_version
-			persistent_client.byond_build = world.byond_build
-			GLOB.persistent_clients_by_ckey[ckey] = persistent_client
-
 /datum/client_interface/proc/set_macros()
 	return
-
-/datum/client_interface/proc/set_right_click_menu_mode()
-	return
-
-/datum/client_interface/proc/is_afk(duration)
-	return FALSE
