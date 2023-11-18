@@ -14,7 +14,8 @@
 
 	smashes_tables = TRUE //:3
 
-	block_chance = 60  //you can use throw mode to block melee attacks... sometimes
+	///you can use throw mode to block melee attacks... sometimes
+	var/block_chance = 60
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
 /datum/armor/scales
@@ -29,11 +30,37 @@
 		return
 	target.add_traits(tribal_traits)
 	target.set_armor(target.get_armor().add_other_armor(/datum/armor/scales))
+	RegisterSignal(target, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 
 /datum/martial_art/tribal_claw/on_remove(mob/living/carbon/human/target)
 	target.set_armor(target.get_armor().subtract_other_armor(/datum/armor/scales))
 	REMOVE_TRAITS_IN(target, tribal_traits)
+	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_LIVING_CHECK_BLOCK))
 	. = ..()
+
+/datum/martial_art/tribal_claw/proc/check_block(mob/living/user, atom/movable/hitby, damage, attack_text, attack_type, ...)
+	SIGNAL_HANDLER
+
+	if(!can_use(user) || !user.throw_mode || user.incapacitated(IGNORE_GRAB))
+		return NONE
+	if(attack_type == PROJECTILE_ATTACK)
+		return NONE
+	if(!prob(block_chance))
+		return NONE
+
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+	if(istype(attacker) && user.Adjacent(attacker))
+		user.visible_message(
+			span_danger("[user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+		attacker.Stun(4 SECONDS)
+	else
+		user.visible_message(
+			span_danger("[user] blocks [attack_text]!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+	return SUCCESSFUL_BLOCK
 
 /datum/martial_art/tribal_claw/proc/check_streak(mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	if(findtext(streak,TAIL_SWEEP_COMBO))

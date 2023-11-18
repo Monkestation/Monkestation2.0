@@ -336,7 +336,7 @@
 	// monkestation start: check shields and baton resistance, deal stamina damage
 	if(ishuman(current_target))
 		var/mob/living/carbon/human/human_target = current_target
-		if(human_target.check_shields(src, 0, "\the [name]", MELEE_ATTACK))
+		if(human_target.check_block(src, 0, "\the [name]", MELEE_ATTACK))
 			return
 	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
 		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
@@ -534,7 +534,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	..()
+	. = ..()
 	if(!isalien(target))
 		target = user
 		mode = BOT_HUNT
