@@ -48,6 +48,8 @@
 #define DETOMATIX_RESIST_MINOR 1
 ///This app grants a larger protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
+///This app grants a larger protection against being PDA bombed if installed.
+///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
 #define DETOMATIX_RESIST_MAJOR 2
 ///This app gives a diminished protection against being PDA bombed if installed.
 #define DETOMATIX_RESIST_MALUS -4
@@ -73,7 +75,9 @@
 ///Low signal, so away from the station, but still connected
 #define NTNET_LOW_SIGNAL 1
 ///On station with good signal.
+///On station with good signal.
 #define NTNET_GOOD_SIGNAL 2
+///Using a Computer or Laptop with good signal, ethernet-connected.
 ///Using a Computer or Laptop with good signal, ethernet-connected.
 #define NTNET_ETHERNET_SIGNAL 3
 
@@ -82,6 +86,11 @@
 
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20
+
+/**
+ * PDA Themes
+ * For these to work, the defines must be defined in tgui/styles/themes/[define].scss
+ */
 
 /**
  * PDA Themes
