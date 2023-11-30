@@ -290,3 +290,5 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+/// Trait when something was labelled by a pen.
+#define PEN_LABEL_TRAIT "pen_label"

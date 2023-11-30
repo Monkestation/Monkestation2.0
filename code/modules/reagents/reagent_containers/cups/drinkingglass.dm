@@ -34,7 +34,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		renamedByPlayer = FALSE //so new drinks can rename the glass
+		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT) //so new drinks can rename the glass
 
 // Having our icon state change removes fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
@@ -69,13 +69,13 @@
 	var/inject_flags = NONE // Pay no mind that I (Brad) put this variable here for ONE gun.
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)
-	if(renamedByPlayer)
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		return
 	. = ..()
 	name = "[length(reagents.reagent_list) ? "filled " : ""]shot glass"
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_desc(updates)
-	if(renamedByPlayer)
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		return
 	. = ..()
 	if(length(reagents.reagent_list))
