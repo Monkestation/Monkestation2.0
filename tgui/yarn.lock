@@ -2461,10 +2461,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:14.x":
-  version: 14.18.36
-  resolution: "@types/node@npm:14.18.36"
-  checksum: 10c0/9742b62fee705cbb177b681e849640834ea3651ea90c7bfea07462dc7511eb73116a12b32c01157b591ebaaed9ece8042016f2a78b50396883f1358a18903fe2
+"@types/node@npm:^14.x":
+  version: 14.18.63
+  resolution: "@types/node@npm:14.18.63"
+  checksum: 10c0/626a371419a6a0e11ca460b22bb4894abe5d75c303739588bc96267e380aa8b90ba5a87bc552400584f0ac2a84b5c458dadcbcf0dfd2396ebeb765f7a7f95893
   languageName: node
   linkType: hard
 
@@ -10325,6 +10325,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui-panel@workspace:packages/tgui-panel"
   dependencies:
+    "@types/node": "npm:^14.x"
     common: "workspace:*"
     dompurify: "npm:^2.4.4"
     inferno: "npm:^8.2.1"
@@ -10368,7 +10369,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.23.3"
     "@types/jest": "npm:^29.5.10"
     "@types/jsdom": "npm:^21.1.6"
-    "@types/node": "npm:14.x"
+    "@types/node": "npm:^14.x"
     "@types/webpack": "npm:^5.28.5"
     "@types/webpack-env": "npm:^1.18.4"
     "@types/wicg-file-system-access": "npm:^2023.10.5"
