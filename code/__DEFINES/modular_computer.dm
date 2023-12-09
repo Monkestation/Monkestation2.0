@@ -1,14 +1,19 @@
 /**
  * can_run_on_flags bitflags
+ * can_run_on_flags bitflags
  * Used by programs to tell what type of ModPC it can run on.
  * Everything a program can run on needs valid icons for each individual one.
  */
 ///Runs on everything.
+///Runs on everything.
 #define PROGRAM_ALL ALL
+///Can run on Modular PC Consoles
 ///Can run on Modular PC Consoles
 #define PROGRAM_CONSOLE (1<<0)
 ///Can run on Laptops.
+///Can run on Laptops.
 #define PROGRAM_LAPTOP (1<<1)
+///Can run on PDAs.
 ///Can run on PDAs.
 #define PROGRAM_PDA (1<<2)
 
