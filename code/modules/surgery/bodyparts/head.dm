@@ -86,11 +86,6 @@
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
 
-	///Draw this head as "debrained"
-	VAR_PROTECTED/show_debrained = FALSE
-	///Draw this head as missing eyes
-	VAR_PROTECTED/show_missing_eyes = FALSE
-
 	///The image for lipstick
 	var/mutable_appearance/lip_overlay
 	///The image for hair
@@ -101,6 +96,16 @@
 	var/mutable_appearance/facial_overlay
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
+
+	VAR_PROTECTED
+		/// Draw this head as "debrained"
+		show_debrained = FALSE
+
+		/// Draw this head as missing eyes
+		show_eyeless = FALSE
+
+		/// Can this head be dismembered normally?
+		can_dismember = FALSE
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -158,8 +163,12 @@
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
+	if (!can_dismember)
+		return FALSE
+
 	if(owner.stat < HARD_CRIT)
 		return FALSE
+
 	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
@@ -281,7 +290,7 @@
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
 
-		if(show_missing_eyes && (head_flags && HEAD_EYEHOLES))
+		if(show_eyeless && (head_flags && HEAD_EYEHOLES))
 			var/mutable_appearance/no_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 			. += no_eyes
 
