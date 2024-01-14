@@ -17,6 +17,11 @@
 	tags = list(TAG_COMBAT, TAG_COMMUNAL)
 	checks_antag_cap = TRUE
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (SSmapping.is_planetary())
+		return EVENT_CANT_RUN
+	return ..()
+
 /datum/round_event/pirates
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list = list(
