@@ -74,7 +74,6 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
 	mat_container = null
 	return ..()
