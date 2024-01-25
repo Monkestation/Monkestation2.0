@@ -75,6 +75,7 @@ handles linking back and forth.
 		silo.ore_connected_machines -= src
 		silo.holds -= src
 		silo = null
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	mat_container = null
 	return ..()
 
@@ -120,6 +121,7 @@ handles linking back and forth.
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	if (allow_standalone)
 		_MakeLocal()
 
@@ -151,7 +153,8 @@ handles linking back and forth.
 		var/obj/machinery/ore_silo/new_silo = M.buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
 		if (silo)
-			silo.disconnect_receptacle(src, parent)
+			silo.ore_connected_machines -= src
+			silo.holds -= src
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -162,7 +165,9 @@ handles linking back and forth.
 					new_container.materials[mat] += mat_amount
 					mat_container.materials[mat] = 0
 			qdel(mat_container)
-		new_silo.connect_receptacle(src, parent)
+		silo = new_silo
+		silo.ore_connected_machines += src
+		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))

@@ -1,6 +1,3 @@
-GLOBAL_DATUM(ore_silo_default, /obj/machinery/ore_silo)
-GLOBAL_LIST_EMPTY(silo_access_logs)
-
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
@@ -9,9 +6,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
+	processing_flags = NONE
 
-	/// The machine UI's page of logs showing ore history.
-	var/log_page = 1
 	/// By default, an ore silo requires you to be wearing an ID to pull materials from it.
 	var/ID_required = TRUE
 	/// List of all connected components that are on hold from accessing materials.
@@ -52,6 +48,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
+		MATCONTAINER_EXAMINE, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/ore_silo, on_item_consumed), \
 			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/machinery/ore_silo, log_sheets_ejected), \
@@ -60,6 +57,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
+	register_context()
 
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
@@ -72,6 +70,30 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	materials = null
 
 	return ..()
+
+/obj/machinery/ore_silo/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be linked to techfabs, circuit printers and protolathes with a multitool.")
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+
+/obj/machinery/ore_silo/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "Log Silo"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
@@ -100,6 +122,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/ore_silo/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials)
+	)
+
 /obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -122,8 +149,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
 				"onHold" = !!holds[remote],
-				"location" = get_area_name(parent, TRUE),
-			)
+				"location" = get_area_name(parent, TRUE)
+				)
 		)
 
 	data["logs"] = list()
@@ -136,13 +163,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 				"action" = entry.action,
 				"amount" = entry.amount,
 				"time" = entry.timestamp,
-				"noun" = entry.noun,
+				"noun" = entry.noun
 			)
 		)
 
 	return data
 
-/obj/machinery/ore_silo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/ore_silo/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -197,129 +224,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 			return TRUE
 
 /**
- * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
- * rather than being on specific types. Serves to agnosticize the remote_materials component somewhat rather than
- * snowflaking code for silos into the component.
- * * receptacle - The datum/component/remote_materials component that is getting connected.
- * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
- *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
- *   and so-on.
- */
-/obj/machinery/ore_silo/proc/connect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
-	ore_connected_machines += receptacle
-	receptacle.mat_container = src.materials
-	receptacle.silo = src
-	RegisterSignal(physical_receptacle, COMSIG_ORE_SILO_PERMISSION_CHECKED, PROC_REF(check_permitted))
-
-/**
- * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
- * rather than being on specific types. Cleans up references to us and to the receptacle.
- * * receptacle - The datum/component/remote_materials component that is getting destroyed.
- * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
- *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
- *   and so-on.
- */
-/obj/machinery/ore_silo/proc/disconnect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
-	ore_connected_machines -= receptacle
-	receptacle.mat_container = null
-	receptacle.silo = null
-	holds -= receptacle
-	UnregisterSignal(physical_receptacle, COMSIG_ORE_SILO_PERMISSION_CHECKED)
-
-/obj/machinery/ore_silo/proc/check_permitted(datum/source, alist/user_data, atom/movable/physical_receptacle)
-	SIGNAL_HANDLER
-
-	if(!ID_required)
-		return COMPONENT_ORE_SILO_ALLOW
-	if(!islist(user_data))
-		// Just allow to salvage the situation
-		. = COMPONENT_ORE_SILO_ALLOW
-		user_data = ID_DATA(null)
-		CRASH("Invalid data passed to check_permitted")
-	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["accesses"], /list)?.Find(ACCESS_QM))
-		return COMPONENT_ORE_SILO_ALLOW
-	if(user_data[ID_READ_FAILURE])
-		physical_receptacle.say("SILO ERR: ID interface failure. Please contact the Head of Personnel.")
-		return COMPONENT_ORE_SILO_DENY
-	if(!user_data["account_id"] || !isnum(user_data["account_id"]))
-		if(prob(5))
-			physical_receptacle.say("SILO ERR: Bank account ID not found. Initiating anti-communist silo-access policy.")
-		physical_receptacle.say("SILO ERR: No account ID found. Please contact Head of Personnel.")
-		return COMPONENT_ORE_SILO_DENY
-	if(banned_users.Find(user_data["account_id"]))
-		physical_receptacle.say("SILO ERR: You are banned from using this ore silo.")
-		return COMPONENT_ORE_SILO_DENY
-	return COMPONENT_ORE_SILO_ALLOW
-
-/obj/machinery/ore_silo/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials)
-	)
-
-/obj/machinery/ore_silo/ui_static_data(mob/user)
-	return materials.ui_static_data()
-
-/obj/machinery/ore_silo/ui_data(mob/user)
-	var/list/data = list(
-		"materials" =  materials.ui_data()
-	)
-
-	var/list/connected_data
-	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
-		var/atom/parent = remote.parent
-		var/icon/parent_icon = icon(initial(parent.icon), initial(parent.icon_state), frame = 1)
-		var/list/remote_data = list(
-			"ref" = REF(remote),
-			"icon" = icon2base64(parent_icon),
-			"name" = parent.name,
-			"onHold" = holds[remote] ? TRUE : FALSE,
-			"location" = get_area_name(parent, TRUE)
-		)
-		LAZYADD(connected_data, list(remote_data))
-	LAZYSET(data, "machines", connected_data)
-
-	var/list/logs_data
-	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
-		var/list/log_data = list(
-			"rawMaterials" = entry.get_raw_materials(""),
-			"machineName" = entry.machine_name,
-			"areaName" = entry.area_name,
-			"action" = entry.action,
-			"amount" = entry.amount,
-			"time" = entry.timestamp,
-			"noun" = entry.noun
-		)
-		LAZYADD(logs_data, list(log_data))
-	LAZYSET(data, "logs", logs_data)
-
-	return data
-
-/obj/machinery/ore_silo/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
-
-	switch(action)
-		if("remove")
-			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
-			remote?.disconnect_from(src)
-			return TRUE
-
-		if("hold")
-			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
-			remote?.toggle_holding()
-			return TRUE
-
-		if("eject")
-			var/datum/material/ejecting = locate(params["ref"])
-			var/amount = text2num(params["amount"])
-			if(!isnum(amount) || !istype(ejecting))
-				return TRUE
-
-			materials.retrieve_sheets(amount, ejecting, drop_location())
-			return TRUE
-
-/**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log
  *
  * Arguments:
@@ -332,6 +236,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))
 		return
+
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
 	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
@@ -341,20 +246,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	flick("silo_active", src)
 
-/obj/machinery/ore_silo/examine(mob/user)
-	. = ..()
-	. += span_notice("[src] can be linked to techfabs, circuit printers and protolathes with a multitool.")
-
+///The log entry for an ore silo action
 /datum/ore_silo_log
-	var/name  // for VV
-	var/formatted  // for display
-
+	///The time of action
 	var/timestamp
+	///The name of the machine that remotely acted on the ore silo
 	var/machine_name
+	///The area of the machine that remotely acted on the ore silo
 	var/area_name
+	///The actual action performed by the machine
 	var/action
+	///An short verb describing the action
 	var/noun
+	///The amount of items affected by this action e.g. print quantity, sheets ejected etc.
 	var/amount
+	///List of individual materials used in the action
 	var/list/materials
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
@@ -380,6 +286,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		data,
 	)
 
+/**
+ * Merges a silo log entry with this one
+ * Arguments
+ *
+ * * datum/ore_silo_log/other - the other silo entry we are trying to merge with this one
+ */
 /datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
 	if (other == src || action != other.action || noun != other.noun)
 		return FALSE
@@ -392,6 +304,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		materials[each] += other.materials[each]
 	return TRUE
 
+/**
+ * Returns list/materials but with each entry joined by an seperator to create 1 string
+ * Arguments
+ *
+ * * separator - the string used to concatenate all entries in list/materials
+ */
 /datum/ore_silo_log/proc/get_raw_materials(separator)
 	var/list/msg = list()
 	for(var/key in materials)
