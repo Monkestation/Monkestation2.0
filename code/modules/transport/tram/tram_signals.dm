@@ -11,13 +11,13 @@
 	integrity_failure = 0.25
 	light_outer_range = 2
 	light_power = 0.7
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.48
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3.6
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.72
 	anchored = TRUE
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
-	subsystem_type = /datum/controller/subsystem/processing/transport
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
@@ -76,8 +76,7 @@
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3.6
 	anchored = TRUE
 	density = FALSE
 	light_outer_range = 1.5
@@ -309,13 +308,14 @@
  * Returns whether we are still processing.
  */
 /obj/machinery/transport/crossing_signal/proc/update_operating()
-	use_energy(idle_power_usage)
 	update_appearance()
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
+		update_use_power(ACTIVE_POWER_USE)
 		begin_processing()
 		return
+	update_use_power(IDLE_POWER_USE)
 	end_processing()
 
 /obj/machinery/transport/crossing_signal/process()
@@ -328,8 +328,6 @@
 		// Throw the error message (blue)
 		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
-
-	use_energy(active_power_usage)
 
 	var/obj/structure/transport/linear/tram_part = tram.return_closest_platform_to(src)
 
@@ -500,7 +498,7 @@
 	icon_state = "sensor-base"
 	desc = "Uses an infrared beam to detect passing trams. Works when paired with a sensor on the other side of the track."
 	layer = TRAM_RAIL_LAYER
-	use_power = 0
+	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
 	/// Sensors work in a married pair
 	var/datum/weakref/paired_sensor

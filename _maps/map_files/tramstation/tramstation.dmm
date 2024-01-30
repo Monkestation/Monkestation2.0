@@ -14677,6 +14677,7 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "dzw" = (
@@ -45826,6 +45827,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"njW" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/transport/power_rectifier,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/right)
 "njX" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
@@ -66550,9 +66563,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/transport/power_rectifier,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "tAT" = (
@@ -74255,6 +74268,16 @@
 /obj/structure/girder,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"vOq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/transport/power_rectifier,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/left)
 "vOu" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -164590,7 +164613,7 @@ aQO
 aQO
 aQO
 aQO
-qhM
+vOq
 sOG
 yiM
 cFs
@@ -191318,7 +191341,7 @@ jnJ
 ged
 whL
 vUE
-aEz
+njW
 hzh
 hYv
 seR
