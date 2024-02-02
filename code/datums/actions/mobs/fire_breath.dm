@@ -28,8 +28,10 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
+	disable_cooldown_actions()
 	attack_sequence(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/fire_breath/IsAvailable(feedback = FALSE)
@@ -109,7 +111,7 @@
 	button_icon = 'icons/effects/fire.dmi'
 	button_icon_state = "1"
 	desc = "Breathe flames in all directions."
-	cooldown_time = 3 SECONDS
+	cooldown_time = 10.5 SECONDS
 	click_to_activate = FALSE
 	/// How many fire lines do we produce to turn a full circle?
 	var/sectors = 12
