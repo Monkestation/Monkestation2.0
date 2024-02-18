@@ -439,7 +439,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" */
 #define TRAIT_PASSTABLE "passtable"
 /// Lets you fly through windows
-/* #define TRAIT_PASSWINDOW "passwindow" */
+#define TRAIT_PASSWINDOW "passwindow"
 /// Makes you immune to flashes
 #define TRAIT_NOFLASH "noflash"
 /// prevents xeno huggies implanting skeletons
