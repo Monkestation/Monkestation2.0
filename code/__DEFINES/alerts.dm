@@ -49,7 +49,6 @@
 #define ALERT_MECH_DAMAGE "mech_damage"
 
 /** Food related */
-#define ALERT_NUTRITION "nutrition"
 #define ALERT_DISGUST "disgust"
 
 /** Environment related */
