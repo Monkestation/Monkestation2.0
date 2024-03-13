@@ -227,6 +227,7 @@
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(play_stepsound))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 	spark_system = new
 	spark_system.set_up(2, 0, src)
@@ -748,3 +749,9 @@
 	for(var/occupant in occupants)
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+/obj/vehicle/sealed/mecha/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(mecha_flags &= HAS_LIGHTS && light_on)
+		set_light_on(FALSE)
+		return COMSIG_SABOTEUR_SUCCESS
