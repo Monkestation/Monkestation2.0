@@ -108,6 +108,9 @@
 	/// If true shows the contents of the storage in open_storage
 	var/display_contents = TRUE
 
+	/// Switch this off if you want to handle click_alt in the parent atom
+	var/click_alt_open = TRUE
+
 /datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	if(!istype(parent))
 		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
@@ -201,6 +204,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	// monke edit: bluespace compression kit
 	RegisterSignal(parent, COMSIG_ITEM_PRE_COMPRESS, PROC_REF(attempt_compression))
 	// monke end
@@ -935,6 +939,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	INVOKE_ASYNC(src, PROC_REF(open_storage), to_show)
 	if(display_contents)
 		return COMPONENT_NO_AFTERATTACK
+
+
+/// Alt click on the storage item. Default: Open the storage.
+/datum/storage/proc/on_click_alt(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!click_alt_open)
+		return
+
+	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)

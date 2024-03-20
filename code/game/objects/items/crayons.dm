@@ -390,6 +390,14 @@
 /// Attempts to color the target. Returns how many charges were used.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
+
+	if(istype(target, /obj/effect/decal/cleanable))
+		target = target.loc
+
+	if(!isValidSurface(target))
+		target.balloon_alert(user, "can't use there!")
+		return ITEM_INTERACT_BLOCKING
+
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 
 	var/cost = 1
@@ -401,14 +409,7 @@
 		if (istagger)
 			cost *= 0.5
 	if(check_empty(user, cost))
-		return 0
-
-	if(istype(target, /obj/effect/decal/cleanable))
-		target = target.loc
-
-	if(!isValidSurface(target))
-		target.balloon_alert(user, "can't use there!")
-		return 0
+		return ITEM_INTERACT_BLOCKING
 
 	var/drawing = drawtype
 	switch(drawtype)
@@ -479,12 +480,10 @@
 
 	if(!instant)
 		if(!do_after(user, 50, target = target))
-			return 0
+			return ITEM_INTERACT_BLOCKING
 
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
-		return 0
-	. = charges_used
+	if(!use_charges(user, cost))
+		return ITEM_INTERACT_BLOCKING
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
