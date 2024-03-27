@@ -241,7 +241,6 @@
 	update_current_power_usage()
 	setup_area_power_relationship()
 
-
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power
  * sets up power related connections to its area if it exists and becomes area sensitive

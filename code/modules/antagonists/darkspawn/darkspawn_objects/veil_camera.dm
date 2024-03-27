@@ -87,12 +87,11 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	internal_light = FALSE
 	armor_type = /datum/armor/machinery_camera
 	flags_1 = NODECONSTRUCT_1
-
-/obj/machinery/camera/darkspawn/Initialize(mapload, obj/structure/camera_assembly/CA)
-	. = ..()
 	network = list(ROLE_DARKSPAWN)
-	change_camnet(GLOB.thrallnet)
-	setViewRange(10)
+	view_range = 10
+
+/obj/machinery/camera/darkspawn/default_camera_net()
+	return GLOB.thrallnet
 
 /obj/machinery/camera/darkspawn/emp_act(severity, reset_time = 10)
 	return
