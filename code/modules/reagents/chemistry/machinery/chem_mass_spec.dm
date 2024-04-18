@@ -302,8 +302,15 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(!is_operational)
 		return FALSE
 	if(!processing_reagents)
-		return TRUE
-	use_energy(active_power_usage)
+		return PROCESS_KILL
+
+	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
+		return
+
+	if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
+		return
+
+	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0

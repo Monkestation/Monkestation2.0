@@ -526,9 +526,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_energy(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE
-		else if(internal_cell?.use(power_consumed * 0.025))
-			protected_contents = TRUE
-		else
+		else if(!internal_cell?.use(power_consumed * 0.025))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
 			investigate_log("shielding turned off due to power loss", INVESTIGATE_ATMOS)

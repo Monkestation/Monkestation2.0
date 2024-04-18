@@ -372,7 +372,7 @@
 			cyborg.updatehealth()
 			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		else
-			cyborg.cell.use(5)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))

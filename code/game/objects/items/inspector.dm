@@ -32,8 +32,6 @@
 	var/cell_cover_open = FALSE
 	///Energy used per print.
 	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
-	///Energy used to say an error message.
-	var/energy_to_speak = 1 KILO JOULES
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()

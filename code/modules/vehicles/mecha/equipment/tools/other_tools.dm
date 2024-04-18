@@ -9,7 +9,7 @@
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	equip_cooldown = 150
-	energy_drain = 1000
+	energy_drain = STANDARD_CELL_CHARGE
 	range = MECHA_RANGED
 	movedelay = 0.4
 	var/teleport_range = 7
@@ -292,7 +292,7 @@
 	///Maximum fuel capacity of the generator, in units
 	var/max_fuel = 50 * SHEET_MATERIAL_AMOUNT
 	///Energy recharged per second
-	var/rechargerate = 100
+	var/rechargerate = 0.005 * STANDARD_CELL_RATE
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()

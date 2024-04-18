@@ -251,7 +251,7 @@
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
+	chargerate = STANDARD_CELL_RATE * 5 //Extremely energy intensive
 
 /obj/item/stock_parts/power_store/cell/beam_rifle/corrupt()
 	return
