@@ -57,17 +57,15 @@
 	camnet = GLOB.cameranet //the default cameranet
 
 /obj/machinery/computer/camera_advanced/Destroy()
-	if(!QDELETED(current_user))
-		unset_machine(current_user)
-	if(eyeobj)
-		QDEL_NULL(eyeobj)
+	unset_machine()
+	QDEL_NULL(eyeobj)
 	QDEL_LIST(actions)
 	current_user = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/process()
 	if(!can_use(current_user) || (issilicon(current_user) && !HAS_SILICON_ACCESS(current_user)))
-		unset_machine(current_user)
+		unset_machine()
 		return PROCESS_KILL
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -130,12 +128,12 @@
 
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
 	if(!is_operational)
-		unset_machine(current_user)
+		unset_machine()
 
-/obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
-	if(M == current_user)
-		remove_eye_control(M)
-		end_processing()
+/obj/machinery/computer/camera_advanced/proc/unset_machine()
+	if(!QDELETED(current_user))
+		remove_eye_control(current_user)
+	end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
@@ -151,7 +149,9 @@
 		return
 	if(!can_use(user))
 		return
-	if(current_user)
+	if(isnull(user.client))
+		return
+	if(!QDELETED(current_user))
 		to_chat(user, span_warning("The console is already in use!"))
 		return
 	var/mob/living/L = user
@@ -183,7 +183,7 @@
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
-			user.unset_machine()
+			unset_machine()
 	else
 		give_eye_control(L)
 		eyeobj.setLoc(eyeobj.loc)
