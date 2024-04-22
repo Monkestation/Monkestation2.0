@@ -220,7 +220,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
+	// The following are just generic, singular types.
 	var/list/ignore = list(
+		//this is somehow a subtype of /atom/movable, because of its purpose...
+		/image/appearance,
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
 		//Nother template type, doesn't like being created with no seed
