@@ -39,16 +39,6 @@
 
 	return ..()
 
-/mob/living/carbon/proc/get_all_worn_items()
-	return list(
-		back,
-		wear_mask,
-		wear_neck,
-		head,
-		handcuffed,
-		legcuffed,
-	)
-
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1, move_equipped = FALSE) //MONKESTATION EDIT - Added 'move_equipped = FALSE'
 	for(var/slot in slots)
 		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE, move_equipped = move_equipped)) //MONKESTATION EDIT - Added 'move_equipped = move_equipped'
@@ -94,13 +84,13 @@
 			if(wear_mask)
 				return
 			wear_mask = I
-			wear_mask_update(I, toggle_off = 0)
+			update_worn_mask()
 		if(ITEM_SLOT_HEAD)
 			if(head)
 				return
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
-			head_update(I)
+			update_worn_head()
 		if(ITEM_SLOT_NECK)
 			if(wear_neck)
 				return
@@ -135,7 +125,7 @@
 	return not_handled
 
 /mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_all_worn_items()
+	return ..() + get_equipped_items()
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
@@ -146,11 +136,12 @@
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
 
+	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(I == head)
 		head = null
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
 		if(!QDELETED(src))
-			head_update(I)
+			update_worn_head()
 	else if(I == back)
 		back = null
 		if(!QDELETED(src))
@@ -158,8 +149,8 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		if(!QDELETED(src))
-			wear_mask_update(I, toggle_off = 1)
-	if(I == wear_neck)
+			update_worn_mask()
+	else if(I == wear_neck)
 		wear_neck = null
 		if(!QDELETED(src))
 			update_worn_neck(I)
@@ -173,6 +164,8 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
+	else
+		not_handled = TRUE
 
 	//monkestation edit start
 	if(I == ears)
@@ -185,7 +178,11 @@
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
+	if(not_handled)
+		return
+
 	update_equipment_speed_mods()
+	update_obscured_slots(I)
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
@@ -334,33 +331,6 @@
 	// Carbons can't open their own externals tanks.
 	return FALSE
 
-/// Handle stuff to update when a mob equips/unequips a mask.
-/mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
-	update_worn_mask()
-
-/mob/living/carbon/wear_mask_update(obj/item/I, toggle_off = 1)
-	var/obj/item/clothing/C = I
-	if(istype(C) && (C.tint || initial(C.tint)))
-		update_tint()
-	update_worn_mask()
-
-/// Handle stuff to update when a mob equips/unequips a headgear.
-/mob/living/carbon/proc/head_update(obj/item/I, forced)
-	if(isclothing(I))
-		var/obj/item/clothing/C = I
-		if(C.tint || initial(C.tint))
-			update_tint()
-		update_sight()
-	if(I.flags_inv & HIDEMASK || forced)
-		update_worn_mask()
-	if(I.flags_inv & HIDEEARS || forced)
-		update_inv_ears()
-	if(I.flags_inv & HIDEEYES || forced)
-		update_worn_glasses()
-	if(wear_neck)
-		update_worn_neck()
-	update_worn_head()
-
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
@@ -371,7 +341,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_all_worn_items()
+	var/list/all_worn_items = get_equipped_items()
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 
@@ -382,7 +352,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_all_worn_items()
+	var/list/all_worn_items = get_equipped_items()
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 

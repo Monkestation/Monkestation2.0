@@ -886,7 +886,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/owl_mask/hunter_owl/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/up
 
@@ -910,7 +914,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/gaster/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/gaster/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/gaster/up
 
