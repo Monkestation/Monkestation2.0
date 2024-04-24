@@ -219,6 +219,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/gas_welding

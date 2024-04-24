@@ -182,7 +182,7 @@
 		return
 
 	update_equipment_speed_mods()
-	update_obscured_slots(I)
+	update_obscured_slots(I.flags_inv)
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
