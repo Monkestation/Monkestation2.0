@@ -10856,9 +10856,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "dmL" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "dmR" = (
@@ -34860,7 +34859,6 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "ldk" = (
@@ -37786,9 +37784,12 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/machinery/light/directional/south,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "maB" = (
@@ -56247,8 +56248,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rPu" = (
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rPL" = (
@@ -60872,7 +60873,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/mining)
 "tsR" = (
-/obj/structure/cable,
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
@@ -65742,7 +65742,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uXC" = (
@@ -73392,7 +73391,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "xrm" = (
-/obj/structure/cable,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xry" = (
