@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 2
 	min_players = 15
-	max_occurrences = 1 //MONKESTATION ADDITION
+	max_occurrences = 0 // monkestation edit: don't occur naturally
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Syndicate troops pour out of portals."
