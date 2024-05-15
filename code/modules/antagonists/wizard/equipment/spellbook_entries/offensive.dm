@@ -143,3 +143,12 @@
 	item_path = /obj/item/highfrequencyblade/wizard
 	category = "Offensive"
 	cost = 3
+
+/datum/spellbook_entry/item/staffshrink
+	name = "Staff of Shrinking"
+	desc = "An artefact that can shrink anything for a reasonable duration. Small structures can be walked over, and small people are very vulnerable (often because their armour no longer fits)."
+	item_path = /obj/item/gun/magic/staff/shrink
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+
+
+#undef SPELLBOOK_CATEGORY_OFFENSIVE
