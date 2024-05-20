@@ -12,6 +12,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	required_slots = list(ITEM_SLOT_BACK)
 	/// Max charges of the shield.
 	var/max_charges = 3
 	/// The time it takes for the first charge to recover.
@@ -76,6 +77,7 @@
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
 	lose_multiple_charges = TRUE
+	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
@@ -88,6 +90,7 @@
 	icon_state = "magic_nullifier"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
+	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/anti_magic/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
@@ -102,6 +105,7 @@
 		The field will neutralize all magic that comes into contact with the user. \
 		It will not protect the caster from social ridicule."
 	icon_state = "magic_neutralizer"
+	required_slots = list()
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
@@ -163,6 +167,7 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/noslip)
+	required_slots = list(ITEM_SLOT_FEET)
 
 /obj/item/mod/module/noslip/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
@@ -207,6 +212,7 @@
 	cooldown_time = 2.5 SECONDS
 	overlay_state_inactive = "module_flamethrower"
 	overlay_state_active = "module_flamethrower_on"
+	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /obj/item/mod/module/flamethrower/on_select_use(atom/target)
 	. = ..()
@@ -229,6 +235,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
+	required_slots = list(ITEM_SLOT_FEET)
 	/// Damage on kick.
 	var/damage = 20
 	/// The wound bonus of the kick.
@@ -321,9 +328,6 @@
 	disguise(FALSE)
 
 /obj/item/mod/module/chameleon/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(current_disguise)
 		undo_disguise()
 		current_disguise = null
@@ -396,10 +400,9 @@
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
-	var/list/mod_skin = mod.theme.skins[mod.skin]
+	var/list/mod_skin = mod.theme.variants[mod.skin]
 	mod.icon = mod_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mod.worn_icon = mod_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
 	mod.lefthand_file = initial(mod.lefthand_file)
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = initial(mod.worn_icon_state)
@@ -457,6 +460,7 @@
 	complexity = 0
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	removable = FALSE
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
 
 /obj/item/mod/module/demoralizer/on_suit_activation()
@@ -475,6 +479,7 @@
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding)
+	required_slots = list(ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/infiltrator/on_install()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
@@ -487,7 +492,9 @@
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
 	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = "states"
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
@@ -496,7 +503,9 @@
 	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
 	if(deleting)
 		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/infiltrator/proc/on_speech_modification(datum/source)
 	SIGNAL_HANDLER
@@ -538,7 +547,7 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
-/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 

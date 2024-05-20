@@ -33,9 +33,6 @@
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!shell.attached_circuit)
 		return
 	var/list/action_components = shell.attached_circuit.get_all_contents_type(/obj/item/circuit_component/equipment_action/mod)
@@ -209,7 +206,7 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else
