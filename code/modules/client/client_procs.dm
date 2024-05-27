@@ -650,6 +650,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(xp_menu)
+	QDEL_NULL(parallax_rock)
+	QDEL_LIST(parallax_layers_cached)
+	parallax_layers = null
 	seen_messages = null
 	Master.UpdateTickRate()
 	if(cam_screen)
