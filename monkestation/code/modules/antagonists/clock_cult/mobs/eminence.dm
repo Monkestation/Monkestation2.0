@@ -8,7 +8,6 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE

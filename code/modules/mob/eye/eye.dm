@@ -8,7 +8,8 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
 	status_flags = NONE
-	move_on_shuttle = FALSE
+	/// Toggles if the camera can move on shuttles
+	var/move_on_shuttle = FALSE
 	/// Toggles if the camera can use emotes
 	var/has_emotes = FALSE
 
@@ -16,6 +17,8 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 	SSpoints_of_interest.make_point_of_interest(src)
+	if(!move_on_shuttle)
+		ADD_TRAIT(src, TRAIT_BLOCK_SHUTTLE_MOVEMENT, INNATE_TRAIT)
 
 /mob/eye/experience_pressure_difference()
 	return
