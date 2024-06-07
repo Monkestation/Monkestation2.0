@@ -521,12 +521,10 @@
 				return TRUE
 			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
 			if(modpath in modifiers)
-				chosen_modifier.unselect(src)
-				modifiers -= modpath
+				unselect_modifier(chosen_modifier)
 				return TRUE
 			if(chosen_modifier.selectable(src))
-				chosen_modifier.on_select(src)
-				modifiers += modpath
+				select_modifier(chosen_modifier)
 				return TRUE
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
@@ -538,6 +536,16 @@
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
 					start_time = 0
 					start_game()
+
+/// Selects the passed modifier.
+/datum/deathmatch_lobby/proc/select_modifier(datum/deathmatch_modifier/modifier)
+	modifier.on_select(src)
+	modifiers += modifier.type
+
+/// Deselects the passed modifier.
+/datum/deathmatch_lobby/proc/unselect_modifier(datum/deathmatch_modifier/modifier)
+	modifier.unselect(src)
+	modifiers -= modifier.type
 
 /datum/deathmatch_lobby/ui_close(mob/user)
 	. = ..()
