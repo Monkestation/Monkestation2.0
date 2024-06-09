@@ -21302,6 +21302,10 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/drone_bay)
+"fDN" = (
+/obj/machinery/transport/tram_controller/tcomms,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "fDP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -30782,6 +30786,10 @@
 	},
 /obj/item/folder/blue,
 /obj/item/pen/blue,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Runs-The-Rails";
+	desc = "An adorable, hard working lizard that runs in circles to keep the tram operating safely."
+	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "iDP" = (
@@ -108611,7 +108619,7 @@ dwR
 ngp
 dwR
 dwR
-cXL
+ney
 ney
 sMr
 sMr
@@ -108869,7 +108877,7 @@ gga
 rBW
 ffN
 sMr
-sMr
+fDN
 osd
 ney
 tms
@@ -109125,7 +109133,7 @@ ocK
 ngp
 dwR
 dwR
-cXL
+sMr
 sMr
 sMr
 sMr
