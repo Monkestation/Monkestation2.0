@@ -301,6 +301,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("Titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	new/datum/stack_recipe("Shuttle seat", /obj/structure/chair/comfy/shuttle, 2, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("Material tram door assembly", /obj/structure/door_assembly/multi_tile/door_assembly_tram, 8, time = 5 SECONDS, check_density = TRUE, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("remote smoke machine", /obj/structure/chemical_tank/smoke, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote liquid pump",/obj/structure/chemical_tank/liquid, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	))
