@@ -124,11 +124,10 @@
 	set_combat_mode(!(istate & ISTATE_HARM))
 	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 
-/mob/living/basic/mining_drone/RangedAttack(atom/target)
-	if(!(istate & ISTATE_HARM))
+/mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)
+	if(!combat_mode)
 		return
-	stored_gun.afterattack(target, src)
-
+	stored_gun.try_fire_gun(target, src, list2params(modifiers))
 
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()

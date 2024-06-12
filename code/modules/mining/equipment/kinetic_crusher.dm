@@ -74,74 +74,85 @@
 	else
 		return ..()
 
-/obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
-		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
-		user.drop_all_held_items()
+/obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!LAZYLEN(trophies))
+		user.balloon_alert(user, "no trophies!")
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, "trophies removed")
+	tool.play_tool_sound(src)
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.remove_from(src, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		user.balloon_alert(user, "must be wielded!")
+		return TRUE
+	return .
+
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clickparams)
+	if(!isliving(target))
 		return
-	var/datum/status_effect/crusher_damage/C = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(!C)
-		C = target.apply_status_effect(/datum/status_effect/crusher_damage)
+	// Melee effect
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.on_melee_hit(target, user)
+	if(QDELETED(target))
+		return
+	// Clear existing marks
+	var/valid_crusher_attack = FALSE
+	for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
+		//this will erase ALL crusher marks, not only ones by you.
+		if(crusher_mark_effect.hammer_synced != src || !target.remove_status_effect(/datum/status_effect/crusher_mark, src))
+			continue
+		valid_crusher_attack = TRUE
+		break
+	if(!valid_crusher_attack)
+		return
+	// Detonation effect
+	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
 	var/target_health = target.health
-	..()
-	for(var/t in trophies)
-		if(!QDELETED(target))
-			var/obj/item/crusher_trophy/T = t
-			T.on_melee_hit(target, user)
-	if(!QDELETED(C) && !QDELETED(target))
-		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.on_mark_detonation(target, user)
+	if(QDELETED(target))
+		return
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
+	var/backstabbed = FALSE
+	var/combined_damage = detonation_damage
+	var/backstab_dir = get_dir(user, target)
+	var/def_check = target.getarmor(type = BOMB)
+	// Backstab bonus
+	if((user.dir & backstab_dir) && (target.dir & backstab_dir))
+		backstabbed = TRUE
+		combined_damage += backstab_bonus
+		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += combined_damage
+	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
+	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
-	if(proximity_flag && isliving(target) && !override_markeffect)
-		var/mob/living/L = target
-		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(/datum/status_effect/crusher_mark)
-		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(/datum/status_effect/crusher_mark))
-			return
-		var/datum/status_effect/crusher_damage/C = L.has_status_effect(/datum/status_effect/crusher_damage)
-		if(!C)
-			C = L.apply_status_effect(/datum/status_effect/crusher_damage)
-		var/target_health = L.health
-		for(var/t in trophies)
-			var/obj/item/crusher_trophy/T = t
-			T.on_mark_detonation(target, user)
-		if(!QDELETED(L))
-			if(!QDELETED(C))
-				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
-			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
-			var/backstabbed = FALSE
-			var/combined_damage = detonation_damage
-			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = BOMB)
-			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				backstabbed = TRUE
-				combined_damage += backstab_bonus
-				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
-
-			if(!QDELETED(C))
-				C.total_damage += combined_damage
-
-
-			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
-			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
-
-/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
+/obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target == user)
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+		return ITEM_INTERACT_BLOCKING
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
 		return
-	var/modifiers = params2list(clickparams)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return

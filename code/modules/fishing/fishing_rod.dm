@@ -138,14 +138,6 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
-	. = ..()
-	/// Reel in if able
-	if(currently_hooked_item)
-		reel(user)
-		return TRUE
-	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
-
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
 	var/mob/user = loc
@@ -198,25 +190,35 @@
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
-/obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-	/// Reel in if able
-	if(currently_hooked_item)
+/obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Reel in if able
+	if(currently_hooked)
 		reel(user)
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	cast_line(target, user, proximity_flag)
+	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
+	cast_line(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return .
-
-///Called by afterattack(). If the line to whatever that is is clear and we're not already busy, try fishing in it
-/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user, proximity_flag)
-	if(casting || currently_hooked_item || proximity_flag || !CheckToolReach(user, target, cast_range))
+/// If the line to whatever that is is clear and we're not already busy, try fishing in it
+/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
+	if(casting || currently_hooked)
 		return
-	/// Annoyingly pre attack is only called in melee
-	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return
+	if(!CheckToolReach(user, target, cast_range))
+		balloon_alert(user, "cannot reach there!")
+		return
+	if(!COOLDOWN_FINISHED(src, casting_cd))
+		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = cast_range

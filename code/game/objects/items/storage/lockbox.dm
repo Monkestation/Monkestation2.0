@@ -23,12 +23,12 @@
 
 	register_context()
 
-/obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/lockbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
 	var/locked = atom_storage.locked
-	if(W.GetID())
+	if(inserted.GetID())
 		if(broken)
 			balloon_alert(user, "broken!")
-			return
+			return FALSE
 		if(allowed(user))
 			if(atom_storage.locked)
 				atom_storage.locked = STORAGE_NOT_LOCKED
@@ -42,15 +42,16 @@
 				icon_state = icon_closed
 
 			balloon_alert(user, locked ? "locked" : "unlocked")
-			return
+			return FALSE
 
-		else
-			balloon_alert(user, "access denied!")
-			return
-	if(!locked)
-		return ..()
-	else
+		balloon_alert(user, "access denied!")
+		return FALSE
+
+	if(locked)
 		balloon_alert(user, "locked!")
+		return FALSE
+
+	return TRUE
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
@@ -249,8 +250,8 @@
 	buyer_account = _buyer_account
 	add_traits(list(TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_BANNED_FROM_CARGO_SHUTTLE), TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
 
-/obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/id_card = W.GetID()
+/obj/item/storage/lockbox/order/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	var/obj/item/card/id/id_card = inserted.GetID()
 	if(!id_card)
 		return ..()
 

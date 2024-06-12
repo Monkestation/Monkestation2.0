@@ -51,30 +51,24 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	return TRUE
 
-/obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
-		return ..()
+/obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(part_replace_action(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(ismachinery(attacked_object))
-		var/obj/machinery/attacked_machinery = attacked_object
-
-		if(!attacked_machinery.component_parts)
-			return ..()
-
-		if(works_from_distance)
-			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-			attacked_machinery.exchange_parts(user, src)
-		return
-
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	if(!adjacent && !works_from_distance)
-		return
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return
-	attacked_frame.attackby(src, user)
-	if(works_from_distance)
-		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
+/obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+	if(part_replace_action(interacting_with, user))
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/structure/frame))
+		// Cursed snowflake but we need to handle frame ranged interaction here
+		// Likely no longer necessary with the new framework, revisit later
+		interacting_with.item_interaction(user, src)
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
