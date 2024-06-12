@@ -76,7 +76,6 @@
 		to_chat(user, span_warning("[target.p_They()] have no head!"))
 		return ITEM_INTERACT_BLOCKING
 
-
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
 	if(istype(target.head, /obj/item/clothing/head/wig))

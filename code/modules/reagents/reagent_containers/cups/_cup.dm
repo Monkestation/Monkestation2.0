@@ -115,7 +115,7 @@
 		return
 
 	if(!spillable)
-		return
+		return NONE
 
 	var/mob/living/chugger = over
 	var/chugging = TRUE //guys this is literally so fucking epic. We are really chugging shit

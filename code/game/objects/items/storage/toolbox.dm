@@ -311,7 +311,6 @@
 	balloon_alert(user, "needs 10 tiles!")
 	return FALSE
 
-
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)
