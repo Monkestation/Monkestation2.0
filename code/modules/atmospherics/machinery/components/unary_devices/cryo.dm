@@ -82,6 +82,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
+	flags_1 = PREVENT_CLICK_UNDER_1
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	showpipe = FALSE
 
@@ -613,19 +615,33 @@
 			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-	return ..()
+/obj/machinery/cryo_cell/click_alt(mob/user)
+	//Required so players don't close the cryo on themselves without a doctor's help
+	if(get_turf(user) == get_turf(src))
+		return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
-	return // we don't see the pipe network while inside cryo.
+	if(state_open )
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
+/obj/machinery/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
+	if(!iscarbon(target))
+		return
+
+	if(isliving(target))
+		var/mob/living/living_mob = target
+		if(living_mob.incapacitated())
+			close_machine(target)
+		return
+
+	user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
+	if (do_after(user, 2.5 SECONDS, target=target))
+		close_machine(target)
+
+/obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()

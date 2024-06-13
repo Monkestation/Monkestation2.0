@@ -6,6 +6,8 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
+	processing_flags = NONE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	var/hacked = FALSE
 	var/disabled = FALSE
@@ -209,6 +211,106 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/autolathe, make_item), custom_materials, multiplier, is_stack, usr), time)
 
 		return TRUE
+
+/**
+ * Callback for start_making, actually makes the item
+ * Arguments
+ *
+ * * datum/design/design - the design we are trying to print
+ * * items_remaining - the number of designs left out to print
+ * * build_time_per_item - the time taken to print 1 item
+ * * material_cost_coefficient - the cost efficiency to print 1 design
+ * * charge_per_item - the amount of power to print 1 item
+ * * list/materials_needed - the list of materials to print 1 item
+ * * turf/target - the location to drop the printed item on
+*/
+/obj/machinery/autolathe/proc/do_make_item(datum/design/design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, list/materials_needed, turf/target)
+	PROTECTED_PROC(TRUE)
+
+	if(items_remaining <= 0) // how
+		finalize_build()
+		return
+
+	if(!is_operational)
+		say("Unable to continue production, power failure.")
+		finalize_build()
+		return
+
+	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
+		var/area/my_area = get_area(src)
+		var/obj/machinery/power/apc/my_apc = my_area.apc
+		if(!QDELETED(my_apc))
+			var/charging_wait = my_apc.time_to_charge(charge_per_item)
+			if(!isnull(charging_wait))
+				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+			else
+				say("Unable to continue production, power grid overload.")
+		else
+			say("Unable to continue production, no APC in area.")
+		finalize_build()
+		return
+
+	var/is_stack = ispath(design.build_path, /obj/item/stack)
+	if(!materials.has_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1))
+		say("Unable to continue production, missing materials.")
+		finalize_build()
+		return
+	materials.use_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1)
+
+	var/atom/movable/created
+	if(is_stack)
+		created = new design.build_path(target, items_remaining)
+	else
+		created = new design.build_path(target)
+		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
+
+	created.pixel_x = created.base_pixel_x + rand(-6, 6)
+	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	created.forceMove(target)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
+
+	if(is_stack)
+		items_remaining = 0
+	else
+		items_remaining -= 1
+
+	if(items_remaining <= 0)
+		finalize_build()
+		return
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, materials_needed, target), build_time_per_item)
+
+/**
+ * Resets the icon state and busy flag
+ * Called at the end of do_make_item's timer loop
+*/
+/obj/machinery/autolathe/proc/finalize_build()
+	PROTECTED_PROC(TRUE)
+
+	icon_state = initial(icon_state)
+	busy = FALSE
+	SStgui.update_uis(src)
+
+/obj/machinery/autolathe/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	if(busy)
+		balloon_alert(user, "printing started!")
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
+	if(busy)
+		balloon_alert(user, "busy printing!")
+		return CLICK_ACTION_SUCCESS
+	balloon_alert(user, "drop direction reset")
+	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(busy)

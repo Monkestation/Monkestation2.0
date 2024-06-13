@@ -837,6 +837,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	new /obj/item/bodybag/environmental(src)
 	new /obj/item/bodybag/environmental(src)
 
+/obj/item/storage/pod/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	return can_interact(user)
+
+/obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
+	if (can_interact(user))
+		atom_storage?.show_contents(user)
+	return TRUE
+
+/obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
+	if(!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
+/obj/item/storage/pod/click_alt(mob/user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/storage/pod/can_interact(mob/user)
+	if(!..())
+		return FALSE
+	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED || unlocked)
+		return TRUE
+	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
+	return FALSE
+
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	shuttle_id = "backup"
