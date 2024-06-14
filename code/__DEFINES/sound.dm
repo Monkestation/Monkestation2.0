@@ -243,3 +243,7 @@ GLOBAL_DATUM_INIT(sfx_datum_by_key, /alist, alist())
 #define SFX_KEYBOARD "keyboard"
 #define SFX_BUTTON "button"
 #define SFX_SWITCH "switch"
+#define SFX_PORTAL_ENTER "portal_enter"
+#define SFX_PORTAL_CLOSE "portal_closed"
+#define SFX_PORTAL_CREATED "portal_created"
+#define SFX_SCREECH "screech"

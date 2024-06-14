@@ -469,3 +469,31 @@
 	file_paths = list(
 		'monkestation/sound/effects/hl2/lightswitch.ogg',
 	)
+
+/datum/sound_effect/portal_close
+	key = SFX_PORTAL_CLOSE
+	file_paths = list('sound/effects/portal_close.ogg')
+
+/datum/sound_effect/portal_enter
+	key = SFX_PORTAL_ENTER
+	file_paths = list('sound/effects/portal_travel.ogg')
+
+/datum/sound_effect/portal_created
+	key = SFX_PORTAL_CREATED
+	file_paths = list(
+		'sound/effects/portal_open_1.ogg',
+		'sound/effects/portal_open_2.ogg',
+		'sound/effects/portal_open_3.ogg',
+	)
+
+/datum/sound_effect/screech
+	key = SFX_SCREECH
+	file_paths = list(
+		'sound/creatures/monkey/monkey_screech_1.ogg',
+		'sound/creatures/monkey/monkey_screech_2.ogg',
+		'sound/creatures/monkey/monkey_screech_3.ogg',
+		'sound/creatures/monkey/monkey_screech_4.ogg',
+		'sound/creatures/monkey/monkey_screech_5.ogg',
+		'sound/creatures/monkey/monkey_screech_6.ogg',
+		'sound/creatures/monkey/monkey_screech_7.ogg',
+	)

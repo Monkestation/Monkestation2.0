@@ -50,7 +50,6 @@
 		to_chat(AM, span_warning("You can't use this here!"))
 		return
 	if(is_ready())
-		playsound(loc, "sound/effects/portal_travel.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(AM)
 
 /obj/machinery/teleport/hub/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -79,6 +78,7 @@
 	var/turf/start_turf = get_turf(M)
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
+	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	use_power(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
