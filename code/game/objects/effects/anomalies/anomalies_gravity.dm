@@ -4,7 +4,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield2"
 	density = FALSE
-	aSignal = /obj/item/assembly/signaler/anomaly/grav
+	anomaly_core = /obj/item/assembly/signaler/anomaly/grav
 	var/boing = 0
 	var/object_launch_prob = 20
 
@@ -77,7 +77,7 @@
 ///Bigger, meaner, immortal gravity anomaly. although this is just the super grav anomaly but bigger and shattering move force
 /obj/effect/anomaly/grav/high/big
 	immortal = TRUE
-	aSignal = null
+	anomaly_core = null
 	move_force = MOVE_FORCE_OVERPOWERING
 
 /obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan, drops_core)
