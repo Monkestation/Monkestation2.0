@@ -5,10 +5,16 @@
   background-color: colors.$background;
   display: flex;
   flex-direction: column;
-  max-width: 231px;
-  height: 100%;
-  width: 100%;
+  max-width: 275px;
   overflow: hidden;
+}
+
+// Remove with 516
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .window {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .window-lightMode {
