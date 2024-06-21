@@ -17,6 +17,7 @@ import {
   PreferencesMenuData,
   RandomSetting,
 } from './data';
+import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { RandomizationButton } from './RandomizationButton';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -30,6 +31,7 @@ import {
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
+import { InfernoNode } from 'inferno';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
@@ -468,6 +470,7 @@ const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
+  children?: InfernoNode;
 }) => {
   return (
     <Stack.Item
@@ -524,6 +527,7 @@ const PreferenceList = (props: {
           },
         )}
       </LabeledList>
+      {props.children}
     </Stack.Item>
   );
 };
@@ -533,6 +537,10 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
     string | null
   >('currentClothingMenu', null);
+  const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] = useLocalState(
+    'deleteCharacterPopupOpen',
+    false,
+  );
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     'multiNameInputOpen',
     false,
@@ -633,6 +641,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
               />
             )}
 
+            {deleteCharacterPopupOpen && (
+              <DeleteCharacterPopup
+                close={() => setDeleteCharacterPopupOpen(false)}
+              />
+            )}
+
             <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
               <Stack.Item fill>
                 <Stack vertical fill>
@@ -722,7 +736,21 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     act={act}
                     randomizations={getRandomization(nonContextualPreferences)}
                     preferences={nonContextualPreferences}
-                  />
+                  >
+                    <Box my={0.5}>
+                      <Button
+                        color="red"
+                        disabled={
+                          Object.values(data.character_profiles).filter(
+                            (name) => name,
+                          ).length < 2
+                        } // check if existing chars more than one
+                        onClick={() => setDeleteCharacterPopupOpen(true)}
+                      >
+                        Delete Character
+                      </Button>
+                    </Box>
+                  </PreferenceList>
                 </Stack>
               </Stack.Item>
             </Stack>
