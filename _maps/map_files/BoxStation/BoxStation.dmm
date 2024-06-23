@@ -7356,8 +7356,7 @@
 /obj/structure/table/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Reception Desk";
-	req_access = list("security")
+	name = "Reception Desk"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Reception Desk";
