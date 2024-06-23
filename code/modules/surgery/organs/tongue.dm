@@ -157,6 +157,7 @@
 	speech_args[SPEECH_MESSAGE] = message
 
 	//MONKESTATION EDIT END
+
 /obj/item/organ/internal/tongue/lizard/silver
 	name = "silver tongue"
 	desc = "A genetic branch of the high society Silver Scales that gives them their silverizing properties. To them, it is everything, and society traitors have their tongue forcibly revoked. Oddly enough, it itself is just blue."
