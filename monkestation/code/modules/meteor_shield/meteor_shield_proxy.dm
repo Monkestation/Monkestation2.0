@@ -14,9 +14,6 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_parent_z_changed))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_moved))
 
-/obj/effect/abstract/meteor_shield_proxy/HasProximity(obj/effect/meteor/meteor)
-	parent.HasProximity(meteor)
-
 /obj/effect/abstract/meteor_shield_proxy/Destroy(force)
 	QDEL_NULL(monitor)
 	if(!QDELETED(parent))
@@ -25,6 +22,9 @@
 		UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
 	parent = null
 	return ..()
+
+/obj/effect/abstract/meteor_shield_proxy/HasProximity(obj/effect/meteor/meteor)
+	parent.HasProximity(meteor)
 
 /obj/effect/abstract/meteor_shield_proxy/proc/on_parent_moved()
 	SIGNAL_HANDLER
