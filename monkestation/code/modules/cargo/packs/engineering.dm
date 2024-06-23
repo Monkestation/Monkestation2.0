@@ -7,6 +7,6 @@
 
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Hard-Kill Meteor Protection System Control Board"
-	desc = "A control system for HK-MPS satellites.."
+	desc = "A control system for HK-MPS satellites."
 	special = FALSE
 	access_view = ACCESS_ENGINEERING
