@@ -1,6 +1,6 @@
 #define TRAIT_METEOR_SHIELD_FIELD_MONITORED	"meteor_shield_field_monitored"
 
-GLOBAL_LIST_EMPTY(meteor_shielded_turfs)
+GLOBAL_LIST_EMPTY_TYPED(meteor_shielded_turfs, /turf/open)
 
 /// Stupid element to handle tracking which turfs are in a meteor sat's range,
 /// without messing up in situations like with overlapping ranges.

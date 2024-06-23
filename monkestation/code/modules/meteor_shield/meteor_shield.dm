@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	/// A counter for how many meteors this specific satellite has zapped.
 	var/meteors_zapped = 0
 	/// A list of "proxy" objects used for multi-z coverage.
-	var/list/obj/effect/abstract/meteor_shield_proxy/proxies
+	var/list/obj/effect/abstract/meteor_shield_proxy/proxies = list()
 
 /obj/machinery/satellite/meteor_shield/Initialize(mapload)
 	. = ..()
@@ -19,6 +19,12 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	setup_proxies()
 	register_context()
 
+/obj/machinery/satellite/meteor_shield/Destroy()
+	GLOB.meteor_shield_sats -= src
+	proxies = null
+	QDEL_NULL(monitor)
+	return ..()
+
 /obj/machinery/satellite/meteor_shield/examine(mob/user)
 	. = ..()
 	. += span_info("It has stopped <b>[meteors_zapped]</b> meteors so far.")
@@ -27,12 +33,6 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 /obj/machinery/satellite/meteor_shield/proc/on_space_move(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_MOVABLE_STOP_SPACEMOVE
-
-/obj/machinery/satellite/meteor_shield/Destroy()
-	GLOB.meteor_shield_sats -= src
-	LAZYNULL(proxies)
-	QDEL_NULL(monitor)
-	return ..()
 
 /obj/machinery/satellite/meteor_shield/vv_edit_var(vname, vval)
 	. = ..()
@@ -81,14 +81,14 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	if(target_z == z)
 		return
 	// don't setup a proxy if there already is one.
-	if(!QDELETED(proxies["[z]"]))
+	if(!QDELETED(proxies["[target_z]"]))
 		return
 	var/turf/our_loc = get_turf(src)
 	var/turf/target_loc = locate(our_loc.x, our_loc.y, target_z)
 	if(QDELETED(target_loc))
 		return
-	var/list/obj/effect/abstract/meteor_shield_proxy/new_proxy = new(target_loc, src)
-	LAZYSET(proxies, "[z]", new_proxy)
+	var/obj/effect/abstract/meteor_shield_proxy/new_proxy = new(target_loc, src)
+	proxies["[target_z]"] = new_proxy
 
 /obj/machinery/satellite/meteor_shield/piercing
 	check_sight = FALSE

@@ -6,10 +6,10 @@ GLOBAL_LIST_EMPTY_TYPED(meteor_shield_fields, /datum/proximity_monitor/advanced/
 	var/obj/machinery/satellite/meteor_shield/proxied_host
 
 /datum/proximity_monitor/advanced/meteor_shield/New(atom/_host, range, _ignore_if_not_on_turf, proxied_host)
-	. = ..()
 	GLOB.meteor_shield_fields += src
 	if(proxied_host)
 		src.proxied_host = proxied_host
+	return ..()
 
 /datum/proximity_monitor/advanced/meteor_shield/Destroy()
 	GLOB.meteor_shield_fields -= src
