@@ -55,12 +55,15 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 		context[SCREENTIP_CONTEXT_RMB] = "Pick up"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/satellite/meteor_shield/toggle(user)
+/obj/machinery/satellite/meteor_shield/toggle(mob/user)
 	. = ..()
+	if(.)
+		user.log_message("[active ? "" : "de"]activated [src] at [AREACOORD(src)]", LOG_GAME)
 	setup_proximity()
 
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
+	user.log_message("emagged [src] at [AREACOORD(src)]", LOG_GAME)
 	setup_proximity()
 
 /obj/machinery/satellite/meteor_shield/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -119,6 +122,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 		return
 	balloon_alert(user, "picking up satellite...")
 	if(do_after(user, 5 SECONDS, src))
+		user.log_message("picked up [src] at [AREACOORD(src)]", LOG_GAME)
 		var/obj/item/meteor_shield_capsule/capsule = new(drop_location())
 		user.put_in_hands(capsule)
 		qdel(src)
