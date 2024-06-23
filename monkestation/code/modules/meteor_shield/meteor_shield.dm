@@ -8,12 +8,15 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	var/datum/proximity_monitor/advanced/meteor_shield/monitor
 	/// A counter for how many meteors this specific satellite has zapped.
 	var/meteors_zapped = 0
+	/// A list of "proxy" objects used for multi-z coverage.
+	var/list/obj/effect/abstract/meteor_shield_proxy/proxies
 
 /obj/machinery/satellite/meteor_shield/Initialize(mapload)
 	. = ..()
 	GLOB.meteor_shield_sats += src
 	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move)) // so these fuckers don't drift off into space when you're trying to position them
 	setup_proximity()
+	setup_proxies()
 	register_context()
 
 /obj/machinery/satellite/meteor_shield/examine(mob/user)
@@ -27,6 +30,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	GLOB.meteor_shield_sats -= src
+	LAZYNULL(proxies)
 	QDEL_NULL(monitor)
 	return ..()
 
@@ -36,6 +40,9 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 		switch(vname)
 			if(NAMEOF(src, kill_range))
 				monitor?.set_range(kill_range)
+				for(var/proxy_z in proxies)
+					var/obj/effect/abstract/meteor_shield_proxy/proxy = proxies[proxy_z]
+					proxy.monitor.set_range(kill_range)
 			if(NAMEOF(src, active))
 				set_anchored(active)
 				setup_proximity()
@@ -54,6 +61,10 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	. = ..()
 	setup_proximity()
 
+/obj/machinery/satellite/meteor_shield/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	setup_proxies()
+
 /obj/machinery/satellite/meteor_shield/proc/setup_proximity()
 	if((obj_flags & EMAGGED) || !active)
 		if(!QDELETED(monitor))
@@ -61,6 +72,23 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	else
 		if(QDELETED(monitor))
 			monitor = new(src, kill_range)
+
+/obj/machinery/satellite/meteor_shield/proc/setup_proxies()
+	for(var/stacked_z in SSmapping.get_connected_levels(get_turf(src)))
+		setup_proxy_for_z(stacked_z)
+
+/obj/machinery/satellite/meteor_shield/proc/setup_proxy_for_z(target_z)
+	if(target_z == z)
+		return
+	// don't setup a proxy if there already is one.
+	if(!QDELETED(proxies["[z]"]))
+		return
+	var/turf/our_loc = get_turf(src)
+	var/turf/target_loc = locate(our_loc.x, our_loc.y, target_z)
+	if(QDELETED(target_loc))
+		return
+	var/list/obj/effect/abstract/meteor_shield_proxy/new_proxy = new(target_loc, src)
+	LAZYSET(proxies, "[z]", new_proxy)
 
 /obj/machinery/satellite/meteor_shield/piercing
 	check_sight = FALSE
@@ -92,3 +120,4 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 		var/obj/item/meteor_shield_capsule/capsule = new(drop_location())
 		user.put_in_hands(capsule)
 		qdel(src)
+

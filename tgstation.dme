@@ -6626,6 +6626,7 @@
 #include "monkestation\code\modules\meteor_shield\meteor_shield_capsule.dm"
 #include "monkestation\code\modules\meteor_shield\meteor_shield_coverage.dm"
 #include "monkestation\code\modules\meteor_shield\meteor_shield_field.dm"
+#include "monkestation\code\modules\meteor_shield\meteor_shield_proxy.dm"
 #include "monkestation\code\modules\meteor_shield\meteor_shield_zap.dm"
 #include "monkestation\code\modules\meteors\meteor_dark_matteor.dm"
 #include "monkestation\code\modules\metrics\metric_subsystem.dm"
