@@ -269,7 +269,7 @@
 	icon_state = "station_map_engi"
 	circuit = /obj/item/circuitboard/machine/station_map/engineering
 
-/obj/machinery/station_map/engineering/Initialize()
+/obj/machinery/station_map/engineering/Initialize(mapload)
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 
