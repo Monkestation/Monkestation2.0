@@ -229,6 +229,9 @@
 	dir = 8
 	},
 /obj/structure/sign/departments/medbay/alt/directional/south,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "js" = (
@@ -529,7 +532,8 @@
 /obj/item/storage/backpack/satchel/flat/listening_post_secret_stash,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Ad" = (
 /obj/structure/closet/crate/solarpanel_small,
