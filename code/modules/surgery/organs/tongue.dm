@@ -128,6 +128,8 @@
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/draconic)
 
+	//MONKESTATION EDIT START
+
 	/// How long is our hissssssss?
 	var/draw_length = 3
 
@@ -154,6 +156,7 @@
 		message = lizard_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
 	speech_args[SPEECH_MESSAGE] = message
 
+	//MONKESTATION EDIT END
 /obj/item/organ/internal/tongue/lizard/silver
 	name = "silver tongue"
 	desc = "A genetic branch of the high society Silver Scales that gives them their silverizing properties. To them, it is everything, and society traitors have their tongue forcibly revoked. Oddly enough, it itself is just blue."
