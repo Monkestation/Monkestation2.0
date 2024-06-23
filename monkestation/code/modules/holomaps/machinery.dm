@@ -303,9 +303,7 @@
 			canvas.DrawBox(color, offset_x, offset_y)
 			z_has_coverage = TRUE
 		if(z_has_coverage)
-			var/image/legend_icon = image('monkestation/code/modules/holomaps/icons/8x8.dmi', icon_state = "meteor_shield")
-			legend_icon.alpha = 64
-			extra_overlays["Meteor Shield"] = list("icon" = legend_icon, "markers" = list(image(canvas)))
+			extra_overlays["Meteor Shield"] = list("icon" = image('monkestation/code/modules/holomaps/icons/8x8.dmi', icon_state = "meteor_shield"), "markers" = list(image(canvas)))
 
 	/*
 	var/list/air_alarms = list()
