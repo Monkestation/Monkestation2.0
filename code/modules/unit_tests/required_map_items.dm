@@ -30,7 +30,6 @@
 	expected_types += /obj/structure/cassette_rack/prefilled
 	expected_types += /obj/machinery/cryopod
 	expected_types += /obj/machinery/cassette/mailbox
-	expected_types += /obj/machinery/station_map/engineering
 	ignored_types  += /obj/machinery/cryopod/prison
 	// monkestation end
 
