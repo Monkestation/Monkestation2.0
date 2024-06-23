@@ -606,7 +606,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "BX" = (
 /obj/item/toy/plush/lizard_plushie/green{
-	name = "Hears-Everything"
+	name = "Hears-It-All";
+	desc = "Well, he would if the walls weren't soundproof."
 	},
 /obj/item/radio{
 	pixel_x = -8;
