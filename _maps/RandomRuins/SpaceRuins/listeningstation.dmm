@@ -278,9 +278,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "nB" = (
-/obj/machinery/door/airlock/wood{
-	name = "Outhouse"
+/obj/structure/toilet{
+	pixel_y = 18
 	},
+/obj/structure/mirror/directional/east,
+/obj/item/soap/syndie,
+/obj/structure/sink/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "nG" = (
@@ -460,10 +464,9 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation)
 "yc" = (
-/obj/structure/toilet{
-	pixel_y = 18
-	},
-/obj/structure/mirror/directional/east,
+/obj/machinery/shower/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "ym" = (
@@ -664,8 +667,6 @@
 /area/ruin/space/has_grav/listeningstation)
 "Er" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -796,7 +797,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "Lk" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/light/small/maintenance/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "Lq" = (
@@ -874,6 +876,11 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/item/stack/tile/iron/small,
 /turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
+"Ni" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "NI" = (
 /obj/effect/turf_decal/sand/plating,
@@ -1015,9 +1022,10 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "TK" = (
-/obj/structure/sink/directional/south,
-/obj/item/soap/syndie,
-/obj/machinery/light/small/maintenance/directional/south,
+/obj/machinery/door/airlock/silver{
+	name = "Restroom"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "TO" = (
@@ -1040,6 +1048,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "Va" = (
@@ -1630,9 +1640,9 @@ WW
 JB
 JB
 JB
-JB
-VK
-VK
+rE
+rE
+yc
 JB
 JB
 JB
@@ -1646,8 +1656,8 @@ JB
 JB
 JB
 rE
-cj
-cj
+VK
+VK
 VK
 VK
 AV
@@ -1668,11 +1678,11 @@ VK
 VK
 VK
 VK
-VK
-VK
-VK
-rG
-rG
+rE
+nB
+Lk
+TK
+Ni
 Er
 MS
 It
@@ -1683,9 +1693,9 @@ dg
 rG
 QI
 QI
-nB
-Lk
-cj
+VK
+VK
+VK
 VK
 VK
 AV
@@ -1721,9 +1731,9 @@ TO
 LR
 RK
 FK
-cj
-TK
-cj
+VK
+VK
+VK
 VK
 VK
 AV
@@ -1759,9 +1769,9 @@ dW
 QI
 Sz
 VK
-cj
-yc
-cj
+VK
+VK
+VK
 VK
 VK
 AV
@@ -1797,9 +1807,9 @@ VK
 QI
 ae
 VK
-cj
-cj
-cj
+VK
+VK
+VK
 VK
 VK
 AV
