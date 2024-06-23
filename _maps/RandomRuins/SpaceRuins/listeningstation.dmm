@@ -875,10 +875,6 @@
 /obj/item/stack/tile/iron/small,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
-"Ni" = (
-/obj/machinery/hydroponics/soil,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation)
 "NI" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/binary/valve,
@@ -994,6 +990,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Sz" = (
 /obj/item/reagent_containers/cup/bucket/wooden,
+/obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation)
 "SB" = (
@@ -1797,7 +1794,7 @@ rG
 rG
 VK
 VK
-Ni
+QI
 ae
 VK
 cj
