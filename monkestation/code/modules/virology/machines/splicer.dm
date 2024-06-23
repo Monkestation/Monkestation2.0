@@ -46,7 +46,7 @@
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."), span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
 		flick_overlay("splicer_disk", src)
-		addtimer(CALLBACK(src, PROC_REF(update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 	attack_hand(user)
 
