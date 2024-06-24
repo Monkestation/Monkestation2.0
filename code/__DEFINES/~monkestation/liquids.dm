@@ -1,0 +1,1 @@
+#define COMSIG_LIQUID_GROUP_DESTROYING "comsig_liquid_destroying"

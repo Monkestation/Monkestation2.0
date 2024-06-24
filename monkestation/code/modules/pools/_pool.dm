@@ -5,8 +5,8 @@
 	base_icon_state = "pool_tile"
 	icon_state = "pool_tile"
 	smoothing_flags = NONE
-	liquid_height = -30
-	turf_height = -30
+	liquid_height = -60
+	turf_height = -60
 
 	///the id we use to get the connected blob of connected objects
 	var/merger_id = "pool_floors"

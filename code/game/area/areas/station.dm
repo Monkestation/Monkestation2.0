@@ -1107,6 +1107,14 @@
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/station/security/break_room
+	name = "\improper Security Break Room"
+	icon_state = "security"
+
+/area/station/security/hallway
+	name = "\improper Security Hallway"
+	icon_state = "security"
+
 /area/station/security/office
 	name = "\improper Security Office"
 	icon_state = "security"
@@ -1356,6 +1364,10 @@
 /area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
+
+/area/station/cargo/break_room
+	name = "\improper Cargo Break Room"
+	icon_state = "cargo_bay"
 
 //Science
 

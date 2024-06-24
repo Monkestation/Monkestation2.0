@@ -25,6 +25,33 @@
 
 	///are we turned on right now?
 	var/turned_on = FALSE
+	///this is our mapping var
+	var/pool_dir = NORTH
+
+
+/obj/machinery/pool_pump/station_pool/Initialize(mapload)
+	. = ..()
+	register_context()
+	if(turned_on)
+		START_PROCESSING(SSmachines, src)
+		var/turf/open/source_turf = get_step(src, pool_dir)
+		if(istype(source_turf, /turf/open/floor/lowered/iron/pool))
+			connect(source_turf)
+
+/obj/machinery/pool_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_container)
+		if(is_reagent_container(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Replace Beaker"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Remove Beaker"
+	if(!held_container)
+		if(is_reagent_container(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Add Beaker"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle Pumping"
+	context[SCREENTIP_CONTEXT_RMB] = "Set Desired Depth"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/pool_pump/update_desc(updates)
 	. = ..()
@@ -35,6 +62,7 @@
 			desc_list += "[round(creatable_reagents[listed_reagent])] units of [listed_reagent.name]"
 	desc_list += "The pump is currently [turned_on ? "Turned On" : "Turned Off"]"
 	desc = desc_list.Join("\n")
+
 /obj/machinery/pool_pump/update_icon(updates)
 	. = ..()
 	if(turned_on)
@@ -73,8 +101,6 @@
 	found_pool.cached_group.connected_pump = src
 
 /obj/machinery/pool_pump/process()
-	if(!held_container)
-		return
 	if(!cached_turf)
 		return
 	if(!length(creatable_reagents))
@@ -84,16 +110,14 @@
 		if(!cached_turf.cached_group)
 			cached_turf.start_fill(creatable_reagents, 300)
 		attached_group = cached_turf.cached_group
+		RegisterSignal(attached_group, COMSIG_LIQUID_GROUP_DESTROYING, PROC_REF(clear_group))
 		return
 
 
 	if(attached_group.expected_turf_height >= desired_depth)
 		return
-	var/list/converted_to_type = list()
-	for(var/datum/reagent/listed_reagent in creatable_reagents)
-		converted_to_type[listed_reagent.type] = creatable_reagents[listed_reagent]
 
-	attached_group.add_reagents(cached_turf.liquids, converted_to_type, 300)
+	attached_group.add_reagents(cached_turf.liquids, creatable_reagents, 300)
 
 
 /obj/machinery/pool_pump/attack_hand(mob/living/user, list/modifiers)
@@ -123,7 +147,7 @@
 	var/list/synthable_reagents = list()
 	for(var/datum/reagent/listed_reagent in held_container.reagents.reagent_list)
 		if(listed_reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED)
-			synthable_reagents[listed_reagent] = (listed_reagent.volume * 0.1)
+			synthable_reagents[listed_reagent.type] = (listed_reagent.volume * 0.1)
 
 	return synthable_reagents
 
@@ -145,3 +169,13 @@
 
 #undef MINIMUM_POOL_DEPTH
 #undef MAXIMUM_POOL_DEPTH
+
+/obj/machinery/pool_pump/station_pool
+	creatable_reagents = list(/datum/reagent/water = 25)
+	desired_depth = 28
+	anchored = TRUE
+	turned_on = TRUE
+
+/obj/machinery/pool_pump/proc/clear_group()
+	UnregisterSignal(attached_group, COMSIG_LIQUID_GROUP_DESTROYING)
+	attached_group = null

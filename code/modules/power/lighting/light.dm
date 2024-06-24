@@ -199,7 +199,7 @@
 	update()
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = TRUE)
+/obj/machinery/light/proc/update(trigger = TRUE, flicker = FALSE)
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
@@ -243,7 +243,7 @@
 					l_falloff_curve = FC,
 					l_color = color_set
 					)
-	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
+	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off() && !flicker)
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
 		START_PROCESSING(SSmachines, src)

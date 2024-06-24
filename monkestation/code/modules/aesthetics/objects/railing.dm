@@ -84,9 +84,10 @@
 
 	else if(dir != NORTH)
 		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+		layer = initial(layer) - 1
 	else
 		SET_PLANE(src, GAME_PLANE, turf)
-		layer = initial(layer)
+		layer = initial(layer) - 1
 
 	if(!neighbor_status || !anchored)
 		icon_state = "railing0-[density]"

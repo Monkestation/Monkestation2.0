@@ -81,6 +81,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(removed_reagent))
 
 /datum/liquid_group/Destroy()
+	SEND_SIGNAL(src, COMSIG_LIQUID_GROUP_DESTROYING)
 	UnregisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT)
 	SSliquids.active_groups -= src
 

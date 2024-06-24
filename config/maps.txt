@@ -54,3 +54,6 @@ map boxstation
 	minplayers 25
 	votable
 endmap
+
+map nebulastation
+endmap
