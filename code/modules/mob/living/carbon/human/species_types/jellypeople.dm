@@ -13,7 +13,10 @@
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
+		HAIR // monke edit: allow them to have hair (it's the future, why not)
 	)
+	hair_color = "mutcolor"
+	hair_alpha = 150
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TOXINLOVER,
