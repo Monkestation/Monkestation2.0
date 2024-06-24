@@ -65951,7 +65951,7 @@
 /area/station/science/genetics)
 "rxZ" = (
 /obj/item/storage/toolbox/maint_kit,
-/obj/item/ammo_casing/shotgun/improvised,
+/obj/effect/spawner/random/junk_shell,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port)
 "ryh" = (
