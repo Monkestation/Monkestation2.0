@@ -1641,6 +1641,10 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/checkpoint/science/research)
+"axc" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/glass/plasma,
+/area/station/security/bitden)
 "axd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
@@ -2876,6 +2880,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "aVx" = (
@@ -3417,7 +3422,8 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/kirbyplants/random,
+/obj/machinery/vending/modularpc,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "bhk" = (
@@ -11766,6 +11772,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"dNR" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/white,
+/area/station/security/prison/mess)
 "dOg" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -14108,6 +14120,11 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"eEF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/white,
+/area/station/security/prison/mess)
 "eEJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -34594,6 +34611,7 @@
 	pixel_x = 14;
 	pixel_y = 13
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/rust,
 /area/station/security/prison/shower)
 "kYU" = (
@@ -45993,8 +46011,16 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "oSG" = (
+/obj/structure/closet/crate,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/onion,
+/obj/item/food/grown/onion,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
@@ -54285,11 +54311,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -4
 	},
@@ -54305,6 +54326,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/diseasesplicer,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pathology)
 "ruz" = (
@@ -55473,6 +55496,8 @@
 	dir = 6
 	},
 /obj/structure/sign/departments/medbay/alt/directional/west,
+/obj/machinery/lapvend,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "rNg" = (
@@ -55904,6 +55929,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/engine,
 /area/station/security/bitden)
 "rTI" = (
@@ -56922,9 +56948,6 @@
 "skJ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Artifact Science Lab"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59948,6 +59971,22 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -8
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "tgo" = (
@@ -61426,6 +61465,10 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/noticeboard/directional/south,
 /obj/machinery/light/directional/east,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "tDW" = (
@@ -72024,6 +72067,11 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"wTa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "wTe" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/camera/directional/north{
@@ -81618,7 +81666,7 @@ gwj
 lrh
 miD
 sOr
-nEP
+axc
 bDy
 dcn
 hdD
@@ -83412,7 +83460,7 @@ aaa
 mWy
 hhi
 xlA
-xlA
+wTa
 aDD
 jYo
 qrF
@@ -86757,7 +86805,7 @@ oUS
 eJN
 bbZ
 phD
-bbZ
+eEF
 kfg
 gdH
 vyQ
@@ -88300,7 +88348,7 @@ jsV
 ybG
 cKA
 ocJ
-wiN
+dNR
 dFN
 fbd
 gSF
