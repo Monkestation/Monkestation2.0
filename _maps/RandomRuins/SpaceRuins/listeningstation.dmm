@@ -1057,10 +1057,10 @@
 "Va" = (
 /obj/docking_port/stationary{
 	dwidth = 4;
-	height = 5;
-	shuttle_id = "caravansyndicate1_listeningpost";
+	height = 7;
+	shuttle_id = "syndicate_listening_post";
 	name = "Syndicate Listening Post";
-	width = 9
+	width = 15
 	},
 /turf/template_noop,
 /area/template_noop)
