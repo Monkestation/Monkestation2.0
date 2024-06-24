@@ -463,6 +463,7 @@
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/suit/chaplainsuit/technotao = 1,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
