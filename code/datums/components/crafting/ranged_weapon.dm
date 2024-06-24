@@ -34,7 +34,7 @@
 
 /datum/crafting_recipe/riflestock
 	name = "Wooden Rifle Stock"
-	tool_paths = list(/obj/item/hatchet)
+	//tool_paths = list(/obj/item/hatchet) //Monkestation
 	result = /obj/item/weaponcrafting/stock
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 8,

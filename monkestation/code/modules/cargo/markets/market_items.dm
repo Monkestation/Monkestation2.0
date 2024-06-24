@@ -15,8 +15,8 @@
 
 	price_min = CARGO_CRATE_VALUE * 4
 	price_max = CARGO_CRATE_VALUE * 5
-	stock_max = 1
-	availability_prob = 40
+	stock_max = 3
+	availability_prob = 45
 
 /datum/market_item/weapon/musket_recipe
 	name = "Journal of a Space Ranger"
@@ -25,15 +25,15 @@
 
 	price_min = CARGO_CRATE_VALUE * 4
 	price_max = CARGO_CRATE_VALUE * 5
-	stock_max = 2
-	availability_prob = 40
+	stock_max = 3
+	availability_prob = 45
 
 /datum/market_item/weapon/smoothbore_recipe
 	name = "Old Tome"
 	desc = "Ahoy Maties, I, Captain Whitebeard, have plundered the ol' Nanotrasen station, among the booty retreived was this here tome about smoothbores. Alas, I have no use for its knowlege, so I am droppin it off here."
 	item = /obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime
 
-	price_min = CARGO_CRATE_VALUE * 6
-	price_max = CARGO_CRATE_VALUE * 8
-	stock_max = 1
-	availability_prob = 20
+	price_min = CARGO_CRATE_VALUE * 4
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 3
+	availability_prob = 45

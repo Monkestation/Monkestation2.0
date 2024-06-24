@@ -15,3 +15,8 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/garnish/ash(location)
+
+/datum/chemical_reaction/greybull
+	results = list(/datum/reagent/consumable/grey_bull = 2)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 2, /datum/reagent/copper = 1, /datum/reagent/consumable/sugar = 1)
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY

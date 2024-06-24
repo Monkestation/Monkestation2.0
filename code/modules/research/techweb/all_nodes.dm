@@ -292,6 +292,7 @@
 		"retractor",
 		"scalpel",
 		"stethoscope",
+		"glasses", //Monke
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",

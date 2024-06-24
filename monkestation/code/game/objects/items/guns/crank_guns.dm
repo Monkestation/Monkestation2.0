@@ -24,10 +24,12 @@
 /obj/projectile/beam/laser/musket
 	damage = 30
 	stamina = 45
+	wound_bonus = -10 //You don't fire fast but your shots are nasty.
 
 /obj/projectile/beam/laser/musket/prime
 	damage = 35
 	stamina = 60
+	wound_bonus = 0
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	stamina = 65

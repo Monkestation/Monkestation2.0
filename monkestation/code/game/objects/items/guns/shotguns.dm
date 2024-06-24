@@ -44,6 +44,9 @@
 	knockback_distance = 100
 	death = 100
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/hundred
+	
+/obj/item/gun/ballistic/rifle/boltaction/pipegun
+	projectile_damage_multiplier = 1
 
 
 /obj/item/ammo_box/magazine/internal/shot/six

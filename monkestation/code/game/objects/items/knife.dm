@@ -10,6 +10,7 @@
 	throw_speed = 5
 	throw_range = 7
 	custom_materials = null
+	bayonet = TRUE
 	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
 	var/amount_per_transfer_from_this = 10
 	/// The different possible amounts of reagent to transfer out of the container
@@ -51,3 +52,12 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 
 #undef VENOM_KNIFE_VOLUME
+
+/obj/item/knife/kitchen
+	bayonet = TRUE
+
+/obj/item/knife/hunting
+	bayonet = TRUE
+
+/obj/item/knife/shiv
+	bayonet = TRUE

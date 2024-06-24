@@ -34,3 +34,16 @@
 	name = "Filter Blood Upgrade"
 	surgery = /datum/surgery/blood_filter/femto
 	id = "surgery_filter_upgrade_femto"
+	
+/datum/design/glasses
+	name = "Prescription Glasses"
+	id = "glasses"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/clothing/glasses/regular
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
