@@ -311,11 +311,6 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/carpet/blue,
 /area/station/command/meeting_room)
-"adj" = (
-/obj/item/kirbyplants/dead,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
-/area/station/command/heads_quarters/rd)
 "adk" = (
 /obj/structure/grille,
 /obj/structure/sign/directions/medical/directional/north,
@@ -47662,6 +47657,11 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"mId" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
 "mIh" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot,
@@ -51089,13 +51089,6 @@
 	dir = 5
 	},
 /area/station/security/brig)
-"nxV" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 1
-	},
-/obj/item/kirbyplants/fullysynthetic,
-/turf/open/floor/mineral/silver,
-/area/station/service/chapel/funeral)
 "nya" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -55807,6 +55800,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
+"oJZ" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/mineral/silver,
+/area/station/service/chapel/funeral)
 "oKc" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
@@ -55916,6 +55916,11 @@
 /obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"oMk" = (
+/obj/effect/turf_decal/siding/white,
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/mineral/silver,
+/area/station/service/chapel/funeral)
 "oMn" = (
 /obj/item/grenade/barrier{
 	pixel_x = -3;
@@ -57861,11 +57866,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/floor3/port)
-"pqe" = (
-/obj/effect/turf_decal/siding/white,
-/obj/item/kirbyplants/fullysynthetic,
-/turf/open/floor/mineral/silver,
-/area/station/service/chapel/funeral)
 "pqg" = (
 /obj/machinery/button/door/directional/east{
 	id = "mechbay";
@@ -65765,11 +65765,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/starboard/aft)
-"rvE" = (
-/obj/machinery/telecomms/relay/preset/station,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/circuit/telecomms,
-/area/station/tcommsat/server/upper)
 "rvZ" = (
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
@@ -184119,7 +184114,7 @@ hge
 dPi
 hge
 oiO
-adj
+mId
 aeI
 aiN
 amR
@@ -207781,7 +207776,7 @@ oyh
 oyh
 tUT
 rlN
-rvE
+qRS
 dfd
 inK
 oOr
@@ -273317,7 +273312,7 @@ ucA
 ucA
 tUT
 rlN
-rvE
+qRS
 kGy
 inK
 oOr
@@ -328809,9 +328804,9 @@ fVV
 fVV
 fVV
 ulj
-nxV
+oJZ
 gbZ
-pqe
+oMk
 iWQ
 xeQ
 fVV
@@ -338853,7 +338848,7 @@ ucA
 ucA
 tUT
 rlN
-rvE
+qRS
 vKH
 inK
 gMd
