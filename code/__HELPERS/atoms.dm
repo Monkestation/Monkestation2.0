@@ -248,7 +248,7 @@ rough example of the "cone" made by the 3 dirs checked
 	var/closest_atom
 	var/closest_distance
 	for(var/atom in atom_list)
-		if(!type || !istype(atom, type)) // monkestation edit: allow null type, for pre-filtered lists
+		if(!istype(atom, type))
 			continue
 		var/distance = get_dist(source, atom)
 		if(!closest_atom)

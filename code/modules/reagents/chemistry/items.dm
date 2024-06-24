@@ -152,7 +152,7 @@
 	var/lit = FALSE
 	///total reagent volume
 	var/max_volume = 50
-	///What the creation reagent is	
+	///What the creation reagent is
 	var/reagent_type = /datum/reagent/consumable/ethanol
 
 /obj/item/burner/Initialize(mapload)
