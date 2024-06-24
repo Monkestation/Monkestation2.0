@@ -10,7 +10,8 @@
 	animal.mind_initialize()
 	var/datum/mind/granters_mind = granter.mind
 	granters_mind.transfer_to(animal)
-	animal.AddComponent()
+	animal.AddElement(/datum/element/dextrous)
+	animal.AddComponent(/datum/component/basic_inhands, y_offset = -6)
 	qdel(granter)
 	. = ..()
 
@@ -83,3 +84,10 @@
 	name = "gumball goblin transformation"
 	icon_state = "gumball_goblin"
 	animal_transformation = /mob/living/basic/pet/gumball_goblin
+
+
+//Raziaar
+/obj/item/effect_granter/donator/orangutan
+	name = "orangutan transformation"
+	icon_state = "orangutan"
+	animal_transformation = /mob/living/basic/pet/orangutan

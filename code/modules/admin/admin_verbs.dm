@@ -98,6 +98,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
+	/client/proc/request_more_opfor,
+	/client/proc/view_opfors,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -253,6 +255,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
+	// monkestation verbs: debugger tools
+	/client/proc/log_viewer_new,
+	/client/proc/getserverlogs_debug,
+	/client/proc/getcurrentlogs_debug,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
