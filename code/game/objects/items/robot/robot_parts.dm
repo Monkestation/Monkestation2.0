@@ -388,7 +388,7 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(istype(attacking_item, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(W))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 //monkestation edit start
 	else if(istype(attacking_item, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))

@@ -130,8 +130,13 @@
 						atom_storage.attempt_remove(T, src)
 				to_chat(user, span_notice("You empty \the [attacking_item] into \the [src]."))
 				update_appearance()
+<<<<<<< HEAD
 			else if(istype(attacking_item, /obj/item/pen))
 				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
+=======
+			else if(IS_WRITING_UTENSIL(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
+>>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
 				if(!user.can_perform_action(src) || !user.can_write(attacking_item))

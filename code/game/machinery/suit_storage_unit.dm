@@ -520,7 +520,118 @@
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
+	if(!card_reader_installed || state_open)
+		return
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return
+
+	access_locked = !access_locked
+	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
+	return TRUE
+
+/obj/machinery/suit_storage_unit/proc/can_install_card_reader(mob/user)
+	if(card_reader_installed || !panel_open || state_open || !is_operational)
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
+/obj/machinery/suit_storage_unit/attackby(obj/item/weapon, mob/user, params)
+	. = TRUE
+	var/obj/item/card/id/id = null
+	if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+		user.visible_message(span_notice("[user] is installing a card reader."),
+					span_notice("You begin installing the card reader."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
+			return
+
+		qdel(weapon)
+		card_reader_installed = TRUE
+
+		balloon_alert(user, "card reader installed")
+
+	else if(!state_open && is_operational && card_reader_installed && !isnull((id = weapon.GetID())))
+		if(panel_open)
+			balloon_alert(user, "close panel!")
+			return
+
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(access_locked)
+			balloon_alert(user, "access panel locked!")
+			return
+
+		//change the access type
+		var/static/list/choices = list(
+			"Personal",
+			"Departmental",
+			"None"
+		)
+		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
+		if(isnull(choice))
+			return
+
+		id_card = null
+		switch(choice)
+			if("Personal") //only the player who swiped their id has access.
+				id_card = WEAKREF(id)
+				name = "[id.registered_name] Suit Storage Unit"
+				desc = "Owned by [id.registered_name]. [initial(desc)]"
+			if("Departmental") //anyone who has the same access permissions as this id has access
+				name = "[id.assignment] Suit Storage Unit"
+				desc = "Its a [id.assignment] Suit Storage Unit. [initial(desc)]"
+				set_access(id.GetAccess())
+			if("None") //free for all
+				name = initial(name)
+				desc = initial(desc)
+				req_access = list()
+				req_one_access = null
+				set_access(list())
+
+		if(!isnull(id_card))
+			balloon_alert(user, "now owned by [id.registered_name]")
+		else
+			balloon_alert(user, "set to [choice]")
+
+	else if(!state_open && IS_WRITING_UTENSIL(weapon))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(isnull(id_card))
+			balloon_alert(user, "not yours to rename!")
+			return
+
+		var/name_set = FALSE
+		var/desc_set = FALSE
+
+		var/str = tgui_input_text(user, "Personal Unit Name", "Unit Name")
+		if(!isnull(str))
+			name = str
+			name_set = TRUE
+
+		str = tgui_input_text(user, "Personal Unit Description", "Unit Description")
+		if(!isnull(str))
+			desc = str
+			desc_set = TRUE
+
+		var/bit_flag = NONE
+		if(name_set)
+			bit_flag |= UPDATE_NAME
+		if(desc_set)
+			bit_flag |= UPDATE_DESC
+		if(bit_flag)
+			update_appearance(bit_flag)
+
 	if(state_open && is_operational)
 		if(istype(attacking_item, /obj/item/clothing/suit))
 			if(suit)

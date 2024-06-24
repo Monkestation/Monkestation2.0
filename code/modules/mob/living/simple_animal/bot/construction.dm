@@ -12,7 +12,11 @@
 
 /obj/item/bot_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
+<<<<<<< HEAD
 	if(istype(attacking_item, /obj/item/pen))
+=======
+	if(IS_WRITING_UTENSIL(I))
+>>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 		rename_bot()
 		return
 

@@ -265,9 +265,39 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
 		screentip_change = TRUE
 
+<<<<<<< HEAD
 	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
+=======
+	if(!locked && !opened && (welded || !can_weld_shut))
+		if(!secure)
+			if(!broken && can_install_electronics && istype(held_item, /obj/item/electronics/airlock))
+				context[SCREENTIP_CONTEXT_LMB] = "Install Electronics"
+				screentip_change = TRUE
+		else
+			if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Electronics"
+				screentip_change = TRUE
+			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics && istype(held_item, /obj/item/stock_parts/card_reader))
+				context[SCREENTIP_CONTEXT_LMB] = "Install Reader"
+				screentip_change = TRUE
+		if(card_reader_installed && istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove Reader"
+			screentip_change = TRUE
+
+	if(!locked && !opened)
+		if(id_card && IS_WRITING_UTENSIL(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Rename"
+			screentip_change = TRUE
+		if(secure && card_reader_installed && !broken)
+			if(!access_locked && istype(held_item) && !isnull(held_item.GetID()))
+				context[SCREENTIP_CONTEXT_LMB] = "Change Access"
+				screentip_change = TRUE
+			if(istype(held_item) && istype(held_item) && held_item.tool_behaviour == TOOL_MULTITOOL)
+				context[SCREENTIP_CONTEXT_LMB] = "[access_locked ? "Unlock" : "Lock"] Access Panel"
+				screentip_change = TRUE
+>>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
@@ -460,10 +490,161 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
+<<<<<<< HEAD
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
+=======
+	var/obj/item/card/id/id = null
+	if(!opened && istype(weapon, /obj/item/airlock_painter))
+		if(!length(paint_jobs))
+			return
+		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
+		if(isnull(choice))
+			return
+
+		var/obj/item/airlock_painter/painter = weapon
+		if(!painter.use_paint(user))
+			return
+		var/list/paint_job = paint_jobs[choice]
+		icon_state = paint_job["icon_state"]
+		base_icon_state = icon_state
+		icon_door = paint_job["icon_door"]
+
+		update_appearance()
+
+	else if(istype(weapon, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
+		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
+			span_notice("You start to install electronics into the [src]..."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
+			return
+		if(!user.transferItemToLoc(weapon, src))
+			return
+
+		CheckParts(list(weapon))
+		secure = TRUE
+		balloon_alert(user, "electronics installed")
+
+		update_appearance()
+
+	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
+		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
+			span_notice("You begin to remove the electronics from the [src]..."))
+
+		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
+			return
+
+		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
+		if(length(req_one_access))
+			airlock_electronics.one_access = TRUE
+			airlock_electronics.accesses = req_one_access
+		else
+			airlock_electronics.accesses = req_access
+
+		req_access = list()
+		req_one_access = null
+		id_card = null
+		secure = FALSE
+		balloon_alert(user, "electronics removed")
+
+		update_appearance()
+
+	else if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+		user.visible_message(span_notice("[user] is installing a card reader."),
+					span_notice("You begin installing the card reader."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
+			return
+
+		qdel(weapon)
+		card_reader_installed = TRUE
+
+		balloon_alert(user, "card reader installed")
+
+	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
+		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
+			span_notice("You begin to pry the card reader out from [src]..."))
+
+		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
+			return
+
+		new /obj/item/stock_parts/card_reader(drop_location())
+		card_reader_installed = FALSE
+
+		balloon_alert(user, "card reader removed")
+
+	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = weapon.GetID())))
+		var/num_choices = length(access_choices)
+		if(!num_choices)
+			return
+
+		var/choice
+		if(num_choices == 1)
+			choice = access_choices[1]
+		else
+			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
+		if(isnull(choice))
+			return
+
+		id_card = null
+		switch(choice)
+			if("Personal") //only the player who swiped their id has access.
+				id_card = WEAKREF(id)
+				name = "[id.registered_name] locker"
+				desc = "now owned by [id.registered_name]. [initial(desc)]"
+			if("Departmental") //anyone who has the same access permissions as this id has access
+				name = "[id.assignment] closet"
+				desc = "Its a [id.assignment] closet. [initial(desc)]"
+				set_access(id.GetAccess())
+			if("None") //free for all
+				name = initial(name)
+				desc = initial(desc)
+				req_access = list()
+				req_one_access = null
+				set_access(list())
+
+		if(!isnull(id_card))
+			balloon_alert(user, "now owned by [id.registered_name]")
+		else
+			balloon_alert(user, "set to [choice]")
+
+	else if(!opened && IS_WRITING_UTENSIL(weapon))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(isnull(id_card))
+			balloon_alert(user, "not yours to rename!")
+			return
+
+		var/name_set = FALSE
+		var/desc_set = FALSE
+
+		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		if(!isnull(str))
+			name = str
+			name_set = TRUE
+
+		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		if(!isnull(str))
+			desc = str
+			desc_set = TRUE
+
+		var/bit_flag = NONE
+		if(name_set)
+			bit_flag |= UPDATE_NAME
+		if(desc_set)
+			bit_flag |= UPDATE_DESC
+		if(bit_flag)
+			update_appearance(bit_flag)
+
+	else if(opened)
+		if(istype(weapon, cutting_tool))
+			if(weapon.tool_behaviour == TOOL_WELDER)
+				if(!weapon.tool_start_check(user, amount=1))
+>>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 					return
 
 				to_chat(user, span_notice("You begin cutting \the [src] apart..."))
