@@ -298,7 +298,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
-		"vial",
+		"tube",
 		"synth_eyes",
 		"synth_tongue",
 		"synth_liver",
@@ -1171,8 +1171,10 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
+		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1755,6 +1757,7 @@
 		"mod_defib",
 		"mod_threadripper",
 		"mod_surgicalprocessor",
+		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
