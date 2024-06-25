@@ -4,10 +4,17 @@
 	duration = 15 SECONDS
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/regen_extract
+	/// The damage healed (for each type) per tick.
+	/// This is multipled against the multiplier derived from cooldowns.
 	var/base_healing_amt = 5
+	/// The number multiplied against the base healing amount,
+	/// used for the "diminishing returns" cooldown effect.
 	var/multiplier = 1
+	/// The multiplier that the cooldown applied after the effect ends will use.
 	var/diminishing_multiplier = 0.75
+	/// How long the subsequent cooldown effect will last.
 	var/diminish_time = 45 SECONDS
+	/// The maximum nutrition level this regenerative extract can heal up to.
 	var/nutrition_heal_cap = NUTRITION_LEVEL_FED - 50
 	/// Base traits given to the owner.
 	var/list/given_traits = list(TRAIT_ANALGESIA, TRAIT_NOCRITDAMAGE)
@@ -15,6 +22,9 @@
 	var/list/extra_traits = list()
 
 /datum/status_effect/regenerative_extract/on_apply()
+	// So this seems weird, but this allows us to have multiple things affect the regen multiplier,
+	// without doing something like hardcoding a `for(var/datum/status_effect/slime_regen_cooldown/cooldown in owner.status_effects)`
+	// Instead, cooldown effects register the [COMSIG_SLIME_REGEN_CALC] signal, and can affect our multiplier via the pointer we pass.
 	SEND_SIGNAL(owner, COMSIG_SLIME_REGEN_CALC, &multiplier)
 	if(multiplier < 1)
 		to_chat(owner, span_warning("The previous regenerative goo hasn't fully evaporated yet, weakening the new regenerative effect!"))
