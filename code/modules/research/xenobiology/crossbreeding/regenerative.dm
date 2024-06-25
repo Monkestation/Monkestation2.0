@@ -53,7 +53,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
-	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
 
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
 	target.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
@@ -81,7 +81,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow
 	colour = "yellow"
-	effect_desc = "Rapidly heals the target and fully recharges a single item on the target." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target and fully recharges a single item on the target. Provides shock immunity while active." // monkestation edit: updates effect_desc to reflect the rework
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
@@ -281,7 +281,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/rainbow
 	colour = "rainbow"
-	effect_desc = "Fully heals the target and temporarily makes them immortal, but pacifistic."
+	effect_desc = "Fully heals the target, including all forms of damage, wounds, brain traumas, sickness, blood loss, and unsafe body temperature. Does not regrow limbs (except for oozelings) or refresh organs. Temporarily makes them immortal, but pacifistic." // monkestation edit: updates effect_desc to reflect the rework, also a typo fix
 
 /obj/item/slimecross/regenerative/rainbow/core_effect(mob/living/target, mob/user)
 	target.apply_status_effect(/datum/status_effect/rainbow_protection)
