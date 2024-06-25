@@ -14939,6 +14939,10 @@
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
+"dIU" = (
+/obj/structure/liquid_barrier,
+/turf/open/space/basic,
+/area/space)
 "dIY" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -20988,6 +20992,7 @@
 	id = "containdeez2";
 	name = "Xenobiology Containment Blast Door"
 	},
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "fFx" = (
@@ -31656,6 +31661,7 @@
 	name = "Secure Pen"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "jge" = (
@@ -45571,6 +45577,7 @@
 	req_access = list("xenobiology")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nzh" = (
@@ -65863,6 +65870,7 @@
 	id = "containdeez6";
 	name = "Xenobiology Containment Blast Door"
 	},
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "tXY" = (
@@ -66414,6 +66422,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/structure/disposalpipe/segment,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "uiI" = (
@@ -70370,6 +70379,7 @@
 	name = "Cytology Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/catwalk_floor,
 /area/station/science/xenobiology)
 "vqn" = (
@@ -88201,7 +88211,7 @@ vXM
 vXM
 vXM
 vXM
-vXM
+dIU
 vXM
 vXM
 vXM
