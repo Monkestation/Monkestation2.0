@@ -604,21 +604,6 @@
 /area/station/service/kitchen/diner
 	name = "\improper Diner"
 	icon_state = "diner"
-@@ -834,6 +840,14 @@
-	icon_state = "engine_sm_room"
-	sound_environment = SOUND_AREA_LARGE_ENCLOSED
-
-//Steelstation Second Sm
-//Monkestation edit for duplicate departments
-/area/station/engineering/supermatter/aux_sm
-	name = "Auxiliary Supermatter"
-
-/area/station/engineering/supermatter/room/aux_sm
-	name = "Auxiliary Supermatter Engine"
-
-/area/station/service/kitchen/diner
-	name = "\improper Diner"
-	icon_state = "diner"
 
 /area/station/service/kitchen/kitchen_backroom
 	name = "\improper Kitchen Backroom"
@@ -855,6 +840,13 @@
 	icon_state = "engine_sm_room"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+//Steelstation Second Sm
+//Monkestation edit for duplicate departments
+/area/station/engineering/supermatter/aux_sm
+	name = "Auxiliary Supermatter"
+
+/area/station/engineering/supermatter/room/aux_sm
+	name = "Auxiliary Supermatter Engine"
 /area/station/engineering/break_room
 	name = "\improper Engineering Foyer"
 	icon_state = "engine_break"
