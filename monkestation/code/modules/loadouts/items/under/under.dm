@@ -566,3 +566,25 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/casual
 	restricted_roles = list(JOB_QUARTERMASTER)
 	requires_purchase = FALSE
+
+	//SCIENCE
+
+/datum/loadout_item/under/formal/nova/rnd/scientist/utility
+	name = "science utility uniform"
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/utility
+	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/formal/nova/rnd/scientist/hluniform
+	name = "science team uniform"
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/hlscience
+	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
+
+		//RESEARCH DIRECTOR
+
+/datum/loadout_item/under/formal/nova/rnd/scientist/hluniform
+	name = "research director's naval jumpsuit"
+	item_path = /obj/item/clothing/under/rank/rnd/research_director/nova/imperial
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
