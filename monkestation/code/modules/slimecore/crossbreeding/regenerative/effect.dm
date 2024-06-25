@@ -17,9 +17,9 @@
 	/// The maximum nutrition level this regenerative extract can heal up to.
 	var/nutrition_heal_cap = NUTRITION_LEVEL_FED - 50
 	/// Base traits given to the owner.
-	var/list/given_traits = list(TRAIT_ANALGESIA, TRAIT_NOCRITDAMAGE)
+	var/static/list/given_traits = list(TRAIT_ANALGESIA, TRAIT_NOCRITDAMAGE)
 	/// Extra traits given to the owner, added to the base traits.
-	var/list/extra_traits = list()
+	var/list/extra_traits
 
 /datum/status_effect/regenerative_extract/on_apply()
 	// So this seems weird, but this allows us to have multiple things affect the regen multiplier,
@@ -28,11 +28,11 @@
 	SEND_SIGNAL(owner, COMSIG_SLIME_REGEN_CALC, &multiplier)
 	if(multiplier < 1)
 		to_chat(owner, span_warning("The previous regenerative goo hasn't fully evaporated yet, weakening the new regenerative effect!"))
-	owner.add_traits(given_traits + extra_traits, id)
+	owner.add_traits(islist(extra_traits) ? given_traits + extra_traits : given_traits, id)
 	return TRUE
 
 /datum/status_effect/regenerative_extract/on_remove()
-	owner.remove_traits(given_traits + extra_traits, id)
+	owner.remove_traits(islist(extra_traits) ? given_traits + extra_traits : given_traits, id)
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
 
 /datum/status_effect/regenerative_extract/tick(seconds_per_tick, times_fired)

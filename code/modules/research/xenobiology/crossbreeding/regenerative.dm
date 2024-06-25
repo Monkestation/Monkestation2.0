@@ -32,6 +32,7 @@ Regenerative extracts:
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
+	H.revive(HEAL_ALL)
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
@@ -273,7 +274,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/adamantine
 	colour = "adamantine"
-	effect_desc = "Rapidly heals the target, while boosts their armor and general resilience." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target, while boosting their armor and general resilience." // monkestation edit: updates effect_desc to reflect the rework, also a typo fix
 
 /obj/item/slimecross/regenerative/adamantine/core_effect(mob/living/target, mob/user) //WIP - Find out why this doesn't work.
 	target.apply_status_effect(/datum/status_effect/slimeskin)
