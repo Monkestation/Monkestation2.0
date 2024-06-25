@@ -62,3 +62,4 @@
 	var/obj/machinery/clonepod/experimental/pod = target
 	pod.custom_objective = objective
 	pod.RefreshParts()
+	pod.locked = TRUE // The pod shouldn't be eligible for cloner event.
