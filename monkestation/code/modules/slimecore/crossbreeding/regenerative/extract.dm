@@ -46,3 +46,9 @@
 		to_chat(user, span_notice("Some of the milky goo sprays onto you, as well!"))
 	else
 		to_chat(user, span_warning("Some of the milky goo sprays onto you, but slides off due to the regenerative effect..."))
+
+/obj/item/slimecross/regenerative/rainbow/can_use(mob/living/target, mob/living/user)
+	if(target.has_status_effect(/datum/status_effect/slime_regen_cooldown))
+		to_chat(user, span_warning("[target == user ? "You are" : "[target] is"] still recovering from the last regenerative extract!"))
+		return FALSE
+	return ..()
