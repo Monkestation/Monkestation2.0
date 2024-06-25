@@ -5536,7 +5536,7 @@
 	pixel_x = -3;
 	pixel_y = 9
 	},
-/obj/item/stamp/hop{
+/obj/item/stamp/head/hop{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -6832,7 +6832,7 @@
 	},
 /obj/item/folder/yellow,
 /obj/item/lighter,
-/obj/item/stamp/ce,
+/obj/item/stamp/head/ce,
 /obj/effect/turf_decal/tile/yellow/full,
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/ce)
@@ -17535,7 +17535,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/item/stamp/hos,
+/obj/item/stamp/head/hos,
 /obj/machinery/keycard_auth{
 	pixel_x = 15
 	},
@@ -87392,7 +87392,7 @@
 "qZR" = (
 /obj/structure/table/glass,
 /obj/item/folder/white,
-/obj/item/stamp/rd,
+/obj/item/stamp/head/rd,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
 "rah" = (
@@ -96039,7 +96039,7 @@
 	dir = 4
 	},
 /obj/item/folder/yellow,
-/obj/item/stamp/qm,
+/obj/item/stamp/head/qm,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 16
@@ -99388,7 +99388,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp/captain{
+/obj/item/stamp/head/captain{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -105921,7 +105921,7 @@
 	pixel_y = 6
 	},
 /obj/item/folder/white,
-/obj/item/stamp/cmo{
+/obj/item/stamp/head/cmo{
 	pixel_y = 5
 	},
 /turf/open/floor/carpet/blue,

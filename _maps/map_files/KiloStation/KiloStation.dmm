@@ -23167,6 +23167,7 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
 "htn" = (
@@ -67781,35 +67782,9 @@
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/blank,
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/random{
-	pixel_y = 8
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = 2;
-	pixel_x = 9
-	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/cassette_rack/prefilled,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "vFH" = (
@@ -73142,6 +73117,7 @@
 	pixel_x = -29
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/radio/radio_mic,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "xle" = (
