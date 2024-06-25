@@ -485,3 +485,79 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/shrine
 	name = "Shrine Priestess Kimono"
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
+
+/// EVERYTHING NOVA RELATED
+
+	//CARGO
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/utility
+	name = "supply utility uniform"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/long
+	name = "cargo technician's long jumpsuit"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/long
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/gorka
+	name = "supply gorka"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/turtleneck
+	name = "supply turtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/turtleneck/skirt
+	name = "supply skirtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck/skirt
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/tech/casualman
+	name = "cargo technician casualwear"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/casualman
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/gorka
+	name = "quartermaster's gorka"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/gorka
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/turtleneck
+	name = "quartermaster's turtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/turtleneck/skirt
+	name = "quartermaster's skirtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck/skirt
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/formal
+	name = "quartermaster's formal jumpsuit"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/formal
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/formal/skirt
+	name = "quartermaster's formal jumpskirt"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/nova/cargo/qm/casual
+	name = "quartermaster's casualwear"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/casual
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE

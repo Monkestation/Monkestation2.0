@@ -464,3 +464,10 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Shrine Priestess Kimono"
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
 	item_cost = 5000
+
+/// EVERYTHING NOVA RELATED
+
+/*/datum/store_item/under/jumpsuit/nova/cargo/tech/utility
+	name = "supply utility uniform"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
+*/
