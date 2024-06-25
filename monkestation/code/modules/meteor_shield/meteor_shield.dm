@@ -15,6 +15,8 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/repackable, /obj/item/flatpacked_machine/generic, 5 SECONDS, TRUE, TRUE)
+
 	GLOB.meteor_shield_sats += src
 	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move)) // so these fuckers don't drift off into space when you're trying to position them
 	setup_proximity()
@@ -51,8 +53,6 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_LMB] = active ? "Deactivate" : "Activate"
-	if(!active)
-		context[SCREENTIP_CONTEXT_RMB] = "Pick up"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/satellite/meteor_shield/toggle(mob/user)
@@ -111,19 +111,3 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	for(var/datum/round_event_control/event as anything in all_events)
 		if(is_type_in_typecache(event, meteor_event_typecache))
 			event.weight *= mod
-
-/obj/machinery/satellite/meteor_shield/attack_hand_secondary(mob/living/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
-		return
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(active)
-		balloon_alert(user, "can't pick up while active!")
-		return
-	balloon_alert(user, "picking up satellite...")
-	if(do_after(user, 5 SECONDS, src))
-		user.log_message("picked up [src] at [AREACOORD(src)]", LOG_GAME)
-		var/obj/item/meteor_shield_capsule/capsule = new(drop_location())
-		user.put_in_hands(capsule)
-		qdel(src)
-
