@@ -4,6 +4,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 /obj/machinery/satellite/meteor_shield
 	name = "meteor defense satellite"
 	mode = "HK-MPS"
+	kill_range = 16
 	/// Whether the meteor sat checks for line of sight to determine if it can intercept a meteor.
 	var/check_sight = TRUE
 	/// The proximity monitor used to detect meteors entering the shield's range.
