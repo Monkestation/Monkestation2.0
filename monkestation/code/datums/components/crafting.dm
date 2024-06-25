@@ -22,7 +22,8 @@
 		/obj/item/stock_parts/cell = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/pen = 1
+		/obj/item/pen = 1,
+		/obj/item/stack/sheet/iron = 2
 	)
 	time = 4 SECONDS
 	category = CAT_CHEMISTRY
