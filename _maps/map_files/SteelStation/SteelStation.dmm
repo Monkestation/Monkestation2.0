@@ -5267,9 +5267,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "cal" = (
-/obj/item/gun/ballistic/rifle{
+/obj/item/gun/ballistic/rifle/boltaction{
+	desc = "Standard-issue Warden rifle. This bolt-action firearm is as robust as they come and has seen over a century of use on the battlefield";
 	name = "No.2 Loughcaster";
-	desc = "Standard-issue Warden rifle. This bolt-action firearm is as robust as they come and has seen over a century of use on the battlefield"
+	sawn_desc = "A sawn-off Loughcaster. Commonly known as the No.2B Hawthorne."
 	},
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -39028,16 +39029,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = 10
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "osV" = (
@@ -53713,16 +53704,6 @@
 /area/station/maintenance/port)
 "tLN" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/cup/beaker/vial{
-	pixel_x = 10
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -58684,13 +58665,6 @@
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/iron,
 /area/station/service/janitor)
-"vxE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sign/delamination_counter/directional/north,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "vxI" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -107934,7 +107908,7 @@ mnT
 gvB
 gvB
 xbK
-vxE
+ach
 afv
 sXo
 afv
