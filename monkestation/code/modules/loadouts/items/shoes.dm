@@ -156,6 +156,8 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	item_path = /obj/item/clothing/shoes/sneakers/rainbow
 
 /// EVERYTHING NOVA RELATED
+//NOTES
+//Glass will fuck you up if you're wearing wraps
 
 //Not adding everything as we already got simillar stuff - Knight
 

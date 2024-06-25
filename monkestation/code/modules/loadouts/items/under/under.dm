@@ -487,10 +487,13 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
 
 /// EVERYTHING NOVA RELATED
+//NOTES
+//Jumpskirt prefs overrides jumpsuits (ex.qm's formal jumpsuit becomes a skirt)
 
 	//CARGO
+		//CARGO TECH
 
-/datum/loadout_item/under/jumpsuit/nova/cargo/tech/utility
+/datum/loadout_item/under/formal/nova/cargo/tech/utility
 	name = "supply utility uniform"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
@@ -502,7 +505,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/nova/cargo/tech/gorka
+/datum/loadout_item/under/formal/nova/cargo/tech/gorka
 	name = "supply gorka"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
@@ -526,7 +529,9 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/nova/cargo/qm/gorka
+			//QUARTERMASTER
+
+/datum/loadout_item/under/formal/nova/cargo/qm/gorka
 	name = "quartermaster's gorka"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/gorka
 	restricted_roles = list(JOB_QUARTERMASTER)
@@ -544,13 +549,13 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/nova/cargo/qm/formal
+/datum/loadout_item/under/formal/nova/cargo/qm/formal
 	name = "quartermaster's formal jumpsuit"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/formal
 	restricted_roles = list(JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/nova/cargo/qm/formal/skirt
+/datum/loadout_item/under/formal/nova/cargo/qm/formal/skirt
 	name = "quartermaster's formal jumpskirt"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt
 	restricted_roles = list(JOB_QUARTERMASTER)
