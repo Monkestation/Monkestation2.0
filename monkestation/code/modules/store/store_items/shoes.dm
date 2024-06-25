@@ -119,3 +119,26 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 
 /// EVERYTHING NOVA RELATED
 
+/datum/store_item/shoes/nova/wraps/swag
+	name = "gilded foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps
+
+/datum/store_item/shoes/nova/wraps/drip
+	name = "silver leg wraps"
+	item_path = /obj/item/clothing/shoes/wraps/silver
+
+/datum/store_item/shoes/nova/jungleboots
+	name = "jungle boots"
+	item_path = /obj/item/clothing/shoes/jungleboots
+
+/datum/store_item/shoes/nova/cowboyboots
+	name = "cowboy boots"
+	item_path = /obj/item/clothing/shoes/cowboyboots
+
+/datum/store_item/shoes/nova/cowboyboots/black
+	name = "black cowboy boots"
+	item_path = /obj/item/clothing/shoes/cowboyboots/black
+
+/datum/store_item/shoes/nova/kimshoes
+	name = "aerostatic boots"
+	item_path = /obj/item/clothing/shoes/kimshoes
