@@ -2,22 +2,27 @@
 	id = "Slime Regeneration"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 15 SECONDS
-	tick_interval = 0.5 SECONDS
-	alert_type = null
-	var/base_healing_amt = 2
+	tick_interval = 0.2 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/regen_extract
+	var/base_healing_amt = 5
 	var/multiplier = 1
 	var/diminishing_multiplier = 0.75
 	var/diminish_time = 45 SECONDS
 	var/nutrition_heal_cap = NUTRITION_LEVEL_FED - 50
+	/// Base traits given to the owner.
 	var/list/given_traits = list(TRAIT_ANALGESIA, TRAIT_NOCRITDAMAGE)
+	/// Extra traits given to the owner, added to the base traits.
+	var/list/extra_traits = list()
 
 /datum/status_effect/regenerative_extract/on_apply()
 	SEND_SIGNAL(owner, COMSIG_SLIME_REGEN_CALC, &multiplier)
-	owner.add_traits(given_traits, id)
+	if(multiplier < 1)
+		to_chat(owner, span_warning("The previous regenerative goo hasn't fully evaporated yet, weakening the new regenerative effect!"))
+	owner.add_traits(given_traits + extra_traits, id)
 	return TRUE
 
 /datum/status_effect/regenerative_extract/on_remove()
-	owner.remove_traits(given_traits, id)
+	owner.remove_traits(given_traits + extra_traits, id)
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
 
 /datum/status_effect/regenerative_extract/tick(seconds_per_tick, times_fired)
@@ -62,3 +67,8 @@
 
 /datum/status_effect/regenerative_extract/get_examine_text()
 	return "[owner.p_They()] have a subtle, gentle glow to [owner.p_their()] skin, with slime soothing [owner.p_their()] wounds."
+
+/atom/movable/screen/alert/status_effect/regen_extract
+	name = "Slime Regeneration"
+	desc = "A milky slime covers your skin, soothing and regenerating your injuries!"
+	icon_state = "regenerative_core"

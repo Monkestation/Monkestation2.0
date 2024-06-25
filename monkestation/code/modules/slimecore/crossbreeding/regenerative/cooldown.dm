@@ -4,6 +4,7 @@
 	tick_interval = -1
 	alert_type = null
 	remove_on_fullheal = TRUE
+	heal_flag_necessary = HEAL_ADMIN
 	var/multiplier = 1
 
 /datum/status_effect/slime_regen_cooldown/on_creation(mob/living/new_owner, multiplier = 1, duration = 45 SECONDS)

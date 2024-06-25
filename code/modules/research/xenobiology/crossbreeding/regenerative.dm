@@ -14,6 +14,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
+/* monkestation edit: overriden in [monkestation\code\modules\slimecore\crossbreeding\regenerative\extract.dm]
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
 	. = ..()
 	if(!prox || !isliving(target))
@@ -29,10 +30,10 @@ Regenerative extracts:
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
-	H.revive(HEAL_ALL)
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
+*/
 
 /obj/item/slimecross/regenerative/grey
 	colour = "grey" //Has no bonus effect.
@@ -192,7 +193,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/green
 	colour = "green"
-	effect_desc = "Fully heals the target and changes the spieces or color of a slime or jellyperson."
+	effect_desc = "Fully heals the target and changes the species or color of a slime or jellyperson."
 
 /obj/item/slimecross/regenerative/green/core_effect(mob/living/target, mob/user)
 	if(isslime(target))
@@ -200,7 +201,7 @@ Regenerative extracts:
 		var/mob/living/basic/slime/S = target
 		S.start_mutating(TRUE)
 	if(isjellyperson(target))
-		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly,5)
+		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly, 5)
 
 
 /obj/item/slimecross/regenerative/pink
