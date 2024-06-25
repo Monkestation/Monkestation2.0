@@ -154,3 +154,62 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/donator/rainbow
 	name = "Rainbow Converse"
 	item_path = /obj/item/clothing/shoes/sneakers/rainbow
+
+/// EVERYTHING NOVA RELATED
+
+//Not adding everything as we already got simillar stuff - Knight
+
+/datum/loadout_item/shoes/nova/jackboots/recolorable
+	name = "Recolorable Jackboots"
+	item_path = /obj/item/clothing/shoes/jackboots/recolorable
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/colorable_laceups
+	name = "Recolorable Laceups"
+	item_path = /obj/item/clothing/shoes/colorable_laceups
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/colorable_sandals
+	name = "Recolorable Sandals"
+	item_path = /obj/item/clothing/shoes/colorable_sandals
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/wraps/colorable
+	name = "colourable foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps/colourable
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/wraps/cloth
+	name = "cloth foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps/cloth
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/wraps/swag
+	name = "gilded foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/wraps/drip
+	name = "silver leg wraps"
+	item_path = /obj/item/clothing/shoes/wraps/silver
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/jungleboots
+	name = "jungle boots"
+	item_path = /obj/item/clothing/shoes/jungleboots
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/cowboyboots
+	name = "cowboy boots"
+	item_path = /obj/item/clothing/shoes/cowboyboots
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/cowboyboots/black
+	name = "black cowboy boots"
+	item_path = /obj/item/clothing/shoes/cowboyboots/black
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/nova/kimshoes
+	name = "aerostatic boots"
+	item_path = /obj/item/clothing/shoes/kimshoes
+	requires_purchase = FALSE

@@ -116,3 +116,6 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Jester Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	item_cost = 4000
+
+/// EVERYTHING NOVA RELATED
+
