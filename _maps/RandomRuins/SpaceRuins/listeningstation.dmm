@@ -601,7 +601,7 @@
 "wx" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate");
-	name = "Cybersun Industries Technical and Munitions Fabricator crate"
+	name = "Cybersun Industries autolathe crate"
 	},
 /obj/item/circuitboard/machine/autolathe,
 /obj/item/stock_parts/matter_bin,
