@@ -87,6 +87,15 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
+"cb" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/circuitboard/machine/ore_redemption,
+/obj/structure/closet/crate/secure/plasma{
+	req_access = list("syndicate");
+	name = "refinery crate"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "ch" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -158,6 +167,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/storage/bag/trash,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "eR" = (
@@ -480,6 +491,10 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
+"qZ" = (
+/obj/item/storage/bag/trash/filled,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "rx" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -767,10 +782,6 @@
 "AV" = (
 /turf/template_noop,
 /area/template_noop)
-"Bc" = (
-/obj/structure/falsewall,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
 "Bk" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -790,6 +801,8 @@
 /area/ruin/space/has_grav/listeningstation/medical)
 "BA" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "BN" = (
@@ -851,8 +864,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/closet/emcloset/anchored,
 /obj/machinery/firealarm/directional/east,
+/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "CJ" = (
@@ -1582,15 +1596,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
-"YG" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/circuitboard/machine/ore_redemption,
-/obj/structure/closet/crate/secure/plasma{
-	req_access = list("syndicate");
-	name = "refinery crate"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "YR" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/listeningstation,
@@ -1615,6 +1620,10 @@
 /obj/structure/bed/roller,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
+"Zt" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 
 (1,1,1) = {"
 AV
@@ -2248,8 +2257,8 @@ Po
 LP
 LP
 xR
-Bc
-YG
+Zt
+cb
 vC
 QI
 CR
@@ -2481,7 +2490,7 @@ rG
 dg
 lE
 bi
-QI
+qZ
 VK
 VK
 VK
@@ -2671,7 +2680,7 @@ QI
 QI
 RP
 QI
-QI
+qZ
 be
 VK
 VK
