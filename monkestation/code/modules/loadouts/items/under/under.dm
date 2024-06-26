@@ -698,7 +698,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/jumpsuit/utility_com
 	name = "Command Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/captain/nova/utility
-	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_QUARTERMASTER, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHIEF_ENGINEER)
+	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHIEF_ENGINEER)
 	requires_purchase = FALSE
 
 /*
@@ -950,6 +950,12 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/cargo_turtle
 	name = "Cargo Turtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/cargo_gorka
+	name = "Cargo Turtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
