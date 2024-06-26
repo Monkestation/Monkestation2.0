@@ -330,3 +330,14 @@
 /datum/armor/vest_durathread
 	bullet = 15
 	wound = 5
+
+/obj/item/clothing/suit/jacket/heavytrenchcoat
+	name = "heavy trench coat"
+	desc = "A wonderful heavy trench coat. The collar seems to be fur lined"
+	icon = 'monkestation/icons/mob/clothing/costumes/coat/heavytrenchcoat.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/coat/heavytrenchcoat_worn.dmi'
+	icon_state = "heavytrenchcoat"
+	greyscale_config = /datum/greyscale_config/heavytrenchcoat
+	greyscale_config_worn = /datum/greyscale_config/heavytrenchcoat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_colors = "#bab8d9#2c211a"
