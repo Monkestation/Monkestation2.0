@@ -25564,12 +25564,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"jiY" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "jjj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -112402,7 +112396,7 @@ cXP
 aaa
 aaa
 aaa
-jiY
+rrt
 mxQ
 aaa
 aaa
