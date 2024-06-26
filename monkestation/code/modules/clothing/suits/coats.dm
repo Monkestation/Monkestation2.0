@@ -104,6 +104,13 @@
 	icon_state = "guardman_vest"
 
 
+/obj/item/clothing/suit/armor/blueshield
+	name = "blueshield coat"
+	desc = "A stylish kevlar coat worn by the blueshield agent."
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_state = "blueshield"
+
 //Only basic and scientist labcoats get to STAPH
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
