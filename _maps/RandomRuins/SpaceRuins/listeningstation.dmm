@@ -600,10 +600,14 @@
 /area/ruin/space/has_grav/listeningstation/support)
 "wx" = (
 /obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
+	req_access = list("syndicate");
+	name = "Cybersun Industries Technical and Munitions Fabricator crate"
 	},
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
+/obj/item/circuitboard/machine/autolathe,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/manipulator,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "wA" = (
@@ -1447,7 +1451,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "VK" = (
-/turf/closed/mineral/asteroid,
+/turf/closed/mineral/random/stationside/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "WD" = (
 /obj/effect/turf_decal/stripes/line,
