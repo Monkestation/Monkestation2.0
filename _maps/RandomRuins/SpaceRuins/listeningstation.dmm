@@ -329,15 +329,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
-"kD" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/circuitboard/machine/ore_redemption,
-/obj/structure/closet/crate/secure/plasma{
-	req_access = list("syndicate");
-	name = "refinery crate"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "kG" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Emergency Backup"
@@ -743,8 +734,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/bedsheetbin,
-/obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "AC" = (
@@ -778,6 +767,10 @@
 "AV" = (
 /turf/template_noop,
 /area/template_noop)
+"Bc" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 "Bk" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -1419,10 +1412,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
-"Uu" = (
-/obj/structure/falsewall,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
 "Uw" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -1486,7 +1475,9 @@
 /area/ruin/space/has_grav/listeningstation/comms)
 "Xc" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
+/obj/structure/bedsheetbin,
+/obj/structure/table,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "Xs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1591,6 +1582,15 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
+"YG" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/circuitboard/machine/ore_redemption,
+/obj/structure/closet/crate/secure/plasma{
+	req_access = list("syndicate");
+	name = "refinery crate"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "YR" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/listeningstation,
@@ -2213,8 +2213,8 @@ xR
 Pz
 Pz
 Pz
-VK
-VK
+Pz
+XM
 VK
 VK
 VK
@@ -2248,8 +2248,8 @@ Po
 LP
 LP
 xR
-Uu
-kD
+Bc
+YG
 vC
 QI
 CR
