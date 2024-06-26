@@ -329,6 +329,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
+"kD" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/circuitboard/machine/ore_redemption,
+/obj/structure/closet/crate/secure/plasma{
+	req_access = list("syndicate");
+	name = "refinery crate"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "kG" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Emergency Backup"
@@ -734,6 +743,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/bedsheetbin,
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "AC" = (
@@ -1408,6 +1419,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
+"Uu" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 "Uw" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -1471,9 +1486,7 @@
 /area/ruin/space/has_grav/listeningstation/comms)
 "Xc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation/support)
 "Xs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2200,7 +2213,7 @@ xR
 Pz
 Pz
 Pz
-Pz
+VK
 VK
 VK
 VK
@@ -2235,10 +2248,10 @@ Po
 LP
 LP
 xR
-Pz
-VK
-VK
-VK
+Uu
+kD
+vC
+QI
 CR
 CR
 CR
