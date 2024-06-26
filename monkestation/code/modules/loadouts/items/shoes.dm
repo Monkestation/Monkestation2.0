@@ -198,14 +198,6 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	name = "jungle boots"
 	item_path = /obj/item/clothing/shoes/jungleboots
 
-/datum/loadout_item/shoes/nova/cowboyboots
-	name = "cowboy boots"
-	item_path = /obj/item/clothing/shoes/cowboyboots
-
-/datum/loadout_item/shoes/nova/cowboyboots/black
-	name = "black cowboy boots"
-	item_path = /obj/item/clothing/shoes/cowboyboots/black
-
 /datum/loadout_item/shoes/nova/kimshoes
 	name = "aerostatic boots"
 	item_path = /obj/item/clothing/shoes/kimshoes
