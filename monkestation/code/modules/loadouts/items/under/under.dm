@@ -954,7 +954,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/cargo_gorka
-	name = "Cargo Turtleneck"
+	name = "Cargo Gorka"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE

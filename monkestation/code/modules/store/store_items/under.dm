@@ -467,25 +467,20 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 
 /// EVERYTHING NOVA RELATED
 
-/*/datum/store_item/under/jumpsuit/nova/cargo/tech/utility
-	name = "supply utility uniform"
-	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
-*/
-
 /datum/store_item/under/jumpsuit/imperial_police_uniform //BUYABLE
 	name = "Imperial Police Uniform"
 	item_path = /obj/item/clothing/under/colonial/nri_police
-	item_cost = 1500
+	item_cost = 3000
 
 /datum/store_item/under/jumpsuit/sol_peacekeeper //BUYABLE
 	name = "Sol Peacekeeper Uniform"
 	item_path = /obj/item/clothing/under/sol_peacekeeper
-	item_cost = 1500
+	item_cost = 3000
 
 /datum/store_item/under/jumpsuit/utility	//BUYABLE
 	name = "Utility Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/utility
-	item_cost = 1500
+	item_cost = 3000
 
 /datum/store_item/under/miscellaneous/vicvest //BUYABLE
 	name = "Recolorable Buttondown Shirt with Double-Breasted Vest"
@@ -680,32 +675,32 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/yukata //BUYABLE
 	name = "Yukata"
 	item_path = /obj/item/clothing/under/costume/nova/yukata
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/qipao_black //BUYABLE
 	name = "Qipao"
 	item_path = /obj/item/clothing/under/costume/nova/qipao
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/qipao_recolorable //BUYABLE
 	name = "Qipao, Custom Trim"
 	item_path = /obj/item/clothing/under/costume/nova/qipao/customtrim
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/cheongsam //BUYABLE
 	name = "Cheongsam"
 	item_path = /obj/item/clothing/under/costume/nova/cheongsam
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/cheongsam_recolorable //BUYABLE
 	name = "Cheongsam, Custom Trim"
 	item_path = /obj/item/clothing/under/costume/nova/cheongsam/customtrim
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/kimono //BUYABLE
 	name = "Fancy Kimono"
 	item_path =  /obj/item/clothing/under/costume/nova/kimono
-	item_cost = 1500
+	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/chaps //BUYABLE
 	name = "Black Chaps"
@@ -720,27 +715,27 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/cybersleek //BUYABLE
 	name = "Sleek Modern Coat"
 	item_path = /obj/item/clothing/under/costume/cybersleek
-	item_cost = 1500
+	item_cost = 4500
 
 /datum/store_item/under/miscellaneous/cybersleek_long //BUYABLE
 	name = "Long Modern Coat"
 	item_path = /obj/item/clothing/under/costume/cybersleek/long
-	item_cost = 1500
+	item_cost = 4500
 
 /datum/store_item/under/miscellaneous/dutch //BUYABLE
 	name = "Dutch Suit"
 	item_path = /obj/item/clothing/under/costume/dutch
-	item_cost = 1500
+	item_cost = 5000
 
 /datum/store_item/under/miscellaneous/cavalry //BUYABLE
 	name = "Cavalry Uniform"
 	item_path = /obj/item/clothing/under/costume/nova/cavalry
-	item_cost = 1500
+	item_cost = 5000
 
 /datum/store_item/under/miscellaneous/expeditionary_corps //BUYABLE
 	name = "Expeditionary Corps Uniform"
 	item_path = /obj/item/clothing/under/rank/expeditionary_corps
-	item_cost = 1500
+	item_cost = 3000
 
 /datum/store_item/under/miscellaneous/tactical_pants //BUYABLE
 	name = "Tactical Pants"
@@ -770,7 +765,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/executive_suit_alt //BUYABLE
 	name = "Wide-collared Executive Suit"
 	item_path = /obj/item/clothing/under/suit/nova/black_really_collared
-	item_cost = 1500
+	item_cost = 5000
 
 /datum/store_item/under/formal/executive_skirt_alt //BUYABLE
 	name = "Wide-collared Executive Suitskirt"
@@ -780,7 +775,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/navy_suit //BUYABLE
 	name = "Navy Suit"
 	item_path = /obj/item/clothing/under/suit/navy
-	item_cost = 1500
+	item_cost = 5000
 
 /datum/store_item/under/formal/helltaker //BUYABLE
 	name = "Red Shirt with White Trousers"
