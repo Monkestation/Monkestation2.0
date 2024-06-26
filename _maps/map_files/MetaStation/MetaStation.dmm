@@ -25564,6 +25564,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"jiY" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "jjj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -29858,12 +29864,6 @@
 	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
-"kKI" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "kKT" = (
 /obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 7;
@@ -30769,11 +30769,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/ordnance/office)
-"kYX" = (
-/obj/effect/spawner/random/structure/grille,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "kZk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -112407,8 +112402,8 @@ cXP
 aaa
 aaa
 aaa
-rrt
-kYX
+jiY
+mxQ
 aaa
 aaa
 aaa
@@ -112921,7 +112916,7 @@ jlU
 kvO
 bPB
 rrt
-kKI
+rrt
 rrt
 aaa
 aaa
