@@ -118,4 +118,4 @@
 	desc = "A plush of a crewmember named Ellie! ~Handcrafted lovingly for elliethedarksun (must be an alias for something..)"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "elliethedarksun"
-	squeak_override = list('elliethedarksunPlushSqueak-1.ogg'=1,'elliethedarksunPlushSqueak-2.ogg'=1,'elliethedarksunPlushSqueak-3.ogg'=1)
+	squeak_override = list('monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-1.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-2.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-3.ogg'=1)
