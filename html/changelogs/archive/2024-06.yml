@@ -425,3 +425,183 @@
   - bugfix: Energy cost for Hardsuits thermoregulator (it would run out in minutes)
   - bugfix: Borers and Alien Larva can now hide on Multiple Z levels instead of just
       one
+2024-06-24:
+  Absolucy:
+  - qol: Mechcomp teleporters now work across different floors on multi-z maps such
+      as Icebox or Tram.
+  Tractor Mann:
+  - rscadd: You can emag jukeboxes! you always could, but now it enables Hacked songs!
+2024-06-25:
+  Absolucy:
+  - bugfix: Eigenstasium no longer cares about purity, a mechanic which we do not
+      even use.
+  - bugfix: Fixed some assorted runtime errors.
+  - bugfix: Fixed some overlay sprite issues with the disease splicer.
+  - bugfix: Fixed curing diseases via aheals or such actually WORK.
+  - refactor: Made `pick_weight` more robust and performant.
+  - balance: '(carlarctg) Reduced the complexity cost of a lot of MODules: Pathfinder
+      2 -> 1, Tether 3 -> 2, Temperature Regulator 2 -> 1, DNA lock 2 -> 1, Health
+      analyzer 2 -> 1, Sonar 2 -> 1, Microwave beam 2 -> 1, Drill 2 -> 1, All visors
+      (including NV and thermals) 2 -> 1, Circuit Adapter 2 -> 1'
+  - balance: (carlarctg) The Mining MODsuit has had its complexity increased to 13
+      and now starts with the eating apparatus module, with a total base complexity
+      of 10/13 now.
+  - balance: (carlarctg) The Prototype MODsuit's active slowdown has been decreased
+      from 1.5 (!) to 1.
+  - spellcheck: (carlarctg) Fixed a type on the energy net module.
+  - rscadd: (Hatterhat) A really old data disk with the MOD module designs for the
+      status readout was recovered, and has been haphazardly hotpatched into the research
+      networks.
+  - rscadd: (Hatterhat) Also, the status readout module now plays a sound on death.
+  - qol: (Hatterhat) The MODsuit health analyzer's info tab health readout can now
+      be disabled in its settings.
+  - rscadd: (Melbert) The Atrocinator will now flip you even more.
+  - qol: (StaringGasMask) Now plasmamen can use the infiltrator MODsuit without having
+      their species revealed. The helmet's still not sealed, so remember your mask.
+  - qol: (Hatterhat) When a MOD fails to store something in itself when retracting,
+      you're now notified in both the chat and by a balloon alert.
+  - qol: (Momo8289) You can now use any hat with the hat stabilizer MOD.
+  - bugfix: (Momo8289) The MOD eating apparatus module now properly disables pepper
+      spray protection.
+  Absolucy, Melbert:
+  - balance: The alcohol tolerance quirk now prevents alcohol from killing you (on
+      its own). Now your character can be an alcoholic trainwreck without dying from
+      liver failure just for being yourself! You'll still be, well, a drunken wreck,
+      tho.
+  - rscadd: When you are drunk, the strength of your slurring now varies based on
+      how drunk you are. Being "a little drunk" only rarely slurs your words, being
+      average drunk is the same as the old effect, while being very drunk now slurs
+      your words even more.
+  - rscadd: Some non-alcohol sources of slurring, such as concussions, now give "generic
+      slurring" rather than "drunk slurring", which less resemble being drunk (ie,
+      no burping).
+  - rscadd: Mind restoration now heals ALL slurring, rather than only drunk slurring
+      (which includes cult / heretic slurring).
+  AlbertNanotracen:
+  - admin: Added an spawn mixtape verb to the admin tab.
+  - qol: Chemmaster UI tweaked
+  - qol: Chemical Press UI tweaked
+  - bugfix: Fixed chem master showing wrong data during reagent analysis
+  - bugfix: Fixed chem master not working with fermented drinks
+  - image: Chemmaster resprited, now has an indicator for buffer reagents
+  - refactor: Refactored chemmaster code, it now uses reagent containers instead of
+      styles
+  - balance: Chemmaster has printing animation of 0.75 second duration. Outputs 1
+      container or up to 2 pills/patches per cycle by default. Can be upgraded to
+      output up to 4 and 8 with t4 manipulators.
+  - image: Resprited many condiment containers
+  - image: Added a sprite for cooking oil / corn oil container
+  - image: Replaced old condiment bottles with the newer bottles in Condi Master
+  - rscadd: Added test tubes and racks for them
+  - balance: All 30u bottles now have 50u volume and chem master/factory output/chemical
+      press/pandemic spawn tubes instead of bottles
+  - bugfix: fixed the advanced watering can
+  Glyphee:
+  - balance: removed freerunning from goblins by default
+  - balance: 'raised stunmod
+
+      :cl:'
+  HimKobold:
+  - rscadd: Added the ability for hair dye spray to fully change your hair color by
+      selecting "None" in the "Choose Gradient" popup list.
+  - bugfix: '#2062
+
+      \:cl:'
+  JackEnoff, KnigTheThrasher:
+  - balance: Certain changeling abilities won't work while on fire.
+  - balance: Changeling stuff will burn down when lit on fire (can be regenerated
+      when you aren't burning)
+  KnigTheThrasher:
+  - rscadd: security gets spammed each time a bitrunner finishes their job because
+      they forget to take crates from perma
+  - rscdel: Deleted few doors in delta transfer area for easier access to the escape
+      pod
+  - rscdel: Deleted that oil stain under boxstation bit den door
+  - bugfix: fixed missing pipes in delta visitation area
+  - bugfix: fixed a backwards bench in delta perma
+  MrMelbert, KnigTheThrasher:
+  - rscadd: Lizards can customize their lisp
+  - code_imp: Added a modular file for species features
+2024-06-26:
+  Absolucy:
+  - rscadd: Holomaps now show meteor defense coverage, visualized by a blue grid.
+  - sound: Meteor defense zap sounds should be able to be heard from further away
+      now.
+  - balance: Meteor defense sats can now always be ordered from cargo, regardless
+      of station goal.
+  - balance: Meteor defense sats now cover upwards and downwards too, making them
+      less of a pain on multi-Z stations.
+  - refactor: Tracking which tiles are covered by meteor defense sats is now much
+      more intuitive and efficient.
+  - qol: Meteors now drop debris when zapped by meteor defense sats.
+  - qol: Examining meteor defense sats now also shows how many meteors have been zapped
+      overall by all sats.
+  - balance: Slightly boosted the range of meteor defense satellite from 14 to 16
+      tiles.
+2024-06-27:
+  Absolucy:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  - rscadd: RCDs can make girders now.
+  - bugfix: Some RCD constructs took more material than manual construction. The RCD
+      cost should be consistent in comparison to manual construction now.
+  - bugfix: RCDs can build wallmounts on reinforced walls.
+  - qol: RCDs can build directional windows without requiring/building a grill.
+  - bugfix: You should be able to click on lattices on icebox with the RCD and construct
+      a floor now
+  - balance: Maintenance drones now can use RPED, RCD, holosigns, and spray bottles.
+  - rscadd: Added liquid barriers, currently mapped into xenobio, which block all
+      liquid flow across them, hopefully preventing the dreaded station-wide ooze
+      floods.
+  - image: (intercepti0n) Resprites t-ray scanner, gas analyzer, geiger counter and
+      hand drill.
+  - image: (LT3) Medical and improvised gauze are visibly different from cloth.
+  - image: (Alecksohs) Updated the Advanced Surgical Tool's sprites.
+  - code_imp: (Alecksohs) Updated the Advanced Surgical Tool's light code.
+  - qol: Placing someone on an operating table now actually buckles them.
+  - qol: Prettied up the Chemical Analyzer's output in chat, making it easier to read,
+      especially when scanning multiple things.
+  DexeeXI:
+  - rscadd: New Title for Captains
+  DustanHache:
+  - rscadd: Egg bags are now craftable using cloth, like many other bags.
+  Kapu1178:
+  - bugfix: Fixed stuff relating to the MODsuit pathfinder module.
+  - code_imp: AI pathfinding should produce slightly better paths.
+  KnigTheThrasher:
+  - bugfix: fixed latejoin prisoner spawns
+  - bugfix: :)
+  RafRoq:
+  - rscadd: 'Added new botany plant trait, seedless, can be found in money tree seeds
+
+      :cl:'
+  Rex9001, DexeeXI:
+  - rscadd: Brig Physician as a job
+  - rscadd: 'Clothing items for Brig Physician: jumpsuit, skirt, scrubs, shoes, backpacks
+      of all kinds.'
+  - rscadd: Plasmaman support for Brig Physician. Sprites provided directly by DimWhat.
+  - rscadd: Alternative job title support for Brig Physician
+  - rscadd: SECHUD, Crew Monitor and ID card support for Brig Physician
+  - rscadd: Locker specifically for Brig Physician
+  - rscadd: Digi-legs support for new clothes for Lizards.
+  - rscadd: Most new items have inhand sprites
+  - rscadd: Brig Physician start markers in Prison Medbays.
+  - rscadd: Requested alternative title for Medical Doctor. (Admin Team Request)
+  - balance: All prison medbays overhauled to provide proper support. The old tram
+      medbay was completely bare while Box was mostly "feature complete". All medbays
+      should have very similar capability.
+  - bugfix: Head of Personnel's supervisor is now the Captain properly.
+  - rscdel: Virus extrapolator in the CMO's locker is now gone. (I don't know how
+      I missed this one)
+  TTNT789:
+  - rscadd: The Ashen Forge as a traitor faction
+  Uristthedorf:
+  - qol: You can craft plastitanium shards.
+  ven1883:
+  - rscadd: Adds Alveolic Deoxidation, a nanite program that heals suffocation.
+  - rscadd: Adds Alveolic Deoxidation to the tech tree.
