@@ -34785,7 +34785,7 @@
 /area/station/maintenance/solars/port/fore)
 "gKc" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/kirbyplants/random,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "gKf" = (
@@ -57775,12 +57775,12 @@
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "lkF" = (
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "lkJ" = (
