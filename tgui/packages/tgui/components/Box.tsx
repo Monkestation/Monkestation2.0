@@ -263,7 +263,7 @@ export const Box = (props: BoxProps) => {
     children,
     ChildFlags.UnknownChildren,
     computedProps,
-    undefined
+    undefined,
   );
 };
 

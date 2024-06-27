@@ -68,12 +68,22 @@
 		"Rancher",
 	)
 
+/datum/job/brig_physician
+	alt_titles = list(
+		"Jail Doctor",
+		"Brig Orderly",
+		"Prison Medic",
+		"Chief Tickler",
+		"Navy Corpsman",
+	)
+
 /datum/job/captain
 	alt_titles = list(
 		"Captain",
 		"Station Commander",
 		"Commanding Officer",
 		"Site Manager",
+		"Criminally Underpaid Babysitter",
 	)
 
 /datum/job/cargo_technician

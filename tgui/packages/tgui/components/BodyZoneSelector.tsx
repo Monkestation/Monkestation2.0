@@ -83,7 +83,8 @@ export class BodyZoneSelector extends Component<
           width: `${32 * scale}px`,
           height: `${32 * scale}px`,
           position: 'relative',
-        }}>
+        }}
+      >
         <Box
           as="img"
           src={resolveAsset('body_zones.base.png')}
@@ -113,9 +114,9 @@ export class BodyZoneSelector extends Component<
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
             'image-rendering': 'pixelated',
-            'position': 'absolute',
-            'width': `${32 * scale}px`,
-            'height': `${32 * scale}px`,
+            position: 'absolute',
+            width: `${32 * scale}px`,
+            height: `${32 * scale}px`,
           }}
         />
 
@@ -127,9 +128,9 @@ export class BodyZoneSelector extends Component<
               '-ms-interpolation-mode': 'nearest-neighbor',
               'image-rendering': 'pixelated',
               'pointer-events': 'none',
-              'position': 'absolute',
-              'width': `${32 * scale}px`,
-              'height': `${32 * scale}px`,
+              position: 'absolute',
+              width: `${32 * scale}px`,
+              height: `${32 * scale}px`,
             }}
           />
         )}
@@ -141,11 +142,11 @@ export class BodyZoneSelector extends Component<
             style={{
               '-ms-interpolation-mode': 'nearest-neighbor',
               'image-rendering': 'pixelated',
-              'opacity': 0.5,
+              opacity: 0.5,
               'pointer-events': 'none',
-              'position': 'absolute',
-              'width': `${32 * scale}px`,
-              'height': `${32 * scale}px`,
+              position: 'absolute',
+              width: `${32 * scale}px`,
+              height: `${32 * scale}px`,
             }}
           />
         )}

@@ -1,7 +1,15 @@
 import { resolveAsset } from '../assets';
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Dropdown, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -63,14 +71,16 @@ export const AntagInfoBloodsucker = (props: any) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Introduction
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Clan & Powers
           </Tabs.Tab>
         </Tabs>
@@ -188,7 +198,7 @@ const BloodsuckerClan = (props: any) => {
                     style={{
                       '-ms-interpolation-mode': 'nearest-neighbor',
                       'image-rendering': 'pixelated',
-                      'position': 'absolute',
+                      position: 'absolute',
                     }}
                   />
                   <Stack.Item fontSize="20px" textAlign="center">
@@ -230,7 +240,8 @@ const PowerSection = (props: any) => {
             'Select a Power using the dropdown menu for an in-depth explanation.'
           }
         />
-      }>
+      }
+    >
       <Stack>
         <Stack.Item grow>
           <Dropdown
@@ -240,7 +251,7 @@ const PowerSection = (props: any) => {
             options={power.map((powers) => powers.power_name)}
             onSelected={(powerName: string) =>
               setSelectedPower(
-                power.find((p) => p.power_name === powerName) || power[0]
+                power.find((p) => p.power_name === powerName) || power[0],
               )
             }
           />
