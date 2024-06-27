@@ -13331,7 +13331,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "dep" = (
@@ -16878,7 +16878,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "dZD" = (
@@ -20513,7 +20513,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "eSq" = (
@@ -35094,7 +35094,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ipN" = (
@@ -36071,7 +36071,7 @@
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -50017,7 +50017,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "lPs" = (
@@ -65190,7 +65190,7 @@
 	c_tag = "Cargo - Waiting Room";
 	name = "cargo camera"
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "pBH" = (
@@ -66244,7 +66244,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "pNq" = (
@@ -69081,7 +69081,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/light/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -96564,7 +96564,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "xbu" = (

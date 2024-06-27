@@ -23,13 +23,14 @@
 	expected_types += /mob/living/simple_animal/pet/cat/runtime
 	expected_types += /mob/living/basic/parrot/poly
 	// monkestation start
-	expected_types += /obj/machinery/cassette/adv_cassette_deck
 	expected_types += /obj/item/radio/radio_mic
 	expected_types += /obj/machinery/atm
+	expected_types += /obj/machinery/cassette/adv_cassette_deck
 	expected_types += /obj/machinery/cassette/dj_station
-	expected_types += /obj/structure/cassette_rack/prefilled
-	expected_types += /obj/machinery/cryopod
 	expected_types += /obj/machinery/cassette/mailbox
+	expected_types += /obj/machinery/cryopod
+	expected_types += /obj/machinery/station_map/engineering
+	expected_types += /obj/structure/cassette_rack/prefilled
 	ignored_types  += /obj/machinery/cryopod/prison
 	// monkestation end
 

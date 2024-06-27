@@ -6716,7 +6716,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -23395,7 +23395,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "hLW" = (
@@ -31889,7 +31889,7 @@
 /area/station/hallway/primary/central)
 "kFc" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
 "kFf" = (
@@ -40078,7 +40078,7 @@
 /area/station/hallway/primary/aft)
 "nrX" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -43766,7 +43766,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_blue/line,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "oAe" = (
@@ -47186,7 +47186,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -56621,7 +56621,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/line,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "sWq" = (
@@ -66967,7 +66967,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "wtt" = (

@@ -21086,7 +21086,7 @@
 	name = "service camera"
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/bar/atrium)
 "gHA" = (
@@ -30770,7 +30770,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jDU" = (
@@ -53160,7 +53160,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "qXA" = (
@@ -56886,7 +56886,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -69928,7 +69928,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "wio" = (

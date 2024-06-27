@@ -225,9 +225,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/holopad,
 /obj/effect/landmark/navigate_destination/dockarrival,
-/obj/machinery/atm{
-	pixel_y = -30
-	},
+/obj/machinery/atm/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/hallway/secondary/entry)
 "acl" = (
@@ -2298,7 +2296,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "aDl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "aDn" = (
@@ -15442,9 +15440,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atm{
-	pixel_y = -30
-	},
+/obj/machinery/atm/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/service/theater)
 "dYr" = (
@@ -24146,7 +24142,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/half{
 	dir = 1
 	},
@@ -33037,7 +33033,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "iVL" = (
@@ -36203,7 +36199,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "jMn" = (
@@ -36499,7 +36495,7 @@
 /area/station/science/lobby)
 "jPs" = (
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -51903,7 +51899,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nHB" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -71169,7 +71165,7 @@
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/entertainment)
 "sZF" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -73617,7 +73613,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/east,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment2)
 "tJZ" = (
@@ -79849,7 +79845,7 @@
 	},
 /area/station/engineering/lobby)
 "vvT" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "vvX" = (

@@ -25941,7 +25941,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/effect/landmark/navigate_destination/common/dorms,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -28844,7 +28844,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "imY" = (
@@ -28876,7 +28876,7 @@
 	pixel_x = -25;
 	pixel_y = -5
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "int" = (
@@ -30054,7 +30054,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "iGg" = (
@@ -48005,7 +48005,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/dark_blue/corner,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "omT" = (
@@ -54686,7 +54686,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "qvt" = (
@@ -61262,7 +61262,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "szZ" = (
