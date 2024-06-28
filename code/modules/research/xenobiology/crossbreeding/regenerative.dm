@@ -53,10 +53,12 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
-	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly afterwards. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
 
+/* monkestation edit: moved functionality to status effect
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
 	target.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
+*/
 
 /obj/item/slimecross/regenerative/blue
 	colour = "blue"
