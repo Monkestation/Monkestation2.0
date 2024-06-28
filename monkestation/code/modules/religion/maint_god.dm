@@ -11,7 +11,7 @@
 /datum/religion_rites/weapon_granter/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	new /obj/item/book/granter/crafting_recipe/maintgodgranter(altar_turf)
+	new /obj/item/book/granter/crafting_recipe/maintgodgranter(get_turf(religious_tool))
 	return TRUE
 
 /datum/religion_rites/shadowascension
@@ -49,7 +49,7 @@
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
 	var/mob/living/carbon/human/rite_target
-	if(!movable_reltool?.buckled_mobs?.len)
+	if(!length(movable_reltool.buckled_mobs))
 		rite_target = user
 	else
 		for(var/buckled in movable_reltool.buckled_mobs)
