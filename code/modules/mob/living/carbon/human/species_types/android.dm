@@ -6,7 +6,7 @@
 		NOTRANSSTING,
 		NO_UNDERWEAR,
 		NOHUSK,
-		HAIR // monke edit: allow them to have hair (it's the future, why not)
+		HAIR, // monke edit: allow them to have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -26,7 +26,7 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
 		TRAIT_VIRUSIMMUNE,
-		TRAIT_REVIVES_BY_HEALING // monkestation edit: making androids closer to IPCs
+		TRAIT_REVIVES_BY_HEALING, // monkestation edit: making androids closer to IPCs
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
