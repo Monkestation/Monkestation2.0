@@ -146,6 +146,10 @@
 /obj/machinery/light/small/maintenance/directional/north,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"ee" = (
+/obj/item/circuitboard/machine/holopad,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "eu" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -499,6 +503,10 @@
 "rG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation/lobby)
+"rQ" = (
+/obj/item/stock_parts/capacitor,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "rT" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
@@ -2715,7 +2723,7 @@ vH
 QI
 VK
 VK
-VK
+rQ
 VK
 VK
 VK
@@ -2753,7 +2761,7 @@ QI
 VK
 VK
 VK
-QI
+ee
 EC
 QI
 VK
