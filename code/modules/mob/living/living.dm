@@ -2168,6 +2168,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
+
 
 
 ///Reports the event of the change in value of the buckled variable.
