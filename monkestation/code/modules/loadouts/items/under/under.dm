@@ -560,66 +560,54 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/jumpsuit/security_dress
 	name = "Security Battle Dress"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/dress
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_trousers
 	name = "Security Trousers"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/trousers
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_shorts
 	name = "Security Shorts"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/trousers/shorts
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_jumpskirt
 	name = "Security Jumpskirt"
 	item_path = /obj/item/clothing/under/rank/security/officer/skirt
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_plain_skirt
 	name = "Security Plain Skirt"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/plain_skirt
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_miniskirt
 	name = "Security Miniskirt"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/miniskirt
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_jumpsuit
 	name = "Security Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper/jumpsuit
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_peacekeeper
 	name = "Security Peacekeeper Uniform"
 	item_path = /obj/item/clothing/under/rank/security/peacekeeper
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/imperial_police_uniform //BUYABLE
 	name = "Imperial Police Uniform"
 	item_path = /obj/item/clothing/under/colonial/nri_police
-
-/datum/loadout_item/under/jumpsuit/disco
-	name = "Superstar Cop Uniform"
-	item_path = /obj/item/clothing/under/rank/security/detective/disco
-	restricted_roles = list(JOB_DETECTIVE)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/jumpsuit/kim
-	name = "Aerostatic Suit"
-	item_path = /obj/item/clothing/under/rank/security/detective/kim
-	restricted_roles = list(JOB_DETECTIVE)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/sol_peacekeeper //BUYABLE
 	name = "Sol Peacekeeper Uniform"
@@ -692,7 +680,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/jumpsuit/utility_sec
 	name = "Security Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/security/nova/utility
-	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_WARDEN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY) //i dunno about the blueshield, they're a weird combo of sec and command, thats why they arent in the loadout pr im making
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_WARDEN, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_HEAD_OF_SECURITY) //i dunno about the blueshield, they're a weird combo of sec and command, thats why they arent in the loadout pr im making
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_com
