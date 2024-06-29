@@ -368,9 +368,6 @@
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
-"lE" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav/listeningstation/medical)
 "lO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue{
@@ -2512,7 +2509,7 @@ iN
 zo
 rG
 dg
-lE
+ME
 bi
 kt
 VK
