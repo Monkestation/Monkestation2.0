@@ -101,8 +101,8 @@
 //		return INITIALIZE_HINT_QDEL
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson //the last agent according to lore, spawns rarely, has some flavour text, should start blinded
-	name = "old sleeper"
-	desc = "An old, fogged-up medicinal sleeper. You can see someone with a gas mask inside inside."
+	name = "sleeper"
+	desc = "A standard medicinal sleeper used to treat small and major injuries alike. It appears to be locked up, and you can see a gas mask through the fogged-up windows..."
 	icon_state = "sleeper"
 	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
 	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
