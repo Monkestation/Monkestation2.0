@@ -368,6 +368,10 @@
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
+"lE" = (
+/mob/living/basic/mining/goliath/ancient,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "lO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue{
@@ -1025,11 +1029,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "Ib" = (
-/mob/living/basic/mining/goliath/ancient{
-	health = 200;
-	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions. This one has several damaged armour plates, and a few embedded 9mm rounds. Their eyeballs look pretty loose, you might be able to extract them once they're dead.";
-	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/organ/internal/eyes/night_vision/goliath)
-	},
+/obj/item/organ/internal/eyes/robotic,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "It" = (
@@ -2729,8 +2729,8 @@ QI
 VK
 VK
 VK
-Ib
 QI
+lE
 SB
 vH
 QI
@@ -2776,7 +2776,7 @@ VK
 VK
 TF
 EC
-QI
+Ib
 VK
 VK
 VK
