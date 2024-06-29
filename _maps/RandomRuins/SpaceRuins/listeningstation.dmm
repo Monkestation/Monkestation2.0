@@ -258,12 +258,13 @@
 /obj/structure/closet/secure_closet/medical1{
 	req_access = list("syndicate")
 	},
-/obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/item/paper/fluff/ruins/listeningstation/reports/october,
+/obj/item/cane/white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
 "iv" = (
@@ -364,6 +365,7 @@
 /obj/item/pai_card{
 	pixel_x = 12
 	},
+/obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "lE" = (
@@ -986,6 +988,16 @@
 /obj/structure/water_source/puddle,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"Gj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/medical)
 "GR" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/suit_storage_unit/open,
@@ -1018,7 +1030,8 @@
 "Ib" = (
 /mob/living/basic/mining/goliath/ancient{
 	health = 200;
-	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions. This one has several damaged armour plates, and a few embedded 9mm rounds."
+	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions. This one has several damaged armour plates, and a few embedded 9mm rounds. Their eyeballs look pretty loose, you might be able to extract them once they're dead.";
+	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/organ/internal/eyes/night_vision/goliath)
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
@@ -1253,7 +1266,6 @@
 "NZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
@@ -1270,7 +1282,7 @@
 "Oo" = (
 /obj/structure/closet/syndicate,
 /obj/machinery/firealarm/directional/west,
-/obj/item/paper/fluff/ruins/listeningstation/reports/october,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "OG" = (
@@ -2235,7 +2247,7 @@ Pz
 Pz
 Pz
 Pz
-XM
+VK
 VK
 VK
 VK
@@ -2272,7 +2284,7 @@ xR
 Kt
 SI
 vC
-QI
+CR
 CR
 CR
 CR
@@ -2311,7 +2323,7 @@ LP
 OT
 eZ
 CR
-CR
+Gj
 yJ
 CR
 VK

@@ -100,6 +100,40 @@
 //		new /mob/living/basic/trooper/syndicate/ranged(get_turf(src))
 //		return INITIALIZE_HINT_QDEL
 
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson //the last agent according to lore, spawns rarely, has some flavour text, should start blinded
+	name = "old sleeper"
+	desc = "An old, fogged-up medicinal sleeper. You can see someone with a gas mask inside inside."
+	icon_state = "sleeper"
+	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
+	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
+	important_text = "DO NOT abandon the base."
+	outfit = /datum/outfit/lavaland_syndicate/comms/anderson
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Initialize(mapload)
+	. = ..()
+	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a regular sleeper
+		var/obj/machinery/sleeper/S = new(drop_location()) //i stole this code from hunters it better not break
+		S.setDir(dir)
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Destroy()
+	var/obj/machinery/sleeper/S = new(drop_location())
+	S.setDir(dir)
+	return ..()
+
+/datum/outfit/lavaland_syndicate/comms/anderson
+	name = "Syndicate Old Comms Agent"
+	r_hand = /obj/item/storage/pill_bottle //empty pillbottle
+	l_hand = /obj/item/knife/combat/survival //no esword, but still a knife
+	head = /obj/item/clothing/head/soft/black
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/special(mob/living/new_spawn)
+	. = ..()
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.adjustOrganLoss(ORGAN_SLOT_EYES, 100)
+	new_spawn.adjustOrganLoss(ORGAN_SLOT_LIVER, 35) //not completely out, but it's not having a good day
+
+
 ///battlecruiser stuff
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser
