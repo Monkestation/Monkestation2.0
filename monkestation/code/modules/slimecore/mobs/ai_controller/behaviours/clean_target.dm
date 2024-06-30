@@ -52,7 +52,7 @@
 		if(!QDELETED(closest))
 			if(dist > (closest_dist + 2)) // leeway to try to avoid "shorter dist but longer path" targets
 				continue
-			var/path_length = length(get_path_to(controller.pawn, trash))
+			path_length = length(get_path_to(controller.pawn, trash))
 			if(closest_path <= path_length)
 				continue
 		else
