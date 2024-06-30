@@ -635,22 +635,22 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/denim_skirt //BUYABLE
 	name = "Jean Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/nova/jean
-	item_cost = 1500
+	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/littleblack //BUYABLE
 	name = "Short Black Dress"
 	item_path = /obj/item/clothing/under/dress/nova/short_dress
-	item_cost = 1500
+	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/pinktutu //BUYABLE
 	name = "Pink Tutu"
 	item_path = /obj/item/clothing/under/dress/nova/pinktutu
-	item_cost = 1500
+	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/flowerdress //BUYABLE
 	name = "Flower Dress"
 	item_path = /obj/item/clothing/under/dress/nova/flower
-	item_cost = 1500
+	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE
 	name = "Tactical Hawaiian Outfit - Orange"
@@ -755,12 +755,12 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/formaldressred //BUYABLE
 	name = "Formal Red Dress"
 	item_path = /obj/item/clothing/under/dress/nova/redformal
-	item_cost = 1500
+	item_cost = 3000
 
 /datum/store_item/under/formal/countessdress //BUYABLE
 	name = "Countess Dress"
 	item_path = /obj/item/clothing/under/dress/nova/countess
-	item_cost = 1500
+	item_cost = 5000
 
 /datum/store_item/under/formal/executive_suit_alt //BUYABLE
 	name = "Wide-collared Executive Suit"
@@ -805,12 +805,12 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/recolorable_suit/casual //BUYABLE
 	name = "Office Casual Suit"
 	item_path = /obj/item/clothing/under/suit/nova/recolorable/casual
-	item_cost = 1500
+	item_cost = 2000
 
 /datum/store_item/under/formal/recolorable_suit/executive //BUYABLE
 	name = "Executive Casual Suit"
 	item_path = /obj/item/clothing/under/suit/nova/recolorable/executive
-	item_cost = 1500
+	item_cost = 2000
 
 /datum/store_item/under/formal/pencil //BUYABLE
 	name = "Pencilskirt with Shirt"
