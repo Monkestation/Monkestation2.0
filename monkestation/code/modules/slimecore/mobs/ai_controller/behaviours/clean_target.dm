@@ -47,16 +47,16 @@
 			continue
 		if(trash.loc == controller.pawn.loc)
 			return trash
-		var/dist = get_dist_euclidean(get_turf(controller.pawn), get_turf(trash))
+		var/dist = get_dist(get_turf(controller.pawn), get_turf(trash))
 		var/path_length
 		if(!QDELETED(closest))
 			if(dist > (closest_dist + 2)) // leeway to try to avoid "shorter dist but longer path" targets
 				continue
-			var/path_length = length(get_swarm_path_to(controller.pawn, trash, age = MAP_REUSE_FAST))
+			var/path_length = length(get_path_to(controller.pawn, trash))
 			if(closest_path <= path_length)
 				continue
 		else
-			path_length = length(get_swarm_path_to(controller.pawn, trash, age = MAP_REUSE_FAST))
+			path_length = length(get_path_to(controller.pawn, trash))
 		closest = trash
 		closest_dist = dist
 		closest_path = path_length
