@@ -7273,6 +7273,7 @@
 #include "monkestation\code\modules\slimecore\corral\upgrades\human_docility_upgrade.dm"
 #include "monkestation\code\modules\slimecore\corral\upgrades\obliteration_upgrade.dm"
 #include "monkestation\code\modules\slimecore\crossbreeding\industrial.dm"
+#include "monkestation\code\modules\slimecore\crossbreeding\stabilized.dm"
 #include "monkestation\code\modules\slimecore\crossbreeding\regenerative\colors.dm"
 #include "monkestation\code\modules\slimecore\crossbreeding\regenerative\cooldown.dm"
 #include "monkestation\code\modules\slimecore\crossbreeding\regenerative\effect.dm"

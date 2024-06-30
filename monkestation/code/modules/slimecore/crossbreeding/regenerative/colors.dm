@@ -40,4 +40,5 @@
 	owner.revive(heal_flags)
 	return FALSE // return false so we immediately clear the effect and start the cooldown
 
+
 #undef RAINBOW_HEAL_FLAGS
