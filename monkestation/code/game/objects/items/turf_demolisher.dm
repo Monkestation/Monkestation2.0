@@ -31,7 +31,7 @@
 
 /obj/item/turf_demolisher/proc/check_breakble(turf/attacked_turf, mob/living/user, params)
 	if((allowed_types && !is_type_in_list(attacked_turf, allowed_types)) || is_type_in_list(attacked_turf, blacklisted_types) || (attacked_turf.resistance_flags & INDESTRUCTIBLE) || \
-		(recharge_time && !COOLDOWN_FINISHED(recharge)))
+		(recharge_time && !COOLDOWN_FINISHED(src, recharge)))
 		if(unbreakable_alert)
 			balloon_alert(user, unbreakable_alert)
 		return FALSE
