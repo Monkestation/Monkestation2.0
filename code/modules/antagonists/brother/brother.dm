@@ -49,10 +49,11 @@
 	return ..()
 
 /datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
-	SIGNAL_HANDLER
+	/* SIGNAL_HANDLER */ // monkestation edit: allow used of is_banned_from
 
 	if (flashed.stat == DEAD)
 		return
+
 
 	if (flashed.stat != CONSCIOUS)
 		flashed.balloon_alert(source, "unconscious!")
@@ -61,6 +62,12 @@
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
+
+	// monkestation edit: allow people to opt-out of BB
+	if(!(ROLE_BROTHER in flashed.client?.prefs?.be_special) || is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
+		flashed.balloon_alert(source, "unwilling to play role!")
+		return
+	// monkestation end
 
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
@@ -72,7 +79,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || (flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE) || (flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)) // monkestation edit: TRAIT_UNCONVERTABLE
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
@@ -100,8 +107,8 @@
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]"
 
-/datum/antagonist/brother/proc/get_base_preview_icon()
-	RETURN_TYPE(/icon)
+// monkestation start: refactor to use [get_base_preview_icon] for better midround polling images
+/datum/antagonist/brother/get_base_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
@@ -130,8 +137,8 @@
 	return final_icon
 
 /datum/antagonist/brother/get_preview_icon()
-	RETURN_TYPE(/icon)
 	return finish_preview_icon(get_base_preview_icon())
+// monkestation end
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner

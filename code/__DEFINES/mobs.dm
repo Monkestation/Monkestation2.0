@@ -131,6 +131,7 @@
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
+#define SPECIES_SATYR "satyr" //Monkestation Addition
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -304,6 +305,19 @@
 #define ETHEREAL_CHARGE_DANGEROUS 3000
 
 
+//Monkestation Addition: Ethereal Blood Charge
+#define ETHEREAL_BLOOD_CHARGE_NONE 0
+#define ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE 56
+#define ETHEREAL_BLOOD_CHARGE_LOW 140
+#define ETHEREAL_BLOOD_CHARGE_NORMAL 280
+#define ETHEREAL_BLOOD_CHARGE_ALMOSTFULL 420
+#define ETHEREAL_BLOOD_CHARGE_FULL 560
+#define ETHEREAL_BLOOD_CHARGE_OVERLOAD 700
+#define ETHEREAL_BLOOD_CHARGE_DANGEROUS 840
+
+#define ETHEREAL_BLOOD_CHARGE_FACTOR 0.224
+//End of Monkestation addition
+
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
 #define CRYSTALIZE_PRE_WAIT_TIME (40 SECONDS)
 #define CRYSTALIZE_DISARM_WAIT_TIME (120 SECONDS)
@@ -348,7 +362,6 @@
 #define AI_ON 1
 #define AI_IDLE 2
 #define AI_OFF 3
-#define AI_Z_OFF 4
 
 //The range at which a mob should wake up if you spawn into the z level near it
 #define MAX_SIMPLEMOB_WAKEUP_RANGE 5
@@ -371,6 +384,8 @@
 #define GALOSHES_DONT_HELP (1<<3)
 /// Slip works even if you're already on the ground
 #define SLIP_WHEN_CRAWLING (1<<4)
+/// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
+#define SLIPPERY_TURF (1<<5)
 
 #define MAX_CHICKENS 50
 
@@ -742,6 +757,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
 	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
+	/* monkestation edit: fix some weirdness with heights, most notably gloves
 	"[GLASSES_LAYER]" = UPPER_BODY,
 	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
 	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
@@ -751,6 +767,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
+	monkestation end */
 	"[FACE_LAYER]" = UPPER_BODY,
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
@@ -759,6 +776,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)

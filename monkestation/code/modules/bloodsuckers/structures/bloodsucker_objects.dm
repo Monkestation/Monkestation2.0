@@ -93,7 +93,7 @@
 		return TRUE
 	if(stat >= UNCONSCIOUS)
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_NODEATH))
+	if(HAS_TRAIT_FROM(src, TRAIT_NODEATH, TORPOR_TRAIT))
 		return TRUE
 	return FALSE
 
@@ -155,7 +155,7 @@
 	if(bloodsuckerdatum)
 		// If DEAD or TORPID... Kill Bloodsucker!
 		if(target.StakeCanKillMe())
-			bloodsuckerdatum.FinalDeath()
+			bloodsuckerdatum.final_death()
 		else
 			to_chat(target, span_userdanger("You have been staked! Your powers are useless, your death forever, while it remains in place."))
 			target.balloon_alert(target, "you have been staked!")
@@ -242,7 +242,7 @@
 	. = ..()
 	if(!user.can_read(src) || in_use || (target == user) || !ismob(target))
 		return
-	if(!HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER))
+	if(!HAS_TRAIT(user.mind, TRAIT_OCCULTIST))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 			return
@@ -269,7 +269,7 @@
 		to_chat(user, span_notice("You fail to draw any conclusions to [target] being a Bloodsucker."))
 
 /obj/item/book/kindred/attack_self(mob/living/user)
-	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER))
+	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_OCCULTIST))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 		else

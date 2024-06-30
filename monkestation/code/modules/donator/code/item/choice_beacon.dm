@@ -80,3 +80,13 @@
 	name = "Quil Maid"
 	default_name = "Quil Maid"
 	donator_pet = 	/mob/living/basic/pet/quilmaid
+
+/obj/item/choice_beacon/pet/donator/gumball_goblin
+	name = "Gumball Goblin"
+	default_name = "Gumball Goblin"
+	donator_pet = 	/mob/living/basic/pet/gumball_goblin
+
+/obj/item/choice_beacon/pet/donator/orangutan
+	name = "Orangutan"
+	default_name = "Orangutan"
+	donator_pet = 	/mob/living/basic/pet/orangutan

@@ -665,6 +665,7 @@
 		newname = "Pet Slime"
 	M.name = newname
 	M.real_name = newname
+	M.update_name_tag(newname) // monkestation edit: name tags
 	qdel(src)
 
 /obj/item/slimepotion/slime/sentience
@@ -790,16 +791,18 @@
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		to_chat(user, span_warning("The steroid only works on baby slimes!"))
+		to_chat(user, span_warning("The steroid only works on slimes!")) // monkestation edit: not baby slimes only, no
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
+	// monkestation start: xenobio rework
 	if(M.ooze_production >= 50)
 		to_chat(user, span_warning("The slime is already producing too much ooze!"))
 		return
 	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
-	M.ooze_production++
+	M.ooze_production = min(M.ooze_production + 20, 50)
+	// monkestation end
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
@@ -872,7 +875,7 @@
 		return
 	if(isitem(C))
 		var/obj/item/I = C
-		if(I.slowdown <= 0 || I.obj_flags & IMMUTABLE_SLOW)
+		if(I.slowdown <= 0 || (I.item_flags & IMMUTABLE_SLOW))
 			to_chat(user, span_warning("The [C] can't be made any faster!"))
 			return ..()
 		I.slowdown = 0

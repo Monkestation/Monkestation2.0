@@ -1,14 +1,21 @@
 import { Window } from '../../layouts';
 import { useBackend, useLocalState } from '../../backend';
-import { ByondUi, Stack, Button, Section, ProgressBar, LabeledList } from '../../components';
+import {
+  ByondUi,
+  Stack,
+  Button,
+  Section,
+  ProgressBar,
+  LabeledList,
+} from '../../components';
 import { formatSiUnit } from '../../format';
 import { ModulesPane } from './ModulesPane';
 import { AlertPane } from './AlertPane';
 import { AccessConfig } from '../common/AccessConfig';
 import { MainData } from './data';
 
-export const Mecha = (props, context) => {
-  const { data } = useBackend<MainData>(context);
+export const Mecha = (props) => {
+  const { data } = useBackend<MainData>();
   return (
     <Window theme={data.ui_theme} width={800} height={560}>
       <Window.Content>
@@ -18,13 +25,9 @@ export const Mecha = (props, context) => {
   );
 };
 
-export const Content = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
-  const [edit_access, editAccess] = useLocalState(
-    context,
-    'edit_access',
-    false
-  );
+export const Content = (props) => {
+  const { act, data } = useBackend<MainData>();
+  const [edit_access, editAccess] = useLocalState('edit_access', false);
   const {
     name,
     mecha_flags,
@@ -50,7 +53,8 @@ export const Content = (props, context) => {
                   tooltipPosition="left"
                   onClick={() => act('changename')}
                 />
-              }>
+              }
+            >
               <Stack fill vertical>
                 <Stack.Item>
                   <ByondUi
@@ -154,12 +158,13 @@ const PowerBar = (props, context) => {
         }}
         style={{
           'text-shadow': '1px 1px 0 black',
-        }}>
+        }}
+      >
         {power_max === null
           ? 'Power cell missing'
           : power_level === 1e31
-            ? 'Infinite'
-            : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
+          ? 'Infinite'
+          : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
               power_max * 1000,
               0,
               'J'
@@ -183,7 +188,8 @@ const IntegrityBar = (props, context) => {
         }}
         style={{
           'text-shadow': '1px 1px 0 black',
-        }}>
+        }}
+      >
         {!scanmod_rating ? 'Unknown' : `${integrity} of ${integrity_max}`}
       </ProgressBar>
     </LabeledList.Item>
@@ -204,14 +210,15 @@ const WeightBar = (props, context) => {
         }}
         style={{
           'text-shadow': '1px 1px 0 black',
-        }}>
+        }}
+      >
         {!scanmod_rating
           ? 'Unknown'
           : `${formatSiUnit(
-            total_equip_weight * 1000,
-            1,
-            'g'
-          )} of ${formatSiUnit(maximum_weight * 1000, 1, 'g')}`}
+              total_equip_weight * 1000,
+              1,
+              'g'
+            )} of ${formatSiUnit(maximum_weight * 1000, 1, 'g')}`}
       </ProgressBar>
     </LabeledList.Item>
   );
@@ -272,8 +279,8 @@ const CabinSeal = (props, context) => {
                 temp_hazard
                   ? 'danger'
                   : temp_warning
-                    ? 'average'
-                    : 'transparent'
+                  ? 'average'
+                  : 'transparent'
               }
               icon="temperature-low"
               tooltipPosition="top"
@@ -284,8 +291,8 @@ const CabinSeal = (props, context) => {
                 pressure_hazard
                   ? 'danger'
                   : pressure_warning
-                    ? 'average'
-                    : 'transparent'
+                  ? 'average'
+                  : 'transparent'
               }
               icon="gauge-high"
               tooltipPosition="top"
@@ -293,7 +300,8 @@ const CabinSeal = (props, context) => {
             />
           </>
         )
-      }>
+      }
+    >
       <Button
         icon={cabin_sealed ? 'mask-ventilator' : 'wind'}
         content={cabin_sealed ? 'Sealed' : 'Exposed'}

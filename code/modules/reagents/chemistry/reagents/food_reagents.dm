@@ -60,7 +60,7 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	. = ..()
 	target.fertility_boosting += min(25, volume * 0.5)
 
@@ -169,7 +169,7 @@
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 	turf_exposure = TRUE
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
@@ -232,9 +232,9 @@
 	default_container = /obj/item/reagent_containers/condiment/sugar
 
 
-/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	.=..()
-	target.adjust_happiness(0.1*volume)
+	target.adjust_happiness(0.1*volume, user)
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
@@ -540,6 +540,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 	turf_exposure = TRUE
 
 /datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)

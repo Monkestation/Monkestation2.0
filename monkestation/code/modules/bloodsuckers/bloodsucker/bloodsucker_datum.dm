@@ -41,6 +41,8 @@
 	var/frenzy_threshold = FRENZY_THRESHOLD_ENTER
 	///If we are currently in a Frenzy
 	var/frenzied = FALSE
+	/// Whether the death handling code is active or not.
+	var/handling_death = FALSE
 
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
@@ -96,6 +98,14 @@
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NO_MIRROR_REFLECTION
 	)
+	/// Traits applied during Torpor.
+	var/static/list/torpor_traits = list(
+		TRAIT_DEATHCOMA,
+		TRAIT_FAKEDEATH,
+		TRAIT_NODEATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE
+	)
 
 /**
  * Apply innate effects is everything given to the mob
@@ -110,6 +120,7 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
+	current_mob.clear_mood_event("vampcandle")
 
 	if(current_mob.hud_used)
 		on_hud_created()
@@ -341,7 +352,7 @@
 
 	// Default Report
 	var/objectives_complete = TRUE
-	if(objectives.len)
+	if(length(objectives))
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
 			if(objective.objective_name == "Optional Objective")
@@ -351,10 +362,10 @@
 				break
 
 	// Now list their vassals
-	if(vassals.len)
-		report += "<span class='header'>Their Vassals were...</span>"
+	if(length(vassals))
+		report +=  span_header("Their Vassals were...")
 		for(var/datum/antagonist/vassal/all_vassals as anything in vassals)
-			if(!all_vassals.owner)
+			if(QDELETED(all_vassals?.owner))
 				continue
 			var/list/vassal_report = list()
 			vassal_report += "<b>[all_vassals.owner.name]</b>"
@@ -367,7 +378,7 @@
 				vassal_report += " and was the <b>Revenge Vassal</b>"
 			report += vassal_report.Join()
 
-	if(objectives.len == 0 || objectives_complete)
+	if(!length(objectives) || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"

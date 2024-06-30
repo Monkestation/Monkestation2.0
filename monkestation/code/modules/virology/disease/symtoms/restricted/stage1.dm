@@ -48,6 +48,7 @@
 			new_mob.mind.add_antag_datum(transformed_antag_datum)
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
+		new_mob.update_name_tag()
 		qdel(affected_mob)
 
 /datum/symptom/transformation/proc/replace_banned_player(mob/living/new_mob, mob/living/affected_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
@@ -134,3 +135,51 @@
 													span_userdanger("You cough up butterflies!"))
 				new /mob/living/basic/butterfly(mob.loc)
 				new /mob/living/basic/butterfly(mob.loc)
+
+/datum/symptom/death_sandwich
+	name = "Death Sandwich"
+	desc = "You ate it wrong, and now you will die. Cure: Anacea"
+	stage = 1
+	badness = EFFECT_DANGER_DEADLY
+	restricted = TRUE
+	max_multiplier = 3
+	chance = 25
+	max_chance = 25
+
+/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	switch(round(multiplier))
+		if(1)
+			if(prob(12))
+				mob.emote("cough")
+			if(prob(4))
+				mob.emote("gag")
+			if(prob(4))
+				mob.adjustToxLoss(5)
+		if(2)
+			if(prob(40))
+				mob.emote("cough")
+			if(prob(20))
+				mob.emote("gag")
+			if(prob(8))
+				to_chat(mob, span_danger("Your body feels hot!"))
+				if(prob(20))
+					mob.take_bodypart_damage(burn = 1)
+			if(prob(24))
+				mob.adjustToxLoss(10)
+		if(3)
+			if(prob(40))
+				mob.emote("gag")
+			if(prob(80))
+				mob.emote("gasp")
+			if(prob(20))
+				mob.vomit(20, TRUE)
+			if(prob(20))
+				to_chat(mob, span_danger("Your body feels hot!"))
+				if(prob(60))
+					mob.take_bodypart_damage(burn = 2)
+			if(prob(48))
+				mob.adjustToxLoss(15)
+			if(prob(12))
+				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
+				mob.set_silence_if_lower(5 SECONDS)
+	multiplier_tweak(0.1)

@@ -15,6 +15,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -25,11 +26,12 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_DETECTIVE,
 		JOB_WARDEN,
-		JOB_SECURITY_OFFICER
+		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 1
 	// BBs should be less common/abundant than normal traitors, albeit not overly so.
-	weight = 8
+	weight = 16
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag

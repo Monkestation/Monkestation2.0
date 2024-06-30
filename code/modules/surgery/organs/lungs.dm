@@ -48,6 +48,7 @@
 	var/safe_plasma_min = 0
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
+	var/n2o_detect_min = 0.08 //Minimum n2o for effects
 	var/n2o_para_min = 1 //Sleeping agent
 	var/n2o_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
@@ -417,9 +418,8 @@
 	else
 		healium_euphoria = EUPHORIA_INACTIVE
 	// Stun/Sleep side-effects.
-	if(healium_pp > healium_para_min)
-		// Random chance to stun mob. Timing not in seconds to have a much higher variation
-		breather.Unconscious(rand(3 SECONDS, 5 SECONDS))
+	if(healium_pp > healium_para_min && !breather.IsSleeping() && prob(30))
+		breather.Sleeping(rand(3 SECONDS, 5 SECONDS))
 	// Metabolize to reagent when concentration is high enough.
 	if(healium_pp > healium_sleep_min)
 		breather.reagents.add_reagent(/datum/reagent/healium, max(0, 1 - breather.reagents.get_reagent_amount(/datum/reagent/healium)))
@@ -507,12 +507,12 @@
 /obj/item/organ/internal/lungs/proc/too_much_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, n2o_pp, old_n2o_pp)
 	if(n2o_pp < n2o_para_min)
 		// Small amount of N2O, small side-effects.
-		if(n2o_pp <= 0.01)
-			if(old_n2o_pp > 0.01)
+		if(n2o_pp <= n2o_detect_min)
+			if(old_n2o_pp > n2o_detect_min)
 				return BREATH_LOST
 			return
 		// No alert for small amounts, but the mob randomly feels euphoric.
-		if(old_n2o_pp >= n2o_para_min || old_n2o_pp <= 0.01)
+		if(old_n2o_pp >= n2o_para_min || old_n2o_pp <= n2o_detect_min)
 			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 
 		if(prob(20))

@@ -15,7 +15,6 @@
 		TRAIT_QUICK_BUILD,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_NIGHT_VISION,
-		TRAIT_FREERUNNING
 		// TRAIT_pickpocketing?
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
@@ -27,7 +26,7 @@
 	liked_food = GORE | MEAT | GROSS
 	species_language_holder = /datum/language_holder/goblin
 	maxhealthmod = 0.75
-	stunmod = 0.75
+	stunmod = 1.2
 	speedmod = -0.25
 	payday_modifier = 1
 	bodypart_overrides = list(
@@ -117,13 +116,25 @@
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "Short",
 			SPECIES_PERK_DESC = "Short, haha.", //Dwarf trauma
-		)
+		),
 		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "hand",
 			SPECIES_PERK_NAME = "Small Hands",
 			SPECIES_PERK_DESC = "Goblin's small hands allow them to construct machines faster.", //Quick Build trait
-		)
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Agile",
+			SPECIES_PERK_DESC = "Goblins run faster than other species.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Hard to Keep Down",
+			SPECIES_PERK_DESC = "You get back up quicker from stuns.",
+		),
 	)
 
 	return to_add

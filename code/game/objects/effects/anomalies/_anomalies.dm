@@ -23,6 +23,8 @@
 	var/immortal = FALSE
 	///Do we stay in one place?
 	var/immobile = FALSE
+	///Chance per second that we will move
+	var/move_chance = ANOMALY_MOVECHANCE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -52,9 +54,8 @@
 	countdown = new(src)
 	if(countdown_colour)
 		countdown.color = countdown_colour
-	if(immortal)
-		return
-	countdown.start()
+	if(!immortal)
+		countdown.start()
 
 /obj/effect/anomaly/vv_edit_var(vname, vval)
 	. = ..()
@@ -79,8 +80,12 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
-	if(!immobile && SPT_PROB(ANOMALY_MOVECHANCE, seconds_per_tick))
-		step(src,pick(GLOB.alldirs))
+	if(!immobile && SPT_PROB(move_chance, seconds_per_tick))
+		move_anomaly()
+
+/// Move in a direction
+/obj/effect/anomaly/proc/move_anomaly()
+	step(src, pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -93,7 +98,7 @@
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
-		aSignal.forceMove(drop_location())
+		aSignal?.forceMove(drop_location())
 		aSignal = null
 	// else, anomaly core gets deleted by qdel(src).
 

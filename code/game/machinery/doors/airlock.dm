@@ -1000,9 +1000,14 @@
 			return
 	add_fingerprint(user)
 
-	if(is_wire_tool(C) && panel_open)
-		attempt_wire_interaction(user)
-		return
+	if(is_wire_tool(C))
+		if(panel_open)
+			attempt_wire_interaction(user)
+			return
+		else
+			attempt_hacking_interaction(user)
+			return
+
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))
 			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)
@@ -1582,7 +1587,7 @@
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, span_notice("[src]'s reinforcement needs to be removed first."))
 				return FALSE
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
