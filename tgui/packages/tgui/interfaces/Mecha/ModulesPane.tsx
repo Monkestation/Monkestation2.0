@@ -40,8 +40,8 @@ const moduleSlotLabel = (param) => {
   }
 };
 
-export const ModulesPane = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+export const ModulesPane = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { modules, selected_module_index, weapons_safety } = data;
   return (
     <Section
@@ -134,8 +134,8 @@ export const ModulesPane = (props, context) => {
   );
 };
 
-export const ModuleDetails = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+export const ModuleDetails = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { slot, name, desc, icon, detachable, ref, snowflake } = props.module;
   return (
     <Box>
@@ -190,8 +190,8 @@ export const ModuleDetails = (props, context) => {
   );
 };
 
-const ModuleDetailsBasic = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const ModuleDetailsBasic = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const {
     ref,
@@ -319,8 +319,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
   }
 };
 
-const SnowflakeWeaponBallistic = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeWeaponBallistic = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const {
     projectiles,
@@ -370,8 +370,8 @@ const SnowflakeWeaponBallistic = (props, context) => {
   );
 };
 
-const SnowflakeSleeper = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeSleeper = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { patient } = props.module.snowflake;
   return !patient ? (
@@ -423,8 +423,8 @@ const SnowflakeSleeper = (props, context) => {
   );
 };
 
-const SnowflakeSyringe = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeSyringe = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const { ref, energy_per_use, equip_cooldown } = props.module;
   const { mode, syringe, max_syringe, reagents, total_reagents } =
@@ -467,8 +467,8 @@ const SnowflakeSyringe = (props, context) => {
   );
 };
 
-const SnowflakeMode = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeMode = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { mode, mode_label } = props.module.snowflake;
   return (
@@ -486,8 +486,8 @@ const SnowflakeMode = (props, context) => {
   );
 };
 
-const SnowflakeRadio = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeRadio = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { microphone, speaker, minFrequency, maxFrequency, frequency } =
     props.module.snowflake;
@@ -542,8 +542,8 @@ const SnowflakeRadio = (props, context) => {
   );
 };
 
-const SnowflakeAirTank = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeAirTank = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { cabin_sealed, one_atmosphere } = data;
   const { ref, integrity, active } = props.module;
   const {
@@ -750,8 +750,8 @@ const SnowflakeAirTank = (props, context) => {
   );
 };
 
-const SnowflakeOrebox = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeOrebox = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { contents } = props.module.snowflake;
   return (
@@ -800,8 +800,8 @@ const SnowflakeOrebox = (props, context) => {
   );
 };
 
-const SnowflakeCargo = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeCargo = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { cargo, cargo_capacity } = props.module.snowflake;
   return (
@@ -837,8 +837,8 @@ const SnowflakeCargo = (props, context) => {
   );
 };
 
-const SnowflakeExtinguisher = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeExtinguisher = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { reagents, total_reagents, reagents_required } =
     props.module.snowflake;
@@ -880,8 +880,8 @@ const SnowflakeExtinguisher = (props, context) => {
   );
 };
 
-const SnowflakeGeneraor = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeGeneraor = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { sheet_material_amount } = data;
   const { ref, active, name } = props.module;
   const { fuel } = props.module.snowflake;

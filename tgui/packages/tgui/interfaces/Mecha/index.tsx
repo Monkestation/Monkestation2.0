@@ -144,8 +144,8 @@ export const Content = (props) => {
   );
 };
 
-const PowerBar = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const PowerBar = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, power_max } = data;
   return (
     <LabeledList.Item label="Power">
@@ -174,8 +174,8 @@ const PowerBar = (props, context) => {
   );
 };
 
-const IntegrityBar = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const IntegrityBar = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { integrity, integrity_max, scanmod_rating } = data;
   return (
     <LabeledList.Item label="Integrity">
@@ -196,8 +196,8 @@ const IntegrityBar = (props, context) => {
   );
 };
 
-const WeightBar = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const WeightBar = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { total_equip_weight, maximum_weight, scanmod_rating } = data;
   return (
     <LabeledList.Item label="Weight">
@@ -224,8 +224,8 @@ const WeightBar = (props, context) => {
   );
 };
 
-const LightsBar = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const LightsBar = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, power_max, mecha_flags, mechflag_keys } = data;
   const has_lights = mecha_flags & mechflag_keys['HAS_LIGHTS'];
   const lights_on = mecha_flags & mechflag_keys['LIGHTS_ON'];
@@ -242,8 +242,8 @@ const LightsBar = (props, context) => {
   );
 };
 
-const CabinSeal = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const CabinSeal = (props) => {
+  const { act, data } = useBackend<MainData>();
   const {
     enclosed,
     cabin_sealed,
@@ -313,8 +313,8 @@ const CabinSeal = (props, context) => {
   );
 };
 
-const DNALock = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const DNALock = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { dna_lock } = data;
   return (
     <LabeledList.Item label="DNA Lock">
