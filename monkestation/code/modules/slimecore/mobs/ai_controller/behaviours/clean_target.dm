@@ -38,6 +38,7 @@
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets_slime/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/obj/closest
+	var/closest_dist
 	var/closest_path
 	for(var/obj/trash as anything in view(search_range, controller.pawn))
 		if(QDELETED(trash))
@@ -46,11 +47,17 @@
 			continue
 		if(trash.loc == controller.pawn.loc)
 			return trash
-		// hopefully get_swarm_path_to will be better, as these things tend to breed like rabbits and you'll have 5 bajillion cleaner slimes before you know it
-		var/list/path_dist = length(get_swarm_path_to(controller.pawn, trash, age = MAP_REUSE_FAST))
-		if(!path_dist)
-			continue
-		if(!closest || path_dist < closest_path)
-			closest = trash
-			closest_path = path_dist
+		var/dist = get_dist_euclidean(get_turf(controller.pawn), get_turf(trash))
+		var/path_length
+		if(!QDELETED(closest))
+			if(dist > closest_dist)
+				continue
+			var/path_length = length(get_swarm_path_to(controller.pawn, trash, age = MAP_REUSE_FAST))
+			if(closest_path <= path_length)
+				continue
+		else
+			path_length = length(get_swarm_path_to(controller.pawn, trash, age = MAP_REUSE_FAST))
+		closest = trash
+		closest_dist = dist
+		closest_path = path_length
 	return closest
