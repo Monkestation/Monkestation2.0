@@ -88,7 +88,7 @@
 	return ..()
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
-/obj/item/mod/module/energy_shield
+/obj/item/mod/module/anomaly_locked/energy_shield
 	name = "MOD energy shield module"
 	desc = "A personal, protective forcefield typically seen in military applications. \
 		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
@@ -98,7 +98,8 @@
 	complexity = 3
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
+	prebuilt = TRUE
 	/// Max charges of the shield.
 	var/max_charges = 3
 	/// The time it takes for the first charge to recover.
@@ -118,28 +119,28 @@
 	/// Charges the shield should start with.
 	var/charges
 
-/obj/item/mod/module/energy_shield/Initialize(mapload)
+/obj/item/mod/module/anomaly_locked/energy_shield/Initialize(mapload)
 	. = ..()
 	charges = max_charges
 
-/obj/item/mod/module/energy_shield/on_suit_activation()
+/obj/item/mod/module/anomaly_locked/energy_shield/on_suit_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(shield_reaction))
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/anomaly_locked/energy_shield/on_suit_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
-/obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/obj/item/mod/module/anomaly_locked/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
 		drain_power(use_power_cost)
 		return SHIELD_BLOCK
 	return NONE
 
-/obj/item/mod/module/energy_shield/wizard
+/obj/item/mod/module/anomaly_locked/energy_shield/wizard
 	name = "MOD battlemage shield module"
 	desc = "The caster wielding this spell gains a visible barrier around them, channeling arcane power through \
 		specialized runes engraved onto the surface of the suit to generate a wall of force. \

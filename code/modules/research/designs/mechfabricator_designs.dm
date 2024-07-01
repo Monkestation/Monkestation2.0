@@ -1660,6 +1660,12 @@
 	id = "mod_emp_shield"
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/emp_shield
+	
+/datum/design/module/mod_emp_shield_advanced
+	name = "Advanced EMP Shield Module"
+	id = "mod_emp_shield_advanced"
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/emp_shield/advanced
 
 /datum/design/module/mod_flashlight
 	name = "Flashlight Module"
@@ -1754,6 +1760,16 @@
 	id = "mod_waddle"
 	materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/waddle
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+	
+/datum/design/module/lubespray
+	name = "Lube Shoulders Module"
+	id = "mod_lubespray"
+	materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bananium =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/pepper_shoulders/clown
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
@@ -1925,6 +1941,26 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	
+/datum/design/module/pepperspray
+	name = "Pepper Shoulders Module"
+	id = "mod_pepperspray"
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/pepper_shoulders
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	
+/datum/design/module/crewarmor
+	name = "Security Armor Booster Module"
+	id = "mod_crewarmor"
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT *1.25, /datum/material/titanium =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/armor_booster/crew
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 //MODsuit bepis modules
 /datum/design/module/disposal
@@ -1967,5 +2003,15 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/module/mod_energyshield
+	name = "Prototype Energy Shield Module"
+	id = "mod_energyshield"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT *1.25, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/anomaly_locked/energy_shield/crew
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
 
 // MONKE END - changed/added lots of department_flags
