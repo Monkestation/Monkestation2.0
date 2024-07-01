@@ -6,7 +6,6 @@
 	var/number // unique id
 	var/list/cables = list() // all cables & junctions
 	var/list/nodes = list() // all connected machines
-
 	var/load = 0 // the current load on the powernet, increased by each machine at processing
 	var/newavail = 0 // what available power was gathered last tick, then becomes...
 	var/avail = 0 //...the current available power in the powernet
