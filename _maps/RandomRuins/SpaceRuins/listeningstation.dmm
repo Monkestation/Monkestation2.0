@@ -649,9 +649,9 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "yc" = (
-/obj/machinery/shower/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain,
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "ym" = (
