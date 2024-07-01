@@ -253,7 +253,7 @@
 /datum/design/surgical_drapes
 	name = "Surgical Drapes"
 	id = "surgical_drapes"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB // monkestation edit: allow robotics to print
 	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/surgical_drapes
 	category = list(
@@ -266,36 +266,36 @@
 	desc = "A laser scalpel used for precise cutting."
 	id = "laserscalpel"
 	build_path = /obj/item/scalpel/advanced
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB // monkestation edit: allow robotics to print
 	materials = list(/datum/material/iron = 6000, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = 4000)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
 
 /datum/design/mechanicalpinches
 	name = "Mechanical Pinches"
 	desc = "These pinches can be either used as retractor or hemostat."
 	id = "mechanicalpinches"
 	build_path = /obj/item/retractor/advanced
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB // monkestation edit: allow robotics to print
 	materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
 
 /datum/design/searingtool
 	name = "Searing Tool"
 	desc = "Used to mend tissue together. Or drill tissue away."
 	id = "searingtool"
 	build_path = /obj/item/cautery/advanced
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB // monkestation edit: allow robotics to print
 	materials = list(/datum/material/iron = 4000, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
 
 /datum/design/medical_spray_bottle
 	name = "Medical Spray Bottle"
