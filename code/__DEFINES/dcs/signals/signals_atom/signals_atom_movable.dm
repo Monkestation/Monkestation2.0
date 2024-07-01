@@ -108,3 +108,6 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE 1
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
+
+/// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
+#define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"
