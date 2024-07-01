@@ -806,6 +806,21 @@
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
 		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
+/client/proc/allow_browser_inspect()
+	set category = "Debug"
+	set name = "Allow Browser Inspect"
+	set desc = "Allow browser debugging via inspect"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(byond_version < 516)
+		to_chat(src, span_warning("You can only use this on 516!"))
+		return
+
+	to_chat(src, span_info("You can now right click to use inspect on browsers."))
+	winset(src, "", "browser-options=byondstorage,find,devtools")
+
 /client/proc/pump_random_event()
 	set category = "Debug"
 	set name = "Pump Random Event"
