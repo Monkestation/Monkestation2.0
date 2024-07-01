@@ -35,13 +35,12 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	return TRUE
 
 ///Send a pod full of helpful items to the station's bridge
-/proc/send_station_support_package(sent_message = "We are sending a support package to the bridge to help deal with the threats to the station.")
+/proc/send_station_support_package(list/additional_items, sent_message = "We are sending a support package to the bridge to help deal with the threats to the station.")
 	var/turf/bridge_turf = pick(GLOB.areas_by_type[/area/station/command/bridge].contained_turfs)
 	if(!bridge_turf)
 		return
 
-	priority_announce(sent_message, has_important_message = TRUE)
-	podspawn(list("target" = bridge_turf, "spawn" = list(
+	var/list/spawned_list = list(
 		/obj/item/storage/medkit/advanced,
 		/obj/item/storage/medkit/brute,
 		/obj/item/storage/medkit/fire,
@@ -49,7 +48,13 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		/obj/item/gun/medbeam,
 		/obj/item/storage/part_replacer/cargo,
 		/obj/item/storage/box/recharger_parts,
-	)))
+	)
+
+	if(additional_items)
+		spawned_list += additional_items
+
+	priority_announce(sent_message, has_important_message = TRUE)
+	podspawn(list("target" = bridge_turf, "spawn" = spawned_list))
 
 /obj/item/storage/box/recharger_parts
 	name = "Recharger Parts"

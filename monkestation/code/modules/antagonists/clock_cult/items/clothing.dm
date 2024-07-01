@@ -101,7 +101,6 @@
 	var/mob/living/wearer
 	/// Are we currently empowered
 	var/is_empowered = FALSE
-	var/animation_time = 0.5 SECONDS
 
 /datum/armor/clockwork_cloak
 	melee = 15
@@ -120,6 +119,8 @@
 		disable()
 
 /obj/item/clothing/suit/clockwork/cloak/Destroy()
+	if(shroud_active)
+		disable()
 	wearer = null
 	return ..()
 
@@ -148,19 +149,20 @@
 	wearer = null
 
 /obj/item/clothing/suit/clockwork/cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
-	if(is_empowered && prob(CLOAK_DODGE_CHANCE)) //we handle this just a biiiiit too different from parent to make simply using the vars be viable
+	if(is_empowered && shroud_active && prob(CLOAK_DODGE_CHANCE)) //we handle this just a biiiiit too different from parent to make simply using the vars be viable
 		owner.visible_message(span_danger("[owner]'s [src] makes them phase out of the way of [attack_text]!"))
-		//addtimer(CALLBACK(src, PROC_REF(fade_back), owner.alpha), animation_time)
-//		var/fade_to = owner.alpha
-//		animate(owner, animation_time, alpha = 30)
-//		animate(owner, animation_time, alpha = fade_to)
+		owner.add_filter("clock_cloak", 3, motion_blur_filter(0, 0))
+		addtimer(CALLBACK(src, PROC_REF(remove_phase_filter), owner), (0.6 SECONDS) + 1)
+		ASYNC
+			animate(owner.get_filter("clock_cloak"), 0.3 SECONDS, x = prob(50) ? rand(4, 5) : rand(-4, -5), y = prob(50) ? rand(4, 5) : rand(-4, -5), flags = ANIMATION_PARALLEL)
+			animate(time = 0.3 SECONDS, x = 0, y = 0)
 		playsound(src, 'sound/weapons/etherealmiss.ogg', BLOCK_SOUND_VOLUME, vary = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		return TRUE
 
-/obj/item/clothing/suit/clockwork/cloak/proc/fade_back(fade_to)
-	if(QDELETED(wearer))
+/obj/item/clothing/suit/clockwork/cloak/proc/remove_phase_filter(mob/living/remove_from)
+	if(QDELETED(remove_from))
 		return
-	animate(wearer, animation_time, alpha = fade_to)
+	remove_from.remove_filter("clock_cloak")
 
 /// Apply the effects to the wearer, making them pretty hard to see
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
@@ -169,8 +171,7 @@
 		return
 
 	previous_alpha = wearer.alpha
-	//animate(wearer, alpha = 80, time = 3 SECONDS)
-	//wearer.add_filter("clock_cloak", 3, list("type" = "blur", "size" = "6"))
+	animate(wearer, alpha = 80, time = 3 SECONDS)
 	apply_wibbly_filters(wearer)
 	ADD_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
@@ -181,9 +182,8 @@
 		return
 
 	do_sparks(3, FALSE, wearer)
-	//wearer.remove_filter("clock_cloak")
 	remove_wibbly_filters(wearer)
-	//animate(wearer, alpha = previous_alpha, time = 3 SECONDS)
+	animate(wearer, alpha = previous_alpha, time = 3 SECONDS)
 	REMOVE_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/clockwork

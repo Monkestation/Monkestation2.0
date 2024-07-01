@@ -163,6 +163,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 50)
 	SSsecurity_level.set_level(3)
 	addtimer(CALLBACK(src, PROC_REF(begin_assault)), ARK_GRACE_PERIOD)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package), /obj/item/turf_demolisher/reebe), 10 SECONDS)
 
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \

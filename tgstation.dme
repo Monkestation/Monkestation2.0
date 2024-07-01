@@ -565,7 +565,6 @@
 #include "code\__HELPERS\~monkestation-helpers\atoms.dm"
 #include "code\__HELPERS\~monkestation-helpers\clients.dm"
 #include "code\__HELPERS\~monkestation-helpers\cmp.dm"
-#include "code\__HELPERS\~monkestation-helpers\filters.dm"
 #include "code\__HELPERS\~monkestation-helpers\icon_smoothing.dm"
 #include "code\__HELPERS\~monkestation-helpers\mapping.dm"
 #include "code\__HELPERS\~monkestation-helpers\roundend.dm"
