@@ -50,6 +50,10 @@ endmap
 map multiz_debug
 endmap
 
+map steelstation
+	minplayer 50
+endmap
+
 map boxstation
 	minplayers 25
 	votable
