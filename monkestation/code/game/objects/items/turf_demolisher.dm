@@ -19,16 +19,16 @@
 	var/recharge_time = 0
 	COOLDOWN_DECLARE(recharge)
 
-/obj/item/turf_demolisher/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(!isturf(attacked_atom) || (user.istate & ISTATE_HARM))
-		return ..()
-
-	if(!check_breakble(attacked_atom, user, params))
+/obj/item/turf_demolisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag || !isturf(target) || (user.istate & ISTATE_HARM))
 		return
 
-	if(try_demolish(attacked_atom, user))
+	if(!check_breakble(target, user, click_parameters))
 		return
-	return ..()
+
+	if(try_demolish(target, user))
+		return
 
 /obj/item/turf_demolisher/proc/check_breakble(turf/attacked_turf, mob/living/user, params)
 	if(recharge_time && !COOLDOWN_FINISHED(src, recharge))
@@ -66,10 +66,11 @@
 	if(!.)
 		return
 
-	if(!on_reebe(src))
+	var/turf/our_turf = get_turf(src)
+	if(!on_reebe(our_turf))
 		balloon_alert(user, "\The [src] is specially calibrated to be used on reebe and will not work here!")
 		return FALSE
 
-	if(GLOB.clock_ark && get_dist(get_turf(src), get_turf(GLOB.clock_ark) <= 14))
+	if(GLOB.clock_ark && get_dist(our_turf, get_turf(GLOB.clock_ark)) <= 8)
 		balloon_alert(user, "A near by energy source is interfering \the [src]!")
 		return FALSE

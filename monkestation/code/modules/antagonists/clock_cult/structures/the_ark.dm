@@ -146,8 +146,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
 	send_clock_message(null, span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
-
 	sleep(3 SECONDS)
+	current_state = ARK_STATE_ACTIVE
 
 	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
 		var/mob/living/servant_mob = servant_mind.current
@@ -174,7 +174,6 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")
 
 /obj/structure/destructible/clockwork/the_ark/proc/begin_assault()
-	current_state = ARK_STATE_ACTIVE
 	START_PROCESSING(SSprocessing, src)
 	priority_announce("Space-time anomalies detected near the station. Source determined to be a temporal \
 		energy pulse emanating from J1523-215. All crew are to enter [text2ratvar("prep#re %o di%")]\
