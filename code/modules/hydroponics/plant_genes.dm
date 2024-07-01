@@ -566,6 +566,24 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(our_plant)
 
+/datum/plant_gene/trait/noreact
+	name = "Catalytic Inhibitor Serum"
+	description = "This genetic trait enables the plant to produce a serum that effectively halts chemical reactions within its tissues."
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/noreact/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+	ENABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(noreact_on_squash))
+
+/datum/plant_gene/trait/noreact/proc/noreact_on_squash(obj/item/our_plant, atom/target)
+	SIGNAL_HANDLER
+
+	DISABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	our_plant.reagents.handle_reactions()
+
 /**
  * A plant trait that causes the plant's capacity to double.
  *
@@ -587,8 +605,7 @@
 
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant, /obj/item/food/grown))
-		//Grown foods use the edible component so we need to change their max_volume var
-		grown_plant.max_volume *= rate
+		grown_plant.volume_rate = rate
 	else
 		//Grown inedibles however just use a reagents holder, so.
 		our_plant.reagents?.maximum_volume *= rate

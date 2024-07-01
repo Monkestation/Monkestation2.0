@@ -84,6 +84,14 @@
 	cost = 4
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
 
+/datum/uplink_item/role_restricted/syndicate_plant_gene
+	name = "Catalytic Inhibitor Serum Plant Data Disk"
+	desc = "This plant data disk contains the genetic blueprint for the Catalytic Inhibitor Serum gene.\
+			enabling plants to produce a serum that halts all internal chemical reactions"
+	item = /obj/item/disk/plantgene/syndicate
+	cost = 20
+	restricted_roles = list(JOB_BOTANIST)
+
 /datum/uplink_item/role_restricted/combat_baking
 	name = "Combat Bakery Kit"
 	desc = "A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword, \
