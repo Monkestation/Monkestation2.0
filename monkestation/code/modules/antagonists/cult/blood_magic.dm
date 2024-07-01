@@ -85,7 +85,7 @@
 			span_userdanger("Making sure to avoid [user]'s [src], you twist [user.p_their()] arm to send it right back at [user.p_them()]!"),
 			ignored_mobs = list(user)
 		)
-		to_chat(user, span_userdanger("As you attempt to stun [target] with the spell, [target.p_they()] twist your arm and send the spell back at you!"), type = MESSAGE_TYPE_COMBAT)
+		to_chat(user, span_userdanger("As you attempt to stun [target] with the spell, [target.p_they()] twist[target.p_s()] your arm and send the spell back at you!"), type = MESSAGE_TYPE_COMBAT)
 		effect_weakened(user, silent = TRUE)
 		return TRUE
 	else if(istype(martial_art, /datum/martial_art/the_sleeping_carp))
