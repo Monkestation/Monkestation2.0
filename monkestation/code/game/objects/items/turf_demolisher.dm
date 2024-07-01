@@ -3,6 +3,8 @@
 	name = "\improper Exprimental Demolisher"
 	desc = "An exprimental able to quickly deconstruct any surface."
 	icon = 'icons/obj/mining.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	///The balloon_alert() to send when we cannot demolish a turf
