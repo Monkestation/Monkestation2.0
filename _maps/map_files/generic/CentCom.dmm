@@ -10854,7 +10854,7 @@
 "Dh" = (
 /obj/structure/bookcase,
 /obj/item/book/granter/action/spell/random,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/book/random,
 /obj/item/book/random,
