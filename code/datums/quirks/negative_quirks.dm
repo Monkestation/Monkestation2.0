@@ -618,6 +618,25 @@
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
 
+	/datum/quirk/bipedal_amputee
+	name = "Bipedal Amputee"
+	desc = "Your old legs dont work anymore, so youve gotten some new ones! They're kinda cheap though..."
+	icon = "tg-prosthetic-leg"
+	value = -5
+	medical_record_text = "During physical examination, patient was found to have only leg prosthetic limbs."
+	hardcore_value = 5
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+
+/datum/quirk/bipedal_amputee/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
+
+/datum/quirk/bipedal_amputee/post_add()
+	to_chat(quirk_holder, span_boldannounce("Your legs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+
+
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
