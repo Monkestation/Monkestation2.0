@@ -25415,7 +25415,7 @@
 	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_x = 8;
 	pixel_y = 12
 	},
@@ -37020,7 +37020,7 @@
 	pixel_y = 4;
 	pixel_x = 9
 	},
-/obj/item/stamp/hos{
+/obj/item/stamp/head/hos{
 	pixel_x = 10;
 	pixel_y = 6
 	},
@@ -43295,7 +43295,7 @@
 /obj/item/pen{
 	pixel_y = 4
 	},
-/obj/item/stamp/ce,
+/obj/item/stamp/head/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "onj" = (
@@ -59023,7 +59023,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/blue,
 /obj/item/pen,
-/obj/item/stamp/hop,
+/obj/item/stamp/head/hop,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hop)
 "tyG" = (
@@ -60005,7 +60005,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/blue,
 /obj/item/pen/fountain,
-/obj/item/stamp/captain,
+/obj/item/stamp/head/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "tQJ" = (
@@ -66059,7 +66059,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/stamp/cmo,
+/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/dark/side,
 /area/station/command/heads_quarters/cmo)
 "vPG" = (
@@ -66306,7 +66306,7 @@
 /obj/item/pen{
 	pixel_y = 7
 	},
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_y = 10
 	},
 /turf/open/floor/carpet/purple,
