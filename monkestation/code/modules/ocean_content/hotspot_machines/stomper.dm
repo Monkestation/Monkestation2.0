@@ -2,9 +2,9 @@
 	name = "mechanical stomping unit"
 	desc = "The power of techtonic shifts, in machine form."
 
-	icon = 'goon/icons/obj/large/32x48.dmi'
-	icon_state = "stomper0"
-	base_icon_state = "stomper"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
+	base_icon_state = "rare_pepe"
 
 	density = TRUE
 	anchored = FALSE
@@ -72,7 +72,7 @@
 
 /obj/machinery/power/stomper/update_icon_state()
 	. = ..()
-	icon_state = "stomper[on]"
+	icon_state = "rare_pepe"
 
 /obj/machinery/power/stomper/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -131,8 +131,8 @@
 	var/turf/source_turf = get_turf(src)
 
 	///we missed center here
-	if(SShotspots.stomp(source_turf))
-		playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
+	//if(SShotspots.stomp(source_turf))
+		//playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 
 	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(source_turf))
 		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 2)///giving a 1 tile leeway on stomps
@@ -142,7 +142,7 @@
 		else
 			say("Hotspot Released!")
 
-	playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
+	//playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
 
 	for(var/mob/any_mob in viewers(src))
 		shake_camera(any_mob, 4, 6)

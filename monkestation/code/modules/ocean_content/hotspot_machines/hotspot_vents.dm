@@ -2,9 +2,8 @@
 	name = "steam capturing unit"
 	desc = "A piece of machinery that converts magmatic activity to electricity"
 
-	icon = 'goon/icons/obj/large/32x48.dmi'
-	icon_state = "hydrovent_1"
-	base_icon_state = "hydrovent"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
 
 	density = TRUE
 	anchored = TRUE
@@ -66,7 +65,7 @@
 
 /obj/machinery/power/vent/update_icon_state()
 	. = ..()
-	icon_state = "hydrovent_[setup]"
+	//icon_state = "hydrovent_[setup]"
 
 /obj/machinery/power/vent/process()
 	if(!setup)
@@ -95,8 +94,8 @@
 	name = "unbuilt steam capturing unit"
 	desc = "A portable form of the steam capturing unit."
 
-	icon = 'goon/icons/obj/sealab_power.dmi'
-	icon_state = "hydrovent_unbuilt"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
 
 	///the cached amount of total generation so we can move em around and brag about power
 	var/stored_total = 0

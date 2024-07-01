@@ -251,7 +251,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		///this instant starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/atm,
 		/datum/hotspot,
-		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
 	)

@@ -936,7 +936,7 @@ SUBSYSTEM_DEF(job)
 
 
 /atom/proc/JoinLaunchTowards(mob/joining_mob, obj/effect/oshan_launch_point/player/launched_point)
-	var/obj/structure/closet/stasis_pod/new_pod = new(src)
+	var/obj/structure/closet/new_pod = new(src)
 	joining_mob.forceMove(new_pod)
 	new_pod.throw_at(launched_point, get_dist(src, launched_point) + 4, 4, null, FALSE)
 

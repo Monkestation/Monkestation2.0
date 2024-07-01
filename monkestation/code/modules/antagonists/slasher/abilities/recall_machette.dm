@@ -29,9 +29,9 @@
 	name = "slasher's machete"
 	desc = "An old machete, clearly showing signs of wear and tear due to its age."
 
-	icon = 'goon/icons/obj/items/weapons.dmi'
-	icon_state = "welder_machete"
-	hitsound = 'goon/sounds/impact_sounds/Flesh_Cut_1.ogg'
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
+	//hitsound = 'goon/sounds/impact_sounds/Flesh_Cut_1.ogg'
 
 	inhand_icon_state = "PKMachete0"
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -52,7 +52,7 @@
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/hit_carbon = hit_atom
 		hit_carbon.blood_volume -= throwforce
-		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
+		//playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
 	if(isliving(hit_atom))
 		var/mob/living/hit_living = hit_atom
 		hit_living.Knockdown(3 SECONDS)

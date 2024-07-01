@@ -1,9 +1,9 @@
 /obj/item/dousing_rod
 	name = "dowsing rod"
 
-	icon = 'goon/icons/obj/sealab_power.dmi'
-	icon_state = "dowsing_hands"
-	base_icon_state = "dowsing"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
+	base_icon_state = "rare_pepe"
 
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -120,6 +120,6 @@
 /obj/item/dousing_rod/update_icon_state()
 	. = ..()
 	if(!deployed)
-		icon_state = "dowsing_hands"
+		icon_state = "rare_pepe"
 	else
-		icon_state = "dowsing_deployed_[current_heat]"
+		icon_state = "rare_pepe"

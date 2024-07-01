@@ -2,8 +2,8 @@
 	name = "sea floor breaching charge"
 	desc = "Mining grade explosives, useful for busting a hole down to the trench."
 
-	icon = 'goon/icons/breaching_charge.dmi'
-	icon_state = "bcharge"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
 
 	///how long until kaboom
 	var/prime_time = 5 SECONDS
@@ -15,7 +15,7 @@
 
 /obj/item/mining_charge/proc/set_explosion()
 	anchored = TRUE
-	icon_state = "bcharge2"
+	icon_state = "rare_pepe"
 	addtimer(CALLBACK(src, PROC_REF(kaboom)), prime_time)
 
 /obj/item/mining_charge/proc/kaboom()

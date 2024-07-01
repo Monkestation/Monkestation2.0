@@ -1542,10 +1542,7 @@
 /area/centcom/central_command_areas/hall)
 "ea" = (
 /obj/structure/railing/wrestling,
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "eb" = (
 /obj/structure/sink/kitchen/directional/south,
@@ -9175,10 +9172,7 @@
 /obj/structure/railing/wrestling{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "yF" = (
 /obj/structure/chair/wood/wings{
@@ -9470,10 +9464,7 @@
 	dir = 10
 	},
 /obj/structure/sink/kitchen/directional/east,
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/admin)
 "zu" = (
 /obj/structure/hedge,
@@ -11539,10 +11530,7 @@
 /obj/structure/railing/wrestling{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "Fb" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
@@ -12354,10 +12342,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/admin)
 "Hp" = (
 /obj/machinery/modular_computer/preset/id/centcom{
@@ -12637,10 +12622,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/admin)
 "If" = (
 /obj/structure/chair/stool/directional/north,
@@ -12807,10 +12789,7 @@
 /obj/structure/railing/wrestling{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "IH" = (
 /obj/structure/sign{
@@ -16062,10 +16041,7 @@
 /obj/structure/railing/wrestling{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "Ry" = (
 /obj/structure/table/reinforced,
@@ -18813,10 +18789,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "YT" = (
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/hall)
 "YU" = (
 /obj/structure/lattice/catwalk,
@@ -19019,10 +18992,7 @@
 	dir = 5
 	},
 /obj/structure/punching_bag,
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/admin)
 "Zy" = (
 /obj/structure/lattice,
