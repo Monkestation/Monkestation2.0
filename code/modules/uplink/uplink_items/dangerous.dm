@@ -15,6 +15,14 @@
 	surplus = 50 //monkestation edit: from 10 to 50
 	purchasable_from = ~UPLINK_NUKE_OPS
 
+/datum/uplink_item/dangerous/concussive_hammer
+	name = "Concussive Hammer"
+	desc = "A pneumatic hammer designed to incapacitate victims without hurting them. \
+			To be used exclusively by Pacifists." //Might change cus I'm just the coder lol
+	item = /obj/item/melee/concussive_hammer
+	cost = 1 //Set this low for ease of access, obviously subject to change for balancing
+	surplus = 0
+
 /datum/uplink_item/dangerous/pistol
 	name = "Makarov Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
