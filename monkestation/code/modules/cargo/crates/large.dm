@@ -1,3 +1,4 @@
+/*
 /datum/supply_pack/medical/experimental_cloner
 	name = "Experimental Cloner Crate"
 	desc = "A complete circuitboard set to a Experimental Cloner Pod and Scanner. Caution: Highly Experimental"
@@ -9,6 +10,7 @@
 	crate_name = "Experimental Cloner Crate"
 	crate_type = /obj/structure/closet/crate/medical
 	dangerous = TRUE
+*/
 
 /datum/supply_pack/engine/tesla_gen
 	name = "Tesla Generator Crate"
