@@ -405,17 +405,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"mO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/obj/structure/cable/multilayer/connected,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "ny" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 8
@@ -444,6 +433,7 @@
 "ou" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "oO" = (
@@ -794,13 +784,16 @@
 /area/station/engineering/supermatter/room)
 "Bw" = (
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable/multilayer/connected,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "BG" = (
@@ -961,6 +954,9 @@
 /area/station/engineering/supermatter/room)
 "GG" = (
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
@@ -989,6 +985,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "HQ" = (
@@ -1016,15 +1013,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Ik" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/obj/structure/chair,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "Iz" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine SMES Room"
@@ -1715,7 +1706,7 @@ xP
 "}
 (7,1,1) = {"
 GP
-oO
+Ik
 uh
 oO
 fp
@@ -1743,7 +1734,7 @@ oW
 "}
 (8,1,1) = {"
 GP
-oO
+Ik
 uh
 gO
 ou
@@ -1771,10 +1762,10 @@ xP
 "}
 (9,1,1) = {"
 GP
-oO
+Ik
 uh
 oO
-oO
+FD
 GP
 xP
 TK
@@ -2141,9 +2132,9 @@ Dp
 tw
 zA
 HS
-Ik
-mO
-Ik
+GG
+Bw
+GG
 HS
 jQ
 fI

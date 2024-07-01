@@ -194,6 +194,7 @@
 "lg" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "lC" = (
@@ -289,6 +290,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "sM" = (
@@ -301,6 +303,10 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/station/engineering/main)
+"sQ" = (
+/obj/structure/chair,
+/turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "tq" = (
 /obj/effect/turf_decal/stripes/line,
@@ -989,7 +995,7 @@ GW
 "}
 (7,1,1) = {"
 PG
-oN
+sQ
 GK
 oN
 ge
@@ -1017,7 +1023,7 @@ Cs
 "}
 (8,1,1) = {"
 PG
-oN
+sQ
 GK
 hq
 lg
@@ -1045,7 +1051,7 @@ GW
 "}
 (9,1,1) = {"
 PG
-oN
+sQ
 GK
 oN
 PG
