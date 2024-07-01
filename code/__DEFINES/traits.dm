@@ -599,7 +599,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
-#define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
@@ -881,11 +881,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
-/// Similar trait given to temporary bodies inhabited by players
-#define TRAIT_TEMPORARY_BODY "temporary_body"
-
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
+
+/// Similar trait given to temporary bodies inhabited by players
+#define TRAIT_TEMPORARY_BODY "temporary_body"
 
 ///fish traits
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
@@ -991,11 +991,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SWORDPLAY_TRAIT "swordplay"
 /// Trait given by being recruited as a nuclear operative
 #define NUKE_OP_MINION_TRAIT "nuke-op-minion"
+/// Trait given by mech equipment
+#define TRAIT_MECH_EQUIPMENT(equipment_type) "mech_equipment_[equipment_type]"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
-///stops someone from splashing their reagent_container on an object with this trait
+/// Stops someone from splashing their reagent_container on an object with this trait
 #define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
