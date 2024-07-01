@@ -51,6 +51,10 @@
 "jA" = (
 /turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
+"ne" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/tdome/arena/actual)
 "nt" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/tdome/arena/actual)
@@ -75,6 +79,10 @@
 "wZ" = (
 /obj/machinery/light/directional/north,
 /turf/open/water/arena,
+/area/centcom/tdome/arena/actual)
+"xK" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/wood/parquet,
 /area/centcom/tdome/arena/actual)
 "yW" = (
 /obj/machinery/light/small/blacklight/directional/west,
@@ -195,7 +203,7 @@ jA
 jA
 cj
 YF
-nt
+ne
 nt
 jA
 TW
@@ -364,7 +372,7 @@ rl
 yW
 rl
 UD
-UD
+xK
 rl
 yW
 rl

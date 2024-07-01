@@ -189,6 +189,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
+"xx" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
 "yr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -332,6 +339,13 @@
 /obj/item/food/chips,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
+"Ty" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
 "Uc" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
@@ -461,7 +475,7 @@ qb
 hL
 hL
 hL
-hL
+xx
 hL
 qv
 Uc
@@ -629,7 +643,7 @@ XF
 FD
 FD
 FD
-FD
+Ty
 FD
 FD
 yW

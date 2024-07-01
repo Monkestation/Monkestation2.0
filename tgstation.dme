@@ -6707,6 +6707,7 @@
 #include "monkestation\code\modules\ghost_players\ghost_player_outfit.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_cleanser.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_items.dm"
+#include "monkestation\code\modules\ghost_players\arena\arena_landmarks.dm"
 #include "monkestation\code\modules\ghost_players\arena\fight_button.dm"
 #include "monkestation\code\modules\ghost_players\arena\map_templates.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_assets\alien.dm"
