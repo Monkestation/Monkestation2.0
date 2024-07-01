@@ -300,6 +300,10 @@ effective or pretty fucking useless.
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
+//monkestation edit start
+	///The type of turret we create
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret_type = /obj/machinery/porta_turret/syndicate/toolbox
+//monkestation edit end
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -319,6 +323,11 @@ effective or pretty fucking useless.
 	if(!attacking_item.toolspeed)
 		return
 
+//monkestation edit start
+	if(!construction_checks(user))
+		return
+//monkestation edit end
+
 	balloon_alert(user, "constructing...")
 	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
 		return
@@ -328,7 +337,7 @@ effective or pretty fucking useless.
 		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 
 	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc)) //monkestation edit: adds turret_type
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
@@ -338,6 +347,12 @@ effective or pretty fucking useless.
 
 /obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list(ROLE_SYNDICATE)
+
+//monkestation edit start
+///Put any extra checks you want to do before constructing here
+/obj/item/storage/toolbox/emergency/turret/proc/construction_checks(mob/living/user)
+	return TRUE
+//monkestation edit end
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	icon_state = "toolbox_off"

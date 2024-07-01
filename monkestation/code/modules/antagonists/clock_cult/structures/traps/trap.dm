@@ -55,7 +55,7 @@
 
 /obj/item/wallframe/clocktrap/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clockwork_desc)
+	AddElement(/datum/element/extra_examine/clockwork_description, clockwork_desc)
 
 /obj/item/wallframe/clocktrap/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall, user) > 1)

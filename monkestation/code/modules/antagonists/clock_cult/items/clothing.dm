@@ -141,7 +141,7 @@
 
 /obj/item/clothing/glasses/clockwork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clock_desc)
+	AddElement(/datum/element/extra_examine/clockwork_description, clock_desc)
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
 
 

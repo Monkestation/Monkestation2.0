@@ -3,6 +3,7 @@
 	desc = "An implant that allows you to summon and control a hardlight spear. \
 	Adding additional implants to your body will further refine the spear summoning process, allowing you to control up to 5 spears. \
 	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
+	purchasable_from = ~UPLINK_GANGS
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
 
@@ -24,7 +25,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 12
 	surplus = 40
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/dangerous/venom_knife
 	name = "Poisoned Knife"

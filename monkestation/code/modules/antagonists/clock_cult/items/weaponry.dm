@@ -238,7 +238,7 @@
 /obj/item/gun/ballistic/bow/clockwork/Initialize(mapload)
 	. = ..()
 	update_icon_state()
-	AddElement(/datum/element/clockwork_description, "Firing from brass tiles will halve the time that it takes to recharge a bolt.")
+	AddElement(/datum/element/extra_examine/clockwork_description, "Firing from brass tiles will halve the time that it takes to recharge a bolt.")
 	AddElement(/datum/element/clockwork_pickup)
 
 /obj/item/gun/ballistic/bow/clockwork/afterattack(atom/target, mob/living/user, flag, params, passthrough)

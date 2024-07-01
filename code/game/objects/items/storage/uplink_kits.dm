@@ -727,7 +727,7 @@
 	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
 	return TRUE
 
-/obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE) //monkestation edit: adds forced
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE

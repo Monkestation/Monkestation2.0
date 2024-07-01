@@ -1,3 +1,6 @@
+/datum/uplink_item/badass/syndiecash
+	purchasable_from = ~UPLINK_GANGS
+
 /datum/uplink_item/badass/costumes/syndimaid
 	name = "Syndicate Maid Outfit"
 	desc = "A box containing a 'tactical' and 'practical' maid outfit. We uh... found this... laying around... you sure you want this thing?"

@@ -15,7 +15,7 @@
 	if(.)
 		RegisterSignal(target, COMSIG_MOB_EMOTED("deathgasp"), PROC_REF(on_deathgasp))
 
-/obj/item/implant/sad_trombone/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/sad_trombone/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE) //monkestation edit: adds forced
 	. = ..()
 	if(.)
 		UnregisterSignal(target, COMSIG_MOB_EMOTED("deathgasp"))

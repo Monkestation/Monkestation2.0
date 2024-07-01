@@ -27,7 +27,7 @@
 
 /obj/structure/destructible/clockwork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clockwork_desc)
+	AddElement(/datum/element/extra_examine/clockwork_description, clockwork_desc)
 
 /obj/structure/destructible/clockwork/Destroy()
 	owner = null

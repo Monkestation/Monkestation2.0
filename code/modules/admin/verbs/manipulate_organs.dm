@@ -63,7 +63,7 @@
 				O.Remove(C)
 			else
 				I = organ
-				I.removed(C)
+				I.removed(C, forced = TRUE) //monkestation edit: adds forced
 
 			organ.forceMove(get_turf(C))
 
