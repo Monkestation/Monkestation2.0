@@ -94,11 +94,43 @@
 	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
 	important_text = "DO NOT abandon the base."
 
-/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload)
+// /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload) - disabled because current main has fuckall ruin budget
+//	. = ..()
+//	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
+//		new /mob/living/basic/trooper/syndicate/ranged(get_turf(src))
+//		return INITIALIZE_HINT_QDEL
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson //the last agent according to lore, spawns rarely, has some flavour text, should start blinded
+	name = "sleeper"
+	desc = "A standard medicinal sleeper used to treat small and major injuries alike. It appears to be locked up, and you can see a gas mask through the fogged-up windows..."
+	icon_state = "sleeper"
+	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
+	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
+	important_text = "DO NOT abandon the base."
+	outfit = /datum/outfit/lavaland_syndicate/comms/anderson
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Initialize(mapload)
 	. = ..()
-	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
-		new /mob/living/basic/trooper/syndicate/ranged(get_turf(src))
-		return INITIALIZE_HINT_QDEL
+	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a regular sleeper
+		return INITIALIZE_HINT_QDEL //the destroy() code already handles sleeper spawning
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Destroy()
+	var/obj/machinery/sleeper/S = new(drop_location())
+	S.setDir(dir)
+	return ..()
+
+/datum/outfit/lavaland_syndicate/comms/anderson
+	name = "Syndicate Old Comms Agent"
+	r_hand = /obj/item/storage/pill_bottle //empty pillbottle
+	l_hand = /obj/item/knife/combat/survival //no esword, but still a knife
+	head = /obj/item/clothing/head/soft/black
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/special(mob/living/new_spawn)
+	. = ..()
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.adjustOrganLoss(ORGAN_SLOT_EYES, 100) //AAAARGH MY EYES
+	new_spawn.adjustOrganLoss(ORGAN_SLOT_LIVER, 35) //not completely out, but it's not having a good day
+
 
 ///battlecruiser stuff
 
