@@ -64,6 +64,7 @@
 				/obj/item/clothing/under/shorts/jeanshorts = 5,
 				/obj/item/clothing/under/costume/buttondown/slacks = 4,
 				/obj/item/clothing/under/costume/buttondown/shorts = 4,
+				/obj/item/clothing/under/costume/buttondown/skirt = 4,
 				/obj/item/clothing/under/dress/sundress = 2,
 				/obj/item/clothing/under/dress/tango = 2,
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
