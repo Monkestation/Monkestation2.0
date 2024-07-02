@@ -73,7 +73,7 @@
 
 	//Needs to be run after traits are called because some of them alter max_volume and volume_rate
 	//Since traits do not know in which order they were run we need to do it here
-	max_volume *= volume_rate
+	max_volume *= volume_rate //Monkestation Edit
 
 	// Set our default bitesize: bite size = 1 + (potency * 0.05) * (max_volume * 0.01) * modifier
 	// A 100 potency, non-densified plant = 1 + (5 * 1 * modifier) = 6u bite size
