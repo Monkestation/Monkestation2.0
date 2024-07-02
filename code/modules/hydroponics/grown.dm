@@ -43,7 +43,7 @@
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 	// this volume can be altered by densified chemicals trait
-	var/volume_rate = 1
+	var/volume_rate = 1 //Monkestation Edit
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
