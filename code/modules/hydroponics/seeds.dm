@@ -428,6 +428,7 @@
 	if(potency == -1)
 		return
 
+	var/max_potency = MAX_PLANT_YIELD
 	potency = clamp(potency + adjustamt, 0, max_potency)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 	if(C)
