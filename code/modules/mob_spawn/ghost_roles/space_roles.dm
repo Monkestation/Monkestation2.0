@@ -93,6 +93,10 @@
 	you_are_text = "You are a syndicate agent, assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13."
 	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
 	important_text = "DO NOT abandon the base."
+	spawner_job_path = /datum/job/lavaland_syndicate/space
+
+//Admin PM from-Kondafairydragon: not that... but HOW THE FUCK DID A LAVALAND SYNDICATE END UP IN SPACE. rather
+//overrides job title so that doesnt happen again bwoinks are scary
 
 // /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload) - disabled because current main has fuckall ruin budget
 //	. = ..()
