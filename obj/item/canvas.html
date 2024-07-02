@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;canvas - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/canvas.html#var">Var Details</a> - <a href="obj/item/canvas.html#proc">Proc Details</a></header>
+<main>
+<h1>canvas <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/canvas.html">canvas</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 38"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/canvas_color">canvas_color</a></th><td>empty canvas color</td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/last_patron">last_patron</a></th><td>reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.</td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/no_save">no_save</a></th><td>boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.</td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/pixels_per_unit">pixels_per_unit</a></th><td>How big the grid cells that compose the painting are in the UI.
+This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa</td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/show_grid">show_grid</a></th><td>Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.</td></tr>
+            <tr><th><a href="obj/item/canvas.html#var/used">used</a></th><td>Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/canvas.html#proc/get_paint_tool_medium">get_paint_tool_medium</a></th><td>Generates medium description</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/canvas_color"><aside class="declaration">var </aside>canvas_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 49"/></a></h3>
+        <p>empty canvas color</p><h3 id="var/last_patron"><aside class="declaration">var </aside>last_patron
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 61"/></a></h3>
+        <p>reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.</p><h3 id="var/no_save"><aside class="declaration">var </aside>no_save
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 58"/></a></h3>
+        <p>boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.</p><h3 id="var/pixels_per_unit"><aside class="declaration">var </aside>pixels_per_unit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 73"/></a></h3>
+        <p>How big the grid cells that compose the painting are in the UI.
+This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa</p><h3 id="var/show_grid"><aside class="declaration">var </aside>show_grid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 54"/></a></h3>
+        <p>Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.</p><h3 id="var/used"><aside class="declaration">var </aside>used
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 51"/></a></h3>
+        <p>Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_paint_tool_medium"><aside class="declaration">proc </aside>get_paint_tool_medium<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/painting_implement) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/art/paintings.dm#L338">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;art&#x2F;paintings.dm 338"/></a></aside>
+        </h3>
+        <p>Generates medium description</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

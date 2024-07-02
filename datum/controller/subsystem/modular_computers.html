@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;modular_computers - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/modular_computers.html#var">Var Details</a> - <a href="datum/controller/subsystem/modular_computers.html#proc">Proc Details</a></header>
+<main>
+<h1>modular_computers <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/modular_computers.html">modular_computers</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/available_antag_software">available_antag_software</a></th><td>List of all programs that can be downloaded from an emagged NTNet store.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/available_station_software">available_station_software</a></th><td>List of all programs available to download from the NTNet store.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/chat_channels">chat_channels</a></th><td>List of all chat channels created by Chat Client.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/intrusion_detection_alarm">intrusion_detection_alarm</a></th><td>Boolean to show a message warning if there's an active intrusion for Wirecarp users.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/intrusion_detection_enabled">intrusion_detection_enabled</a></th><td>Boolean on whether the IDS warning system is enabled</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#var/logs">logs</a></th><td>List of all ModPC logging</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#proc/add_log">add_log</a></th><td>Records a message into the station logging system for the network
+Arguments:</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#proc/build_software_lists">build_software_lists</a></th><td>Finds all downloadable programs and adds them to their respective downloadable list.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#proc/find_ntnet_file_by_name">find_ntnet_file_by_name</a></th><td>Attempts to find a new file through searching the available stores with its name.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#proc/get_chat_channel_by_id">get_chat_channel_by_id</a></th><td>Attempts to find a chatorom using the ID of the channel.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/modular_computers.html#proc/purge_logs">purge_logs</a></th><td>Removes all station logs and leaves it with an alert that it's been wiped.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/available_antag_software"><aside class="declaration">var </aside>available_antag_software
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 14"/></a></h3>
+        <p>List of all programs that can be downloaded from an emagged NTNet store.</p><h3 id="var/available_station_software"><aside class="declaration">var </aside>available_station_software
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 12"/></a></h3>
+        <p>List of all programs available to download from the NTNet store.</p><h3 id="var/chat_channels"><aside class="declaration">var </aside>chat_channels
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 16"/></a></h3>
+        <p>List of all chat channels created by Chat Client.</p><h3 id="var/intrusion_detection_alarm"><aside class="declaration">var </aside>intrusion_detection_alarm
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 21"/></a></h3>
+        <p>Boolean to show a message warning if there's an active intrusion for Wirecarp users.</p><h3 id="var/intrusion_detection_enabled"><aside class="declaration">var </aside>intrusion_detection_enabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 19"/></a></h3>
+        <p>Boolean on whether the IDS warning system is enabled</p><h3 id="var/logs"><aside class="declaration">var </aside>logs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 9"/></a></h3>
+        <p>List of all ModPC logging</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_log"><aside class="declaration">proc </aside>add_log<aside>(log_string) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 60"/></a></aside>
+        </h3>
+        <p>Records a message into the station logging system for the network
+Arguments:</p>
+<ul>
+<li>log_string - The message being logged</li>
+</ul><h3 id="proc/build_software_lists"><aside class="declaration">proc </aside>build_software_lists<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 29"/></a></aside>
+        </h3>
+        <p>Finds all downloadable programs and adds them to their respective downloadable list.</p><h3 id="proc/find_ntnet_file_by_name"><aside class="declaration">proc </aside>find_ntnet_file_by_name<aside>(filename) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 42"/></a></aside>
+        </h3>
+        <p>Attempts to find a new file through searching the available stores with its name.</p><h3 id="proc/get_chat_channel_by_id"><aside class="declaration">proc </aside>get_chat_channel_by_id<aside>(id) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 49"/></a></aside>
+        </h3>
+        <p>Attempts to find a chatorom using the ID of the channel.</p><h3 id="proc/purge_logs"><aside class="declaration">proc </aside>purge_logs<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/controllers/subsystem/modular_computers.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;modular_computers.dm 76"/></a></aside>
+        </h3>
+        <p>Removes all station logs and leaves it with an alert that it's been wiped.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

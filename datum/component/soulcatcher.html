@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;soulcatcher - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/soulcatcher.html#var">Var Details</a> - <a href="datum/component/soulcatcher.html#proc">Proc Details</a></header>
+<main>
+<h1>soulcatcher <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/soulcatcher.html">soulcatcher</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 14"/></a></h1>
+
+<p>Soulcatcher Component</p>
+<p>This component functions as a bridge between the <code>soulcatcher_room</code> attached to itself and the parented datum.
+It handles the creation of new soulcatcher rooms, TGUI, and relaying messages to the parent datum.
+If the component is deleted, any soulcatcher rooms inside of <code>soulcatcher_rooms</code> will be deleted.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/communicate_as_parent">communicate_as_parent</a></th><td>Are are the souls inside able to emote/speak as the parent?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/ghost_joinable">ghost_joinable</a></th><td>Are ghosts currently able to join this soulcatcher?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/max_souls">max_souls</a></th><td>What is the max number of people we can keep in this soulcatcher? If this is set to <code>FALSE</code> we don't have a limit</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/name">name</a></th><td>What is the name of the soulcatcher?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/removable">removable</a></th><td>Is the soulcatcher removable from the parent object?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/require_approval">require_approval</a></th><td>Do we want to ask the user permission before the ghost joins?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/soulcatcher_rooms">soulcatcher_rooms</a></th><td>What rooms are linked to this soulcatcher</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/targeted_soulcatcher_room">targeted_soulcatcher_room</a></th><td>What soulcatcher room are verbs sending messages to?</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#var/ui_theme">ui_theme</a></th><td>What theme are we using for our soulcatcher UI?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/check_for_vacancy">check_for_vacancy</a></th><td>Checks the total number of souls present and compares it with <code>max_souls</code> returns <code>TRUE</code> if there is room (or no limit), otherwise returns <code>FALSE</code></td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/create_room">create_room</a></th><td>Creates a <code>/datum/soulcatcher_room</code> and adds it to the <code>soulcatcher_rooms</code> list.</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/get_approval">get_approval</a></th><td>Attempts to ping the current user of the soulcatcher, asking them if <code>joiner_name</code> is allowed in. If they are, the proc returns <code>TRUE</code>, otherwise returns FALSE</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/get_current_holder">get_current_holder</a></th><td>Tries to find out who is currently using the soulcatcher, returns the holder. If no holder can be found, returns FALSE</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/get_current_souls">get_current_souls</a></th><td>Returns a list containing all of the souls currently present within a soulcatcher.</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/receive_message">receive_message</a></th><td>Receives a message from a soulcatcher room.</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/remove_self">remove_self</a></th><td>Attempts to remove the soulcatcher from the attached object</td></tr>
+            <tr><th><a href="datum/component/soulcatcher.html#proc/scan_body">scan_body</a></th><td>Attempts to scan the body for the <code>previous_body component</code>, returns FALSE if the body is unable to be scanned, otherwise returns TRUE</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/communicate_as_parent"><aside class="declaration">var </aside>communicate_as_parent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 31"/></a></h3>
+        <p>Are are the souls inside able to emote/speak as the parent?</p><h3 id="var/ghost_joinable"><aside class="declaration">var </aside>ghost_joinable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 25"/></a></h3>
+        <p>Are ghosts currently able to join this soulcatcher?</p><h3 id="var/max_souls"><aside class="declaration">var </aside>max_souls
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 29"/></a></h3>
+        <p>What is the max number of people we can keep in this soulcatcher? If this is set to <code>FALSE</code> we don't have a limit</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 16"/></a></h3>
+        <p>What is the name of the soulcatcher?</p><h3 id="var/removable"><aside class="declaration">var </aside>removable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 33"/></a></h3>
+        <p>Is the soulcatcher removable from the parent object?</p><h3 id="var/require_approval"><aside class="declaration">var </aside>require_approval
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 27"/></a></h3>
+        <p>Do we want to ask the user permission before the ghost joins?</p><h3 id="var/soulcatcher_rooms"><aside class="declaration">var </aside>soulcatcher_rooms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 18"/></a></h3>
+        <p>What rooms are linked to this soulcatcher</p><h3 id="var/targeted_soulcatcher_room"><aside class="declaration">var </aside>targeted_soulcatcher_room
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/soulcatcher_room.html">soulcatcher_room</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 20"/></a></h3>
+        <p>What soulcatcher room are verbs sending messages to?</p><h3 id="var/ui_theme"><aside class="declaration">var </aside>ui_theme
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 22"/></a></h3>
+        <p>What theme are we using for our soulcatcher UI?</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_for_vacancy"><aside class="declaration">proc </aside>check_for_vacancy<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L157">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 157"/></a></aside>
+        </h3>
+        <p>Checks the total number of souls present and compares it with <code>max_souls</code> returns <code>TRUE</code> if there is room (or no limit), otherwise returns <code>FALSE</code></p><h3 id="proc/create_room"><aside class="declaration">proc </aside>create_room<aside>(target_name, target_desc) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L80">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 80"/></a></aside>
+        </h3>
+        <p>Creates a <code>/datum/soulcatcher_room</code> and adds it to the <code>soulcatcher_rooms</code> list.</p>
+<p>Arguments</p>
+<ul>
+<li>target_name - The name that we want to assign to the created room.</li>
+<li>target_desc - The description that we want to assign to the created room.</li>
+</ul><h3 id="proc/get_approval"><aside class="declaration">proc </aside>get_approval<aside>(joiner_name) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L116">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 116"/></a></aside>
+        </h3>
+        <p>Attempts to ping the current user of the soulcatcher, asking them if <code>joiner_name</code> is allowed in. If they are, the proc returns <code>TRUE</code>, otherwise returns FALSE</p><h3 id="proc/get_current_holder"><aside class="declaration">proc </aside>get_current_holder<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L89">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 89"/></a></aside>
+        </h3>
+        <p>Tries to find out who is currently using the soulcatcher, returns the holder. If no holder can be found, returns FALSE</p><h3 id="proc/get_current_souls"><aside class="declaration">proc </aside>get_current_souls<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L148">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 148"/></a></aside>
+        </h3>
+        <p>Returns a list containing all of the souls currently present within a soulcatcher.</p><h3 id="proc/receive_message"><aside class="declaration">proc </aside>receive_message<aside>(message_to_receive) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L104">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 104"/></a></aside>
+        </h3>
+        <p>Receives a message from a soulcatcher room.</p><h3 id="proc/remove_self"><aside class="declaration">proc </aside>remove_self<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L167">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 167"/></a></aside>
+        </h3>
+        <p>Attempts to remove the soulcatcher from the attached object</p><h3 id="proc/scan_body"><aside class="declaration">proc </aside>scan_body<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/parent_body, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L131">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 131"/></a></aside>
+        </h3>
+        <p>Attempts to scan the body for the <code>previous_body component</code>, returns FALSE if the body is unable to be scanned, otherwise returns TRUE</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

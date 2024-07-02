@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;multi_hit - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/multi_hit.html#var">Var Details</a> - <a href="datum/component/multi_hit.html#proc">Proc Details</a></header>
+<main>
+<h1>multi_hit <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/multi_hit.html">multi_hit</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/after_hit_callback">after_hit_callback</a></th><td>the callback we use after attacking something incase we have unique effects</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/attacking_direction">attacking_direction</a></th><td>attacking direction if used (Goes from start to end so )</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/center_offset">center_offset</a></th><td>the offset from center use for finding targets</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/continues_travel">continues_travel</a></th><td>do we continue to travel after impacting the first mob</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/height">height</a></th><td>height we use from attacking</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/icon">icon</a></th><td>icon file we use while attacking</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/icon_state">icon_state</a></th><td>icon_state we use while attacking</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/pre_hit_callback">pre_hit_callback</a></th><td>the prehit callback we use incase unique effects need to happen before hitting</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/stamina_cost">stamina_cost</a></th><td>the stamina cost for doing these swings</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#var/width">width</a></th><td>width we use from attacking - NOTE non odd widths will always offset 1 farther in the opposite of the direction traveled</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#proc/Initialize">Initialize</a></th><td>this is incredibly cursed i should probably move the default defines into this to make it not have a ton of if statements but that feels wrong aswell.</td></tr>
+            <tr><th><a href="datum/component/multi_hit.html#proc/get_attacking_direction">get_attacking_direction</a></th><td>list of targeted turfs in order of apperance</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/after_hit_callback"><aside class="declaration">var </aside>after_hit_callback
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 18"/></a></h3>
+        <p>the callback we use after attacking something incase we have unique effects</p><h3 id="var/attacking_direction"><aside class="declaration">var </aside>attacking_direction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 16"/></a></h3>
+        <p>attacking direction if used (Goes from start to end so )</p><h3 id="var/center_offset"><aside class="declaration">var </aside>center_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 14"/></a></h3>
+        <p>the offset from center use for finding targets</p><h3 id="var/continues_travel"><aside class="declaration">var </aside>continues_travel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 4"/></a></h3>
+        <p>do we continue to travel after impacting the first mob</p><h3 id="var/height"><aside class="declaration">var </aside>height
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 12"/></a></h3>
+        <p>height we use from attacking</p><h3 id="var/icon"><aside class="declaration">var </aside>icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 8"/></a></h3>
+        <p>icon file we use while attacking</p><h3 id="var/icon_state"><aside class="declaration">var </aside>icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 6"/></a></h3>
+        <p>icon_state we use while attacking</p><h3 id="var/pre_hit_callback"><aside class="declaration">var </aside>pre_hit_callback
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 20"/></a></h3>
+        <p>the prehit callback we use incase unique effects need to happen before hitting</p><h3 id="var/stamina_cost"><aside class="declaration">var </aside>stamina_cost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 22"/></a></h3>
+        <p>the stamina cost for doing these swings</p><h3 id="var/width"><aside class="declaration">var </aside>width
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 10"/></a></h3>
+        <p>width we use from attacking - NOTE non odd widths will always offset 1 farther in the opposite of the direction traveled</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(continues_travel, icon_state, icon, width, height, center_offset, attacking_direction, after_hit_callback, pre_hit_callback, stamina_cost) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 25"/></a></aside>
+        </h3>
+        <p>this is incredibly cursed i should probably move the default defines into this to make it not have a ton of if statements but that feels wrong aswell.</p><h3 id="proc/get_attacking_direction"><aside class="declaration">proc </aside>get_attacking_direction<aside>(starting_dir, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/components/multi_hit.dm#L146">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;components&#x2F;multi_hit.dm 146"/></a></aside>
+        </h3>
+        <p>list of targeted turfs in order of apperance</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

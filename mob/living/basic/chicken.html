@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;basic&#x2F;chicken - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/basic/chicken.html#var">Var Details</a> - <a href="mob/living/basic/chicken.html#proc">Proc Details</a></header>
+<main>
+<h1>chicken <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/basic.html">basic</a>/<a href="mob/living/basic/chicken.html">chicken</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/ability_planning_tree">ability_planning_tree</a></th><td>the self ability planning tree</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/ability_prob">ability_prob</a></th><td>probability for ability</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/book_desc">book_desc</a></th><td>What shows up in the encyclopedia, will need some lovin</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/breed_name">breed_name</a></th><td>Breed of the chicken needed for naming</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/breed_name_female">breed_name_female</a></th><td>Is the hen also different?</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/breed_name_male">breed_name_male</a></th><td>Do we wanna call the male rooster something different?</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/chicken_path">chicken_path</a></th><td>Needed cause i can't iterate a new spawn with the ref to a mob</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/current_feed_amount">current_feed_amount</a></th><td>Current fed level</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/disliked_chemicals">disliked_chemicals</a></th><td>list of dislike chemicals</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/disliked_food_types">disliked_food_types</a></th><td>list of disliked foods</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/disliked_foods">disliked_foods</a></th><td>list of disliked foods</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/egg_laying_boosting">egg_laying_boosting</a></th><td>modifier to the egg laying cooldown</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/feedMessages">feedMessages</a></th><td>Message you get when it is fed</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/fertility_boosting">fertility_boosting</a></th><td>how much extra fertile we are</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/forced_gender">forced_gender</a></th><td>mapping helper gender</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/glass_egg_reagents">glass_egg_reagents</a></th><td>Glass Chicken exclusive: reagents for eggs</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/happy_chems">happy_chems</a></th><td>List of happy chems</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/is_marked">is_marked</a></th><td>if this chicken is marked, will add a sigil above it to show its marked</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/layMessage">layMessage</a></th><td>Message that is sent when an egg is laid</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/liked_foods">liked_foods</a></th><td>List of liked foods</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/likes_pets">likes_pets</a></th><td>if this chicken likes pets</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/max_happiness_per_generation">max_happiness_per_generation</a></th><td>max generational happiness</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/minimum_living_happiness">minimum_living_happiness</a></th><td>How sad until they die of sadness?</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/overcrowding">overcrowding</a></th><td>Overcrowding amount</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/production_type">production_type</a></th><td>Stone Chicken Exclusive: ore type for eggs</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/projectile_type">projectile_type</a></th><td>what type of projectile do we shoot?</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/ranged_cooldown">ranged_cooldown</a></th><td>probabilty of firing a shot on any given attack</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/self_ability">self_ability</a></th><td>unique ability for chicken</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/speech_buffer">speech_buffer</a></th><td>Last phrase said near it and person who said it</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/targeted_ability">targeted_ability</a></th><td>targeted ability of this chicken</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/targeted_ability_planning_tree">targeted_ability_planning_tree</a></th><td>the targeted ability planning tree</td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#var/total_times_eaten">total_times_eaten</a></th><td>Total times eaten</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/basic/chicken.html#proc/attackby">attackby</a></th><td>petting is not efficent</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/ability_planning_tree"><aside class="declaration">var </aside>ability_planning_tree
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L109">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 109"/></a></h3>
+        <p>the self ability planning tree</p><h3 id="var/ability_prob"><aside class="declaration">var </aside>ability_prob
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L90">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 90"/></a></h3>
+        <p>probability for ability</p><h3 id="var/book_desc"><aside class="declaration">var </aside>book_desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L105">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 105"/></a></h3>
+        <p>What shows up in the encyclopedia, will need some lovin</p><h3 id="var/breed_name"><aside class="declaration">var </aside>breed_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 52"/></a></h3>
+        <p>Breed of the chicken needed for naming</p><h3 id="var/breed_name_female"><aside class="declaration">var </aside>breed_name_female
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L56">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 56"/></a></h3>
+        <p>Is the hen also different?</p><h3 id="var/breed_name_male"><aside class="declaration">var </aside>breed_name_male
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 54"/></a></h3>
+        <p>Do we wanna call the male rooster something different?</p><h3 id="var/chicken_path"><aside class="declaration">var </aside>chicken_path
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 50"/></a></h3>
+        <p>Needed cause i can't iterate a new spawn with the ref to a mob</p><h3 id="var/current_feed_amount"><aside class="declaration">var </aside>current_feed_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L60">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 60"/></a></h3>
+        <p>Current fed level</p><h3 id="var/disliked_chemicals"><aside class="declaration">var </aside>disliked_chemicals
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L81">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 81"/></a></h3>
+        <p>list of dislike chemicals</p><h3 id="var/disliked_food_types"><aside class="declaration">var </aside>disliked_food_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L77">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 77"/></a></h3>
+        <p>list of disliked foods</p><h3 id="var/disliked_foods"><aside class="declaration">var </aside>disliked_foods
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L79">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 79"/></a></h3>
+        <p>list of disliked foods</p><h3 id="var/egg_laying_boosting"><aside class="declaration">var </aside>egg_laying_boosting
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L125">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 125"/></a></h3>
+        <p>modifier to the egg laying cooldown</p><h3 id="var/feedMessages"><aside class="declaration">var </aside>feedMessages
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L44">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 44"/></a></h3>
+        <p>Message you get when it is fed</p><h3 id="var/fertility_boosting"><aside class="declaration">var </aside>fertility_boosting
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L121">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 121"/></a></h3>
+        <p>how much extra fertile we are</p><h3 id="var/forced_gender"><aside class="declaration">var </aside>forced_gender
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_egg.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_egg.dm 1"/></a></h3>
+        <p>mapping helper gender</p><h3 id="var/glass_egg_reagents"><aside class="declaration">var </aside>glass_egg_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L97">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 97"/></a></h3>
+        <p>Glass Chicken exclusive: reagents for eggs</p><h3 id="var/happy_chems"><aside class="declaration">var </aside>happy_chems
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L69">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 69"/></a></h3>
+        <p>List of happy chems</p><h3 id="var/is_marked"><aside class="declaration">var </aside>is_marked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L107">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 107"/></a></h3>
+        <p>if this chicken is marked, will add a sigil above it to show its marked</p><h3 id="var/layMessage"><aside class="declaration">var </aside>layMessage
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L46">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 46"/></a></h3>
+        <p>Message that is sent when an egg is laid</p><h3 id="var/liked_foods"><aside class="declaration">var </aside>liked_foods
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L75">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 75"/></a></h3>
+        <p>List of liked foods</p><h3 id="var/likes_pets"><aside class="declaration">var </aside>likes_pets
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L83">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 83"/></a></h3>
+        <p>if this chicken likes pets</p><h3 id="var/max_happiness_per_generation"><aside class="declaration">var </aside>max_happiness_per_generation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L64">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 64"/></a></h3>
+        <p>max generational happiness</p><h3 id="var/minimum_living_happiness"><aside class="declaration">var </aside>minimum_living_happiness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L66">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 66"/></a></h3>
+        <p>How sad until they die of sadness?</p><h3 id="var/overcrowding"><aside class="declaration">var </aside>overcrowding
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 62"/></a></h3>
+        <p>Overcrowding amount</p><h3 id="var/production_type"><aside class="declaration">var </aside>production_type
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/ore</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L99">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 99"/></a></h3>
+        <p>Stone Chicken Exclusive: ore type for eggs</p><h3 id="var/projectile_type"><aside class="declaration">var </aside>projectile_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L92">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 92"/></a></h3>
+        <p>what type of projectile do we shoot?</p><h3 id="var/ranged_cooldown"><aside class="declaration">var </aside>ranged_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L94">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 94"/></a></h3>
+        <p>probabilty of firing a shot on any given attack</p><h3 id="var/self_ability"><aside class="declaration">var </aside>self_ability
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L86">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 86"/></a></h3>
+        <p>unique ability for chicken</p><h3 id="var/speech_buffer"><aside class="declaration">var </aside>speech_buffer
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L101">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 101"/></a></h3>
+        <p>Last phrase said near it and person who said it</p><h3 id="var/targeted_ability"><aside class="declaration">var </aside>targeted_ability
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L88">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 88"/></a></h3>
+        <p>targeted ability of this chicken</p><h3 id="var/targeted_ability_planning_tree"><aside class="declaration">var </aside>targeted_ability_planning_tree
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L111">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 111"/></a></h3>
+        <p>the targeted ability planning tree</p><h3 id="var/total_times_eaten"><aside class="declaration">var </aside>total_times_eaten
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken_defines.dm#L58">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken_defines.dm 58"/></a></h3>
+        <p>Total times eaten</p><h2 id="proc">Proc Details</h2><h3 id="proc/attackby"><aside class="parent"><a title="/atom" href="atom.html#proc/attackby">&uarr;</a></aside>attackby<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/given_item, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ranching/chickens/_chicken.dm#L158">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ranching&#x2F;chickens&#x2F;_chicken.dm 158"/></a></aside>
+        </h3>
+        <p>petting is not efficent</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

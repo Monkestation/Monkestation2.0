@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;pinpointer&#x2F;area_pinpointer - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/pinpointer/area_pinpointer.html#var">Var Details</a> - <a href="obj/item/pinpointer/area_pinpointer.html#proc">Proc Details</a></header>
+<main>
+<h1>area_pinpointer <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/pinpointer.html">pinpointer</a>/<a href="obj/item/pinpointer/area_pinpointer.html">area_pinpointer</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 19"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/all_tracked_area_turfs">all_tracked_area_turfs</a></th><td>The list of all open turfs within our tracked area</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/door_mode">door_mode</a></th><td>a switch, if TRUE it will display all door turfs instead of all open turfs</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/door_turfs">door_turfs</a></th><td>The list of all turfs with doors on them, used for the door mode</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/not_tracked_area_turfs">not_tracked_area_turfs</a></th><td>The list of all open turfs within our tracked area that we dont track, used exclusivelly for the debug pinpointer</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/pinpointer_turf">pinpointer_turf</a></th><td>We save our position every time we scan_for_target()
+Its used to check if we moved so we may ignore calculations when being still, along with calculations between us and the target turfs.</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/tracked_area">tracked_area</a></th><td>The area we are currently tracking</td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#var/tracked_area_turfs">tracked_area_turfs</a></th><td>The list of all open turfs within our tracked area, trimmed down to only the turfs we track</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/pinpointer/area_pinpointer.html#proc/attack_self">attack_self</a></th><td>The turf that has the lowest possible range towards us and the area
+Whats the range between us and the closest turf?</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/all_tracked_area_turfs"><aside class="declaration">var </aside>all_tracked_area_turfs
+            <aside>&ndash; /list/turf</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 32"/></a></h3>
+        <p>The list of all open turfs within our tracked area</p><h3 id="var/door_mode"><aside class="declaration">var </aside>door_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 41"/></a></h3>
+        <p>a switch, if TRUE it will display all door turfs instead of all open turfs</p><h3 id="var/door_turfs"><aside class="declaration">var </aside>door_turfs
+            <aside>&ndash; /list/turf/open</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 38"/></a></h3>
+        <p>The list of all turfs with doors on them, used for the door mode</p><h3 id="var/not_tracked_area_turfs"><aside class="declaration">var </aside>not_tracked_area_turfs
+            <aside>&ndash; /list/turf/open</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 34"/></a></h3>
+        <p>The list of all open turfs within our tracked area that we dont track, used exclusivelly for the debug pinpointer</p><h3 id="var/pinpointer_turf"><aside class="declaration">var </aside>pinpointer_turf
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 27"/></a></h3>
+        <p>We save our position every time we scan_for_target()
+Its used to check if we moved so we may ignore calculations when being still, along with calculations between us and the target turfs.</p><h3 id="var/tracked_area"><aside class="declaration">var </aside>tracked_area
+            <aside>&ndash; /<a href="area.html">area</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 29"/></a></h3>
+        <p>The area we are currently tracking</p><h3 id="var/tracked_area_turfs"><aside class="declaration">var </aside>tracked_area_turfs
+            <aside>&ndash; /list/turf/open</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 36"/></a></h3>
+        <p>The list of all open turfs within our tracked area, trimmed down to only the turfs we track</p><h2 id="proc">Proc Details</h2><h3 id="proc/attack_self"><aside class="parent"><a title="/obj/item" href="obj/item.html#proc/attack_self">&uarr;</a></aside>attack_self<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/contractor/items/misc.dm#L135">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;contractor&#x2F;items&#x2F;misc.dm 135"/></a></aside>
+        </h3>
+        <p>The turf that has the lowest possible range towards us and the area
+Whats the range between us and the closest turf?</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

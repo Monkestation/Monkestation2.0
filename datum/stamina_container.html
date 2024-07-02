@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;stamina_container - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/stamina_container.html#var">Var Details</a> - <a href="datum/stamina_container.html#proc">Proc Details</a></header>
+<main>
+<h1>stamina_container <aside>/<a href="datum.html">datum</a>/<a href="datum/stamina_container.html">stamina_container</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/current">current</a></th><td>How much stamina we have right now</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/decrement">decrement</a></th><td>Every tick, remove this much stamina</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/is_regenerating">is_regenerating</a></th><td>Are we regenerating right now?</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/loss">loss</a></th><td>The difference between current and maximum stamina</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/maximum">maximum</a></th><td>The maximum amount of stamina this container has</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/parent">parent</a></th><td>Daddy?</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/paused_stamina">paused_stamina</a></th><td>how long stamina is paused for</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/regen_rate">regen_rate</a></th><td>The amount of stamina gained per second</td></tr>
+            <tr><th><a href="datum/stamina_container.html#var/stamina_grace_period">stamina_grace_period</a></th><td>cooldowns
+how long until we can lose stamina again</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/adjust">adjust</a></th><td>Adjust stamina by an amount.</td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/adjust_grace_period">adjust_grace_period</a></th><td>adjust the grace period a mob has usually used after stam crit to prevent infinite stamina locking</td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/pause">pause</a></th><td>Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.</td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/resume">resume</a></th><td>Resume stamina processing</td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/revitalize">revitalize</a></th><td>Our parent might want to fuck with these numbers
+Revitalize the stamina to the maximum this container can have.</td></tr>
+            <tr><th><a href="datum/stamina_container.html#proc/stop">stop</a></th><td>Stops stamina regeneration entirely until manually resumed.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current"><aside class="declaration">var </aside>current
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 7"/></a></h3>
+        <p>How much stamina we have right now</p><h3 id="var/decrement"><aside class="declaration">var </aside>decrement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 14"/></a></h3>
+        <p>Every tick, remove this much stamina</p><h3 id="var/is_regenerating"><aside class="declaration">var </aside>is_regenerating
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 16"/></a></h3>
+        <p>Are we regenerating right now?</p><h3 id="var/loss"><aside class="declaration">var </aside>loss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 11"/></a></h3>
+        <p>The difference between current and maximum stamina</p><h3 id="var/maximum"><aside class="declaration">var </aside>maximum
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 5"/></a></h3>
+        <p>The maximum amount of stamina this container has</p><h3 id="var/parent"><aside class="declaration">var </aside>parent
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 3"/></a></h3>
+        <p>Daddy?</p><h3 id="var/paused_stamina"><aside class="declaration">var </aside>paused_stamina
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 22"/></a></h3>
+        <p>how long stamina is paused for</p><h3 id="var/regen_rate"><aside class="declaration">var </aside>regen_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 9"/></a></h3>
+        <p>The amount of stamina gained per second</p><h3 id="var/stamina_grace_period"><aside class="declaration">var </aside>stamina_grace_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 20"/></a></h3>
+        <p>cooldowns
+how long until we can lose stamina again</p><h2 id="proc">Proc Details</h2><h3 id="proc/adjust"><aside class="declaration">proc </aside>adjust<aside>(amt, forced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L70">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 70"/></a></aside>
+        </h3>
+        <p>Adjust stamina by an amount.</p><h3 id="proc/adjust_grace_period"><aside class="declaration">proc </aside>adjust_grace_period<aside>(time) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L66">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 66"/></a></aside>
+        </h3>
+        <p>adjust the grace period a mob has usually used after stam crit to prevent infinite stamina locking</p><h3 id="proc/pause"><aside class="declaration">proc </aside>pause<aside>(time) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 53"/></a></aside>
+        </h3>
+        <p>Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.</p><h3 id="proc/resume"><aside class="declaration">proc </aside>resume<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 62"/></a></aside>
+        </h3>
+        <p>Resume stamina processing</p><h3 id="proc/revitalize"><aside class="declaration">proc </aside>revitalize<aside>(forced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L82">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 82"/></a></aside>
+        </h3>
+        <p>Our parent might want to fuck with these numbers
+Revitalize the stamina to the maximum this container can have.</p><h3 id="proc/stop"><aside class="declaration">proc </aside>stop<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/stamina_container.dm#L58">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;stamina_container.dm 58"/></a></aside>
+        </h3>
+        <p>Stops stamina regeneration entirely until manually resumed.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

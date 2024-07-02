@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;satellite&#x2F;meteor_shield - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/satellite/meteor_shield.html#var">Var Details</a></header>
+<main>
+<h1>meteor_shield <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/satellite.html">satellite</a>/<a href="obj/machinery/satellite/meteor_shield.html">meteor_shield</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/station_goals/meteor_shield.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;station_goals&#x2F;meteor_shield.dm 55"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/check_sight">check_sight</a></th><td>Whether the meteor sat checks for line of sight to determine if it can intercept a meteor.</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/emagged_active_meteor_shields">emagged_active_meteor_shields</a></th><td>amount of emagged active meteor shields</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/highest_emagged_threshold_reached">highest_emagged_threshold_reached</a></th><td>the highest amount of shields you've ever emagged</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/meteors_zapped">meteors_zapped</a></th><td>A counter for how many meteors this specific satellite has zapped.</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/monitor">monitor</a></th><td>The proximity monitor used to detect meteors entering the shield's range.</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/proxies">proxies</a></th><td>A list of &quot;proxy&quot; objects used for multi-z coverage.</td></tr>
+            <tr><th><a href="obj/machinery/satellite/meteor_shield.html#var/shared_emag_cooldown">shared_emag_cooldown</a></th><td>cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/check_sight"><aside class="declaration">var </aside>check_sight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/meteor_shield/meteor_shield.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;meteor_shield&#x2F;meteor_shield.dm 9"/></a></h3>
+        <p>Whether the meteor sat checks for line of sight to determine if it can intercept a meteor.</p><h3 id="var/emagged_active_meteor_shields"><aside class="declaration">var </aside>emagged_active_meteor_shields
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/station_goals/meteor_shield.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;station_goals&#x2F;meteor_shield.dm 71"/></a></h3>
+        <p>amount of emagged active meteor shields</p><h3 id="var/highest_emagged_threshold_reached"><aside class="declaration">var </aside>highest_emagged_threshold_reached
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/station_goals/meteor_shield.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;station_goals&#x2F;meteor_shield.dm 73"/></a></h3>
+        <p>the highest amount of shields you've ever emagged</p><h3 id="var/meteors_zapped"><aside class="declaration">var </aside>meteors_zapped
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/meteor_shield/meteor_shield.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;meteor_shield&#x2F;meteor_shield.dm 13"/></a></h3>
+        <p>A counter for how many meteors this specific satellite has zapped.</p><h3 id="var/monitor"><aside class="declaration">var </aside>monitor
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/proximity_monitor.html">proximity_monitor</a>/<a href="datum/proximity_monitor/advanced.html">advanced</a>/meteor_shield</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/meteor_shield/meteor_shield.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;meteor_shield&#x2F;meteor_shield.dm 11"/></a></h3>
+        <p>The proximity monitor used to detect meteors entering the shield's range.</p><h3 id="var/proxies"><aside class="declaration">var </aside>proxies
+            <aside>&ndash; /list/obj/effect/abstract/meteor_shield_proxy</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/meteor_shield/meteor_shield.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;meteor_shield&#x2F;meteor_shield.dm 15"/></a></h3>
+        <p>A list of &quot;proxy&quot; objects used for multi-z coverage.</p><h3 id="var/shared_emag_cooldown"><aside class="declaration">var </aside>shared_emag_cooldown
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/station_goals/meteor_shield.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;station_goals&#x2F;meteor_shield.dm 75"/></a></h3>
+        <p>cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

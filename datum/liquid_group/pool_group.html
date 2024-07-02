@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;liquid_group&#x2F;pool_group - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/liquid_group/pool_group.html#var">Var Details</a> - <a href="datum/liquid_group/pool_group.html#proc">Proc Details</a></header>
+<main>
+<h1>pool_group <aside>/<a href="datum.html">datum</a>/<a href="datum/liquid_group.html">liquid_group</a>/<a href="datum/liquid_group/pool_group.html">pool_group</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#var/can_merge">can_merge</a></th><td>we do not merge</td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#var/connected_pump">connected_pump</a></th><td>the connected pump used when new pumps try and attach</td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#var/evaporates">evaporates</a></th><td>we do not evaporate</td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#var/loss_precent">loss_precent</a></th><td>we lose way less liquids from applications</td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#var/merger_turfs">merger_turfs</a></th><td>list of all merger turfs, we can only spread in these turfs</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/liquid_group/pool_group.html#proc/spread_liquid">spread_liquid</a></th><td>pool is drained now we remove the pool references</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_merge"><aside class="parent"><a title="/datum/liquid_group" href="datum/liquid_group.html#var/can_merge">&uarr;</a></aside>can_merge
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 9"/></a></h3>
+        <p>we do not merge</p><h3 id="var/connected_pump"><aside class="declaration">var </aside>connected_pump
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/pool_pump.html">pool_pump</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 5"/></a></h3>
+        <p>the connected pump used when new pumps try and attach</p><h3 id="var/evaporates"><aside class="parent"><a title="/datum/liquid_group" href="datum/liquid_group.html#var/evaporates">&uarr;</a></aside>evaporates
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 7"/></a></h3>
+        <p>we do not evaporate</p><h3 id="var/loss_precent"><aside class="parent"><a title="/datum/liquid_group" href="datum/liquid_group.html#var/loss_precent">&uarr;</a></aside>loss_precent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 11"/></a></h3>
+        <p>we lose way less liquids from applications</p><h3 id="var/merger_turfs"><aside class="declaration">var </aside>merger_turfs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 3"/></a></h3>
+        <p>list of all merger turfs, we can only spread in these turfs</p><h2 id="proc">Proc Details</h2><h3 id="proc/spread_liquid">spread_liquid<aside>(/<a href="turf.html">turf</a>/new_turf, /<a href="turf.html">turf</a>/source_turf) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/pools/pool_liquid_group.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;pools&#x2F;pool_liquid_group.dm 21"/></a></aside>
+        </h3>
+        <p>pool is drained now we remove the pool references</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

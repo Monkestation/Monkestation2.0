@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;objective - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/objective.html#var">Var Details</a> - <a href="datum/objective.html#proc">Proc Details</a></header>
+<main>
+<h1>objective <aside>/<a href="datum.html">datum</a>/<a href="datum/objective.html">objective</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/objective.html#var/admin_grantable">admin_grantable</a></th><td>can this be granted by admins?</td></tr>
+            <tr><th><a href="datum/objective.html#var/default_opt_in_level">default_opt_in_level</a></th><td>The default opt in level of this objective. Only targets with opt in above or at this will be considered for this objective.</td></tr>
+            <tr><th><a href="datum/objective.html#var/objective_name">objective_name</a></th><td>name used in printing this objective (Objective #1)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/objective.html#proc/get_opt_in_level">get_opt_in_level</a></th><td>Simple getter for [default_opt_in_level]. Use for custom behavior.</td></tr>
+            <tr><th><a href="datum/objective.html#proc/get_roundend_success_suffix">get_roundend_success_suffix</a></th><td>Provides a string describing what a good job you did or did not do</td></tr>
+            <tr><th><a href="datum/objective.html#proc/opt_in_valid">opt_in_valid</a></th><td>Returns whether or not our opt in levels/variables are correct for the target. If true, they can be picked as a target.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/admin_grantable"><aside class="declaration">var </aside>admin_grantable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective.dm 16"/></a></h3>
+        <p>can this be granted by admins?</p><h3 id="var/default_opt_in_level"><aside class="declaration">var </aside>default_opt_in_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/optin/objectives.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;optin&#x2F;objectives.dm 3"/></a></h3>
+        <p>The default opt in level of this objective. Only targets with opt in above or at this will be considered for this objective.</p><h3 id="var/objective_name"><aside class="declaration">var </aside>objective_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective.dm 9"/></a></h3>
+        <p>name used in printing this objective (Objective #1)</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_opt_in_level"><aside class="declaration">proc </aside>get_opt_in_level<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/target_mind) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/optin/objectives.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;optin&#x2F;objectives.dm 6"/></a></aside>
+        </h3>
+        <p>Simple getter for [default_opt_in_level]. Use for custom behavior.</p><h3 id="proc/get_roundend_success_suffix"><aside class="declaration">proc </aside>get_roundend_success_suffix<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective.dm 100"/></a></aside>
+        </h3>
+        <p>Provides a string describing what a good job you did or did not do</p><h3 id="proc/opt_in_valid"><aside class="declaration">proc </aside>opt_in_valid<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/target_mind) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/optin/objectives.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;optin&#x2F;objectives.dm 10"/></a></aside>
+        </h3>
+        <p>Returns whether or not our opt in levels/variables are correct for the target. If true, they can be picked as a target.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;bloodsuckers.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/bloodsuckers.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/bloodsuckers.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TRAIT_OCCULTIST">TRAIT_OCCULTIST</a></th><td>Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
+You have special interactions with bloodsuckers and the occult</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BS_BLOOD_VOLUME_MAX_REGEN">BS_BLOOD_VOLUME_MAX_REGEN</a></th><td>Blood-level defines
+Determines Bloodsucker regeneration rate</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TORTURE_BLOOD_HALF_COST">TORTURE_BLOOD_HALF_COST</a></th><td>Cost to torture someone halfway, in blood. Called twice for full cost</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TORTURE_CONVERSION_COST">TORTURE_CONVERSION_COST</a></th><td>Cost to convert someone after successful torture, in blood</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/FRENZY_THRESHOLD_ENTER">FRENZY_THRESHOLD_ENTER</a></th><td>Once blood is this low, will enter Frenzy</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/FRENZY_THRESHOLD_EXIT">FRENZY_THRESHOLD_EXIT</a></th><td>Once blood is this high, will exit Frenzyshak</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/VASSALIZATION_ALLOWED">VASSALIZATION_ALLOWED</a></th><td>Vassal defines
+If someone passes all checks and can be vassalized</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/VASSALIZATION_DISLOYAL">VASSALIZATION_DISLOYAL</a></th><td>If someone has to accept vassalization</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/VASSALIZATION_BANNED">VASSALIZATION_BANNED</a></th><td>If someone is not allowed under any circimstances to become a Vassal</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_SPAM_HEALING">BLOODSUCKER_SPAM_HEALING</a></th><td>Cooldown defines
+Used in Cooldowns Bloodsuckers use to prevent spamming
+Spam prevention for healing messages.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_SPAM_MASQUERADE">BLOODSUCKER_SPAM_MASQUERADE</a></th><td>Span prevention for Sol Masquerade messages.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_SPAM_SOL">BLOODSUCKER_SPAM_SOL</a></th><td>Span prevention for Sol messages.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/CLAN_NONE">CLAN_NONE</a></th><td>Clan defines</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_CANT_USE_IN_TORPOR">BP_CANT_USE_IN_TORPOR</a></th><td>Power defines
+This Power can't be used in Torpor</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_CANT_USE_IN_FRENZY">BP_CANT_USE_IN_FRENZY</a></th><td>This Power can't be used in Frenzy.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_CANT_USE_WHILE_STAKED">BP_CANT_USE_WHILE_STAKED</a></th><td>This Power can't be used with a stake in you</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_CANT_USE_WHILE_INCAPACITATED">BP_CANT_USE_WHILE_INCAPACITATED</a></th><td>This Power can't be used while incapacitated</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_CANT_USE_WHILE_UNCONSCIOUS">BP_CANT_USE_WHILE_UNCONSCIOUS</a></th><td>This Power can't be used while unconscious</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_CAN_BUY">BLOODSUCKER_CAN_BUY</a></th><td>This Power can be purchased by Bloodsuckers</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_DEFAULT_POWER">BLOODSUCKER_DEFAULT_POWER</a></th><td>This is a Default Power that all Bloodsuckers get.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TREMERE_CAN_BUY">TREMERE_CAN_BUY</a></th><td>This Power can be purchased by Tremere Bloodsuckers</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/VASSAL_CAN_BUY">VASSAL_CAN_BUY</a></th><td>This Power can be purchased by Vassals</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_AM_TOGGLE">BP_AM_TOGGLE</a></th><td>This Power is a Toggled Power</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_AM_SINGLEUSE">BP_AM_SINGLEUSE</a></th><td>This Power is a Single-Use Power</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_AM_STATIC_COOLDOWN">BP_AM_STATIC_COOLDOWN</a></th><td>This Power has a Static cooldown</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BP_AM_COSTLESS_UNCONSCIOUS">BP_AM_COSTLESS_UNCONSCIOUS</a></th><td>This Power doesn't cost bloot to run while unconscious</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_RANK_UP">BLOODSUCKER_RANK_UP</a></th><td>Bloodsucker Signals
+Called when a Bloodsucker ranks up: (datum/bloodsucker_datum, mob/owner, mob/target)</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_INTERACT_WITH_VASSAL">BLOODSUCKER_INTERACT_WITH_VASSAL</a></th><td>Called when a Bloodsucker interacts with a Vassal on their persuasion rack.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_MAKE_FAVORITE">BLOODSUCKER_MAKE_FAVORITE</a></th><td>Called when a Bloodsucker makes a Vassal into their Favorite Vassal: (datum/vassal_datum, mob/master)</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_MADE_VASSAL">BLOODSUCKER_MADE_VASSAL</a></th><td>Called when a new Vassal is successfully made: (datum/bloodsucker_datum)</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_EXIT_TORPOR">BLOODSUCKER_EXIT_TORPOR</a></th><td>Called when a Bloodsucker exits Torpor.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_FINAL_DEATH">BLOODSUCKER_FINAL_DEATH</a></th><td>Called when a Bloodsucker reaches Final Death.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/DONT_DUST">DONT_DUST</a></th><td>Whether the Bloodsucker should not be dusted when arriving Final Death</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/COMSIG_BLOODSUCKER_BROKE_MASQUERADE">COMSIG_BLOODSUCKER_BROKE_MASQUERADE</a></th><td>Called when a Bloodsucker breaks the Masquerade</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_ENTERS_FRENZY">BLOODSUCKER_ENTERS_FRENZY</a></th><td>Called when a Bloodsucker enters Frenzy</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_EXITS_FRENZY">BLOODSUCKER_EXITS_FRENZY</a></th><td>Called when a Bloodsucker exits Frenzy</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/COMSIG_SOL_RANKUP_BLOODSUCKERS">COMSIG_SOL_RANKUP_BLOODSUCKERS</a></th><td>Sol signals &amp; Defines</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/COMSIG_SOL_WARNING_GIVEN">COMSIG_SOL_WARNING_GIVEN</a></th><td>Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/COMSIG_BLOODSUCKER_ON_LIFETICK">COMSIG_BLOODSUCKER_ON_LIFETICK</a></th><td>Called on a Bloodsucker's Lifetick.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_DRINK_NORMAL">BLOODSUCKER_DRINK_NORMAL</a></th><td>Clan defines</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_DRINK_SNOBBY">BLOODSUCKER_DRINK_SNOBBY</a></th><td>Drinks blood but is snobby, refusing to drink from mindless</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_DRINK_INHUMANELY">BLOODSUCKER_DRINK_INHUMANELY</a></th><td>Drinks blood from disgusting creatures without Humanity consequences.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/ROLE_BLOODSUCKER">ROLE_BLOODSUCKER</a></th><td>Role defines</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TRAIT_MASQUERADE">TRAIT_MASQUERADE</a></th><td>Traits
+Falsifies Health analyzer blood levels</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TRAIT_COLDBLOODED">TRAIT_COLDBLOODED</a></th><td>Your body is literal room temperature. Does not make you immune to the temp</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/BLOODSUCKER_TRAIT">BLOODSUCKER_TRAIT</a></th><td>Sources
+Source trait for Bloodsuckers-related traits</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/TORPOR_TRAIT">TORPOR_TRAIT</a></th><td>Source trait for bloodsuckers in torpor.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/MESMERIZED_TRAIT">MESMERIZED_TRAIT</a></th><td>Source trait for bloodsucker mesmerization.</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/HUNTER_TRAIT">HUNTER_TRAIT</a></th><td>Source trait for Monster Hunter-related traits</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/FEED_TRAIT">FEED_TRAIT</a></th><td>Source trait while Feeding</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/FRENZY_TRAIT">FRENZY_TRAIT</a></th><td>Source trait during a Frenzy</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/IS_BLOODSUCKER">IS_BLOODSUCKER</a></th><td>Macros
+Whether a mob is a Bloodsucker</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/IS_VASSAL">IS_VASSAL</a></th><td>Whether a mob is a Vassal</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/IS_FAVORITE_VASSAL">IS_FAVORITE_VASSAL</a></th><td>Whether a mob is a Favorite Vassal</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/IS_REVENGE_VASSAL">IS_REVENGE_VASSAL</a></th><td>Whether a mob is a Revenge Vassal</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/IS_MONSTERHUNTER">IS_MONSTERHUNTER</a></th><td>Whether a mob is a Monster Hunter</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/COMSIG_RABBIT_FOUND">COMSIG_RABBIT_FOUND</a></th><td>monsterhunter signals</td></tr>
+        <tr><th><a href="code/__DEFINES/bloodsuckers.html#define/FACTION_RABBITS">FACTION_RABBITS</a></th><td>Define for the 'Rabbits' Faction.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BLOODSUCKER_CAN_BUY"><aside class="declaration">#define </aside>BLOODSUCKER_CAN_BUY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 75"/></a>
+    </h3>
+    <p>This Power can be purchased by Bloodsuckers</p><h3 id="define/BLOODSUCKER_DEFAULT_POWER"><aside class="declaration">#define </aside>BLOODSUCKER_DEFAULT_POWER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 77"/></a>
+    </h3>
+    <p>This is a Default Power that all Bloodsuckers get.</p><h3 id="define/BLOODSUCKER_DRINK_INHUMANELY"><aside class="declaration">#define </aside>BLOODSUCKER_DRINK_INHUMANELY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 144"/></a>
+    </h3>
+    <p>Drinks blood from disgusting creatures without Humanity consequences.</p><h3 id="define/BLOODSUCKER_DRINK_NORMAL"><aside class="declaration">#define </aside>BLOODSUCKER_DRINK_NORMAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 140"/></a>
+    </h3>
+    <p>Clan defines</p>
+<p>This is stuff that is used solely by Clans for clan-related activity.
+Drinks blood the normal Bloodsucker way.</p><h3 id="define/BLOODSUCKER_DRINK_SNOBBY"><aside class="declaration">#define </aside>BLOODSUCKER_DRINK_SNOBBY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 142"/></a>
+    </h3>
+    <p>Drinks blood but is snobby, refusing to drink from mindless</p><h3 id="define/BLOODSUCKER_ENTERS_FRENZY"><aside class="declaration">#define </aside>BLOODSUCKER_ENTERS_FRENZY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 112"/></a>
+    </h3>
+    <p>Called when a Bloodsucker enters Frenzy</p><h3 id="define/BLOODSUCKER_EXITS_FRENZY"><aside class="declaration">#define </aside>BLOODSUCKER_EXITS_FRENZY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 114"/></a>
+    </h3>
+    <p>Called when a Bloodsucker exits Frenzy</p><h3 id="define/BLOODSUCKER_EXIT_TORPOR"><aside class="declaration">#define </aside>BLOODSUCKER_EXIT_TORPOR
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 104"/></a>
+    </h3>
+    <p>Called when a Bloodsucker exits Torpor.</p><h3 id="define/BLOODSUCKER_FINAL_DEATH"><aside class="declaration">#define </aside>BLOODSUCKER_FINAL_DEATH
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 106"/></a>
+    </h3>
+    <p>Called when a Bloodsucker reaches Final Death.</p><h3 id="define/BLOODSUCKER_INTERACT_WITH_VASSAL"><aside class="declaration">#define </aside>BLOODSUCKER_INTERACT_WITH_VASSAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 98"/></a>
+    </h3>
+    <p>Called when a Bloodsucker interacts with a Vassal on their persuasion rack.</p><h3 id="define/BLOODSUCKER_MADE_VASSAL"><aside class="declaration">#define </aside>BLOODSUCKER_MADE_VASSAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 102"/></a>
+    </h3>
+    <p>Called when a new Vassal is successfully made: (datum/bloodsucker_datum)</p><h3 id="define/BLOODSUCKER_MAKE_FAVORITE"><aside class="declaration">#define </aside>BLOODSUCKER_MAKE_FAVORITE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 100"/></a>
+    </h3>
+    <p>Called when a Bloodsucker makes a Vassal into their Favorite Vassal: (datum/vassal_datum, mob/master)</p><h3 id="define/BLOODSUCKER_RANK_UP"><aside class="declaration">#define </aside>BLOODSUCKER_RANK_UP
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 96"/></a>
+    </h3>
+    <p>Bloodsucker Signals
+Called when a Bloodsucker ranks up: (datum/bloodsucker_datum, mob/owner, mob/target)</p><h3 id="define/BLOODSUCKER_SPAM_HEALING"><aside class="declaration">#define </aside>BLOODSUCKER_SPAM_HEALING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 36"/></a>
+    </h3>
+    <p>Cooldown defines
+Used in Cooldowns Bloodsuckers use to prevent spamming
+Spam prevention for healing messages.</p><h3 id="define/BLOODSUCKER_SPAM_MASQUERADE"><aside class="declaration">#define </aside>BLOODSUCKER_SPAM_MASQUERADE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 38"/></a>
+    </h3>
+    <p>Span prevention for Sol Masquerade messages.</p><h3 id="define/BLOODSUCKER_SPAM_SOL"><aside class="declaration">#define </aside>BLOODSUCKER_SPAM_SOL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 41"/></a>
+    </h3>
+    <p>Span prevention for Sol messages.</p><h3 id="define/BLOODSUCKER_TRAIT"><aside class="declaration">#define </aside>BLOODSUCKER_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 167"/></a>
+    </h3>
+    <p>Sources
+Source trait for Bloodsuckers-related traits</p><h3 id="define/BP_AM_COSTLESS_UNCONSCIOUS"><aside class="declaration">#define </aside>BP_AM_COSTLESS_UNCONSCIOUS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 90"/></a>
+    </h3>
+    <p>This Power doesn't cost bloot to run while unconscious</p><h3 id="define/BP_AM_SINGLEUSE"><aside class="declaration">#define </aside>BP_AM_SINGLEUSE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 86"/></a>
+    </h3>
+    <p>This Power is a Single-Use Power</p><h3 id="define/BP_AM_STATIC_COOLDOWN"><aside class="declaration">#define </aside>BP_AM_STATIC_COOLDOWN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 88"/></a>
+    </h3>
+    <p>This Power has a Static cooldown</p><h3 id="define/BP_AM_TOGGLE"><aside class="declaration">#define </aside>BP_AM_TOGGLE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 84"/></a>
+    </h3>
+    <p>This Power is a Toggled Power</p><h3 id="define/BP_CANT_USE_IN_FRENZY"><aside class="declaration">#define </aside>BP_CANT_USE_IN_FRENZY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 66"/></a>
+    </h3>
+    <p>This Power can't be used in Frenzy.</p><h3 id="define/BP_CANT_USE_IN_TORPOR"><aside class="declaration">#define </aside>BP_CANT_USE_IN_TORPOR
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 64"/></a>
+    </h3>
+    <p>Power defines
+This Power can't be used in Torpor</p><h3 id="define/BP_CANT_USE_WHILE_INCAPACITATED"><aside class="declaration">#define </aside>BP_CANT_USE_WHILE_INCAPACITATED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 70"/></a>
+    </h3>
+    <p>This Power can't be used while incapacitated</p><h3 id="define/BP_CANT_USE_WHILE_STAKED"><aside class="declaration">#define </aside>BP_CANT_USE_WHILE_STAKED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 68"/></a>
+    </h3>
+    <p>This Power can't be used with a stake in you</p><h3 id="define/BP_CANT_USE_WHILE_UNCONSCIOUS"><aside class="declaration">#define </aside>BP_CANT_USE_WHILE_UNCONSCIOUS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 72"/></a>
+    </h3>
+    <p>This Power can't be used while unconscious</p><h3 id="define/BS_BLOOD_VOLUME_MAX_REGEN"><aside class="declaration">#define </aside>BS_BLOOD_VOLUME_MAX_REGEN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 11"/></a>
+    </h3>
+    <p>Blood-level defines
+Determines Bloodsucker regeneration rate</p><h3 id="define/CLAN_NONE"><aside class="declaration">#define </aside>CLAN_NONE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 46"/></a>
+    </h3>
+    <p>Clan defines</p><h3 id="define/COMSIG_BLOODSUCKER_BROKE_MASQUERADE"><aside class="declaration">#define </aside>COMSIG_BLOODSUCKER_BROKE_MASQUERADE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 110"/></a>
+    </h3>
+    <p>Called when a Bloodsucker breaks the Masquerade</p><h3 id="define/COMSIG_BLOODSUCKER_ON_LIFETICK"><aside class="declaration">#define </aside>COMSIG_BLOODSUCKER_ON_LIFETICK
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 126"/></a>
+    </h3>
+    <p>Called on a Bloodsucker's Lifetick.</p><h3 id="define/COMSIG_RABBIT_FOUND"><aside class="declaration">#define </aside>COMSIG_RABBIT_FOUND
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L197">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 197"/></a>
+    </h3>
+    <p>monsterhunter signals</p><h3 id="define/COMSIG_SOL_RANKUP_BLOODSUCKERS"><aside class="declaration">#define </aside>COMSIG_SOL_RANKUP_BLOODSUCKERS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 119"/></a>
+    </h3>
+    <p>Sol signals &amp; Defines</p><h3 id="define/COMSIG_SOL_WARNING_GIVEN"><aside class="declaration">#define </aside>COMSIG_SOL_WARNING_GIVEN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 124"/></a>
+    </h3>
+    <p>Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)</p><h3 id="define/DONT_DUST"><aside class="declaration">#define </aside>DONT_DUST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 108"/></a>
+    </h3>
+    <p>Whether the Bloodsucker should not be dusted when arriving Final Death</p><h3 id="define/FACTION_RABBITS"><aside class="declaration">#define </aside>FACTION_RABBITS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 202"/></a>
+    </h3>
+    <p>Define for the 'Rabbits' Faction.</p><h3 id="define/FEED_TRAIT"><aside class="declaration">#define </aside>FEED_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 175"/></a>
+    </h3>
+    <p>Source trait while Feeding</p><h3 id="define/FRENZY_THRESHOLD_ENTER"><aside class="declaration">#define </aside>FRENZY_THRESHOLD_ENTER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 17"/></a>
+    </h3>
+    <p>Once blood is this low, will enter Frenzy</p><h3 id="define/FRENZY_THRESHOLD_EXIT"><aside class="declaration">#define </aside>FRENZY_THRESHOLD_EXIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 19"/></a>
+    </h3>
+    <p>Once blood is this high, will exit Frenzyshak</p><h3 id="define/FRENZY_TRAIT"><aside class="declaration">#define </aside>FRENZY_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L177">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 177"/></a>
+    </h3>
+    <p>Source trait during a Frenzy</p><h3 id="define/HUNTER_TRAIT"><aside class="declaration">#define </aside>HUNTER_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 173"/></a>
+    </h3>
+    <p>Source trait for Monster Hunter-related traits</p><h3 id="define/IS_BLOODSUCKER"><aside class="declaration">#define </aside>IS_BLOODSUCKER
+            <aside>(mob)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 183"/></a>
+    </h3>
+    <p>Macros
+Whether a mob is a Bloodsucker</p><h3 id="define/IS_FAVORITE_VASSAL"><aside class="declaration">#define </aside>IS_FAVORITE_VASSAL
+            <aside>(mob)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 187"/></a>
+    </h3>
+    <p>Whether a mob is a Favorite Vassal</p><h3 id="define/IS_MONSTERHUNTER"><aside class="declaration">#define </aside>IS_MONSTERHUNTER
+            <aside>(mob)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L191">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 191"/></a>
+    </h3>
+    <p>Whether a mob is a Monster Hunter</p><h3 id="define/IS_REVENGE_VASSAL"><aside class="declaration">#define </aside>IS_REVENGE_VASSAL
+            <aside>(mob)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 189"/></a>
+    </h3>
+    <p>Whether a mob is a Revenge Vassal</p><h3 id="define/IS_VASSAL"><aside class="declaration">#define </aside>IS_VASSAL
+            <aside>(mob)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 185"/></a>
+    </h3>
+    <p>Whether a mob is a Vassal</p><h3 id="define/MESMERIZED_TRAIT"><aside class="declaration">#define </aside>MESMERIZED_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 171"/></a>
+    </h3>
+    <p>Source trait for bloodsucker mesmerization.</p><h3 id="define/ROLE_BLOODSUCKER"><aside class="declaration">#define </aside>ROLE_BLOODSUCKER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 149"/></a>
+    </h3>
+    <p>Role defines</p><h3 id="define/TORPOR_TRAIT"><aside class="declaration">#define </aside>TORPOR_TRAIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 169"/></a>
+    </h3>
+    <p>Source trait for bloodsuckers in torpor.</p><h3 id="define/TORTURE_BLOOD_HALF_COST"><aside class="declaration">#define </aside>TORTURE_BLOOD_HALF_COST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 13"/></a>
+    </h3>
+    <p>Cost to torture someone halfway, in blood. Called twice for full cost</p><h3 id="define/TORTURE_CONVERSION_COST"><aside class="declaration">#define </aside>TORTURE_CONVERSION_COST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 15"/></a>
+    </h3>
+    <p>Cost to convert someone after successful torture, in blood</p><h3 id="define/TRAIT_COLDBLOODED"><aside class="declaration">#define </aside>TRAIT_COLDBLOODED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 161"/></a>
+    </h3>
+    <p>Your body is literal room temperature. Does not make you immune to the temp</p><h3 id="define/TRAIT_MASQUERADE"><aside class="declaration">#define </aside>TRAIT_MASQUERADE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 159"/></a>
+    </h3>
+    <p>Traits
+Falsifies Health analyzer blood levels</p><h3 id="define/TRAIT_OCCULTIST"><aside class="declaration">#define </aside>TRAIT_OCCULTIST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 5"/></a>
+    </h3>
+    <p>Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
+You have special interactions with bloodsuckers and the occult</p><h3 id="define/TREMERE_CAN_BUY"><aside class="declaration">#define </aside>TREMERE_CAN_BUY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 79"/></a>
+    </h3>
+    <p>This Power can be purchased by Tremere Bloodsuckers</p><h3 id="define/VASSALIZATION_ALLOWED"><aside class="declaration">#define </aside>VASSALIZATION_ALLOWED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 25"/></a>
+    </h3>
+    <p>Vassal defines
+If someone passes all checks and can be vassalized</p><h3 id="define/VASSALIZATION_BANNED"><aside class="declaration">#define </aside>VASSALIZATION_BANNED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 29"/></a>
+    </h3>
+    <p>If someone is not allowed under any circimstances to become a Vassal</p><h3 id="define/VASSALIZATION_DISLOYAL"><aside class="declaration">#define </aside>VASSALIZATION_DISLOYAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 27"/></a>
+    </h3>
+    <p>If someone has to accept vassalization</p><h3 id="define/VASSAL_CAN_BUY"><aside class="declaration">#define </aside>VASSAL_CAN_BUY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/bloodsuckers.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;bloodsuckers.dm 81"/></a>
+    </h3>
+    <p>This Power can be purchased by Vassals</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

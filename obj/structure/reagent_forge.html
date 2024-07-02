@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;reagent_forge - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/reagent_forge.html#var">Var Details</a> - <a href="obj/structure/reagent_forge.html#proc">Proc Details</a></header>
+<main>
+<h1>reagent_forge <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/reagent_forge.html">structure/reagent_forge</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1880">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1880"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/forge_fuel_strong">forge_fuel_strong</a></th><td>How many seconds of strong fuel (coal) does the forge have left</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/forge_fuel_weak">forge_fuel_weak</a></th><td>How many seconds of weak fuel (wood) does the forge have left</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/forge_level">forge_level</a></th><td>The current 'level' of the forge, how upgraded is it from zero to three</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/forge_temperature">forge_temperature</a></th><td>What the current internal temperature of the forge is</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/forging_cooldown">forging_cooldown</a></th><td>Cooldown time for processing on the forge</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/in_use">in_use</a></th><td>Is the forge in use or not? If true, prevents most interactions with the forge</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/minimum_target_temperature">minimum_target_temperature</a></th><td>What the minimum target temperature is, used for upgrades</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/radial_choice_list">radial_choice_list</a></th><td>List of possible choices for the selection radial</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/smoke_state">smoke_state</a></th><td>What smoke particles should be coming out of the forge</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/target_temperature">target_temperature</a></th><td>What temperature the forge is moving towards</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/temperature_loss_reduction">temperature_loss_reduction</a></th><td>What is the current reduction for temperature decrease</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#var/used_tray">used_tray</a></th><td>Tracks any oven tray placed inside of the forge</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/add_tray_to_forge">add_tray_to_forge</a></th><td>Take the given tray and place it inside the forge, updating everything relevant to that</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/check_fuel">check_fuel</a></th><td>Checks if the forge has fuel, if so what type. If it has either type of fuel, returns TRUE, otherwise returns FALSE. just_checking will check if there is fuel without taking actions</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/check_in_use">check_in_use</a></th><td>If the forge is in use, checks if there is an oven tray, then if there are any mobs actually in use range. If not sets the forge to not be in use.</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/check_temp">check_temp</a></th><td>Adjust the temperature to head towards the target temperature, changing icon and creating light if the temperature is rising</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/fail_message">fail_message</a></th><td>Creates both a fail message balloon alert, and sets in_use to false</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/handle_baking_things">handle_baking_things</a></th><td>Sends signals to bake and items on the used tray, setting the smoke state of the forge according to the most cooked item in it</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/handle_ceramics">handle_ceramics</a></th><td>Sets ceramic items from their unusable state into their finished form</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/handle_glass_sheet_melting">handle_glass_sheet_melting</a></th><td>Handles the creation of molten glass from glass sheets</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/handle_metal_cup_melting">handle_metal_cup_melting</a></th><td>Handles creating molten glass from a metal cup filled with sand</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/refuel">refuel</a></th><td>Adds to either the strong or weak fuel timers from the given stack</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/remove_tray_from_forge">remove_tray_from_forge</a></th><td>Take the used_tray and spit it out, updating everything relevant to that</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/set_smoke_state">set_smoke_state</a></th><td>The worst off item being baked in our forge right now, to ensure people know when gordon ramsay is gonna be upset at them
+Sets the type of particles that the forge should be generating</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/smelt_ore">smelt_ore</a></th><td>Takes given ore and smelts it, possibly producing extra sheets if upgraded</td></tr>
+            <tr><th><a href="obj/structure/reagent_forge.html#proc/spawn_coal">spawn_coal</a></th><td>Spawns a piece of coal at the forge and renames it to charcoal</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/forge_fuel_strong"><aside class="declaration">var </aside>forge_fuel_strong
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1900">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1900"/></a></h3>
+        <p>How many seconds of strong fuel (coal) does the forge have left</p><h3 id="var/forge_fuel_weak"><aside class="declaration">var </aside>forge_fuel_weak
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1898">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1898"/></a></h3>
+        <p>How many seconds of weak fuel (wood) does the forge have left</p><h3 id="var/forge_level"><aside class="declaration">var </aside>forge_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1906">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1906"/></a></h3>
+        <p>The current 'level' of the forge, how upgraded is it from zero to three</p><h3 id="var/forge_temperature"><aside class="declaration">var </aside>forge_temperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1890">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1890"/></a></h3>
+        <p>What the current internal temperature of the forge is</p><h3 id="var/forging_cooldown"><aside class="declaration">var </aside>forging_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1902">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1902"/></a></h3>
+        <p>Cooldown time for processing on the forge</p><h3 id="var/in_use"><aside class="declaration">var </aside>in_use
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1904">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1904"/></a></h3>
+        <p>Is the forge in use or not? If true, prevents most interactions with the forge</p><h3 id="var/minimum_target_temperature"><aside class="declaration">var </aside>minimum_target_temperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1894">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1894"/></a></h3>
+        <p>What the minimum target temperature is, used for upgrades</p><h3 id="var/radial_choice_list"><aside class="declaration">var </aside>radial_choice_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1912">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1912"/></a></h3>
+        <p>List of possible choices for the selection radial</p><h3 id="var/smoke_state"><aside class="declaration">var </aside>smoke_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1908">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1908"/></a></h3>
+        <p>What smoke particles should be coming out of the forge</p><h3 id="var/target_temperature"><aside class="declaration">var </aside>target_temperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1892">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1892"/></a></h3>
+        <p>What temperature the forge is moving towards</p><h3 id="var/temperature_loss_reduction"><aside class="declaration">var </aside>temperature_loss_reduction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1896">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1896"/></a></h3>
+        <p>What is the current reduction for temperature decrease</p><h3 id="var/used_tray"><aside class="declaration">var </aside>used_tray
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/plate.html">plate</a>/oven_tray</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1910">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1910"/></a></h3>
+        <p>Tracks any oven tray placed inside of the forge</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_tray_to_forge"><aside class="declaration">proc </aside>add_tray_to_forge<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/plate.html">plate</a>/oven_tray/tray) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2246">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2246"/></a></aside>
+        </h3>
+        <p>Take the given tray and place it inside the forge, updating everything relevant to that</p><h3 id="proc/check_fuel"><aside class="declaration">proc </aside>check_fuel<aside>(just_checking) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1986">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1986"/></a></aside>
+        </h3>
+        <p>Checks if the forge has fuel, if so what type. If it has either type of fuel, returns TRUE, otherwise returns FALSE. just_checking will check if there is fuel without taking actions</p><h3 id="proc/check_in_use"><aside class="declaration">proc </aside>check_in_use<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2026">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2026"/></a></aside>
+        </h3>
+        <p>If the forge is in use, checks if there is an oven tray, then if there are any mobs actually in use range. If not sets the forge to not be in use.</p><h3 id="proc/check_temp"><aside class="declaration">proc </aside>check_temp<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2016">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2016"/></a></aside>
+        </h3>
+        <p>Adjust the temperature to head towards the target temperature, changing icon and creating light if the temperature is rising</p><h3 id="proc/fail_message"><aside class="declaration">proc </aside>fail_message<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, message) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2011">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2011"/></a></aside>
+        </h3>
+        <p>Creates both a fail message balloon alert, and sets in_use to false</p><h3 id="proc/handle_baking_things"><aside class="declaration">proc </aside>handle_baking_things<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2064">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2064"/></a></aside>
+        </h3>
+        <p>Sends signals to bake and items on the used tray, setting the smoke state of the forge according to the most cooked item in it</p><h3 id="proc/handle_ceramics"><aside class="declaration">proc </aside>handle_ceramics<aside>(/<a href="obj.html">obj</a>/attacking_item, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2341">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2341"/></a></aside>
+        </h3>
+        <p>Sets ceramic items from their unusable state into their finished form</p><h3 id="proc/handle_glass_sheet_melting"><aside class="declaration">proc </aside>handle_glass_sheet_melting<aside>(/<a href="obj.html">obj</a>/attacking_item, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2369">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2369"/></a></aside>
+        </h3>
+        <p>Handles the creation of molten glass from glass sheets</p><h3 id="proc/handle_metal_cup_melting"><aside class="declaration">proc </aside>handle_metal_cup_melting<aside>(/<a href="obj.html">obj</a>/attacking_item, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2393">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2393"/></a></aside>
+        </h3>
+        <p>Handles creating molten glass from a metal cup filled with sand</p><h3 id="proc/refuel"><aside class="declaration">proc </aside>refuel<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/refueling_stack, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, is_strong_fuel) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2279">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2279"/></a></aside>
+        </h3>
+        <p>Adds to either the strong or weak fuel timers from the given stack</p><h3 id="proc/remove_tray_from_forge"><aside class="declaration">proc </aside>remove_tray_from_forge<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2264">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2264"/></a></aside>
+        </h3>
+        <p>Take the used_tray and spit it out, updating everything relevant to that</p><h3 id="proc/set_smoke_state"><aside class="declaration">proc </aside>set_smoke_state<aside>(new_state) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2089">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2089"/></a></aside>
+        </h3>
+        <p>The worst off item being baked in our forge right now, to ensure people know when gordon ramsay is gonna be upset at them
+Sets the type of particles that the forge should be generating</p><h3 id="proc/smelt_ore"><aside class="declaration">proc </aside>smelt_ore<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/ore/ore_item, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2310">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2310"/></a></aside>
+        </h3>
+        <p>Takes given ore and smelts it, possibly producing extra sheets if upgraded</p><h3 id="proc/spawn_coal"><aside class="declaration">proc </aside>spawn_coal<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L2038">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 2038"/></a></aside>
+        </h3>
+        <p>Spawns a piece of coal at the forge and renames it to charcoal</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

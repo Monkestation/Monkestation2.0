@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>monkestation&#x2F;code&#x2F;modules&#x2F;outdoors&#x2F;code&#x2F;screen_alerts&#x2F;blurb.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>monkestation/code/modules/outdoors/code/screen_alerts/blurb.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/outdoors/code/screen_alerts/blurb.dm">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;outdoors&#x2F;code&#x2F;screen_alerts&#x2F;blurb.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th>/proc/<a href="global.html#proc/show_blurb">show_blurb</a></th>
+                <td><em>Shows a ticker reading out the given text on a client's screen.
+targets = mob or list of mobs to show it to.
+duration = how long it lingers after it finishes ticking.
+message = the message to display. Due to using maptext it isn't very flexible format-wise. 11px font, up to 480 pixels per line.
+Use \n for line breaks. Single-character HTML tags (<b>, <i>, <u> etc.) are handled correctly but others display strangely.
+Note that maptext can display text macros in strange ways, ex. \improper showing as &quot;Ã¿&quot;. Lines containing only spaces,
+including ones only containing &quot;\improper &quot;, don't display.
+scroll_down = by default each line pushes the previous line upwards - this tells it to start high and scroll down.
+Ticks on \n - does not autodetect line breaks in long strings.
+screen_position = screen loc for the bottom-left corner of the blurb.
+text_alignment = &quot;right&quot;, &quot;left&quot;, or &quot;center&quot;
+text_color = colour of the text.
+blurb_key = a key used for specific blurb types so they are not shown repeatedly. Ex. someone who joins as CLF repeatedly only seeing the mission blurb the first time.
+ignore_key = used to skip key checks. Ex. a USCM ERT member shouldn't see the normal USCM drop message,
+but should see their own spawn message even if the player already dropped as USCM.</em></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;round_event&#x2F;scrubber_clog - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/round_event/scrubber_clog.html#var">Var Details</a> - <a href="datum/round_event/scrubber_clog.html#proc">Proc Details</a></header>
+<main>
+<h1>scrubber_clog <aside>/<a href="datum.html">datum</a>/<a href="datum/round_event.html">round_event</a>/<a href="datum/round_event/scrubber_clog.html">scrubber_clog</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 10"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/clogged">clogged</a></th><td>Used for tracking if the clog signal should be sent.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/living_mobs">living_mobs</a></th><td>Used to track/limit produced mobs.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/maximum_spawns">maximum_spawns</a></th><td>Cap on the number of spawned mobs that can be alive at once.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/scrubber">scrubber</a></th><td>Scrubber selected for the event.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/spawn_delay">spawn_delay</a></th><td>Interval between mob spawns.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#var/spawned_mob">spawned_mob</a></th><td>What mob will be spawned</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#proc/get_mob">get_mob</a></th><td>Selects which mob will be spawned for a given scrubber clog event.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#proc/get_scrubber">get_scrubber</a></th><td>Finds a valid scrubber for the scrubber clog event.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#proc/life_check">life_check</a></th><td>Checks which mobs in the mob spawn list are alive.</td></tr>
+            <tr><th><a href="datum/round_event/scrubber_clog.html#proc/scrubber_move">scrubber_move</a></th><td>Finds a new scrubber for the event if the original is destroyed.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/clogged"><aside class="declaration">var </aside>clogged
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 26"/></a></h3>
+        <p>Used for tracking if the clog signal should be sent.</p><h3 id="var/living_mobs"><aside class="declaration">var </aside>living_mobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 24"/></a></h3>
+        <p>Used to track/limit produced mobs.</p><h3 id="var/maximum_spawns"><aside class="declaration">var </aside>maximum_spawns
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 20"/></a></h3>
+        <p>Cap on the number of spawned mobs that can be alive at once.</p><h3 id="var/scrubber"><aside class="declaration">var </aside>scrubber
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/atmospherics.html">atmospherics</a>/<a href="obj/machinery/atmospherics/components.html">components</a>/<a href="obj/machinery/atmospherics/components/unary.html">unary</a>/<a href="obj/machinery/atmospherics/components/unary/vent_scrubber.html">vent_scrubber</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 16"/></a></h3>
+        <p>Scrubber selected for the event.</p><h3 id="var/spawn_delay"><aside class="declaration">var </aside>spawn_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 22"/></a></h3>
+        <p>Interval between mob spawns.</p><h3 id="var/spawned_mob"><aside class="declaration">var </aside>spawned_mob
+            <aside>&ndash; /<a href="mob.html">mob</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 18"/></a></h3>
+        <p>What mob will be spawned</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_mob"><aside class="declaration">proc </aside>get_mob<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 67"/></a></aside>
+        </h3>
+        <p>Selects which mob will be spawned for a given scrubber clog event.</p>
+<p>Creates a static list of mobs, which is different based on the severity of the event being run, and returns a pick() of it.</p><h3 id="proc/get_scrubber"><aside class="declaration">proc </aside>get_scrubber<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 82"/></a></aside>
+        </h3>
+        <p>Finds a valid scrubber for the scrubber clog event.</p>
+<p>For every scrubber in the round, checks if the scrubber turf is on-station, and is neither welded nor already clogged, and
+adds it to a list. A random scrubber is picked from this list, and returned as the scrubber that will be used for the event.</p><h3 id="proc/life_check"><aside class="declaration">proc </aside>life_check<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 107"/></a></aside>
+        </h3>
+        <p>Checks which mobs in the mob spawn list are alive.</p>
+<p>Checks each mob in the living_mobs list, to see if they're dead or not. If dead, they're removed from the list.
+This is used to keep new mobs spawning as the old ones die.</p><h3 id="proc/scrubber_move"><aside class="declaration">proc </aside>scrubber_move<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/events/scrubber_clog.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;scrubber_clog.dm 120"/></a></aside>
+        </h3>
+        <p>Finds a new scrubber for the event if the original is destroyed.</p>
+<p>This is used when the scrubber for the event is destroyed. It picks a new scrubber and announces that the event has moved elsewhere.
+Handles the scrubber ref if there are no valid scrubbers to replace it with.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

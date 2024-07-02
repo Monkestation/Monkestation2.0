@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;lift_master&#x2F;tram - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/lift_master/tram.html#var">Var Details</a> - <a href="datum/lift_master/tram.html#proc">Proc Details</a></header>
+<main>
+<h1>tram <aside>/<a href="datum.html">datum</a>/<a href="datum/lift_master.html">lift_master</a>/<a href="datum/lift_master/tram.html">tram</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/base_horizontal_speed">base_horizontal_speed</a></th><td>version of horizontal_speed that gets set in init and is considered our base speed if our lift gets slowed down</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/collision_lethality">collision_lethality</a></th><td>multiplier on how much damage/force the tram imparts on things it hits</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/horizontal_speed">horizontal_speed</a></th><td>decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
+this var is poorly named its actually horizontal movement delay but whatever.</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/idle_platform">idle_platform</a></th><td>reference to the destination landmark we consider ourselves &quot;at&quot;. since we potentially span multiple z levels we dont actually
+know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+and the destination landmark.</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/next_move">next_move</a></th><td>the world.time we should next move at. in case our speed is set to less than 1 movement per tick</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/slowed_down">slowed_down</a></th><td>whether we have been slowed down automatically</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/times_below">times_below</a></th><td>how many times we moved while costing less than 0.5 * SStramprocess.max_time milliseconds per movement</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/times_exceeded">times_exceeded</a></th><td>how many times we moved while costing more than SStramprocess.max_time milliseconds per movement.
+if this exceeds SStramprocess.max_exceeding_moves</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/travel_direction">travel_direction</a></th><td>if we're travelling, what direction are we going</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/travel_distance">travel_distance</a></th><td>if we're travelling, how far do we have to go</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/travel_trip_length">travel_trip_length</a></th><td>how far in total we'll be travelling</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#var/travelling">travelling</a></th><td>whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#proc/gracefully_break">gracefully_break</a></th><td>Signal for when the tram runs into a field of which it cannot go through.
+Stops the train's travel fully, sends a message, and destroys the train.
+Arguments:
+bumped_atom - The atom this tram bumped into</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#proc/tram_travel">tram_travel</a></th><td>Handles moving the tram</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#proc/unlock_controls">unlock_controls</a></th><td>Handles unlocking the tram controls for use after moving</td></tr>
+            <tr><th><a href="datum/lift_master/tram.html#proc/update_tram_doors">update_tram_doors</a></th><td>Controls the doors of the tram when it departs and arrives at stations.
+The tram doors are in a list of airlocks and we apply the proc on that list.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/base_horizontal_speed"><aside class="declaration">var </aside>base_horizontal_speed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 25"/></a></h3>
+        <p>version of horizontal_speed that gets set in init and is considered our base speed if our lift gets slowed down</p><h3 id="var/collision_lethality"><aside class="declaration">var </aside>collision_lethality
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 13"/></a></h3>
+        <p>multiplier on how much damage/force the tram imparts on things it hits</p><h3 id="var/horizontal_speed"><aside class="declaration">var </aside>horizontal_speed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 22"/></a></h3>
+        <p>decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
+this var is poorly named its actually horizontal movement delay but whatever.</p><h3 id="var/idle_platform"><aside class="declaration">var </aside>idle_platform
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/effect/landmark/tram.html">effect/landmark/tram</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 18"/></a></h3>
+        <p>reference to the destination landmark we consider ourselves &quot;at&quot;. since we potentially span multiple z levels we dont actually
+know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+and the destination landmark.</p><h3 id="var/next_move"><aside class="declaration">var </aside>next_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 28"/></a></h3>
+        <p>the world.time we should next move at. in case our speed is set to less than 1 movement per tick</p><h3 id="var/slowed_down"><aside class="declaration">var </aside>slowed_down
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 31"/></a></h3>
+        <p>whether we have been slowed down automatically</p><h3 id="var/times_below"><aside class="declaration">var </aside>times_below
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 38"/></a></h3>
+        <p>how many times we moved while costing less than 0.5 * SStramprocess.max_time milliseconds per movement</p><h3 id="var/times_exceeded"><aside class="declaration">var </aside>times_exceeded
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 35"/></a></h3>
+        <p>how many times we moved while costing more than SStramprocess.max_time milliseconds per movement.
+if this exceeds SStramprocess.max_exceeding_moves</p><h3 id="var/travel_direction"><aside class="declaration">var </aside>travel_direction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 6"/></a></h3>
+        <p>if we're travelling, what direction are we going</p><h3 id="var/travel_distance"><aside class="declaration">var </aside>travel_distance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 8"/></a></h3>
+        <p>if we're travelling, how far do we have to go</p><h3 id="var/travel_trip_length"><aside class="declaration">var </aside>travel_trip_length
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 10"/></a></h3>
+        <p>how far in total we'll be travelling</p><h3 id="var/travelling"><aside class="declaration">var </aside>travelling
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 4"/></a></h3>
+        <p>whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this</p><h2 id="proc">Proc Details</h2><h3 id="proc/gracefully_break"><aside class="declaration">proc </aside>gracefully_break<aside>(/<a href="atom.html">atom</a>/bumped_atom) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 80"/></a></aside>
+        </h3>
+        <p>Signal for when the tram runs into a field of which it cannot go through.
+Stops the train's travel fully, sends a message, and destroys the train.
+Arguments:
+bumped_atom - The atom this tram bumped into</p><h3 id="proc/tram_travel"><aside class="declaration">proc </aside>tram_travel<aside>(/<a href="obj.html">obj</a>/<a href="obj/effect/landmark/tram.html">effect/landmark/tram</a>/destination_platform, rapid) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 115"/></a></aside>
+        </h3>
+        <p>Handles moving the tram</p>
+<p>Tells the individual tram parts where to actually go and has an extra safety checks
+incase multiple inputs get through, preventing conflicting directions and the tram
+literally ripping itself apart. all of the actual movement is handled by SStramprocess
+Arguments: destination platform, rapid (bypass some safety checks)</p><h3 id="proc/unlock_controls"><aside class="declaration">proc </aside>unlock_controls<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 188"/></a></aside>
+        </h3>
+        <p>Handles unlocking the tram controls for use after moving</p>
+<p>More safety checks to make sure the tram has actually docked properly
+at a location before users are allowed to interact with the tram console again.
+Tram finds its location at this point before fully unlocking controls to the user.</p><h3 id="proc/update_tram_doors"><aside class="declaration">proc </aside>update_tram_doors<aside>(action) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/industrial_lift/tram/tram_lift_master.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;industrial_lift&#x2F;tram&#x2F;tram_lift_master.dm 206"/></a></aside>
+        </h3>
+        <p>Controls the doors of the tram when it departs and arrives at stations.
+The tram doors are in a list of airlocks and we apply the proc on that list.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

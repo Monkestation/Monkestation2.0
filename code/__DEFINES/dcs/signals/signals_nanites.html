@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/dcs/signals/signals_nanites.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/dcs/signals/signals_nanites.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_HAS_NANITES">COMSIG_HAS_NANITES</a></th><td>() returns TRUE if nanites are found</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_IS_STEALTHY">COMSIG_NANITE_IS_STEALTHY</a></th><td>() returns TRUE if nanites have stealth</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_DELETE">COMSIG_NANITE_DELETE</a></th><td>() deletes the nanite component</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_GET_PROGRAMS">COMSIG_NANITE_GET_PROGRAMS</a></th><td>(list/nanite_programs) - makes the input list a copy the nanites' program list</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_GET_VOLUME">COMSIG_NANITE_GET_VOLUME</a></th><td>(amount) Returns nanite amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_VOLUME">COMSIG_NANITE_SET_VOLUME</a></th><td>(amount) Sets current nanite volume to the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_ADJUST_VOLUME">COMSIG_NANITE_ADJUST_VOLUME</a></th><td>(amount) Adjusts nanite volume by the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_MAX_VOLUME">COMSIG_NANITE_SET_MAX_VOLUME</a></th><td>(amount) Sets maximum nanite volume to the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_CLOUD">COMSIG_NANITE_SET_CLOUD</a></th><td>(amount(0-100)) Sets cloud ID to the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_CLOUD_SYNC">COMSIG_NANITE_SET_CLOUD_SYNC</a></th><td>(method) Modify cloud sync status. Method can be toggle, enable or disable</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_SAFETY">COMSIG_NANITE_SET_SAFETY</a></th><td>(amount) Sets safety threshold to the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SET_REGEN">COMSIG_NANITE_SET_REGEN</a></th><td>(amount) Sets regeneration rate to the given amount</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SIGNAL">COMSIG_NANITE_SIGNAL</a></th><td>(code(1-9999)) Called when sending a nanite signal to a mob.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_COMM_SIGNAL">COMSIG_NANITE_COMM_SIGNAL</a></th><td>(comm_code(1-9999), comm_message) Called when sending a nanite comm signal to a mob.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SCAN">COMSIG_NANITE_SCAN</a></th><td>(mob/user, full_scan) - sends to chat a scan of the nanites to the user, returns TRUE if nanites are detected</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_UI_DATA">COMSIG_NANITE_UI_DATA</a></th><td>(list/data, scan_level) - adds nanite data to the given data list - made for ui_data procs</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_ADD_PROGRAM">COMSIG_NANITE_ADD_PROGRAM</a></th><td>(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMPONENT_PROGRAM_INSTALLED">COMPONENT_PROGRAM_INSTALLED</a></th><td>Installation successful</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMPONENT_PROGRAM_NOT_INSTALLED">COMPONENT_PROGRAM_NOT_INSTALLED</a></th><td>Installation failed, but there are still nanites</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_nanites.html#define/COMSIG_NANITE_SYNC">COMSIG_NANITE_SYNC</a></th><td>(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/COMPONENT_PROGRAM_INSTALLED"><aside class="declaration">#define </aside>COMPONENT_PROGRAM_INSTALLED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 36"/></a>
+    </h3>
+    <p>Installation successful</p><h3 id="define/COMPONENT_PROGRAM_NOT_INSTALLED"><aside class="declaration">#define </aside>COMPONENT_PROGRAM_NOT_INSTALLED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 38"/></a>
+    </h3>
+    <p>Installation failed, but there are still nanites</p><h3 id="define/COMSIG_HAS_NANITES"><aside class="declaration">#define </aside>COMSIG_HAS_NANITES
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 2"/></a>
+    </h3>
+    <p>() returns TRUE if nanites are found</p><h3 id="define/COMSIG_NANITE_ADD_PROGRAM"><aside class="declaration">#define </aside>COMSIG_NANITE_ADD_PROGRAM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 34"/></a>
+    </h3>
+    <p>(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component</p><h3 id="define/COMSIG_NANITE_ADJUST_VOLUME"><aside class="declaration">#define </aside>COMSIG_NANITE_ADJUST_VOLUME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 14"/></a>
+    </h3>
+    <p>(amount) Adjusts nanite volume by the given amount</p><h3 id="define/COMSIG_NANITE_COMM_SIGNAL"><aside class="declaration">#define </aside>COMSIG_NANITE_COMM_SIGNAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 28"/></a>
+    </h3>
+    <p>(comm_code(1-9999), comm_message) Called when sending a nanite comm signal to a mob.</p><h3 id="define/COMSIG_NANITE_DELETE"><aside class="declaration">#define </aside>COMSIG_NANITE_DELETE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 6"/></a>
+    </h3>
+    <p>() deletes the nanite component</p><h3 id="define/COMSIG_NANITE_GET_PROGRAMS"><aside class="declaration">#define </aside>COMSIG_NANITE_GET_PROGRAMS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 8"/></a>
+    </h3>
+    <p>(list/nanite_programs) - makes the input list a copy the nanites' program list</p><h3 id="define/COMSIG_NANITE_GET_VOLUME"><aside class="declaration">#define </aside>COMSIG_NANITE_GET_VOLUME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 10"/></a>
+    </h3>
+    <p>(amount) Returns nanite amount</p><h3 id="define/COMSIG_NANITE_IS_STEALTHY"><aside class="declaration">#define </aside>COMSIG_NANITE_IS_STEALTHY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 4"/></a>
+    </h3>
+    <p>() returns TRUE if nanites have stealth</p><h3 id="define/COMSIG_NANITE_SCAN"><aside class="declaration">#define </aside>COMSIG_NANITE_SCAN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 30"/></a>
+    </h3>
+    <p>(mob/user, full_scan) - sends to chat a scan of the nanites to the user, returns TRUE if nanites are detected</p><h3 id="define/COMSIG_NANITE_SET_CLOUD"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_CLOUD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 18"/></a>
+    </h3>
+    <p>(amount(0-100)) Sets cloud ID to the given amount</p><h3 id="define/COMSIG_NANITE_SET_CLOUD_SYNC"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_CLOUD_SYNC
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 20"/></a>
+    </h3>
+    <p>(method) Modify cloud sync status. Method can be toggle, enable or disable</p><h3 id="define/COMSIG_NANITE_SET_MAX_VOLUME"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_MAX_VOLUME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 16"/></a>
+    </h3>
+    <p>(amount) Sets maximum nanite volume to the given amount</p><h3 id="define/COMSIG_NANITE_SET_REGEN"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_REGEN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 24"/></a>
+    </h3>
+    <p>(amount) Sets regeneration rate to the given amount</p><h3 id="define/COMSIG_NANITE_SET_SAFETY"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_SAFETY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 22"/></a>
+    </h3>
+    <p>(amount) Sets safety threshold to the given amount</p><h3 id="define/COMSIG_NANITE_SET_VOLUME"><aside class="declaration">#define </aside>COMSIG_NANITE_SET_VOLUME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 12"/></a>
+    </h3>
+    <p>(amount) Sets current nanite volume to the given amount</p><h3 id="define/COMSIG_NANITE_SIGNAL"><aside class="declaration">#define </aside>COMSIG_NANITE_SIGNAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 26"/></a>
+    </h3>
+    <p>(code(1-9999)) Called when sending a nanite signal to a mob.</p><h3 id="define/COMSIG_NANITE_SYNC"><aside class="declaration">#define </aside>COMSIG_NANITE_SYNC
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 40"/></a>
+    </h3>
+    <p>(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component</p><h3 id="define/COMSIG_NANITE_UI_DATA"><aside class="declaration">#define </aside>COMSIG_NANITE_UI_DATA
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/dcs/signals/signals_nanites.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_nanites.dm 32"/></a>
+    </h3>
+    <p>(list/data, scan_level) - adds nanite data to the given data list - made for ui_data procs</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ&#x2F;internal&#x2F;eyes&#x2F;robotic&#x2F;glow - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ/internal/eyes/robotic/glow.html#var">Var Details</a> - <a href="obj/item/organ/internal/eyes/robotic/glow.html#proc">Proc Details</a></header>
+<main>
+<h1>glow <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/eyes.html">eyes</a>/<a href="obj/item/organ/internal/eyes/robotic/glow.html">robotic/glow</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L363">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 363"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/current_color_string">current_color_string</a></th><td>The selected color for the light beam itself</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/current_left_color_string">current_left_color_string</a></th><td>The custom selected eye color for the left eye. Defaults to the mob's natural eye color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/current_right_color_string">current_right_color_string</a></th><td>The custom selected eye color for the right eye. Defaults to the mob's natural eye color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/eye_color_mode">eye_color_mode</a></th><td>Whether or not to match the eye color to the light or use a custom selection</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/eyes_overlay">eyes_overlay</a></th><td>The overlay that is used when both eyes are set to match the light color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/eyes_overlay_left">eyes_overlay_left</a></th><td>The overlay that is used when custom color selection is enabled, for the left eye</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#var/eyes_overlay_right">eyes_overlay_right</a></th><td>The overlay that is used when custom color selection is enabled, for the right eye</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/Insert">Insert</a></th><td>We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/activate">activate</a></th><td>Activates the light</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/deactivate">deactivate</a></th><td>Deactivates the light</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/randomize_color">randomize_color</a></th><td>Randomizes the light color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/set_beam_color">set_beam_color</a></th><td>Setter function for the light's color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/set_beam_range">set_beam_range</a></th><td>Setter function for the light's range</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/toggle_active">toggle_active</a></th><td>Toggle the attached flashlight object on or off</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/toggle_eye_color_mode">toggle_eye_color_mode</a></th><td>Toggles for the eye color mode</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/update_mob_eye_color">update_mob_eye_color</a></th><td>Updates the mob eye color</td></tr>
+            <tr><th><a href="obj/item/organ/internal/eyes/robotic/glow.html#proc/update_mob_eyes_overlay">update_mob_eyes_overlay</a></th><td>Updates the emissive mob eye overlay</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_color_string"><aside class="declaration">var </aside>current_color_string
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L380">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 380"/></a></h3>
+        <p>The selected color for the light beam itself</p><h3 id="var/current_left_color_string"><aside class="declaration">var </aside>current_left_color_string
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L382">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 382"/></a></h3>
+        <p>The custom selected eye color for the left eye. Defaults to the mob's natural eye color</p><h3 id="var/current_right_color_string"><aside class="declaration">var </aside>current_right_color_string
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L386">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 386"/></a></h3>
+        <p>The custom selected eye color for the right eye. Defaults to the mob's natural eye color</p><h3 id="var/eye_color_mode"><aside class="declaration">var </aside>eye_color_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L378">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 378"/></a></h3>
+        <p>Whether or not to match the eye color to the light or use a custom selection</p><h3 id="var/eyes_overlay"><aside class="declaration">var </aside>eyes_overlay
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L372">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 372"/></a></h3>
+        <p>The overlay that is used when both eyes are set to match the light color</p><h3 id="var/eyes_overlay_left"><aside class="declaration">var </aside>eyes_overlay_left
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L374">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 374"/></a></h3>
+        <p>The overlay that is used when custom color selection is enabled, for the left eye</p><h3 id="var/eyes_overlay_right"><aside class="declaration">var </aside>eyes_overlay_right
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L376">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 376"/></a></h3>
+        <p>The overlay that is used when custom color selection is enabled, for the right eye</p><h2 id="proc">Proc Details</h2><h3 id="proc/Insert">Insert<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/eye_recipient, special, drop_if_replaced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L402">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 402"/></a></aside>
+        </h3>
+        <p>We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set</p><h3 id="proc/activate"><aside class="declaration">proc </aside>activate<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L499">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 499"/></a></aside>
+        </h3>
+        <p>Activates the light</p>
+<p>Turns on the attached flashlight object, updates the mob overlay to be added.</p><h3 id="proc/deactivate"><aside class="declaration">proc </aside>deactivate<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/eye_owner, close_ui) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L513">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 513"/></a></aside>
+        </h3>
+        <p>Deactivates the light</p>
+<p>Turns off the attached flashlight object, closes UIs, updates the mob overlay to be removed.
+Arguments:</p>
+<ul>
+<li>mob/living/carbon/eye_owner - the mob who the eyes belong to, for passing to update_mob_eyes_overlay</li>
+<li>close_ui - whether or not to close the ui</li>
+</ul><h3 id="proc/randomize_color"><aside class="declaration">proc </aside>randomize_color<aside>(to_update) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L527">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 527"/></a></aside>
+        </h3>
+        <p>Randomizes the light color</p>
+<p>Picks a random color and sets the beam color to that
+Arguments:</p>
+<ul>
+<li>to_update - whether we are setting the color for the light beam itself, or the individual eyes</li>
+</ul><h3 id="proc/set_beam_color"><aside class="declaration">proc </aside>set_beam_color<aside>(newcolor, to_update, sanitize) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L557">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 557"/></a></aside>
+        </h3>
+        <p>Setter function for the light's color</p>
+<p>Sets the light color of the attached flashlight object. Sets the eye color vars of this eye organ as well and then updates the mob's eye color.
+Arguments:</p>
+<ul>
+<li>newcolor - the new color hex string to set</li>
+<li>to_update - whether we are setting the color for the light beam itself, or the individual eyes</li>
+<li>sanitize - whether the hex string should be sanitized</li>
+</ul><h3 id="proc/set_beam_range"><aside class="declaration">proc </aside>set_beam_range<aside>(new_range) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L541">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 541"/></a></aside>
+        </h3>
+        <p>Setter function for the light's range</p>
+<p>Sets the light range of the attached flashlight object
+Includes some 'unique' logic to accomodate for some quirks of the lighting system
+Arguments:</p>
+<ul>
+<li>new_range - the new range to set</li>
+</ul><h3 id="proc/toggle_active"><aside class="declaration">proc </aside>toggle_active<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L577">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 577"/></a></aside>
+        </h3>
+        <p>Toggle the attached flashlight object on or off</p><h3 id="proc/toggle_eye_color_mode"><aside class="declaration">proc </aside>toggle_eye_color_mode<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L588">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 588"/></a></aside>
+        </h3>
+        <p>Toggles for the eye color mode</p>
+<p>Toggles the eye color mode on or off and then calls an update on the mob's eye color</p><h3 id="proc/update_mob_eye_color"><aside class="declaration">proc </aside>update_mob_eye_color<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/eye_owner) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L599">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 599"/></a></aside>
+        </h3>
+        <p>Updates the mob eye color</p>
+<p>Updates the eye color to reflect on the mob's body if it's possible to do so
+Arguments:</p>
+<ul>
+<li>mob/living/carbon/eye_owner - the mob to update the eye color appearance of</li>
+</ul><h3 id="proc/update_mob_eyes_overlay"><aside class="declaration">proc </aside>update_mob_eyes_overlay<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/eye_owner) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/organs/eyes.dm#L622">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;eyes.dm 622"/></a></aside>
+        </h3>
+        <p>Updates the emissive mob eye overlay</p>
+<p>When the light is on, the overlay(s) are added. When it is disabled, they are cut.
+Adds one or two overlays depending on what the eye_color_mode toggle is set to.
+Arguments:</p>
+<ul>
+<li>mob/living/carbon/eye_owner - the mob to add the overlay to</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

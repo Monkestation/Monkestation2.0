@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;cauldron - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/cauldron.html#var">Var Details</a> - <a href="obj/machinery/cauldron.html#proc">Proc Details</a></header>
+<main>
+<h1>cauldron <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/cauldron.html">cauldron</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/ingredient_shifts_x">ingredient_shifts_x</a></th><td>When this is the nth ingredient, whats its pixel_x?</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/ingredient_shifts_y">ingredient_shifts_y</a></th><td>When this is the nth ingredient, whats its pixel_y?</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/ingredients">ingredients</a></th><td>Ingredients - may only contain /atom/movables</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/max_n_of_items">max_n_of_items</a></th><td>Cauldron max capacity</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/open">open</a></th><td>Lid position</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/operating">operating</a></th><td>Whether it's currently cooking</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/radial_eject">radial_eject</a></th><td>Radial list icons</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#var/radial_options">radial_options</a></th><td>Radial list options</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/close">close</a></th><td>Closes the cauldron, called by the open() proc after some delay</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/cook">cook</a></th><td>Begins the process of cooking the included ingredients.</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/cook_loop">cook_loop</a></th><td>The actual cook loop started via [proc/start]</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/eject">eject</a></th><td>Ejects all the ingredients currently stored in the cauldron.
+Called by deconstruction, finishing cooking, or user selecting the eject option.</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/loop_finish">loop_finish</a></th><td>Called when the cook_loop is done successfully</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/open">open</a></th><td>Temporary opens the cauldron, called when ingredients are added or ejected</td></tr>
+            <tr><th><a href="obj/machinery/cauldron.html#proc/start">start</a></th><td>The start of the cook loop</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/ingredient_shifts_x"><aside class="declaration">var </aside>ingredient_shifts_x
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 21"/></a></h3>
+        <p>When this is the nth ingredient, whats its pixel_x?</p><h3 id="var/ingredient_shifts_y"><aside class="declaration">var </aside>ingredient_shifts_y
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 30"/></a></h3>
+        <p>When this is the nth ingredient, whats its pixel_y?</p><h3 id="var/ingredients"><aside class="declaration">var </aside>ingredients
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 19"/></a></h3>
+        <p>Ingredients - may only contain /atom/movables</p><h3 id="var/max_n_of_items"><aside class="declaration">var </aside>max_n_of_items
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 17"/></a></h3>
+        <p>Cauldron max capacity</p><h3 id="var/open"><aside class="declaration">var </aside>open
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 15"/></a></h3>
+        <p>Lid position</p><h3 id="var/operating"><aside class="declaration">var </aside>operating
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 13"/></a></h3>
+        <p>Whether it's currently cooking</p><h3 id="var/radial_eject"><aside class="declaration">var </aside>radial_eject
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 37"/></a></h3>
+        <p>Radial list icons</p><h3 id="var/radial_options"><aside class="declaration">var </aside>radial_options
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 41"/></a></h3>
+        <p>Radial list options</p><h2 id="proc">Proc Details</h2><h3 id="proc/close"><aside class="declaration">proc </aside>close<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L337">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 337"/></a></aside>
+        </h3>
+        <p>Closes the cauldron, called by the open() proc after some delay</p><h3 id="proc/cook"><aside class="declaration">proc </aside>cook<aside>(/<a href="mob.html">mob</a>/cooker) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L281">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 281"/></a></aside>
+        </h3>
+        <p>Begins the process of cooking the included ingredients.</p>
+<ul>
+<li>cooker - The mob that initiated the cook cycle</li>
+</ul><h3 id="proc/cook_loop"><aside class="declaration">proc </aside>cook_loop<aside>(cycles, wait, /<a href="mob.html">mob</a>/cooker) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L304">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 304"/></a></aside>
+        </h3>
+        <p>The actual cook loop started via [proc/start]</p>
+<ul>
+<li>time - how many loops are left, base case for recursion</li>
+<li>wait - deciseconds between loops</li>
+<li>cooker - The mob that initiated the cook cycle</li>
+</ul><h3 id="proc/eject"><aside class="declaration">proc </aside>eject<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L270">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 270"/></a></aside>
+        </h3>
+        <p>Ejects all the ingredients currently stored in the cauldron.
+Called by deconstruction, finishing cooking, or user selecting the eject option.</p><h3 id="proc/loop_finish"><aside class="declaration">proc </aside>loop_finish<aside>(/<a href="mob.html">mob</a>/cooker) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L316">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 316"/></a></aside>
+        </h3>
+        <p>Called when the cook_loop is done successfully</p>
+<ul>
+<li>cooker - The mob that initiated the cook cycle</li>
+</ul><h3 id="proc/open"><aside class="declaration">proc </aside>open<aside>(autoclose) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L329">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 329"/></a></aside>
+        </h3>
+        <p>Temporary opens the cauldron, called when ingredients are added or ejected</p>
+<p>autoclose - how long it stays open before calling the close() proc</p><h3 id="proc/start"><aside class="declaration">proc </aside>start<aside>(/<a href="mob.html">mob</a>/cooker) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/cauldron.dm#L292">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;cauldron.dm 292"/></a></aside>
+        </h3>
+        <p>The start of the cook loop</p>
+<ul>
+<li>cooker - The mob that initiated the cook cycle</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

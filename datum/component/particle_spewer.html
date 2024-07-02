@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;particle_spewer - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/particle_spewer.html#var">Var Details</a> - <a href="datum/component/particle_spewer.html#proc">Proc Details</a></header>
+<main>
+<h1>particle_spewer <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/particle_spewer.html">particle_spewer</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 10"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/added_x">added_x</a></th><td>kept track of for removal sake</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/animate_holder">animate_holder</a></th><td>our animate_holder</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/burst_amount">burst_amount</a></th><td>per burst spawn amount</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/count">count</a></th><td>current process count</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/dead_particles">dead_particles</a></th><td>list of particles that finished (added only as a failsafe)</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/duration">duration</a></th><td>the duration we last</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/equipped_offset">equipped_offset</a></th><td>equipped offset ie hats go to 32 if set to 32 will also reset to height changes</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/icon_file">icon_file</a></th><td>the dmi location of the particle</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/lifetime">lifetime</a></th><td>the actual lifetime of this component before we die [ 0 = infinite]</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/living_particles">living_particles</a></th><td>particles still in the process of animating</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/offset_x">offset_x</a></th><td>x offset for source_object</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/offset_y">offset_y</a></th><td>y offset for source_object</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/offsets">offsets</a></th><td>should we offset</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/particle_blending">particle_blending</a></th><td>the blend type we use for particles</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/particle_state">particle_state</a></th><td>the icon_state given to the objects</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/processes">processes</a></th><td>do we process?</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/random_bursts">random_bursts</a></th><td>do we do random amounts of particle bursts?</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/spawn_interval">spawn_interval</a></th><td>the spawn intervals in game ticks</td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#var/unusual_description">unusual_description</a></th><td>the unusual_description grabbed into the actual handler itself only needed when used as an unusual</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/particle_spewer.html#proc/animate_particle">animate_particle</a></th><td>this is the proc that gets overridden when we create new particle spewers that control its movements</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/added_x"><aside class="declaration">var </aside>added_x
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 41"/></a></h3>
+        <p>kept track of for removal sake</p><h3 id="var/animate_holder"><aside class="declaration">var </aside>animate_holder
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/animate_holder.html">animate_holder</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 54"/></a></h3>
+        <p>our animate_holder</p><h3 id="var/burst_amount"><aside class="declaration">var </aside>burst_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 37"/></a></h3>
+        <p>per burst spawn amount</p><h3 id="var/count"><aside class="declaration">var </aside>count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 33"/></a></h3>
+        <p>current process count</p><h3 id="var/dead_particles"><aside class="declaration">var </aside>dead_particles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 23"/></a></h3>
+        <p>list of particles that finished (added only as a failsafe)</p><h3 id="var/duration"><aside class="declaration">var </aside>duration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 17"/></a></h3>
+        <p>the duration we last</p><h3 id="var/equipped_offset"><aside class="declaration">var </aside>equipped_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L35">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 35"/></a></h3>
+        <p>equipped offset ie hats go to 32 if set to 32 will also reset to height changes</p><h3 id="var/icon_file"><aside class="declaration">var </aside>icon_file
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 29"/></a></h3>
+        <p>the dmi location of the particle</p><h3 id="var/lifetime"><aside class="declaration">var </aside>lifetime
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 39"/></a></h3>
+        <p>the actual lifetime of this component before we die [ 0 = infinite]</p><h3 id="var/living_particles"><aside class="declaration">var </aside>living_particles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 21"/></a></h3>
+        <p>particles still in the process of animating</p><h3 id="var/offset_x"><aside class="declaration">var </aside>offset_x
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 25"/></a></h3>
+        <p>x offset for source_object</p><h3 id="var/offset_y"><aside class="declaration">var </aside>offset_y
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 27"/></a></h3>
+        <p>y offset for source_object</p><h3 id="var/offsets"><aside class="declaration">var </aside>offsets
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L46">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 46"/></a></h3>
+        <p>should we offset</p><h3 id="var/particle_blending"><aside class="declaration">var </aside>particle_blending
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 50"/></a></h3>
+        <p>the blend type we use for particles</p><h3 id="var/particle_state"><aside class="declaration">var </aside>particle_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 31"/></a></h3>
+        <p>the icon_state given to the objects</p><h3 id="var/processes"><aside class="declaration">var </aside>processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 48"/></a></h3>
+        <p>do we process?</p><h3 id="var/random_bursts"><aside class="declaration">var </aside>random_bursts
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L44">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 44"/></a></h3>
+        <p>do we do random amounts of particle bursts?</p><h3 id="var/spawn_interval"><aside class="declaration">var </aside>spawn_interval
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 19"/></a></h3>
+        <p>the spawn intervals in game ticks</p><h3 id="var/unusual_description"><aside class="declaration">var </aside>unusual_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 13"/></a></h3>
+        <p>the unusual_description grabbed into the actual handler itself only needed when used as an unusual</p><h2 id="proc">Proc Details</h2><h3 id="proc/animate_particle"><aside class="declaration">proc </aside>animate_particle<aside>(/<a href="obj.html">obj</a>/effect/abstract/particle/spawned) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/trading/unusual_effects/animation_housing/__spawning_component.dm#L134">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;trading&#x2F;unusual_effects&#x2F;animation_housing&#x2F;__spawning_component.dm 134"/></a></aside>
+        </h3>
+        <p>this is the proc that gets overridden when we create new particle spewers that control its movements</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

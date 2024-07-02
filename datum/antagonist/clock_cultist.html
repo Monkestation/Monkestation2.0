@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;antagonist&#x2F;clock_cultist - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/antagonist/clock_cultist.html#var">Var Details</a> - <a href="datum/antagonist/clock_cultist.html#proc">Proc Details</a></header>
+<main>
+<h1>clock_cultist <aside>/<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a>/<a href="datum/antagonist/clock_cultist.html">clock_cultist</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/clock_team">clock_team</a></th><td>our cult team</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/communicate">communicate</a></th><td>Ref to the cultist's communication ability</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/forbearance">forbearance</a></th><td>our overlay for after the assault begins</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/give_slab">give_slab</a></th><td>should we directly give them a slab or not</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/owner_turf_healing">owner_turf_healing</a></th><td>ref to our turf_healing component, used for deletion when deconverted</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/recall">recall</a></th><td>Ref to the cultist's slab recall ability</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#var/servant_deconversion_phrases">servant_deconversion_phrases</a></th><td>used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#proc/handle_equipment_removal">handle_equipment_removal</a></th><td>remove clock cult items from their inventory by dropping them</td></tr>
+            <tr><th><a href="datum/antagonist/clock_cultist.html#proc/switch_recall_slab">switch_recall_slab</a></th><td>Change the slab in the recall ability, if it's different from the last one.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/clock_team"><aside class="declaration">var </aside>clock_team
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/team.html">team</a>/<a href="datum/team/clock_cult.html">clock_cult</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 16"/></a></h3>
+        <p>our cult team</p><h3 id="var/communicate"><aside class="declaration">var </aside>communicate
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/innate.html">innate</a>/<a href="datum/action/innate/clockcult/comm.html">clockcult/comm</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 12"/></a></h3>
+        <p>Ref to the cultist's communication ability</p><h3 id="var/forbearance"><aside class="declaration">var </aside>forbearance
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 20"/></a></h3>
+        <p>our overlay for after the assault begins</p><h3 id="var/give_slab"><aside class="declaration">var </aside>give_slab
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 18"/></a></h3>
+        <p>should we directly give them a slab or not</p><h3 id="var/owner_turf_healing"><aside class="declaration">var </aside>owner_turf_healing
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/turf_healing.html">turf_healing</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 22"/></a></h3>
+        <p>ref to our turf_healing component, used for deletion when deconverted</p><h3 id="var/recall"><aside class="declaration">var </aside>recall
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/innate.html">innate</a>/<a href="datum/action/innate/clockcult/recall_slab.html">clockcult/recall_slab</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 14"/></a></h3>
+        <p>Ref to the cultist's slab recall ability</p><h3 id="var/servant_deconversion_phrases"><aside class="declaration">var </aside>servant_deconversion_phrases
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 24"/></a></h3>
+        <p>used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list</p><h2 id="proc">Proc Details</h2><h3 id="proc/handle_equipment_removal"><aside class="declaration">proc </aside>handle_equipment_removal<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L198">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 198"/></a></aside>
+        </h3>
+        <p>remove clock cult items from their inventory by dropping them</p><h3 id="proc/switch_recall_slab"><aside class="declaration">proc </aside>switch_recall_slab<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clockwork.html">clockwork</a>/<a href="obj/item/clockwork/clockwork_slab.html">clockwork_slab</a>/slab) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/clock_cult/antag_datums/clock_cultist.dm#L169">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;clock_cult&#x2F;antag_datums&#x2F;clock_cultist.dm 169"/></a></aside>
+        </h3>
+        <p>Change the slab in the recall ability, if it's different from the last one.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

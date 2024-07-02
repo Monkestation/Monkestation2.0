@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;progressbar - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/progressbar.html#var">Var Details</a> - <a href="datum/progressbar.html#proc">Proc Details</a></header>
+<main>
+<h1>progressbar <aside>/<a href="datum.html">datum</a>/<a href="datum/progressbar.html">progressbar</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/progressbar.html#var/active_color">active_color</a></th><td>the color shown when its active</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/bar">bar</a></th><td>The progress bar visual element.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/bar_loc">bar_loc</a></th><td>The target where this progress bar is applied and where it is shown.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/bar_look">bar_look</a></th><td>the icon_state of the bar</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/border">border</a></th><td>border image</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/border_look_accessory">border_look_accessory</a></th><td>accessroy overlay that goes over the bar</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/fail_color">fail_color</a></th><td>the color shown when it fails</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/finish_color">finish_color</a></th><td>the color shown when it succeeds</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/goal">goal</a></th><td>Effectively the number of steps the progress bar will need to do before reaching completion.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/last_progress">last_progress</a></th><td>Control check to see if the progress was interrupted before reaching its goal.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/listindex">listindex</a></th><td>Variable to ensure smooth visual stacking on multiple progress bars.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/old_format">old_format</a></th><td>do we use the old format of progress bars or the new version</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/shown_image">shown_image</a></th><td>shown image</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/user">user</a></th><td>The mob whose client sees the progress bar.</td></tr>
+            <tr><th><a href="datum/progressbar.html#var/user_client">user_client</a></th><td>The client seeing the progress bar.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/add_prog_bar_image_to_client">add_prog_bar_image_to_client</a></th><td>Adds a smoothly-appearing progress bar image to the player's screen.</td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/clean_user_client">clean_user_client</a></th><td>Removes the progress bar image from the user_client and nulls the variable, if it exists.</td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/end_progress">end_progress</a></th><td>Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.</td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/on_user_delete">on_user_delete</a></th><td>Called right before the user's Destroy()</td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/on_user_login">on_user_login</a></th><td>Called by user's Login(), it transfers the progress bar image to the new client.</td></tr>
+            <tr><th><a href="datum/progressbar.html#proc/update">update</a></th><td>Updates the progress bar image visually.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_color"><aside class="declaration">var </aside>active_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 26"/></a></h3>
+        <p>the color shown when its active</p><h3 id="var/bar"><aside class="declaration">var </aside>bar
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 6"/></a></h3>
+        <p>The progress bar visual element.</p><h3 id="var/bar_loc"><aside class="declaration">var </aside>bar_loc
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 8"/></a></h3>
+        <p>The target where this progress bar is applied and where it is shown.</p><h3 id="var/bar_look"><aside class="declaration">var </aside>bar_look
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 37"/></a></h3>
+        <p>the icon_state of the bar</p><h3 id="var/border"><aside class="declaration">var </aside>border
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 20"/></a></h3>
+        <p>border image</p><h3 id="var/border_look_accessory"><aside class="declaration">var </aside>border_look_accessory
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 24"/></a></h3>
+        <p>accessroy overlay that goes over the bar</p><h3 id="var/fail_color"><aside class="declaration">var </aside>fail_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 28"/></a></h3>
+        <p>the color shown when it fails</p><h3 id="var/finish_color"><aside class="declaration">var </aside>finish_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 30"/></a></h3>
+        <p>the color shown when it succeeds</p><h3 id="var/goal"><aside class="declaration">var </aside>goal
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 14"/></a></h3>
+        <p>Effectively the number of steps the progress bar will need to do before reaching completion.</p><h3 id="var/last_progress"><aside class="declaration">var </aside>last_progress
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 16"/></a></h3>
+        <p>Control check to see if the progress was interrupted before reaching its goal.</p><h3 id="var/listindex"><aside class="declaration">var </aside>listindex
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 18"/></a></h3>
+        <p>Variable to ensure smooth visual stacking on multiple progress bars.</p><h3 id="var/old_format"><aside class="declaration">var </aside>old_format
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 32"/></a></h3>
+        <p>do we use the old format of progress bars or the new version</p><h3 id="var/shown_image"><aside class="declaration">var </aside>shown_image
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 22"/></a></h3>
+        <p>shown image</p><h3 id="var/user"><aside class="declaration">var </aside>user
+            <aside>&ndash; /<a href="mob.html">mob</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 10"/></a></h3>
+        <p>The mob whose client sees the progress bar.</p><h3 id="var/user_client"><aside class="declaration">var </aside>user_client
+            <aside>&ndash; /<a href="client.html">client</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 12"/></a></h3>
+        <p>The client seeing the progress bar.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_prog_bar_image_to_client"><aside class="declaration">proc </aside>add_prog_bar_image_to_client<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 158"/></a></aside>
+        </h3>
+        <p>Adds a smoothly-appearing progress bar image to the player's screen.</p><h3 id="proc/clean_user_client"><aside class="declaration">proc </aside>clean_user_client<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 129"/></a></aside>
+        </h3>
+        <p>Removes the progress bar image from the user_client and nulls the variable, if it exists.</p><h3 id="proc/end_progress"><aside class="declaration">proc </aside>end_progress<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L193">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 193"/></a></aside>
+        </h3>
+        <p>Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.</p><h3 id="proc/on_user_delete"><aside class="declaration">proc </aside>on_user_delete<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 120"/></a></aside>
+        </h3>
+        <p>Called right before the user's Destroy()</p><h3 id="proc/on_user_login"><aside class="declaration">proc </aside>on_user_login<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 144"/></a></aside>
+        </h3>
+        <p>Called by user's Login(), it transfers the progress bar image to the new client.</p><h3 id="proc/update"><aside class="declaration">proc </aside>update<aside>(progress) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/datums/progressbar.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;progressbar.dm 180"/></a></aside>
+        </h3>
+        <p>Updates the progress bar image visually.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

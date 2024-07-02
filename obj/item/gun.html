@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;gun - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/gun.html#var">Var Details</a> - <a href="obj/item/gun.html#proc">Proc Details</a></header>
+<main>
+<h1>gun <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/gun.html">gun</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/gun.html#var/can_hold_up">can_hold_up</a></th><td>Can we hold up our target with this? Default to yes</td></tr>
+            <tr><th><a href="obj/item/gun.html#var/pinless">pinless</a></th><td>True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks</td></tr>
+            <tr><th><a href="obj/item/gun.html#var/projectile_damage_multiplier">projectile_damage_multiplier</a></th><td>Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.</td></tr>
+            <tr><th><a href="obj/item/gun.html#var/projectile_wound_bonus">projectile_wound_bonus</a></th><td>Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/gun.html#proc/add_seclight_point">add_seclight_point</a></th><td>Handles adding <a href="datum/component/seclite_attachable.html" title="/datum/component/seclite_attachable">the seclite mount component</a> to the gun.
+If the gun shouldn't have a seclight mount, override this with a return.
+Or, if a child of a gun with a seclite mount has slightly different behavior or icons, extend this.</td></tr>
+            <tr><th><a href="obj/item/gun.html#proc/clear_suppressor">clear_suppressor</a></th><td>Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.</td></tr>
+            <tr><th><a href="obj/item/gun.html#proc/give_manufacturer_examine">give_manufacturer_examine</a></th><td>Adds the gun manufacturer examine component to the gun on subtypes, does nothing by default</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_hold_up"><aside class="declaration">var </aside>can_hold_up
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 47"/></a></h3>
+        <p>Can we hold up our target with this? Default to yes</p><h3 id="var/pinless"><aside class="declaration">var </aside>pinless
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 63"/></a></h3>
+        <p>True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks</p><h3 id="var/projectile_damage_multiplier"><aside class="declaration">var </aside>projectile_damage_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 50"/></a></h3>
+        <p>Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.</p><h3 id="var/projectile_wound_bonus"><aside class="declaration">var </aside>projectile_wound_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 53"/></a></h3>
+        <p>Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_seclight_point"><aside class="declaration">proc </aside>add_seclight_point<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 107"/></a></aside>
+        </h3>
+        <p>Handles adding <a href="datum/component/seclite_attachable.html" title="/datum/component/seclite_attachable">the seclite mount component</a> to the gun.
+If the gun shouldn't have a seclight mount, override this with a return.
+Or, if a child of a gun with a seclite mount has slightly different behavior or icons, extend this.</p><h3 id="proc/clear_suppressor"><aside class="declaration">proc </aside>clear_suppressor<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/projectiles/gun.dm#L123">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;gun.dm 123"/></a></aside>
+        </h3>
+        <p>Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.</p><h3 id="proc/give_manufacturer_examine"><aside class="declaration">proc </aside>give_manufacturer_examine<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/items/_balistic_additions.dm#L132">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;items&#x2F;_balistic_additions.dm 132"/></a></aside>
+        </h3>
+        <p>Adds the gun manufacturer examine component to the gun on subtypes, does nothing by default</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

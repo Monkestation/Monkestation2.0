@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;reaction_chamber - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/reaction_chamber.html#var">Var Details</a> - <a href="obj/machinery/plumbing/reaction_chamber.html#proc">Proc Details</a></header>
+<main>
+<h1>reaction_chamber <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/reaction_chamber.html">reaction_chamber</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 3"/></a></h1>
+
+<p>a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/category">category</a></th><td>category for plumbing RCD</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/emptying">emptying</a></th><td>our reagent goal has been reached, so now we lock our inputs and start emptying</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/heater_coefficient">heater_coefficient</a></th><td>cool/heat power</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/required_reagents">required_reagents</a></th><td>list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
+example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/target_temperature">target_temperature</a></th><td>towards which temperature do we build (except during draining)?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#proc/on_reagent_change">on_reagent_change</a></th><td>Handles stopping the emptying process when the chamber empties.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#proc/on_reagents_del">on_reagents_del</a></th><td>Handles properly detaching signal hooks.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/category"><aside class="parent"><a title="/obj/machinery/plumbing" href="obj/machinery/plumbing.html#var/category">&uarr;</a></aside>category
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 11"/></a></h3>
+        <p>category for plumbing RCD</p><h3 id="var/emptying"><aside class="declaration">var </aside>emptying
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 20"/></a></h3>
+        <p>our reagent goal has been reached, so now we lock our inputs and start emptying</p><h3 id="var/heater_coefficient"><aside class="declaration">var </aside>heater_coefficient
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 25"/></a></h3>
+        <p>cool/heat power</p><h3 id="var/required_reagents"><aside class="declaration">var </aside>required_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 17"/></a></h3>
+        <p>list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
+example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)</p><h3 id="var/target_temperature"><aside class="declaration">var </aside>target_temperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 23"/></a></h3>
+        <p>towards which temperature do we build (except during draining)?</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_reagent_change"><aside class="declaration">proc </aside>on_reagent_change<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, ...) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 44"/></a></aside>
+        </h3>
+        <p>Handles stopping the emptying process when the chamber empties.</p><h3 id="proc/on_reagents_del"><aside class="declaration">proc </aside>on_reagents_del<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/reagents) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 38"/></a></aside>
+        </h3>
+        <p>Handles properly detaching signal hooks.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

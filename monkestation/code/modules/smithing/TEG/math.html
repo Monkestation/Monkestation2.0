@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;math.md - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>monkestation/code/modules/smithing/TEG/math.md 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/math.md">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;math.md"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><p>ZT = S2(σ)T/k</p>
+<p>We want a low k value as it signifies the thermal conductivity
+We want a high σ value as it signifies the electrical conductivity</p>
+<p>ZT = S2(1000)T/1</p>
+<p>While we can deal with the Seebeck coefficient that will make the math far to complicated to work with in the future so we are going to simplfy that part out</p>
+<p>ZT = 2(1000)T/1</p>
+<p>We are applying this as an ideal state when inputted instead of a constant check so we can drop the temperature variable so it simplifies down to</p>
+<p>ZT = 2(1000)/1</p>
+<p>so the final calculation we will use in game is.</p>
+<p>ZT = 2(σ)/k</p>
+<p>An example of this would be:</p>
+<p>MATERIAL STATS
+thermal = 60
+conductivity = 100</p>
+<p>ZT = 2(100)/60
+ZT = 200/60
+ZT = 3.333</p>
+<p>The other issue would be that since we are taking out temperature and Seebeck all the outputs would be good for power generation, plus we have a base efficency on the TEG we need to worry about so we would need to add a constant decrease and to make it line up with how the TEG's base efficency works we would need to multiply it afterwards so it would change to</p>
+<p>ZT = ((2(100)/60) - a) * b</p>
+<p>an example of this now would be </p>
+<p>ZT = ((2(100)/60) - 2) * 10</p>
+<p>ZT = (1.33) * 10</p>
+<p>ZT = 13.3</p>
+<p>Which is fine until we get a really really good setup for instance</p>
+<p>ZT = ((2(100)/1) - 2) * 10
+ZT = (198) * 10
+ZT = 1980</p>
+<p>This means we are going to need to clamp the end value to be reasonable, so we can take the base scale of the engine and clamp at *0.5 and *1.5 so we can't blow shit up.</p></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

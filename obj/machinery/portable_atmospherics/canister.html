@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;portable_atmospherics&#x2F;canister - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/portable_atmospherics/canister.html#var">Var Details</a> - <a href="obj/machinery/portable_atmospherics/canister.html#proc">Proc Details</a></header>
+<main>
+<h1>canister <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/portable_atmospherics.html">portable_atmospherics</a>/<a href="obj/machinery/portable_atmospherics/canister.html">canister</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 32"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/can_max_release_pressure">can_max_release_pressure</a></th><td>Maximum pressure allowed for release_pressure var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/can_min_release_pressure">can_min_release_pressure</a></th><td>Minimum pressure allower for release_pressure var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/current_pressure_state">current_pressure_state</a></th><td>used while processing to update appearance only when its pressure state changes</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/filled">filled</a></th><td>How much the canister should be filled (recommended from 0 to 1)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/gas_type">gas_type</a></th><td>Stores the path of the gas for mapped canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/maximum_pressure">maximum_pressure</a></th><td>Maximum pressure allowed on initialize inside the canister, multiplied by the filled var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/prototype">prototype</a></th><td>Is the canister a prototype one?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/release_log">release_log</a></th><td>Used to log opening and closing of the valve, available on VV</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/release_pressure">release_pressure</a></th><td>Player controlled var that set the release pressure of the canister</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/restricted">restricted</a></th><td>If true, the prototype canister requires engi access to be used</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/starter_temp">starter_temp</a></th><td>Initial temperature gas mixture</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/temperature_resistance">temperature_resistance</a></th><td>Maximum amount of external heat that the canister can handle before taking damage</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/valve_open">valve_open</a></th><td>Is the valve open?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/valve_timer">valve_timer</a></th><td>Timer variables</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/window">window</a></th><td>Window overlay showing the gas inside the canister</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/canister_break">canister_break</a></th><td>Handle canisters disassemble, releases the gas content in the turf</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/create_gas">create_gas</a></th><td>Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
+Used for canisters spawned in maps and by admins</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/get_pressure_state">get_pressure_state</a></th><td>return the icon_state component for the canister's indicator light based on its current pressure reading</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/get_time_left">get_time_left</a></th><td>Getter for the amount of time left in the timer of prototype canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/set_active">set_active</a></th><td>Starts the timer of prototype canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/update_greyscale">update_greyscale</a></th><td>Function is used to actually set the overlays</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_max_release_pressure"><aside class="declaration">var </aside>can_max_release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 62"/></a></h3>
+        <p>Maximum pressure allowed for release_pressure var</p><h3 id="var/can_min_release_pressure"><aside class="declaration">var </aside>can_min_release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 64"/></a></h3>
+        <p>Minimum pressure allower for release_pressure var</p><h3 id="var/current_pressure_state"><aside class="declaration">var </aside>current_pressure_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 95"/></a></h3>
+        <p>used while processing to update appearance only when its pressure state changes</p><h3 id="var/filled"><aside class="declaration">var </aside>filled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 54"/></a></h3>
+        <p>How much the canister should be filled (recommended from 0 to 1)</p><h3 id="var/gas_type"><aside class="declaration">var </aside>gas_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 58"/></a></h3>
+        <p>Stores the path of the gas for mapped canisters</p><h3 id="var/maximum_pressure"><aside class="declaration">var </aside>maximum_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 56"/></a></h3>
+        <p>Maximum pressure allowed on initialize inside the canister, multiplied by the filled var</p><h3 id="var/prototype"><aside class="declaration">var </aside>prototype
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 71"/></a></h3>
+        <p>Is the canister a prototype one?</p><h3 id="var/release_log"><aside class="declaration">var </aside>release_log
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 52"/></a></h3>
+        <p>Used to log opening and closing of the valve, available on VV</p><h3 id="var/release_pressure"><aside class="declaration">var </aside>release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 60"/></a></h3>
+        <p>Player controlled var that set the release pressure of the canister</p><h3 id="var/restricted"><aside class="declaration">var </aside>restricted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 80"/></a></h3>
+        <p>If true, the prototype canister requires engi access to be used</p><h3 id="var/starter_temp"><aside class="declaration">var </aside>starter_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 68"/></a></h3>
+        <p>Initial temperature gas mixture</p><h3 id="var/temperature_resistance"><aside class="declaration">var </aside>temperature_resistance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 66"/></a></h3>
+        <p>Maximum amount of external heat that the canister can handle before taking damage</p><h3 id="var/valve_open"><aside class="declaration">var </aside>valve_open
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 50"/></a></h3>
+        <p>Is the valve open?</p><h3 id="var/valve_timer"><aside class="declaration">var </aside>valve_timer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 73"/></a></h3>
+        <p>Timer variables</p><h3 id="var/window"><aside class="declaration">var </aside>window
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 82"/></a></h3>
+        <p>Window overlay showing the gas inside the canister</p><h2 id="proc">Proc Details</h2><h3 id="proc/canister_break"><aside class="declaration">proc </aside>canister_break<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L532">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 532"/></a></aside>
+        </h3>
+        <p>Handle canisters disassemble, releases the gas content in the turf</p><h3 id="proc/create_gas"><aside class="declaration">proc </aside>create_gas<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L356">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 356"/></a></aside>
+        </h3>
+        <p>Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
+Used for canisters spawned in maps and by admins</p><h3 id="proc/get_pressure_state"><aside class="declaration">proc </aside>get_pressure_state<aside>(air_pressure) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L581">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 581"/></a></aside>
+        </h3>
+        <p>return the icon_state component for the canister's indicator light based on its current pressure reading</p><h3 id="proc/get_time_left"><aside class="declaration">proc </aside>get_time_left<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L315">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 315"/></a></aside>
+        </h3>
+        <p>Getter for the amount of time left in the timer of prototype canisters</p><h3 id="proc/set_active"><aside class="declaration">proc </aside>set_active<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L324">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 324"/></a></aside>
+        </h3>
+        <p>Starts the timer of prototype canisters</p><h3 id="proc/update_greyscale"><aside class="parent"><a title="/atom" href="atom.html#proc/update_greyscale">&uarr;</a></aside>update_greyscale<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/atmospherics/machinery/portable/canister.dm#L402">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 402"/></a></aside>
+        </h3>
+        <p>Function is used to actually set the overlays</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

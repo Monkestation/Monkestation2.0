@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;construction&#x2F;rcd - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/construction/rcd.html#var">Var Details</a> - <a href="obj/item/construction/rcd.html#proc">Proc Details</a></header>
+<main>
+<h1>rcd <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/construction.html">construction</a>/<a href="obj/item/construction/rcd.html">rcd</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 27"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/airlock_electronics">airlock_electronics</a></th><td>integrated airlock electronics for setting access to a newly built airlocks</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/airlock_glass">airlock_glass</a></th><td>are we building glass/solid airlocks</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/airlock_type">airlock_type</a></th><td>type of airlock/windoor being built[mode = RCD_AIRLOCK]</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/canRturf">canRturf</a></th><td>variable for R walls to deconstruct them</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/computer_dir">computer_dir</a></th><td>direction which computer frames are constructed in</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/construction_mode">construction_mode</a></th><td>temporary holder of mode, used to restore mode original value after rcd deconstruction act</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/current_active_effects">current_active_effects</a></th><td>number of active rcd effects in use e.g. when building multiple walls at once this value increases</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/delay_mod">delay_mod</a></th><td>delay multiplier for all construction types</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/design_category">design_category</a></th><td>category of currently selected design</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/design_title">design_title</a></th><td>name of currently selected design</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/furnish_type">furnish_type</a></th><td>type of furniture tables,chairs etc we are trying to build</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/mode">mode</a></th><td>type of structure being built, used to decide what variables are used to build what structure</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/owner">owner</a></th><td>owner of this rcd. It can either be an construction console or an player</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/ranged">ranged</a></th><td>used by arcd, can this rcd work from a range</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/root_categories">root_categories</a></th><td>all stuff used by RCD for construction</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/root_category">root_category</a></th><td>main category of currently selected design[Structures, Airlocks, Airlock Access]</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/wallframe_type">wallframe_type</a></th><td>type of wallmount airalarm,firealarm,apc we are trying to build</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/window_type">window_type</a></th><td>are we building normal/reinforced directional/fulltile windows</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/_rcd_create_effect">_rcd_create_effect</a></th><td>Internal proc which creates the rcd effects &amp; creates the structure</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/attack_self">attack_self</a></th><td>The advantage of organizing designs into categories is that
+You can ignore an complete category if the design disk upgrade for that category isn't installed.</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/can_place">can_place</a></th><td>checks if we can build the structure
+Arguments</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/rcd_create">rcd_create</a></th><td>For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
+If we are just trying to destory something then this check is not nessassary
+RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/airlock_electronics"><aside class="declaration">var </aside>airlock_electronics
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/electronics/airlock.html">electronics/airlock</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 164"/></a></h3>
+        <p>integrated airlock electronics for setting access to a newly built airlocks</p><h3 id="var/airlock_glass"><aside class="declaration">var </aside>airlock_glass
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 152"/></a></h3>
+        <p>are we building glass/solid airlocks</p><h3 id="var/airlock_type"><aside class="declaration">var </aside>airlock_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 150"/></a></h3>
+        <p>type of airlock/windoor being built[mode = RCD_AIRLOCK]</p><h3 id="var/canRturf"><aside class="declaration">var </aside>canRturf
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 162"/></a></h3>
+        <p>variable for R walls to deconstruct them</p><h3 id="var/computer_dir"><aside class="declaration">var </aside>computer_dir
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 148"/></a></h3>
+        <p>direction which computer frames are constructed in</p><h3 id="var/construction_mode"><aside class="declaration">var </aside>construction_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 144"/></a></h3>
+        <p>temporary holder of mode, used to restore mode original value after rcd deconstruction act</p><h3 id="var/current_active_effects"><aside class="declaration">var </aside>current_active_effects
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 169"/></a></h3>
+        <p>number of active rcd effects in use e.g. when building multiple walls at once this value increases</p><h3 id="var/delay_mod"><aside class="declaration">var </aside>delay_mod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 160"/></a></h3>
+        <p>delay multiplier for all construction types</p><h3 id="var/design_category"><aside class="declaration">var </aside>design_category
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 136"/></a></h3>
+        <p>category of currently selected design</p><h3 id="var/design_title"><aside class="declaration">var </aside>design_title
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 134"/></a></h3>
+        <p>name of currently selected design</p><h3 id="var/furnish_type"><aside class="declaration">var </aside>furnish_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 158"/></a></h3>
+        <p>type of furniture tables,chairs etc we are trying to build</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 142"/></a></h3>
+        <p>type of structure being built, used to decide what variables are used to build what structure</p><h3 id="var/owner"><aside class="declaration">var </aside>owner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 140"/></a></h3>
+        <p>owner of this rcd. It can either be an construction console or an player</p><h3 id="var/ranged"><aside class="declaration">var </aside>ranged
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 146"/></a></h3>
+        <p>used by arcd, can this rcd work from a range</p><h3 id="var/root_categories"><aside class="declaration">var </aside>root_categories
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 42"/></a></h3>
+        <p>all stuff used by RCD for construction</p><h3 id="var/root_category"><aside class="declaration">var </aside>root_category
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 138"/></a></h3>
+        <p>main category of currently selected design[Structures, Airlocks, Airlock Access]</p><h3 id="var/wallframe_type"><aside class="declaration">var </aside>wallframe_type
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/wallframe</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L156">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 156"/></a></h3>
+        <p>type of wallmount airalarm,firealarm,apc we are trying to build</p><h3 id="var/window_type"><aside class="declaration">var </aside>window_type
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/structure/window.html">structure/window</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L154">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 154"/></a></h3>
+        <p>are we building normal/reinforced directional/fulltile windows</p><h2 id="proc">Proc Details</h2><h3 id="proc/_rcd_create_effect"><aside class="declaration">proc </aside>_rcd_create_effect<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, delay, /list/rcd_results) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L399">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 399"/></a></aside>
+        </h3>
+        <p>Internal proc which creates the rcd effects &amp; creates the structure</p>
+<p>Arguments</p>
+<ul>
+<li>[atom][target]- the target we are trying to build on/deconstruct e.g. turf, wall etc</li>
+<li>[mob][user]- the user trying to build the structure</li>
+<li>delay- the delay with the disk upgrades applied</li>
+<li>rcd_results- list of params which contains the cost &amp; build mode to create the structure</li>
+</ul><h3 id="proc/attack_self"><aside class="parent"><a title="/obj/item" href="obj/item.html#proc/attack_self">&uarr;</a></aside>attack_self<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L586">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 586"/></a></aside>
+        </h3>
+        <p>The advantage of organizing designs into categories is that
+You can ignore an complete category if the design disk upgrade for that category isn't installed.</p><h3 id="proc/can_place"><aside class="declaration">proc </aside>can_place<aside>(/<a href="atom.html">atom</a>/target, /list/rcd_results, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L277">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 277"/></a></aside>
+        </h3>
+        <p>checks if we can build the structure
+Arguments</p>
+<ul>
+<li>[atom][target]- the target we are trying to build on/deconstruct e.g. turf, wall etc</li>
+<li>rcd_results- list of params specifically the build type of our structure</li>
+<li>[mob][user]- the user</li>
+</ul><h3 id="proc/rcd_create"><aside class="declaration">proc </aside>rcd_create<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/rcd/RCD.dm#L372">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;rcd&#x2F;RCD.dm 372"/></a></aside>
+        </h3>
+        <p>For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
+If we are just trying to destory something then this check is not nessassary
+RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade</p>
+<p>if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
+if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder</p>
+<p>actual proc to create the structure</p>
+<p>Arguments</p>
+<ul>
+<li>[atom][target]- the target we are trying to build on/deconstruct e.g. turf, wall etc</li>
+<li>[mob][user]- the user building this structure</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

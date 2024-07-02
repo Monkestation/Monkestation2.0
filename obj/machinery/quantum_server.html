@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;quantum_server - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/quantum_server.html#var">Var Details</a> - <a href="obj/machinery/quantum_server.html#proc">Proc Details</a></header>
+<main>
+<h1>quantum_server <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/quantum_server.html">quantum_server</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 4"/></a></h1>
+
+<p>The base object for the quantum server</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/available_domains">available_domains</a></th><td>List of available domains</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/avatar_connection_refs">avatar_connection_refs</a></th><td>Current plugged in users</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/capacitor_coefficient">capacitor_coefficient</a></th><td>Affects server cooldown efficiency</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/domain_randomized">domain_randomized</a></th><td>If the current domain was a random selection</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/exit_turfs">exit_turfs</a></th><td>The turfs we can place a hololadder on.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/generated_domain">generated_domain</a></th><td>The loaded map template, map_template/virtual_domain</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/generated_safehouse">generated_safehouse</a></th><td>The loaded safehouse, map_template/safehouse</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/is_ready">is_ready</a></th><td>Prevents multiple user actions. Handled by loading domains and cooldowns</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/multiplayer_bonus">multiplayer_bonus</a></th><td>Scales loot with extra players</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/mutation_candidate_refs">mutation_candidate_refs</a></th><td>Cached list of mutable mobs in zone for cybercops</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/points">points</a></th><td>The amount of points in the system, used to purchase maps</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/radio">radio</a></th><td>The radio the console can speak into</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/retries_spent">retries_spent</a></th><td>Keeps track of the number of times someone has built a hololadder</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/scanner_tier">scanner_tier</a></th><td>Changes how much info is available on the domain</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/server_cooldown_time">server_cooldown_time</a></th><td>Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/servo_bonus">servo_bonus</a></th><td>Applies bonuses to rewards etc</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#var/spawned_threat_refs">spawned_threat_refs</a></th><td>Any ghosts that have spawned in</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/add_threats">add_threats</a></th><td>Adds threats to the list and notifies players</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/begin_shutdown">begin_shutdown</a></th><td>Gives all current occupants a notification that the server is going down</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/calculate_rewards">calculate_rewards</a></th><td>Handles calculating rewards based on number of players, parts, threats, etc</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/cold_boot_map">cold_boot_map</a></th><td></td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/cool_off">cool_off</a></th><td>Resets the cooldown state and updates icons</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/generate_avatar">generate_avatar</a></th><td>just in case someone's connected
+Generates a new avatar for the bitrunner.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/generate_hololadder">generate_hololadder</a></th><td>Generates a new hololadder for the bitrunner. Effectively a respawn attempt.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/generate_loot">generate_loot</a></th><td>Handles spawning the (new) crate and deleting the former</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_available_domains">get_available_domains</a></th><td>Compiles a list of available domains.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_avatar_data">get_avatar_data</a></th><td>If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_completion_certificate">get_completion_certificate</a></th><td>Returns the markdown text containing domain completion information</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_nearby_forges">get_nearby_forges</a></th><td>Locates any turfs with forges on them</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_random_domain_id">get_random_domain_id</a></th><td>Gets a random available domain given the current points. Weighted towards higher cost domains.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_random_nearby_forge">get_random_nearby_forge</a></th><td>Locates any turfs with forges on them, returns a random one</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/get_valid_domain_targets">get_valid_domain_targets</a></th><td>Gets all mobs originally generated by the loaded domain and returns a list that are capable of being antagged</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/grade_completion">grade_completion</a></th><td>Grades the player's run based on several factors</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/initialize_domain">initialize_domain</a></th><td>Initializes a new domain if the given key is valid and the user has enough points</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/initialize_map_items">initialize_map_items</a></th><td>Loads in necessary map items, sets mutation targets, etc</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/initialize_safehouse">initialize_safehouse</a></th><td>Loads the safehouse</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/notify_spawned_threats">notify_spawned_threats</a></th><td>Finds any mobs with minds in the zones and gives them the bad news</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_broken">on_broken</a></th><td>If broken via signal, disconnects all users</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_corpse_spawned">on_corpse_spawned</a></th><td>Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_delete">on_delete</a></th><td>Being qdeleted - make sure the circuit and connected mobs go with it</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_examine">on_examine</a></th><td>Handles examining the server. Shows cooldown time and efficiency.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_goal_turf_entered">on_goal_turf_entered</a></th><td>Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_goal_turf_examined">on_goal_turf_examined</a></th><td>Handles examining the server. Shows cooldown time and efficiency.</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_template_loaded">on_template_loaded</a></th><td>Scans over the inbound created_atoms from lazy templates</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/on_threat_created">on_threat_created</a></th><td>Just in case there's any special handling for the domain
+Handles when cybercops are summoned into the area or ghosts click a ghost role spawner</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/reset">reset</a></th><td>Stops the current virtual domain and disconnects all users</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/scrub_vdom">scrub_vdom</a></th><td>Deletes all the tile contents</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/sever_connections">sever_connections</a></th><td>Severs any connected users</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/spark_at_location">spark_at_location</a></th><td>Do some magic teleport sparks</td></tr>
+            <tr><th><a href="obj/machinery/quantum_server.html#proc/stock_gear">stock_gear</a></th><td>Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/available_domains"><aside class="declaration">var </aside>available_domains
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 24"/></a></h3>
+        <p>List of available domains</p><h3 id="var/avatar_connection_refs"><aside class="declaration">var </aside>avatar_connection_refs
+            <aside>&ndash; /list/datum/weakref</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 26"/></a></h3>
+        <p>Current plugged in users</p><h3 id="var/capacitor_coefficient"><aside class="declaration">var </aside>capacitor_coefficient
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 14"/></a></h3>
+        <p>Affects server cooldown efficiency</p><h3 id="var/domain_randomized"><aside class="declaration">var </aside>domain_randomized
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 20"/></a></h3>
+        <p>If the current domain was a random selection</p><h3 id="var/exit_turfs"><aside class="declaration">var </aside>exit_turfs
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 46"/></a></h3>
+        <p>The turfs we can place a hololadder on.</p><h3 id="var/generated_domain"><aside class="declaration">var </aside>generated_domain
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/lazy_template.html">lazy_template</a>/<a href="datum/lazy_template/virtual_domain.html">virtual_domain</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 16"/></a></h3>
+        <p>The loaded map template, map_template/virtual_domain</p><h3 id="var/generated_safehouse"><aside class="declaration">var </aside>generated_safehouse
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/map_template.html">map_template</a>/<a href="datum/map_template/safehouse.html">safehouse</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 18"/></a></h3>
+        <p>The loaded safehouse, map_template/safehouse</p><h3 id="var/is_ready"><aside class="declaration">var </aside>is_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 22"/></a></h3>
+        <p>Prevents multiple user actions. Handled by loading domains and cooldowns</p><h3 id="var/multiplayer_bonus"><aside class="declaration">var </aside>multiplayer_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 32"/></a></h3>
+        <p>Scales loot with extra players</p><h3 id="var/mutation_candidate_refs"><aside class="declaration">var </aside>mutation_candidate_refs
+            <aside>&ndash; /list/datum/weakref</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 28"/></a></h3>
+        <p>Cached list of mutable mobs in zone for cybercops</p><h3 id="var/points"><aside class="declaration">var </aside>points
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 36"/></a></h3>
+        <p>The amount of points in the system, used to purchase maps</p><h3 id="var/radio"><aside class="declaration">var </aside>radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 34"/></a></h3>
+        <p>The radio the console can speak into</p><h3 id="var/retries_spent"><aside class="declaration">var </aside>retries_spent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 38"/></a></h3>
+        <p>Keeps track of the number of times someone has built a hololadder</p><h3 id="var/scanner_tier"><aside class="declaration">var </aside>scanner_tier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 40"/></a></h3>
+        <p>Changes how much info is available on the domain</p><h3 id="var/server_cooldown_time"><aside class="declaration">var </aside>server_cooldown_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 42"/></a></h3>
+        <p>Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that</p><h3 id="var/servo_bonus"><aside class="declaration">var </aside>servo_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 44"/></a></h3>
+        <p>Applies bonuses to rewards etc</p><h3 id="var/spawned_threat_refs"><aside class="declaration">var </aside>spawned_threat_refs
+            <aside>&ndash; /list/datum/weakref</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/quantum_server.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;quantum_server.dm 30"/></a></h3>
+        <p>Any ghosts that have spawned in</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_threats"><aside class="declaration">proc </aside>add_threats<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/threat) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/threats.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;threats.dm 2"/></a></aside>
+        </h3>
+        <p>Adds threats to the list and notifies players</p><h3 id="proc/begin_shutdown"><aside class="declaration">proc </aside>begin_shutdown<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 4"/></a></aside>
+        </h3>
+        <p>Gives all current occupants a notification that the server is going down</p><h3 id="proc/calculate_rewards"><aside class="declaration">proc </aside>calculate_rewards<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/loot.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;loot.dm 2"/></a></aside>
+        </h3>
+        <p>Handles calculating rewards based on number of players, parts, threats, etc</p><h3 id="proc/cold_boot_map"><aside class="declaration">proc </aside>cold_boot_map<aside>(/<a href="mob.html">mob</a>/user, map_key) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 35"/></a></aside>
+        </h3>
+        <hh3 id="quantum-server-cold-boot">Quantum Server Cold Boot</hh3>
+<p>Procedurally links the 3 booting processes together.</p>
+<p>This is the starting point if you have an id. Does validation and feedback on steps</p><h3 id="proc/cool_off"><aside class="declaration">proc </aside>cool_off<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 5"/></a></aside>
+        </h3>
+        <p>Resets the cooldown state and updates icons</p><h3 id="proc/generate_avatar"><aside class="declaration">proc </aside>generate_avatar<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure/hololadder.html">structure/hololadder</a>/wayout, /<a href="datum.html">datum</a>/<a href="datum/outfit.html">outfit</a>/netsuit) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/obj_generation.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;obj_generation.dm 2"/></a></aside>
+        </h3>
+        <p>just in case someone's connected
+Generates a new avatar for the bitrunner.</p><h3 id="proc/generate_hololadder"><aside class="declaration">proc </aside>generate_hololadder<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/obj_generation.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;obj_generation.dm 58"/></a></aside>
+        </h3>
+        <p>Generates a new hololadder for the bitrunner. Effectively a respawn attempt.</p><h3 id="proc/generate_loot"><aside class="declaration">proc </aside>generate_loot<aside>(/<a href="obj.html">obj</a>/cache, /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/byteforge.html">byteforge</a>/chosen_forge) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/loot.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;loot.dm 18"/></a></aside>
+        </h3>
+        <p>Handles spawning the (new) crate and deleting the former</p><h3 id="proc/get_available_domains"><aside class="declaration">proc </aside>get_available_domains<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 13"/></a></aside>
+        </h3>
+        <p>Compiles a list of available domains.</p><h3 id="proc/get_avatar_data"><aside class="declaration">proc </aside>get_avatar_data<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 34"/></a></aside>
+        </h3>
+        <p>If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals</p><h3 id="proc/get_completion_certificate"><aside class="declaration">proc </aside>get_completion_certificate<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/loot.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;loot.dm 45"/></a></aside>
+        </h3>
+        <p>Returns the markdown text containing domain completion information</p><h3 id="proc/get_nearby_forges"><aside class="declaration">proc </aside>get_nearby_forges<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 109"/></a></aside>
+        </h3>
+        <p>Locates any turfs with forges on them</p><h3 id="proc/get_random_domain_id"><aside class="declaration">proc </aside>get_random_domain_id<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 59"/></a></aside>
+        </h3>
+        <p>Gets a random available domain given the current points. Weighted towards higher cost domains.</p><h3 id="proc/get_random_nearby_forge"><aside class="declaration">proc </aside>get_random_nearby_forge<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 84"/></a></aside>
+        </h3>
+        <p>Locates any turfs with forges on them, returns a random one</p><h3 id="proc/get_valid_domain_targets"><aside class="declaration">proc </aside>get_valid_domain_targets<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 93"/></a></aside>
+        </h3>
+        <p>Gets all mobs originally generated by the loaded domain and returns a list that are capable of being antagged</p><h3 id="proc/grade_completion"><aside class="declaration">proc </aside>grade_completion<aside>(completion_time) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/loot.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;loot.dm 94"/></a></aside>
+        </h3>
+        <p>Grades the player's run based on several factors</p><h3 id="proc/initialize_domain"><aside class="declaration">proc </aside>initialize_domain<aside>(map_key) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 71"/></a></aside>
+        </h3>
+        <p>Initializes a new domain if the given key is valid and the user has enough points</p><h3 id="proc/initialize_map_items"><aside class="declaration">proc </aside>initialize_map_items<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 90"/></a></aside>
+        </h3>
+        <p>Loads in necessary map items, sets mutation targets, etc</p><h3 id="proc/initialize_safehouse"><aside class="declaration">proc </aside>initialize_safehouse<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 130"/></a></aside>
+        </h3>
+        <p>Loads the safehouse</p><h3 id="proc/notify_spawned_threats"><aside class="declaration">proc </aside>notify_spawned_threats<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/threats.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;threats.dm 7"/></a></aside>
+        </h3>
+        <p>Finds any mobs with minds in the zones and gives them the bad news</p><h3 id="proc/on_broken"><aside class="declaration">proc </aside>on_broken<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 2"/></a></aside>
+        </h3>
+        <p>If broken via signal, disconnects all users</p><h3 id="proc/on_corpse_spawned"><aside class="declaration">proc </aside>on_corpse_spawned<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/corpse) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 8"/></a></aside>
+        </h3>
+        <p>Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations</p><h3 id="proc/on_delete"><aside class="declaration">proc </aside>on_delete<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 14"/></a></aside>
+        </h3>
+        <p>Being qdeleted - make sure the circuit and connected mobs go with it</p><h3 id="proc/on_examine"><aside class="declaration">proc </aside>on_examine<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/examiner, /list/examine_text) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 29"/></a></aside>
+        </h3>
+        <p>Handles examining the server. Shows cooldown time and efficiency.</p><h3 id="proc/on_goal_turf_entered"><aside class="declaration">proc </aside>on_goal_turf_entered<aside>(/<a href="datum.html">datum</a>/source, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/arrived, /<a href="atom.html">atom</a>/old_loc, /list/atom/old_locs) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 46"/></a></aside>
+        </h3>
+        <p>Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.</p><h3 id="proc/on_goal_turf_examined"><aside class="declaration">proc </aside>on_goal_turf_examined<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/examiner, /list/examine_text) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 58"/></a></aside>
+        </h3>
+        <p>Handles examining the server. Shows cooldown time and efficiency.</p><h3 id="proc/on_template_loaded"><aside class="declaration">proc </aside>on_template_loaded<aside>(/<a href="datum.html">datum</a>/<a href="datum/lazy_template.html">lazy_template</a>/source, /list/created_atoms) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 65"/></a></aside>
+        </h3>
+        <p>Scans over the inbound created_atoms from lazy templates</p><h3 id="proc/on_threat_created"><aside class="declaration">proc </aside>on_threat_created<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/threat) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/signal_handlers.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;signal_handlers.dm 94"/></a></aside>
+        </h3>
+        <p>Just in case there's any special handling for the domain
+Handles when cybercops are summoned into the area or ghosts click a ghost role spawner</p><h3 id="proc/reset"><aside class="declaration">proc </aside>reset<aside>(fast) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 147"/></a></aside>
+        </h3>
+        <p>Stops the current virtual domain and disconnects all users</p><h3 id="proc/scrub_vdom"><aside class="declaration">proc </aside>scrub_vdom<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/map_handling.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;map_handling.dm 166"/></a></aside>
+        </h3>
+        <p>Deletes all the tile contents</p><h3 id="proc/sever_connections"><aside class="declaration">proc </aside>sever_connections<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 118"/></a></aside>
+        </h3>
+        <p>Severs any connected users</p><h3 id="proc/spark_at_location"><aside class="declaration">proc </aside>spark_at_location<aside>(/<a href="obj.html">obj</a>/cache) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/util.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;util.dm 125"/></a></aside>
+        </h3>
+        <p>Do some magic teleport sparks</p><h3 id="proc/stock_gear"><aside class="declaration">proc </aside>stock_gear<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/avatar, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/neo, /<a href="datum.html">datum</a>/<a href="datum/lazy_template.html">lazy_template</a>/<a href="datum/lazy_template/virtual_domain.html">virtual_domain</a>/generated_domain) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/bitrunning/server/obj_generation.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;server&#x2F;obj_generation.dm 83"/></a></aside>
+        </h3>
+        <p>Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

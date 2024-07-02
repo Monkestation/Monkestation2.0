@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/~monkestation/blueshift.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/~monkestation/blueshift.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_GLASSBLOWING">TRAIT_GLASSBLOWING</a></th><td>Traits granted by glassblowing</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_CURRENTLY_GLASSBLOWING">TRAIT_CURRENTLY_GLASSBLOWING</a></th><td>Trait that is applied whenever someone or something is glassblowing</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_CLOTHING">RND_CATEGORY_AKHTER_CLOTHING</a></th><td>Category for clothing in the organics printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_EQUIPMENT">RND_CATEGORY_AKHTER_EQUIPMENT</a></th><td>Category for equipment like belts and bags in the organics printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_RESOURCES">RND_CATEGORY_AKHTER_RESOURCES</a></th><td>Category for resources made by the organics printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_FOODRICATOR_INGREDIENTS">RND_CATEGORY_AKHTER_FOODRICATOR_INGREDIENTS</a></th><td>Category for ingredients in the ration printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_FOODRICATOR_BAGS">RND_CATEGORY_AKHTER_FOODRICATOR_BAGS</a></th><td>Category for bags and containers of reagents in the ration printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_FOODRICATOR_SNACKS">RND_CATEGORY_AKHTER_FOODRICATOR_SNACKS</a></th><td>Category for snacks in the ration printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_FOODRICATOR_UTENSILS">RND_CATEGORY_AKHTER_FOODRICATOR_UTENSILS</a></th><td>Category for utensils and whatnot in the ration printer</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_AKHTER_SEEDS">RND_CATEGORY_AKHTER_SEEDS</a></th><td>Category for the seeds the organics printer can make</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_DEFOREST_MEDICAL">RND_CATEGORY_DEFOREST_MEDICAL</a></th><td>Medical items in the deforest medstation</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/RND_CATEGORY_DEFOREST_BLOOD">RND_CATEGORY_DEFOREST_BLOOD</a></th><td>Blood and blood bags</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_WALLMOUNTED">TRAIT_WALLMOUNTED</a></th><td>Trait given to objects with the wallmounted component</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/LOWER_TEXT">LOWER_TEXT</a></th><td>BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
+We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/COMSIG_MAIN_SM_DELAMINATING">COMSIG_MAIN_SM_DELAMINATING</a></th><td>Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/LASER_SHOTS">LASER_SHOTS</a></th><td>Macro to turn a number of laser shots into an energy cost, based on the above define
+e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_XENO_INNATE">TRAIT_XENO_INNATE</a></th><td>Trait source for xeno innate abilities</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_XENO_ABILITY_GIVEN">TRAIT_XENO_ABILITY_GIVEN</a></th><td>Trait source for something added BY a xeno ability</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_XENO_HEAL_AURA">TRAIT_XENO_HEAL_AURA</a></th><td>Determines if something can receive healing from a xeno</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/GRANT_ACTION">GRANT_ACTION</a></th><td>Takes in a typepath of a <code>/datum/action</code> and adds it to <code>src</code>.
+Only useful if you want to add the action and never desire to reference it again ever.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/COMSIG_SOULCATCHER_CHECK_SOUL">COMSIG_SOULCATCHER_CHECK_SOUL</a></th><td>Whenever we need to check if a mob is currently inside of soulcatcher.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/COMSIG_SOULCATCHER_SCAN_BODY">COMSIG_SOULCATCHER_SCAN_BODY</a></th><td>Whenever we need to get the soul of the mob inside of the soulcatcher.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_NIFSOFT">TRAIT_NIFSOFT</a></th><td>Trait that was granted by a NIFSoft</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_NIFSOFT_HUD_GRANTER">TRAIT_NIFSOFT_HUD_GRANTER</a></th><td>Trait given to a piece of eyewear that allows the user to use NIFSoft HUDs</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/CATEGORY_LIMIT">CATEGORY_LIMIT</a></th><td>To identify the limit of the category type in the associative list. Techical stuff.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/COLOR_PRIDE_RED">COLOR_PRIDE_RED</a></th><td>Colors for pride week</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/TRAIT_TWITCH_ADAPTED">TRAIT_TWITCH_ADAPTED</a></th><td>Trait that changes the ending effects of twitch leaving your system</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/WOUND_SERIES_MUSCLE_DAMAGE">WOUND_SERIES_MUSCLE_DAMAGE</a></th><td>See muscle.dm and robotic_blunt.dm</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_YES_TEMP">OPT_IN_YES_TEMP</a></th><td>For temporary or otherwise 'inconvenient' objectives like kidnapping or theft</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_YES_KILL">OPT_IN_YES_KILL</a></th><td>Cool with being killed or otherwise occupied but not removed from the round</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_YES_ROUND_REMOVE">OPT_IN_YES_ROUND_REMOVE</a></th><td>Fine with being round removed.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_NOT_TARGET">OPT_IN_NOT_TARGET</a></th><td>Prefers not to be a target. Will still be a potential target if playing sec or command.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/SECURITY_OPT_IN_LEVEL">SECURITY_OPT_IN_LEVEL</a></th><td>The minimum opt-in level for people playing sec.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/COMMAND_OPT_IN_LEVEL">COMMAND_OPT_IN_LEVEL</a></th><td>The minimum opt-in level for people playing command.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_DEFAULT_LEVEL">OPT_IN_DEFAULT_LEVEL</a></th><td>The default opt in level for preferences and mindless mobs.</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/blueshift.html#define/OPT_IN_ANTAG_ENABLED_LEVEL">OPT_IN_ANTAG_ENABLED_LEVEL</a></th><td>If the player has any non-ghost role antags enabled, they are forced to use a minimum of this.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/CATEGORY_LIMIT"><aside class="declaration">#define </aside>CATEGORY_LIMIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L191">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 191"/></a>
+    </h3>
+    <p>To identify the limit of the category type in the associative list. Techical stuff.</p><h3 id="define/COLOR_PRIDE_RED"><aside class="declaration">#define </aside>COLOR_PRIDE_RED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L277">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 277"/></a>
+    </h3>
+    <p>Colors for pride week</p><h3 id="define/COMMAND_OPT_IN_LEVEL"><aside class="declaration">#define </aside>COMMAND_OPT_IN_LEVEL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L329">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 329"/></a>
+    </h3>
+    <p>The minimum opt-in level for people playing command.</p><h3 id="define/COMSIG_MAIN_SM_DELAMINATING"><aside class="declaration">#define </aside>COMSIG_MAIN_SM_DELAMINATING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 115"/></a>
+    </h3>
+    <p>Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)</p><h3 id="define/COMSIG_SOULCATCHER_CHECK_SOUL"><aside class="declaration">#define </aside>COMSIG_SOULCATCHER_CHECK_SOUL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 142"/></a>
+    </h3>
+    <p>Whenever we need to check if a mob is currently inside of soulcatcher.</p><h3 id="define/COMSIG_SOULCATCHER_SCAN_BODY"><aside class="declaration">#define </aside>COMSIG_SOULCATCHER_SCAN_BODY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 145"/></a>
+    </h3>
+    <p>Whenever we need to get the soul of the mob inside of the soulcatcher.</p><h3 id="define/GRANT_ACTION"><aside class="declaration">#define </aside>GRANT_ACTION
+            <aside>(typepath)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 135"/></a>
+    </h3>
+    <p>Takes in a typepath of a <code>/datum/action</code> and adds it to <code>src</code>.
+Only useful if you want to add the action and never desire to reference it again ever.</p><h3 id="define/LASER_SHOTS"><aside class="declaration">#define </aside>LASER_SHOTS
+            <aside>(X, MAX_CHARGE)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 124"/></a>
+    </h3>
+    <p>Macro to turn a number of laser shots into an energy cost, based on the above define
+e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots</p><h3 id="define/LOWER_TEXT"><aside class="declaration">#define </aside>LOWER_TEXT
+            <aside>(thing)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 91"/></a>
+    </h3>
+    <p>BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
+We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.</p><h3 id="define/OPT_IN_ANTAG_ENABLED_LEVEL"><aside class="declaration">#define </aside>OPT_IN_ANTAG_ENABLED_LEVEL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L335">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 335"/></a>
+    </h3>
+    <p>If the player has any non-ghost role antags enabled, they are forced to use a minimum of this.</p><h3 id="define/OPT_IN_DEFAULT_LEVEL"><aside class="declaration">#define </aside>OPT_IN_DEFAULT_LEVEL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L332">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 332"/></a>
+    </h3>
+    <p>The default opt in level for preferences and mindless mobs.</p><h3 id="define/OPT_IN_NOT_TARGET"><aside class="declaration">#define </aside>OPT_IN_NOT_TARGET
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L324">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 324"/></a>
+    </h3>
+    <p>Prefers not to be a target. Will still be a potential target if playing sec or command.</p><h3 id="define/OPT_IN_YES_KILL"><aside class="declaration">#define </aside>OPT_IN_YES_KILL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 298"/></a>
+    </h3>
+    <p>Cool with being killed or otherwise occupied but not removed from the round</p><h3 id="define/OPT_IN_YES_ROUND_REMOVE"><aside class="declaration">#define </aside>OPT_IN_YES_ROUND_REMOVE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L300">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 300"/></a>
+    </h3>
+    <p>Fine with being round removed.</p><h3 id="define/OPT_IN_YES_TEMP"><aside class="declaration">#define </aside>OPT_IN_YES_TEMP
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L296">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 296"/></a>
+    </h3>
+    <p>For temporary or otherwise 'inconvenient' objectives like kidnapping or theft</p><h3 id="define/RND_CATEGORY_AKHTER_CLOTHING"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_CLOTHING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 44"/></a>
+    </h3>
+    <p>Category for clothing in the organics printer</p><h3 id="define/RND_CATEGORY_AKHTER_EQUIPMENT"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_EQUIPMENT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 46"/></a>
+    </h3>
+    <p>Category for equipment like belts and bags in the organics printer</p><h3 id="define/RND_CATEGORY_AKHTER_FOODRICATOR_BAGS"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_FOODRICATOR_BAGS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 53"/></a>
+    </h3>
+    <p>Category for bags and containers of reagents in the ration printer</p><h3 id="define/RND_CATEGORY_AKHTER_FOODRICATOR_INGREDIENTS"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_FOODRICATOR_INGREDIENTS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 51"/></a>
+    </h3>
+    <p>Category for ingredients in the ration printer</p><h3 id="define/RND_CATEGORY_AKHTER_FOODRICATOR_SNACKS"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_FOODRICATOR_SNACKS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 55"/></a>
+    </h3>
+    <p>Category for snacks in the ration printer</p><h3 id="define/RND_CATEGORY_AKHTER_FOODRICATOR_UTENSILS"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_FOODRICATOR_UTENSILS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 57"/></a>
+    </h3>
+    <p>Category for utensils and whatnot in the ration printer</p><h3 id="define/RND_CATEGORY_AKHTER_RESOURCES"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_RESOURCES
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 48"/></a>
+    </h3>
+    <p>Category for resources made by the organics printer</p><h3 id="define/RND_CATEGORY_AKHTER_SEEDS"><aside class="declaration">#define </aside>RND_CATEGORY_AKHTER_SEEDS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 59"/></a>
+    </h3>
+    <p>Category for the seeds the organics printer can make</p><h3 id="define/RND_CATEGORY_DEFOREST_BLOOD"><aside class="declaration">#define </aside>RND_CATEGORY_DEFOREST_BLOOD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 64"/></a>
+    </h3>
+    <p>Blood and blood bags</p><h3 id="define/RND_CATEGORY_DEFOREST_MEDICAL"><aside class="declaration">#define </aside>RND_CATEGORY_DEFOREST_MEDICAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 62"/></a>
+    </h3>
+    <p>Medical items in the deforest medstation</p><h3 id="define/SECURITY_OPT_IN_LEVEL"><aside class="declaration">#define </aside>SECURITY_OPT_IN_LEVEL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L327">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 327"/></a>
+    </h3>
+    <p>The minimum opt-in level for people playing sec.</p><h3 id="define/TRAIT_CURRENTLY_GLASSBLOWING"><aside class="declaration">#define </aside>TRAIT_CURRENTLY_GLASSBLOWING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 14"/></a>
+    </h3>
+    <p>Trait that is applied whenever someone or something is glassblowing</p><h3 id="define/TRAIT_GLASSBLOWING"><aside class="declaration">#define </aside>TRAIT_GLASSBLOWING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 11"/></a>
+    </h3>
+    <p>Traits granted by glassblowing</p><h3 id="define/TRAIT_NIFSOFT"><aside class="declaration">#define </aside>TRAIT_NIFSOFT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 151"/></a>
+    </h3>
+    <p>Trait that was granted by a NIFSoft</p><h3 id="define/TRAIT_NIFSOFT_HUD_GRANTER"><aside class="declaration">#define </aside>TRAIT_NIFSOFT_HUD_GRANTER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L154">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 154"/></a>
+    </h3>
+    <p>Trait given to a piece of eyewear that allows the user to use NIFSoft HUDs</p><h3 id="define/TRAIT_TWITCH_ADAPTED"><aside class="declaration">#define </aside>TRAIT_TWITCH_ADAPTED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L285">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 285"/></a>
+    </h3>
+    <p>Trait that changes the ending effects of twitch leaving your system</p><h3 id="define/TRAIT_WALLMOUNTED"><aside class="declaration">#define </aside>TRAIT_WALLMOUNTED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 87"/></a>
+    </h3>
+    <p>Trait given to objects with the wallmounted component</p><h3 id="define/TRAIT_XENO_ABILITY_GIVEN"><aside class="declaration">#define </aside>TRAIT_XENO_ABILITY_GIVEN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 129"/></a>
+    </h3>
+    <p>Trait source for something added BY a xeno ability</p><h3 id="define/TRAIT_XENO_HEAL_AURA"><aside class="declaration">#define </aside>TRAIT_XENO_HEAL_AURA
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 131"/></a>
+    </h3>
+    <p>Determines if something can receive healing from a xeno</p><h3 id="define/TRAIT_XENO_INNATE"><aside class="declaration">#define </aside>TRAIT_XENO_INNATE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 127"/></a>
+    </h3>
+    <p>Trait source for xeno innate abilities</p><h3 id="define/WOUND_SERIES_MUSCLE_DAMAGE"><aside class="declaration">#define </aside>WOUND_SERIES_MUSCLE_DAMAGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/~monkestation/blueshift.dm#L289">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;blueshift.dm 289"/></a>
+    </h3>
+    <p>See muscle.dm and robotic_blunt.dm</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

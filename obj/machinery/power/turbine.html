@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;power&#x2F;turbine - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/power/turbine.html#var">Var Details</a> - <a href="obj/machinery/power/turbine.html#proc">Proc Details</a></header>
+<main>
+<h1>turbine <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/power.html">power</a>/<a href="obj/machinery/power/turbine.html">turbine</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/active">active</a></th><td>Checks if the machine is processing or not</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/active_overlay">active_overlay</a></th><td>Our overlay when active</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/can_connect">can_connect</a></th><td>The parts can be registered on the main one only when their panel is closed</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/emissive">emissive</a></th><td>Should we use emissive appearance?</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/gas_theoretical_volume">gas_theoretical_volume</a></th><td>Theoretical volume of gas that's moving through the turbine, it expands the further it goes</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/installed_part">installed_part</a></th><td>Reference to our turbine part</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/off_overlay">off_overlay</a></th><td>Our overlay when off</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/open_overlay">open_overlay</a></th><td>Our overlay when open</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/our_turf_thermal_conductivity">our_turf_thermal_conductivity</a></th><td>Stores the turf thermal conductivity to restore it later</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#var/part_path">part_path</a></th><td>Path of the turbine part we can install</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#proc/calculate_parts_limits">calculate_parts_limits</a></th><td>Called when installing new parts and when activating the main machine</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#proc/disable_parts">disable_parts</a></th><td>Allow easy disabling of each machine from the main controller</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#proc/enable_parts">enable_parts</a></th><td>Allow easy enabling of each machine for connection to the main controller</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#proc/get_efficiency">get_efficiency</a></th><td>Gets the efficiency of the installed part, returns 0 if no part is installed</td></tr>
+            <tr><th><a href="obj/machinery/power/turbine.html#proc/install_part">install_part</a></th><td>Checks if the machine part we are installing is an improvement over the installed one (if present)
+Currently it doesn't allow worst parts to be installed</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 11"/></a></h3>
+        <p>Checks if the machine is processing or not</p><h3 id="var/active_overlay"><aside class="declaration">var </aside>active_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 26"/></a></h3>
+        <p>Our overlay when active</p><h3 id="var/can_connect"><aside class="declaration">var </aside>can_connect
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 13"/></a></h3>
+        <p>The parts can be registered on the main one only when their panel is closed</p><h3 id="var/emissive"><aside class="declaration">var </aside>emissive
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 32"/></a></h3>
+        <p>Should we use emissive appearance?</p><h3 id="var/gas_theoretical_volume"><aside class="declaration">var </aside>gas_theoretical_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 7"/></a></h3>
+        <p>Theoretical volume of gas that's moving through the turbine, it expands the further it goes</p><h3 id="var/installed_part"><aside class="declaration">var </aside>installed_part
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/turbine_parts.html">turbine_parts</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 16"/></a></h3>
+        <p>Reference to our turbine part</p><h3 id="var/off_overlay"><aside class="declaration">var </aside>off_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 28"/></a></h3>
+        <p>Our overlay when off</p><h3 id="var/open_overlay"><aside class="declaration">var </aside>open_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 30"/></a></h3>
+        <p>Our overlay when open</p><h3 id="var/our_turf_thermal_conductivity"><aside class="declaration">var </aside>our_turf_thermal_conductivity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 9"/></a></h3>
+        <p>Stores the turf thermal conductivity to restore it later</p><h3 id="var/part_path"><aside class="declaration">var </aside>part_path
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/turbine_parts.html">turbine_parts</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 18"/></a></h3>
+        <p>Path of the turbine part we can install</p><h2 id="proc">Proc Details</h2><h3 id="proc/calculate_parts_limits"><aside class="declaration">proc </aside>calculate_parts_limits<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 194"/></a></aside>
+        </h3>
+        <p>Called when installing new parts and when activating the main machine</p><h3 id="proc/disable_parts"><aside class="declaration">proc </aside>disable_parts<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 140"/></a></aside>
+        </h3>
+        <p>Allow easy disabling of each machine from the main controller</p><h3 id="proc/enable_parts"><aside class="declaration">proc </aside>enable_parts<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 134"/></a></aside>
+        </h3>
+        <p>Allow easy enabling of each machine for connection to the main controller</p><h3 id="proc/get_efficiency"><aside class="declaration">proc </aside>get_efficiency<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 186"/></a></aside>
+        </h3>
+        <p>Gets the efficiency of the installed part, returns 0 if no part is installed</p><h3 id="proc/install_part"><aside class="declaration">proc </aside>install_part<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/turbine_parts.html">turbine_parts</a>/part_object, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/power/turbine/turbine.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;turbine&#x2F;turbine.dm 171"/></a></aside>
+        </h3>
+        <p>Checks if the machine part we are installing is an improvement over the installed one (if present)
+Currently it doesn't allow worst parts to be installed</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

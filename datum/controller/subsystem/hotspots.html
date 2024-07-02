@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;hotspots - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/hotspots.html#var">Var Details</a> - <a href="datum/controller/subsystem/hotspots.html#proc">Proc Details</a></header>
+<main>
+<h1>hotspots <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/hotspots.html">hotspots</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#var/colors">colors</a></th><td>colors used in generating the map</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#var/finished_map">finished_map</a></th><td>the map icon with all the hotspots rendered ontop</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#var/generated_hotspots">generated_hotspots</a></th><td>the list of all the hotspots generated</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#var/hotspots_to_generate">hotspots_to_generate</a></th><td>the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#var/map">map</a></th><td>the map_start map icon</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/disturb_turf">disturb_turf</a></th><td>when a turf is disturbed on maps with hotspot controller we need to check if we are inside the radius of a hotspot.
+NOTE: this will early return if not on a mining level because we only want the amplification if we had miners work for it.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/generate_map">generate_map</a></th><td>this is a pile of shitcode, so its seperated from the actual controller because i will be coming back in the future to fix it</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/kerpow">kerpow</a></th><td>total value of heat from the hotspots we ended up being inside
+temporary value of the heat, we need to check on the station z however as thats where we generated the hotspots
+this is basically the flash's [AOE_flash] but here because aoe flash isn't a global proc.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/move_all_hotspots">move_all_hotspots</a></th><td>this is a debug tool item to move all hotspots to me</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/retrieve_hotspot">retrieve_hotspot</a></th><td>attempts to retrieve a hotspot in this turf, if none found return FALSE.
+This only retrieves the first hotspot found, to retrieve a list call [retrieve_hotspot_list]</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/retrieve_hotspot_list">retrieve_hotspot_list</a></th><td>works like [retrieve_hotspot] but on failure returns empty list, so check against length to determine if found.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/return_heat">return_heat</a></th><td>gotta be centered to stop movement
+we handle movement and recentering here
+this proc returns the heat value from the given turf</td></tr>
+            <tr><th><a href="datum/controller/subsystem/hotspots.html#proc/stomp">stomp</a></th><td>this is where we handle the interaction between using a stomper on a turf and affecting a hotspot
+if its the center it locks position, if not it drifts it away from the stomper
+we calculate the drift direction using [angle2dir] and [arctan], which is less than perfect
+if this stops working in the future its because we broke one of those procs.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/colors"><aside class="declaration">var </aside>colors
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 18"/></a></h3>
+        <p>colors used in generating the map</p><h3 id="var/finished_map"><aside class="declaration">var </aside>finished_map
+            <aside>&ndash; /icon</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 16"/></a></h3>
+        <p>the map icon with all the hotspots rendered ontop</p><h3 id="var/generated_hotspots"><aside class="declaration">var </aside>generated_hotspots
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 10"/></a></h3>
+        <p>the list of all the hotspots generated</p><h3 id="var/hotspots_to_generate"><aside class="declaration">var </aside>hotspots_to_generate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 12"/></a></h3>
+        <p>the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds</p><h3 id="var/map"><aside class="declaration">var </aside>map
+            <aside>&ndash; /icon</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 14"/></a></h3>
+        <p>the map_start map icon</p><h2 id="proc">Proc Details</h2><h3 id="proc/disturb_turf"><aside class="declaration">proc </aside>disturb_turf<aside>(/<a href="turf.html">turf</a>/triggered) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L80">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 80"/></a></aside>
+        </h3>
+        <p>when a turf is disturbed on maps with hotspot controller we need to check if we are inside the radius of a hotspot.
+NOTE: this will early return if not on a mining level because we only want the amplification if we had miners work for it.</p><h3 id="proc/generate_map"><aside class="declaration">proc </aside>generate_map<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/trench_map.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;trench_map.dm 3"/></a></aside>
+        </h3>
+        <p>this is a pile of shitcode, so its seperated from the actual controller because i will be coming back in the future to fix it</p><h3 id="proc/kerpow"><aside class="declaration">proc </aside>kerpow<aside>(/<a href="turf.html">turf</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L96">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 96"/></a></aside>
+        </h3>
+        <p>total value of heat from the hotspots we ended up being inside
+temporary value of the heat, we need to check on the station z however as thats where we generated the hotspots
+this is basically the flash's [AOE_flash] but here because aoe flash isn't a global proc.</p><h3 id="proc/move_all_hotspots"><aside class="declaration">proc </aside>move_all_hotspots<aside>(/<a href="client.html">client</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L147">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 147"/></a></aside>
+        </h3>
+        <p>this is a debug tool item to move all hotspots to me</p><h3 id="proc/retrieve_hotspot"><aside class="declaration">proc </aside>retrieve_hotspot<aside>(/<a href="turf.html">turf</a>/pinged) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L64">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 64"/></a></aside>
+        </h3>
+        <p>attempts to retrieve a hotspot in this turf, if none found return FALSE.
+This only retrieves the first hotspot found, to retrieve a list call [retrieve_hotspot_list]</p><h3 id="proc/retrieve_hotspot_list"><aside class="declaration">proc </aside>retrieve_hotspot_list<aside>(/<a href="turf.html">turf</a>/pinged) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L72">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 72"/></a></aside>
+        </h3>
+        <p>works like [retrieve_hotspot] but on failure returns empty list, so check against length to determine if found.</p><h3 id="proc/return_heat"><aside class="declaration">proc </aside>return_heat<aside>(/<a href="turf.html">turf</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L136">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 136"/></a></aside>
+        </h3>
+        <p>gotta be centered to stop movement
+we handle movement and recentering here
+this proc returns the heat value from the given turf</p><h3 id="proc/stomp"><aside class="declaration">proc </aside>stomp<aside>(/<a href="turf.html">turf</a>/stomped) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/hotspot/hotspot_controller.dm#L116">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;hotspot&#x2F;hotspot_controller.dm 116"/></a></aside>
+        </h3>
+        <p>this is where we handle the interaction between using a stomper on a turf and affecting a hotspot
+if its the center it locks position, if not it drifts it away from the stomper
+we calculate the drift direction using [angle2dir] and [arctan], which is less than perfect
+if this stops working in the future its because we broke one of those procs.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

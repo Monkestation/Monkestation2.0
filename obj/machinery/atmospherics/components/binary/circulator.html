@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;atmospherics&#x2F;components&#x2F;binary&#x2F;circulator - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/atmospherics/components/binary/circulator.html#var">Var Details</a></header>
+<main>
+<h1>circulator <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/atmospherics.html">atmospherics</a>/<a href="obj/machinery/atmospherics/components.html">components</a>/<a href="obj/machinery/atmospherics/components/binary.html">binary</a>/<a href="obj/machinery/atmospherics/components/binary/circulator.html">circulator</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/bad_reagents">bad_reagents</a></th><td>our list of bad reagents (these damage the lubrication system)</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/circulator_flags">circulator_flags</a></th><td>our current circulator flags</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/generator">generator</a></th><td>The generator we are connected to.</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/liked_lubricants">liked_lubricants</a></th><td>our list of reagents and how good they are as lubricant (this is independant of viscosity as it can be changed by teg states)</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/lube_process_count">lube_process_count</a></th><td>how many lube processes we have left</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/lube_processes">lube_processes</a></th><td>process count for lube checks (maybe timer in the future?)</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/lubricant_loss">lubricant_loss</a></th><td>this is the amount of reagent loss we have per lube check</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/lubricated_multiplier">lubricated_multiplier</a></th><td>our lubrication multiplier</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/mode">mode</a></th><td>Which circulator mode we are on, the generator requires one of each to work.</td></tr>
+            <tr><th><a href="obj/machinery/atmospherics/components/binary/circulator.html#var/reagent_buffer">reagent_buffer</a></th><td>our reagent buffer</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bad_reagents"><aside class="declaration">var </aside>bad_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 33"/></a></h3>
+        <p>our list of bad reagents (these damage the lubrication system)</p><h3 id="var/circulator_flags"><aside class="declaration">var </aside>circulator_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 41"/></a></h3>
+        <p>our current circulator flags</p><h3 id="var/generator"><aside class="declaration">var </aside>generator
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/power.html">power</a>/<a href="obj/machinery/power/thermoelectric_generator.html">thermoelectric_generator</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 22"/></a></h3>
+        <p>The generator we are connected to.</p><h3 id="var/liked_lubricants"><aside class="declaration">var </aside>liked_lubricants
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 27"/></a></h3>
+        <p>our list of reagents and how good they are as lubricant (this is independant of viscosity as it can be changed by teg states)</p><h3 id="var/lube_process_count"><aside class="declaration">var </aside>lube_process_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L47">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 47"/></a></h3>
+        <p>how many lube processes we have left</p><h3 id="var/lube_processes"><aside class="declaration">var </aside>lube_processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L45">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 45"/></a></h3>
+        <p>process count for lube checks (maybe timer in the future?)</p><h3 id="var/lubricant_loss"><aside class="declaration">var </aside>lubricant_loss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 43"/></a></h3>
+        <p>this is the amount of reagent loss we have per lube check</p><h3 id="var/lubricated_multiplier"><aside class="declaration">var </aside>lubricated_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 39"/></a></h3>
+        <p>our lubrication multiplier</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 20"/></a></h3>
+        <p>Which circulator mode we are on, the generator requires one of each to work.</p><h3 id="var/reagent_buffer"><aside class="declaration">var </aside>reagent_buffer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/smithing/TEG/circulators.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;smithing&#x2F;TEG&#x2F;circulators.dm 25"/></a></h3>
+        <p>our reagent buffer</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

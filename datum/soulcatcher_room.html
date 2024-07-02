@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;soulcatcher_room - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/soulcatcher_room.html#var">Var Details</a> - <a href="datum/soulcatcher_room.html#proc">Proc Details</a></header>
+<main>
+<h1>soulcatcher_room <aside>/<a href="datum.html">datum</a>/<a href="datum/soulcatcher_room.html">soulcatcher_room</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L180">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 180"/></a></h1>
+
+<p>Soulcatcher Room</p>
+<p>This datum is where souls are sent to when joining soulcatchers.
+It handles sending messages to souls from the outside along with adding new souls, transfering, and removing souls.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/current_souls">current_souls</a></th><td>What souls are currently inside of the room?</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/joinable">joinable</a></th><td>Can the room be joined at all?</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/master_soulcatcher">master_soulcatcher</a></th><td>Weakref for the master soulcatcher datum</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/name">name</a></th><td>What is the name of the room?</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/outside_voice">outside_voice</a></th><td>What is the name of the person sending the messages?</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/room_color">room_color</a></th><td>What is the color of chat messages sent by the room?</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#var/room_description">room_description</a></th><td>What is the description of the room?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/add_soul">add_soul</a></th><td>Converts a mind into a soul and adds the resulting soul to the room.</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/add_soul_from_ghost">add_soul_from_ghost</a></th><td>Attemps to add a ghost to the soulcatcher room.</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/relay_message_to_soulcatcher">relay_message_to_soulcatcher</a></th><td>Relays a message sent from the send_message proc to the parent soulcatcher datum</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/remove_soul">remove_soul</a></th><td>Removes a soul from a soulcatcher room, leaving it as a ghost. Returns <code>FALSE</code> if the <code>soul_to_remove</code> cannot be found, otherwise returns <code>TRUE</code> after a successful deletion.</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/send_message">send_message</a></th><td>Sends a message or emote to all of the souls currently located inside of the soulcatcher room. Returns <code>FALSE</code> if a message cannot be sent, otherwise returns <code>TRUE</code>.</td></tr>
+            <tr><th><a href="datum/soulcatcher_room.html#proc/transfer_soul">transfer_soul</a></th><td>Transfers a soul from a soulcatcher room to another soulcatcher room. Returns <code>FALSE</code> if the target room or target soul cannot be found.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_souls"><aside class="declaration">var </aside>current_souls
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L186">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 186"/></a></h3>
+        <p>What souls are currently inside of the room?</p><h3 id="var/joinable"><aside class="declaration">var </aside>joinable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L192">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 192"/></a></h3>
+        <p>Can the room be joined at all?</p><h3 id="var/master_soulcatcher"><aside class="declaration">var </aside>master_soulcatcher
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L188">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 188"/></a></h3>
+        <p>Weakref for the master soulcatcher datum</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L182">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 182"/></a></h3>
+        <p>What is the name of the room?</p><h3 id="var/outside_voice"><aside class="declaration">var </aside>outside_voice
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L190">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 190"/></a></h3>
+        <p>What is the name of the person sending the messages?</p><h3 id="var/room_color"><aside class="declaration">var </aside>room_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L194">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 194"/></a></h3>
+        <p>What is the color of chat messages sent by the room?</p><h3 id="var/room_description"><aside class="declaration">var </aside>room_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L184">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 184"/></a></h3>
+        <p>What is the description of the room?</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_soul"><aside class="declaration">proc </aside>add_soul<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/mind_to_add) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L212">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 212"/></a></aside>
+        </h3>
+        <p>Converts a mind into a soul and adds the resulting soul to the room.</p><h3 id="proc/add_soul_from_ghost"><aside class="declaration">proc </aside>add_soul_from_ghost<aside>(/<a href="mob.html">mob</a>/<a href="mob/dead.html">dead</a>/observer/ghost) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L197">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 197"/></a></aside>
+        </h3>
+        <p>Attemps to add a ghost to the soulcatcher room.</p><h3 id="proc/relay_message_to_soulcatcher"><aside class="declaration">proc </aside>relay_message_to_soulcatcher<aside>(message) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L361">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 361"/></a></aside>
+        </h3>
+        <p>Relays a message sent from the send_message proc to the parent soulcatcher datum</p><h3 id="proc/remove_soul"><aside class="declaration">proc </aside>remove_soul<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/soulcatcher_soul.html">soulcatcher_soul</a>/soul_to_remove) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L263">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 263"/></a></aside>
+        </h3>
+        <p>Removes a soul from a soulcatcher room, leaving it as a ghost. Returns <code>FALSE</code> if the <code>soul_to_remove</code> cannot be found, otherwise returns <code>TRUE</code> after a successful deletion.</p><h3 id="proc/send_message"><aside class="declaration">proc </aside>send_message<aside>(message_to_send, message_sender, emote) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L301">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 301"/></a></aside>
+        </h3>
+        <p>Sends a message or emote to all of the souls currently located inside of the soulcatcher room. Returns <code>FALSE</code> if a message cannot be sent, otherwise returns <code>TRUE</code>.</p>
+<p>Arguments</p>
+<ul>
+<li>message_to_send - The message we want to send to the occupants of the room</li>
+<li>message_sender - The person that is sending the message. This is not required.</li>
+<li>emote - Is the message sent an emote or not?</li>
+</ul><h3 id="proc/transfer_soul"><aside class="declaration">proc </aside>transfer_soul<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/soulcatcher_soul.html">soulcatcher_soul</a>/target_soul, /<a href="datum.html">datum</a>/<a href="datum/soulcatcher_room.html">soulcatcher_room</a>/target_room) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/components/soulcatcher_base.dm#L276">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;components&#x2F;soulcatcher_base.dm 276"/></a></aside>
+        </h3>
+        <p>Transfers a soul from a soulcatcher room to another soulcatcher room. Returns <code>FALSE</code> if the target room or target soul cannot be found.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

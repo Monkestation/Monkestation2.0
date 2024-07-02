@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;bodypart&#x2F;leg - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/bodypart/leg.html#var">Var Details</a> - <a href="obj/item/bodypart/leg.html#proc">Proc Details</a></header>
+<main>
+<h1>leg <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/<a href="obj/item/bodypart/leg.html">leg</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/bodyparts/parts.dm#L304">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;parts.dm 304"/></a></h1>
+
+<p>Parent Type for arms, should not appear in game.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/bodypart/leg.html#var/can_be_digitigrade">can_be_digitigrade</a></th><td>Can these legs be digitigrade? See digitigrade.dm</td></tr>
+            <tr><th><a href="obj/item/bodypart/leg.html#var/digitigrade_id">digitigrade_id</a></th><td>Set limb_id to this when in &quot;digi mode&quot;. MUST BE UNIQUE LIKE ALL LIMB IDS</td></tr>
+            <tr><th><a href="obj/item/bodypart/leg.html#var/footprint_sprite">footprint_sprite</a></th><td>Used by the bloodysoles component to make footprints</td></tr>
+            <tr><th><a href="obj/item/bodypart/leg.html#var/old_limb_id">old_limb_id</a></th><td>Used solely by digitigrade limbs to remember what their old limb ID was.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/bodypart/leg.html#proc/generate_masked_leg">generate_masked_leg</a></th><td>This proc serves as a way to ensure that legs layer properly on a mob.
+To do this, two separate images are created - A low layer one, and a normal layer one.
+Each of the image will appropriately crop out dirs that are not used on that given layer.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_be_digitigrade"><aside class="declaration">var </aside>can_be_digitigrade
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/bodyparts/parts.dm#L321">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;parts.dm 321"/></a></h3>
+        <p>Can these legs be digitigrade? See digitigrade.dm</p><h3 id="var/digitigrade_id"><aside class="declaration">var </aside>digitigrade_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/bodyparts/parts.dm#L323">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;parts.dm 323"/></a></h3>
+        <p>Set limb_id to this when in &quot;digi mode&quot;. MUST BE UNIQUE LIKE ALL LIMB IDS</p><h3 id="var/footprint_sprite"><aside class="declaration">var </aside>footprint_sprite
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/bodyparts/parts.dm#L327">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;parts.dm 327"/></a></h3>
+        <p>Used by the bloodysoles component to make footprints</p><h3 id="var/old_limb_id"><aside class="declaration">var </aside>old_limb_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/surgery/bodyparts/parts.dm#L325">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;parts.dm 325"/></a></h3>
+        <p>Used solely by digitigrade limbs to remember what their old limb ID was.</p><h2 id="proc">Proc Details</h2><h3 id="proc/generate_masked_leg"><aside class="declaration">proc </aside>generate_masked_leg<aside>(/mutable_appearance/limb_overlay, image_dir) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/mob/living/carbon/carbon_update_icons.dm#L592">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;carbon_update_icons.dm 592"/></a></aside>
+        </h3>
+        <p>This proc serves as a way to ensure that legs layer properly on a mob.
+To do this, two separate images are created - A low layer one, and a normal layer one.
+Each of the image will appropriately crop out dirs that are not used on that given layer.</p>
+<p>Arguments:</p>
+<ul>
+<li>limb_overlay - The limb image being masked, not necessarily the original limb image as it could be an overlay on top of it</li>
+<li>image_dir - Direction of the masked images.</li>
+</ul>
+<p>Returns the list of masked images, or <code>null</code> if the limb_overlay didn't exist</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

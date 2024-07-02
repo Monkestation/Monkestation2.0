@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;antagonist&#x2F;bloodsucker - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/antagonist/bloodsucker.html#var">Var Details</a> - <a href="datum/antagonist/bloodsucker.html#proc">Proc Details</a></header>
+<main>
+<h1>bloodsucker <aside>/<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a>/<a href="datum/antagonist/bloodsucker.html">bloodsucker</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/all_bloodsucker_powers">all_bloodsucker_powers</a></th><td>Static typecache of all bloodsucker powers.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/blood_display">blood_display</a></th><td>Blood display HUD</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_blood_volume">bloodsucker_blood_volume</a></th><td>How much blood we have, starting off at default blood levels.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_name">bloodsucker_name</a></th><td>Used for assigning your name</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_reputation">bloodsucker_reputation</a></th><td>Used for assigning your reputation</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_spam_healing">bloodsucker_spam_healing</a></th><td>Timer between alerts for Healing messages</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_spam_sol_burn">bloodsucker_spam_sol_burn</a></th><td>Timer between alerts for Burn messages</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_title">bloodsucker_title</a></th><td>Used for assigning your title</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/bloodsucker_traits">bloodsucker_traits</a></th><td>Default Bloodsucker traits</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/broke_masquerade">broke_masquerade</a></th><td>Have we been broken the Masquerade?</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/frenzied">frenzied</a></th><td>If we are currently in a Frenzy</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/frenzy_threshold">frenzy_threshold</a></th><td>Blood required to enter Frenzy</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/frenzygrab">frenzygrab</a></th><td>Frenzy Grab Martial art given to Bloodsuckers in a Frenzy</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/handling_death">handling_death</a></th><td>Whether the death handling code is active or not.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/humanity_lost">humanity_lost</a></th><td>Amount of Humanity lost</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/masquerade_infractions">masquerade_infractions</a></th><td>How many Masquerade Infractions do we have?</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/max_blood_volume">max_blood_volume</a></th><td>How much blood we can have at once, increases per level.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/powers">powers</a></th><td>ALL Powers currently owned</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/special_vassals">special_vassals</a></th><td>Special vassals I own, to not have double of the same type.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/sunlight_display">sunlight_display</a></th><td>Sunlight timer HUD</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/torpor_traits">torpor_traits</a></th><td>Traits applied during Torpor.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/vamprank_display">vamprank_display</a></th><td>Vampire level display HUD</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/vassal_banned_antags">vassal_banned_antags</a></th><td>Antagonists that cannot be Vassalized no matter what</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#var/vassals">vassals</a></th><td>Vassals under my control. Periodically remove the dead ones.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/AddBloodVolume">AddBloodVolume</a></th><td></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/AmValidAntag">AmValidAntag</a></th><td>Checks if the target has antag datums and, if so,
+are they allowed to be Vassalized, or not, or banned.
+Args:
+target - The person we check for antag datums.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/BuyPower">BuyPower</a></th><td>Called when a Bloodsucker buys a power: (power)</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/DisableAllPowers">DisableAllPowers</a></th><td>Disables all powers, accounting for torpor</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/HandleHealing">HandleHealing</a></th><td></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/LifeTick">LifeTick</a></th><td>Runs from COMSIG_LIVING_LIFE, handles Bloodsucker constant proccesses.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/RemovePower">RemovePower</a></th><td>Called when a Bloodsucker loses a power: (power)</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/SelectFirstName">SelectFirstName</a></th><td>Returns a First name for the Bloodsucker.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/SelectReputation">SelectReputation</a></th><td>Returns a Reputation for the Bloodsucker.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/SelectTitle">SelectTitle</a></th><td>Returns a Title for the Bloodsucker.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/antag_listing_name">antag_listing_name</a></th><td>Stats
+Name shown on antag list</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/antag_listing_status">antag_listing_status</a></th><td>Whatever interesting things happened to the antag admins should know about
+Include additional information about antag in this part</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/apply_innate_effects">apply_innate_effects</a></th><td>Apply innate effects is everything given to the mob
+When a body is tranferred, this is called on the new mob
+while on_gain is called ONCE per ANTAG, this is called ONCE per BODY.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/assign_clan_and_bane">assign_clan_and_bane</a></th><td>Gives Bloodsuckers the ability to choose a Clan.
+If they are already in a Clan, or is in a Frenzy, they will not be able to do so.
+The arg is optional and should really only be an Admin setting a Clan for a player.
+If set however, it will give them the control of their Clan instead of the Bloodsucker.
+This is selected through a radial menu over the player's body, even when an Admin is setting it.
+Args:
+person_selecting - Mob override for stuff like Admins selecting someone's clan.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/break_masquerade">break_masquerade</a></th><td>When a Bloodsucker breaks the Masquerade, they get their HUD icon changed, and Malkavian Bloodsuckers get alerted.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/can_make_vassal">can_make_vassal</a></th><td></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/check_begin_torpor">check_begin_torpor</a></th><td></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/check_cancel_sunlight">check_cancel_sunlight</a></th><td>End Sol, if you're the last Bloodsucker</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/check_end_torpor">check_end_torpor</a></th><td>Are we entering Torpor via Sol/Death? Then entering it isnt optional!
+Checks - Not daylight &amp; Has more than 10 Brute/Burn &amp; not already in Torpor</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/check_start_sunlight">check_start_sunlight</a></th><td></td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/clear_powers_and_stats">clear_powers_and_stats</a></th><td>Clear Disabilities &amp; Organs
+##clear_power_and_stats()</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/do_handle_death">do_handle_death</a></th><td>FINAL DEATH.
+Don't call this directly, use handle_death().</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/final_death">final_death</a></th><td>Gibs the Bloodsucker, roundremoving them.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/fix_masquerade">fix_masquerade</a></th><td>This is admin-only of reverting a broken masquerade, sadly it doesn't remove the Malkavian objectives yet.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/free_all_vassals">free_all_vassals</a></th><td>Called when a Bloodsucker reaches Final Death
+Releases all Vassals and gives them the ex_vassal datum.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/handle_death">handle_death</a></th><td>A wrapper around final death code, to prevent multiple calls,
+and to ensure any sort of weird runtimes won't result in [handling_death] being broken.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/handle_feeding">handle_feeding</a></th><td>mult: SILENT feed is 1/3 the amount</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/handle_sol">handle_sol</a></th><td>Cycle through all vamp antags and check if they're inside a closet.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/make_vassal">make_vassal</a></th><td>First will check if the target can be turned into a Vassal, if so then it will
+turn them into one, log it, sync their minds, then updates the Rank
+Args:
+conversion_target - The person converted.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/on_gain">on_gain</a></th><td>Called when you get the antag datum, called only ONCE per antagonist.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/on_removal">on_removal</a></th><td>Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/on_sol_end">on_sol_end</a></th><td>Called when Sol first ends.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/remove_innate_effects">remove_innate_effects</a></th><td>Remove innate effects is everything given to the mob
+When a body is tranferred, this is called on the old mob.
+while on_removal is called ONCE per ANTAG, this is called ONCE per BODY.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/return_current_max_vassals">return_current_max_vassals</a></th><td>This proc is responsible for calculating how many vassals you can have at any given
+time, ranges from 1 at 20 pop to 4 at 40 pop</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/return_vamp_examine">return_vamp_examine</a></th><td>Returns a Vampire's examine strings.
+Args:
+viewer - The person examining.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/sol_near_start">sol_near_start</a></th><td>Called when Sol is near starting.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/sol_rank_up">sol_rank_up</a></th><td>Ranks the Bloodsucker up, called by Sol.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/update_blood">update_blood</a></th><td>Makes your blood_volume look like your bloodsucker blood, unless you're Masquerading.</td></tr>
+            <tr><th><a href="datum/antagonist/bloodsucker.html#proc/update_hud">update_hud</a></th><td>Update Blood Counter + Rank Counter</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/all_bloodsucker_powers"><aside class="declaration">var </aside>all_bloodsucker_powers
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L75">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 75"/></a></h3>
+        <p>Static typecache of all bloodsucker powers.</p><h3 id="var/blood_display"><aside class="declaration">var </aside>blood_display
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/bloodsucker/blood_counter</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L68">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 68"/></a></h3>
+        <p>Blood display HUD</p><h3 id="var/bloodsucker_blood_volume"><aside class="declaration">var </aside>bloodsucker_blood_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 15"/></a></h3>
+        <p>How much blood we have, starting off at default blood levels.</p><h3 id="var/bloodsucker_name"><aside class="declaration">var </aside>bloodsucker_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L28">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 28"/></a></h3>
+        <p>Used for assigning your name</p><h3 id="var/bloodsucker_reputation"><aside class="declaration">var </aside>bloodsucker_reputation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 32"/></a></h3>
+        <p>Used for assigning your reputation</p><h3 id="var/bloodsucker_spam_healing"><aside class="declaration">var </aside>bloodsucker_spam_healing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 25"/></a></h3>
+        <p>Timer between alerts for Healing messages</p><h3 id="var/bloodsucker_spam_sol_burn"><aside class="declaration">var </aside>bloodsucker_spam_sol_burn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 23"/></a></h3>
+        <p>Timer between alerts for Burn messages</p><h3 id="var/bloodsucker_title"><aside class="declaration">var </aside>bloodsucker_title
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 30"/></a></h3>
+        <p>Used for assigning your title</p><h3 id="var/bloodsucker_traits"><aside class="declaration">var </aside>bloodsucker_traits
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L84">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 84"/></a></h3>
+        <p>Default Bloodsucker traits</p><h3 id="var/broke_masquerade"><aside class="declaration">var </aside>broke_masquerade
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 37"/></a></h3>
+        <p>Have we been broken the Masquerade?</p><h3 id="var/frenzied"><aside class="declaration">var </aside>frenzied
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 43"/></a></h3>
+        <p>If we are currently in a Frenzy</p><h3 id="var/frenzy_threshold"><aside class="declaration">var </aside>frenzy_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 41"/></a></h3>
+        <p>Blood required to enter Frenzy</p><h3 id="var/frenzygrab"><aside class="declaration">var </aside>frenzygrab
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/martial_art.html">martial_art</a>/frenzygrab</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 50"/></a></h3>
+        <p>Frenzy Grab Martial art given to Bloodsuckers in a Frenzy</p><h3 id="var/handling_death"><aside class="declaration">var </aside>handling_death
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L45">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 45"/></a></h3>
+        <p>Whether the death handling code is active or not.</p><h3 id="var/humanity_lost"><aside class="declaration">var </aside>humanity_lost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L35">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 35"/></a></h3>
+        <p>Amount of Humanity lost</p><h3 id="var/masquerade_infractions"><aside class="declaration">var </aside>masquerade_infractions
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 39"/></a></h3>
+        <p>How many Masquerade Infractions do we have?</p><h3 id="var/max_blood_volume"><aside class="declaration">var </aside>max_blood_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 17"/></a></h3>
+        <p>How much blood we can have at once, increases per level.</p><h3 id="var/powers"><aside class="declaration">var </aside>powers
+            <aside>&ndash; /list/datum/action/cooldown/bloodsucker</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 48"/></a></h3>
+        <p>ALL Powers currently owned</p><h3 id="var/special_vassals"><aside class="declaration">var </aside>special_vassals
+            <aside>&ndash; /list/datum/antagonist/vassal</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L55">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 55"/></a></h3>
+        <p>Special vassals I own, to not have double of the same type.</p><h3 id="var/sunlight_display"><aside class="declaration">var </aside>sunlight_display
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/bloodsucker/sunlight_counter</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L72">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 72"/></a></h3>
+        <p>Sunlight timer HUD</p><h3 id="var/torpor_traits"><aside class="declaration">var </aside>torpor_traits
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L102">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 102"/></a></h3>
+        <p>Traits applied during Torpor.</p><h3 id="var/vamprank_display"><aside class="declaration">var </aside>vamprank_display
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/bloodsucker/rank_counter</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L70">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 70"/></a></h3>
+        <p>Vampire level display HUD</p><h3 id="var/vassal_banned_antags"><aside class="declaration">var </aside>vassal_banned_antags
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L77">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 77"/></a></h3>
+        <p>Antagonists that cannot be Vassalized no matter what</p><h3 id="var/vassals"><aside class="declaration">var </aside>vassals
+            <aside>&ndash; /list/datum/antagonist/vassal</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 53"/></a></h3>
+        <p>Vassals under my control. Periodically remove the dead ones.</p><h2 id="proc">Proc Details</h2><h3 id="proc/AddBloodVolume"><aside class="declaration">proc </aside>AddBloodVolume<aside>(value) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 36"/></a></aside>
+        </h3>
+        <hh2 id="blood-stuff">BLOOD STUFF</hh2><h3 id="proc/AmValidAntag"><aside class="declaration">proc </aside>AmValidAntag<aside>(/<a href="mob.html">mob</a>/target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_conversion.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_conversion.dm 7"/></a></aside>
+        </h3>
+        <p>Checks if the target has antag datums and, if so,
+are they allowed to be Vassalized, or not, or banned.
+Args:
+target - The person we check for antag datums.</p><h3 id="proc/BuyPower"><aside class="declaration">proc </aside>BuyPower<aside>(/<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/cooldown.html">cooldown</a>/<a href="datum/action/cooldown/bloodsucker.html">bloodsucker</a>/power) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 11"/></a></aside>
+        </h3>
+        <p>Called when a Bloodsucker buys a power: (power)</p><h3 id="proc/DisableAllPowers"><aside class="declaration">proc </aside>DisableAllPowers<aside>(forced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L88">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 88"/></a></aside>
+        </h3>
+        <p>Disables all powers, accounting for torpor</p><h3 id="proc/HandleHealing"><aside class="declaration">proc </aside>HandleHealing<aside>(mult) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L78">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 78"/></a></aside>
+        </h3>
+        <hh2 id="healing">HEALING</hh2>
+<p>Constantly runs on Bloodsucker's LifeTick, and is increased by being in Torpor/Coffins</p><h3 id="proc/LifeTick"><aside class="declaration">proc </aside>LifeTick<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/source, seconds_per_tick, times_fired) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 5"/></a></aside>
+        </h3>
+        <p>Runs from COMSIG_LIVING_LIFE, handles Bloodsucker constant proccesses.</p><h3 id="proc/RemovePower"><aside class="declaration">proc </aside>RemovePower<aside>(/<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/cooldown.html">cooldown</a>/<a href="datum/action/cooldown/bloodsucker.html">bloodsucker</a>/power) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 21"/></a></aside>
+        </h3>
+        <p>Called when a Bloodsucker loses a power: (power)</p><h3 id="proc/SelectFirstName"><aside class="declaration">proc </aside>SelectFirstName<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_names.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_names.dm 11"/></a></aside>
+        </h3>
+        <p>Returns a First name for the Bloodsucker.</p><h3 id="proc/SelectReputation"><aside class="declaration">proc </aside>SelectReputation<aside>(am_fledgling, forced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_names.dm#L73">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_names.dm 73"/></a></aside>
+        </h3>
+        <p>Returns a Reputation for the Bloodsucker.</p><h3 id="proc/SelectTitle"><aside class="declaration">proc </aside>SelectTitle<aside>(am_fledgling, forced) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_names.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_names.dm 38"/></a></aside>
+        </h3>
+        <p>Returns a Title for the Bloodsucker.</p><h3 id="proc/antag_listing_name">antag_listing_name<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L463">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 463"/></a></aside>
+        </h3>
+        <p>Stats
+Name shown on antag list</p><h3 id="proc/antag_listing_status">antag_listing_status<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L468">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 468"/></a></aside>
+        </h3>
+        <p>Whatever interesting things happened to the antag admins should know about
+Include additional information about antag in this part</p><h3 id="proc/apply_innate_effects">apply_innate_effects<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/mob_override) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L115">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 115"/></a></aside>
+        </h3>
+        <p>Apply innate effects is everything given to the mob
+When a body is tranferred, this is called on the new mob
+while on_gain is called ONCE per ANTAG, this is called ONCE per BODY.</p><h3 id="proc/assign_clan_and_bane"><aside class="declaration">proc </aside>assign_clan_and_bane<aside>(/<a href="mob.html">mob</a>/person_selecting) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_flaws.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_flaws.dm 10"/></a></aside>
+        </h3>
+        <p>Gives Bloodsuckers the ability to choose a Clan.
+If they are already in a Clan, or is in a Frenzy, they will not be able to do so.
+The arg is optional and should really only be an Admin setting a Clan for a player.
+If set however, it will give them the control of their Clan instead of the Bloodsucker.
+This is selected through a radial menu over the player's body, even when an Admin is setting it.
+Args:
+person_selecting - Mob override for stuff like Admins selecting someone's clan.</p><h3 id="proc/break_masquerade"><aside class="declaration">proc </aside>break_masquerade<aside>(/<a href="mob.html">mob</a>/admin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L28">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 28"/></a></aside>
+        </h3>
+        <p>When a Bloodsucker breaks the Masquerade, they get their HUD icon changed, and Malkavian Bloodsuckers get alerted.</p><h3 id="proc/can_make_vassal"><aside class="declaration">proc </aside>can_make_vassal<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/conversion_target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_conversion.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_conversion.dm 27"/></a></aside>
+        </h3>
+        <hh1 id="can-make-vassal">can_make_vassal</hh1>
+<p>Checks if the person is allowed to turn into the Bloodsucker's
+Vassal, ensuring they are a player and valid.
+If they are a Vassal themselves, will check if their master
+has broken the Masquerade, to steal them.
+Args:
+conversion_target - Person being vassalized</p><h3 id="proc/check_begin_torpor"><aside class="declaration">proc </aside>check_begin_torpor<aside>(SkipChecks) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L115">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 115"/></a></aside>
+        </h3>
+        <hh1 id="torpor">Torpor</hh1>
+<p>Torpor is what deals with the Bloodsucker falling asleep, their healing, the effects, ect.
+This is basically what Sol is meant to do to them, but they can also trigger it manually if they wish to heal, as Burn is only healed through Torpor.
+You cannot manually exit Torpor, it is instead entered/exited by:</p>
+<p>Torpor is triggered by:</p>
+<ul>
+<li>Being in a Coffin while Sol is on, dealt with by Sol</li>
+<li>Entering a Coffin with more than 10 combined Brute/Burn damage, dealt with by /closet/crate/coffin/close() [bloodsucker_coffin.dm]</li>
+<li>Death, dealt with by /handle_death()
+Torpor is ended by:</li>
+<li>Having less than 10 Brute damage while OUTSIDE of your Coffin while it isnt Sol.</li>
+<li>Having less than 10 Brute &amp; Burn Combined while INSIDE of your Coffin while it isnt Sol.</li>
+<li>Sol being over, dealt with by /sunlight/process() [bloodsucker_daylight.dm]</li>
+</ul><h3 id="proc/check_cancel_sunlight"><aside class="declaration">proc </aside>check_cancel_sunlight<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 15"/></a></aside>
+        </h3>
+        <p>End Sol, if you're the last Bloodsucker</p><h3 id="proc/check_end_torpor"><aside class="declaration">proc </aside>check_end_torpor<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L128">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 128"/></a></aside>
+        </h3>
+        <p>Are we entering Torpor via Sol/Death? Then entering it isnt optional!
+Checks - Not daylight &amp; Has more than 10 Brute/Burn &amp; not already in Torpor</p><h3 id="proc/check_start_sunlight"><aside class="declaration">proc </aside>check_start_sunlight<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 8"/></a></aside>
+        </h3>
+        <hh1 id="assigning-sol">Assigning Sol</hh1>
+<p>Sol is the sunlight, during this period, all Bloodsuckers must be in their coffin, else they burn.
+Start Sol, called when someone is assigned Bloodsucker</p><h3 id="proc/clear_powers_and_stats"><aside class="declaration">proc </aside>clear_powers_and_stats<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L432">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 432"/></a></aside>
+        </h3>
+        <p>Clear Disabilities &amp; Organs
+##clear_power_and_stats()</p>
+<p>Removes all Bloodsucker related Powers/Stats changes, setting them back to pre-Bloodsucker
+Order of steps and reason why:
+Remove clan - Clans like Nosferatu give Powers on removal, we have to make sure this is given before removing Powers.
+Powers - Remove all Powers, so things like Masquerade are off.
+Species traits, Traits, MaxHealth, Language - Misc stuff, has no priority.
+Organs - At the bottom to ensure everything that changes them has reverted themselves already.
+Update Sight - Done after Eyes are regenerated.</p><h3 id="proc/do_handle_death"><aside class="declaration">proc </aside>do_handle_death<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L193">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 193"/></a></aside>
+        </h3>
+        <p>FINAL DEATH.
+Don't call this directly, use handle_death().</p><h3 id="proc/final_death"><aside class="declaration">proc </aside>final_death<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L261">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 261"/></a></aside>
+        </h3>
+        <p>Gibs the Bloodsucker, roundremoving them.</p><h3 id="proc/fix_masquerade"><aside class="declaration">proc </aside>fix_masquerade<aside>(/<a href="mob.html">mob</a>/admin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 40"/></a></aside>
+        </h3>
+        <p>This is admin-only of reverting a broken masquerade, sadly it doesn't remove the Malkavian objectives yet.</p><h3 id="proc/free_all_vassals"><aside class="declaration">proc </aside>free_all_vassals<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L103">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 103"/></a></aside>
+        </h3>
+        <p>Called when a Bloodsucker reaches Final Death
+Releases all Vassals and gives them the ex_vassal datum.</p><h3 id="proc/handle_death"><aside class="declaration">proc </aside>handle_death<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L184">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 184"/></a></aside>
+        </h3>
+        <p>A wrapper around final death code, to prevent multiple calls,
+and to ensure any sort of weird runtimes won't result in [handling_death] being broken.</p><h3 id="proc/handle_feeding"><aside class="declaration">proc </aside>handle_feeding<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target, mult, power_level) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L47">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 47"/></a></aside>
+        </h3>
+        <p>mult: SILENT feed is 1/3 the amount</p><h3 id="proc/handle_sol"><aside class="declaration">proc </aside>handle_sol<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L42">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 42"/></a></aside>
+        </h3>
+        <p>Cycle through all vamp antags and check if they're inside a closet.</p><h3 id="proc/make_vassal"><aside class="declaration">proc </aside>make_vassal<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/conversion_target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_conversion.dm#L70">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_conversion.dm 70"/></a></aside>
+        </h3>
+        <p>First will check if the target can be turned into a Vassal, if so then it will
+turn them into one, log it, sync their minds, then updates the Rank
+Args:
+conversion_target - The person converted.</p><h3 id="proc/on_gain">on_gain<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L191">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 191"/></a></aside>
+        </h3>
+        <p>Called when you get the antag datum, called only ONCE per antagonist.</p><h3 id="proc/on_removal">on_removal<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L217">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 217"/></a></aside>
+        </h3>
+        <p>Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.</p><h3 id="proc/on_sol_end"><aside class="declaration">proc </aside>on_sol_end<aside>(/<a href="atom.html">atom</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 34"/></a></aside>
+        </h3>
+        <p>Called when Sol first ends.</p><h3 id="proc/remove_innate_effects">remove_innate_effects<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/mob_override) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_datum.dm#L140">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_datum.dm 140"/></a></aside>
+        </h3>
+        <p>Remove innate effects is everything given to the mob
+When a body is tranferred, this is called on the old mob.
+while on_removal is called ONCE per ANTAG, this is called ONCE per BODY.</p><h3 id="proc/return_current_max_vassals"><aside class="declaration">proc </aside>return_current_max_vassals<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_conversion.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_conversion.dm 54"/></a></aside>
+        </h3>
+        <p>This proc is responsible for calculating how many vassals you can have at any given
+time, ranges from 1 at 20 pop to 4 at 40 pop</p><h3 id="proc/return_vamp_examine"><aside class="declaration">proc </aside>return_vamp_examine<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/viewer) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_misc_procs.dm#L119">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_misc_procs.dm 119"/></a></aside>
+        </h3>
+        <p>Returns a Vampire's examine strings.
+Args:
+viewer - The person examining.</p><h3 id="proc/sol_near_start"><aside class="declaration">proc </aside>sol_near_start<aside>(/<a href="atom.html">atom</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L28">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 28"/></a></aside>
+        </h3>
+        <p>Called when Sol is near starting.</p><h3 id="proc/sol_rank_up"><aside class="declaration">proc </aside>sol_rank_up<aside>(/<a href="atom.html">atom</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_sol.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_sol.dm 22"/></a></aside>
+        </h3>
+        <p>Ranks the Bloodsucker up, called by Sol.</p><h3 id="proc/update_blood"><aside class="declaration">proc </aside>update_blood<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_life.dm#L244">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_life.dm 244"/></a></aside>
+        </h3>
+        <p>Makes your blood_volume look like your bloodsucker blood, unless you're Masquerading.</p><h3 id="proc/update_hud"><aside class="declaration">proc </aside>update_hud<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/bloodsucker/bloodsucker_hud.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;bloodsucker&#x2F;bloodsucker_hud.dm 39"/></a></aside>
+        </h3>
+        <p>Update Blood Counter + Rank Counter</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

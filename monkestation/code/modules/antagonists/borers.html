@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;readme.md - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>monkestation/code/modules/antagonists/borers/readme.md 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/readme.md">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;readme.md"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><p>https://github.com/Monkestation/Monkestation2.0/pull/976</p>
+<hh2 id="cortical-borers">Cortical Borers</hh2>
+<p>MODULE ID: CORTICAL_BORERS</p>
+<hh3 id="description">Description:</hh3>
+<p>This file is responsible for all cortical worm related files
+Cortical worms are antagonists whose sole purpose is to reproduce infintelly</p>
+<hh3 id="tg-proc-file-changes">TG Proc/File Changes:</hh3>
+<p>code/__DEFINES/research/anomalies.dm -- Needed to blacklist the borer organs from the bioscrambler
+code/__DEFINES/role_preferences.dm -- Needed a define here for cortical borers
+code/__DEFINES/~monkestation/actionspeed_modification.dm -- Added the actionspeed modifier ID for the borers here... maybe should move it
+code/__DEFINES/~monkestation/antagonists.dm -- Bunch of bitflags, iscorticalborer() check and evolution defines
+code/__DEFINES/~monkestation/role_preferences.dm -- Role preference for borers
+code/_globalvars/lists/poll_ignore.dm -- Somethin to ignore any future votes to become a borer
+code/datums/mutations/_mutations.dm -- Borers automatically will prevent you from getting anymore genetic mutations
+code/modules/admin/sql_ban_system.dm -- Ban system was simply needed for borers
+code/modules/antagonists/changeling/powers/panacea.dm -- If you are a changeling, panacea will take the pest off of you</p>
+<hh3 id="included-files-that-are-not-contained-in-this-module">Included files that are not contained in this module:</hh3>
+<p>code/__DEFINES/~monkestation/actionspeed_modification.dm -- Added the actionspeed modifier ID for the borers here... maybe should move it
+code/__DEFINES/~monkestation/antagonists.dm -- Bunch of bitflags, iscorticalborer() check and evolution defines
+code/__DEFINES/~monkestation/role_preferences.dm -- Role preference for borers</p>
+<p>monkestation/code/modules/uplink/uplink_items/misc.dm -- Uplink entry for spawning neutered borers in
+monkestation/code/modules/cargo/crates/security.dm -- Contains the cargo crate for getting borer cages out of</p>
+<p>tgui/packages/tgui/interfaces/AntagInfoBorer.tsx -- TGUI window explaining what the borers objectives are, and how to use abilities
+tgui/packages/tgui/interfaces/BorerChem.js -- Allows the borers to inject chemicals, very sensitive
+tgui/packages/tgui/interfaces/BorerEvolution.tsx -- Allows you to evolve abilities</p>
+<hh3 id="credits">Credits:</hh3>
+<p>Jake Park - Original borer Code
+/vg/station - Partial Icons
+Zonespace - Lots of TGUI work, and gave borers the evolution tree
+Gboster - Porting the code to monkestation</p></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

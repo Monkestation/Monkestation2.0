@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;basic&#x2F;cortical_borer - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/basic/cortical_borer.html#var">Var Details</a> - <a href="mob/living/basic/cortical_borer.html#proc">Proc Details</a></header>
+<main>
+<h1>cortical_borer <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/basic.html">basic</a>/<a href="mob/living/basic/cortical_borer.html">cortical_borer</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L83">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 83"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/antagonist_datum">antagonist_datum</a></th><td>Used to give the borer the antagonist datum</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/blacklisted_chemicals">blacklisted_chemicals</a></th><td>Blacklisted chemicals - separate from chemicals that cannot be synthesized, borers specifically cannot learn these</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/blood_chems_learned">blood_chems_learned</a></th><td>How many blood chems have been learned through the blood</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/body_focuses">body_focuses</a></th><td>What focuses the borer has unlocked</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/changeling_restricted">changeling_restricted</a></th><td>Borers are unable to enter changelings if true</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/chem_regen_per_level">chem_regen_per_level</a></th><td>Chemical regen you gain per level</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/chem_storage_per_level">chem_storage_per_level</a></th><td>How much more chemical storage you gain per level</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/chemical_evolution">chemical_evolution</a></th><td>The amount of &quot;evolution&quot; points a borer has for chemicals. Start with one</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/chemical_regen">chemical_regen</a></th><td>How fast chemicals are gained. Goes up only when inside a host</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/chemical_storage">chemical_storage</a></th><td>How many chemical points the borer has</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/children_produced">children_produced</a></th><td>How many children the borer has produced</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/deathgasp_once">deathgasp_once</a></th><td>We dont want to spam the chat</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/generation">generation</a></th><td>Lust a flavor kind of thing</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/genome_locked">genome_locked</a></th><td>If the borer has evolved with a genome that locks out others of the same &amp; higher tier</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/health_per_level">health_per_level</a></th><td>How much health you gain per level</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/health_regen">health_regen</a></th><td>Multiplies the current health up to the max health</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/health_regen_per_level">health_regen_per_level</a></th><td>How much health regen you gain per level</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/host_harm_multiplier">host_harm_multiplier</a></th><td>Multiplier for a borer's negative effects to their host</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/hosts_abilities">hosts_abilities</a></th><td>What the host gains or loses with the borer</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/human_host">human_host</a></th><td>The host</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/injection_cooldown">injection_cooldown</a></th><td>Cooldown between injecting chemicals</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/injection_rate_current">injection_rate_current</a></th><td>What is the current injection rate of the borer</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/injection_rates">injection_rates</a></th><td>Assoc list of chemical injection rates that the borer can have</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/injection_rates_unlocked">injection_rates_unlocked</a></th><td>Which injection rates the borer has unlocked</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/known_abilities">known_abilities</a></th><td>The list of actions that the borer has</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/known_chemicals">known_chemicals</a></th><td>What chemicals borers know, starting with none</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/level">level</a></th><td>How many times you've levelled up over all</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/maturity_age">maturity_age</a></th><td>How old the borer is, starting from zero. Goes up only when inside a host</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/max_chemical_storage">max_chemical_storage</a></th><td>How many chemical points the borer can have. Can be upgraded</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/neutered">neutered</a></th><td>Controls if the borer can reproduce or not, TRUE means it wont be able to spawn eggs</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/organic_restricted">organic_restricted</a></th><td>Borers can only enter biologicals if true</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/past_evolutions">past_evolutions</a></th><td>Evolutions we've already learned</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/possible_focuses">possible_focuses</a></th><td>List of focus datums</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/potential_chemicals">potential_chemicals</a></th><td>What chemicals the borer can learn</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/reagent_holder">reagent_holder</a></th><td>Holds the chems right before injection</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/skip_status_tab">skip_status_tab</a></th><td>Skips unique borer status tab text, used for unique borer subtypes with their own status tabs</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/stat_evolution">stat_evolution</a></th><td>The amount of &quot;evolution&quot; points a borer has for stats</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/timed_maturity">timed_maturity</a></th><td>Just a little &quot;timer&quot; to compare to world.time</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#var/upgrade_flags">upgrade_flags</a></th><td>Bitflag of upgrades and effects the borer has</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#proc/handle_environment">handle_environment</a></th><td>Base mob environment handler for body temperature, overridden to take into consideration being inside a host</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#proc/mature">mature</a></th><td>Called on Life() for the borer to age a bit</td></tr>
+            <tr><th><a href="mob/living/basic/cortical_borer.html#proc/recalculate_stats">recalculate_stats</a></th><td>The point values are double what they seem
+So in the beginning you start out with the following generation:
+Evolution point per 40 seconds
+Chemical point per 20 seconds
+Use to recalculate a borer's health and chemical stats when something retroactively affects them</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/antagonist_datum"><aside class="declaration">var </aside>antagonist_datum
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L237">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 237"/></a></h3>
+        <p>Used to give the borer the antagonist datum</p><h3 id="var/blacklisted_chemicals"><aside class="declaration">var </aside>blacklisted_chemicals
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L136">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 136"/></a></h3>
+        <p>Blacklisted chemicals - separate from chemicals that cannot be synthesized, borers specifically cannot learn these</p><h3 id="var/blood_chems_learned"><aside class="declaration">var </aside>blood_chems_learned
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L201">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 201"/></a></h3>
+        <p>How many blood chems have been learned through the blood</p><h3 id="var/body_focuses"><aside class="declaration">var </aside>body_focuses
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L197">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 197"/></a></h3>
+        <p>What focuses the borer has unlocked</p><h3 id="var/changeling_restricted"><aside class="declaration">var </aside>changeling_restricted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L209">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 209"/></a></h3>
+        <p>Borers are unable to enter changelings if true</p><h3 id="var/chem_regen_per_level"><aside class="declaration">var </aside>chem_regen_per_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L167">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 167"/></a></h3>
+        <p>Chemical regen you gain per level</p><h3 id="var/chem_storage_per_level"><aside class="declaration">var </aside>chem_storage_per_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L165">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 165"/></a></h3>
+        <p>How much more chemical storage you gain per level</p><h3 id="var/chemical_evolution"><aside class="declaration">var </aside>chemical_evolution
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L148">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 148"/></a></h3>
+        <p>The amount of &quot;evolution&quot; points a borer has for chemicals. Start with one</p><h3 id="var/chemical_regen"><aside class="declaration">var </aside>chemical_regen
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L157">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 157"/></a></h3>
+        <p>How fast chemicals are gained. Goes up only when inside a host</p><h3 id="var/chemical_storage"><aside class="declaration">var </aside>chemical_storage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L155">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 155"/></a></h3>
+        <p>How many chemical points the borer has</p><h3 id="var/children_produced"><aside class="declaration">var </aside>children_produced
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L199">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 199"/></a></h3>
+        <p>How many children the borer has produced</p><h3 id="var/deathgasp_once"><aside class="declaration">var </aside>deathgasp_once
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L203">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 203"/></a></h3>
+        <p>We dont want to spam the chat</p><h3 id="var/generation"><aside class="declaration">var </aside>generation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L193">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 193"/></a></h3>
+        <p>Lust a flavor kind of thing</p><h3 id="var/genome_locked"><aside class="declaration">var </aside>genome_locked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L230">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 230"/></a></h3>
+        <p>If the borer has evolved with a genome that locks out others of the same &amp; higher tier</p><h3 id="var/health_per_level"><aside class="declaration">var </aside>health_per_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L160">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 160"/></a></h3>
+        <p>How much health you gain per level</p><h3 id="var/health_regen"><aside class="declaration">var </aside>health_regen
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L189">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 189"/></a></h3>
+        <p>Multiplies the current health up to the max health</p><h3 id="var/health_regen_per_level"><aside class="declaration">var </aside>health_regen_per_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L162">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 162"/></a></h3>
+        <p>How much health regen you gain per level</p><h3 id="var/host_harm_multiplier"><aside class="declaration">var </aside>host_harm_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L232">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 232"/></a></h3>
+        <p>Multiplier for a borer's negative effects to their host</p><h3 id="var/hosts_abilities"><aside class="declaration">var </aside>hosts_abilities
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L186">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 186"/></a></h3>
+        <p>What the host gains or loses with the borer</p><h3 id="var/human_host"><aside class="declaration">var </aside>human_host
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L184">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 184"/></a></h3>
+        <p>The host</p><h3 id="var/injection_cooldown"><aside class="declaration">var </aside>injection_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L224">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 224"/></a></h3>
+        <p>Cooldown between injecting chemicals</p><h3 id="var/injection_rate_current"><aside class="declaration">var </aside>injection_rate_current
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L222">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 222"/></a></h3>
+        <p>What is the current injection rate of the borer</p><h3 id="var/injection_rates"><aside class="declaration">var </aside>injection_rates
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L211">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 211"/></a></h3>
+        <p>Assoc list of chemical injection rates that the borer can have</p><h3 id="var/injection_rates_unlocked"><aside class="declaration">var </aside>injection_rates_unlocked
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L218">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 218"/></a></h3>
+        <p>Which injection rates the borer has unlocked</p><h3 id="var/known_abilities"><aside class="declaration">var </aside>known_abilities
+            <aside>&ndash; /list/datum/action/cooldown/borer</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L170">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 170"/></a></h3>
+        <p>The list of actions that the borer has</p><h3 id="var/known_chemicals"><aside class="declaration">var </aside>known_chemicals
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L103">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 103"/></a></h3>
+        <p>What chemicals borers know, starting with none</p><h3 id="var/level"><aside class="declaration">var </aside>level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L145">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 145"/></a></h3>
+        <p>How many times you've levelled up over all</p><h3 id="var/maturity_age"><aside class="declaration">var </aside>maturity_age
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L140">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 140"/></a></h3>
+        <p>How old the borer is, starting from zero. Goes up only when inside a host</p><h3 id="var/max_chemical_storage"><aside class="declaration">var </aside>max_chemical_storage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L153">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 153"/></a></h3>
+        <p>How many chemical points the borer can have. Can be upgraded</p><h3 id="var/neutered"><aside class="declaration">var </aside>neutered
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L235">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 235"/></a></h3>
+        <p>Controls if the borer can reproduce or not, TRUE means it wont be able to spawn eggs</p><h3 id="var/organic_restricted"><aside class="declaration">var </aside>organic_restricted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L207">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 207"/></a></h3>
+        <p>Borers can only enter biologicals if true</p><h3 id="var/past_evolutions"><aside class="declaration">var </aside>past_evolutions
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L226">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 226"/></a></h3>
+        <p>Evolutions we've already learned</p><h3 id="var/possible_focuses"><aside class="declaration">var </aside>possible_focuses
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L195">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 195"/></a></h3>
+        <p>List of focus datums</p><h3 id="var/potential_chemicals"><aside class="declaration">var </aside>potential_chemicals
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L105">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 105"/></a></h3>
+        <p>What chemicals the borer can learn</p><h3 id="var/reagent_holder"><aside class="declaration">var </aside>reagent_holder
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L191">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 191"/></a></h3>
+        <p>Holds the chems right before injection</p><h3 id="var/skip_status_tab"><aside class="declaration">var </aside>skip_status_tab
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L240">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 240"/></a></h3>
+        <p>Skips unique borer status tab text, used for unique borer subtypes with their own status tabs</p><h3 id="var/stat_evolution"><aside class="declaration">var </aside>stat_evolution
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L150">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 150"/></a></h3>
+        <p>The amount of &quot;evolution&quot; points a borer has for stats</p><h3 id="var/timed_maturity"><aside class="declaration">var </aside>timed_maturity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L142">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 142"/></a></h3>
+        <p>Just a little &quot;timer&quot; to compare to world.time</p><h3 id="var/upgrade_flags"><aside class="declaration">var </aside>upgrade_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L228">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 228"/></a></h3>
+        <p>Bitflag of upgrades and effects the borer has</p><h2 id="proc">Proc Details</h2><h3 id="proc/handle_environment">handle_environment<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/environment, seconds_per_tick, times_fired) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L415">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 415"/></a></aside>
+        </h3>
+        <p>Base mob environment handler for body temperature, overridden to take into consideration being inside a host</p><h3 id="proc/mature"><aside class="declaration">proc </aside>mature<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L487">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 487"/></a></aside>
+        </h3>
+        <p>Called on Life() for the borer to age a bit</p><h3 id="proc/recalculate_stats"><aside class="declaration">proc </aside>recalculate_stats<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/antagonists/borers/code/mobs/cortical_borer.dm#L525">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;antagonists&#x2F;borers&#x2F;code&#x2F;mobs&#x2F;cortical_borer.dm 525"/></a></aside>
+        </h3>
+        <p>The point values are double what they seem
+So in the beginning you start out with the following generation:
+Evolution point per 40 seconds
+Chemical point per 20 seconds
+Use to recalculate a borer's health and chemical stats when something retroactively affects them</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;sticker - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/sticker.html#var">Var Details</a> - <a href="obj/item/sticker.html#proc">Proc Details</a></header>
+<main>
+<h1>sticker <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/sticker.html">sticker</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 4"/></a></h1>
+
+<p>parent type for all other stickers. do not spawn directly</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/sticker.html#var/attached">attached</a></th><td>The thing we are attached to</td></tr>
+            <tr><th><a href="obj/item/sticker.html#var/contraband">contraband</a></th><td>If the sticker should be disincluded from normal sticker boxes.</td></tr>
+            <tr><th><a href="obj/item/sticker.html#var/icon_states">icon_states</a></th><td>A list of icon_states to pick an icon_state on Initialize, provided it is not null.</td></tr>
+            <tr><th><a href="obj/item/sticker.html#var/signal_turf">signal_turf</a></th><td>The turf our COMSIG_TURF_EXPOSE is registered to, so we can unregister it later.</td></tr>
+            <tr><th><a href="obj/item/sticker.html#var/sticker_overlay">sticker_overlay</a></th><td>The overlay we apply to things we stick to</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/on_attached_qdel">on_attached_qdel</a></th><td>Signal handler for COMSIG_QDELETING, deletes this sticker if the attached object is deleted</td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/on_ignite">on_ignite</a></th><td>Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker, if it is flammable</td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/on_turf_expose">on_turf_expose</a></th><td>Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable</td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/peel">peel</a></th><td>Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.</td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/register_signals">register_signals</a></th><td>Registers signals to the object it is attached to</td></tr>
+            <tr><th><a href="obj/item/sticker.html#proc/stick">stick</a></th><td>Sticks this sticker to the target, with the pixel offsets being px and py.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/attached"><aside class="declaration">var </aside>attached
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 18"/></a></h3>
+        <p>The thing we are attached to</p><h3 id="var/contraband"><aside class="declaration">var </aside>contraband
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 22"/></a></h3>
+        <p>If the sticker should be disincluded from normal sticker boxes.</p><h3 id="var/icon_states"><aside class="declaration">var </aside>icon_states
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 16"/></a></h3>
+        <p>A list of icon_states to pick an icon_state on Initialize, provided it is not null.</p><h3 id="var/signal_turf"><aside class="declaration">var </aside>signal_turf
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 20"/></a></h3>
+        <p>The turf our COMSIG_TURF_EXPOSE is registered to, so we can unregister it later.</p><h3 id="var/sticker_overlay"><aside class="declaration">var </aside>sticker_overlay
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 14"/></a></h3>
+        <p>The overlay we apply to things we stick to</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_attached_qdel"><aside class="declaration">proc </aside>on_attached_qdel<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 124"/></a></aside>
+        </h3>
+        <p>Signal handler for COMSIG_QDELETING, deletes this sticker if the attached object is deleted</p><h3 id="proc/on_ignite"><aside class="declaration">proc </aside>on_ignite<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 116"/></a></aside>
+        </h3>
+        <p>Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker, if it is flammable</p><h3 id="proc/on_turf_expose"><aside class="declaration">proc </aside>on_turf_expose<aside>(/<a href="datum.html">datum</a>/source, /<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/air, exposed_temperature) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 108"/></a></aside>
+        </h3>
+        <p>Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable</p><h3 id="proc/peel"><aside class="declaration">proc </aside>peel<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 68"/></a></aside>
+        </h3>
+        <p>Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.</p><h3 id="proc/register_signals"><aside class="declaration">proc </aside>register_signals<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 82"/></a></aside>
+        </h3>
+        <p>Registers signals to the object it is attached to</p><h3 id="proc/stick"><aside class="declaration">proc </aside>stick<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, px, py) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/objects/items/sticker.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;sticker.dm 49"/></a></aside>
+        </h3>
+        <p>Sticks this sticker to the target, with the pixel offsets being px and py.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

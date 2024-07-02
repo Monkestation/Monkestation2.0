@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;group_planning - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/group_planning.html#var">Var Details</a> - <a href="datum/group_planning.html#proc">Proc Details</a></header>
+<main>
+<h1>group_planning <aside>/<a href="datum.html">datum</a>/<a href="datum/group_planning.html">group_planning</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/group_planning.html#var/cooldown_time">cooldown_time</a></th><td>our cooldown time of actions</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/fetched_behaviour">fetched_behaviour</a></th><td>do we need to fetch a new behaviour?</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/finished_mobs">finished_mobs</a></th><td>list of finished mobs</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/group_mobs">group_mobs</a></th><td>list of mobs in our group</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/in_progress_mobs">in_progress_mobs</a></th><td>list of mobs still executing our queued_behavior</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/next_action">next_action</a></th><td>when our next queuing is done</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/queued_behavior">queued_behavior</a></th><td>our behaviour that we are queing</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/target">target</a></th><td>our current_target</td></tr>
+            <tr><th><a href="datum/group_planning.html#var/usable_behaviours">usable_behaviours</a></th><td>list of all behaviours we can do</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/group_planning.html#proc/add_to_current_action">add_to_current_action</a></th><td>we are still doing an action</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cooldown_time"><aside class="declaration">var </aside>cooldown_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 5"/></a></h3>
+        <p>our cooldown time of actions</p><h3 id="var/fetched_behaviour"><aside class="declaration">var </aside>fetched_behaviour
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 15"/></a></h3>
+        <p>do we need to fetch a new behaviour?</p><h3 id="var/finished_mobs"><aside class="declaration">var </aside>finished_mobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 11"/></a></h3>
+        <p>list of finished mobs</p><h3 id="var/group_mobs"><aside class="declaration">var </aside>group_mobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 7"/></a></h3>
+        <p>list of mobs in our group</p><h3 id="var/in_progress_mobs"><aside class="declaration">var </aside>in_progress_mobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 9"/></a></h3>
+        <p>list of mobs still executing our queued_behavior</p><h3 id="var/next_action"><aside class="declaration">var </aside>next_action
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 3"/></a></h3>
+        <p>when our next queuing is done</p><h3 id="var/queued_behavior"><aside class="declaration">var </aside>queued_behavior
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 13"/></a></h3>
+        <p>our behaviour that we are queing</p><h3 id="var/target"><aside class="declaration">var </aside>target
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 21"/></a></h3>
+        <p>our current_target</p><h3 id="var/usable_behaviours"><aside class="declaration">var </aside>usable_behaviours
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 17"/></a></h3>
+        <p>list of all behaviours we can do</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_to_current_action"><aside class="declaration">proc </aside>add_to_current_action<aside>(/<a href="datum.html">datum</a>/<a href="datum/ai_controller.html">ai_controller</a>/controller) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ocean_content/mobs/group_planning.dm#L57">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ocean_content&#x2F;mobs&#x2F;group_planning.dm 57"/></a></aside>
+        </h3>
+        <p>we are still doing an action</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

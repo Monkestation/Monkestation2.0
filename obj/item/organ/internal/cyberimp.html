@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ&#x2F;internal&#x2F;cyberimp - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ/internal/cyberimp.html#var">Var Details</a> - <a href="obj/item/organ/internal/cyberimp.html#proc">Proc Details</a></header>
+<main>
+<h1>cyberimp <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/cyberimp.html">cyberimp</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#var/bodypart_overlay">bodypart_overlay</a></th><td>The bodypart overlay datum we should apply to whatever mob we are put into</td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#var/failed_count">failed_count</a></th><td>how many times we failed to hack this</td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#var/ownerlimb">ownerlimb</a></th><td>What limb we are inside of, used for tracking when and how to remove our overlays and all that</td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#var/visual_implant">visual_implant</a></th><td>are we a visual implant</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#proc/check_compatibility">check_compatibility</a></th><td>Checks compatibility of implant against the cyberlink</td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#proc/random_encode">random_encode</a></th><td>Randomly scrambles encode_info of an implant</td></tr>
+            <tr><th><a href="obj/item/organ/internal/cyberimp.html#proc/update_implants">update_implants</a></th><td>Updates implants</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bodypart_overlay"><aside class="declaration">var </aside>bodypart_overlay
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/bodypart_overlay.html">bodypart_overlay</a>/<a href="datum/bodypart_overlay/simple.html">simple</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 13"/></a></h3>
+        <p>The bodypart overlay datum we should apply to whatever mob we are put into</p><h3 id="var/failed_count"><aside class="declaration">var </aside>failed_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 17"/></a></h3>
+        <p>how many times we failed to hack this</p><h3 id="var/ownerlimb"><aside class="declaration">var </aside>ownerlimb
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 15"/></a></h3>
+        <p>What limb we are inside of, used for tracking when and how to remove our overlays and all that</p><h3 id="var/visual_implant"><aside class="declaration">var </aside>visual_implant
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 11"/></a></h3>
+        <p>are we a visual implant</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_compatibility"><aside class="declaration">proc </aside>check_compatibility<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L129">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 129"/></a></aside>
+        </h3>
+        <p>Checks compatibility of implant against the cyberlink</p>
+<p>Every implant contains it's own encode_info, this info stores the data on what security, encoding and operating protocols it uses.
+Implant is compatible if for every protocol catergory it shares at least 1 protocol in common with the link.
+If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE</p><h3 id="proc/random_encode"><aside class="declaration">proc </aside>random_encode<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L117">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 117"/></a></aside>
+        </h3>
+        <p>Randomly scrambles encode_info of an implant</p>
+<p>Every implant contains it's own encode_info, this info stores the data on what security, encoding and operating protocols it uses.
+Implant is compatible if for every protocol catergory it shares at least 1 protocol in common with the link.
+If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE</p><h3 id="proc/update_implants"><aside class="declaration">proc </aside>update_implants<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/augments/_base_changes.dm#L107">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;augments&#x2F;_base_changes.dm 107"/></a></aside>
+        </h3>
+        <p>Updates implants</p>
+<p>Used when an implant is already installed and a new cyberlink is inserted, in this situation this proc fires, to update the compatibility of an implant.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

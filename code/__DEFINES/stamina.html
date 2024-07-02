@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;stamina.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/stamina.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/stamina.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_REGEN_TIME">STAMINA_REGEN_TIME</a></th><td>Time before regen starts when hit with stam damage</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_REGEN">STAMINA_REGEN</a></th><td>The amount of stamina a carbon recovers every 2 seconds</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_MAX">STAMINA_MAX</a></th><td>STATS</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_EXHAUSTION_THRESHOLD_MODIFIER">STAMINA_EXHAUSTION_THRESHOLD_MODIFIER</a></th><td>Carbons enter Exhaustion when their stamina drops below this percentage</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT">STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT</a></th><td>Carbons exit Exhaustion when their stamina drops below this percentage</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN">STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN</a></th><td>The slowdown when a mob is exhausted</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_STUN_THRESHOLD_MODIFIER">STAMINA_STUN_THRESHOLD_MODIFIER</a></th><td>Carbons will be exposed to stamina stuns upon dropping below this percentage</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SWING_COST_ITEM">STAMINA_SWING_COST_ITEM</a></th><td>COMBAT</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_DAMAGE_ITEM">STAMINA_DAMAGE_ITEM</a></th><td>The default stamina damage of an item</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_DAMAGE_UNARMED">STAMINA_DAMAGE_UNARMED</a></th><td>The default stamina damage of unarmed attacks</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SWING_COST_UNARMED">STAMINA_SWING_COST_UNARMED</a></th><td>The default stamina consumption of unarmed attacks</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_CRITICAL_RATE_ITEM">STAMINA_CRITICAL_RATE_ITEM</a></th><td>The default critical hit chance of an item</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_CRITICAL_MODIFIER">STAMINA_CRITICAL_MODIFIER</a></th><td>The multiplier applied to damage on a critical</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_MAXIMUM_TO_SWING">STAMINA_MAXIMUM_TO_SWING</a></th><td>The amount of stamina at which point swinging is free.</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_STUN_TIME">STAMINA_STUN_TIME</a></th><td>The time a mob is stunned when stamina stunned</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SCALING_STUN_BASE">STAMINA_SCALING_STUN_BASE</a></th><td>The base value of a stamina stun chance</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SCALING_STUN_SCALER">STAMINA_SCALING_STUN_SCALER</a></th><td>The maximum additional stun chance based on missing stamina</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_DISARM_COST">STAMINA_DISARM_COST</a></th><td>DISARM</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_DISARM_DMG">STAMINA_DISARM_DMG</a></th><td>The amount of stamina damage dealt on disarm by default.</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SUSTAINED_RUN_GRACE">STAMINA_SUSTAINED_RUN_GRACE</a></th><td>SPRINTING</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SUSTAINED_SPRINT_THRESHOLD">STAMINA_SUSTAINED_SPRINT_THRESHOLD</a></th><td>The amount of tiles you need to move to be considered moving in a sustained sprint</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_MIN2SPRINT_MODIFER">STAMINA_MIN2SPRINT_MODIFER</a></th><td>The amount of stamina required to sprint</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_SPRINT_COST">STAMINA_SPRINT_COST</a></th><td>How much stamina is taken per tile while sprinting</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_GRAB_PASSIVE_RESIST_CHANCE">STAMINA_GRAB_PASSIVE_RESIST_CHANCE</a></th><td>GRAPPLING</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_GRAB_AGGRESSIVE_RESIST_CHANCE">STAMINA_GRAB_AGGRESSIVE_RESIST_CHANCE</a></th><td>Chance to resist out of a strong grab (i.e. werewolves)</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/STAMINA_GRAB_CHOKE_RESIST_CHANCE">STAMINA_GRAB_CHOKE_RESIST_CHANCE</a></th><td>Chance to resist out of chokeholds grabs.</td></tr>
+        <tr><th><a href="code/__DEFINES/stamina.html#define/TRAIT_CANT_STAMCRIT">TRAIT_CANT_STAMCRIT</a></th><td>TRAITS</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/STAMINA_CRITICAL_MODIFIER"><aside class="declaration">#define </aside>STAMINA_CRITICAL_MODIFIER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 43"/></a>
+    </h3>
+    <p>The multiplier applied to damage on a critical</p><h3 id="define/STAMINA_CRITICAL_RATE_ITEM"><aside class="declaration">#define </aside>STAMINA_CRITICAL_RATE_ITEM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 41"/></a>
+    </h3>
+    <p>The default critical hit chance of an item</p><h3 id="define/STAMINA_DAMAGE_ITEM"><aside class="declaration">#define </aside>STAMINA_DAMAGE_ITEM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 35"/></a>
+    </h3>
+    <p>The default stamina damage of an item</p><h3 id="define/STAMINA_DAMAGE_UNARMED"><aside class="declaration">#define </aside>STAMINA_DAMAGE_UNARMED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 37"/></a>
+    </h3>
+    <p>The default stamina damage of unarmed attacks</p><h3 id="define/STAMINA_DISARM_COST"><aside class="declaration">#define </aside>STAMINA_DISARM_COST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 57"/></a>
+    </h3>
+    <p>DISARM</p>
+<p>How much stamina it costs to Disarm/Shove</p><h3 id="define/STAMINA_DISARM_DMG"><aside class="declaration">#define </aside>STAMINA_DISARM_DMG
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 59"/></a>
+    </h3>
+    <p>The amount of stamina damage dealt on disarm by default.</p><h3 id="define/STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN"><aside class="declaration">#define </aside>STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 22"/></a>
+    </h3>
+    <p>The slowdown when a mob is exhausted</p><h3 id="define/STAMINA_EXHAUSTION_THRESHOLD_MODIFIER"><aside class="declaration">#define </aside>STAMINA_EXHAUSTION_THRESHOLD_MODIFIER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 18"/></a>
+    </h3>
+    <p>Carbons enter Exhaustion when their stamina drops below this percentage</p><h3 id="define/STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT"><aside class="declaration">#define </aside>STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 20"/></a>
+    </h3>
+    <p>Carbons exit Exhaustion when their stamina drops below this percentage</p><h3 id="define/STAMINA_GRAB_AGGRESSIVE_RESIST_CHANCE"><aside class="declaration">#define </aside>STAMINA_GRAB_AGGRESSIVE_RESIST_CHANCE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 79"/></a>
+    </h3>
+    <p>Chance to resist out of a strong grab (i.e. werewolves)</p><h3 id="define/STAMINA_GRAB_CHOKE_RESIST_CHANCE"><aside class="declaration">#define </aside>STAMINA_GRAB_CHOKE_RESIST_CHANCE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 81"/></a>
+    </h3>
+    <p>Chance to resist out of chokeholds grabs.</p><h3 id="define/STAMINA_GRAB_PASSIVE_RESIST_CHANCE"><aside class="declaration">#define </aside>STAMINA_GRAB_PASSIVE_RESIST_CHANCE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 77"/></a>
+    </h3>
+    <p>GRAPPLING</p>
+<p>Chance to resist out of passive grabs.</p><h3 id="define/STAMINA_MAX"><aside class="declaration">#define </aside>STAMINA_MAX
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 16"/></a>
+    </h3>
+    <p>STATS</p>
+<p>The default maximum stamina</p><h3 id="define/STAMINA_MAXIMUM_TO_SWING"><aside class="declaration">#define </aside>STAMINA_MAXIMUM_TO_SWING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 45"/></a>
+    </h3>
+    <p>The amount of stamina at which point swinging is free.</p><h3 id="define/STAMINA_MIN2SPRINT_MODIFER"><aside class="declaration">#define </aside>STAMINA_MIN2SPRINT_MODIFER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 69"/></a>
+    </h3>
+    <p>The amount of stamina required to sprint</p><h3 id="define/STAMINA_REGEN"><aside class="declaration">#define </aside>STAMINA_REGEN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 5"/></a>
+    </h3>
+    <p>The amount of stamina a carbon recovers every 2 seconds</p><h3 id="define/STAMINA_REGEN_TIME"><aside class="declaration">#define </aside>STAMINA_REGEN_TIME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 3"/></a>
+    </h3>
+    <p>Time before regen starts when hit with stam damage</p><h3 id="define/STAMINA_SCALING_STUN_BASE"><aside class="declaration">#define </aside>STAMINA_SCALING_STUN_BASE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 49"/></a>
+    </h3>
+    <p>The base value of a stamina stun chance</p><h3 id="define/STAMINA_SCALING_STUN_SCALER"><aside class="declaration">#define </aside>STAMINA_SCALING_STUN_SCALER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 51"/></a>
+    </h3>
+    <p>The maximum additional stun chance based on missing stamina</p><h3 id="define/STAMINA_SPRINT_COST"><aside class="declaration">#define </aside>STAMINA_SPRINT_COST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 71"/></a>
+    </h3>
+    <p>How much stamina is taken per tile while sprinting</p><h3 id="define/STAMINA_STUN_THRESHOLD_MODIFIER"><aside class="declaration">#define </aside>STAMINA_STUN_THRESHOLD_MODIFIER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 24"/></a>
+    </h3>
+    <p>Carbons will be exposed to stamina stuns upon dropping below this percentage</p><h3 id="define/STAMINA_STUN_TIME"><aside class="declaration">#define </aside>STAMINA_STUN_TIME
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 47"/></a>
+    </h3>
+    <p>The time a mob is stunned when stamina stunned</p><h3 id="define/STAMINA_SUSTAINED_RUN_GRACE"><aside class="declaration">#define </aside>STAMINA_SUSTAINED_RUN_GRACE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 65"/></a>
+    </h3>
+    <p>SPRINTING</p>
+<p>The grace period where you can stop sprinting but still be considered sprinting</p><h3 id="define/STAMINA_SUSTAINED_SPRINT_THRESHOLD"><aside class="declaration">#define </aside>STAMINA_SUSTAINED_SPRINT_THRESHOLD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 67"/></a>
+    </h3>
+    <p>The amount of tiles you need to move to be considered moving in a sustained sprint</p><h3 id="define/STAMINA_SWING_COST_ITEM"><aside class="declaration">#define </aside>STAMINA_SWING_COST_ITEM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 33"/></a>
+    </h3>
+    <p>COMBAT</p>
+<p>The default swing cost of an item.</p><h3 id="define/STAMINA_SWING_COST_UNARMED"><aside class="declaration">#define </aside>STAMINA_SWING_COST_UNARMED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 39"/></a>
+    </h3>
+    <p>The default stamina consumption of unarmed attacks</p><h3 id="define/TRAIT_CANT_STAMCRIT"><aside class="declaration">#define </aside>TRAIT_CANT_STAMCRIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/__DEFINES/stamina.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;stamina.dm 86"/></a>
+    </h3>
+    <p>TRAITS</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

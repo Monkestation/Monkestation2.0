@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;meta_token_holder - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/meta_token_holder.html#var">Var Details</a> - <a href="datum/meta_token_holder.html#proc">Proc Details</a></header>
+<main>
+<h1>meta_token_holder <aside>/<a href="datum.html">datum</a>/<a href="datum/meta_token_holder.html">meta_token_holder</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 19"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/antag_timeout">antag_timeout</a></th><td>The timer for the antag token timeout</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/donator_token">donator_token</a></th><td>are they a donator? and do they have their free token?</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/event_timeout">event_timeout</a></th><td>The timer for the event token timeout</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/event_token_month">event_token_month</a></th><td>the month we last used event tokens on</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/event_tokens">event_tokens</a></th><td>how many event tokens we currently have</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/in_queue">in_queue</a></th><td>the antagonist we are currently waiting for a reply on whether we can use</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/owner">owner</a></th><td>the client that owns this holder</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/queued_donor">queued_donor</a></th><td>is the queued token a donor token</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/queued_token_event">queued_token_event</a></th><td>what token event do we currently have queued</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/total_antag_tokens">total_antag_tokens</a></th><td>total amount of antag tokens</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/total_high_threat_tokens">total_high_threat_tokens</a></th><td>high threat antag tokens</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/total_low_threat_tokens">total_low_threat_tokens</a></th><td>low threat antag_tokens</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#var/total_medium_threat_tokens">total_medium_threat_tokens</a></th><td>medium threat antag tokens</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#proc/adjust_antag_tokens">adjust_antag_tokens</a></th><td>adjusts the users tokens, yes they can be in antag token debt</td></tr>
+            <tr><th><a href="datum/meta_token_holder.html#proc/backup_tokens">backup_tokens</a></th><td>Backs up the owner's tokens to [GLOB.saved_token_values],
+with sanity checks to make damn sure we don't write invalid data.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/antag_timeout"><aside class="declaration">var </aside>antag_timeout
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L44">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 44"/></a></h3>
+        <p>The timer for the antag token timeout</p><h3 id="var/donator_token"><aside class="declaration">var </aside>donator_token
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 23"/></a></h3>
+        <p>are they a donator? and do they have their free token?</p><h3 id="var/event_timeout"><aside class="declaration">var </aside>event_timeout
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 48"/></a></h3>
+        <p>The timer for the event token timeout</p><h3 id="var/event_token_month"><aside class="declaration">var </aside>event_token_month
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 40"/></a></h3>
+        <p>the month we last used event tokens on</p><h3 id="var/event_tokens"><aside class="declaration">var </aside>event_tokens
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 38"/></a></h3>
+        <p>how many event tokens we currently have</p><h3 id="var/in_queue"><aside class="declaration">var </aside>in_queue
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 33"/></a></h3>
+        <p>the antagonist we are currently waiting for a reply on whether we can use</p><h3 id="var/owner"><aside class="declaration">var </aside>owner
+            <aside>&ndash; /<a href="client.html">client</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 21"/></a></h3>
+        <p>the client that owns this holder</p><h3 id="var/queued_donor"><aside class="declaration">var </aside>queued_donor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 36"/></a></h3>
+        <p>is the queued token a donor token</p><h3 id="var/queued_token_event"><aside class="declaration">var </aside>queued_token_event
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/twitch_event.html">twitch_event</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L42">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 42"/></a></h3>
+        <p>what token event do we currently have queued</p><h3 id="var/total_antag_tokens"><aside class="declaration">var </aside>total_antag_tokens
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 25"/></a></h3>
+        <p>total amount of antag tokens</p><h3 id="var/total_high_threat_tokens"><aside class="declaration">var </aside>total_high_threat_tokens
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 27"/></a></h3>
+        <p>high threat antag tokens</p><h3 id="var/total_low_threat_tokens"><aside class="declaration">var </aside>total_low_threat_tokens
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 31"/></a></h3>
+        <p>low threat antag_tokens</p><h3 id="var/total_medium_threat_tokens"><aside class="declaration">var </aside>total_medium_threat_tokens
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 29"/></a></h3>
+        <p>medium threat antag tokens</p><h2 id="proc">Proc Details</h2><h3 id="proc/adjust_antag_tokens"><aside class="declaration">proc </aside>adjust_antag_tokens<aside>(tier, amount) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L118">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 118"/></a></aside>
+        </h3>
+        <p>adjusts the users tokens, yes they can be in antag token debt</p><h3 id="proc/backup_tokens"><aside class="declaration">proc </aside>backup_tokens<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/datums/meta_tokens.dm#L72">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;meta_tokens.dm 72"/></a></aside>
+        </h3>
+        <p>Backs up the owner's tokens to [GLOB.saved_token_values],
+with sanity checks to make damn sure we don't write invalid data.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

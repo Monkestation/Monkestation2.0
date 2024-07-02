@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;aquarium - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/aquarium.html#var">Var Details</a> - <a href="obj/structure/aquarium.html#proc">Proc Details</a></header>
+<main>
+<h1>aquarium <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/aquarium.html">structure/aquarium</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#var/allow_breeding">allow_breeding</a></th><td>Can fish reproduce in this quarium.</td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#var/tracked_fish_by_type">tracked_fish_by_type</a></th><td>obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish</td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#var/used_layers">used_layers</a></th><td>Current layers in use by aquarium contents</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#proc/admire">admire</a></th><td>Apply mood bonus depending on aquarium status</td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#proc/free_layer">free_layer</a></th><td>base aq layer
+min_offset = this value is returned on bottom layer mode
+min_offset + 0.1 fish1
+min_offset + 0.2 fish2
+... these layers are returned for auto layer mode and tracked by used_layers
+min_offset + max_offset = this value is returned for top layer mode
+min_offset + max_offset + 1 = this is used for glass overlay</td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#proc/get_fishes">get_fishes</a></th><td>Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.</td></tr>
+            <tr><th><a href="obj/structure/aquarium.html#proc/try_to_put_mob_in">try_to_put_mob_in</a></th><td>Tries to put mob pulled by the user in the aquarium after a delay</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/allow_breeding"><aside class="declaration">var </aside>allow_breeding
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 22"/></a></h3>
+        <p>Can fish reproduce in this quarium.</p><h3 id="var/tracked_fish_by_type"><aside class="declaration">var </aside>tracked_fish_by_type
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 43"/></a></h3>
+        <p>obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish</p><h3 id="var/used_layers"><aside class="declaration">var </aside>used_layers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 38"/></a></h3>
+        <p>Current layers in use by aquarium contents</p><h2 id="proc">Proc Details</h2><h3 id="proc/admire"><aside class="declaration">proc </aside>admire<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 198"/></a></aside>
+        </h3>
+        <p>Apply mood bonus depending on aquarium status</p><h3 id="proc/free_layer"><aside class="declaration">proc </aside>free_layer<aside>(value) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 97"/></a></aside>
+        </h3>
+        <p>base aq layer
+min_offset = this value is returned on bottom layer mode
+min_offset + 0.1 fish1
+min_offset + 0.2 fish2
+... these layers are returned for auto layer mode and tracked by used_layers
+min_offset + max_offset = this value is returned for top layer mode
+min_offset + max_offset + 1 = this is used for glass overlay</p><h3 id="proc/get_fishes"><aside class="declaration">proc </aside>get_fishes<aside>(shuffle, blacklist) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 65"/></a></aside>
+        </h3>
+        <p>Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.</p><h3 id="proc/try_to_put_mob_in"><aside class="declaration">proc </aside>try_to_put_mob_in<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/fishing/aquarium/aquarium.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;aquarium.dm 180"/></a></aside>
+        </h3>
+        <p>Tries to put mob pulled by the user in the aquarium after a delay</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

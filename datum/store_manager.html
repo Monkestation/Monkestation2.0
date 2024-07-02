@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;store_manager - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/store_manager.html#var">Var Details</a> - <a href="datum/store_manager.html#proc">Proc Details</a></header>
+<main>
+<h1>store_manager <aside>/<a href="datum.html">datum</a>/<a href="datum/store_manager.html">store_manager</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 11"/></a></h1>
+
+<p>Datum holder for the loadout manager UI.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/store_manager.html#var/custom_loadout">custom_loadout</a></th><td>A ref to the dummy outfit we're using</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/dummy_dir">dummy_dir</a></th><td>The dir the dummy is facing.</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/dummy_key">dummy_key</a></th><td>The key of the dummy we use to generate sprites</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/dummysprite">dummysprite</a></th><td>Our preview sprite.</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/loadout_on_open">loadout_on_open</a></th><td>The current selected loadout list.</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/menu">menu</a></th><td>Our currently open greyscaling menu.</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/owner">owner</a></th><td>The client of the person using the UI</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/update_dummysprite">update_dummysprite</a></th><td>Whether we need to update our dummy sprite next ui_data or not.</td></tr>
+            <tr><th><a href="datum/store_manager.html#var/view_job_clothes">view_job_clothes</a></th><td>Whether we see our favorite job's clothes on the dummy</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/store_manager.html#proc/rotate_model_dir">rotate_model_dir</a></th><td>Rotate the dummy [DIR] direction, or reset it to SOUTH dir if we're showing all dirs at once.</td></tr>
+            <tr><th><a href="datum/store_manager.html#proc/select_item">select_item</a></th><td>Select [path] item to [category_slot] slot.</td></tr>
+            <tr><th><a href="datum/store_manager.html#proc/toggle_model_dirs">toggle_model_dirs</a></th><td>Toggle between showing all the dirs and just the front dir of the dummy.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/custom_loadout"><aside class="declaration">var </aside>custom_loadout
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/outfit.html">outfit</a>/player_loadout</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 21"/></a></h3>
+        <p>A ref to the dummy outfit we're using</p><h3 id="var/dummy_dir"><aside class="declaration">var </aside>dummy_dir
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 19"/></a></h3>
+        <p>The dir the dummy is facing.</p><h3 id="var/dummy_key"><aside class="declaration">var </aside>dummy_key
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 17"/></a></h3>
+        <p>The key of the dummy we use to generate sprites</p><h3 id="var/dummysprite"><aside class="declaration">var </aside>dummysprite
+            <aside>&ndash; /icon</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 31"/></a></h3>
+        <p>Our preview sprite.</p><h3 id="var/loadout_on_open"><aside class="declaration">var </aside>loadout_on_open
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 15"/></a></h3>
+        <p>The current selected loadout list.</p><h3 id="var/menu"><aside class="declaration">var </aside>menu
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/greyscale_modify_menu.html">greyscale_modify_menu</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 25"/></a></h3>
+        <p>Our currently open greyscaling menu.</p><h3 id="var/owner"><aside class="declaration">var </aside>owner
+            <aside>&ndash; /<a href="client.html">client</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 13"/></a></h3>
+        <p>The client of the person using the UI</p><h3 id="var/update_dummysprite"><aside class="declaration">var </aside>update_dummysprite
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 27"/></a></h3>
+        <p>Whether we need to update our dummy sprite next ui_data or not.</p><h3 id="var/view_job_clothes"><aside class="declaration">var </aside>view_job_clothes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 23"/></a></h3>
+        <p>Whether we see our favorite job's clothes on the dummy</p><h2 id="proc">Proc Details</h2><h3 id="proc/rotate_model_dir"><aside class="declaration">proc </aside>rotate_model_dir<aside>(dir) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L106">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 106"/></a></aside>
+        </h3>
+        <p>Rotate the dummy [DIR] direction, or reset it to SOUTH dir if we're showing all dirs at once.</p><h3 id="proc/select_item"><aside class="declaration">proc </aside>select_item<aside>(/<a href="datum.html">datum</a>/<a href="datum/store_item.html">store_item</a>/selected_item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L100">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 100"/></a></aside>
+        </h3>
+        <p>Select [path] item to [category_slot] slot.</p><h3 id="proc/toggle_model_dirs"><aside class="declaration">proc </aside>toggle_model_dirs<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/store/store_items/__store.dm#L113">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;store&#x2F;store_items&#x2F;__store.dm 113"/></a></aside>
+        </h3>
+        <p>Toggle between showing all the dirs and just the front dir of the dummy.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

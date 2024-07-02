@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;market&#x2F;auction - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/market/auction.html#var">Var Details</a> - <a href="datum/market/auction.html#proc">Proc Details</a></header>
+<main>
+<h1>auction <aside>/<a href="datum.html">datum</a>/<a href="datum/market.html">market</a>/<a href="datum/market/auction.html">auction</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/market/auction.html#var/current_auction">current_auction</a></th><td>our current auction</td></tr>
+            <tr><th><a href="datum/market/auction.html#var/current_auction_time">current_auction_time</a></th><td>how much time is left of our auction checked with COOLDOWN_TIME_LEFT</td></tr>
+            <tr><th><a href="datum/market/auction.html#var/queue_length">queue_length</a></th><td>how many items we have in a queue at once</td></tr>
+            <tr><th><a href="datum/market/auction.html#var/queued_items">queued_items</a></th><td>list of all items and when they start in world time</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/market/auction.html#proc/grab_purchase_info">grab_purchase_info</a></th><td>There is no ID card on the user, or the ID card has no account</td></tr>
+            <tr><th><a href="datum/market/auction.html#proc/purchase">purchase</a></th><td>There is no ID card on the user, or the ID card has no account
+Handles buying the item, this is mainly for future use and moving the code away from the uplink.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_auction"><aside class="declaration">var </aside>current_auction
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/market_item.html">market_item</a>/<a href="datum/market_item/auction.html">auction</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 12"/></a></h3>
+        <p>our current auction</p><h3 id="var/current_auction_time"><aside class="declaration">var </aside>current_auction_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 14"/></a></h3>
+        <p>how much time is left of our auction checked with COOLDOWN_TIME_LEFT</p><h3 id="var/queue_length"><aside class="declaration">var </aside>queue_length
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 10"/></a></h3>
+        <p>how many items we have in a queue at once</p><h3 id="var/queued_items"><aside class="declaration">var </aside>queued_items
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 8"/></a></h3>
+        <p>list of all items and when they start in world time</p><h2 id="proc">Proc Details</h2><h3 id="proc/grab_purchase_info"><aside class="declaration">proc </aside>grab_purchase_info<aside>(/<a href="datum.html">datum</a>/<a href="datum/market_item.html">market_item</a>/<a href="datum/market_item/auction.html">auction</a>/item, category, method) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L144">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 144"/></a></aside>
+        </h3>
+        <p>There is no ID card on the user, or the ID card has no account</p><h3 id="proc/purchase"><aside class="parent"><a title="/datum/market" href="datum/market.html#proc/purchase">&uarr;</a></aside>purchase<aside>(item, category, method, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/market_uplink.html">market_uplink</a>/uplink, user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/blackmarket/auction.dm#L115">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;blackmarket&#x2F;auction.dm 115"/></a></aside>
+        </h3>
+        <p>There is no ID card on the user, or the ID card has no account
+Handles buying the item, this is mainly for future use and moving the code away from the uplink.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

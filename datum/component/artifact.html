@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;artifact - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/artifact.html#var">Var Details</a> - <a href="datum/component/artifact.html#proc">Proc Details</a></header>
+<main>
+<h1>artifact <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/artifact.html">artifact</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/activators">activators</a></th><td>activators that activate the artifact</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/active">active</a></th><td>Is the artifact active?</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/analysis">analysis</a></th><td>we store our analysis form var here</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/artifact_origin">artifact_origin</a></th><td>origin datum</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/artifact_size">artifact_size</a></th><td>size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/associated_object">associated_object</a></th><td>object related to this datum for spawning</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/chosen_fault">chosen_fault</a></th><td>the fault we picked from the listed ones</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/explict_examine">explict_examine</a></th><td>if we have a special examine IE borgers</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/fake_name">fake_name</a></th><td>fake name for when unanalyzed</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/freebies">freebies</a></th><td>the amount of freebies we get</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/generated_name">generated_name</a></th><td>the randomly generated name using our origin</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/holder">holder</a></th><td>actual specific object for this instance</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/potency">potency</a></th><td>Potency in percentage, used for making more strong artifacts need more stimulus. (1% - 100%) 100 is strongest.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/type_name">type_name</a></th><td>type name for displaying on analysis forms</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/valid_activators">valid_activators</a></th><td>Valid activators to pick</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/valid_faults">valid_faults</a></th><td>valid list of faults with their weights [10 is base]</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/valid_origins">valid_origins</a></th><td>origin datums to pick</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/weight">weight</a></th><td>list weight for picking this artifact datum (0 = never)</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/xray_result">xray_result</a></th><td>structure description from x-ray machines</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/on_update_overlays">on_update_overlays</a></th><td>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/activators"><aside class="declaration">var </aside>activators
+            <aside>&ndash; /list/datum/artifact_activator</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 22"/></a></h3>
+        <p>activators that activate the artifact</p><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 20"/></a></h3>
+        <p>Is the artifact active?</p><h3 id="var/analysis"><aside class="declaration">var </aside>analysis
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/sticker.html">sticker</a>/analysis_form</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L68">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 68"/></a></h3>
+        <p>we store our analysis form var here</p><h3 id="var/artifact_origin"><aside class="declaration">var </aside>artifact_origin
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/artifact_origin.html">artifact_origin</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L46">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 46"/></a></h3>
+        <p>origin datum</p><h3 id="var/artifact_size"><aside class="declaration">var </aside>artifact_size
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 12"/></a></h3>
+        <p>size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)</p><h3 id="var/associated_object"><aside class="declaration">var </aside>associated_object
+            <aside>&ndash; /<a href="obj.html">obj</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 6"/></a></h3>
+        <p>object related to this datum for spawning</p><h3 id="var/chosen_fault"><aside class="declaration">var </aside>chosen_fault
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/artifact_fault.html">artifact_fault</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L72">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 72"/></a></h3>
+        <p>the fault we picked from the listed ones</p><h3 id="var/explict_examine"><aside class="declaration">var </aside>explict_examine
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L78">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 78"/></a></h3>
+        <p>if we have a special examine IE borgers</p><h3 id="var/fake_name"><aside class="declaration">var </aside>fake_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 16"/></a></h3>
+        <p>fake name for when unanalyzed</p><h3 id="var/freebies"><aside class="declaration">var </aside>freebies
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L74">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 74"/></a></h3>
+        <p>the amount of freebies we get</p><h3 id="var/generated_name"><aside class="declaration">var </aside>generated_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 18"/></a></h3>
+        <p>the randomly generated name using our origin</p><h3 id="var/holder"><aside class="declaration">var </aside>holder
+            <aside>&ndash; /<a href="obj.html">obj</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 8"/></a></h3>
+        <p>actual specific object for this instance</p><h3 id="var/potency"><aside class="declaration">var </aside>potency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L63">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 63"/></a></h3>
+        <p>Potency in percentage, used for making more strong artifacts need more stimulus. (1% - 100%) 100 is strongest.</p><h3 id="var/type_name"><aside class="declaration">var </aside>type_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 14"/></a></h3>
+        <p>type name for displaying on analysis forms</p><h3 id="var/valid_activators"><aside class="declaration">var </aside>valid_activators
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 25"/></a></h3>
+        <p>Valid activators to pick</p><h3 id="var/valid_faults"><aside class="declaration">var </aside>valid_faults
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 36"/></a></h3>
+        <p>valid list of faults with their weights [10 is base]</p><h3 id="var/valid_origins"><aside class="declaration">var </aside>valid_origins
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 48"/></a></h3>
+        <p>origin datums to pick</p><h3 id="var/weight"><aside class="declaration">var </aside>weight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 10"/></a></h3>
+        <p>list weight for picking this artifact datum (0 = never)</p><h3 id="var/xray_result"><aside class="declaration">var </aside>xray_result
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L66">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 66"/></a></h3>
+        <p>structure description from x-ray machines</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_update_overlays"><aside class="declaration">proc </aside>on_update_overlays<aside>(/<a href="atom.html">atom</a>/parent_atom, /list/overlays) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component_signal_procs.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component_signal_procs.dm 31"/></a></aside>
+        </h3>
+        <p>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

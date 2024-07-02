@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;vending - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/vending.html#var">Var Details</a> - <a href="obj/machinery/vending.html#proc">Proc Details</a></header>
+<main>
+<h1>vending machines <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/vending.html">vending</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 50"/></a></h1>
+
+<p>Captalism in the year 2525, everything in a vending machine, even love</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/active">active</a></th><td>Is the machine active (No sales pitches if off)!</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/age_restrictions">age_restrictions</a></th><td>Whether our age check is currently functional</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/bill">bill</a></th><td>Bills we accept?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/coin">coin</a></th><td>Coins that we accept?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/contraband">contraband</a></th><td>List of products this machine sells when you hack it</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/contraband_monke">contraband_monke</a></th><td>Additions to the <code>contraband</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/crit_chance">crit_chance</a></th><td>The chance, in percent, of this vendor performing a critical hit on anything it crushes via [tilt].</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/default_price">default_price</a></th><td>Default price of items if not overridden</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/excluded_products">excluded_products</a></th><td>list of products to exclude when building the vending machine's inventory</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/extended_inventory">extended_inventory</a></th><td>can we access the hidden inventory?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/extra_price">extra_price</a></th><td>Default price of premium items if not overridden</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/forcecrit">forcecrit</a></th><td>If set to a critical define in crushing.dm, anything this vendor crushes will always be hit with that effect.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/icon_deny">icon_deny</a></th><td>Icon to flash when user is denied a vend</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/icon_vend">icon_vend</a></th><td>Icon when vending an item to the user</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/input_display_header">input_display_header</a></th><td>Display header on the input view</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_reply">last_reply</a></th><td>Last world tick we sent a vent reply</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_shopper">last_shopper</a></th><td>The ref of the last mob to shop with us</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_slogan">last_slogan</a></th><td>Last world tick we sent a slogan message out</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/light_mask">light_mask</a></th><td>Name of lighting mask for the vending machine</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/loaded_items">loaded_items</a></th><td>how many items have been inserted in a vendor</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/onstation">onstation</a></th><td>Is this item on station or not</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/onstation_override">onstation_override</a></th><td>A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/panel_type">panel_type</a></th><td>Icon for the maintenance panel overlay</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/premium">premium</a></th><td>List of premium products this machine sells</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/premium_monke">premium_monke</a></th><td>Additions to the <code>premium</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_ads">product_ads</a></th><td>String of small ad messages in the vending screen - random chance</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_categories">product_categories</a></th><td>List of products this machine sells, categorized.
+Can only be used as an alternative to <code>products</code>, not alongside it.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_categories_monke">product_categories_monke</a></th><td>Additions to the <code>product_categories</code> list of the vending machine, modularly. Will become null after Initialize, to free up memory.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_slogans">product_slogans</a></th><td>String of slogans separated by semicolons, optional</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/products">products</a></th><td>List of products this machine sells</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/products_monke">products_monke</a></th><td>Additions to the <code>products</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/purchase_message_cooldown">purchase_message_cooldown</a></th><td>Next world time to send a purchase message</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/scan_id">scan_id</a></th><td>Are we checking the users ID</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/sec_radio">sec_radio</a></th><td>used for narcing on underages</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/seconds_electrified">seconds_electrified</a></th><td>World ticks the machine is electified for</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/shoot_inventory">shoot_inventory</a></th><td>When this is TRUE, we fire items at customers! We're broken!</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/shoot_inventory_chance">shoot_inventory_chance</a></th><td>How likely this is to happen (prob 100) per second</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/slogan_delay">slogan_delay</a></th><td>How many ticks until we can send another</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/small_ads">small_ads</a></th><td>Small ad messages in the vending screen - random chance of popping up whenever you open it</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/tilted_rotation">tilted_rotation</a></th><td>If tilted, this variable should always be the rotation that was applied when we were tilted. Stored for the purposes of unapplying it.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/vend_ready">vend_ready</a></th><td>Are we ready to vend?? Is it time??</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/vend_reply">vend_reply</a></th><td>Message sent post vend (Thank you for shopping!)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/allow_increase">allow_increase</a></th><td>This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/build_inventories">build_inventories</a></th><td>Prices of vending machines are all increased uniformly.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/build_inventory">build_inventory</a></th><td>Build the inventory of the vending machine from it's product and record lists</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/canLoadItem">canLoadItem</a></th><td>Are we able to load the item passed in</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/compartmentLoadAccessCheck">compartmentLoadAccessCheck</a></th><td>Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/pre_throw">pre_throw</a></th><td>A callback called before an item is tossed out</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/refill_inventory">refill_inventory</a></th><td>Refill our inventory from the passed in product list into the record list</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/remove_products">remove_products</a></th><td>Removes given list of products. Must be called before build_inventory() to actually prevent the records from being created.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/reset_prices">reset_prices</a></th><td>Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/restock">restock</a></th><td>Refill a vending machine from a refill canister</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/shock">shock</a></th><td>Shock the passed in user</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/speak">speak</a></th><td>Speak the given message verbally</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/throw_impact">throw_impact</a></th><td>Crush the mob that the vending machine got thrown at</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/throw_item">throw_item</a></th><td>Throw an item from our internal inventory out in front of us</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/tilt">tilt</a></th><td>Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/unbuild_inventory">unbuild_inventory</a></th><td>Given a record list, go through and and return a list of type -&gt; amount</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/unbuild_inventory_into">unbuild_inventory_into</a></th><td>Put stuff in product_categories if the products have a category, otherwise put them in products</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/untilt">untilt</a></th><td>Rights the vendor up, unpinning mobs under it, if any.
+Arguments:
+user - mob that has untilted the vendor</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/update_canister">update_canister</a></th><td>Set up a refill canister that matches this machines products</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 69"/></a></h3>
+        <p>Is the machine active (No sales pitches if off)!</p><h3 id="var/age_restrictions"><aside class="declaration">var </aside>age_restrictions
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 167"/></a></h3>
+        <p>Whether our age check is currently functional</p><h3 id="var/bill"><aside class="declaration">var </aside>bill
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/spacecash</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 161"/></a></h3>
+        <p>Bills we accept?</p><h3 id="var/coin"><aside class="declaration">var </aside>coin
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/coin.html">coin</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 159"/></a></h3>
+        <p>Coins that we accept?</p><h3 id="var/contraband"><aside class="declaration">var </aside>contraband
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 114"/></a></h3>
+        <p>List of products this machine sells when you hack it</p>
+<p>form should be list(/type/path = amount, /type/path2 = amount2)</p><h3 id="var/contraband_monke"><aside class="declaration">var </aside>contraband_monke
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 13"/></a></h3>
+        <p>Additions to the <code>contraband</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</p><h3 id="var/crit_chance"><aside class="declaration">var </aside>crit_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 82"/></a></h3>
+        <p>The chance, in percent, of this vendor performing a critical hit on anything it crushes via [tilt].</p><h3 id="var/default_price"><aside class="declaration">var </aside>default_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 163"/></a></h3>
+        <p>Default price of items if not overridden</p><h3 id="var/excluded_products"><aside class="declaration">var </aside>excluded_products
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L221">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 221"/></a></h3>
+        <p>list of products to exclude when building the vending machine's inventory</p><h3 id="var/extended_inventory"><aside class="declaration">var </aside>extended_inventory
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 155"/></a></h3>
+        <p>can we access the hidden inventory?</p><h3 id="var/extra_price"><aside class="declaration">var </aside>extra_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 165"/></a></h3>
+        <p>Default price of premium items if not overridden</p><h3 id="var/forcecrit"><aside class="declaration">var </aside>forcecrit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 84"/></a></h3>
+        <p>If set to a critical define in crushing.dm, anything this vendor crushes will always be hit with that effect.</p><h3 id="var/icon_deny"><aside class="declaration">var </aside>icon_deny
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 145"/></a></h3>
+        <p>Icon to flash when user is denied a vend</p><h3 id="var/icon_vend"><aside class="declaration">var </aside>icon_vend
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 143"/></a></h3>
+        <p>Icon when vending an item to the user</p><h3 id="var/input_display_header"><aside class="declaration">var </aside>input_display_header
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 179"/></a></h3>
+        <p>Display header on the input view</p><h3 id="var/last_reply"><aside class="declaration">var </aside>last_reply
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 137"/></a></h3>
+        <p>Last world tick we sent a vent reply</p><h3 id="var/last_shopper"><aside class="declaration">var </aside>last_shopper
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 75"/></a></h3>
+        <p>The ref of the last mob to shop with us</p><h3 id="var/last_slogan"><aside class="declaration">var </aside>last_slogan
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 139"/></a></h3>
+        <p>Last world tick we sent a slogan message out</p><h3 id="var/light_mask"><aside class="declaration">var </aside>light_mask
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 188"/></a></h3>
+        <p>Name of lighting mask for the vending machine</p><h3 id="var/loaded_items"><aside class="declaration">var </aside>loaded_items
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 185"/></a></h3>
+        <p>how many items have been inserted in a vendor</p><h3 id="var/onstation"><aside class="declaration">var </aside>onstation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 173"/></a></h3>
+        <p>Is this item on station or not</p>
+<p>if it doesn't originate from off-station during mapload, everything is free</p><h3 id="var/onstation_override"><aside class="declaration">var </aside>onstation_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 175"/></a></h3>
+        <p>A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements</p><h3 id="var/panel_type"><aside class="declaration">var </aside>panel_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 88"/></a></h3>
+        <p>Icon for the maintenance panel overlay</p><h3 id="var/premium"><aside class="declaration">var </aside>premium
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 121"/></a></h3>
+        <p>List of premium products this machine sells</p>
+<p>form should be list(/type/path, /type/path2) as there is only ever one in stock</p><h3 id="var/premium_monke"><aside class="declaration">var </aside>premium_monke
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 9"/></a></h3>
+        <p>Additions to the <code>premium</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</p><h3 id="var/product_ads"><aside class="declaration">var </aside>product_ads
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 126"/></a></h3>
+        <p>String of small ad messages in the vending screen - random chance</p><h3 id="var/product_categories"><aside class="declaration">var </aside>product_categories
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 107"/></a></h3>
+        <p>List of products this machine sells, categorized.
+Can only be used as an alternative to <code>products</code>, not alongside it.</p>
+<p>Form should be list(
+&quot;name&quot; = &quot;Category Name&quot;,
+&quot;icon&quot; = &quot;UI Icon (Font Awesome or tgfont)&quot;,
+&quot;products&quot; = list(/type/path = amount, ...),
+)</p><h3 id="var/product_categories_monke"><aside class="declaration">var </aside>product_categories_monke
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 7"/></a></h3>
+        <p>Additions to the <code>product_categories</code> list of the vending machine, modularly. Will become null after Initialize, to free up memory.</p><h3 id="var/product_slogans"><aside class="declaration">var </aside>product_slogans
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 124"/></a></h3>
+        <p>String of slogans separated by semicolons, optional</p><h3 id="var/products"><aside class="declaration">var </aside>products
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 95"/></a></h3>
+        <p>List of products this machine sells</p>
+<p>form should be list(/type/path = amount, /type/path2 = amount2)</p><h3 id="var/products_monke"><aside class="declaration">var </aside>products_monke
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 5"/></a></h3>
+        <p>Additions to the <code>products</code> list  of the vending machine, modularly. Will become null after Initialize, to free up memory.</p><h3 id="var/purchase_message_cooldown"><aside class="declaration">var </aside>purchase_message_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 73"/></a></h3>
+        <p>Next world time to send a purchase message</p><h3 id="var/scan_id"><aside class="declaration">var </aside>scan_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 157"/></a></h3>
+        <p>Are we checking the users ID</p><h3 id="var/sec_radio"><aside class="declaration">var </aside>sec_radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 194"/></a></h3>
+        <p>used for narcing on underages</p><h3 id="var/seconds_electrified"><aside class="declaration">var </aside>seconds_electrified
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 147"/></a></h3>
+        <p>World ticks the machine is electified for</p><h3 id="var/shoot_inventory"><aside class="declaration">var </aside>shoot_inventory
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 149"/></a></h3>
+        <p>When this is TRUE, we fire items at customers! We're broken!</p><h3 id="var/shoot_inventory_chance"><aside class="declaration">var </aside>shoot_inventory_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 151"/></a></h3>
+        <p>How likely this is to happen (prob 100) per second</p><h3 id="var/slogan_delay"><aside class="declaration">var </aside>slogan_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 141"/></a></h3>
+        <p>How many ticks until we can send another</p><h3 id="var/small_ads"><aside class="declaration">var </aside>small_ads
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 133"/></a></h3>
+        <p>Small ad messages in the vending screen - random chance of popping up whenever you open it</p><h3 id="var/tilted_rotation"><aside class="declaration">var </aside>tilted_rotation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 78"/></a></h3>
+        <p>If tilted, this variable should always be the rotation that was applied when we were tilted. Stored for the purposes of unapplying it.</p><h3 id="var/vend_ready"><aside class="declaration">var </aside>vend_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 71"/></a></h3>
+        <p>Are we ready to vend?? Is it time??</p><h3 id="var/vend_reply"><aside class="declaration">var </aside>vend_reply
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 135"/></a></h3>
+        <p>Message sent post vend (Thank you for shopping!)</p><h2 id="proc">Proc Details</h2><h3 id="proc/allow_increase"><aside class="declaration">proc </aside>allow_increase<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/clothing_path) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 62"/></a></aside>
+        </h3>
+        <p>This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!</p><h3 id="proc/build_inventories"><aside class="declaration">proc </aside>build_inventories<aside>(start_empty) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L378">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 378"/></a></aside>
+        </h3>
+        <p>Prices of vending machines are all increased uniformly.</p><h3 id="proc/build_inventory"><aside class="declaration">proc </aside>build_inventory<aside>(/list/productlist, /list/recordlist, /list/categories, start_empty) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L348">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 348"/></a></aside>
+        </h3>
+        <p>Build the inventory of the vending machine from it's product and record lists</p>
+<p>This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
+Arguments:</p>
+<ul>
+<li>productlist - the list of products that need to be converted</li>
+<li>recordlist - the list containing /datum/data/vending_product datums</li>
+<li>categories - A list in the format of product_categories to source category from</li>
+<li>startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)</li>
+</ul><h3 id="proc/canLoadItem"><aside class="declaration">proc </aside>canLoadItem<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1442">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1442"/></a></aside>
+        </h3>
+        <p>Are we able to load the item passed in</p>
+<p>Arguments:</p>
+<ul>
+<li>I - the item being loaded</li>
+<li>user - the user doing the loading</li>
+</ul><h3 id="proc/compartmentLoadAccessCheck"><aside class="declaration">proc </aside>compartmentLoadAccessCheck<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1023">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1023"/></a></aside>
+        </h3>
+        <p>Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - mob that is doing the loading of the vending machine</li>
+</ul><h3 id="proc/pre_throw"><aside class="declaration">proc </aside>pre_throw<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1412">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1412"/></a></aside>
+        </h3>
+        <p>A callback called before an item is tossed out</p>
+<p>Override this if you need to do any special case handling</p>
+<p>Arguments:</p>
+<ul>
+<li>I - obj/item being thrown</li>
+</ul><h3 id="proc/refill_inventory"><aside class="declaration">proc </aside>refill_inventory<aside>(/list/productlist, /list/recordlist) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L470">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 470"/></a></aside>
+        </h3>
+        <p>Refill our inventory from the passed in product list into the record list</p>
+<p>Arguments:</p>
+<ul>
+<li>productlist - list of types -&gt; amount</li>
+<li>recordlist - existing record datums</li>
+</ul><h3 id="proc/remove_products"><aside class="declaration">proc </aside>remove_products<aside>(/list/paths_to_remove) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/machines/vending_additions.dm#L209">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;machines&#x2F;vending_additions.dm 209"/></a></aside>
+        </h3>
+        <p>Removes given list of products. Must be called before build_inventory() to actually prevent the records from being created.</p><h3 id="proc/reset_prices"><aside class="declaration">proc </aside>reset_prices<aside>(/list/recordlist, /list/premiumlist) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L409">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 409"/></a></aside>
+        </h3>
+        <p>Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy</p>
+<p>This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+Arguments:</p>
+<ul>
+<li>recordlist - the list of standard product datums in the vendor to refresh their prices.</li>
+<li>premiumlist - the list of premium product datums in the vendor to refresh their prices.</li>
+</ul><h3 id="proc/restock"><aside class="declaration">proc </aside>restock<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/vending_refill/canister) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L434">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 434"/></a></aside>
+        </h3>
+        <p>Refill a vending machine from a refill canister</p>
+<p>This takes the products from the refill canister and then fills the products,contraband and premium product categories</p>
+<p>Arguments:</p>
+<ul>
+<li>canister - the vending canister we are refilling from</li>
+</ul><h3 id="proc/shock"><aside class="declaration">proc </aside>shock<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, prb) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1424">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1424"/></a></aside>
+        </h3>
+        <p>Shock the passed in user</p>
+<p>This checks we have power and that the passed in prob is passed, then generates some sparks
+and calls electrocute_mob on the user</p>
+<p>Arguments:</p>
+<ul>
+<li>user - the user to shock</li>
+<li>prb - probability the shock happens</li>
+</ul><h3 id="proc/speak"><aside class="declaration">proc </aside>speak<aside>(message) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1356">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1356"/></a></aside>
+        </h3>
+        <p>Speak the given message verbally</p>
+<p>Checks if the machine is powered and the message exists</p>
+<p>Arguments:</p>
+<ul>
+<li>message - the message to speak</li>
+</ul><h3 id="proc/throw_impact">throw_impact<aside>(/<a href="atom.html">atom</a>/hit_atom, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwingdatum) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1460">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1460"/></a></aside>
+        </h3>
+        <p>Crush the mob that the vending machine got thrown at</p><h3 id="proc/throw_item"><aside class="declaration">proc </aside>throw_item<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L1376">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1376"/></a></aside>
+        </h3>
+        <p>Throw an item from our internal inventory out in front of us</p>
+<p>This is called when we are hacked, it selects a random product from the records that has an amount &gt; 0
+This item is then created and tossed out in front of us with a visible message</p><h3 id="proc/tilt"><aside class="declaration">proc </aside>tilt<aside>(/<a href="atom.html">atom</a>/fatty, local_crit_chance, forced_crit) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L662">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 662"/></a></aside>
+        </h3>
+        <p>Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.</p><h3 id="proc/unbuild_inventory"><aside class="declaration">proc </aside>unbuild_inventory<aside>(/list/recordlist) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L501">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 501"/></a></aside>
+        </h3>
+        <p>Given a record list, go through and and return a list of type -&gt; amount</p><h3 id="proc/unbuild_inventory_into"><aside class="declaration">proc </aside>unbuild_inventory_into<aside>(/list/product_records, /list/products, /list/product_categories) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L508">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 508"/></a></aside>
+        </h3>
+        <p>Put stuff in product_categories if the products have a category, otherwise put them in products</p><h3 id="proc/untilt"><aside class="declaration">proc </aside>untilt<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L979">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 979"/></a></aside>
+        </h3>
+        <p>Rights the vendor up, unpinning mobs under it, if any.
+Arguments:
+user - mob that has untilted the vendor</p><h3 id="proc/update_canister"><aside class="declaration">proc </aside>update_canister<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/vending/_vending.dm#L485">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 485"/></a></aside>
+        </h3>
+        <p>Set up a refill canister that matches this machines products</p>
+<p>This is used when the machine is deconstructed, so the items aren't &quot;lost&quot;</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

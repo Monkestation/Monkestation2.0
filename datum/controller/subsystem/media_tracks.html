@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;media_tracks - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/media_tracks.html#var">Var Details</a> - <a href="datum/controller/subsystem/media_tracks.html#proc">Proc Details</a></header>
+<main>
+<h1>media_tracks <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/media_tracks.html">media_tracks</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 8"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#var/all_tracks">all_tracks</a></th><td>Every track, including secret</td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#var/current_lobby_track">current_lobby_track</a></th><td>current picked lobby song</td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#var/first_lobby_play">first_lobby_play</a></th><td>have we picked our lobby song yet?</td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#var/jukebox_tracks">jukebox_tracks</a></th><td>Non-secret jukebox tracks</td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#var/lobby_tracks">lobby_tracks</a></th><td>Lobby music tracks</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/media_tracks.html#proc/manual_track_remove">manual_track_remove</a></th><td>Alternatively to using a series of inputs, you can use json and paste it in.
+The json base element needs to be an array, even if it's only one song, so wrap it in []
+The songs are json object literals inside the base array and use these keys:
+&quot;url&quot;: the url for the song (REQUIRED) (text)
+&quot;title&quot;: the title of the song (REQUIRED) (text)
+&quot;duration&quot;: duration of song in 1/10ths of a second (seconds * 10) (REQUIRED) (number)
+&quot;artist&quot;: artist of the song (text)
+&quot;genre&quot;: artist of the song, REALLY try to match an existing one (text)
+&quot;secret&quot;: only on hacked jukeboxes (true/false)
+&quot;lobby&quot;: plays in the lobby (true/false)</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/all_tracks"><aside class="declaration">var </aside>all_tracks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 14"/></a></h3>
+        <p>Every track, including secret</p><h3 id="var/current_lobby_track"><aside class="declaration">var </aside>current_lobby_track
+            <aside>&ndash; /<a href="datum.html">datum</a>/media_track</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 24"/></a></h3>
+        <p>current picked lobby song</p><h3 id="var/first_lobby_play"><aside class="declaration">var </aside>first_lobby_play
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 20"/></a></h3>
+        <p>have we picked our lobby song yet?</p><h3 id="var/jukebox_tracks"><aside class="declaration">var </aside>jukebox_tracks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 16"/></a></h3>
+        <p>Non-secret jukebox tracks</p><h3 id="var/lobby_tracks"><aside class="declaration">var </aside>lobby_tracks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 18"/></a></h3>
+        <p>Lobby music tracks</p><h2 id="proc">Proc Details</h2><h3 id="proc/manual_track_remove"><aside class="declaration">proc </aside>manual_track_remove<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cassettes/machines/media/subsystem/media_track_manager.dm#L169">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cassettes&#x2F;machines&#x2F;media&#x2F;subsystem&#x2F;media_track_manager.dm 169"/></a></aside>
+        </h3>
+        <p>Alternatively to using a series of inputs, you can use json and paste it in.
+The json base element needs to be an array, even if it's only one song, so wrap it in []
+The songs are json object literals inside the base array and use these keys:
+&quot;url&quot;: the url for the song (REQUIRED) (text)
+&quot;title&quot;: the title of the song (REQUIRED) (text)
+&quot;duration&quot;: duration of song in 1/10ths of a second (seconds * 10) (REQUIRED) (number)
+&quot;artist&quot;: artist of the song (text)
+&quot;genre&quot;: artist of the song, REALLY try to match an existing one (text)
+&quot;secret&quot;: only on hacked jukeboxes (true/false)
+&quot;lobby&quot;: plays in the lobby (true/false)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

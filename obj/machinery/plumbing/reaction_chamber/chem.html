@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;reaction_chamber&#x2F;chem - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/reaction_chamber/chem.html#var">Var Details</a> - <a href="obj/machinery/plumbing/reaction_chamber/chem.html#proc">Proc Details</a></header>
+<main>
+<h1>chem <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/reaction_chamber.html">reaction_chamber</a>/<a href="obj/machinery/plumbing/reaction_chamber/chem.html">chem</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 124"/></a></h1>
+
+<p>Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber/chem.html#var/acidic_beaker">acidic_beaker</a></th><td>Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber/chem.html#var/acidic_limit">acidic_limit</a></th><td>If above this pH, we start dumping buffer into it</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber/chem.html#var/alkaline_beaker">alkaline_beaker</a></th><td>beaker that holds the alkaline buffer.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber/chem.html#var/alkaline_limit">alkaline_limit</a></th><td>If below this pH, we start dumping buffer into it</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber/chem.html#proc/Destroy">Destroy</a></th><td>Make sure beakers are deleted when being deconstructed</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/acidic_beaker"><aside class="declaration">var </aside>acidic_beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/<a href="obj/item/reagent_containers/cup.html">cup</a>/beaker</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 133"/></a></h3>
+        <p>Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker</p><h3 id="var/acidic_limit"><aside class="declaration">var </aside>acidic_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 128"/></a></h3>
+        <p>If above this pH, we start dumping buffer into it</p><h3 id="var/alkaline_beaker"><aside class="declaration">var </aside>alkaline_beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/<a href="obj/item/reagent_containers/cup.html">cup</a>/beaker</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 137"/></a></h3>
+        <p>beaker that holds the alkaline buffer.</p><h3 id="var/alkaline_limit"><aside class="declaration">var </aside>alkaline_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 130"/></a></h3>
+        <p>If below this pH, we start dumping buffer into it</p><h2 id="proc">Proc Details</h2><h3 id="proc/Destroy"><aside class="parent"><a title="/datum" href="datum.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/modules/plumbing/plumbers/reaction_chamber.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 147"/></a></aside>
+        </h3>
+        <p>Make sure beakers are deleted when being deconstructed</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

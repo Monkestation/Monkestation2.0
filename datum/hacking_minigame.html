@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;hacking_minigame - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/hacking_minigame.html#proc">Proc Details</a></header>
+<main>
+<h1>hacking_minigame <aside>/<a href="datum.html">datum</a>/<a href="datum/hacking_minigame.html">hacking_minigame</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 9"/></a></h1>
+
+<p>Piping minigame, controls the board and procs surrounding it</p>
+<p>Holds all relevant information regarding the piping minigame
+Contains the procs needed to generate the game, check if the game is finished and rotate any pieces.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/hacking_minigame.html#proc/check_connections">check_connections</a></th><td>Checks connections coming from the source, returns TRUE if the source has a path to the destination</td></tr>
+            <tr><th><a href="datum/hacking_minigame.html#proc/consider_possible_moves">consider_possible_moves</a></th><td>Algorithm that returns possible directions from a given coordinate</td></tr>
+            <tr><th><a href="datum/hacking_minigame.html#proc/game_check">game_check</a></th><td>checks if the game is finished</td></tr>
+            <tr><th><a href="datum/hacking_minigame.html#proc/generate">generate</a></th><td>Simple algorithm for generating a labyrinth</td></tr>
+            <tr><th><a href="datum/hacking_minigame.html#proc/get_simplified_image">get_simplified_image</a></th><td>Simplification algorithm for the purpose of display</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/check_connections"><aside class="declaration">proc </aside>check_connections<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L143">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 143"/></a></aside>
+        </h3>
+        <p>Checks connections coming from the source, returns TRUE if the source has a path to the destination</p><h3 id="proc/consider_possible_moves"><aside class="declaration">proc </aside>consider_possible_moves<aside>(xcord, ycord) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L118">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 118"/></a></aside>
+        </h3>
+        <p>Algorithm that returns possible directions from a given coordinate</p><h3 id="proc/game_check"><aside class="declaration">proc </aside>game_check<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 27"/></a></aside>
+        </h3>
+        <p>checks if the game is finished</p>
+<p>Checks if the game was finished, and sets the finished to TRUE if it is
+returns finished.</p><h3 id="proc/generate"><aside class="declaration">proc </aside>generate<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 38"/></a></aside>
+        </h3>
+        <p>Simple algorithm for generating a labyrinth</p>
+<p>This algorithm 'carves out' a single path and the destination is placed when there aren't anymore possible moves.
+Rest of the board is filled randomly. This procedure makes sure that there is at least 1 possible path to take, and possibly more due to randomness.</p><h3 id="proc/get_simplified_image"><aside class="declaration">proc </aside>get_simplified_image<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cybernetics/minigame/hacking_minigame.dm#L99">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cybernetics&#x2F;minigame&#x2F;hacking_minigame.dm 99"/></a></aside>
+        </h3>
+        <p>Simplification algorithm for the purpose of display</p>
+<p>Simplifies a 2d array of datums into a 2d array composed out of letters.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

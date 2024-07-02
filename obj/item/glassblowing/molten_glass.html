@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;glassblowing&#x2F;molten_glass - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/glassblowing/molten_glass.html#var">Var Details</a> - <a href="obj/item/glassblowing/molten_glass.html#proc">Proc Details</a></header>
+<main>
+<h1>molten_glass <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/glassblowing.html">glassblowing</a>/<a href="obj/item/glassblowing/molten_glass.html">molten_glass</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1310">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1310"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#var/chosen_item">chosen_item</a></th><td>the typepath of the item that will be produced when the required actions are met</td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#var/is_finished">is_finished</a></th><td>whether this glass's chosen item has completed all its steps. So we don't have to keep checking this a million times once it's done.</td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#var/remaining_heat">remaining_heat</a></th><td>the cooldown if its still molten / requires heating up</td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#var/steps_remaining">steps_remaining</a></th><td>the list of steps remaining</td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#var/total_time">total_time</a></th><td>the amount of time this glass will stay heated, updated each time it gets put in the forge based on the user's skill</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/glassblowing/molten_glass.html#proc/try_burn_user">try_burn_user</a></th><td>Tries to burn the user if the glass is still molten hot.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/chosen_item"><aside class="declaration">var </aside>chosen_item
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1317">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1317"/></a></h3>
+        <p>the typepath of the item that will be produced when the required actions are met</p><h3 id="var/is_finished"><aside class="declaration">var </aside>is_finished
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1323">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1323"/></a></h3>
+        <p>whether this glass's chosen item has completed all its steps. So we don't have to keep checking this a million times once it's done.</p><h3 id="var/remaining_heat"><aside class="declaration">var </aside>remaining_heat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1315">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1315"/></a></h3>
+        <p>the cooldown if its still molten / requires heating up</p><h3 id="var/steps_remaining"><aside class="declaration">var </aside>steps_remaining
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1319">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1319"/></a></h3>
+        <p>the list of steps remaining</p><h3 id="var/total_time"><aside class="declaration">var </aside>total_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1321">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1321"/></a></h3>
+        <p>the amount of time this glass will stay heated, updated each time it gets put in the forge based on the user's skill</p><h2 id="proc">Proc Details</h2><h3 id="proc/try_burn_user"><aside class="declaration">proc </aside>try_burn_user<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/structures/primative.dm#L1343">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;structures&#x2F;primative.dm 1343"/></a></aside>
+        </h3>
+        <p>Tries to burn the user if the glass is still molten hot.</p>
+<p>Arguments:</p>
+<ul>
+<li>mob/living/user - user to burn</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

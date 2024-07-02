@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;soulcatcher_soul - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/soulcatcher_soul.html#var">Var Details</a> - <a href="mob/living/soulcatcher_soul.html#proc">Proc Details</a></header>
+<main>
+<h1>soulcatcher_soul <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/soulcatcher_soul.html">soulcatcher_soul</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_emote">able_to_emote</a></th><td>Is the soul able to emote inside the soulcatcher room?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_emote_as_container">able_to_emote_as_container</a></th><td>Is the soul able to emote as the object it is inside?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_leave">able_to_leave</a></th><td>Is the soul able to leave the soulcatcher?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_rename">able_to_rename</a></th><td>Is the soul able to change their own name?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_speak">able_to_speak</a></th><td>Is the soul able to speak inside the soulcatcher room?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/able_to_speak_as_container">able_to_speak_as_container</a></th><td>Is the soul able to speak as the object it is inside?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/body_scan_needed">body_scan_needed</a></th><td>Does the body need scanned?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/communicating_externally">communicating_externally</a></th><td>Are emote's and Say's done through the container the mob is in?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/current_room">current_room</a></th><td>What is the weakref of the soulcatcher room are we currently in?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/internal_hearing">internal_hearing</a></th><td>Is the soul able to &quot;hear&quot; things from inside of the soulcatcher?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/internal_sight">internal_sight</a></th><td>Is the soul able to &quot;see&quot; things from inside of the soulcatcher?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/ooc_notes">ooc_notes</a></th><td>What are the ooc notes for the soul?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/outside_hearing">outside_hearing</a></th><td>Is the soul able to hear things from the outside world?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/outside_sight">outside_sight</a></th><td>Is the soul able to see things in the outside world?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/previous_body">previous_body</a></th><td>Assuming we died inside of the round? What is our previous body?</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/round_participant">round_participant</a></th><td>Did the soul live within the round? This is checked if we want to transfer the soul to another body.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#var/soul_desc">soul_desc</a></th><td>What does our soul look like?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/change_name">change_name</a></th><td>Changes the soul's name based off <code>new_name</code>. Returns <code>TRUE</code> if the name has been changed, otherwise returns <code>FALSE</code>.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/leave_soulcatcher">leave_soulcatcher</a></th><td>Checks if the mob wants to leave the soulcatcher. If they do and are able to leave, they are booted out.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/reset_name">reset_name</a></th><td>Attempts to reset the soul's name to it's name in prefs. Returns <code>TRUE</code> if the name is reset, otherwise returns <code>FALSE</code>.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/return_to_body">return_to_body</a></th><td>Assuming we have a previous body a present mind on our soul, we are going to transfer the mind back to the old body.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/toggle_hearing">toggle_hearing</a></th><td>Toggles whether or not the soul inside the soulcatcher can see the outside world. Returns the state of the <code>outside_hearing</code> variable.</td></tr>
+            <tr><th><a href="mob/living/soulcatcher_soul.html#proc/toggle_sight">toggle_sight</a></th><td>Toggles whether or not the soul inside the soulcatcher can see the outside world. Returns the state of the <code>outside_sight</code> variable.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/able_to_emote"><aside class="declaration">var </aside>able_to_emote
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 21"/></a></h3>
+        <p>Is the soul able to emote inside the soulcatcher room?</p><h3 id="var/able_to_emote_as_container"><aside class="declaration">var </aside>able_to_emote_as_container
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 29"/></a></h3>
+        <p>Is the soul able to emote as the object it is inside?</p><h3 id="var/able_to_leave"><aside class="declaration">var </aside>able_to_leave
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 34"/></a></h3>
+        <p>Is the soul able to leave the soulcatcher?</p><h3 id="var/able_to_rename"><aside class="declaration">var </aside>able_to_rename
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 25"/></a></h3>
+        <p>Is the soul able to change their own name?</p><h3 id="var/able_to_speak"><aside class="declaration">var </aside>able_to_speak
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 23"/></a></h3>
+        <p>Is the soul able to speak inside the soulcatcher room?</p><h3 id="var/able_to_speak_as_container"><aside class="declaration">var </aside>able_to_speak_as_container
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 27"/></a></h3>
+        <p>Is the soul able to speak as the object it is inside?</p><h3 id="var/body_scan_needed"><aside class="declaration">var </aside>body_scan_needed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 38"/></a></h3>
+        <p>Does the body need scanned?</p><h3 id="var/communicating_externally"><aside class="declaration">var </aside>communicating_externally
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 31"/></a></h3>
+        <p>Are emote's and Say's done through the container the mob is in?</p><h3 id="var/current_room"><aside class="declaration">var </aside>current_room
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 10"/></a></h3>
+        <p>What is the weakref of the soulcatcher room are we currently in?</p><h3 id="var/internal_hearing"><aside class="declaration">var </aside>internal_hearing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 19"/></a></h3>
+        <p>Is the soul able to &quot;hear&quot; things from inside of the soulcatcher?</p><h3 id="var/internal_sight"><aside class="declaration">var </aside>internal_sight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 17"/></a></h3>
+        <p>Is the soul able to &quot;see&quot; things from inside of the soulcatcher?</p><h3 id="var/ooc_notes"><aside class="declaration">var </aside>ooc_notes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 5"/></a></h3>
+        <p>What are the ooc notes for the soul?</p><h3 id="var/outside_hearing"><aside class="declaration">var </aside>outside_hearing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 15"/></a></h3>
+        <p>Is the soul able to hear things from the outside world?</p><h3 id="var/outside_sight"><aside class="declaration">var </aside>outside_sight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 13"/></a></h3>
+        <p>Is the soul able to see things in the outside world?</p><h3 id="var/previous_body"><aside class="declaration">var </aside>previous_body
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 8"/></a></h3>
+        <p>Assuming we died inside of the round? What is our previous body?</p><h3 id="var/round_participant"><aside class="declaration">var </aside>round_participant
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 36"/></a></h3>
+        <p>Did the soul live within the round? This is checked if we want to transfer the soul to another body.</p><h3 id="var/soul_desc"><aside class="declaration">var </aside>soul_desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 3"/></a></h3>
+        <p>What does our soul look like?</p><h2 id="proc">Proc Details</h2><h3 id="proc/change_name"><aside class="declaration">proc </aside>change_name<aside>(new_name) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L77">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 77"/></a></aside>
+        </h3>
+        <p>Changes the soul's name based off <code>new_name</code>. Returns <code>TRUE</code> if the name has been changed, otherwise returns <code>FALSE</code>.</p><h3 id="proc/leave_soulcatcher"><aside class="declaration">verb </aside>leave_soulcatcher<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L92">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 92"/></a></aside>
+        </h3>
+        <p>Checks if the mob wants to leave the soulcatcher. If they do and are able to leave, they are booted out.</p><h3 id="proc/reset_name"><aside class="declaration">proc </aside>reset_name<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L85">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 85"/></a></aside>
+        </h3>
+        <p>Attempts to reset the soul's name to it's name in prefs. Returns <code>TRUE</code> if the name is reset, otherwise returns <code>FALSE</code>.</p><h3 id="proc/return_to_body"><aside class="declaration">proc </aside>return_to_body<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L168">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 168"/></a></aside>
+        </h3>
+        <p>Assuming we have a previous body a present mind on our soul, we are going to transfer the mind back to the old body.</p><h3 id="proc/toggle_hearing"><aside class="declaration">proc </aside>toggle_hearing<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L67">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 67"/></a></aside>
+        </h3>
+        <p>Toggles whether or not the soul inside the soulcatcher can see the outside world. Returns the state of the <code>outside_hearing</code> variable.</p><h3 id="proc/toggle_sight"><aside class="declaration">proc </aside>toggle_sight<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/mobs/soulcatcher.dm#L57">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;mobs&#x2F;soulcatcher.dm 57"/></a></aside>
+        </h3>
+        <p>Toggles whether or not the soul inside the soulcatcher can see the outside world. Returns the state of the <code>outside_sight</code> variable.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

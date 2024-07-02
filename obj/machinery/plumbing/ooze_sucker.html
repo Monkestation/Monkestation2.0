@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;ooze_sucker - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/ooze_sucker.html#var">Var Details</a> - <a href="obj/machinery/plumbing/ooze_sucker.html#proc">Proc Details</a></header>
+<main>
+<h1>ooze_sucker <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/ooze_sucker.html">ooze_sucker</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 8"/></a></h1>
+
+<p>this cannablizes floor_pump code but rips specific reagents and and such just does stuff itself so it can be expanded easier in the future</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/drain_flat">drain_flat</a></th><td>Base amount to drain</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/drain_percent">drain_percent</a></th><td>Additional ratio of liquid volume to drain</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/drained_last_process">drained_last_process</a></th><td>Whether draining was performed last process or not.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/mapping_id">mapping_id</a></th><td>if we have this on mapload we will look in a range for a controller</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/tile_placed">tile_placed</a></th><td>Floor tile is placed down</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#var/turned_on">turned_on</a></th><td>Pump is turned on by engineer, etc.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#proc/on_reagent_change">on_reagent_change</a></th><td>Handles ensuring power usage becomes idle when reagents are full.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/ooze_sucker.html#proc/on_reagents_del">on_reagents_del</a></th><td>Handles properly detaching signal hooks.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/drain_flat"><aside class="declaration">var </aside>drain_flat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L38">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 38"/></a></h3>
+        <p>Base amount to drain</p><h3 id="var/drain_percent"><aside class="declaration">var </aside>drain_percent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 40"/></a></h3>
+        <p>Additional ratio of liquid volume to drain</p><h3 id="var/drained_last_process"><aside class="declaration">var </aside>drained_last_process
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 43"/></a></h3>
+        <p>Whether draining was performed last process or not.</p><h3 id="var/mapping_id"><aside class="declaration">var </aside>mapping_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 29"/></a></h3>
+        <p>if we have this on mapload we will look in a range for a controller</p><h3 id="var/tile_placed"><aside class="declaration">var </aside>tile_placed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 32"/></a></h3>
+        <p>Floor tile is placed down</p><h3 id="var/turned_on"><aside class="declaration">var </aside>turned_on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 25"/></a></h3>
+        <p>Pump is turned on by engineer, etc.</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_reagent_change"><aside class="declaration">proc </aside>on_reagent_change<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, ...) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L147">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 147"/></a></aside>
+        </h3>
+        <p>Handles ensuring power usage becomes idle when reagents are full.</p><h3 id="proc/on_reagents_del"><aside class="declaration">proc </aside>on_reagents_del<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/reagents) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/machines/ooze_sucker.dm#L141">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;machines&#x2F;ooze_sucker.dm 141"/></a></aside>
+        </h3>
+        <p>Handles properly detaching signal hooks.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

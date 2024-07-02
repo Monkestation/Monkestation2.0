@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;station_map - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/station_map.html#var">Var Details</a> - <a href="obj/machinery/station_map.html#proc">Proc Details</a></header>
+<main>
+<h1>station_map <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/station_map.html">station_map</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 8"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#var/bogus">bogus</a></th><td>This set to FALSE when the station map is initialized on a zLevel that has its own icon formatted for use by station holomaps.</td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#var/floor_markings">floor_markings</a></th><td>The little &quot;map&quot; floor painting.</td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#var/holomap_datum">holomap_datum</a></th><td>The various images and icons for the map are stored in here, as well as the actual big map itself.</td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#var/small_station_map">small_station_map</a></th><td>The image that can be seen in-world.</td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#var/watching_mob">watching_mob</a></th><td>The mob beholding this marvel.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#proc/open_map">open_map</a></th><td>Tries to open the map for the given mob. Returns FALSE if it doesn't meet the criteria, TRUE if the map successfully opened with no runtimes.</td></tr>
+            <tr><th><a href="obj/machinery/station_map.html#proc/rotate_map">rotate_map</a></th><td>Rotates the map machine by the given amount of degrees. See byond's builtin <code>turn</code> for more info.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bogus"><aside class="declaration">var </aside>bogus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 30"/></a></h3>
+        <p>This set to FALSE when the station map is initialized on a zLevel that has its own icon formatted for use by station holomaps.</p><h3 id="var/floor_markings"><aside class="declaration">var </aside>floor_markings
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 25"/></a></h3>
+        <p>The little &quot;map&quot; floor painting.</p><h3 id="var/holomap_datum"><aside class="declaration">var </aside>holomap_datum
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/station_holomap.html">station_holomap</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 34"/></a></h3>
+        <p>The various images and icons for the map are stored in here, as well as the actual big map itself.</p><h3 id="var/small_station_map"><aside class="declaration">var </aside>small_station_map
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 23"/></a></h3>
+        <p>The image that can be seen in-world.</p><h3 id="var/watching_mob"><aside class="declaration">var </aside>watching_mob
+            <aside>&ndash; /<a href="mob.html">mob</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 21"/></a></h3>
+        <p>The mob beholding this marvel.</p><h2 id="proc">Proc Details</h2><h3 id="proc/open_map"><aside class="declaration">proc </aside>open_map<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L76">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 76"/></a></aside>
+        </h3>
+        <p>Tries to open the map for the given mob. Returns FALSE if it doesn't meet the criteria, TRUE if the map successfully opened with no runtimes.</p><h3 id="proc/rotate_map"><aside class="declaration">proc </aside>rotate_map<aside>(direction) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/holomaps/machinery.dm#L231">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;holomaps&#x2F;machinery.dm 231"/></a></aside>
+        </h3>
+        <p>Rotates the map machine by the given amount of degrees. See byond's builtin <code>turn</code> for more info.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

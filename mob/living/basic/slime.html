@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;basic&#x2F;slime - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/basic/slime.html#var">Var Details</a> - <a href="mob/living/basic/slime.html#proc">Proc Details</a></header>
+<main>
+<h1>slime <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/basic.html">basic</a>/<a href="mob/living/basic/slime.html">slime</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/current_color">current_color</a></th><td>our current datum for slime color</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/emotion_states">emotion_states</a></th><td>this is our emotion overlay states</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/friendship_commands">friendship_commands</a></th><td>Commands you can give this slime once it is tamed, not static because subtypes can modify it</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/hunger_precent">hunger_precent</a></th><td>this is our last cached hunger precentage between 0 and 1</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/icon_state_override">icon_state_override</a></th><td>if set and with the trait replaces the grey part with this</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/mutating_into">mutating_into</a></th><td>the in progress mutation used for descs</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/mutation_chance">mutation_chance</a></th><td>this is our mutation chance</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/number">number</a></th><td>our number</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/ooze_production">ooze_production</a></th><td>the amount of ooze we produce</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/possible_color_mutations">possible_color_mutations</a></th><td>list of all possible mutations</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/production_precent">production_precent</a></th><td>how much hunger we need to produce</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/replacement_trees">replacement_trees</a></th><td>this is a list of trees that we replace goes from base = replaced</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/slime_flags">slime_flags</a></th><td>we track flags for slimes here like ADULT_SLIME, and PASSIVE_SLIME</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/slime_name_regex">slime_name_regex</a></th><td>used to help our name changes so we don't rename named slimes</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/slime_traits">slime_traits</a></th><td>our list of slime traits</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#var/trait_foods">trait_foods</a></th><td>this is our list of trait foods</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#proc/has_slime_trait">has_slime_trait</a></th><td>unlike add trait this uses a type and is checked against the list don't pass the created one pass the type</td></tr>
+            <tr><th><a href="mob/living/basic/slime.html#proc/remove_trait">remove_trait</a></th><td>unlike add trait this uses a type and is checked against the list don't pass the created one pass the type</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_color"><aside class="declaration">var </aside>current_color
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/slime_color.html">slime_color</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 52"/></a></h3>
+        <p>our current datum for slime color</p><h3 id="var/emotion_states"><aside class="declaration">var </aside>emotion_states
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L80">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 80"/></a></h3>
+        <p>this is our emotion overlay states</p><h3 id="var/friendship_commands"><aside class="declaration">var </aside>friendship_commands
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L98">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 98"/></a></h3>
+        <p>Commands you can give this slime once it is tamed, not static because subtypes can modify it</p><h3 id="var/hunger_precent"><aside class="declaration">var </aside>hunger_precent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 54"/></a></h3>
+        <p>this is our last cached hunger precentage between 0 and 1</p><h3 id="var/icon_state_override"><aside class="declaration">var </aside>icon_state_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L91">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 91"/></a></h3>
+        <p>if set and with the trait replaces the grey part with this</p><h3 id="var/mutating_into"><aside class="declaration">var </aside>mutating_into
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/slime_color.html">slime_color</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L71">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 71"/></a></h3>
+        <p>the in progress mutation used for descs</p><h3 id="var/mutation_chance"><aside class="declaration">var </aside>mutation_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L73">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 73"/></a></h3>
+        <p>this is our mutation chance</p><h3 id="var/number"><aside class="declaration">var </aside>number
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 62"/></a></h3>
+        <p>our number</p><h3 id="var/ooze_production"><aside class="declaration">var </aside>ooze_production
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L105">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 105"/></a></h3>
+        <p>the amount of ooze we produce</p><h3 id="var/possible_color_mutations"><aside class="declaration">var </aside>possible_color_mutations
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L65">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 65"/></a></h3>
+        <p>list of all possible mutations</p><h3 id="var/production_precent"><aside class="declaration">var </aside>production_precent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L56">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 56"/></a></h3>
+        <p>how much hunger we need to produce</p><h3 id="var/replacement_trees"><aside class="declaration">var </aside>replacement_trees
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L78">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 78"/></a></h3>
+        <p>this is a list of trees that we replace goes from base = replaced</p><h3 id="var/slime_flags"><aside class="declaration">var </aside>slime_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L49">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 49"/></a></h3>
+        <p>we track flags for slimes here like ADULT_SLIME, and PASSIVE_SLIME</p><h3 id="var/slime_name_regex"><aside class="declaration">var </aside>slime_name_regex
+            <aside>&ndash; /static/regex</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L60">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 60"/></a></h3>
+        <p>used to help our name changes so we don't rename named slimes</p><h3 id="var/slime_traits"><aside class="declaration">var </aside>slime_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L58">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 58"/></a></h3>
+        <p>our list of slime traits</p><h3 id="var/trait_foods"><aside class="declaration">var </aside>trait_foods
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L69">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 69"/></a></h3>
+        <p>this is our list of trait foods</p><h2 id="proc">Proc Details</h2><h3 id="proc/has_slime_trait"><aside class="declaration">proc </aside>has_slime_trait<aside>(/<a href="datum.html">datum</a>/<a href="datum/slime_trait.html">slime_trait</a>/checked_trait) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L323">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 323"/></a></aside>
+        </h3>
+        <p>unlike add trait this uses a type and is checked against the list don't pass the created one pass the type</p><h3 id="proc/remove_trait"><aside class="declaration">proc </aside>remove_trait<aside>(/<a href="datum.html">datum</a>/<a href="datum/slime_trait.html">slime_trait</a>/removed_trait) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/slimecore/mobs/_base_slime.dm#L314">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;mobs&#x2F;_base_slime.dm 314"/></a></aside>
+        </h3>
+        <p>unlike add trait this uses a type and is checked against the list don't pass the created one pass the type</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

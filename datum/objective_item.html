@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;objective_item - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/objective_item.html#var">Var Details</a> - <a href="datum/objective_item.html#proc">Proc Details</a></header>
+<main>
+<h1>objective_item <aside>/<a href="datum.html">datum</a>/<a href="datum/objective_item.html">objective_item</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/objective_item.html#var/altitems">altitems</a></th><td>List of additional items which also count, for things like blueprints</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/excludefromjob">excludefromjob</a></th><td>Jobs which cannot generate this objective (no stealing your own stuff)</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/exists_on_map">exists_on_map</a></th><td>Whether this item exists on the station map at the start of a round.</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/item_owner">item_owner</a></th><td>Who CARES if this item goes missing (no stealing unguarded items), often similar but not identical to the next list</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/name">name</a></th><td>How the item is described in the objective</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/objective_type">objective_type</a></th><td>Defines in which contexts the item can be given as an objective</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/opt_in_level">opt_in_level</a></th><td>The opt in level all owners of the item must meet for this to be eligible as an objective target.</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/special_equipment">special_equipment</a></th><td>Items to provide to people in order to allow them to acquire the target</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/targetitem">targetitem</a></th><td>Typepath of item</td></tr>
+            <tr><th><a href="datum/objective_item.html#var/valid_containers">valid_containers</a></th><td>Valid containers that the target item can be in.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/objective_item.html#proc/check_special_completion">check_special_completion</a></th><td>For objectives with special checks (does that intellicard have an ai in it? etcetc)</td></tr>
+            <tr><th><a href="datum/objective_item.html#proc/owner_exists">owner_exists</a></th><td>Returns true if one of the item's owners exists somewhere</td></tr>
+            <tr><th><a href="datum/objective_item.html#proc/owner_opted_in">owner_opted_in</a></th><td>Returns TRUE if we have no owners, or all owners's effective opt in level is above [opt_in_level]. FALSE otherwise.</td></tr>
+            <tr><th><a href="datum/objective_item.html#proc/target_exists">target_exists</a></th><td>Returns true if the target item exists</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/altitems"><aside class="declaration">var </aside>altitems
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 18"/></a></h3>
+        <p>List of additional items which also count, for things like blueprints</p><h3 id="var/excludefromjob"><aside class="declaration">var </aside>excludefromjob
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 16"/></a></h3>
+        <p>Jobs which cannot generate this objective (no stealing your own stuff)</p><h3 id="var/exists_on_map"><aside class="declaration">var </aside>exists_on_map
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 24"/></a></h3>
+        <p>Whether this item exists on the station map at the start of a round.</p><h3 id="var/item_owner"><aside class="declaration">var </aside>item_owner
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 14"/></a></h3>
+        <p>Who CARES if this item goes missing (no stealing unguarded items), often similar but not identical to the next list</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 8"/></a></h3>
+        <p>How the item is described in the objective</p><h3 id="var/objective_type"><aside class="declaration">var </aside>objective_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 22"/></a></h3>
+        <p>Defines in which contexts the item can be given as an objective</p><h3 id="var/opt_in_level"><aside class="declaration">var </aside>opt_in_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/optin/objective_item.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;optin&#x2F;objective_item.dm 3"/></a></h3>
+        <p>The opt in level all owners of the item must meet for this to be eligible as an objective target.</p><h3 id="var/special_equipment"><aside class="declaration">var </aside>special_equipment
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 20"/></a></h3>
+        <p>Items to provide to people in order to allow them to acquire the target</p><h3 id="var/targetitem"><aside class="declaration">var </aside>targetitem
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 10"/></a></h3>
+        <p>Typepath of item</p><h3 id="var/valid_containers"><aside class="declaration">var </aside>valid_containers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 12"/></a></h3>
+        <p>Valid containers that the target item can be in.</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_special_completion"><aside class="declaration">proc </aside>check_special_completion<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 27"/></a></aside>
+        </h3>
+        <p>For objectives with special checks (does that intellicard have an ai in it? etcetc)</p><h3 id="proc/owner_exists"><aside class="declaration">proc </aside>owner_exists<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 45"/></a></aside>
+        </h3>
+        <p>Returns true if one of the item's owners exists somewhere</p><h3 id="proc/owner_opted_in"><aside class="declaration">proc </aside>owner_opted_in<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/optin/objective_item.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;optin&#x2F;objective_item.dm 6"/></a></aside>
+        </h3>
+        <p>Returns TRUE if we have no owners, or all owners's effective opt in level is above [opt_in_level]. FALSE otherwise.</p><h3 id="proc/target_exists"><aside class="declaration">proc </aside>target_exists<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/code/game/gamemodes/objective_items.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;objective_items.dm 41"/></a></aside>
+        </h3>
+        <p>Returns true if the target item exists</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

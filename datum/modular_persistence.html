@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;modular_persistence - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/modular_persistence.html#var">Var Details</a> - <a href="datum/modular_persistence.html#proc">Proc Details</a></header>
+<main>
+<h1>modular_persistence <aside>/<a href="datum.html">datum</a>/<a href="datum/modular_persistence.html">modular_persistence</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/items/soul_catcher.dm#L225">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;items&#x2F;soul_catcher.dm 225"/></a></h1>
+
+<p>The master persistence datum. Add vars onto this in your own code. Just be aware that you'll need to use simple data types, such as strings, ints, and lists.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_durability">nif_durability</a></th><td>The current durability of the implanted NIF. Can be null.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_examine_text">nif_examine_text</a></th><td>The extra examine text for the user of the NIF. Can be null.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_is_calibrated">nif_is_calibrated</a></th><td>Whether the NIF is calibrated for use or not. Can be null.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_path">nif_path</a></th><td>The path to the current implanted NIF. Can be null.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_soulcatcher_rooms">nif_soulcatcher_rooms</a></th><td>A param string containing soulcatcher rooms</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/nif_theme">nif_theme</a></th><td>The theme of the implanted NIF. Can be null.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/owner">owner</a></th><td>The human that this is attached to.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/persistent_nifsofts">persistent_nifsofts</a></th><td>A string containing programs that are transfered from one round to the next.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/soul_poem_nifsoft_message">soul_poem_nifsoft_message</a></th><td>What message is saved to the station pass NIFSoft?</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/soul_poem_nifsoft_name">soul_poem_nifsoft_name</a></th><td>What name is saved to the station pass NIFSoft?</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/stored_character_slot_index">stored_character_slot_index</a></th><td>The owner's character slot index.</td></tr>
+            <tr><th><a href="datum/modular_persistence.html#var/stored_rewards_points">stored_rewards_points</a></th><td>How many rewards points does the NIF have stored on it?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/modular_persistence.html#proc/save_data">save_data</a></th><td>Saves the held persistence data to where it needs to go.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/nif_durability"><aside class="declaration">var </aside>nif_durability
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L499">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 499"/></a></h3>
+        <p>The current durability of the implanted NIF. Can be null.</p><h3 id="var/nif_examine_text"><aside class="declaration">var </aside>nif_examine_text
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L501">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 501"/></a></h3>
+        <p>The extra examine text for the user of the NIF. Can be null.</p><h3 id="var/nif_is_calibrated"><aside class="declaration">var </aside>nif_is_calibrated
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L505">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 505"/></a></h3>
+        <p>Whether the NIF is calibrated for use or not. Can be null.</p><h3 id="var/nif_path"><aside class="declaration">var </aside>nif_path
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L497">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 497"/></a></h3>
+        <p>The path to the current implanted NIF. Can be null.</p><h3 id="var/nif_soulcatcher_rooms"><aside class="declaration">var </aside>nif_soulcatcher_rooms
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/items/soul_catcher.dm#L227">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;items&#x2F;soul_catcher.dm 227"/></a></h3>
+        <p>A param string containing soulcatcher rooms</p><h3 id="var/nif_theme"><aside class="declaration">var </aside>nif_theme
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L503">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 503"/></a></h3>
+        <p>The theme of the implanted NIF. Can be null.</p><h3 id="var/owner"><aside class="declaration">var </aside>owner
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/brain.html">brain</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cryopods/persistance/base_persistance.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cryopods&#x2F;persistance&#x2F;base_persistance.dm 50"/></a></h3>
+        <p>The human that this is attached to.</p><h3 id="var/persistent_nifsofts"><aside class="declaration">var </aside>persistent_nifsofts
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L511">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 511"/></a></h3>
+        <p>A string containing programs that are transfered from one round to the next.</p><h3 id="var/soul_poem_nifsoft_message"><aside class="declaration">var </aside>soul_poem_nifsoft_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/types.dm#L408">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;types.dm 408"/></a></h3>
+        <p>What message is saved to the station pass NIFSoft?</p><h3 id="var/soul_poem_nifsoft_name"><aside class="declaration">var </aside>soul_poem_nifsoft_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/types.dm#L404">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;types.dm 404"/></a></h3>
+        <p>What name is saved to the station pass NIFSoft?</p><h3 id="var/stored_character_slot_index"><aside class="declaration">var </aside>stored_character_slot_index
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cryopods/persistance/base_persistance.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cryopods&#x2F;persistance&#x2F;base_persistance.dm 54"/></a></h3>
+        <p>The owner's character slot index.</p><h3 id="var/stored_rewards_points"><aside class="declaration">var </aside>stored_rewards_points
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/blueshift/nifsoft/_base.dm#L507">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blueshift&#x2F;nifsoft&#x2F;_base.dm 507"/></a></h3>
+        <p>How many rewards points does the NIF have stored on it?</p><h2 id="proc">Proc Details</h2><h3 id="proc/save_data"><aside class="declaration">proc </aside>save_data<aside>(ckey) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/cryopods/persistance/base_persistance.dm#L98">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;cryopods&#x2F;persistance&#x2F;base_persistance.dm 98"/></a></aside>
+        </h3>
+        <p>Saves the held persistence data to where it needs to go.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

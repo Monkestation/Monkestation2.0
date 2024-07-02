@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;asteroid_magnet - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/asteroid_magnet.html#var">Var Details</a> - <a href="obj/machinery/asteroid_magnet.html#proc">Proc Details</a></header>
+<main>
+<h1>asteroid_magnet <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/asteroid_magnet.html">asteroid_magnet</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/Auto_pinging">Auto_pinging</a></th><td>Are we currently automatically pinging the target?</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/area_size">area_size</a></th><td>The size (chebyshev) of the available area, set in mapping</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/available_templates">available_templates</a></th><td>Templates available to succ in</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/center_turf">center_turf</a></th><td>The center turf</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/center_x">center_x</a></th><td>Center turf X, set in mapping</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/center_y">center_y</a></th><td>Center turf Y, set in mapping</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/map">map</a></th><td>The map that stores asteroids</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/selected_template">selected_template</a></th><td>The currently selected template</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/status">status</a></th><td>Status of the user interface</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/summon_cd">summon_cd</a></th><td>The cooldown between uses.</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/summon_in_progress">summon_in_progress</a></th><td>Boolean to keep track of state and protect against double summoning</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#var/templates_on_map">templates_on_map</a></th><td>All templates in the &quot;map&quot;.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/CleanupTemplate">CleanupTemplate</a></th><td>Cleanup our currently loaded mining template</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/GenerateMap">GenerateMap</a></th><td>Generates the random map for the magnet.</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/PlaceForcefield">PlaceForcefield</a></th><td>Places the forcefield boundary during summon_sequence</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/PlaceTemplate">PlaceTemplate</a></th><td>Summoning part of summon_sequence()</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/_FinishSummonSequence">_FinishSummonSequence</a></th><td>This process should take ATLEAST 20 seconds</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/check_for_magnet_errors">check_for_magnet_errors</a></th><td>Test to see if we should clear the magnet area.
+Returns FALSE if it can clear, returns a string error message if it can't.</td></tr>
+            <tr><th><a href="obj/machinery/asteroid_magnet.html#proc/summon_sequence">summon_sequence</a></th><td>Performs a full summoning sequence, including putting up boundaries, clearing out the area, and bringing in the new asteroid.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/Auto_pinging"><aside class="declaration">var </aside>Auto_pinging
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 39"/></a></h3>
+        <p>Are we currently automatically pinging the target?</p><h3 id="var/area_size"><aside class="declaration">var </aside>area_size
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 27"/></a></h3>
+        <p>The size (chebyshev) of the available area, set in mapping</p><h3 id="var/available_templates"><aside class="declaration">var </aside>available_templates
+            <aside>&ndash; /list/datum/mining_template</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 12"/></a></h3>
+        <p>Templates available to succ in</p><h3 id="var/center_turf"><aside class="declaration">var </aside>center_turf
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 25"/></a></h3>
+        <p>The center turf</p><h3 id="var/center_x"><aside class="declaration">var </aside>center_x
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 21"/></a></h3>
+        <p>Center turf X, set in mapping</p><h3 id="var/center_y"><aside class="declaration">var </aside>center_y
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 23"/></a></h3>
+        <p>Center turf Y, set in mapping</p><h3 id="var/map"><aside class="declaration">var </aside>map
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/cartesian_plane.html">cartesian_plane</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 16"/></a></h3>
+        <p>The map that stores asteroids</p><h3 id="var/selected_template"><aside class="declaration">var </aside>selected_template
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/mining_template.html">mining_template</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 18"/></a></h3>
+        <p>The currently selected template</p><h3 id="var/status"><aside class="declaration">var </aside>status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L35">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 35"/></a></h3>
+        <p>Status of the user interface</p><h3 id="var/summon_cd"><aside class="declaration">var </aside>summon_cd
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 43"/></a></h3>
+        <p>The cooldown between uses.</p><h3 id="var/summon_in_progress"><aside class="declaration">var </aside>summon_in_progress
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 37"/></a></h3>
+        <p>Boolean to keep track of state and protect against double summoning</p><h3 id="var/templates_on_map"><aside class="declaration">var </aside>templates_on_map
+            <aside>&ndash; /list/datum/mining_template</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 14"/></a></h3>
+        <p>All templates in the &quot;map&quot;.</p><h2 id="proc">Proc Details</h2><h3 id="proc/CleanupTemplate"><aside class="declaration">proc </aside>CleanupTemplate<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L169">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 169"/></a></aside>
+        </h3>
+        <p>Cleanup our currently loaded mining template</p><h3 id="proc/GenerateMap"><aside class="declaration">proc </aside>GenerateMap<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L186">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 186"/></a></aside>
+        </h3>
+        <p>Generates the random map for the magnet.</p><h3 id="proc/PlaceForcefield"><aside class="declaration">proc </aside>PlaceForcefield<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L160">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 160"/></a></aside>
+        </h3>
+        <p>Places the forcefield boundary during summon_sequence</p><h3 id="proc/PlaceTemplate"><aside class="declaration">proc </aside>PlaceTemplate<aside>(/<a href="datum.html">datum</a>/<a href="datum/mining_template.html">mining_template</a>/template) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L155">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 155"/></a></aside>
+        </h3>
+        <p>Summoning part of summon_sequence()</p><h3 id="proc/_FinishSummonSequence"><aside class="declaration">proc </aside>_FinishSummonSequence<aside>(/<a href="datum.html">datum</a>/<a href="datum/mining_template.html">mining_template</a>/template, /list/forcefields) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L142">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 142"/></a></aside>
+        </h3>
+        <p>This process should take ATLEAST 20 seconds</p><h3 id="proc/check_for_magnet_errors"><aside class="declaration">proc </aside>check_for_magnet_errors<aside>(/<a href="datum.html">datum</a>/<a href="datum/mining_template.html">mining_template</a>/template) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L95">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 95"/></a></aside>
+        </h3>
+        <p>Test to see if we should clear the magnet area.
+Returns FALSE if it can clear, returns a string error message if it can't.</p><h3 id="proc/summon_sequence"><aside class="declaration">proc </aside>summon_sequence<aside>(/<a href="datum.html">datum</a>/<a href="datum/mining_template.html">mining_template</a>/template) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/art_sci_overrides/asteroids/asteroid_magnet.dm#L114">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;asteroids&#x2F;asteroid_magnet.dm 114"/></a></aside>
+        </h3>
+        <p>Performs a full summoning sequence, including putting up boundaries, clearing out the area, and bringing in the new asteroid.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

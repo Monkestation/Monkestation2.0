@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;mcinterface - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/mcinterface.html#var">Var Details</a> - <a href="datum/mcinterface.html#proc">Proc Details</a></header>
+<main>
+<h1>mcinterface <aside>/<a href="datum.html">datum</a>/<a href="datum/mcinterface.html">mcinterface</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/mcinterface.html#var/inputs">inputs</a></th><td>A list of mcinterfaces that we are recieving from</td></tr>
+            <tr><th><a href="datum/mcinterface.html#var/outputs">outputs</a></th><td>A list of mcinterfaces that we are outputting to</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/mcinterface.html#proc/AddInput">AddInput</a></th><td>/// MESSAGES</td></tr>
+            <tr><th><a href="datum/mcinterface.html#proc/AddOutput">AddOutput</a></th><td>Add an interface to our outputs, and add us to their inputs. Origin is an arg used to prevent an infinite loop of add/remove</td></tr>
+            <tr><th><a href="datum/mcinterface.html#proc/RemoveInput">RemoveInput</a></th><td>Remove an interface from our inputs, and remove us from their outputs. Origin is an arg used to prevent an infinite loop of add/remove</td></tr>
+            <tr><th><a href="datum/mcinterface.html#proc/RemoveOutput">RemoveOutput</a></th><td>Remove an interface from our outputs, and remove us from their inputs. Origin is an arg used to prevent an infinite loop of add/remove</td></tr>
+            <tr><th><a href="datum/mcinterface.html#proc/Send">Send</a></th><td>Send an mcmessage to our outputs</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/inputs"><aside class="declaration">var </aside>inputs
+            <aside>&ndash; /list/datum/mcinterface</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 5"/></a></h3>
+        <p>A list of mcinterfaces that we are recieving from</p><h3 id="var/outputs"><aside class="declaration">var </aside>outputs
+            <aside>&ndash; /list/datum/mcinterface</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 7"/></a></h3>
+        <p>A list of mcinterfaces that we are outputting to</p><h2 id="proc">Proc Details</h2><h3 id="proc/AddInput"><aside class="declaration">proc </aside>AddInput<aside>(/<a href="datum.html">datum</a>/<a href="datum/mcinterface.html">mcinterface</a>/target, act, origin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 32"/></a></aside>
+        </h3>
+        <p>/// MESSAGES</p>
+<p>Add an interface to our inputs, and add us to their outputs. Origin is an arg used to prevent an infinite loop of add/remove</p><h3 id="proc/AddOutput"><aside class="declaration">proc </aside>AddOutput<aside>(/<a href="datum.html">datum</a>/<a href="datum/mcinterface.html">mcinterface</a>/target, act, origin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 40"/></a></aside>
+        </h3>
+        <p>Add an interface to our outputs, and add us to their inputs. Origin is an arg used to prevent an infinite loop of add/remove</p><h3 id="proc/RemoveInput"><aside class="declaration">proc </aside>RemoveInput<aside>(/<a href="datum.html">datum</a>/<a href="datum/mcinterface.html">mcinterface</a>/target, origin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 48"/></a></aside>
+        </h3>
+        <p>Remove an interface from our inputs, and remove us from their outputs. Origin is an arg used to prevent an infinite loop of add/remove</p><h3 id="proc/RemoveOutput"><aside class="declaration">proc </aside>RemoveOutput<aside>(/<a href="datum.html">datum</a>/<a href="datum/mcinterface.html">mcinterface</a>/target, origin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L56">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 56"/></a></aside>
+        </h3>
+        <p>Remove an interface from our outputs, and remove us from their inputs. Origin is an arg used to prevent an infinite loop of add/remove</p><h3 id="proc/Send"><aside class="declaration">proc </aside>Send<aside>(/<a href="datum.html">datum</a>/mcmessage/message, /<a href="datum.html">datum</a>/mcmessage/cached_message) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/mech_comp/_interface.dm#L65">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mech_comp&#x2F;_interface.dm 65"/></a></aside>
+        </h3>
+        <p>Send an mcmessage to our outputs</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

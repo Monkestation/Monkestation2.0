@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;antagonist&#x2F;vassal - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/antagonist/vassal.html#var">Var Details</a> - <a href="datum/antagonist/vassal.html#proc">Proc Details</a></header>
+<main>
+<h1>vassal <aside>/<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a>/<a href="datum/antagonist/vassal.html">vassal</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#var/master">master</a></th><td>The Master Bloodsucker's antag datum.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#var/powers">powers</a></th><td>List of all Purchased Powers, like Bloodsuckers.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#var/special_type">special_type</a></th><td>Whether this vassal is already a special type of Vassal.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#var/vassal_description">vassal_description</a></th><td>Description of what this Vassal does.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/BuyPower">BuyPower</a></th><td>Used when your Master teaches you a new Power.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/admin_add">admin_add</a></th><td>Message told to your (former) Master.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/farewell">farewell</a></th><td>Message told to your Master.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/make_special">make_special</a></th><td>Called when we are made into the Favorite Vassal</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/on_mindshield">on_mindshield</a></th><td>This is called when the antagonist is successfully mindshielded.</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/on_removal">on_removal</a></th><td>Enslave them to their Master
+Give Recuperate Power
+Give Objectives
+Give Vampire Language &amp; Hud</td></tr>
+            <tr><th><a href="datum/antagonist/vassal.html#proc/return_vassal_examine">return_vassal_examine</a></th><td>Returns a Vassals's examine strings.
+Args:
+viewer - The person examining.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/master"><aside class="declaration">var </aside>master
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a>/<a href="datum/antagonist/bloodsucker.html">bloodsucker</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 16"/></a></h3>
+        <p>The Master Bloodsucker's antag datum.</p><h3 id="var/powers"><aside class="declaration">var </aside>powers
+            <aside>&ndash; /list/datum/action</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 18"/></a></h3>
+        <p>List of all Purchased Powers, like Bloodsuckers.</p><h3 id="var/special_type"><aside class="declaration">var </aside>special_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 20"/></a></h3>
+        <p>Whether this vassal is already a special type of Vassal.</p><h3 id="var/vassal_description"><aside class="declaration">var </aside>vassal_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 24"/></a></h3>
+        <p>Description of what this Vassal does.</p><h2 id="proc">Proc Details</h2><h3 id="proc/BuyPower"><aside class="declaration">proc </aside>BuyPower<aside>(/<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/cooldown.html">cooldown</a>/<a href="datum/action/cooldown/bloodsucker.html">bloodsucker</a>/power) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_misc_procs.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_misc_procs.dm 43"/></a></aside>
+        </h3>
+        <p>Used when your Master teaches you a new Power.</p><h3 id="proc/admin_add"><aside class="parent"><a title="/datum/antagonist" href="datum/antagonist.html#proc/admin_add">&uarr;</a></aside>admin_add<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/new_owner, /<a href="mob.html">mob</a>/admin) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L154">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 154"/></a></aside>
+        </h3>
+        <p>Message told to your (former) Master.</p><h3 id="proc/farewell"><aside class="parent"><a title="/datum/antagonist" href="datum/antagonist.html#proc/farewell">&uarr;</a></aside>farewell<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L141">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 141"/></a></aside>
+        </h3>
+        <p>Message told to your Master.</p><h3 id="proc/make_special"><aside class="declaration">proc </aside>make_special<aside>(/<a href="datum.html">datum</a>/<a href="datum/antagonist.html">antagonist</a>/<a href="datum/antagonist/vassal.html">vassal</a>/vassal_type) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_misc_procs.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_misc_procs.dm 53"/></a></aside>
+        </h3>
+        <p>Called when we are made into the Favorite Vassal</p><h3 id="proc/on_mindshield"><aside class="parent"><a title="/datum/antagonist" href="datum/antagonist.html#proc/on_mindshield">&uarr;</a></aside>on_mindshield<aside>(/<a href="mob.html">mob</a>/implanter, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/mob_override) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L65">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 65"/></a></aside>
+        </h3>
+        <p>This is called when the antagonist is successfully mindshielded.</p><h3 id="proc/on_removal">on_removal<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_datum.dm#L100">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_datum.dm 100"/></a></aside>
+        </h3>
+        <p>Enslave them to their Master
+Give Recuperate Power
+Give Objectives
+Give Vampire Language &amp; Hud</p><h3 id="proc/return_vassal_examine"><aside class="declaration">proc </aside>return_vassal_examine<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/viewer) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/bloodsuckers/vassals/vassal_misc_procs.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;bloodsuckers&#x2F;vassals&#x2F;vassal_misc_procs.dm 11"/></a></aside>
+        </h3>
+        <p>Returns a Vassals's examine strings.
+Args:
+viewer - The person examining.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

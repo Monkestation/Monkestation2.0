@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;attachment&#x2F;underbarrel&#x2F;flashlight - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/attachment/underbarrel/flashlight.html#var">Var Details</a> - <a href="obj/item/attachment/underbarrel/flashlight.html#proc">Proc Details</a></header>
+<main>
+<h1>flashlight <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/attachment.html">attachment</a>/<a href="obj/item/attachment/underbarrel/flashlight.html">underbarrel/flashlight</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/ballistics/parts/underbarrel/flashlight/_base_flashlight.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;ballistics&#x2F;parts&#x2F;underbarrel&#x2F;flashlight&#x2F;_base_flashlight.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/attachment/underbarrel/flashlight.html#var/light_object">light_object</a></th><td>the flashlight we store</td></tr>
+            <tr><th><a href="obj/item/attachment/underbarrel/flashlight.html#var/toggle_action_ref">toggle_action_ref</a></th><td>A weakref to the item action we add with the light.</td></tr>
+            <tr><th><a href="obj/item/attachment/underbarrel/flashlight.html#var/toggled">toggled</a></th><td>are we toggled on?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/attachment/underbarrel/flashlight.html#proc/on_action_click">on_action_click</a></th><td>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_object.html#define/COMSIG_ITEM_UI_ACTION_CLICK" title="COMSIG_ITEM_UI_ACTION_CLICK">COMSIG_ITEM_UI_ACTION_CLICK</a> that toggles our light on and off if our action button is clicked.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/light_object"><aside class="declaration">var </aside>light_object
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/flashlight.html">flashlight</a>/seclite</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/ballistics/parts/underbarrel/flashlight/_base_flashlight.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;ballistics&#x2F;parts&#x2F;underbarrel&#x2F;flashlight&#x2F;_base_flashlight.dm 4"/></a></h3>
+        <p>the flashlight we store</p><h3 id="var/toggle_action_ref"><aside class="declaration">var </aside>toggle_action_ref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/ballistics/parts/underbarrel/flashlight/_base_flashlight.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;ballistics&#x2F;parts&#x2F;underbarrel&#x2F;flashlight&#x2F;_base_flashlight.dm 6"/></a></h3>
+        <p>A weakref to the item action we add with the light.</p><h3 id="var/toggled"><aside class="declaration">var </aside>toggled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/ballistics/parts/underbarrel/flashlight/_base_flashlight.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;ballistics&#x2F;parts&#x2F;underbarrel&#x2F;flashlight&#x2F;_base_flashlight.dm 8"/></a></h3>
+        <p>are we toggled on?</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_action_click"><aside class="declaration">proc </aside>on_action_click<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source, /<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/action) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/modular_guns/ballistics/parts/underbarrel/flashlight/_base_flashlight.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;modular_guns&#x2F;ballistics&#x2F;parts&#x2F;underbarrel&#x2F;flashlight&#x2F;_base_flashlight.dm 30"/></a></aside>
+        </h3>
+        <p>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_object.html#define/COMSIG_ITEM_UI_ACTION_CLICK" title="COMSIG_ITEM_UI_ACTION_CLICK">COMSIG_ITEM_UI_ACTION_CLICK</a> that toggles our light on and off if our action button is clicked.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

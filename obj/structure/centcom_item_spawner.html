@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;centcom_item_spawner - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/centcom_item_spawner.html#var">Var Details</a> - <a href="obj/structure/centcom_item_spawner.html#proc">Proc Details</a></header>
+<main>
+<h1>centcom_item_spawner <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/centcom_item_spawner.html">structure/centcom_item_spawner</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#var/blacklisted_items">blacklisted_items</a></th><td>list of exact types this spawner will not be able to spawn</td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#var/blacklisted_types">blacklisted_types</a></th><td>typesof() these types will not be able to be spawned</td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#var/fabrication_phrase">fabrication_phrase</a></th><td>what do we say() when we fabricate something</td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#var/items_to_spawn">items_to_spawn</a></th><td>assoc list of category name stings as keys with lists of what types they can spawn as values.
+category is always required, even if you only have 1. however, if there is only 1 category then it will be removed and category selection for the player will be skipped</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#proc/build_items_to_spawn">build_items_to_spawn</a></th><td>build our items to spawn, override this to generate items_to_spawn, call parent at the END of your override</td></tr>
+            <tr><th><a href="obj/structure/centcom_item_spawner.html#proc/spawn_chosen_item">spawn_chosen_item</a></th><td>spawn our item, used if you want to add additional logic when an item is spawned</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blacklisted_items"><aside class="declaration">var </aside>blacklisted_items
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 11"/></a></h3>
+        <p>list of exact types this spawner will not be able to spawn</p><h3 id="var/blacklisted_types"><aside class="declaration">var </aside>blacklisted_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 13"/></a></h3>
+        <p>typesof() these types will not be able to be spawned</p><h3 id="var/fabrication_phrase"><aside class="declaration">var </aside>fabrication_phrase
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 9"/></a></h3>
+        <p>what do we say() when we fabricate something</p><h3 id="var/items_to_spawn"><aside class="declaration">var </aside>items_to_spawn
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 18"/></a></h3>
+        <p>assoc list of category name stings as keys with lists of what types they can spawn as values.
+category is always required, even if you only have 1. however, if there is only 1 category then it will be removed and category selection for the player will be skipped</p><h2 id="proc">Proc Details</h2><h3 id="proc/build_items_to_spawn"><aside class="declaration">proc </aside>build_items_to_spawn<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L44">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 44"/></a></aside>
+        </h3>
+        <p>build our items to spawn, override this to generate items_to_spawn, call parent at the END of your override</p><h3 id="proc/spawn_chosen_item"><aside class="declaration">proc </aside>spawn_chosen_item<aside>(type_to_spawn) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/ghost_players/job_helpers/_centcom_item_spawner.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;ghost_players&#x2F;job_helpers&#x2F;_centcom_item_spawner.dm 40"/></a></aside>
+        </h3>
+        <p>spawn our item, used if you want to add additional logic when an item is spawned</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

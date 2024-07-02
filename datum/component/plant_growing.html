@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;plant_growing - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/plant_growing.html#var">Var Details</a> - <a href="datum/component/plant_growing.html#proc">Proc Details</a></header>
+<main>
+<h1>plant_growing <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/plant_growing.html">plant_growing</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L2">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 2"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/bio_boosted">bio_boosted</a></th><td>are we bioboosted</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/managed_seeds">managed_seeds</a></th><td>this is our managed seeds</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/max_water">max_water</a></th><td>how much water we can have at max used to determine %</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/maximum_seeds">maximum_seeds</a></th><td>this is the amount of seeds we can have at once in a tray</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/next_work">next_work</a></th><td>what work time we are at</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/self_growing">self_growing</a></th><td>does self sustaining also increase plant stats slowly</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/self_sustaining_overlay">self_sustaining_overlay</a></th><td>the icon we apply to our parent if we are self sustaining</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/self_sustaining_precent">self_sustaining_precent</a></th><td>the current precentage we are to self sustaining</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/toxicity_contents">toxicity_contents</a></th><td>how toxic our tray currently is % wise</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/water_precent">water_precent</a></th><td>our current water precent</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/work_cycle">work_cycle</a></th><td>what stage are we one</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#var/work_processes">work_processes</a></th><td>how many processes we need to work</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#proc/on_reagent_cache_pre">on_reagent_cache_pre</a></th><td>here we just remove any water added and increase the water precent, add other things you want done once.</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#proc/pre_trans">pre_trans</a></th><td>restocks water</td></tr>
+            <tr><th><a href="datum/component/plant_growing.html#proc/process">process</a></th><td>we create reagents using max_reagents, then make it visible and an open container</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bio_boosted"><aside class="declaration">var </aside>bio_boosted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 9"/></a></h3>
+        <p>are we bioboosted</p><h3 id="var/managed_seeds"><aside class="declaration">var </aside>managed_seeds
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 4"/></a></h3>
+        <p>this is our managed seeds</p><h3 id="var/max_water"><aside class="declaration">var </aside>max_water
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 14"/></a></h3>
+        <p>how much water we can have at max used to determine %</p><h3 id="var/maximum_seeds"><aside class="declaration">var </aside>maximum_seeds
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 6"/></a></h3>
+        <p>this is the amount of seeds we can have at once in a tray</p><h3 id="var/next_work"><aside class="declaration">var </aside>next_work
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 20"/></a></h3>
+        <p>what work time we are at</p><h3 id="var/self_growing"><aside class="declaration">var </aside>self_growing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 32"/></a></h3>
+        <p>does self sustaining also increase plant stats slowly</p><h3 id="var/self_sustaining_overlay"><aside class="declaration">var </aside>self_sustaining_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L28">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 28"/></a></h3>
+        <p>the icon we apply to our parent if we are self sustaining</p><h3 id="var/self_sustaining_precent"><aside class="declaration">var </aside>self_sustaining_precent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 30"/></a></h3>
+        <p>the current precentage we are to self sustaining</p><h3 id="var/toxicity_contents"><aside class="declaration">var </aside>toxicity_contents
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 25"/></a></h3>
+        <p>how toxic our tray currently is % wise</p><h3 id="var/water_precent"><aside class="declaration">var </aside>water_precent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 12"/></a></h3>
+        <p>our current water precent</p><h3 id="var/work_cycle"><aside class="declaration">var </aside>work_cycle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 22"/></a></h3>
+        <p>what stage are we one</p><h3 id="var/work_processes"><aside class="declaration">var </aside>work_processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 18"/></a></h3>
+        <p>how many processes we need to work</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_reagent_cache_pre"><aside class="declaration">proc </aside>on_reagent_cache_pre<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, /<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/reagent, /<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/coming_from, amount) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L202">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 202"/></a></aside>
+        </h3>
+        <p>here we just remove any water added and increase the water precent, add other things you want done once.</p><h3 id="proc/pre_trans"><aside class="declaration">proc </aside>pre_trans<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/main, /<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/incoming) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L221">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 221"/></a></aside>
+        </h3>
+        <p>restocks water</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/415c9515b4a9cb16444ce19065ee12494f2dc50a/monkestation/code/modules/botany/components/plant_growing.dm#L77">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;botany&#x2F;components&#x2F;plant_growing.dm 77"/></a></aside>
+        </h3>
+        <p>we create reagents using max_reagents, then make it visible and an open container</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/415c9515b4a9cb16444ce19065ee12494f2dc50a">415c951</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
