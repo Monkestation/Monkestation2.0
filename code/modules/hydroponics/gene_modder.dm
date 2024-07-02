@@ -426,10 +426,6 @@
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/disk/plantgene/syndicate
-	gene = new /datum/plant_gene/trait/noreact
-	read_only = 1
-
 /obj/item/disk/plantgene/Initialize(mapload)
 	. = ..()
 	add_overlay("datadisk_gene")
