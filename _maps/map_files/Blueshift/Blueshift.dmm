@@ -2009,6 +2009,10 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -23118,7 +23122,7 @@
 /obj/effect/turf_decal/siding/thinplating/light,
 /obj/machinery/door/window/left/directional/south{
 	name = "Monkey Pen";
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /turf/open/floor/grass,
 /area/station/medical/virology/isolation)
@@ -84544,6 +84548,10 @@
 	name = "hallway camera"
 	},
 /obj/machinery/feed_machine,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
