@@ -67,7 +67,7 @@
 	make_dryable()
 
 	// Go through all traits in their genes and call on_new_plant from them.
-	// TODO: we need a priority queue for traits,some of them need to be called first
+	//TODO: We need a priority queue for traits,some of them need to be called first
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
 
