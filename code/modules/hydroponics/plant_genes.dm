@@ -605,7 +605,7 @@
 
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant, /obj/item/food/grown))
-		grown_plant.volume_rate = rate
+		grown_plant.volume_rate = rate //Monkestation Edit
 	else
 		//Grown inedibles however just use a reagents holder, so.
 		our_plant.reagents?.maximum_volume *= rate
