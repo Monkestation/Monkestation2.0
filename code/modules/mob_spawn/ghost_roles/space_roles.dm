@@ -98,12 +98,6 @@
 //Admin PM from-Kondafairydragon: not that... but HOW THE FUCK DID A LAVALAND SYNDICATE END UP IN SPACE. rather
 //overrides job title so that doesnt happen again bwoinks are scary
 
-// /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload) - disabled because current main has fuckall ruin budget
-//	. = ..()
-//	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
-//		new /mob/living/basic/trooper/syndicate/ranged(get_turf(src))
-//		return INITIALIZE_HINT_QDEL
-
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson //the last agent according to lore, spawns rarely, has some flavour text, should start blinded
 	name = "sleeper"
 	desc = "A standard medicinal sleeper used to treat small and major injuries alike. It appears to be locked up, and you can see a gas mask through the fogged-up windows..."
