@@ -3,7 +3,15 @@
 import { resolveAsset } from '../assets';
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Dropdown, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -29,8 +37,8 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props: any, context: any) => {
-  const { data } = useBackend<Info>(context);
+const ObjectivePrintout = (props: any) => {
+  const { data } = useBackend<Info>();
   const { objectives } = data;
   return (
     <Stack vertical>
@@ -47,8 +55,8 @@ const ObjectivePrintout = (props: any, context: any) => {
   );
 };
 
-export const AntagInfoBorer = (props: any, context: any) => {
-  const [tab, setTab] = useLocalState(context, 'tab', 1);
+export const AntagInfoBorer = (props: any) => {
+  const [tab, setTab] = useLocalState('tab', 1);
   return (
     <Window width={620} height={580} theme="ntos_cat">
       <Window.Content>
@@ -57,28 +65,32 @@ export const AntagInfoBorer = (props: any, context: any) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Introduction
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Ability explanations
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 3}
-            onClick={() => setTab(3)}>
+            onClick={() => setTab(3)}
+          >
             Borer side-effects
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 4}
-            onClick={() => setTab(4)}>
+            onClick={() => setTab(4)}
+          >
             Basic chemical information
           </Tabs.Tab>
         </Tabs>
@@ -168,8 +180,8 @@ const MainPage = () => {
   );
 };
 
-const BorerAbilities = (props: any, context: any) => {
-  const { act, data } = useBackend<BorerInformation>(context);
+const BorerAbilities = (props: any) => {
+  const { act, data } = useBackend<BorerInformation>();
   return (
     <Stack vertical fill>
       <Stack.Item minHeight="42rem">
@@ -179,17 +191,16 @@ const BorerAbilities = (props: any, context: any) => {
   );
 };
 
-const AbilitySection = (props: any, context: any) => {
-  const { act, data } = useBackend<BorerInformation>(context);
+const AbilitySection = (props: any) => {
+  const { act, data } = useBackend<BorerInformation>();
   const { ability } = data;
   if (!ability) {
     return <Section minHeight="300px" />;
   }
 
   const [selectedAbility, setSelectedAbility] = useLocalState(
-    context,
     'ability',
-    ability[0]
+    ability[0],
   );
 
   return (
@@ -205,7 +216,8 @@ const AbilitySection = (props: any, context: any) => {
             'Select an ability using the dropdown menu for an in-depth explanation.'
           }
         />
-      }>
+      }
+    >
       <Stack>
         <Stack.Item grow>
           <Dropdown
@@ -216,7 +228,7 @@ const AbilitySection = (props: any, context: any) => {
             onSelected={(abilityName: string) =>
               setSelectedAbility(
                 ability.find((p) => p.ability_name === abilityName) ||
-                  ability[0]
+                  ability[0],
               )
             }
           />

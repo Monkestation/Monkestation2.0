@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Flex, Stack, Button, Box, Input, NoticeBox } from '../components';
+import {
+  Section,
+  Flex,
+  Stack,
+  Button,
+  Box,
+  Input,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 type OverwatchDisplayData = {
@@ -12,20 +20,17 @@ type Data = {
   displayData: Array<OverwatchDisplayData>;
 };
 
-export const OverwatchWhitelistPanel = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OverwatchWhitelistPanel = (props) => {
+  const { act, data } = useBackend<Data>();
   const { displayData } = data;
-  const [inputWLCkey, setInputWLCkey] = useLocalState(
-    context,
-    'inputWLCkey',
-    ''
-  );
+  const [inputWLCkey, setInputWLCkey] = useLocalState('inputWLCkey', '');
   return (
     <Window
       width={600}
       height={500}
       title="Overwatch Whitelist Panel"
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content scrollable>
         <Section title="Add CKEY to Overwatch Whitelist">
           <Flex>
