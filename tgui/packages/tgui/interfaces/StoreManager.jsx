@@ -9,7 +9,7 @@ export const StoreManager = (props) => {
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     'tabs',
-    loadout_tabs[0]?.name,
+    loadout_tabs[0]?.name
   );
   const selectedTab = loadout_tabs.find((curTab) => {
     return curTab.name === selectedTabName;
@@ -30,8 +30,7 @@ export const StoreManager = (props) => {
                   content={total_coins}
                   tooltip="This is your total Monkecoin amount."
                 />
-              }
-            >
+              }>
               <Dropdown
                 width="100%"
                 selected={selectedTabName}
@@ -52,14 +51,12 @@ export const StoreManager = (props) => {
                     title={selectedTab.title}
                     fill
                     scrollable
-                    align="center"
-                  >
+                    align="center">
                     <Stack
                       direction="row"
                       textAlign="center"
                       align="center"
-                      wrap
-                    >
+                      wrap>
                       {selectedTab.contents.map((item) => (
                         <Stack.Item
                           class="thisissettostopwiththebullshit"
@@ -70,8 +67,7 @@ export const StoreManager = (props) => {
                           style={{
                             border: '2px double silver',
                             'border-radius': '5px',
-                          }}
-                        >
+                          }}>
                           <Stack.Item>
                             <Stack.Item>
                               <Box

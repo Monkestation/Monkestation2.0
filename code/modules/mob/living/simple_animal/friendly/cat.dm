@@ -118,7 +118,6 @@
 	held_state = "cat"
 
 /mob/living/simple_animal/pet/cat/runtime/Initialize(mapload)
-	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"

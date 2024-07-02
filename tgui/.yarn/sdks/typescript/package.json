@@ -2,9 +2,5 @@
   "name": "typescript",
   "version": "4.9.4-sdk",
   "main": "./lib/typescript.js",
-  "type": "commonjs",
-  "bin": {
-    "tsc": "./bin/tsc",
-    "tsserver": "./bin/tsserver"
-  }
+  "type": "commonjs"
 }

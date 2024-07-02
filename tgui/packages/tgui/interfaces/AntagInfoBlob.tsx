@@ -1,12 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Collapsible,
-  Divider,
-  LabeledList,
-  Section,
-  Stack,
-} from '../components';
+import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
 import { Objective } from './common/Objectives';
 
 import { Window } from '../layouts';
@@ -66,8 +59,7 @@ const Overview = (props) => {
         <span
           style={{
             color,
-          }}
-        >
+          }}>
           {name}
         </span>
       </Stack.Item>
@@ -76,8 +68,7 @@ const Overview = (props) => {
         <span
           style={{
             color,
-          }}
-        >
+          }}>
           {name}
         </span>{' '}
         reagent {description}
@@ -88,8 +79,7 @@ const Overview = (props) => {
           <span
             style={{
               color,
-            }}
-          >
+            }}>
             {name}
           </span>{' '}
           reagent {effects}
@@ -194,8 +184,7 @@ const ObjectiveDisplay = (props) => {
           <LabeledList.Item
             color={color ?? 'white'}
             key={index}
-            label={(index + 1).toString()}
-          >
+            label={(index + 1).toString()}>
             {explanation}
           </LabeledList.Item>
         ))}

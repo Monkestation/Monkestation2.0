@@ -1,13 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Button,
-  Stack,
-  Section,
-  LabeledList,
-  Box,
-  BlockQuote,
-  ProgressBar,
-} from '../components';
+import { Button, Stack, Section, LabeledList, Box, BlockQuote, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 export const HackingMinigame = (props) => {
@@ -17,8 +9,7 @@ export const HackingMinigame = (props) => {
     <Window
       title={hacking_name ? hacking_name + ' Hacking' : 'Unknown Hacking'}
       width={400}
-      height={500}
-    >
+      height={500}>
       <Window.Content>
         <Stack vertical width="100%" height="100%">
           <Stack.Item>
@@ -66,8 +57,7 @@ const ActionsMenu = (props) => {
                   }
                   style={{
                     'font-size': '140%',
-                  }}
-                >
+                  }}>
                   {action}
                 </Button>
               </Stack.Item>
@@ -100,8 +90,7 @@ const HackingMenu = (props) => {
           style={{
             'font-weight': 'bold',
             'font-size': '150%',
-          }}
-        >
+          }}>
           Current Hack: {current_hacking_action}
         </BlockQuote>
       </Stack.Item>
@@ -150,8 +139,7 @@ const HackerInfo = (props) => {
               value={hacker_cooldown}
               minValue={0}
               maxValue={100}
-              color="good"
-            >
+              color="good">
               {hacker_cooldown}%
             </ProgressBar>
           </LabeledList.Item>
@@ -185,8 +173,7 @@ const HolderInfo = (props) => {
               value={holder_cooldown}
               minValue={0}
               maxValue={100}
-              color="bad"
-            >
+              color="bad">
               {holder_cooldown}%
             </ProgressBar>
           </LabeledList.Item>
@@ -211,8 +198,7 @@ const HackingAttack = (props) => {
         }
         style={{
           'font-size': '140%',
-        }}
-      >
+        }}>
         {attack_type}
       </Button>
     </Stack.Item>

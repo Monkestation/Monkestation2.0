@@ -1,13 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Dimmer,
-  Icon,
-  LabeledList,
-  Section,
-  Tabs,
-} from '../components';
+import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const Limbgrower = (props) => {
@@ -53,8 +45,7 @@ export const Limbgrower = (props) => {
                       })
                     }
                   />
-                }
-              >
+                }>
                 {reagent.reagent_amount}u
               </LabeledList.Item>
             ))}
@@ -67,8 +58,7 @@ export const Limbgrower = (props) => {
                 fluid
                 key={category.name}
                 selected={tab === category.name}
-                onClick={() => setTab(category.name)}
-              >
+                onClick={() => setTab(category.name)}>
                 {category.name}
               </Tabs.Tab>
             ))}
@@ -89,8 +79,7 @@ export const Limbgrower = (props) => {
                       })
                     }
                   />
-                }
-              >
+                }>
                 {design.needed_reagents.map((reagent) => (
                   <Box key={reagent.name}>
                     {reagent.name}: {reagent.amount}u

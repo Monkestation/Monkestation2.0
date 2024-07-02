@@ -1,13 +1,7 @@
 import { sortBy } from 'common/collections';
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  LabeledList,
-  Section,
-} from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const PortableChemMixer = (props) => {
@@ -41,8 +35,7 @@ export const PortableChemMixer = (props) => {
                 })
               }
             />
-          ))}
-        >
+          ))}>
           <Box>
             {chemicals.map((chemical) => (
               <Button
@@ -71,8 +64,7 @@ export const PortableChemMixer = (props) => {
               content={amount}
               onClick={() => act('remove', { amount })}
             />
-          ))}
-        >
+          ))}>
           <LabeledList>
             <LabeledList.Item
               label="Beaker"
@@ -85,8 +77,7 @@ export const PortableChemMixer = (props) => {
                     onClick={() => act('eject')}
                   />
                 )
-              }
-            >
+              }>
               {(recording && 'Virtual beaker') ||
                 (data.isBeakerLoaded && (
                   <>

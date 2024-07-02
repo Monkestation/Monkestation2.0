@@ -46,8 +46,7 @@ export const PortableTurret = (props) => {
                       onClick={() => act('manual')}
                     />
                   )
-                }
-              >
+                }>
                 <Button
                   icon={on ? 'power-off' : 'times'}
                   content={on ? 'On' : 'Off'}
@@ -68,8 +67,7 @@ export const PortableTurret = (props) => {
                   disabled={locked}
                   onClick={() => act('shootheads')}
                 />
-              }
-            >
+              }>
               <Button.Checkbox
                 fluid
                 checked={neutralize_all}

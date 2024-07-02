@@ -108,8 +108,7 @@ const TabsPrefab = (props) => {
     <Tabs
       vertical={tabProps.vertical}
       fluid={tabProps.fluid}
-      textAlign={tabProps.centered && 'center'}
-    >
+      textAlign={tabProps.centered && 'center'}>
       {TAB_RANGE.map((text, i) => (
         <Tabs.Tab
           key={i}
@@ -125,8 +124,7 @@ const TabsPrefab = (props) => {
               <Button circular compact color="transparent" icon="times" />
             )
           }
-          onClick={() => setTabIndex(i)}
-        >
+          onClick={() => setTabIndex(i)}>
           {text}
         </Tabs.Tab>
       ))}

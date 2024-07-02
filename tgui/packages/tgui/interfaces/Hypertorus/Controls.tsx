@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Icon,
-  Knob,
-  LabeledControls,
-  LabeledList,
-  NumberInput,
-  Section,
-  Tooltip,
-} from 'tgui/components';
+import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
 import { HelpDummy, HoverHelp } from './helpers';
 
 import { BooleanLike } from 'common/react';
@@ -216,8 +206,7 @@ export const HypertorusWasteRemove = (props) => {
               />
               Waste remove:
             </>
-          }
-        >
+          }>
           <Button
             icon={waste_remove ? 'power-off' : 'times'}
             content={waste_remove ? 'On' : 'Off'}
@@ -231,8 +220,7 @@ export const HypertorusWasteRemove = (props) => {
               <HelpDummy />
               Moderator filtering rate:
             </>
-          }
-        >
+          }>
           <NumberInput
             animated
             value={mod_filtering_rate}
@@ -252,8 +240,7 @@ export const HypertorusWasteRemove = (props) => {
               <HelpDummy />
               Filter from moderator mix:
             </>
-          }
-        >
+          }>
           {filter_types.map(({ gas_id, gas_name, enabled }) => (
             <Button.Checkbox
               key={gas_id}
@@ -262,8 +249,7 @@ export const HypertorusWasteRemove = (props) => {
                 act('filter', {
                   mode: gas_id,
                 })
-              }
-            >
+              }>
               {gas_name}
             </Button.Checkbox>
           ))}

@@ -3,15 +3,7 @@
 import { resolveAsset } from '../assets';
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Divider,
-  Dropdown,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, Divider, Dropdown, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -65,32 +57,28 @@ export const AntagInfoBorer = (props: any) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}
-          >
+            onClick={() => setTab(1)}>
             Introduction
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}
-          >
+            onClick={() => setTab(2)}>
             Ability explanations
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 3}
-            onClick={() => setTab(3)}
-          >
+            onClick={() => setTab(3)}>
             Borer side-effects
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 4}
-            onClick={() => setTab(4)}
-          >
+            onClick={() => setTab(4)}>
             Basic chemical information
           </Tabs.Tab>
         </Tabs>
@@ -200,7 +188,7 @@ const AbilitySection = (props: any) => {
 
   const [selectedAbility, setSelectedAbility] = useLocalState(
     'ability',
-    ability[0],
+    ability[0]
   );
 
   return (
@@ -216,8 +204,7 @@ const AbilitySection = (props: any) => {
             'Select an ability using the dropdown menu for an in-depth explanation.'
           }
         />
-      }
-    >
+      }>
       <Stack>
         <Stack.Item grow>
           <Dropdown
@@ -228,7 +215,7 @@ const AbilitySection = (props: any) => {
             onSelected={(abilityName: string) =>
               setSelectedAbility(
                 ability.find((p) => p.ability_name === abilityName) ||
-                  ability[0],
+                  ability[0]
               )
             }
           />

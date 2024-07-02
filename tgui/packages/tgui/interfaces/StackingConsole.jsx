@@ -45,8 +45,7 @@ export const StackingConsoleContent = (props) => {
                   })
                 }
               />
-            }
-          >
+            }>
             <Box style={{ 'text-transform': 'capitalize' }}>
               {input_direction}
             </Box>
@@ -63,8 +62,7 @@ export const StackingConsoleContent = (props) => {
                   })
                 }
               />
-            }
-          >
+            }>
             <Box style={{ 'text-transform': 'capitalize' }}>
               {output_direction}
             </Box>
@@ -90,8 +88,7 @@ export const StackingConsoleContent = (props) => {
                       })
                     }
                   />
-                }
-              >
+                }>
                 {sheet.amount || 'Unknown'}
               </LabeledList.Item>
             ))}

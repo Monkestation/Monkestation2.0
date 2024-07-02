@@ -19,7 +19,7 @@ const boxHelp = [
     color: 'green',
     text: 'Bring the crate to the designated sending location in the safehouse. The area may seem out of place. Examine the safehouse to find it.',
     icon: 'boxes',
-    title: 'Recover',
+    'title': 'Recover',
   },
   {
     color: 'blue',
@@ -60,8 +60,7 @@ export const AvatarHelp = (props) => {
               color="good"
               fill
               scrollable
-              title="Welcome to the Virtual Domain."
-            >
+              title="Welcome to the Virtual Domain.">
               {help_text}
             </Section>
           </Stack.Item>
@@ -115,8 +114,7 @@ const BoxHelp = (props: { index: number }) => {
             />
             <Box>{boxHelp[index].title}</Box>
           </Stack>
-        }
-      >
+        }>
         {boxHelp[index].text}
       </Section>
     </Stack.Item>

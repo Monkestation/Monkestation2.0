@@ -12,7 +12,6 @@
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
-		JOB_BRIG_PHYSICIAN,
 	)
 	shared_occurence_type = SHARED_HIGH_THREAT
 	maximum_antags = 1

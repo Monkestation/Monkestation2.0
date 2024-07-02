@@ -1,15 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Table,
-  Tabs,
-  Collapsible,
-  Stack,
-  LabeledList,
-  ProgressBar,
-  Section,
-  Button,
-} from '../components';
+import { Box, Table, Tabs, Collapsible, Stack, LabeledList, ProgressBar, Section, Button } from '../components';
 import { Window } from '../layouts';
 import { toFixed } from 'common/math';
 
@@ -24,16 +14,14 @@ export const SlimePenController = (_) => {
             key={1}
             selected={tabIndex === 1}
             icon="flask"
-            onClick={() => setTabIndex(1)}
-          >
+            onClick={() => setTabIndex(1)}>
             Slime Data
           </Tabs.Tab>
           <Tabs.Tab
             key={2}
             selected={tabIndex === 2}
             icon="flask"
-            onClick={() => setTabIndex(2)}
-          >
+            onClick={() => setTabIndex(2)}>
             Corral Data
           </Tabs.Tab>
         </Tabs>
@@ -63,8 +51,7 @@ const SlimeData = (_) => {
                     }}
                     value={slime.health}
                     minValue={0}
-                    maxValue={100}
-                  >
+                    maxValue={100}>
                     {toFixed(slime.health, 0.1) + ' %'}
                   </ProgressBar>
                 </LabeledList.Item>
@@ -77,8 +64,7 @@ const SlimeData = (_) => {
                     }}
                     value={slime.hunger_precent * 100}
                     minValue={0}
-                    maxValue={100}
-                  >
+                    maxValue={100}>
                     {toFixed(slime.hunger_precent * 100, 0.1) + ' %'}
                   </ProgressBar>
                 </LabeledList.Item>
@@ -91,8 +77,7 @@ const SlimeData = (_) => {
                     }}
                     value={slime.mutation_chance}
                     minValue={0}
-                    maxValue={100}
-                  >
+                    maxValue={100}>
                     {toFixed(slime.mutation_chance, 0.1) + ' %'}
                   </ProgressBar>
                 </LabeledList.Item>
@@ -105,8 +90,7 @@ const SlimeData = (_) => {
                           !mutation.mobs_needed & !mutation.items_needed
                             ? 'green'
                             : ''
-                        }
-                      >
+                        }>
                         <Stack>
                           <Box>{mutation.color + ' Slime'}</Box>
                           <Button
@@ -219,8 +203,7 @@ const StoreViewer = (_) => {
                   icon={'sack-dollar'}
                   color="green"
                   disabled={item.owned}
-                  onClick={() => act('buy', { path: item.path })}
-                >
+                  onClick={() => act('buy', { path: item.path })}>
                   {item.cost + ' Xenobiology Points'}
                 </Button>
               </Stack.Item>
@@ -243,7 +226,7 @@ const StoreViewer = (_) => {
                   ml="10px"
                   mt="3px"
                   style={{
-                    transform: 'scale(1.5)',
+                    'transform': 'scale(1.5)',
                   }}
                   icon={'question'}
                   tooltip={item.desc}
@@ -268,8 +251,7 @@ const StoreViewer = (_) => {
               tooltip={reagent.amount}
               value={(reagent.amount / reagent_amount) * 100}
               minValue={0}
-              maxValue={100}
-            >
+              maxValue={100}>
               {toFixed((reagent.amount / reagent_amount) * 100, 0.1) +
                 ' % (' +
                 toFixed(reagent.amount, 0.1) +

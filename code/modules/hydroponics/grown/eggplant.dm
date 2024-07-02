@@ -6,7 +6,7 @@
 	species = "eggplant"
 	plantname = "Eggplants"
 	product = /obj/item/food/grown/eggplant
-	yield = 20
+	yield = 2
 	potency = 20
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"

@@ -570,7 +570,9 @@
 	dir = 1;
 	name = "old bloody sofa"
 	},
-/obj/machinery/atm/directional/south,
+/obj/machinery/atm{
+	pixel_y = -30
+	},
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -830,7 +832,7 @@
 	dir = 4;
 	name = "old bloody sofa"
 	},
-/obj/machinery/atm/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Ov" = (

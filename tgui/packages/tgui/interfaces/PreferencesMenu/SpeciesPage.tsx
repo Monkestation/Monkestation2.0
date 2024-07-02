@@ -1,23 +1,8 @@
 import { classes } from 'common/react';
 import { useBackend } from '../../backend';
-import {
-  Box,
-  Button,
-  Divider,
-  Icon,
-  Section,
-  Stack,
-  Tooltip,
-} from '../../components';
+import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import {
-  createSetPreference,
-  Food,
-  Perk,
-  PreferencesMenuData,
-  ServerData,
-  Species,
-} from './data';
+import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const FOOD_ICONS = {
@@ -97,8 +82,7 @@ const FoodList = (props: {
               .join(', ')}
           </Box>
         </Box>
-      }
-    >
+      }>
       <Stack ml={2}>
         {props.food.map((food) => {
           return (
@@ -170,8 +154,7 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           <Divider />
           <Box>{perk.description}</Box>
         </Box>
-      }
-    >
+      }>
       <Box class={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
@@ -239,7 +222,7 @@ const SpeciesPageInner = (props: {
   let species: [string, Species][] = Object.entries(props.species).map(
     ([species, data]) => {
       return [species, data];
-    },
+    }
   );
 
   // Humans are always the top of the list
@@ -279,8 +262,7 @@ const SpeciesPageInner = (props: {
                       display: 'block',
                       height: '64px',
                       width: '64px',
-                    }}
-                  >
+                    }}>
                     <Box
                       className={classes(['species64x64', species.icon])}
                       ml={-1}
@@ -304,8 +286,7 @@ const SpeciesPageInner = (props: {
                         currentSpecies.diet && (
                           <Diet diet={currentSpecies.diet} />
                         )
-                      }
-                    >
+                      }>
                       <Section title="Description">
                         {currentSpecies.desc}
                       </Section>

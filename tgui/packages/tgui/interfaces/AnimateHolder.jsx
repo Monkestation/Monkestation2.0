@@ -1,14 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import {
-  Button,
-  Input,
-  Section,
-  Collapsible,
-  LabeledList,
-  NumberInput,
-  Dropdown,
-} from '../components';
+import { Button, Input, Section, Collapsible, LabeledList, NumberInput, Dropdown } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 
 export const AnimateHolder = (props) => {
@@ -64,8 +56,7 @@ const AnimateSteps = (props) => {
                           variable: name,
                           index: index + 1,
                         })
-                      }
-                    >
+                      }>
                       RANDOM
                     </ButtonCheckbox>
                   ) : null}
@@ -139,8 +130,7 @@ const AnimateSteps = (props) => {
                       value: !value,
                       index: index + 1,
                     })
-                  }
-                >
+                  }>
                   {key}
                 </ButtonCheckbox>
               ))}
@@ -153,8 +143,7 @@ const AnimateSteps = (props) => {
             color="red"
             icon="sync"
             width="100%"
-            onClick={() => act('remove_step', { index: index + 1 })}
-          >
+            onClick={() => act('remove_step', { index: index + 1 })}>
             Delete Step
           </Button>
         </Collapsible>
@@ -163,8 +152,7 @@ const AnimateSteps = (props) => {
         color="green"
         icon="sync"
         width="100%"
-        onClick={() => act('add_blank_step')}
-      >
+        onClick={() => act('add_blank_step')}>
         Create New Step
       </Button>
     </Section>
@@ -206,8 +194,7 @@ export const Transform = (props) => {
             index: step,
             variable: 'transform',
           })
-        }
-      >
+        }>
         RANDOM
       </ButtonCheckbox>
       <Dropdown
@@ -289,8 +276,7 @@ export const Transform = (props) => {
           act('modify_transform', {
             index: step,
           })
-        }
-      >
+        }>
         Confirm
       </Button>
     </Section>

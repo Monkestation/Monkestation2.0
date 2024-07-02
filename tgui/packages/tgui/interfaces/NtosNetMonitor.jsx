@@ -1,14 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  NoticeBox,
-  Icon,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetMonitor = (props) => {
@@ -30,16 +21,14 @@ export const NtosNetMonitor = (props) => {
               icon="network-wired"
               lineHeight="23px"
               selected={tab_main === 1}
-              onClick={() => setTab_main(1)}
-            >
+              onClick={() => setTab_main(1)}>
               NtNet
             </Tabs.Tab>
             <Tabs.Tab
               icon="tablet"
               lineHeight="23px"
               selected={tab_main === 2}
-              onClick={() => setTab_main(2)}
-            >
+              onClick={() => setTab_main(2)}>
               Tablets ({tablets.length})
             </Tabs.Tab>
           </Tabs>
@@ -131,8 +120,7 @@ const MainPage = (props) => {
               content="Clear Logs"
               onClick={() => act('purgelogs')}
             />
-          }
-        >
+          }>
           {ntnetlogs.map((log) => (
             <Box key={log.entry} className="candystripe">
               {log.entry}

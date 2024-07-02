@@ -1,28 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  NumberInput,
-  ColorBox,
-  Input,
-  Dropdown,
-  Stack,
-} from '../../components';
-import {
-  EntryCoordProps,
-  EntryFloatProps,
-  EntryGradientProps,
-  EntryIconStateProps,
-  EntryTransformProps,
-  MatrixTypes,
-  ParticleUIData,
-  P_DATA_ICON_ADD,
-  P_DATA_ICON_REMOVE,
-  P_DATA_ICON_WEIGHT,
-  SpaceToNum,
-  SpaceTypes,
-} from './data';
+import { Box, Button, LabeledList, NumberInput, ColorBox, Input, Dropdown, Stack } from '../../components';
+import { EntryCoordProps, EntryFloatProps, EntryGradientProps, EntryIconStateProps, EntryTransformProps, MatrixTypes, ParticleUIData, P_DATA_ICON_ADD, P_DATA_ICON_REMOVE, P_DATA_ICON_WEIGHT, SpaceToNum, SpaceTypes } from './data';
 import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
 
 export const EntryFloat = (props: EntryFloatProps) => {
@@ -103,8 +81,8 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
-      )
+      (space) => SpaceToNum[space] === gradient['space']
+    )
     : 'COLORSPACE_RGB';
   return (
     <LabeledList.Item label={name}>
@@ -140,7 +118,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 var: var_name,
                 new_value: gradient
                   ? setGradientSpace(gradient, SpaceToNum[e])
-                  : { space: SpaceToNum[e] },
+                  : { 'space': SpaceToNum[e] },
               })
             }
             width="145px"
@@ -161,7 +139,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
-                        i === index ? value : x,
+                        i === index ? value : x
                       ),
                     })
                   }
@@ -177,7 +155,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                   }
                 />
               </>
-            ),
+            )
           )}
         </Stack.Item>
         <Stack.Item>
@@ -238,7 +216,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
-                    i === index ? value : x,
+                    i === index ? value : x
                   ),
                 })
               }
@@ -328,8 +306,8 @@ export const EntryIconState = (props: EntryIconStateProps) => {
   const { name, var_name, icon_state } = props;
   const newValue =
     typeof icon_state === 'string'
-      ? { [icon_state]: 1, None: 0 }
-      : { ...icon_state, None: 0 };
+      ? { [icon_state]: 1, 'None': 0 }
+      : { ...icon_state, 'None': 0 };
   return (
     <LabeledList.Item label={name}>
       <Stack>
@@ -381,8 +359,8 @@ export const EntryIconState = (props: EntryIconStateProps) => {
                       var: var_name,
                       new_value: Object.fromEntries(
                         Object.entries(icon_state).filter(
-                          ([key]) => key !== iconstate,
-                        ),
+                          ([key]) => key !== iconstate
+                        )
                       ),
                     })
                   }

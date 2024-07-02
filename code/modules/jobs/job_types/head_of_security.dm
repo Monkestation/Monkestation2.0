@@ -71,7 +71,7 @@
 	box = /obj/item/storage/box/survival/security
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun/hos,
-		/obj/item/stamp/head/hos,
+		/obj/item/stamp/hos,
 		)
 	implants = list(/obj/item/implant/mindshield)
 

@@ -489,7 +489,7 @@
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "tJ" = (
-/obj/machinery/atm/directional/north,
+/obj/machinery/atm,
 /obj/structure/chair/wood{
 	dir = 4
 	},

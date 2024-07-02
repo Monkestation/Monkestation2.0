@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/korta_nut
 	lifespan = 55
 	endurance = 35
-	yield = 50
+	yield = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "kortanut-grow"
 	icon_dead = "kortanut-dead"

@@ -96,7 +96,6 @@
 /obj/item/storage/canesword/civ/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
-	AddElement(/datum/element/manufacturer_examine, COMPANY_ASHENFORGE)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
@@ -139,7 +138,6 @@
 /obj/item/storage/canesword/CentCom/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
-	AddElement(/datum/element/manufacturer_examine, COMPANY_ASHENFORGE)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
@@ -181,7 +179,6 @@
 /obj/item/storage/canesword/syndicate/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
-	AddElement(/datum/element/manufacturer_examine, COMPANY_ASHENFORGE)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE

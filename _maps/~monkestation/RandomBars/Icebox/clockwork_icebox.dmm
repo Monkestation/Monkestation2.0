@@ -424,7 +424,7 @@
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "wb" = (
-/obj/machinery/atm/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "wg" = (

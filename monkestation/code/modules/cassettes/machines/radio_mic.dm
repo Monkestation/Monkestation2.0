@@ -25,8 +25,6 @@
 
 /obj/item/radio/radio_mic/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
-
 	frequency = FREQ_RADIO
 	broadcasting = TRUE
 	use_command = TRUE

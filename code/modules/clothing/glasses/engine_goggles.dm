@@ -51,7 +51,7 @@
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
-			color_cutoffs = null
+			color_cutoffs = list()
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_PIPE_CONNECTABLE)

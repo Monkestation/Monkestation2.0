@@ -68,7 +68,7 @@
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/head/hop,
+		/obj/item/stamp/hop,
 		)
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)

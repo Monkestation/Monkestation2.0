@@ -1,13 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  Section,
-  Flex,
-  Stack,
-  Button,
-  Box,
-  Input,
-  NoticeBox,
-} from '../components';
+import { Section, Flex, Stack, Button, Box, Input, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type OverwatchDisplayData = {

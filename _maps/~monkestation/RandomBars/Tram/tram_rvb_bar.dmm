@@ -192,7 +192,10 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
 	},
-/obj/machinery/atm/directional/east,
+/obj/machinery/atm{
+	pixel_x = 30;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "dn" = (
@@ -2268,7 +2271,10 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/duct,
-/obj/machinery/atm/directional/west,
+/obj/machinery/atm{
+	pixel_x = -30;
+	pixel_y = 0
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

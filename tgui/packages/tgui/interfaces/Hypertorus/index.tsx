@@ -142,8 +142,7 @@ export const Hypertorus = (props) => {
     <Window
       title="Hypertorus Fusion Reactor control panel"
       width={width}
-      height={height}
-    >
+      height={height}>
       <Window.Content scrollable>
         <HypertorusLayout />
       </Window.Content>

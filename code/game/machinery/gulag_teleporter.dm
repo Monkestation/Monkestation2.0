@@ -43,7 +43,6 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/Destroy()
 	if(linked_reclaimer)
 		linked_reclaimer.linked_teleporter = null
-	linked_reclaimer = null
 	return ..()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)

@@ -31,7 +31,6 @@
 
 /mob/living/basic/parrot/poly/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	if(!memory_saved)
 		roundend_callback = CALLBACK(src, PROC_REF(Write_Memory))

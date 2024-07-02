@@ -102,8 +102,7 @@ export const PanelOptions = (props) => {
         <Button.Checkbox
           fluid
           checked={announce}
-          onClick={() => setAnnounce(!announce)}
-        >
+          onClick={() => setAnnounce(!announce)}>
           Announce
         </Button.Checkbox>
       </Stack.Item>
@@ -131,7 +130,7 @@ export const EventSection = (props) => {
       }
       return true;
     }),
-    EVENT_PAGE_ITEMS,
+    EVENT_PAGE_ITEMS
   );
 
   const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
@@ -160,8 +159,7 @@ export const EventSection = (props) => {
                         type: event.type,
                         announce: announce,
                       })
-                    }
-                  >
+                    }>
                     {event.name}
                   </Button>
                 </Stack.Item>
@@ -191,8 +189,7 @@ export const EventTabs = (props) => {
               selected={category === cat}
               icon={cat.icon}
               key={cat.icon}
-              onClick={() => setCategory(cat)}
-            >
+              onClick={() => setCategory(cat)}>
               {cat.name}
             </Tabs.Tab>
           ))}

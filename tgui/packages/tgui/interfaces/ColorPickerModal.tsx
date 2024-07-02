@@ -6,27 +6,10 @@
 
 import { Loader } from './common/Loader';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Autofocus,
-  Box,
-  Flex,
-  Section,
-  Stack,
-  Pointer,
-  NumberInput,
-  Tooltip,
-} from '../components';
+import { Autofocus, Box, Flex, Section, Stack, Pointer, NumberInput, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
-import {
-  hexToHsva,
-  HsvaColor,
-  hsvaToHex,
-  hsvaToHslString,
-  hsvaToRgba,
-  rgbaToHsva,
-  validHex,
-} from 'common/color';
+import { hexToHsva, HsvaColor, hsvaToHex, hsvaToHslString, hsvaToRgba, rgbaToHsva, validHex } from 'common/color';
 import { Interaction, Interactive } from 'tgui/components/Interactive';
 import { classes } from 'common/react';
 import { Component, FocusEvent, FormEvent, InfernoNode } from 'inferno';
@@ -55,7 +38,7 @@ export const ColorPickerModal = (_) => {
   } = data;
   let [selectedColor, setSelectedColor] = useLocalState<HsvaColor>(
     'color_picker_choice',
-    hexToHsva(default_color),
+    hexToHsva(default_color)
   );
 
   return (
@@ -399,7 +382,7 @@ export class ColorInput extends Component {
         this.props.onChange(
           this.props.escape
             ? this.props.escape(e.currentTarget.value)
-            : e.currentTarget.value,
+            : e.currentTarget.value
         );
       }
     }
@@ -465,9 +448,8 @@ const SaturationValue = ({ hsva, onChange }) => {
         onKey={handleKey}
         aria-label="Color"
         aria-valuetext={`Saturation ${Math.round(
-          hsva.s,
-        )}%, Brightness ${Math.round(hsva.v)}%`}
-      >
+          hsva.s
+        )}%, Brightness ${Math.round(hsva.v)}%`}>
         <Pointer
           className="react-colorful__saturation_value-pointer"
           top={1 - hsva.v / 100}
@@ -509,8 +491,7 @@ const Hue = ({
         aria-label="Hue"
         aria-valuenow={Math.round(hue)}
         aria-valuemax="360"
-        aria-valuemin="0"
-      >
+        aria-valuemin="0">
         <Pointer
           className="react-colorful__hue-pointer"
           left={hue / 360}
@@ -547,7 +528,7 @@ const Saturation = ({
     <div className={nodeClassName}>
       <Interactive
         style={{
-          background: `linear-gradient(to right, ${hsvaToHslString({
+          'background': `linear-gradient(to right, ${hsvaToHslString({
             h: color.h,
             s: 0,
             v: color.v,
@@ -559,8 +540,7 @@ const Saturation = ({
         aria-label="Saturation"
         aria-valuenow={Math.round(color.s)}
         aria-valuemax="100"
-        aria-valuemin="0"
-      >
+        aria-valuemin="0">
         <Pointer
           className="react-colorful__saturation-pointer"
           left={color.s / 100}
@@ -596,7 +576,7 @@ const Value = ({
     <div className={nodeClassName}>
       <Interactive
         style={{
-          background: `linear-gradient(to right, ${hsvaToHslString({
+          'background': `linear-gradient(to right, ${hsvaToHslString({
             h: color.h,
             s: color.s,
             v: 0,
@@ -608,8 +588,7 @@ const Value = ({
         aria-label="Value"
         aria-valuenow={Math.round(color.s)}
         aria-valuemax="100"
-        aria-valuemin="0"
-      >
+        aria-valuemin="0">
         <Pointer
           className="react-colorful__value-pointer"
           left={color.v / 100}
@@ -662,8 +641,7 @@ const RGBSlider = ({
         onKey={handleKey}
         aria-valuenow={rgb[target]}
         aria-valuemax="100"
-        aria-valuemin="0"
-      >
+        aria-valuemin="0">
         <Pointer
           className={`react-colorful__${target}-pointer`}
           left={rgb[target] / 255}

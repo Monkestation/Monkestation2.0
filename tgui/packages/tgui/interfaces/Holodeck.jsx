@@ -21,8 +21,7 @@ export const Holodeck = (props) => {
               selected={!emagged}
               onClick={() => act('safety')}
             />
-          }
-        >
+          }>
           {default_programs.map((def_program) => (
             <Button
               fluid

@@ -1,14 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  ColorBox,
-  LabeledList,
-  NumberInput,
-  Section,
-  Table,
-} from '../components';
+import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const ChemMaster = (props) => {
@@ -57,8 +48,7 @@ const ChemMasterContent = (props) => {
               />
             </>
           )
-        }
-      >
+        }>
         {!isBeakerLoaded && (
           <Box color="label" mt="3px" mb="5px">
             No beaker loaded.
@@ -93,8 +83,7 @@ const ChemMasterContent = (props) => {
               onClick={() => act('toggleMode')}
             />
           </>
-        }
-      >
+        }>
         {bufferContents.length === 0 && (
           <Box color="label" mt="3px" mb="5px">
             Buffer is empty.
@@ -262,8 +251,7 @@ const PackagingControls = (props) => {
               selected={pill.id === chosenPillStyle}
               textAlign="center"
               color="transparent"
-              onClick={() => act('pillStyle', { id: pill.id })}
-            >
+              onClick={() => act('pillStyle', { id: pill.id })}>
               <Box mx={-1} className={pill.className} />
             </Button>
           ))}
@@ -295,8 +283,7 @@ const PackagingControls = (props) => {
               color="transparent"
               onClick={() =>
                 act('change_patch_style', { patch_style: patch.style })
-              }
-            >
+              }>
               <Box mb={0} mt={1} className={patch.class_name} />
             </Button>
           ))}
@@ -343,8 +330,7 @@ const PackagingControls = (props) => {
               })
             }
             checked={autoCondiStyleChosen}
-            disabled={!condiStyles.length}
-          >
+            disabled={!condiStyles.length}>
             Guess from contents
           </Button.Checkbox>
         </LabeledList.Item>
@@ -359,8 +345,7 @@ const PackagingControls = (props) => {
               textAlign="center"
               color="transparent"
               title={style.title}
-              onClick={() => act('condiStyle', { id: style.id })}
-            >
+              onClick={() => act('condiStyle', { id: style.id })}>
               <Box mx={-1} className={style.className} />
             </Button>
           ))}
@@ -418,8 +403,7 @@ const AnalysisResults = (props) => {
             })
           }
         />
-      }
-    >
+      }>
       <LabeledList>
         <LabeledList.Item label="Name">{analyzeVars.name}</LabeledList.Item>
         <LabeledList.Item label="State">{analyzeVars.state}</LabeledList.Item>

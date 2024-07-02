@@ -34,8 +34,7 @@ export const ChemFilterPane = (props: Props) => {
             })
           }
         />
-      }
-    >
+      }>
       {list.map((filter) => (
         <Fragment key={filter}>
           <Button

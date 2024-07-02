@@ -6,15 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Knob,
-  LabeledList,
-  NoticeBox,
-  ProgressBar,
-  Section,
-} from '../components';
+import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { formatMoney, formatSiUnit, formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -94,15 +86,13 @@ const InputControls = (props) => {
               color={accepting_power ? 'green' : 'red'}
               onClick={() => act('toggle_input')}
             />
-          }
-        >
+          }>
           <Box
             color={
               (sucking_power && 'good') ||
               (accepting_power && 'average') ||
               'bad'
-            }
-          >
+            }>
             {(sucking_power && 'Online') ||
               (accepting_power && 'Idle') ||
               'Offline'}
@@ -207,13 +197,11 @@ const OutputControls = (props) => {
               color={firing ? 'green' : 'red'}
               onClick={() => act('toggle_output')}
             />
-          }
-        >
+          }>
           <Box
             color={
               (firing && 'good') || (accepting_power && 'average') || 'bad'
-            }
-          >
+            }>
             {(firing && 'Online') || (accepting_power && 'Idle') || 'Offline'}
           </Box>
         </LabeledList.Item>

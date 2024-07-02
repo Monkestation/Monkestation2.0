@@ -3,14 +3,7 @@ import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  ByondUi,
-  Input,
-  NoticeBox,
-  Section,
-  Stack,
-} from '../components';
+import { Button, ByondUi, Input, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -32,7 +25,7 @@ type Camera = {
  */
 const prevNextCamera = (
   cameras: Camera[],
-  activeCamera: Camera & { status: BooleanLike },
+  activeCamera: Camera & { status: BooleanLike }
 ) => {
   if (!activeCamera || cameras.length < 2) {
     return [];
@@ -138,8 +131,7 @@ const CameraSelector = (props) => {
                 act('switch_camera', {
                   camera: camera.ref,
                 })
-              }
-            >
+              }>
               {camera.name}
             </div>
           ))}

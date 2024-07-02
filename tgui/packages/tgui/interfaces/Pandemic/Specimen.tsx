@@ -44,8 +44,7 @@ const Buttons = (props) => {
                 <Tabs.Tab
                   selected={tab === index}
                   onClick={() => setTab(index)}
-                  key={index}
-                >
+                  key={index}>
                   {virus.name}
                 </Tabs.Tab>
               );

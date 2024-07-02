@@ -18,8 +18,7 @@ export const MassDriverControl = (props) => {
                 selected={timing}
                 onClick={() => act('time')}
               />
-            }
-          >
+            }>
             <Button
               icon="fast-backward"
               disabled={timing}
@@ -53,8 +52,7 @@ export const MassDriverControl = (props) => {
               disabled={timing || !poddoor}
               onClick={() => act('door')}
             />
-          }
-        >
+          }>
           {(!!connected && (
             <>
               <LabeledList>
@@ -67,8 +65,7 @@ export const MassDriverControl = (props) => {
                       disabled={timing}
                       onClick={() => act('driver_test')}
                     />
-                  }
-                >
+                  }>
                   <NumberInput
                     value={power}
                     width="40px"

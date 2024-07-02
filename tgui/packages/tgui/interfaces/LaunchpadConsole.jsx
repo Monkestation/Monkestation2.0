@@ -1,15 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  Input,
-  NoticeBox,
-  NumberInput,
-  Section,
-} from '../components';
+import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 const LaunchpadButtonPad = (props) => {
@@ -150,8 +140,7 @@ export const LaunchpadControl = (props) => {
           color="bad"
           onClick={() => act('remove')}
         />
-      }
-    >
+      }>
       <Grid>
         <Grid.Column>
           <Section title="Controls" level={2}>

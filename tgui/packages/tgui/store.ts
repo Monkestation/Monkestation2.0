@@ -4,14 +4,7 @@
  * @license MIT
  */
 
-import {
-  Middleware,
-  Reducer,
-  Store,
-  applyMiddleware,
-  combineReducers,
-  createStore,
-} from 'common/redux';
+import { Middleware, Reducer, Store, applyMiddleware, combineReducers, createStore } from 'common/redux';
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
@@ -51,11 +44,11 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
   const middlewares: Middleware[] = !sideEffects
     ? []
     : [
-        ...(middleware?.pre || []),
-        assetMiddleware,
-        backendMiddleware,
-        ...(middleware?.post || []),
-      ];
+      ...(middleware?.pre || []),
+      assetMiddleware,
+      backendMiddleware,
+      ...(middleware?.post || []),
+    ];
 
   if (process.env.NODE_ENV !== 'production') {
     // We are using two if statements because Webpack is capable of
@@ -79,7 +72,7 @@ const loggingMiddleware: Middleware = (store) => (next) => (action) => {
   const { type } = action;
   logger.debug(
     'action',
-    type === 'update' || type === 'backend/update' ? { type } : action,
+    type === 'update' || type === 'backend/update' ? { type } : action
   );
   return next(action);
 };

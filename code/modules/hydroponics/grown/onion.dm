@@ -8,7 +8,7 @@
 	lifespan = 20
 	maturation = 30
 	production = 4
-	yield = 60
+	yield = 6
 	endurance = 25
 	growthstages = 3
 	weed_chance = 3

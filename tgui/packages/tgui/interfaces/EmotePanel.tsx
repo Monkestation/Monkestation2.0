@@ -25,44 +25,44 @@ export const EmotePanelContent = (props) => {
 
   const [filterVisible, toggleVisualFilter] = useLocalState<boolean>(
     'filterVisible',
-    false,
+    false
   );
 
   const [filterAudible, toggleAudibleFilter] = useLocalState<boolean>(
     'filterAudible',
-    false,
+    false
   );
 
   const [filterSound, toggleSoundFilter] = useLocalState<boolean>(
     'filterSound',
-    false,
+    false
   );
 
   const [filterHands, toggleHandsFilter] = useLocalState<boolean>(
     'filterHands',
-    false,
+    false
   );
 
   const [filterUseParams, toggleUseParamsFilter] = useLocalState<boolean>(
     'filterUseParams',
-    false,
+    false
   );
 
   const [useParams, toggleUseParams] = useLocalState<boolean>(
     'useParams',
-    false,
+    false
   );
 
   const [searchText, setSearchText] = useLocalState<string>('search_text', '');
 
   const [showNames, toggleShowNames] = useLocalState<boolean>(
     'showNames',
-    true,
+    true
   );
 
   const [showIcons, toggleShowIcons] = useLocalState<boolean>(
     'showIcons',
-    false,
+    false
   );
 
   return (
@@ -117,8 +117,7 @@ export const EmotePanelContent = (props) => {
               onClick={() => toggleUseParamsFilter(!filterUseParams)}
             />
           </Flex>
-        }
-      >
+        }>
         <SearchBar
           searchText={searchText}
           onSearchTextChanged={setSearchText}
@@ -139,8 +138,7 @@ export const EmotePanelContent = (props) => {
               </Button>
               <Button
                 selected={showIcons}
-                onClick={() => toggleShowIcons(!showIcons)}
-              >
+                onClick={() => toggleShowIcons(!showIcons)}>
                 Show Icons
               </Button>
             </Flex.Item>
@@ -148,14 +146,12 @@ export const EmotePanelContent = (props) => {
               <Button
                 icon="crosshairs"
                 selected={useParams}
-                onClick={() => toggleUseParams(!useParams)}
-              >
+                onClick={() => toggleUseParams(!useParams)}>
                 Use Params
               </Button>
             </Flex.Item>
           </Flex>
-        }
-      >
+        }>
         <Flex>
           <Flex.Item>
             {emotes
@@ -164,17 +160,15 @@ export const EmotePanelContent = (props) => {
                   emote.key &&
                   (searchText.length > 0
                     ? emote.key
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()) ||
-                      emote.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase())
+                      .toLowerCase()
+                      .includes(searchText.toLowerCase()) ||
+                    emote.name.toLowerCase().includes(searchText.toLowerCase())
                     : true) &&
                   (filterVisible ? emote.visible : true) &&
                   (filterAudible ? emote.audible : true) &&
                   (filterSound ? emote.sound : true) &&
                   (filterHands ? emote.hands : true) &&
-                  (filterUseParams ? emote.use_params : true),
+                  (filterUseParams ? emote.use_params : true)
               )
               .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map((emote) => (
@@ -200,8 +194,7 @@ export const EmotePanelContent = (props) => {
                       emote_key: emote.key,
                       use_params: useParams,
                     })
-                  }
-                >
+                  }>
                   <Box inline width="50%">
                     {showNames
                       ? capitalizeFirst(emote.name.toLowerCase())

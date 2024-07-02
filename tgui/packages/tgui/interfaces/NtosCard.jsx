@@ -1,13 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Dropdown,
-  Input,
-  NumberInput,
-  Section,
-  Stack,
-} from '../components';
+import { Box, Button, Dropdown, Input, NumberInput, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -57,8 +49,7 @@ export const NtosCardContent = (props) => {
               }
               tooltipPosition="left"
             />
-          }
-        >
+          }>
           <TemplateDropdown templates={templates} />
         </Section>
       )}
@@ -130,8 +121,7 @@ const IdCardPage = (props) => {
             }}
           />
         </>
-      }
-    >
+      }>
       <Stack wrap="wrap">
         <Stack.Item width="100%">
           <Button

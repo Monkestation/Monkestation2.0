@@ -10,10 +10,6 @@
 	///Selection used to remove songs
 	var/selection
 
-/obj/machinery/cassette/adv_cassette_deck/Initialize(mapload)
-	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
-
 /obj/machinery/cassette/adv_cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
 	..()
 	default_unfasten_wrench(user, wrench, 15)

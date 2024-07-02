@@ -52,8 +52,7 @@ const DialogButton = (props: DialogButtonProps) => {
     <Button
       onClick={onClick}
       className="Dialog__button"
-      verticalAlignContent="middle"
-    >
+      verticalAlignContent="middle">
       {children}
     </Button>
   );

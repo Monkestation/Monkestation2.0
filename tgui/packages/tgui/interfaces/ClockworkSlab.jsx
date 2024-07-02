@@ -1,16 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Icon,
-  Box,
-  Button,
-  Section,
-  Table,
-  Divider,
-  Grid,
-  ProgressBar,
-  Collapsible,
-} from '../components';
+import { Icon, Box, Button, Section, Table, Divider, Grid, ProgressBar, Collapsible } from '../components';
 import { Window } from '../layouts';
 import { TableRow } from '../components/Table';
 
@@ -33,7 +23,7 @@ const convertPower = (power_in) => {
 export const ClockworkSlab = (props) => {
   const [selectedTab, setSelectedTab] = useLocalState(
     'selectedTab',
-    'Servitude',
+    'Servitude'
   );
   return (
     <Window theme="clockwork" width={860} height={700}>
@@ -45,8 +35,7 @@ export const ClockworkSlab = (props) => {
               {' Clockwork Slab '}
               <Icon name={'cog'} rotation={35} spin={1} />
             </Box>
-          }
-        >
+          }>
           <ClockworkButtonSelection />
         </Section>
         <div className="ClockSlab__left">
@@ -64,8 +53,7 @@ export const ClockworkSlab = (props) => {
             <Section
               height="100%"
               overflowY="auto"
-              title="Servants of the Cog vol.1"
-            >
+              title="Servants of the Cog vol.1">
               <ClockworkHelp />
             </Section>
           </div>
@@ -254,7 +242,7 @@ const ClockworkSpellList = (props) => {
           </Fragment>
         ) : (
           <Box key={script} />
-        ),
+        )
       )}
     </Table>
   );
@@ -312,8 +300,7 @@ const ClockworkOverviewStat = (props) => {
               good: [maxAmount / 2, Infinity],
               average: [maxAmount / 4, maxAmount / 2],
               bad: [-Infinity, maxAmount / 4],
-            }}
-          >
+            }}>
             {overrideText ? overrideText : amount + ' ' + unit}
           </ProgressBar>
         </Grid.Column>

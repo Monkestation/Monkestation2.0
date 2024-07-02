@@ -1,9 +1,4 @@
-import {
-  CheckboxInput,
-  FeatureToggle,
-  FeatureChoiced,
-  FeatureDropdownInput,
-} from '../../base';
+import { CheckboxInput, FeatureToggle, FeatureChoiced, FeatureDropdownInput } from '../../base';
 
 export const see_looc_on_map: FeatureToggle = {
   name: 'Enable LOOC Runechat',

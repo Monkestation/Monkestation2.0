@@ -87,7 +87,8 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/component/cell/Destroy(force, silent)
-	on_cell_removed = null
+	if(on_cell_removed)
+		on_cell_removed = null
 	if(inserted_cell)
 		if(!inside_robot) //We really don't want to be deleting the robot's cell.
 			QDEL_NULL(inserted_cell)
