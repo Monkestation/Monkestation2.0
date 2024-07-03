@@ -85,19 +85,19 @@
 
 /datum/armament_entry/company_import/sol_defense/sidearm/eland
 	item_type = /obj/item/gun/ballistic/revolver/sol
-	cost = 1000
+	cost = PAYCHECK_COMMAND * 4
 
 /datum/armament_entry/company_import/sol_defense/sidearm/wespe
 	item_type = /obj/item/gun/ballistic/automatic/pistol/sol
-	cost = 1200
+	cost = PAYCHECK_COMMAND * 4
 
 /datum/armament_entry/company_import/sol_defense/sidearm/skild
 	item_type = /obj/item/gun/ballistic/automatic/pistol/trappiste
-	cost = 1400
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/sol_defense/sidearm/takbok
 	item_type = /obj/item/gun/ballistic/revolver/takbok
-	cost = 1500
+	cost = PAYCHECK_COMMAND * 6
 
 // Lethal anything that's not a pistol, requires high company interest
 
@@ -107,34 +107,34 @@
 
 /datum/armament_entry/company_import/sol_defense/longarm/renoster
 	item_type = /obj/item/gun/ballistic/shotgun/riot/sol
-	cost = 2000
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/sol_defense/longarm/sindano
 	item_type = /obj/item/gun/ballistic/automatic/sol_smg
-	cost = 2000
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/sol_defense/longarm/elite
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle/marksman
-	cost = 2500
+	cost = PAYCHECK_COMMAND * 12
 
 /datum/armament_entry/company_import/sol_defense/longarm/bogseo
 	item_type = /obj/item/gun/ballistic/automatic/xhihao_smg
-	cost = 2000
+	cost = PAYCHECK_COMMAND * 10
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/infanterie
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle
-	cost = 2500
+	cost = PAYCHECK_COMMAND * 14
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/outomaties
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle/machinegun
-	cost = 4000
+	cost = PAYCHECK_COMMAND * 23
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/kiboko
 	item_type = /obj/item/gun/ballistic/automatic/sol_grenade_launcher
-	cost = 5000
+	cost = PAYCHECK_COMMAND * 46
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/magazines

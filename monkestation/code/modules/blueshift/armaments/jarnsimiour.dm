@@ -13,12 +13,12 @@
 
 /datum/armament_entry/company_import/blacksteel/blade/survival_knife
 	item_type = /obj/item/knife/combat/survival
-	cost = 500
+	cost = PAYCHECK_CREW * 2
 
 /datum/armament_entry/company_import/blacksteel/blade/bowie_knife
 	item_type = /obj/item/storage/belt/bowie_sheath
-	cost = 700
+	cost = PAYCHECK_COMMAND * 3
 
 /datum/armament_entry/company_import/blacksteel/blade/shamshir_sabre
 	item_type = /obj/item/storage/belt/sabre/cargo
-	cost = 1000
+	cost = PAYCHECK_COMMAND * 3

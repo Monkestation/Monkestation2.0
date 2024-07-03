@@ -83,34 +83,34 @@
 
 /datum/armament_entry/company_import/nri_surplus/firearm/shotgun_revolver
 	item_type = /obj/item/gun/ballistic/revolver/shotgun_revolver
-	cost = 1500
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/nri_surplus/firearm/plasma_thrower
 	item_type = /obj/item/gun/ballistic/automatic/pistol/plasma_thrower
-	cost = 1000
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/nri_surplus/firearm/plasma_marksman
 	item_type = /obj/item/gun/ballistic/automatic/pistol/plasma_marksman
-	cost = 1200
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/nri_surplus/firearm/miecz
 	item_type = /obj/item/gun/ballistic/automatic/miecz
-	cost = 1700
+	cost = PAYCHECK_COMMAND * 10
 
 /datum/armament_entry/company_import/nri_surplus/firearm/sakhno_rifle
 	item_type = /obj/item/gun/ballistic/rifle/boltaction
-	cost = 1200 //it's a classic mosin, nothing fancy
+	cost = PAYCHECK_COMMAND * 12
 
 /datum/armament_entry/company_import/nri_surplus/firearm/lanca
 	item_type = /obj/item/gun/ballistic/automatic/lanca
 	contraband = TRUE
-	cost = 2000
+	cost = PAYCHECK_COMMAND * 14
 	restricted = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm/anti_materiel_rifle
 	item_type = /obj/item/gun/ballistic/automatic/wylom
 	contraband = TRUE
-	cost = 3000
+	cost = PAYCHECK_COMMAND * 16
 	restricted = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo
