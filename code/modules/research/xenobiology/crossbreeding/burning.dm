@@ -81,8 +81,9 @@ Burning extracts:
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
-		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
+		if(!istype(W, /turf/closed/wall/r_wall)) //Monke, doesn't destroy reinforced walls.
+			W.dismantle_wall(1)
+			playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
 	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
 	..()
 
@@ -97,9 +98,9 @@ Burning extracts:
 		if(M != user)
 			var/mob/living/carbon/C = M
 			if(istype(C))
-				C.electrocute_act(25,src)
+				C.electrocute_act(5,src) //Monke, only does 5 damage instead of 25.
 			else
-				M.adjustFireLoss(25)
+				M.adjustFireLoss(5)
 			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
 	..()
 
