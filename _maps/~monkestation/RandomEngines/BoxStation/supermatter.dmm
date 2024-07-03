@@ -196,6 +196,9 @@
 	c_tag = "Engineering Supermatter Fore";
 	network = list("ss13","engine")
 	},
+/obj/machinery/button/delam_scram{
+	pixel_y = -32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "fB" = (
@@ -440,6 +443,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "oS" = (
+/obj/effect/turf_decal/stripes/box,
 /obj/machinery/power/supermatter_crystal/engine,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -472,11 +476,12 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "pJ" = (
-/obj/structure/table,
-/obj/item/analyzer,
-/obj/item/pipe_dispenser,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/delam_scram/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "pR" = (
 /obj/structure/reflector/double/anchored{
 	dir = 6
@@ -704,6 +709,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "zV" = (
@@ -918,7 +924,7 @@
 "Fu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small/directional/south,
-/obj/structure/sign/warning/radiation/directional/south,
+/obj/structure/sign/delam_procedure/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -1197,20 +1203,25 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -8
+	},
+/obj/machinery/firealarm/directional/north,
 /obj/structure/table/reinforced,
-/obj/machinery/light_switch/directional/north,
+/obj/item/clothing/gloves/color/black,
 /obj/item/tank/internals/emergency_oxygen/engi{
 	pixel_x = 5
 	},
-/obj/item/clothing/gloves/color/black,
 /obj/item/clothing/glasses/meson/engine,
+/obj/item/analyzer,
+/obj/item/pipe_dispenser,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "OR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/utility/radiation,
@@ -1473,11 +1484,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "XP" = (
-/obj/machinery/meter,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/radiation/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/item/radio/intercom/directional/south,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "XU" = (
@@ -2048,7 +2059,7 @@ dP
 DX
 dy
 kz
-yF
+pJ
 yF
 yF
 Kw
@@ -2249,7 +2260,7 @@ xv
 xv
 aW
 xv
-pJ
+xv
 mg
 mn
 mn
