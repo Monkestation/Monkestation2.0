@@ -242,11 +242,12 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEHAIR
 	dog_fashion = null
 
 /datum/armor/helmet_swat
 	melee = 40
-	bullet = 30
+	bullet = 40
 	laser = 30
 	energy = 40
 	bomb = 50
@@ -265,8 +266,11 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF | SNUG_FIT
 
+/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
