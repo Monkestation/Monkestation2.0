@@ -2,7 +2,7 @@
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | NO_DEATH_MESSAGE | BINARY_JAMMING
 
 /area/deathmatch/fullbright
 	static_lighting = FALSE
