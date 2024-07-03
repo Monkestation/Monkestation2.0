@@ -88,43 +88,54 @@
 
 /datum/armament_entry/company_import/deforest/medpens
 	subcategory = "Medical Autoinjectors"
-	cost = PAYCHECK_LOWER * 3
 
 /datum/armament_entry/company_import/deforest/medpens/occuisate
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/morpital
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/morpital
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/lipital
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/lipital
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/meridine
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/meridine
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/calopine
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/calopine
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/coagulants
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/coagulants
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/lepoturi
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/psifinil
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/psifinil
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/halobinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/halobinin
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/robo_solder
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/robo_cleaner
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
+	cost = 150
 
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin
+	cost = 150
 	contraband = TRUE
 
 // Autoinjectors for fighting
@@ -175,11 +186,11 @@
 
 /datum/armament_entry/company_import/deforest/equipment/loaded_defib
 	item_type = /obj/item/defibrillator/loaded
-	cost = PAYCHECK_COMMAND
+	cost = 200
 
 /datum/armament_entry/company_import/deforest/equipment/surgical_tools
 	item_type = /obj/item/surgery_tray
-	cost = PAYCHECK_COMMAND
+	cost = 400
 
 /datum/armament_entry/company_import/deforest/equipment/advanced_health_analyer
 	item_type = /obj/item/healthanalyzer/advanced

@@ -85,19 +85,19 @@
 
 /datum/armament_entry/company_import/sol_defense/sidearm/eland
 	item_type = /obj/item/gun/ballistic/revolver/sol
-	cost = PAYCHECK_COMMAND * 4
+	cost = 1000
 
 /datum/armament_entry/company_import/sol_defense/sidearm/wespe
 	item_type = /obj/item/gun/ballistic/automatic/pistol/sol
-	cost = PAYCHECK_COMMAND * 4
+	cost = 1200
 
 /datum/armament_entry/company_import/sol_defense/sidearm/skild
 	item_type = /obj/item/gun/ballistic/automatic/pistol/trappiste
-	cost = PAYCHECK_COMMAND * 6
+	cost = 1400
 
 /datum/armament_entry/company_import/sol_defense/sidearm/takbok
 	item_type = /obj/item/gun/ballistic/revolver/takbok
-	cost = PAYCHECK_COMMAND * 6
+	cost = 1500
 
 // Lethal anything that's not a pistol, requires high company interest
 
@@ -107,34 +107,34 @@
 
 /datum/armament_entry/company_import/sol_defense/longarm/renoster
 	item_type = /obj/item/gun/ballistic/shotgun/riot/sol
-	cost = PAYCHECK_COMMAND * 6
+	cost = 2000
 
 /datum/armament_entry/company_import/sol_defense/longarm/sindano
 	item_type = /obj/item/gun/ballistic/automatic/sol_smg
-	cost = PAYCHECK_COMMAND * 6
+	cost = 2000
 
 /datum/armament_entry/company_import/sol_defense/longarm/elite
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle/marksman
-	cost = PAYCHECK_COMMAND * 12
+	cost = 2500
 
 /datum/armament_entry/company_import/sol_defense/longarm/bogseo
 	item_type = /obj/item/gun/ballistic/automatic/xhihao_smg
-	cost = PAYCHECK_COMMAND * 10
+	cost = 2000
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/infanterie
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle
-	cost = PAYCHECK_COMMAND * 14
+	cost = 2500
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/outomaties
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle/machinegun
-	cost = PAYCHECK_COMMAND * 23
+	cost = 4000
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/longarm/kiboko
 	item_type = /obj/item/gun/ballistic/automatic/sol_grenade_launcher
-	cost = PAYCHECK_COMMAND * 46
+	cost = 5000
 	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/magazines

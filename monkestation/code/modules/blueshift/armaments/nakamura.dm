@@ -9,7 +9,7 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/core/standard
 	item_type = /obj/item/mod/core/standard
-	cost = PAYCHECK_CREW * 2
+	cost = 200
 
 /datum/armament_entry/company_import/nakamura_modsuits/core/plasma
 	item_type = /obj/item/mod/core/plasma
@@ -17,7 +17,7 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/core/ethereal
 	item_type = /obj/item/mod/core/ethereal
-	cost = PAYCHECK_CREW
+	cost = 400
 
 // MOD plating
 
