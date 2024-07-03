@@ -154,9 +154,9 @@
  * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
  */
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
+	saved_screen = change_screen // remember the old screen in case of revival
 	for(var/obj/item/bodypart/head/ipc_head in transformer.bodyparts) // i know this is kinda bad but i honestly have no fucking clue how to directly get the head
 		if (ipc_head != null) // if we dont have a head dont do this
-			saved_screen = change_screen // remember the old screen in case of revival
 			switch_to_screen(transformer, screen_name)
 			addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 			return
