@@ -227,7 +227,7 @@
 /datum/techweb_node/advanced_ipcs
 	id = "advanced_ipcs"
 	display_name = "Advanced Positronic Brain Research"
-	description = "tba"
+	description = "We have the technology to synthesize him."
 	prereq_ids = list("ipc_parts")
 	design_ids = list(
 		"ipc_chest_ipc_construction",
