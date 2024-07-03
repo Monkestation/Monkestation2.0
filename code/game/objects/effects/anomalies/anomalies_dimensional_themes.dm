@@ -208,7 +208,7 @@
 
 /datum/dimension_theme/radioactive
 	icon = 'icons/obj/ore.dmi'
-	icon_state = "Uranium ore"
+	icon_state = "uranium"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'
 
