@@ -82,3 +82,26 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/ipc_part_chest_ipc_construction
+	name = "IPC Replacement Chest (IPC Construction)"
+	id = "ipc_chest_ipc_construction"
+	build_type = MECHFAB
+	construction_time = 30 SECONDS
+	materials = list(/datum/material/iron = 10000)
+	build_path = /obj/item/ipc_chest
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/ipc_part_posibrain
+	name = "Compact Positronic Brain"
+	id = "ipc_posibrain"
+	build_type = MECHFAB
+	construction_time = 150
+	build_path = /obj/item/mmi/posibrain/ipc
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
