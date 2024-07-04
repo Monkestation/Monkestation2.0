@@ -398,6 +398,7 @@
 #include "code\__DEFINES\~monkestation\colors.dm"
 #include "code\__DEFINES\~monkestation\combat.dm"
 #include "code\__DEFINES\~monkestation\company.dm"
+#include "code\__DEFINES\~monkestation\components.dm"
 #include "code\__DEFINES\~monkestation\construction.dm"
 #include "code\__DEFINES\~monkestation\cooldowns.dm"
 #include "code\__DEFINES\~monkestation\cybernetics.dm"
