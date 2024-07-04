@@ -83,7 +83,7 @@ Burning extracts:
 //monkestation edit start
 	var/turf/our_turf = get_turf(src)
 	if(GLOB.clock_ark && on_reebe(our_turf) && get_dist(our_turf, GLOB.clock_ark) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
-		balloon_alert(user, "A near by energy source is stopping \the [src] from activating!")
+		balloon_alert(user, "a near by energy source is stopping \the [src] from activating!")
 		return FALSE
 //monkestation edit end
 	for(var/turf/closed/wall/W in range(1, our_turf)) //monkestation edit: replaces get_turf(src) with our_turf
