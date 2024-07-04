@@ -10,7 +10,6 @@
 
 /datum/religion_rites/weapon_granter/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/altar_turf = get_turf(religious_tool)
 	new /obj/item/book/granter/crafting_recipe/maintgodgranter(get_turf(religious_tool))
 	return TRUE
 
@@ -25,12 +24,15 @@
 	if(!ismovable(religious_tool))
 		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
+
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
 	var/atom/movable/movable_reltool = religious_tool
+
 	if(!movable_reltool)
 		return FALSE
+
 	if(LAZYLEN(movable_reltool.buckled_mobs))
 		to_chat(user, span_warning("You're going to convert the one buckled on [movable_reltool]."))
 	else
@@ -49,6 +51,7 @@
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
 	var/mob/living/carbon/human/rite_target
+
 	if(!length(movable_reltool.buckled_mobs))
 		rite_target = user
 	else
@@ -56,6 +59,7 @@
 			if(ishuman(buckled))
 				rite_target = buckled
 				break
+
 	if(!rite_target)
 		return FALSE
 	rite_target.set_species(/datum/species/shadow)
