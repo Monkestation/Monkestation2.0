@@ -774,7 +774,6 @@
 	pixel_x = 7;
 	pixel_y = -3
 	},
-/obj/item/stack/sheet/iron,
 /obj/structure/table_frame,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lounge)
@@ -1438,6 +1437,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/duct,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "TO" = (
