@@ -6689,6 +6689,7 @@
 #include "monkestation\code\modules\events\summon_wizard_event.dm"
 #include "monkestation\code\modules\events\ghost_role\drifting_contractor.dm"
 #include "monkestation\code\modules\events\wizard\summon_gifts.dm"
+#include "monkestation\code\modules\experisci\experiment\experiments.dm"
 #include "monkestation\code\modules\flavor_text\flavor_examine.dm"
 #include "monkestation\code\modules\flavor_text\flavor_helpers.dm"
 #include "monkestation\code\modules\flavor_text\flavor_hrefs.dm"

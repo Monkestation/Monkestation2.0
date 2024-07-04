@@ -24,7 +24,7 @@
 		ipc_brain.brain_gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 		qdel(src)
 
-/obj/item/mmi/posibrain/update_icon_state()
+/obj/item/mmi/posibrain/ipc/update_icon_state()
 	. = ..()
 	if(searching)
 		icon = 'icons/obj/assemblies/assemblies.dmi'

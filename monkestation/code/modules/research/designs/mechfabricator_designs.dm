@@ -100,6 +100,7 @@
 	id = "ipc_posibrain"
 	build_type = MECHFAB
 	construction_time = 150
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*3.4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.7, /datum/material/gold =SMALL_MATERIAL_AMOUNT*10, /datum/material/diamond =SMALL_MATERIAL_AMOUNT*10)
 	build_path = /obj/item/mmi/posibrain/ipc
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
