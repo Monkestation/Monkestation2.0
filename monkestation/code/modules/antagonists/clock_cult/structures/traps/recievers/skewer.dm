@@ -44,7 +44,7 @@
 	icon_state = "[initial(icon_state)]_extended"
 	var/target_stabbed = FALSE
 	density = TRUE
-	set_armor(datum/armor/raised_clock_skewer)
+	set_armor(/datum/armor/raised_clock_skewer)
 
 	for(var/mob/living/stabbed_mob in get_turf(src))
 		if(stabbed_mob.incorporeal_move || (stabbed_mob.movement_type & (FLOATING|FLYING)))
