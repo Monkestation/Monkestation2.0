@@ -31,3 +31,6 @@
 
 ///how long between uses of the anchoring crystal scripture, also how long the hostile environment lasts if the crystal is not destroyed
 #define ANCHORING_CRYSTAL_COOLDOWN 7 MINUTES
+
+///up to how many tiles away will the ark stop certain things from breaking turfs
+#define ARK_TURF_DESTRUCTION_BLOCK_RANGE 9

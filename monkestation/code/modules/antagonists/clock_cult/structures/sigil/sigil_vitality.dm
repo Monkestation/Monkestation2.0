@@ -44,7 +44,7 @@
 				affected_mob.revive(ADMIN_HEAL_ALL)
 				revived = TRUE
 
-		if(!affected_mob.client || affected_mob.client.is_afk())
+		if(affected_mob.stat != DEAD && (!affected_mob.client || affected_mob.client.is_afk()))
 			set waitfor = FALSE
 			var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
 				"Do you want to play as a [affected_mob.real_name], an inactive clock cultist?",
