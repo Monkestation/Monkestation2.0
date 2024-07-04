@@ -344,3 +344,189 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	name = "Fancy Hat"
 	item_path = /obj/item/clothing/head/costume/fancy
 	item_cost = 5000
+
+
+/// EVERYTHING NOVA RELATED
+
+
+/*
+*	BERETS
+*/
+
+/datum/store_item/head/greyscale_beret/badge //BUYABLE
+	name = "Greyscale Beret with Badge"
+	item_path = /obj/item/clothing/head/beret/badge
+
+/*
+*	CAPS
+*/
+
+/datum/store_item/head/pflatcap //BUYABLE
+	name = "Poly Flat Cap"
+	item_path = /obj/item/clothing/head/colourable_flatcap
+
+/datum/store_item/head/mothcap //BUYABLE
+	name = "Mothic Softcap"
+	item_path = /obj/item/clothing/head/mothcap
+
+/datum/store_item/head/frontiercap //BUYABLE
+	name = "Frontier Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist
+
+/datum/store_item/head/frontiercap/medic //BUYABLE
+	name = "Frontier Medical Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist/medic
+
+/*
+*	FEDORAS
+*/
+
+/datum/store_item/head/black_fedora //BUYABLE
+	name = "Black Fedora"
+	item_path = /obj/item/clothing/head/fedora
+
+
+/datum/store_item/head/brown_fedora //BUYABLE
+	name = "Brown Fedora"
+	item_path = /obj/item/clothing/head/fedora/brown
+
+/*
+*	MISC
+*/
+
+/datum/store_item/head/hair_tie //BUYABLE
+	name = "Hair Tie"
+	item_path = /obj/item/clothing/head/hair_tie
+
+/datum/store_item/head/hair_tie_scrunchie //BUYABLE
+	name = "Scrunchie"
+	item_path = /obj/item/clothing/head/hair_tie/scrunchie
+
+/datum/store_item/head/hair_tie_plastic_beads //BUYABLE
+	name = "Colorful Hair tie"
+	item_path = /obj/item/clothing/head/hair_tie/plastic_beads
+
+/datum/store_item/head/standalone_hood //BUYABLE
+	name = "Recolorable Standalone Hood"
+	item_path = /obj/item/clothing/head/standalone_hood
+
+/datum/store_item/head/top_hat //BUYABLE
+	name = "Top Hat"
+	item_path = /obj/item/clothing/head/hats/tophat
+
+/datum/store_item/head/large_bow //BUYABLE
+	name = "Colourable Large Bow"
+	item_path = /obj/item/clothing/head/large_bow
+
+/datum/store_item/head/back_bow //BUYABLE
+	name = "Colourable Back Bow"
+	item_path = /obj/item/clothing/head/back_bow
+
+/datum/store_item/head/small_bow //BUYABLE
+	name = "Colourable Small Bow"
+	item_path = /obj/item/clothing/head/small_bow
+
+/datum/store_item/head/sweet_bow //BUYABLE
+	name = "Colourable Sweet bow"
+	item_path = /obj/item/clothing/head/sweet_bow
+
+/*
+*	MISC
+*/
+
+/datum/store_item/head/floral_garland //BUYABLE
+	name = "Floral Garland"
+	item_path = /obj/item/clothing/head/costume/garland
+
+/datum/store_item/head/sombrero //BUYABLE
+	name = "Sombrero"
+	item_path = /obj/item/clothing/head/costume/sombrero
+
+/datum/store_item/head/flakhelm //BUYABLE
+	name = "Flak Helmet"
+	item_path = /obj/item/clothing/head/hats/flakhelm
+
+/datum/store_item/head/fashionable_cap //BUYABLE
+	name = "Fashionable Baseball Cap"
+	item_path = /obj/item/clothing/head/soft/yankee
+
+/datum/store_item/head/plague_hat //BUYABLE
+	name = "Plague Doctor's Hat"
+	item_path = /obj/item/clothing/head/bio_hood/plague
+
+/datum/store_item/head/chap_nunh //BUYABLE
+	name = "Nun's Hood"
+	item_path = /obj/item/clothing/head/chaplain/nun_hood
+
+/datum/store_item/head/chap_kippah //BUYABLE
+	name = "Jewish Kippah"
+	item_path = /obj/item/clothing/head/chaplain/kippah
+
+/*
+*	COWBOY
+*/
+
+/datum/store_item/head/cowboyhat //BUYABLE
+	name = "Recolorable Cattleman Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman
+
+/datum/store_item/head/cowboyhat_black //BUYABLE
+	name = "Recolorable Wide-Brimmed Cattleman Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/wide
+
+/datum/store_item/head/cowboyhat_wide //BUYABLE
+	name = "Wide-Brimmed Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/wide
+
+/datum/store_item/head/cowboyhat_wide_feather //BUYABLE
+	name = "Wide-Brimmed Feathered Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/wide/feathered
+
+/datum/store_item/head/cowboyhat_flat //BUYABLE
+	name = "Flat-Brimmed Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat
+
+/datum/store_item/head/cowboyhat_flat_cowl //BUYABLE
+	name = "Flat-Brimmed Hat with Cowl"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl
+
+/datum/store_item/head/cowboyhat_sheriff //BUYABLE
+	name = "Sheriff Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/sheriff
+
+/datum/store_item/head/cowboyhat_deputy //BUYABLE
+	name = "Deputy Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/deputy
+
+/datum/store_item/head/cowboyhat_winter //BUYABLE
+	name = "Winter Cowboy Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
+
+/datum/store_item/head/blasthelmet //BUYABLE
+	name = "Blast Helmet"
+	item_path = /obj/item/clothing/head/hats/imperial/helmet
+
+/datum/store_item/head/cybergoggles_civ //BUYABLE
+	name = "Type-34C Forensics Headwear"
+	item_path = /obj/item/clothing/head/fedora/det_hat/cybergoggles/civilian
+
+/datum/store_item/head/imperial_generic //BUYABLE
+	name = "Grey Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial
+
+/datum/store_item/head/imperial_grey //BUYABLE
+	name = "Dark Grey Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/grey
+
+/datum/store_item/head/imperial_red //BUYABLE
+	name = "Red Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/red
+
+/datum/store_item/head/imperial_white //BUYABLE
+	name = "White Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/white
+
+// Legacy unpaintable cowboy hat because it fits a character better
+/datum/store_item/head/cowboyhat_legacy  //BUYABLE
+	name = "Cowboy Hat (Legacy)"
+	item_path = /obj/item/clothing/head/costume/cowboyhat_old
