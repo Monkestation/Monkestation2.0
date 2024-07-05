@@ -11,7 +11,7 @@
 	new_mob_message = "<span class='notice'>The compact positronic brain chimes quietly.</span>"
 	recharge_message = "<span class='warning'>The compact positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 
-/obj/item/mmi/posibrain/ipc/transfer_personality(mob/candidate)
+/obj/item/mmi/posibrain/ipc/transfer_personality(mob/dead/observer/candidate)
 	if(candidate)
 		var/obj/item/organ/internal/brain/synth/ipc_brain = new /obj/item/organ/internal/brain/synth(get_turf(src))
 		ipc_brain.brainmob = new /mob/living/brain(ipc_brain)
@@ -19,6 +19,7 @@
 			candidate.mind.transfer_to(ipc_brain.brainmob)
 		else
 			ipc_brain.brainmob.key = candidate.key
+		candidate.reenter_corpse()
 		visible_message(success_message)
 		playsound(src, 'sound/machines/ping.ogg', 15, TRUE)
 		ipc_brain.brain_gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)

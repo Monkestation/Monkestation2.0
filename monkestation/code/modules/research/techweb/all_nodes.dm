@@ -231,7 +231,8 @@
 	prereq_ids = list("ipc_parts")
 	design_ids = list(
 		"ipc_chest_ipc_construction",
-		"ipc_posibrain"
+		"ipc_posibrain",
+		"ipc_charger"
 	)
 	required_experiments = list(/datum/experiment/scanning/cyborg_scan)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
