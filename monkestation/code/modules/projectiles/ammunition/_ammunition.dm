@@ -20,6 +20,6 @@
 
 /obj/item/ammo_casing/proc/update_trash_trait()
 	if(QDELETED(loaded_projectile))
-		REMOVE_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
-	else
 		ADD_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
