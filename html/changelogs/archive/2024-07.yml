@@ -1,0 +1,71 @@
+2024-07-02:
+  Absolucy:
+  - bugfix: TramStation now has the CMO's stamp properly mapped in.
+  - bugfix: KiloStation now has the CMO's stamp, prefilled cassette rack, and the
+      curator's radio "properly" mapped in.
+  - rscadd: Mapped ATMs and holomaps into Blueshift.
+  - refactor: Fixed up some code relating to the bodypart overlays of cybernetics.
+  - bugfix: Meteor satellites now longer shake the camera.
+  Absolucy, mc-oofert:
+  - qol: You may alt-click action buttons to bind them to a key.
+  KnigTheThrasher:
+  - rscadd: Added novastation clothes to our loadouts and store
+  - bugfix: Fixed satyr legs being unhealable
+  ancient-engineer:
+  - qol: Gets rid of the fov effect of the swat mask
+  - qol: Gets rid of the vignette around your vision while wearing the spacepol mask
+2024-07-04:
+  Absolucy:
+  - bugfix: You can no longer somehow reach *around* a shield wall.
+  - bugfix: Fixed some runtime errors related to drowning/choking in liquids.
+  - bugfix: Fixed newly built slime pens allowing ooze to leak.
+  KnigTheThrasher:
+  - rscadd: Added hard soles to ashwalkers (they no longer get paralyzed when stepping
+      on their cati)
+  - rscadd: Added hard soles as a quirk (2 points)
+  - balance: Changed light step cost to 2 points to be on pair with hard soles
+  - sound: Changed lizard footsteps to claws
+  - balance: Increased prices of firing pins
+2024-07-05:
+  Jacquerel, IndieanaJones:
+  - rscadd: Adds a box of liveleak stickers for 1 TC to the badass category
+  - balance: The kindle scripture now has reduced effects on people with mindshields
+  - balance: Observation consoles can now only warp to a random list of areas, vitality
+      can be spent to add more
+  - balance: Vitality sigils now reduce max health instead of dealing clone damage
+  - bugfix: Anchoring crystals are now actually needed to open the ark
+  ViktorKoL:
+  - bugfix: heretics no longer lose their spells when returning from a shapeshift.
+2024-07-06:
+  00-Steven:
+  - bugfix: Ethereal heart revive doesn't delete organs alien to your species, like
+      prosthetics, cybernetics, and possibly itself.
+  - bugfix: Nightmare heart revive doesn't delete organs alien to your species, like
+      itself, upon which it would stop the conversion to shadowperson.
+  - bugfix: Bloodsucker torpor, doesn't delete organs alien to your species, which
+      would result in things such as wings being lost (therefore preventing ultrakill
+      jokes from lasting more than 10 minutes)
+  Absolucy:
+  - rscadd: (Time-Green) Adds shuttle events! If shuttle escapes weren't exciting
+      before (doubtful), they definitely are now! I'm joking it's mostly an atmosphere
+      thing.
+  - admin: '(Time-Green) Adds an admin panel to interact with shuttle events, under
+      the Events tab: Change Shuttle Events.'
+  - bugfix: (Time-Green) Objects spawned in hyperspace will properly catch hyperspace
+      drift.
+  - rscadd: (timothymtorres) Add admin blackhole shuttle event with a normal version
+      and suicidal version.
+  - rscadd: (Jacquerel) Adds a new shuttle event, where space shuttles can experience
+      minor turbulance. Keep your belt on while the appropriate cabin light is lit.
+  - bugfix: Fixed some errors with some objectives, i.e cult sacrifice, trying to
+      find a target.
+  - bugfix: RPLD UI now actually shows the sprites for new xenobio stuff, rather than
+      a generic sprite.
+  FlufflesTheDog:
+  - bugfix: Multi-z hole repair works better, especially when the turf below is blocked
+      by items
+  cnleth, Absolucy:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  - qol: Linked speech now prevents messages from highlighting if its a message you
+      sent, or if you are the owner of said link..
+  - qol: Linked speech messages are now marked as radio messages, for chat tab purposes.
