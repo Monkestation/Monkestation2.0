@@ -146,6 +146,10 @@
 /obj/machinery/light/small/maintenance/directional/north,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"ep" = (
+/mob/living/basic/mining/hivelord,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/support)
 "eu" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -192,6 +196,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
+"fo" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/medical)
 "fz" = (
 /obj/item/ammo_casing/spent,
 /obj/effect/decal/cleanable/blood/old,
@@ -500,6 +508,10 @@
 "rE" = (
 /turf/closed/wall/r_wall/rust,
 /area/ruin/space/has_grav/listeningstation/support)
+"rF" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation/lobby)
 "rG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation/lobby)
@@ -638,10 +650,6 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
-"xx" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/listeningstation/lounge)
 "xR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -857,6 +865,10 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
+"Ce" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation/dorms)
 "Ch" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet,
@@ -1002,6 +1014,10 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/medical)
+"Gr" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/support)
 "GR" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/suit_storage_unit/open,
@@ -1031,28 +1047,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
-"HY" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/listeningstation/support)
 "Ib" = (
 /obj/item/organ/internal/eyes/robotic,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
-"Ic" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/listeningstation/medical)
 "It" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
-"II" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall,
-/area/ruin/space/has_grav/listeningstation/dorms)
 "IK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Outpost Bulkhead";
@@ -1400,6 +1404,10 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"Sk" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "Sx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/misc/asteroid/airless,
@@ -1421,7 +1429,7 @@
 	name = "refinery crate"
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/asteroid)
+/area/ruin/space/has_grav/listeningstation/support)
 "Th" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/small/directional/east,
@@ -1661,10 +1669,6 @@
 /obj/structure/bed/roller,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
-"Zw" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall,
-/area/ruin/space/has_grav/listeningstation/lobby)
 
 (1,1,1) = {"
 AV
@@ -2300,7 +2304,7 @@ LP
 xR
 Kt
 SI
-vC
+ep
 CR
 CR
 CR
@@ -2326,7 +2330,7 @@ VK
 JB
 JB
 Jg
-II
+Ce
 Po
 Po
 BX
@@ -2336,7 +2340,7 @@ Va
 qV
 LP
 MV
-HY
+Gr
 OT
 eZ
 CR
@@ -2482,16 +2486,16 @@ JB
 oh
 oh
 yc
-xx
+Sk
 OT
 OT
 MY
 oi
 Er
 rG
-Zw
+rF
 zv
-Ic
+fo
 JF
 JF
 CR
