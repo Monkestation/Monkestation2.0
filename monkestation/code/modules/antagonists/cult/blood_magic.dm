@@ -97,6 +97,7 @@
 				ignored_mobs = list(user),
 			)
 			to_chat(user, span_userdanger("[target] carefully dodges your [src], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
+			target.balloon_alert(user, "miss!")
 			playsound(target, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			return TRUE
 	return FALSE
