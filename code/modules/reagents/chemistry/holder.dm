@@ -464,12 +464,18 @@
 	else
 		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
-			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
-			if(!belly)
-				eater.expel_ingested(my_atom, amount)
-				return
-			R = belly.reagents
-			target_atom = belly
+			// monkestation edit: species without a stomach in the first place don't need one to ingest things
+			if(eater.has_dna()?.species?.mutantstomach != null)
+				var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+				if(!belly)
+					eater.expel_ingested(my_atom, amount)
+					return
+				R = belly.reagents
+				target_atom = belly
+			else
+				R = target.reagents
+				target_atom = target
+			// monkestation end
 		else if(!target.reagents)
 			return
 		else
