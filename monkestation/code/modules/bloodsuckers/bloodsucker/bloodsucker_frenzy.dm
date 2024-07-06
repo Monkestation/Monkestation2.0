@@ -40,7 +40,7 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum
 
 /datum/status_effect/frenzy/get_examine_text()
-	return span_notice("They seem... inhumane, and feral!")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] inhumane, and feral!")
 
 /atom/movable/screen/alert/status_effect/masquerade/MouseEntered(location,control,params)
 	desc = initial(desc)
@@ -49,6 +49,9 @@
 /datum/status_effect/frenzy/on_apply()
 	var/mob/living/carbon/human/user = owner
 	bloodsuckerdatum = IS_BLOODSUCKER(user)
+
+	if(QDELETED(bloodsuckerdatum) || !COOLDOWN_FINISHED(bloodsuckerdatum, bloodsucker_frenzy_cooldown))
+		return FALSE
 
 	// Disable ALL Powers and notify their entry
 	bloodsuckerdatum.DisableAllPowers(forced = TRUE)
@@ -74,18 +77,20 @@
 	return ..()
 
 /datum/status_effect/frenzy/on_remove()
-	var/mob/living/carbon/human/user = owner
-	owner.balloon_alert(owner, "you come back to your senses.")
-	owner.remove_traits(list(TRAIT_MUTE, TRAIT_DEAF), FRENZY_TRAIT)
-	if(was_tooluser)
-		ADD_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
-		was_tooluser = FALSE
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
-	bloodsuckerdatum.frenzygrab.remove(user)
-	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	if(bloodsuckerdatum?.frenzied)
+		var/mob/living/carbon/human/user = owner
+		owner.balloon_alert(owner, "you come back to your senses.")
+		owner.remove_traits(list(TRAIT_MUTE, TRAIT_DEAF), FRENZY_TRAIT)
+		if(was_tooluser)
+			ADD_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
+			was_tooluser = FALSE
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
+		bloodsuckerdatum.frenzygrab.remove(user)
+		owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
-	SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_EXITS_FRENZY)
-	bloodsuckerdatum.frenzied = FALSE
+		SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_EXITS_FRENZY)
+		bloodsuckerdatum.frenzied = FALSE
+		COOLDOWN_START(bloodsuckerdatum, bloodsucker_frenzy_cooldown, 30 SECONDS)
 	return ..()
 
 /datum/status_effect/frenzy/tick()

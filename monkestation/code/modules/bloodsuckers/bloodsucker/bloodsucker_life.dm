@@ -142,6 +142,8 @@
 
 /datum/antagonist/bloodsucker/proc/heal_vampire_organs()
 	var/mob/living/carbon/bloodsuckeruser = owner.current
+	if(!iscarbon(bloodsuckeruser))
+		return
 
 	bloodsuckeruser.cure_husk()
 	bloodsuckeruser.regenerate_organs(regenerate_existing = FALSE)
@@ -228,7 +230,8 @@
 
 	// The more blood, the better the Regeneration, get too low blood, and you enter Frenzy.
 	if(bloodsucker_blood_volume < (FRENZY_THRESHOLD_ENTER + (humanity_lost * 5)) && !frenzied)
-		owner.current.apply_status_effect(/datum/status_effect/frenzy)
+		if(COOLDOWN_FINISHED(src, bloodsucker_frenzy_cooldown))
+			owner.current.apply_status_effect(/datum/status_effect/frenzy)
 	else if(bloodsucker_blood_volume < BLOOD_VOLUME_BAD)
 		additional_regen = 0.1
 	else if(bloodsucker_blood_volume < BLOOD_VOLUME_OKAY)
