@@ -27,6 +27,7 @@
 	icon = 'monkestation/code/modules/slimecore/icons/equipment.dmi'
 	icon_state = "vacuum_pack"
 	inhand_icon_state = "vacuum_pack"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "waterbackpackjani"
 	lefthand_file = 'monkestation/code/modules/slimecore/icons/backpack_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/slimecore/icons/backpack_righthand.dmi'
