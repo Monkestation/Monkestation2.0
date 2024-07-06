@@ -144,6 +144,7 @@
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
+	// monkestation edit: volume mixer
 	var/actual_channel = channel || SSsounds.random_available_channel()
 	if(direct)
 		var/mob/mob_parent = parent
@@ -159,9 +160,10 @@
 			pressure_affected = pressure_affected,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			channel = actual_channel, //monkestation edit
+			channel = actual_channel,
 			mixer_channel = actual_channel
 		)
+	// monkestation end
 	else
 		playsound(
 			parent,
@@ -174,8 +176,10 @@
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			channel = actual_channel, //monkestation edit
-			mixer_channel = actual_channel
+			// monkestation start: volume mixer
+			channel = actual_channel,
+			mixer_channel = actual_channel,
+			// monkestation end
 		)
 
 /// Returns the sound we should now be playing.
