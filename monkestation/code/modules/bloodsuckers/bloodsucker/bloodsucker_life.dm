@@ -107,10 +107,9 @@
 		fireheal = min(user.getFireLoss_nonProsthetic(), actual_regen) / 1.2 // 20% slower than being in a coffin
 		mult *= 3
 	// Heal if Damaged
-	if((bruteheal + fireheal > 0) && mult != 0) // Just a check? Don't heal/spend, and return.
+	if((bruteheal + fireheal > 0) && mult > 0) // Just a check? Don't heal/spend, and return.
 		// We have damage. Let's heal (one time)
-		user.adjustBruteLoss(-bruteheal * mult, forced = TRUE) // Heal BRUTE / BURN in random portions throughout the body.
-		user.adjustFireLoss(-fireheal * mult, forced = TRUE)
+		user.heal_overall_damage(brute = bruteheal * mult, burn = fireheal * mult) // Heal BRUTE / BURN in random portions throughout the body.
 		AddBloodVolume(((bruteheal * -0.5) + (fireheal * -1)) * costMult * mult) // Costs blood to heal
 		return TRUE
 
