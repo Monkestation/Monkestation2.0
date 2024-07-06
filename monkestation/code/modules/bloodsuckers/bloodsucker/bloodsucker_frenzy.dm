@@ -32,7 +32,7 @@
 	id = "Frenzy"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
-	tick_interval = 10
+	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/frenzy
 	/// The stored Bloodsucker antag datum
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum
