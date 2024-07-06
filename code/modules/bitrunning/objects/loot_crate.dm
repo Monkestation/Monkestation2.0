@@ -5,8 +5,8 @@
 #define ORE_MULTIPLIER_GOLD 0.6
 #define ORE_MULTIPLIER_TITANIUM 0.5
 #define ORE_MULTIPLIER_URANIUM 0.4
-#define ORE_MULTIPLIER_DIAMOND 0.3
-/*#define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2*/
+#define ORE_MULTIPLIER_DIAMOND 0.5 //MONKESTATION EDIT: Compenstation for removing crystals (was .3)
+/*#define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2*/ //MONKESTATION REMOVAL
 
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class cache"
