@@ -638,6 +638,10 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"xx" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "xR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1027,16 +1031,28 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
+"HY" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/support)
 "Ib" = (
 /obj/item/organ/internal/eyes/robotic,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"Ic" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation/medical)
 "It" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
+"II" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation/dorms)
 "IK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Outpost Bulkhead";
@@ -1645,6 +1661,10 @@
 /obj/structure/bed/roller,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
+"Zw" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation/lobby)
 
 (1,1,1) = {"
 AV
@@ -2306,7 +2326,7 @@ VK
 JB
 JB
 Jg
-Po
+II
 Po
 Po
 BX
@@ -2316,7 +2336,7 @@ Va
 qV
 LP
 MV
-LP
+HY
 OT
 eZ
 CR
@@ -2462,16 +2482,16 @@ JB
 oh
 oh
 yc
-OT
+xx
 OT
 OT
 MY
 oi
 Er
 rG
-rG
+Zw
 zv
-JF
+Ic
 JF
 JF
 CR
