@@ -79,6 +79,7 @@
 	for(var/datum/brain_trauma/trauma as anything in shuffle(brain?.traumas))
 		if(!is_type_in_typecache(trauma, ignored_traumas) && trauma.resilience <= TRAUMA_RESILIENCE_MAGIC)
 			qdel(trauma)
+			return
 
 /datum/status_effect/regenerative_extract/proc/heal_wounds()
 	var/mob/living/carbon/carbon_owner = owner
