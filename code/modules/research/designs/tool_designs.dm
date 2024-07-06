@@ -84,7 +84,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rtd_loaded
 	name = "Rapid Tiling Device"
@@ -107,7 +107,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/frames
 	name = "RCD frames designs upgrade"
@@ -119,7 +119,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/simple_circuits
 	name = "RCD simple circuits designs upgrade"
@@ -131,7 +131,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/anti_interrupt
 	name = "RCD anti disruption designs upgrade"
@@ -148,7 +148,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/cooling
 	name = "RCD cooling upgrade"
@@ -164,7 +164,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/furnishing
 	name = "RCD furnishing upgrade"
@@ -176,7 +176,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/silo_link
 	name = "Advanced RCD silo link upgrade"
@@ -188,7 +188,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rpd_upgrade/unwrench
 	name = "RPD unwrenching upgrade"
