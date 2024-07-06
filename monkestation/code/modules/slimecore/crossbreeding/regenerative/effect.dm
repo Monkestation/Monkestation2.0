@@ -28,11 +28,11 @@
 	SEND_SIGNAL(owner, COMSIG_SLIME_REGEN_CALC, &multiplier)
 	if(multiplier < 1)
 		to_chat(owner, span_warning("The previous regenerative goo hasn't fully evaporated yet, weakening the new regenerative effect!"))
-	owner.add_traits(islist(extra_traits) ? given_traits + extra_traits : given_traits, id)
+	owner.add_traits(islist(extra_traits) ? (given_traits + extra_traits) : given_traits, id)
 	return TRUE
 
 /datum/status_effect/regenerative_extract/on_remove()
-	owner.remove_traits(islist(extra_traits) ? given_traits + extra_traits : given_traits, id)
+	owner.remove_traits(islist(extra_traits) ? (given_traits + extra_traits) : given_traits, id)
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
 
 /datum/status_effect/regenerative_extract/tick(seconds_per_tick, times_fired)
@@ -64,10 +64,21 @@
 		owner.nutrition = min(owner.nutrition + heal_amt, nutrition_heal_cap)
 
 /datum/status_effect/regenerative_extract/proc/heal_organs(heal_amt)
+	var/static/list/ignored_traumas
+	if(!ignored_traumas)
+		ignored_traumas = typecacheof(list(
+			/datum/brain_trauma/hypnosis,
+			/datum/brain_trauma/special/obsessed,
+			/datum/brain_trauma/severe/split_personality/brainwashing,
+		))
 	var/mob/living/carbon/carbon_owner = owner
 	for(var/obj/item/organ/organ in carbon_owner.organs)
 		organ.apply_organ_damage(-heal_amt)
-	carbon_owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC)
+	// stupid manual trauma curing code, so you can't just remove trauma-based antags with one click
+	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	for(var/datum/brain_trauma/trauma as anything in shuffle(brain?.traumas))
+		if(!is_type_in_typecache(trauma, ignored_traumas) && trauma.resilience <= TRAUMA_RESILIENCE_MAGIC)
+			qdel(trauma)
 
 /datum/status_effect/regenerative_extract/proc/heal_wounds()
 	var/mob/living/carbon/carbon_owner = owner
