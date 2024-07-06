@@ -46,10 +46,18 @@
 		/obj/item/clothing/suit/armor/secduster/cargo = 2,
 		/obj/item/clothing/head/helmet/hat/cowboy/cargo = 2,
 		/obj/item/clothing/suit/armor/secduster/science = 2,
-		/obj/item/clothing/head/helmet/hat/cowboy/science = 2
+		/obj/item/clothing/head/helmet/hat/cowboy/science = 2,
+	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/security = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/security = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/armor/security_tailcoat = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/security/security_bunnysuit = 3,  //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/security = 3 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
+	extra_price = PAYCHECK_CREW
 	light_color = COLOR_MOSTLY_PURE_RED
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
@@ -90,8 +98,25 @@
 		/obj/item/clothing/suit/apron/surgical = 4,
 		/obj/item/clothing/mask/surgical = 4,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/doctor = 4, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/doctor = 4, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/doctor_tailcoat = 4, //Monkestation edit addition
+		/obj/item/clothing/under/rank/medical/doctor_bunnysuit = 4, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/doctor = 4, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/paramedic = 4, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/paramedic = 4, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/paramedic_tailcoat = 4, //Monkestation edit addition
+		/obj/item/clothing/under/rank/medical/paramedic_bunnysuit = 4, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/paramedic = 4, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/psychologist = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/psychologist = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/psychologist_bunnysuit = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/psychologist = 1 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
+	extra_price = PAYCHECK_CREW
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
@@ -118,8 +143,16 @@
 		/obj/item/clothing/head/utility/hardhat = 3,
 		/obj/item/clothing/head/utility/hardhat/welding = 3,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/engineer = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/engineer = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/engineer = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/engineering/engineer_bunnysuit = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/workboots/heeled = 3 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
+	extra_price = PAYCHECK_CREW
 	light_color = COLOR_VIVID_YELLOW
 
 /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -141,8 +174,16 @@
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/atmos_tech = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/atmos_tech = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/utility/fire/atmos_tech_tailcoat = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/engineering/atmos_tech_bunnysuit = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/workboots/heeled = 3 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
+	extra_price = PAYCHECK_CREW
 	light_color = COLOR_VIVID_YELLOW
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
@@ -174,10 +215,20 @@
 	contraband = list(
 		/obj/item/clothing/under/wonka = 1,
 		/obj/item/clothing/head/wonka = 1,
-		/obj/item/cane = 1
+		/obj/item/cane = 1,
+		/obj/item/clothing/head/playbunnyears/cargo = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/cargo = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/cargo = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/cargo/cargo_bunnysuit = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/cargo = 3, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/mailman = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/mailman = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/cargo/mailman_bunnysuit = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/mail = 1 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
+	extra_price = PAYCHECK_CREW
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	machine_name = "CargoDrobe"
@@ -203,9 +254,14 @@
 		/obj/item/clothing/suit/hooded/techpriest = 2,
 		/obj/item/clothing/under/costume/mech_suit = 2,
 		/obj/item/organ/internal/tongue/robot = 2,
+		/obj/item/clothing/head/playbunnyears/roboticist = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/roboticist = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/roboticist_tailcoat = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/rnd/scientist/roboticist_bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/roboticist = 2 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
-	extra_price = PAYCHECK_COMMAND * 1.2
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/robo_wardrobe
 	machine_name = "RoboDrobe"
@@ -231,8 +287,16 @@
 		/obj/item/radio/headset/headset_sci = 3,
 		/obj/item/clothing/mask/gas = 3,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/scientist = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/scientist = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/science_tailcoat = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/rnd/scientist/bunnysuit = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/scientist = 3 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
 
@@ -255,8 +319,16 @@
 		/obj/item/clothing/mask/bandana/striped/botany = 3,
 		/obj/item/clothing/accessory/armband/hydro = 3,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/botanist = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/botanist = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/botanist = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/hydroponics/bunnysuit = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/botanist = 3 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
+	extra_price = PAYCHECK_CREW
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
@@ -287,8 +359,23 @@
 		/obj/item/storage/bag/books = 1,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/curator_red = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/curator_red = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_red = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/curator_red = 1, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/curator_green = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/curator_green = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_green = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/curator_green = 1, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/curator_teal = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/curator_teal = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_teal = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/curator_teal = 1 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/curator_wardrobe
 	machine_name = "CuraDrobe"
 
@@ -325,11 +412,15 @@
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
+		/obj/item/clothing/head/playbunnyears/bartender = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/bartender = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/bartender = 2, // MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/rank/civilian/bartender_bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/bartender = 2 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
-	extra_price = PAYCHECK_COMMAND
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"
 
@@ -357,8 +448,16 @@
 		/obj/item/clothing/suit/hooded/wintercoat = 2,
 		/obj/item/clothing/under/artisan = 2, //monkestation edit
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/cook = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/cook = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/cook = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/cook_bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/chef = 2 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/chef_wardrobe
 	machine_name = "ChefDrobe"
 
@@ -391,9 +490,16 @@
 		/obj/item/wirebrush = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/janitor = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/janitor = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/janitor = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/janitor/bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/galoshes/heeled = 1 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_CREW
-	extra_price = PAYCHECK_COMMAND * 0.8
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 	light_color = COLOR_STRONG_MAGENTA
 
@@ -431,8 +537,31 @@
 		/obj/item/clothing/accessory/lawyers_badge = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/lawyer_black = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/lawyer_black = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/lawyer_black = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_black = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/lawyer_black = 1, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/lawyer_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/lawyer_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/lawyer_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/lawyer_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/lawyer_red = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/lawyer_red = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/lawyer_red = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_red = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/lawyer_red = 1, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/lawyer_good = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/lawyer_good = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/lawyer_good = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_good = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/lawyer_good = 1 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/law_wardrobe
 	machine_name = "LawDrobe"
 
@@ -469,6 +598,10 @@
 		/obj/item/clothing/head/chaplain/medievaljewhat = 3,
 		/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 		/obj/item/clothing/head/chaplain/clownmitre = 1,
+		/obj/item/clothing/head/playbunnyears/chaplain = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/tailcoat/chaplain = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/civilian/chaplain_bunnysuit = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/chaplain = 1 //Monkestation edit addition
 	)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
@@ -476,6 +609,7 @@
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 	payment_department = ACCOUNT_SRV
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/chap_wardrobe
 	machine_name = "DeusVend"
 
@@ -500,9 +634,15 @@
 	)
 	contraband = list(
 		/obj/item/reagent_containers/spray/syndicate = 2,
+		/obj/item/clothing/head/playbunnyears/chemist = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/chemist = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/chemist_tailcoat = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/medical/chemist/bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/chemist = 2 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/chem_wardrobe
 	machine_name = "ChemDrobe"
 
@@ -522,8 +662,16 @@
 		/obj/item/storage/backpack/satchel/gen = 2,
 		/obj/item/storage/backpack/duffelbag/genetics = 2,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/geneticist = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/geneticist = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/geneticist_tailcoat = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/rnd/geneticist/bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/geneticist = 2 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/gene_wardrobe
 	machine_name = "GeneDrobe"
 
@@ -545,8 +693,16 @@
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/pathologist = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/pathologist = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/pathologist_tailcoat = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/medical/pathologist_bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/pathologist = 2 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
+	extra_price = PAYCHECK_CREW
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
 
@@ -587,8 +743,15 @@
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
 	)
+	contraband = list(
+		/obj/item/clothing/head/playbunnyears/detective = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/detective= 1, //Monkestation edit addition
+		/obj/item/clothing/suit/jacket/det_suit/tailcoat = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/security/detective_bunnysuit = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/detective = 1 //Monkestation edit addition
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
-	extra_price = PAYCHECK_COMMAND * 1.75
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SEC
 
 /obj/item/vending_refill/wardrobe/det_wardrobe

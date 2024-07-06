@@ -16,6 +16,9 @@
 /datum/orderable_item/mining/fulton_core
 	item_path = /obj/item/fulton_core
 	cost_per_order = 400
+/datum/orderable_item/mining/bunny //MONKE EDIT
+	item_path = /obj/item/storage/backpack/duffelbag/mining_bunny
+	cost_per_order = 500
 
 /datum/orderable_item/mining/mining_modsuit
 	item_path = /obj/item/mod/control/pre_equipped/mining

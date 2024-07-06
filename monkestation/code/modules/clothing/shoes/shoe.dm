@@ -56,9 +56,8 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/heels/syndicate
-	name = "heels"
+	name = "syndicate heels"
 	desc = "A both professional and stylish pair of footwear that are shockingly comfortable to walk in. They have have been sharpened to allow them to be used as a rudimentary weapon."
-	icon_state = "heels_syndi"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	strip_delay = 2 SECONDS
 	force = 10
@@ -66,56 +65,35 @@
 	sharpness = SHARP_POINTY
 	attack_verb_continuous = list("attacks", "slices", "slashes", "cuts", "stabs")
 	attack_verb_simple = list("attack", "slice", "slash", "cut", "stab")
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#39393f"
+	flags_1 = null
 
 /obj/item/clothing/shoes/heels/magician
 	name = "magical heels"
 	desc = "A pair of heels that seem to magically solve all the problems with walking in heels."
-	icon_state = "heels_wiz"
 	strip_delay = 2 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#4c2882"
+	flags_1 = null
 
 /obj/item/clothing/shoes/heels/centcom
-	name = "green heels"
+	name = "corporate heels"
 	desc = "A stylish piece of corporate footwear, its ergonomic design makes it easier to both run and work in than the average pair of heels."
-	icon_state = "heels_centcom"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#46b946"
+	flags_1 = null
 
 /obj/item/clothing/shoes/heels/red
-	name = "red heels"
-	desc = "A pair of classy red heels."
-	icon_state = "heels_red"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#c82424"
+	flags_1 = null
 
 /obj/item/clothing/shoes/heels/blue
-	name = "blue heels"
-	desc = "A pair of classy blue heels."
-	icon_state = "heels_blue"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#1b6ec4"
+	flags_1 = null
 
 /obj/item/clothing/shoes/heels/enviroheels
 	name = "enviroheels"
 	desc = "A pair of heels designed to function marginally better with envirosuits."
-	icon_state = "enviroheels"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+	greyscale_colors = "#a747c0"
+	flags_1 = null
 
 //END HEELS
