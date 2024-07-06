@@ -31,7 +31,7 @@
 	lefthand_file = 'monkestation/code/modules/slimecore/icons/backpack_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/slimecore/icons/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	actions_types = list(/datum/action/item_action/toggle_nozzle)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -121,7 +121,7 @@
 	if(!istype(user))
 		return
 
-	if(user.get_item_by_slot(user.getBackSlot()) != src && check_backpack)
+	if(!(user.get_slot_by_item(src) & (ITEM_SLOT_BELT | ITEM_SLOT_BACK)) && check_backpack)
 		to_chat(user, span_warning("[src] must be worn properly to use!"))
 		return
 
@@ -141,12 +141,12 @@
 		remove_nozzle()
 
 /obj/item/vacuum_pack/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
+	if(slot & (ITEM_SLOT_BELT | ITEM_SLOT_BACK))
 		return TRUE
 
 /obj/item/vacuum_pack/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_BACK)
+	if(!(slot & (ITEM_SLOT_BELT | ITEM_SLOT_BACK)))
 		remove_nozzle()
 
 /obj/item/vacuum_pack/proc/remove_nozzle()
@@ -158,7 +158,7 @@
 		nozzle.forceMove(src)
 
 /obj/item/vacuum_pack/attack_hand(mob/user, list/modifiers)
-	if (user.get_item_by_slot(user.getBackSlot()) == src)
+	if (user.get_slot_by_item(src) & (ITEM_SLOT_BELT | ITEM_SLOT_BACK))
 		toggle_nozzle(user)
 	else
 		return ..()
