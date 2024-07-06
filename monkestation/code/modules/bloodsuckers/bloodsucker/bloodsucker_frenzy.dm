@@ -49,7 +49,7 @@
 	)
 
 /datum/status_effect/frenzy/get_examine_text()
-	return span_warning("[owner.p_They()] seem[owner.p_s()] inhumane, and feral!")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] inhumane and feral!")
 
 /atom/movable/screen/alert/status_effect/masquerade/MouseEntered(location,control,params)
 	desc = initial(desc)
