@@ -150,6 +150,7 @@
 
 	for(var/obj/item/organ/organ as anything in bloodsuckeruser.organs)
 		organ.set_organ_damage(0)
+	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC) // i think vampires ARE magic, so, yeah
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE
@@ -157,7 +158,7 @@
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 		current_eyes.color_cutoffs = list(25, 8, 5)
-		current_eyes.sight_flags = SEE_MOBS
+		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
@@ -289,8 +290,7 @@
 	user.remove_all_embedded_objects()
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
 
-	var/unique_death = SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH)
-	if(unique_death & DONT_DUST)
+	if(SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
 		return
 
 	// Elders get dusted, Fledglings get gibbed.
