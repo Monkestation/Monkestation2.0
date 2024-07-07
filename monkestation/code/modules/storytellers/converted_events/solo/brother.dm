@@ -34,12 +34,16 @@
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
-	force_secondary_antag = TRUE
 
 /datum/round_event_control/antagonist/solo/brother/roundstart
 	name = "Blood Brothers"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
+	extra_spawned_events = list(
+		/datum/round_event_control/antagonist/solo/traitor/roundstart = 12,
+		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 4,
+		/datum/round_event_control/antagonist/solo/heretic/roundstart = 2,
+	)
 
 /datum/round_event_control/antagonist/solo/brother/midround
 	name = "Sleeper Agents (Blood Brothers)"
