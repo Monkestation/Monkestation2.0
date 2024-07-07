@@ -30,11 +30,11 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 1
-	// BBs should be less common/abundant than normal traitors, albeit not overly so.
-	weight = 16
+	weight = 10
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
+	force_secondary_antag = TRUE
 
 /datum/round_event_control/antagonist/solo/brother/roundstart
 	name = "Blood Brothers"

@@ -136,6 +136,8 @@
 	var/antag_datum
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
 	var/prompted_picking = FALSE
+	/// If true, if this is picked at roundstart, the storyteller will forcefully trigger another antag alongside it.
+	var/force_secondary_antag = FALSE
 
 /datum/round_event_control/antagonist/solo/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
