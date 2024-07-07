@@ -53,6 +53,10 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
+/obj/structure/holosign/emp_act(severity) // Monke, emping a holosign creator makes it destroy its signs.
+	. = ..()
+	src.Destroy()
+
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
 	desc = "The words flicker as if they mean nothing."
