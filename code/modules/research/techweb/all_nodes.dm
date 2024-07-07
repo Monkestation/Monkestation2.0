@@ -156,7 +156,9 @@
 		"borg_suit",
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
-		"cyborgrecharger", // Monke, cannot print cyborg upload or robotics control.
+//		"borgupload", // Monke, cannot print borg upload console.
+		"cyborgrecharger",
+//		"robocontrol", // Monke, cannot print robotics control console.
 		"sflash",
 	)
 
@@ -1027,7 +1029,8 @@
 		"borg_ai_control",
 		"intellicard",
 		"mecha_tracking_ai_control",
-		"aifixer", // Monke, cannot print upload.
+		"aifixer",
+//		"aiupload", // Monke, cannot print AI upload console.
 		"reset_module",
 		"asimov_module",
 		"default_module",
