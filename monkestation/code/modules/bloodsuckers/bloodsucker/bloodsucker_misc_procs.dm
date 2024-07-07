@@ -150,21 +150,23 @@
 	return getBruteLoss()
 
 /mob/living/carbon/getBruteLoss_nonProsthetic()
-	var/amount = 0
+	if(dna?.species?.inherent_biotypes & MOB_ROBOTIC) // technically it's not a prosthetic if it's a "natural" part of their species
+		return getBruteLoss()
+	. = 0
 	for(var/obj/item/bodypart/chosen_bodypart as anything in bodyparts)
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
 			continue
-		amount += chosen_bodypart.brute_dam
-	return amount
+		. += chosen_bodypart.brute_dam
 
 /// Burn
 /mob/living/proc/getFireLoss_nonProsthetic()
 	return getFireLoss()
 
 /mob/living/carbon/getFireLoss_nonProsthetic()
-	var/amount = 0
+	if(dna?.species?.inherent_biotypes & MOB_ROBOTIC) // technically it's not a prosthetic if it's a "natural" part of their species
+		return getBruteLoss()
+	. = 0
 	for(var/obj/item/bodypart/chosen_bodypart as anything in bodyparts)
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
 			continue
-		amount += chosen_bodypart.burn_dam
-	return amount
+		. += chosen_bodypart.burn_dam
