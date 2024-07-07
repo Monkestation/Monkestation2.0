@@ -164,7 +164,7 @@
 
 /mob/living/carbon/getFireLoss_nonProsthetic()
 	if(dna?.species?.inherent_biotypes & MOB_ROBOTIC) // technically it's not a prosthetic if it's a "natural" part of their species
-		return getBruteLoss()
+		return getFireLoss()
 	. = 0
 	for(var/obj/item/bodypart/chosen_bodypart as anything in bodyparts)
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
