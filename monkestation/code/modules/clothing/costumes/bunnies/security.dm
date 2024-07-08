@@ -137,16 +137,58 @@
 	acid = 50
 	wound = 10
 
-/obj/item/clothing/shoes/heels/warden
-	name = "warden's heels"
-	desc = "A both professional and stylish pair of footwear that are difficult to walk in." //TODO: new desc
-	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/heeled_shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/heeled_shoes_worn.dmi'
-	icon_state = ""
+//Brig Physician
+
+/obj/item/clothing/head/playbunnyears/brig_phys
+	name = "brig physician's bunny ears"
+	desc = "A pair of red and grey bunny ears attatched to a headband. Whoever's wearing these is surely a professional... right?"
+	icon_state = "brig_phys"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/bunny_ears.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/rank/security/brig_phys_bunnysuit
+	desc = "The staple of any bunny themed brig physicians. The rejected alternative to an already discontinued alternate uniform, now sold at a premium!"
+	name = "brig physician's bunnysuit"
+	icon_state = "bunnysuit_brig_phys"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/bunnysuits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/bunnysuits_worn.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/security/brig_phys_bunnysuit/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny)
+
+/obj/item/clothing/suit/toggle/labcoat/brig_phys_tailcoat
+	name = "brig physician's tailcoat"
+	desc = "A mostly sterile red and grey coat worn by bunny themed brig physicians. It lacks the padding of the \"standard\" security tailcoat."
+	icon_state = "brig_phys"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/tailcoats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
+	body_parts_covered = CHEST|ARMS|GROIN
+	species_exception = null
+
+/obj/item/clothing/neck/tie/bunnytie/brig_phys
+	name = "brig physician's bowtie"
+	desc = "A red tie that includes a collar. Looking underappreciated!"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/neckwear.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
+	icon_state = "bowtie_collar_brig_phys_tied"
+	tie_type = "bowtie_collar_brig_phys"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	flags_1 = null
+
+/obj/item/clothing/neck/tie/bunnytie/brig_phys/tied
+	is_tied = TRUE
+
+/obj/item/clothing/shoes/heels/brig_phys
+	greyscale_colors = "#918f8c"
 	flags_1 = null
 
 //Detective
@@ -315,3 +357,11 @@
 	fire = 70
 	acid = 90
 	wound = 10
+
+/obj/item/clothing/shoes/jackboots/gogo_boots
+	name = "tactical go-go boots"
+	desc = "Highly tactical footwear designed to give you a better view of the battlefield."
+	icon_state = "hos_boots"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/heeled_shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/heeled_shoes_worn.dmi'
+

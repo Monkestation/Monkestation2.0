@@ -110,7 +110,7 @@
 				/obj/item/clothing/head/costume/jester/alt =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/rank/civilian/clown/jester/alt =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/head/playbunnyears/clown = 1, //Monkestation edit addition
-				/obj/item/clothing/neck/tie/bunnytie/clown = 1, //Monkestation edit addition
+				/obj/item/clothing/neck/tie/clown = 1, //Monkestation edit addition
 				/obj/item/clothing/suit/jacket/tailcoat/clown = 1, //Monkestation edit addition
 				/obj/item/clothing/under/rank/civilian/clown_bunnysuit = 1, //Monkestation edit addition
 				/obj/item/clothing/shoes/clown_shoes/heeled = 1, //Monkestation edit addition

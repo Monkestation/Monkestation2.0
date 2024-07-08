@@ -106,7 +106,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/security(src)
 	new /obj/item/clothing/suit/armor/hos_tailcoat(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/security(src)
+	new /obj/item/clothing/shoes/jackboots/gogo_boots(src)
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
 	new /obj/item/clothing/under/rank/rnd/research_director(src)

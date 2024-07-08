@@ -149,11 +149,11 @@
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /datum/armor/tailcoat_miner
-	melee = 20
-	bullet = 5
+	melee = 30
+	bullet = 10
 	laser = 10
-	energy = 10
-	bomb = 40
+	energy = 20
+	bomb = 50
 	fire = 50
 	acid = 50
 

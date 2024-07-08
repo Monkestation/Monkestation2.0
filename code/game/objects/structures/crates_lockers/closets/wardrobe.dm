@@ -80,6 +80,11 @@
 		new /obj/item/clothing/under/rank/prisoner/skirt(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/orange(src)
+	if(prob(50))
+		new /obj/item/clothing/head/playbunnyears/prisoner(src)
+		new /obj/item/clothing/neck/tie/bunnytie/prisoner(src)
+		new /obj/item/clothing/under/rank/security/prisoner_bunnysuit(src)
+		new /obj/item/clothing/shoes/heels/prisoner(src)
 	return
 
 

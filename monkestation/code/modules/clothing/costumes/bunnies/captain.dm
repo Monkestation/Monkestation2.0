@@ -37,7 +37,7 @@
 	name = "captain's tailcoat"
 	desc = "A nautical coat usually worn by bunny themed captains. It’s reinforced with genetically modified armored blue rabbit fluff."
 	icon_state = "captain"
-	inhand_icon_state = "armor"
+	inhand_icon_state = null
 	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/tailcoats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS

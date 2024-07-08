@@ -339,19 +339,20 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/neck/tie/bunnytie/clown
+/obj/item/clothing/neck/tie/clown
 	name = "clown's bowtie"
 	desc = "An outrageously large blue bowtie. Looking funny!"
 	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/neckwear.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
-	//icon_state = "bowtie_collar__tied"
-	//tie_type = "bowtie_collar_"
+	icon_state = "bowtie_clown_tied"
+	tie_type = "bowtie_clown"
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	flags_1 = null
+	tie_timer = 8 SECONDS //It's a BIG bowtie
 
-/obj/item/clothing/neck/tie/bunnytie/clown/tied
+/obj/item/clothing/neck/tie/clown/tied
 	is_tied = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/heeled
@@ -453,6 +454,13 @@
 /obj/item/clothing/shoes/heels/chaplain
 	greyscale_colors = "#39393f"
 	flags_1 = null
+
+/obj/item/clothing/neck/bunny_pendant
+	name = "bunny pendant"
+	desc = "A golden pendant depicting a holy rabbit."
+	icon_state = "chaplain_pendant"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/neckwear.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
 
 //Curator Red
 

@@ -53,7 +53,12 @@
 		/obj/item/clothing/neck/tie/bunnytie/security = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/armor/security_tailcoat = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/security_bunnysuit = 3,  //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/security = 3 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/security = 3, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/brig_phys = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/brig_phys = 1, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/brig_phys_tailcoat = 1, //Monkestation edit addition
+		/obj/item/clothing/under/rank/security/brig_phys_bunnysuit = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/brig_phys = 1 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
@@ -599,6 +604,7 @@
 		/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 		/obj/item/clothing/head/chaplain/clownmitre = 1,
 		/obj/item/clothing/head/playbunnyears/chaplain = 1, //Monkestation edit addition
+		/obj/item/clothing/neck/bunny_pendant = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/chaplain = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/chaplain_bunnysuit = 1, //Monkestation edit addition
 		/obj/item/clothing/shoes/heels/chaplain = 1 //Monkestation edit addition
