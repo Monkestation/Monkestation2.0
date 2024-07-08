@@ -3,4 +3,4 @@
 	if(LAZYLEN(signs))
 		for(var/sign as anything in signs)
 			qdel(sign)
-	return
+		return
