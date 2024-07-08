@@ -82,12 +82,6 @@
 			qdel(H)
 		balloon_alert(user, "holograms cleared")
 
-/obj/item/holosign_creator/emp_act(severity) // Monke, emping a holosign creator makes it destroy its signs.
-	. = ..()
-	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
-
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
