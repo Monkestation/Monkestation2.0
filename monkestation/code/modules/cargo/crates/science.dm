@@ -17,15 +17,6 @@
 	desc = "Control the Silicons with upload and robotics control console boards."
 	cost = CARGO_CRATE_VALUE * 20
 	access = ACCESS_RD
-	contains = list(/obj/item/storage/lockbox/upload)
+	contains = list(/obj/item/circuitboard/computer/aiupload, /obj/item/circuitboard/computer/robotics, /obj/item/circuitboard/computer/borgupload)
 	crate_name = "secure science board crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-
-/obj/item/storage/lockbox/upload
-	name = "lockbox of silicon control boards"
-	req_access = list(ACCESS_RD)
-
-/obj/item/storage/lockbox/upload/PopulateContents()
-	new /obj/item/circuitboard/computer/aiupload(src)
-	new /obj/item/circuitboard/computer/robotics(src)
-	new /obj/item/circuitboard/computer/borgupload(src)
