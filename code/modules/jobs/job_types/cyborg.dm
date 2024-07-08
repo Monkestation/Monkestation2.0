@@ -3,7 +3,7 @@
 	description = "Assist the crew, follow your laws, obey your AI."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
-	total_positions = 2
+	total_positions = 3
 	spawn_positions = 1
 	supervisors = "your laws and the AI" //Nodrak
 	spawn_type = /mob/living/silicon/robot
