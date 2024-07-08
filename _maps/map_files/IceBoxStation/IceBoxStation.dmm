@@ -1656,7 +1656,6 @@
 /obj/item/seeds/onion,
 /obj/item/seeds/garlic,
 /obj/item/seeds/potato,
-/obj/item/seeds/tomato,
 /obj/item/seeds/carrot,
 /obj/item/seeds/grass,
 /obj/item/seeds/ambrosia,
@@ -25846,9 +25845,6 @@
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
-	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/garden)

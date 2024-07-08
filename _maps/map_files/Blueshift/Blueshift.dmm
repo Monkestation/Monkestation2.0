@@ -784,9 +784,6 @@
 /area/station/security/checkpoint/science/research)
 "aiu" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "aiw" = (
@@ -2543,14 +2540,14 @@
 /area/station/cargo/warehouse)
 "azM" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/entertainment/money,
 /obj/item/storage/pill_bottle/maintenance_pill/full,
 /obj/item/coin/adamantine,
 /obj/item/clothing/glasses/sunglasses,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/belt/utility/full/engi,
 /obj/item/clothing/suit/armor/vest/old,
 /obj/effect/spawner/random/contraband/plus,
+/obj/item/seeds/cocaleaf,
+/obj/item/clothing/mask/cigarette/pipe/crackpipe,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "azU" = (
@@ -6727,7 +6724,6 @@
 /area/station/command/gateway)
 "bpN" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/seeds/banana,
 /obj/item/seeds/carrot,
 /obj/item/seeds/carrot/parsnip,
 /obj/item/seeds/chili,
@@ -6746,7 +6742,6 @@
 /obj/item/seeds/grape/green,
 /obj/item/seeds/grass,
 /obj/item/seeds/pumpkin,
-/obj/item/seeds/tomato,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -11580,6 +11575,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"clD" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/security/prison/mess)
 "clI" = (
 /obj/item/statuebust/hippocratic,
 /obj/structure/table/wood/fancy/blue,
@@ -17527,7 +17526,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/falsewall,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "dpg" = (
@@ -23118,7 +23117,7 @@
 /obj/effect/turf_decal/siding/thinplating/light,
 /obj/machinery/door/window/left/directional/south{
 	name = "Monkey Pen";
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /turf/open/floor/grass,
 /area/station/medical/virology/isolation)
@@ -31954,7 +31953,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/wood,
 /area/station/security/prison)
 "ggC" = (
@@ -58141,8 +58139,6 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/item/pipe_dispenser,
-/obj/item/wrench,
-/obj/item/analyzer,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/station/security/prison)
@@ -73150,7 +73146,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "chem_lockdown";
 	name = "chemistry lockdown control";
-	req_access = list("chemistry")
+	req_access = list("pharmacy")
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -84270,10 +84266,8 @@
 /area/station/maintenance/central)
 "qtz" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/color/fyellow/old,
 /obj/item/clothing/under/color/grey,
 /obj/item/clothing/shoes/sneakers/black,
-/obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "qtE" = (
@@ -97631,7 +97625,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/item/clothing/mask/cigarette/pipe/crackpipe,
 /turf/open/floor/iron/kitchen{
 	dir = 1
 	},
@@ -120641,12 +120634,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xoN" = (
-/obj/item/spear,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/clothing/head/helmet/old{
-	pixel_y = 9
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -163201,7 +163190,7 @@ dCS
 eAw
 tPV
 tKm
-tKm
+clD
 tKm
 cmI
 pXM

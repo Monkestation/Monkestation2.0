@@ -37177,7 +37177,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/paper/guides/jobs/hydroponics,
@@ -44402,7 +44401,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/vehicle/ridden/wheelchair,
+/obj/vehicle/ridden/wheelchair{
+	name = "crippling depression";
+	desc = "A chair with big wheels. It looks like you can move in this on your own, provided you do not have a case of osteoperosis."
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -60746,9 +60748,6 @@
 	dir = 6;
 	network = list("ss13","Security","prison")
 	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "stc" = (
@@ -75699,7 +75698,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "wWS" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/vending/cola/red,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},

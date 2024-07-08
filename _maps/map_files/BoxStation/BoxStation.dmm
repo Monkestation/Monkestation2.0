@@ -11218,10 +11218,6 @@
 	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
-"dKa" = (
-/obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/iron/dark,
-/area/station/security/prison/mess)
 "dKf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
@@ -34183,7 +34179,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/seeds/onion,
@@ -42528,7 +42523,6 @@
 "ogd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -42551,15 +42545,6 @@
 /area/station/service/janitor)
 "ogz" = (
 /obj/structure/table/reinforced,
-/obj/item/food/grown/tomato,
-/obj/item/food/grown/tomato{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/food/grown/tomato{
-	pixel_x = 4;
-	pixel_y = 5
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "ogH" = (
@@ -56030,9 +56015,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
@@ -100468,7 +100450,7 @@ tLo
 phd
 fuS
 dxW
-dKa
+dxW
 rhW
 rhW
 rhW
