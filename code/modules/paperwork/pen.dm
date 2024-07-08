@@ -254,7 +254,7 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 1.5
 	light_power = 0.75
 	light_color = COLOR_SOFT_RED
@@ -359,6 +359,9 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
+
+/obj/item/pen/screwdriver/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()

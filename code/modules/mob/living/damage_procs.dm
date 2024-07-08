@@ -1,4 +1,8 @@
 
+/// return the total damage of all types which update your health
+/mob/living/proc/get_total_damage(precision = DAMAGE_PRECISION)
+	return round(getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss(), precision)
+
 /**
  * Applies damage to this mob.
  *
@@ -129,7 +133,7 @@
 		if(BURN)
 			return adjustFireLoss(heal_amount)
 		if(TOX)
-			return adjustToxLoss(heal_amount)
+			return adjustToxLoss(heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
 			return adjustOxyLoss(heal_amount)
 		if(CLONE)
@@ -486,10 +490,12 @@
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
  *
- * needs to return amount healed in order to calculate things like tend wounds xp gain
+ * returns the net change in damage
  */
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE)) //zero as argument for no instant health update
+	if(!.) // no change, no need to update
+		return FALSE
 	if(updating_health)
 		updatehealth()
 

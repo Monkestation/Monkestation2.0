@@ -11,6 +11,11 @@
 #define SMOOTH_QUEUED (1<<4)
 /// Smooths with objects, and will thus need to scan turfs for contents.
 #define SMOOTH_OBJ (1<<5)
+/// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
+/// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in
+/// it represents the sides of our directional border object that have a neighbor
+/// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
+#define SMOOTH_BORDER_OBJECT (1<<6)
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
@@ -19,6 +24,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
 	"SMOOTH_OBJ" = SMOOTH_OBJ,
+	"SMOOTH_BORDER_OBJECT" = SMOOTH_BORDER_OBJECT,
 ))
 
 
@@ -131,12 +137,17 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
 
+#define SMOOTH_GROUP_SHIPWALLS S_OBJ(19) ///turf/closed/wall/mineral/titanium/spaceship
+#define SMOOTH_GROUP_STONE_WALLS S_OBJ(20) ///turf/closed/wall/mineral/stone, /obj/structure/falsewall/stone
+
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
 #define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(22) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
 #define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(23) ///obj/structure/window/bronze/fulltile
 #define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
 #define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
+
+#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/window/reinforced/tram
 
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk
@@ -149,6 +160,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BRONZE_TABLES S_OBJ(54) ///obj/structure/table/bronze
 #define SMOOTH_GROUP_ABDUCTOR_TABLES S_OBJ(55) ///obj/structure/table/abductor
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(56) ///obj/structure/table/glass
+#define SMOOTH_GROUP_SANDSTONE_TABLES S_OBJ(57) ///obj/structure/table/sandstone //MONKESTATION EDIT
 
 #define SMOOTH_GROUP_ALIEN_NEST S_OBJ(60) ///obj/structure/bed/nest
 #define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(61) ///obj/structure/alien/resin
@@ -174,6 +186,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_GRILLE S_OBJ(75)
 
+#define SMOOTH_GROUP_WAXWALL S_OBJ(76)
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \

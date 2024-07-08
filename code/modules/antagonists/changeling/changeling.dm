@@ -102,6 +102,8 @@
 
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
+	/// the amount of oozeling revives we have left
+	var/oozeling_revives = 3
 
 /datum/antagonist/changeling/New()
 	. = ..()
@@ -158,10 +160,11 @@
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	// Brains are optional for lings.
-	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(our_ling_brain)
-		our_ling_brain.organ_flags &= ~ORGAN_VITAL
-		our_ling_brain.decoy_override = TRUE
+	if(!isoozeling(living_mob))
+		var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(our_ling_brain)
+			our_ling_brain.organ_flags &= ~ORGAN_VITAL
+			our_ling_brain.decoy_override = TRUE
 
 /datum/antagonist/changeling/proc/generate_name()
 	var/honorific
@@ -264,13 +267,15 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
+	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick, total_chem_storage * 0.5)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
 
 	// If we're not dead - we go up to the full chem cap.
 	else
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
 
 /**
  * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], getting admin-healed restores our chemicals.
@@ -686,16 +691,21 @@
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			objectives += maroon_objective
+
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
 				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
+				identity_theft.find_target()
 				identity_theft.update_explanation_text()
-				objectives += identity_theft
 				escape_objective_possible = FALSE
+				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
+				maroon_objective.update_explanation_text()
+				objectives += maroon_objective
+				objectives += identity_theft
+			else
+				maroon_objective.find_target()
+				objectives += maroon_objective
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))
@@ -975,7 +985,9 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/get_preview_icon()
+// monkestation start: refactor to use [get_base_preview_icon] for better midround polling images
+/datum/antagonist/changeling/get_base_preview_icon()
+	RETURN_TYPE(/icon)
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
 	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
@@ -987,7 +999,11 @@
 
 	final_icon.Blend(split_icon, ICON_OVERLAY)
 
-	return finish_preview_icon(final_icon)
+	return final_icon
+
+/datum/antagonist/changeling/get_preview_icon()
+	return finish_preview_icon(get_base_preview_icon())
+// monkestation end
 
 /datum/antagonist/changeling/ui_data(mob/user)
 	var/list/data = list()

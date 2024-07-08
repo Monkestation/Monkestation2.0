@@ -1,11 +1,6 @@
 GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark) //set to be equal to the ark on creation if none
 GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
-#define ARK_STATE_BASE 0 //base state the ark is created in, any state besides this will be a hostile environment
-#define ARK_STATE_CHARGING 1 //state for the grace period after the cult has reached its member count max and have an active anchor crystal
-#define ARK_STATE_ACTIVE 2 //state for after the cult has been annouced as well as the first half of the assault
-#define ARK_STATE_SUMMONING 3 //state for the halfway point of ark activation
-#define ARK_STATE_FINAL 4 //the ark has either finished opening or been destroyed in this state
 #define ARK_READY_PERIOD 300 SECONDS //how long until the cult is annouced after they reach max members, 5 minutes
 #define ARK_GRACE_PERIOD 210 SECONDS //how long until the portals open after the cult is annouced, 3 minutes 30 seconds
 #define ARK_ASSAULT_PERIOD 600 //how long the crew has to destroy the ark after the assault begins, 10 minutes
@@ -140,9 +135,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD)
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
-	if(current_state >= ARK_STATE_ACTIVE)
+	if(current_state >= ARK_STATE_GRACE)
 		return
-	current_state = ARK_STATE_ACTIVE
+	current_state = ARK_STATE_GRACE
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
 	send_clock_message(null, span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
@@ -151,24 +146,24 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
 	send_clock_message(null, span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
-
 	sleep(3 SECONDS)
+	current_state = ARK_STATE_ACTIVE
 
 	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
 		var/mob/living/servant_mob = servant_mind.current
-		if(!servant_mob || QDELETED(servant_mob))
+		if(QDELETED(servant_mob))
 			continue
+
 		if(GLOB.abscond_markers)
 			try_servant_warp(servant_mob, get_turf(pick(GLOB.abscond_markers)))
-		if(ishuman(servant_mob))
-			var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
-			if(servant_antag)
-				servant_antag.forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
-				servant_mob.add_overlay(servant_antag.forbearance)
+
+		var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
+		servant_antag?.add_forbearance(servant_mob)
 
 	sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 50)
 	SSsecurity_level.set_level(3)
 	addtimer(CALLBACK(src, PROC_REF(begin_assault)), ARK_GRACE_PERIOD)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package), /obj/item/turf_demolisher/reebe), 10 SECONDS)
 
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
@@ -231,19 +226,14 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /proc/explode_reebe()
 	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)
-	if(reebe_area_list.len)
+	if(length(reebe_area_list))
 		for(var/i in 1 to 30)
 			explosion(pick(reebe_area_list), 0, 2, 4, 4, FALSE)
 			sleep(5)
-	if(GLOB.abscond_markers.len)
+	if(length(GLOB.abscond_markers))
 		explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
 	SSticker.force_ending = TRUE
 
-#undef ARK_STATE_BASE
-#undef ARK_STATE_CHARGING
-#undef ARK_STATE_ACTIVE
-#undef ARK_STATE_SUMMONING
-#undef ARK_STATE_FINAL
 #undef ARK_READY_PERIOD
 #undef ARK_GRACE_PERIOD
 #undef ARK_ASSAULT_PERIOD

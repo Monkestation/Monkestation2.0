@@ -32,16 +32,15 @@
 	return 100 - protection
 
 ///Get all the clothing on a specific body part
-/mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
+/mob/living/carbon/human/proc/get_clothing_on_part(def_zone)
+	if(istype(def_zone, /obj/item/bodypart))
+		var/obj/item/bodypart/def_bodypart = def_zone
+		def_zone = def_bodypart.body_part
 	var/list/covering_part = list()
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
-				covering_part += C
+	for(var/obj/item/clothing/worn in body_parts)
+		if(worn.body_parts_covered & def_zone)
+			covering_part += worn
 	return covering_part
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
@@ -172,7 +171,7 @@
 
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	I.disease_contact(src, check_zone(user.zone_selected))
-	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))
+	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[initial(I.name)]"))
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
 
 	// the attacked_by code varies among species
@@ -252,6 +251,7 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
+/*
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(check_shields(user, 0, "the [user.name]"))
 		visible_message(span_danger("[user] attempts to touch [src]!"), \
@@ -306,7 +306,7 @@
 		if(!dismembering_strike(user, user.zone_selected)) //Dismemberment successful
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
-
+*/
 
 
 

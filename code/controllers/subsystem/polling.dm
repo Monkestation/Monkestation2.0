@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(polling)
 	pic_source,
 	role_name_text,
 	list/custom_response_messages,
-	start_signed_up = FALSE,
+	start_signed_up = FALSE
 )
 	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
@@ -121,7 +121,6 @@ SUBSYSTEM_DEF(polling)
 			if((candidate_mob in other_poll.signed_up) && new_poll.sign_up(candidate_mob, TRUE))
 				break
 
-		// Image to display
 		var/image/poll_image
 		if(pic_source)
 			if(isatom(pic_source))
@@ -135,9 +134,8 @@ SUBSYSTEM_DEF(polling)
 				the_pic_source.plane = old_plane
 			else if(ispath(pic_source, /datum/antagonist))
 				var/datum/antagonist/antagonist = new pic_source
-				var/icon/preview_icon = antagonist.preview_outfit ? antagonist.render_preview_outfit(antagonist.preview_outfit) : null
+				poll_image = antagonist.render_poll_preview() || image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 				qdel(antagonist)
-				poll_image = preview_icon ? image(preview_icon) : image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 			else
 				poll_image = image(pic_source, layer = FLOAT_LAYER)
 		else
@@ -157,8 +155,8 @@ SUBSYSTEM_DEF(polling)
 		if(ignore_category)
 			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round\]</a>"
 
-		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
-			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+		if(!duplicate_message_check(alert_poll) && candidate_mob.client) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
+			SEND_SOUND(candidate_mob.client, sound('sound/misc/notice2.ogg', volume = candidate_mob.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
 			to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
 
 		// Start processing it so it updates visually the timer
@@ -180,6 +178,9 @@ SUBSYSTEM_DEF(polling)
 
 /datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, check_jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
 	var/static/list/mob/currently_polling_mobs = list()
+
+	if(!isnull(target_mob) && !ismob(target_mob))
+		stack_trace("attempted to use a non-mob as the target mob ([target_mob] | [target_mob.type])")
 
 	if(currently_polling_mobs.Find(target_mob))
 		return list()

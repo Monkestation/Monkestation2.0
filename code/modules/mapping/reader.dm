@@ -347,6 +347,7 @@
 	// And we are done lads, call it off
 	loading = FALSE
 	SSatoms.map_loader_stop(REF(src))
+	loading = FALSE
 
 	if(new_z)
 		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
@@ -1005,8 +1006,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	if (!text)
 		return
 
-	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
-	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
 	var/position
 	var/old_position = 1
 	while(position != 0)
@@ -1069,7 +1068,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	return text
 
 /datum/parsed_map/Destroy()
-	..()
 	SSatoms.map_loader_stop(REF(src)) // Just in case, I don't want to double up here
 	if(turf_blacklist)
 		turf_blacklist.Cut()
@@ -1077,7 +1075,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	bounds.Cut()
 	grid_models.Cut()
 	gridSets.Cut()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 #undef MAP_DMM
 #undef MAP_TGM

@@ -312,36 +312,6 @@
 			return TRUE
 	return FALSE
 
-/// Remove an amount of reagents without caring about what they are
-/datum/reagents/proc/remove_any(amount = 1)
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/R = cached_reagents[current_list_element]
-		var/remove_amt = min(amount-total_removed,round(amount/rand(2,initial_list_length),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(R.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-		update_total()
-
-	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
-
 /// Removes all reagents from this holder
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
@@ -515,6 +485,7 @@
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
 	var/reagents_to_remove = list()
+	SEND_SIGNAL(R, COMSIG_REAGENT_PRE_TRANS_TO, src)
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -525,6 +496,10 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
@@ -557,10 +532,14 @@
 			var/transfer_amount = amount
 			if(amount > reagent.volume)
 				transfer_amount = reagent.volume
-			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
+			if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, amount))
 				continue
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
-				continue
+				return
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(isorgan(target_atom))
@@ -764,6 +743,7 @@
  */
 /datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/need_mob_update = FALSE
+	SEND_SIGNAL(src, COMSIG_REAGENT_METABOLIZE_REAGENT, reagent, seconds_per_tick)
 	if(QDELETED(reagent.holder))
 		return FALSE
 
@@ -940,7 +920,10 @@
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				matching_container = reaction.required_container ? (cached_my_atom.type == reaction.required_container) : TRUE
+				if(reaction.required_container_accepts_subtypes)
+					matching_container = !reaction.required_container || istype(cached_my_atom, reaction.required_container)
+				else
+					matching_container = !reaction.required_container || cached_my_atom.type == reaction.required_container
 
 				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
@@ -1030,11 +1013,11 @@
 			if(!text_in_list(temp_mix_message, mix_message))
 				mix_message += temp_mix_message
 			continue
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction] total reaction steps")
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
-	if(length(mix_message)) //This is only at the end
+	if(length(mix_message) && my_atom) //This is only at the end
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))

@@ -96,7 +96,7 @@
 	var/list/alternate_appearances
 
 	///Light systems, both shouldn't be active at the same time.
-	var/light_system = STATIC_LIGHT
+	var/light_system = COMPLEX_LIGHT
 	///Range of the maximum brightness of light in tiles. Zero means no light.
 	var/light_inner_range = 0
 	///Range where light begins to taper into darkness in tiles.
@@ -250,9 +250,6 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
-	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
-
 	SET_PLANE_IMPLICIT(src, plane)
 
 	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
@@ -262,7 +259,7 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if (light_system == STATIC_LIGHT && light_power && (light_inner_range || light_outer_range))
+	if (light_system == COMPLEX_LIGHT && light_power && (light_inner_range || light_outer_range))
 		update_light()
 
 	SETUP_SMOOTHING()
@@ -336,6 +333,12 @@
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
+
+	if(material_stats)
+		QDEL_NULL(material_stats)
+
+	if(animate_holder)
+		QDEL_NULL(animate_holder)
 
 	return ..()
 
@@ -821,7 +824,6 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
-	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
@@ -835,19 +837,54 @@
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 		var/list/new_overlays = update_overlays(updates)
-		if (managed_overlays)
-			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
-				overlays = null
-				POST_OVERLAY_CHANGE(src)
-			else
-				cut_overlay(managed_overlays)
-				managed_overlays = null
-		if(length(new_overlays))
-			if (length(new_overlays) == 1)
-				managed_overlays = new_overlays[1]
-			else
-				managed_overlays = new_overlays
-			add_overlay(new_overlays)
+		var/nulls = 0
+		for(var/i in 1 to length(new_overlays))
+			var/atom/maybe_not_an_atom = new_overlays[i]
+			if(isnull(maybe_not_an_atom))
+				nulls++
+				continue
+			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
+				continue
+			new_overlays[i] = maybe_not_an_atom.appearance
+		if(nulls)
+			for(var/i in 1 to nulls)
+				new_overlays -= null
+
+		var/identical = FALSE
+		var/new_length = length(new_overlays)
+		if(!managed_overlays && !new_length)
+			identical = TRUE
+		else if(!islist(managed_overlays))
+			if(new_length == 1 && managed_overlays == new_overlays[1])
+				identical = TRUE
+		else if(length(managed_overlays) == new_length)
+			identical = TRUE
+			for(var/i in 1 to length(managed_overlays))
+				if(managed_overlays[i] != new_overlays[i])
+					identical = FALSE
+					break
+
+		if(!identical)
+			var/full_control = FALSE
+			if(managed_overlays)
+				full_control = length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1)
+				if(full_control)
+					overlays = null
+				else
+					cut_overlay(managed_overlays)
+
+			switch(length(new_overlays))
+				if(0)
+					if(full_control)
+						POST_OVERLAY_CHANGE(src)
+					managed_overlays = null
+				if(1)
+					add_overlay(new_overlays)
+					managed_overlays = new_overlays[1]
+				else
+					add_overlay(new_overlays)
+					managed_overlays = new_overlays
+
 		. |= UPDATE_OVERLAYS
 
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
@@ -1171,6 +1208,9 @@
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
+	//SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
+	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /**
  * Called when the atom log's in or out
@@ -1264,23 +1304,23 @@
 /atom/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, light_inner_range))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_inner_range = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_outer_range))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_outer_range = var_value)
 			else
 				set_light_range(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_power))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_power = var_value)
 			else
 				set_light_power(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_color))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_color = var_value)
 			else
 				set_light_color(var_value)
@@ -1342,6 +1382,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify Armor")
+	VV_DROPDOWN_OPTION(VV_HK_ADJUST_ANIMATIONS, "Adjust Animations")
 	if(greyscale_colors)
 		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
@@ -1489,6 +1530,13 @@
 		var/client/C = usr.client
 		C?.open_color_matrix_editor(src)
 
+	//monke edit start: CYBERNETIC
+	if(href_list[VV_HK_ADJUST_ANIMATIONS] && check_rights(R_VAREDIT))
+		if(!animate_holder)
+			animate_holder = new(src)
+		animate_holder.ui_interact(usr)
+	//monke edit end: CYBERNETIC
+
 /atom/vv_get_header()
 	. = ..()
 	var/refid = REF(src)
@@ -1582,6 +1630,14 @@
 			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
 		if(TOOL_ANALYZER)
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+		if(TOOL_BILLOW)
+			act_result = is_left_clicking ? billow_act(user, tool) : billow_act_secondary(user, tool)
+		if(TOOL_TONG)
+			act_result = is_left_clicking ? tong_act(user, tool) : tong_act_secondary(user, tool)
+		if(TOOL_HAMMER)
+			act_result = is_left_clicking ? hammer_act(user, tool) : hammer_act_secondary(user, tool)
+		if(TOOL_BLOWROD)
+			act_result = is_left_clicking ? blowrod_act(user, tool) : blowrod_act_secondary(user, tool)
 	if(!act_result)
 		return
 
@@ -2034,10 +2090,13 @@
 	if (isnull(user))
 		return
 
+	if(user.client)
+		SEND_SIGNAL(user.client, COMSIG_CLIENT_HOVER_NEW, src)
+	SEND_SIGNAL(src, COMSIG_ATOM_MOUSE_ENTERED, user)
+
 	// Face directions on combat mode. No procs, no typechecks, just a var for speed
 	if(user.face_mouse)
 		user.face_atom(src)
-
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used
 	if(!active_hud)

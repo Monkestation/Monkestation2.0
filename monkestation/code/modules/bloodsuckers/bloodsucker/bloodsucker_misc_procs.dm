@@ -87,7 +87,7 @@
 ///Disables all powers, accounting for torpor
 /datum/antagonist/bloodsucker/proc/DisableAllPowers(forced = FALSE)
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
-		if(forced || ((power.check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(owner.current, TRAIT_NODEATH)))
+		if(forced || ((power.check_flags & BP_CANT_USE_IN_TORPOR) && is_in_torpor()))
 			if(power.active)
 				power.DeactivatePower()
 
@@ -127,7 +127,7 @@
 		return returnIcon + returnString
 	// Viewer not a Vamp AND not the target's vassal?
 	if(!viewer.mind.has_antag_datum((/datum/antagonist/bloodsucker)) && !(viewer in vassals))
-		if(!(HAS_TRAIT(viewer.mind, TRAIT_BLOODSUCKER_HUNTER) && broke_masquerade))
+		if(!(HAS_TRAIT(viewer.mind, TRAIT_OCCULTIST) && broke_masquerade))
 			return FALSE
 	// Default String
 	var/returnString = "\[<span class='warning'><EM>[return_full_name()]</EM></span>\]"

@@ -1,4 +1,8 @@
 #define EXPLOSION_THROW_SPEED 4
+#define EXPLOSION_BLOCK_LIGHT 2.5
+#define EXPLOSION_BLOCK_HEAVY 1.5
+#define EXPLOSION_BLOCK_DEV 1
+
 GLOBAL_LIST_EMPTY(explosions)
 
 SUBSYSTEM_DEF(explosions)
@@ -121,25 +125,26 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
+		var/block = 0
 
 		if(newmode == "Yes")
 			if(explode != epicenter)
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block
+				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 			else
 				cached_exp_block[explode] = explode.explosive_resistance
 
 		dist = round(dist, 0.01)
-		if(dist < dev)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < dev)
 			explode.color = "red"
 			explode.maptext = MAPTEXT("[dist]")
-		else if (dist < heavy)
+		else if (dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy)
 			explode.color = "yellow"
-			explode.maptext = MAPTEXT("[dist]")
-		else if (dist < light)
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_HEAVY)]")
+		else if (dist + (block * EXPLOSION_BLOCK_LIGHT) < light)
 			explode.color = "blue"
-			explode.maptext = MAPTEXT("[dist]")
+			explode.maptext = MAPTEXT("[dist + (block * EXPLOSION_BLOCK_LIGHT)]")
 		else
 			continue
 
@@ -398,26 +403,26 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
-
+		var/block = 0
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
 		// So we always sample from a "loop" closer
-		// It's kind of behaviorly unimpressive that that's a problem for the future
+		// It's kind of behaviorly unimpressive but that's a problem for the future
 		if(reactionary)
 			if(explode == epicenter)
 				cached_exp_block[explode] = explode.explosive_resistance
 			else
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block
+				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 
 
 		var/severity = EXPLODE_NONE
-		if(dist < devastation_range)
+		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
 			severity = EXPLODE_DEVASTATE
-		else if(dist < heavy_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_HEAVY) < heavy_impact_range)
 			severity = EXPLODE_HEAVY
-		else if(dist < light_impact_range)
+		else if(dist + (block * EXPLOSION_BLOCK_LIGHT) < light_impact_range)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
@@ -509,7 +514,7 @@ SUBSYSTEM_DEF(explosions)
  * - [creaking_sound][/sound]: The sound that plays when the station creaks during the explosion.
  * - [hull_creaking_sound][/sound]: The sound that plays when the station creaks after the explosion.
  */
-/datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx(SFX_EXPLOSION)), sound/far_sound = sound('sound/effects/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx(SFX_EXPLOSION_CREAKING)), hull_creaking_sound = sound(get_sfx(SFX_HULL_CREAKING)))
+/datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx(SFX_EXPLOSION)), sound/far_sound = sound('sound/effects/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx(SFX_EXPLOSION_CREAKING)), hull_creaking_sound = sound(get_sfx(SFX_HULL_CREAKING)), pressure_affected = TRUE, disable_shaking = FALSE) // monkestation edit: add pressure_affected, disable_shaking
 	var/frequency = get_rand_frequency()
 	var/blast_z = epicenter.z
 	if(isnull(creaking)) // Autoset creaking.
@@ -530,20 +535,20 @@ SUBSYSTEM_DEF(explosions)
 		var/base_shake_amount = sqrt(near_distance / (distance + 1))
 
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
-			listener.playsound_local(epicenter, null, 100, TRUE, frequency, sound_to_use = near_sound)
-			if(base_shake_amount > 0)
+			listener.playsound_local(epicenter, null, 100, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = near_sound) // monkestation edit: pressure_affected
+			if(base_shake_amount > 0 && !disable_shaking) // monkestation edit: disable_shaking
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
 		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
 			var/far_volume = clamp(far_distance / 2, FAR_LOWER, FAR_UPPER)
 			if(creaking)
-				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, sound_to_use = creaking_sound, distance_multiplier = 0)
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = creaking_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
 			else if(prob(FAR_SOUND_PROB)) // Sound variety during meteor storm/tesloose/other bad event
-				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, sound_to_use = far_sound, distance_multiplier = 0)
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = far_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
 			else
-				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, sound_to_use = echo_sound, distance_multiplier = 0)
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = echo_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
 
-			if(base_shake_amount || quake_factor)
+			if(!disable_shaking && (base_shake_amount || quake_factor)) // monkestation edit: disable_shaking
 				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
 				shake_camera(listener, FAR_SHAKE_DURATION, min(base_shake_amount, FAR_SHAKE_CAP))
 
@@ -551,10 +556,11 @@ SUBSYSTEM_DEF(explosions)
 			var/echo_volume
 			if(quake_factor)
 				echo_volume = 60
-				shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
+				if(!disable_shaking) // monkestation edit: disable_shaking
+					shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
 			else
 				echo_volume = 40
-			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, sound_to_use = echo_sound, distance_multiplier = 0)
+			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = echo_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
 
 		if(creaking) // 5 seconds after the bang, the station begins to creak
 			addtimer(CALLBACK(listener, TYPE_PROC_REF(/mob, playsound_local), epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
@@ -722,3 +728,6 @@ SUBSYSTEM_DEF(explosions)
 	currentpart = SSEXPLOSIONS_TURFS
 
 #undef EXPLOSION_THROW_SPEED
+#undef EXPLOSION_BLOCK_LIGHT
+#undef EXPLOSION_BLOCK_HEAVY
+#undef EXPLOSION_BLOCK_DEV

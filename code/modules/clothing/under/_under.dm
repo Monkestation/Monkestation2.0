@@ -60,6 +60,7 @@
 
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to tracking"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) < max_number_of_accessories)
@@ -74,7 +75,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
+	if(can_adjust)
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		. = CONTEXTUAL_SCREENTIP_SET
 
@@ -150,12 +151,13 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
+/*	 MONKESTATION EDIT
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
 		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
-
+*/
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
@@ -182,11 +184,6 @@
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
-	if(length(attached_accessories) >= max_number_of_accessories)
-		if(user)
-			balloon_alert(user, "too many accessories!")
-		return
-
 	if(!accessory.can_attach_accessory(src, user))
 		return
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
@@ -323,6 +320,16 @@
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
+/obj/item/clothing/under/CtrlClick(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!can_toggle_sensors(user))
+		return
+
+	sensor_mode = SENSOR_COORDS
+	balloon_alert(user, "set to tracking")
+
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
 	if(!can_use(toggler) || toggler.stat == DEAD) //make sure they didn't hold the window open.
@@ -393,9 +400,10 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
+/* MONKESTATION EDIT
 		if(DIGITIGRADE_STYLE)
 			return
-
+*/
 		if(NORMAL_STYLE)
 			adjust_to_alt()
 

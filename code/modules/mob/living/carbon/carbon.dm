@@ -500,12 +500,21 @@
 	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
 		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
 		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		add_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+
 	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()
-	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER))
+
+	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT))
 		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		remove_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+
 	update_stamina_hud()
+
+/datum/movespeed_modifier/exhaustion
+	id = "exhaustion"
+	multiplicative_slowdown = STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -546,7 +555,7 @@
 			set_invis_see(min(glasses.invis_view, see_invisible))
 		if(!isnull(glasses.lighting_cutoff))
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-		if(!isnull(glasses.color_cutoffs))
+		if(length(glasses.color_cutoffs))
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
 
 
@@ -1346,3 +1355,13 @@
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/carbon/ominous_nosebleed()
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		return ..()
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		to_chat(src, span_notice("You get a headache."))
+		return
+	head.adjustBleedStacks(5)
+	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))

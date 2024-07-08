@@ -72,9 +72,9 @@
 		I spoke, and heard my own words echoed back."
 	adds_sidepath_points = 1
 	next_knowledge = list(
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/summon/fire_shark,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
@@ -238,6 +238,7 @@
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner, // monkestation edit: allow star gazers to passively protect their summoner
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/star_gazer
 	)
@@ -254,7 +255,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'monkestation/sound/ambience/antag/heretic/ascend_cosmic.ogg',
 		color_override = "pink",
 	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)

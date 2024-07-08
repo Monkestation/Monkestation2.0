@@ -101,9 +101,57 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
+/obj/item/reagent_containers/cup/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	if(!isliving(over))
+		return
+
+	if(!spillable)
+		return
+
+	var/mob/living/chugger = over
+	var/chugging = TRUE //guys this is literally so fucking epic. We are really chugging shit
+	var/chug_time = 2 SECONDS /// guys we are literally chugging
+	while(chugging)
+		if(!reagents.total_volume)
+			chugging = FALSE
+			return
+
+		if(!do_after(chugger, chug_time, src))
+			chugging = FALSE
+			return
+		chug_time = max(0.5 SECONDS, chug_time - 0.2 SECONDS)
+
+		to_chat(chugger, span_notice("You swallow a gulp of [src]."))
+
+		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, chugger, chugger)
+		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		var/obj/item/organ/internal/bladder/contained_bladder = chugger.get_organ_slot(ORGAN_SLOT_BLADDER)
+		if(contained_bladder)
+			contained_bladder.consume_act(reagents, gulp_size * 0.2)
+		reagents.trans_to(chugger, gulp_size, transfered_by = chugger, methods = INGEST)
+		checkLiked(fraction, chugger)
+		playsound(chugger.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+		if(!iscarbon(chugger))
+			continue
+		var/mob/living/carbon/carbon_drinker = chugger
+		var/list/diseases = carbon_drinker.get_static_viruses()
+		if(!LAZYLEN(diseases))
+			continue
+		var/list/datum/disease/diseases_to_add = list()
+		for(var/datum/disease/malady as anything in diseases)
+			if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				diseases_to_add += malady
+		if(LAZYLEN(diseases_to_add))
+			AddComponent(/datum/component/infective, diseases_to_add)
+
+
 /obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_TRY_EAT_TRAIT, target))
 		return
 
 	. |= AFTERATTACK_PROCESSED_ITEM
@@ -124,7 +172,8 @@
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		if(trans)
+			to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -566,3 +615,15 @@
 	volume = 240
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = list(0)
+
+///Test tubes created by chem master and pandemic and placed in racks
+/obj/item/reagent_containers/cup/tube
+	name = "tube"
+	desc = "A small test tube."
+	icon_state = "test_tube"
+	fill_icon_state = "tube"
+	inhand_icon_state = "atoxinbottle"
+	worn_icon_state = "test_tube"
+	possible_transfer_amounts = list(5, 10, 15, 30)
+	volume = 30
+	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)

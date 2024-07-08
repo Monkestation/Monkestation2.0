@@ -234,6 +234,7 @@
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
+	icon_state = "gauze_imp"
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
 	splint_factor = 0.85
@@ -417,6 +418,9 @@
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
+
+/obj/item/stack/medical/bone_gel/get_surgery_tool_overlay(tray_extended)
+	return "gel" + (tray_extended ? "" : "_out")
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/patient, mob/user)
 	patient.balloon_alert(user, "no fractures!")

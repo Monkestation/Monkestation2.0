@@ -40,33 +40,34 @@
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
-	switch(blood_volume)
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
-				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
-				inflate_gib()
-		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel terribly bloated."))
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(src, span_warning("You feel [word]."))
-			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
-			if(SPT_PROB(2.5, seconds_per_tick))
-				set_eye_blur_if_lower(12 SECONDS)
-				to_chat(src, span_warning("You feel very [word]."))
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			adjustOxyLoss(2.5 * seconds_per_tick)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				Unconscious(rand(20,60))
-				to_chat(src, span_warning("You feel extremely [word]."))
-		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			if(!HAS_TRAIT(src, TRAIT_NODEATH))
-				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
-				death()
+	if(!HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_DAMAGE)) //monkestation addition
+		switch(blood_volume)
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+					investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
+					inflate_gib()
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel terribly bloated."))
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(SPT_PROB(2.5, seconds_per_tick))
+					to_chat(src, span_warning("You feel [word]."))
+				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+				if(SPT_PROB(2.5, seconds_per_tick))
+					set_eye_blur_if_lower(12 SECONDS)
+					to_chat(src, span_warning("You feel very [word]."))
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				adjustOxyLoss(2.5 * seconds_per_tick)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					Unconscious(rand(20,60))
+					to_chat(src, span_warning("You feel extremely [word]."))
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+					investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
+					death()
 
 	var/temp_bleed = 0
 	//Bleeding out
@@ -327,16 +328,15 @@
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
 	if(get_blood_id() != /datum/reagent/blood)
 		return
-	if(!T)
+	if(!QDELETED(T))
 		T = get_turf(src)
-	if(isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
+	if(QDELETED(T) || isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
 		return
 
 	var/datum/reagent/blood_type = get_blood_id()
 	var/list/temp_blood_DNA
 	if(small_drip)
-
-		if(T.liquids)
+		if(!QDELETED(T.liquids))
 			var/list/blood_drop = list(get_blood_id() = 0.1)
 			T.add_liquid_list(blood_drop, FALSE, 300)
 			return
@@ -344,7 +344,7 @@
 		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in T
 		if(drop)
 			if(drop.drips < 5)
-				T.pollute_turf(/datum/pollutant/metallic_scent, 5)
+				T?.pollute_turf(/datum/pollutant/metallic_scent, 5)
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
@@ -353,7 +353,7 @@
 				temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
-			T.pollute_turf(/datum/pollutant/metallic_scent, 5)
+			T?.pollute_turf(/datum/pollutant/metallic_scent, 5)
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
 			return

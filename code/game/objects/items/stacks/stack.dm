@@ -79,7 +79,7 @@
 	var/absorption_rate
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
+	if(new_amount != null && isnum(new_amount))
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
@@ -402,6 +402,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
@@ -431,6 +432,9 @@
 	//BubbleWrap END
 
 	return TRUE
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))

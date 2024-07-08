@@ -48,6 +48,7 @@
 	/// What the game tells ghosts when you make one
 	var/ghost_notification_message = "IT'S LOOSE"
 
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
@@ -386,16 +387,8 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
+	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in considered_turf)
-		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
-		if(check_generator?.active)
-			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
-		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
-		if(check_shield?.active)
-			return FALSE
 	return TRUE
 
 /obj/singularity/proc/event()
@@ -478,3 +471,7 @@
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
+
+/// Special singularity that spawns for shuttle events only
+/obj/singularity/shuttle_event
+	anchored = FALSE

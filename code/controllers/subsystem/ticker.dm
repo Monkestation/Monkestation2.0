@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(ticker)
 	var/start_at
 
 	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
-	var/station_time_rate_multiplier = 12 //factor of station time progressal vs real time.
+	var/station_time_rate_multiplier = 24 //factor of station time progressal vs real time.
 
 	/// Num of players, used for pregame stats on statpanel
 	var/totalPlayers = 0
@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(ticker)
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
-	
+
 	for(var/mob/M as anything in GLOB.player_list)
 		if(!M.client)
 			SEND_SOUND(M, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
@@ -333,6 +333,7 @@ SUBSYSTEM_DEF(ticker)
 
 		iter_human.increment_scar_slot()
 		iter_human.load_persistent_scars()
+		SSpersistence.load_modular_persistence(iter_human.get_organ_slot(ORGAN_SLOT_BRAIN))
 
 		if(!iter_human.hardcore_survival_score)
 			continue
@@ -364,7 +365,8 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
-			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
+			var/chosen_title = player.client?.prefs.alt_job_titles[player.mind.assigned_role.title] || player.mind.assigned_role.title
+			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point(chosen_title)
 			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
 				continue
 			player.create_character(destination)
@@ -485,8 +487,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)

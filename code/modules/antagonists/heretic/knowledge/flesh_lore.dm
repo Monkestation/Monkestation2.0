@@ -13,7 +13,6 @@
  * Imperfect Ritual
  * > Sidepaths:
  *   Void Cloak
- *   Ashen Eyes
  *
  * Mark of Flesh
  * Ritual of Knowledge
@@ -21,13 +20,13 @@
  * Raw Ritual
  * > Sidepaths:
  *   Blood Siphon
- *   Curse of Paralysis
+ *   Opening Blast
  *
  * Bleeding Steel
  * Lonely Ritual
  * > Sidepaths:
- *   Ashen Ritual
  *   Cleave
+ *   Aptera Vulnera
  *
  * Priest's Final Hymn
  */
@@ -130,7 +129,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/flesh_mark,
 		/datum/heretic_knowledge/void_cloak,
-		/datum/heretic_knowledge/medallion,
 	)
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
@@ -251,7 +249,7 @@
 		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/curse/paralysis,
+		/datum/heretic_knowledge/spell/opening_blast,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
@@ -290,7 +288,7 @@
 	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/flesh_final,
-		/datum/heretic_knowledge/summon/ashy,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
@@ -325,7 +323,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'monkestation/sound/ambience/antag/heretic/ascend_flesh.ogg',
 		color_override = "pink",
 	)
 

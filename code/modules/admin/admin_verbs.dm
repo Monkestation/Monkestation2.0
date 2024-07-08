@@ -47,6 +47,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_circuits,
 	/datum/admins/proc/open_artifactpanel,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
+	/datum/admins/proc/kick_player_by_ckey, //MONKESTATION ADDITION - kick a player by their ckey
+	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -97,6 +99,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
+	/client/proc/request_more_opfor,
+	/client/proc/view_opfors,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -151,7 +155,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/toggle_random_events,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape)) //Monkestation Addition: mixtape spawner
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
@@ -179,6 +183,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/toggle_hub,
 	/client/proc/toggle_interviews,
 	/client/proc/toggle_random_events,
+	/client/proc/Overwatch_ASN_panel,
+	/client/proc/Overwatch_WhitelistPanel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -191,6 +197,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/adventure_manager,
+	/client/proc/hard_deletion_toggle,
 	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,
@@ -223,6 +230,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/get_dynex_range, /*debug verbs for dynex explosions.*/
 	/client/proc/jump_to_ruin,
 	/client/proc/load_circuit,
+	/client/proc/map_export,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/modify_goals,
@@ -248,6 +256,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
+	// monkestation verbs: debugger tools
+	/client/proc/log_viewer_new,
+	/client/proc/getserverlogs_debug,
+	/client/proc/getcurrentlogs_debug,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)

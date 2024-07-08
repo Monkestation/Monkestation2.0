@@ -20,7 +20,7 @@
 	/// Default wait time until can stun again.
 	var/cooldown = (1.5 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
-	var/knockdown_time = (1.5 SECONDS)
+	var/knockdown_time = (0 SECONDS) //monkestation edit
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
 	var/stun_time_cyborg = (5 SECONDS)
 	/// The length of the knockdown applied to the user on clumsy_check()
@@ -136,7 +136,7 @@
 
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
@@ -207,7 +207,7 @@
 		if(!trait_check)
 			target.stamina.adjust(-stamina_damage)
 		else
-			var/stamina_to_min = (target.stamina.maximum * 0.35)
+			var/stamina_to_min = (target.stamina.maximum * 0.29)
 			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
@@ -314,7 +314,6 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
-	cooldown = 1.5 SECONDS //monkestation edit
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -377,7 +376,7 @@
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-//monkestation removal start
+//monkestation removal start, moved to \antagonists\contractor\items in the modular folder
 /*/obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
@@ -788,9 +787,10 @@
 	if(!.)
 		return
 	var/obj/item/stuff_in_hand = target.get_active_held_item()
-	if(stuff_in_hand && target.temporarilyRemoveItemFromInventory(stuff_in_hand))
-		if(user.put_in_inactive_hand(stuff_in_hand))
-			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
-		else
-			stuff_in_hand.forceMove(user.drop_location())
-			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+	if(!user || !stuff_in_hand || !target.temporarilyRemoveItemFromInventory(stuff_in_hand))
+		return
+	if(user.put_in_inactive_hand(stuff_in_hand))
+		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+	else
+		stuff_in_hand.forceMove(user.drop_location())
+		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))

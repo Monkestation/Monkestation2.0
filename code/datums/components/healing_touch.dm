@@ -104,7 +104,7 @@
 	return ..()
 
 /datum/component/healing_touch/Destroy(force, silent)
-	QDEL_NULL(extra_checks)
+	extra_checks = null
 	return ..()
 
 /// Validate our target, and interrupt the attack chain to start healing it if it is allowed
@@ -201,7 +201,7 @@
 		updating_health = FALSE,
 	)
 	healed += target.adjustOxyLoss(-heal_oxy, updating_health = FALSE, required_biotype = valid_biotypes)
-	healed += target.adjustToxLoss(-heal_tox, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjustToxLoss(-heal_tox, updating_health = FALSE, forced = TRUE, required_biotype = valid_biotypes)
 	//MONKESTATION REMOVAL START
 	// While removing this could cause some issues, keeping it seems to cause more than it would
 	// solve. In particular, the above procs are somewhat bugged and don't return the values we

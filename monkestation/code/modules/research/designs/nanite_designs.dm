@@ -33,6 +33,13 @@
 	program_type = /datum/nanite_program/monitoring
 	category = list("Utility Nanites")
 
+/datum/design/nanites/research
+	name = "Research Network Integration"
+	desc = "The nanites contribute processing power to the research network, generating useful data and heat while consuming nanites. Requires a live host."
+	id = "research_nanites"
+	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+
 /datum/design/nanites/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
@@ -80,14 +87,14 @@
 	name = "Signal Repeater"
 	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
 	id = "repeater_nanites"
-	program_type = /datum/nanite_program/sensor/repeat
+	program_type = /datum/nanite_program/repeat
 	category = list("Utility Nanites")
 
 /datum/design/nanites/relay_repeater
 	name = "Relay Signal Repeater"
 	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
 	id = "relay_repeater_nanites"
-	program_type = /datum/nanite_program/sensor/relay_repeat
+	program_type = /datum/nanite_program/relay_repeat
 	category = list("Utility Nanites")
 
 /datum/design/nanites/emp
@@ -134,6 +141,14 @@
 			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
 	id = "regenerative_plus_nanites"
 	program_type = /datum/nanite_program/regenerative_advanced
+	category = list("Medical Nanites")
+
+/datum/design/nanites/oxygen_rush
+	name = "Alveolic Deoxidation"
+	desc = "The nanites deoxidze the carbon dioxide carried within the blood inside of the host's lungs through rapid electrical stimulus. \
+			However, this process is extremely dangerous, leaving carbon deposits within the lungs as well as causing severe organ damage."
+	id = "oxygen_rush_nanites"
+	program_type = /datum/nanite_program/oxygen_rush
 	category = list("Medical Nanites")
 
 /datum/design/nanites/temperature
@@ -462,6 +477,13 @@
 	program_type = /datum/nanite_program/bad_mood
 	category = list("Suppression Nanites")
 
+/datum/design/nanites/conversation_filter
+	name = "Conversation Filter"
+	desc = "The nanites pre-process words, granting the ability to filter out certain phrases."
+	id = "word_filter_nanites"
+	program_type = /datum/nanite_program/conversation_filter
+	category = list("Suppression Nanites")
+
 ////////////////////SENSOR NANITES//////////////////////////////////////
 
 /datum/design/nanites/sensor_health
@@ -478,16 +500,30 @@
 	program_type = /datum/nanite_program/sensor/damage
 	category = list("Sensor Nanites")
 
+/datum/design/nanites/sensor_blood
+	name = "Blood Sensor"
+	desc = "The nanites receive a signal when the host's blood volume is above/below a target percentage."
+	id = "sensor_blood_nanites"
+	program_type = /datum/nanite_program/sensor/blood
+	category = list("Sensor Nanites")
+
+/datum/design/nanites/sensor_nutrition
+	name = "Nutrition Sensor"
+	desc = "The nanites receive a signal when the host's nutrition level is above/below a target percentage."
+	id = "sensor_nutrition_nanites"
+	program_type = /datum/nanite_program/sensor/nutrition
+	category = list("Sensor Nanites")
+
 /datum/design/nanites/sensor_crit
 	name = "Critical Health Sensor"
-	desc = "The nanites receive a signal when the host first reaches critical health."
+	desc = "The nanites receive a signal when the host enters/leaves critical condition."
 	id = "sensor_crit_nanites"
 	program_type = /datum/nanite_program/sensor/crit
 	category = list("Sensor Nanites")
 
 /datum/design/nanites/sensor_death
 	name = "Death Sensor"
-	desc = "The nanites receive a signal when they detect the host is dead."
+	desc = "The nanites receive a signal when the host dies/revives."
 	id = "sensor_death_nanites"
 	program_type = /datum/nanite_program/sensor/death
 	category = list("Sensor Nanites")
@@ -508,7 +544,7 @@
 
 /datum/design/nanites/sensor_species
 	name = "Species Sensor"
-	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
+	desc = "The nanites receive a singal when they detect that the host is/isn't the target species."
 	id = "sensor_species_nanites"
 	program_type = /datum/nanite_program/sensor/species
 	category = list("Sensor Nanites")

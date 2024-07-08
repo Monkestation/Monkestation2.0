@@ -1,0 +1,368 @@
+2024-05-01:
+  DimWhat:
+  - rscadd: Added Kumi's donator items, thanks buckaroo!
+  Jake Park, Zonespace, Gboster:
+  - rscadd: 'Added a new antagonist: The cortical borer, capable of manipulating humans
+      with the sole goal of making more of itself'
+  Kitsunemitsu:
+  - image: modified ID card sprites.
+  KnigTheThrasher:
+  - bugfix: Fixed tram cult bar
+  MomoBerri:
+  - qol: several updates to the labor camp
+  Rex9001:
+  - bugfix: honk mechs don't let you get to CC
+  wraith-54321:
+  - bugfix: You can no longer roll 2 antags at once
+2024-05-02:
+  Absolucy:
+  - qol: Makes it easier for heretics to click on influences without accidentally
+      drawing a rune with their codex cicatrix because the animation shifted and made
+      you click on the floor instead.
+  Absolucy, That0nePerson:
+  - rscadd: Adds the poisoned knife (originally by That0nePerson, for BeeStation)
+      for 6TC to the syndie uplink. This knife has a 40u capacity and can switch between
+      injecting 5u and 10u of its content per attack.
+  Absolucy, itseasytosee:
+  - balance: the Syndicate Tome traitor item now grants anti-magic while held and
+      can be used to clear cult runes.
+  AlbertNanotracen:
+  - bugfix: Opening a necropolis gate will no longer tell ghosts that a body is being
+      created, instead it will tell them the Legion has been released
+  DexeeXI:
+  - bugfix: changed the medboard spawner in tech storage to support pathology machines.
+      rest in piss pandemic machine.
+  - rscadd: tram gets a crystallizer board (still a DIY project however)
+  - bugfix: box station pathology now has handcuffs in exchange for the useless extrapolators.
+  RikuTheKiller:
+  - balance: Nanite protocols are back from the experimental tech junkyard.
+2024-05-04:
+  Absolucy:
+  - rscadd: Adds a new job, Security Assistants! They're basically hall monitors,
+      with basic security and permabrig access, along with some basic tools to abuse
+      the clown- err, help detain ner-do-wells with!
+  - rscadd: Added the Citationinator, a handheld device that can issue fines to people!
+  - rscadd: Added a new "Permabrig" access, used for allowing access to the permabrig
+      without granting full brig access.
+  - balance: Brain damage from borer abilities will no longer go above 100.
+  - qol: Neutered borers will now "skip over" abilities related to reproduction.
+  - bugfix: Fixed floorpills rolling random drinks that should've been filtered out
+      (but weren't due to a bad check).
+  MichiRecRoom:
+  - qol: If a lootbox item fails to save, you will now receive a replacement lootbox
+      that can be used at a later time, and will hopefully work then.
+2024-05-06:
+  Absolucy:
+  - rscadd: The Damned Rabbit Mask now has a cool visual effect when worn by a hunter.
+  - rscadd: The Damned Rabbit Mask now works with internals.
+  - balance: Monster Hunter items such as the Damned Rabbit Mask, Rabbit Eye, Red
+      Queen Card, etc are now indestructible/fireproof/etc.
+  - rscadd: If a non-hunter tries to arm a jack in the box, they will botch it, resulting
+      in an early detonation.
+  - qol: Made the Red Queen Card a bit less janky to use.
+  - code_imp: Cleaned up and organized a bunch of Monster Hunter-related code.
+  - rscadd: Wonderland Apocalypse now raises the alert to delta when it starts, and
+      applies a station-wide effect that harms anyone attempting to cast magical spells.
+  - balance: Jabberwockies and killer rabbits are now antimagic.
+  - bugfix: The Cargorilla station trait works again.
+2024-05-07:
+  AlbertNanotracen:
+  - qol: using a syringe on a virus dish now fills the syringe at the cost of growth,
+      rather than decreasing a hidden variable.
+  - balance: Blood from a virus dish is now O- (Universal donor)
+  - rscadd: lantern syndrome is now real, drink space cleaner to keep it white if
+      you want
+  - rscadd: Added Self-Respiration as a stage 4 symptom
+  MichiRecRoom:
+  - rscadd: 'Mobs with synthetic voice boxes (such as IPCs) are now capable of using
+      silicon-type emotes. As of the time of this change, this means they can now
+      use: boop, buzz, buzz2, chime, honk, ping, sad, warn, slowclap.'
+2024-05-08:
+  Absolucy:
+  - bugfix: Bioscramblers can no longer give you buggy abstract organs, like dullahan
+      eyes.
+  - qol: Added some more things to the bioscrambler blacklist, such as psyker heads,
+      fly tongues/stomachs, anime implants, and abductor glands.
+  - rscadd: Bioscramblers can now give you wings. Moffcats, here we come!
+  - balance: The Bioscrambler will now actively attempt to get closer to living targets
+      rather than chilling in a closet nobody goes into (unless you trap it in a containment
+      field).
+  - balance: Because it can now travel through walls, the Bioscrambler will no longer
+      transform you THROUGH walls.
+  - bugfix: Fixed various worn items (most noticeably gloves) looking weird with variable
+      heights.
+  AlbertNanotracen:
+  - bugfix: fixed some wikibook links
+  - bugfix: Chef recipe book no longer tells you you can microwave pasta to cook it
+      (you cant)
+  DimWhat:
+  - rscadd: Added heels to the LawDrobe
+  MrMelbert, NikoTheDude, Ported by Hardly:
+  - rscadd: Added examine text, describe your character in ways that a 32x32 sprite
+      can't!
+  - rscadd: Added temporary examine text alongside an indicator
+  - rscadd: Added character records text
+  - admin: Admins can see all flavor texts of a character
+  NicoDeLuna:
+  - rscadd: Added Ashsuits for miners
+  Odairu:
+  - rscadd: Added a secondary ammo type on the captain's Antique
+  Oricana-16:
+  - bugfix: BCI Actions now use icons instead of ERRORs/.
+  RikuTheKiller:
+  - bugfix: Remove purity adjustment for overdose thresholds, as we don't even use
+      reagent purity here.
+  Uristthedorf:
+  - rscadd: Diagnostic huds can now see nanite volume.
+  flleeppyy:
+  - bugfix: spelling mistake in quirk description
+2024-05-09:
+  Absolucy:
+  - bugfix: Dimensional anomalies are once again immobile like they should be.
+  - bugfix: Fixed hollow anomalies "escaping" the anomaly research ruin.
+  Kitsunemitsu:
+  - bugfix: fixed the syndicate and prisoner ID cards being missaligned.
+2024-05-13:
+  Absolucy:
+  - bugfix: Healing holoparas (and other mobs that heal on touch) are slime-friendly
+      and won't damage them anymore.
+  - bugfix: Actually, hopefully, probably fixed runaway ruin anomalies this time.
+  - bugfix: Fixed guardian decks not working afterwards if nobody signs up.
+2024-05-14:
+  Absolucy:
+  - bugfix: Gaining TRAIT_VIRUSIMMUNE now properly cures any diseases.
+  AlbertNanotracen:
+  - bugfix: Splicing a symptom on a symptom that isn't in its initial stage will now
+      work
+  - bugfix: Stage Occurrence mutations will now work on symptoms not in their initial
+      stage
+  - rscadd: Bio bag can now carry mouse cubes and virus dishes
+2024-05-16:
+  Absolucy:
+  - bugfix: Fix DNA vault scanner being broken with plants.
+2024-05-17:
+  Gboster-0:
+  - bugfix: borers can now be taken out of a host
+2024-05-21:
+  Absolucy:
+  - bugfix: Adminwho should no longer have a weird delay every time it's ran.
+  - bugfix: Clicking on an admin's name in Adminwho should no longer crash.
+  - admin: The antag tokens of every player that logged in during a round is now logged
+      to `tokens.json` at roundend.
+  - rscadd: Medibots now automatically update their surgical knowledge whenever surgery
+      tech is researched.
+  AlbertNanotracen:
+  - bugfix: Lantern syndrome should no longer flash (hopefully)
+  - image: removed a random pixel that some centrifuge sprites had
+  - bugfix: You can now control blast doors with buttons again
+  - rscadd: Security gas masks now can use filters to filter out harmful chemicals
+  - bugfix: Mopping floors makes them slippery
+  Bastian0930, Metekillot, TJatPBnJ, Singul0:
+  - bugfix: IPCs are unable to be absorb and escape as objectives, after the hivemind
+      realized IPCs have no DNA.
+  - bugfix: IPC firmware upgrades no longer allow a changelings transformation sting
+      to work on them.
+  - bugfix: TGUI say now shows :g as "cling".
+  HimKobold:
+  - rscadd: Added Brads office to the CentCom level.
+  - rscdel: 'Removed a placeholder office to replace it with the new one.
+
+      \:cl:'
+  KnigTheThrasher:
+  - balance: Removed knockdown from command and detective batongs, cooldown reduced
+      back to 1.5 seconds as a compensation
+  RikuTheKiller:
+  - rscadd: Added the Radiomagnetic Disruptor reagent which rapidly purges nanites
+      and causes localized EMPs.
+  - qol: Code 0 is now invalid on nanites allowing you to leave blank output signals.
+  - qol: Added missing rule for the nanite species sensor.
+  - qol: The species and damage sensors can detect additional types now.
+  - rscadd: Added completely new sensors (with rules) for blood and nutrition.
+  - bugfix: The species sensor no longer uses a weird trigger based snowflake system,
+      it's now signal based like all the others.
+  - refactor: Refactored some nanite sensor code, this might (or rather, is practically
+      guaranteed to) cause some minor issues. Please report them ASAP if you find
+      any.
+  Uristthedorf:
+  - rscadd: Security Assistants are now considered enemies to antagonists to the story
+      teller.
+  - rscadd: More documentation for arachnids, florans, goblins, simians, and moths.
+2024-05-22:
+  Absolucy:
+  - qol: Allow normal engis to unlock air alarms.
+  DimWhat:
+  - image: fixes mouse tail sprites
+  MichiRecRoom:
+  - qol: Personal AIs and simple bots (such as Medibots) can now listen to the curator
+      radio.
+  RikuTheKiller:
+  - balance: The nanite "Toggle" error has been replaced with a "Disable" error that
+      temporarily forces the nanite program to be inactive. It's fixed by cloud syncs
+      automatically, unlike the previous permanent version.
+  The-Black-Screen:
+  - rscadd: added rpds to engineering shared storage, other miscellaneous things around
+      the map.
+  - bugfix: fixed the teg, other miscellaneous things around the map.
+2024-05-23:
+  Absolucy:
+  - bugfix: Dark Matt-eor announcements no longer falsely claim it missed.
+  - bugfix: Traitors hacking communication consoles will no longer trigger dynamic
+      rulesets instead of storyteller events.
+  - rscadd: The "unknown signal" comms console hack now has a somewhat low chance
+      of spawning certain non-traitor antagonists instead.
+  - bugfix: Fix double-encoding on the Wonderland Apocalypse announcement's header.
+  - bugfix: More magic is now affected by the Wonderland Manifestation status effect
+      (spellcode moment)
+  - image: Improved the icon for the Wonderland Manifestation status effect (thanks,
+      Aberra!)
+  - bugfix: You can no longer take off the cursed rabbit mask while in wonderland,
+      preventing weird issues that could result.
+  - bugfix: Reagents that shouldn't exist on their own in the first place can no longer
+      appear in maint pills.
+  - qol: Removed some completely useless reagents from the maint pill pool, such as
+      those related to pH or purity.
+  - balance: Maint pills are now less biased towards certain reagents with a large
+      number of variants, i.e carpet or colorful reagent.
+  DimWhat:
+  - rscadd: Added Oliver's and Gnob's clothing items
+  KnigTheThrasher:
+  - rscadd: Miner callouts for c4
+  - rscdel: Removed the "iconic" tramstation atmos landmine
+  Rex9001:
+  - rscadd: The explosive spear/lance is now back as a blood brothers crafting option!
+      Knights rejoice!
+  aberrantQuesrist:
+  - bugfix: Changed Deltastation SM interior to be in line with other SM interiors.
+  - bugfix: Put Deltastation xenobio in line with other stations with the layout adjusted
+      to fit 2 new slime pens.
+2024-05-24:
+  Absolucy:
+  - bugfix: Fixed a rare bug where the round would not properly restart.
+2024-05-25:
+  Absolucy:
+  - rscadd: The changelog UI now parses and shows changelogs for all current testmerges.
+  - refactor: Refactored the changelog UI from JavaScript into TypeScript.
+  - bugfix: Fixed a weird oozeling revival bug that results in their items being sent
+      to the void.
+2024-05-26:
+  DexeeXI:
+  - qol: HOP now has supply radio access as they are the final boss of supply.
+  - bugfix: HOP is no longer self-supervising. You answer to the Captain, damnit!
+  Kitsunemitsu:
+  - rscadd: Geneticist is now a medsci role.
+2024-05-27:
+  Absolucy:
+  - bugfix: Cryoing now properly removes you from the manifest! Uncryoing will also
+      add you back to the manifest.
+  Absolucy, ninjanomnom:
+  - admin: Unrelated stack traces no longer group together in the runtime viewer.
+  AlbertNanotracen:
+  - bugfix: particle weather immunity check now checks the immunity of mobs directly
+      on a tile
+  DexeeXI:
+  - admin: Welcome to our Christian Minecraft Server.
+  Uristthedorf:
+  - balance: Durathread is stronger now.
+2024-05-28:
+  Absolucy, Fluffles:
+  - bugfix: Hats/glasses/masks should hopefully behave more predictably for the purposes
+      of eye/mouth surgery.
+  Absolucy, san7890:
+  - qol: The game now supports export of your preferences into a JSON file! The verb
+      (export-preferences) should now be available in the OOC tab of your stat-panel
+      if enabled by server operators.
+  - server: Exporting player preferences is controlled by a configuration option,
+      'FORBID_PREFERENCES_EXPORT'. If you do not wish to let clients access the ftp()
+      function to their own preferences file (probably for bandwidth reasons?) you
+      should uncomment this or add it to your config somehow.
+  - config: Server operators are also able to set the cooldown between requests to
+      download the JSON Preferences file via the 'SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT'
+      config option.
+  AlbertNanotracen:
+  - rscadd: Circuit tiles now all stack with each other and can be used in-hand to
+      recolor
+  - image: Animated circuit tiles have valid sprites for when there is no power
+  KnigTheThrasher:
+  - bugfix: fixed toolset implant in charlie and added a cyberlink there
+  - rscadd: Kilostation is back! Rejoice
+  - rscadd: Major reworks in Kilo departments that try to make them less claustrophobic
+  Odairu:
+  - rscadd: Stamp Right click functionality
+  Tractor Mann:
+  - rscadd: Added IPC bodyparts as researchable prints!
+2024-05-29:
+  Absolucy:
+  - bugfix: Fix "never for this round" polls being broken.
+  - bugfix: Fixed midround prompt icons for changelings and paradox clones.
+  - bugfix: Non-crew antags (nukies, wizards, ninjas) will now be properly removed
+      from the crew manifest.
+  - image: New liquid plasma sprites from SS14!
+  Absolucy, Cheshify:
+  - qol: telecomms is quieter and less ear-damaging.
+  - sound: 'modified tcomms sound to remove high-tones. fix: the telecomms sound only
+      comes from the server hub machine.'
+  Absolucy, Kylerace:
+  - admin: admins/maintainers can now make the profiler focus on specific subsystems
+      by setting the subsystem var profile_focused to TRUE
+  Absolucy, Melbert:
+  - rscadd: Cigarette smoke is now more smokey.
+  - rscadd: Taking a cigarette out of your mouth will let out a big puff of smoke.
+  Absolucy, Rhials, Ghommie:
+  - rscadd: Shuttle Firesale positive station trait. Some emergency shuttle options
+      have been put on sale!
+  - rscadd: Misplaced Wallet positive station trait. You wouldn't steal from a missing
+      wallet, would you??
+  - rscadd: Wisdom Cow Invasion positive station trait.
+  - rscadd: Advanced Medbots positive station trait. Better roundstart medbots!
+  - rscadd: Loaner Shuttle positive station trait. More shuttle loan offers and more
+      payout!
+  - qol: Station Trait titles are now italicized for easier reading.
+  - balance: '"Scarves" and "Wallets!" are now neutral traits.'
+  - balance: Halved the weight of station traits such as scarves, wallets and glitched
+      PDAs.
+  Absolucy, Swiftfeather:
+  - qol: Increased threshold of trace n2o required to make euphoria and giggles happen.
+  Flleeppyy, ancient-engineer:
+  - rscadd: Adds new heretic path moon
+  dieamond13:
+  - rscadd: adds propeller hats, rainbow bowties, and swirl lollipops
+2024-05-30:
+  Absolucy:
+  - balance: Slime steroid potions now boost ooze production by an actually notable
+      amount, reaching the max production after 4 potions.
+  - spellcheck: The description for the industrial grey extract now properly says
+      that it produces biocubes, rather than monkey cubes.
+  - qol: Industrial extracts now always layer their output below the extract itself.
+  - bugfix: The "weather" sound mixer volume now actually affects weather.
+  - qol: Star Gazers will now retaliate if their owner is attacked.
+  - qol: Star Gazers now use more advanced pathfinding.
+  - bugfix: Beam rifles will no longer inappropriately retain any bonuses they may
+      gain from wizardry.
+  - bugfix: 'Inappropriate stack traces over bonuses being applied to components
+
+      that gain bonuses innately (like Mythril stacks) should cease.'
+  - qol: If you don't breathe at all, eye covering is now enough to protect you from
+      pepper apray.
+  Absolucy, moocowswag:
+  - balance: Reinforced sections of station hull have gotten better at mitigating
+      explosive shockwaves.
+  AlbertNanotracen:
+  - bugfix: propeller hat now has the right name in the store
+  HimKobold:
+  - rscadd: Hydrogen Peroxide & Acetone Oxide now do organ damage on consumption (but
+      not on touch).
+  - bugfix: Acetone Oxide & Hydrogen Peroxide now do damage appropriate to the volume
+      touched.
+  - bugfix: '#1889
+
+      \:cl:'
+  Oricana-16:
+  - code_imp: Non-carbons (simple mobs and stuff like that) can now be made as ERTs
+  - admin: Added Moffroach Station Inspectors ERT
+  - bugfix: BCIs now correctly show their charge by default.
+  Uristthedorf:
+  - rscadd: Sleeper boards can now be printed with advanced biotech.
+  - rscadd: Existing sleepers can be deconstructed for board.
+2024-05-31:
+  Syndie Kate:
+  - bugfix: Made the sandevistan bundle not spawn mantis blades.

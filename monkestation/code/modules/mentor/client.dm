@@ -41,7 +41,17 @@
 		if(ckey in cdatums)
 			mentor_datum.is_contributor = TRUE
 
-/// Admins are Mentors, too
+///Verifies if the client is considered a Mentor, AKA has a Mentor datum or is an Admin.
 /client/proc/is_mentor()
-	if(mentor_datum || check_rights_for(src, R_ADMIN,0))
+	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
 		return TRUE
+
+/proc/dementor(client/owner)
+	if(owner.is_mentor())
+		owner.mentor_datum.not_active = TRUE
+
+/proc/rementor(client/owner)
+	if(owner.is_mentor())
+		owner.mentor_datum.not_active = FALSE
+
+

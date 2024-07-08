@@ -150,32 +150,17 @@
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
+/obj/item/organ/internal/brain/attackby(obj/item/item, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	if(istype(O, /obj/item/borg/apparatus/organ_storage))
+	if(istype(item, /obj/item/borg/apparatus/organ_storage))
 		return //Borg organ bags shouldn't be killing brains
 
-	if(damage && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
-		. = TRUE //don't do attack animation.
-		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
-			return
-
-		user.visible_message(span_notice("[user] starts to slowly pour the contents of [O] onto [src]."), span_notice("You start to slowly pour the contents of [O] onto [src]."))
-		if(!do_after(user, 3 SECONDS, src))
-			to_chat(user, span_warning("You failed to pour the contents of [O] onto [src]!"))
-			return
-
-		user.visible_message(span_notice("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
-		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
-		var/healto = max(0, damage - amount * 2)
-		O.reagents.remove_all(ROUND_UP(O.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
-		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
-		return
+	if (check_for_repair(item, user))
+		return TRUE
 
 	// Cutting out skill chips.
-	if(length(skillchips) && O.get_sharpness() == SHARP_EDGED)
+	if(length(skillchips) && item.get_sharpness() == SHARP_EDGED)
 		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
 		if(do_after(user, 15 SECONDS, target = src))
 			for(var/chip in skillchips)
@@ -198,14 +183,33 @@
 		return
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
-		O.attack(brainmob, user) //Oh noooeeeee
+		item.attack(brainmob, user) //Oh noooeeeee
 
-	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+	if(item.force != 0 && !(item.item_flags & NOBLUDGEON))
 		user.do_attack_animation(src)
 		playsound(loc, 'sound/effects/meatslap.ogg', 50)
 		set_organ_damage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
-		visible_message(span_danger("[user] hits [src] with [O]!"))
-		to_chat(user, span_danger("You hit [src] with [O]!"))
+
+		visible_message(span_danger("[user] hits [src] with [item]!"))
+		to_chat(user, span_danger("You hit [src] with [item]!"))
+
+/obj/item/organ/internal/brain/proc/check_for_repair(obj/item/item, mob/user)
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (status == ORGAN_ORGANIC)) //attempt to heal the brain
+		// MONKESTATION NOTE: There was a check for the brain being completely dead here. But that's like, the only case when you'd want to do this. Pretty sure it isn't on tg, so I'm leaving this here for documentation.
+
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
+		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
+		var/healto = max(0, damage - amount * 2)
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
+		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
+		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY) // MONKESTATION EDIT: if you go out of your way to do this, then you shouldn't have to do brain surgery
+		return TRUE
+	return FALSE
 
 /obj/item/organ/internal/brain/examine(mob/user)
 	. = ..()
@@ -456,7 +460,7 @@
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience
-	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
+	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma)
 	return actual_trauma
 
 /// Adds the passed trauma instance to our list of traumas and links it to our brain.

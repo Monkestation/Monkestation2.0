@@ -11,6 +11,11 @@
 	req_access = list(ACCESS_CLOCKCULT)
 	damage_deflection = 10
 
+/obj/machinery/door/airlock/bronze/clock/Initialize(mapload)
+	. = ..()
+	if(on_reebe(src))
+		damage_deflection = 0
+
 /obj/machinery/door/airlock/bronze/clock/canAIControl(mob/user)
 	return (IS_CLOCK(user) && !isAllPowerCut())
 
@@ -33,11 +38,11 @@
 	if(!density || IS_CLOCK(user))
 		return TRUE
 
-	else
+	else if(!on_reebe(src))
 		user.Paralyze(2 SECONDS)
-		user.electrocute_act(25, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+		user.electrocute_act(20, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
 		to_chat(user, span_warning("You feel a sudden jolt as you touch [src]!"))
-		return FALSE
+	return FALSE
 
 /obj/machinery/door/airlock/bronze/clock/emp_act(severity)
 	return

@@ -20,6 +20,10 @@
 	item_path = /obj/item/storage/backpack/duffelbag/mining_bunny
 	cost_per_order = 500
 
+/datum/orderable_item/mining/ashsuit //MONKE EDIT
+	item_path = /obj/item/clothing/suit/hooded/ashsuit
+	cost_per_order = 100
+
 /datum/orderable_item/mining/mining_modsuit
 	item_path = /obj/item/mod/control/pre_equipped/mining
 	desc = "A mining-themed MODsuit that works best when in a mining environment."

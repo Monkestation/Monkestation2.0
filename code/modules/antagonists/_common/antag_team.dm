@@ -33,6 +33,8 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	return ..()
 
 /datum/team/proc/add_member(datum/mind/new_member)
+	if(!istype(new_member))
+		CRASH("Attempted to add non-mind ([new_member?.type]) as a team member!")
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
@@ -44,6 +46,11 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		new_objective.find_target(dupe_search_range = list(src))
 	new_objective.update_explanation_text()
 	objectives += new_objective
+	for(var/datum/mind/member as anything in members)
+		for(var/datum/antagonist/antag in member.antag_datums)
+			if(antag.get_team() == src)
+				antag.objectives |= new_objective
+				antag.update_static_data_for_all_viewers()
 
 //Display members/victory/failure/objectives for the team
 /datum/team/proc/roundend_report()

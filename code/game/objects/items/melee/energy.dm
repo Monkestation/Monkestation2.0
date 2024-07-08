@@ -5,7 +5,7 @@
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	light_power = 1
 	light_on = FALSE
@@ -33,6 +33,9 @@
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
+
+/obj/item/melee/energy/get_all_tool_behaviours()
+	return list(TOOL_SAW)
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()

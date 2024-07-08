@@ -30,7 +30,7 @@
 
 /obj/machinery/corral_corner
 	name = "corral fencepost"
-	desc = "One of the corners of a corral"
+	desc = "One of the corners of a corral."
 
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	icon_state = "corral_corner"
@@ -178,7 +178,7 @@
 	. = ..()
 	if(mover.pulledby)
 		return TRUE
-	if((istype(mover, /mob/living/basic/slime) || ismonkey(mover) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
+	if((istype(mover, /mob/living/basic/slime) || ismonkey(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
 		return FALSE
 	return TRUE
 

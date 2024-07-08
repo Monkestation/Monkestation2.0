@@ -275,7 +275,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 7
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
@@ -895,18 +895,19 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
-/obj/item/organ/internal/cyberimp/arm/katana
+/obj/item/organ/internal/cyberimp/arm/item_set/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
 	status = ORGAN_ORGANIC
+	encode_info = AUGMENT_NO_REQ
 	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
+/obj/item/organ/internal/cyberimp/arm/item_set/katana/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
@@ -916,10 +917,10 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/internal/cyberimp/arm/item_set/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/internal/cyberimp/arm/katana/Retract()
+/obj/item/organ/internal/cyberimp/arm/item_set/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE

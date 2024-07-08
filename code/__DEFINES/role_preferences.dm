@@ -40,6 +40,7 @@
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 // monke midrounds
+#define ROLE_CORTICAL_BORER "Cortical Borer"
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_FLORIDA_MAN "Florida Man"
 #define ROLE_SLASHER "Slasher"
@@ -152,11 +153,13 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPIDER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
 //monkestation edit start
+	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_MONSTERHUNTER = 0,
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,
+	ROLE_OPFOR_CANDIDATE = 0,
 //monkestation edit end
 
 	// Latejoin

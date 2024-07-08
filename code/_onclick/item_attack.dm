@@ -185,6 +185,15 @@
 	if(..())
 		return TRUE
 	user.changeNext_move(attacking_item.attack_speed)
+	//monkestation edit - Stamina cost
+	if(attacking_item.stamina_cost && user.stamina)
+		var/swing_cost = attacking_item.stamina_cost
+		var/lowest_stamina_value = (user.stamina.maximum * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) - 5
+		if(user.stamina.current - attacking_item.stamina_cost < lowest_stamina_value)
+			swing_cost = max(user.stamina.current - lowest_stamina_value, 0)
+
+		user.stamina?.adjust(-swing_cost)
+	//monkestation edit - Stamina cost
 	return attacking_item.attack(src, user, params)
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
@@ -300,7 +309,8 @@
 	if(item_flags & NOBLUDGEON)
 		return
 	user.changeNext_move(attack_speed)
-	user.do_attack_animation(attacked_atom)
+	if(!is_reagent_container(src) || force)
+		user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds

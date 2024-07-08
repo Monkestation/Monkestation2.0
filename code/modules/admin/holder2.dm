@@ -94,6 +94,8 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
+	if(owner)
+		rementor(owner)
 	QDEL_NULL(plane_debug)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
@@ -107,6 +109,9 @@ GLOBAL_PROTECT(href_token)
 		return
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
+
+	if(owner)
+		dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -189,7 +194,7 @@ GLOBAL_PROTECT(href_token)
 		return cached_feedback_link
 
 	if (!SSdbcore.IsConnected())
-		return FALSE
+		return null
 
 	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
@@ -200,7 +205,8 @@ GLOBAL_PROTECT(href_token)
 
 	if(!feedback_query.NextRow())
 		qdel(feedback_query)
-		return FALSE // no feedback link exists
+		cached_feedback_link = NO_FEEDBACK_LINK // monkestation edit: fallback to prevent issues
+		return null // no feedback link exists
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
 	qdel(feedback_query)

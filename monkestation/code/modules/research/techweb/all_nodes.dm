@@ -46,6 +46,7 @@
 		"sensor_voice_nanites",
 		"stealth_nanites",
 		"voice_nanites",
+		"research_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
 
@@ -79,6 +80,8 @@
 		"regenerative_nanites",
 		"sensor_crit_nanites",
 		"sensor_damage_nanites",
+		"sensor_blood_nanites",
+		"sensor_nutrition_nanites",
 		"sensor_death_nanites",
 		"sensor_health_nanites",
 		"sensor_species_nanites",
@@ -98,6 +101,7 @@
 		"paralyzing_nanites",
 		"selfscan_nanites",
 		"stun_nanites",
+		"word_filter_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
 
@@ -129,6 +133,7 @@
 		"fakedeath_nanites",
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
+		"oxygen_rush_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
 
@@ -169,9 +174,7 @@
 		"offline_nanites",
 		"pyramid_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
-	hidden = TRUE
-	experimental = TRUE
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000, TECHWEB_POINT_TYPE_NANITES = 5000)
 
 /datum/techweb_node/nanite_storage_protocols
 	id = "nanite_storage_protocols"
@@ -184,9 +187,7 @@
 		"unsafe_storage_nanites",
 		"zip_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
-	hidden = TRUE
-	experimental = TRUE
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000, TECHWEB_POINT_TYPE_NANITES = 5000)
 
 /datum/techweb_node/adv_ballistics
 	id = "adv_ballistics"
@@ -207,3 +208,18 @@
 	design_ids = list("linked_surgery")
 	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+
+/datum/techweb_node/ipc_parts
+	id = "ipc_parts"
+	display_name = "I.P.C Repair Parts"
+	description = "Through purchasing licenses to print IPC Parts, we can rebuild our silicon friends, no, not those silicon friends."
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"ipc_head",
+		"ipc_chest",
+		"ipc_arm_left",
+		"ipc_arm_right",
+		"ipc_leg_left",
+		"ipc_leg_right"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

@@ -9,7 +9,7 @@
 	endurance = 50
 	maturation = 15
 	production = 1
-	yield = 5
+	yield = 50
 	potency = 50
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -121,7 +121,7 @@
 	name = "steel-cap log"
 	desc = "It's made of metal."
 	icon_state = "steellogs"
-	plank_type = /obj/item/stack/rods
+	plank_type = /obj/item/stack/sheet/iron
 	plank_name = "rods"
 
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)

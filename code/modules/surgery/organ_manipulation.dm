@@ -13,7 +13,7 @@
 	)
 
 /datum/surgery/organ_manipulation/soft
-	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -25,7 +25,7 @@
 
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	target_mobtypes = list(/mob/living/carbon/alien/adult)
 	steps = list(
 		/datum/surgery_step/saw,
@@ -82,6 +82,8 @@
 		BODY_ZONE_PRECISE_MOUTH,
 		BODY_ZONE_L_ARM,
 		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
 	)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
@@ -248,7 +250,9 @@
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
-			target_organ.forceMove(get_turf(target))
+			var/turf/drop_turf = get_turf(target)
+			if(drop_turf)
+				target_organ.forceMove(drop_turf)
 			target.regenerate_icons()
 		else
 			display_results(

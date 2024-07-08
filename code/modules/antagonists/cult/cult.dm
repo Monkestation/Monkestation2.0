@@ -109,22 +109,15 @@
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
-
+///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/list/slots = list(
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"left pocket" = ITEM_SLOT_LPOCKET,
-		"right pocket" = ITEM_SLOT_RPOCKET
-	)
-
-	var/T = new item_path(mob)
-	var/item_name = initial(item_path.name)
-	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/item = new item_path(mob)
+	var/where = mob.equip_conspicuous_item(item)
 	if(!where)
-		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1)."))
+		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
 		return FALSE
 	else
-		to_chat(mob, span_danger("You have a [item_name] in your [where]."))
+		to_chat(mob, span_danger("You have [item] in your [where]."))
 		if(where == "backpack")
 			mob.back.atom_storage?.show_contents(mob)
 		return TRUE
@@ -362,11 +355,15 @@
 		return
 	var/datum/team/cult/cult = team
 	var/list/target_candidates = list()
+	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences)
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if (!opt_in_disabled && !opt_in_valid(player))
+			continue
 		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
+
 	if(target_candidates.len == 0)
-		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
+		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target, this could be because NO ONE was set to Round Remove forcibly picking target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
 				target_candidates += player.mind
@@ -498,7 +495,7 @@
 		return FALSE
 	if(isnull(target.mind) || !GET_CLIENT(target))
 		return FALSE
-	if(target.mind.unconvertable)
+	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE)) // monkestation edit: mind.unconvertable -> TRAIT_UNCONVERTABLE
 		return FALSE
 	if(ishuman(target) && target.mind.holy_role)
 		return FALSE

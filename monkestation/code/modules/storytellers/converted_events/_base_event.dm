@@ -90,11 +90,20 @@
 
 	var/job_check = 0
 	var/list/enemy_players = list()
-	for(var/enemy in enemy_roles)
-		var/datum/job/enemy_job = SSjob.GetJob(enemy)
-		if(enemy_job && SSjob.assigned_players_by_job[enemy_job.type])
-			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
-			enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
+	if(roundstart)
+		for(var/enemy in enemy_roles)
+			var/datum/job/enemy_job = SSjob.GetJob(enemy)
+			if(enemy_job && SSjob.assigned_players_by_job[enemy_job.type])
+				job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
+				enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
+
+	else
+		for(var/mob/M in GLOB.alive_player_list)
+			if (M.stat == DEAD)
+				continue // Dead players cannot count as opponents
+			if (M.mind && (M.mind.assigned_role.title in enemy_roles))
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that
+				enemy_players += M
 
 	if(job_check >= required_enemies)
 		return return_players ? enemy_players : TRUE
@@ -223,6 +232,7 @@
 		if(prompted_picking)
 			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
 			var/mob/picked_mob = picked_client.mob
+			log_storyteller("Prompted antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			if(picked_mob)
 				candidates |= SSpolling.poll_candidates(
 					question = "Would you like to be a [cast_control.name]?",
@@ -236,6 +246,7 @@
 		else
 			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
 			var/mob/picked_mob = picked_client.mob
+			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
 	for(var/i in 1 to antag_count)
@@ -244,6 +255,7 @@
 			break
 
 		var/mob/candidate = pick_n_take(candidates)
+		log_storyteller("Antag event spawned mob: [candidate], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
 
 		candidate.client?.prefs.reset_antag_rep()
 

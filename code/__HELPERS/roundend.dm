@@ -281,30 +281,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
-	var/hour = round((world.time - SSticker.round_start_time) / 36000)
-	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
-	var/added_xp = round(25 + (minute**0.85))
-	for(var/client/C in GLOB.clients)
-		if(C && C.prefs)
-			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
-			C.prefs.adjust_metacoins(C.ckey, C.reward_this_person, "Special Bonus")
-			if(C.mob?.mind?.assigned_role)
-				add_jobxp(C,added_xp, C.mob.mind.assigned_role.title)
-		if(length(C.applied_challenges))
-			if(isliving(C.mob))
-				var/mob/living/client_mob = C.mob
-				if(client_mob.stat != DEAD)
-					var/total_payout = 0
-					for(var/datum/challenge/listed_challenge as anything in C.applied_challenges)
-						if(listed_challenge.failed)
-							continue
-						total_payout += listed_challenge.challenge_payout
-					if(total_payout)
-						C.prefs.adjust_metacoins(C.ckey, total_payout, "Challenge rewards.")
+
+	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
+	save_tokens()
+	distribute_rewards()
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
 	send2roundend_webhook(embed)
+	// monkestation end
 	standard_reboot()
 
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
@@ -378,6 +363,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	//Antagonists
 	parts += antag_report()
+
+	parts += opfor_report()
 
 	parts += hardcore_random_report()
 
@@ -667,9 +654,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/list/all_antagonists = list()
 
 	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		if(!istype(team))
+			stack_trace("Non-team ([team?.type]) found in GLOB.antagonist_teams!")
+			continue
 		all_teams |= team
 
 	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
+		if(!istype(antagonists))
+			stack_trace("Non-antagonist ([antagonists?.type]) found in GLOB.antagonists!")
+			continue
 		if(!antagonists.owner)
 			continue
 		all_antagonists |= antagonists
@@ -678,9 +671,11 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		//check if we should show the team
 		if(!active_teams.show_roundend_report)
 			continue
-
 		//remove the team's individual antag reports, if the team actually shows up in the report.
 		for(var/datum/mind/team_minds as anything in active_teams.members)
+			if(!istype(team_minds))
+				stack_trace("Non-mind ([team_minds?.type]) found in team.members!")
+				continue
 			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
 				all_antagonists -= team_minds.antag_datums
 
@@ -708,8 +703,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		result += "<br><br>"
 		CHECK_TICK
 
-	if(all_antagonists.len)
-		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
+	if(length(all_antagonists))
+		var/datum/antagonist/last = all_antagonists[length(all_antagonists)]
 		result += last.roundend_report_footer()
 		result += "</div>"
 

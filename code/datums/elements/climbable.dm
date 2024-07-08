@@ -49,7 +49,7 @@
 			return
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(climbed_thing)
-		structure_climber.Paralyze(40)
+		structure_climber.Immobilize(40)
 		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
 
 
@@ -67,7 +67,10 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
-		adjusted_climb_stun *= 0.8
+	//monkestation edit - CYBERNETICS
+	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
+		adjusted_climb_time *= 0.3
+	//monkestation edit - CYBERNETICS
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
@@ -76,7 +79,7 @@
 		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN)//monkestation edit: simians can fling themselves off climbable structures
 			vault_over_object(user, climbed_thing)
 			if(climb_stun)
-				user.Stun(climb_stun)
+				user.Immobilize(climb_stun)
 				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
 									span_notice("You flip over [climbed_thing]!"))
 
@@ -85,7 +88,7 @@
 								span_notice("You climb onto [climbed_thing]."))
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
-				user.Stun(adjusted_climb_stun)
+				user.Immobilize(adjusted_climb_stun)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
@@ -147,7 +150,7 @@
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
 	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
-		INVOKE_ASYNC(src, PROC_REF(attempt_sprint_climb), source, bumpee)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)

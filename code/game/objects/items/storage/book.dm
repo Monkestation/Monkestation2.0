@@ -77,9 +77,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if("honk1")
 			user.dna.add_mutation(/datum/mutation/human/clumsy)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
+			AddComponent(/datum/component/slippery, 40) //Same as a synthesized banana peel.
 		if("honk2")
 			user.dna.add_mutation(/datum/mutation/human/clumsy)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
+			AddComponent(/datum/component/slippery, 40) //Same as a synthesized banana peel.
 		if("insuls")
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
 			insuls.name = "insuls"
@@ -270,6 +272,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	item_flags = NO_BLOOD_ON_ITEM
 	var/uses = 1
 	var/ownername
+
+/obj/item/book/bible/syndicate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)

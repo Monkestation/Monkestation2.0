@@ -35,7 +35,7 @@
 	/// Changes the amount of time needed for a plant to become harvestable.
 	var/production = 25
 	/// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/yield = 3
+	var/yield = 30
 	/// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
@@ -71,8 +71,6 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
-	/// How many pixels on the Y axis this plant should be shifted.
-	var/seed_offset = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -97,7 +95,7 @@
 	var/list/generated_infusions = list()
 	for(var/datum/hydroponics/plant_mutation/infusion/listed_item as anything in infusion_mutations)
 		var/datum/hydroponics/plant_mutation/infusion/created_list_item = new listed_item
-		generated_mutations += created_list_item
+		generated_infusions += created_list_item
 	infusion_mutations = generated_infusions
 
 	if(!nogenes) // not used on Copy()
@@ -184,7 +182,7 @@
 	copy_seed.icon_dead = icon_dead
 	copy_seed.growthstages = growthstages
 	copy_seed.growing_icon = growing_icon
-	copy_seed.seed_offset = seed_offset
+	copy_seed.plant_icon_offset = plant_icon_offset
 	copy_seed.traits_in_progress = traits_in_progress
 
 	if(istype(src, /obj/item/seeds/spliced))
@@ -233,10 +231,6 @@
 /obj/item/seeds/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/projectile/energy/flora/yield))
 		var/rating = 1
-		if(istype(loc, /obj/machinery/hydroponics))
-			var/obj/machinery/hydroponics/H = loc
-			rating = H.rating
-
 		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
@@ -247,72 +241,83 @@
 
 // Harvest procs
 /obj/item/seeds/proc/getYield()
-	var/return_yield = yield
-
-	var/obj/machinery/hydroponics/parent = loc
-	if(istype(loc, /obj/machinery/hydroponics))
-		if(parent.yieldmod == 0)
-			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
-		else
-			return_yield *= (parent.yieldmod)
-
-	return return_yield
+	return yield
 
 
 /obj/item/seeds/proc/harvest(mob/user)
 	///Reference to the tray/soil the seeds are planted in.
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	///Count used for creating the correct amount of results to the harvest.
-	var/t_amount = 0
+	var/atom/movable/parent = loc //for ease of access
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
-	var/product_count = getYield()
-
-	if(product_count >= 10)
-		product_count = 10 + log(1.02) * (getYield() - 1)
+	var/seed_harvest_ratio = 0.2
+	var/seedless = get_gene(/datum/plant_gene/trait/seedless)
+	///the value of yield that the harvest amount stops being linear and slows down
+	var/yield_linearity_breakpoint = 100
+	///linear region growth coeff
+	var/harvest_linear_coeff = 0.1
+	///harvest amount gets close to 20 as yield gets close to +infinity
+	var/maximum_harvest_amount = 20
+	///to be calculated later based on yield
+	var/harvest_amount = 0
+	var/harvest_counter = 0
+	var/maximum_seed_production = 0
+	var/seed_counter = 0
+	var/plant_yield = getYield()
 
 	if(user.client)
 		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 20)
 
-	while(t_amount < product_count)
-		if(prob(25))
+	if(plant_yield >= yield_linearity_breakpoint)
+		harvest_amount = qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield)
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+
+	else
+		harvest_amount = floor(plant_yield * harvest_linear_coeff)
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+			if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
+				maximum_seed_production = 1
+	
+	while(harvest_counter < harvest_amount)
+		while(seed_counter < maximum_seed_production)
 			var/obj/item/seeds/seed_prod
-			if(prob(50) && has_viable_mutations())
+			if(prob(65) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
 				ADD_TRAIT(seed_prod, TRAIT_PLANT_WILDMUTATE, "mutated")
 			else
 				seed_prod = src.Copy_drop(output_loc)
-			result.Add(seed_prod) // User gets a consumable
-			t_amount++
+			result.Add(seed_prod)
+			harvest_counter++
+			seed_counter++
+		var/obj/item/food/grown/item_grown
+		if(prob(10) && has_viable_mutations())
+			item_grown = create_valid_mutation(output_loc)
 		else
-			var/obj/item/food/grown/t_prod
-			if(prob(10) && has_viable_mutations())
-				t_prod = create_valid_mutation(output_loc)
-			else
-				if(!product)
-					t_amount++
-					continue
-				t_prod = new product(output_loc, src)
-				if(parent.myseed.plantname != initial(parent.myseed.plantname))
-					t_prod.name = parent.myseed.plantname
-				t_prod.seed.name = parent.myseed.name
-				t_prod.seed.desc = parent.myseed.desc
-				t_prod.seed.plantname = parent.myseed.plantname
-			result.Add(t_prod) // User gets a consumable
-			if(!t_prod)
-				return
-			t_amount++
-			product_name = t_prod.seed.plantname
-	if(product_count >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
-	parent.update_tray(user, product_count)
-	parent.update_overlays()
+			if(!product)
+				harvest_counter++
+				continue
+			item_grown = new product(output_loc, src)
+			if(plantname != initial(plantname))
+				item_grown.name = plantname
+			if(istype(item_grown))
+				item_grown.seed.name = name
+				item_grown.seed.desc = desc
+				item_grown.seed.plantname = plantname
+		result.Add(item_grown) // User gets a consumable
+		if(!item_grown)
+			return
+		harvest_counter++
+		if(istype(item_grown))
+			product_name = item_grown.seed.plantname
+	if(harvest_amount >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result
+		
 
 /**
  * This is where plant chemical products are handled.

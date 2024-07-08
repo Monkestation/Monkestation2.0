@@ -4,6 +4,7 @@
 	antag_flag = ROLE_CLOCK_CULTIST
 	antag_datum = /datum/antagonist/clock_cultist
 	typepath = /datum/round_event/antagonist/solo/clockcult
+	shared_occurence_type = SHARED_HIGH_THREAT
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -15,12 +16,14 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
@@ -28,11 +31,11 @@
 	base_antags = 4
 	maximum_antags = 4
 	// I give up, just there should be enough heads with 35 players...
-	min_players = 30
+	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
-	max_occurrences = 1
+	max_occurrences = 0
 
 /datum/round_event/antagonist/solo/clockcult
 	end_when = 60000

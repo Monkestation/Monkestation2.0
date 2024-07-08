@@ -46,6 +46,109 @@
 
 	host_mob.hud_set_nanite_indicator()
 
+#define NANITE_RESEARCH_CHANGE "nanite_research_change"
+#define NANITE_RESEARCH_SLOW "Slow (1x)"
+#define NANITE_RESEARCH_FAST "Fast (2x)"
+#define NANITE_RESEARCH_SUPERFAST "Bitcoin Miner (10x)"
+
+/datum/nanite_program/research
+	name = "Research Network Integration"
+	desc = "The nanites contribute processing power to the research network, generating useful data and heat. Higher usage rates will consume more nanites. Requires a live host."
+	rogue_types = list(/datum/nanite_program/spreading, /datum/nanite_program/mitosis) // it researches itself into oblivion
+	use_rate = 0.5
+
+	var/research_speed
+	var/current_research_bonus
+	var/current_mode
+	COOLDOWN_DECLARE(next_warning_time)
+
+/datum/nanite_program/research/register_extra_settings()
+	extra_settings[NES_MODE] = new /datum/nanite_extra_setting/type(NANITE_RESEARCH_SLOW, list(NANITE_RESEARCH_SLOW, NANITE_RESEARCH_FAST, NANITE_RESEARCH_SUPERFAST))
+
+/datum/nanite_program/research/check_conditions()
+	return host_mob.stat != DEAD && ..()
+
+/datum/nanite_program/research/active_effect() // yep it's basically a space heater
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+
+	if (current_mode != mode.get_value() && passive_enabled)
+		disable_passive_effect() // toggles it so that it updates
+		enable_passive_effect()
+
+	var/turf/turf = get_turf(host_mob)
+	if (!istype(turf))
+		return
+
+	var/datum/gas_mixture/enviroment = turf.return_air()
+	if (host_mob.bodytemperature < enviroment.temperature) // sadly our bitcoin mining operations just aren't cool enough
+		return
+
+	var/difference = host_mob.bodytemperature - enviroment.temperature
+	var/heat_capacity = enviroment.heat_capacity()
+	var/required_energy = difference * heat_capacity
+	var/delta_temperature = min(required_energy, research_speed * 500) / heat_capacity
+
+	enviroment.temperature += delta_temperature
+	turf.air_update_turf()
+
+/datum/nanite_program/research/enable_passive_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	current_mode = mode.get_value()
+
+	var/message
+	switch (current_mode)
+		if (NANITE_RESEARCH_SLOW)
+			message = span_notice("You feel slightly warmer than usual.")
+		if (NANITE_RESEARCH_FAST)
+			message = span_warning("You feel a lot warmer than usual.")
+		if (NANITE_RESEARCH_SUPERFAST)
+			message = span_userdanger("You feel your insides radiate with dizzying heat!")
+
+	update_research_speed()
+
+	host_mob.add_body_temperature_change(NANITE_RESEARCH_CHANGE, research_speed * 15)
+	use_rate = initial(use_rate) * research_speed
+	current_research_bonus = use_rate
+	SSresearch.science_tech.nanite_bonus += current_research_bonus
+
+	if (COOLDOWN_FINISHED(src, next_warning_time))
+		to_chat(host_mob, message)
+		COOLDOWN_START(src, next_warning_time, 10 SECONDS)
+
+/datum/nanite_program/research/disable_passive_effect()
+	. = ..()
+	SSresearch.science_tech.nanite_bonus -= current_research_bonus
+	host_mob.remove_body_temperature_change(NANITE_RESEARCH_CHANGE)
+
+/datum/nanite_program/research/set_extra_setting(setting, value)
+	. = ..()
+	update_research_speed()
+
+/datum/nanite_program/research/copy_programming(datum/nanite_program/target, copy_activated)
+	. = ..()
+	var/datum/nanite_program/research/research = target
+	if (!istype(research))
+		return
+	research.update_research_speed()
+
+/datum/nanite_program/research/proc/update_research_speed()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	switch (mode.get_value())
+		if (NANITE_RESEARCH_SLOW)
+			research_speed = 1
+		if (NANITE_RESEARCH_FAST)
+			research_speed = 2
+		if (NANITE_RESEARCH_SUPERFAST)
+			research_speed = 10 // oh god
+	use_rate = initial(use_rate) * research_speed
+
+#undef NANITE_RESEARCH_CHANGE
+#undef NANITE_RESEARCH_SLOW
+#undef NANITE_RESEARCH_FAST
+#undef NANITE_RESEARCH_SUPERFAST
+
 /datum/nanite_program/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
@@ -147,12 +250,12 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(C.nutrition <= NUTRITION_LEVEL_STARVING) //It's the nanite programmer's job to make sure nanites don't starve the host, also allows a saboteur to starve everyone who has nanites.
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.adjust_nutrition(-0.5)
+	host_mob.adjust_nutrition(-0.25)
 
 /datum/nanite_program/access
 	name = "Subdermal ID"
@@ -257,6 +360,49 @@
 			return
 		fault.software_error()
 		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
+
+/datum/nanite_program/repeat
+	name = "Signal Repeater"
+	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat
+	name = "Relay Signal Repeater"
+	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/relay_repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_RELAY_CHANNEL] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/relay_repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat/send_code()
+	var/datum/nanite_extra_setting/relay = extra_settings[NES_RELAY_CHANNEL]
+	if(activated && relay.get_value())
+		for(var/X in SSnanites.nanite_relays)
+			var/datum/nanite_program/relay/N = X
+			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
+			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"

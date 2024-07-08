@@ -482,7 +482,7 @@
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
 	department_color = COLOR_SCIENCE_PINK
-	subdepartment_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_GENETICIST
 	minimal_access = list(
 		ACCESS_GENETICS,
@@ -593,6 +593,7 @@
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
@@ -939,6 +940,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	extra_access = list(
 		ACCESS_DETECTIVE,
@@ -1151,6 +1153,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		) // See /datum/job/warden/get_access()
 	extra_access = list(
 		ACCESS_DETECTIVE,

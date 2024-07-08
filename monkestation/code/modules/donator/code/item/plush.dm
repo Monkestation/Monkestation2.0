@@ -62,3 +62,74 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "lief_flos"
 
+/obj/item/toy/plush/quilark
+	name = "quilark plush"
+	desc = "A plush of the Lizard Basil. ~Handcrafted lovingly for quilark"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "quilark"
+
+/obj/item/toy/plush/gumball_goblin
+	name = "gumball goblin plush"
+	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs.  Help. ~Handcrafted lovingly for elliethedarksun"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "gumball_goblin"
+
+
+/obj/item/toy/plush/glep
+	name = "glep plush"
+	desc = "A plush of Glep."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "glep"
+	squeak_override = list('monkestation/code/modules/donator/sounds/glep1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep3.ogg'=1)
+
+/obj/item/toy/plush/mr_frog
+	name = "mr frog plush"
+	desc = "A plush of a classic beloved television star, Mr. Frog."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "mr_frog"
+	squeak_override = list('monkestation/code/modules/donator/sounds/mr_frog1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog3.ogg'=1)
+
+/obj/item/toy/plush/pim
+	name = "pim plush"
+	desc = "A plush of Pim."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "pim"
+	squeak_override = list('monkestation/code/modules/donator/sounds/pim.ogg'=1)
+
+/obj/item/toy/plush/charlie
+	name = "charlie plush"
+	desc = "A plush of Charlie."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "charlie"
+	squeak_override = list('monkestation/code/modules/donator/sounds/charlie.ogg'=1)
+
+/obj/item/toy/plush/cowlephant
+	name = "cowlephant plush"
+	desc = "A plush of a Cowlephant ~Handcrafted lovingly for Raziaar"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "cowlephant"
+
+/obj/item/toy/plush/elliethedarksun
+	name = "ellie plush"
+	desc = "A plush of a crewmember named Ellie! ~Handcrafted lovingly for elliethedarksun (must be an alias for something..)"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "elliethedarksun"
+	squeak_override = list('monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-1.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-2.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-3.ogg'=1)
+
+/obj/item/clothing/head/sheep_plush_av4l0n
+	name = "sheep plushie"
+	desc = "What a silly little guy."
+	attack_verb_continuous = list("thumps", "whomps", "bumps")
+	attack_verb_simple = list("thump", "whomp", "bump")
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/plushes.dmi'
+	icon_state = "av4l0n_sheep"
+	inhand_icon_state = "av4l0n_sheep"
+	lefthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_left.dmi'
+	righthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_right.dmi'
