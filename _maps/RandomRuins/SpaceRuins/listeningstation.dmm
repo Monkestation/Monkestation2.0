@@ -604,8 +604,8 @@
 	syndie = 1
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/machinery/computer/camera_advanced,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "wf" = (
