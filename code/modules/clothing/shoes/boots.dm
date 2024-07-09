@@ -39,6 +39,19 @@
 	fire = 90
 	acid = 50
 
+/obj/item/clothing/shoes/combat/swat_replica
+	name = "\improper SWAT boots replica"
+	desc = "Replica of a high speed(not anymore), no drag combat boots."
+
+/datum/loadout_item/shoes/swat_replica
+	name = "SWAT boots replica"
+	item_path = /obj/item/clothing/shoes/combat/swat_replica
+
+/datum/store_item/shoes/swat_replica
+	name = "SWAT boots replica"
+	item_path = /obj/item/clothing/shoes/combat/swat_replica
+	item_cost = 1000
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
