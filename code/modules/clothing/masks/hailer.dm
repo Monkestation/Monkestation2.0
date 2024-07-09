@@ -94,8 +94,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = "swat"
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR | HIDESNOUT
 	visor_flags_inv = 0
-	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES |
-	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES |
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /datum/loadout_item/mask/swat_replica
