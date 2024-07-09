@@ -220,7 +220,7 @@
 		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt, // monkestation edit: cybernetics overhaul (couldn't think of anything else that was good for cmo)
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
-		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/xray, // monkestation edit: cybernetics overhaul (now you can truly be the paparazzi the HoP wouldn't let you be!)
+		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
