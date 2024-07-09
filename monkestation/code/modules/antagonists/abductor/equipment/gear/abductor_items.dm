@@ -36,4 +36,3 @@
 	else
 		to_chat(user, span_warning("[icon2html(src, user)] Out of charges! Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_charge))] for the next charge!"))
 		return FALSE
-
