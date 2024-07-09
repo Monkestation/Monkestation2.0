@@ -54433,6 +54433,16 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /obj/item/seeds/tree,
 /obj/item/botanical_lexicon,
+/obj/item/seeds/apple,
+/obj/item/seeds/corn,
+/obj/item/seeds/grape,
+/obj/item/seeds/herbs,
+/obj/item/seeds/rose,
+/obj/item/seeds/tobacco,
+/obj/item/seeds/olive,
+/obj/item/seeds/pineapple,
+/obj/item/seeds/tea,
+/obj/item/seeds/coffee,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "tja" = (

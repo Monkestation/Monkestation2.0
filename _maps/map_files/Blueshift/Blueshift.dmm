@@ -6746,6 +6746,15 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/spawner/random/contraband/prison,
+/obj/item/seeds/apple,
+/obj/item/seeds/corn,
+/obj/item/seeds/grape,
+/obj/item/seeds/herbs,
+/obj/item/seeds/rose,
+/obj/item/seeds/olive,
+/obj/item/seeds/pineapple,
+/obj/item/seeds/tea,
+/obj/item/seeds/coffee,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "bpT" = (
