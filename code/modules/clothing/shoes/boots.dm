@@ -40,15 +40,15 @@
 	acid = 50
 
 /obj/item/clothing/shoes/combat/swat_replica
-	name = "\improper SWAT boots replica"
-	desc = "Replica of a high speed(not anymore), no drag combat boots."
+	name = "\improper Generic combat boots"
+	desc = "Replica of a high speed (not anymore), no drag combat boots."
 
 /datum/loadout_item/shoes/swat_replica
-	name = "SWAT boots replica"
+	name = "Generic combat boots"
 	item_path = /obj/item/clothing/shoes/combat/swat_replica
 
 /datum/store_item/shoes/swat_replica
-	name = "SWAT boots replica"
+	name = "Generic combat boots"
 	item_path = /obj/item/clothing/shoes/combat/swat_replica
 	item_cost = 1000
 
