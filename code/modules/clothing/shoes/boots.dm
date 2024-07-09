@@ -41,7 +41,7 @@
 
 /obj/item/clothing/shoes/combat/swat_replica
 	name = "\improper Combat boots"
-	desc = "Replica of a high speed (not anymore), no drag combat boots. "
+	desc = "Replica of a high speed (not anymore), no drag combat boots."
 
 /datum/loadout_item/shoes/swat_replica
 	name = "Combat boots"
