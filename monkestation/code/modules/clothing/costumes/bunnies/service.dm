@@ -61,7 +61,8 @@
 /obj/item/clothing/neck/tie/bunnytie/hop/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/hop
+/obj/item/clothing/shoes/heels/lightblue
+	name = "light blue heels"
 	greyscale_colors = "#3e6588"
 	flags_1 = null
 
@@ -164,10 +165,6 @@
 /obj/item/clothing/neck/tie/bunnytie/bartender/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/bartender
-	greyscale_colors = "#39393f"
-	flags_1 = null
-
 //Cook
 
 /obj/item/clothing/head/playbunnyears/cook
@@ -225,10 +222,6 @@
 
 /obj/item/clothing/neck/tie/bunnytie/cook/tied
 	is_tied = TRUE
-
-/obj/item/clothing/shoes/heels/chef
-	greyscale_colors = null
-	flags_1 = null
 
 //Botanist
 
@@ -297,7 +290,8 @@
 /obj/item/clothing/neck/tie/bunnytie/botanist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/botanist
+/obj/item/clothing/shoes/heels/green
+	name = "green heels"
 	greyscale_colors = "#50d967"
 	flags_1 = null
 
@@ -400,10 +394,6 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/shoes/heels/mime
-	greyscale_colors = "#a52f29"
-	flags_1 = null
-
 //Chaplain
 
 /obj/item/clothing/head/playbunnyears/chaplain
@@ -451,10 +441,6 @@
 		/obj/item/tank/internals/plasmaman
 	)
 
-/obj/item/clothing/shoes/heels/chaplain
-	greyscale_colors = "#39393f"
-	flags_1 = null
-
 /obj/item/clothing/neck/bunny_pendant
 	name = "bunny pendant"
 	desc = "A golden pendant depicting a holy rabbit."
@@ -500,10 +486,6 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/shoes/heels/curator_red
-	greyscale_colors = "#a52f29"
-	flags_1 = null
-
 //Curator Green
 
 /obj/item/clothing/head/playbunnyears/curator_green
@@ -542,7 +524,8 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/shoes/heels/curator_green
+/obj/item/clothing/shoes/heels/darkgreen
+	name = "dark green heels"
 	greyscale_colors = "#47853a"
 	flags_1 = null
 
@@ -584,7 +567,8 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/shoes/heels/curator_teal
+/obj/item/clothing/shoes/heels/teal
+	name = "teal heels"
 	greyscale_colors = "#5cbfaa"
 	flags_1 = null
 
@@ -641,7 +625,8 @@
 /obj/item/clothing/neck/tie/bunnytie/lawyer_black/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/lawyer_black
+/obj/item/clothing/shoes/heels/mutedblack
+	name = "muted black heels"
 	greyscale_colors = "#2f3038"
 	flags_1 = null
 
@@ -698,7 +683,8 @@
 /obj/item/clothing/neck/tie/bunnytie/lawyer_blue/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/lawyer_blue
+/obj/item/clothing/shoes/heels/brightblue
+	name = "bright blue heels"
 	greyscale_colors = "#1165c5"
 	flags_1 = null
 
@@ -755,10 +741,6 @@
 /obj/item/clothing/neck/tie/bunnytie/lawyer_red/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/lawyer_red
-	greyscale_colors = "#a52f29"
-	flags_1 = null
-
 //Lawyer Good
 
 /obj/item/clothing/head/playbunnyears/lawyer_good
@@ -812,7 +794,8 @@
 /obj/item/clothing/neck/tie/bunnytie/lawyer_good/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/lawyer_good
+/obj/item/clothing/shoes/heels/beige
+	name = "beige heels"
 	greyscale_colors = "#a69e9a"
 	flags_1 = null
 
@@ -854,6 +837,7 @@
 	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
-/obj/item/clothing/shoes/heels/psychologist
+/obj/item/clothing/shoes/heels/darkgrey
+	name = "dark grey heels"
 	greyscale_colors = "#46464d"
 	flags_1 = null

@@ -48,8 +48,9 @@
 /obj/item/clothing/neck/tie/bunnytie/doctor/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/doctor
-	greyscale_colors = null
+/obj/item/clothing/shoes/heels/white
+	name = "white heels"
+	greyscale_colors = "#ffffff"
 	flags_1 = null
 
 //Paramedic
@@ -102,7 +103,8 @@
 /obj/item/clothing/neck/tie/bunnytie/paramedic/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/paramedic
+/obj/item/clothing/shoes/heels/darkblue
+	name = "dark blue heels"
 	greyscale_colors = "#364660"
 	flags_1 = null
 
@@ -156,10 +158,6 @@
 /obj/item/clothing/neck/tie/bunnytie/chemist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/chemist
-	greyscale_colors = null
-	flags_1 = null
-
 //Pathologist
 
 /obj/item/clothing/head/playbunnyears/pathologist
@@ -209,10 +207,6 @@
 
 /obj/item/clothing/neck/tie/bunnytie/pathologist/tied
 	is_tied = TRUE
-
-/obj/item/clothing/shoes/heels/pathologist
-	greyscale_colors = null
-	flags_1 = null
 
 // Chief Medical Officer
 
@@ -264,6 +258,3 @@
 /obj/item/clothing/neck/tie/bunnytie/cmo/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/cmo
-	greyscale_colors = null
-	flags_1 = null

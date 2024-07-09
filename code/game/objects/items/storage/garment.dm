@@ -69,7 +69,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/captain(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain(src)
 	new /obj/item/clothing/under/rank/captain/bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/captain(src)
+	new /obj/item/clothing/shoes/heels/blue(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
 	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
@@ -84,7 +84,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/hop(src)
 	new /obj/item/clothing/suit/armor/hop_tailcoat(src)
 	new /obj/item/clothing/under/rank/civilian/hop_bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/hop(src)
+	new /obj/item/clothing/shoes/heels/lightblue(src)
 
 /obj/item/storage/bag/garment/hos/PopulateContents()
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
@@ -124,7 +124,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/rd(src)
 	new /obj/item/clothing/suit/jacket/research_director/tailcoat(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/rd(src)
+	new /obj/item/clothing/shoes/heels/purple(src)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
@@ -141,7 +141,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo_tailcoat(src)
 	new /obj/item/clothing/under/rank/medical/cmo_bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/cmo(src)
+	new /obj/item/clothing/shoes/heels/white(src)
 
 /obj/item/storage/bag/garment/engineering_chief/PopulateContents()
 	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
@@ -173,7 +173,7 @@
 	new /obj/item/clothing/neck/tie/bunnytie/cargo(src)
 	new /obj/item/clothing/suit/jacket/tailcoat/quartermaster(src)
 	new /obj/item/clothing/under/rank/cargo/quartermaster_bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/cargo(src)
+	new /obj/item/clothing/shoes/heels/lightgrey(src)
 
 
 /obj/item/storage/bag/garment/warden/PopulateContents()
@@ -188,4 +188,4 @@
 	new /obj/item/clothing/neck/tie/bunnytie/security(src)
 	new /obj/item/clothing/suit/armor/warden_tailcoat(src)
 	new /obj/item/clothing/under/rank/security/warden_bunnysuit(src)
-	new /obj/item/clothing/shoes/heels/security(src)
+	new /obj/item/clothing/shoes/heels/red(src)

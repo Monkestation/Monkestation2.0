@@ -109,7 +109,7 @@
 				/obj/item/clothing/neck/ascot = 1, //Monkestation edit addition
 				/obj/item/clothing/suit/jacket/tailcoat/mime = 1, //Monkestation edit addition
 				/obj/item/clothing/under/rank/civilian/mime_bunnysuit = 1, //Monkestation edit addition
-				/obj/item/clothing/shoes/heels/mime = 1, //Monkestation edit addition
+				/obj/item/clothing/shoes/heels/red = 1, //Monkestation edit addition
 				/obj/item/clothing/head/costume/jester = 1,
 				/obj/item/clothing/under/rank/civilian/clown/jester = 1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/shoes/clown_shoes/green_jester_shoes =1, // MONKESTATION EDIT ADDITION

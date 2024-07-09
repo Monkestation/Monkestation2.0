@@ -57,12 +57,12 @@
 		/obj/item/clothing/neck/tie/bunnytie/security = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/armor/security_tailcoat = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/security_bunnysuit = 3,  //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/security = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/red = 3, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/brig_phys = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/brig_phys = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/brig_phys_tailcoat = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/brig_phys_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/brig_phys = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/grey = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
@@ -112,16 +112,16 @@
 		/obj/item/clothing/neck/tie/bunnytie/doctor = 4, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/doctor_tailcoat = 4, //Monkestation edit addition
 		/obj/item/clothing/under/rank/medical/doctor_bunnysuit = 4, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/doctor = 4, //Monkestation edit addition
-		/obj/item/clothing/head/playbunnyears/paramedic = 4, //Monkestation edit addition
-		/obj/item/clothing/neck/tie/bunnytie/paramedic = 4, //Monkestation edit addition
-		/obj/item/clothing/suit/toggle/labcoat/paramedic_tailcoat = 4, //Monkestation edit addition
-		/obj/item/clothing/under/rank/medical/paramedic_bunnysuit = 4, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/paramedic = 4, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 4, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/paramedic = 2, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/paramedic = 2, //Monkestation edit addition
+		/obj/item/clothing/suit/toggle/labcoat/paramedic_tailcoat = 2, //Monkestation edit addition
+		/obj/item/clothing/under/rank/medical/paramedic_bunnysuit = 2, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/darkblue = 2, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/psychologist = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/psychologist = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/psychologist_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/psychologist = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/darkgrey = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
@@ -157,7 +157,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/engineer = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/engineer = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/engineering/engineer_bunnysuit = 3, //Monkestation edit addition
-		/obj/item/clothing/shoes/workboots/heeled = 3 //Monkestation edit addition
+		/obj/item/clothing/shoes/workboots/heeled = 3, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -188,7 +188,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/atmos_tech = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/utility/fire/atmos_tech_tailcoat = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/engineering/atmos_tech_bunnysuit = 3, //Monkestation edit addition
-		/obj/item/clothing/shoes/workboots/heeled = 3 //Monkestation edit addition
+		/obj/item/clothing/shoes/workboots/heeled = 3, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -229,11 +229,11 @@
 		/obj/item/clothing/neck/tie/bunnytie/cargo = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/cargo = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/cargo/cargo_bunnysuit = 3, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/cargo = 3, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/lightgrey = 3, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/mailman = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/mailman = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/cargo/mailman_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/mail = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/navyblue = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -267,7 +267,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/roboticist = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/roboticist_tailcoat = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/rnd/scientist/roboticist_bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/roboticist = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/black = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 	extra_price = PAYCHECK_CREW
@@ -301,7 +301,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/scientist = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/science_tailcoat = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/rnd/scientist/bunnysuit = 3, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/scientist = 3 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 3 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -333,7 +333,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/botanist = 3, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/botanist = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/hydroponics/bunnysuit = 3, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/botanist = 3 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/green = 3 //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -372,15 +372,15 @@
 		/obj/item/clothing/head/playbunnyears/curator_red = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/curator_red = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_red = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/curator_red = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/red = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/curator_green = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/curator_green = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_green = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/curator_green = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/darkgreen = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/curator_teal = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/curator_teal = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/curator_bunnysuit_teal = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/curator_teal = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/teal = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -425,7 +425,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/bartender = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/bartender = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/clothing/under/rank/civilian/bartender_bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/bartender = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/black = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -462,7 +462,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/cook = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/cook = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/cook_bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/chef = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -504,7 +504,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/janitor = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/janitor = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/janitor/bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/galoshes/heeled = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/galoshes/heeled = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_CREW
@@ -552,22 +552,22 @@
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_black = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_black = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_black = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/lawyer_black = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/mutedblack = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/lawyer_blue = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_blue = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_blue = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_blue = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/lawyer_blue = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/brightblue = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/lawyer_red = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_red = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_red = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_red = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/lawyer_red = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/red = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/lawyer_good = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_good = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_good = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_good = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/lawyer_good = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/beige = 1 ,//Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -612,7 +612,7 @@
 		/obj/item/clothing/neck/bunny_pendant = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/chaplain = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/chaplain_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/chaplain = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/black = 1, //Monkestation edit addition
 	)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
@@ -649,7 +649,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/chemist = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/chemist_tailcoat = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/medical/chemist/bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/chemist = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
@@ -678,7 +678,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/geneticist = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/geneticist_tailcoat = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/rnd/geneticist/bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/geneticist = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -709,7 +709,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/pathologist = 2, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/pathologist_tailcoat = 2, //Monkestation edit addition
 		/obj/item/clothing/under/rank/medical/pathologist_bunnysuit = 2, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/pathologist = 2 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/white = 2, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
@@ -759,7 +759,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/detective= 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/det_suit/tailcoat = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/detective_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/detective = 1 //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/brown = 1, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
 	extra_price = PAYCHECK_CREW

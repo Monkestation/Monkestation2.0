@@ -70,6 +70,7 @@
 /obj/item/clothing/neck/tie/bunnytie/captain/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/captain
+/obj/item/clothing/shoes/heels/blue
+	name = "blue heels"
 	greyscale_colors = "#41579a"
 	flags_1 = null

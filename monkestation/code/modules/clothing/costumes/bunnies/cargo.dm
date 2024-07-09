@@ -51,7 +51,8 @@
 /obj/item/clothing/neck/tie/bunnytie/cargo/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/cargo
+/obj/item/clothing/shoes/heels/lightgrey
+	name = "light grey heels"
 	greyscale_colors = "#d0d7da"
 	flags_1 = null
 
@@ -226,6 +227,7 @@
 /obj/item/clothing/neck/tie/bunnytie/mail/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/mail
+/obj/item/clothing/shoes/heels/navyblue
+	name = "navy blue heels"
 	greyscale_colors = "#362f68"
 	flags_1 = null

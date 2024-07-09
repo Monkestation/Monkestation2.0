@@ -73,7 +73,8 @@
 /obj/item/clothing/neck/tie/bunnytie/security/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/security
+/obj/item/clothing/shoes/heels/red
+	name = "red heels"
 	greyscale_colors = "#a52f29"
 	flags_1 = null
 
@@ -187,7 +188,8 @@
 /obj/item/clothing/neck/tie/bunnytie/brig_phys/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/brig_phys
+/obj/item/clothing/shoes/heels/grey
+	name = "grey heels"
 	greyscale_colors = "#918f8c"
 	flags_1 = null
 
@@ -248,7 +250,8 @@
 /obj/item/clothing/neck/tie/bunnytie/detective/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/detective
+/obj/item/clothing/shoes/heels/brown
+	name = "brown heels"
 	greyscale_colors = "#784f44"
 	flags_1 = null
 
@@ -293,7 +296,8 @@
 /obj/item/clothing/neck/tie/bunnytie/prisoner/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/prisoner
+/obj/item/clothing/shoes/heels/orange
+	name = "orange heels"
 	greyscale_colors = "#ff8d1e"
 	flags_1 = null
 

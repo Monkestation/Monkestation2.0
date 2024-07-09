@@ -84,7 +84,7 @@
 		new /obj/item/clothing/head/playbunnyears/prisoner(src)
 		new /obj/item/clothing/neck/tie/bunnytie/prisoner(src)
 		new /obj/item/clothing/under/rank/security/prisoner_bunnysuit(src)
-		new /obj/item/clothing/shoes/heels/prisoner(src)
+		new /obj/item/clothing/shoes/heels/orange(src)
 	return
 
 

@@ -48,10 +48,6 @@
 /obj/item/clothing/neck/tie/bunnytie/scientist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/scientist
-	greyscale_colors = null
-	flags_1 = null
-
 //Roboticist
 
 /obj/item/clothing/head/playbunnyears/roboticist
@@ -102,7 +98,8 @@
 /obj/item/clothing/neck/tie/bunnytie/roboticist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/roboticist
+/obj/item/clothing/shoes/heels/black
+	name = "black heels"
 	greyscale_colors = "#39393f"
 	flags_1 = null
 
@@ -156,10 +153,6 @@
 /obj/item/clothing/neck/tie/bunnytie/geneticist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/geneticist
-	greyscale_colors = null
-	flags_1 = null
-
 //Research Director
 
 /obj/item/clothing/head/playbunnyears/rd
@@ -210,6 +203,6 @@
 /obj/item/clothing/neck/tie/bunnytie/scientist/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/rd
+/obj/item/clothing/shoes/heels/purple
 	greyscale_colors = "#7e1980"
 	flags_1 = null
