@@ -93,7 +93,7 @@
 /obj/machinery/computer/proc/imprint_gps(gps_tag) // Currently used by the upload computers and communications console
 	var/tracker = gps_tag
 	if(!tracker) // Don't give a null GPS signal if there is none
-		return
+		CRASH("[src] Called imprint_gps without setting gps_tag")
 	for(var/obj/item/circuitboard/computer/board in src.contents)
 		if(!contents || board.GetComponent(/datum/component/gps))
 			return
