@@ -345,22 +345,6 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/armor/swat_replica
-	name = "MK.I SWAT Suit replica"
-	desc = "A replica of a tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations."
-	icon_state = "heavy"
-	inhand_icon_state = "swat_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
-/datum/loadout_item/suit/swat_replica
-	name = "MK.1 SWAT Suit replica"
-	item_path = /obj/item/clothing/suit/armor/swat_replica
-
-/datum/store_item/suit/swat_replica
-	name = "MK.1 SWAT Suit replica"
-	item_path = /obj/item/clothing/suit/armor/swat_replica
-	item_cost = 5000
-
 //All of the armor below is mostly unused
 
 /datum/armor/armor_swat

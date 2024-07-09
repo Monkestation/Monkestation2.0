@@ -255,21 +255,6 @@
 	acid = 100
 	wound = 15
 
-/obj/item/clothing/head/helmet/swat_replica
-	name = "\improper SWAT helmet replica"
-	desc = "A lookalike, non-space-worthy helmet in a nefarious red and black stripe pattern."
-	icon_state = "swatsyndie"
-	inhand_icon_state = "swatsyndie_helmet"
-
-/datum/loadout_item/head/swat_replica
-	name = "SWAT helmet replica"
-	item_path = /obj/item/clothing/head/helmet/swat_replica
-
-/datum/store_item/head/swat_replica
-	name = "SWAT helmet replica"
-	item_path = /obj/item/clothing/head/helmet/swat_replica
-	item_cost = 3000
-
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
