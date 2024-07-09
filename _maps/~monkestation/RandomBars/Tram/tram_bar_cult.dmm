@@ -1080,7 +1080,7 @@
 /area/station/commons/lounge)
 "Ap" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_y = 23
 	},
 /turf/open/floor/cult,
@@ -1418,9 +1418,7 @@
 /turf/open/floor/cult,
 /area/station/service/theater)
 "FA" = (
-/obj/machinery/atm{
-	pixel_y = -30
-	},
+/obj/machinery/atm/directional/south,
 /obj/effect/turf_decal/arrows{
 	pixel_x = -8
 	},
@@ -1946,10 +1944,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Ud" = (
-/obj/machinery/atm{
-	pixel_x = -30;
-	pixel_y = 0
-	},
+/obj/machinery/atm/directional/west,
 /turf/open/floor/cult,
 /area/station/service/theater)
 "Uf" = (
@@ -2230,7 +2225,7 @@
 /area/station/commons/lounge)
 "ZD" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_y = 23
 	},
 /obj/item/storage/fancy/heart_box,
