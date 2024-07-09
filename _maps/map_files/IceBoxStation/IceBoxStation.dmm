@@ -25847,9 +25847,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ipa" = (

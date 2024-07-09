@@ -6821,6 +6821,15 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space)
+"cid" = (
+/obj/machinery/processor{
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/station/security/prison/mess)
 "cij" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -50616,9 +50625,7 @@
 	c_tag = "Prison Botany";
 	network = list("ss13","prison")
 	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "qkc" = (
@@ -56644,6 +56651,22 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "scS" = (
@@ -61325,8 +61348,8 @@
 /area/station/ai_monitored/turret_protected/ai)
 "tzV" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/security/detective,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "tAu" = (
@@ -66824,7 +66847,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/security/upper)
 "vqs" = (
@@ -87394,7 +87417,7 @@ dWG
 cLd
 dAH
 gSF
-bth
+cid
 bth
 gSF
 tPH

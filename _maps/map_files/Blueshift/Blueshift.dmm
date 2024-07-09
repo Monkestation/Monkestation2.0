@@ -784,9 +784,7 @@
 /area/station/security/checkpoint/science/research)
 "aiu" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "aiw" = (
@@ -2546,10 +2544,7 @@
 /obj/effect/spawner/random/entertainment/money,
 /obj/item/storage/pill_bottle/maintenance_pill/full,
 /obj/item/coin/adamantine,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/belt/utility/full/engi,
-/obj/item/clothing/suit/armor/vest/old,
 /obj/effect/spawner/random/contraband/plus,
 /turf/open/floor/plating,
 /area/station/security/prison)
@@ -6882,7 +6877,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "brg" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -8493,6 +8488,7 @@
 	default_raw_text = "Going to miss this spot once the shift ends, wonder who'll be the next one to find it.. whoever reads this, the stash is yours.";
 	name = "Assistant's note"
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/prison)
 "bHc" = (
@@ -17528,7 +17524,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/falsewall,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "dpg" = (
 /obj/machinery/light/small/broken/directional/north,
@@ -18905,6 +18901,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/bounty/start_closed,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/bitden)
 "dEF" = (
@@ -25393,6 +25390,7 @@
 /area/station/security/brig)
 "eQz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/bitden)
 "eQE" = (
@@ -28855,7 +28853,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "fzj" = (
 /obj/structure/table/reinforced,
@@ -28919,7 +28917,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "fzJ" = (
 /obj/structure/chair/office{
@@ -31954,7 +31952,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/wood,
 /area/station/security/prison)
 "ggC" = (
@@ -32017,7 +32014,7 @@
 /area/station/medical/break_room)
 "ghk" = (
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "ghm" = (
 /obj/structure/chair/office{
@@ -33250,7 +33247,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "gtm" = (
 /obj/effect/turf_decal/bot,
@@ -39907,6 +39904,7 @@
 "hKq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/can,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
@@ -50219,6 +50217,7 @@
 "jMJ" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/small,
 /area/station/security/bitden)
 "jMO" = (
@@ -50865,7 +50864,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "jRR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57884,7 +57883,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/abandon_diner)
 "lkt" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "lkw" = (
@@ -58956,6 +58956,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "luD" = (
@@ -63004,7 +63005,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "mjK" = (
 /obj/effect/spawner/random/trash/mess,
@@ -68635,7 +68636,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "nsb" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -79984,6 +79985,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/trash/can,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/bitden)
 "pBo" = (
@@ -84171,6 +84173,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "qsP" = (
@@ -84270,10 +84273,8 @@
 /area/station/maintenance/central)
 "qtz" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/color/fyellow/old,
 /obj/item/clothing/under/color/grey,
 /obj/item/clothing/shoes/sneakers/black,
-/obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "qtE" = (
@@ -85454,6 +85455,7 @@
 /area/station/maintenance/department/security/lesser)
 "qDV" = (
 /obj/effect/spawner/random/trash/moisture_trap,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "qEb" = (
@@ -86593,7 +86595,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "qQn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -92139,6 +92141,7 @@
 "rTq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/bounty/start_closed,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/bitden)
 "rTv" = (
@@ -94279,7 +94282,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "squ" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -97992,6 +97995,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/bounty/start_closed,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/bitden)
 "sZz" = (
@@ -102309,6 +102313,7 @@
 /area/station/hallway/primary/upper)
 "tPq" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/small,
 /area/station/security/bitden)
 "tPs" = (
@@ -105340,6 +105345,11 @@
 /area/station/maintenance/aux_eva)
 "usU" = (
 /obj/effect/spawner/random/contraband/landmine,
+/obj/item/spear,
+/obj/item/clothing/head/helmet/old{
+	pixel_y = 9
+	},
+/obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "utc" = (
@@ -107161,7 +107171,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "uLe" = (
 /obj/structure/chair{
@@ -111442,6 +111452,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/prison)
 "vAH" = (
@@ -114674,6 +114685,8 @@
 /obj/structure/table,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/color/fyellow/old,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "wgv" = (
@@ -116109,6 +116122,7 @@
 /area/station/security/checkpoint/science/research)
 "wtW" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "wtZ" = (
@@ -118943,7 +118957,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/security/prison)
 "wWZ" = (
 /obj/structure/hedge,
@@ -120641,12 +120655,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xoN" = (
-/obj/item/spear,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/clothing/head/helmet/old{
-	pixel_y = 9
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -121839,6 +121849,9 @@
 /area/station/hallway/primary/starboard)
 "xBh" = (
 /obj/structure/table,
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/suit/armor/vest/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
 "xBs" = (
@@ -169621,9 +169634,9 @@ tPq
 pBl
 jsS
 ciC
-fWC
-fWC
-fWC
+chV
+chV
+chV
 fBz
 fZI
 fZI
