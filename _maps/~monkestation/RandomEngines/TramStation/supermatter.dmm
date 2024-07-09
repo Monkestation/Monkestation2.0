@@ -752,12 +752,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"Dr" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "Ep" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -1587,7 +1581,7 @@ GF
 uv
 tL
 nT
-Dr
+yN
 ft
 wW
 iF
