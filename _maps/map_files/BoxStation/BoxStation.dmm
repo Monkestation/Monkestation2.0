@@ -15913,8 +15913,8 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/status_display/ai/directional/north,
 /obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -20113,6 +20113,7 @@
 	fax_name = "Engineering Lobby";
 	name = "Engineering Lobby Fax Machine"
 	},
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -47903,6 +47904,13 @@
 /obj/effect/spawner/random/decoration/flower,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"pVU" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "pVZ" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/chapel{
@@ -60226,6 +60234,7 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "ugD" = (
@@ -97767,7 +97776,7 @@ rFn
 mih
 lOo
 fxk
-bGX
+pVU
 qRc
 ihh
 ksa

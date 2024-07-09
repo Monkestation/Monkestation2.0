@@ -93,7 +93,6 @@
 	dir = 10;
 	network = list("ss13","engine","engineering")
 	},
-/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "fo" = (
@@ -126,10 +125,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
-"ga" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "gb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -287,9 +282,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/ai/directional/west{
-	pixel_y = 32
-	},
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -495,6 +487,9 @@
 /obj/structure/reflector/single/anchored{
 	dir = 9
 	},
+/obj/machinery/incident_display/delam/directional/south{
+	pixel_x = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "qI" = (
@@ -612,23 +607,6 @@
 "uv" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
-"uw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/west{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "vH" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/utility/radiation,
@@ -639,17 +617,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"wr" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/power/apc/auto_name/directional/north{
-	areastring = "/area/station/engineering/supermatter"
-	},
-/obj/structure/cable,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wR" = (
@@ -710,6 +678,12 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"AL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Bo" = (
@@ -776,6 +750,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"Dr" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Ep" = (
@@ -883,14 +863,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"Kh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Ku" = (
@@ -1047,7 +1019,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "QV" = (
-/obj/structure/sign/warning/radiation,
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
@@ -1150,9 +1121,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/status_display/evac/directional/east{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 8
 	},
@@ -1177,9 +1145,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/status_display/ai/directional/east{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
@@ -1262,10 +1227,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"Zl" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "Zt" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
@@ -1274,6 +1235,7 @@
 	dir = 1
 	},
 /obj/item/pipe_dispenser,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Zz" = (
@@ -1623,9 +1585,9 @@ GF
 fL
 GF
 uv
-Kh
+tL
 nT
-yN
+Dr
 ft
 wW
 iF
@@ -1644,7 +1606,7 @@ aj
 Ep
 Ep
 Ep
-Zl
+uv
 wR
 Ul
 rA
@@ -1688,7 +1650,7 @@ aj
 Ug
 Ug
 Ug
-ga
+uv
 ZA
 jr
 Jg
@@ -1705,15 +1667,15 @@ vH
 Wf
 fo
 uv
-ga
+uv
 aj
 iM
 Zk
 iM
 uv
-wr
+OX
 nT
-yN
+AL
 ft
 wW
 iF
@@ -1771,7 +1733,7 @@ yM
 Wf
 JT
 sz
-uw
+sz
 sz
 OO
 Ex

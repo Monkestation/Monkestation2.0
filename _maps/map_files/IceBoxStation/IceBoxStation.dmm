@@ -321,7 +321,6 @@
 /area/station/engineering/atmos/project)
 "ahm" = (
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/firealarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -692,7 +691,6 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/ai/directional/west,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -1439,6 +1437,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "ayf" = (
@@ -3230,6 +3231,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"bcE" = (
+/obj/machinery/incident_display/delam/directional/south{
+	pixel_x = -16
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "bcN" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central)
@@ -14834,6 +14841,7 @@
 /obj/item/analyzer,
 /obj/item/pipe_dispenser,
 /obj/item/flashlight,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eEz" = (
@@ -16536,7 +16544,6 @@
 /area/station/maintenance/port/aft)
 "fhY" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4
 	},
@@ -21790,7 +21797,6 @@
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gVt" = (
@@ -26705,10 +26711,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"iEd" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "iEh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/thinplating{
@@ -43329,6 +43331,10 @@
 	dir = 6
 	},
 /obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/button/door/directional/west{
+	id = "ceprivacy";
+	name = "Privacy Shutters Control"
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/command/heads_quarters/ce)
 "nPE" = (
@@ -48931,11 +48937,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/service/library)
-"pDT" = (
-/obj/structure/cable,
-/obj/machinery/station_map/engineering/directional/south,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "pDW" = (
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
@@ -52780,7 +52781,6 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/status_display/evac/directional/east,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -58634,15 +58634,6 @@
 "sMg" = (
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
-"sMl" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/incident_display/delam/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "sMo" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Solar Maintenance - South East Access"
@@ -62568,10 +62559,6 @@
 "ucN" = (
 /turf/closed/wall/r_wall,
 /area/station/security/detectives_office)
-"ucO" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "udd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66571,10 +66558,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"vuK" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "vuR" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -70265,7 +70248,6 @@
 /obj/machinery/light/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wDc" = (
@@ -73454,10 +73436,6 @@
 /area/station/science/explab)
 "xBh" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/button/door/directional/north{
-	id = "ceprivacy";
-	name = "Privacy Shutters Control"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -234125,7 +234103,7 @@ kYL
 gLu
 dth
 bTF
-wRd
+oXN
 gka
 swe
 lAu
@@ -234896,7 +234874,7 @@ nzI
 gTK
 gTK
 iWY
-pDT
+sSJ
 gka
 eEh
 fab
@@ -235158,14 +235136,14 @@ gka
 uXC
 fab
 oOk
-iEd
+wuo
 wuo
 nnw
 spv
 dwy
 spv
 wuo
-sMl
+pry
 kUz
 mLV
 gka
@@ -235421,7 +235399,7 @@ xBp
 bYw
 bYw
 bYw
-ucO
+wuo
 kcD
 ugq
 njT
@@ -235687,7 +235665,7 @@ efE
 dYK
 efE
 kJU
-lhC
+bcE
 gka
 bln
 tCr
@@ -235935,7 +235913,7 @@ xBp
 imd
 imd
 imd
-vuK
+wuo
 utA
 qYQ
 xUb
@@ -236187,7 +236165,7 @@ gFR
 fab
 kFZ
 wuo
-vuK
+wuo
 nnw
 cDK
 uvk

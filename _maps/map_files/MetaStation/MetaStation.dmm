@@ -9890,7 +9890,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -54029,7 +54029,6 @@
 	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "tcx" = (
@@ -68220,6 +68219,7 @@
 "ybl" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ybm" = (

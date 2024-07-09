@@ -7213,6 +7213,7 @@
 	dir = 1;
 	name = "engineering camera"
 	},
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "buC" = (
@@ -20934,6 +20935,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
+"dYC" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/engineering/engine_smes)
 "dYI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/trash_pile,
@@ -33184,7 +33193,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -34285,7 +34293,6 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "gDy" = (
@@ -35958,7 +35965,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gUm" = (
@@ -58838,6 +58844,7 @@
 /area/station/hallway/primary/central)
 "ltc" = (
 /obj/machinery/suit_storage_unit/ce,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "ltd" = (
@@ -61847,7 +61854,6 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/structure/sign/warning/radiation/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "lYD" = (
@@ -63944,6 +63950,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
 	},
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "muW" = (
@@ -64530,6 +64537,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "mAN" = (
@@ -64714,6 +64722,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain)
+"mCX" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/toolcloset,
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "mDc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -79432,6 +79446,12 @@
 	},
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
+"pwn" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/obj/item/inducer,
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/engineering/break_room)
 "pwo" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
@@ -81660,8 +81680,6 @@
 /area/station/hallway/primary/upper)
 "pTu" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/sign/warning/radiation/directional/east,
-/obj/structure/sign/warning/radiation/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "pTx" = (
@@ -94603,7 +94621,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "stH" = (
@@ -107947,7 +107964,6 @@
 /area/station/maintenance/abandon_exam/cat)
 "uTu" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/item/paper/fluff{
 	default_raw_text = "To the Engineers of BlueShift, we would like to inform you that the power draw at the start of your shift may be something you're not used to while working on stations. BlueShift is equipped with departmental power banks. You should NEVER connect departments into the main power net to avoid issues. These power banks are located in maintenance around their respective departments, and the head of said department may come in at their leisure. If you ever encounter issues, please have your Chief Engineer contact Central Command. Have a secure shift.";
 	name = "Note to Electricians"
@@ -113999,6 +114015,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"wbb" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/obj/item/inducer,
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/engineering/break_room)
 "wbc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -116464,14 +116486,9 @@
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "wxW" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
 /obj/machinery/status_display/ai/directional/north,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "wxY" = (
@@ -154074,12 +154091,12 @@ ltF
 hxd
 dIW
 owf
-rCC
+wbb
 uom
 gcY
 spI
 odj
-rCC
+pwn
 lzd
 ltc
 ukI
@@ -154610,7 +154627,7 @@ lzd
 hIe
 uOU
 uOU
-uOU
+dYC
 bgi
 dmu
 jrA
@@ -158197,7 +158214,7 @@ hMm
 hMm
 hMm
 hMm
-sVS
+mCX
 gNT
 uTy
 pwX
