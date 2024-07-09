@@ -263,11 +263,11 @@
 
 /datum/loadout_item/head/swat_replica
 	name = "SWAT helmet replica"
-	item_path = /obj/item/clothing/helmet/swat_replica
+	item_path = /obj/item/clothing/head/helmet/swat_replica
 
 /datum/store_item/head/swat_replica
 	name = "SWAT helmet replica"
-	item_path = /obj/item/clothing/helmet/swat_replica
+	item_path = /obj/item/clothing/head/helmet/swat_replica
 	item_cost = 3000
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
