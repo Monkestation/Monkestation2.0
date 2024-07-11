@@ -63,7 +63,7 @@
 	if(!round_started || disable_distribution) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
 
-	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
+	if(!guarantees_roundstart_roleset && SSgamemode.rng.chance(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
 
 	if(SSgamemode.current_roundstart_event && !SSgamemode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
@@ -129,7 +129,7 @@
 			message_admins("Storyteller failed to pick an event for track of [track].")
 			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
 			return
-		picked_event = pick_weight(valid_events)
+		picked_event = SSgamemode.rng.pick_weighted(valid_events)
 		if(!picked_event)
 			if(length(valid_events))
 				var/added_string = ""
@@ -152,7 +152,7 @@
 	// Perhaps use some bell curve instead of a flat variance?
 	var/total_cost = bought_event.cost * mode.point_thresholds[track]
 	if(!bought_event.roundstart)
-		total_cost *= (1 + (rand(-cost_variance, cost_variance)/100)) //Apply cost variance if not roundstart event
+		total_cost *= (1 + (SSgamemode.rng.ranged_int(-cost_variance, cost_variance) / 100)) //Apply cost variance if not roundstart event
 	mode.event_track_points[track] = max(mode.event_track_points[track] - total_cost, 0)
 	message_admins("Storyteller purchased and triggered [bought_event] event, on [track] track, for [total_cost] cost.")
 	if(bought_event.roundstart)
