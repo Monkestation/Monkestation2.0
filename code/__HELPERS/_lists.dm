@@ -426,6 +426,7 @@
 		result = first ^ second
 	return result
 
+#if !defined(ANERI_OVERRIDE_PICK) && !defined(ANERI_OVERRIDE_PICK_WEIGHT)
 /**
  * Picks a random element from a list based on a weighting system.
  * For example, given the following list:
@@ -448,6 +449,7 @@
 		if(total <= 0)
 			return item
 	return null
+#endif
 
 /**
  * Like pick_weight, but allowing for nested lists.
