@@ -58,11 +58,15 @@
 		/obj/item/clothing/suit/armor/security_tailcoat = 3, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/security_bunnysuit = 3,  //Monkestation edit addition
 		/obj/item/clothing/shoes/heels/red = 3, //Monkestation edit addition
+		/obj/item/clothing/head/playbunnyears/security_assistant = 3, //Monkestation edit addition
+		/obj/item/clothing/neck/tie/bunnytie/security_assistant = 3, //Monkestation edit addition
+		/obj/item/clothing/suit/armor/security_assistant_tailcoat = 3, //Monkestation edit addition
+		/obj/item/clothing/under/rank/security/security_assistant_bunnysuit = 3,
 		/obj/item/clothing/head/playbunnyears/brig_phys = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/brig_phys = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/toggle/labcoat/brig_phys_tailcoat = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/security/brig_phys_bunnysuit = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/grey = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/grey = 4, //Monkestation edit addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
@@ -557,7 +561,7 @@
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_blue = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_blue = 1, //Monkestation edit addition
 		/obj/item/clothing/under/rank/civilian/lawyer_bunnysuit_blue = 1, //Monkestation edit addition
-		/obj/item/clothing/shoes/heels/brightblue = 1, //Monkestation edit addition
+		/obj/item/clothing/shoes/heels/mutedblue = 1, //Monkestation edit addition
 		/obj/item/clothing/head/playbunnyears/lawyer_red = 1, //Monkestation edit addition
 		/obj/item/clothing/neck/tie/bunnytie/lawyer_red = 1, //Monkestation edit addition
 		/obj/item/clothing/suit/jacket/tailcoat/lawyer_red = 1, //Monkestation edit addition

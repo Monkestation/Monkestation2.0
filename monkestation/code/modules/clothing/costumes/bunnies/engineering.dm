@@ -46,6 +46,12 @@
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 	)
 
+/obj/item/clothing/suit/jacket/tailcoat/engineer/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+
 /obj/item/clothing/neck/tie/bunnytie/engineer
 	name = "engineering bowtie"
 	desc = "An orange tie that includes a collar. Looking industrious!"

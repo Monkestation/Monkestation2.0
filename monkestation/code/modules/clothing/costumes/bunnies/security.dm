@@ -78,6 +78,81 @@
 	greyscale_colors = "#a52f29"
 	flags_1 = null
 
+//Security Assistant
+
+/obj/item/clothing/head/playbunnyears/security_assistant
+	name = "security assistant's bunny ears"
+	desc = "A pair of red and grey bunny ears attatched to a headband. Snugly fit, to keep it attatched during long distance tackles."
+	icon_state = "sec_assistant"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/bunny_ears.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
+	clothing_flags = SNUG_FIT
+	armor_type = /datum/armor/playbunnyears_security
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+
+/datum/armor/playbunnyears_security
+	melee = 30
+	bullet = 30
+	laser = 20
+	energy = 30
+	fire = 30
+	bomb = 20
+	acid = 30
+	wound = 10
+
+/obj/item/clothing/under/rank/security/security_assistant_bunnysuit
+	desc = "The staple of any bunny themed security assistants. Can't lost respect you don't have!"
+	name = "security assistant's bunnysuit"
+	icon_state = "bunnysuit_sec_assistant"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/bunnysuits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/bunnysuits_worn.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/security/security_assistant_bunnysuit/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny)
+
+/obj/item/clothing/suit/armor/security_assistant_tailcoat
+	name = "security assistant's tailcoat"
+	desc = "A reinforced tailcoat worn by bunny themed security assistants. The duller color scheme denotes a lower rank on the chain of bunny command."
+	icon_state = "sec_assistant"
+	inhand_icon_state = "armor"
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/tailcoats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	dog_fashion = null
+	armor_type = /datum/armor/security_tailcoat
+
+/datum/armor/security_tailcoat
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 70
+	acid = 90
+	wound = 10
+
+/obj/item/clothing/neck/tie/bunnytie/security_assistant
+	name = "security assistant's bowtie"
+	desc = "A grey tie that includes a collar. Looking \"helpful\"."
+	icon = 'monkestation/icons/obj/clothing/costumes/bunnysprites/neckwear.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
+	icon_state = "bowtie_collar_sec_assistant_tied"
+	tie_type = "bowtie_collar_sec_assistant"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	flags_1 = null
+
+/obj/item/clothing/neck/tie/bunnytie/security_assistant/tied
+	is_tied = TRUE
+
 //Warden
 
 /obj/item/clothing/head/playbunnyears/warden

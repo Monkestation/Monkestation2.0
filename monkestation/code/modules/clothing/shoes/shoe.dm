@@ -82,11 +82,13 @@
 	greyscale_colors = "#46b946"
 	flags_1 = null
 
-/obj/item/clothing/shoes/heels/red
+/obj/item/clothing/shoes/heels/brightred
+	name = "bright red heels"
 	greyscale_colors = "#c82424"
 	flags_1 = null
 
-/obj/item/clothing/shoes/heels/blue
+/obj/item/clothing/shoes/heels/brightblue
+	name = "bright blue heels"
 	greyscale_colors = "#1b6ec4"
 	flags_1 = null
 

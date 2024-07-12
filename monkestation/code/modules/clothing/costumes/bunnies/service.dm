@@ -683,8 +683,8 @@
 /obj/item/clothing/neck/tie/bunnytie/lawyer_blue/tied
 	is_tied = TRUE
 
-/obj/item/clothing/shoes/heels/brightblue
-	name = "bright blue heels"
+/obj/item/clothing/shoes/heels/mutedblue
+	name = "muted blue heels"
 	greyscale_colors = "#1165c5"
 	flags_1 = null
 
