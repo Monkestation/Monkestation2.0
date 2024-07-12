@@ -10,7 +10,7 @@
 	inhand_icon_state = "razorwire"
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	force = 12
+	force = 15
 	demolition_mod = 0.25 // This thing sucks at destroying stuff
 	wound_bonus = -10 // Very weak against armor.
 	bare_wound_bonus = 25
