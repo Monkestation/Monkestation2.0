@@ -69,3 +69,6 @@
 /// A cryptographic PRNG instance, using Blake3.
 /datum/rng/secure
 	secure = TRUE
+
+/proc/byondapi_stack_trace(msg)
+	CRASH("[msg]")
