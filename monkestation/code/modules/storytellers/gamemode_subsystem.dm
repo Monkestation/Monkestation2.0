@@ -162,6 +162,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// The RNG used for the storyteller/gamemode
 	var/datum/rng/rng
 
+	COOLDOWN_DECLARE(_debug_verify_cooldown)
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 	// Initialize RNG
 	rng = new
@@ -218,6 +220,10 @@ SUBSYSTEM_DEF(gamemode)
 		update_crew_infos()
 		next_storyteller_process = world.time + STORYTELLER_WAIT_TIME
 		storyteller.process(STORYTELLER_WAIT_TIME * 0.1)
+
+	if(COOLDOWN_FINISHED(src, _debug_verify_cooldown) && SSticker.HasRoundStarted())
+		verify_event_integrity()
+		COOLDOWN_START(src, _debug_verify_cooldown, 15 MINUTES)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

@@ -8,3 +8,14 @@
 		oh_god = TRUE
 		stack_trace("ANERI DEBUG: [type] ([src]) is a managed event that's being deleted!!! this is bad!!!")
 		message_admins("ANERI DEBUG: [type] ([src]) is a managed event that's being deleted!!! this is bad!!! tell borbop and/or absolucy ASAP!!! tell borbop and/or absolucy ASAP!!!")
+
+/datum/controller/subsystem/gamemode/proc/verify_event_integrity()
+	for(var/event in control)
+		if(!istype(event, /datum/round_event_control))
+			stack_trace("Invalid object in SSgamemode.control: [event]")
+			message_admins("\[BUG\] Invalid object in SSgamemode.control: [event]. REPORT THIS TO ABSOLUCY OR BORBOP!")
+	for(var/track in event_pools)
+		for(var/event in event_pools[track])
+			if(!istype(event, /datum/round_event_control))
+				message_admins("\[BUG\] Invalid object in SSgamemode.event_pools\[[track]\]: [event]. REPORT THIS TO ABSOLUCY OR BORBOP!")
+				stack_trace("Invalid object in SSgamemode.event_pools\[[track]\]: [event]")
