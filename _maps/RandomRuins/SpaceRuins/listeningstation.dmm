@@ -596,6 +596,7 @@
 /obj/machinery/computer/message_monitor{
 	dir = 8
 	},
+/obj/structure/sign/calendar/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "vP" = (
@@ -606,6 +607,7 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/camera_advanced/syndie,
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "wf" = (
@@ -647,7 +649,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "xj" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "xR" = (
@@ -713,6 +717,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/red/directional/south,
 /obj/structure/cable,
+/obj/structure/sign/warning/xeno_mining/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "zR" = (
@@ -974,7 +979,8 @@
 /area/ruin/space/has_grav/listeningstation/lounge)
 "EG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/structure/sign/clock/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "EK" = (
@@ -1232,9 +1238,7 @@
 "MY" = (
 /obj/machinery/modular_computer/preset/civilian,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "Ni" = (
@@ -1871,7 +1875,7 @@ AV
 VK
 VK
 VK
-xY
+xj
 xY
 xY
 xY
@@ -1909,7 +1913,7 @@ AV
 VK
 VK
 VK
-xY
+aW
 VK
 VK
 VK
@@ -1947,8 +1951,8 @@ AV
 AV
 VK
 VK
-xY
-xY
+Sx
+Sx
 VK
 VK
 VK
@@ -1986,7 +1990,7 @@ AV
 VK
 VK
 VK
-xY
+Sx
 VK
 VK
 VK
@@ -2024,7 +2028,7 @@ AV
 VK
 VK
 VK
-xY
+Sx
 VK
 VK
 VK
@@ -2062,10 +2066,10 @@ AV
 VK
 VK
 VK
-xY
-xj
 Sx
-aW
+Sx
+Sx
+yK
 yK
 yK
 QI
