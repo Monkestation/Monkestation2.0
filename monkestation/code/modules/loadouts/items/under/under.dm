@@ -876,9 +876,11 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Cheongsam, Custom Trim"
 	item_path = /obj/item/clothing/under/costume/nova/cheongsam/customtrim
 
+/*
 /datum/loadout_item/under/miscellaneous/kimono //BUYABLE
 	name = "Fancy Kimono"
 	item_path =  /obj/item/clothing/under/costume/nova/kimono
+*/
 
 /datum/loadout_item/under/miscellaneous/chaps //BUYABLE
 	name = "Black Chaps"
