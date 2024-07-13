@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Flex, Stack, Button, Box, Input, NoticeBox } from '../components';
+import {
+  Section,
+  Flex,
+  Stack,
+  Button,
+  Box,
+  Input,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 type OverwatchDisplayData = {
@@ -12,10 +20,10 @@ type Data = {
   displayData: Array<OverwatchDisplayData>;
 };
 
-export const OverwatchASNManager = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OverwatchASNManager = (props) => {
+  const { act, data } = useBackend<Data>();
   const { displayData } = data;
-  const [inputIP, setinputIP] = useLocalState(context, 'inputIPkey', '');
+  const [inputIP, setinputIP] = useLocalState('inputIPkey', '');
   return (
     <Window width={600} height={500} title="Overwatch ASN Panel" theme="admin">
       <Window.Content scrollable>
