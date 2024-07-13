@@ -1,6 +1,13 @@
 // @ts-nocheck
 import { useBackend, useSharedState, useLocalState } from '../../backend';
-import { Box, Button, Section, Stack, Dropdown, FitText } from '../../components';
+import {
+  Box,
+  Button,
+  Section,
+  Stack,
+  Dropdown,
+  FitText,
+} from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
 import { NameInput } from './names';
@@ -42,8 +49,8 @@ const CharacterControls = (props: {
   );
 };
 
-export const LoadoutManager = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const LoadoutManager = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const {
     selected_loadout,
     loadout_tabs,
@@ -52,14 +59,12 @@ export const LoadoutManager = (props, context) => {
     selected_unusuals,
   } = data;
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
-    context,
     'multiNameInputOpen',
-    false
+    false,
   );
   const [selectedTabName, setSelectedTab] = useSharedState(
-    context,
     'tabs',
-    loadout_tabs[0]?.name
+    loadout_tabs[0]?.name,
   );
   const selectedTab = loadout_tabs.find((curTab) => {
     return curTab.name === selectedTabName;
@@ -88,7 +93,8 @@ export const LoadoutManager = (props, context) => {
                   fontSize="22px"
                   icon="fa-solid fa-coins"
                   align="center"
-                  tooltip="This is your total Monkecoin amount.">
+                  tooltip="This is your total Monkecoin amount."
+                >
                   <FitText maxFontSize={22} maxWidth={CLOTHING_CELL_SIZE * 1}>
                     {total_coins}
                   </FitText>
@@ -125,7 +131,8 @@ export const LoadoutManager = (props, context) => {
                   content="Tutorial"
                   onClick={() => act('toggle_tutorial')}
                 />
-              }>
+              }
+            >
               <Button
                 icon="check-double"
                 color="good"
@@ -163,7 +170,8 @@ export const LoadoutManager = (props, context) => {
                         width={10}
                         onClick={() => act('clear_all_items')}
                       />
-                    }>
+                    }
+                  >
                     <Stack grow vertical>
                       {selectedTab.contents.map((item) => (
                         <Stack.Item key={item.name}>
@@ -237,7 +245,7 @@ export const LoadoutManager = (props, context) => {
                                 checked={
                                   selected_loadout.includes(item.path) ||
                                   (selected_unusuals.includes(
-                                    item.unusual_placement
+                                    item.unusual_placement,
                                   ) &&
                                     item.unusual_spawning_requirements)
                                 }
@@ -253,7 +261,7 @@ export const LoadoutManager = (props, context) => {
                                       item.unusual_spawning_requirements,
                                     unusual_placement: item.unusual_placement,
                                     deselect: selected_loadout.includes(
-                                      item.path
+                                      item.path,
                                     ),
                                   })
                                 }

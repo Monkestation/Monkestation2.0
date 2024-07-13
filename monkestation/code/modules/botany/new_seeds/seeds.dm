@@ -12,7 +12,7 @@
 	endurance = 50
 	maturation = 15
 	production = 5
-	yield = 5
+	yield = 50
 
 	plant_icon_offset = 0
 	growing_icon = 'goon/icons/obj/hydroponics/plants_crop.dmi'
@@ -52,7 +52,7 @@
 	icon_grow = "TreeCash-G"
 
 	possible_mutations = list()
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/seedless)
 	product = /obj/item/stack/spacecash/c10
 
 /obj/item/seeds/tree/steel

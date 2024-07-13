@@ -7,8 +7,8 @@
 	///decals we can clean
 	var/static/list/cleanable_decals = typecacheof(list(
 		/obj/effect/decal/cleanable/ants,
-		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/confetti,
+		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/fuel_pool,
 		/obj/effect/decal/cleanable/generic,
@@ -23,6 +23,7 @@
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/wrapping,
+		/obj/effect/decal/cleanable/piss_stain,
 		/obj/effect/decal/remains,
 	))
 	///blood we can clean
@@ -40,6 +41,17 @@
 	var/static/list/huntable_trash = typecacheof(list(
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
+		/obj/item/shard,
+		/obj/item/food/candy_trash,
+		/obj/item/cigbutt,
+		/obj/item/food/breadslice/moldy,
+		/obj/item/food/pizzaslice/moldy,
+		/obj/item/food/badrecipe,
+		/obj/item/food/egg/rotten,
+		/obj/item/light/tube/broken,
+		/obj/item/light/bulb/broken,
+		/obj/item/popsicle_stick,
+		/obj/item/broken_bottle,
 	))
 
 /datum/slime_trait/cleaner/on_add(mob/living/basic/slime/parent)

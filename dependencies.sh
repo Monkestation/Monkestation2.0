@@ -5,7 +5,7 @@
 
 # byond version
 export BYOND_MAJOR=515
-export BYOND_MINOR=1633
+export BYOND_MINOR=1637
 
 #rust_g git tag
 export RUST_G_VERSION=3.1.0
@@ -16,8 +16,9 @@ export ANERI_REPO=Absolucy/aneri
 export ANERI_VERSION=2692d334ae39bfb436338cfdd1f0d837773063d4
 
 #node version
-export NODE_VERSION=14
-export NODE_VERSION_PRECISE=14.16.1
+export NODE_VERSION_LTS=20.13.0
+# compatiblility mode MUST work with windows 7
+export NODE_VERSION_COMPAT=20.2.0
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.8

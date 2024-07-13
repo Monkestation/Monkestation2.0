@@ -4,6 +4,7 @@
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop/clownop
 	typepath = /datum/round_event/antagonist/solo/clown_operative
+	shared_occurence_type = SHARED_HIGH_THREAT
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -17,6 +18,7 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 3
 	maximum_antags = 5

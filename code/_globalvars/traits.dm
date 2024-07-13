@@ -205,6 +205,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_ANALGESIA" = TRAIT_ANALGESIA,
 		"TRAIT_FAST_CLIMBER" = TRAIT_FAST_CLIMBER,
 		"TRAIT_ON_ELEVATED_SURFACE" = TRAIT_ON_ELEVATED_SURFACE,
+		"TRAIT_IGNORE_ELEVATION" = TRAIT_IGNORE_ELEVATION,
 		"TRAIT_NO_BLOODLOSS_DAMAGE" = TRAIT_NO_BLOODLOSS_DAMAGE, // Monkestation Addition
 		"TRAIT_CANT_SIGN_SPELLS" = TRAIT_CANT_SIGN_SPELLS, // monke edit
 	),
@@ -265,7 +266,17 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/turf = list(
 		"TRAIT_ELEVATED_TURF" = TRAIT_ELEVATED_TURF,
+	),
+	// monkestation edit: add /datum/mind, because it's not here for some reason
+	/datum/mind = list(
+		"TRAIT_CANT_SIGN_SPELLS" = TRAIT_CANT_SIGN_SPELLS,
+		"TRAIT_CHUNKYFINGERS_IGNORE_BATON" = TRAIT_CHUNKYFINGERS_IGNORE_BATON,
+		"TRAIT_MAGICALLY_GIFTED" = TRAIT_MAGICALLY_GIFTED,
+		"TRAIT_NAIVE" = TRAIT_NAIVE,
+		"TRAIT_REVEAL_FISH" = TRAIT_REVEAL_FISH,
+		"TRAIT_UNCONVERTABLE" = TRAIT_UNCONVERTABLE,
 	)
+	// monkestation end
 ))
 
 /// value -> trait name, generated on use from trait_by_type global

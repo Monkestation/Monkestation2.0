@@ -328,7 +328,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/remove_any(obj/effect/abstract/liquid_turf/remover, amount)
-	reagents.remove_any(amount, TRUE)
+	reagents.remove_all(amount)
 	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	total_reagent_volume = reagents.total_volume
@@ -895,6 +895,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
 	if(isclosedturf(new_turf) || !source_turf.atmos_adjacent_turfs)
 		return
+	if(HAS_TRAIT(new_turf, TRAIT_BLOCK_LIQUID_SPREAD))
+		return
 	if(!(new_turf in source_turf.atmos_adjacent_turfs)) //i hate that this is needed
 		return
 	if(!source_turf.atmos_adjacent_turfs[new_turf])
@@ -904,7 +906,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
 			return
-		if(isspaceturf(Z_turf_below))
+		if(isspaceturf(Z_turf_below) || HAS_TRAIT(Z_turf_below, TRAIT_BLOCK_LIQUID_SPREAD))
 			return FALSE
 		if(QDELETED(Z_turf_below.liquids))
 			Z_turf_below.liquids = new(Z_turf_below)
