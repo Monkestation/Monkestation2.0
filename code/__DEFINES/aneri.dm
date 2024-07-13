@@ -72,7 +72,7 @@
 	return ANERI_CALL("replace_chars_prob", input, replacement, probability, skip_whitespace)
 
 #if defined(ANERI_OVERRIDE_PICK) || defined(ANERI_OVERRIDE_PICK_WEIGHT)
-#define pick_weight(list)		ANERI_CALL("pick_weighted", list)
+#define pick_weight(list)		_aneri_pick_weighted(list)
 #endif
 
 #ifdef ANERI_OVERRIDE_PICK
@@ -86,9 +86,9 @@
 			var/list/arg = args[1]
 			if(!islist(arg))
 				CRASH("pick() called with non-list argument")
-			return ANERI_CALL("pick", arg)
+			return _aneri_pick(arg)
 		else
-			return ANERI_CALL("pick", args)
+			return _aneri_pick(args)
 #endif
 
 #ifdef ANERI_OVERRIDE_RAND

@@ -39,10 +39,24 @@
 	return ANERI_CALL("instanced_random_range_int_signed", src, min, max)
 
 /datum/rng/proc/pick_from(list/choices)
-	return ANERI_CALL("instanced_pick", src, choices)
+	var/choices_len = length(choices)
+	switch(choices_len)
+		if(0)
+			return null
+		if(1)
+			return choices[1]
+		else
+			var/idx = src.ranged_uint(1, choices_len)
+			return choices[idx]
 
-/datum/rng/proc/pick_weighted(list/choices)
-	return ANERI_CALL("instanced_pick_weighted", src, choices)
+/datum/rng/proc/pick_weighted(list/list_to_pick)
+	if(!islist(list_to_pick))
+		stack_trace("Attempted to do a weighted pick from a non-list")
+		return null
+	if(!length(list_to_pick))
+		return null
+	var/chosen_idx = ANERI_CALL("instanced_pick_weighted", src, assoc_to_weights(list_to_pick))
+	return list_to_pick[chosen_idx]
 
 /datum/rng/proc/chance(percent) // "prob" is a reserved word, so we do "chance" instead
 	return ANERI_CALL("instanced_prob", src, percent)
