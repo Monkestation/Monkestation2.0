@@ -376,6 +376,8 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
+	//monke edit - prevents soapbox speech from being leaked into comms via hotmic
+	spans -= SPAN_FAKE_COMMAND
 
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 

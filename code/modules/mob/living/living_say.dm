@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/obj/structure/closet/crate/soapbox = locate(/obj/structure/closet/crate) in T
 	if(soapbox)
 		if(!soapbox.opened && !ismovable(loc))
-			spans |= SPAN_COMMAND
+			spans |= SPAN_FAKE_COMMAND
 	///Monke edit end
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost

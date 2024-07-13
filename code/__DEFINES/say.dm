@@ -73,6 +73,10 @@
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_HELIUM "small"
 
+///monke edit begin
+#define SPAN_FAKE_COMMAND "command_headset"
+///monke edit end
+
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
 #define REDUCE_RANGE (1<<1)
