@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	///Monke edit begin - Loud mode when on a crate
 	var/obj/structure/closet/crate/soapbox = locate(/obj/structure/closet/crate) in T
 	if(soapbox)
-		if(!soapbox.opened)
+		if(!soapbox.opened && !ismovable(loc))
 			spans |= SPAN_COMMAND
 	///Monke edit end
 
