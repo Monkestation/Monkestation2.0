@@ -123,3 +123,15 @@
 	"}
 
 
+/obj/item/paper/fluff/ruins/listeningstation/engineer
+	name = "message from syndicate engineering"
+	default_raw_text = {"This outpost's pretty messy compared to other models, so here's the basic rundown of every room and whatnot:
+	<br>As is to be expected, you've probably already found your way around the lounge area: it's where you'll spend most of your day, given the frequent dark periods on Nanotrasen stations.
+	<br>You also have a self-destruct issued for emergencies - probably don't wanna touch that.
+	<br>There's also your office, equipped with everything needed to communicate with agents and decieve (or just annoy) Nanotrasen crew - given this is being faxed, you're probably here.
+	<br>Service areas should be behind the yellow airlock - that's the laundry, engineering area, and life support: the relay is also through here.
+	<br>Entrance's opposite - it's reconfigured by different post crews for different uses: some use it as a lobby, some use it for cargo handling, others just cut it up for parts and leave it in shoddy condition.
+	<br>Infirmary's below - it's got a proper sleeper modified to allow you to use it without external assistance, as well as some supplies.
+	<br>There's also a pile of garden equipment in the excavation near medical - have fun with that.
+	<br>
+	<br>Enjoy your assignment."}

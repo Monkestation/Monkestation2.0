@@ -597,6 +597,7 @@
 	dir = 8
 	},
 /obj/structure/sign/calendar/directional/east,
+/obj/item/paper/monitorkey,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "vP" = (
@@ -1445,8 +1446,8 @@
 	name = "listening post fax machine";
 	fax_name = "Syndicate Listening Post"
 	},
-/obj/item/paper/monitorkey,
 /obj/item/paper/fluff/ruins/listeningstation/briefing,
+/obj/item/paper/fluff/ruins/listeningstation/engineer,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "Tq" = (
