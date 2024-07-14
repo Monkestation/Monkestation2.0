@@ -24,6 +24,8 @@
 	var/warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	///Reference to the target we've fed off of
 	var/datum/weakref/target_ref
+	/// Whether the target was alive or not when we started feeding.
+	var/started_alive = TRUE
 	///Are we feeding with passive grab or not?
 	var/silent_feed = TRUE
 
@@ -59,6 +61,7 @@
 			bloodsuckerdatum_power.AddHumanityLost(10)
 
 	target_ref = null
+	started_alive = TRUE
 	warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	blood_taken = 0
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, FEED_TRAIT)
@@ -82,6 +85,7 @@
 		feed_timer = 2 SECONDS
 
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
+	started_alive = (feed_target.stat < HARD_CRIT)
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
@@ -168,7 +172,7 @@
 	// Drank mindless as Ventrue? - BAD
 	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(feed_target.mind))
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)
-	if(feed_target.stat >= DEAD)
+	if(feed_target.stat >= DEAD && !started_alive)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_dead)
 
 	if(!IS_BLOODSUCKER(feed_target))
