@@ -44781,10 +44781,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/station/service/lawoffice)
-"ojw" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/garden)
 "ojz" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -86874,8 +86870,8 @@ oBd
 oBd
 oBd
 ifQ
-ojw
-ojw
+myp
+myp
 jYh
 jYh
 myp
