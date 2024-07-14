@@ -71485,12 +71485,10 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_x = -6;
+/obj/effect/turf_decal/bot,
+/obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "wua" = (
