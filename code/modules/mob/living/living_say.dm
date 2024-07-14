@@ -241,14 +241,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	///Monke edit begin - Loud mode when on a crate
-	if(!(SPAN_COMMAND in spans))
-		var/obj/structure/closet/crate/soapbox = locate(/obj/structure/closet/crate) in T
-		if(soapbox && !soapbox.opened && !ismovable(loc))
-			spans |= SPAN_COMMAND
-			message_mods[SAY_FAKE_COMMAND] = TRUE
-	///Monke edit end
-
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost
 
 	//monkestation edit
