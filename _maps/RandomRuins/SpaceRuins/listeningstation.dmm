@@ -1128,6 +1128,7 @@
 	name = "Telecommunications Relay"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "Kt" = (
