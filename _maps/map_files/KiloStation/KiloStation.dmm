@@ -13448,6 +13448,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
+"erx" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/station/security/prison/garden)
 "erY" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -25968,6 +25975,14 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/clown{
+	name = "John Gamer";
+	limb_destroyer = 1;
+	health = 1000;
+	desc = "Imprisoned for his many sins.";
+	maxHealth = 1000;
+	wound_bonus = 10
+	},
 /turf/open/ballpit,
 /area/station/security/bitden)
 "idF" = (
@@ -42492,6 +42507,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -45274,6 +45290,7 @@
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "otA" = (
@@ -45938,6 +45955,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -46228,6 +46246,7 @@
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/red/line,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "oJq" = (
@@ -60665,6 +60684,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -61906,6 +61926,7 @@
 "tAM" = (
 /obj/machinery/growing/soil,
 /obj/item/seeds/carrot,
+/obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "tAN" = (
@@ -86086,7 +86107,7 @@ gNB
 umr
 qPb
 eEt
-mix
+erx
 myp
 aeU
 aeu
