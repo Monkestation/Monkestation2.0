@@ -6745,7 +6745,6 @@
 /obj/item/seeds/grape/green,
 /obj/item/seeds/grass,
 /obj/item/seeds/pumpkin,
-/obj/item/seeds/tomato,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
