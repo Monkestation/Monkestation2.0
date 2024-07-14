@@ -10999,6 +10999,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"dBi" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/security/prison/garden)
 "dBs" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -45744,6 +45748,10 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"oBd" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/security/prison)
 "oBe" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/north{
@@ -75652,10 +75660,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"xOm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "xOB" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/main)
@@ -83252,7 +83256,7 @@ uep
 dap
 sei
 dap
-xOm
+oBd
 wsX
 kwk
 pzM
@@ -85584,7 +85588,7 @@ kjb
 jhk
 uFa
 myp
-jYh
+dBi
 myp
 gOL
 ovi
@@ -86866,9 +86870,9 @@ tWp
 lga
 lQr
 sAv
-mWy
-mWy
-mWy
+oBd
+oBd
+oBd
 ifQ
 ojw
 ojw

@@ -22838,6 +22838,11 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"irc" = (
+/obj/machinery/netpod,
+/obj/machinery/camera/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/security/bitden)
 "irL" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
@@ -87338,7 +87343,7 @@ mxQ
 lMJ
 rZK
 cTa
-cTa
+irc
 ixX
 ngv
 qIL
