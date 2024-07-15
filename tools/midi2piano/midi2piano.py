@@ -4,7 +4,8 @@ for copy-and-paste
 """
 from functools import reduce
 import midi as mi
-import easygui as egui
+from tkinter import filedialog
+from tkinter import messagebox
 import pyperclip as pclip
 
 LINE_LENGTH_LIM = 50
@@ -105,9 +106,8 @@ def obtain_midi_file():
     """
     Asks user to select MIDI and returns this file opened in binary mode for reading
     """
-    file = egui.fileopenbox(msg='Choose MIDI file to convert',
-                            title='MIDI file selection',
-                            filetypes=[['*.mid', 'MID files']])
+    messagebox.showinfo("Midi2Piano Information", "Choose a MIDI file to convert, when done click \"cancel\" on the dialogue box")
+    file = filedialog.askopenfilename(title='MIDI file selection',filetypes=[['*.mid', 'MID files']])
     if not file:
         return None
     file = open(file, mode='rb').read()
