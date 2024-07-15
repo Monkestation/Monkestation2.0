@@ -104,7 +104,7 @@
 	icon_state = "sleeper"
 	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
 	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
-	important_text = "DO NOT abandon the base."
+	important_text = "DO NOT abandon the base, it's your only hope to see again!"
 	outfit = /datum/outfit/lavaland_syndicate/comms/anderson
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Initialize(mapload)
