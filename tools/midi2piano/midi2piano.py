@@ -106,7 +106,7 @@ def obtain_midi_file():
     """
     Asks user to select MIDI and returns this file opened in binary mode for reading
     """
-    messagebox.showinfo("Midi2Piano Information", "Choose a MIDI file to convert, when done click \"cancel\" on the dialogue box")
+    messagebox.showinfo("Midi2Piano Information", "Choose a MIDI file to convert")
     file = filedialog.askopenfilename(title='MIDI file selection',filetypes=[['*.mid', 'MID files']])
     if not file:
         return None
