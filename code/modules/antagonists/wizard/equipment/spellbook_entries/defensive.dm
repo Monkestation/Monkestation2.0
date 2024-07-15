@@ -53,8 +53,8 @@
 		no matter the circumstances. Be wary - with each revival, your body will become weaker, and \
 		it will become easier for others to find your item of power."
 	spell_type =  /datum/action/cooldown/spell/lichdom
-	category = "Defensive"
-	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting)
+	category = SPELLBOOK_CATEGORY_DEFENSIVE
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting, /datum/spellbook_entry/perks/wormborn)
 
 /datum/spellbook_entry/chuunibyou
 	name = "Chuuni Invocations"

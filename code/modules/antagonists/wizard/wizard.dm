@@ -24,6 +24,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_to_ghosts = TRUE
 	/// This mob's Grand Ritual ability
 	var/datum/action/cooldown/grand_ritual/ritual
+	/// Perks that wizard learn
+	var/list/perks = list()
 
 /datum/antagonist/wizard/antag_token(datum/mind/hosts_mind, mob/spender)
 	if(isobserver(spender))
