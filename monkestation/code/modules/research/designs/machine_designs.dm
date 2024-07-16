@@ -70,3 +70,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
+
+	/datum/design/board/bomb_actualizer
+		name = "Machine Design (Bomb Actualizer Board)"
+		desc = "The circuit board for a bomb actualizing machine"
+		id = "bomb_actualizer"
+		build_path = /obj/item/circuitboard/machine/bomb_actualizer
+		category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
