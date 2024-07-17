@@ -25978,10 +25978,10 @@
 /mob/living/basic/clown{
 	name = "John Gamer";
 	limb_destroyer = 1;
-	health = 1000;
 	desc = "Imprisoned for his many sins.";
 	maxHealth = 1000;
-	wound_bonus = 10
+	wound_bonus = 10;
+	health = 200
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -61460,6 +61460,9 @@
 /area/station/commons/storage/art)
 "tty" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "ttB" = (
@@ -64733,6 +64736,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"utq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/prison)
 "utw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -71449,6 +71458,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/garden)
 "wtt" = (
@@ -84814,8 +84824,8 @@ mqC
 nbS
 rsk
 qEu
-bpC
-bpC
+utq
+utq
 tty
 wto
 rLK
