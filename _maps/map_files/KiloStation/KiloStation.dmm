@@ -61929,7 +61929,6 @@
 "tAM" = (
 /obj/machinery/growing/soil,
 /obj/item/seeds/carrot,
-/obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "tAN" = (
