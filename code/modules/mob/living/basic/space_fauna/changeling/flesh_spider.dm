@@ -47,7 +47,7 @@
 	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
 	AddElement(/datum/element/cliff_walking)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
-	AddElement(/datum/element/venomous, /datum/reagent/toxin/hunterspider, 5)
+	/*AddElement(/datum/element/venomous, /datum/reagent/toxin/hunterspider, 5)*/ //MONKESTATION REMOVAL
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
@@ -58,7 +58,7 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
+		regeneration_delay = 6 SECONDS,\
 		health_per_second = maxHealth / 6,\
 		outline_colour = COLOR_PINK,\
 	)
