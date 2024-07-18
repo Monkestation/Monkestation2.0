@@ -20383,7 +20383,14 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/griddle,
+/obj/structure/closet/crate,
+/obj/item/food/grown/onion,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/grown/onion,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "guK" = (
@@ -25939,12 +25946,12 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/basic/clown{
-	name = "John Gamer";
+	name = "John Gamer The Prisoner Terminator";
 	limb_destroyer = 1;
-	desc = "Imprisoned for his many sins.";
+	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
 	maxHealth = 1000;
 	wound_bonus = 10;
-	health = 100
+	health = 200
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -29161,8 +29168,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 4
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -39734,21 +39741,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"mzr" = (
-/obj/structure/closet/crate,
-/obj/item/food/breadslice/plain,
-/obj/item/food/breadslice/plain,
-/obj/item/food/breadslice/plain,
-/obj/item/food/grown/potato,
-/obj/item/food/grown/potato,
-/obj/item/food/grown/onion,
-/obj/item/food/grown/onion,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/station/security/prison/mess)
 "mzt" = (
 /obj/structure/flora/grass/jungle/a/style_random{
 	icon_state = "grassb2"
@@ -50661,6 +50653,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "qdk" = (
@@ -87092,7 +87085,7 @@ aqm
 fXN
 rNv
 uwy
-mzr
+wRZ
 qdh
 tPH
 aeU
