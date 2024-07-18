@@ -12193,6 +12193,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/vending/wardrobe/warden_wardrobe,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "cPL" = (

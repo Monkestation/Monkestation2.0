@@ -26612,6 +26612,8 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1
 	},
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "jyq" = (
@@ -50236,15 +50238,14 @@
 /area/station/maintenance/port/fore)
 "rOA" = (
 /obj/structure/cable,
-/obj/structure/bed/dogbed/mcgriff,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 26
 	},
-/mob/living/basic/pet/dog/pug/mcgriff,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 9
 	},
+/obj/machinery/vending/wardrobe/warden_wardrobe,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "rOF" = (

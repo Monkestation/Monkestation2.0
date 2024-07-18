@@ -73850,6 +73850,7 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/vending/wardrobe/warden_wardrobe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "wsA" = (

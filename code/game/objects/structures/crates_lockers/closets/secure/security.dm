@@ -85,13 +85,14 @@
 	..()
 	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
+/* 	MONKESTATION EDITS FOR WARDEN DROBE
 	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/hats/warden(src)
 	new /obj/item/clothing/head/hats/warden/drill(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
-	new /obj/item/clothing/under/rank/security/warden/skirt(src)
+	new /obj/item/clothing/under/rank/security/warden/skirt(src) */
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
