@@ -1,0 +1,204 @@
+2024-07-02:
+  Absolucy:
+  - bugfix: TramStation now has the CMO's stamp properly mapped in.
+  - bugfix: KiloStation now has the CMO's stamp, prefilled cassette rack, and the
+      curator's radio "properly" mapped in.
+  - rscadd: Mapped ATMs and holomaps into Blueshift.
+  - refactor: Fixed up some code relating to the bodypart overlays of cybernetics.
+  - bugfix: Meteor satellites now longer shake the camera.
+  Absolucy, mc-oofert:
+  - qol: You may alt-click action buttons to bind them to a key.
+  KnigTheThrasher:
+  - rscadd: Added novastation clothes to our loadouts and store
+  - bugfix: Fixed satyr legs being unhealable
+  ancient-engineer:
+  - qol: Gets rid of the fov effect of the swat mask
+  - qol: Gets rid of the vignette around your vision while wearing the spacepol mask
+2024-07-04:
+  Absolucy:
+  - bugfix: You can no longer somehow reach *around* a shield wall.
+  - bugfix: Fixed some runtime errors related to drowning/choking in liquids.
+  - bugfix: Fixed newly built slime pens allowing ooze to leak.
+  KnigTheThrasher:
+  - rscadd: Added hard soles to ashwalkers (they no longer get paralyzed when stepping
+      on their cati)
+  - rscadd: Added hard soles as a quirk (2 points)
+  - balance: Changed light step cost to 2 points to be on pair with hard soles
+  - sound: Changed lizard footsteps to claws
+  - balance: Increased prices of firing pins
+2024-07-05:
+  Jacquerel, IndieanaJones:
+  - rscadd: Adds a box of liveleak stickers for 1 TC to the badass category
+  - balance: The kindle scripture now has reduced effects on people with mindshields
+  - balance: Observation consoles can now only warp to a random list of areas, vitality
+      can be spent to add more
+  - balance: Vitality sigils now reduce max health instead of dealing clone damage
+  - bugfix: Anchoring crystals are now actually needed to open the ark
+  ViktorKoL:
+  - bugfix: heretics no longer lose their spells when returning from a shapeshift.
+2024-07-06:
+  00-Steven:
+  - bugfix: Ethereal heart revive doesn't delete organs alien to your species, like
+      prosthetics, cybernetics, and possibly itself.
+  - bugfix: Nightmare heart revive doesn't delete organs alien to your species, like
+      itself, upon which it would stop the conversion to shadowperson.
+  - bugfix: Bloodsucker torpor, doesn't delete organs alien to your species, which
+      would result in things such as wings being lost (therefore preventing ultrakill
+      jokes from lasting more than 10 minutes)
+  Absolucy:
+  - rscadd: (Time-Green) Adds shuttle events! If shuttle escapes weren't exciting
+      before (doubtful), they definitely are now! I'm joking it's mostly an atmosphere
+      thing.
+  - admin: '(Time-Green) Adds an admin panel to interact with shuttle events, under
+      the Events tab: Change Shuttle Events.'
+  - bugfix: (Time-Green) Objects spawned in hyperspace will properly catch hyperspace
+      drift.
+  - rscadd: (timothymtorres) Add admin blackhole shuttle event with a normal version
+      and suicidal version.
+  - rscadd: (Jacquerel) Adds a new shuttle event, where space shuttles can experience
+      minor turbulance. Keep your belt on while the appropriate cabin light is lit.
+  - bugfix: Fixed some errors with some objectives, i.e cult sacrifice, trying to
+      find a target.
+  - bugfix: RPLD UI now actually shows the sprites for new xenobio stuff, rather than
+      a generic sprite.
+  FlufflesTheDog:
+  - bugfix: Multi-z hole repair works better, especially when the turf below is blocked
+      by items
+  cnleth, Absolucy:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  - qol: Linked speech now prevents messages from highlighting if its a message you
+      sent, or if you are the owner of said link..
+  - qol: Linked speech messages are now marked as radio messages, for chat tab purposes.
+2024-07-07:
+  Absolucy:
+  - spellcheck: Fixed a minor typo with the CQC/cult stun interaction.
+  - sound: Added a sound effect when a Sleeping Carp user dodges a touch attack.
+  - qol: Added messages to make it more immediately clear to the attacker when a martial
+      arts user dodges/reflects their attack.
+  - bugfix: (Ghommie) Fixed fishing skeleton mob spawners that immediately crumble
+      back into the void of whatever chasm you fished them from.
+  - bugfix: (vinylspiders) Rescue hooks will once again drop the mob next to the fisherman
+      instead of just displaying a balloon alert and doing nothing.
+  - balance: (Tattle) You can no longer teleport into chasms.
+  - bugfix: (lizardqueenlexi) Basic mobs will no longer randomly walk into terrain
+      that harms or kills them.
+  - qol: (carlarctg) Adds a chat message for fishing in a chasm with a normal and
+      rescue hook, to clarify that only rescue hooks can drag up corpses.
+  - qol: Androids, skeletons, zombies, and jellypeople can all have hair now. Again,
+      it's the future, don't question it.
+  - balance: Androids now have proper synthetic organs, including flash-proofing and
+      having an actual metabolism, and can also be revived by healing them, like IPCs.
+  KnigTheThrasher:
+  - rscadd: Added rest of nova clothes to the store
+  - balance: Deleted quirk restriction from hard soles and light step
+2024-07-08:
+  Absolucy:
+  - bugfix: Oozelings and slimepeople can now actually speak slime.
+  MTandi:
+  - image: New sprite for syringes
+2024-07-09:
+  Syndie Kate:
+  - bugfix: Metastation xenobiology fields work now
+  - balance: Shield generators range is now 12, from 8.
+2024-07-12:
+  Absolucy:
+  - qol: Cleaner slimes will now target the closest trash, rather than a random piece
+      within their range.
+  - qol: Cleaner slimes are now more intelligent, and will consider more items as
+      trash, such as spent ammo casings, empty cigarette packets, empty condiment
+      packs, beer bottles, food packs, used slime mutators, etc.
+  - balance: Cleaner slimes are now slightly faster at searching for trash.
+  - rscadd: Certain slime traits will now result in them having slightly different
+      names, i.e catslime or cleaner slime.
+  Odairu:
+  - balance: changed zauker decomp gas and damage
+  - balance: Overclocked volume pumps have no limits
+  SirNightKnight:
+  - rscadd: Seclite mount for the NT SWAT Helmet
+  - qol: SWAT Helmets now hides  hair
+  - rscdel: SWAT Helmet mouth coverage
+  - balance: SWAT gear now has more bullet resistance
+  - balance: SWAT suit now has less slowdown (0.7 to 0.5)
+  - bugfix: Realigned the East direction of the NT SWAT helmet so it doesn't look
+      out of place. Was shifted over one pixel by accident.
+2024-07-13:
+  Marabout2:
+  - bugfix: 'fixed the kimono''s layer issue
+
+      :cl:'
+  Odairu:
+  - rscadd: adds emotes :)
+  RikuTheKiller:
+  - balance: Soft-spoken no longer affects radio messages.
+2024-07-14:
+  Absolucy:
+  - rscdel: Removed the "NT Artificial Surveillance Protocol", "StationDefender",
+      and "Security Master 4000" AI law sets and boards.
+2024-07-15:
+  Absolucy:
+  - bugfix: Everyone can now actually use their implants at roundstart during Cybernetic
+      Revolution as they could before, as they get a compatible cyberlink alongside
+      it if needed.
+  - balance: Changed up the implants some jobs get for cybernetic revolution.
+  - qol: Uninverted the top left corner of the Icebox medbay treatment center.
+  - qol: KiloStation and Blueshift's Xenobio now start with a fully charged 10k cell
+      in their APCs, consistent with other maps.
+  - balance: Reworked the regenerative slime extracts from xenobiology.
+  - balance: Regenerative extracts now apply a status effect that lasts around 15
+      seconds, where it rapidly heals damage.
+  - balance: Regenerative extracts have a cooldown after being applied, where any
+      further of them results in diminishing returns.
+  - balance: Rainbow regenerative extracts have a similar effect to old regenerative
+      extracts, although they do not work if the regen cooldown is active, and they
+      no longer refresh your organs or regrows limbs (unless you're an oozeling).
+  - rscadd: Added a mechcomp vendor into R&D and Engineering on Blueshift.
+  - bugfix: Changing species no longer deletes your skillchips.
+  KnigTheThrasher:
+  - bugfix: fixed cargo express being unlockable by entire cargo all the time
+  - rscadd: Remade Kilo perma (again)
+  - rscadd: Remade Armory (it has the cool shit now)
+  - rscdel: Removed some decals (it still has way too many of them imo)
+  - bugfix: Fixed sec airlocks with wrong access
+  Odairu:
+  - rscdel: nova kimono
+  Uristthedorf:
+  - balance: Razorwhile Spool Nerfed.
+  ancient-engineer:
+  - rscadd: Observing mentors can become imaginary friends at will!
+  ven1883:
+  - rscadd: Adds Hosed, a 3 point quirk that gives you a breathing tube implant.
+  - rscadd: Adds Neuralinked, a 3 point quirk that gives you an NT 1.0 cyberlink.
+  - rscadd: Adds Bright Eyes, a 3 point quirk that gives you High Luminosity Eyes.
+  - rscadd: Changes the quirk blacklist so the above are incompatible with Body Purist
+2024-07-16:
+  Jacquerel:
+  - balance: Bioscramblers pulse more often but with less range, plus you can see
+      them pulsing.
+2024-07-17:
+  Absolucy:
+  - sound: The zap sound effects from meteor defense satellites are now around 5x
+      quieter.
+2024-07-18:
+  Absolucy:
+  - bugfix: NIFs and such now properly use the tgui color picker.
+  - balance: The headspin dance now immobilizes you, so you can't abuse it to make
+      it harder to hit you anymore.
+  - bugfix: Lunatics are no longer afraid of their own amulettes.
+  Absolucy, Flleeppyy:
+  - sound: Added a new sound for midround prompts!
+  Absolucy, SirNightKnight:
+  - image: Added brand new sprites for meteor defense satellites!
+  Gboster-0:
+  - code_imp: Midi2Piano now works!
+  KnigTheThrasher:
+  - rscadd: Added basic items to tram ocean kitchen, now you have a sink...wow so
+      cool
+  Marabout2:
+  - rscadd: 'Added the replica of the swat boots.
+
+      :cl:'
+  Odairu:
+  - rscadd: gives loudmode to people who stand on crates (doesn't work with comms
+  ThePooba:
+  - rscadd: costs to blueshift nukeops gun kits
+  - bugfix: m90GL provides correct toploading ammo magazines
