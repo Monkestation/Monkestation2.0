@@ -18621,7 +18621,7 @@
 /obj/structure/cable,
 /mob/living/simple_animal/pet/cat{
 	name = "Pawtton";
-	desc = "Given as a sign of friendship by [REDACTED] Fleet"
+	desc = "Given as a sign of friendship by the REDACTED Fleet, with love"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
