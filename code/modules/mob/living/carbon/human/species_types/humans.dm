@@ -6,12 +6,12 @@
 		HAIR,
 		FACEHAIR,
 		LIPS,
+		MUTCOLORS,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = TRUE
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH | BUGS | GORE
 	liked_food = JUNKFOOD | FRIED
