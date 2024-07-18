@@ -17,10 +17,12 @@
 	var/countdown = FALSE
 	//i dont really get what this is for, see anomaly refinery
 	var/obj/item/tank/tank_to_target
+	var/active = FALSE
+	var/exploded = FALSE
 
-	/obj/machinery/research/anomaly_refinery/Initialize(mapload)
-		. = ..()
-		RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(modify_explosion))
+/obj/machinery/bomb_actualizer/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(modify_explosion))
 
 	//Stolen from anomaly_refinery
 /obj/machinery/bomb_actualizer/attackby(obj/item/tool, mob/living/user, params)
@@ -65,7 +67,7 @@
  * Starts the Detonation Sequence
  */
 /obj/machinery/bomb_actualizer/proc/start_detonation()
-	if (active)
+	if(active)
 		say("ERROR: The countdown has aready begun!!!")
 		return
 
@@ -75,13 +77,11 @@
 
 	say("Begining detonation sequence. Countdown starting.")
 	//TODO TIMER
-
+	active = TRUE
 	inserted_bomb.toggle_valve(tank_to_target)
 
 
 
-//when crew inevitably bashes the thing to pieces
-/obj/machiner/bomb_actualizer/Destroy()
 
 
 //catches the parameter of the TTV's explosions as it happens internally, cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
@@ -94,16 +94,43 @@
 	var/flash = 0
 	var/turf/location = get_turf(src)
 	var/actualizer_multiplier = 0.25
+	var/capped_heavy
+	var/capped_medium
+	var/capped_light
 
 	if(heavy > 3)
-		var/capped_heavy = (GLOB.MAX_EX_DEVESTATION_RANGE + (heavy * actualizer_multiplier))
+		capped_heavy = (GLOB.MAX_EX_DEVESTATION_RANGE + (heavy * actualizer_multiplier))
 
 	if(medium > 7)
-		var/capped_medium = (GLOB.MAX_EX_HEAVY_RANGE * (medium * actualizer_multiplier))
+		capped_medium = (GLOB.MAX_EX_HEAVY_RANGE + (medium * actualizer_multiplier))
 
 	if(light > 14)
-		var/capped_light = (GLOB.MAX_EX_LIGHT_RANGE * (light * actualizer_multiplier))
+		capped_light = (GLOB.MAX_EX_LIGHT_RANGE + (light * actualizer_multiplier))
 
-	COMSIG_CANCEL_EXPLOSION
 
-	SSexplosions.explode(location, capped_heavy, capped_medium, capped_light, flame, flash, TRUE, TRUE, FALSE, FALSE)
+// creates the new explosion, cancels the old one, this will get called twice so i just made it cancel in case its already exploded
+	if(!exploded)
+		SSexplosions.explode(location, capped_heavy, capped_medium, capped_light, flame, flash, TRUE, TRUE, FALSE, FALSE)
+		exploded = TRUE
+		return COMSIG_CANCEL_EXPLOSION
+	return COMSIG_ATOM_EXPLODE
+
+//when crew inevitably bashes the thing to pieces
+/obj/machinery/bomb_actualizer/Destroy()
+	inserted_bomb = null
+	combined_gasmix = null
+	return ..()
+
+/obj/machinery/bomb_actualizer/ui_interact(mob/user, datum/tgui/ui)
+	.=..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BombActualizer", name)
+		ui.open()
+
+/obj/machinery/bomb_actualizer/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+	if(action = "start_timer" && !active)
+		start_detonation()
