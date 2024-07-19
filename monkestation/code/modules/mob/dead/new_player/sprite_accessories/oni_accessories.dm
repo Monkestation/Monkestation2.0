@@ -11,7 +11,7 @@
 	icon_state = "normal"
 
 /datum/sprite_accessory/oni_horns
-	icon = 'monkestation\icons\mob\species\oni/oni_horns.dmi'
+	icon = 'monkestation/icons/mob/species/oni/oni_horns.dmi'
 	color_src = MUTCOLORS
 
 /datum/sprite_accessory/oni_horns/none
