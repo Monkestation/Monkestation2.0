@@ -21,7 +21,7 @@
 	liked_food = GORE | MEAT | SEAFOOD
 	maxhealthmod = 0.75
 	stunmod = 1.2
-	speedmod = -0.25
+	speedmod = 1.1
 	payday_modifier = 1
 
 /mob/living/carbon/human/species/oni
@@ -63,45 +63,21 @@
 	to_add += list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
-			SPECIES_PERK_NAME = "Maintenance Native",
-			SPECIES_PERK_DESC = "As a creature of filth, you feel right at home in maintenance and can see better!", //Mood boost when in maint? How to do?
+			SPECIES_PERK_ICON = "band-aid",
+			SPECIES_PERK_NAME = "Steel Bones",
+			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 25% health
 		),
-		// list(
-		// 	SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		// 	SPECIES_PERK_ICON = "fist-raised",
-		// 	SPECIES_PERK_NAME = "Swift Hands",
-		// 	SPECIES_PERK_DESC = "Your small fingers allow you to pick pockets quieter than most.",		//I DON'T KNOW HOW TO DO THIS >:c
-		// ),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "skull",
-			SPECIES_PERK_NAME = "Level One Goblin",
-			SPECIES_PERK_DESC = "You are a weak being, and have less health than most.", // 0.75% health and Easily Wounded trait
-		)
-		,list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
-			SPECIES_PERK_NAME = "Short",
-			SPECIES_PERK_DESC = "Short, haha.", //Dwarf trauma
-		),
-		,list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "hand",
-			SPECIES_PERK_NAME = "Small Hands",
-			SPECIES_PERK_DESC = "Goblin's small hands allow them to construct machines faster.", //Quick Build trait
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bolt",
-			SPECIES_PERK_NAME = "Agile",
-			SPECIES_PERK_DESC = "Goblins run faster than other species.",
+			SPECIES_PERK_NAME = "Weak Nerves",
+			SPECIES_PERK_DESC = "You're stunned for longer then most.", // an extra 20% stun time.
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "fist-raised",
-			SPECIES_PERK_NAME = "Hard to Keep Down",
-			SPECIES_PERK_DESC = "You get back up quicker from stuns.",
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Heavy Footed",
+			SPECIES_PERK_DESC = "You're a tad slower then the normal norman.", // 10% slower then normal.
 		),
 	)
 

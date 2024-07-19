@@ -121,8 +121,8 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_horns
 
 /datum/bodypart_overlay/mutant/oni_horns
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
-	feature_key = "oni_tail"
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	feature_key = "oni_horns"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
 /datum/bodypart_overlay/mutant/oni_horns/get_global_feature_list()
