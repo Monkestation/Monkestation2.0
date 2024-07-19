@@ -39529,7 +39529,7 @@
 /area/station/security/checkpoint/customs)
 "mrT" = (
 /obj/machinery/door/airlock/cult/friendly{
-	name = "afraid?"
+	name = "Afraid?"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
@@ -42247,7 +42247,7 @@
 /area/station/ai_monitored/security/armory)
 "nmI" = (
 /obj/machinery/door/airlock/wood{
-	name = "You know why you're here"
+	name = "You Know Why You're Here"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
@@ -54138,7 +54138,7 @@
 /area/station/security/courtroom)
 "rdZ" = (
 /obj/machinery/door/airlock/wood{
-	name = "You know why you're here"
+	name = "Reloading Room"
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark/textured_large,
@@ -62566,7 +62566,7 @@
 /area/station/service/lawoffice)
 "tKN" = (
 /obj/machinery/door/airlock/wood{
-	name = "what a shame"
+	name = "What A Shame"
 	},
 /turf/open/floor/plastic,
 /area/station/maintenance/starboard/fore)
