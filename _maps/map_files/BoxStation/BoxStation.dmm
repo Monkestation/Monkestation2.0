@@ -24627,7 +24627,7 @@
 /obj/structure/desk_bell{
 	pixel_x = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ijn" = (
 /obj/structure/disposalpipe/segment{
@@ -56671,9 +56671,7 @@
 	pixel_x = 8
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "sLG" = (
