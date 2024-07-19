@@ -94,7 +94,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_tail
 
 /datum/bodypart_overlay/mutant/oni_tail
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 	feature_key = "oni_tail"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 

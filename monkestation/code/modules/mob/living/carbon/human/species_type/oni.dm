@@ -23,9 +23,9 @@
 	mutantlungs = /obj/item/organ/internal/lungs/oni
 	disliked_food = VEGETABLES | GROSS
 	liked_food = GORE | MEAT | SEAFOOD
-	maxhealthmod = 0.75
+	maxhealthmod = 1.1
 	stunmod = 1.2
-	speedmod = 1.1
+	speedmod = +0.1
 	payday_modifier = 1
 
 /mob/living/carbon/human/species/oni
@@ -59,7 +59,7 @@
 		return 'sound/voice/human/womanlaugh.ogg'
 
 /datum/species/oni/get_species_description()
-	return "A species of slightly larger then average humanoids, with vibrant skin and features not too dissimilair from demons from folklore."
+	return "A species of slightly larger then average humanoids, with vibrant skin and features not too dissimilair from the oni of folklore."
 
 /datum/species/oni/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -69,7 +69,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "band-aid",
 			SPECIES_PERK_NAME = "Thick Skin",
-			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 25% health
+			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 10% health
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
@@ -93,7 +93,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "temperature-low",
 			SPECIES_PERK_NAME = "Heat-Acclimated",
-			SPECIES_PERK_DESC = "Your lungs aren't used to filtering cold air, and are very sensitive to it. On the flipside, your lungs like hot air much more! Your skin however, is just as susceptible to heat as anybody elses.", // higher cold damage thresholds, the opposite is also true
+			SPECIES_PERK_DESC = "Your lungs aren't used to filtering cold air, and are very sensitive to it. On the flipside, your lungs like hot air much more! Your skin however, is just as susceptible to heat as anybody.", // higher cold damage thresholds, the opposite is also true
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
