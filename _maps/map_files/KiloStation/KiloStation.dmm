@@ -3208,7 +3208,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "bdk" = (
@@ -6655,11 +6654,11 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cgq" = (
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -2;
 	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "cgu" = (
@@ -7080,11 +7079,18 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "clp" = (
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/pen{
+	pixel_x = -5
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "clr" = (
@@ -8291,6 +8297,15 @@
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
+"cHb" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/buckshotroulette,
+/obj/item/paper/carbon_copy{
+	name = "Release of liability";
+	default_raw_text = "The Fleet is not responsible for any damage this weapon will cause as per our agreement."
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "cHg" = (
 /obj/structure/chair/pew{
 	dir = 8
@@ -20255,7 +20270,7 @@
 	},
 /obj/item/paper/crumpled/bloody{
 	name = "bloodied note";
-	default_raw_text = "DO NOT TOUCH HIM, YOU HAVE NO IDEA WHAT HE'S CAPABLE OF, DO NOT DO IT"
+	default_raw_text = "DO NOT TOUCH HIM, YOU HAVE NO IDEA WHAT HE'S CAPABLE OF, DO NOT DO IT...OH F- rest of the note is covered in bloodstains."
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
@@ -21259,7 +21274,7 @@
 /obj/structure/cable,
 /obj/item/paper/carbon_copy{
 	name = "Note on the prisoner";
-	default_raw_text = "Please do not open the ultramax containment, the fleet is not liable for any damage our gift will cause if you ignore this note."
+	default_raw_text = "Please do not open the ultramax containment, The Fleet is not liable for any damage our gift will cause if you ignore this note."
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -28201,11 +28216,11 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "iHt" = (
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "iHC" = (
@@ -28366,9 +28381,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "iJu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "iJv" = (
@@ -31601,11 +31614,11 @@
 /area/station/medical/morgue)
 "jLf" = (
 /obj/structure/mirror/directional/west,
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = 10;
 	pixel_y = -9
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
 /area/station/maintenance/starboard/fore)
 "jLn" = (
@@ -32804,6 +32817,7 @@
 /area/station/security/lockers)
 "kiw" = (
 /obj/structure/table,
+/obj/item/storage/box/buckshotroulette,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
 "kix" = (
@@ -52199,9 +52213,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "qAa" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -54129,7 +54141,6 @@
 	name = "You know why you're here"
 	},
 /obj/structure/barricade/wooden/crude,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
 "rel" = (
@@ -55636,6 +55647,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
+"rAO" = (
+/obj/structure/table,
+/obj/item/storage/box/lethalshot,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "rAQ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -57147,6 +57163,12 @@
 	dir = 4
 	},
 /area/station/ai_monitored/security/armory)
+"sar" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain,
+/obj/structure/toilet,
+/turf/open/floor/plastic,
+/area/station/maintenance/starboard/fore)
 "sav" = (
 /obj/structure/flora/bush/pale/style_random,
 /obj/structure/sign/warning/electric_shock/directional/south,
@@ -65501,9 +65523,7 @@
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "uFM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/light/small/red/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -66227,7 +66247,7 @@
 /obj/structure/cable,
 /mob/living/simple_animal/pet/cat{
 	name = "Pawtton";
-	desc = "Given as a sign of friendship by the REDACTED Fleet, with love"
+	desc = "Given as a sign of friendship by The Fleet, with love"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
@@ -109644,7 +109664,7 @@ aaa
 lRk
 kiw
 amd
-lGC
+cHb
 mkt
 eIa
 aVq
@@ -110413,7 +110433,7 @@ aaa
 aaa
 aaa
 lRk
-kiw
+rAO
 lGC
 lGC
 rdZ
@@ -112220,7 +112240,7 @@ gMF
 gQi
 lvI
 lRk
-iDV
+sar
 tSn
 iDV
 mXm
