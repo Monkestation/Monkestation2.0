@@ -51787,6 +51787,11 @@
 	pixel_y = 9
 	},
 /obj/structure/table,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/lighter/skull{
+	pixel_x = 10;
+	pixel_y = -6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "qsn" = (
@@ -81226,14 +81231,14 @@ aeu
 aeu
 aeU
 aeU
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acm
+acm
+aeo
+acm
+aeo
+acm
+aeo
+acm
 aeU
 coy
 aeU
@@ -81488,7 +81493,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acm
 aaa
 aaa
 aUz
@@ -83042,7 +83047,7 @@ wio
 aeu
 aeU
 coy
-aaa
+aeo
 aaa
 aaa
 aaa
@@ -83299,7 +83304,7 @@ wio
 sAv
 aeu
 aeU
-aaa
+aeo
 aaa
 aaa
 aaa
@@ -83556,7 +83561,7 @@ hvC
 mWy
 aUz
 aeU
-aaa
+acm
 aaa
 aaa
 aaa
@@ -83813,10 +83818,10 @@ uRL
 mWy
 aeU
 aeU
-aaa
-aaa
-aaa
-aaa
+aeo
+aeo
+acm
+aeo
 aaa
 aaa
 aaa
@@ -84071,9 +84076,9 @@ mWy
 aeU
 aaa
 aaa
+acm
 aaa
-aaa
-aaa
+aeo
 aaa
 aaa
 aaa
@@ -84329,8 +84334,8 @@ myp
 jYh
 jYh
 gyf
-aaa
-aaa
+acm
+acm
 aaa
 aaa
 aaa
@@ -84587,7 +84592,7 @@ gDU
 lro
 myp
 aaa
-aaa
+aeo
 aaa
 aaa
 aaa
@@ -84844,7 +84849,7 @@ ucS
 bmn
 jYh
 aaa
-aaa
+acm
 aaa
 aaa
 aaa
@@ -85101,7 +85106,7 @@ sEN
 xBw
 jYh
 aeU
-aaa
+acm
 aaa
 aaa
 aaa
@@ -108907,13 +108912,13 @@ aeu
 aeU
 aeU
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acm
+aeo
+acm
+acm
+aeo
+acm
+acm
 acm
 acm
 aaa
@@ -109164,10 +109169,10 @@ aaa
 aaa
 aaa
 aaa
+aeo
 aaa
 aaa
-aaa
-aaa
+acm
 aaa
 aaa
 lRk
@@ -109421,7 +109426,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acm
 aaa
 lRk
 lRk
@@ -109678,8 +109683,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+acm
+acm
 lRk
 kiw
 amd
@@ -109935,7 +109940,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aeo
 aaa
 lRk
 kiw
@@ -110192,7 +110197,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acm
 aaa
 lRk
 kiw
@@ -110449,8 +110454,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aeo
+acm
 lRk
 rAO
 lGC
@@ -110706,7 +110711,7 @@ aaB
 aaa
 aaa
 aaa
-aaa
+aeo
 aaa
 lRk
 lRk
@@ -110963,7 +110968,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acm
 aaa
 aaa
 aeU
@@ -111220,7 +111225,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aeo
 aaa
 aaa
 aeU
@@ -111477,9 +111482,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+acm
+acm
+acm
 aeU
 mkt
 gMF
@@ -111734,7 +111739,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aeo
 aaa
 aaa
 aeU
@@ -111991,7 +111996,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acm
 aaa
 aaa
 aeU
@@ -112248,8 +112253,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+acm
+acm
 aeU
 aUz
 lRk
