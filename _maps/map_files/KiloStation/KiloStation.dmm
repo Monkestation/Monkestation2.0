@@ -68523,7 +68523,6 @@
 /area/station/service/kitchen)
 "vAG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
