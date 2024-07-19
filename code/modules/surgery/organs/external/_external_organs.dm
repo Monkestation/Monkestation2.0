@@ -174,7 +174,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/horns
 
 /datum/bodypart_overlay/mutant/horns
-	layers = EXTERNAL_FRONT
+	layers = EXTERNAL_ADJACENT
 	feature_key = "horns"
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
