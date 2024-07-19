@@ -20,6 +20,7 @@
 		/obj/item/organ/external/oni_horns = "normal",
 		/obj/item/organ/external/goblin_ears = "long",
 		)
+	mutantlungs = /obj/item/organ/internal/lungs/oni
 	disliked_food = VEGETABLES | GROSS
 	liked_food = GORE | MEAT | SEAFOOD
 	maxhealthmod = 0.75
@@ -87,6 +88,18 @@
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Steel Bones",
 			SPECIES_PERK_DESC = "You're more resistant to being wounded, things like limb loss and lacerations are less likely to happen to you.", // TRAIT_HARDLY_INJURED
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-low",
+			SPECIES_PERK_NAME = "Heat-Acclimated",
+			SPECIES_PERK_DESC = "Your lungs aren't used to filtering cold air, and are very sensitive to it. On the flipside, your lungs like hot air much more! Your skin however, is just as susceptible to heat as anybody elses.", // higher cold damage thresholds, the opposite is also true
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "sun",
+			SPECIES_PERK_NAME = "Pyromancy",
+			SPECIES_PERK_DESC = "Your lungs can build up and then expel flames.", // fire ball!
 		),
 	)
 
