@@ -79,3 +79,57 @@
 
 /datum/bodypart_overlay/mutant/satyr_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
+
+/obj/item/organ/external/oni_tail
+	name = "oni tail"
+	desc = "An Oni's tail. Put it back!"
+	icon_state = ""
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+
+	preference = "feature_oni_tail"
+	zone = BODY_ZONE_PRECISE_GROIN
+	slot = ORGAN_SLOT_EXTERNAL_TAIL
+
+	use_mob_sprite_as_obj_sprite = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_tail
+
+/datum/bodypart_overlay/mutant/oni_tail
+	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	feature_key = "oni_tail"
+	color_source = DNA_MUTANT_COLOR_BLOCK
+
+/datum/bodypart_overlay/mutant/oni_tail/get_global_feature_list()
+	return GLOB.oni_tail_list
+
+/datum/bodypart_overlay/mutant/oni_tail/get_base_icon_state()
+	return sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+	return TRUE
+
+/obj/item/organ/external/oni_horns
+	name = "oni horns"
+	desc = "An Oni's horns. Put them back!"
+	icon_state = ""
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+
+	preference = "feature_oni_horns"
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EXTERNAL_HORNS
+
+	use_mob_sprite_as_obj_sprite = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_horns
+
+/datum/bodypart_overlay/mutant/oni_horns
+	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	feature_key = "oni_tail"
+	color_source = DNA_MUTANT_COLOR_BLOCK
+
+/datum/bodypart_overlay/mutant/oni_horns/get_global_feature_list()
+	return GLOB.oni_horns_list
+
+/datum/bodypart_overlay/mutant/oni_horns/get_base_icon_state()
+	return sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+	return TRUE

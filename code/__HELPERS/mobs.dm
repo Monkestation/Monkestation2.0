@@ -126,6 +126,10 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list)
 	if(!GLOB.satyr_horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list)
+	if(!GLOB.oni_tail_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list)
+	if(!GLOB.oni_horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
@@ -167,6 +171,8 @@
 		"satyr_fluff" = pick(GLOB.satyr_fluff_list), //Monkestation Addition
 		"satyr_tail" = pick(GLOB.satyr_tail_list), //Monkestation Addition
 		"satyr_horns" = pick(GLOB.satyr_horns_list), //Monkestation Addition
+		"oni_tail" = pick(GLOB.oni_tail_list), //Monkestation Addition
+		"oni_horns" = pick(GLOB.oni_horns_list), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
