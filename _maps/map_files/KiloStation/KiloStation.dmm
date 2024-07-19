@@ -14283,6 +14283,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"eFU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/execution/transfer)
 "eFZ" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/detective,
 /obj/machinery/door/airlock/security{
@@ -18947,7 +18953,6 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/structure/table,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
@@ -23423,9 +23428,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "hqK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/station_map/engineering/directional/north,
 /obj/structure/closet/radiation,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/execution/transfer)
 "hqS" = (
@@ -69874,11 +69879,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
-"vXn" = (
-/obj/structure/closet/secure_closet/brig,
-/obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/turf/open/floor/iron/showroomfloor,
-/area/station/security/execution/transfer)
 "vXp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -75133,6 +75133,7 @@
 	name = "ULTRAMAX CONTAINMENT - DANGER"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "xEJ" = (
@@ -88868,7 +88869,7 @@ fbz
 chj
 oIU
 wDz
-vXn
+wKG
 kPd
 hCK
 mMy
@@ -89383,7 +89384,7 @@ pqD
 iza
 wDz
 bYK
-iOR
+eFU
 mvF
 vAa
 myd
