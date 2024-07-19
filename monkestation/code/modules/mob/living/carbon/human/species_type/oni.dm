@@ -12,6 +12,9 @@
 		FACEHAIR
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
+	inherent_traits = list(
+		TRAIT_HARDLY_WOUNDED,
+	)
 	external_organs = list(
 		/obj/item/organ/external/oni_tail = "normal",
 		/obj/item/organ/external/oni_horns = "normal",
@@ -64,7 +67,7 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "band-aid",
-			SPECIES_PERK_NAME = "Steel Bones",
+			SPECIES_PERK_NAME = "Thick Skin",
 			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 25% health
 		),
 		list(
@@ -78,6 +81,12 @@
 			SPECIES_PERK_ICON = "wind",
 			SPECIES_PERK_NAME = "Heavy Footed",
 			SPECIES_PERK_DESC = "You're a tad slower then the normal norman.", // 10% slower then normal.
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Steel Bones",
+			SPECIES_PERK_DESC = "You're more resistant to being wounded, things like limb loss and lacerations are less likely to happen to you.", // TRAIT_HARDLY_INJURED
 		),
 	)
 
