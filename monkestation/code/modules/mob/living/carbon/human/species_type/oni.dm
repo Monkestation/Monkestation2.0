@@ -25,7 +25,7 @@
 	liked_food = GORE | MEAT | SEAFOOD
 	maxhealthmod = 1.1
 	stunmod = 1.2
-	speedmod = +0.1
+	speedmod = 0.1
 	payday_modifier = 1
 
 /mob/living/carbon/human/species/oni
