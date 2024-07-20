@@ -52049,10 +52049,6 @@
 /obj/item/defibrillator/loaded{
 	pixel_y = -3
 	},
-/obj/item/hemostat{
-	pixel_x = -4;
-	pixel_y = -5
-	},
 /obj/item/reagent_containers/syringe/contraband/morphine{
 	pixel_x = 3;
 	pixel_y = -5
@@ -52061,6 +52057,15 @@
 	pixel_x = 3;
 	pixel_y = -10
 	},
+/obj/item/scalpel{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/hemostat{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/surgical_drapes,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "qvV" = (
