@@ -23,7 +23,7 @@
 	if(!.)
 		return FALSE
 	var/datum/antagonist/vassal/revenge/revenge_vassal = owner.mind.has_antag_datum(/datum/antagonist/ex_vassal)
-	if(QDELETED(revenge_vassal))
+	if(revenge_vassal)
 		return FALSE
 
 	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
