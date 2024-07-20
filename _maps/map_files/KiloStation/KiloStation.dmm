@@ -257,6 +257,9 @@
 	pixel_x = 6;
 	pixel_y = 9
 	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "acu" = (
@@ -950,6 +953,9 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "amd" = (
 /obj/machinery/light/small/red/directional/west,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
 "ami" = (
@@ -6659,6 +6665,9 @@
 	pixel_x = -2;
 	pixel_y = 9
 	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "cgu" = (
@@ -7090,6 +7099,12 @@
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -2;
 	pixel_y = 4
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/lighter/skull{
+	pixel_x = 10;
+	pixel_y = -6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
@@ -8303,6 +8318,10 @@
 /obj/item/paper/carbon_copy{
 	name = "Release of liability";
 	default_raw_text = "The Fleet is not responsible for any damage this weapon will cause as per our agreement."
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 10
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
@@ -13810,6 +13829,7 @@
 	pixel_y = 6
 	},
 /obj/item/storage/briefcase,
+/obj/effect/turf_decal/trimline/dark/filled/line,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "evV" = (
@@ -14540,6 +14560,9 @@
 /area/station/service/hydroponics)
 "eIa" = (
 /obj/machinery/vending/boozeomat,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "eIb" = (
@@ -15530,6 +15553,13 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"eXd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/starboard/fore)
 "eXj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -17883,6 +17913,9 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/mask/joy,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "fDS" = (
@@ -28233,6 +28266,9 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 5
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "iHC" = (
@@ -28840,6 +28876,9 @@
 /obj/structure/chair/office/light{
 	dir = 1;
 	pixel_y = 3
+	},
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
@@ -32759,6 +32798,14 @@
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/restrooms)
+"kfL" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/starboard/fore)
 "kgq" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -32838,6 +32885,9 @@
 "kiw" = (
 /obj/structure/table,
 /obj/item/storage/box/buckshotroulette,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 9
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
 "kix" = (
@@ -41661,6 +41711,11 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"naN" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/trimline/dark/filled/line,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "naY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43075,7 +43130,11 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
-/obj/item/lead_pipe,
+/obj/item/melee/baseball_bat{
+	desc = "A staple of security force interrogations.";
+	icon_state = "baseball_bat_metal";
+	name = "Assistant Destroyer"
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/quartermaster)
 "nzu" = (
@@ -46608,6 +46667,9 @@
 "oNg" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/media/jukebox,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "oNo" = (
@@ -47483,6 +47545,9 @@
 /area/station/service/chapel/dock)
 "pcf" = (
 /obj/machinery/light/small/red/dim/directional/east,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "pcl" = (
@@ -51787,10 +51852,8 @@
 	pixel_y = 9
 	},
 /obj/structure/table,
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/item/lighter/skull{
-	pixel_x = 10;
-	pixel_y = -6
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 9
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
@@ -51980,6 +52043,26 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"qvR" = (
+/obj/effect/turf_decal/trimline/dark/filled/line,
+/obj/structure/table,
+/obj/item/defibrillator/loaded{
+	pixel_y = -3
+	},
+/obj/item/hemostat{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/syringe/contraband/morphine{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/syringe/contraband/morphine{
+	pixel_x = 3;
+	pixel_y = -10
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/starboard/fore)
 "qvV" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -53783,7 +53866,6 @@
 /area/station/security/brig)
 "qYg" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/west,
 /obj/item/radio/intercom/directional/north,
@@ -55675,6 +55757,9 @@
 "rAO" = (
 /obj/structure/table,
 /obj/item/storage/box/lethalshot,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 5
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/fore)
 "rAQ" = (
@@ -56393,6 +56478,12 @@
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
+"rMx" = (
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "rMI" = (
 /obj/structure/table,
 /obj/machinery/newscaster/directional/west,
@@ -61543,6 +61634,11 @@
 /obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"trB" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/trimline/dark/filled/line,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "tsf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64307,6 +64403,14 @@
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/station/security/prison/garden)
+"umK" = (
+/obj/structure/table,
+/obj/item/storage/box/buckshotroulette,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "umL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -74838,6 +74942,12 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/chapel/monastery)
+"xuT" = (
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/starboard/fore)
 "xva" = (
 /obj/item/radio/intercom/directional/east,
 /turf/closed/wall,
@@ -75967,6 +76077,12 @@
 	dir = 4
 	},
 /area/station/ai_monitored/security/armory)
+"xOD" = (
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/starboard/fore)
 "xOF" = (
 /obj/structure/sign/poster/contraband/missing_gloves,
 /turf/closed/wall/rust,
@@ -109436,7 +109552,7 @@ lRk
 qsg
 iQQ
 cgq
-sEH
+kfL
 fDM
 lRk
 aeu
@@ -109942,10 +110058,10 @@ aaa
 aaa
 aeo
 aaa
-lRk
-kiw
+mkt
+umK
 lGC
-lGC
+trB
 mkt
 act
 aVq
@@ -110199,16 +110315,16 @@ aaa
 aaa
 acm
 aaa
-lRk
-kiw
-lGC
-lGC
 mkt
-aVj
+umK
+lGC
+naN
+mkt
+xOD
 sEH
 lWS
 lEA
-aVj
+qvR
 lRk
 aeu
 cIV
@@ -110458,12 +110574,12 @@ aeo
 acm
 lRk
 rAO
-lGC
-lGC
+rMx
+xuT
 rdZ
 iHt
-aVq
-aVq
+eXd
+eXd
 pcf
 oNg
 lRk
