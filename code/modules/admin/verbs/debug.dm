@@ -819,7 +819,7 @@
 		return
 
 	to_chat(src, span_info("You can now right click to use inspect on browsers."))
-	winset(src, "", "browser-options=byondstorage,find,devtools")
+	winset(src, null, "browser-options=byondstorage,find,devtools")
 
 /client/proc/pump_random_event()
 	set category = "Debug"
