@@ -82,14 +82,14 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist(base_provisional_music_path)
 	for(var/S in provisional_title_music)
 		var/fullpath = base_provisional_music_path + S
-		var/splitname = splittext(S, ".")
-		if (fexists(fullpath) && splitname[2] == "json")
+		if (fexists(fullpath))
 			try
-				var/json = json_decode(file2text(fullpath))
+				var/list/json = json_decode(file2text(fullpath))
 				if (json["url"] != old_login_music)
 					GLOB.jukebox_track_files += fullpath
 			catch
-				log_runtime("Failed to parse [fullpath], json_decode failed.")
+				if (S == "exclude") continue
+				log_runtime("Failed to parse [fullpath], likely an invalid file.")
 	login_music_done = TRUE
 	// monkestation end
 
