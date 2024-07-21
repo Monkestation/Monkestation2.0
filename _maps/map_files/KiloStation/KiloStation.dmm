@@ -45972,6 +45972,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/incident_display/delam/directional/north,
+/mob/living/basic/pet/poppy,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "oBt" = (
@@ -77008,7 +77009,8 @@
 	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
 	maxHealth = 1000;
 	wound_bonus = 10;
-	health = 200
+	health = 200;
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
