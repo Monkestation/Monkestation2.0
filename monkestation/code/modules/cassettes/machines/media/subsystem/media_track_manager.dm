@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(media_tracks)
 
 /datum/controller/subsystem/media_tracks/proc/load_tracks()
 	for(var/filename in GLOB.jukebox_track_files)
-		message_admins("Loading jukebox track: [filename]")
+		message_admins("Loading jukebox track(s): [filename]")
 
 		if(!fexists(filename))
 			log_runtime("File not found: [filename]")
