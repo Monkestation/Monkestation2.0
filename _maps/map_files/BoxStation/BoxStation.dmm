@@ -2613,11 +2613,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"aTJ" = (
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aTS" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -3650,6 +3645,17 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"blM" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/engineering/break_room)
 "blQ" = (
 /turf/open/floor/iron/recharge_floor,
 /area/station/science/robotics/mechbay)
@@ -8644,14 +8650,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
-"cRS" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/bot,
-/obj/machinery/vending/hydroseeds/permabrig,
-/turf/open/floor/iron/dark,
-/area/station/security/prison/garden)
 "cSm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -14491,6 +14489,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
+"ePU" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ePX" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -34159,6 +34161,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"lsx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/closet/crate/hydroponics,
+/obj/item/botanical_lexicon,
+/obj/item/seeds/tree,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/seeds/pumpkin,
+/obj/item/seeds/wheat,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/grass,
+/obj/item/seeds/carrot,
+/obj/item/seeds/potato,
+/obj/item/seeds/garlic,
+/obj/item/seeds/onion,
+/obj/item/paper/guides/jobs/hydroponics,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
 "lsC" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -38125,13 +38146,6 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/shower)
-"mKM" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/incident_display/delam/directional/north,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "mKW" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/red/line{
@@ -40436,20 +40450,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
-"nxI" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 5
-	},
-/obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Engineering Lobby";
-	name = "Engineering Lobby Fax Machine"
-	},
-/obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 5
-	},
-/area/station/engineering/break_room)
 "nxU" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Atmospherics Plasma Chamber";
@@ -44782,6 +44782,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
+"oRM" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "oSg" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -47610,6 +47617,16 @@
 /obj/item/stack/license_plates/empty/fifty,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/work)
+"pPd" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
 "pPq" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -48387,25 +48404,6 @@
 /obj/machinery/smartfridge/organ,
 /turf/closed/wall,
 /area/station/medical/surgery)
-"qfk" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/closet/crate/hydroponics,
-/obj/item/botanical_lexicon,
-/obj/item/seeds/tree,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/seeds/pumpkin,
-/obj/item/seeds/wheat,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/grass,
-/obj/item/seeds/carrot,
-/obj/item/seeds/potato,
-/obj/item/seeds/garlic,
-/obj/item/seeds/onion,
-/obj/item/paper/guides/jobs/hydroponics,
-/turf/open/floor/iron/dark,
-/area/station/security/prison/garden)
 "qfo" = (
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
@@ -56358,19 +56356,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"sRx" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/machinery/incident_display/delam/directional/south,
-/turf/open/floor/iron,
-/area/station/engineering/storage)
 "sRA" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -58538,6 +58523,20 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
+"tzR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Engineering Lobby";
+	name = "Engineering Lobby Fax Machine"
+	},
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/station/engineering/break_room)
 "tzU" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -63678,10 +63677,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/dorms)
-"vlw" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "vlK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -71915,17 +71910,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"ybf" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/obj/machinery/incident_display/delam/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/station/engineering/break_room)
 "ybj" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison)
@@ -72312,6 +72296,19 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
+"yhN" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/storage)
 "yhO" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -72582,6 +72579,11 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
+"ylq" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ylx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -94299,7 +94301,7 @@ uoo
 fEP
 fEP
 fEP
-vlw
+ePU
 fEP
 uoo
 aeM
@@ -94704,7 +94706,7 @@ oPA
 kZD
 oPA
 etg
-sRx
+yhN
 cHh
 cHh
 cHh
@@ -94810,7 +94812,7 @@ ksa
 ksa
 uoo
 ksa
-aTJ
+ylq
 ksa
 kFk
 kFk
@@ -95067,7 +95069,7 @@ ksa
 ksa
 ksa
 ksa
-aTJ
+ylq
 uoo
 kFk
 apg
@@ -95324,7 +95326,7 @@ ksa
 ksa
 ksa
 ksa
-aTJ
+ylq
 ksa
 kFk
 apg
@@ -95581,7 +95583,7 @@ ksa
 uoo
 uoo
 ksa
-aTJ
+ylq
 ksa
 kFk
 apg
@@ -95838,7 +95840,7 @@ uoo
 uoo
 ksa
 ksa
-aTJ
+ylq
 ksa
 kFk
 kzh
@@ -97782,7 +97784,7 @@ rFn
 mih
 lOo
 fxk
-mKM
+oRM
 qRc
 ihh
 ksa
@@ -100475,7 +100477,7 @@ yaX
 yaX
 gJK
 vTX
-cRS
+pPd
 oER
 gfF
 tLo
@@ -101244,7 +101246,7 @@ ksa
 tFK
 mfE
 mfE
-qfk
+lsx
 lEa
 wtv
 oER
@@ -103675,7 +103677,7 @@ psz
 hol
 mpY
 ufs
-ybf
+blM
 iGG
 uxl
 sSP
@@ -104189,7 +104191,7 @@ fVi
 dYW
 fVi
 mLH
-nxI
+tzR
 bFK
 vTs
 ukW
