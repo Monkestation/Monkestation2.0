@@ -84,11 +84,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_chest_ipc_construction
-	name = "IPC Replacement Chest (IPC Construction)"
+	name = "IPC Chest (IPC Construction)"
 	id = "ipc_chest_ipc_construction"
 	build_type = MECHFAB
-	construction_time = 30 SECONDS
-	materials = list(/datum/material/iron = 10000)
+	construction_time = 100
+	materials = list(/datum/material/iron = 20000, /datum/material/titanium = 500)
 	build_path = /obj/item/ipc_chest
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
@@ -108,11 +108,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/ipc_part_charger
-	name = "charging implant"
+	name = "Recharging Electronics"
 	id = "ipc_charger"
 	build_type = MECHFAB
-	construction_time = 6 SECONDS
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	construction_time = 100
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
