@@ -1137,6 +1137,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAD_WIZARD_TRAIT "mad_wizard_trait"
 /// Isn't attacked harmfully by blob structures
 #define TRAIT_BLOB_ALLY "blob_ally"
+/// Has the chuuni component
+#define TRAIT_CHUUNIBYOU "chuunibyou"
+/// Has splattercasting
+#define TRAIT_SPLATTERCASTER "splattercaster"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
