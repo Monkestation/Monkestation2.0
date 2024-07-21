@@ -85,4 +85,3 @@ This folder *used* to accept BYOND sound file formats, but:
 - sending files to the client is slow, and you'd have to hyper-compress the shit out of those files if you want a chance at the client NOT stalling the game, because file transfers lock the game until done.
 - lobby music sounded like shit because of how compressed the files were
 - *do i need to go on?*
-- 
