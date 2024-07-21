@@ -128,6 +128,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list)
 	if(!GLOB.oni_tail_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list)
+	if(!GLOB.oni_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_wings_list)
 	if(!GLOB.oni_horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list)
 //Monkestation Addition End
@@ -172,6 +174,7 @@
 		"satyr_tail" = pick(GLOB.satyr_tail_list), //Monkestation Addition
 		"satyr_horns" = pick(GLOB.satyr_horns_list), //Monkestation Addition
 		"oni_tail" = pick(GLOB.oni_tail_list), //Monkestation Addition
+		"oni_wings" = pick(GLOB.oni_wings_list), //Monkestation Addition
 		"oni_horns" = pick(GLOB.oni_horns_list), //Monkestation Addition
 	))
 

@@ -1,3 +1,4 @@
+// TAILS
 /datum/sprite_accessory/oni_tail
 	icon = 'monkestation/icons/mob/species/oni/oni_tail.dmi'
 	color_src = MUTCOLORS
@@ -10,6 +11,24 @@
 	name = "Spade"
 	icon_state = "spade"
 
+// WINGS
+/datum/sprite_accessory/oni_wings
+	icon = 'monkestation/icons/mob/species/oni/oni_wings.dmi'
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/oni_wings/none
+	name = "None"
+	icon_state = "None"
+
+/datum/sprite_accessory/oni_wings/normal
+	name = "Normal"
+	icon_state = "normal"
+
+/datum/sprite_accessory/oni_wings/large
+	name = "Large"
+	icon_state = "large"
+
+// HORNS
 /datum/sprite_accessory/oni_horns
 	icon = 'monkestation/icons/mob/species/oni/oni_horns.dmi'
 	color_src = MUTCOLORS

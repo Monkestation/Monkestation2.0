@@ -16,9 +16,10 @@
 		TRAIT_HARDLY_WOUNDED,
 	)
 	external_organs = list(
-		/obj/item/organ/external/oni_tail = "normal",
-		/obj/item/organ/external/oni_horns = "normal",
 		/obj/item/organ/external/goblin_ears = "long",
+		/obj/item/organ/external/oni_horns = "oni",
+		/obj/item/organ/external/oni_wings = "normal",
+		/obj/item/organ/external/oni_tail = "spade",
 		)
 	mutantlungs = /obj/item/organ/internal/lungs/oni
 	disliked_food = VEGETABLES | GROSS

@@ -53,6 +53,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_wings, GLOB.oni_wings_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list) //Monkestation Addition
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists

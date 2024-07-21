@@ -16,6 +16,24 @@
 /datum/preference/choiced/oni_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["oni_tail"] = value
 
+//Oni Wings
+/datum/preference/choiced/oni_wings
+	savefile_key = "feature_oni_wings"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Oni Wings"
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/oni_wings/init_possible_values()
+	return possible_values_for_sprite_accessory_list_for_body_part(
+		GLOB.oni_wings_list,
+		"oni_wings",
+		list("BEHIND", "FRONT"),
+	)
+
+/datum/preference/choiced/oni_wings/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["oni_wings"] = value
+
 //Oni Horns
 /datum/preference/choiced/oni_horns
 	savefile_key = "feature_oni_horns"
