@@ -135,6 +135,7 @@ h1.alert, h2.alert		{color: #000000;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold;	font-size: 3;}
+.soapbox 				{font-weight: bold; font-size: 2;}
 .small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
@@ -171,6 +172,8 @@ h1.alert, h2.alert		{color: #000000;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
+
+.upside_down			{display: inline; -moz-transform: scale(-1, -1); -webkit-transform: scale(-1, -1); -o-transform: scale(-1, -1); -ms-transform: scale(-1, -1); transform: scale(-1, -1);}
 
 //MONKESTATION ADDITION START
 .brass {
