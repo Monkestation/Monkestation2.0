@@ -219,6 +219,7 @@
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.client)
+			P.client.playtitlemusic()
 	*/
 
 /datum/holiday/spess
