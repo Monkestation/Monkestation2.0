@@ -5778,6 +5778,7 @@
 #include "monkestation\code\datums\components\turf_checker_complex.dm"
 #include "monkestation\code\datums\components\turf_healing.dm"
 #include "monkestation\code\datums\components\uplink.dm"
+#include "monkestation\code\datums\components\vent_safety.dm"
 #include "monkestation\code\datums\components\wound_converter.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\clockwork.dm"
 #include "monkestation\code\datums\elements\area_locked.dm"

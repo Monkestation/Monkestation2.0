@@ -18,6 +18,7 @@
 	if(!bloodsuckerdatum.owner.current.has_quirk(/datum/quirk/badback))
 		bloodsuckerdatum.owner.current.add_quirk(/datum/quirk/badback)
 	bloodsuckerdatum.owner.current.add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_DISFIGURED), BLOODSUCKER_TRAIT)
+	bloodsuckerdatum.owner.current.AddComponentFrom(REF(src), /datum/component/vent_safety)
 
 /datum/bloodsucker_clan/nosferatu/Destroy(force)
 	for(var/datum/action/cooldown/bloodsucker/power in bloodsuckerdatum.powers)
@@ -25,6 +26,7 @@
 	bloodsuckerdatum.give_starting_powers()
 	bloodsuckerdatum.owner.current.remove_quirk(/datum/quirk/badback)
 	bloodsuckerdatum.owner.current.remove_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_DISFIGURED), BLOODSUCKER_TRAIT)
+	bloodsuckerdatum.owner.current.RemoveComponentSource(REF(src), /datum/component/vent_safety)
 	return ..()
 
 /datum/bloodsucker_clan/nosferatu/handle_clan_life(datum/antagonist/bloodsucker/source)
