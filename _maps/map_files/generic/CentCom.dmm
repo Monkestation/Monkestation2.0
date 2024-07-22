@@ -9566,8 +9566,8 @@
 	pixel_x = 18;
 	pixel_y = 5
 	},
-/obj/machinery/atm,
 /obj/structure/table,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/arcade)
 "ayP" = (
@@ -12854,19 +12854,6 @@
 	},
 /obj/structure/table/wood/poker,
 /obj/machinery/light/directional/north,
-/obj/machinery/atm/directional/north,
-/obj/item/paper_bin{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/paper_bin{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/paper_bin{
-	pixel_x = 18;
-	pixel_y = 5
-	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/arcade)
 "aHr" = (
