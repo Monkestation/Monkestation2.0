@@ -1,69 +1,68 @@
-/// To be used for announcements about a milestone being broken
-#define ANNOUNCEMENT_MILESTONE (1<<0)
-/// To be used for rare history lessons that the PTL history team can make
-#define ANNOUNCEMENT_HISTORY (1<<1)
-
 /obj/machinery/power/transmission_laser/proc/send_ptl_announcement()
 	/// The message we send
-	var/major_title
-	var/minor_title
 	var/message
-	var/announcement_reason
 	var/flavor_text
-	var/roll_for_history = rand(1, 10)
 	switch(announcement_treshold)
 		if(1 MW)
 			message = "PTL account successfully made"
-			flavor_text = "from now on you will receive regular updates on the power exported via the onboard PTL, goodluck [station_name()]"
+			flavor_text = "From now on you will receive regular updates on the power exported via the onboard PTL, goodluck [station_name()]"
 			INVOKE_ASYNC(src, PROC_REF(send_regular_ptl_announcement)) // starts giving the station regular updates on the PTL since our station just got an account
 
 		if(1 GW)
 			message = "The onboard PTL has successfully exported 1 Gigawatt worth of power"
-			flavor_text = "using the exported power we managed to save a station whose supermatter engine has dellamianted, good work."
-			announcement_reason = ANNOUNCEMENT_MILESTONE
+			flavor_text = "Using the exported power we managed to save a station whose supermatter engine has dellamianted, good work."
 
 		if(1 TW)
 			message = "The onboard PTL has successfully exported 1 Terawatt worth of power"
-			flavor_text = "using the exported power a nearby plasma mining outpost has been established without an engine, we depend on you and keep doing good work"
-			announcement_reason = ANNOUNCEMENT_MILESTONE
+			flavor_text = "You outputted so much power it caused space station 15's powergrid to overload, good work!"
 
 		if(1 PW)
 			message = "The onboard PTL has successfully exported 1 Petawatt worth of power"
-			if(roll_for_history > 1)
-				flavor_text = "thanks to your exported power we quickly managed to discharge emergency power to our fleet in distress, securing victory against a nearby syndicate ship. Great work"
-				announcement_reason = ANNOUNCEMENT_MILESTONE
-			else
-				flavor_text = "1.4 Petawatts is the estimated heat flux transported by the Gulf Stream back on the human's mother planet \"earth\""
-				announcement_reason = ANNOUNCEMENT_HISTORY
+			flavor_text = "Your onboard PTL is out performing all Nanotrasen owned solar PTL platforms in your sector. Central Command congratulates you for your achievement"
 
 		if(1 EW)
 			message = "The onboard PTL has successfully exported 1 Exawatt worth of power"
-			if(roll_for_history > 1)
-				flavor_text = "We did not expect your station to export such a high amount of power, and due to that [rand(1, 3)] of our batteries over-charged and blew up [rand(1, 5)] stations... keep doing good work?"
-				announcement_reason = ANNOUNCEMENT_MILESTONE
-			else
-				flavor_text = "In a keynote presentation, NIF & Photon Science Chief Technology Officer Chris Barty described the \"Nexawatt\" Laser, an exawatt (1,000-petawatt) laser concept based on NIF technologies, on April 13 at the SPIE Optics + Optoelectronics 2015 Conference in Prague. Barty also gave an invited talk on \"Laser-Based Nuclear Photonics\" at the SPIE meeting."
-				announcement_reason = ANNOUNCEMENT_HISTORY
+			flavor_text = "Using the exported power a nearby plasma mining outpost has been established without an engine, we depend on you and keep doing good work"
 
-		else
+		if(1 ZW)
+			message = "The onboard PTL has successfully exported 1 Zetawatt worth of power"
+			flavor_text = "Thanks to your exported power we quickly managed to discharge emergency power to our fleet in distress, securing victory against a nearby syndicate ship. Great work"
+
+		if(1 YW)
+			message = "The onboard PTL has successfully exported 1 Yottawatt worth of power"
+			flavor_text = "We did not expect your station to export such a high amount of power, and due to that [rand(1, 3)] of our batteries over-charged and blew up [rand(1, 5)] stations... keep doing good work?"
+
+		if(1 RW)
+			message = "The onboard PTL has successfully exported 1 Ronnawatt worth of power"
+			flavor_text = "The sheer amount of power you sent us has successfully BSA'ed an entire planet, we will be charging you 50 million credits for that post-shift, as we know you can afford it"
+
+		if(1 QW)
+			message = "The onboard PTL has successfully exported 1 Quettawatt worth of power"
+			flavor_text = "\
+				We have aquired enormous amounts of power thanks to you, making several new mining outposts. \
+				We will hold a special medal granting ceremony to your local Chief Engineer and all the engineers are getting a raise once you arrive on centcom. \
+				But please do stop sending power soon, as we cannot hold much more. Consequences will arise if power output continues to be unmoderated.\
+			"
+
+		if(1 AW)
+			message = "The onboard PTL has successfully exported 1 Raynawatt worth of power"
+			flavor_text = "\
+				Great job, geniuses! You've just vaporized an entire sector. \
+				Do you have any idea how much paperwork that is? \
+				We're talking about a bureaucratic nightmare of epic proportions. \
+				I hope you're ready to spend the next decade filling out forms, because that's what it's going to take to clean up this mess. \
+				So, congratulations, you've made history. Now, get ready to pay for it in triplicate.\
+			"
+
+		else // should not be achievable because it would require 1+36e power, but for safety reasons lets leave it here
 			message = "The onboard PTL has successfully exported extremelly high amounts of power"
-			flavor_text = "we are not sure anymore how much power your PTL has exported, but it sure is a lot. Keep doing great work"
-			announcement_reason = ANNOUNCEMENT_MILESTONE
+			flavor_text = "We ran out of orders of magnitude that are currently catagorized, good work"
 
-	minor_title = "Power Transmission Laser report"
-	if(announcement_reason)
-		switch(announcement_reason)
-			if(ANNOUNCEMENT_MILESTONE)
-				major_title = "[command_name()] energy unit"
-				message = "New milestone reached!\n[message]"
-			if(ANNOUNCEMENT_HISTORY)
-				major_title = "[command_name()] energy unit"
-				minor_title = "Power Transmission Laser report, history sub-division"
-				message = "PTL history lesson\n[message]"
+	message = "New milestone reached!\n[message]"
 
 	priority_announce(
-		sender_override = major_title,
-		title = minor_title,
+		sender_override = "[command_name()] energy unit",
+		title = "Power Transmission Laser report",
 		text = "[message]\n[flavor_text]",
 		color_override = "orange",
 	)
@@ -93,6 +92,9 @@
 
 		if(1 EW to INFINITY)
 			readable_power = "[total_power / (1 EW)] Exowatts"
+
+		if(INFINITY + 1 to 999 AW) // for when infinity is not enough...
+			readable_power = "[total_power / (1 QW)] Quettawatts (1+30e watts, for your information)"
 
 	priority_announce(
 		sender_override = "[command_name()] energy unit",
