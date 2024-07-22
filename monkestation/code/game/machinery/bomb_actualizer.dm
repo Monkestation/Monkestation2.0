@@ -3,17 +3,17 @@
 	desc = "An advanced machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly... or so the sticker says"
 	circuit = /obj/item/circuitboard/machine/bomb_actualizer
 	icon = 'icons/obj/machines/research.dmi'
-	base_icon_state = "explosive_compressor"
-	icon_state = "explosive_compressor"
+	base_icon_state = "bomb_actualizer"
+	icon_state = "bomb_actualizer"
 	density = TRUE
-
+	max_integrity = 600
 	use_power = NO_POWER_USE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	//stages for alerts
-	var/stages = 0
+	var/stage = 0
 	//location to call out on priority message
 	var/alerthere = null
 	/// The TTV inserted in the machine.
@@ -82,17 +82,20 @@
 
 /obj/machinery/bomb_actualizer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!active)
+		default_unfasten_wrench(user, tool)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
 
 /obj/machinery/bomb_actualizer/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, "[base_icon_state]-off", "[base_icon_state]", tool))
-		return FALSE
+	if(!active)
+		if(!default_deconstruction_screwdriver(user, "[base_icon_state]-off", "[base_icon_state]", tool))
+			return FALSE
 	update_appearance()
 	return TRUE
 
 /obj/machinery/bomb_actualizer/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
+	if(!default_deconstruction_crowbar(tool) && !active)
 		return FALSE
 	return TRUE
 
