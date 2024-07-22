@@ -1,28 +1,61 @@
 /obj/machinery/bomb_actualizer
-	name = "Bomb Actualizer	"
-	desc = "An advanced EVIL? machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly"
+	name = "Bomb Actualizer"
+	desc = "An advanced machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly... or so the sticker says"
 	circuit = /obj/item/circuitboard/machine/bomb_actualizer
 	icon = 'icons/obj/machines/research.dmi'
 	base_icon_state = "explosive_compressor"
 	icon_state = "explosive_compressor"
 	density = TRUE
 
+	use_power = NO_POWER_USE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+
+	//stages for alerts
+	var/stages = 0
+	//location to call out on priority message
+	var/alerthere = null
 	/// The TTV inserted in the machine.
 	var/obj/item/transfer_valve/inserted_bomb
 	//combined gasmix to determine the simulation to reality
 	var/datum/gas_mixture/combined_gasmix
 	//Timer till detonation in seconds
-	var/timer = 420
-	//Countdown active
-	var/countdown = FALSE
-	//i dont really get what this is for, see anomaly refinery
+	var/default_time = 420
+	//used to track current world time
+	var/timer = null
+	/// The countdown that'll show up to ghosts regarding the bomb's timer.
+	var/obj/effect/countdown/syndicatebomb/countdown
+	//Can examine the Countdown
+	var/examinable_countdown = TRUE
+	//So the ttv transfers gas properly
 	var/obj/item/tank/tank_to_target
+	//For managing if the tank exploded so it doesnt explode twice
 	var/active = FALSE
 	var/exploded = FALSE
+	//When to beep (every second)
+	var/next_beep = null
+	//sounds for scaryness
+	var/beepsound = 'sound/items/timer.ogg'
+	var/scarywarning = 'sound/misc/bloblarm.ogg'
+	var/verybadsound = 'sound/machines/engine_alert1.ogg'
+	/// The countdown that'll show up to ghosts regarding the bomb's timer.
+	///Our internal radio
+	var/obj/item/radio/radio
+	///The key our internal radio uses
+	var/radio_key = /obj/item/encryptionkey/headset_sci
+	///The common channel
+	var/common_channel = null
 
 /obj/machinery/bomb_actualizer/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(modify_explosion))
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
+	countdown = new(src)
+	update_appearance()
 
 	//Stolen from anomaly_refinery
 /obj/machinery/bomb_actualizer/attackby(obj/item/tool, mob/living/user, params)
@@ -72,14 +105,59 @@
 		return
 
 	if(!istype(inserted_bomb))
-		say("ERROR: Incorrect Bomb Specifications")
+		say("ERROR: No Bomb Inserted")
 		return
 
-	say("Begining detonation sequence. Countdown starting.")
-	//TODO TIMER
+	say("Beginning detonation sequence. Countdown starting.")
+	countdown.start()
 	active = TRUE
-	inserted_bomb.toggle_valve(tank_to_target)
+	next_beep = world.time + 10
+	timer = world.time + (default_time * 10)
+	alerthere = get_area(src)
+	begin_processing()
+	priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
+				Remove the tampering device within 7 Minutes or evacuate the localized areas. \
+				Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
 
+//Process for handling the bombs timer
+/obj/machinery/bomb_actualizer/process()
+	var/volume = 40
+	if(!active)
+		end_processing()
+		timer = null
+		next_beep = null
+		countdown.stop()
+		stage = 0
+		return
+	if(!isnull(next_beep) && (next_beep <= world.time))
+
+		playsound(loc, beepsound, volume, FALSE)
+		next_beep = world.time +10
+	if(seconds_remaining() == 60)
+		radio.talk_into(src, "WARNING: DETONATION IN ONE MINUTE.", common_channel)
+		if(stage == 0)
+			playsound(loc, scarywarning, volume, FALSE)
+			stage++
+	if(seconds_remaining() == 10)
+		if(stage == 1)
+			radio.talk_into(src, "FAILSAFE DISENGAGED, DETONATION IMMINENT", common_channel)
+			playsound(loc, verybadsound, 80, FALSE)
+			stage++
+
+
+	if(active && (timer <= world.time))
+		active = FALSE
+		stage = 0
+		update_appearance()
+		inserted_bomb.toggle_valve(tank_to_target)
+
+
+/obj/machinery/bomb_actualizer/proc/seconds_remaining()
+	if(active)
+		. = max(0, round((timer - world.time) / 10))
+
+	else
+		. = 420
 
 
 
@@ -115,10 +193,22 @@
 		return COMSIG_CANCEL_EXPLOSION
 	return COMSIG_ATOM_EXPLODE
 
-//when crew inevitably bashes the thing to pieces
+/obj/machinery/bomb_actualizer/examine(mob/user)
+	. = ..()
+	. += "Big bomb."
+	if(examinable_countdown)
+		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
+		if(active)
+			balloon_alert(user, "[seconds_remaining()]")
+	else
+		. += span_notice({"The digital display on it is inactive."})
+
+//when crew inevitably bashes the thing to pieces hopefully
 /obj/machinery/bomb_actualizer/Destroy()
 	inserted_bomb = null
 	combined_gasmix = null
+	QDEL_NULL(countdown)
+	end_processing()
 	return ..()
 
 /obj/machinery/bomb_actualizer/ui_interact(mob/user, datum/tgui/ui)
@@ -132,5 +222,5 @@
 	. = ..()
 	if (.)
 		return
-	if(action = "start_timer" && !active)
+	if(action == "start_timer" && !active)
 		start_detonation()
