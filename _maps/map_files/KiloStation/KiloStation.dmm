@@ -3055,8 +3055,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "aZY" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -9225,6 +9225,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
+"cXE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "cXH" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -30618,7 +30623,7 @@
 "jxm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/sealed/mecha/working/ripley/cargo,
-/turf/open/floor/iron,
+/turf/open/floor/iron/recharge_floor,
 /area/station/cargo/storage)
 "jxs" = (
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -77010,7 +77015,7 @@
 	maxHealth = 1000;
 	wound_bonus = 10;
 	health = 200;
-	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."),"emote_hear"=list("honks","squeaks"),"emote_sound"=list('sound/items/bikehorn.ogg'),"emote_chance"=5)
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -118604,7 +118609,7 @@ tWR
 cen
 qod
 bzY
-mYW
+cXE
 hOc
 acm
 aaa
