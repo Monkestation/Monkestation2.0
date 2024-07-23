@@ -12350,7 +12350,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/turf/open/floor/iron/white/textured,
+/turf/open/floor/iron/textured,
 /area/station/science/robotics/lab)
 "eav" = (
 /turf/closed/wall,
@@ -13278,6 +13278,7 @@
 /area/station/hallway/primary/port)
 "erV" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "esk" = (
@@ -38346,6 +38347,7 @@
 /area/station/tcommsat/computer)
 "mHp" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/cable,
 /obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -49231,6 +49233,7 @@
 /area/station/security/office)
 "qmb" = (
 /obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -52073,6 +52076,7 @@
 "rjn" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/effect/turf_decal/box,
+/obj/structure/cable,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
@@ -54323,6 +54327,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "rTK" = (
+/obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
 "rTM" = (
@@ -58810,6 +58815,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Chief Medical Officer's Quarters"
@@ -62974,7 +62980,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/turf/open/floor/iron/white/textured,
+/turf/open/floor/iron/textured,
 /area/station/science/robotics/lab)
 "uNE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67905,6 +67911,7 @@
 	id = "cmo_shutters";
 	name = "CMO Office Shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "wuE" = (
@@ -72103,6 +72110,7 @@
 /area/station/hallway/primary/central)
 "xRd" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/cable,
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/fax{
 	fax_name = "Chief Medical Officer's Office";
@@ -72957,6 +72965,7 @@
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "ycB" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/cable,
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/checker{
 	dir = 1
@@ -115334,9 +115343,9 @@ wxL
 mOH
 nBE
 qmb
-mhc
 vLk
 lRi
+tpC
 nBE
 rHt
 grF
@@ -115849,7 +115858,7 @@ pUp
 nBE
 rHt
 mhc
-ydO
+tpC
 grF
 nBE
 mhc
