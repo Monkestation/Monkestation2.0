@@ -59,7 +59,7 @@
 
 	//Stolen from anomaly_refinery
 /obj/machinery/bomb_actualizer/attackby(obj/item/tool, mob/living/user, params)
-	if(active)
+	if(active && istype(tool, /obj/item/transfer_valve))
 		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
 		return
 	if(istype(tool, /obj/item/transfer_valve))
