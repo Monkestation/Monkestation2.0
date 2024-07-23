@@ -89,6 +89,17 @@
 	else if(S.active)
 		return S.seconds_remaining()
 
+/obj/effect/countdown/bomb_actualizer
+	name = "bomb actualizer countdown"
+	color = "#ff9100"
+
+/obj/effect/countdown/bomb_actualizer/get_value()
+	var/obj/machinery/bomb_actualizer/B = attached_to
+	if(!istype(B))
+		return
+	else if(B.active)
+		return B.seconds_remaining()
+
 /obj/effect/countdown/nuclearbomb
 	name = "nuclear bomb countdown"
 	color = "#81FF14"

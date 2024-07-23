@@ -25,7 +25,7 @@
 	//used to track current world time
 	var/timer = null
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
-	var/obj/effect/countdown/syndicatebomb/countdown
+	var/obj/effect/countdown/bomb_actualizer/countdown
 	//Can examine the Countdown
 	var/examinable_countdown = TRUE
 	//So the ttv transfers gas properly
@@ -111,16 +111,21 @@
 		say("ERROR: No Bomb Inserted")
 		return
 
-	say("Beginning detonation sequence. Countdown starting.")
-	countdown.start()
-	active = TRUE
-	next_beep = world.time + 10
-	timer = world.time + (default_time * 10)
-	alerthere = get_area(src)
-	begin_processing()
-	priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
-				Remove the tampering device within 7 Minutes or evacuate the localized areas. \
-				Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
+	alerthere = src.loc.loc.name
+	if(alerthere != ("City of Cogs" || "Outpost of Cogs Space"))
+		say("Beginning detonation sequence. Countdown starting.")
+		countdown.start()
+		active = TRUE
+		next_beep = world.time + 10
+		timer = world.time + (default_time * 10)
+
+		begin_processing()
+		priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
+					Remove the tampering device within 7 Minutes or evacuate the localized areas. \
+					Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
+		return
+	say("UNKNOWN ERROR: Nice try nerd. ")
+	return
 
 //Process for handling the bombs timer
 /obj/machinery/bomb_actualizer/process()
@@ -209,6 +214,7 @@
 //when crew inevitably bashes the thing to pieces hopefully
 /obj/machinery/bomb_actualizer/Destroy()
 	inserted_bomb = null
+	radio = null
 	combined_gasmix = null
 	QDEL_NULL(countdown)
 	end_processing()
