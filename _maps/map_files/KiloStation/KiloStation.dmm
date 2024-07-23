@@ -24429,10 +24429,6 @@
 /obj/item/crowbar/red,
 /obj/item/flashlight,
 /obj/item/flashlight,
-/obj/machinery/door/window/right/directional/north{
-	name = "Emergency Storage";
-	req_access = list("command")
-	},
 /obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -64434,10 +64430,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/office)
 "uml" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/delivery,
 /obj/structure/fireaxecabinet/directional/south,
+/obj/machinery/vending/access/command,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "umq" = (
@@ -76869,10 +76864,6 @@
 	pixel_x = 6
 	},
 /obj/item/storage/medkit/regular,
-/obj/machinery/door/window/left/directional/north{
-	name = "Emergency Storage";
-	req_access = list("command")
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Bridge Emergency Supplies";
 	name = "command camera"
