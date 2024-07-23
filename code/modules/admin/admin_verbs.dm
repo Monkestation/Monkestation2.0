@@ -48,6 +48,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/open_artifactpanel,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/kick_player_by_ckey, //MONKESTATION ADDITION - kick a player by their ckey
+	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -273,6 +274,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 		var/rights = holder.rank_flags()
 		add_verb(src, GLOB.admin_verbs_default)
+		add_verb(GLOB.mentor_verbs) //Monkestation Edit
 		if(rights & R_BUILD)
 			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
@@ -319,7 +321,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
-		/client/proc/readmin
+		/client/proc/readmin,
+		GLOB.mentor_verbs //Monkestation Edit
 		))
 
 /client/proc/hide_verbs()
