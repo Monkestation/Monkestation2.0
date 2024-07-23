@@ -39951,6 +39951,7 @@
 "mzX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
+/mob/living/basic/chicken/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "mAa" = (
