@@ -188,6 +188,7 @@
 	gumball_ability.Grant(src)
 
 
+
 ///drops peels around the mob when activated
 /datum/action/cooldown/lay_gumball
 	name = "Lay gumball"
@@ -214,3 +215,28 @@
 	for(var/i in 1 to gumballs_to_spawn)
 		new gumball_type(pick_n_take(reachable_turfs))
 	StartCooldown()
+
+/mob/living/basic/pet/orangutan
+	name = "\improper Orangutan"
+	desc = "A vibrant colored primate once native to Indonesia"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "orangutan"
+	icon_living = "orangutan"
+	icon_dead = "orangutan"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+
+	ckeywhitelist = list("Raziaar")
+
+/mob/living/basic/pet/fluffykobold
+	name = "fluffy kobold"
+	desc = "A cute and fluffy horned creature with the attitude of a cat and the dexterity of a monkey. Whether it's a stow-away that snuck in from some foreign zoo, a geneticist's mad experiment or a supposedly terrifying predator from the ashlands, it's here now and it wants your pizza."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "Bluedragon66"
+	icon_living = "Bluedragon66"
+	icon_dead = "Bluedragon66-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Bluedragon66")

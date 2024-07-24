@@ -23,6 +23,8 @@
 	COOLDOWN_DECLARE(bloodsucker_spam_sol_burn)
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
+	/// Cooldown for bloodsuckers going into Frenzy.
+	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
 
 	///Used for assigning your name
 	var/bloodsucker_name
@@ -41,6 +43,8 @@
 	var/frenzy_threshold = FRENZY_THRESHOLD_ENTER
 	///If we are currently in a Frenzy
 	var/frenzied = FALSE
+	/// Whether the death handling code is active or not.
+	var/handling_death = FALSE
 
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
@@ -95,6 +99,14 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NO_MIRROR_REFLECTION
+	)
+	/// Traits applied during Torpor.
+	var/static/list/torpor_traits = list(
+		TRAIT_DEATHCOMA,
+		TRAIT_FAKEDEATH,
+		TRAIT_NODEATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE
 	)
 
 /**

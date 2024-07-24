@@ -12,6 +12,11 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Work Boots"
 	item_path = /obj/item/clothing/shoes/workboots
 
+/datum/store_item/shoes/swat_replica
+	name = "Combat boots"
+	item_path = /obj/item/clothing/shoes/combat/swat_replica
+	item_cost = 1000
+
 /datum/store_item/shoes/mining_boots
 	name = "Mining Boots"
 	item_path = /obj/item/clothing/shoes/workboots/mining
@@ -116,3 +121,87 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Jester Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	item_cost = 4000
+
+/// EVERYTHING NOVA RELATED
+
+/datum/store_item/shoes/nova/wraps/swag
+	name = "gilded foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps
+	item_cost = 4000 //The price of kissing glass shards
+
+/datum/store_item/shoes/nova/wraps/drip
+	name = "silver leg wraps"
+	item_path = /obj/item/clothing/shoes/wraps/silver
+	item_cost = 3000 //The price of kissing glass shards
+
+/datum/store_item/shoes/nova/jungleboots
+	name = "jungle boots"
+	item_path = /obj/item/clothing/shoes/jungleboots
+	item_cost = 4000
+
+/datum/store_item/shoes/nova/kimshoes
+	name = "aerostatic boots"
+	item_path = /obj/item/clothing/shoes/kimshoes
+	item_cost = 2500
+
+/datum/store_item/shoes/timbs
+	name = "Fashionable Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/timbs
+	item_cost = 2500
+
+/*
+*	COWBOY
+*/
+
+/datum/store_item/shoes/cowboyboots
+	name = "Cowboy Boots (Brown)"
+	item_path = /obj/item/clothing/shoes/cowboyboots
+	item_cost = 4000
+
+/datum/store_item/shoes/cowboyboots_black
+	name = "Cowboy Boots (Black)"
+	item_path = /obj/item/clothing/shoes/cowboyboots/black
+	item_cost = 4000
+
+/*
+*	MISC
+*/
+
+/datum/store_item/shoes/high_heels
+	name = "High Heels"
+	item_path = /obj/item/clothing/shoes/high_heels
+	item_cost = 3000
+
+/datum/store_item/shoes/black_heels
+	name = "Fancy Heels"
+	item_path = /obj/item/clothing/shoes/fancy_heels
+	item_cost = 3000
+
+/datum/store_item/shoes/sportshoes
+	name = "Sport Shoes"
+	item_path = /obj/item/clothing/shoes/sports
+	item_cost = 1500
+
+/datum/store_item/shoes/rollerskates
+	name = "Roller Skates"
+	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
+	item_cost = 2500
+
+/datum/store_item/shoes/wheelys
+	name = "Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys
+	item_cost = 2500
+
+/*
+*	SEASONAL
+*/
+
+/datum/store_item/shoes/christmas
+	name = "Red Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas
+	item_cost = 10000
+
+/datum/store_item/shoes/christmas/green
+	name = "Green Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas/green
+	item_cost = 10000
