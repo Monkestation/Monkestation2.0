@@ -112,3 +112,6 @@
 
 /datum/action/item_action/flip
 	name = "Flip"
+
+/datum/action/item_action/toggle_suit_flashlight //monkestation addition
+	name = "Toggle Integrated Flashlight"
