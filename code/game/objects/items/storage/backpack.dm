@@ -411,11 +411,13 @@
 
 	..()
 
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash
+	desc = "God, the stench from this thing is potent."
+
 /obj/item/storage/backpack/satchel/flat/listening_post_secret_stash/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/eva(src)
-	new /obj/item/clothing/suit/space/eva(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
+	new /obj/item/seeds/cannabis
+	new /obj/item/food/grown/cannabis
+	new /obj/item/storage/box/donkpockets/donkpockethonk
 
 	..()
 
