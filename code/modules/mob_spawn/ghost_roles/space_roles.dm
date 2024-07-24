@@ -92,7 +92,7 @@
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space
 	you_are_text = "You are a syndicate agent, assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13."
 	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
-	important_text = "DO NOT abandon the base."
+	important_text = "DO NOT leave the base. You are not a field agent, and are not permitted to do their job for them."
 	spawner_job_path = /datum/job/lavaland_syndicate/space
 
 //Admin PM from-Kondafairydragon: not that... but HOW THE FUCK DID A LAVALAND SYNDICATE END UP IN SPACE. rather
@@ -104,7 +104,7 @@
 	icon_state = "sleeper"
 	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
 	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
-	important_text = "DO NOT abandon the base, it's your only hope to see again!"
+	important_text = "DO NOT leave the base, you're inevitably doomed without it!"
 	outfit = /datum/outfit/lavaland_syndicate/comms/anderson
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Initialize(mapload)
