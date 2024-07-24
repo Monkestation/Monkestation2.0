@@ -113,8 +113,8 @@
 		return INITIALIZE_HINT_QDEL //the destroy() code already handles sleeper spawning
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Destroy()
-	var/obj/machinery/sleeper/self_control/S = new(drop_location()) //one guy cmon
-	S.setDir(dir)
+	var/obj/machinery/sleeper/self_control/anderson = new(drop_location()) //one guy cmon
+	anderson.setDir(dir)
 	return ..()
 
 /datum/outfit/lavaland_syndicate/comms/anderson
