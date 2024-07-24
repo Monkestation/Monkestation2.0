@@ -111,8 +111,8 @@
 		say("ERROR: No Bomb Inserted")
 		return
 
-	alerthere = src.loc.loc.name
-	if(alerthere != ("City of Cogs" || "Outpost of Cogs Space"))
+	alerthere = get_area(src)
+	if(!on_reebe(src))
 		say("Beginning detonation sequence. Countdown starting.")
 		countdown.start()
 		active = TRUE
