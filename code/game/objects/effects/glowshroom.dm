@@ -128,13 +128,11 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, spread_cooldown))
 		COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
-		Spread()
+		Spread(seconds_per_tick)
 
 	Decay(rand(idle_decay_min, idle_decay_max) * seconds_per_tick)
 
-
-
-/obj/structure/glowshroom/proc/Spread()
+/obj/structure/glowshroom/proc/Spread(seconds_per_tick)
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
 		return //Deal with it not now
@@ -157,10 +155,10 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
-		if(!prob(chance_generation))
+		if(!SPT_PROB(chance_generation, seconds_per_tick))
 			continue
-		var/spreads_into_adjacent = prob(spread_into_adjacent_chance)
-		var/turf/new_loc = null
+		var/spreads_into_adjacent = SPT_PROB(spread_into_adjacent_chance, seconds_per_tick)
+		var/turf/new_loc
 
 		//Try three random locations to spawn before giving up tradeoff
 		//between running view(1, earth) on every single collected possibleLoc
@@ -173,7 +171,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 				break
 
 		//We failed to find any location, skip trying to yield
-		if(new_loc == null)
+		if(QDELETED(new_loc))
 			break
 
 
@@ -190,6 +188,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
+		CHECK_TICK
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)
 	var/direction = 16
