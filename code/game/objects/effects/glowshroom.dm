@@ -103,7 +103,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSplants, src) // monkestation edit: use SSplants
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
@@ -118,7 +118,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(isatom(myseed))
 		QDEL_NULL(myseed)
 	GLOB.glowshrooms--
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSplants, src) // monkestation edit: use SSplants
 	return ..()
 
 /**
