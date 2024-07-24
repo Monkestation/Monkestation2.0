@@ -5749,6 +5749,7 @@
 #include "monkestation\code\area\areas\direction_names.dm"
 #include "monkestation\code\area\areas\station.dm"
 #include "monkestation\code\controllers\subsystem\economy.dm"
+#include "monkestation\code\controllers\subsystem\glowshroom.dm"
 #include "monkestation\code\controllers\subsystem\job.dm"
 #include "monkestation\code\datums\action.dm"
 #include "monkestation\code\datums\dna.dm"
