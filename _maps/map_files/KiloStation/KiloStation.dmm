@@ -14983,6 +14983,13 @@
 "eNb" = (
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
+"eNp" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "5";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "eNy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16174,6 +16181,13 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison/mess)
+"fgn" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "3";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "fgo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -16646,6 +16660,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
+"fmB" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "6";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "fmQ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -26558,6 +26579,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
+"ilx" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "4";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "ilH" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -75786,6 +75814,13 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard)
+"xJV" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "2";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "xKn" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -113894,7 +113929,7 @@ rhE
 jPq
 qmW
 xHa
-iaW
+eNp
 qmW
 qmW
 qmW
@@ -114161,7 +114196,7 @@ qmW
 qmW
 qmW
 xHa
-iaW
+xJV
 qmW
 qmW
 mRW
@@ -116212,12 +116247,12 @@ qmW
 qmW
 qmW
 xHa
-iaW
+fgn
 qmW
 qmW
 qmW
 xHa
-iaW
+ilx
 qmW
 qmW
 ccu
@@ -116464,7 +116499,7 @@ xej
 hjI
 qmW
 xHa
-iaW
+fmB
 qmW
 qmW
 qmW
