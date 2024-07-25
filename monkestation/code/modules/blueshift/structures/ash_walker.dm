@@ -1163,9 +1163,6 @@
 /obj/structure/antfarm/Initialize(mapload)
 	. = ..()
 	var/turf/src_turf = get_turf(src)
-	if(!src_turf.GetComponent(/datum/component/simple_farm))
-		src_turf.balloon_alert_to_viewers("must be on farmable surface")
-		return INITIALIZE_HINT_QDEL
 
 	for(var/obj/structure/antfarm/found_farm in range(2, get_turf(src)))
 		if(found_farm == src)
@@ -1174,6 +1171,10 @@
 		src_turf.balloon_alert_to_viewers("too close to another farm")
 		return INITIALIZE_HINT_QDEL
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/antfarm/LateInitialize()
+	var/turf/src_turf = get_turf(src)
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, ant_timer, 30 SECONDS)
 

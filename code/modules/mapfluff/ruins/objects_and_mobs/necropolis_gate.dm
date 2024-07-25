@@ -93,7 +93,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
-	if(locked)
+	if(locked && !isashwalker(user))
 		to_chat(user, span_boldannounce("It's [open ? "stuck open":"locked"]."))
 		return
 	toggle_the_gate(user)

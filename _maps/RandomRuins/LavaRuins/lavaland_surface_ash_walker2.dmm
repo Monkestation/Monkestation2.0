@@ -76,7 +76,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "br" = (
-/obj/structure/necropolis_gate,
+/obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/slab,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
@@ -291,7 +291,7 @@
 /area/ruin/unpowered/ash_walkers)
 "eL" = (
 /obj/structure/stone_tile/slab,
-/obj/structure/necropolis_gate,
+/obj/structure/necropolis_gate/locked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "eO" = (
@@ -1239,6 +1239,13 @@
 "vB" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
 /obj/structure/stone_tile/center/burnt,
+/obj/structure/antfarm{
+	has_ants = 1
+	},
+/obj/effect/mapping_helpers/atom_injector/component_injector{
+	component_args = list(TRUE, TRUE, list(0, 16));
+	component_type = /datum/component/simple_farm
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "vE" = (
@@ -1469,7 +1476,7 @@
 "yG" = (
 /obj/structure/necropolis_arch,
 /obj/structure/stone_tile/slab,
-/obj/structure/necropolis_gate,
+/obj/structure/necropolis_gate/locked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "yI" = (
