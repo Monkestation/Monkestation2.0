@@ -2,15 +2,15 @@
 	name = "sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench. Needs to be placed over a catwalk covered trench hole."
 
-	icon = 'goon/icons/obj/fluid.dmi'
-	icon_state = "ladder_off"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
 
 /obj/structure/trench_ladder
 	name = "sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 
-	icon = 'goon/icons/obj/fluid.dmi'
-	icon_state = "ladder_on"
+	icon = 'icons/misc/pepe.dmi' // TODO ADD NEW SPRITES
+	icon_state = "rare_pepe"
 
 	var/obj/structure/trench_ladder/linked_ladder
 	var/obj/item/trench_ladder_kit/real_item
