@@ -95,6 +95,9 @@
 	///can we radio host
 	var/radio_host = FALSE
 
+	/// If TRUE, then this message will always be received intact, regardless of exospheric anomalies / processor issues.
+	var/lossless = FALSE
+
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
@@ -312,11 +315,8 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	var/turf/position = get_turf(src)
-	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
-		var/turf/jammer_turf = get_turf(jammer)
-		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range) && !syndie)
-			return
+	if(is_within_radio_jammer_range(src) && !syndie)
+		return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, talking_movable, src)
@@ -331,6 +331,10 @@
 		signal.levels = list(0)
 		signal.broadcast()
 		return
+	// monkestation edit: "lossless" var
+	if(lossless)
+		signal.data["compression"] = 0
+	// monkestation end
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
