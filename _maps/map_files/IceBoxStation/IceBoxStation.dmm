@@ -8058,6 +8058,7 @@
 /obj/structure/table/wood,
 /obj/machinery/recharger,
 /obj/item/melee/chainofcommand,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "cyG" = (
@@ -12798,6 +12799,8 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/power/dataterminal,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dWZ" = (
@@ -18050,6 +18053,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/power/dataterminal,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "fJm" = (
@@ -35438,6 +35442,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"lqt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "lqv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -48260,6 +48270,8 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/dataterminal,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "ptO" = (
@@ -69006,6 +69018,8 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/dataterminal,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "wjy" = (
@@ -238173,7 +238187,7 @@ aJN
 wzm
 ond
 mvc
-mvc
+lqt
 mvc
 lpM
 dbm

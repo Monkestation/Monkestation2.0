@@ -32996,6 +32996,8 @@
 	name = "Captain's Computer"
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/power/dataterminal,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "iUT" = (
@@ -45138,6 +45140,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/captain,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "maW" = (
@@ -50547,6 +50550,10 @@
 	dir = 5
 	},
 /area/station/hallway/floor3/fore)
+"nqn" = (
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain)
 "nqo" = (
 /turf/closed/wall,
 /area/station/science/research/abandoned)
@@ -81380,6 +81387,7 @@
 	name = "Captain's Requests Console";
 	can_send_announcements = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "vRj" = (
@@ -308509,7 +308517,7 @@ per
 uTG
 oKq
 nih
-wnO
+nqn
 vRi
 lRR
 sCG

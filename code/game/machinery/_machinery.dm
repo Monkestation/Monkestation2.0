@@ -165,7 +165,6 @@
 	. = ..()
 	GLOB.machines += src
 	SSmachines.register_machine(src)
-
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
