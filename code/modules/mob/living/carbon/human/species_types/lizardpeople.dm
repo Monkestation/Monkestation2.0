@@ -137,7 +137,6 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_HARD_SOLES //MONKESTATION ADDITION
 	)
-	inherent_factions = list(FACTION_ASHWALKER)
 	species_language_holder = /datum/language_holder/lizard/ash
 	/*digitigrade_customization = DIGITIGRADE_FORCED*/ //MONKESTATION REMOVAL: not needed
 	examine_limb_id = SPECIES_LIZARD
