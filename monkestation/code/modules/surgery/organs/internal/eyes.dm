@@ -45,3 +45,8 @@
 
 /obj/item/organ/internal/eyes/ethereal
 	eye_icon_state = "etherealeyes"
+
+/obj/item/organ/internal/eyes/cetanoid
+	name = "cetanoid eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-moth"
