@@ -24652,14 +24652,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "eJW" = (
-/obj/structure/table,
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/obj/item/soap,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "eJY" = (
@@ -68843,7 +68842,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "nuD" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -68851,6 +68849,9 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/computer/cloning{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "nuL" = (
@@ -81331,15 +81332,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
 "pOU" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "pOV" = (
@@ -92723,12 +92722,13 @@
 	pixel_x = 6;
 	pixel_y = 9
 	},
-/obj/item/storage/box/monkeycubes{
-	pixel_x = 4
-	},
+/obj/item/soap,
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = -10;
 	pixel_y = -1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
