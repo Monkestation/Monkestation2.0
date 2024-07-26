@@ -1,4 +1,4 @@
-/datum/action/changeling/spiders
+/*/datum/action/changeling/spiders //MONKESTATION REMOVAL
 	name = "Spread Infestation"
 	desc = "Our form divides, creating a cluster of eggs which will grow into a deadly arachnid. Costs 45 chemicals."
 	helptext = "The spiders are ruthless creatures, and may attack their creators when fully grown. Requires at least 3 DNA absorptions."
@@ -12,3 +12,4 @@
 	..()
 	new /obj/effect/mob_spawn/ghost_role/spider/bloody(user.loc)
 	return TRUE
+*/

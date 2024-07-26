@@ -155,7 +155,7 @@
 	)
 	flash_window = TRUE
 
-/obj/effect/mob_spawn/ghost_role/spider/bloody
+/*/obj/effect/mob_spawn/ghost_role/spider/bloody //MONKESTATION REMOVAL
 	name = "bloody egg cluster"
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	icon_state = "eggs"
@@ -169,7 +169,7 @@
 	)
 	granted_datum = /datum/antagonist/spider/flesh
 	flash_window = TRUE
-
+*/
 /obj/effect/mob_spawn/ghost_role/spider/midwife
 	name = "midwife egg cluster"
 	you_are_text = "You are a midwife spider."
