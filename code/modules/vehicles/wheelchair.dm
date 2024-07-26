@@ -61,7 +61,7 @@
 	if(usr == buckled_mob)
 		..()
 	else
-		if(do_after(usr, 3 SECONDS))
+		if(do_after(usr, 2 SECONDS))
 			..()
 //MONKESTATION ADDITION END
 
