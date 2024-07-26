@@ -58,8 +58,8 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 6 SECONDS,\
-		health_per_second = maxHealth / 6,\
+		regeneration_delay = 10 SECONDS,\
+		health_per_second = maxHealth / 3,\
 		outline_colour = COLOR_PINK,\
 	)
 
