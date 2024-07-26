@@ -11908,12 +11908,6 @@
 /obj/effect/spawner/random/entertainment/money,
 /turf/open/floor/iron/large,
 /area/station/cargo/storage)
-"dFi" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "dFl" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -20847,11 +20841,6 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
-"gkM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/meter,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "gkQ" = (
 /obj/machinery/light/cold/directional/east,
 /obj/structure/disposalpipe/segment{
@@ -46319,10 +46308,6 @@
 /turf/open/openspace,
 /area/station/security/holding_cell)
 "nCx" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -54916,10 +54901,6 @@
 /turf/open/misc/asteroid/snow/coldroom,
 /area/station/service/kitchen/coldroom)
 "qkl" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
@@ -65050,12 +65031,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/upper)
 "tnI" = (
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 1
-	},
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tnJ" = (
@@ -113543,8 +113522,8 @@ npk
 hWK
 kAb
 dtw
-gkM
-sNx
+hWK
+hWK
 gyS
 qVq
 bJf
@@ -115339,7 +115318,7 @@ ezK
 kAb
 nwm
 sUB
-gkM
+sNx
 bEj
 hWK
 wMJ
@@ -115596,7 +115575,7 @@ obu
 eVe
 rUa
 sUB
-dFi
+sNx
 kAb
 mEN
 rUa
@@ -115853,7 +115832,7 @@ kAb
 kAb
 hOa
 sUB
-gkM
+sNx
 liD
 kLD
 gID
@@ -116110,7 +116089,7 @@ gvj
 adr
 wVC
 sUB
-dFi
+sNx
 rVx
 cai
 gGL
