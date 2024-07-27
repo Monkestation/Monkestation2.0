@@ -6712,6 +6712,7 @@
 #include "monkestation\code\modules\clothing\neck\neckties.dm"
 #include "monkestation\code\modules\clothing\outfits\bunny.dm"
 #include "monkestation\code\modules\clothing\outfits\special.dm"
+#include "monkestation\code\modules\clothing\outfits\cetanoid.dm"
 #include "monkestation\code\modules\clothing\shoes\clown.dm"
 #include "monkestation\code\modules\clothing\shoes\shoe.dm"
 #include "monkestation\code\modules\clothing\spacesuits\plasmamen.dm"

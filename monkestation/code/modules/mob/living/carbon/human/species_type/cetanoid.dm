@@ -39,6 +39,7 @@
 		/obj/item/organ/external/cetanoid_fins = "Default",
 	)
 	digitigrade_customization = DIGITIGRADE_FORCED
+	outfit_important_for_life = /datum/outfit/cetanoid
 
 /datum/species/cetanoid/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
@@ -46,6 +47,12 @@
 	//no legs for you bozo
 	for(var/obj/item/bodypart/leg/leg in C.bodyparts)
 		QDEL_NULL(leg)
+
+/datum/species/cetanoid/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	if(job?.cetanoid_outfit)
+		equipping.equipOutfit(job.cetanoid_outfit, visuals_only)
+	else
+		give_important_for_life(equipping)
 
 /datum/species/cetanoid/get_species_description()
 	return "Space-fish people. Cetanoids give most people the impression that they live a wonderful \
