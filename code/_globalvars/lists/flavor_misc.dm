@@ -58,8 +58,9 @@ GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_fluff_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_tail_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_horns_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(tails_list_cetanoid) //Monkestation Addition
-GLOBAL_LIST_EMPTY(frills_list_cetanoid) //Monkestation Addition
+GLOBAL_LIST_EMPTY(cetanoid_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(cetanoid_frills_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(cetanoid_fins_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",

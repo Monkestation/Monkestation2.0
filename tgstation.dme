@@ -7069,6 +7069,7 @@
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\anime.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\arachnid_appendages.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\arachnid_chelicerae.dm"
+#include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\cetanoid_fins.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\cetanoid_frills.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\cetanoid_tails.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\clockwork_sprites.dm"

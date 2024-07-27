@@ -52,8 +52,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_fluff, GLOB.satyr_fluff_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list) //Monkestation Addition
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/cetanoid, GLOB.tails_list_cetanoid) //Monkestation Addition
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills_cetanoid, GLOB.frills_list_cetanoid) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/cetanoid, GLOB.cetanoid_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills_cetanoid, GLOB.cetanoid_frills_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/cetanoid_fins, GLOB.cetanoid_fins_list) //Monkestation Addition
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()

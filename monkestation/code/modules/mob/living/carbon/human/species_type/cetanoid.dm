@@ -33,9 +33,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/digitigrade
 	)
 	external_organs = list(
-		/obj/item/organ/external/tail/cetanoid = "Smooth",
+		/obj/item/organ/external/tail/cetanoid = "Default",
 		/obj/item/organ/external/frills/cetanoid = "Aquatic",
 		/obj/item/organ/external/snout = "Round",
+		/obj/item/organ/external/cetanoid_fins = "Default",
 	)
 	digitigrade_customization = DIGITIGRADE_FORCED
 
