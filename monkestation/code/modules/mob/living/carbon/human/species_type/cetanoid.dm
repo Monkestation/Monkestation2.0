@@ -32,21 +32,15 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/digitigrade,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/digitigrade
 	)
+	external_organs = list(
+		/obj/item/organ/external/tail/cetanoid = "Smooth",
+		/obj/item/organ/external/frills/cetanoid = "Aquatic",
+		/obj/item/organ/external/snout = "Round",
+	)
 	digitigrade_customization = DIGITIGRADE_FORCED
 
 /datum/species/cetanoid/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
-
-	//doing this until cetanoids have their own external organs :sob:
-	C.dna.features["tail_lizard"] = "Smooth"
-	C.dna.features["frills"] = "Aquatic"
-	C.dna.features["snout"] = "Round"
-	var/obj/item/organ/external/tail/lizard/tail = new /obj/item/organ/external/tail/lizard()
-	tail.Insert(C)
-	var/obj/item/organ/external/frills/frills = new /obj/item/organ/external/frills()
-	frills.Insert(C)
-	var/obj/item/organ/external/snout/snout = new /obj/item/organ/external/snout()
-	snout.Insert(C)
 
 	//no legs for you bozo
 	for(var/obj/item/bodypart/leg/leg in C.bodyparts)
