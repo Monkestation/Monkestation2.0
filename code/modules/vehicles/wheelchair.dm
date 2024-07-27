@@ -4,7 +4,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
-	max_integrity = 40 //MONKESTATION EDIT
+	max_integrity = 50 //MONKESTATION EDIT
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
@@ -55,15 +55,6 @@
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
 	update_appearance()
-
-//MONKESTATION ADDITION START
-/obj/vehicle/ridden/wheelchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	if(usr == buckled_mob)
-		..()
-	else
-		if(do_after(usr, 2 SECONDS))
-			..()
-//MONKESTATION ADDITION END
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
