@@ -1,5 +1,5 @@
 /datum/sprite_accessory/frills_cetanoid
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi' //using lizard icons for now
+	icon = 'monkestation/icons/mob/species/cetanoid/cetanoid_frills.dmi'
 
 /datum/sprite_accessory/frills_cetanoid/aquatic
 	name = "Aquatic"

@@ -1,6 +1,6 @@
 /datum/sprite_accessory/tails/cetanoid
-	icon = 'icons/mob/species/lizard/lizard_tails.dmi' //using lizard icons for now
+	icon = 'monkestation/icons/mob/species/cetanoid/cetanoid_tail.dmi'
 
-/datum/sprite_accessory/tails/cetanoid/smooth
-	name = "Smooth"
+/datum/sprite_accessory/tails/cetanoid/default
+	name = "Default"
 	icon_state = "smooth"
