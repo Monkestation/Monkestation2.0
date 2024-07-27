@@ -172,6 +172,7 @@
 		"satyr_tail" = pick(GLOB.satyr_tail_list), //Monkestation Addition
 		"satyr_horns" = pick(GLOB.satyr_horns_list), //Monkestation Addition
 		"cetanoid_tail" = pick(GLOB.tails_list_cetanoid), //Monkestation Addition
+		"cetanoid_frills" = pick(GLOB.frills_list_cetanoid), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
