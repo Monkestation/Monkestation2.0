@@ -16,7 +16,6 @@
 
 	inherent_traits = list(
 		TRAIT_NIGHT_VISION,
-		TRAIT_DWARF
 	)
 
 	liked_food = SEAFOOD
