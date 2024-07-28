@@ -120,7 +120,7 @@
 		/obj/item/sensor_device,
 		/obj/item/gun/medbeam
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
