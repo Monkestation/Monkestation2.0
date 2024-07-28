@@ -1,3 +1,5 @@
+//Cetanoids from the Human Nature series by Cosmicartoons!
+
 /datum/species/cetanoid
 	name = "\improper Cetanoid"
 	plural_form = "Cetanoids"
@@ -59,7 +61,7 @@
 			magical mermaid fantasy life, but life on Corallo is coldhearted and \
 			hard. For these underwater dwellers, percieved success and intelligence \
 			is everything when it comes to status, and in that fight you're on your \
-			own."
+			own. (Cetanoids are from the YouTube series Human Nature by Cosmicartoons!)"
 
 /datum/species/cetanoid/create_pref_unique_perks()
 	var/list/to_add = list()
