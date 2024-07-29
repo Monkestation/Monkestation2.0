@@ -13,7 +13,7 @@
 	if((slot & ITEM_SLOT_OCLOTHING))
 		if(istype(wearer.get_organ_slot(ORGAN_SLOT_LUNGS),/obj/item/organ/internal/lungs/cetanoid)) //do we have cetanoid lungs?
 			var/obj/item/organ/internal/lungs/cetanoid/lungs = wearer.get_organ_slot(ORGAN_SLOT_LUNGS)
-			lungs.suffocating = FALSE //yay we can breathe
+			lungs.no_suit = FALSE //yay we can breathe
 
 		if(wearer.dna.species.id == SPECIES_CETANOID)
 			if(!wearer.get_bodypart(BODY_ZONE_L_LEG))
@@ -31,7 +31,7 @@
 	. = ..()
 	if(istype(wearer.get_organ_slot(ORGAN_SLOT_LUNGS),/obj/item/organ/internal/lungs/cetanoid)) //do we have cetanoid lungs?
 		var/obj/item/organ/internal/lungs/cetanoid/lungs = wearer.get_organ_slot(ORGAN_SLOT_LUNGS)
-		lungs.suffocating = TRUE //uh oh no suit you're dying
+		lungs.no_suit = TRUE //uh oh no suit you're dying
 
 	if(wearer.dna.species.id == SPECIES_CETANOID)
 		if(wearer.get_bodypart(BODY_ZONE_L_LEG))
