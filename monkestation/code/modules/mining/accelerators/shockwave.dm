@@ -10,7 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
 	can_bayonet = FALSE
 	max_mod_capacity = 60
-	firing_pin = /obj/item/firing_pin/explorer/unremovable
+	pin = /obj/item/firing_pin/explorer/unremovable
 
 /obj/item/ammo_casing/energy/kinetic/shockwave
 	projectile_type = /obj/projectile/kinetic/shockwave
