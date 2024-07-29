@@ -18,9 +18,22 @@ import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 import { exportChatSettings } from './settingsImExport';
 
-const setGlobalFontSize = (fontSize) => {
+let setStatFontTimer;
+
+const setGlobalFontSize = (fontSize, statFontSize, statLinked) => {
   document.documentElement.style.setProperty('font-size', fontSize + 'px');
   document.body.style.setProperty('font-size', fontSize + 'px');
+
+  // Used solution from theme.ts
+  clearInterval(setStatFontTimer);
+  Byond.command(
+    `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+  );
+  setStatFontTimer = setTimeout(() => {
+    Byond.command(
+      `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+    );
+  }, 1500);
 };
 
 const setGlobalFontFamily = (fontFamily) => {
@@ -62,7 +75,11 @@ export const settingsMiddleware = (store) => {
       next(action);
       const settings = selectSettings(store.getState());
       // Update global UI font size
-      setGlobalFontSize(settings.fontSize);
+      setGlobalFontSize(
+        settings.fontSize,
+        settings.statFontSize,
+        settings.statLinked,
+      );
       setGlobalFontFamily(settings.fontFamily);
       // Save settings to the web storage
       storage.set('panel-settings', settings);

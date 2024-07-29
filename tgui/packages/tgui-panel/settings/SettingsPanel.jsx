@@ -17,11 +17,11 @@ import {
   Icon,
   Input,
   LabeledList,
-  NumberInput,
   Section,
   Stack,
   Tabs,
   TextArea,
+  Slider,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
@@ -82,12 +82,12 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
-    context,
-    selectSettings,
-  );
+  const { theme, fontFamily, fontSize, lineHeight, statLinked, statFontSize } =
+    useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
+  const [statFont, setStatFont] = useLocalState('statFont', false);
+
   return (
     <Section>
       <LabeledList>
@@ -168,28 +168,60 @@ export const SettingsGeneral = (props, context) => {
             )}
           </Stack.Item>
         </LabeledList.Item>
-        <LabeledList.Item label="Font size">
-          <NumberInput
-            width="4.2em"
-            step={1}
-            stepPixelSize={10}
-            minValue={8}
-            maxValue={32}
-            value={fontSize}
-            unit="px"
-            format={(value) => toFixed(value)}
-            onChange={(e, value) =>
-              dispatch(
-                updateSettings({
-                  fontSize: value,
-                }),
-              )
-            }
-          />
+        <LabeledList.Item label="Font size" verticalAlign="middle">
+          <Stack textAlign="center">
+            <Stack.Item grow>
+              <Slider
+                width="100%"
+                step={1}
+                stepPixelSize={20}
+                minValue={8}
+                maxValue={32}
+                value={statFont ? statFontSize : fontSize}
+                unit="px"
+                format={(value) => toFixed(value)}
+                onChange={(e, value) =>
+                  dispatch(
+                    updateSettings({
+                      [statFont ? 'statFontSize' : 'fontSize']: value,
+                    }),
+                  )
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width={statFont ? 7.3 : 10}
+                onClick={() => setStatFont(!statFont)}
+              >
+                {statFont ? 'Stat Panel' : 'Chat'}
+              </Button>
+            </Stack.Item>
+            {!!statFont && (
+              <Stack.Item>
+                <Button
+                  tooltip={
+                    statLinked
+                      ? 'Unlink Stat Panel settings from chat'
+                      : 'Link Stat Panel settings to chat'
+                  }
+                  icon={statLinked ? 'link' : 'link-slash'}
+                  color={statLinked ? 'bad' : 'good'}
+                  onClick={() =>
+                    dispatch(
+                      updateSettings({
+                        statLinked: !statLinked,
+                      }),
+                    )
+                  }
+                />
+              </Stack.Item>
+            )}
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
-          <NumberInput
-            width="4.2em"
+          <Slider
+            width="100%"
             step={0.01}
             stepPixelSize={2}
             minValue={0.8}
