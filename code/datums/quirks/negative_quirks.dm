@@ -514,6 +514,11 @@
 	mail_goodies = list(/obj/vehicle/ridden/wheelchair/motorized) //yes a fullsized unfolded motorized wheelchair does fit
 
 /datum/quirk/paraplegic/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder //Monkestation Addition
+	if(human_holder.dna.species.id == SPECIES_CETANOID) //Monkestation Addition
+		var/obj/item/organ/external/tail/tail = quirk_holder.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		QDEL_NULL(tail) //tail privileges revoked
+		return
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
 		quirk_holder.buckled.unbuckle_mob(quirk_holder)
 
@@ -538,11 +543,13 @@
 
 /datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+		human_holder.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/paraplegic/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+		human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
@@ -578,6 +585,8 @@
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(human_holder.dna.species.id == SPECIES_CETANOID) //Monkestation Addition
+		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM) //dont give cetanoids prosthetic legs roundstart
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
@@ -611,8 +620,9 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+		human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
+		human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
