@@ -56,7 +56,7 @@
 		return
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE)
+	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -85,7 +85,7 @@
 		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		affected_human.dna?.species?.handle_body(affected_human) //updates eye icon
+		affected_human.update_body()
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
