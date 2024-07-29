@@ -172,6 +172,20 @@ GLOBAL_VAR(dj_booth)
 		people_with_signals = list()
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
+	var/static/list/innate_listener_typecache
+	if(!innate_listener_typecache)
+		innate_listener_typecache = typecacheof(list(
+			/mob/camera/ai_eye,
+			/mob/camera/blob,
+			/mob/dead/observer,
+			/mob/living/basic,
+			/mob/living/carbon/alien,
+			/mob/living/eminence,
+			/mob/living/silicon,
+			/mob/living/simple_animal,
+			/mob/living/soulcatcher_soul,
+			/mob/living/split_personality,
+		))
 	var/choice = tgui_input_list(usr, "Choose which song to play.", "[src]", current_namelist)
 	if(!choice)
 		return
@@ -183,7 +197,7 @@ GLOBAL_VAR(dj_booth)
 
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM, ZTRAIT_RESERVED))
 	for(var/mob/person as anything in GLOB.player_list)
-		if(issilicon(person) || isobserver(person) || isaicamera(person) || isbot(person))
+		if(is_type_in_typecache(person, innate_listener_typecache))
 			active_listeners |=	person.client
 			continue
 		if(iscarbon(person))
@@ -198,7 +212,8 @@ GLOBAL_VAR(dj_booth)
 				people_with_signals |= anything
 
 			if(!(anything.client in active_listeners))
-				if(!(anything.z in viable_z))
+				var/turf/their_turf = get_turf(anything)
+				if(!(their_turf.z in viable_z))
 					continue
 
 				if(!anything.client)
