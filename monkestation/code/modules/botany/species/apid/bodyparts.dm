@@ -6,7 +6,7 @@
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 	brute_modifier = 1.25 //ethereal are weak to brute damage
-	head_flags = HEAD_HAIR|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
+	head_flags = HEAD_HAIR| HEAD_LIPS | HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/apid
 	icon = 'monkestation/code/modules/botany/icons/apid_sprites.dmi'

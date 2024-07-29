@@ -2,7 +2,7 @@
 /obj/item/bodypart/head/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
@@ -32,7 +32,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_ALL_FEATURES
+	head_flags = NONE
 
 /obj/item/bodypart/chest/abductor
 	limb_id = SPECIES_ABDUCTOR
@@ -118,13 +118,14 @@
 /obj/item/bodypart/leg/right/slime
 	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_SLIMEPERSON
+	head_flags = HEAD_ALL_FEATURES
+
 
 ///LUMINESCENT
 /obj/item/bodypart/head/luminescent
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
-	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/luminescent
 	biological_state = (BIO_FLESH|BIO_BLOODED)
