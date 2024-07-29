@@ -6,8 +6,6 @@
 	bodytype = BODYTYPE_CUSTOM
 
 	species_traits = list(
-		EYECOLOR,
-		LIPS,
 		NO_UNDERWEAR,
 		SPECIES_FUR,
 		)
