@@ -340,7 +340,7 @@
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 14
 
-///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
+///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother) (2024: yeah this is shit)
 /obj/item/bodypart/head/golem
 	biological_state = BIO_BONE
 	bodytype = BODYTYPE_ORGANIC
@@ -490,6 +490,7 @@
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
@@ -539,6 +540,7 @@
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
@@ -567,6 +569,7 @@
 	limb_id = SPECIES_GOLEM_BONE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/bone
 	biological_state = BIO_BONE
@@ -599,6 +602,7 @@
 	limb_id = SPECIES_GOLEM_SNOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
