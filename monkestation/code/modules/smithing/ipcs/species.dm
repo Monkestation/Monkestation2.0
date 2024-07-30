@@ -28,7 +28,6 @@
 
 	species_traits = list(
 		NO_DNA_COPY,
-		NOEYESPRITES,
 		NOTRANSSTING,
 		NOHUSK
 	)
