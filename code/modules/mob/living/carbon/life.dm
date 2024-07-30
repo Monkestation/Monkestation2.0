@@ -114,7 +114,7 @@
 			else if(isturf(loc)) //Breathe from loc as turf
 				breath_airborne_diseases() //monkestation edit - VIROLOGY
 				var/turf/our_turf = loc
-				if(src.dna.species.id != SPECIES_CETANOID && our_turf.liquids && !HAS_TRAIT(src, TRAIT_NOBREATH) && ((body_position == LYING_DOWN && our_turf.liquids.liquid_state >= LIQUID_STATE_WAIST) || (body_position == STANDING_UP && our_turf.liquids.liquid_state >= LIQUID_STATE_FULLTILE))) //MONKESTATION EDIT - "src.dna.species.id != SPECIES_CETANOID" Cetanoid lungs have custom behavior for breathing liquids.
+				if(!istype(src.get_organ_slot(ORGAN_SLOT_LUNGS),/obj/item/organ/internal/lungs/cetanoid) && our_turf.liquids && !HAS_TRAIT(src, TRAIT_NOBREATH) && ((body_position == LYING_DOWN && our_turf.liquids.liquid_state >= LIQUID_STATE_WAIST) || (body_position == STANDING_UP && our_turf.liquids.liquid_state >= LIQUID_STATE_FULLTILE))) //MONKESTATION EDIT - "!istype(src.get_organ_slot(ORGAN_SLOT_LUNGS),/obj/item/organ/internal/lungs/cetanoid)" Cetanoid lungs have custom behavior for breathing liquids.
 					//Officially trying to breathe underwater
 					if(HAS_TRAIT(src, TRAIT_WATER_BREATHING))
 						failed_last_breath = FALSE

@@ -4,6 +4,43 @@
 	preference = "feature_cetanoid_tail"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cetanoid
+	var/no_suit = TRUE
+
+/obj/item/organ/external/tail/cetanoid/on_insert(mob/living/carbon/receiver)
+	. = ..()
+	RegisterSignal(receiver, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(speed_boost))
+
+/obj/item/organ/external/tail/cetanoid/on_remove(mob/living/carbon/organ_owner)
+	. = ..()
+	remove_speed_boost(organ_owner) //fuck you you dont get an infinite speed boost by removing your tail while underwater
+	UnregisterSignal(organ_owner, COMSIG_MOVABLE_PRE_MOVE)
+
+/obj/item/organ/external/tail/cetanoid/proc/speed_boost()
+	SIGNAL_HANDLER
+
+	var/turf/cur_turf = get_turf(owner)
+	if(!cur_turf || !cur_turf.liquids)
+		return
+
+	var/depth = cur_turf.liquids.liquid_state
+	if(depth >= LIQUID_STATE_SHOULDERS && no_suit && !owner.usable_legs)
+		add_speed_boost(owner)
+	else
+		remove_speed_boost(owner)
+
+/obj/item/organ/external/tail/cetanoid/proc/add_speed_boost(mob/living/carbon/target)
+	target.add_movespeed_modifier(/datum/movespeed_modifier/cetanoid_swimming)
+	target.remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+	REMOVE_TRAIT(target, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+
+/obj/item/organ/external/tail/cetanoid/proc/remove_speed_boost(mob/living/carbon/target)
+	target.remove_movespeed_modifier(/datum/movespeed_modifier/cetanoid_swimming)
+	target.set_usable_legs(target.usable_legs) //does this to reset the limbless movespeed modifier, fucking hate this.
+	if(no_suit && !target.usable_legs)
+		ADD_TRAIT(target, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		if(!target.usable_hands)
+			ADD_TRAIT(target, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
 /datum/bodypart_overlay/mutant/tail/cetanoid
 	feature_key = "cetanoid_tail"

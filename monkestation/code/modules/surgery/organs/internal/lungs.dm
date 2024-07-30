@@ -14,7 +14,7 @@
 
 /obj/item/organ/internal/lungs/cetanoid/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	var/turf/cur_turf = get_turf(breather)
-	if(no_suit == TRUE)
+	if(no_suit == TRUE && cur_turf != null)
 		if(cur_turf.liquids != null)
 			..(breath_liquids(cur_turf.liquids, breath, breather), breather)
 		else
