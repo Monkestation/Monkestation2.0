@@ -92,6 +92,8 @@
 //monkestation edit start
 	if(roundstart && ((SSticker.round_start_time && world.time - SSticker.round_start_time >= 2 MINUTES) || (SSgamemode.ran_roundstart && !fake_check)))
 		return FALSE
+	if(istype(src, /datum/round_event_control/antagonist/solo/from_ghosts) && (SSautotransfer.starttime + 85 MINUTES <= world.time))
+		return TRUE // we just running ghost roles at this point.
 //monkestation edit end
 	if(occurrences >= max_occurrences)
 		return FALSE
@@ -357,7 +359,12 @@ Runs the event
 /datum/round_event/proc/announce_to_ghosts(atom/atom_of_interest)
 	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
+			notify_ghosts(
+				"[control.name] has an object of interest: [atom_of_interest]!",
+				source = atom_of_interest,
+				action = NOTIFY_ORBIT,
+				header = "Something's Interesting!",
+			)
 	return
 
 //Called when the tick is equal to the announce_when variable.
