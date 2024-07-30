@@ -16,6 +16,7 @@
 
 	inherent_traits = list(
 		TRAIT_NIGHT_VISION,
+		TRAIT_NO_SLIP_WATER
 	)
 
 	liked_food = SEAFOOD
@@ -70,13 +71,25 @@
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "No Legs",
-			SPECIES_PERK_DESC = "You don't have legs, but will start with a suit that allows you to walk.",
+			SPECIES_PERK_DESC = "You don't have legs, but will arrive with a suit that allows you to walk.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "Gills",
 			SPECIES_PERK_DESC = "You cannot breathe air without your cybernetic suit!",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_NAME = "Water Breather",
+			SPECIES_PERK_DESC = "You can breathe underwater!",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_NAME = "Fast Swimmer",
+			SPECIES_PERK_DESC = "You swim much faster than other species.",
 		)
 		)
 

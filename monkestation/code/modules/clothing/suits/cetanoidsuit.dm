@@ -15,6 +15,10 @@
 			var/obj/item/organ/internal/lungs/cetanoid/lungs = wearer.get_organ_slot(ORGAN_SLOT_LUNGS)
 			lungs.no_suit = FALSE //yay we can breathe
 
+		if(istype(wearer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL),/obj/item/organ/external/tail/cetanoid)) //do we have a cetanoid tail?
+			var/obj/item/organ/external/tail/cetanoid/tail = wearer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+			tail.no_suit = FALSE //no swimming for you bozo
+
 		if(wearer.dna.species.id == SPECIES_CETANOID)
 			if(!wearer.get_bodypart(BODY_ZONE_L_LEG))
 				var/obj/item/bodypart/leg/leg = new /obj/item/bodypart/leg/left/robot/digitigrade()
@@ -33,12 +37,18 @@
 		var/obj/item/organ/internal/lungs/cetanoid/lungs = wearer.get_organ_slot(ORGAN_SLOT_LUNGS)
 		lungs.no_suit = TRUE //uh oh no suit you're dying
 
+	if(istype(wearer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL),/obj/item/organ/external/tail/cetanoid)) //do we have a cetanoid tail?
+		var/obj/item/organ/external/tail/cetanoid/tail = wearer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		tail.no_suit = TRUE //yay we can swim fast
+
 	if(wearer.dna.species.id == SPECIES_CETANOID)
 		if(wearer.get_bodypart(BODY_ZONE_L_LEG))
 			var/obj/item/bodypart/leg/left/target = wearer.get_bodypart(BODY_ZONE_L_LEG)
 			if(istype(target,/obj/item/bodypart/leg/left/robot/digitigrade)) //if we have a non-digitigrade robot leg, don't delete it!
+				target.drop_limb()
 				QDEL_NULL(target) //no suit, no legs
 		if(wearer.get_bodypart(BODY_ZONE_R_LEG))
 			var/obj/item/bodypart/leg/right/target = wearer.get_bodypart(BODY_ZONE_R_LEG)
 			if(istype(target,/obj/item/bodypart/leg/right/robot/digitigrade)) //if we have a non-digitigrade robot leg, don't delete it!
+				target.drop_limb()
 				QDEL_NULL(target) //no suit, no legs
