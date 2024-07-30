@@ -25,7 +25,7 @@ map deltastation
 endmap
 
 map kilostation
-	maxplayers 40
+	minplayers 5
 	votable
 endmap
 
@@ -57,5 +57,14 @@ endmap
 
 map blueshift
 	minplayers 75
+	votable
+endmap
+
+map voidraptor
+	minplayers 40
+	votable
+endmap
+
+map ouroboros
 	votable
 endmap

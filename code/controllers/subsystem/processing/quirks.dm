@@ -30,11 +30,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Gigantism", "Dwarfism"),
-		list("Light Step","Hardened Soles"), //MONKESTATION ADDITION
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
 		list("Bilingual", "Foreigner"),
+		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
+		list("Body Purist", "Hosed", "Neuralinked")
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

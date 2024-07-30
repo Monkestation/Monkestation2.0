@@ -12,11 +12,11 @@
 	id = SPECIES_JELLYPERSON
 	species_traits = list(
 		MUTCOLORS,
-		)
+	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TOXINLOVER,
-		TRAIT_NOBLOOD
+		TRAIT_NOBLOOD,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
