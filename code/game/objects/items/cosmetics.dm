@@ -73,7 +73,7 @@
 /obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
-		var/static/list/possible_colors
+	var/static/list/possible_colors
 	if(!possible_colors)
 		possible_colors = list()
 		for(var/obj/item/lipstick/lipstick_path as anything in (typesof(/obj/item/lipstick) - src.type))

@@ -2,7 +2,7 @@
 /obj/item/bodypart/head/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
-	head_flags = head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
@@ -118,8 +118,6 @@
 /obj/item/bodypart/leg/right/slime
 	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_SLIMEPERSON
-	head_flags = HEAD_ALL_FEATURES
-
 
 ///LUMINESCENT
 /obj/item/bodypart/head/luminescent

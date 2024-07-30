@@ -30,7 +30,7 @@
 		if(item_uniform.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 			if(item_uniform.flags_inv & HIDEFACIALHAIR)
-			facial_hair_hidden = TRUE
+				facial_hair_hidden = TRUE
 	//invisibility and husk stuff
 	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 		hair_hidden = TRUE

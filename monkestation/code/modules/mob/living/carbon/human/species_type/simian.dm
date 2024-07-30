@@ -8,6 +8,7 @@
 	species_traits = list(
 		NO_UNDERWEAR,
 		SPECIES_FUR,
+		SKINTONES,
 		)
 	inherent_traits = list(
 		TRAIT_VAULTING,

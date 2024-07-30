@@ -28,9 +28,6 @@
 
 	species_traits = list(
 		NO_DNA_COPY,
-		EYECOLOR,
-		LIPS,
-		HAIR,
 		NOEYESPRITES,
 		NOTRANSSTING,
 		NOHUSK
