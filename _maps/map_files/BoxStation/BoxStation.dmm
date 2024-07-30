@@ -36732,9 +36732,6 @@
 /area/station/engineering/main)
 "miU" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/machinery/door/airlock/corporate{
-	name = "Blueshield's Quarters"
-	},
 /obj/machinery/door/airlock/highsecurity{
 	name = "Blueshield's Equipment Room"
 	},
