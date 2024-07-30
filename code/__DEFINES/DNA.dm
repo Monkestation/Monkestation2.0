@@ -78,6 +78,7 @@
 #define ANIME 7
 #define MUTCOLORS_SECONDARY 8
 #define SPECIES_FUR 9
+#define SKINTONES 10
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 7

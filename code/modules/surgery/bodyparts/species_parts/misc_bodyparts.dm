@@ -710,3 +710,5 @@
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 	unarmed_stun_threshold = 2
+
+//

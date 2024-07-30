@@ -101,7 +101,6 @@
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
 
-
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
 	QDEL_NULL(brain)
@@ -218,7 +217,6 @@
 		if(lip_style && (head_flags & HEAD_LIPS))
 			var/image/lips_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -FACE_LAYER, SOUTH)
 			lips_overlay.color = lip_color
-			worn_face_offset?.apply_offset(lips_overlay)
 			. += lips_overlay
 
 
@@ -264,7 +262,6 @@
 			. += eye_right
 	else
 		if(lip_overlay && (head_flags & HEAD_LIPS))
-			worn_face_offset?.apply_offset(lip_overlay)
 			. += lip_overlay
 
 		if(!facial_hair_hidden && facial_overlay && (head_flags & HEAD_FACIAL_HAIR))
@@ -284,7 +281,6 @@
 
 		if(show_missing_eyes && (head_flags && HEAD_EYEHOLES))
 			var/mutable_appearance/no_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
-			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
 	return
@@ -333,9 +329,6 @@
 	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
 		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
-	else if(bodytype & BODYTYPE_GOLEM)
-		debrain_icon = 'icons/mob/species/golems.dmi'
-		debrain_icon_state = "debrained"
 
 	var/image/debrain_overlay
 	if(can_rotate)
@@ -343,9 +336,6 @@
 	else
 		debrain_overlay = image(debrain_icon, debrain_icon_state, -HAIR_LAYER, SOUTH)
 	return debrain_overlay
-
-/mob/living/proc/set_haircolor(hex_string, override)
-	return
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"
