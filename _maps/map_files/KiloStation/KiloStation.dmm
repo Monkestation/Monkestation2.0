@@ -13708,6 +13708,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/old,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/fore)
 "etm" = (
@@ -21796,6 +21797,10 @@
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = 10;
 	pixel_y = -9
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -16
 	},
 /turf/open/floor/plastic,
 /area/station/maintenance/starboard/fore)
@@ -35627,6 +35632,10 @@
 /obj/structure/mirror/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -16
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ldz" = (
@@ -48980,6 +48989,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/innards,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -16
+	},
 /turf/open/floor/plastic,
 /area/station/maintenance/starboard/fore)
 "pvK" = (
