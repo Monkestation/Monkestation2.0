@@ -137,6 +137,12 @@
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
+/**
+ * Returns the amount of charge used on the cell.
+ */
+/obj/item/stock_parts/cell/proc/used_charge()
+	return maxcharge - charge
+
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
 	if(rigged && amount > 0)
@@ -145,6 +151,7 @@
 	if(!force && charge < amount)
 		return FALSE
 	charge = max(charge - amount, 0)
+	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return TRUE
@@ -158,6 +165,7 @@
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
@@ -236,7 +244,7 @@
 
 		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 
-			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
+			var/charge_limit = ETHEREAL_BLOOD_CHARGE_DANGEROUS - CELL_POWER_GAIN //Monkestation edit
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if((stomach.drain_time > world.time) || !stomach)
 				return
@@ -249,7 +257,7 @@
 			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
 			stomach.drain_time = world.time + CELL_DRAIN_TIME
 			if(do_after(user, CELL_DRAIN_TIME, target = src))
-				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+				if((charge < CELL_POWER_DRAIN) || (H.blood_volume > charge_limit)) //Monkestation edit
 					return
 				if(istype(stomach))
 					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))

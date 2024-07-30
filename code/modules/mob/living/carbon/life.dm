@@ -7,7 +7,7 @@
 		if(my_our_turf.pollution)
 			my_our_turf.pollution.touch_act(src)
 	//monkestation edit start
-	if(SSparticle_weather.running_weather)
+	if(SSparticle_weather.running_weather || SSparticle_weather.running_eclipse_weather)
 		handle_weather(seconds_per_tick)
 	//monkestation edit end
 	if(damageoverlaytemp)
@@ -16,7 +16,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
-		reagents.handle_stasis_chems(src, seconds_per_tick, times_fired)
+		reagents?.handle_stasis_chems(src, seconds_per_tick, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
@@ -123,14 +123,11 @@
 					adjustOxyLoss(3)
 					failed_last_breath = TRUE
 					if(oxyloss <= OXYGEN_DAMAGE_CHOKING_THRESHOLD && stat == CONSCIOUS)
-						to_chat(src, "<span class='userdanger'>You hold in your breath!</span>")
+						to_chat(src, span_userdanger("You hold in your breath!"))
 					else
 						//Try and drink water
-						var/datum/reagents/tempr = our_turf.liquids.take_reagents_flat(CHOKE_REAGENTS_INGEST_ON_BREATH_AMOUNT)
-						tempr.trans_to(src, tempr.total_volume, methods = INGEST)
-						qdel(tempr)
-						visible_message("<span class='warning'>[src] chokes on water!</span>", \
-									"<span class='userdanger'>You're choking on water!</span>")
+						our_turf.liquids.liquid_group.transfer_to_atom(src, CHOKE_REAGENTS_INGEST_ON_BREATH_AMOUNT)
+						visible_message(span_warning("[src] chokes on water!"), span_userdanger("You're choking on water!"))
 					return FALSE
 				if(isopenturf(our_turf))
 					var/turf/open/open_turf = our_turf
@@ -142,7 +139,7 @@
 
 				var/breath_moles = 0
 				if(environment)
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+					breath_moles = environment.total_moles() * BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 		else //Breathe from loc as obj again
@@ -501,7 +498,7 @@
 
 /mob/living/carbon/proc/handle_organs(seconds_per_tick, times_fired)
 	if(stat == DEAD)
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
+		if(reagents && (reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane))) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ in organs)
 			// On-death is where organ decay is handled
@@ -556,6 +553,7 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
+					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
@@ -578,9 +576,9 @@
  * - times_fired: The number of times SSmobs has ticked.
  */
 /mob/living/carbon/proc/handle_dead_metabolization(seconds_per_tick, times_fired)
-	if (stat != DEAD)
+	if(stat != DEAD)
 		return
-	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
+	reagents?.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)

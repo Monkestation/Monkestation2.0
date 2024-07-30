@@ -1542,6 +1542,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
+	new_mob.update_name_tag(real_name) // monkestation edit: name tags
 
 	// Transfer mind to the new mob (also handles actions and observers and stuff)
 	if(mind)
@@ -1755,7 +1756,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(AI_STATUS_OFF)
-	
+
 	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
 	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
 
@@ -1786,6 +1787,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
+	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder) // monkestation edit: COMSIG_MOB_PICKED_UP
 
 /mob/living/proc/set_name()
 	numba = rand(1, 1000)

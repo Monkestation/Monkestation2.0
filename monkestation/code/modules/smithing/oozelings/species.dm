@@ -21,7 +21,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/slime
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
-	//mutanttongue = /obj/item/organ/interal/tongue/oozeling
+	mutanttongue = /obj/item/organ/internal/tongue/jelly
 
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -40,8 +40,6 @@
 	species_language_holder = /datum/language_holder/oozeling
 	ass_image = 'icons/ass/assslime.png'
 	//swimming_component = /datum/component/swimming/dissolve
-	toxic_food = NONE
-	disliked_food = NONE
 	wing_types = list(/obj/item/organ/external/wings/functional/slime)
 
 	bodypart_overrides = list(

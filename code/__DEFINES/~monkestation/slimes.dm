@@ -21,6 +21,7 @@
 #define BB_WONT_TARGET_CLIENTS "BB_wont_target_clients"
 
 #define TRAIT_CAREFUL_STEPS "careful_steps"
+#define TRAIT_LIGHTWEIGHT "lightweight"
 #define TRAIT_SLIME_STASIS "slime_stasis"
 #define TRAIT_SLIME_RABID "slime_rabid"
 #define TRAIT_SLIME_DUST_IMMUNE "slime_dust_immune"
@@ -50,6 +51,12 @@
 #define SLIME_RANDOM_MODIFIER_MIN -0.0003
 #define SLIME_RANDOM_MODIFIER_MAX 0.0003
 
+/// How many units of slime ooze are required for a normal extract recipe.
+#define EXTRACT_RECIPE_OOZE_AMOUNT			20
+/// How many units of slime ooze (of each color) are required for a crossbreed recipe.
+#define CROSSBREED_RECIPE_OOZE_AMOUNT		250
+/// How many units of slime ooze (of each color) are required for an regenerative crossbreed recipe.
+#define REGEN_CROSSBREED_RECIPE_OOZE_AMOUNT	500
 
 #define EMOTION_HAPPY "happy"
 #define EMOTION_SAD "sad"
@@ -75,6 +82,9 @@
 
 #define COMSIG_FRIENDSHIP_CHECK_LEVEL "friendship_check_level"
 #define COMSIG_FRIENDSHIP_CHANGE "friendship_change"
-
+#define COMSIG_FRIENDSHIP_PASS_FRIENDSHIP "friendship_passfriends"
 
 #define TRAIT_RAINBOWED "rainbowed"
+
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
+#define COMSIG_CLIENT_HOVER_NEW "client_new_hover"

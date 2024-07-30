@@ -82,7 +82,7 @@
  * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
 /datum/tgui/proc/open()
-	if(!user.client)
+	if(!user?.client)
 		return FALSE
 	if(window)
 		return FALSE
@@ -202,7 +202,7 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_full_update(custom_data, force)
-	if(!user.client || !initialized || closing)
+	if(!user?.client || !initialized || closing)
 		return
 	if(!COOLDOWN_FINISHED(src, refresh_cooldown))
 		refreshing = TRUE
@@ -225,7 +225,7 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_update(custom_data, force)
-	if(!user.client || !initialized || closing)
+	if(!user?.client || !initialized || closing)
 		return
 	var/should_update_data = force || status >= UI_UPDATE
 	window.send_message("update", get_payload(
@@ -249,27 +249,27 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
+			"fancy" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_fancy),
+			"locked" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_lock),
 		),
 		"client" = list(
-			"ckey" = user.client.ckey,
-			"address" = user.client.address,
-			"computer_id" = user.client.computer_id,
+			"ckey" = user.client?.ckey,
+			"address" = user.client?.address,
+			"computer_id" = user.client?.computer_id,
 		),
 		"user" = list(
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
 	)
-	var/data = custom_data || with_data && src_object.ui_data(user)
+	var/data = custom_data || with_data && src_object?.ui_data(user)
 	if(data)
 		json_data["data"] = data
-	var/static_data = with_static_data && src_object.ui_static_data(user)
+	var/static_data = with_static_data && src_object?.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
-	if(src_object.tgui_shared_states)
-		json_data["shared"] = src_object.tgui_shared_states
+	if(src_object?.tgui_shared_states)
+		json_data["shared"] = src_object?.tgui_shared_states
 	return json_data
 
 /**

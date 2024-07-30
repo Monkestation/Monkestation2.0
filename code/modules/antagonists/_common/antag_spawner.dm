@@ -224,6 +224,7 @@
 	borg.mmi.brainmob.real_name = brainopsname
 	borg.mmi.brainmob.name = brainopsname
 	borg.real_name = borg.name
+	borg.update_name_tag() // monkestation edit: name tags
 
 	borg.key = C.key
 
@@ -255,7 +256,6 @@
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		"Do you want to play as a [initial(demon_type.name)]?",
 		check_jobban = ROLE_SLAUGHTER_DEMON,
-		role = ROLE_SLAUGHTER_DEMON,
 		poll_time = 5 SECONDS,
 		pic_source = demon_type,
 		role_name_text = initial(demon_type.name)

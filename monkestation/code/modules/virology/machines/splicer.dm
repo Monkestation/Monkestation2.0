@@ -38,16 +38,16 @@
 			to_chat(user, span_warning("You can't let go of \the [I]!"))
 			return
 		dish = I
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', vol = 50, vary = TRUE)
 		update_icon()
 
 	if(istype(I, /obj/item/disk/disease))
 		var/obj/item/disk/disease/disk = I
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."), span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
-		flick_overlay("splicer_disk", src)
-		spawn(2)
-			update_icon()
+		var/image/disk_icon = image(icon, src, "splicer_disk")
+		flick_overlay_global(disk_icon, GLOB.clients, 2 SECONDS)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 	attack_hand(user)
 
@@ -106,9 +106,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(scanning || splicing || burning)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 	if(scanning)
 		scanning--
@@ -122,7 +122,8 @@
 		burning--
 		if(!burning)
 			update_icon()
-			flick_overlay("splicer_print", src)
+			var/image/print = image(icon, src, "splicer_print")
+			flick_overlay_global(print, GLOB.clients, 2 SECONDS)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
 			if(analysed)
 				d.name = "\improper [memorybank.name] GNA disk (Stage: [memorybank.stage])"
@@ -130,58 +131,44 @@
 				d.name = "unknown GNA disk (Stage: [memorybank.stage])"
 			d.effect = memorybank
 			d.update_desc()
-			spawn(10)
-				d.forceMove(loc)
-				d.pixel_x = -6
-				d.pixel_y = 3
+			addtimer(CALLBACK(src, PROC_REF(drop_disease_disk), d), 1 SECONDS)
 
+/obj/machinery/computer/diseasesplicer/proc/drop_disease_disk(obj/item/disk/disease/disk)
+	disk.forceMove(drop_location())
+	disk.pixel_x = -6
+	disk.pixel_y = 3
 
 /obj/machinery/computer/diseasesplicer/update_overlays()
 	..()
-	if (dish)
-		var/mutable_appearance/dish_outline = mutable_appearance(icon,"smalldish2-outline", src)
-		dish_outline.alpha = 128
-		dish_outline.pixel_x = -1
-		dish_outline.pixel_y = -13
-		.+= dish_outline
-		var/mutable_appearance/dish_content = mutable_appearance(icon,"smalldish2-empty", src)
-		dish_content.alpha = 128
-		dish_content.pixel_x = -1
-		dish_content.pixel_y = -13
-		if (dish.contained_virus)
-			dish_content.icon_state = "smalldish2-color"
-			dish_content.color = dish.contained_virus.color
-		.+=dish_outline
+	. = list() // We don't use any of the overlays from the parent
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 
-	if (dish && dish.contained_virus)
+	if (dish?.contained_virus)
 		if (dish.analysed)
-			var/mutable_appearance/scan_pattern = mutable_appearance(icon,"pattern-[dish.contained_virus.pattern]b", src)
-			scan_pattern.color = "#00FF00"
-			scan_pattern.pixel_x = -2
-			scan_pattern.pixel_y = 4
-			.+= scan_pattern
-		else
-			.+= mutable_appearance(icon,"splicer_unknown")
+			var/mutable_appearance/scan_pattern = mutable_appearance(icon, "pattern-[dish.contained_virus.pattern]-s")
+			. +=  emissive_appearance(icon, "pattern-[dish.contained_virus.pattern]-s", src)
 
-	if(scanning || splicing)
-		var/mutable_appearance/splicer_glass = emissive_appearance(icon,"splicer_glass", src)
-		splicer_glass.blend_mode = BLEND_ADD
-		.+= splicer_glass
+			. += scan_pattern
+		else
+			. += mutable_appearance(icon, "splicer_unknown")
 
 	if (memorybank)
-		.+= emissive_appearance(icon,"splicer_buffer", src)
+		. += emissive_appearance(icon, "splicer_buffer", src)
+		. += mutable_appearance(icon, "splicer_buffer", src)
+
+	. += emissive_appearance(icon, "splicer_screen", src)
+	. += emissive_appearance(icon, "splicer_keyboard", src)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
-	if(!memorybank || !dish || !dish.contained_virus)
+	if(!memorybank || !dish?.contained_virus)
 		return
 
 	var/list/effects = dish.contained_virus.symptoms
-	for(var/x = 1 to effects.len)
-		var/datum/symptom/e = effects[x]
-		if(e.stage == target_stage)
+	for(var/x = 1 to length(effects))
+		if(x == target_stage)
+			var/datum/symptom/e = effects[x]
 			effects[x] = memorybank.Copy(dish.contained_virus)
 			dish.contained_virus.log += "<br />[ROUND_TIME()] [memorybank.name] spliced in by [key_name(usr)] (replaces [e.name])"
 			break
@@ -191,7 +178,7 @@
 	update_icon()
 
 /obj/machinery/computer/diseasesplicer/proc/dish2buffer(target_stage)
-	if(!dish || !dish.contained_virus)
+	if(!dish?.contained_virus)
 		return
 	if(dish.growth < 50)
 		return
@@ -206,7 +193,8 @@
 	qdel(dish)
 	dish = null
 	update_icon()
-	flick("splicer_scan", src)
+	var/image/scan = image(icon, src, "splicer_scan")
+	flick_overlay_global(scan, GLOB.clients, 2 SECONDS)
 
 /obj/machinery/computer/diseasesplicer/proc/eject_dish()
 	if(!dish)
@@ -226,7 +214,7 @@
 
 	dish.forceMove(loc)
 	if (Adjacent(usr))
-		dish.forceMove(usr.loc)
+		dish.forceMove(usr.drop_location())
 		usr.put_in_hands(dish)
 	dish = null
 	update_icon()

@@ -6,12 +6,6 @@ GLOBAL_LIST_EMPTY(deadmins) //all ckeys who have used the de-admin verb.
 GLOBAL_LIST_EMPTY(directory) //all ckeys with associated client
 GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for stealthmins
 
-GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
-	/turf/open/lava,
-	/turf/open/chasm,
-	/turf/open/space,
-	/turf/open/openspace)))
-
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/basic/blob_minion,
@@ -151,7 +145,7 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 /proc/get_crewmember_minds()
 	var/list/minds = list()
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind = target.mind_ref
+		var/datum/mind/mind = target.mind_ref?.resolve() // monkestation edit: weakreffed mind ref
 		if(mind)
 			minds += mind
 	return minds

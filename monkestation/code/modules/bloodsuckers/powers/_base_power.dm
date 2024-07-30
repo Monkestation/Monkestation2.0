@@ -54,7 +54,7 @@
 	return ..()
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
-	return next_use_time <= world.time
+	return COOLDOWN_FINISHED(src, next_use_time)
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
@@ -76,7 +76,7 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/proc/can_pay_cost()
-	if(!owner || !owner.mind)
+	if(QDELETED(owner) || QDELETED(owner.mind))
 		return FALSE
 	// Cooldown?
 	if(!COOLDOWN_FINISHED(src, next_use_time))
@@ -108,7 +108,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Torpor?
-	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(user, TRAIT_NODEATH))
+	if((check_flags & BP_CANT_USE_IN_TORPOR) && bloodsuckerdatum_power?.is_in_torpor())
 		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
@@ -124,12 +124,12 @@
 		to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
-	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)))
+	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0 && bloodsuckerdatum_power?.bloodsucker_blood_volume <= 0)
-		to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
+		to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 		return FALSE
 	return TRUE
 
@@ -186,9 +186,11 @@
 /datum/action/cooldown/bloodsucker/process(seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE) //Need this to call parent so the cooldown system works
 	. = ..()
+	if(!active) // if we're not active anyways, then we shouldn't be processing!!!
+		return
 	if(!ContinueActive(owner)) // We can't afford the Power? Deactivate it.
 		DeactivatePower()
-		return FALSE
+		return
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		if(bloodsuckerdatum_power)

@@ -108,10 +108,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "gp" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/suit_storage_unit/standard_unit{
 	mask_type = /obj/item/clothing/mask/gas;
 	storage_type = /obj/item/tank/internals/oxygen/yellow
@@ -140,6 +138,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "ho" = (
@@ -173,6 +172,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "kL" = (
@@ -215,6 +215,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "qF" = (
@@ -246,6 +247,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cockpit Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "vZ" = (
@@ -284,6 +286,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "yo" = (
@@ -519,6 +522,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "JU" = (
@@ -572,10 +576,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Nr" = (
@@ -586,6 +588,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cargo Hold Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "QG" = (
@@ -595,6 +598,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Se" = (
@@ -633,6 +637,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Uu" = (
@@ -688,10 +693,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "WL" = (
@@ -702,6 +705,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Xu" = (
@@ -722,10 +726,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
