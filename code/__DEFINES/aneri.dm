@@ -30,7 +30,6 @@
 
 #define aneri_hex_decode(input)			ANERI_CALL("hex_decode", input)
 
-
 #define aneri_url_encode(input) 		ANERI_CALL("url_encode", input)
 #define aneri_url_decode(input) 		ANERI_CALL("url_decode", input)
 
@@ -62,13 +61,17 @@
 #define aneri_toml_decode(toml)				ANERI_CALL("toml_decode", "[toml]")
 #define aneri_toml_decode_file(file)		ANERI_CALL("toml_decode_file", "[file]")
 
+/// Use instead of REGEX_QUOTE for aneri regex
+#define aneri_regex_escape(pattern)			ANERI_CALL("regex_escape", "[pattern]")
+#define aneri_regex_combine_list(patterns)	ANERI_CALL("regex_combine_list", islist(patterns) ? patterns : list(patterns))
+
 //#define file2text(fname)		aneri_file_read("[fname]")
 //#define text2file(text, fname)	aneri_file_append(text, "[fname]")
 
 #define aneri_md5(input)		ANERI_CALL("hash", "md5", input)
 #define aneri_md5_file(fname)	ANERI_CALL("hash_file", "md5", fname)
 
-/proc/aneri_replace_chars_prob(input, replacement, probability = 25, skip_whitespace = FALSE)
+/proc/aneri_replace_chars_prob(input, replacement, probability = 25, skip_whitespace = FALSE) as text
 	return ANERI_CALL("replace_chars_prob", input, replacement, probability, skip_whitespace)
 
 #if defined(ANERI_OVERRIDE_PICK) || defined(ANERI_OVERRIDE_PICK_WEIGHT)
