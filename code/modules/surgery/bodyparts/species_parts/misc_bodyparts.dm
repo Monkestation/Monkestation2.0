@@ -151,7 +151,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN
+	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -272,6 +272,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = HEAD_HAIR
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
