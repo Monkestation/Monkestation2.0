@@ -208,7 +208,7 @@
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = NONE
+	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
@@ -347,7 +347,7 @@
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
-	head_flags = NONE
+	head_flags = HEAD_EYESPRITES
 
 /obj/item/bodypart/chest/golem
 	biological_state = BIO_BONE
