@@ -209,6 +209,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = NONE
+
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = TRUE

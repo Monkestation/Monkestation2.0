@@ -37,6 +37,9 @@
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 	wing_types = list(/obj/item/organ/external/wings/functional/slime)
+	hair_color = "mutcolor"
+	hair_alpha = 150
+	facial_hair_alpha = 150
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly,
