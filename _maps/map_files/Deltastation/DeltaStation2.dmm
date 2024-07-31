@@ -41032,6 +41032,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "jIs" = (
@@ -57528,6 +57529,7 @@
 "nEd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/keycard_auth/directional/north,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "nEg" = (
