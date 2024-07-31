@@ -18227,6 +18227,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 8
 	},
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "eJz" = (
@@ -32370,6 +32371,7 @@
 "jpd" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/nanotrasen/double,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "jpp" = (
@@ -32857,6 +32859,7 @@
 	pixel_y = 5;
 	pixel_x = -6
 	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "jwT" = (
@@ -44950,6 +44953,7 @@
 "nnc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/station/command/heads_quarters/blueshield)
 "nns" = (
@@ -59132,6 +59136,15 @@
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
@@ -78156,6 +78169,7 @@
 /area/station/science/breakroom)
 "xOC" = (
 /obj/machinery/computer/records/security,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/station/command/heads_quarters/blueshield)
 "xOL" = (
