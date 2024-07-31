@@ -32472,9 +32472,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/obj/machinery/digital_clock/directional/north,
+/obj/structure/fireplace,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "kcy" = (
@@ -40923,6 +40921,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "mQZ" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/holopad,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "mRf" = (
@@ -40993,6 +40993,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "mRs" = (
@@ -65678,6 +65679,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"uFx" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/digital_clock/directional/east,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/blueshield)
 "uFH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -105759,7 +105768,7 @@ sSN
 bnl
 eql
 xkj
-mRo
+uFx
 mRo
 fqP
 qPX
