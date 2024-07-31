@@ -6116,6 +6116,7 @@
 #include "monkestation\code\modules\antagonists\slasher\slasher_outfit\slasher_headgear.dm"
 #include "monkestation\code\modules\antagonists\slasher\slasher_outfit\slasher_middlewear.dm"
 #include "monkestation\code\modules\antagonists\space_ninja\space_ninja.dm"
+#include "monkestation\code\modules\antagonists\teratoma\teratoma.dm"
 #include "monkestation\code\modules\antagonists\traitor\traitor_objective.dm"
 #include "monkestation\code\modules\antagonists\traitor\uplink_handler.dm"
 #include "monkestation\code\modules\antagonists\traitor\objectives\kidnapping.dm"
