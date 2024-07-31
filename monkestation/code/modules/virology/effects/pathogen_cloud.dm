@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	anchored = 0
 	density = 0
 	var/mob/source = null
-	var/sourceIsCarrier = TRUE
+	var/source_is_carrier = TRUE
 	var/list/viruses = list()
 	var/lifetime = 10 SECONDS //how long until we naturally disappear, humans breath about every 8 seconds, so it has to survive at least this long to have a chance to infect
 	var/turf/target = null //when created, we'll slowly move toward this turf
@@ -23,105 +23,105 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	var/list/id_list = list()
 	var/death = 0
 
-/obj/effect/pathogen_cloud/New(turf/loc, mob/sourcemob, list/virus, isCarrier = TRUE, isCore = TRUE)
-	..()
-	if (!loc || !virus || virus.len <= 0)
-		qdel(src)
-		return
-	core = isCore
-	sourceIsCarrier = isCarrier
-	GLOB.pathogen_clouds += src
+/obj/effect/pathogen_cloud/Initialize(mob/source, list/viruses, is_carrier = TRUE, is_core = TRUE)
+	. = ..()
+	if (QDELETED(loc) || !length(viruses))
+		return INITIALIZE_HINT_QDEL
+	src.source = source
+	src.viruses = viruses
+	src.source_is_carrier = is_carrier
+	src.core = is_core
 
-	viruses = virus
-
-	for(var/datum/disease/advanced/D as anything in viruses)
-		id_list += "[D.uniqueID]-[D.subID]"
+	for(var/datum/disease/advanced/virus as anything in viruses)
+		id_list += "[virus.uniqueID]-[virus.subID]"
 
 	if(!core)
-		var/obj/effect/pathogen_cloud/core/core = locate(/obj/effect/pathogen_cloud/core) in src.loc
-		if(get_turf(core) == get_turf(src))
-			for(var/datum/disease/advanced/V as anything in viruses)
-				if("[V.uniqueID]-[V.subID]" in core.id_list)
+		var/obj/effect/pathogen_cloud/core/existing_core = locate(/obj/effect/pathogen_cloud/core) in src.loc
+		if(!QDELETED(existing_core))
+			for(var/datum/disease/advanced/virus as anything in viruses)
+				if("[virus.uniqueID]-[virus.subID]" in existing_core.id_list)
 					continue
-				core.viruses |= V.Copy()
-				core.modified = TRUE
-			qdel(src)
+				existing_core.viruses |= virus.Copy()
+				existing_core.modified = TRUE
+			return INITIALIZE_HINT_QDEL
 
-	if(istype(src, /obj/effect/pathogen_cloud/core))
-		SSpathogen_clouds.cores += src
-	else
-		SSpathogen_clouds.clouds += src
+	GLOB.pathogen_clouds += src
+	register()
 
-	pathogen = image('monkestation/code/modules/virology/icons/96x96.dmi',src,"pathogen_airborne")
+	pathogen = image('monkestation/code/modules/virology/icons/96x96.dmi', src, "pathogen_airborne")
 	pathogen.plane = HUD_PLANE
-	pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-	for (var/mob/living/L as anything in GLOB.science_goggles_wearers)
-		if (L.client)
-			L.client.images |= pathogen
+	pathogen.appearance_flags = RESET_COLOR | RESET_ALPHA
+	for (var/mob/living/wearer in GLOB.science_goggles_wearers)
+		wearer.client?.images |= pathogen
 
-	source = sourcemob
+	if(lifetime)
+		QDEL_IN(src, lifetime)
 
-	death = world.time + lifetime
+/obj/effect/pathogen_cloud/Destroy()
+	GLOB.pathogen_clouds -= src
+	unregister()
+	if(pathogen)
+		for(var/mob/living/wearer in GLOB.science_goggles_wearers)
+			wearer.client?.images -= pathogen
+		pathogen = null
+	source = null
+	viruses = null
+	target = null
+	return ..()
 
-	START_PROCESSING(SSpathogen_processing, src)
+/obj/effect/pathogen_cloud/proc/register()
+	SSpathogen_clouds.clouds += src
 
-/obj/effect/pathogen_cloud/process(seconds_per_tick)
-	if(death <= world.time)
-		qdel(src)
-		return PROCESS_KILL
+/obj/effect/pathogen_cloud/proc/unregister()
+	SSpathogen_clouds.clouds -= src
+	SSpathogen_clouds.current_run_clouds -= src
 
 /obj/effect/pathogen_cloud/core
 	core = TRUE
 
-/obj/effect/pathogen_cloud/Destroy()
+/obj/effect/pathogen_cloud/core/Initialize(mapload, list/viruses, is_carrier = TRUE, is_core = TRUE)
 	. = ..()
-	STOP_PROCESSING(SSpathogen_processing, src)
-
-	if(istype(src, /obj/effect/pathogen_cloud/core))
-		SSpathogen_clouds.cores -= src
-		SSpathogen_clouds.current_run_cores -= src
-	else
-		SSpathogen_clouds.clouds -= src
-		SSpathogen_clouds.current_run_clouds -= src
-
-	if (pathogen)
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
-			if (L.client)
-				L.client.images -= pathogen
-		pathogen = null
-	GLOB.pathogen_clouds -= src
-	source = null
-	viruses = list()
-	lifetime = 3
-	target = null
-	. = ..()
-
-/obj/effect/pathogen_cloud/core/New(turf/loc, mob/sourcemob, list/virus)
-	..()
-	if (!loc || !virus || virus.len <= 0)
+	if(.)
 		return
-
 	var/strength = 0
-	for (var/datum/disease/advanced/V as anything in viruses)
-		strength += V.infectionchance
-	strength = round(strength/viruses.len)
-	var/list/possible_turfs = list()
-	for (var/turf/open/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
-		if(isclosedturf(T))
-			continue
-		possible_turfs += T
-	target = pick(possible_turfs)
+	for (var/datum/disease/advanced/virus as anything in viruses)
+		strength += virus.infectionchance
+	strength = round(strength / length(viruses))
+	var/spread_range = max(0, (strength / 20) - 1)
+	if(spread_range > 0)
+		var/list/possible_turfs = list()
+		for(var/turf/open/turf as anything in RANGE_TURFS(spread_range, loc)) //stronger viruses can reach turfs further away.
+			if(!isopenturf(turf) || QDELING(turf))
+				continue
+			possible_turfs += turf
+		if(length(possible_turfs))
+			target = pick(possible_turfs)
+	START_PROCESSING(SSpathogen_processing, src)
 
+/obj/effect/pathogen_cloud/core/Destroy()
+	STOP_PROCESSING(SSpathogen_processing, src)
+	return ..()
+
+/obj/effect/pathogen_cloud/core/register()
+	SSpathogen_clouds.cores += src
+
+/obj/effect/pathogen_cloud/core/unregister()
+	SSpathogen_clouds.cores -= src
+	SSpathogen_clouds.current_run_cores -= src
 
 /obj/effect/pathogen_cloud/core/process(seconds_per_tick)
-	. = ..()
+	if(!moving)
+		return PROCESS_KILL
 	var/turf/open/turf = get_turf(src)
+	if(!istype(turf) || QDELING(turf))
+		qdel(src)
+		return PROCESS_KILL
 	if ((turf != target) && moving)
-		if (prob(75))
-			if(!step_towards(src,target)) // we hit a wall and our momentum is shattered
+		if(!QDELETED(target) && SPT_PROB(75, seconds_per_tick))
+			if(!step_towards(src, target)) // we hit a wall and our momentum is shattered
 				moving = FALSE
 		else
 			step_rand(src)
-		var/obj/effect/pathogen_cloud/C = new /obj/effect/pathogen_cloud(turf, source, viruses, sourceIsCarrier, FALSE)
-		C.modified = modified
-		C.moving = FALSE
+		var/obj/effect/pathogen_cloud/new_cloud = new(turf, source, viruses, source_is_carrier, FALSE)
+		new_cloud.modified = src.modified
+		new_cloud.moving = FALSE

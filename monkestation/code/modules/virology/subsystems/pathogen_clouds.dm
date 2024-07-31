@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	init_order = INIT_ORDER_PATHOGEN
 	priority = FIRE_PRIORITY_PATHOGEN
 	wait = 1 SECONDS
-	flags = SS_BACKGROUND
+	flags = SS_NO_INIT | SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/current_run_cores = list()
@@ -20,22 +20,24 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	msg += "Clouds:[length(clouds)]"
 	return ..()
 
-
-/datum/controller/subsystem/pathogen_clouds/Initialize()
-	return SS_INIT_SUCCESS
-
 /datum/controller/subsystem/pathogen_clouds/fire(resumed = FALSE)
 
 	if(!length(cores) && !length(clouds))
-		current_run_clouds = list()
-		current_run_cores = list()
+		current_run_clouds.Cut()
+		current_run_cores.Cut()
 		return
 
+	list_clear_nulls(clouds)
+	list_clear_nulls(cores)
+
 	if(current_run_level == "clouds")
+		list_clear_nulls(current_run_clouds)
 		for(var/obj/effect/pathogen_cloud/cloud as anything in current_run_clouds)
-			if(QDELETED(cloud) || isnull(cloud))
+			if(QDELETED(cloud))
 				current_run_clouds -= cloud
 				continue
+			if(MC_TICK_CHECK)
+				return
 			//If we exist ontop of a core transfer viruses and die unless parent this means something moved back.
 			//This should prevent mobs breathing in hundreds of clouds at once
 			for(var/obj/effect/pathogen_cloud/core/core in cloud.loc)
@@ -45,7 +47,6 @@ SUBSYSTEM_DEF(pathogen_clouds)
 					core.viruses |= V.Copy()
 					core.modified = TRUE
 				qdel(cloud)
-				CHECK_TICK
 			current_run_clouds -= cloud
 		current_run_level = "cores"
 		if(!length(current_run_clouds))
@@ -55,11 +56,13 @@ SUBSYSTEM_DEF(pathogen_clouds)
 			current_run_clouds = clouds.Copy()
 
 	if(current_run_level == "cores")
+		list_clear_nulls(current_run_cores)
 		for(var/obj/effect/pathogen_cloud/core as anything in current_run_cores)
-			if(QDELETED(core) || isnull(core))
+			if(QDELETED(core))
 				current_run_cores -= core
 				continue
-
+			if(MC_TICK_CHECK)
+				return
 			if(!core.moving || core.target == get_turf(core))
 				for (var/obj/effect/pathogen_cloud/core/other_C in core.loc)
 					if(other_C == core)
@@ -71,7 +74,6 @@ SUBSYSTEM_DEF(pathogen_clouds)
 							core.viruses |= V.Copy()
 							core.modified = TRUE
 						qdel(other_C)
-						CHECK_TICK
 				core.moving = FALSE
 				current_run_cores -= core
 		current_run_level = "clouds"

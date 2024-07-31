@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		return
 
 	if(mob.immune_system)
-		if(prob(10 - (robustness * 0.01))) //100 robustness don't auto cure
+		if(SPT_PROB(10 - (robustness * 0.01), seconds_per_tick)) //100 robustness don't auto cure
 			mob.immune_system.NaturalImmune()
 
 	if(!mob.immune_system.CanInfect(src))
@@ -176,11 +176,11 @@ GLOBAL_LIST_INIT(virusDB, list())
 			ticks += 10
 		else
 			logged_virusfood=0
-	if(prob(strength * 0.1))
+	if(SPT_PROB(strength * 0.1, seconds_per_tick))
 		incubate(mob, 1)
 
 	//Moving to the next stage
-	if(ticks > stage*100 && prob(stageprob))
+	if(ticks > (stage * 100) && SPT_PROB(stageprob, seconds_per_tick))
 		incubate(mob, 1)
 		if(stage < max_stages)
 			log += "<br />[ROUND_TIME()] NEXT STAGE ([stage])"
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 			if (MOB_SIZE_HUGE)
 				mob.bodytemperature += fever*2
 
-		if (fever > 0  && prob(3))
+		if (fever > 0  && SPT_PROB(3, seconds_per_tick))
 			switch (fever_warning)
 				if (0)
 					to_chat(mob, span_warning("You feel a fever coming on, your body warms up and your head hurts a bit."))

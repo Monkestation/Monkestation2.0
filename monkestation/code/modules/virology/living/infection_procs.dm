@@ -69,67 +69,67 @@
 
 //Called in Life() by humans (in handle_breath.dm), monkeys and mice
 /mob/living/proc/breath_airborne_diseases()//only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
-	if (!check_airborne_sterility() && isturf(loc))//checking for sterile mouth protections
-		breath_airborne_diseases_from_clouds()
+	if (check_airborne_sterility() || !isturf(loc)) //checking for sterile mouth protections
+		return
+	breath_airborne_diseases_from_clouds()
 
-		var/turf/T = get_turf(src)
-		var/list/breathable_cleanable_types = list(
-			/obj/effect/decal/cleanable/blood,
-			/obj/effect/decal/cleanable/vomit,
-			)
+	var/turf/T = get_turf(src)
+	var/list/breathable_cleanable_types = list(
+		/obj/effect/decal/cleanable/blood,
+		/obj/effect/decal/cleanable/vomit,
+		)
 
-		for(var/obj/effect/decal/cleanable/C in T)
-			if (is_type_in_list(C,breathable_cleanable_types))
-				if(istype(C.diseases,/list) && C.diseases.len > 0)
-					for(var/datum/disease/advanced/V as anything in C.diseases)
-						if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
-							infect_disease(V, notes="(Airborne, from [C])")
-		/*
-		for(var/obj/effect/rune/R in T)
-			if(istype(R.virus2,/list) && R.virus2.len > 0)
-				for(var/datum/disease/advanced/V as anything in R.diseases)
+	for(var/obj/effect/decal/cleanable/C in T)
+		if (is_type_in_list(C,breathable_cleanable_types))
+			if(istype(C.diseases,/list) && C.diseases.len > 0)
+				for(var/datum/disease/advanced/V as anything in C.diseases)
 					if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
-						infect_disease(V, notes="(Airborne, from [R])")
-		*/
+						infect_disease(V, notes="(Airborne, from [C])")
+	/*
+	for(var/obj/effect/rune/R in T)
+		if(istype(R.virus2,/list) && R.virus2.len > 0)
+			for(var/datum/disease/advanced/V as anything in R.diseases)
+				if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
+					infect_disease(V, notes="(Airborne, from [R])")
+	*/
 
-		spawn (1)
-			//we don't want the rest of the mobs to start breathing clouds before they've settled down
-			//otherwise it can produce exponential amounts of lag if many mobs are in an enclosed space
-			spread_airborne_diseases()
+	// We don't want the rest of the mobs to start breathing clouds before they've settled down
+	// Otherwise it can produce exponential amounts of lag if many mobs are in an enclosed space
+	INVOKE_ASYNC(src, PROC_REF(spread_airborne_diseases))
 
 /mob/living/proc/breath_airborne_diseases_from_clouds()
-	for(var/turf/T in range(1, src))
+	for(var/turf/open/turf as anything in RANGE_TURFS(1, src))
+		if(!isopenturf(turf) || QDELING(turf))
+			continue
 		var/sanity = 0
-		for(var/obj/effect/pathogen_cloud/cloud in T.contents)
+		for(var/obj/effect/pathogen_cloud/cloud in turf.contents)
 			if(sanity > 10)
 				break
 			sanity++ //anything more than 10 and you aint getting air really
-			if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
-				if (Adjacent(cloud))
-					for (var/datum/disease/advanced/V in cloud.viruses)
-						//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
-						infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
+			if(!Adjacent(cloud))
+				continue
+			if(!cloud.source_is_carrier || cloud.source != src || cloud.modified)
+				for (var/datum/disease/advanced/virus as anything in cloud.viruses)
+					//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
+					infect_disease(virus, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
 /mob/living/proc/handle_virus_updates(seconds_per_tick)
 	if(status_flags & GODMODE)
-		return 0
-
+		return FALSE
 	find_nearby_disease()//getting diseases from blood/mucus/vomit splatters and open dishes
-
 	activate_diseases(seconds_per_tick)
 
 /mob/living/proc/activate_diseases(seconds_per_tick)
 	if (length(diseases))
 		var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
-		for (var/datum/disease/advanced/V  as anything in diseases)
-			if(istype(V))
-				V.activate(src, active_disease != V, seconds_per_tick)
-
-				if(HAS_TRAIT(src, TRAIT_IRRADIATED))
-					if (prob(50))//radiation turns your body into an inefficient pathogenic incubator.
-						V.incubate(src, 1)
-						//effect mutations won't occur unless the mob also has ingested mutagen
-						//and even if they occur, the new effect will have a badness similar to the old one, so helpful pathogen won't instantly become deadly ones.
+		for (var/datum/disease/advanced/virus  as anything in diseases)
+			if(!istype(virus))
+				continue
+			virus.activate(src, active_disease != virus, seconds_per_tick)
+			if(HAS_TRAIT(src, TRAIT_IRRADIATED) && SPT_PROB(50, seconds_per_tick)) //radiation turns your body into an inefficient pathogenic incubator.
+				virus.incubate(src, 1)
+				//effect mutations won't occur unless the mob also has ingested mutagen
+				//and even if they occur, the new effect will have a badness similar to the old one, so helpful pathogen won't instantly become deadly ones.
 	else
 		//Slowly decay back to regular strength immune system while you are sick
 		if(immune_system?.strength > 1)
