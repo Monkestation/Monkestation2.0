@@ -87057,6 +87057,10 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
+"qUW" = (
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/noslip,
+/area/station/maintenance/gag_room)
 "qVa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -210178,7 +210182,7 @@ ulx
 ulx
 ulx
 oCx
-feB
+qUW
 iVj
 iVj
 iVj
