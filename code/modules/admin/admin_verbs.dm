@@ -148,6 +148,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/spawn_liquid, //monkestation addition
+	/client/proc/spawn_sunbeam,
 	/client/proc/spawn_pollution, //monkestation addition
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition
@@ -274,6 +275,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 		var/rights = holder.rank_flags()
 		add_verb(src, GLOB.admin_verbs_default)
+		add_verb(src, GLOB.mentor_verbs) // monkestation edit: mentors
 		if(rights & R_BUILD)
 			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
@@ -320,7 +322,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
-		/client/proc/readmin
+		/client/proc/readmin,
+		GLOB.mentor_verbs //Monkestation Edit
 		))
 
 /client/proc/hide_verbs()
