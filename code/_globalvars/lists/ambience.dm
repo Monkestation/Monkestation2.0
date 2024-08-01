@@ -98,6 +98,11 @@ GLOBAL_LIST_INIT(space_ambience,list(
 	'sound/ambience/ambispace.ogg',
 	'sound/ambience/ambispace2.ogg',
 	'sound/ambience/ambispace3.ogg',
+	// monkestation addition: more space ambient
+	'sound/ambience/ambispace4.ogg',
+	'sound/ambience/ambispace5.ogg',
+	'sound/ambience/ambispace6.ogg',
+	// monkestation end
 	'sound/ambience/title2.ogg',
 ))
 
