@@ -12,16 +12,21 @@
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
-	//stages for alerts
+	/**
+	* Stages for countdown warnings and alerts.
+	* 0 = no major alerts,
+	* 1 = the timer has reached 60 seconds,
+	* 2 = the timer has reached 10 seconds (it will reset to zero immediately after)
+	*/
 	var/stage = 0
 	//location to call out on priority message
-	var/alerthere = null
+	var/alerthere = ""
 	/// The TTV inserted in the machine.
 	var/obj/item/transfer_valve/inserted_bomb
 	//combined gasmix to determine the simulation to reality
 	var/datum/gas_mixture/combined_gasmix
 	//Timer till detonation in seconds
-	var/default_time = 420
+	var/default_time = 42 SECONDS
 	//used to track current world time
 	var/timer = null
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
@@ -46,6 +51,8 @@
 	var/radio_key = /obj/item/encryptionkey/headset_sci
 	///The common channel
 	var/common_channel = null
+	//Cooldown for pressing button
+	var/COOLDOWN_BOMB_BUTTON
 
 /obj/machinery/bomb_actualizer/Initialize(mapload)
 	. = ..()
@@ -57,7 +64,15 @@
 	countdown = new(src)
 	update_appearance()
 
-	//Stolen from anomaly_refinery
+//For when the machine is destroyed
+/obj/machinery/bomb_actualizer/Destroy()
+	inserted_bomb = null
+	radio = null
+	combined_gasmix = null
+	QDEL_NULL(countdown)
+	end_processing()
+	return ..()
+
 /obj/machinery/bomb_actualizer/attackby(obj/item/tool, mob/living/user, params)
 	if(active && istype(tool, /obj/item/transfer_valve))
 		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
@@ -103,28 +118,34 @@
  * Starts the Detonation Sequence
  */
 /obj/machinery/bomb_actualizer/proc/start_detonation()
-	if(active)
-		say("ERROR: The countdown has aready begun!!!")
-		return
+	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BOMB_BUTTON))
 
-	if(!istype(inserted_bomb))
-		say("ERROR: No Bomb Inserted")
-		return
+		if(active)
+			say("ERROR: The countdown has aready begun!!!")
+			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
+			return
 
-	alerthere = get_area(src)
-	if(!on_reebe(src))
-		say("Beginning detonation sequence. Countdown starting.")
-		countdown.start()
-		active = TRUE
-		next_beep = world.time + 10
-		timer = world.time + (default_time * 10)
+		else if(!istype(inserted_bomb))
+			say("ERROR: No Bomb Inserted")
+			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
+			return
 
-		begin_processing()
-		priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
-					Remove the tampering device within 7 Minutes or evacuate the localized areas. \
-					Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
-		return
-	say("UNKNOWN ERROR: Nice try nerd. ")
+
+		else if(!on_reebe(src))
+			say("Beginning detonation sequence. Countdown starting.")
+			alerthere = get_area(src)
+			countdown.start()
+			active = TRUE
+			next_beep = world.time + 1 SECONDS
+			timer = world.time + (default_time * 1 SECONDS)
+			begin_processing()
+			priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
+						Remove the tampering device within 7 Minutes or evacuate the localized areas. \
+						Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
+			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
+			return
+		say("UNKNOWN ERROR: Nice try nerd. ")
+		TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
 	return
 
 //Process for handling the bombs timer
@@ -143,11 +164,11 @@
 		next_beep = world.time +10
 	if(seconds_remaining() == 60)
 		radio.talk_into(src, "WARNING: DETONATION IN ONE MINUTE.", common_channel)
-		if(stage == 0)
+		if(!stage)
 			playsound(loc, scarywarning, volume, FALSE)
 			stage++
 	if(seconds_remaining() == 10)
-		if(stage == 1)
+		if(stage)
 			radio.talk_into(src, "FAILSAFE DISENGAGED, DETONATION IMMINENT", common_channel)
 			playsound(loc, verybadsound, 80, FALSE)
 			stage++
@@ -162,40 +183,42 @@
 
 /obj/machinery/bomb_actualizer/proc/seconds_remaining()
 	if(active)
-		. = max(0, round((timer - world.time) / 10))
+		. = max(0, round((timer - world.time) / 1 SECONDS))
 
 	else
 		. = 420
 
 
 
-
-//catches the parameter of the TTV's explosions as it happens internally, cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
+	/**
+	* catches the parameters of the TTV's explosion as it happens internally,
+	* cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
+	* while REDUCING the theoretical size by actualizer multiplier
+	* (actualizer_multiplier 0.25 would mean the 200 size theoretical bomb is only 12 + (200*0.25) in size )
+	*/
 /obj/machinery/bomb_actualizer/proc/modify_explosion(atom/source, list/arguments)
 	SIGNAL_HANDLER
-	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
-	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
-	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
-	var/flame = 0
-	var/flash = 0
-	var/turf/location = get_turf(src)
-	var/actualizer_multiplier = 0.25
-	var/capped_heavy
-	var/capped_medium
-	var/capped_light
-
-	if(heavy > 3)
-		capped_heavy = (GLOB.MAX_EX_DEVESTATION_RANGE + (heavy * actualizer_multiplier))
-
-	if(medium > 7)
-		capped_medium = (GLOB.MAX_EX_HEAVY_RANGE + (medium * actualizer_multiplier))
-
-	if(light > 14)
-		capped_light = (GLOB.MAX_EX_LIGHT_RANGE + (light * actualizer_multiplier))
-
-
-// creates the new explosion, cancels the old one, this will get called twice so i just made it cancel in case its already exploded
 	if(!exploded)
+		var/heavy = arguments[EXARG_KEY_DEV_RANGE]
+		var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
+		var/light = arguments[EXARG_KEY_LIGHT_RANGE]
+		var/flame = 0
+		var/flash = 0
+		var/turf/location = get_turf(src)
+		var/actualizer_multiplier = 0.25
+		var/capped_heavy
+		var/capped_medium
+		var/capped_light
+
+		if(heavy > 3)
+			capped_heavy = (GLOB.MAX_EX_DEVESTATION_RANGE + (heavy * actualizer_multiplier))
+
+		if(medium > 7)
+			capped_medium = (GLOB.MAX_EX_HEAVY_RANGE + (medium * actualizer_multiplier))
+
+		if(light > 14)
+			capped_light = (GLOB.MAX_EX_LIGHT_RANGE + (light * actualizer_multiplier))
+
 		SSexplosions.explode(location, capped_heavy, capped_medium, capped_light, flame, flash, TRUE, TRUE, FALSE, FALSE)
 		exploded = TRUE
 		return COMSIG_CANCEL_EXPLOSION
@@ -211,15 +234,6 @@
 	else
 		. += span_notice({"The digital display on it is inactive."})
 
-//when crew inevitably bashes the thing to pieces hopefully
-/obj/machinery/bomb_actualizer/Destroy()
-	inserted_bomb = null
-	radio = null
-	combined_gasmix = null
-	QDEL_NULL(countdown)
-	end_processing()
-	return ..()
-
 /obj/machinery/bomb_actualizer/ui_interact(mob/user, datum/tgui/ui)
 	.=..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -233,3 +247,4 @@
 		return
 	if(action == "start_timer" && !active)
 		start_detonation()
+
