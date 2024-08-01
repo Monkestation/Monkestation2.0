@@ -82,6 +82,7 @@
 #define COMSIG_KB_MOB_TARGETLEFTLEG_DOWN "keybinding_mob_targetleftleg_down"
 #define COMSIG_KB_MOB_BLOCKMOVEMENT_DOWN "keybinding_mob_blockmovement_down"
 #define COMSIG_KB_MOB_SHOW_NAMES_DOWN "keybinding_mob_show_names_down"
+#define COMSIG_KB_MOB_PIXELSHIFT "keybinding_mob_pixelshift"
 
 //Robot
 #define COMSIG_KB_SILICON_TOGGLEMODULEONE_DOWN "keybinding_silicon_togglemoduleone_down"

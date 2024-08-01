@@ -576,3 +576,11 @@
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()
+
+//SKYRAT EDIT ADDITION BEGIN - PIXEL_SHIFT
+	if(mob.shifting)
+		mob.pixel_shift(direct)
+		return FALSE
+	else if(mob.is_shifted)
+		mob.unpixel_shift()
+	//SKYRAT EDIT ADDITION END
