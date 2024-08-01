@@ -56,6 +56,8 @@
 	var/mob/living/carbon/human/user = thrower
 	if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/bowling_jersey))
 		pro_wielded = TRUE
+	else
+		pro_wielded = FALSE
 	. = ..()
 
 /obj/item/bowling_ball/proc/get_target(turf/target, turf/starting)
@@ -76,13 +78,13 @@
 		return ..()
 	playsound(src, 'hippiestation/sound/effects/bowlhit.ogg', 60, 0)
 	if(pro_wielded)
-		target_mob.Knockdown(80)
-		target_mob.setStaminaLoss(40)
+		target_mob.Knockdown(90)
+		target_mob.adjustBruteLoss(20)
 		if(prob(30))
-			target_mob.emote(pick("scream", "superfart", "cry"))
+			target_mob.emote(pick("scream", "superfart"))
 	else
 		target_mob.Knockdown(10)
 		if(prob(20))
-			target_mob.emote(pick("scream", "laugh"))
+			target_mob.emote("scream")
 
 
