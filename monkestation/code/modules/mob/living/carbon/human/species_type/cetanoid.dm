@@ -71,13 +71,13 @@
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "No Legs",
-			SPECIES_PERK_DESC = "You don't have legs, but will arrive with a suit that allows you to walk.",
+			SPECIES_PERK_DESC = "You don't have legs, but will arrive with a jumpsuit accessory that allows you to walk.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "Gills",
-			SPECIES_PERK_DESC = "You cannot breathe air without your cybernetic suit!",
+			SPECIES_PERK_DESC = "You cannot breathe air without your helmet!",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,

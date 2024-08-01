@@ -37,10 +37,6 @@
 /obj/item/organ/external/tail/cetanoid/proc/remove_speed_boost(mob/living/carbon/target)
 	target.remove_movespeed_modifier(/datum/movespeed_modifier/cetanoid_swimming)
 	target.set_usable_legs(target.usable_legs) //does this to reset the limbless movespeed modifier, fucking hate this.
-	if(no_suit && !target.usable_legs)
-		ADD_TRAIT(target, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		if(!target.usable_hands)
-			ADD_TRAIT(target, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
 /datum/bodypart_overlay/mutant/tail/cetanoid
 	feature_key = "cetanoid_tail"

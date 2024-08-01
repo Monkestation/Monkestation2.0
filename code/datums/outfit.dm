@@ -172,6 +172,7 @@
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
 		EQUIP_OUTFIT_ITEM(uniform, ITEM_SLOT_ICLOTHING)
+		apply_cetanoid_legs(H) //MONKESTATION ADDITION - Adds the cetanoid legs accessory to jumpsuits on Cetanoids.
 	if(suit)
 		EQUIP_OUTFIT_ITEM(suit, ITEM_SLOT_OCLOTHING)
 	if(belt)
@@ -480,3 +481,25 @@
 	. = ..()
 	if(href_list[VV_HK_TO_OUTFIT_EDITOR])
 		usr.client.open_outfit_editor(src)
+
+//MONKESTATION ADDITION
+/datum/outfit/proc/apply_cetanoid_legs(mob/living/carbon/human/H)
+	if(H.dna.species.id == SPECIES_CETANOID)
+		var/obj/item/clothing/under/jumpsuit = H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+		var/obj/item/clothing/accessory/cetanoid_legs/legs
+		var/job_label = "undefineddepartment"
+
+		if(H.mind.assigned_role.departments_list != null)
+			job_label = H.mind.assigned_role.departments_list[1].label_class
+
+		var/path = text2path("/obj/item/clothing/accessory/cetanoid_legs/[job_label]")
+
+		if(job_label == "undefineddepartment" || job_label == "spooktober" || job_label == "silicon") //if someone somehow manages to spawn as a cetanoid while in the silicon department i think we have bigger problems than giving them uniquely colored legs
+			legs = new /obj/item/clothing/accessory/cetanoid_legs
+		else
+			if(H.mind.assigned_role.title == "Captain")
+				legs = new /obj/item/clothing/accessory/cetanoid_legs/command/captain
+			else
+				legs = new path
+
+		jumpsuit.attach_accessory(legs, null)
