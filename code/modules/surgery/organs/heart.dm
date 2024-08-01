@@ -390,7 +390,7 @@
 
 	//Monkestation Edit Begin
 	if(IS_BLOODSUCKER(ethereal) && SSsunlight.sunlight_active)
-		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize"))
+		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize."))
 		stop_crystalization_process(ethereal, FALSE)
 		return
 	//Monkestation Edit End
