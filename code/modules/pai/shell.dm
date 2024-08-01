@@ -59,10 +59,6 @@
 	if(!choice)
 		return FALSE
 	set_holochassis(choice)
-	if (choice == "cat" || choice == "kitten")
-		ADD_TRAIT(src, TRAIT_CAT, PAI_FOLDED)
-	else
-		REMOVE_TRAIT(src, TRAIT_CAT, PAI_FOLDED)
 	balloon_alert(src, "[choice] composite engaged")
 	update_resting()
 	return TRUE

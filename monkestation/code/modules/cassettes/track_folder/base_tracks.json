@@ -5,7 +5,7 @@
 	"duration": 1500,
 	"artist": "X-CEED",
 	"secret": false,
-	"lobby": false,
+	"lobby": true,
 	"jukebox": true,
 	"genre": "Jazz"
 	},
@@ -15,7 +15,7 @@
 	"duration": 1180,
 	"artist": "Cboyardee",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Electronic"
 	},
@@ -3820,7 +3820,7 @@
 	"artist": "Madducks",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3830,7 +3830,7 @@
 	"artist": "Chronoquest",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3840,7 +3840,7 @@
 	"artist": "Chronoquest",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3850,7 +3850,7 @@
 	"artist": "Chronoquest",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3860,7 +3860,7 @@
 	"artist": "Chronoquest",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3870,7 +3870,7 @@
 	"artist": "Terrible Tim",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3880,7 +3880,7 @@
 	"artist": "Bizaonacci",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3890,7 +3890,7 @@
 	"artist": "LISA:The Pointless",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -3900,7 +3900,7 @@
 	"artist": "Skyline",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
