@@ -92,6 +92,16 @@
 		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 	if(accessory_overlay)
 		. += accessory_overlay
+	//MONKESTATION ADDITION - For the cetanoid legs accessory.
+	var/mob/living/carbon/user = src.loc
+	if(user.dna.species.id == SPECIES_CETANOID && !user.usable_legs)
+		for(var/obj/item/clothing/accessory/cetanoid_legs/legs in attached_accessories)
+			var/mutable_appearance/legs_overlay = mutable_appearance(legs.worn_icon, legs.icon_state)
+			. += legs_overlay
+			var/mutable_appearance/legs_color_overlay = mutable_appearance(legs.worn_icon, "overlay")
+			legs_color_overlay.color = legs.overlay_color
+			. += legs_color_overlay
+	//END OF MONKESTATION ADDITION
 
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
@@ -235,6 +245,10 @@
 /// Only the first accessory attached is displayed (currently)
 /obj/item/clothing/under/proc/create_accessory_overlay()
 	var/obj/item/clothing/accessory/prime_accessory = attached_accessories[1]
+	if(istype(prime_accessory, /obj/item/clothing/accessory/cetanoid_legs)) //MONKESTATION EDIT - We already create an overlay for cetanoid legs, don't let them prevent another accessory from displaying.
+		for(var/obj/item/clothing/accessory/new_accessory in attached_accessories)
+			if(!istype(new_accessory, /obj/item/clothing/accessory/cetanoid_legs))
+				prime_accessory = new_accessory
 	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color

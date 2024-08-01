@@ -10,11 +10,11 @@
 	name = "cetanoid lungs"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "lungs"
-	var/no_suit = TRUE //cetanoids need their cybernetic suit to breathe
+	var/no_helmet = TRUE //cetanoids need their cybernetic helmet to breathe
 
 /obj/item/organ/internal/lungs/cetanoid/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	var/turf/cur_turf = get_turf(breather)
-	if(no_suit == TRUE && cur_turf != null)
+	if(no_helmet == TRUE && cur_turf != null)
 		if(cur_turf.liquids != null)
 			..(breath_liquids(cur_turf.liquids, breath, breather), breather)
 		else

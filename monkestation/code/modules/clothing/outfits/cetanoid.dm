@@ -1,4 +1,3 @@
 /datum/outfit/cetanoid
 	name = "Assistant Cetanoid"
-
-	suit = /obj/item/clothing/suit/cetanoid_suit
+	head = /obj/item/clothing/head/fish_bowl
