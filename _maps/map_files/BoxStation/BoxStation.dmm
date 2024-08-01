@@ -8792,7 +8792,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "cSx" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/chapel/funeral)
 "cSz" = (
@@ -40217,7 +40217,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/command/teleporter)
 "nmw" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "nmY" = (
