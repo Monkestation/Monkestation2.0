@@ -4867,8 +4867,6 @@
 #include "code\modules\photography\photos\album.dm"
 #include "code\modules\photography\photos\frame.dm"
 #include "code\modules\photography\photos\photo.dm"
-#include "code\modules\pixel_shift\pixel_shift_component.dm"
-#include "code\modules\pixel_shift\pixel_shift_keybind.dm"
 #include "code\modules\pixel_shift\pixel_shift_mob.dm"
 #include "code\modules\plumbing\ducts.dm"
 #include "code\modules\plumbing\plumbers\_plumb_machinery.dm"
