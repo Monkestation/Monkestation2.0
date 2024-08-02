@@ -925,7 +925,8 @@
 	icon = 'icons/obj/flora/xenoflora.dmi'
 	density = FALSE
 	light_color = COLOR_WHITE
-	light_range = 2
+	light_inner_range = 1 //monkestation edit
+	light_outer_range = 2 //monkestation edit
 
 /obj/structure/flora/lunar_plant/Initialize(mapload)
 	. = ..()

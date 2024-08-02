@@ -106,13 +106,14 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+//monkestation edit start
 /datum/design/rollerbed
 	name = "Roller Bed"
 	desc = "For the modern coma patient on the go!  Much better than dragging a bleeding person along the floor."
 	id = "rollerbed"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
-	build_path = /obj/item/roller/
+	build_path = /obj/item/emergency_bed
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
@@ -129,6 +130,7 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+//monkestation edit end
 
 /datum/design/bluespacebodybag
 	name = "Bluespace Body Bag"

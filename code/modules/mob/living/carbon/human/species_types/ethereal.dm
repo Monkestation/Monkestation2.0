@@ -242,10 +242,14 @@
 	mutantbrain = /obj/item/organ/internal/brain/lustrous
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	inherent_traits = list(
+//monkestation temp removal start
+/*
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
 		TRAIT_AGENDER,
+*/
+//monkestation temp removal end
 		TRAIT_TENACIOUS,
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,
