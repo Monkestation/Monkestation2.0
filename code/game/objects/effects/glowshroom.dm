@@ -166,9 +166,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		//between running view(1, earth) on every single collected possibleLoc
 		//and failing to spread if we get 3 bad picks, which should only be a problem
 		//if there's a lot of glow shroom clustered about
-		for(var/iterator in 1 to 3)
-			var/turf/possibleLoc = pick(possible_locs)
-			if(spreads_into_adjacent || !locate(/obj/structure/glowshroom) in view(1,possibleLoc))
+		for(var/iterator in 1 to min(length(possible_locs), 3))
+			var/turf/possibleLoc = pick_n_take(possible_locs)
+			if(spreads_into_adjacent || !locate(/obj/structure/glowshroom) in view(1, possibleLoc))
 				new_loc = possibleLoc
 				break
 
