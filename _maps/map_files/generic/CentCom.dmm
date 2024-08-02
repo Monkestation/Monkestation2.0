@@ -879,7 +879,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "acl" = (
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/decal/cleanable/cobweb,
@@ -1330,7 +1330,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/admin)
 "adt" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted,
 /obj/structure/closet/mini_fridge,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
@@ -2299,7 +2299,7 @@
 /area/centcom/central_command_areas/admin)
 "agg" = (
 /obj/machinery/light/small/maintenance/directional/east,
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "agh" = (
@@ -6185,7 +6185,7 @@
 /area/centcom/central_command_areas/supplypod/loading/ert)
 "apV" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner,
 /turf/open/space/basic,
 /area/space/nearstation)
 "apW" = (
@@ -6701,7 +6701,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "aro" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "arp" = (
@@ -7714,7 +7714,7 @@
 /area/centcom/central_command_areas/arcade)
 "atS" = (
 /obj/machinery/light/small/maintenance/directional/west,
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted,
 /obj/effect/spawner/random/trash/garbage{
 	pixel_x = 5;
 	pixel_y = -3
@@ -9606,7 +9606,9 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "ayO" = (
@@ -13018,15 +13020,6 @@
 	dir = 4
 	},
 /obj/structure/railing/wood,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/bed/medical/emergency,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
 "aHJ" = (
@@ -13092,7 +13085,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/admin)
 "aHR" = (
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/directional/west,
@@ -13883,8 +13876,12 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "aJZ" = (
@@ -14436,7 +14433,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "aLo" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner,
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -15918,7 +15915,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/syndicate_mothership/control)
 "aPi" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted,
 /obj/item/chair/wood,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
@@ -16553,8 +16550,10 @@
 /obj/structure/table/wood,
 /obj/item/trash/tray,
 /obj/item/trash/energybar,
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "aQU" = (
@@ -20154,20 +20153,6 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"bkp" = (
-/obj/effect/turf_decal/siding/blue,
-/obj/structure/railing/wood,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/bed/medical/emergency,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/centcom/central_command_areas/medical)
 "bkY" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -20198,15 +20183,6 @@
 	dir = 8
 	},
 /area/cruiser_dock)
-"bKh" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/basic,
-/area/space)
 "bKY" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -20240,17 +20216,6 @@
 /obj/machinery/door/puzzle/keycard/assault_ops_chemistry,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"ddX" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/bed/medical/emergency,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/space/basic,
-/area/space)
 "dqh" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/dark/textured_large,
@@ -20539,15 +20504,6 @@
 	dir = 1
 	},
 /area/cruiser_dock)
-"lbk" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/lattice,
-/turf/open/floor/carpet/royalblue,
-/area/centcom/central_command_areas/admin)
 "lbs" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 4
@@ -20715,15 +20671,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
-"qkw" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/carpet/royalblue,
-/area/centcom/central_command_areas/admin)
 "qwj" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 1
@@ -20879,32 +20826,11 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"uUI" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "uYh" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
 	},
 /area/cruiser_dock)
-"vdE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/bed/medical/emergency,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/periodic_table/directional/west,
-/turf/open/space/basic,
-/area/space)
 "vgV" = (
 /obj/structure/closet/syndicate{
 	desc = "It's a personal storage unit for operative gear."
@@ -20967,27 +20893,6 @@
 	},
 /turf/closed/indestructible/syndicate,
 /area/cruiser_dock)
-"vOp" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/reinforced,
-/obj/item/paper_bin{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/pen{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/kitchen)
 "vPF" = (
 /obj/structure/chair/plastic{
 	dir = 4
@@ -47500,10 +47405,10 @@ aaa
 aaa
 aaa
 aaa
-uUI
 aaa
 aaa
-bKh
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -47765,8 +47670,8 @@ aaa
 aaa
 aaa
 aaa
-vdE
-ddX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -50584,10 +50489,10 @@ auo
 aOn
 aTQ
 aAS
-lbk
+ahD
 aAS
 ahD
-qkw
+ahD
 ahD
 agB
 aPp
@@ -65958,7 +65863,7 @@ amQ
 amQ
 amQ
 amQ
-vOp
+amQ
 amQ
 amQ
 amQ
@@ -67254,7 +67159,7 @@ aqB
 atk
 akC
 atk
-bkp
+azI
 aWW
 aEv
 arj
