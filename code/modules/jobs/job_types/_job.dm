@@ -173,6 +173,29 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	if(prob(25))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+		var/list/anti = list(
+			ANTIGEN_BLOOD	= 2,
+			ANTIGEN_COMMON	= 2,
+			ANTIGEN_RARE	= 1,
+			ANTIGEN_ALIEN	= 0,
+		)
+		var/list/bad = list(
+			EFFECT_DANGER_HELPFUL	= 1,
+			EFFECT_DANGER_FLAVOR	= 2,
+			EFFECT_DANGER_ANNOYING	= 2,
+			EFFECT_DANGER_HINDRANCE	= 2,
+			EFFECT_DANGER_HARMFUL	= 2,
+			EFFECT_DANGER_DEADLY	= 2,
+		)
+		var/datum/disease/advanced/disease = new virus_choice
+		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+
+		disease.disease_flags |= DISEASE_DORMANT
+		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
+
+		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
 
 /datum/job/proc/announce_job(mob/living/joining_mob, job_title)
 	if(head_announce)
@@ -356,8 +379,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.saved_identification = equipped.real_name
-		pda.saved_job = equipped_job.title
+		pda.imprint_id(equipped.real_name, equipped_job.title)
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 
@@ -399,7 +421,7 @@
 
 
 /// Returns an atom where the mob should spawn in.
-/datum/job/proc/get_roundstart_spawn_point()
+/datum/job/proc/get_roundstart_spawn_point(chosen_title)
 	if(random_spawns_possible)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
@@ -416,22 +438,40 @@
 			return hangover_spawn_point || get_latejoin_spawn_point()
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
-	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
+	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point(chosen_title)
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 		return get_latejoin_spawn_point()
 	return spawn_point
 
 
 /// Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.
-/datum/job/proc/get_default_roundstart_spawn_point()
+/datum/job/proc/get_default_roundstart_spawn_point(chosen_title)
+	var/list/spawn_points_picked = list()
+	var/list/spawn_points_not_picked = list()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
 		if(spawn_point.name != title)
 			continue
-		. = spawn_point
-		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
-			continue
-		spawn_point.used = TRUE
-		break
+		if(spawn_point.required_jobtitle && spawn_point.required_jobtitle == chosen_title) // we default to jobtitle spawns first
+			. = spawn_point
+			if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+				continue
+			spawn_point.used = TRUE
+			break
+		else
+
+			if(spawn_point.used)
+				spawn_points_picked += spawn_point
+			else
+				spawn_points_not_picked += spawn_point
+
+	var/obj/effect/landmark/start/picked = pick(spawn_points_not_picked)
+
+	if(!picked)
+		picked = pick(spawn_points_picked)
+
+	. = picked
+	picked.used = TRUE
+
 	if(!.)
 		log_world("Couldn't find a round start spawn point for [title]")
 

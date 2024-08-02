@@ -189,8 +189,7 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
-
-//	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
@@ -261,7 +260,10 @@ SUBSYSTEM_DEF(gamemode)
 		else if(living_players && isliving(player))
 			if(!ishuman(player) && !isAI(player))
 				continue
-			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
+			// I split these checks up to make the code more readable ~Lucy
+			var/is_on_station = is_station_level(player.z)
+			var/is_late_arrival = HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(get_area(player), /area/shuttle/arrival)
+			if(!is_on_station && !is_late_arrival)
 				continue
 			candidate_candidates += player
 
@@ -274,7 +276,7 @@ SUBSYSTEM_DEF(gamemode)
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
-					if(!(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 						real = TRUE
 						break
 				if(real)
@@ -765,7 +767,7 @@ SUBSYSTEM_DEF(gamemode)
 					event.reoccurence_penalty_multiplier = value
 				if("shared_occurence_type")
 					if(!isnull(value))
-						value = text2path(value)
+						value = "[value]"
 					event.shared_occurence_type = value
 
 /// Loads config values from game_options.txt

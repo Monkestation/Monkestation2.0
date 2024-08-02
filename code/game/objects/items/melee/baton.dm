@@ -18,9 +18,9 @@
 	/// Used interally, you don't want to modify
 	var/cooldown_check = 0
 	/// Default wait time until can stun again.
-	var/cooldown = (4 SECONDS) //monkestation edit
+	var/cooldown = (1.5 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
-	var/knockdown_time = (1.5 SECONDS)
+	var/knockdown_time = (0 SECONDS) //monkestation edit
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
 	var/stun_time_cyborg = (5 SECONDS)
 	/// The length of the knockdown applied to the user on clumsy_check()
@@ -376,7 +376,7 @@
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-//monkestation removal start
+//monkestation removal start, moved to \antagonists\contractor\items in the modular folder
 /*/obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
@@ -787,9 +787,10 @@
 	if(!.)
 		return
 	var/obj/item/stuff_in_hand = target.get_active_held_item()
-	if(stuff_in_hand && target.temporarilyRemoveItemFromInventory(stuff_in_hand))
-		if(user.put_in_inactive_hand(stuff_in_hand))
-			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
-		else
-			stuff_in_hand.forceMove(user.drop_location())
-			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+	if(!user || !stuff_in_hand || !target.temporarilyRemoveItemFromInventory(stuff_in_hand))
+		return
+	if(user.put_in_inactive_hand(stuff_in_hand))
+		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+	else
+		stuff_in_hand.forceMove(user.drop_location())
+		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))

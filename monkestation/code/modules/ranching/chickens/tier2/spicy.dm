@@ -4,6 +4,7 @@
 	breed_name = "Spicy"
 	egg_type = /obj/item/food/egg/spicy
 	mutation_list = list(/datum/mutation/ranching/chicken/phoenix)
+	liked_foods = list(/obj/item/food/grown/ghost_chili = 5)
 
 	book_desc = "Ever since Space Wendy's discontinued Nano-Transen has been working on genetically modified chickens that can produce spicy nuggets, this is the results of their labor."
 /obj/item/food/egg/spicy
@@ -11,3 +12,5 @@
 	icon_state = "spicy"
 
 	layer_hen_type = /mob/living/basic/chicken/spicy
+	low_temp = 350
+	high_temp = 450

@@ -7,6 +7,7 @@
 	id = "rainbow_protection"
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -37,6 +38,7 @@
 	id = "slimeskin"
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -137,6 +139,7 @@
 	var/mob/living/carbon/C = clone
 	if(istype(C) && istype(O))
 		C.real_name = O.real_name
+		C.update_name_tag(C.real_name) // monkestation edit: name tags
 		O.dna.transfer_identity(C)
 		C.updateappearance(mutcolor_update=1)
 	if(owner.mind)
@@ -444,12 +447,18 @@
 	/// Colour of the extract providing the buff
 	var/colour = "null"
 
+/datum/status_effect/stabilized/Destroy()
+	if(linked_extract?.linked_effect == src)
+		linked_extract.linked_effect = null
+	linked_extract = null
+	return ..()
+
 /datum/status_effect/stabilized/on_creation(mob/living/new_owner, obj/item/slimecross/stabilized/linked_extract)
 	src.linked_extract = linked_extract
 	return ..()
 
 /datum/status_effect/stabilized/tick()
-	if(isnull(linked_extract))
+	if(QDELETED(linked_extract))
 		qdel(src)
 		return
 	if(linked_extract.get_held_mob() == owner)
@@ -471,7 +480,7 @@
 
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/basic/slime/new_friend in range(3, get_turf(owner)))
-		SEND_SIGNAL(new_friend, COMSIG_FRIENDSHIP_CHANGE, owner, 1)
+		SEND_SIGNAL(new_friend, COMSIG_FRIENDSHIP_CHANGE, owner, 2)
 	return ..()
 
 /datum/status_effect/stabilized/orange
@@ -609,7 +618,7 @@
 	var/obj/item/item = owner.get_active_held_item()
 	if(item)
 		if(IS_EDIBLE(item) && (item.microwave_act(microwaver = owner) & COMPONENT_MICROWAVE_SUCCESS))
-			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough cook [item]!"))
+			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough to cook [item]!"))
 		else
 			item.attackby(fire, owner)
 	return ..()
@@ -739,6 +748,7 @@
 	var/mob/living/carbon/C = clone
 	if(istype(C) && istype(O))
 		C.real_name = O.real_name
+		C.update_name_tag(C.real_name) // monkestation edit: name tags
 		O.dna.transfer_identity(C)
 		C.updateappearance(mutcolor_update=1)
 	return ..()
@@ -820,6 +830,7 @@
 		var/mob/living/carbon/human/H = owner
 		originalDNA.transfer_identity(H)
 		H.real_name = originalname
+		H.update_name_tag(originalname) // monkestation edit: name tags
 		H.updateappearance(mutcolor_update=1)
 
 /datum/status_effect/brokenpeace
@@ -1067,6 +1078,7 @@
 	id = "stabilizedrainbow"
 	colour = "rainbow"
 
+/* monkestation edit: replaced in [monkestation\code\modules\slimecore\crossbreeding\stabilized.dm]
 /datum/status_effect/stabilized/rainbow/tick()
 	if(owner.health <= 0)
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
@@ -1078,3 +1090,4 @@
 				qdel(src)
 				qdel(linked_extract)
 	return ..()
+*/

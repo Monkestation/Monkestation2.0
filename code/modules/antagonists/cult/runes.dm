@@ -276,6 +276,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
+
+	// monke start: old man henderson
+	if(convertee.get_drunk_amount() >= OLD_MAN_HENDERSON_DRUNKENNESS)
+		convertee.visible_message(span_cultitalic("[convertee] is unfazed by the rune, grumbling with incoherent drunken annoyance instead!"))
+		for(var/invoker in invokers)
+			to_chat(invoker, span_warning("The rune's blood magic is ineffective on [convertee], unable to pierce the intense alcoholic haze clouding [convertee.p_their()] mind!"))
+		return FALSE
+	// monke end
+
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -940,7 +949,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			log_game("Manifest rune failed - too many summoned ghosts")
 			return list()
-		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
+		notify_ghosts(
+			"Manifest rune invoked in [get_area(src)].",
+			'sound/effects/ghost2.ogg',
+			source = src,
+			header = "Manifest rune",
+		)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
 			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))

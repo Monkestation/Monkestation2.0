@@ -118,11 +118,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/opacity = 175
 	///The rate of evaporation in units per call
 	var/evaporation_rate = 1
-
-	///is this chemical exempt from istype restrictions
-	var/bypass_restriction = FALSE
-	///chemicals that aren't typepathed but are useless so we remove
-	var/restricted = FALSE
 	/// do we have a turf exposure (used to prevent liquids doing un-needed processes)
 	var/turf_exposure = FALSE
 	/// are we slippery?
@@ -350,5 +345,5 @@ Primarily used in reagents/reaction_agents
 
 	return reagent_strings.Join(join_text)
 
-/datum/reagent/proc/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/proc/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	return

@@ -7,12 +7,6 @@
 		and become the enforcer of the Masquerade code."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
 
-/datum/bloodsucker_clan/malkavian/on_enter_frenzy(datum/antagonist/bloodsucker/source)
-	ADD_TRAIT(bloodsuckerdatum.owner.current, TRAIT_STUNIMMUNE, FRENZY_TRAIT)
-
-/datum/bloodsucker_clan/malkavian/on_exit_frenzy(datum/antagonist/bloodsucker/source)
-	REMOVE_TRAIT(bloodsuckerdatum.owner.current, TRAIT_STUNIMMUNE, FRENZY_TRAIT)
-
 /datum/bloodsucker_clan/malkavian/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_BLOODSUCKER_BROKE_MASQUERADE, PROC_REF(on_bloodsucker_broke_masquerade))
@@ -40,7 +34,7 @@
 	. = ..()
 	if(prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
-	var/message = pick(strings("malkavian_revelations.json", "revelations", "fulp_modules/strings/bloodsuckers"))
+	var/message = pick(strings("malkavian_revelations.json", "revelations", "monkestation/strings"))
 	INVOKE_ASYNC(bloodsuckerdatum.owner.current, TYPE_PROC_REF(/atom/movable, say), message, , , , , , CLAN_MALKAVIAN)
 
 /datum/bloodsucker_clan/malkavian/on_favorite_vassal(datum/antagonist/bloodsucker/source, datum/antagonist/vassal/vassaldatum)

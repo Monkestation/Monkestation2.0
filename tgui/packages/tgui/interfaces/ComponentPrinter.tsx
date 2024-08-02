@@ -14,8 +14,8 @@ type ComponentPrinterData = {
   materials: Material[];
 };
 
-export const ComponentPrinter = (props, context) => {
-  const { act, data } = useBackend<ComponentPrinterData>(context);
+export const ComponentPrinter = (props) => {
+  const { act, data } = useBackend<ComponentPrinterData>();
   const { designs, materials } = data;
 
   // Reduce the material count array to a map of actually available materials.
@@ -36,7 +36,7 @@ export const ComponentPrinter = (props, context) => {
               buildRecipeElement={(
                 design,
                 availableMaterials,
-                _onPrintDesign
+                _onPrintDesign,
               ) => <Recipe design={design} available={availableMaterials} />}
             />
           </Stack.Item>
@@ -56,13 +56,13 @@ export const ComponentPrinter = (props, context) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<ComponentPrinterData>(context);
+const Recipe = (props: { design: Design; available: MaterialMap }) => {
+  const { act, data } = useBackend<ComponentPrinterData>();
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -73,7 +73,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -84,13 +85,15 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             amount={1}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('print', { designId: design.id, amount: 1 })}>
+          onClick={() => act('print', { designId: design.id, amount: 1 })}
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

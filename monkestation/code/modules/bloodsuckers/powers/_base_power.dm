@@ -54,16 +54,15 @@
 	return ..()
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
-	return next_use_time <= world.time
+	return COOLDOWN_FINISHED(src, next_use_time)
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(owner)
-	if(bloodsuckerdatum)
-		bloodsuckerdatum_power = bloodsuckerdatum
+	find_bloodsucker_datum()
 
 //This is when we CLICK on the ability Icon, not USING.
 /datum/action/cooldown/bloodsucker/Trigger(trigger_flags, atom/target)
+	find_bloodsucker_datum()
 	if(active && can_deactivate()) // Active? DEACTIVATE AND END!
 		DeactivatePower()
 		return FALSE
@@ -75,8 +74,11 @@
 		StartCooldown()
 	return TRUE
 
+/datum/action/cooldown/bloodsucker/proc/find_bloodsucker_datum()
+	bloodsuckerdatum_power ||= IS_BLOODSUCKER(owner)
+
 /datum/action/cooldown/bloodsucker/proc/can_pay_cost()
-	if(!owner || !owner.mind)
+	if(QDELETED(owner) || QDELETED(owner.mind))
 		return FALSE
 	// Cooldown?
 	if(!COOLDOWN_FINISHED(src, next_use_time))
@@ -108,7 +110,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Torpor?
-	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(user, TRAIT_NODEATH))
+	if((check_flags & BP_CANT_USE_IN_TORPOR) && bloodsuckerdatum_power?.is_in_torpor())
 		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
@@ -124,13 +126,15 @@
 		to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
-	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)))
+	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
-	if(constant_bloodcost > 0 && bloodsuckerdatum_power?.bloodsucker_blood_volume <= 0)
-		to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
-		return FALSE
+	if(constant_bloodcost > 0)
+		var/can_upkeep = bloodsuckerdatum_power ? (bloodsuckerdatum_power.bloodsucker_blood_volume > 0) : (HAS_TRAIT(user, TRAIT_NOBLOOD) || (user.blood_volume > (bloodcost + BLOOD_VOLUME_OKAY)))
+		if(!can_upkeep)
+			to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
+			return FALSE
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
@@ -139,7 +143,7 @@
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
 		cooldown_time = initial(cooldown_time)
 	else
-		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current-1)))
+		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
 	return ..()
 
@@ -186,9 +190,11 @@
 /datum/action/cooldown/bloodsucker/process(seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE) //Need this to call parent so the cooldown system works
 	. = ..()
+	if(!active) // if we're not active anyways, then we shouldn't be processing!!!
+		return
 	if(!ContinueActive(owner)) // We can't afford the Power? Deactivate it.
 		DeactivatePower()
-		return FALSE
+		return
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		if(bloodsuckerdatum_power)

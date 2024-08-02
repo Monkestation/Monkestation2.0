@@ -131,6 +131,7 @@
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
+#define SPECIES_SATYR "satyr" //Monkestation Addition
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -303,6 +304,19 @@
 #define ETHEREAL_CHARGE_OVERLOAD 2500
 #define ETHEREAL_CHARGE_DANGEROUS 3000
 
+
+//Monkestation Addition: Ethereal Blood Charge
+#define ETHEREAL_BLOOD_CHARGE_NONE 0
+#define ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE 56
+#define ETHEREAL_BLOOD_CHARGE_LOW 140
+#define ETHEREAL_BLOOD_CHARGE_NORMAL 280
+#define ETHEREAL_BLOOD_CHARGE_ALMOSTFULL 420
+#define ETHEREAL_BLOOD_CHARGE_FULL 560
+#define ETHEREAL_BLOOD_CHARGE_OVERLOAD 700
+#define ETHEREAL_BLOOD_CHARGE_DANGEROUS 840
+
+#define ETHEREAL_BLOOD_CHARGE_FACTOR 0.224
+//End of Monkestation addition
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
 #define CRYSTALIZE_PRE_WAIT_TIME (40 SECONDS)
@@ -762,6 +776,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)

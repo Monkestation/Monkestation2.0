@@ -27,6 +27,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_PRUDE,
 ))
 
+GLOBAL_LIST_EMPTY(cached_mixer_channels)
+
 
 /proc/guess_mixer_channel(soundin)
 	var/sound_text_string
@@ -35,21 +37,24 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 		sound_text_string = "[bleh.file]"
 	else
 		sound_text_string = "[soundin]"
-	if(findtext(sound_text_string, "effects/"))
-		return CHANNEL_SOUND_EFFECTS
-	if(findtext(sound_text_string, "machines/"))
-		return CHANNEL_MACHINERY
-	if(findtext(sound_text_string, "creatures/"))
-		return CHANNEL_MOB_SOUNDS
-	if(findtext(sound_text_string, "/ai/"))
-		return CHANNEL_VOX
-	if(findtext(sound_text_string, "chatter/"))
-		return CHANNEL_MOB_SOUNDS
-	if(findtext(sound_text_string, "items/"))
-		return CHANNEL_SOUND_EFFECTS
-	if(findtext(sound_text_string, "weapons/"))
-		return CHANNEL_SOUND_EFFECTS
-	return FALSE
+	if(GLOB.cached_mixer_channels[sound_text_string])
+		return GLOB.cached_mixer_channels[sound_text_string]
+	else if(findtext(sound_text_string, "effects/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "machines/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
+	else if(findtext(sound_text_string, "creatures/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+	else if(findtext(sound_text_string, "/ai/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
+	else if(findtext(sound_text_string, "chatter/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+	else if(findtext(sound_text_string, "items/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "weapons/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else
+		return FALSE
 
 ///Default override for echo
 /sound
@@ -224,9 +229,14 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
 
-		if(use_reverb && sound_to_use.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
-			sound_to_use.echo[3] = 0 //Room setting, 0 means normal reverb
-			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
+		if(turf_source != get_turf(src))
+			sound_to_use.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+		else
+			sound_to_use.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+
+		if(!use_reverb)
+			sound_to_use.echo[3] = -10000
+			sound_to_use.echo[4] = -10000
 
 	SEND_SOUND(src, sound_to_use)
 
@@ -248,7 +258,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 
 /client/proc/playtitlemusic(vol = 0.85)
 	set waitfor = FALSE
-	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
+	UNTIL(SSticker.login_music_done) //wait for SSticker init to set the login music // monkestation edit: fix-lobby-music
 	UNTIL(fully_created)
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
@@ -268,6 +278,11 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 
 	if(SSmedia_tracks.first_lobby_play)
 		SSmedia_tracks.current_lobby_track = pick(SSmedia_tracks.lobby_tracks)
+		// monkestation edit start: fix-lobby-music
+		if (fexists("data/last_round_lobby_music.txt"))
+			fdel("data/last_round_lobby_music.txt")
+		text2file(SSmedia_tracks.current_lobby_track.url, "data/last_round_lobby_music.txt")
+		// monkestation edit end
 		SSmedia_tracks.first_lobby_play = FALSE
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track

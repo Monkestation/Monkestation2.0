@@ -34,6 +34,10 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(onItemAttack))
 
+/datum/component/butchering/Destroy(force, silent)
+	butcher_callback = null
+	return ..()
+
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -132,6 +136,14 @@
 			continue
 		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, meat) = counterlist_sum(meat_mats)))
 
+	// transfer reagents to meat
+	if(meat.reagents)
+		var/meat_produced = 0
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			meat_produced += 1
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			meat.reagents.trans_to(target_meat, meat.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
+	//
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
 								span_notice("You butcher [meat]."))

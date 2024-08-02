@@ -1,5 +1,15 @@
 import { useBackend } from '../backend';
-import { LabeledList, Section, ProgressBar, Collapsible, Stack, Icon, Box, Tooltip, Button } from '../components';
+import {
+  LabeledList,
+  Section,
+  ProgressBar,
+  Collapsible,
+  Stack,
+  Icon,
+  Box,
+  Tooltip,
+  Button,
+} from '../components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 import { Design, MaterialMap } from './Fabrication/Types';
@@ -25,8 +35,8 @@ type AutolatheData = {
   active: BooleanLike;
 };
 
-export const Autolathe = (props, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+export const Autolathe = (props) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { materialtotal, materialsmax, materials, designs, active } = data;
 
   const filteredMaterials = materials.filter((material) => material.amount > 0);
@@ -50,10 +60,11 @@ export const Autolathe = (props, context) => {
                     minValue={0}
                     maxValue={materialsmax}
                     ranges={{
-                      'good': [materialsmax * 0.85, materialsmax],
-                      'average': [materialsmax * 0.25, materialsmax * 0.85],
-                      'bad': [0, materialsmax * 0.25],
-                    }}>
+                      good: [materialsmax * 0.85, materialsmax],
+                      average: [materialsmax * 0.25, materialsmax * 0.85],
+                      bad: [0, materialsmax * 0.25],
+                    }}
+                  >
                     {materialtotal + '/' + materialsmax + ' cm³'}
                   </ProgressBar>
                 </LabeledList.Item>
@@ -64,7 +75,8 @@ export const Autolathe = (props, context) => {
                         {filteredMaterials.map((material) => (
                           <LabeledList.Item
                             key={material.name}
-                            label={capitalize(material.name)}>
+                            label={capitalize(material.name)}
+                          >
                             <ProgressBar
                               style={{
                                 transform: 'scaleX(-1) scaleY(1)',
@@ -72,7 +84,8 @@ export const Autolathe = (props, context) => {
                               value={materialsmax - material.amount}
                               maxValue={materialsmax}
                               backgroundColor={material.color}
-                              color="black">
+                              color="black"
+                            >
                               <div style={{ transform: 'scaleX(-1)' }}>
                                 {material.amount + ' cm³'}
                               </div>
@@ -94,7 +107,7 @@ export const Autolathe = (props, context) => {
               buildRecipeElement={(
                 design,
                 availableMaterials,
-                _onPrintDesign
+                _onPrintDesign,
               ) => (
                 <AutolatheRecipe
                   design={design}
@@ -115,14 +128,14 @@ type PrintButtonProps = {
   availableMaterials: MaterialMap;
 };
 
-const PrintButton = (props: PrintButtonProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+const PrintButton = (props: PrintButtonProps) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { design, quantity, availableMaterials } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !availableMaterials[material] ||
-      amount * quantity > (availableMaterials[material] ?? 0)
+      amount * quantity > (availableMaterials[material] ?? 0),
   );
 
   return (
@@ -133,14 +146,16 @@ const PrintButton = (props: PrintButtonProps, context) => {
           amount={quantity}
           available={availableMaterials}
         />
-      }>
+      }
+    >
       <div
         className={classes([
           'FabricatorRecipe__Button',
           !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
         color={'transparent'}
-        onClick={() => act('make', { id: design.id, multiplier: quantity })}>
+        onClick={() => act('make', { id: design.id, multiplier: quantity })}
+      >
         &times;{quantity}
       </div>
     </Tooltip>
@@ -152,14 +167,14 @@ type AutolatheRecipeProps = {
   availableMaterials: MaterialMap;
 };
 
-const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+const AutolatheRecipe = (props: AutolatheRecipeProps) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { design, availableMaterials } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !availableMaterials[material] ||
-      amount > (availableMaterials[material] ?? 0)
+      amount > (availableMaterials[material] ?? 0),
   );
 
   return (
@@ -170,7 +185,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -181,13 +197,15 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             amount={1}
             available={availableMaterials}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('make', { id: design.id, multiplier: 1 })}>
+          onClick={() => act('make', { id: design.id, multiplier: 1 })}
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -235,7 +253,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
         className={classes([
           'FabricatorRecipe__Button',
           !canPrint && 'FabricatorRecipe__Button--disabled',
-        ])}>
+        ])}
+      >
         <Button.Input
           content={'[Max: ' + design.maxmult + ']'}
           color={'transparent'}

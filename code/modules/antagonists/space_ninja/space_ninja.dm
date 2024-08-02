@@ -40,9 +40,11 @@
 /datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert at least one cyborg to aid you in sabotaging the station."
 
+/* monkestation edit: remove doorjack objective
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective
 	var/doors_required = 0
+*/
 
 /datum/objective/plant_explosive
 	var/area/detonation_location
@@ -70,11 +72,13 @@
 	var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
 	objectives += sabotage_research
 
+	/* monkestation edit: remove doorjack objective
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
 	doorobjective.doors_required = rand(15,40)
 	doorobjective.explanation_text = "Use your gloves to doorjack [doorobjective.doors_required] airlocks on the station."
 	objectives += doorobjective
+	*/
 
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
@@ -128,9 +132,10 @@
 	log_admin("[key_name(admin)] has ninja'ed [key_name(new_owner)].")
 
 /datum/antagonist/ninja/antag_token(datum/mind/hosts_mind, mob/spender)
-	hosts_mind.current.unequip_everything()
-	new /obj/effect/holy(hosts_mind.current.loc)
-	QDEL_IN(hosts_mind.current, 20)
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 20)
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
@@ -142,7 +147,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/key = hosts_mind.key
+	var/key = spender.ckey
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))

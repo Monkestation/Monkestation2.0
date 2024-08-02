@@ -32,16 +32,15 @@
 	return 100 - protection
 
 ///Get all the clothing on a specific body part
-/mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
+/mob/living/carbon/human/proc/get_clothing_on_part(def_zone)
+	if(istype(def_zone, /obj/item/bodypart))
+		var/obj/item/bodypart/def_bodypart = def_zone
+		def_zone = def_bodypart.body_part
 	var/list/covering_part = list()
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
-				covering_part += C
+	for(var/obj/item/clothing/worn in body_parts)
+		if(worn.body_parts_covered & def_zone)
+			covering_part += worn
 	return covering_part
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
@@ -195,12 +194,24 @@
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
 	apply_damage(15, BRUTE, wound_bonus=10)
 
-/mob/living/carbon/human/attack_hand(mob/user, list/modifiers)
+/mob/living/carbon/human/attack_hand(mob/living/user, list/modifiers)
 	if(..()) //to allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		dna.species.spec_attack_hand(H, src, null, modifiers)
+
+
+	var/touch_zone = zone_selected
+	var/used_bodypart = HANDS
+	var/block = 0
+	var/bleeding = 0
+	// biting causes the check to consider that both sides are bleeding, allowing for blood-only disease transmission through biting.
+	if ((user.check_contact_sterility(used_bodypart)) || check_contact_sterility(touch_zone))//only one side has to wear protective clothing to prevent contact infection
+		block = 1
+	if ((user.check_bodypart_bleeding(used_bodypart)) && (check_bodypart_bleeding(touch_zone)))//both sides have to be bleeding to allow for blood infections
+		bleeding = 1
+	share_contact_diseases(user,block,bleeding)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -252,6 +263,7 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
+/*
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(check_shields(user, 0, "the [user.name]"))
 		visible_message(span_danger("[user] attempts to touch [src]!"), \
@@ -306,7 +318,7 @@
 		if(!dismembering_strike(user, user.zone_selected)) //Dismemberment successful
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
-
+*/
 
 
 

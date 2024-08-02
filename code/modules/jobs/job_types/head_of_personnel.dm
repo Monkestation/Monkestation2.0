@@ -8,7 +8,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = SUPERVISOR_CAPTAIN //dunno when this got fucked but this will now be fixed to be proper.
 	req_admin_notify = 1
 	minimal_player_age = 10
 	exp_requirements = 1500
@@ -68,7 +68,7 @@
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/hop,
+		/obj/item/stamp/head/hop,
 		)
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)

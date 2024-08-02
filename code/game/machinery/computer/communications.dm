@@ -87,6 +87,9 @@
 
 /obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
+	// All maps should have at least 1 comms console
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+
 	GLOB.shuttle_caller_list += src
 	AddComponent(/datum/component/gps, "Secured Communications Signal")
 
@@ -284,8 +287,13 @@
 			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated(usr) || issilicon(usr) || syndicate)
+			var/clock_user = IS_CLOCK(usr) //monkestation edit
+			if (!authenticated(usr) || issilicon(usr) || syndicate || (clock_user && GLOB.main_clock_cult?.member_recalled)) //monkestation edit: adds the CWC check
 				return
+//monkestation edit start
+			if(clock_user)
+				GLOB.main_clock_cult?.member_recalled = TRUE
+//monkestation edit end
 			SSshuttle.cancelEvac(usr)
 		if ("requestNukeCodes")
 			if (!authenticated_as_non_silicon_captain(usr))
@@ -610,6 +618,7 @@
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
 						"creditCost" = shuttle_template.credit_cost,
+						"initial_cost" = initial(shuttle_template.credit_cost),
 						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
@@ -885,6 +894,19 @@
 
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
+			// monkestation start: inject storyteller events instead of dynamic rulesets
+			var/event_to_spawn = pick_weight(list(
+				/datum/round_event_control/antagonist/solo/traitor/midround = 75,
+				// hmmm, let's rarely spawn some non-traitor antags just to spice things up a bit
+				/datum/round_event_control/antagonist/solo/heretic/midround = 15,
+				/datum/round_event_control/antagonist/solo/from_ghosts/wizard = 1
+			))
+			force_event_after(event_to_spawn, "[hacker] hacking a communications console", rand(20 SECONDS, 1 MINUTES))
+			priority_announce(
+				"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
+				"[command_name()] High-Priority Update",
+			)
+			/*
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/from_living/autotraitor
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
@@ -904,6 +926,7 @@
 					"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
 					"[command_name()] High-Priority Update",
 				)
+			*/ // monkestation end
 
 #undef HACK_PIRATE
 #undef HACK_FUGITIVES
@@ -929,6 +952,10 @@
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
+
+/datum/comm_message/Destroy()
+	answer_callback = null
+	return ..()
 
 #undef IMPORTANT_ACTION_COOLDOWN
 #undef EMERGENCY_ACCESS_COOLDOWN

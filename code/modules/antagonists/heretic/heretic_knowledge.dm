@@ -120,7 +120,7 @@
 	return TRUE
 
 /**
- * Parses specific items into a more reaadble form.
+ * Parses specific items into a more readble form.
  * Can be overriden by knoweldge subtypes.
  */
 /datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
@@ -185,7 +185,6 @@
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
-
 			sac_stack.use(how_much_to_use)
 			continue
 
@@ -216,7 +215,8 @@
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	created_spell?.Remove(user)
+	if(created_spell?.owner == user)
+		created_spell.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -734,6 +734,13 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	notify_ghosts(
+		"[user] has completed an ascension ritual!",
+		source = user,
+		action = NOTIFY_ORBIT,
+		header = "A Heretic is Ascending!",
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

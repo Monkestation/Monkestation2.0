@@ -1000,9 +1000,14 @@
 			return
 	add_fingerprint(user)
 
-	if(is_wire_tool(C) && panel_open)
-		attempt_wire_interaction(user)
-		return
+	if(is_wire_tool(C))
+		if(panel_open)
+			attempt_wire_interaction(user)
+			return
+		else
+			attempt_hacking_interaction(user)
+			return
+
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))
 			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)
@@ -1326,17 +1331,20 @@
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 
+	// monkestation edit: liquids
 	var/turf/open/open_turf = get_turf(src)
-	if(open_turf.liquids)
+	if(!QDELETED(open_turf.liquids))
 		var/datum/liquid_group/turfs_group = open_turf.liquids.liquid_group
-		turfs_group.remove_from_group(open_turf)
-		qdel(open_turf.liquids)
-		turfs_group.try_split(open_turf)
-		for(var/dir in GLOB.cardinals)
-			var/turf/open/direction_turf = get_step(open_turf, dir)
-			if(!isopenturf(direction_turf) || !direction_turf.liquids)
-				continue
-			turfs_group.check_edges(direction_turf)
+		if(!QDELETED(turfs_group))
+			turfs_group.remove_from_group(open_turf)
+			turfs_group.try_split(open_turf)
+			for(var/dir in GLOB.cardinals)
+				var/turf/open/direction_turf = get_step(open_turf, dir)
+				if(!isopenturf(direction_turf) || QDELING(direction_turf) || QDELETED(direction_turf.liquids))
+					continue
+				turfs_group.check_edges(direction_turf)
+		QDEL_NULL(open_turf.liquids)
+	// monkestation end
 
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
@@ -1582,7 +1590,7 @@
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, span_notice("[src]'s reinforcement needs to be removed first."))
 				return FALSE
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
