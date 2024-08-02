@@ -83910,6 +83910,15 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/plant_analyzer,
+/obj/item/seeds/pumpkin,
+/obj/item/seeds/tree,
+/obj/item/seeds/watermelon,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/obj/item/cultivator,
+/obj/item/hatchet,
+/obj/item/secateurs,
+/obj/item/shovel/spade,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "qqK" = (
@@ -119045,20 +119054,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "wYk" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/shovel/spade,
-/obj/item/secateurs,
-/obj/item/cultivator,
-/obj/item/hatchet,
-/obj/item/reagent_containers/cup/bottle/nutrient/ez,
-/obj/item/reagent_containers/cup/bottle/nutrient/ez,
-/obj/item/seeds/watermelon,
-/obj/item/seeds/tower,
-/obj/item/seeds/pumpkin,
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "wYl" = (
