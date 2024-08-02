@@ -230,6 +230,7 @@
 	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	occupancy_limit = "30"
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -322,6 +323,7 @@
 	Needless to say, no engineering team wanted to go near the thing, and it's only being used as an Emergency Escape Shuttle because there is literally nothing else available."
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = CARGO_CRATE_VALUE * 30
+	occupancy_limit = "30"
 
 /datum/map_template/shuttle/emergency/omega
 	suffix = "omega"
