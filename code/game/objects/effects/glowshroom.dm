@@ -135,6 +135,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/proc/Spread(seconds_per_tick)
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
+		last_successful_spread = INFINITY // monkestation edit: glowshroom optimizations
 		return //Deal with it not now
 
 	var/list/possible_locs = list()
@@ -149,7 +150,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		possible_locs += earth
 
 	//Lets not even try to spawn again if somehow we have ZERO possible locations
-	if(!possible_locs.len)
+	if(!length(possible_locs))
+		last_successful_spread = INFINITY // monkestation edit: glowshroom optimizations
 		return
 
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
@@ -188,6 +190,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
+		last_successful_spread = world.time // monkestation edit: glowshroom optimizations
 		CHECK_TICK
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)
