@@ -109,7 +109,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Initialize(mapload)
 	. = ..()
-	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a regular (self-control) sleeper
+	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a regular (self-control) sleeper
 		return INITIALIZE_HINT_QDEL //the destroy() code already handles sleeper spawning
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/Destroy()
