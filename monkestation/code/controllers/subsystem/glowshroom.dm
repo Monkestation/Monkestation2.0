@@ -24,11 +24,7 @@ PROCESSING_SUBSYSTEM_DEF(glowshrooms)
 
 /datum/controller/subsystem/processing/glowshrooms/proc/sort_processing()
 	list_clear_nulls(processing)
-#ifdef ANERI
-	processing = aneri_sort(processing, "cmp_glowshroom_spread")
-#else
 	sortTim(processing, GLOBAL_PROC_REF(cmp_glowshroom_spread))
-#endif
 
 /proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
 	return a.last_successful_spread - b.last_successful_spread
