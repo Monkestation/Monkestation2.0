@@ -1831,13 +1831,13 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "axn" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "axz" = (
@@ -8341,8 +8341,8 @@
 /turf/open/floor/wood,
 /area/station/service/bar/atrium)
 "ccs" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/openspace,
 /area/station/maintenance/floor3/port)
 "ccw" = (
@@ -10889,8 +10889,8 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "cLQ" = (
@@ -20303,8 +20303,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "fur" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/openspace,
 /area/station/maintenance/floor3/port)
 "fuy" = (
@@ -23057,8 +23057,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor3/fore)
 "gfF" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/openspace,
 /area/station/maintenance/floor2/port)
 "gfP" = (
@@ -24719,11 +24719,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "gFf" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "gFh" = (
@@ -34434,8 +34434,8 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "jqJ" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/openspace,
 /area/station/maintenance/floor2/port)
 "jrh" = (
@@ -34606,10 +34606,10 @@
 /obj/structure/frame/computer{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "jsY" = (
@@ -38491,11 +38491,11 @@
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "ksG" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "ksN" = (
@@ -42279,8 +42279,8 @@
 /area/station/medical/storage)
 "lqD" = (
 /obj/item/food/deadmouse/moldy,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /obj/effect/turf_decal/tile/red/half,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "lqE" = (
@@ -42992,8 +42992,6 @@
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "lAE" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
@@ -43005,6 +43003,8 @@
 	desc = "Your only friend in this place";
 	name = "Robert"
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "lAH" = (
@@ -67453,10 +67453,10 @@
 	},
 /area/station/hallway/floor3/fore)
 "rYa" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "rYw" = (
@@ -67577,10 +67577,10 @@
 /area/station/service/kitchen)
 "sat" = (
 /obj/effect/decal/remains/human,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "saA" = (
@@ -67907,10 +67907,10 @@
 /obj/effect/mob_spawn/corpse/human/skeleton{
 	pixel_y = 14
 	},
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "sfR" = (
@@ -74790,10 +74790,10 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "ueN" = (
@@ -82479,9 +82479,9 @@
 "wiH" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/effect/spawner/random/bureaucracy,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "wiJ" = (
@@ -84049,11 +84049,11 @@
 	},
 /area/station/hallway/floor2/aft)
 "wCR" = (
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner,
 /obj/structure/bed/maint,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/stone,
 /area/station/maintenance/floor1/port)
 "wCX" = (
@@ -89549,10 +89549,10 @@
 /obj/structure/frame/computer{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "ybB" = (
@@ -90126,9 +90126,9 @@
 "yjq" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "yjz" = (
