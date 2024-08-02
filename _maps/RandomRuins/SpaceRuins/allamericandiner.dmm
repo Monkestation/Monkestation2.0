@@ -186,23 +186,10 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/brown,
 /obj/machinery/jukebox{
 	active = 1
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/effect/turf_decal/siding/green{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/brown,
-/obj/machinery/jukebox{
-	active = 1;
-	req_access = null
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "gI" = (
@@ -237,16 +224,8 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "jl" = (
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/sign/poster/contraband/space_cola/directional/north,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "jx" = (
@@ -904,16 +883,8 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Kr" = (
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/sign/poster/official/bless_this_spess/directional/north,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "Kx" = (

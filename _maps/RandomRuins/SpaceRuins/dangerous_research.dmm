@@ -1323,20 +1323,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rd" = (
-/obj/structure/sign/poster/official/safety_report{
-	pixel_y = -32
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/sign/poster/official/safety_report/directional/south,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
@@ -1529,17 +1517,6 @@
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "tz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -2286,21 +2263,11 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "CB" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_b" = "Air Supply B");
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("asrc_b"="Air Supply B");
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
@@ -3199,23 +3166,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/andromeda_bitters{
-	pixel_x = 32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
-	pixel_x = 8;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 5;
-	pixel_y = 3
-	},
 /obj/structure/sign/poster/contraband/andromeda_bitters/directional/east,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/dangerous_research/dorms)
@@ -3568,17 +3519,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "TH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/syndiemoth{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/dark_red/half{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /obj/effect/turf_decal/tile/dark_red/half{

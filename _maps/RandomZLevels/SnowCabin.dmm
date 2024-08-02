@@ -1779,12 +1779,6 @@
 "fZ" = (
 /obj/structure/weightmachine/stacklifter,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/weightmachine,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gb" = (
@@ -1818,14 +1812,6 @@
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/sign/poster/contraband/pwr_game/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -2087,15 +2073,6 @@
 /area/awaymission/cabin)
 "hs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
-/obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2340,24 +2317,13 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "iq" = (
-/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/hivebot/range{
 	desc = "Looks like he's been left behind.";
 	faction = list("russian");
 	maxHealth = 5;
 	name = "soviet machine"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range{
-	desc = "Looks like he's been left behind.";
-	faction = list("russian");
-	maxHealth = 5;
-	name = "soviet machine"
-	},
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3834,6 +3800,18 @@
 /obj/item/food/fishmeat/carp,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
+"xf" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/hivebot/range{
+	desc = "Looks like he's been left behind.";
+	faction = list("russian");
+	maxHealth = 5;
+	name = "soviet machine"
+	},
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
+/area/awaymission/cabin/caves/sovietcave)
 "xo" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/mug/britcup,
@@ -64174,7 +64152,7 @@ gx
 gx
 ii
 im
-iq
+xf
 ii
 gx
 gx

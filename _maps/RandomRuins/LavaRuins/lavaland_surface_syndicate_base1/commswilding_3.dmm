@@ -44,18 +44,6 @@
 	dir = 2;
 	req_access = list("syndicate")
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/button/door{
-	id = "lavalandsyndi_fredrickright";
-	name = "Security Blast Door Control";
-	pixel_y = 26;
-	req_access = list("syndicate")
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/tile/iron/grimy,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "ai" = (
@@ -240,11 +228,6 @@
 "aR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/freezer/commsagent,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "aS" = (

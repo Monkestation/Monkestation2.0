@@ -299,12 +299,6 @@
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/pet/fox,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -386,21 +380,11 @@
 	},
 /area/ruin/unpowered/buried_library)
 "bC" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/pet/fox,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/paper{
-	dir = 1
-	},
-/mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

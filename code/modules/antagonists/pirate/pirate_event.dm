@@ -6,36 +6,52 @@
 	name = "Space Pirates"
 	typepath = /datum/round_event/pirates
 	weight = 10
-	max_occurrences = 1
+	max_occurrences = 3 //monkestation edit: from 1 to 3 because pirates fighting over the station sounds funny
 	min_players = 20
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
 	admin_setup = list(/datum/event_admin_setup/listed_options/pirates)
 	map_flags = EVENT_SPACE_ONLY
-	track = EVENT_TRACK_ROLESET
+//monkestation edit start
+	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_COMMUNAL)
 	checks_antag_cap = TRUE
+//monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (SSmapping.is_planetary())
 		return EVENT_CANT_RUN
 	return ..()
 
+//monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list = list(
-		new /datum/pirate_gang/grey,
-		new /datum/pirate_gang/skeletons,
-		new /datum/pirate_gang/rogues,
-		new /datum/pirate_gang/interdyne,
+		/datum/pirate_gang/grey,
+		/datum/pirate_gang/interdyne,
+		/datum/pirate_gang/irs,
+		/datum/pirate_gang/lustrous,
+		/datum/pirate_gang/rogues,
+		/datum/pirate_gang/silverscales,
+		/datum/pirate_gang/skeletons,
 	)
+
+//monkestation edit start
+/datum/round_event/pirates/setup()
+	. = ..()
+	gang_list = list()
+	for(var/datum/pirate_gang/gang in GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs)
+		if(gang.paid_off)
+			continue
+		gang_list += gang
+//monkestation edit end
 
 /datum/round_event/pirates/start()
 	send_pirate_threat(gang_list)
 
 /proc/send_pirate_threat(list/pirate_selection)
-	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
+	var/datum/pirate_gang/chosen_gang = pick(pirate_selection) //monkestation edit: changed from pick_n_take()
 	///If there was nothing to pull from our requested list, stop here.
 	if(!chosen_gang)
 		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
