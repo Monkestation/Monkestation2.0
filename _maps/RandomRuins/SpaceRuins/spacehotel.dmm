@@ -54,7 +54,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "aC" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "aE" = (
@@ -759,7 +759,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
@@ -857,7 +857,7 @@
 	color = "A46106"
 	},
 /obj/effect/spawner/random/structure/crate_abandoned,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "hG" = (
@@ -865,7 +865,7 @@
 	color = "A46106"
 	},
 /obj/structure/closet/crate/wooden/toy,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "hH" = (
@@ -935,7 +935,7 @@
 /area/ruin/space/has_grav/hotel)
 "hZ" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "ia" = (
@@ -1157,7 +1157,7 @@
 /area/ruin/space/has_grav/hotel/power)
 "jh" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "jo" = (
@@ -1257,7 +1257,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "A46106"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "jY" = (
@@ -1507,7 +1507,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "lW" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "lZ" = (
@@ -1607,7 +1607,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "A46106"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/medical,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
@@ -1898,7 +1898,7 @@
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "pr" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/trooper/syndicate/melee/space/stormtrooper,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
@@ -2099,7 +2099,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "A46106"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/emergency_oxygen/double,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
@@ -2329,7 +2329,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "tW" = (
@@ -3090,7 +3090,7 @@
 "Ct" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3218,7 +3218,7 @@
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 34
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/lightreplacer,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/custodial)
@@ -3549,7 +3549,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "A46106"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "Hb" = (
@@ -4083,7 +4083,7 @@
 	pixel_y = -25
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "NJ" = (
@@ -4129,7 +4129,7 @@
 /obj/effect/spawner/random/decoration/material,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "Oi" = (
@@ -4808,7 +4808,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/garbage,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "Vs" = (

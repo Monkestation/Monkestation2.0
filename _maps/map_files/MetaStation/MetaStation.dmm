@@ -11113,8 +11113,8 @@
 "dTH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/roller,
-/obj/item/roller,
+/obj/item/emergency_bed,
+/obj/item/emergency_bed,
 /obj/item/toy/figure/md,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/merge_conflict_marker{
@@ -18771,7 +18771,7 @@
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/regular,
 /obj/item/clothing/gloves/latex,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/reagent_containers/cup/bottle/epinephrine,
@@ -19681,8 +19681,8 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "gVb" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -22929,11 +22929,11 @@
 "hXR" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/spawner/directional/west,
-/obj/item/roller,
-/obj/item/roller{
+/obj/item/emergency_bed,
+/obj/item/emergency_bed{
 	pixel_y = 3
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
 /obj/merge_conflict_marker{
@@ -22941,11 +22941,11 @@
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/table/reinforced,
-/obj/item/roller,
-/obj/item/roller{
+/obj/item/emergency_bed,
+/obj/item/emergency_bed{
 	pixel_y = 3
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
 /obj/structure/window/spawner/directional/west,
@@ -38242,7 +38242,7 @@
 	pixel_x = -3;
 	pixel_y = -1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -51654,7 +51654,7 @@
 "rtX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
@@ -53903,7 +53903,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "scb" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/box,
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/sign/poster/contraband/lizard{

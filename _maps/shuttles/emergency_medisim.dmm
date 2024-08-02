@@ -839,7 +839,7 @@
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "HE" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/directional/west,
 /obj/merge_conflict_marker{

@@ -2,21 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/ruin/syndicate_lava_base/telecomms)
-"ac" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "ad" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -53,7 +38,7 @@
 	pixel_y = 26;
 	req_access = list("syndicate")
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/iron/grimy,
 /obj/machinery/computer/records/medical/syndie{
 	dir = 2;
@@ -77,10 +62,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aj" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "ak" = (
@@ -120,13 +101,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"ao" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/grimy,
-/area/ruin/syndicate_lava_base/telecomms)
 "ap" = (
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -135,25 +109,6 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/syndicate_lava_base/telecomms)
 "ar" = (
-/turf/open/floor/iron/grimy,
-/area/ruin/syndicate_lava_base/telecomms)
-"as" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"at" = (
-/obj/structure/sign/poster/contraband/syndiemoth/directional/west,
-/obj/item/radio/intercom{
-	freerange = 1;
-	name = "Syndicate Radio Intercom";
-	pixel_y = 5
-	},
-/obj/structure/table/reinforced,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/phone{
-	pixel_x = -4;
-	pixel_y = -4
-	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "au" = (
@@ -168,7 +123,7 @@
 	pixel_x = -7;
 	pixel_y = 13
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
@@ -185,13 +140,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"av" = (
-/obj/structure/railing,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "aw" = (
 /obj/machinery/door/poddoor{
 	id = "lavalandsyndi_fredrickleft"
@@ -217,19 +165,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"az" = (
-/obj/item/modular_computer/pda/chameleon/broken{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/food/cherrycupcake{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/grimy,
-/area/ruin/syndicate_lava_base/telecomms)
 "aA" = (
 /obj/machinery/door/poddoor{
 	id = "lavalandsyndi_fredrickright"
@@ -242,34 +177,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
-/area/ruin/syndicate_lava_base/telecomms)
-"aC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aD" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
-"aE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/modular_map_connector,
-/obj/machinery/door/airlock/security{
-	name = "Security Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "aF" = (
 /obj/structure/railing{
@@ -284,22 +191,6 @@
 "aG" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/telecomms)
-"aH" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/multitool,
-/obj/machinery/button/door{
-	id = "lavalandsyndi_telecomms";
-	name = "Telecomms Blast Door Control";
-	pixel_x = 26;
-	req_access = list("syndicate")
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
 "aI" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/red{
@@ -311,11 +202,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
-"aK" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "aL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
@@ -351,25 +237,8 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"aO" = (
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aQ" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/chair/plastic,
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "aR" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/freezer/commsagent,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -398,33 +267,8 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"aW" = (
-/obj/machinery/light/small/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/noticeboard/directional/east,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aX" = (
-/obj/machinery/button/door{
-	id = "lavalandsyndi_fredrickright";
-	name = "Security Blast Door Control";
-	pixel_y = 26;
-	req_access = list("syndicate")
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/tile/iron/grimy,
-/turf/open/floor/plating,
-/area/ruin/syndicate_lava_base/telecomms)
 "aY" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/telecomms)
-"aZ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "HQ" = (

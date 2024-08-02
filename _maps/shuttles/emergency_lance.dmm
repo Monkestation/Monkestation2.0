@@ -233,7 +233,7 @@
 /turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "iy" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/directional/west,
 /obj/merge_conflict_marker{
@@ -710,7 +710,7 @@
 /area/shuttle/escape)
 "xc" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -733,7 +733,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "xR" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/directional/east,
 /obj/merge_conflict_marker{

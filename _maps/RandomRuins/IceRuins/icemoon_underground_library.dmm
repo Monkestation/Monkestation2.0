@@ -297,7 +297,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bh" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/pet/fox,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -386,7 +386,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "bC" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	dir = 1
 	},

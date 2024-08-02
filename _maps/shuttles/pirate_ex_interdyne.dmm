@@ -324,7 +324,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/storage/box/handcuffs,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -332,7 +332,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /obj/structure/bed,
 /obj/machinery/door/window/brigdoor/right/directional/west{
@@ -467,7 +467,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/bed{
 	dir = 1
 	},

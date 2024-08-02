@@ -4799,7 +4799,7 @@
 /area/station/ai_monitored/security/armory)
 "aFC" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "aFP" = (
@@ -6525,7 +6525,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "aVg" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
@@ -7668,7 +7668,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "bsf" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/bz,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
@@ -8418,7 +8418,7 @@
 /area/station/security/prison/workout)
 "bCh" = (
 /obj/effect/spawner/random/trash/mess,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "bCj" = (
@@ -9937,7 +9937,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10090,7 +10090,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/powered/clownplanet)
 "cdg" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -10550,7 +10550,7 @@
 "ciI" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/trash/garbage,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -12414,7 +12414,7 @@
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/service/kitchen/coldroom)
 "cRa" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "cRc" = (
@@ -12823,7 +12823,7 @@
 	pixel_x = 4
 	},
 /obj/item/modular_computer/laptop/preset/civilian,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -13213,7 +13213,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dfH" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -13457,7 +13457,7 @@
 /area/station/cargo/miningdock)
 "djJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medical - Lobby";
@@ -14603,7 +14603,7 @@
 "dCC" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/snack/lizard,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/pushbroom,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/iron/smooth,
@@ -17625,7 +17625,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "exN" = (
 /obj/effect/spawner/random/trash/hobo_squat,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "eye" = (
@@ -18495,7 +18495,7 @@
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "eOY" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
@@ -18677,7 +18677,7 @@
 /area/station/medical/treatment_center)
 "eRq" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/secure_closet/armory2,
 /obj/item/storage/box/lethalshot,
 /obj/item/storage/box/lethalshot,
@@ -22697,7 +22697,7 @@
 "gjv" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/mod/maint,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "gjx" = (
@@ -25260,7 +25260,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "haI" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -26535,7 +26535,7 @@
 /area/station/science/xenobiology)
 "hyO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet,
 /obj/effect/spawner/random/mod/maint,
 /obj/effect/spawner/random/maintenance/three,
@@ -27177,7 +27177,7 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "hJX" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -27708,7 +27708,7 @@
 /obj/structure/rack,
 /obj/structure/window/spawner/directional/west,
 /obj/item/storage/crayons,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -28181,7 +28181,7 @@
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
@@ -32437,7 +32437,7 @@
 /area/station/maintenance/department/security)
 "jqf" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "jqg" = (
@@ -34070,7 +34070,7 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/vending_restock,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "jSa" = (
@@ -34712,7 +34712,7 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/construction/engineering)
 "kbw" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "kbF" = (
@@ -36038,7 +36038,7 @@
 "kzq" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/table_or_rack,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -38682,7 +38682,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "llY" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -41502,7 +41502,7 @@
 /area/station/science/lab)
 "mhn" = (
 /obj/effect/spawner/random/trash/grime,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/box,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -45782,7 +45782,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -45829,7 +45829,7 @@
 "nAr" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "nAB" = (
@@ -48145,7 +48145,7 @@
 	network = list("ss13","Security")
 	},
 /obj/item/reagent_containers/spray/cleaner,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "onf" = (
@@ -48895,7 +48895,7 @@
 /area/station/hallway/secondary/exit)
 "oAH" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/clothing/glasses/science,
@@ -51100,7 +51100,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ppM" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
@@ -51583,7 +51583,7 @@
 	name = "Atmospherics Delivery";
 	req_access = list("atmospherics")
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
@@ -53093,7 +53093,7 @@
 "pRn" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/special_lighter,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/north,
 /obj/item/clothing/under/rank/civilian/janitor/maid,
 /turf/open/floor/iron/smooth,
@@ -55417,7 +55417,7 @@
 /area/station/command/heads_quarters/ce)
 "qEw" = (
 /obj/effect/spawner/random/trash/bacteria,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "qEH" = (
@@ -56044,7 +56044,7 @@
 /area/station/commons/dorms/laundry)
 "qON" = (
 /obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "qOY" = (
@@ -58078,7 +58078,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rtO" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -60696,7 +60696,7 @@
 /area/station/maintenance/department/science)
 "spE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -61799,7 +61799,7 @@
 /area/station/hallway/secondary/entry)
 "sHv" = (
 /obj/effect/spawner/random/trash/grime,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "sHw" = (
@@ -62756,7 +62756,7 @@
 /area/station/maintenance/department/cargo)
 "sVy" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
@@ -63364,7 +63364,7 @@
 /area/station/cargo/warehouse)
 "tfv" = (
 /obj/effect/spawner/random/structure/crate_loot,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "tfx" = (
@@ -63489,7 +63489,7 @@
 /area/station/science/explab)
 "thz" = (
 /obj/effect/spawner/random/trash/graffiti,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "thE" = (
@@ -63642,7 +63642,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "tjH" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
@@ -64040,7 +64040,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/medkit,
 /obj/effect/spawner/random/medical/medkit_rare,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "tpR" = (
@@ -66704,7 +66704,7 @@
 /area/station/security/prison)
 "ukh" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/left/directional/east,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Privacy Shutter";
@@ -67920,7 +67920,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "uBQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
@@ -69909,7 +69909,7 @@
 /area/station/medical/pharmacy)
 "vik" = (
 /obj/effect/spawner/random/trash/botanical_waste,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "vin" = (
@@ -71247,7 +71247,7 @@
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "vzT" = (
@@ -71797,7 +71797,7 @@
 /area/station/hallway/primary/tram/center)
 "vHy" = (
 /obj/effect/spawner/random/structure/furniture_parts,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "vIa" = (
@@ -73660,7 +73660,7 @@
 "wns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "wnw" = (
@@ -73700,7 +73700,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "woP" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/yellow,
@@ -74245,7 +74245,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "wwr" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -76243,7 +76243,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "xfV" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/smooth,
@@ -76936,7 +76936,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "xsj" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -77602,7 +77602,7 @@
 	pixel_y = 3
 	},
 /obj/effect/spawner/random/entertainment/deck,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)

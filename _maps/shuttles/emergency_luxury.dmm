@@ -620,7 +620,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
@@ -847,7 +847,7 @@
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."

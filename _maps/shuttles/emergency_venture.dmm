@@ -483,7 +483,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "yk" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
