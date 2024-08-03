@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(nasheed_playing, FALSE) //prevent double nasheed
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 
-obj/item/melee/execution_sword/attack_self(mob/living/user)
+/obj/item/melee/execution_sword/attack_self(mob/living/user)
 	if(faction_chosen)
 		to_chat(user, span_notice("You have already pledged your allegiance to [execution_faction]!"))
 		return ..()
@@ -32,9 +32,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 	else
 		faction_chosen = TRUE
 
-
-
-obj/item/melee/execution_sword/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/melee/execution_sword/attack(mob/living/target_mob, mob/living/user, params)
 	if(!ishuman(target_mob) || executing || !target_mob.mind || target_mob == user)
 		return ..()
 	if(execution_cooldown_on)
@@ -72,19 +70,17 @@ obj/item/melee/execution_sword/attack(mob/living/target_mob, mob/living/user, pa
 		priority_announce("[user] has to failed to execute [target_mob] and has brought shame to [execution_faction]", "LiveLeak Announcement", 'sound/misc/compiler-failure.ogg')
 		addtimer(CALLBACK(src, PROC_REF(recharge_execute)), cooldown_time)
 
-
-obj/item/melee/execution_sword/proc/nasheed_end()
+/obj/item/melee/execution_sword/proc/nasheed_end()
 	for(var/mob/M in GLOB.player_list)
 		M.stop_sound_channel(CHANNEL_WALKMAN) // AH
 	GLOB.nasheed_playing = FALSE
 
-
-obj/item/melee/execution_sword/proc/recharge_execute()
+/obj/item/melee/execution_sword/proc/recharge_execute()
 	execution_cooldown_on = FALSE
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE, -1)
 
 
-obj/item/melee/execution_sword/suicide_act(mob/living/user)
+/obj/item/melee/execution_sword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is holding the [src] to [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/obj/item/bodypart/head/target_head = user.get_bodypart("head")
 	if(!target_head)
@@ -95,7 +91,7 @@ obj/item/melee/execution_sword/suicide_act(mob/living/user)
 	return(BRUTELOSS)
 
 
-obj/item/melee/execution_sword/proc/add_tally()
+/obj/item/melee/execution_sword/proc/add_tally()
 	death_tally ++
 	desc = "Not much good in a fight but perfect for making an example of your enemies. a digit display on the handle displays [death_tally]"
 	cooldown_time = clamp(cooldown_time*1.2, 120, 500)
