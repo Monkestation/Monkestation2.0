@@ -93,7 +93,7 @@
 		return FALSE
 	return TRUE
 
-// Just a completely normal crowbar except it's bulky sized and can force doors like jaws of life can
+// Just a completely normal crowbar except it's bulky sized and can force doors like jaws of life can.
 
 /obj/item/crowbar/large/doorforcer
 	name = "prybar"
