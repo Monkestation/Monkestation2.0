@@ -58,6 +58,8 @@
 #define LAZYCOPY(L) (L ? L.Copy() : list() )
 /// Consider LAZYNULL instead
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+/// Clears any nulls out of a list, and also turns the list itself null if its empty afterwards.
+#define LAZYCLEARNULLS(L) if(L) { list_clear_nulls(L); if(!length(L)) L = null };
 ///Returns the list if it's actually a valid list, otherwise will initialize it
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverse_range(L.Copy())
