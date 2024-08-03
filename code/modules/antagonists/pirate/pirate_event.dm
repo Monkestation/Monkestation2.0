@@ -20,26 +20,21 @@
 //monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()
-	if (SSmapping.is_planetary())
+	if(!(length(GLOB.light_pirate_gangs) + length(GLOB.heavy_pirate_gangs))) //monkestation edit: adds the pirate gangs check, as well as a redundant planetary check
 		return EVENT_CANT_RUN
 	return ..()
 
 //monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
 	///admin chosen pirate team
-	var/list/datum/pirate_gang/gang_list = list(
-		/datum/pirate_gang/grey,
-		/datum/pirate_gang/interdyne,
-		/datum/pirate_gang/irs,
-		/datum/pirate_gang/lustrous,
-		/datum/pirate_gang/rogues,
-		/datum/pirate_gang/silverscales,
-		/datum/pirate_gang/skeletons,
-	)
+	var/list/datum/pirate_gang/gang_list
 
 //monkestation edit start
 /datum/round_event/pirates/setup()
 	. = ..()
+	if(gang_list)
+		return
+
 	gang_list = list()
 	for(var/datum/pirate_gang/gang in GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs)
 		if(gang.paid_off)
