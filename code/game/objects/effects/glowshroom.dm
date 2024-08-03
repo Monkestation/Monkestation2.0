@@ -155,7 +155,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
-		if(!prob(chance_generation, seconds_per_tick))
+		if(!prob(chance_generation))
 			continue
 		var/spreads_into_adjacent = SPT_PROB(spread_into_adjacent_chance, seconds_per_tick)
 		var/turf/new_loc
