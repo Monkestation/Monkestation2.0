@@ -142,10 +142,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
 	//times when there's no real chance of the viewable range changing, really you could do this once on item
 	//spawn and most people probably would not notice.
-	for(var/turf/open/floor/earth as anything in RANGE_TURFS(2, ownturf) - ownturf)
-		if(!istype(earth) || QDELING(earth) || is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
-			continue
-		if(!TURF_SHARES(earth))
+	for(var/turf/open/floor/earth in oview(2, src))
+		if(QDELING(earth) || !TURF_SHARES(earth) || is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
 		possible_locs += earth
 
