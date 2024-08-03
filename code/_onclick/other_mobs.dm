@@ -9,6 +9,7 @@
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
 		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
+//Checks if mob doesnt have hands blocked, for future TG PR port (see https://github.com/tgstation/tgstation/pull/78991)
 /mob/living/proc/can_unarmed_attack()
 	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
 
@@ -130,8 +131,10 @@
 #define LIVING_UNARMED_ATTACK_BLOCKED(target_atom) (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
 	|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, target_atom, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 
+//Partial port of https://github.com/tgstation/tgstation/pull/78991 to fix some immenent bugs with cleanbots
+//This will eventually be entirely ported
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-s	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
 	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(sigreturn & COMPONENT_SKIP_ATTACK)

@@ -338,9 +338,11 @@
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
 	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+	//START: Monkestation edit (this lets it burn trash a tiny bit faster)
 	if(is_type_in_typecache(target, huntable_trash))
 		target.acid_act(75, 20)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+	//END: Monkestation edit
 	else
 		target.acid_act(75, 10)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
