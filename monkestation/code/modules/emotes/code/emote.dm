@@ -141,6 +141,14 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
+	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, FALSE) && isipc(user)))
+		return pick(
+			'monkestation/sound/voice/screams/silicon/catscream1.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream2.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream3.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream4.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream5.ogg',
+		)
 	if(issilicon(user))
 		return pick(
 			'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
@@ -194,6 +202,7 @@
 		return TRUE
 	else
 		return FALSE
+
 /datum/emote/living/bark
 	key = "bark"
 	key_third_person = "barks"
