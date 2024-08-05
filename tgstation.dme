@@ -5734,6 +5734,7 @@
 #include "hippiestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
 #include "hippiestation\code\modules\sports\uplink\uplink_items.dm"
+#include "hippiestation\code\modules\clothing\spacesuits\nanosuit.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
@@ -7778,3 +7779,5 @@
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
 // END_INCLUDE
+
+
