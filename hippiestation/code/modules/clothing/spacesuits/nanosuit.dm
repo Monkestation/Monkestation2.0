@@ -243,20 +243,17 @@
 	return cell
 
 /obj/item/clothing/suit/space/hardsuit/nano/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	var/datum/atom_hud/diagsensor = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC ]
-	secsensor.remove_hud_from(Wearer)
-	diagsensor.remove_hud_from(Wearer)
-	if(Wearer && help_verb)
-		Wearer.verbs -= help_verb
-	Wearer = null
-	if(style)
-		QDEL_NULL(style)
-	if(cell)
-		QDEL_NULL(cell)
-	return ..()
-
+    STOP_PROCESSING(SSfastprocess, src)
+    if(Wearer)
+        Wearer.remove_from_all_data_huds()
+    if(Wearer && help_verb)
+        Wearer.verbs -= help_verb
+    Wearer = null
+    if(style)
+        QDEL_NULL(style)
+    if(cell)
+        QDEL_NULL(cell)
+    return ..()
 /obj/item/clothing/suit/space/hardsuit/nano/prevent_content_explosion()
 	return TRUE
 
@@ -406,17 +403,38 @@
 	return FALSE
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/toggle_mode(var/suitmode, var/forced = FALSE)
+
 	if(!shutdown && (forced || (cell?.charge && mode != suitmode)))
+
 		mode = suitmode
+
 		switch(suitmode)
+
 			if(NANO_ARMOR)
+
 				helmet.display_visor_message("Maximum Armor!")
 				var/datum/component/footstep/FS = Wearer.GetComponent(/datum/component/footstep)
 				FS.volume = 1.5
 				block_chance = hacked ? 65 : 50 //65% block emagged, 50% normal
 				slowdown = initial(slowdown)
-				armor = armor.setRating(melee = 40, bullet = 40, laser = 40, energy = 45, bomb = 90, rad = 90)
-				helmet.armor = helmet.armor.setRating(melee = 40, bullet = 40, laser = 40, energy = 45, bomb = 90, rad = 90)
+				// Update the armor values for the hardsuit
+				armor = armor.generate_new_with_specific(list(
+					melee = 40,
+					bullet = 40,
+					laser = 40,
+					energy = 45,
+					bomb = 90,
+					rad = 90
+				))
+				if(helmet)
+					helmet.armor = helmet.armor.generate_new_with_specific(list(
+						melee = 40,
+						bullet = 40,
+						laser = 40,
+						energy = 45,
+						bomb = 90,
+						rad = 90
+					))
 				Wearer.filters = list()
 				animate(Wearer, alpha = 255, time = 5)
 				Wearer.remove_movespeed_modifier(NANO_SPEED)
@@ -1077,11 +1095,6 @@
 	take_damage(nanosuit_damage(), BRUTE, "melee", FALSE, get_dir(src, user))
 	return TRUE
 
-/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/carbon/attacker)
-	. = ..()
-	if(attacker && ishuman(attacker))
-		if(attacker.mind.has_martialart(MARTIALART_NANOSUIT) && weapon && weapon.damtype == BRUTE)
-			. += 1.25 //deal 25% more damage in strength
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force && I.damtype == BRUTE && ishuman(user) && !user.stat && user.mind.has_martialart(MARTIALART_NANOSUIT))
