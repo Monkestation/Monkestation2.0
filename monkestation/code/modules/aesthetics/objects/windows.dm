@@ -23,8 +23,8 @@
 /obj/structure/window/reinforced/fulltile
     icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
     canSmoothWith = SMOOTH_GROUP_WALLS
-	icon_state = "reinforced_window-0"
-	base_icon_state = "reinforced_window"
+    icon_state = "reinforced_window-0"
+    base_icon_state = "reinforced_window"
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/plasma/fulltile
