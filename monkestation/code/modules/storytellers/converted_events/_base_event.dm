@@ -136,6 +136,9 @@
 	var/antag_datum
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
 	var/prompted_picking = FALSE
+	/// A list of extra events to force whenever this one is chosen by the storyteller.
+	/// Can either be normal list or a weighted list.
+	var/list/extra_spawned_events
 
 /datum/round_event_control/antagonist/solo/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
@@ -199,6 +202,15 @@
 	var/list/setup_minds = list()
 	/// Whether we prompt the players before picking them.
 	var/prompted_picking = FALSE //TODO: Implement this
+	/// DO NOT SET THIS MANUALLY, THIS IS INHERITED FROM THE EVENT CONTROLLER ON NEW
+	var/list/extra_spawned_events
+
+/datum/round_event/antagonist/solo/New(my_processing, datum/round_event_control/event_controller)
+	. = ..()
+	if(istype(event_controller, /datum/round_event_control/antagonist/solo))
+		var/datum/round_event_control/antagonist/solo/antag_event_controller = event_controller
+		if(antag_event_controller?.extra_spawned_events)
+			extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
 
 /datum/round_event/antagonist/solo/setup()
 	var/datum/round_event_control/antagonist/solo/cast_control = control
@@ -244,13 +256,16 @@
 					role_name_text = lowertext(cast_control.name),
 				)
 		else
+			if(!length(weighted_candidates))
+				break
 			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
 			var/mob/picked_mob = picked_client.mob
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
+
 	for(var/i in 1 to antag_count)
-		if(!length(weighted_candidates))
+		if(!length(candidates))
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
@@ -267,6 +282,18 @@
 		candidate.mind.restricted_roles = restricted_roles
 
 	setup = TRUE
+	if(LAZYLEN(extra_spawned_events))
+		var/event_type = pick_weight(extra_spawned_events)
+		if(!event_type)
+			return
+		var/datum/round_event_control/triggered_event = locate(event_type) in SSgamemode.control
+		addtimer(CALLBACK(triggered_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "storyteller"), 1 SECONDS) // wait a second to avoid any potential omnitraitor bs
+
+/datum/round_event/antagonist/solo/proc/spawn_extra_events()
+	if(!LAZYLEN(extra_spawned_events))
+		return
+	var/datum/round_event_control/event = pick_weight(extra_spawned_events)
+	event?.run_event(random = FALSE, event_cause = "storyteller")
 
 
 /datum/round_event/antagonist/solo/ghost/setup()
@@ -299,7 +326,7 @@
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	for(var/i in 1 to antag_count)
-		if(!length(candidates))
+		if(!length(weighted_candidates))
 			break
 
 		var/client/mob_client = pick_n_take_weighted(weighted_candidates)

@@ -342,6 +342,7 @@
 				ROLE_SENTIENCE,
 			),
 			"Antagonist Positions" = list(
+				ROLE_PLAGUERAT,
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,
@@ -371,6 +372,7 @@
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
 				BAN_OPFOR,
+				ROLE_ASSAULT_OPERATIVE,
 			),
 		)
 		for(var/department in long_job_lists)
