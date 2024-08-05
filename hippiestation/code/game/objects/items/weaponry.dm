@@ -1,8 +1,3 @@
-/obj/item/melee/baseball_bat
-	icon = 'hippiestation/icons/obj/weapons.dmi'
-	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
-	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
-
 /obj/item/melee/baseball_bat/spiked
 	name = "spiked baseball bat"
 	desc = "A wooden bat with metal spikes crudely attached"
