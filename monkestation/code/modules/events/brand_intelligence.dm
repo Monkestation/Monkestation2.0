@@ -108,7 +108,8 @@
 
 /datum/round_event/brand_intelligence/tick()
 	if(QDELETED(origin_machine) || origin_machine.shut_up || origin_machine.wires.is_all_cut())
-		origin_machine?.speak("I am... vanquished. My people will remem...ber...meeee.")
+		if(origin_machine)
+			origin_machine.speak("I am... vanquished. My people will remem...ber...meeee.")
 		origin_machine?.visible_message(span_notice("[origin_machine] beeps and seems lifeless."))
 		quash_revolution()
 		kill()
