@@ -155,7 +155,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
-		if(!prob(chance_generation))
+		if(!SPT_PROB(chance_generation, seconds_per_tick))
 			continue
 		var/spreads_into_adjacent = SPT_PROB(spread_into_adjacent_chance, seconds_per_tick)
 		var/turf/new_loc
@@ -166,7 +166,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		//if there's a lot of glow shroom clustered about
 		for(var/iterator in 1 to min(length(possible_locs), 3))
 			var/turf/possibleLoc = pick_n_take(possible_locs)
-			if(spreads_into_adjacent || !locate(/obj/structure/glowshroom) in view(1, possibleLoc))
+			if(spreads_into_adjacent || !(locate(/obj/structure/glowshroom) in view(1, possibleLoc)))
 				new_loc = possibleLoc
 				break
 
