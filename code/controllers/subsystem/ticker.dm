@@ -729,11 +729,15 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	round_end_sound_sent = FALSE
 	round_end_sound = fcopy_rsc(the_sound)
+	// monkestation start: roundend sound optimization
+	GLOB.clients << load_resource(round_end_sound, -1)
+	/*
 	for(var/thing in GLOB.clients)
 		var/client/C = thing
 		if (!C)
 			continue
 		C.Export("##action=load_rsc", round_end_sound)
+	monkestation end */
 	round_end_sound_sent = TRUE
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
