@@ -10,7 +10,7 @@
     icon = 'icons/obj/smooth_structures/window.dmi'
     icon_state = "window-0"
     base_icon_state = "window"
-    canSmoothWith = MOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/plasma/fulltile
