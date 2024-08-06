@@ -118612,6 +118612,10 @@
 "wSR" = (
 /obj/machinery/teleport/hub,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/button/door/directional/south{
+	name = "Public Teleporter Shutters";
+	id = "teleporterhubshutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "wSU" = (
