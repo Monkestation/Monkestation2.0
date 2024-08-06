@@ -28667,7 +28667,8 @@
 "fxw" = (
 /obj/machinery/button/door/directional/south{
 	id = "gatewayshutters";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	req_access = list("command")
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
