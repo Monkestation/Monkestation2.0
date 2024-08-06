@@ -10,28 +10,36 @@
     icon = 'icons/obj/smooth_structures/window.dmi'
     icon_state = "window-0"
     base_icon_state = "window"
-    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+    smoothing_flags = SMOOTH_BITMASK
+    smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/plasma/fulltile
     icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
-    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
     icon_state = "rplasma_window-0"
     base_icon_state = "rplasma_window"
+    smoothing_flags = SMOOTH_BITMASK
+    smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/fulltile
     icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
-    canSmoothWith = SMOOTH_GROUP_WALLS
     icon_state = "reinforced_window-0"
     base_icon_state = "reinforced_window"
+    smoothing_flags = SMOOTH_BITMASK
+    smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/plasma/fulltile
     icon = 'icons/obj/smooth_structures/plasma_window.dmi'
-    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
     icon_state = "plasma_window-0"
     base_icon_state = "plasma_window"
+    smoothing_flags = SMOOTH_BITMASK
+    smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
     smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/grille
@@ -39,9 +47,9 @@
     icon_state = "grille"
     base_icon_state = "grille"
     layer = ABOVE_OBJ_LAYER - 0.01
-    canSmoothWith = SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_WALLS
     smoothing_flags = SMOOTH_BITMASK
     smoothing_groups = SMOOTH_GROUP_GRILLE
+    canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 
 /obj/structure/grille/update_overlays(updates=ALL)
     . = ..()
