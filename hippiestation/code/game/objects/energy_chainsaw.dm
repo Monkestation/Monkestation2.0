@@ -81,9 +81,7 @@
 /obj/item/chainsaw/energy_chainsaw/mounted
 	name = "mounted energy chainsaw"
 	desc = "Byond Leatherspace"
-	inhand_icon_state = "mounted_chainsaw"
-	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	inhand_icon_state = "mounted_echainsaw"
 	item_flags = ABSTRACT | DROPDEL
 	throwforce = 0
 	throw_range = 0
