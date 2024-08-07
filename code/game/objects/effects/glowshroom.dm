@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	/// Max time interval between glowshroom "spreads"
 	var/max_delay_spread = 30 SECONDS
 	/// Boolean to indicate if the shroom is on the floor/wall
-	var/floor = 0
+	var/floor = FALSE
 	/// Mushroom generation number
 	var/generation = 1
 	/// Chance to spread into adjacent tiles (0-100)
@@ -85,6 +85,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(istype(our_glow_gene))
 		set_light(l_outer_range = our_glow_gene.glow_range(myseed), l_power = our_glow_gene.glow_power(myseed), l_color = our_glow_gene.glow_color)
 	setDir(calc_dir())
+	/* monkestation edit: use our own sprites
 	base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
@@ -98,7 +99,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = base_icon_state
+		icon_state = base_icon_state */
+	update_icon_state()
+	// monkestation end
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
@@ -216,12 +219,12 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(dir_list.len)
 		var/new_dir = pick(dir_list)
 		if(new_dir == 16)
-			floor = 1
+			floor = TRUE
 			new_dir = 1
 		return new_dir
 
-	floor = 1
-	return 1
+	floor = TRUE
+	return TRUE
 
 /**
  * Causes the glowshroom to decay by decreasing its endurance, destroying it when it gets too low.
