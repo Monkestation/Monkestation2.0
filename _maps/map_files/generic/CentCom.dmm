@@ -20195,7 +20195,10 @@
 /area/cruiser_dock)
 "bWS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/pod/old/syndicate,
+/obj/machinery/computer/pod/old{
+	name = "\improper Fortune's Terminal";
+	is_operational = 0
+	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "cvB" = (
@@ -20896,8 +20899,8 @@
 "uIq" = (
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Brad";
-	name = "Brads Fax Machine"
+	fax_name = "Fortune";
+	name = "Fortune's Fax Machine"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
