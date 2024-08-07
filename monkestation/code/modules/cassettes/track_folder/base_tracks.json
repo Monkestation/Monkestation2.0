@@ -5,7 +5,7 @@
 	"duration": 1500,
 	"artist": "X-CEED",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Jazz"
 	},
@@ -25,7 +25,7 @@
 	"duration": 2450,
 	"artist": "Jeroen Tel (Remixed by Cuboos)",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Electronic"
 	},
