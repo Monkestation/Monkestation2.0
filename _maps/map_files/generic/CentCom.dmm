@@ -20195,7 +20195,10 @@
 /area/cruiser_dock)
 "bWS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/pod/old,
+/obj/machinery/computer/pod/old{
+	name = "\improper Fortune's Terminal";
+	desc = "Fortune's Terminal"
+	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "cvB" = (
@@ -20281,8 +20284,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "elb" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/space/basic,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "eAb" = (
 /turf/open/floor/iron/stairs/medium{
@@ -20896,8 +20899,8 @@
 "uIq" = (
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Brad";
-	name = "Brads Fax Machine"
+	fax_name = "Fortune";
+	name = "Fortune's Fax Machine"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
@@ -21002,12 +21005,14 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/flasher/directional/west{
-	id = sss
+	id = "fortuneflash"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "wAk" = (
-/mob/living/simple_animal/pet/cat/kitten,
+/mob/living/simple_animal/pet/cat/kitten{
+	name = "Kbity :3"
+	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "wAD" = (
