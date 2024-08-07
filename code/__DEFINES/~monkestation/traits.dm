@@ -20,6 +20,8 @@
 #define TRAIT_REMOVED_FROM_MANIFEST "removed_from_manifest"
 /// Station trait for when the clown has bridge access *shudders*
 #define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
+// RDS compatibility trait. This is used to determine if a mob/silicon is compatible with RDS.
+#define TRAIT_RDS_COMPATIBLE "rds_compatible"
 
 // /datum/mind
 /// Prevents any sort of antagonist/brainwashing conversion.

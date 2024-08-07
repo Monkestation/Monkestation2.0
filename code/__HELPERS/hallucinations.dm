@@ -25,38 +25,40 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
 /// Unless you need this for an explicit reason, use the cause_hallucination wrapper.
 /mob/living/proc/_cause_hallucination(list/raw_args)
-	if(!length(raw_args))
-		CRASH("cause_hallucination called with no arguments.")
+    if(!length(raw_args))
+        CRASH("cause_hallucination called with no arguments.")
+    if(!(HAS_TRAIT(src, TRAIT_RDS_COMPATIBLE) || !is_species(src, /datum/species/ipc)))
+        return
 
-	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
-	if(!ispath(hallucination_type))
-		CRASH("cause_hallucination was given a non-hallucination type.")
+    var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
+    if(!ispath(hallucination_type))
+        CRASH("cause_hallucination was given a non-hallucination type.")
 
-	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
-	var/datum/hallucination/new_hallucination
+    var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
+    var/datum/hallucination/new_hallucination
 
-	if(length(raw_args) >= HALLUCINATION_ARGLIST)
-		var/list/passed_args = raw_args.Copy(HALLUCINATION_ARGLIST)
-		passed_args.Insert(HALLUCINATION_ARG_TYPE, src)
+    if(length(raw_args) >= HALLUCINATION_ARGLIST)
+        var/list/passed_args = raw_args.Copy(HALLUCINATION_ARGLIST)
+        passed_args.Insert(HALLUCINATION_ARG_TYPE, src)
 
-		new_hallucination = new hallucination_type(arglist(passed_args))
-	else
-		new_hallucination = new hallucination_type(src)
+        new_hallucination = new hallucination_type(arglist(passed_args))
+    else
+        new_hallucination = new hallucination_type(src)
 
-	// For some reason, we qdel'd in New, maybe something went wrong.
-	if(QDELETED(new_hallucination))
-		return
-	// It's not guaranteed that the hallucination passed can successfully be initiated.
-	// This means there may be cases where someone should have a hallucination but nothing happens,
-	// notably if you pass a randomly picked hallucination type into this.
-	// Maybe there should be a separate proc to reroll on failure?
-	if(!new_hallucination.start())
-		qdel(new_hallucination)
-		return
+    // For some reason, we qdel'd in New, maybe something went wrong.
+    if(QDELETED(new_hallucination))
+        return
+    // It's not guaranteed that the hallucination passed can successfully be initiated.
+    // This means there may be cases where someone should have a hallucination but nothing happens,
+    // notably if you pass a randomly picked hallucination type into this.
+    // Maybe there should be a separate proc to reroll on failure?
+    if(!new_hallucination.start())
+        qdel(new_hallucination)
+        return
 
-	investigate_log("was afflicted with a hallucination of type [hallucination_type] by: [hallucination_source]. \
-		([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
-	return new_hallucination
+    investigate_log("was afflicted with a hallucination of type [hallucination_type] by: [hallucination_source]. \
+        ([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
+    return new_hallucination
 
 /**
  * Emits a hallucinating pulse around the passed atom.

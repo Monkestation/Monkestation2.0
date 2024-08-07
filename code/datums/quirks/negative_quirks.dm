@@ -646,23 +646,26 @@
 	var/datum/weakref/added_trama_ref
 
 /datum/quirk/insanity/add(client/client_source)
-	if(!iscarbon(quirk_holder))
-		return
-	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
+    if(!iscarbon(quirk_holder))
+        return
+    var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	// Setup our special RDS mild hallucination.
-	// Not a unique subtype so not to plague subtypesof,
-	// also as we inherit the names and values from our quirk.
-	var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
-	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
-	added_trauma.name = name
-	added_trauma.desc = medical_record_text
-	added_trauma.scan_desc = lowertext(name)
-	added_trauma.gain_text = null
-	added_trauma.lose_text = null
+    // Setup our special RDS mild hallucination.
+    // Not a unique subtype so not to plague subtypesof,
+    // also as we inherit the names and values from our quirk.
+    var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
+    added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
+    added_trauma.name = name
+    added_trauma.desc = medical_record_text
+    added_trauma.scan_desc = lowertext(name)
+    added_trauma.gain_text = null
+    added_trauma.lose_text = null
 
-	carbon_quirk_holder.gain_trauma(added_trauma)
-	added_trama_ref = WEAKREF(added_trauma)
+    if(HAS_TRAIT(carbon_quirk_holder, TRAIT_RDS_COMPATIBLE))
+        added_trauma.ignore_immunity = TRUE
+
+    carbon_quirk_holder.gain_trauma(added_trauma)
+    added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
 	var/rds_policy = get_policy("[type]") || "Please note that your [lowertext(name)] does NOT give you any additional right to attack people or cause chaos."
