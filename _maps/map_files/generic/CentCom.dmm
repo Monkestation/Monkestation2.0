@@ -20197,7 +20197,10 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/pod/old{
 	name = "\improper Fortune's Terminal";
-	is_operational = 0
+	is_operational = 0;
+	desc = "Fortune's Terminal";
+	light_on = 0;
+	light_system = 0
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
