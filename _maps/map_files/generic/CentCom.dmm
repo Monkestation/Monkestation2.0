@@ -20283,8 +20283,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "elb" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/space/basic,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "eAb" = (
 /turf/open/floor/iron/stairs/medium{
@@ -21009,7 +21009,9 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "wAk" = (
-/mob/living/simple_animal/pet/cat/kitten,
+/mob/living/simple_animal/pet/cat/kitten{
+	name = "Kbity :3"
+	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "wAD" = (
