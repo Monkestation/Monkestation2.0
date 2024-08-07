@@ -20195,11 +20195,7 @@
 /area/cruiser_dock)
 "bWS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/prisoner{
-	icon_screen = "library";
-	icon_state = "oldcomp";
-	name = "Fortune's PC"
-	},
+/obj/machinery/computer/pod/old/syndicate,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "cvB" = (
