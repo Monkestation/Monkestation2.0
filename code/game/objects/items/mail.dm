@@ -125,6 +125,8 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
+	var/token = new /obj/item/stack/mail_token  // MONKESTATION EDIT START
+	user.put_in_hands(token) // MONKESTATION EDIT END
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -294,7 +296,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/stack/mail_token, // monkestation edit
 	))
 
 /obj/item/paper/fluff/junkmail_redpill
