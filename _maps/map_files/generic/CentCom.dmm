@@ -20196,7 +20196,7 @@
 "bWS" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/pod/old/swf{
-	name = "\improper Fortune's Terminal"
+	name = "\improper Fortune's Computer"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
