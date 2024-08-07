@@ -80,13 +80,13 @@
 			//Overlay
 			facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
 			facial_overlay.alpha = facial_hair_alpha
-			facial_overlay.pixel_y += offsets[1]
+		//	facial_overlay.pixel_y += offsets[1]
 			//Gradients
 			facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
 			if(facial_hair_gradient_style)
 				facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
 				facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
-				facial_gradient_overlay.pixel_y += offsets[1]
+	//			facial_gradient_overlay.pixel_y += offsets[1]
 			//Emissive
 			facial_overlay.overlays += emissive_blocker(facial_overlay.icon, facial_overlay.icon_state, location, alpha = facial_hair_alpha)
 
