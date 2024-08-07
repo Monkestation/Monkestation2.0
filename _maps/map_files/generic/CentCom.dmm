@@ -20195,8 +20195,9 @@
 /area/cruiser_dock)
 "bWS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/pod/old{
-	name = "\improper Fortune's Terminal"
+/obj/machinery/computer/pod/old/swf{
+	name = "\improper Fortune's Terminal";
+	obj_flags = s
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
