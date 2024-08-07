@@ -21004,7 +21004,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/flasher/directional/west{
-	id = sss
+	id = "fortuneflash"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
