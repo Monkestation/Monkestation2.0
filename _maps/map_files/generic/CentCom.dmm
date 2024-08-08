@@ -12704,7 +12704,8 @@
 /area/centcom/central_command_areas/admin)
 "aGZ" = (
 /obj/machinery/door/airlock/centcom{
-	dir = 4
+	dir = 4;
+	name = "Sees's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
