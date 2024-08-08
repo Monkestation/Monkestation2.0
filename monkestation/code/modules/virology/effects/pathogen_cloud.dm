@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	var/list/id_list = list()
 	var/death = 0
 
-/obj/effect/pathogen_cloud/Initialize(mob/source, list/viruses, is_carrier = TRUE, is_core = TRUE)
+/obj/effect/pathogen_cloud/Initialize(mapload, mob/source, list/viruses, is_carrier = TRUE, is_core = TRUE)
 	. = ..()
 	if (QDELETED(loc) || !length(viruses))
 		return INITIALIZE_HINT_QDEL
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 /obj/effect/pathogen_cloud/core
 	core = TRUE
 
-/obj/effect/pathogen_cloud/core/Initialize(mapload, list/viruses, is_carrier = TRUE, is_core = TRUE)
+/obj/effect/pathogen_cloud/core/Initialize(mapload, mob/source, list/viruses, is_carrier = TRUE, is_core = TRUE)
 	. = ..()
 	if(.)
 		return
