@@ -1111,7 +1111,6 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"t" = 'sound/vox_fem/t.ogg',
 	"table" = 'sound/vox_fem/table.ogg',
 	"tactical" = 'sound/vox_fem/tactical.ogg',
-	"taildragger" = 'sound/vox_fem/taildragger.ogg',
 	"take" = 'sound/vox_fem/take.ogg',
 	"talk" = 'sound/vox_fem/talk.ogg',
 	"tampered" = 'sound/vox_fem/tampered.ogg',
