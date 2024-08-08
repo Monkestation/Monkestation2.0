@@ -20217,19 +20217,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stack/sheet/mineral/abductor,
 /obj/item/stack/sheet/mineral/runite,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/item/stack/sheet/mineral/mythril,
-/obj/item/stack/sheet/mineral/plastitanium,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/stack/sheet/mineral/abductor,
-/obj/item/merged_material/mineral_sample,
 /turf/open/misc/ashplanet/rocky/arena,
 /area/centcom/central_command_areas/admin)
 "dRD" = (
@@ -20343,14 +20330,6 @@
 	dir = 8
 	},
 /obj/machinery/light/floor/has_bulb,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
 /turf/open/floor/carpet/neon/simple/teal,
 /area/centcom/central_command_areas/admin)
 "fDK" = (
@@ -20556,15 +20535,6 @@
 	dir = 8
 	},
 /area/cruiser_dock)
-"iZE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/carpet/neon/simple/teal,
-/area/centcom/central_command_areas/admin)
 "jce" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -20671,14 +20641,6 @@
 	dir = 4
 	},
 /obj/machinery/light/floor/has_bulb,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
 /turf/open/floor/carpet/neon/simple/teal,
 /area/centcom/central_command_areas/admin)
 "kUz" = (
@@ -20918,15 +20880,6 @@
 /obj/item/storage/bag/chemistry,
 /obj/item/storage/bag/chemistry,
 /turf/open/floor/carpet/neon/simple/teal,
-/area/centcom/central_command_areas/admin)
-"oFB" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
 "oHu" = (
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -21189,18 +21142,6 @@
 /obj/item/stack/sheet/mineral/bananium/five,
 /obj/item/stack/sheet/mineral/metal_hydrogen,
 /obj/item/stack/sheet/runed_metal/fifty,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/stack/sheet/mineral/zaukerite,
-/obj/item/stack/sheet/mineral/bananium/five,
-/obj/item/stack/sheet/mineral/metal_hydrogen,
 /turf/open/misc/ashplanet/rocky/arena,
 /area/centcom/central_command_areas/admin)
 "tql" = (
@@ -21374,7 +21315,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 6
 	},
-/obj/item/effect_granter/donator/fluffykobold,
+/mob/living/basic/pet/fluffykobold,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
 "wcn" = (
@@ -21398,18 +21339,6 @@
 /obj/item/merged_material/mineral_sample,
 /obj/item/merged_material/mineral_sample,
 /obj/item/merged_material/mineral_sample,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 6
-	},
-/obj/item/stack/sheet/runed_metal/fifty,
-/obj/item/stack/sheet/mineral/runite,
-/obj/item/stack/sheet/mineral/adamantine,
-/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/misc/ashplanet/rocky/arena,
 /area/centcom/central_command_areas/admin)
 "wmt" = (
@@ -51805,7 +51734,7 @@ aMc
 aMc
 jPl
 jKX
-iZE
+rgY
 rgY
 rgY
 tql
@@ -52315,7 +52244,7 @@ aeD
 aSh
 aOn
 aMc
-oFB
+adQ
 aMc
 jPl
 tgi
