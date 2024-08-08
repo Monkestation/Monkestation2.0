@@ -543,12 +543,12 @@
 
 /datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Edit - Don't give Cetanoids the actual paraplegic quirk.
 		human_holder.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/paraplegic/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Edit
 		human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/poor_aim
@@ -620,7 +620,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
-	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Addition
+	if(human_holder.dna.species.id != SPECIES_CETANOID) //Monkestation Edit - Don't give Cetanoids prosthetic legs.
 		human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
 		human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
 
