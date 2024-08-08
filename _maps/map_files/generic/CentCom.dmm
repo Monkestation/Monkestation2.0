@@ -20328,6 +20328,13 @@
 	dir = 4
 	},
 /area/centcom/central_command_areas/admin)
+"foy" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
 "fCW" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -20448,6 +20455,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
+"hoY" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/central_command_areas/admin)
 "hrx" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured_large,
@@ -20496,7 +20507,10 @@
 /area/cruiser_dock)
 "hWq" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark/smooth_large/airless,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "iah" = (
 /turf/open/floor/mineral/plastitanium/red,
@@ -20569,6 +20583,18 @@
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/indestructible/syndicate,
 /area/cruiser_dock)
+"jtp" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
+"jxl" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
 "jzm" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -20577,6 +20603,13 @@
 	id = "fortuneflash"
 	},
 /turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/admin)
+"jCy" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "jFt" = (
 /obj/structure/table/glass/plasmaglass,
@@ -20786,6 +20819,13 @@
 	},
 /turf/open/misc/ashplanet/rocky/arena,
 /area/centcom/central_command_areas/admin)
+"nyv" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
 "nCt" = (
 /obj/structure/anvil,
 /turf/open/misc/ashplanet/rocky/arena,
@@ -20877,7 +20917,10 @@
 	name = "Admin Play Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/iron/shuttle/evac/airless,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "AdminPlayRoom"
+	},
+/turf/open/floor/iron/smooth,
 /area/centcom/central_command_areas/admin)
 "opw" = (
 /obj/structure/closet/l3closet/security,
@@ -20901,7 +20944,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "oyH" = (
-/turf/open/floor/iron/dark/smooth_large/airless,
+/turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/admin)
 "oDh" = (
 /obj/item/kirbyplants/random,
@@ -20950,11 +20993,22 @@
 /obj/structure/mop_bucket,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"prm" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
 "pwv" = (
 /obj/structure/closet/crate/cardboard/tiziran,
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"pDq" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/admin)
 "pDQ" = (
 /obj/effect/landmark/start/assaultop,
 /obj/structure/chair/office/light{
@@ -20968,6 +21022,13 @@
 	dir = 8
 	},
 /turf/open/misc/ashplanet/rocky/arena,
+/area/centcom/central_command_areas/admin)
+"pUS" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "qaG" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -21026,6 +21087,12 @@
 	},
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/carpet/neon/simple/teal,
+/area/centcom/central_command_areas/admin)
+"qIm" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "qKe" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -42006,30 +42073,30 @@ aaa
 aOn
 bJi
 oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
+foy
+qIm
+qIm
+qIm
+jCy
+qIm
+qIm
+qIm
+jCy
+qIm
+qIm
+qIm
+jCy
+qIm
+qIm
+qIm
+jCy
+qIm
+qIm
+qIm
+jCy
+qIm
+qIm
+qIm
 hWq
 oyH
 bJi
@@ -42263,31 +42330,31 @@ aaa
 aOn
 bJi
 oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+jPl
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+wmt
 oyH
 bJi
 aOn
@@ -42520,31 +42587,31 @@ aaa
 aOn
 bJi
 oyH
-oyH
-oyH
-oyH
-oyH
+jPl
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+wmt
 oyH
 bJi
 aOn
@@ -42777,31 +42844,31 @@ aaa
 aOn
 pkk
 oyH
-hWq
-oyH
-oyH
+nyv
+tgi
+tgi
 kXI
 iEE
 kXI
-oyH
-oyH
-hWq
-oyH
-oyH
+tgi
+tgi
+prm
+tgi
+tgi
 kXI
 iEE
 kXI
-oyH
-oyH
-hWq
-oyH
-oyH
+tgi
+tgi
+prm
+tgi
+tgi
 kXI
 iEE
 kXI
-oyH
-oyH
-hWq
+tgi
+tgi
+jtp
 oyH
 iSP
 aOn
@@ -43034,31 +43101,31 @@ aaa
 aOn
 bJi
 oyH
-oyH
-oyH
-oyH
-oyH
+jPl
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
 kXI
-oyH
-oyH
-oyH
-oyH
+tgi
+tgi
+tgi
+wmt
 oyH
 bJi
 aOn
@@ -43291,31 +43358,31 @@ aaa
 aOn
 bJi
 oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
-oyH
+jPl
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+tgi
+wmt
 oyH
 bJi
 aOn
@@ -43548,31 +43615,31 @@ aaa
 aOn
 bJi
 oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
-oyH
-oyH
-oyH
-hWq
+pUS
+bTY
+bTY
+bTY
+pDq
+bTY
+bTY
+bTY
+pDq
+bTY
+bTY
+bTY
+pDq
+bTY
+bTY
+bTY
+pDq
+bTY
+bTY
+bTY
+pDq
+bTY
+bTY
+bTY
+jxl
 oyH
 bJi
 aOn
@@ -44844,9 +44911,9 @@ aaa
 aaa
 aaa
 aOn
-aMc
-aMc
-aMc
+tDp
+bJi
+fhB
 aOn
 aaa
 aaa
@@ -45101,9 +45168,9 @@ aaa
 aaa
 aaa
 aOn
-aMc
-adQ
-aMc
+bJi
+hoY
+bJi
 aOn
 aaa
 aaa
@@ -45358,9 +45425,9 @@ aaa
 aaa
 aaa
 aOn
-aMc
-aMc
-aMc
+ror
+bJi
+gGj
 aOn
 aaa
 aaa
@@ -45615,9 +45682,9 @@ aaa
 aaa
 aaa
 aOn
-aMc
-aMc
-aMc
+aOn
+onc
+aOn
 aOn
 aaa
 aaa
