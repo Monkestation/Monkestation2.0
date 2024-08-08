@@ -418,6 +418,7 @@
 	new /obj/item/seeds/cannabis(src)
 	new /obj/item/food/grown/cannabis(src)
 	new /obj/item/storage/box/donkpockets/donkpockethonk(src)
+	new /obj/item/choice_beacon/pet(src)
 
 	..()
 
