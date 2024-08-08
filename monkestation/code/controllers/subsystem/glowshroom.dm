@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
 	priority = 10
-	runlevels = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	stat_tag = "GSP"
 
 /datum/controller/subsystem/processing/glowshrooms/fire(resumed = FALSE)
