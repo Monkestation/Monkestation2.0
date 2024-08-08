@@ -1,5 +1,6 @@
 /obj/structure/glowshroom
 	icon = 'monkestation/icons/obj/flora/glowshroom.dmi'
+	icon_state = "glowshroom1"
 	layer = ABOVE_OPEN_TURF_LAYER
 	/// The world.time of the last successful glowshroom spread.
 	/// Used for sorting processing to try to ensure all glowshrooms get a chance to proc.
@@ -24,3 +25,9 @@
 				pixel_x = -32
 	add_atom_colour(light_color, FIXED_COLOUR_PRIORITY)
 	return ..()
+
+/obj/structure/glowshroom/glowcap
+	icon_state = "glowshroom1"
+
+/obj/structure/glowshroom/shadowshroom
+	icon_state = "glowshroom1"
