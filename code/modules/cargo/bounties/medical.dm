@@ -73,11 +73,13 @@
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/organ/external/tail/lizard = TRUE)
 
+/* monkestation removal: LEAVE KBITY ALONE
 /datum/bounty/item/medical/cat_tail
 	name = "Cat Tail"
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/organ/external/tail/cat = TRUE)
+monkestation end */
 
 /datum/bounty/item/medical/chainsaw
 	name = "Chainsaw"
