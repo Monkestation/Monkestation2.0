@@ -125,8 +125,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
-	var/token = new /obj/item/stack/mail_token  // MONKESTATION EDIT START
-	user.put_in_hands(token) // MONKESTATION EDIT END
+	user.put_in_hands(new /obj/item/stack/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
