@@ -50,13 +50,13 @@
 	if(user.dna.species.id == SPECIES_CETANOID)
 		if(user.get_bodypart(BODY_ZONE_L_LEG))
 			var/obj/item/bodypart/leg/left/target = user.get_bodypart(BODY_ZONE_L_LEG)
-			if(istype(target,/obj/item/bodypart/leg/left/robot/digitigrade)) //if we have a non-digitigrade robot leg, don't store it!
+			if(istype(target,/obj/item/bodypart/leg/left/robot/digitigrade)) //if we don't have a robot leg, don't store it!
 				target.drop_limb()
 				target.forceMove(src)
 				stored_l_leg = target
 		if(user.get_bodypart(BODY_ZONE_R_LEG))
 			var/obj/item/bodypart/leg/right/target = user.get_bodypart(BODY_ZONE_R_LEG)
-			if(istype(target,/obj/item/bodypart/leg/right/robot/digitigrade)) //if we have a non-digitigrade robot leg, don't store it!
+			if(istype(target,/obj/item/bodypart/leg/right/robot/digitigrade))
 				target.drop_limb()
 				target.forceMove(src)
 				stored_r_leg = target
