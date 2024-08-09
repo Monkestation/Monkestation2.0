@@ -221,6 +221,8 @@
 			power_format_multi = 1 RW
 		if("inputQW")
 			power_format_multi = 1 QW
+		if("inputAW")
+			power_format_multi = 1 AW
 
 		if("outputW")
 			power_format_multi_output = 1
@@ -244,7 +246,8 @@
 			power_format_multi_output = 1 RW
 		if("outputQW")
 			power_format_multi_output = 1 QW
-
+		if("outputAW")
+			power_format_multi_output = 1 AW
 
 /obj/machinery/power/transmission_laser/process()
 	max_grid_load = terminal.surplus()

@@ -180,6 +180,11 @@ const InputControls = (props) => {
           selected={power_format === 10 ** 30}
           onClick={() => act('inputQW')}
         />
+        <Button
+          content={'AW'}
+          selected={power_format === 10 ** 33}
+          onClick={() => act('outputAW')}
+        />
       </Box>
     </Section>
   );
@@ -283,6 +288,11 @@ const OutputControls = (props) => {
           content={'QW'}
           selected={output_multiplier === 10 ** 30}
           onClick={() => act('outputQW')}
+        />
+        <Button
+          content={'AW'}
+          selected={output_multiplier === 10 ** 33}
+          onClick={() => act('outputAW')}
         />
       </Box>
     </Section>
