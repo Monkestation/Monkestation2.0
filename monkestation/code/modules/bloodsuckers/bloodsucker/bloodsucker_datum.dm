@@ -500,3 +500,14 @@
 			gourmand_objective.owner = owner
 			gourmand_objective.objective_name = "Optional Objective"
 			objectives += gourmand_objective
+
+	// Objective 2: Stake your claim, or rise in power
+	switch(rand(1, 2))
+		if(1)  //Stake claim objective
+			var/datum/objective/bloodsucker/kingofthehill/stakeclaim_obj = new
+			stakeclaim_obj.owner = owner
+			objectives += stakeclaim_obj
+		if(2) //Rise in power objective
+			var/datum/objective/bloodsucker/control/rise_obj = new
+			rise_obj.owner = owner
+			objectives += rise_obj

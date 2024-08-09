@@ -88,6 +88,13 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
+/datum/objective/bloodsucker/kingofthehill
+	name = "stakeyourclaim"
+	explanation_text = "Turn your department into your lair, welcome your kind with open arms and defend your claim"
+
+/datum/objective/bloodsucker/control
+	name = "riseinpower"
+	explanation_text = "Ascend the ranks and plant yourself as the leader of the station, you know better than they do and they would be wise to follow your instruction."
 
 /// Vassalize a certain person / people
 /datum/objective/bloodsucker/conversion
