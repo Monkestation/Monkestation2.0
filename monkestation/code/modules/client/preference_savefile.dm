@@ -3,11 +3,22 @@
  * You can't really use the non-modular version, least you eventually want asinine merge
  * conflicts and/or potentially disastrous issues to arise, so here's your own.
  */
-#define MODULAR_SAVEFILE_VERSION_MAX 3
+#define MODULAR_SAVEFILE_VERSION_MAX 4
 
 #define MODULAR_SAVEFILE_UP_TO_DATE -1
 
 
+
+/datum/preferences/proc/save_data_needs_update_monkestation(list/save_data)
+	if(!save_data) // empty list, either savefile isnt loaded or its a new char
+		return MODULAR_SAVEFILE_UP_TO_DATE
+	/* // Should probably add a minimum save data number... I have no idea what to set it at though.
+	if(save_data["modular_version"] < MODULAR_SAVEFILE_VERSION_MIN)
+		return -2
+	*/
+	if(save_data["modular_version"] < MODULAR_SAVEFILE_VERSION_MAX)
+		return save_data["modular_version"]
+	return MODULAR_SAVEFILE_UP_TO_DATE
 
 /datum/preferences/proc/load_character_monkestation(list/save_data)
 	if(!save_data)
@@ -42,13 +53,11 @@
 	loadout_list = sanitize_loadout_list(save_loadout)
 	special_loadout_list = texted_special_save_loadouts
 
-	if(needs_update >= 0)
-		update_character_monkestation(needs_update, save_data) // needs_update == savefile_version if we need an update (positive integer)
-
 
 /// Brings a savefile up to date with modular preferences. Called if savefile_needs_update_monkestation() returned a value higher than 0
 /datum/preferences/proc/update_character_monkestation(current_version, list/save_data)
-	return
+	if(current_version < 4)
+		monkestation_set_ipc_genders(save_data)
 
 
 /// Saves the modular customizations of a character on the savefile
@@ -59,6 +68,7 @@
 	save_data["alt_job_titles"] = alt_job_titles
 
 /datum/preferences/proc/save_preferences_monkestation()
+	savefile.set_entry("modular_version", MODULAR_SAVEFILE_VERSION_MAX)
 	write_jobxp_preferences()
 	savefile.set_entry("channel_volume", channel_volume)
 	savefile.set_entry("saved_tokens", saved_tokens)
@@ -83,3 +93,5 @@
 	lootboxes_owned = savefile.get_entry("lootboxes_owned", lootboxes_owned)
 	antag_rep = savefile.get_entry("antag_rep", antag_rep)
 
+/datum/preferences/proc/update_preferences_monkestation(current_version, datum/json_savefile/json_savefile)
+	return
