@@ -2370,6 +2370,16 @@
 	},
 /turf/open/floor/iron/textured_corner,
 /area/station/cargo/sorting)
+"aJN" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aKj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -21888,6 +21898,15 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/vault,
 /area/station/ai_monitored/turret_protected/ai)
+"gsQ" = (
+/obj/structure/lattice/catwalk,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "gsU" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -25648,6 +25667,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
+"hwd" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "hwm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27237,6 +27267,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/security/office)
+"hSE" = (
+/obj/structure/lattice/catwalk,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "hSK" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/poster/random/directional/east,
@@ -74109,6 +74149,15 @@
 	dir = 1
 	},
 /area/station/cargo/lobby)
+"uDS" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "uDV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -77444,6 +77493,16 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/storage/gas)
+"vCu" = (
+/obj/structure/lattice,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vCI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -102646,7 +102705,7 @@ ttw
 ttw
 xMq
 ttw
-xMq
+iLQ
 ttw
 ttw
 ttw
@@ -103417,7 +103476,7 @@ iLQ
 iLQ
 xMq
 ttw
-xMq
+iLQ
 xMq
 iLQ
 ttw
@@ -103674,7 +103733,7 @@ ttw
 ttw
 xMq
 ttw
-xMq
+iLQ
 ttw
 iLQ
 iLQ
@@ -104196,9 +104255,9 @@ xMq
 xMq
 ttw
 ttw
-ttw
-ttw
-ttw
+uDS
+uDS
+uDS
 ttw
 ttw
 ttw
@@ -104975,8 +105034,8 @@ xMq
 xMq
 xMq
 xMq
-ttw
-ttw
+iLQ
+iLQ
 iTA
 pYu
 iTA
@@ -105225,7 +105284,7 @@ ttw
 ttw
 ttw
 iLQ
-xqO
+hwd
 odJ
 odJ
 odJ
@@ -105481,7 +105540,7 @@ tdv
 xMq
 xMq
 xMq
-xMq
+vCu
 odJ
 ttw
 ttw
@@ -105736,9 +105795,9 @@ nZn
 jKg
 tdv
 lPC
+uDS
 ttw
-ttw
-iLQ
+aJN
 odJ
 ttw
 ttw
@@ -105993,9 +106052,9 @@ pNU
 qwS
 tdv
 ttw
-ttw
-ttw
-iLQ
+uDS
+xMq
+aJN
 odJ
 ttw
 ttw
@@ -106250,8 +106309,8 @@ cFr
 nUB
 tdv
 ttw
-ttw
-ttw
+uDS
+xMq
 iLQ
 odJ
 ttw
@@ -106507,9 +106566,9 @@ ghB
 dlv
 tdv
 ttw
-ttw
-ttw
+uDS
 xMq
+vCu
 odJ
 ttw
 ttw
@@ -106765,8 +106824,8 @@ xBB
 tdv
 xqO
 odJ
-odJ
-odJ
+gsQ
+hSE
 odJ
 ttw
 ttw
@@ -107023,7 +107082,7 @@ eyy
 hSY
 uvj
 xMq
-ttw
+iLQ
 odJ
 ttw
 ttw
