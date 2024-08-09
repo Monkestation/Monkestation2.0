@@ -158,6 +158,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
+		if(!length(possible_locs))
+			return
 		if(!SPT_PROB(chance_generation, seconds_per_tick))
 			continue
 		var/spreads_into_adjacent = SPT_PROB(spread_into_adjacent_chance, seconds_per_tick)
@@ -177,7 +179,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		if(QDELETED(new_loc))
 			break
 
-
 		var/shroom_count = 0
 		var/place_count = 1
 		for(var/obj/structure/glowshroom/shroom in new_loc)
@@ -192,7 +193,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
 		last_successful_spread = world.time // monkestation edit: glowshroom optimizations
-		CHECK_TICK
+		if(TICK_CHECK)
+			return
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)
 	var/direction = 16
@@ -237,7 +239,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	take_damage(amount)
 	// take_damage could qdel our shroom, so check beforehand
 	// if our endurance dropped before the min plant endurance, then delete our shroom anyways
-	if (!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
+	if(!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
