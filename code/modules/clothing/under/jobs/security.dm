@@ -26,7 +26,7 @@
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security uniform"
-	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
+	desc = "A tactical suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
 
