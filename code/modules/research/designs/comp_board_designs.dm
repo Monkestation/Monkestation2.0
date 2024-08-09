@@ -46,6 +46,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/*
 /datum/design/board/aiupload
 	name = "AI Upload Board"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
@@ -67,6 +68,7 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+*/
 
 /datum/design/board/med_data
 	name = "Medical Records Board"
@@ -149,6 +151,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/* Monke, cannot print robot control console board.
 /datum/design/board/robocontrol
 	name = "Robotics Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
@@ -159,6 +162,7 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+*/
 
 /datum/design/board/slot_machine
 	name = "Slot Machine Board"
