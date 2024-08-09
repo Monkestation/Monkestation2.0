@@ -310,7 +310,9 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/item/xenoarch/strange_rock,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "ci" = (
 /obj/machinery/door/airlock/external/glass{
@@ -2670,7 +2672,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "ov" = (
 /obj/machinery/door/airlock/external/glass{
@@ -2773,8 +2775,9 @@
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "pg" = (
-/obj/effect/spawner/random/trash/hobo_squat,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/machinery/xenoarch/recoverer,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "pm" = (
 /obj/structure/stone_tile/block/cracked{
@@ -3386,9 +3389,8 @@
 "sR" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
-/obj/structure/rack,
-/turf/open/floor/plating,
+/obj/structure/table,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "sS" = (
 /obj/effect/spawner/random/trash/mess,
@@ -3949,8 +3951,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/south)
 "wg" = (
@@ -4409,13 +4411,13 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/laborcamp)
 "zc" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Mining Station Maintenance"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenoarchaeology Labs"
+	},
 /turf/open/floor/plating,
 /area/mine/maintenance/public/south)
 "zd" = (
@@ -4825,7 +4827,9 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "Ce" = (
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/machinery/xenoarch/researcher,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "Cf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6440,6 +6444,10 @@
 	dir = 4
 	},
 /area/mine/lounge)
+"LN" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/mine/lounge)
 "LR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -6720,7 +6728,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/south)
 "Nw" = (
@@ -7027,9 +7035,9 @@
 /area/mine/maintenance/service)
 "PD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance/two,
-/obj/structure/rack,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/machinery/xenoarch/scanner,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "PG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7123,6 +7131,12 @@
 /obj/structure/ore_box,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
+"Qf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/mine/lounge)
 "Qi" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Mining Station Mech Bay"
@@ -7188,10 +7202,8 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "QH" = (
-/obj/structure/rack,
-/obj/item/crowbar,
-/obj/item/screwdriver,
-/turf/open/floor/plating,
+/obj/structure/closet/xenoarch,
+/turf/open/floor/iron/large,
 /area/mine/maintenance/public/south)
 "QI" = (
 /obj/machinery/conveyor{
@@ -7468,9 +7480,6 @@
 	},
 /area/mine/hydroponics)
 "SA" = (
-/obj/machinery/door/airlock/glass{
-	name = "Arrival Lounge"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -41107,9 +41116,9 @@ Dz
 CS
 Dz
 Dz
-GH
+Qf
 SA
-Zq
+LN
 ch
 sR
 QH
