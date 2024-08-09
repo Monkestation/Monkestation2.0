@@ -295,7 +295,7 @@
 	applied_core = /obj/item/mod/core/infinite
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/energy_shield/wizard,
+		/obj/item/mod/module/anomaly_locked/energy_shield/wizard,
 		/obj/item/mod/module/emp_shield/advanced,
 	)
 
