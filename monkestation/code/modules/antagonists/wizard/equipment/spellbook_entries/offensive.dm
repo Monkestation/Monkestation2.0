@@ -5,8 +5,33 @@
 	category = "Offensive"
 	cost = 2
 
+/datum/spellbook_entry/summon_mjollnir/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
+	. = ..()
+	user.worthiness += 5
+
+/datum/spellbook_entry/summon_mjollnir/refund_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
+	. = ..()
+	user.worthiness -= 5
+
 /datum/spellbook_entry/smite
 	name = "Smite"
 	desc = "Allows you to call in a favor from the gods upon your foe."
 	spell_type = /datum/action/cooldown/spell/pointed/smite
 	category = "Offensive"
+
+/datum/spellbook_entry/item/badmin_gauntlet
+	name = "Badmin Gauntlet"
+	desc = "A gauntlet capable of holding the Badmin Stones. <b>Wearing this will trigger a war declaration!</b>. \
+			Before you wear it, you can refund it by hitting it against the spellbook. \
+			<b>You cannot buy this if you have bought anything else!</b> \
+			Requires 27+ crew."
+	item_path = /obj/item/badmin_gauntlet
+	category = "Rituals"
+	cost = 10
+
+/datum/spellbook_entry/item/badmin_gauntlet/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
+	. = ..()
+	book.uses = 0
+
+/datum/spellbook_entry/item/badmin_gauntlet/can_buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	return ..() && !book.gauntlet_flag && (GLOB.Debug2 || GLOB.joined_player_list.len >= 27)

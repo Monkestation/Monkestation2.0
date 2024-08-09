@@ -45,3 +45,7 @@
 
 /obj/item/organ/internal/eyes/ethereal
 	eye_icon_state = "etherealeyes"
+
+/obj/item/organ/eyes/night_vision/alien/ganymede
+	name = "ganymedian eyes"
+	desc = "The eyes of a Ganymedian, a legendary alien race."
