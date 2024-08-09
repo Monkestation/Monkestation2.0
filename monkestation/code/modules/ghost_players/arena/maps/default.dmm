@@ -2,6 +2,10 @@
 "a" = (
 /turf/open/floor/holofloor/plating,
 /area/centcom/tdome/arena/actual)
+"g" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "l" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -12,6 +16,10 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
+"G" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
 /turf/open/floor/holofloor/plating,
 /area/centcom/tdome/arena/actual)
 "I" = (
@@ -47,13 +55,13 @@ R
 R
 l
 l
-a
+L
 "}
 (2,1,1) = {"
 a
 a
 a
-a
+G
 a
 a
 a
@@ -221,7 +229,7 @@ a
 a
 a
 a
-a
+g
 a
 a
 a

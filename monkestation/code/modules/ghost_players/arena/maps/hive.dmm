@@ -109,6 +109,13 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/body,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
+"zR" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
 "Cy" = (
 /obj/structure/alien/resin/membrane,
 /obj/structure/alien/weeds{
@@ -163,6 +170,13 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/core,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
+"Wp" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
 "Xl" = (
 /obj/structure/alien/weeds{
 	obj_flags = null
@@ -190,7 +204,7 @@ gC
 rX
 ih
 rX
-ih
+zR
 lO
 rX
 Ix
@@ -358,7 +372,7 @@ eU
 rX
 ih
 rX
-ih
+Wp
 lO
 tg
 Xl

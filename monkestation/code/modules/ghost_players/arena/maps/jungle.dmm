@@ -35,6 +35,10 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
+"x" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
 "A" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/floor/has_bulb,
@@ -46,6 +50,11 @@
 /area/centcom/tdome/arena/actual)
 "C" = (
 /obj/structure/flora/bush/fullgrass,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
+"E" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
 "F" = (
@@ -105,7 +114,7 @@ K
 U
 K
 K
-K
+x
 K
 l
 K
@@ -273,7 +282,7 @@ K
 U
 K
 K
-u
+E
 K
 S
 Y

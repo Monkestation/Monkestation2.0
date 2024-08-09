@@ -193,6 +193,7 @@
 /obj/effect/turf_decal/trimline/dark/arrow_cw{
 	dir = 1
 	},
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
 /turf/open/floor/pod/dark,
 /area/centcom/tdome/arena/actual)
 "Cb" = (
@@ -348,6 +349,7 @@
 "UD" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark/arrow_cw,
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/floor/pod/dark,
 /area/centcom/tdome/arena/actual)
 "VD" = (
