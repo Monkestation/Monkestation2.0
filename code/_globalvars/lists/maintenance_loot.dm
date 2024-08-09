@@ -404,7 +404,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.maint_fauna = maint_fauna_weight,
 	))
 
-//Monke, loot pool of uncommon or better loot, used in maint god rituals.
+//Monke, loot pool of uncommon or better loot, used in maint god rituals
 GLOBAL_LIST_INIT(good_maintenance_loot, list(
 	GLOB.uncommon_loot = maint_uncommon_weight,
 	GLOB.rarity_loot = maint_rarity_weight,
