@@ -3,7 +3,7 @@
  * An independent hit-and-run antagonist which can make webs and heals itself if left undamaged for a few seconds.
  * Not a spider subtype because it keeps getting hit by unrelated balance changes intended for the Giant Spiders gamemode.
  */
-/mob/living/basic/flesh_spider
+/*/mob/living/basic/flesh_spider //MONKESTATION REMOVAL
 	name = "flesh spider"
 	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -73,3 +73,4 @@
 
 	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
+*/
