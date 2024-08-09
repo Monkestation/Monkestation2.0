@@ -11,3 +11,10 @@
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	surplus = 50
+
+/datum/uplink_item/role_restricted/power_gloves
+	name = "Power Gloves"
+	desc = "Are the Engineers on your station creating too much power? Use this to set them in their place. T-ray scanner not included"
+	cost = 8
+	item = /obj/item/clothing/gloves/color/yellow/power_gloves
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
