@@ -71,7 +71,7 @@
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/dangerous/bananashield
 	name = "Bananium Energy Shield"
@@ -81,7 +81,7 @@
 	item = /obj/item/shield/energy/bananium
 	cost = 16
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/dangerous/clownsword
 	name = "Bananium Energy Sword"
@@ -90,14 +90,14 @@
 	item = /obj/item/melee/energy/sword/bananium
 	cost = 3
 	surplus = 100 //monkestation edit: from 0 to 100(its funny)
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/dangerous/clownoppin
 	name = "Ultra Hilarious Firing Pin"
 	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
 	cost = 1 //much cheaper for clown ops than for clowns
 	item = /obj/item/firing_pin/clown/ultra
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 	illegal_tech = FALSE
 
 /datum/uplink_item/dangerous/clownopsuperpin
@@ -207,7 +207,7 @@
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/pistolap_nukeop
 	name = "10mm Armour Piercing Magazine"
@@ -215,7 +215,7 @@
 			These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	cost = 3
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/pistolhp_nukeop
 	name = "10mm Hollow Point Magazine"
@@ -223,7 +223,7 @@
 			These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/pistolfire_nukeop
 	name = "10mm Incendiary Magazine"
@@ -231,7 +231,7 @@
 			Loaded with incendiary rounds which inflict less damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -247,6 +247,7 @@
 	name = "12g Buckshot Drum"
 	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/shotgun/slug
 	name = "12g Slug Drum"
@@ -254,20 +255,21 @@
 			Now 8 times less likely to shoot your pals."
 	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g/slug
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/shotgun/dragon
 	name = "12g Dragon's Breath Drum"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
 		Great for blasting holes into the hull and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade Box"
@@ -636,7 +638,7 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
@@ -644,28 +646,28 @@
 			within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/mod/module/energy_shield
 	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/emp_shield
 	name = "MODsuit Advanced EMP Shield Module"
 	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
 	item = /obj/item/mod/module/emp_shield/advanced
 	cost = 5
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/injector
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"
@@ -717,7 +719,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 			Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 	restricted = TRUE
 
 /datum/uplink_item/implants/antistun
@@ -726,7 +728,7 @@
 	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 12
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
@@ -735,7 +737,7 @@
 			This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/macrobomb
 	name = "Macrobomb Implant"
@@ -752,7 +754,7 @@
 	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
 	surplus = 30 //monkestation edit: from 0 to 30
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/thermals
 	name = "Thermal Eyes"
@@ -760,7 +762,7 @@
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"

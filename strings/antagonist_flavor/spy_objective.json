@@ -1,0 +1,71 @@
+{
+	"objective_body": [
+		"Deprive the station of as many @pick(stealables) as you can.",
+		"Steal as many @pick(stealables) as you can.",
+		"Steal as many @pick(stealables) as you can from @pick(department).",
+		"Steal as many @pick(stealables) as you can from @pick(location).",
+		"Beat as many other spies at getting bounties as you can"
+	],
+	"department": [
+		"Security",
+		"Engineering",
+		"Medical",
+		"Science",
+		"Supply"
+	],
+	"location": [
+		"engineering",
+		"genetics",
+		"hydroponics",
+		"medbay",
+		"the bar",
+		"the bridge",
+		"the brig",
+		"the cargo bay",
+		"the chapel",
+		"the kitchen",
+		"the library",
+		"xenobiology"
+	],
+	"happenings": [
+		"research",
+		"cargo operations",
+		"communications",
+		"genetic research",
+		"mining operation"
+	],
+	"affected": [
+		"ablaze",
+		"burning",
+		"covered in blood",
+		"demolished",
+		"destroyed",
+		"engulfed in flames",
+		"obliterated",
+		"on fire",
+		"ruined",
+		"sabotaged",
+		"wrecked"
+	],
+	"rivals": [
+		"agents",
+		"moles",
+		"operatives",
+		"spies",
+		"traitors"
+	],
+	"stealables": [
+		"items",
+		"objects",
+		"things",
+		"tools",
+		"weapons"
+	],
+	"escape": [
+		"depart",
+		"escape",
+		"evacuate",
+		"flee",
+		"leave"
+	]
+}
