@@ -11021,12 +11021,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "dqU" = (
-/obj/machinery/computer/telecomms/server{
-	network = "tcommsat"
-	},
 /obj/effect/turf_decal/box,
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/computer/telecomms/traffic,
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
 "dqV" = (
@@ -11445,8 +11443,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "dwI" = (
-/obj/machinery/computer/message_monitor,
 /obj/effect/turf_decal/box,
+/obj/machinery/computer/telecomms/server{
+	network = "tcommsat"
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
 "dwK" = (
@@ -40933,6 +40933,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/obj/effect/landmark/start/signal_technician,
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
 "mbl" = (
@@ -46949,6 +46950,9 @@
 	},
 /obj/structure/railing,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/computer/message_monitor{
+	dir = 1
+	},
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
 "nOH" = (

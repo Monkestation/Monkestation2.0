@@ -10,21 +10,21 @@ macro "default"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -34,7 +34,7 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
@@ -43,22 +43,22 @@ menu "menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "Refresh TGUI"
 		command = "refresh-tgui"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "Fix Chat"
 		command = "fix-chat"
 		category = "&Help"
@@ -377,4 +377,3 @@ window "tgui_say"
 		anchor1 = 0,0
 		anchor2 = 0,0
 		saved-params = ""
-

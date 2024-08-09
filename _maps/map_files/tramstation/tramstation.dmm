@@ -6729,6 +6729,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"bac" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "bay" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12221,13 +12227,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
-"cNq" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 5
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "cNy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -37164,25 +37163,6 @@
 /obj/structure/closet/lasertag/red,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
-"kPv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/closet/crate/hydroponics,
-/obj/item/botanical_lexicon,
-/obj/item/seeds/tree,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/seeds/pumpkin,
-/obj/item/seeds/wheat,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/grass,
-/obj/item/seeds/carrot,
-/obj/item/seeds/potato,
-/obj/item/seeds/garlic,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/item/seeds/onion,
-/turf/open/floor/iron,
-/area/station/security/prison/garden)
 "kPx" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
@@ -38900,6 +38880,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"lpO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/botanical_lexicon,
+/obj/item/seeds/tree,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/seeds/pumpkin,
+/obj/item/seeds/wheat,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/grass,
+/obj/item/seeds/carrot,
+/obj/item/seeds/potato,
+/obj/item/seeds/garlic,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/item/seeds/onion,
+/turf/open/floor/iron,
+/area/station/security/prison/garden)
 "lpS" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/transit_tube,
@@ -39117,6 +39116,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
+"lud" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/computer/telecomms/traffic{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "lue" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40413,13 +40421,6 @@
 "lSo" = (
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
-"lSp" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 10
-	},
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "lSu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -48219,6 +48220,12 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
+"orw" = (
+/obj/structure/chair/office,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/landmark/start/signal_technician,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "ory" = (
 /obj/item/wallframe/apc,
 /turf/open/misc/asteroid,
@@ -49126,14 +49133,6 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"oHC" = (
-/obj/structure/table,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "oHM" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
@@ -54853,11 +54852,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"qxZ" = (
-/obj/structure/chair/office,
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "qya" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55634,6 +55628,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
+"qJK" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/announcement_system,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "qJU" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -73502,13 +73504,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
-"wnq" = (
-/obj/machinery/announcement_system,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "wns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
@@ -75111,6 +75106,14 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
+"wMc" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "wMt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -103048,7 +103051,7 @@ cAU
 duB
 fwr
 ecs
-kPv
+lpO
 biS
 tgZ
 duB
@@ -105424,9 +105427,9 @@ hxz
 jIG
 iDB
 lkv
-oHC
-lSp
-wnq
+qJK
+bac
+lud
 dwR
 ney
 lib
@@ -105682,7 +105685,7 @@ jIG
 qjA
 bzo
 wnh
-qxZ
+orw
 gMr
 dwR
 ney
@@ -105936,7 +105939,7 @@ aeL
 jnq
 hxz
 jIG
-cNq
+wMc
 jLy
 vGs
 qda

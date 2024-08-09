@@ -10094,11 +10094,11 @@
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/fore)
 "dau" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/multitool,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "day" = (
@@ -17648,6 +17648,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/effect/landmark/start/signal_technician,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "fdP" = (
@@ -31401,6 +31402,9 @@
 "iZs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table,
+/obj/item/multitool,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "iZx" = (
@@ -55165,7 +55169,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "pzK" = (
-/obj/structure/table,
 /obj/item/clipboard{
 	pixel_x = 4
 	},
@@ -55173,6 +55176,7 @@
 /obj/item/radio,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/table,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "pzL" = (
@@ -61231,11 +61235,11 @@
 	},
 /area/station/hallway/primary/central/aft)
 "rfR" = (
-/obj/machinery/computer/message_monitor{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/computer/telecomms/traffic{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "rga" = (
