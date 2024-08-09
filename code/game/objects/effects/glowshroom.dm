@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	/// Max time interval between glowshroom "spreads"
 	var/max_delay_spread = 30 SECONDS
 	/// Boolean to indicate if the shroom is on the floor/wall
-	var/floor = 0
+	var/floor = FALSE
 	/// Mushroom generation number
 	var/generation = 1
 	/// Chance to spread into adjacent tiles (0-100)
@@ -85,6 +85,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(istype(our_glow_gene))
 		set_light(l_outer_range = our_glow_gene.glow_range(myseed), l_power = our_glow_gene.glow_power(myseed), l_color = our_glow_gene.glow_color)
 	setDir(calc_dir())
+	/* monkestation edit: use our own sprites
 	base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
@@ -98,12 +99,14 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = base_icon_state
+		icon_state = base_icon_state */
+	update_icon_state()
+	// monkestation end
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSglowshrooms, src) // monkestation edit: use SSglowshrooms
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
@@ -118,7 +121,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(isatom(myseed))
 		QDEL_NULL(myseed)
 	GLOB.glowshrooms--
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSglowshrooms, src) // monkestation edit: use SSglowshrooms
 	return ..()
 
 /**
@@ -128,54 +131,53 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, spread_cooldown))
 		COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
-		Spread()
+		Spread(seconds_per_tick)
 
 	Decay(rand(idle_decay_min, idle_decay_max) * seconds_per_tick)
 
-
-
-/obj/structure/glowshroom/proc/Spread()
+/obj/structure/glowshroom/proc/Spread(seconds_per_tick)
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
+		last_successful_spread = INFINITY // monkestation edit: glowshroom optimizations
 		return //Deal with it not now
 
 	var/list/possible_locs = list()
 	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
 	//times when there's no real chance of the viewable range changing, really you could do this once on item
 	//spawn and most people probably would not notice.
-	for(var/turf/open/floor/earth in oview(2,src))
-		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
-			continue
-		if(!TURF_SHARES(earth))
+	for(var/turf/open/floor/earth in oview(2, src))
+		if(QDELING(earth) || !TURF_SHARES(earth) || is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
 		possible_locs += earth
 
 	//Lets not even try to spawn again if somehow we have ZERO possible locations
-	if(!possible_locs.len)
+	if(!length(possible_locs))
+		last_successful_spread = INFINITY // monkestation edit: glowshroom optimizations
 		return
 
 	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
-		if(!prob(chance_generation))
+		if(!length(possible_locs))
+			return
+		if(!SPT_PROB(chance_generation, seconds_per_tick))
 			continue
-		var/spreads_into_adjacent = prob(spread_into_adjacent_chance)
-		var/turf/new_loc = null
+		var/spreads_into_adjacent = SPT_PROB(spread_into_adjacent_chance, seconds_per_tick)
+		var/turf/new_loc
 
 		//Try three random locations to spawn before giving up tradeoff
 		//between running view(1, earth) on every single collected possibleLoc
 		//and failing to spread if we get 3 bad picks, which should only be a problem
 		//if there's a lot of glow shroom clustered about
-		for(var/iterator in 1 to 3)
-			var/turf/possibleLoc = pick(possible_locs)
-			if(spreads_into_adjacent || !locate(/obj/structure/glowshroom) in view(1,possibleLoc))
+		for(var/iterator in 1 to min(length(possible_locs), 3))
+			var/turf/possibleLoc = pick_n_take(possible_locs)
+			if(spreads_into_adjacent || !(locate(/obj/structure/glowshroom) in view(1, possibleLoc)))
 				new_loc = possibleLoc
 				break
 
 		//We failed to find any location, skip trying to yield
-		if(new_loc == null)
+		if(QDELETED(new_loc))
 			break
-
 
 		var/shroom_count = 0
 		var/place_count = 1
@@ -190,6 +192,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
+		last_successful_spread = world.time // monkestation edit: glowshroom optimizations
+		if(TICK_CHECK)
+			return
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)
 	var/direction = 16
@@ -216,12 +221,12 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	if(dir_list.len)
 		var/new_dir = pick(dir_list)
 		if(new_dir == 16)
-			floor = 1
+			floor = TRUE
 			new_dir = 1
 		return new_dir
 
-	floor = 1
-	return 1
+	floor = TRUE
+	return TRUE
 
 /**
  * Causes the glowshroom to decay by decreasing its endurance, destroying it when it gets too low.
@@ -234,7 +239,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	take_damage(amount)
 	// take_damage could qdel our shroom, so check beforehand
 	// if our endurance dropped before the min plant endurance, then delete our shroom anyways
-	if (!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
+	if(!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
