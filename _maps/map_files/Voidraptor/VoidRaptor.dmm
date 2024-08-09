@@ -532,6 +532,17 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
+"ahq" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/iron/textured_edge{
+	dir = 1
+	},
+/area/station/science/auxlab)
 "ahv" = (
 /obj/structure/chair{
 	name = "Prosecution"
@@ -2370,16 +2381,6 @@
 	},
 /turf/open/floor/iron/textured_corner,
 /area/station/cargo/sorting)
-"aJN" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aKj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4385,6 +4386,15 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/textured,
 /area/station/medical/virology)
+"bmG" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/textured,
+/area/station/science/auxlab)
 "bmN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/warning{
@@ -6445,10 +6455,11 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
 "bTM" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron/textured_edge{
+	dir = 1
 	},
-/turf/open/floor/iron/textured,
 /area/station/science/ordnance/testlab)
 "bUl" = (
 /obj/structure/sign/departments/custodian/directional/west,
@@ -21898,15 +21909,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/vault,
 /area/station/ai_monitored/turret_protected/ai)
-"gsQ" = (
-/obj/structure/lattice/catwalk,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "gsU" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -22099,6 +22101,17 @@
 	},
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
+"gvk" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/structure/rack,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/turf/open/floor/iron/textured_edge{
+	dir = 1
+	},
+/area/station/science/auxlab)
 "gvl" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
@@ -25667,17 +25680,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
-"hwd" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "hwm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27267,16 +27269,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/security/office)
-"hSE" = (
-/obj/structure/lattice/catwalk,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "hSK" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/poster/random/directional/east,
@@ -28466,6 +28458,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/electrical)
+"ilj" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/asteroid_magnet{
+	center_x = 63;
+	center_y = 158;
+	area_size = 3;
+	Auto_pinging = 1
+	},
+/turf/open/floor/iron/textured,
+/area/station/science/auxlab)
 "ilm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
 /obj/machinery/meter,
@@ -30698,6 +30700,18 @@
 	},
 /turf/open/floor/iron/textured_edge,
 /area/station/engineering/main)
+"iPL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/science{
+	name = "Asteroid Magnet"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
+/obj/structure/cable,
+/turf/open/floor/iron/textured_edge{
+	dir = 1
+	},
+/area/station/science/auxlab)
 "iPZ" = (
 /turf/closed/wall,
 /area/station/maintenance/department/electrical)
@@ -34146,12 +34160,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/port/central)
-"jKg" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/iron/textured_edge{
-	dir = 1
-	},
-/area/station/science/ordnance/testlab)
 "jKi" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -34843,9 +34851,6 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/mess)
-"jVp" = (
-/turf/open/floor/iron/textured_large,
-/area/station/science/ordnance/testlab)
 "jVq" = (
 /obj/machinery/modular_computer/preset/command,
 /obj/machinery/status_display/ai/directional/north,
@@ -41790,10 +41795,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/barber)
-"lPC" = (
-/obj/structure/sign/warning/secure_area/directional/north,
-/turf/open/space/basic,
-/area/space)
 "lPJ" = (
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
@@ -43163,6 +43164,16 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
+"miA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/textured_edge{
+	dir = 1
+	},
+/area/station/science/auxlab)
 "miR" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -46440,6 +46451,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/cargo/miningdock)
+"nfj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/science/auxlab)
 "nfr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46458,6 +46473,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/cc_dock)
+"nfT" = (
+/turf/open/space/basic,
+/area/station/cargo/mining/asteroid_magnet)
 "nge" = (
 /obj/item/paper/fluff/gateway,
 /obj/item/coin/gold{
@@ -47440,6 +47458,14 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
+"ntK" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/textured,
+/area/station/science/auxlab)
 "ntM" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/plasticflaps/opaque{
@@ -48925,6 +48951,7 @@
 "nPT" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
@@ -49675,6 +49702,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/box/red,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/textured_large,
 /area/station/science/ordnance/testlab)
 "nZr" = (
@@ -56272,10 +56301,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/fore)
-"pNU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/textured_large,
-/area/station/science/ordnance/testlab)
 "pNZ" = (
 /obj/effect/turf_decal/trimline/green/corner{
 	dir = 1
@@ -58823,6 +58848,7 @@
 	},
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
@@ -62177,12 +62203,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
-"rsC" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 9
-	},
-/turf/open/floor/iron/textured,
-/area/station/science/ordnance/testlab)
 "rsM" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
@@ -65065,6 +65085,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/item/analysis_bin,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "skC" = (
@@ -65624,6 +65645,11 @@
 /obj/effect/landmark/navigate_destination/research,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/research)
+"ssw" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ssL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -74149,15 +74175,6 @@
 	dir = 1
 	},
 /area/station/cargo/lobby)
-"uDS" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "uDV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76903,6 +76920,11 @@
 "vud" = (
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft)
+"vuj" = (
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vum" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -77493,16 +77515,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/storage/gas)
-"vCu" = (
-/obj/structure/lattice,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "vCI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -77527,7 +77539,7 @@
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/warehouse)
 "vDd" = (
-/obj/structure/anvil,
+/obj/machinery/material_analyzer,
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "vDe" = (
@@ -83838,9 +83850,9 @@
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "xqv" = (
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_corner{
 	dir = 8
 	},
@@ -98860,7 +98872,7 @@ ttw
 ttw
 ttw
 ttw
-ttw
+rug
 ttw
 ttw
 ttw
@@ -100669,7 +100681,7 @@ ttw
 ttw
 ttw
 ttw
-ttw
+rug
 ttw
 ttw
 ttw
@@ -101678,16 +101690,16 @@ ttw
 xMq
 ttw
 xMq
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+xMq
+xMq
+xMq
+iLQ
+iLQ
+ssw
+xMq
+xMq
+xMq
+xMq
 ttw
 ttw
 ttw
@@ -101935,16 +101947,16 @@ ttw
 xMq
 ttw
 xMq
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+xqO
+odJ
+odJ
+odJ
+odJ
+odJ
+odJ
+odJ
+xqO
+xMq
 ttw
 ttw
 ttw
@@ -102192,16 +102204,16 @@ ttw
 xMq
 ttw
 xMq
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+iLQ
 ttw
 ttw
 ttw
@@ -102449,16 +102461,16 @@ ttw
 xMq
 ttw
 xMq
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+xMq
 ttw
 ttw
 ttw
@@ -102706,16 +102718,16 @@ ttw
 xMq
 ttw
 iLQ
-ttw
-ttw
-ttw
-ttw
-ttw
-rug
-ttw
-ttw
-ttw
-ttw
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+xMq
 ttw
 ttw
 ttw
@@ -102963,16 +102975,16 @@ ttw
 xMq
 ttw
 xMq
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+vuj
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+xMq
 ttw
 ttw
 ttw
@@ -103220,22 +103232,22 @@ ttw
 xMq
 ttw
 xMq
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+xMq
 ttw
 ttw
 ttw
 ttw
 ttw
 ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-rug
 ttw
 ttw
 ttw
@@ -103477,16 +103489,16 @@ iLQ
 xMq
 ttw
 iLQ
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
 xMq
-iLQ
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
 ttw
 ttw
 ttw
@@ -103734,16 +103746,16 @@ ttw
 xMq
 ttw
 iLQ
-ttw
-iLQ
-iLQ
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
+odJ
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+nfT
+odJ
+xMq
 ttw
 ttw
 ttw
@@ -103988,19 +104000,19 @@ ttw
 ttw
 ttw
 ttw
+qNd
+ttw
+qNd
+xqO
+odJ
+odJ
+odJ
+odJ
+odJ
+odJ
+odJ
+xqO
 xMq
-ttw
-xMq
-ttw
-ttw
-iLQ
-iLQ
-ttw
-ttw
-ttw
-ttw
-ttw
-ttw
 ttw
 ttw
 ttw
@@ -104245,19 +104257,19 @@ odJ
 ttw
 ttw
 ttw
+odJ
+ttw
+bsI
+bsI
+nfj
+nfj
+nfj
+odJ
 xMq
-ttw
 xMq
-ttw
-ttw
-ttw
-xMq
-xMq
-ttw
-ttw
-uDS
-uDS
-uDS
+iLQ
+iLQ
+iLQ
 ttw
 ttw
 ttw
@@ -104502,14 +104514,14 @@ odJ
 odJ
 dtt
 odJ
-qNd
+odJ
 ttw
-qNd
-cvG
-ttw
-ttw
-ttw
-xMq
+bsI
+bmG
+ntK
+gvk
+nfj
+odJ
 xMq
 ttw
 ttw
@@ -104761,14 +104773,14 @@ tdv
 kHU
 kHU
 keO
-tdv
-tdv
-kHU
-kHU
+bsI
+ahq
+miA
+ilj
+nfj
+odJ
+xMq
 ttw
-ttw
-iLQ
-iLQ
 ttw
 ttw
 ttw
@@ -105018,15 +105030,15 @@ tdv
 lff
 xhb
 mJV
-tdv
-rsC
-bTM
-kHU
-kHU
+bsI
+bsI
+iPL
+bsI
+bsI
+odJ
+xMq
 ttw
 ttw
-iLQ
-iLQ
 xMq
 xMq
 xMq
@@ -105279,17 +105291,17 @@ tdv
 lZV
 xqv
 bTM
-kHU
-ttw
-ttw
+tdv
+odJ
+xMq
 ttw
 iLQ
-hwd
-odJ
-odJ
-odJ
-odJ
-odJ
+iLQ
+ttw
+ttw
+ttw
+ttw
+ttw
 iTA
 qjA
 iTA
@@ -105534,14 +105546,14 @@ oeS
 dvQ
 tCa
 eHj
-jVp
+cFr
 nPT
 tdv
-xMq
-xMq
-xMq
-vCu
 odJ
+xMq
+ttw
+iLQ
+ttw
 ttw
 ttw
 ttw
@@ -105792,13 +105804,13 @@ lMZ
 tdv
 eWG
 nZn
-jKg
+bTM
 tdv
-lPC
-uDS
-ttw
-aJN
 odJ
+iLQ
+ttw
+xMq
+ttw
 ttw
 ttw
 ttw
@@ -106048,14 +106060,14 @@ paM
 mXc
 qkz
 vdn
-pNU
+cFr
 qwS
 tdv
-ttw
-uDS
-xMq
-aJN
 odJ
+iLQ
+xMq
+xMq
+ttw
 ttw
 ttw
 ttw
@@ -106308,11 +106320,11 @@ dtY
 cFr
 nUB
 tdv
-ttw
-uDS
+odJ
+iLQ
 xMq
 iLQ
-odJ
+ttw
 ttw
 ttw
 ttw
@@ -106565,11 +106577,11 @@ cmM
 ghB
 dlv
 tdv
-ttw
-uDS
-xMq
-vCu
 odJ
+iLQ
+xMq
+iLQ
+ttw
 ttw
 ttw
 ttw
@@ -106822,11 +106834,11 @@ wNt
 nwu
 xBB
 tdv
-xqO
 odJ
-gsQ
-hSE
-odJ
+xMq
+xMq
+iLQ
+ttw
 ttw
 ttw
 ttw
@@ -107083,7 +107095,7 @@ hSY
 uvj
 xMq
 iLQ
-odJ
+ttw
 ttw
 ttw
 ttw
@@ -107338,9 +107350,9 @@ nFs
 uvj
 fTK
 uvj
+iLQ
 xMq
-xMq
-odJ
+ttw
 ttw
 ttw
 ttw
@@ -107596,8 +107608,8 @@ uvj
 ktn
 uvj
 uvj
-xMq
-odJ
+iLQ
+ttw
 ttw
 ttw
 ttw
