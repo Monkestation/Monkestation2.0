@@ -15,6 +15,7 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"big_manipulator",
 		"bodybag",
 		"bounced_radio",
 		"bowl",

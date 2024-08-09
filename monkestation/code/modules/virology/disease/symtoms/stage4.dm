@@ -73,8 +73,8 @@
 /datum/symptom/dna/activate(mob/living/carbon/mob)
 	mob.bodytemperature = max(mob.bodytemperature, 350)
 	scramble_dna(mob, TRUE, TRUE, TRUE, rand(15,45))
-	if(mob.cloneloss <= 50)
-		mob.adjustCloneLoss(10)
+	if(mob.toxloss <= 50)
+		mob.adjustToxLoss(10)
 
 
 /datum/symptom/immortal
@@ -99,7 +99,7 @@
 		total_healed += (heal_amt - current_health) * 0.2
 	mob.adjustBruteLoss(-heal_amt)
 	mob.adjustFireLoss(-heal_amt)
-	mob.adjustCloneLoss(-heal_amt)
+	mob.adjustToxLoss(-heal_amt)
 
 /datum/symptom/immortal/deactivate(mob/living/carbon/mob)
 	if(istype(mob, /mob/living/carbon/human))

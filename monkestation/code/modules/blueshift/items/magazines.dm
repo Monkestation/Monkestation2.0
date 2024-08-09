@@ -20,13 +20,13 @@
 
 /obj/item/ammo_box/magazine/c35sol_pistol/stendo
 	name = "\improper Sol extended pistol magazine"
-	desc = "An extended magazine for SolFed pistols, holds twenty-four rounds."
+	desc = "An extended magazine for SolFed pistols, holds sixteen rounds."
 
 	icon_state = "pistol_35_stended"
 
 	w_class = WEIGHT_CLASS_NORMAL
 
-	max_ammo = 24
+	max_ammo = 16
 
 /obj/item/ammo_box/magazine/c35sol_pistol/stendo/starts_empty
 	start_empty = TRUE

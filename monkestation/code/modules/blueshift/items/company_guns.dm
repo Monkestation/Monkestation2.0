@@ -1001,7 +1001,7 @@
 
 	bolt_type = BOLT_TYPE_OPEN
 
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
 
@@ -1015,8 +1015,8 @@
 
 	suppressor_x_offset = 11
 
-	burst_size = 3
-	fire_delay = 0.2 SECONDS
+	burst_size = 2
+	fire_delay = 0.35 SECONDS
 
 	spread = 7.5
 

@@ -381,7 +381,7 @@
 		var/mob/living/carbon/human/victim = mob
 		if(victim.dna)
 			if(ispodperson(victim)) //Plantmen take a LOT of damage
-				victim.adjustCloneLoss(5 * multiplier)
+				victim.adjustToxLoss(5 * multiplier)
 
 	for(var/obj/item/food/grown/crop in range(2*multiplier,mob))
 		crop.visible_message("<span class = 'warning'>\The [crop] rots at an alarming rate!</span>")
