@@ -79,3 +79,12 @@ SUBSYSTEM_DEF(pathogen_clouds)
 		current_run_level = "clouds"
 		if(!length(current_run_cores))
 			current_run_cores = cores.Copy()
+
+/datum/controller/subsystem/pathogen_clouds/get_metrics()
+	. = ..()
+	.["custom"] = list(
+		"cores" = length(cores),
+		"clouds" = length(clouds),
+		"current_run_cores" = length(current_run_cores),
+		"current_run_clouds" = length(current_run_clouds),
+	)
