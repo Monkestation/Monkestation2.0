@@ -1208,6 +1208,22 @@
 "DI" = (
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
+"DK" = (
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/iv_drip,
+/obj/item/storage/medkit/regular,
+/obj/item/defibrillator,
+/obj/structure/closet,
+/obj/item/surgery_tray,
+/obj/item/emergency_bed,
+/obj/item/storage/medkit/regular,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/item/organ/internal/heart/cybernetic/tier2,
+/turf/open/floor/iron/sepia,
+/area/centcom/central_command_areas/holding)
 "DL" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -1613,15 +1629,16 @@
 "Mz" = (
 /obj/structure/closet,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/machinery/iv_drip,
-/obj/item/roller,
-/obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/organ/internal/heart/cybernetic/tier2,
 /obj/item/organ/internal/heart/cybernetic/tier2,
 /obj/item/defibrillator,
+/obj/item/surgery_tray,
+/obj/machinery/iv_drip,
+/obj/item/emergency_bed,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "ML" = (
@@ -3784,7 +3801,7 @@ rV
 dg
 aw
 Wm
-Mz
+DK
 dg
 uL
 hO

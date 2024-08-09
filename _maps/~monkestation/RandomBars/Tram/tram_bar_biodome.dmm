@@ -795,7 +795,7 @@
 /area/station/service/theater)
 "sx" = (
 /obj/structure/table/wood/fancy/orange,
-/obj/structure/window/reinforced/tinted/frosted,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/bar)
 "sK" = (
@@ -1150,7 +1150,7 @@
 /area/station/service/kitchen)
 "BK" = (
 /obj/structure/ladder,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen)
 "BN" = (
@@ -1691,9 +1691,7 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/bar)
 "NP" = (
@@ -2147,7 +2145,7 @@
 /turf/open/misc/snow/actually_safe,
 /area/station/service/theater)
 "XA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen)
 "XG" = (
