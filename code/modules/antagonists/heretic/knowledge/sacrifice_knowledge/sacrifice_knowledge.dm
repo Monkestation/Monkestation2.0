@@ -158,6 +158,15 @@
 			valid_targets -= department_mind
 			break
 
+///Monke Edit begin - Heretics now always get another heretic as a sacrifice target (if there is one)
+	for(var/datum/mind/heretic_mind as anything in shuffle(valid_targets))
+		var/datum/antagonist/heretic/heretic_sac = heretic_mind.has_antag_datum(/datum/antagonist/heretic)
+		if(heretic_sac)
+			final_targets += heretic_mind
+			valid_targets -= heretic_mind
+			break
+///Monke Edit end
+
 	// Now grab completely random targets until we'll full
 	var/target_sanity = 0
 	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
@@ -208,6 +217,13 @@
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
+
+//Monke edit - give heretics extra points for saccing heretics
+	if(IS_HERETIC(sacrifice))
+		heretic_datum.knowledge_points += 2
+		heretic_datum.high_value_sacrifices++
+		feedback += " <i>maliciously</i>"
+//Monke edit end
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
