@@ -35,6 +35,16 @@
 	team = new_team
 	objectives |= team.objectives
 
+/datum/antagonist/teratoma/get_base_preview_icon()
+	RETURN_TYPE(/icon)
+	var/static/icon/teratoma_icon
+	if(!teratoma_icon)
+		var/mob/living/carbon/human/species/teratoma/teratoma = new
+		teratoma.setDir(SOUTH)
+		teratoma_icon = getFlatIcon(teratoma, no_anim = TRUE)
+		QDEL_NULL(teratoma)
+	return teratoma_icon
+
 /datum/objective/teratoma
 	name = "Spread misery and chaos"
 	explanation_text = "Spread misery and chaos upon the station."

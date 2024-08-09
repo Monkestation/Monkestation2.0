@@ -60,14 +60,14 @@
 
 /datum/species/teratoma/on_species_gain(mob/living/carbon/human/idiot, datum/species/old_species, pref_load)
 	. = ..()
-	misfortune = idiot.AddComponent(misfortune)
+	misfortune = idiot.AddComponent(/datum/component/omen/teratoma)
 
 /datum/species/teratoma/on_species_loss(mob/living/carbon/human/idiot, datum/species/new_species, pref_load)
 	. = ..()
 	QDEL_NULL(misfortune)
 
-/datum/species/teratoma/random_name(gender,unique,lastname)
-	return "teratoma ([rand(1,999)])"
+/datum/species/teratoma/random_name(gender, unique, lastname)
+	return "teratoma ([rand(1, 999)])"
 
 // Don't let them use chems that could potential change them into something non-teratoma.
 /datum/species/teratoma/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/goober, seconds_per_tick, times_fired)
@@ -84,6 +84,17 @@
 		chem.holder?.del_reagent(chem.type)
 		return TRUE
 	return ..()
+
+/datum/species/teratoma/get_scream_sound(mob/living/carbon/human/monkey)
+	return pick(
+		'sound/creatures/monkey/monkey_screech_1.ogg',
+		'sound/creatures/monkey/monkey_screech_2.ogg',
+		'sound/creatures/monkey/monkey_screech_3.ogg',
+		'sound/creatures/monkey/monkey_screech_4.ogg',
+		'sound/creatures/monkey/monkey_screech_5.ogg',
+		'sound/creatures/monkey/monkey_screech_6.ogg',
+		'sound/creatures/monkey/monkey_screech_7.ogg',
+	)
 
 /datum/component/omen/teratoma
 	permanent = TRUE
