@@ -351,9 +351,7 @@
 /area/shuttle/abandoned/crew)
 "bf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/structure/closet/wardrobe/black,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -558,9 +556,7 @@
 /obj/machinery/microwave,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /obj/item/storage/box/donkpockets,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -949,9 +945,7 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -1193,9 +1187,7 @@
 /area/shuttle/abandoned/bar)
 "dG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/vending/hydroseeds{
 	use_power = 0
 	},
@@ -1716,9 +1708,7 @@
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
@@ -1863,9 +1853,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)

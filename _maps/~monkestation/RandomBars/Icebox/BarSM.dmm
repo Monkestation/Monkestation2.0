@@ -953,9 +953,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/east,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "Gh" = (
@@ -1469,9 +1467,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/west,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "YV" = (

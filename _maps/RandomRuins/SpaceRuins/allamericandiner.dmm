@@ -434,8 +434,7 @@
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
 "ui" = (
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_y = 32;
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north{
 	name = "Ray's Pizza";
 	desc = "Ray's Famous Original Pizza: Family style pizza for 2 centuries."
 	},

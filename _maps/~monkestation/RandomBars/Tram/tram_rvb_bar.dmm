@@ -1154,9 +1154,7 @@
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/enlist/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ru" = (
@@ -2163,9 +2161,7 @@
 	dir = 1
 	},
 /obj/machinery/light/dim/directional/east,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/enlist/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "HZ" = (

@@ -1120,9 +1120,7 @@
 /area/station/medical/pathology)
 "atn" = (
 /obj/structure/frame/computer,
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "atv" = (
@@ -1640,9 +1638,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "aCj" = (
-/obj/structure/sign/poster/official/twelve_gauge{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/twelve_gauge/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4615,9 +4611,7 @@
 /area/mine/laborcamp)
 "bxX" = (
 /obj/structure/chair/stool/directional/north,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -5127,9 +5121,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "bEi" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -6005,9 +5997,7 @@
 /area/mine/eva/lower)
 "bRD" = (
 /obj/structure/bookcase/random,
-/obj/structure/sign/poster/official/nanomichi_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/nanomichi_ad/directional/north,
 /turf/open/floor/carpet/red,
 /area/station/security/prison/work)
 "bRE" = (
@@ -7899,9 +7889,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/moth_piping{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/moth_piping/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/work)
 "cvN" = (
@@ -8655,9 +8643,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/poster/official/wtf_is_co2{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/wtf_is_co2/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "cGf" = (
@@ -11943,9 +11929,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "dFQ" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14362,9 +14346,7 @@
 /area/station/hallway/secondary/entry)
 "exo" = (
 /obj/structure/sink/directional/west,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "exq" = (
@@ -15436,9 +15418,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "eOm" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/west,
 /turf/closed/wall,
 /area/station/maintenance/starboard/fore)
 "eOw" = (
@@ -17526,9 +17506,7 @@
 	c_tag = "Security - Permabrig Observation Prep";
 	network = list("ss13","prison")
 	},
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -22115,9 +22093,7 @@
 "haN" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Service Kitchen"
 	},
@@ -25731,9 +25707,7 @@
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 1"
 	},
-/obj/structure/sign/poster/official/obey{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/obey/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -30721,9 +30695,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "jSQ" = (
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/here_for_your_safety/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "jST" = (
@@ -32091,9 +32063,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/contraband/atmosia_independence{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/atmosia_independence/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage/gas)
 "kpC" = (
@@ -36215,9 +36185,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "lDE" = (
-/obj/structure/sign/poster/official/safety_report{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_report/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -37415,9 +37383,7 @@
 "lZr" = (
 /obj/machinery/growing/soil,
 /obj/machinery/light/directional/west,
-/obj/structure/sign/poster/contraband/kudzu{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/kudzu/directional/west,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lZv" = (
@@ -38893,9 +38859,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/poster/contraband/punch_shit{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/punch_shit/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "mzY" = (
@@ -42640,9 +42604,7 @@
 /obj/structure/chair/stool/directional/west,
 /obj/item/trash/energybar,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /turf/open/floor/iron,
 /area/station/security/prison/work)
 "nGb" = (
@@ -43040,9 +43002,7 @@
 /area/station/medical/pathology)
 "nMf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -45083,9 +45043,7 @@
 "ose" = (
 /obj/machinery/vending/tool,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/build{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/build/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
@@ -47425,9 +47383,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "pfn" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
@@ -47529,9 +47485,7 @@
 /area/station/hallway/primary/central)
 "phB" = (
 /obj/machinery/vending/coffee,
-/obj/structure/sign/poster/official/science{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/science/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "phK" = (
@@ -48079,9 +48033,7 @@
 "pqG" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/light/small/directional/south,
-/obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "pqK" = (
@@ -49393,9 +49345,7 @@
 /area/station/command/heads_quarters/cmo)
 "pKB" = (
 /obj/structure/filingcabinet,
-/obj/structure/sign/poster/official/space_cops{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/space_cops/directional/west,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -50039,9 +49989,7 @@
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 2"
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -50299,9 +50247,7 @@
 /area/icemoon/underground/explored)
 "qaD" = (
 /obj/machinery/light_switch/directional/north,
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/west,
 /turf/open/floor/iron/checker,
 /area/station/commons/storage/emergency/port)
 "qaE" = (
@@ -52397,9 +52343,7 @@
 /area/station/service/library)
 "qLg" = (
 /obj/effect/spawner/random/contraband/narcotics,
-/obj/structure/sign/poster/contraband/syndiemoth{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/syndiemoth/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
@@ -53493,9 +53437,7 @@
 "rch" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
-/obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/safety_eye_protection/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "rcj" = (
@@ -54111,9 +54053,7 @@
 /area/station/command/meeting_room)
 "rmU" = (
 /obj/effect/spawner/random/trash/graffiti,
-/obj/structure/sign/poster/contraband/free_drone{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/free_drone/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "rnb" = (
@@ -57861,9 +57801,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "szu" = (
-/obj/structure/sign/poster/official/obey{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/obey/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -60216,9 +60154,7 @@
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 3"
 	},
-/obj/structure/sign/poster/official/obey{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/obey/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -60296,9 +60232,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/obey{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/obey/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "trK" = (
@@ -61137,9 +61071,7 @@
 /obj/structure/table,
 /obj/item/hand_labeler,
 /obj/item/storage/box/shipping,
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/south,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -62368,9 +62300,7 @@
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/build{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/build/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "tZR" = (
@@ -63214,9 +63144,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/obj/structure/sign/poster/ripped{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/ripped/directional/north,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
@@ -66563,9 +66491,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
 "vve" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -67213,9 +67139,7 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "vDy" = (
-/obj/structure/sign/poster/official/safety_report{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/safety_report/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/west{
 	c_tag = "Labor Camp Central";
@@ -72620,9 +72544,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xnr" = (
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/here_for_your_safety/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
@@ -72822,9 +72744,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xru" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
@@ -73713,9 +73633,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)

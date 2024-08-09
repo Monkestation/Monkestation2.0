@@ -1633,9 +1633,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -5098,9 +5096,7 @@
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "bKu" = (
-/obj/structure/sign/poster/contraband/kudzu{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/kudzu/directional/east,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
@@ -5176,9 +5172,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/structure/sign/poster/official/wtf_is_co2{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/wtf_is_co2/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/north,
@@ -9794,9 +9788,7 @@
 	id = "QMLoad2";
 	name = "on ramp"
 	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/red_rum/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -11199,9 +11191,7 @@
 /area/station/security/warden)
 "dFA" = (
 /obj/machinery/pdapainter,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/ian/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "dFC" = (
@@ -18575,9 +18565,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "fQE" = (
-/obj/structure/sign/poster/contraband/the_griffin{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/the_griffin/directional/north,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -18916,9 +18904,7 @@
 /area/station/hallway/secondary/service)
 "fWK" = (
 /obj/structure/chair/sofa/right/brown,
-/obj/structure/sign/poster/official/love_ian{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/love_ian/directional/north,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "fWZ" = (
@@ -22920,9 +22906,8 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "hlb" = (
-/obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_x = 32;
-	pixel_y = -32
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -25424,9 +25409,7 @@
 "hVL" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -26164,9 +26147,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -27756,9 +27737,7 @@
 /area/station/medical/storage)
 "iEy" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/south,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/matches{
@@ -32583,9 +32562,8 @@
 /area/space/nearstation)
 "kiZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/poster/official/space_cops{
-	pixel_x = 32;
-	pixel_y = -32
+/obj/structure/sign/poster/official/space_cops/directional/south{
+	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red{
@@ -33158,9 +33136,7 @@
 /turf/closed/wall,
 /area/station/security/lockers)
 "ktc" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -33776,9 +33752,7 @@
 /area/station/maintenance/port/fore)
 "kEm" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/self_ai_liberation{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/self_ai_liberation/directional/west,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "kEz" = (
@@ -34260,9 +34234,7 @@
 /area/station/engineering/atmos)
 "kMs" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -35346,9 +35318,7 @@
 "lcN" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/box,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -38122,9 +38092,7 @@
 "lYy" = (
 /obj/machinery/shower/directional/east,
 /obj/item/soap/nanotrasen,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/restrooms)
@@ -46921,9 +46889,8 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "oVY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = 32;
-	pixel_y = 32
+/obj/structure/sign/poster/contraband/rebels_unite/directional/north{
+	pixel_x = 32
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
@@ -51223,9 +51190,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/plasmaman/belt/full,
 /obj/structure/table,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = 32;
-	pixel_y = -32
+/obj/structure/sign/poster/contraband/rebels_unite/directional/south{
+	pixel_x = 32
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
@@ -52667,9 +52633,8 @@
 /area/station/maintenance/port/fore)
 "qKH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = -32;
-	pixel_y = -32
+/obj/structure/sign/poster/contraband/rebels_unite/directional/south{
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -52691,9 +52656,7 @@
 /obj/machinery/space_heater,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light/directional/south,
-/obj/structure/sign/poster/contraband/fun_police{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/fun_police/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -53082,9 +53045,7 @@
 /area/station/security/execution/transfer)
 "qQf" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/bless_this_spess/directional/north,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
@@ -54972,9 +54933,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -55326,9 +55285,7 @@
 "ryK" = (
 /obj/structure/table,
 /obj/structure/sign/departments/medbay/alt/directional/east,
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/south,
 /obj/item/storage/box/bodybags{
 	pixel_y = 5
 	},
@@ -56401,9 +56358,7 @@
 /area/station/maintenance/port/greater)
 "rPU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/grey_tide{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/grey_tide/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -61038,9 +60993,8 @@
 /area/station/maintenance/fore)
 "tmv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = -32;
-	pixel_y = 32
+/obj/structure/sign/poster/contraband/rebels_unite/directional/north{
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -66220,9 +66174,7 @@
 	},
 /obj/item/storage/belt/janitor,
 /obj/item/storage/bag/trash,
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -68258,9 +68210,7 @@
 /turf/open/floor/carpet/neon/simple/green,
 /area/station/science/xenobiology)
 "vzV" = (
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chemistry North";
 	network = list("ss13","medbay")
@@ -69664,9 +69614,7 @@
 /area/station/security/prison/mess)
 "vTh" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
@@ -71312,9 +71260,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "wrH" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/iron/dark,
@@ -74955,9 +74901,7 @@
 /area/station/service/chapel)
 "xCq" = (
 /obj/effect/spawner/random/vending/snackvend,
-/obj/structure/sign/poster/official/the_owl{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/the_owl/directional/east,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8

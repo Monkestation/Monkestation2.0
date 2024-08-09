@@ -51,9 +51,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/sign/poster/official/there_is_no_gas_giant{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/there_is_no_gas_giant/directional/south,
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -61,9 +59,7 @@
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "bq" = (
@@ -87,9 +83,7 @@
 	dir = 6
 	},
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bP" = (
@@ -97,9 +91,7 @@
 	dir = 10
 	},
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bS" = (
@@ -426,9 +418,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "iY" = (
-/obj/structure/sign/poster/official/download{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/download/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "jb" = (
@@ -464,9 +454,7 @@
 	color = "#A47449";
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/blood_geometer{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/north,
 /turf/open/water,
 /area/shuttle/escape)
 "ju" = (
@@ -942,9 +930,7 @@
 /area/shuttle/escape)
 "qm" = (
 /obj/structure/closet/cardboard,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /obj/item/clothing/suit/hooded/wintercoat/custom,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -1081,9 +1067,7 @@
 "sW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/poster/official/jim_nortons{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/jim_nortons/directional/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1160,9 +1144,7 @@
 "uK" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/moth_epi/directional/north,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1656,9 +1638,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/ion_rifle{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/ion_rifle/directional/north,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark/textured_half,
@@ -1757,9 +1737,7 @@
 	color = "#A47449";
 	dir = 4
 	},
-/obj/structure/sign/poster/official/festive{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/festive/directional/south,
 /turf/open/water,
 /area/shuttle/escape)
 "FS" = (
@@ -1939,9 +1917,7 @@
 	dir = 4;
 	pixel_y = 4
 	},
-/obj/structure/sign/poster/official/midtown_slice{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/midtown_slice/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "IJ" = (
@@ -2771,9 +2747,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "ZF" = (
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/shuttle/escape)

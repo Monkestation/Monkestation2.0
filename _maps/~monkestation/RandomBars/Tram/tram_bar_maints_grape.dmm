@@ -563,9 +563,7 @@
 /turf/open/floor/plating,
 /area/station/service/theater)
 "on" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/plating,
 /area/station/service/theater)
 "oq" = (
@@ -1447,9 +1445,7 @@
 "Gs" = (
 /obj/item/chair,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/sign/poster/contraband/mothic_rations{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/mothic_rations/directional/north,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "Gv" = (
@@ -1976,9 +1972,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/sugar,
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north,
 /obj/item/reagent_containers/condiment/flour,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -2108,9 +2102,7 @@
 "Wj" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/obj/structure/sign/poster/contraband/microwave{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/microwave/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "Wq" = (
@@ -2264,9 +2256,7 @@
 	c_tag = "Service - Bar Lounge North East"
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/sign/poster/contraband/eat{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/eat/directional/north,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "XR" = (
