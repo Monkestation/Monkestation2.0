@@ -1,5 +1,5 @@
 {
-	"buttondown_shorts": [
+	"buttondown_skirt": [
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown",
@@ -20,7 +20,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "buttondown_obj_shorts",
+			"icon_state": "buttondown_obj_skirt",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		}

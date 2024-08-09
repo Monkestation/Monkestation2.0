@@ -843,6 +843,16 @@
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json'
 
+/datum/greyscale_config/buttondown_skirt
+	name = "Buttondown with Skirt"
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_skirt.json'
+
+/datum/greyscale_config/buttondown_skirt_worn
+	name = "Buttondown with Skirt (Worn)"
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_skirt_worn.json'
+
 /datum/greyscale_config/sweater
 	name = "Sweater"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
