@@ -65,7 +65,7 @@
 /obj/projectile/bullet/reusable/arrow/holy/Initialize(mapload)
 	. = ..()
 	//50 damage to revenants
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 30)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 30)
 
 /// special pyre sect arrow
 /// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
