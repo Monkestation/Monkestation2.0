@@ -69,6 +69,22 @@
 /datum/species/teratoma/random_name(gender,unique,lastname)
 	return "teratoma ([rand(1,999)])"
 
+// Don't let them use chems that could potential change them into something non-teratoma.
+/datum/species/teratoma/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/goober, seconds_per_tick, times_fired)
+	var/static/list/disallowed_chems_typecache
+	if(!disallowed_chems_typecache)
+		disallowed_chems_typecache = typecacheof(list(
+			/datum/reagent/cyborg_mutation_nanomachines,
+			/datum/reagent/gluttonytoxin,
+			/datum/reagent/magillitis,
+			/datum/reagent/mutationtoxin,
+			/datum/reagent/xenomicrobes,
+		))
+	if(is_type_in_typecache(chem, disallowed_chems_typecache))
+		chem.holder?.del_reagent(chem.type)
+		return TRUE
+	return ..()
+
 /datum/component/omen/teratoma
 	permanent = TRUE
 	luck_mod = 0.75
