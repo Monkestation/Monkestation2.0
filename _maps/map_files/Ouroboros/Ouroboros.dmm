@@ -16164,6 +16164,7 @@
 "eOE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "eOW" = (
@@ -39529,10 +39530,6 @@
 	dir = 1
 	},
 /area/station/medical/pharmacy)
-"lFn" = (
-/obj/structure/cable,
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/secondary/exit)
 "lFJ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -188840,7 +188837,7 @@ vLh
 mBj
 xlZ
 eOE
-lFn
+xlZ
 arm
 rqN
 xlO
@@ -189097,7 +189094,7 @@ fmL
 aSS
 cnF
 eOE
-lFn
+xlZ
 arm
 eOi
 dqn
