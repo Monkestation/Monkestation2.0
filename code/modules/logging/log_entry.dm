@@ -108,12 +108,12 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
-	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
+	//CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 	WRITE_LOG_NO_FORMAT(file, "[to_json_text()]\n")
 
 /// Writes the log entry to a file as a human-readable string.
 /datum/log_entry/proc/write_readable_entry_to_file(file, format_internally = TRUE)
-	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
+	//CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 	// If it's being formatted internally we need to manually add a newline
 	if(format_internally)
 		WRITE_LOG_NO_FORMAT(file, "[to_readable_text(format = TRUE)]\n")

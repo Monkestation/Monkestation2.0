@@ -88,7 +88,7 @@
 		output += "#define FA_ICON_[uppertext(replacetext(icon_name, "-", "_"))] \"[icon]\""
 
 	var/output_file = "[output.Join("\n")]\n"
-	rustg_file_write(output_file, "data/font_awesome_icons.dm")
+	aneri_file_write(output_file, "data/font_awesome_icons.dm")
 	var/current = file2text('code/__DEFINES/font_awesome_icons.dm')
 	if(current == output_file)
 		return

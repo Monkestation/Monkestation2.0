@@ -49,7 +49,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(!path || !fexists(path))
 		return FALSE
 	try
-		tree = json_decode(rustg_file_read(path))
+		tree = json_decode(aneri_file_read(path))
 		return TRUE
 	catch(var/exception/err)
 		stack_trace("failed to load json savefile at '[path]': [err]")
@@ -57,7 +57,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /datum/json_savefile/proc/save()
 	if(path)
-		rustg_file_write(json_encode(tree), path)
+		aneri_file_write(json_encode(tree), path)
 
 /datum/json_savefile/serialize_list(list/options, list/semvers)
 	SHOULD_CALL_PARENT(FALSE)

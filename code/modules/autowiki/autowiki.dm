@@ -10,7 +10,7 @@
 
 /proc/generate_autowiki()
 	var/output = generate_autowiki_output()
-	rustg_file_write(output, "data/autowiki_edits.txt")
+	aneri_file_write(output, "data/autowiki_edits.txt")
 	qdel(world)
 #endif
 

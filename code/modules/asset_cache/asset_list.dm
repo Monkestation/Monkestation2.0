@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		LAZYADD(cached_spritesheets_needed, asset_id)
 
 	var/replaced_css_filename = "data/spritesheets/spritesheet_[name].css"
-	rustg_file_write(replaced_css, replaced_css_filename)
+	aneri_file_write(replaced_css, replaced_css_filename)
 	SSassets.transport.register_asset("spritesheet_[name].css", replaced_css_filename)
 
 	fdel(replaced_css_filename)
@@ -341,10 +341,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/mock_css = generate_css()
 	generating_cache = FALSE
 
-	rustg_file_write(mock_css, css_cache_filename())
+	aneri_file_write(mock_css, css_cache_filename())
 
 /datum/asset/spritesheet/proc/write_data_to_cache()
-	rustg_file_write(json_encode(list(
+	aneri_file_write(json_encode(list(
 		"sprites" = sprites,
 	)), data_cache_filename())
 

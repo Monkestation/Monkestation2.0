@@ -36,7 +36,7 @@
 	//the given file is directly from a dmi file and is thus in the rsc already, we know that its file_hash will be correct
 	if(!hash)
 		if(dmi_file_path)
-			hash = md5(file)
+			hash = aneri_md5_file(dmi_file_path)
 		else
 			hash = md5asfile(file) //icons sent to the rsc md5 incorrectly when theyre given incorrect data
 	if (!hash)

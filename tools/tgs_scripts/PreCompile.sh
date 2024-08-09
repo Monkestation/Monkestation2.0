@@ -32,6 +32,26 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --re
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+# update aneri
+if [ ! -d "aneri" ]; then
+	echo "Cloning aneri..."
+	git clone "https://github.com/$ANERI_REPO"
+	cd aneri
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+else
+	echo "Fetching aneri..."
+	cd aneri
+	git remote set-url origin "https://github.com/$ANERI_REPO"
+	git fetch
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+fi
+
+echo "Deploying aneri..."
+git checkout "$ANERI_VERSION"
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
+mv target/i686-unknown-linux-gnu/release/libaneri.so "$1/libaneri.so"
+cd ..
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"

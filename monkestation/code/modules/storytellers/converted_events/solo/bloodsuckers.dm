@@ -38,4 +38,4 @@
 
 /datum/round_event/antagonist/solo/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = antag_mind.make_bloodsucker()
-	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)
+	bloodsuckerdatum.bloodsucker_level_unspent = SSgamemode.rng.ranged_int(2, 3)

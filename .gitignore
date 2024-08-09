@@ -244,3 +244,8 @@ config/dbconfig.txt
 
 # Running OpenDream locally
 tgstation.json
+
+meowtonin*
+
+# TODO: REMOVE BEFORE FULL MERGE!!! (this is so CI works)
+!/libaneri.so

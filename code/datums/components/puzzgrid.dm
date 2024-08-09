@@ -207,7 +207,7 @@
 	var/static/total_lines
 
 	if (isnull(total_lines))
-		total_lines = rustg_file_get_line_count(PUZZGRID_CONFIG)
+		total_lines = aneri_file_get_line_count(PUZZGRID_CONFIG)
 
 		if (isnull(total_lines))
 			// There was an error reading the file
@@ -218,7 +218,7 @@
 
 	for (var/_ in 1 to PUZZGRID_MAX_ATTEMPTS)
 		var/line_number = rand(0, total_lines - 1)
-		var/line = rustg_file_seek_line(PUZZGRID_CONFIG, line_number)
+		var/line = aneri_file_seek_line(PUZZGRID_CONFIG, line_number)
 		if (!line)
 			continue
 

@@ -5,17 +5,17 @@ RUN dpkg --add-architecture i386 \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
-        ca-certificates
+    ca-certificates
 
 # byond = base + byond installed globally
 FROM base AS byond
 WORKDIR /byond
 
 RUN apt-get install -y --no-install-recommends \
-        curl \
-        unzip \
-        make \
-        libstdc++6:i386
+    curl \
+    unzip \
+    make \
+    libstdc++6:i386
 
 COPY dependencies.sh .
 
@@ -35,7 +35,7 @@ FROM byond AS build
 WORKDIR /tgstation
 
 RUN apt-get install -y --no-install-recommends \
-        curl
+    curl
 
 COPY . .
 
@@ -45,7 +45,7 @@ RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
 # rust = base + rustc and i686 target
 FROM base AS rust
 RUN apt-get install -y --no-install-recommends \
-        curl && \
+    curl && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal \
     && ~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 
@@ -54,10 +54,10 @@ FROM rust AS rust_g
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
-        pkg-config:i386 \
-        libssl-dev:i386 \
-        gcc-multilib \
-        git \
+    pkg-config:i386 \
+    libssl-dev:i386 \
+    gcc-multilib \
+    git \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
@@ -68,16 +68,37 @@ RUN . ./dependencies.sh \
     && git checkout FETCH_HEAD \
     && env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target i686-unknown-linux-gnu
 
-# final = byond + runtime deps + rust_g + build
+# aneri = base + aneri compiled to /aneri
+FROM rust AS aneri
+WORKDIR /aneri
+
+RUN apt-get install -y --no-install-recommends \
+    pkg-config:i386 \
+    libssl-dev:i386 \
+    gcc-multilib \
+    clang \
+    git \
+    && git init \
+    && git remote add origin https://github.com/Absolucy/aneri
+
+COPY dependencies.sh .
+
+RUN . ./dependencies.sh \
+    && git fetch --depth 1 origin "${ANERI_VERSION}" \
+    && git checkout FETCH_HEAD \
+    && env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target i686-unknown-linux-gnu
+
+# final = byond + runtime deps + rust_g + aneri + build
 FROM byond
 WORKDIR /tgstation
 
 RUN apt-get install -y --no-install-recommends \
-        libssl1.0.0:i386 \
-        zlib1g:i386
+    libssl1.0.0:i386 \
+    zlib1g:i386
 
 COPY --from=build /deploy ./
 COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
+COPY --from=aneri /aneri/target/i686-unknown-linux-gnu/release/libaneri.so ./libaneri.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
 ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]

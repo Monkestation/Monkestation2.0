@@ -100,10 +100,12 @@
  * * probability - probability any character gets changed
  *
  * This proc is dangerously laggy, avoid it or die
+ * (monkestation edit: no it's not, we offloaded this to aneri)
  */
 /proc/stars(phrase, probability = 25)
 	if(probability <= 0)
 		return phrase
+	/* monkestation edit: aneri time!
 	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
@@ -114,7 +116,8 @@
 			. += char
 		else
 			. += "*"
-	return sanitize(.)
+	*/
+	return sanitize(aneri_replace_chars_prob(html_decode(phrase), "*", probability, TRUE))
 
 /**
  * Turn text into complete gibberish!

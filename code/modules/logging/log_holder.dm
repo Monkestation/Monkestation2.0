@@ -226,18 +226,18 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/init_category_file(datum/log_category/category)
 	var/file_path = category.get_output_file(null)
 	if(fexists(file_path)) // already exists? implant a reset marker
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
+		aneri_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("[json_encode(category.category_header)]\n", file_path)
+	aneri_file_write("[json_encode(category.category_header)]\n", file_path)
 
 	if(!human_readable_enabled)
 		return
 
 	file_path = category.get_output_file(null, "log")
 	if(fexists(file_path))
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
+		aneri_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+	aneri_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
@@ -279,7 +279,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
+	return "[aneri_unix_timestamp()]"
 
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")

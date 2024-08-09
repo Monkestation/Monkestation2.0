@@ -28,7 +28,7 @@
  */
 /proc/send_exported_map(user, name, map)
 	var/file_path = "data/[name].dmm"
-	rustg_file_write(map, file_path)
+	aneri_file_write(map, file_path)
 	DIRECT_OUTPUT(user, ftp(file_path, "[name].dmm"))
 	var/file_to_delete = file(file_path)
 	fdel(file_to_delete)

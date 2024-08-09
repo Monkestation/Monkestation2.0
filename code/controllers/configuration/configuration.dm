@@ -408,13 +408,12 @@ Example config:
 		return
 
 	log_config("Loading config file word_filter.toml...")
-	var/list/result = rustg_raw_read_toml_file("[directory]/word_filter.toml")
-	if(!result["success"])
-		var/message = "The word filter is not configured correctly! [result["content"]]"
+	var/list/word_filter = aneri_toml_decode_file("[directory]/word_filter.toml")
+	if(!islist(word_filter))
+		var/message = "The word filter is not configured correctly! [word_filter]"
 		log_config(message)
 		DelayedMessageAdmins(message)
 		return
-	var/list/word_filter = json_decode(result["content"])
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")

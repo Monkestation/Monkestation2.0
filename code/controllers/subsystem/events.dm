@@ -21,6 +21,8 @@ SUBSYSTEM_DEF(events)
 		if(!event.valid_for_map())
 			qdel(event)
 			continue
+		event.managed = TRUE
+		RegisterSignal(event, COMSIG_QDELETING, TYPE_PROC_REF(/datum/round_event_control, oh_shit_oh_fuck))
 		control += event //add it to the list of all events (controls)
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already

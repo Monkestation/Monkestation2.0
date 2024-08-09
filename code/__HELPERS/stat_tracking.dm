@@ -26,7 +26,7 @@
 			"count" = counts[key],
 		)
 
-	rustg_file_write(json_encode(output), "[GLOB.log_directory]/[filename]")
+	aneri_file_write(json_encode(output), "[GLOB.log_directory]/[filename]")
 
 /proc/stat_tracking_export_to_csv_later(filename, costs, counts)
 	if (IsAdminAdvancedProcCall())
@@ -38,4 +38,4 @@
 	for (var/key in costs)
 		output += "[replacetext(key, ",", "")], [costs[key]], [counts[key]]"
 
-	rustg_file_write(output.Join("\n"), "[GLOB.log_directory]/[filename]")
+	aneri_file_write(output.Join("\n"), "[GLOB.log_directory]/[filename]")

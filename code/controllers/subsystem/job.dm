@@ -843,7 +843,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/export_toml(mob/user, data)
 	var/file_location = "data/jobconfig.toml" // store it in the data folder server-side so we can FTP it to the client.
 	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"
-	rustg_file_write(payload, file_location)
+	aneri_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
 

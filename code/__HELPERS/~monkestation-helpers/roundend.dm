@@ -1,5 +1,5 @@
 /datum/controller/subsystem/ticker/proc/save_tokens()
-	rustg_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
+	aneri_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards()
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)

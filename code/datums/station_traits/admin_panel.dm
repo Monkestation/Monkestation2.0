@@ -100,7 +100,7 @@
 			message_admins(message)
 
 			future_traits = new_future_traits
-			rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
+			aneri_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
 
 			return TRUE
 		if ("clear_future_traits")
