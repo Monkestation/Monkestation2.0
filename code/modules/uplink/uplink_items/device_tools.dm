@@ -122,7 +122,7 @@
 	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -138,7 +138,7 @@
 	cost = 1
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)

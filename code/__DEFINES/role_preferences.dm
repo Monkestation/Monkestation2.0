@@ -16,9 +16,12 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+//monkestation edit start
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_GANG_MEMBER "Gang Member"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
+//monkestation edit end
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -131,9 +134,12 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+//monkestation edit start
 	ROLE_CLOCK_CULTIST = 14,
 	ROLE_BLOODSUCKER = 0,
+	ROLE_GANG_MEMBER = 14,
 	ROLE_ASSAULT_OPERATIVE = 14,
+//monkestation edit end
 
 	// Midround
 	ROLE_ABDUCTOR = 0,

@@ -40,7 +40,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -68,7 +68,7 @@
 	item = /obj/item/dualsaber
 
 	cost = 16
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
 	switch(discount_type)
@@ -87,7 +87,7 @@
 	item = /obj/item/guardian_creator/tech
 	cost = 18
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 	restricted = TRUE
 	refundable = TRUE
 
@@ -98,4 +98,4 @@
 	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS

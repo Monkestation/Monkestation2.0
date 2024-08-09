@@ -32,7 +32,7 @@
 	ADD_TRAIT(living_target, TRAIT_NO_TELEPORT, IMPLANT_TRAIT)
 	return TRUE
 
-/obj/item/implant/exile/noteleport/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/exile/noteleport/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE) //monkestation edit: adds forced
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE

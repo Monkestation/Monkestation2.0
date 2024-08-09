@@ -246,7 +246,7 @@
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
-		return
+		return FALSE //monkestation edit: adds the FALSE return
 
 	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
@@ -254,6 +254,7 @@
 	potential_objectives -= to_take
 	active_objectives += to_take
 	on_update()
+	return TRUE //monkestation edit
 
 /datum/uplink_handler/proc/ui_objective_act(mob/user, datum/traitor_objective/to_act_on, action)
 	if(!(to_act_on in active_objectives))
