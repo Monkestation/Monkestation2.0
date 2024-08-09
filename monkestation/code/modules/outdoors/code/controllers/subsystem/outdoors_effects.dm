@@ -104,11 +104,12 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return ..()
 
 /datum/controller/subsystem/outdoor_effects/proc/fullPlonk()
-	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
-		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
-			var/area/TArea = T.loc
-			if (TArea.static_lighting)
-				GLOB.SUNLIGHT_QUEUE_WORK += T
+	var/list/zs = SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) | SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting)
+			continue
+		for(var/z in zs)
+			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
 	if(SSmapping.config.map_name == "Oshan Station")
@@ -141,13 +142,13 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs(list/targets)
-	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
-		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
-			var/area/TArea = T.loc
-			if (TArea.static_lighting || istype(TArea, /area/space))
-				GLOB.SUNLIGHT_QUEUE_WORK += T
-
+/datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs()
+	var/list/zs = SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) | SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting && !istype(area, /area/space))
+			continue
+		for(var/z in zs)
+			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
 
 /datum/controller/subsystem/outdoor_effects/proc/check_cycle()
 	if(!next_step_datum)
