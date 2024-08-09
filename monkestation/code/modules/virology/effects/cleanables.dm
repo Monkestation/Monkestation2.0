@@ -1,21 +1,27 @@
-GLOBAL_LIST_INIT(infected_cleanables, list())
+GLOBAL_LIST_EMPTY_TYPED(infected_cleanables, /obj/effect/decal/cleanable)
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/LateInitialize()
 	. = ..()
-	spawn(1)//cleanables can get infected in many different ways when they spawn so it's much easier to handle the pathogen overlay here after a delay
-		if (src.diseases && length(src.diseases))
-			GLOB.infected_cleanables += src
-			if (!pathogen)
-				pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',src,"pathogen_blood")
-				pathogen.plane = HUD_PLANE
-				pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-			for (var/mob/L in GLOB.science_goggles_wearers)
-				if (L.client)
-					L.client.images |= pathogen
+	addtimer(CALLBACK(src, PROC_REF(handle_pathogen_images)), 0.1 SECONDS, TIMER_DELETE_ME)
+
+/obj/effect/decal/cleanable/proc/handle_pathogen_images()
+	if(!length(diseases))
+		return
+	GLOB.infected_cleanables += src
+	if(!pathogen)
+		pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_blood")
+		pathogen.plane = HUD_PLANE
+		pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
+	for (var/mob/wearer in GLOB.science_goggles_wearers)
+		wearer.client?.images |= pathogen
 
 /obj/effect/decal/cleanable/Destroy()
-	. = ..()
 	GLOB.infected_cleanables -= src
+	return ..()
 
 /obj/effect/decal/cleanable/Entered(mob/living/perp)
 	..()
