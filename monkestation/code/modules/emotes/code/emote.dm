@@ -141,14 +141,6 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, FALSE) && isipc(user)))
-		return pick(
-			'monkestation/sound/voice/screams/silicon/catscream1.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream2.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream3.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream4.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream5.ogg',
-		)
 	if(issilicon(user))
 		return pick(
 			'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
@@ -195,12 +187,6 @@
 	return ..() && is_cat_enough(user, include_all_anime = TRUE)
 
 /datum/emote/living/meow/get_sound(mob/living/user)
-	if(issilicon(user) || isipc(user))
-		return pick(
-			'monkestation/sound/voice/feline/silicon/meow1.ogg',
-			'monkestation/sound/voice/feline/silicon/meow2.ogg',
-			'monkestation/sound/voice/feline/silicon/meow3.ogg',
-		)
 	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
 
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
