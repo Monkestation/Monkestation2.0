@@ -106,7 +106,7 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency
@@ -120,7 +120,7 @@
 		"compression" = rand(35, 65),
 		"language" = lang_instance.name,
 		"spans" = spans,
-		"mods" = message_mods
+		"mods" = message_mods,
 	)
 	levels = SSmapping.get_connected_levels(get_turf(source))
 
@@ -182,7 +182,7 @@
 	for(var/obj/item/radio/called_radio as anything in radios)
 		if(QDELETED(called_radio))
 			return
-		called_radio.on_recieve_message()
+		called_radio.on_recieve_message(data)
 
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_hearers_in_radio_ranges(radios)

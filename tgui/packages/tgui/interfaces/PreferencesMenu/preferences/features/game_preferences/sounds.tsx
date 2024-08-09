@@ -85,3 +85,11 @@ export const sound_vox: FeatureToggle = {
   component: CheckboxInput,
 };
 // monke edit end
+
+export const sound_radio_noise: FeatureToggle = {
+  name: 'Enable radio noise',
+  category: 'SOUND',
+  description:
+    'When enabled, hear sounds of talking and hearing radio chatter.',
+  component: CheckboxInput,
+};

@@ -25,6 +25,7 @@ export const Radio = (props) => {
   const channels = map((value, key) => ({
     name: key,
     status: !!value,
+    sound: !!value,
   }))(data.channels);
   // Calculate window height
   let height = 106;
@@ -120,6 +121,16 @@ export const Radio = (props) => {
                           channel: channel.name,
                         })
                       }
+                    />
+                    <Button
+                      icon={channel.sound ? 'volume-up' : 'volume-off'}
+                      tooltip="Disable/enable radio message sounds"
+                      checked={channel.sound}
+                      onClick={() => {
+                        act('channel_sound', {
+                          channel: channel.name,
+                        });
+                      }}
                     />
                   </Box>
                 ))}

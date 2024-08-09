@@ -77,3 +77,9 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// Controls hearing radio noise
+/datum/preference/toggle/radio_noise
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_radio_noise"
+	savefile_identifier = PREFERENCE_PLAYER
