@@ -170,14 +170,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"hD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "hR" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -229,10 +221,6 @@
 "jC" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
-"jL" = (
-/obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "jM" = (
@@ -685,7 +673,6 @@
 /obj/machinery/meter,
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xG" = (
@@ -770,10 +757,6 @@
 "Ar" = (
 /turf/closed/wall/rust,
 /area/station/engineering/supermatter/room)
-"At" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/supermatter)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -880,15 +863,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"Fq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/incident_display/delam/directional/north,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Fu" = (
@@ -1084,6 +1058,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"KF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "KI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -1342,15 +1323,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"Tt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/north,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "Uk" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/effect/turf_decal/stripes/line{
@@ -1382,7 +1354,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "UP" = (
@@ -1460,6 +1432,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "WZ" = (
@@ -1480,6 +1453,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"XI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "XR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1760,7 +1741,7 @@ FB
 Uw
 dA
 ZC
-hD
+Pp
 xX
 IA
 Wd
@@ -1790,7 +1771,7 @@ Fj
 Fj
 vs
 Fj
-Fj
+KF
 zp
 aK
 aK
@@ -1800,7 +1781,7 @@ vD
 RV
 cc
 ZC
-jL
+pk
 yr
 kM
 aJ
@@ -1874,7 +1855,7 @@ Le
 PV
 PV
 PV
-jL
+pk
 ll
 MY
 vD
@@ -1892,20 +1873,20 @@ vD
 Pp
 UP
 pk
-At
+ZC
 Yj
 uW
 GC
 uW
 pk
-Fq
+GO
 nb
 Cu
 GL
 GL
 nw
 np
-Fj
+KF
 zp
 aK
 aK
@@ -1944,7 +1925,7 @@ FB
 Uw
 FB
 pk
-Tt
+GO
 hW
 qK
 If
@@ -1981,7 +1962,7 @@ aK
 "}
 (19,1,1) = {"
 zp
-NC
+XI
 NC
 LD
 Ib

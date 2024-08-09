@@ -127,7 +127,6 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -296,7 +295,6 @@
 /obj/machinery/meter,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rY" = (
@@ -328,7 +326,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/light/directional/north,
-/obj/machinery/status_display/evac/directional/north,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -428,7 +425,6 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
-/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "xe" = (
@@ -482,6 +478,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "zi" = (
@@ -565,7 +562,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/south,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -644,10 +640,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"Fw" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "FN" = (
 /obj/machinery/power/supermatter_crystal/engine,
 /turf/open/floor/engine,
@@ -804,6 +796,9 @@
 "Np" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/incident_display/delam/directional/north{
+	pixel_x = -16
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Nu" = (
@@ -908,10 +903,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"Sh" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "Sw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1340,9 +1331,9 @@ rs
 Qn
 Qn
 Qn
-Fw
+Qn
 NA
-Sh
+Qn
 Qn
 Qn
 fL
