@@ -5736,6 +5736,7 @@
 #include "hippiestation\code\game\objects\items\execution_sword.dm"
 #include "hippiestation\code\game\objects\items\weaponry.dm"
 #include "hippiestation\code\game\objects\items\storage\uplink_kits.dm"
+#include "hippiestation\code\modules\events\aurora_caelus.dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
 #include "hippiestation\code\modules\uplink\uplink_items.dm"
 #include "interface\interface.dm"
