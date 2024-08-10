@@ -201,10 +201,7 @@
 	c_tag = "Service - Kitchen West"
 	},
 /obj/machinery/grill,
-/obj/structure/sign/poster/contraband/shamblers_juice{
-	pixel_y = 4;
-	pixel_x = -31
-	},
+/obj/structure/sign/poster/contraband/shamblers_juice/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ev" = (

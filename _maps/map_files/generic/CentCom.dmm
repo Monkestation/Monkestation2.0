@@ -1097,9 +1097,6 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/quirk/engineering_slogan{
-	pixel_x = 32
-	},
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "acU" = (
@@ -2169,9 +2166,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = 31
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "afO" = (
@@ -20081,6 +20076,10 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/misc/asteroid,
 /area/cruiser_dock)
+"coC" = (
+/obj/structure/sign/poster/quirk/engineering_slogan,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/centcom/central_command_areas/evacuation/ship)
 "cvB" = (
 /obj/machinery/armament_station/assault_operatives,
 /turf/open/floor/iron/smooth_large,
@@ -38294,7 +38293,7 @@ aaa
 aaa
 aaa
 aKH
-aLt
+coC
 aLt
 aLt
 aLt

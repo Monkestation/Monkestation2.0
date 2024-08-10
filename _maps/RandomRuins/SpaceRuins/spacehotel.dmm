@@ -1454,9 +1454,7 @@
 "lA" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/trimline/yellow/line,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -30
-	},
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "lB" = (
@@ -3211,11 +3209,9 @@
 /obj/item/storage/bag/trash,
 /obj/item/holosign_creator/janibarrier,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 34
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/lightreplacer,
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/custodial)
 "DO" = (

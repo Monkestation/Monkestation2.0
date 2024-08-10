@@ -2111,6 +2111,7 @@
 "awi" = (
 /obj/structure/table/glass,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/safety_internals/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut/observatory)
 "awk" = (
@@ -7139,6 +7140,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/poster/official/help_others/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "bGr" = (
@@ -36919,9 +36921,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "iNY" = (
-/obj/structure/sign/poster/official/help_others/directional/south{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -42774,16 +42773,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
-"keJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
-	pixel_x = -32
-	},
-/turf/open/floor/glass,
-/area/station/maintenance/space_hut/observatory)
 "keO" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -52910,6 +52899,7 @@
 /obj/structure/table/glass,
 /obj/item/paper_bin,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut/observatory)
 "mCf" = (
@@ -54089,9 +54079,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
-	},
-/obj/structure/sign/poster/official/science/directional/north{
-	pixel_x = 32
 	},
 /turf/open/floor/glass,
 /area/station/maintenance/space_hut/observatory)
@@ -59585,16 +59572,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"ois" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/bless_this_spess/directional/north{
-	pixel_x = -32
-	},
-/turf/open/floor/glass,
-/area/station/maintenance/space_hut/observatory)
 "oiC" = (
 /obj/machinery/computer/records/security{
 	dir = 8
@@ -60882,9 +60859,6 @@
 /obj/structure/chair/office/light,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
-	},
-/obj/structure/sign/poster/official/safety_internals/directional/south{
-	pixel_x = 32
 	},
 /turf/open/floor/glass,
 /area/station/maintenance/space_hut/observatory)
@@ -76702,6 +76676,7 @@
 /obj/structure/table/glass,
 /obj/item/food/pizzaslice/vegetable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/bless_this_spess/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut/observatory)
 "srh" = (
@@ -82098,6 +82073,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"tFT" = (
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/science/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/space_hut/observatory)
 "tGc" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
@@ -95725,13 +95706,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "wSh" = (
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/here_for_your_safety/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
 "wSk" = (
@@ -160682,9 +160661,9 @@ aaa
 dNn
 mUL
 pgz
-ois
 naB
-keJ
+naB
+naB
 xxK
 mUL
 dNn
@@ -161453,7 +161432,7 @@ aaa
 aaa
 uUW
 uUW
-awi
+tFT
 ltZ
 awi
 uUW

@@ -507,11 +507,9 @@
 "ju" = (
 /obj/machinery/coffeemaker,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/light/directional/north,
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "jw" = (
@@ -578,10 +576,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "jX" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/effect/spawner/random/entertainment/arcade,
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "kc" = (
@@ -911,12 +907,10 @@
 "re" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/vending/liberationstation,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west{
 	damage_deflection = 21
 	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ri" = (
@@ -1384,9 +1378,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
-/obj/structure/sign/poster/party_game/directional/east{
-	pixel_y = 3
-	},
+/obj/structure/sign/poster/party_game/directional/east,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "AA" = (
@@ -1976,13 +1968,11 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -30
-	},
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ki" = (
@@ -2015,13 +2005,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "KZ" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -29
-	},
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
 /obj/machinery/vending/toyliberationstation,
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Lf" = (

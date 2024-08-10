@@ -8435,9 +8435,7 @@
 	name = "educational injections";
 	pixel_x = 2
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -27
-	},
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/white,
 /area/station/security/execution/education)
 "bCK" = (
@@ -13640,10 +13638,8 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/cell_charger,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 34
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "dmR" = (

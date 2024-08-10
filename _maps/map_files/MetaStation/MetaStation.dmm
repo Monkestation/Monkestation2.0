@@ -19167,6 +19167,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
+"hbY" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/chemistry)
 "hcv" = (
 /obj/effect/landmark/observer_start,
 /obj/effect/turf_decal/plaque{
@@ -23784,6 +23789,7 @@
 /area/station/security/office)
 "iDU" = (
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iEk" = (
@@ -50133,13 +50139,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
-"rJq" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/chemistry)
 "rJr" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Head of Personnel's Office"
@@ -61907,12 +61906,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"vPp" = (
-/obj/structure/sign/poster/random/directional/east{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "vPq" = (
 /obj/structure/chair{
 	dir = 8
@@ -93219,7 +93212,7 @@ iqz
 iqz
 dVN
 iqz
-rJq
+tqd
 btH
 bqX
 lmq
@@ -93476,7 +93469,7 @@ skx
 lxw
 dVN
 iqz
-jtl
+hbY
 hZV
 hZV
 nZm
@@ -99148,7 +99141,7 @@ iKL
 nFa
 nFa
 etQ
-vPp
+nFa
 uGg
 lMJ
 aaa
