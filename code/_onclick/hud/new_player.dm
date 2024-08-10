@@ -27,13 +27,13 @@
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
 	return
-
-/atom/movable/screen/lobby/background
-	layer = LOBBY_BACKGROUND_LAYER
-	icon = 'icons/hud/lobby/background_monke.dmi'
-	icon_state = "background"
-	screen_loc = "TOP,CENTER:-61"
-
+//hippie start -- gutting lobby hud
+// /atom/movable/screen/lobby/background
+// 	layer = LOBBY_BACKGROUND_LAYER
+// 	icon = 'icons/hud/lobby/background_moneke.dmi'
+// 	icon_state = "background"
+// 	screen_loc = "TOP,CENTER:-61"
+//hippie end
 /atom/movable/screen/lobby/button
 	///Is the button currently enabled?
 	var/enabled = TRUE
@@ -98,7 +98,7 @@
 
 ///Prefs menu
 /atom/movable/screen/lobby/button/character_setup
-	screen_loc = "TOP:-87,CENTER:+100"
+	screen_loc = "TOP:-4,CENTER:261" //hippie -- bare hud
 	icon = 'icons/hud/lobby/character_setup.dmi'
 	icon_state = "character_setup"
 	base_icon_state = "character_setup"
@@ -115,7 +115,7 @@
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
-	screen_loc = "TOP:-54,CENTER:-35"
+	screen_loc = "TOP:-4,CENTER:+66" //hippie -- bare hud
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
@@ -164,7 +164,7 @@
 
 ///Shown when the game has started
 /atom/movable/screen/lobby/button/join
-	screen_loc = "TOP:-54,CENTER:-35"
+	screen_loc = "TOP:-4,CENTER:+66" //hippie -- bare hud
 	icon = 'icons/hud/lobby/join.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
@@ -234,7 +234,7 @@
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
 
 /atom/movable/screen/lobby/button/observe
-	screen_loc = "TOP:-54,CENTER:+82"
+	screen_loc = "TOP:-4,CENTER:+183" //hippie -- bare hud
 	icon = 'icons/hud/lobby/observe.dmi'
 	icon_state = "observe_disabled"
 	base_icon_state = "observe"
@@ -259,176 +259,177 @@
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+//hippie start -- gutting lobby hud
+// /atom/movable/screen/lobby/button/patreon_link
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "patreon"
+// 	base_icon_state = "patreon"
+// 	screen_loc = "TOP:-126,CENTER:86"
 
-/atom/movable/screen/lobby/button/patreon_link
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "patreon"
-	base_icon_state = "patreon"
-	screen_loc = "TOP:-126,CENTER:86"
+// /atom/movable/screen/lobby/button/patreon_link/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	if(!CONFIG_GET(string/patreon_link_website))
+// 		return
+// 	hud.mymob.client << link("[CONFIG_GET(string/patreon_link_website)]?ckey=[hud.mymob.client.ckey]")
 
-/atom/movable/screen/lobby/button/patreon_link/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	if(!CONFIG_GET(string/patreon_link_website))
-		return
-	hud.mymob.client << link("[CONFIG_GET(string/patreon_link_website)]?ckey=[hud.mymob.client.ckey]")
+// /atom/movable/screen/lobby/button/intents
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "intents"
+// 	base_icon_state = "intents"
+// 	screen_loc = "TOP:-126,CENTER:62"
 
-/atom/movable/screen/lobby/button/intents
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "intents"
-	base_icon_state = "intents"
-	screen_loc = "TOP:-126,CENTER:62"
+// /atom/movable/screen/lobby/button/intents/Click(location, control, params)
+// 	. = ..()
+// 	if(!hud.mymob.client.challenge_menu)
+// 		var/datum/challenge_selector/new_tgui = new(hud.mymob)
+// 		new_tgui.ui_interact(hud.mymob)
+// 	else
+// 		hud.mymob.client.challenge_menu.ui_interact(hud.mymob)
+// /atom/movable/screen/lobby/button/discord
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "discord"
+// 	base_icon_state = "discord"
+// 	screen_loc = "TOP:-126,CENTER:38"
 
-/atom/movable/screen/lobby/button/intents/Click(location, control, params)
-	. = ..()
-	if(!hud.mymob.client.challenge_menu)
-		var/datum/challenge_selector/new_tgui = new(hud.mymob)
-		new_tgui.ui_interact(hud.mymob)
-	else
-		hud.mymob.client.challenge_menu.ui_interact(hud.mymob)
-/atom/movable/screen/lobby/button/discord
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "discord"
-	base_icon_state = "discord"
-	screen_loc = "TOP:-126,CENTER:38"
+// /atom/movable/screen/lobby/button/discord/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	hud.mymob.client << link("https://discord.gg/monkestation")
 
-/atom/movable/screen/lobby/button/discord/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	hud.mymob.client << link("https://discord.gg/monkestation")
+// /atom/movable/screen/lobby/button/twitch
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "info"
+// 	base_icon_state = "info"
+// 	screen_loc = "TOP:-126,CENTER:14"
 
-/atom/movable/screen/lobby/button/twitch
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "info"
-	base_icon_state = "info"
-	screen_loc = "TOP:-126,CENTER:14"
+// /atom/movable/screen/lobby/button/twitch/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	if(!CONFIG_GET(string/twitch_link_website))
+// 		return
+// 	hud.mymob.client << link("[CONFIG_GET(string/twitch_link_website)]?ckey=[hud.mymob.client.ckey]")
 
-/atom/movable/screen/lobby/button/twitch/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	if(!CONFIG_GET(string/twitch_link_website))
-		return
-	hud.mymob.client << link("[CONFIG_GET(string/twitch_link_website)]?ckey=[hud.mymob.client.ckey]")
+// /atom/movable/screen/lobby/button/settings
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "settings"
+// 	base_icon_state = "settings"
+// 	screen_loc = "TOP:-126,CENTER:-10"
 
-/atom/movable/screen/lobby/button/settings
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "settings"
-	base_icon_state = "settings"
-	screen_loc = "TOP:-126,CENTER:-10"
+// /atom/movable/screen/lobby/button/settings/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
 
-/atom/movable/screen/lobby/button/settings/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
+// 	var/datum/preferences/preferences = hud.mymob.client.prefs
+// 	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+// 	preferences.update_static_data(usr)
+// 	preferences.ui_interact(usr)
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+// /atom/movable/screen/lobby/button/volume
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "volume"
+// 	base_icon_state = "volume"
+// 	screen_loc = "TOP:-126,CENTER:-34"
 
-/atom/movable/screen/lobby/button/volume
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "volume"
-	base_icon_state = "volume"
-	screen_loc = "TOP:-126,CENTER:-34"
+// /atom/movable/screen/lobby/button/volume/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
 
-/atom/movable/screen/lobby/button/volume/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
+// 	var/datum/preferences/preferences = hud.mymob.client.prefs
+// 	if(!preferences.pref_mixer)
+// 		preferences.pref_mixer = new
+// 	preferences.pref_mixer.open_ui(hud.mymob)
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	if(!preferences.pref_mixer)
-		preferences.pref_mixer = new
-	preferences.pref_mixer.open_ui(hud.mymob)
-
-/atom/movable/screen/lobby/button/changelog_button
-	icon = 'icons/hud/lobby/changelog.dmi'
-	icon_state = "changelog"
-	base_icon_state = "changelog"
-	screen_loc ="TOP:-98,CENTER:+45"
+// /atom/movable/screen/lobby/button/changelog_button
+// 	icon = 'icons/hud/lobby/changelog.dmi'
+// 	icon_state = "changelog"
+// 	base_icon_state = "changelog"
+// 	screen_loc ="TOP:-98,CENTER:+45"
 
 
-/atom/movable/screen/lobby/button/crew_manifest
-	icon = 'icons/hud/lobby/manifest.dmi'
-	icon_state = "manifest"
-	base_icon_state = "manifest"
-	screen_loc = "TOP:-98,CENTER:-9"
+// /atom/movable/screen/lobby/button/crew_manifest
+// 	icon = 'icons/hud/lobby/manifest.dmi'
+// 	icon_state = "manifest"
+// 	base_icon_state = "manifest"
+// 	screen_loc = "TOP:-98,CENTER:-9"
 
-/atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	var/mob/dead/new_player/new_player = hud.mymob
-	new_player.ViewManifest()
+// /atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	var/mob/dead/new_player/new_player = hud.mymob
+// 	new_player.ViewManifest()
 
-/atom/movable/screen/lobby/button/changelog_button/Click(location, control, params)
-	. = ..()
-	usr.client?.changelog()
+// /atom/movable/screen/lobby/button/changelog_button/Click(location, control, params)
+// 	. = ..()
+// 	usr.client?.changelog()
 
-/atom/movable/screen/lobby/button/poll
-	icon = 'icons/hud/lobby/poll.dmi'
-	icon_state = "poll"
-	base_icon_state = "poll"
-	screen_loc = "TOP:-98,CENTER:-40"
+// /atom/movable/screen/lobby/button/poll
+// 	icon = 'icons/hud/lobby/poll.dmi'
+// 	icon_state = "poll"
+// 	base_icon_state = "poll"
+// 	screen_loc = "TOP:-98,CENTER:-40"
 
-	var/new_poll = FALSE
+// 	var/new_poll = FALSE
 
-/atom/movable/screen/lobby/button/poll/SlowInit(mapload)
-	. = ..()
-	if(!usr)
-		return
-	var/mob/dead/new_player/new_player = usr
-	if(is_guest_key(new_player.key))
-		set_button_status(FALSE)
-		return
-	if(!SSdbcore.Connect())
-		set_button_status(FALSE)
-		return
-	var/isadmin = FALSE
-	if(new_player.client?.holder)
-		isadmin = TRUE
-	var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
-		SELECT id FROM [format_table_name("poll_question")]
-		WHERE (adminonly = 0 OR :isadmin = 1)
-		AND Now() BETWEEN starttime AND endtime
-		AND deleted = 0
-		AND id NOT IN (
-			SELECT pollid FROM [format_table_name("poll_vote")]
-			WHERE ckey = :ckey
-			AND deleted = 0
-		)
-		AND id NOT IN (
-			SELECT pollid FROM [format_table_name("poll_textreply")]
-			WHERE ckey = :ckey
-			AND deleted = 0
-		)
-	"}, list("isadmin" = isadmin, "ckey" = new_player.ckey))
-	if(!query_get_new_polls.Execute())
-		qdel(query_get_new_polls)
-		set_button_status(FALSE)
-		return
-	if(query_get_new_polls.NextRow())
-		new_poll = TRUE
-	else
-		new_poll = FALSE
-	update_appearance(UPDATE_OVERLAYS)
-	qdel(query_get_new_polls)
-	if(QDELETED(new_player))
-		set_button_status(FALSE)
-		return
+// /atom/movable/screen/lobby/button/poll/SlowInit(mapload)
+// 	. = ..()
+// 	if(!usr)
+// 		return
+// 	var/mob/dead/new_player/new_player = usr
+// 	if(is_guest_key(new_player.key))
+// 		set_button_status(FALSE)
+// 		return
+// 	if(!SSdbcore.Connect())
+// 		set_button_status(FALSE)
+// 		return
+// 	var/isadmin = FALSE
+// 	if(new_player.client?.holder)
+// 		isadmin = TRUE
+// 	var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
+// 		SELECT id FROM [format_table_name("poll_question")]
+// 		WHERE (adminonly = 0 OR :isadmin = 1)
+// 		AND Now() BETWEEN starttime AND endtime
+// 		AND deleted = 0
+// 		AND id NOT IN (
+// 			SELECT pollid FROM [format_table_name("poll_vote")]
+// 			WHERE ckey = :ckey
+// 			AND deleted = 0
+// 		)
+// 		AND id NOT IN (
+// 			SELECT pollid FROM [format_table_name("poll_textreply")]
+// 			WHERE ckey = :ckey
+// 			AND deleted = 0
+// 		)
+// 	"}, list("isadmin" = isadmin, "ckey" = new_player.ckey))
+// 	if(!query_get_new_polls.Execute())
+// 		qdel(query_get_new_polls)
+// 		set_button_status(FALSE)
+// 		return
+// 	if(query_get_new_polls.NextRow())
+// 		new_poll = TRUE
+// 	else
+// 		new_poll = FALSE
+// 	update_appearance(UPDATE_OVERLAYS)
+// 	qdel(query_get_new_polls)
+// 	if(QDELETED(new_player))
+// 		set_button_status(FALSE)
+// 		return
 
-/atom/movable/screen/lobby/button/poll/update_overlays()
-	. = ..()
-	if(new_poll)
-		. += mutable_appearance('icons/hud/lobby/poll_overlay.dmi', "new_poll")
+// /atom/movable/screen/lobby/button/poll/update_overlays()
+// 	. = ..()
+// 	if(new_poll)
+// 		. += mutable_appearance('icons/hud/lobby/poll_overlay.dmi', "new_poll")
 
-/atom/movable/screen/lobby/button/poll/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	var/mob/dead/new_player/new_player = hud.mymob
-	new_player.handle_player_polling()
+// /atom/movable/screen/lobby/button/poll/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	var/mob/dead/new_player/new_player = hud.mymob
+// 	new_player.handle_player_polling()
+//hippie end
