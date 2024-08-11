@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /// Initialises the grand ritual action for this mob
 /datum/antagonist/wizard/proc/assign_ritual()
-	ritual = new(owner.current)
+	ritual = new(owner) //monkestation edit: adds directly to owner instead of owner.current
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/proc/send_to_lair()
