@@ -14,18 +14,18 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	density = 0
 	var/mob/source = null
 	var/source_is_carrier = TRUE
-	var/list/viruses = list()
+	var/list/viruses
 	var/lifetime = 10 SECONDS //how long until we naturally disappear, humans breath about every 8 seconds, so it has to survive at least this long to have a chance to infect
 	var/turf/target = null //when created, we'll slowly move toward this turf
 	var/core = FALSE
 	var/modified = FALSE
 	var/moving = TRUE
-	var/list/id_list = list()
+	var/list/id_list
 	var/death = 0
 
 /obj/effect/pathogen_cloud/Initialize(mapload, mob/source, list/viruses, is_carrier = TRUE, is_core = TRUE)
 	. = ..()
-	if (QDELETED(loc) || !length(viruses))
+	if (QDELETED(loc) || !LAZYLEN(viruses))
 		return INITIALIZE_HINT_QDEL
 	src.source = source
 	src.viruses = viruses
@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	src.core = is_core
 
 	for(var/datum/disease/advanced/virus as anything in viruses)
-		id_list += "[virus.uniqueID]-[virus.subID]"
+		LAZYADD(id_list, "[virus.uniqueID]-[virus.subID]")
 
 	if(!core)
 		var/obj/effect/pathogen_cloud/core/existing_core = locate(/obj/effect/pathogen_cloud/core) in src.loc
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 			for(var/datum/disease/advanced/virus as anything in viruses)
 				if("[virus.uniqueID]-[virus.subID]" in existing_core.id_list)
 					continue
-				existing_core.viruses |= virus.Copy()
+				LAZYOR(existing_core.viruses, virus.Copy())
 				existing_core.modified = TRUE
 			return INITIALIZE_HINT_QDEL
 
