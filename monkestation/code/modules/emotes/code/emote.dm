@@ -141,7 +141,7 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, TRUE) && isipc(user)))
+	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, FALSE) && isipc(user)))
 		return pick(
 			'monkestation/sound/voice/screams/silicon/catscream1.ogg',
 			'monkestation/sound/voice/screams/silicon/catscream2.ogg',
@@ -209,6 +209,7 @@
 		return TRUE
 	else
 		return FALSE
+
 /datum/emote/living/bark
 	key = "bark"
 	key_third_person = "barks"
