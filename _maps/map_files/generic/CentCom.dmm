@@ -2175,7 +2175,7 @@
 /area/centcom/central_command_areas/admin)
 "agg" = (
 /obj/machinery/light/small/maintenance/directional/east,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "agi" = (
@@ -7362,7 +7362,6 @@
 /area/centcom/central_command_areas/arcade)
 "atS" = (
 /obj/machinery/light/small/maintenance/directional/west,
-/obj/structure/window/reinforced/tinted,
 /obj/effect/spawner/random/trash/garbage{
 	pixel_x = 5;
 	pixel_y = -3
@@ -7373,6 +7372,7 @@
 /obj/effect/spawner/random/trash/garbage{
 	pixel_y = 9
 	},
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "atT" = (
@@ -9200,9 +9200,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "ayP" = (
@@ -13297,12 +13295,8 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "aJZ" = (
@@ -15229,8 +15223,8 @@
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/syndicate_mothership/control)
 "aPi" = (
-/obj/structure/window/reinforced/tinted,
 /obj/item/chair/wood,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "aPj" = (
@@ -15828,10 +15822,8 @@
 /obj/structure/table/wood,
 /obj/item/trash/tray,
 /obj/item/trash/energybar,
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "aQU" = (
@@ -17069,9 +17061,6 @@
 /area/centcom/central_command_areas/admin)
 "aUa" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/structure/window/reinforced/survival_pod/spawner/directional{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Secret Stuff";
 	req_access = list("robotics");
@@ -17093,6 +17082,7 @@
 	pixel_y = -4;
 	color = "#fcba03"
 	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "aUb" = (
