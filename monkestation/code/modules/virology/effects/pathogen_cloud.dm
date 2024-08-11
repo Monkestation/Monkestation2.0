@@ -1,5 +1,5 @@
-GLOBAL_LIST_INIT(pathogen_clouds, list())
-GLOBAL_LIST_INIT(science_goggles_wearers, list())
+GLOBAL_LIST_EMPTY(pathogen_clouds)
+GLOBAL_LIST_EMPTY(science_goggles_wearers)
 
 /obj/effect/pathogen_cloud
 	name = ""
