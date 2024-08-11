@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(science_goggles_wearers)
 	var/spread_range = max(0, (strength / 20) - 1)
 	if(spread_range > 0)
 		var/list/possible_turfs = list()
-		for(var/turf/open/turf as anything in RANGE_TURFS(spread_range, loc)) //stronger viruses can reach turfs further away.
+		for(var/turf/open/turf as anything in view(spread_range, loc)) //stronger viruses can reach turfs further away.
 			if(!isopenturf(turf) || QDELING(turf))
 				continue
 			possible_turfs += turf
