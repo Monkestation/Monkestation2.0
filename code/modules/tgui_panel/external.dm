@@ -28,7 +28,7 @@
 	winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
 	winset(src, "browseroutput", "is-disabled=1;is-visible=0")
 	if(byond_version >= 516)
-		winset(src, null, "browser-options=byondstorage")
+		winset(src, null, "browser-options=byondstorage,find")
 	if(!tgui_panel || !istype(tgui_panel))
 		log_tgui(src, "tgui_panel datum is missing",
 			context = "verb/fix_tgui_panel")
