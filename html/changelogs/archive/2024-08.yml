@@ -45,3 +45,60 @@
   - rscadd: Resprited Long and Messy Hair
   flleeppyy:
   - sound: added some more space ambience
+2024-08-04:
+  Absolucy:
+  - sound: 'Added 3 new volume mixer channels: squeaking/plushies, mob emotes, and
+      silicon emotes.'
+  - bugfix: Antag tokening for Florida Man as ghost no longer spawns a duplicate random
+      human.
+  KittyNoodle:
+  - balance: Changelings can now store up to 60 different dna strands!
+2024-08-05:
+  flleeppyy:
+  - bugfix: silicons with the anime trait and no cat ears/tail cannot scream like
+      a cat.
+2024-08-06:
+  Absolucy, AnturK:
+  - bugfix: Fixes void cloak not making suit store slot items unstrippable.
+  FlufflesTheDog, Absolucy:
+  - bugfix: Anomalies shouldn't spawn with frequencies that can't be selected on signalers
+      anymore.
+  Uristthedorf:
+  - balance: Prybar is now bulky.
+2024-08-07:
+  Absolucy:
+  - bugfix: Heretic sacrifices properly work again.
+  Odairu:
+  - balance: removes hivemind from NIFs it has no place in this realm
+2024-08-08:
+  Odairu:
+  - rscadd: mantisblade has 2 settings now, crowbar and knife
+2024-08-09:
+  Absolucy:
+  - bugfix: Fixed some conflicting sound channels on the volume mixer.
+  - server: Added structured logging to runtime errors.
+  CannibalHunter:
+  - balance: rebalanced the wheelchairs to be similar to as they were in monke 1.0!
+  ThePooba:
+  - bugfix: Krav Maga gloves now have a tooltip instead of the longest name in the
+      game for its abilities
+  - bugfix: Farting in blueshifts fridge now makes frozen farts (and every other maps
+      fridge)
+  - bugfix: Cleaner bots now clean trash and dead rats with acid (Make sure to turn
+      it on!)
+  - bugfix: Flour bag now displays correct recipes for dough and cake batter
+  - bugfix: Flushers no longer DELETE YOU if the trunk under it is broken
+2024-08-10:
+  Uristthedorf:
+  - rscadd: Experimental cloner can become corrupted due to emag, event or EMP, causing
+      it to produce evil clones that have a randomized objective.
+  - rscadd: Science circuit imprinter can make clonepods now.
+  - rscadd: New geneticist traitor kit to start a clone army.
+  - rscadd: Experimental cloners and other cloning equipment can be printed from science.
+      (So a geneticist with experimental cloner doesn't blare alarm bells when no
+      one remembers cargo ordering a cloner crate.)
+  ven1883:
+  - rscadd: Ports Tribal Claw, a lizard exclusive martial arts,
+  - bugfix: Fixes a bug in species.dm preventing species exclusive traitor items from
+      appearing,
+  - code_imp: Adds a Martial Arts module for coders.
