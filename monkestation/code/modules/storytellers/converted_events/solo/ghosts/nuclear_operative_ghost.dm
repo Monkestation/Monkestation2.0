@@ -17,6 +17,7 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 3
 	maximum_antags = 4
@@ -32,7 +33,7 @@
 	required_enemies = 5
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
-	earliest_start = 45 MINUTES
+	earliest_start = 60 MINUTES
 	weight = 4
 	max_occurrences = 1
 	prompted_picking = TRUE

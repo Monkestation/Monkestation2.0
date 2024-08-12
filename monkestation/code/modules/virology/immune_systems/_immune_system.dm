@@ -71,7 +71,7 @@
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
 	for(var/ID in host.diseases)
 		var/datum/disease/advanced/D = host.diseases[ID]
-		D.cure(host,2)
+		D.cure(target = host)
 	strength = 0
 	overloaded = TRUE
 
@@ -80,6 +80,9 @@
 /datum/immune_system/proc/CanInfect(datum/disease/advanced/disease)
 	if (overloaded)
 		return TRUE
+
+	if(HAS_TRAIT(host, TRAIT_VIRUSIMMUNE))
+		return FALSE
 
 	for (var/antigen in disease.antigen)
 		if ((antibodies[antigen]) >= disease.strength)
@@ -121,13 +124,26 @@
 				var/obj/structure/bed/B = locate() in host.loc
 				if (host.buckled == B)//fucking chairs n stuff
 					tally += 0.5
-				if (host.IsUnconscious())
+				if (host.IsUnconscious() || host.IsSleeping())
 					if (tally < 2.5)
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
 			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 				tally += 3.5
+
+			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
+				switch(host.nutrition)
+					if(NUTRITION_LEVEL_FAT to INFINITY)
+						tally -= 0.5
+					if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+						tally += 1.5
+					if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+						tally += 1
+					if(0 to NUTRITION_LEVEL_STARVING)
+						tally = max(tally - 1.5, 0.5)
+					else
+						EMPTY_BLOCK_GUARD
 
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
@@ -161,10 +177,10 @@
 		return
 
 	for (var/A in antigen)
-		antibodies[A] = min(antibodies[A] + 10 * amount, 100)
+		antibodies[A] = min(antibodies[A] + 5 * amount, 100)
 	if(decay)
 		addtimer(CALLBACK(src, PROC_REF(decay_vaccine), antigen, amount), decay)
 
 /datum/immune_system/proc/decay_vaccine(list/antigens, amount = 1)
 	for (var/A in antigens)
-		antibodies[A] = max(antibodies[A] - 5 * amount, 10)
+		antibodies[A] = max(antibodies[A] - 2.5 * amount, 10)

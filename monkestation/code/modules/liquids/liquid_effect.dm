@@ -55,8 +55,8 @@
 		R = reagent_type
 		//We evaporate. bye bye
 		if(initial(R.evaporates))
-			var/remove_amount = min((initial(R.evaporation_rate)), R.volume, (liquid_group.reagents_per_turf / liquid_group.reagents.reagent_list.len))
-			liquid_group.remove_specific(src, remove_amount, R)
+			var/remove_amount = min((initial(R.evaporation_rate)), R.volume, (liquid_group.reagents_per_turf / length(liquid_group.reagents.reagent_list)))
+			liquid_group.remove_specific(src, remove_amount, R, TRUE)
 			any_change = TRUE
 			R.evaporate(src.loc, remove_amount)
 
@@ -200,7 +200,8 @@
 	RegisterSignal(my_turf, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 	RegisterSignal(my_turf, COMSIG_ATOM_EXAMINE, PROC_REF(examine_turf))
 
-	SEND_SIGNAL(my_turf, COMSIG_TURF_LIQUIDS_CREATION, src)
+	if(SEND_SIGNAL(my_turf, COMSIG_TURF_LIQUIDS_CREATION, src) & BLOCK_LIQUID_CREATION)
+		return INITIALIZE_HINT_QDEL
 
 	if(z)
 		QUEUE_SMOOTH(src)

@@ -1,5 +1,21 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber, Dropdown } from '../components';
+import {
+  Button,
+  ColorBox,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Collapsible,
+  Box,
+  Icon,
+  Stack,
+  Table,
+  Dimmer,
+  NumberInput,
+  Flex,
+  AnimatedNumber,
+  Dropdown,
+} from '../components';
 import { Window } from '../layouts';
 
 const ConfigureNumberEntry = (props) => {
@@ -14,9 +30,9 @@ const ConfigureNumberEntry = (props) => {
       width="39px"
       onChange={(e, value) =>
         act('configure', {
-          'key': name,
-          'value': value,
-          'ref': module_ref,
+          key: name,
+          value: value,
+          ref: module_ref,
         })
       }
     />
@@ -31,9 +47,9 @@ const ConfigureBoolEntry = (props) => {
       checked={value}
       onClick={() =>
         act('configure', {
-          'key': name,
-          'value': !value,
-          'ref': module_ref,
+          key: name,
+          value: !value,
+          ref: module_ref,
         })
       }
     />
@@ -49,8 +65,8 @@ const ConfigureColorEntry = (props) => {
         icon="paint-brush"
         onClick={() =>
           act('configure', {
-            'key': name,
-            'ref': module_ref,
+            key: name,
+            ref: module_ref,
           })
         }
       />
@@ -68,9 +84,9 @@ const ConfigureListEntry = (props) => {
       options={values}
       onSelected={(value) =>
         act('configure', {
-          'key': name,
-          'value': value,
-          'ref': module_ref,
+          key: name,
+          value: value,
+          ref: module_ref,
         })
       }
     />
@@ -100,7 +116,8 @@ const RadCounter = (props) => {
       <Stack.Item grow>
         <Section
           title="Radiation Level"
-          color={active && userradiated ? 'bad' : 'good'}>
+          color={active && userradiated ? 'bad' : 'good'}
+        >
           {active && userradiated ? 'IRRADIATED' : 'RADIATION-FREE'}
         </Section>
       </Stack.Item>
@@ -112,7 +129,8 @@ const RadCounter = (props) => {
               good: [-Infinity, 0.2],
               average: [0.2, 0.5],
               bad: [0.5, Infinity],
-            }}>
+            }}
+          >
             <AnimatedNumber value={usertoxins} />
           </ProgressBar>
         </Section>
@@ -121,7 +139,8 @@ const RadCounter = (props) => {
         <Section
           title="Hazard Level"
           color={active && threatlevel ? 'bad' : 'good'}
-          bold>
+          bold
+        >
           {active && threatlevel ? threatlevel : 0}
         </Section>
       </Stack.Item>
@@ -132,6 +151,7 @@ const RadCounter = (props) => {
 const HealthAnalyzer = (props) => {
   const {
     active,
+    show_vitals,
     userhealth,
     usermaxhealth,
     userbrute,
@@ -140,79 +160,93 @@ const HealthAnalyzer = (props) => {
     useroxy,
   } = props;
   return (
-    <>
-      <Section title="Health">
-        <ProgressBar
-          value={active ? userhealth / usermaxhealth : 0}
-          ranges={{
-            good: [0.5, Infinity],
-            average: [0.2, 0.5],
-            bad: [-Infinity, 0.2],
-          }}>
-          <AnimatedNumber value={active ? userhealth : 0} />
-        </ProgressBar>
-      </Section>
-      <Stack textAlign="center">
-        <Stack.Item grow>
-          <Section title="Brute">
+    <Section>
+      {show_vitals ? (
+        <>
+          <Section title="Health">
             <ProgressBar
-              value={active ? userbrute / usermaxhealth : 0}
+              value={active ? userhealth / usermaxhealth : 0}
               ranges={{
-                good: [-Infinity, 0.2],
+                good: [0.5, Infinity],
                 average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? userbrute : 0} />
+                bad: [-Infinity, 0.2],
+              }}
+            >
+              <AnimatedNumber value={active ? userhealth : 0} />
             </ProgressBar>
           </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Burn">
-            <ProgressBar
-              value={active ? userburn / usermaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? userburn : 0} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Toxin">
-            <ProgressBar
-              value={active ? usertoxin / usermaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? usertoxin : 0} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Suffocation">
-            <ProgressBar
-              value={active ? useroxy / usermaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? useroxy : 0} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </>
+          <Stack textAlign="center">
+            <Stack.Item grow>
+              <Section title="Brute">
+                <ProgressBar
+                  value={active ? userbrute / usermaxhealth : 0}
+                  ranges={{
+                    good: [-Infinity, 0.2],
+                    average: [0.2, 0.5],
+                    bad: [0.5, Infinity],
+                  }}
+                >
+                  <AnimatedNumber value={active ? userbrute : 0} />
+                </ProgressBar>
+              </Section>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Section title="Burn">
+                <ProgressBar
+                  value={active ? userburn / usermaxhealth : 0}
+                  ranges={{
+                    good: [-Infinity, 0.2],
+                    average: [0.2, 0.5],
+                    bad: [0.5, Infinity],
+                  }}
+                >
+                  <AnimatedNumber value={active ? userburn : 0} />
+                </ProgressBar>
+              </Section>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Section title="Toxin">
+                <ProgressBar
+                  value={active ? usertoxin / usermaxhealth : 0}
+                  ranges={{
+                    good: [-Infinity, 0.2],
+                    average: [0.2, 0.5],
+                    bad: [0.5, Infinity],
+                  }}
+                >
+                  <AnimatedNumber value={active ? usertoxin : 0} />
+                </ProgressBar>
+              </Section>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Section title="Suffocation">
+                <ProgressBar
+                  value={active ? useroxy / usermaxhealth : 0}
+                  ranges={{
+                    good: [-Infinity, 0.2],
+                    average: [0.2, 0.5],
+                    bad: [0.5, Infinity],
+                  }}
+                >
+                  <AnimatedNumber value={active ? useroxy : 0} />
+                </ProgressBar>
+              </Section>
+            </Stack.Item>
+          </Stack>
+        </>
+      ) : (
+        <Section>
+          {'Health Analyzer Vitals Readout Disabled In Settings'}
+        </Section>
+      )}
+    </Section>
   );
 };
 
 const StatusReadout = (props) => {
   const {
     active,
+    show_time,
     statustime,
     statusid,
     statushealth,
@@ -229,18 +263,20 @@ const StatusReadout = (props) => {
   } = props;
   return (
     <>
-      <Stack textAlign="center">
-        <Stack.Item grow>
-          <Section title="Operation Time">
-            {active ? statustime : '00:00:00'}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Operation Number">
-            {active ? statusid || '0' : '???'}
-          </Section>
-        </Stack.Item>
-      </Stack>
+      {!!show_time && (
+        <Stack textAlign="center">
+          <Stack.Item grow>
+            <Section title="Operation Time">
+              {active ? statustime : '00:00:00'}
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section title="Operation Number">
+              {active ? statusid : '???'}
+            </Section>
+          </Stack.Item>
+        </Stack>
+      )}
       <Section title="Health">
         <ProgressBar
           value={active ? statushealth / statusmaxhealth : 0}
@@ -248,7 +284,8 @@ const StatusReadout = (props) => {
             good: [0.5, Infinity],
             average: [0.2, 0.5],
             bad: [-Infinity, 0.2],
-          }}>
+          }}
+        >
           <AnimatedNumber value={active ? statushealth : 0} />
         </ProgressBar>
       </Section>
@@ -261,7 +298,8 @@ const StatusReadout = (props) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? statusbrute : 0} />
             </ProgressBar>
           </Section>
@@ -274,7 +312,8 @@ const StatusReadout = (props) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? statusburn : 0} />
             </ProgressBar>
           </Section>
@@ -287,7 +326,8 @@ const StatusReadout = (props) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={statustoxin} />
             </ProgressBar>
           </Section>
@@ -300,7 +340,8 @@ const StatusReadout = (props) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={statusoxy} />
             </ProgressBar>
           </Section>
@@ -437,7 +478,8 @@ const ConfigureScreen = (props) => {
               fluid
               onClick={props.onExit}
               icon="times"
-              textAlign="center">
+              textAlign="center"
+            >
               Exit
             </Button>
           </Box>
@@ -488,7 +530,8 @@ const ParametersSection = (props) => {
               content={active ? 'Deactivate' : 'Activate'}
               onClick={() => act('activate')}
             />
-          }>
+          }
+        >
           {status}
         </LabeledList.Item>
         <LabeledList.Item
@@ -499,7 +542,8 @@ const ParametersSection = (props) => {
               content={locked ? 'Unlock' : 'Lock'}
               onClick={() => act('lock')}
             />
-          }>
+          }
+        >
           {locked ? 'Locked' : 'Unlocked'}
         </LabeledList.Item>
         <LabeledList.Item label="Cover">
@@ -601,7 +645,7 @@ const ModuleSection = (props) => {
   const { complexity_max, modules } = data;
   const [configureState, setConfigureState] = useLocalState(
     'module_configuration',
-    null
+    null,
   );
   return (
     <Section title="Modules" fill>
@@ -689,7 +733,7 @@ const ModuleSection = (props) => {
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <Button
-                            onClick={() => act('select', { 'ref': module.ref })}
+                            onClick={() => act('select', { ref: module.ref })}
                             icon="bullseye"
                             selected={module.module_active}
                             tooltip={displayText(module.module_type)}
@@ -705,7 +749,7 @@ const ModuleSection = (props) => {
                             disabled={module.configuration_data.length === 0}
                           />
                           <Button
-                            onClick={() => act('pin', { 'ref': module.ref })}
+                            onClick={() => act('pin', { ref: module.ref })}
                             icon="thumbtack"
                             selected={module.pinned}
                             tooltip="Pin"
@@ -764,7 +808,8 @@ export const MODsuit = (props) => {
       height={525}
       theme={ui_theme}
       title="MOD Interface Panel"
-      resizable>
+      resizable
+    >
       <Window.Content scrollable={!interface_break}>
         <MODsuitContent />
       </Window.Content>

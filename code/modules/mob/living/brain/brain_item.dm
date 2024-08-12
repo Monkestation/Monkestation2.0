@@ -220,13 +220,13 @@
 		return
 	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
 		if(organ_flags & ORGAN_FAILING)
-			return span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
+			. += span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
 		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
-			return span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
+			. += span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
 		else
-			return span_info("You can feel the small spark of life still left in this one.")
+			. += span_info("You can feel the small spark of life still left in this one.")
 	else
-		return span_info("This one is completely devoid of life.")
+		. += span_info("This one is completely devoid of life.")
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -377,6 +377,20 @@
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
+
+/obj/item/organ/internal/brain/lustrous
+	name = "lustrous brain"
+	desc = "This is your brain on bluespace dust. Not even once."
+	icon_state = "random_fly_4"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+
+/obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

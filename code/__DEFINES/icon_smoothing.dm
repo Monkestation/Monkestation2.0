@@ -114,7 +114,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(61)
 #define SMOOTH_GROUP_FISSURE S_TURF(62)
 
-#define MAX_S_TURF 62 //Always match this value with the one above it.
+#define SMOOTH_GROUP_MUSHROOM S_TURF(63)
+
+#define MAX_S_TURF 63 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -136,6 +138,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(16) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 #define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
+
+#define SMOOTH_GROUP_SHIPWALLS S_OBJ(19) ///turf/closed/wall/mineral/titanium/spaceship
+#define SMOOTH_GROUP_STONE_WALLS S_OBJ(20) ///turf/closed/wall/mineral/stone, /obj/structure/falsewall/stone
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 

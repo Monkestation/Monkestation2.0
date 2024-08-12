@@ -7,6 +7,7 @@
 	id = "rainbow_protection"
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -37,6 +38,7 @@
 	id = "slimeskin"
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -445,12 +447,18 @@
 	/// Colour of the extract providing the buff
 	var/colour = "null"
 
+/datum/status_effect/stabilized/Destroy()
+	if(linked_extract?.linked_effect == src)
+		linked_extract.linked_effect = null
+	linked_extract = null
+	return ..()
+
 /datum/status_effect/stabilized/on_creation(mob/living/new_owner, obj/item/slimecross/stabilized/linked_extract)
 	src.linked_extract = linked_extract
 	return ..()
 
 /datum/status_effect/stabilized/tick()
-	if(isnull(linked_extract))
+	if(QDELETED(linked_extract))
 		qdel(src)
 		return
 	if(linked_extract.get_held_mob() == owner)
@@ -1070,6 +1078,7 @@
 	id = "stabilizedrainbow"
 	colour = "rainbow"
 
+/* monkestation edit: replaced in [monkestation\code\modules\slimecore\crossbreeding\stabilized.dm]
 /datum/status_effect/stabilized/rainbow/tick()
 	if(owner.health <= 0)
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
@@ -1081,3 +1090,4 @@
 				qdel(src)
 				qdel(linked_extract)
 	return ..()
+*/

@@ -7,8 +7,6 @@
 
 	max_integrity = 10000
 
-	pixel_y = 30
-
 	icon = 'monkestation/icons/obj/machines/atm.dmi'
 	icon_state = "atm"
 
@@ -21,11 +19,14 @@
 	///static variable to check if a lottery is running
 	var/static/lottery_running = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
+
 /obj/machinery/atm/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -42,19 +43,21 @@
 
 /obj/machinery/atm/ui_data(mob/user)
 	var/list/data = list()
-
 	if(!user.client)
 		return
+
 	var/cash_balance = 0
-	var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
-	if(user_id && istype(user_id, /obj/item/card/id))
-		var/obj/item/card/id/id_card = user_id.GetID()
-		cash_balance = id_card.registered_account.account_balance
+	var/obj/item/card/id/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
+	if(user_id)
+		user_id = user_id.GetID()
+		if(istype(user_id))
+			cash_balance = user_id.registered_account.account_balance
 	else
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-			cash_balance = user_account.account_balance
+			if(user_account)
+				cash_balance = user_account.account_balance
 
 	data["meta_balance"] = user.client.prefs.metacoins
 	data["cash_balance"] = cash_balance
@@ -92,9 +95,12 @@
 		if("buy_flash")
 			buy_flash_sale()
 			return TRUE
+		if("buy_lootbox")
+			buy_lootbox()
+			return TRUE
 	return TRUE
 
-/obj/machinery/atm/proc/pull_lottery_winner()
+/obj/machinery/atm/proc/poll_lottery_winner()
 	if(length(ticket_owners))
 		var/datum/bank_account/winning_account = pick_weight(ticket_owners)
 		winning_account.account_balance += lottery_pool
@@ -107,7 +113,7 @@
 	lottery_running = FALSE
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/proc/buy_lottery()
 	if(!iscarbon(usr))
@@ -142,8 +148,10 @@
 
 /obj/machinery/atm/proc/attempt_withdraw()
 	var/mob/living/living_user = usr
-	var/current_balance = living_user.client.prefs.metacoins
+	if(!living_user)
+		return
 
+	var/current_balance = living_user.client.prefs.metacoins
 	var/withdraw_amount = tgui_input_number(living_user, "How many Monkecoins would you like to withdraw?", "ATM", 0 , current_balance, 0)
 
 	if(!withdraw_amount)
@@ -154,8 +162,28 @@
 
 	var/obj/item/stack/monkecoin/coin_stack = new(living_user.loc)
 	coin_stack.amount = withdraw_amount
+	coin_stack.update_desc()
 
 	living_user.put_in_hands(coin_stack)
+
+/obj/machinery/atm/proc/buy_lootbox()
+	var/mob/living/living_user = usr
+	if(!living_user)
+		return
+
+	var/current_balance = living_user.client.prefs.metacoins
+	if(tgui_alert(living_user, "Are you sure you would like to purchase a lootbox for [LOOTBOX_COST] monkecoins?", "Balance: [current_balance]", list("Yes", "No")) != "Yes")
+		return
+
+	if(!living_user.client.prefs.has_coins(LOOTBOX_COST))
+		to_chat(living_user, span_warning("Not enough monkecoins."))
+		return
+
+	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -LOOTBOX_COST, donator_multipler = FALSE))
+		return
+
+	var/obj/item/lootbox/box = new(get_turf(living_user))
+	living_user.put_in_hands(box)
 
 
 /obj/machinery/atm/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -165,6 +193,7 @@
 			var/obj/item/stack/monkecoin/attacked_coins = attacking_item
 			if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount, donator_multipler = FALSE))
 				say("Error acceptings coins, please try again later.")
+				return
 			qdel(attacked_coins)
 			say("Coins deposited to your account, have a nice day.")
 
@@ -222,8 +251,8 @@
 /obj/item/stack/monkecoin
 	name = "monkecoin"
 	singular_name = "monkecoin"
-	icon = 'monkestation/icons/obj/economy.dmi'
-	icon_state = "coins"
+	icon = 'monkestation/icons/obj/monkecoin.dmi'
+	icon_state = "monkecoin"
 	amount = 1
 	max_amount = INFINITY
 	throwforce = 0
@@ -231,19 +260,20 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	merge_type = /obj/item/stack/monkecoin
 	var/value = 100
 
-/obj/item/stack/monkecoin/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+/obj/item/stack/monkecoin/Initialize(mapload, new_amount, merge = FALSE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	update_desc()
 
 /obj/item/stack/monkecoin/update_desc()
 	. = ..()
 	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total.\n"
-	desc +=	"Their are [amount] monkecoins in this stack."
+	desc = "Monkecoin, it's the backbone of the economy. "
+	desc += "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total."
+	update_icon_state()
 
 /obj/item/stack/monkecoin/get_item_credit_value()
 	return (amount*value)
@@ -258,12 +288,23 @@
 
 /obj/item/stack/monkecoin/update_icon_state()
 	. = ..()
+	var/coinpress = copytext("[amount]",1,2)
 	switch(amount)
-		if(1)
-			icon_state = initial(icon_state)
-		if(2 to 9)
-			icon_state = "[initial(icon_state)]_2"
-		if(10 to 24)
-			icon_state = "[initial(icon_state)]_3"
-		if(25 to INFINITY)
-			icon_state = "[initial(icon_state)]_4"
+		if(1 to 9)
+			icon_state = "[initial(icon_state)][coinpress]"
+		if(10 to 99)
+			icon_state = "[initial(icon_state)][coinpress]0"
+		if(100 to 999)
+			icon_state = "[initial(icon_state)][coinpress]00"
+		if(1000 to 8999)
+			icon_state = "[initial(icon_state)][coinpress]000"
+		if(9000 to INFINITY)
+			icon_state = "[initial(icon_state)]9000"
+
+/obj/item/stack/monkecoin/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] begins to gouge [user.p_their()] eyes with the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.emote("scream")
+	if(do_after(user, 5 SECONDS, src))
+		return BRUTELOSS
+	else
+		user.visible_message(span_suicide("[user] puts the [src] down away from [user.p_their()] eyes."))

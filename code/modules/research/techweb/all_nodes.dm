@@ -98,6 +98,8 @@
 		"sec_beanbag_slug",
 		"sec_dart",
 		"buckshot_shell",
+		"sec_buckshot_shell",
+		"sec_shotgun_slug",
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
@@ -281,6 +283,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -298,7 +301,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
-		"vial",
+		"tube",
 		"synth_eyes",
 		"synth_tongue",
 		"synth_liver",
@@ -752,6 +755,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
@@ -1171,8 +1175,10 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
+		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1556,6 +1562,8 @@
 	description = "Unlocks new designs that improve rapid devices."
 	prereq_ids = list("adv_engi")
 	design_ids = list(
+		"rcd_upgrade_anti_interrupt",
+		"rcd_upgrade_cooling",
 		"rcd_upgrade_frames",
 		"rcd_upgrade_furnishing",
 		"rcd_upgrade_simple_circuits",
@@ -1755,6 +1763,7 @@
 		"mod_defib",
 		"mod_threadripper",
 		"mod_surgicalprocessor",
+		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 

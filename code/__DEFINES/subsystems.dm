@@ -149,10 +149,10 @@
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
-#define INIT_ORDER_MEDIA_TRACKS 60
+#define INIT_ORDER_TICKER 60 // monkestation edit: ticker needs to start before media_tracks before it loads tracks, since ticker loads and adds lobby tracks from config
+#define INIT_ORDER_MEDIA_TRACKS 59 // monkestation edit: see INIT_ORDER_TICKER
 #define INIT_ORDER_AI_MOVEMENT 56 //We need the movement setup
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
-#define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_EARLY_ASSETS 48
@@ -164,6 +164,7 @@
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_ATOMS 30
+#define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
 #define INIT_ORDER_SKILLS 15
