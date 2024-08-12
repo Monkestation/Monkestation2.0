@@ -83,13 +83,15 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/Destroy()
 	UnregisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT)
 	SSliquids.active_groups -= src
+	SSliquids.active_turf_group_queue -= src
 
 	if(src in SSliquids.arrayed_groups)
 		SSliquids.arrayed_groups -= src /// Someone made a massive fucky wucky if this is happening
 
 	for(var/turf/member_turf as anything in members)
-		member_turf?.liquids?.liquid_group = null
-	members = list()
+		if(member_turf?.liquids?.liquid_group == src)
+			SSliquids.cached_exposures -= member_turf
+	members = null
 	burning_members = null
 	return ..()
 

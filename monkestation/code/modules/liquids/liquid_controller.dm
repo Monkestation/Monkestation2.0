@@ -195,15 +195,14 @@ SUBSYSTEM_DEF(liquids)
 					active_turf_group_queue -= liquid_group
 					if(!liquid_group.exposure)
 						continue
-					for(var/turf/member as anything in liquid_group.members)
-						cached_exposures += liquid_group.members
+					cached_exposures |= liquid_group.members
 
 			var/process_count = 0
 			var/list/groups_we_rebuilt = list()
 			while((process_count <= 500) && length(cached_exposures))
 				process_count++
 				var/turf/member = pick_n_take(cached_exposures)
-				if(!member)
+				if(QDELETED(member))
 					break
 				if(MC_TICK_CHECK)
 					return
@@ -213,7 +212,6 @@ SUBSYSTEM_DEF(liquids)
 					groups_we_rebuilt |= liquid_group
 					liquid_group.build_turf_reagent()
 
-				cached_exposures -= member
 				if(!istype(member) || QDELING(member))
 					liquid_group.members -= member
 					continue
