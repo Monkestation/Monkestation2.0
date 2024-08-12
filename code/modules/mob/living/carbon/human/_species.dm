@@ -422,9 +422,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				qdel(existing_organ)
 			continue
 
-		if(!isnull(old_species) && !isnull(existing_organ))
-			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
-				continue // we don't want to remove organs that are not the default for this species
+		// we don't want to remove organs that are not the default for this species
+		if(!isnull(existing_organ))
+			if(!isnull(old_species) && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
+				continue
+			else if(!replace_current && existing_organ.type != get_mutant_organ_type_for_slot(slot))
+				continue
 
 		// at this point we already know new_organ is not null
 		if(existing_organ?.type == new_organ)
@@ -475,7 +478,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// External organ checking. We need to check the external organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
-		if(external_organ in external_organs)
+		if((external_organ in external_organs) || istype(external_organ, /obj/item/organ/external/wings/functional)) // monkestation edit: don't delete wings
 			continue // Don't remove external organs this species is supposed to have.
 
 		external_organ.Remove(organ_holder)

@@ -7,8 +7,6 @@
 
 	max_integrity = 10000
 
-	pixel_y = 30
-
 	icon = 'monkestation/icons/obj/machines/atm.dmi'
 	icon_state = "atm"
 
@@ -21,11 +19,14 @@
 	///static variable to check if a lottery is running
 	var/static/lottery_running = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
+
 /obj/machinery/atm/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -42,19 +43,21 @@
 
 /obj/machinery/atm/ui_data(mob/user)
 	var/list/data = list()
-
 	if(!user.client)
 		return
+
 	var/cash_balance = 0
-	var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
-	if(user_id && istype(user_id, /obj/item/card/id))
-		var/obj/item/card/id/id_card = user_id.GetID()
-		cash_balance = id_card.registered_account.account_balance
+	var/obj/item/card/id/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
+	if(user_id)
+		user_id = user_id.GetID()
+		if(istype(user_id))
+			cash_balance = user_id.registered_account.account_balance
 	else
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-			cash_balance = user_account.account_balance
+			if(user_account)
+				cash_balance = user_account.account_balance
 
 	data["meta_balance"] = user.client.prefs.metacoins
 	data["cash_balance"] = cash_balance
@@ -92,9 +95,12 @@
 		if("buy_flash")
 			buy_flash_sale()
 			return TRUE
+		if("buy_lootbox")
+			buy_lootbox()
+			return TRUE
 	return TRUE
 
-/obj/machinery/atm/proc/pull_lottery_winner()
+/obj/machinery/atm/proc/poll_lottery_winner()
 	if(length(ticket_owners))
 		var/datum/bank_account/winning_account = pick_weight(ticket_owners)
 		winning_account.account_balance += lottery_pool
@@ -107,7 +113,7 @@
 	lottery_running = FALSE
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/proc/buy_lottery()
 	if(!iscarbon(usr))
@@ -142,8 +148,10 @@
 
 /obj/machinery/atm/proc/attempt_withdraw()
 	var/mob/living/living_user = usr
-	var/current_balance = living_user.client.prefs.metacoins
+	if(!living_user)
+		return
 
+	var/current_balance = living_user.client.prefs.metacoins
 	var/withdraw_amount = tgui_input_number(living_user, "How many Monkecoins would you like to withdraw?", "ATM", 0 , current_balance, 0)
 
 	if(!withdraw_amount)
@@ -158,6 +166,24 @@
 
 	living_user.put_in_hands(coin_stack)
 
+/obj/machinery/atm/proc/buy_lootbox()
+	var/mob/living/living_user = usr
+	if(!living_user)
+		return
+
+	var/current_balance = living_user.client.prefs.metacoins
+	if(tgui_alert(living_user, "Are you sure you would like to purchase a lootbox for [LOOTBOX_COST] monkecoins?", "Balance: [current_balance]", list("Yes", "No")) != "Yes")
+		return
+
+	if(!living_user.client.prefs.has_coins(LOOTBOX_COST))
+		to_chat(living_user, span_warning("Not enough monkecoins."))
+		return
+
+	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -LOOTBOX_COST, donator_multipler = FALSE))
+		return
+
+	var/obj/item/lootbox/box = new(get_turf(living_user))
+	living_user.put_in_hands(box)
 
 
 /obj/machinery/atm/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -167,6 +193,7 @@
 			var/obj/item/stack/monkecoin/attacked_coins = attacking_item
 			if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount, donator_multipler = FALSE))
 				say("Error acceptings coins, please try again later.")
+				return
 			qdel(attacked_coins)
 			say("Coins deposited to your account, have a nice day.")
 

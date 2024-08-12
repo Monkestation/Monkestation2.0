@@ -14,6 +14,10 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_INSTRUMENTS,
 	CHANNEL_INSTRUMENTS_ROBOT,
 	CHANNEL_MOB_SOUNDS,
+	CHANNEL_PRUDE,
+	CHANNEL_SQUEAK,
+	CHANNEL_MOB_EMOTES,
+	CHANNEL_SILICON_EMOTES,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -25,6 +29,9 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_INSTRUMENTS_ROBOT,
 	CHANNEL_MOB_SOUNDS,
 	CHANNEL_PRUDE,
+	CHANNEL_SQUEAK,
+	CHANNEL_MOB_EMOTES,
+	CHANNEL_SILICON_EMOTES,
 ))
 
 GLOBAL_LIST_EMPTY(cached_mixer_channels)
@@ -258,7 +265,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 
 /client/proc/playtitlemusic(vol = 0.85)
 	set waitfor = FALSE
-	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
+	UNTIL(SSticker.login_music_done) //wait for SSticker init to set the login music // monkestation edit: fix-lobby-music
 	UNTIL(fully_created)
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
@@ -278,6 +285,11 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 
 	if(SSmedia_tracks.first_lobby_play)
 		SSmedia_tracks.current_lobby_track = pick(SSmedia_tracks.lobby_tracks)
+		// monkestation edit start: fix-lobby-music
+		if (fexists("data/last_round_lobby_music.txt"))
+			fdel("data/last_round_lobby_music.txt")
+		text2file(SSmedia_tracks.current_lobby_track.url, "data/last_round_lobby_music.txt")
+		// monkestation edit end
 		SSmedia_tracks.first_lobby_play = FALSE
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
