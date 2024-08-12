@@ -65621,11 +65621,6 @@
 /obj/effect/landmark/navigate_destination/research,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/research)
-"ssw" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ssL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -101671,7 +101666,7 @@ xMq
 xMq
 iLQ
 iLQ
-ssw
+xMq
 xMq
 xMq
 xMq
