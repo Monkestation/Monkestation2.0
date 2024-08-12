@@ -12,7 +12,7 @@
 	needs_anchored = FALSE
 
 
-/obj/item/circuitboard/machine/clonepod	//hippie start, re-add cloning
+/obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -26,7 +26,7 @@
 	name = "Experimental Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod/experimental
 
-/obj/item/circuitboard/machine/clonescanner	//hippie end, re-add cloning
+/obj/item/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/dna_scannernew
