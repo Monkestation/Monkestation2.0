@@ -12437,13 +12437,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
-"dMf" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "asteroidsci"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/science/auxlab)
 "dMh" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -28972,6 +28965,7 @@
 "iDm" = (
 /obj/structure/sign/warning/hot_temp/directional/east,
 /obj/structure/railing,
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
 "iDG" = (
@@ -71579,11 +71573,6 @@
 /obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
-"vhx" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer1,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer5,
-/turf/open/space/basic,
-/area/space/nearstation)
 "vhF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -102925,7 +102914,7 @@ hLk
 hLk
 wmi
 gTz
-dMf
+bkF
 gTz
 hHz
 vCD
@@ -103191,7 +103180,7 @@ gFx
 vhH
 vhH
 vhH
-vhx
+vhH
 uZB
 con
 bev
@@ -103702,7 +103691,7 @@ jSJ
 pWu
 npN
 pWu
-jOm
+wmi
 iDm
 wmi
 cgo
