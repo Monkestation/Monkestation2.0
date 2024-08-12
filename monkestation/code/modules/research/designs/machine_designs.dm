@@ -1,5 +1,5 @@
 
-/datum/design/board/clonecontrol
+/datum/design/board/clonecontrol	//hippie start, re-add cloning
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"
@@ -31,7 +31,7 @@
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
 
 
-/datum/design/board/clonescanner
+/datum/design/board/clonescanner	//hippie end, re-add cloning
 	name = "Machine Design (Cloning Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
 	id = "clonescanner"

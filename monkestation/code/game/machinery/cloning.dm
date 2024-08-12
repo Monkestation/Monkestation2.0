@@ -18,10 +18,10 @@
 	ADD_GAS(/datum/gas/nitrogen, gases)
 	gases[/datum/gas/nitrogen][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
-/datum/gas_mixture/immutable/cloner/heat_capacity()
+/datum/gas_mixture/immutable/cloner/heat_capacity()	//hippie end, re-add cloning
 	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20
 
-/obj/machinery/clonepod
+/obj/machinery/clonepod	//hippie start, re-add cloning
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
