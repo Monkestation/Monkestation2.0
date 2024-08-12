@@ -12,10 +12,10 @@ GLOBAL_LIST_INIT(generic_ambience,list(
 	'sound/ambience/ambigen12.ogg',
 	'sound/ambience/ambigen14.ogg',
 	'sound/ambience/ambigen15.ogg',
-	//hippie -- ambience
-	'hippiestation/sound/ambience/ambiencegenlawnmower.ogg',
-	'hippiestation/sound/ambience/ambiencegenscivir.ogg',
-	//hippie -- end
+	//HIPPIE EDIT START - ports ambience
+	'o-hippiestation/sound/ambience/ambiencegenlawnmower.ogg',
+	'o-hippiestation/sound/ambience/ambiencegenscivir.ogg',
+	//HIPPIE EDIT END
 ))
 
 GLOBAL_LIST_INIT(holy_ambience,list(
