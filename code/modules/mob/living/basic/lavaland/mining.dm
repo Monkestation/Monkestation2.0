@@ -38,10 +38,13 @@
 			drop_mod = crusher_drop_chance,\
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
+	return INITIALIZE_HINT_LATELOAD
+
+/mob/living/basic/mining/LateInitialize()
+	if(!HAS_TRAIT(src, TRAIT_RELAYING_ATTACKER))
+		AddElement(/datum/element/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_ashwalker_peace_violation))
-	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
-	// handling for retaliation and attack special cases
-	AddElement(/datum/element/relay_attackers)
+
 
 /mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/carbon/human/possible_ashwalker)
 	SIGNAL_HANDLER
