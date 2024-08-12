@@ -452,6 +452,7 @@
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_element.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_guns.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_item.dm"
+#include "code\__DEFINES\~monkestation\dcs\signals\signals_object.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_traitor.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_mob\signals_mob_main.dm"
 #include "code\__HELPERS\_auxtools_api.dm"

@@ -12,8 +12,10 @@
 	inhand_icon_state = "wizard_mirror_shield"
 	lefthand_file = 'monkestation/icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/equipment/shields_righthand.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
+	worn_icon_state = "wizard_mirror_shield"
 	force = 16
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
@@ -34,23 +36,22 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src) //we want can_charge set to TRUE but dont actually use the processing it gives so just disable it
 
+/obj/item/gun/magic/mirror_shield/Destroy()
+	for(var/projectile in stored_projectiles)
+		qdel(projectile) //could also have them shoot off in random directions
+		stored_projectiles -= projectile
+	return ..()
+
+/obj/item/gun/magic/mirror_shield/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(ismob(old_loc))
+		UnregisterSignal(old_loc, COMSIG_PROJECTILE_PREHIT)
+
+	if(ismob(loc))
+		RegisterSignal(loc, COMSIG_PROJECTILE_PREHIT, PROC_REF(handle_hit))
+
 /obj/item/gun/magic/mirror_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
-	if(attack_type == PROJECTILE_ATTACK)
-		if(!prob(PROJECTILE_HIT_EFFECT_CHANCE))
-			return FALSE
-
-		if(reaction_mode == REACTION_MODE_ABSORB && length(stored_projectiles) <= max_stored_projectiles && !(hitby.type in blacklisted_projectile_types))
-			absorb_projectile(hitby)
-		else
-			var/obj/projectile/reflected = hitby
-			reflected.set_angle_centered(get_angle(owner, reflected.firer))
-			reflected.parried = TRUE
-			reflected.firer = owner
-			reflected.speed *= 0.8
-			reflected.damage *= 1.15
-		return TRUE
-
-	else if(prob(NORMAL_BLOCK_CHANCE))
+	if(attack_type != PROJECTILE_ATTACK && prob(NORMAL_BLOCK_CHANCE))
 		return TRUE
 
 /obj/item/gun/magic/mirror_shield/attack_self(mob/user, modifiers)
@@ -78,16 +79,36 @@
 
 /obj/item/gun/magic/mirror_shield/proc/absorb_projectile(obj/projectile/absorbed)
 	STOP_PROCESSING(SSprojectiles, absorbed)
-	absorbed.projectile_phasing |= PASSMOB //JANK, MIGHT NOT WORK, ALSO NEED TO REMOVE THIS FLAG AFTER IF NEEDED
 	absorbed.fired = FALSE
+	QDEL_NULL(absorbed.trajectory)
 	if(!chambered.loaded_projectile)
-		chambered.loaded_projectile = absorbed
 		absorbed.forceMove(chambered)
+		chambered.loaded_projectile = absorbed
 	else
 		absorbed.forceMove(src)
 		stored_projectiles += absorbed
+	absorbed.update_appearance()
 	visible_message(span_notice("\The [src] absorbs [absorbed]!"))
+
+/obj/item/gun/magic/mirror_shield/proc/handle_hit(mob/held_by, list/projectile_args, obj/projectile/hit_by)
+	SIGNAL_HANDLER
+	if(!prob((src in held_by.held_items) ? PROJECTILE_HIT_EFFECT_CHANCE : NORMAL_BLOCK_CHANCE)) //turns out its harder to block with something when your not holding it
+		return
+
+	hit_by.impacted = list()
+	var/turf/firer_turf = get_turf(hit_by.firer)
+	if(hit_by.firer && get_dist(firer_turf, get_turf(src)) <= 1) //this is due to some jank I cant figure out, if you want to go ahead
+		hit_by.process_hit(firer_turf, hit_by.firer)
+	else if(reaction_mode == REACTION_MODE_ABSORB && length(stored_projectiles) <= max_stored_projectiles && !(hit_by.type in blacklisted_projectile_types))
+		absorb_projectile(hit_by)
+	else
+		hit_by.set_angle_centered(get_angle(held_by, hit_by.firer))
+		hit_by.firer = held_by
+		hit_by.speed *= 0.8
+		hit_by.damage *= 1.15
+
 	playsound(src, 'sound/magic/cosmic_expansion.ogg', vol = 120, channel = CHANNEL_SOUND_EFFECTS)
+	return PROJECTILE_INTERRUPT_HIT | PROJECTILE_INTERRUPT_BLOCK_QDEL
 
 //a dummy casing type to get filled with absorbed projectiles
 /obj/item/ammo_casing/mirror_shield_dummy
@@ -96,11 +117,6 @@
 
 /obj/item/ammo_casing/mirror_shield_dummy/newshot()
 	return
-
-/obj/projectile/Destroy()
-	if(ismob(firer) && firer:client)
-		stack_trace("funny") //LOOK AT THIS
-	. = ..()
 
 #undef PROJECTILE_HIT_EFFECT_CHANCE
 #undef NORMAL_BLOCK_CHANCE
