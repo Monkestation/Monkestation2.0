@@ -121,7 +121,10 @@
 	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
 		var/atom/movable/screen/splash/Spl = new(null, boarder.client, TRUE)
 		Spl.Fade(TRUE)
-		boarder.playsound_local(get_turf(boarder), 'monkestation/sound/ai/duke/welcome/welcome2.ogg', 50) //MONKESTATION EDIT
+		//HIPPIE EDIT START
+		// boarder.playsound_local(get_turf(boarder), 'monkestation/sound/ai/duke/welcome/welcome2.ogg', 50) //MONKESTATION EDIT - HIPPIE EDIT ORIGINAL
+		boarder.playsound_local(get_turf(boarder), 'o-hippiestation/sound/ai/welcome.ogg', 50)
+		//HIPPIE EDIT END
 	boarder.update_parallax_teleport()
 
 

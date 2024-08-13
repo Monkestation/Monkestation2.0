@@ -1,7 +1,11 @@
 /datum/centcom_announcer/default
-	welcome_sounds = list('monkestation/sound/ai/duke/welcome/bonus1.ogg',
-						'monkestation/sound/ai/duke/welcome/welcome1.ogg',
-						'monkestation/sound/ai/duke/welcome/welcome2.ogg')
+//HIPPIE EDIT START
+	// welcome_sounds = list('monkestation/sound/ai/duke/welcome/bonus1.ogg', - HIPPIE EDIT ORIGINAL
+	// 					'monkestation/sound/ai/duke/welcome/welcome1.ogg',
+	// 					'monkestation/sound/ai/duke/welcome/welcome2.ogg')
+	welcome_sounds = list('o-hippiestation/sound/ai/welcome.ogg',
+						  'o-hippiestation/sound/ai/pyko/welcome/WelcomeHippie.ogg')
+//HIPPIE EDIT END
 	alert_sounds = list('sound/ai/default/attention.ogg')
 	command_report_sounds = list('sound/ai/default/commandreport.ogg')
 	event_sounds = list(ANNOUNCER_AIMALF = 'sound/ai/default/aimalf.ogg',

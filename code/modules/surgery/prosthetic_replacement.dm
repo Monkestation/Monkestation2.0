@@ -124,14 +124,17 @@
 			span_notice("[user] finishes the attachment procedure!"),
 		)
 		display_pain(target, "You feel a strange sensation from your new [parse_zone(target_zone)].", TRUE)
-		if(istype(tool, /obj/item/chainsaw/energy_chainsaw)) //hippie -- begin energy chainsaw surgery code
+		//HIPPIE EDIT START - energy chainsaw surgery code
+		// if(istype(tool, /obj/item/chainsaw)) - HIPPIE EDIT ORIGINAL
+		if(istype(tool, /obj/item/chainsaw/energy_chainsaw))
 			qdel(tool)
 			bodypart_to_attach.bodytype |= BODYTYPE_ROBOTIC
 			bodypart_to_attach.bodytype &= ~BODYTYPE_ORGANIC
 			var/obj/item/chainsaw/energy_chainsaw/mounted/new_arm = new(target)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return
-		else if(istype(tool, /obj/item/chainsaw)) //hippie -- end
+		else if(istype(tool, /obj/item/chainsaw))
+		//HIPPIE EDIT END
 			qdel(tool)
 			bodypart_to_attach.bodytype |= BODYTYPE_ROBOTIC
 			bodypart_to_attach.bodytype &= ~BODYTYPE_ORGANIC
