@@ -55,7 +55,7 @@
 /datum/uplink_item/weapon_kits/high_cost/sword_and_board
 	name = "Energy sword and shield combo box (Moderate)"
 	desc = "An Energy Shield and sword combo, popular amongst agents that like to get shot in the back."
-	cost = 20
+	cost = 18
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
 /datum/uplink_item/weapon_kits/high_cost/cqc
@@ -63,5 +63,5 @@
 	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a discount bandana and a thermal eyepatch."
 	item = /obj/item/storage/toolbox/guncase/cqc
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	cost = 18
+	cost = 15
 	surplus = 0
