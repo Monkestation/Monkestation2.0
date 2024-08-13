@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/fountain = 1,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/restraints/legcuffs/bola = 1,
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
 		/obj/item/market_uplink/blackmarket = 1,
@@ -305,6 +305,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,
+		/obj/item/spess_knife = 1,
 		) = 1,
 
 	list(//equipment
@@ -402,6 +403,13 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
 	GLOB.maint_fauna = maint_fauna_weight,
+	))
+
+//Monke, loot pool of uncommon or better loot, used in maint god rituals
+GLOBAL_LIST_INIT(good_maintenance_loot, list(
+	GLOB.uncommon_loot = maint_uncommon_weight,
+	GLOB.rarity_loot = maint_rarity_weight,
+	GLOB.oddity_loot = maint_oddity_weight,
 	))
 
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.
