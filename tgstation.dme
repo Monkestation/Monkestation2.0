@@ -7838,6 +7838,8 @@
 #include "o-hippiestation\code\game\objects\items\weapons\energy_chainsaw.dm"
 #include "o-hippiestation\code\game\objects\items\weapons\execution_sword.dm"
 #include "o-hippiestation\code\game\objects\items\weapons\weaponry.dm"
+#include "o-hippiestation\code\modules\butt\butt.dm"
+#include "o-hippiestation\code\modules\butt\inspect.dm"
 #include "o-hippiestation\code\modules\cassettes\media_track_manager.dm"
 #include "o-hippiestation\code\modules\events\aurora_caelus.dm"
 #include "o-hippiestation\code\modules\sports\bowling.dm"
