@@ -3,15 +3,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
-"ap" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/meter,
-/obj/machinery/light/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "aJ" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/cable,
@@ -28,14 +19,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"bQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "cc" = (
@@ -65,6 +48,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"dq" = (
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/circuit/red,
 /area/station/engineering/supermatter/room)
 "dA" = (
 /obj/effect/turf_decal/caution/stand_clear,
@@ -479,12 +468,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"rL" = (
-/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable,
-/turf/open/floor/circuit/red,
-/area/station/engineering/supermatter/room)
 "rW" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -508,10 +491,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"sY" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "th" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Supermatter Waste Line";
@@ -533,6 +512,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"tu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "tB" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/stripes/corner{
@@ -542,6 +532,14 @@
 /obj/structure/sign/warning/no_smoking{
 	pixel_x = 30
 	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"tC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "uc" = (
@@ -597,6 +595,15 @@
 	luminosity = 2
 	},
 /area/station/engineering/supermatter)
+"vr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "vs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -762,6 +769,17 @@
 /area/template_noop)
 "Ar" = (
 /turf/closed/wall/rust,
+/area/station/engineering/supermatter/room)
+"AX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"Be" = (
+/turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1292,14 +1310,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"St" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "Su" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/emitter,
@@ -1398,6 +1408,13 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"VZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "Wd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1417,22 +1434,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
-"Wo" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
-"WM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/incident_display/delam/directional/north,
-/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "WZ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1465,17 +1466,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
-"Yo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/incident_display/delam/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"Yu" = (
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "YC" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
@@ -1684,7 +1674,7 @@ Ll
 "}
 (7,1,1) = {"
 zp
-St
+AX
 LM
 LM
 hj
@@ -1732,8 +1722,8 @@ aK
 fN
 BL
 sG
-sY
-Yu
+Be
+Be
 pk
 FB
 Uw
@@ -1755,8 +1745,8 @@ aK
 BM
 Qj
 sz
-sY
-Wo
+Be
+Be
 ZC
 wk
 EA
@@ -1769,7 +1759,7 @@ Fj
 Fj
 vs
 Fj
-Yo
+VZ
 zp
 aK
 aK
@@ -1799,7 +1789,7 @@ aK
 "}
 (12,1,1) = {"
 pa
-WM
+tu
 xp
 yr
 kF
@@ -1884,7 +1874,7 @@ GL
 GL
 nw
 np
-Yo
+VZ
 zp
 aK
 aK
@@ -1941,7 +1931,7 @@ wZ
 hh
 yM
 yM
-ap
+vr
 yM
 rj
 rj
@@ -1960,7 +1950,7 @@ aK
 "}
 (19,1,1) = {"
 zp
-bQ
+tC
 NC
 LD
 Ib
@@ -1987,7 +1977,7 @@ Tl
 LO
 rW
 Qn
-rL
+dq
 vz
 Ee
 fx
