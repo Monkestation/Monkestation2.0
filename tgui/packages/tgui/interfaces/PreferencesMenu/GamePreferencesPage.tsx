@@ -7,6 +7,8 @@ import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
 import { TabbedMenu } from './TabbedMenu';
 
+const PREFERENCE_STREAMER_MODE = 'streamer_mode';
+
 type PreferenceChild = {
   name: string;
   children: InfernoNode;
@@ -83,7 +85,7 @@ export const GamePreferencesPage = (props) => {
       children: child,
     };
 
-    const category = feature?.category || 'ERROR';
+    const category = feature?.category || 'GAME_PREFERENCES';
 
     gamePreferences[category] = binaryInsertPreference(
       gamePreferences[category] || [],

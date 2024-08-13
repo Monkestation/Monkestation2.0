@@ -117,6 +117,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// older data.
 /// Must be overridden by subtypes.
 /// Can return null if no value was found.
+/datum/preference/toggle/streamer_mode/apply_to_client(client/client, value)
+    client.streamer_mode = value
+
 /datum/preference/proc/deserialize(input, datum/preferences/preferences)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
@@ -559,3 +562,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/text/compile_constant_data()
 	return list("maximum_length" = maximum_value_length)
+
+/datum/preference/toggle/streamer_mode
+    category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+    savefile_key = "streamer_mode"
+    savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/streamer_mode/create_default_value()
+    return FALSE
+
+/datum/preference/toggle/streamer_mode/apply_to_client(client/client, value)
+    client.streamer_mode = value

@@ -136,3 +136,6 @@
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
+
+//Hippie edithowever, this is for the actual game that hides words rather than block you can't just see them.
+#define PREFERENCE_STREAMER_MODE "streamer_mode"
