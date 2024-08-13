@@ -81,12 +81,6 @@
 	nightshift_allowed = FALSE
 	fire_colour = "#ff1100"
 
-/obj/machinery/light/small/warm
-	bulb_colour = "#fae5c1"
-	no_low_power = TRUE
-	nightshift_allowed = FALSE
-	fire_colour = "#ff1100"
-
 /obj/machinery/light/small/red/dim
 	bulb_inner_range = 2
 	bulb_power = 0.8
@@ -125,8 +119,6 @@
 	bulb_colour = "#FF3232"
 	nightshift_allowed = FALSE
 	no_low_power = TRUE
-
-
 
 // -------- Directional presets
 // The directions are backwards on the lights we have now
