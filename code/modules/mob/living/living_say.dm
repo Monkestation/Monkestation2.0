@@ -99,7 +99,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
-
+	if(client?.prefs?.read_preference(/datum/preference/toggle/streamer_mode))
+		message = filter_streamer_words(message)
 	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
@@ -273,6 +274,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
+	if(client?.prefs?.read_preference(/datum/preference/toggle/streamer_mode))
+		raw_message = filter_streamer_words(raw_message)
 	//monkestation edit
 	if(radio_freq && can_hear())
 		var/atom/movable/virtualspeaker/V = speaker
