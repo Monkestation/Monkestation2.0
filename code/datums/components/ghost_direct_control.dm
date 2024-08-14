@@ -47,7 +47,7 @@
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_EXAMINE))
 	return ..()
 
-/datum/component/ghost_direct_control/Destroy(force, silent)
+/datum/component/ghost_direct_control/Destroy(force)
 	extra_control_checks = null
 	after_assumed_control = null
 

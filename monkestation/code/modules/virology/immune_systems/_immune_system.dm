@@ -18,7 +18,7 @@
 		ANTIGEN_Z	= 0,
 		)
 
-/datum/immune_system/Destroy(force, ...)
+/datum/immune_system/Destroy(force)
 	. = ..()
 	host = null
 	antibodies = null

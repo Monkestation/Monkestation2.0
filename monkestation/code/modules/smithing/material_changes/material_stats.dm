@@ -115,7 +115,7 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
 	START_PROCESSING(SSobj, src)
 
-/datum/material_stats/Destroy(force, ...)
+/datum/material_stats/Destroy(force)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	for(var/datum/material_trait/trait as anything in material_traits)
