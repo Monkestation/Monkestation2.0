@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
  * you for it
  */
 /client
-    var/streamer_mode = FALSE
+	var/streamer_mode = FALSE
 /client/proc/handle_spam_prevention(message, mute_type)
 
 	//Increment message count
