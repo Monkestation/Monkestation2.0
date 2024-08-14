@@ -239,8 +239,10 @@
 		for(var/atom/target in checking)  // will filter out nulls
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
-
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
+			//HIPPIE EDIT BEGIN
+			// if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms - HIPPIE EDIT ORIGINAL
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage || istype(target, /obj/item/organ/internal/butt))
+			//HIPPIE EDIT END
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
