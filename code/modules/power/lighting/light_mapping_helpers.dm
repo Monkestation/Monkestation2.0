@@ -99,27 +99,6 @@
 	nightshift_allowed = FALSE
 	bulb_power = 0.8
 
-// floor  light fixture
-
-/obj/machinery/light/floor/warm
-	color = "#FFD6AA"
-	bulb_colour = "#fae5c1"
-	nightshift_allowed = FALSE
-
-/obj/machinery/light/floor/has_bulb/warm
-	bulb_colour = "#fae5c1"
-	nightshift_allowed = FALSE
-
-/obj/machinery/light/floor/red
-	bulb_colour = "#FF3232"
-	nightshift_allowed = FALSE
-	no_low_power = TRUE
-
-/obj/machinery/light/floor/has_bulb/red
-	bulb_colour = "#FF3232"
-	nightshift_allowed = FALSE
-	no_low_power = TRUE
-
 // -------- Directional presets
 // The directions are backwards on the lights we have now
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light, 0)
@@ -175,9 +154,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
 
 // ---- Red bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red, 0)
-
-// ---- Warm bulbs
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/warm, 0)
 
 // ---- Red dim bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red/dim, 0)
