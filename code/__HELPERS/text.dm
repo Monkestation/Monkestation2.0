@@ -1211,3 +1211,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		text2num(semver_regex.group[2]),
 		text2num(semver_regex.group[3]),
 	)
+/proc/filter_streamer_words(message)
+	var/static/regex/streamer_regex
+	if(!streamer_regex)
+		var/list/banned_words = list("Slut", "Whore", "fuck", "shit", "bitch")
+		streamer_regex = regex(replacetext(jointext(banned_words, "|"), "\\", "\\\\"), "i")
+	return streamer_regex.Replace(message, "****")

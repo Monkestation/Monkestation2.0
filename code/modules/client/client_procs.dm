@@ -165,6 +165,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
  * The second checks for the same duplicate message too many times and mutes
  * you for it
  */
+/client
+	var/streamer_mode = FALSE
 /client/proc/handle_spam_prevention(message, mute_type)
 
 	//Increment message count
@@ -248,6 +250,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.interviews.client_login(src)
 	GLOB.requests.client_login(src)
 
+	//Add streamer mode preference
+	streamer_mode = prefs?.read_preference(/datum/preference/toggle/streamer_mode) || FALSE
 	if(src.ckey in GLOB.interviews.cooldown_ckeys)
 		qdel(src)
 
