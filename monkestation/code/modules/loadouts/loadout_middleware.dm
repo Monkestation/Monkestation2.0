@@ -148,7 +148,7 @@
 
 	var/array_index = 1
 	for(var/datum/loadout_item/item as anything in list_of_datums)
-		if(QDELETED(preferences)|| QDELETED(preferences.parent))
+		if(QDELETED(preferences) || QDELETED(preferences.parent))
 			return
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
 			if(!(preferences.parent.ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
