@@ -1,8 +1,8 @@
 // Offensive wizard spells
 /datum/spellbook_entry/fireball
-	name = "Fireball"
-	desc = "Fires an explosive fireball at a target. Considered a classic among all wizards."
-	spell_type = /datum/action/cooldown/spell/pointed/projectile/fireball
+	name = "Fire Ball" //monkestation edit: added the space
+	desc = "Fires a fire ball at a target. The Wizard Federation got hit hard by the budget cuts." //monkestation edit: edited to reflect the new version of the given spell
+	spell_type = /datum/action/cooldown/spell/pointed/projectile/fireball/bouncy //monkestation edit: adds the bouncy subtype
 	category = "Offensive"
 
 /datum/spellbook_entry/spell_cards

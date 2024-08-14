@@ -27,6 +27,33 @@
 	reagents.add_reagent_list(list_reagents)
 	return
 
+//wizard bio suit
+/obj/item/clothing/head/wizard/bio_suit
+	name = "gem encrusted bio hood"
+	desc = "A hood that protects the head and face from biological contaminants. It's covered in small gemstones."
+	icon = 'monkestation/icons/obj/clothing/head/bio.dmi'
+	icon_state = "bio_wizard"
+	worn_icon = 'monkestation/icons/mob/clothing/head/bio.dmi'
+	worn_icon_state = "bio_wizard"
+	inhand_icon_state = "bio_hood"
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS | CASTING_CLOTHES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/obj/item/clothing/suit/wizrobe/bio_suit
+	name = "gem encrusted bio suit"
+	desc = "A suit that protects against biological contamination. It's covered in small gemstones."
+	icon = 'monkestation/icons/obj/clothing/suits/bio.dmi'
+	icon_state = "bio_wizard"
+	worn_icon = 'monkestation/icons/mob/clothing/suits/bio.dmi'
+	worn_icon_state = "bio_wizard"
+	inhand_icon_state = "bio_suit"
+	clothing_flags = THICKMATERIAL | CASTING_CLOTHES
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDEJUMPSUIT
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
+
 //reactive talisman
 #define REACTION_COOLDOWN_DURATION 10 SECONDS
 /obj/item/clothing/neck/neckless/wizard_reactive //reactive armor for wizards that casts a spell when it reacts

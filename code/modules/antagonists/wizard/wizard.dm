@@ -279,7 +279,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		if(APPRENTICE_DESTRUCTION)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/aoe/magic_missile,
-				/datum/action/cooldown/spell/pointed/projectile/fireball,
+				/datum/action/cooldown/spell/pointed/projectile/fireball/bouncy, //monkestation edit: adds the bouncy subtype
 			)
 			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
 				Studying under [master.current.real_name], you have learned powerful, \
