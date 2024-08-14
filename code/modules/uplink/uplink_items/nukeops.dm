@@ -1,3 +1,4 @@
+//Monkestation edit: Bulldog and c20r moved to uplink kits
 /datum/uplink_item/bundles_tc/cyber_implants
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
