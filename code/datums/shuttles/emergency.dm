@@ -223,6 +223,12 @@
 	description = "A train but in space, choo choo!"
 	occupancy_limit = "35"
 
+/datum/map_template/shuttle/emergency/steel
+	suffix = "steel"
+	name = "Steel Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 12
+	description = "A spaceliner designed for Steel station. May damage regular stations."
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
