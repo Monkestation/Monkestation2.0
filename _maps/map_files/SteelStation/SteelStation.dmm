@@ -2914,7 +2914,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "bgi" = (
-/obj/structure/bed/roller,
 /obj/machinery/camera/directional/north{
 	c_tag = "Medbay Lobby - Fore"
 	},
@@ -11067,7 +11066,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "ehS" = (
-/obj/structure/bed/roller,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -18000,7 +17998,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "gGZ" = (
-/obj/structure/bed/roller,
 /obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -28260,12 +28257,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kwi" = (
-/obj/item/roller{
-	pixel_y = 6
-	},
-/obj/item/roller{
-	pixel_y = 6
-	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -42608,7 +42599,6 @@
 	},
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
-/obj/item/stamp/qm,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "pJX" = (
@@ -46285,7 +46275,6 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "rcI" = (
-/obj/structure/bed/roller,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
@@ -60053,12 +60042,6 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "wdM" = (
-/obj/item/roller{
-	pixel_y = 6
-	},
-/obj/item/roller{
-	pixel_y = 6
-	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -63862,7 +63845,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/stamp/hos,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -65157,10 +65139,6 @@
 	pixel_x = -10;
 	pixel_y = 9
 	},
-/obj/item/stamp/qm{
-	pixel_x = 7;
-	pixel_y = -2
-	},
 /obj/item/stamp/denied{
 	pixel_x = 7;
 	pixel_y = 4
@@ -65337,10 +65315,6 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin/carbon{
 	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stamp/hop{
-	pixel_x = -4;
 	pixel_y = 4
 	},
 /turf/open/floor/carpet,
