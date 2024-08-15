@@ -303,7 +303,7 @@
 	var/datum/round_event_control/event = pick_weight(extra_spawned_events)
 	event?.run_event(random = FALSE, event_cause = "storyteller")
 
-/datum/round_event/antagonist/solo/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob)
+/datum/round_event/antagonist/solo/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob, qdel_old_mob = TRUE)
 	if(!old_mob?.client)
 		return
 
@@ -313,7 +313,9 @@
 
 	old_mob.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
-	old_mob.mind.transfer_to()
+	old_mob.mind.transfer_to(new_character)
+	if(qdel_old_mob)
+		qdel(old_mob)
 	return new_character
 
 /datum/round_event/antagonist/solo/ghost/start()
