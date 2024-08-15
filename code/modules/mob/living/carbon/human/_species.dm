@@ -987,7 +987,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(H.stat == DEAD)
 			return
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if(HAS_TRAIT(H, TRAIT_NOBREATH) && (H.health < H.crit_threshold) && takes_crit_damage)
+		SHOULD_CALL_PARENT(TRUE)
+		if(H.stat == DEAD)
+			return
+		if(HAS_TRAIT(H, TRAIT_NOBREATH) && (H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 			H.adjustBruteLoss(0.5 * seconds_per_tick)
 			//no breathing so remove oxydamage when it somehow happens
 			H.setOxyLoss(0)
