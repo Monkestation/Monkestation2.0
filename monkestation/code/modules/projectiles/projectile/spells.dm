@@ -48,7 +48,7 @@
 		projectile_piercing = NONE
 	target.adjust_fire_stacks(2)
 	target.ignite_mob()
-	target.Knockdown(2 SECONDS)
+	target.Knockdown(3 SECONDS)
 	target.Paralyze(0.5 SECONDS)
 	handle_bounce(target)
 
