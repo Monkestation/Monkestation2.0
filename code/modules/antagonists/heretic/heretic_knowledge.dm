@@ -215,7 +215,8 @@
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	created_spell?.Remove(user)
+	if(created_spell?.owner == user)
+		created_spell.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -529,6 +530,7 @@
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
+	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
@@ -733,6 +735,13 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	notify_ghosts(
+		"[user] has completed an ascension ritual!",
+		source = user,
+		action = NOTIFY_ORBIT,
+		header = "A Heretic is Ascending!",
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

@@ -39,7 +39,7 @@
 /obj/item/storage/toolbox/guncase/m90gl
 	name = "m-90gl gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/m90
-	extra_to_spawn = /obj/item/ammo_box/magazine/m223
+	extra_to_spawn = /obj/item/ammo_box/magazine/m556
 
 /obj/item/storage/toolbox/guncase/m90gl/PopulateContents()
 	new weapon_to_spawn (src)
@@ -79,6 +79,10 @@
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src)
+	new /obj/item/clothing/mask/bandana/skull (src) // the bandana intended for this doesnt exist anymore so the best i can do is an eypatch and a skull bandana
+	new /obj/item/clothing/glasses/thermal/eyepatch (src) //hngh colonel im trying to sneak around...
+	new /obj/item/toy/plush/snakeplushie (src)
+
 
 /*
 *	GUNSET BOXES

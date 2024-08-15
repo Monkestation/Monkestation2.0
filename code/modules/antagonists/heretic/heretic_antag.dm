@@ -55,6 +55,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	/// Wether we are allowed to ascend
+	var/feast_of_owls = FALSE
 	/// Static list of what each path converts to in the UI (colors are TGUI colors)
 	var/static/list/path_to_ui_color = list(
 		PATH_START = "grey",
@@ -215,7 +217,7 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/heretic/heretic_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
@@ -485,7 +487,8 @@
 				succeeded = FALSE
 			parts += "<b>Objective #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
-
+	if(feast_of_owls)
+		parts += span_greentext("Ascension Forsaken")
 	if(ascended)
 		parts += span_greentext(span_big("THE HERETIC ASCENDED!"))
 
@@ -694,6 +697,8 @@
 /datum/antagonist/heretic/proc/can_ascend()
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
+	if(feast_of_owls)
+		return FALSE // We sold our ambition for immediate power :/
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return FALSE
@@ -742,7 +747,7 @@
 /datum/objective/major_sacrifice
 	name = "major sacrifice"
 	target_amount = 1
-	explanation_text = "Sacrifice 1 head of staff."
+	explanation_text = "Sacrifice any head of staff." // monkestation edit: clarify that any head can be sacrificed
 
 /datum/objective/major_sacrifice/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)

@@ -124,6 +124,14 @@
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
 
+/obj/item/clothing/head/helmet/marine/pmc
+	icon_state = "marine"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for it's lack of space worthiness"
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	clothing_flags = null
+	armor_type = /datum/armor/pmc
+
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
@@ -242,11 +250,12 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEHAIR //monkestation edit
 	dog_fashion = null
 
 /datum/armor/helmet_swat
 	melee = 40
-	bullet = 30
+	bullet = 40 //monkestation edit, 30 to 40
 	laser = 30
 	energy = 40
 	bomb = 50
@@ -260,13 +269,16 @@
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
 
+/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"

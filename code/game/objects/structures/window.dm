@@ -105,7 +105,7 @@
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 5)
 	return FALSE
 
 /obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
@@ -458,6 +458,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 /obj/structure/window/unanchored
 	anchored = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
+
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
@@ -489,7 +491,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 /obj/structure/window/reinforced/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 30, "cost" = 15)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 3 SECONDS, "cost" = 15)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
@@ -589,6 +591,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner, 0)
+
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
@@ -678,7 +682,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 25, "cost" = 10)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 2.5 SECONDS, "cost" = 10)
 	return FALSE
 
 /obj/structure/window/fulltile/unanchored
@@ -735,7 +739,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 20)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 4 SECONDS, "cost" = 20)
 	return FALSE
 
 /obj/structure/window/reinforced/fulltile/unanchored

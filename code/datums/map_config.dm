@@ -19,7 +19,7 @@
 	var/map_file = "MetaStation.dmm"
 
 	var/traits = null
-	var/space_ruin_levels = 7
+	var/space_ruin_levels = 5
 	var/space_empty_levels = 1
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
@@ -40,6 +40,9 @@
 	var/job_changes = list()
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
+
+	/// List of unit tests that are skipped when running this map
+	var/list/skipped_tests
 
 	//List of particle_weather types for this map
 	var/particle_weathers = list() //Monkestation addition
@@ -209,6 +212,16 @@
 				stack_trace("Invalid path in mapping config for additional library areas: \[[path_as_text]\]")
 				continue
 			library_areas += path
+
+#ifdef UNIT_TESTS
+	// Check for unit tests to skip, no reason to check these if we're not running tests
+	for(var/path_as_text in json["ignored_unit_tests"])
+		var/path_real = text2path(path_as_text)
+		if(!ispath(path_real, /datum/unit_test))
+			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
+			continue
+		LAZYADD(skipped_tests, path_real)
+#endif
 
 	defaulted = FALSE
 	return TRUE

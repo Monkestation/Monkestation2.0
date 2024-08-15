@@ -3,7 +3,7 @@
 	display_name = "Cloning"
 	description = "We have the technology to make him."
 	prereq_ids = list("biotech")
-	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk")
+	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk", "clonepod_experimental")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////Nanites/////////////////////////
@@ -133,6 +133,7 @@
 		"fakedeath_nanites",
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
+		"oxygen_rush_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
 

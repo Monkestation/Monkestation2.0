@@ -1,6 +1,14 @@
 // @ts-nocheck
 import { useBackend, useSharedState, useLocalState } from '../../backend';
-import { Box, Button, Section, Stack, Dropdown, FitText } from '../../components';
+import {
+  Box,
+  Button,
+  Section,
+  Stack,
+  FitText,
+  Tabs,
+  Table,
+} from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
 import { NameInput } from './names';
@@ -53,11 +61,11 @@ export const LoadoutManager = (props) => {
   } = data;
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     'multiNameInputOpen',
-    false
+    false,
   );
   const [selectedTabName, setSelectedTab] = useSharedState(
     'tabs',
-    loadout_tabs[0]?.name
+    loadout_tabs[0]?.name,
   );
   const selectedTab = loadout_tabs.find((curTab) => {
     return curTab.name === selectedTabName;
@@ -86,7 +94,8 @@ export const LoadoutManager = (props) => {
                   fontSize="22px"
                   icon="fa-solid fa-coins"
                   align="center"
-                  tooltip="This is your total Monkecoin amount.">
+                  tooltip="This is your total Monkecoin amount."
+                >
                   <FitText maxFontSize={22} maxWidth={CLOTHING_CELL_SIZE * 1}>
                     {total_coins}
                   </FitText>
@@ -123,7 +132,8 @@ export const LoadoutManager = (props) => {
                   content="Tutorial"
                   onClick={() => act('toggle_tutorial')}
                 />
-              }>
+              }
+            >
               <Button
                 icon="check-double"
                 color="good"
@@ -131,16 +141,17 @@ export const LoadoutManager = (props) => {
                 tooltip="Confirm loadout and exit UI."
                 onClick={() => act('close_ui', { revert: 0 })}
               />
-              <Dropdown
-                width="100%"
-                selected={selectedTabName}
-                displayText={selectedTabName}
-                options={loadout_tabs.map((curTab) => ({
-                  value: curTab,
-                  displayText: curTab.name,
-                }))}
-                onSelected={(curTab) => setSelectedTab(curTab.name)}
-              />
+              <Tabs>
+                {loadout_tabs.map((curTab) => (
+                  <Tabs.Tab
+                    key={curTab.name}
+                    selected={selectedTabName === curTab.name}
+                    onClick={() => setSelectedTab(curTab.name)}
+                  >
+                    {curTab.name}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
             </Section>
           </Stack.Item>
           <Stack.Item grow>
@@ -161,10 +172,17 @@ export const LoadoutManager = (props) => {
                         width={10}
                         onClick={() => act('clear_all_items')}
                       />
-                    }>
-                    <Stack grow vertical>
-                      {selectedTab.contents.map((item) => (
-                        <Stack.Item key={item.name}>
+                    }
+                  >
+                    <Table grow vertical>
+                      {selectedTab.contents.map((item, index) => (
+                        <Table.Row
+                          header
+                          key={item.name}
+                          backgroundColor={
+                            index % 2 === 0 ? '#19181e' : '#16151b'
+                          }
+                        >
                           <Stack fontSize="15px">
                             <Stack.Item grow align="left">
                               {item.name}
@@ -235,7 +253,7 @@ export const LoadoutManager = (props) => {
                                 checked={
                                   selected_loadout.includes(item.path) ||
                                   (selected_unusuals.includes(
-                                    item.unusual_placement
+                                    item.unusual_placement,
                                   ) &&
                                     item.unusual_spawning_requirements)
                                 }
@@ -251,16 +269,16 @@ export const LoadoutManager = (props) => {
                                       item.unusual_spawning_requirements,
                                     unusual_placement: item.unusual_placement,
                                     deselect: selected_loadout.includes(
-                                      item.path
+                                      item.path,
                                     ),
                                   })
                                 }
                               />
                             </Stack.Item>
                           </Stack>
-                        </Stack.Item>
+                        </Table.Row>
                       ))}
-                    </Stack>
+                    </Table>
                   </Section>
                 ) : (
                   <Section fill>
