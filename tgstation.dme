@@ -7833,6 +7833,7 @@
 #include "o-hippiestation\code\datums\components\crafting.dm"
 #include "o-hippiestation\code\datums\station_traits\neutral_traits.dm"
 #include "o-hippiestation\code\game\objects\noose.dm"
+#include "o-hippiestation\code\game\objects\items\implants\implants.dm"
 #include "o-hippiestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "o-hippiestation\code\game\objects\items\weapons\brick.dm"
 #include "o-hippiestation\code\game\objects\items\weapons\energy_chainsaw.dm"
@@ -7841,7 +7842,9 @@
 #include "o-hippiestation\code\modules\butt\butt.dm"
 #include "o-hippiestation\code\modules\butt\inspect.dm"
 #include "o-hippiestation\code\modules\cassettes\media_track_manager.dm"
+#include "o-hippiestation\code\modules\clothing\outfits\ert.dm"
 #include "o-hippiestation\code\modules\events\aurora_caelus.dm"
+#include "o-hippiestation\code\modules\projectiles\guns\ballistic\launchers.dm"
 #include "o-hippiestation\code\modules\sports\bowling.dm"
 #include "o-hippiestation\code\modules\uplink\uplink_items.dm"
 // END_INCLUDE
