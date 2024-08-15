@@ -51,3 +51,13 @@
 
 ///added to structures we want the mobs to be able to target.
 #define TRAIT_MOB_DESTROYABLE "mob_destroyable"
+
+#define YEET_TRAIT "yeet_trait"
+#define BLUESPACE_STONE_TRAIT "bluespace_stone_trait"
+#define SYNDIE_STONE_TRAIT "syndie_stone_trait"
+#define SUPERMATTER_STONE_TRAIT "supermatter_stone_trait"
+#define LAG_STONE_TRAIT "lag_stone_trait"
+#define GHOST_STONE_TRAIT "ghost_stone_trait"
+#define GAUNTLET_TRAIT "gauntlet_trait"
+
+#define TRAIT_BLOODCRAWL_WITH_ITEMS "bloodcrawl_with_items"
