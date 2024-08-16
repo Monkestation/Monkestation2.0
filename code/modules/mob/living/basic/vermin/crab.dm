@@ -92,5 +92,4 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/crab,
-		/datum/ai_planning_subtree/go_for_swim,
 	)
