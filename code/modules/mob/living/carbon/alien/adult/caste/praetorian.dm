@@ -8,12 +8,11 @@
 /mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)
 	real_name = name
 
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/alien/evolve_to_queen,
-		/datum/action/cooldown/spell/aoe/repulse/xeno,
-	)
+	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
+	tail_whip.Grant(src)
 
-	grant_actions_by_list(innate_actions)
+	var/datum/action/cooldown/alien/evolve_to_queen/evolution = new(src)
+	evolution.Grant(src)
 
 	return ..()
 

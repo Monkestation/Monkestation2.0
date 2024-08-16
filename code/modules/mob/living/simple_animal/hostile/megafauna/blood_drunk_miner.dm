@@ -65,21 +65,20 @@ Difficulty: Medium
 	. = ..()
 	miner_saw = new(src)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-
-	dash = new /datum/action/cooldown/mob_cooldown/dash
-	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
-	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
-	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon
+	dash = new /datum/action/cooldown/mob_cooldown/dash()
+	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
+	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
-	dash = null
-	kinetic_accelerator = null
-	dash_attack = null
-	transform_weapon = null
+	QDEL_NULL(dash)
+	QDEL_NULL(kinetic_accelerator)
+	QDEL_NULL(dash_attack)
+	QDEL_NULL(transform_weapon)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()

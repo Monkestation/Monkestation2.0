@@ -6,7 +6,8 @@
 	icon_state = "aliens"
 
 /mob/living/carbon/alien/adult/sentinel/Initialize(mapload)
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/alien)
+	var/datum/action/cooldown/sneak/alien/sneaky_beaky = new(src)
+	sneaky_beaky.Grant(src)
 	return ..()
 
 /mob/living/carbon/alien/adult/sentinel/create_internal_organs()

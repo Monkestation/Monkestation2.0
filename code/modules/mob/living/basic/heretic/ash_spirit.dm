@@ -20,4 +20,6 @@
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
 	)
-	grant_actions_by_list(actions_to_add)
+	for (var/action in actions_to_add)
+		var/datum/action/cooldown/new_action = new action(src)
+		new_action.Grant(src)

@@ -32,7 +32,8 @@
 		/obj/item/shard,
 	)
 	AddElement(/datum/element/death_drops, loot)
-	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
+	var/datum/action/cooldown/spell/jaunt/mirror_walk/jaunt = new (src)
+	jaunt.Grant(src)
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)

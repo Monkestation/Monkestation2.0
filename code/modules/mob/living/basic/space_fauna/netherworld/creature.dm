@@ -39,7 +39,8 @@
 		min_health_slowdown = -1.5,\
 	)
 
-	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/creature_teleport)
+	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
+	teleport.Grant(src)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness

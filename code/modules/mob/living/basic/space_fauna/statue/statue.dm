@@ -58,14 +58,16 @@
 
 /mob/living/basic/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
+	if(LAZYLEN(loot))
+		AddElement(/datum/element/death_drops, loot)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
+	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
 
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/spell/aoe/blindness,
-		/datum/action/cooldown/spell/aoe/flicker_lights,
-	)
-	grant_actions_by_list(innate_actions)
+	// Give spells
+	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
+	flicker.Grant(src)
+	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
+	blind.Grant(src)
 
 	// Set creator
 	if(creator)
