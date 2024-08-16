@@ -35296,10 +35296,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"lHC" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "lHG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -99444,7 +99440,7 @@ lXw
 lXw
 lXw
 lXw
-pbl
+lXw
 nhC
 nhC
 nhC
@@ -105871,7 +105867,7 @@ evS
 fZO
 rwL
 lXw
-pbl
+lXw
 lXw
 lXw
 lXw
@@ -109115,7 +109111,7 @@ pHZ
 dxO
 iLa
 smk
-pbl
+lXw
 akc
 lXw
 lXw
@@ -117621,7 +117617,7 @@ euv
 lXw
 lXw
 iCs
-lHC
+plQ
 iCs
 lXw
 lzI
