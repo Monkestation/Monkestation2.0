@@ -123,7 +123,6 @@
 /area/station/security/brig)
 "acH" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "acJ" = (
@@ -16056,6 +16055,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "fsS" = (
@@ -24713,9 +24713,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "iqa" = (
@@ -41666,6 +41663,7 @@
 /area/station/medical/treatment_center)
 "nMJ" = (
 /obj/item/kirbyplants/random,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "nNk" = (
@@ -42698,11 +42696,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "ofj" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -43189,11 +43185,14 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "ong" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "onm" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -47775,7 +47774,6 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "pUt" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -50041,9 +50039,6 @@
 	pixel_x = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "qCC" = (
@@ -91646,7 +91641,7 @@ mFH
 vgb
 pKK
 avb
-xKG
+avb
 mHI
 tLD
 nhC
@@ -103904,7 +103899,7 @@ ioJ
 gCM
 yhU
 tcJ
-uUr
+ong
 ghc
 egh
 juQ
@@ -116021,7 +116016,7 @@ vBB
 wGt
 fJA
 lUC
-ong
+mcu
 apT
 lXw
 eNA
