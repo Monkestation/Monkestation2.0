@@ -1354,55 +1354,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given when a mob has been tipped
 #define TRAIT_MOB_TIPPED "mob_tipped"
 
-/// Trait which self-identifies as an enemy of the law
-#define TRAIT_ALWAYS_WANTED "always_wanted"
-
-/// Trait given to mobs that have the basic eating element
-#define TRAIT_MOB_EATER "mob_eater"
-/// Trait which means whatever has this is dancing by a dance machine
-#define TRAIT_DISCO_DANCER "disco_dancer"
-
-/// Trait which allows mobs to instantly break down boulders.
-#define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
-
-/// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
-#define TRAIT_BOULDER_BREAKER "boulder_breaker"
-
-/// Trait given to anything linked to, not necessarily allied to, the mansus
-#define TRAIT_MANSUS_TOUCHED "mansus_touched"
-
-/// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
-/// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
-/// Appiled it wizard can't refund any spells.
-#define TRAIT_SPELLS_LOTTERY "spell_for_sale"
-
-/// Trait given to mobs wearing the clown mask
-#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
-/// Does this item bypass ranged armor checks?
-#define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
-
-/// Trait which means that this item is considered illegal contraband, and valid for the contraband bounty or when scanned by an nspect scanner.
-#define TRAIT_CONTRABAND "illegal_contraband"
-
-/// Traits given by settler, each with their own specific effects for cases where someone would have that trait, but not the other settler effects
-
-#define TRAIT_EXPERT_FISHER "expert_fisher" // fishing is easier
-#define TRAIT_ROUGHRIDER "roughrider" // you can improve speed on mounted animals with a good mood
-#define TRAIT_STUBBY_BODY "stubby_body" // you have a stubby body that lessens your agility
-#define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
-#define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
-
-/// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
-#define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
-/// This trait lets you attach limbs to any player without surgery.
-#define TRAIT_EASY_ATTACH "easy_attach"
-
-///Trait given to the birthday boy
-#define TRAIT_BIRTHDAY_BOY "birthday_boy"
-
-///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
-#define TRAIT_NO_TERRAFORM "no_terraform"
-
 // END TRAIT DEFINES
 
 /// This atom can have spells cast from it if a mob is within it

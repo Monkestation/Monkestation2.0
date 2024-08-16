@@ -221,33 +221,3 @@
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
-
-/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
-#define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
-
-/// Sent from a mob to their loc when starting to remove cuffs on itself
-#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
-	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
-	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
-
-/// Sent to a mob grabbing another mob: (mob/living/grabbing)
-#define COMSIG_LIVING_GRAB "living_grab"
-	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
-
-///Called when living finish eat (/datum/component/edible/proc/On_Consume)
-#define COMSIG_LIVING_FINISH_EAT "living_finish_eat"
-
-/// From /datum/element/basic_eating/try_eating()
-#define COMSIG_MOB_PRE_EAT "mob_pre_eat"
-	///cancel eating attempt
-	#define COMSIG_MOB_CANCEL_EAT (1<<0)
-
-/// From /datum/element/basic_eating/finish_eating()
-#define COMSIG_MOB_ATE "mob_ate"
-
-///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
-#define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
-///From /datum/component/happiness()
-#define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
-/// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
-#define COMSIG_MOB_BATONED "mob_batoned"

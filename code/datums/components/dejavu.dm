@@ -88,7 +88,7 @@
 			master.forceMove(starting_turf)
 
 	rewinds_remaining --
-	if(rewinds_remaining || rewinds_remaining < 0)
+	if(rewinds_remaining)
 		addtimer(CALLBACK(src, rewind_type), rewind_interval)
 	else
 		to_chat(parent, span_notice(no_rewinds_message))
