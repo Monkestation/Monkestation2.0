@@ -45135,11 +45135,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
-"pbl" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pbn" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
@@ -118443,7 +118438,7 @@ nhC
 nhC
 nhC
 nhC
-pbl
+lXw
 iCs
 iCs
 iCs
@@ -131251,7 +131246,7 @@ lXw
 lXw
 lXw
 lXw
-pbl
+lXw
 lXw
 euv
 euv
