@@ -39,7 +39,7 @@
 	var/obj/structure/container = .
 	for(var/obj/item/gun/gun_actually in container.contents)
 		QDEL_NULL(gun_actually.pin)
-		var/obj/item/firing_pin/permit_pin/new_pin = new(gun_actually)
+		var/obj/item/firing_pin/permit_pin/buckshotroulette/new_pin = new(gun_actually) //Did this like that so nova armoury weapons still have removable firing pins
 		gun_actually.pin = new_pin
 
 #undef CARGO_CUT

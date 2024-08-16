@@ -93,7 +93,7 @@
 		return FALSE
 	return TRUE
 
-// Just a completely normal crowbar except it's bulky sized and can force doors like jaws of life can.
+// Just a completely normal crowbar except it's can't fit in toolbelts and can force doors like jaws of life can. It's also slower.
 
 /obj/item/crowbar/large/doorforcer
 	name = "prybar"
@@ -101,12 +101,12 @@
 		survive <b>forcing doors open</b>."
 	icon = 'monkestation/code/modules/blueshift/icons/tools.dmi'
 	icon_state = "prybar"
-	toolspeed = 1.3
-	w_class = WEIGHT_CLASS_BULKY
+	toolspeed = 0.6
+	w_class = WEIGHT_CLASS_NORMAL //Same way nova nerfed it, along with removing it from imports
 	force_opens = TRUE
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.75,
-		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
 	)
 
 /obj/item/crowbar/large/doorforcer/Initialize(mapload)

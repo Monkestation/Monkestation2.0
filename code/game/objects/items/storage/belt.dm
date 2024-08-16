@@ -46,7 +46,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
+	atom_storage.set_holdable(can_hold_list = list(
 		/obj/item/airlock_painter,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler,
@@ -78,7 +78,11 @@
 		/obj/item/melee/sickly_blade/knock, //monkestation edit(maybe)
 		/obj/item/clockwork/replica_fabricator, //monkestation edit
 		/obj/item/clockwork/clockwork_slab, //monkestation edit
-	))
+	),
+	cant_hold_list = list(
+		/obj/item/crowbar/large/doorforcer
+	)
+	)
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
