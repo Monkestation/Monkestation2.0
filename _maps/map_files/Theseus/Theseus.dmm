@@ -49956,7 +49956,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "qDo" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -97762,7 +97761,7 @@ nhC
 nhC
 nhC
 nhC
-pbl
+lXw
 nhC
 nhC
 vXD
@@ -112205,7 +112204,7 @@ hKB
 nPa
 upf
 iCs
-lHC
+plQ
 iCs
 iCs
 acv
