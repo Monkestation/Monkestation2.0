@@ -298,3 +298,10 @@
 	var/atom/movable/movable_parent = parent
 	for (var/mob/rider in movable_parent.buckled_mobs)
 		REMOVE_TRAIT(rider, trait, REF(src))
+
+/datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
+	SIGNAL_HANDLER
+
+	if((living_hitter in source.buckled_mobs))
+		return
+	return COMPONENT_CANCEL_ATTACK_CHAIN
