@@ -85,9 +85,5 @@ def run_check_with_file(defines_file: str, min_defines: int = 450):
 	else:
 		print(green(f"All traits were found in both files! (found {number_of_defines} defines)"))
 
-#run_check_with_file("code/__DEFINES/traits/declarations.dm")
-#run_check_with_file("code/__DEFINES/traits/monkestation/declarations.dm", min_defines=25)
-
-import json
-
-print(json.dumps(get_defines("code/__DEFINES/traits/declarations.dm")))
+run_check_with_file("code/__DEFINES/traits/declarations.dm")
+run_check_with_file("code/__DEFINES/traits/monkestation/declarations.dm", min_defines=25)
