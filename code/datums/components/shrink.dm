@@ -31,7 +31,7 @@
 				/datum/component/squashable, \
 				squash_chance = 75, \
 				squash_damage = 10, \
-				squash_flags = /*SQUASHED_ALWAYS_IF_DEAD|*/SQUASHED_DONT_SQUASH_IN_CONTENTS, \
+				squash_flags = SQUASHED_ALWAYS_IF_DEAD|SQUASHED_DONT_SQUASH_IN_CONTENTS, \
 			)
 	else
 		parent_atom.set_density(FALSE) // this is handled by the UNDENSE trait on mobs
