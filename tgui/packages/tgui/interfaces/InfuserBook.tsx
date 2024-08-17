@@ -69,7 +69,7 @@ const TIER2TIERDATA: TierData[] = [
 ];
 
 export const InfuserBook = (props, context) => {
-  const { data, act } = useBackend<DnaInfuserData>(context);
+  const { data, act } = useBackend<DnaInfuserData>();
   const { entries } = data;
 
   const [bookPosition, setBookPosition] = useLocalState<BookPosition>(
