@@ -16,6 +16,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
+		JOB_BLUESHIELD,
 	)
 	weight = 6
 	max_occurrences = 3

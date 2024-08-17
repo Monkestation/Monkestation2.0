@@ -18,6 +18,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BLUESHIELD,
 	)
 	base_antags = 3
 	maximum_antags = 4

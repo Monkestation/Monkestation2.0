@@ -17,6 +17,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BLUESHIELD,
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
@@ -26,6 +27,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
+		JOB_BLUESHIELD,
 	)
 	required_enemies = 5
 	base_antags = 4

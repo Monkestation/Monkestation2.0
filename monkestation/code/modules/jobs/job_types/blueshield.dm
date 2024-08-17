@@ -1,6 +1,6 @@
 /datum/job/blueshield
 	title = JOB_BLUESHIELD
-	description = "Protect the heads of staff with your life. You are not a sec officer, and cannot perform arrests."
+	description = "Protect the heads of staff with your life. You are not a security officer, and cannot perform arrests."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION

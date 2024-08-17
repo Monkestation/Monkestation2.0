@@ -13,6 +13,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BLUESHIELD,
 	)
 	shared_occurence_type = SHARED_HIGH_THREAT
 	maximum_antags = 1
