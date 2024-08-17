@@ -241,10 +241,10 @@
 		return target // They're just standing around, proceed as normal
 
 	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
-		if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+		/*if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
 			return cast_loc.loc
-		else
-			return cast_loc
+		else*/ //monkestation temp removal
+		return cast_loc
 	// They're in an atom which allows casting, so redirect the caster to loc
 
 	return null

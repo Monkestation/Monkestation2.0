@@ -599,9 +599,6 @@
 /// Don't squash our mob if its not located in a turf
 #define SQUASHED_DONT_SQUASH_IN_CONTENTS (1<<3)
 
-
-/// Don't squash our mob if its not located in a turf
-#define SQUASHED_DONT_SQUASH_IN_CONTENTS (1<<3)
 /*
  * Defines for "AI emotions", allowing the AI to expression emotions
  * with status displays via emotes.

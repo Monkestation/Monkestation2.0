@@ -158,7 +158,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 32 // Demolishes any disgust we have
 	metabolism_efficiency = 0.033 // Slightly worse at transferring reagents
-	hunger_modifier = 3
+//	hunger_modifier = 3 //monkestation temp removal
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "stomach"
