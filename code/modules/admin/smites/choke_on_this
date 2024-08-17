@@ -1,0 +1,4 @@
+/datum/smite/choke_on_this
+	name = "Choke on this!"
+
+/datum/smite/choke_on_this/effect(client/user, mob/living/target)
