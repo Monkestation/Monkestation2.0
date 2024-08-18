@@ -44,7 +44,7 @@ def post_error(file, name):
 	if on_github:
 		print(f"::error file={file},title=Define Sanity::{name} is defined in {file} but not added to {globalvars_file}!")
 	else:
-		print(red(f"- Failure: {name} is defined in {name} but not added to {globalvars_file}!"))
+		print(red(f"- Failure: {name} is defined in {file} but not added to {globalvars_file}!"))
 
 if not os.path.isfile(globalvars_file):
 	print(red(f"Could not find the globalvars file '{globalvars_file}'!"))
