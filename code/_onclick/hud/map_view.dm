@@ -16,10 +16,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers_to_huds)
-		var/client/our_client = client_ref.resolve()
-		if(!istype(our_client) || QDELING(our_client))
-			continue
-		hide_from(our_client.mob)
+		hide_from_client(client_ref.resolve())
 
 	return ..()
 
@@ -32,9 +29,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	set_position(1, 1)
 
 /atom/movable/screen/map_view/proc/display_to(mob/show_to)
-	if(QDELETED(show_to) || QDELETED(show_to.client))
-		return
-	show_to.client?.register_map_obj(src)
+	show_to.client.register_map_obj(src)
 	// We need to add planesmasters to the popup, otherwise
 	// blending fucks up massively. Any planesmaster on the main screen does
 	// NOT apply to map popups. If there's ever a way to make planesmasters
@@ -46,7 +41,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	var/datum/hud/our_hud = hud_ref?.resolve()
-	if(!QDELETED(our_hud))
+	if(our_hud)
 		return our_hud.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
 
 	// Generate a new plane group for this case
@@ -57,16 +52,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	return pop_planes
 
 /atom/movable/screen/map_view/proc/hide_from(mob/hide_from)
-	if(QDELETED(hide_from) || QDELETED(hide_from.canon_client))
-		return
-	hide_from?.canon_client.clear_map(assigned_map)
-	var/client_ref = WEAKREF(hide_from?.canon_client)
+	hide_from_client(hide_from?.canon_client)
 
+/atom/movable/screen/map_view/proc/hide_from_client(client/hide_from)
+	if(!hide_from)
+		return
+	hide_from.clear_map(assigned_map)
+
+	var/datum/weakref/client_ref = WEAKREF(hide_from)
 	// Make sure we clear the *right* hud
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	viewers_to_huds -= client_ref
+
 	var/datum/hud/clear_from = hud_ref?.resolve()
-	if(QDELETED(clear_from))
+	if(!clear_from)
 		return
 
 	var/datum/plane_master_group/popup/pop_planes = clear_from.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
