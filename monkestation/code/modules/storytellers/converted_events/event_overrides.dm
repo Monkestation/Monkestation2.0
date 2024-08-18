@@ -39,7 +39,6 @@
 /datum/round_event_control/camera_failure
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
-	event_group = /datum/event_group/error
 
 /datum/round_event_control/carp_migration
 	track = EVENT_TRACK_MODERATE
@@ -207,7 +206,6 @@
 /datum/round_event_control/space_dust
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_DESTRUCTIVE, TAG_SPACE, TAG_EXTERNAL)
-	event_group = /datum/event_group/debris
 
 /datum/round_event_control/space_dragon
 	track = EVENT_TRACK_ROLESET
