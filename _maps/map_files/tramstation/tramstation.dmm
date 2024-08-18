@@ -2224,7 +2224,7 @@
 /area/station/engineering/atmos)
 "ahG" = (
 /obj/structure/flora/bush/sunny/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "ahR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8248,7 +8248,7 @@
 	name = "The Monkey Pit";
 	req_access = list("science")
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "bzo" = (
 /obj/structure/cable,
@@ -13856,7 +13856,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "dpd" = (
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "dpk" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -16832,7 +16832,7 @@
 /area/station/maintenance/department/science)
 "elo" = (
 /obj/structure/flora/tree/palm/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "elr" = (
 /turf/closed/wall,
@@ -19301,7 +19301,7 @@
 	pixel_x = 5;
 	pixel_y = 16
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "fdU" = (
 /obj/structure/disposalpipe/junction/flip{
@@ -24995,7 +24995,7 @@
 /area/station/medical/break_room)
 "gWc" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "gWo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26394,7 +26394,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/warden)
 "hwe" = (
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/science/lower)
 "hwn" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -30650,7 +30650,7 @@
 /area/station/command/teleporter)
 "iPu" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/science/lower)
 "iPx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32672,7 +32672,7 @@
 "juy" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "juN" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -33935,7 +33935,7 @@
 "jQb" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "jQm" = (
 /turf/open/floor/engine/hull,
@@ -34601,7 +34601,7 @@
 /area/station/maintenance/disposal)
 "jZf" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "jZw" = (
 /obj/effect/decal/cleanable/dirt,
@@ -43173,7 +43173,7 @@
 /area/station/command/bridge)
 "mJp" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "mJv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -44345,7 +44345,7 @@
 /area/station/security/checkpoint/supply)
 "nff" = (
 /obj/structure/flora/bush/jungle/b/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "nfg" = (
 /obj/machinery/mineral/processing_unit_console,
@@ -46254,7 +46254,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/tree/palm/style_random,
 /obj/effect/overlay/coconut,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "nJf" = (
 /obj/structure/spider/sticky,
@@ -46916,7 +46916,7 @@
 "nTd" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "nTg" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -51812,7 +51812,7 @@
 "pAk" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "pAl" = (
 /obj/machinery/light/small/directional/east,
@@ -53339,7 +53339,7 @@
 	name = "The Monkey Pit";
 	req_access = list("science")
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "pWw" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -69715,7 +69715,7 @@
 /area/station/hallway/secondary/exit)
 "veH" = (
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "veL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71007,7 +71007,7 @@
 	c_tag = "Science - Monkey Pit";
 	network = list("ss13","rd")
 	},
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/science/lower)
 "vvK" = (
 /obj/effect/spawner/structure/window,
@@ -74041,7 +74041,7 @@
 /area/station/hallway/primary/tram/right)
 "wtX" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/lower)
 "wuc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -74618,7 +74618,7 @@
 /area/station/cargo/sorting)
 "wCg" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/science/lower)
 "wCl" = (
 /obj/effect/turf_decal/sand/plating,
@@ -78681,7 +78681,7 @@
 /area/station/maintenance/department/medical)
 "xYf" = (
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/science/lower)
 "xYg" = (
 /obj/effect/decal/cleanable/dirt,
