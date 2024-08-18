@@ -1,5 +1,3 @@
-/// Trait given by [/datum/status_effect/blessing_of_insanity]
-#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 /// Traits given by mechs.
 #define MECH_TRAIT "mech_trait"
 /// Traits given by nanites.
