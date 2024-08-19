@@ -122,7 +122,7 @@
 	data["volume"] = volume
 	return data
 
-/obj/machinery/dance_machine/ui_act(action, list/params)
+/obj/machinery/jukebox/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -146,8 +146,31 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O, /obj/item/food/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/) || istype(O, /obj/item/food/))
+/**
+ * Can this item be accepted by the smart fridge
+ * Arguments
+ * * [weapon][obj/item] - the item to accept
+ */
+/obj/machinery/smartfridge/proc/accept_check(obj/item/weapon)
+	var/static/list/accepted_items = list(
+		/obj/item/food/grown,
+		/obj/item/seeds,
+		/obj/item/grown,
+		/obj/item/graft,
+	)
+	return is_type_in_list(weapon, accepted_items)
+
+/**
+ * Loads the item into the smart fridge
+ * Arguments
+ * * [weapon][obj/item] - the item to load. If the item is being held by a mo it will transfer it from hand else directly force move
+ */
+/obj/machinery/smartfridge/proc/load(obj/item/weapon, mob/user)
+	if(ismob(weapon.loc))
+		var/mob/owner = weapon.loc
+		if(!owner.transferItemToLoc(weapon, src))
+			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			return FALSE
 		return TRUE
 	return FALSE
 
@@ -295,15 +318,16 @@
 	.["verb"] = "Take"
 	.["drying"] = drying
 
-
-/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+/obj/machinery/smartfridge/drying/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
 		return
+
+	var/mob/user = ui.user
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE)
+			toggle_drying(FALSE, user)
 			return TRUE
 	return FALSE
 

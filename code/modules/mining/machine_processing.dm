@@ -81,7 +81,19 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProcessingConsole")
+		ui.open()
+
+/obj/machinery/mineral/processing_unit_console/ui_static_data(mob/user)
+	return processing_machine.ui_static_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
+	return processing_machine.ui_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!processing_machine)
 		return

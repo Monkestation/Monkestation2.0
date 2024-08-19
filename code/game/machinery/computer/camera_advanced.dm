@@ -51,7 +51,18 @@
 	//Camera action button to move down a Z level
 	if(move_down_action)
 		actions += new move_down_action(src)
-	camnet = GLOB.cameranet //the default cameranet
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	unset_machine()
+	QDEL_NULL(eyeobj)
+	QDEL_LIST(actions)
+	current_user = null
+	return ..()
+
+/obj/machinery/computer/camera_advanced/process()
+	if(!can_use(current_user) || (issilicon(current_user) && !HAS_SILICON_ACCESS(current_user)))
+		unset_machine()
+		return PROCESS_KILL
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)

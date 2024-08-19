@@ -16,7 +16,46 @@
 
 /obj/machinery/computer/prisoner/management/ui_interact(mob/user)
 	. = ..()
-	if(isliving(user))
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PrisonerManagement")
+		ui.open()
+
+/obj/machinery/computer/prisoner/management/ui_data(mob/user)
+	var/list/data = list()
+
+	data["authorized"] = (authenticated && isliving(user)) || HAS_SILICON_ACCESS(user)
+	data["inserted_id"] = null
+	if(!isnull(contained_id))
+		data["inserted_id"] = list(
+			"name" = contained_id.name,
+			"points" = contained_id.points,
+			"goal" = contained_id.goal,
+		)
+
+	var/list/implants = list()
+	for(var/obj/item/implant/implant as anything in GLOB.tracked_implants)
+		if(!implant.is_shown_on_console(src))
+			continue
+		var/list/implant_data = list()
+		implant_data["info"] = implant.get_management_console_data()
+		implant_data["buttons"] = implant.get_management_console_buttons()
+		implant_data["category"] = initial(implant.name)
+		implant_data["ref"] = REF(implant)
+		UNTYPED_LIST_ADD(implants, implant_data)
+	data["implants"] = implants
+
+	return data
+
+/obj/machinery/computer/prisoner/management/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	if(!authenticated && action != "login")
+		CRASH("[usr] potentially spoofed ui action [action] on prisoner console without the console being logged in.")
+
+	if(isliving(usr))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat = ""
 	if(screen == 0)
