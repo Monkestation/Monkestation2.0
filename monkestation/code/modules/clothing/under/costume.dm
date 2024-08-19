@@ -89,6 +89,16 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/cop_mascot
+	name = "cop mascot suit"
+	desc = "On the chest is a badge with an eye in the middle. It makes you feel like "
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "cop_mascot"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
+	alternate_worn_layer = GLOVES_LAYER
+	can_adjust = FALSE
+
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */

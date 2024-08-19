@@ -60,6 +60,15 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
 
+/obj/item/clothing/head/cop_mascot
+	name = "cop mascot head"
+	desc = "Formly designed to be a part of the BB Horror Film Franchise, it is now used for Police Theater and children's birthday parties."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "cop_mascot"
+	worn_y_offset = 1
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+
 /*
 BUNNY EARS
 */
