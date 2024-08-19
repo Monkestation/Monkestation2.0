@@ -219,5 +219,5 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	ckeywhitelist = list("dwasint")
 
 /datum/loadout_item/toys/durrcell
-	name = "Durrcell"
+	name = "Durrcell Plush"
 	item_path = /obj/item/toy/plush/durrcell

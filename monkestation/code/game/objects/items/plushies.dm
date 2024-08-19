@@ -56,7 +56,7 @@
 	icon_state = "knight"
 
 /obj/item/toy/plush/durrcell // https://www.twitch.tv/durrhurrdurr
-	name = "durrcell"
+	name = "durrcell plush"
 	desc = "''Behold, Man''"
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "durrcell"
