@@ -1,7 +1,7 @@
->you can press control + shift + v in visual studio code to make this documenet **beautiful**
+>you can press control + shift + v in visual studio code to make this document **beautiful**
 # Modularization
 due to the absurd nature of branching open source games, Its important to follow certain standards to make maintaining and contributing easier. 
-For the sake of standardization, we will be following Monkestations protocals which are found [here](../monkestation/README.md). Huge thanks to [ZoneSpace](https://www.byond.com/members/zonespace) for explaining everything so clearly. 
+For the sake of standardization, we will be following Monkestations protocols which are found [here](../monkestation/README.md). Huge thanks to [ZoneSpace](https://www.byond.com/members/zonespace) for explaining everything so clearly. 
 
 ## History and practices
 
@@ -10,9 +10,9 @@ For the sake of standardization, we will be following Monkestations protocals wh
 Hippiestation is currently downstream from Monkestation, which is downstream from /tg/station, which is downstream from Goonstation.
 However, Goonstation does its own thing so we consider /tg/ the root.
 
- Because of our policies and the conduct of our past staff, there is a lot of vitriol between hippie and the rest of the community. While we dont particularly care to much about this, it's still a good idea contribute upstream when possible for several reasons.
+ Because of our policies and the conduct of our past staff, there is a lot of vitriol between hippie and the rest of the community. While we don't particularly care to much about this, it's still a good idea contribute upstream when possible for several reasons.
  - It can **ease tensions** and encourage **cooperation**
- - It reduces the amount of code we have to maintain and **elimanates merge conflicts**.
+ - It reduces the amount of code we have to maintain and **eliminates merge conflicts**.
  - If something gets merged upstream, It will be **maintained** and **optimized** by a broader group of people.
 
 ## Where to contribute
@@ -26,7 +26,7 @@ something that Monkestation might accept may get rejected by /tg/ and vise versa
 - **overpowered**, **game changing**, or **unbalanced** features will likely be **rejected**
 - **tech based**, **sci-fi**, and **roleplay** features will likely be **accepted**
 - **bug fixes** and **optimizations** will be **accepted** and should always be merged here
-- dont mention the feature or change is originating from hippie, you might get less resistance.
+- don't mention the feature or change is originating from hippie, you might get less resistance.
 
 ### Monkestation
 Monkestation aligns closer our playstyle. However it is run by a twitch streamer so they have tighter restrictions on antagonist, nsfw content and roleplay standards. [rules](https://wiki.monkestation.com/)
@@ -34,14 +34,14 @@ Monkestation aligns closer our playstyle. However it is run by a twitch streamer
 - anything **dark** (like the noose) will likely be **rejected**
 - anything overly **nsfw** or **gory** (like cavity searches or teeth pulling) will likely be **rejected**
 - **silly**, **unrealistic**, or **goofy** features will likely be **accepted**
-- dont mention the feature or change is originating from hippie, you might get less resistance.
+- don't mention the feature or change is originating from hippie, you might get less resistance.
 
 ### Hippiestation
 We are pretty liberal on what we accept, feel free to run any bizzare idea by us, the worst we can do is say no.
 
 ## o-hippiestation folder
 
-Our root folder is called **`/o-hippiestation`** it sits after the **`/monkestation`** folder, enabling us to hook and overwrite any of their changes. You shouldn't need to touch **`/monkestation`** folder at all. the same practices [here](../monkestation/README.md) apply for our folder as well. we attatched and modified the following section about non-modular changes below
+Our root folder is called **`/o-hippiestation`** it sits after the **`/monkestation`** folder, enabling us to hook and overwrite any of their changes. You shouldn't need to touch **`/monkestation`** folder at all. the same practices [here](../monkestation/README.md) apply for our folder as well. we attached and modified the following section about non-modular changes below
 
 ### Non-modular Changes to the Core Code - IMPORTANT
 
@@ -70,7 +70,7 @@ In those cases, this is the following convention, with examples:
     if(S.id = id)
       return S
   */
-  //MONKESTATION REMOVAL END
+  //HIPPIE REMOVAL END
   WARNING("couldn't find dock with id: [id]")
   ```
 
