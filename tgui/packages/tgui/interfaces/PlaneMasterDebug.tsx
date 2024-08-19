@@ -13,7 +13,7 @@ import {
 } from '../components';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { classes, shallowDiffers } from 'common/react';
+import { shallowDiffers } from 'common/react';
 import { Component, createRef, RefObject } from 'inferno';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
@@ -493,10 +493,8 @@ class PlaneMaster extends Component<PlaneMasterProps> {
     const [currentPlane, setCurrentPlane] = useLocalState('currentPlane', {});
     const [readPlane, setReadPlane] = useLocalState('readPlane', '');
 
-    // Assigned onto the ports
-    const PortOptions = {
-      onPortMouseDown: onPortMouseDown,
-    };
+    const PortOptions = { onPortMouseDown };
+
     return (
       <Box position="absolute" left={`${x}px`} top={`${y}px`} {...rest}>
         <Box
@@ -527,27 +525,25 @@ class PlaneMaster extends Component<PlaneMasterProps> {
             <Stack.Item>
               <Stack vertical fill>
                 {incoming_connections.map((con_ref, portIndex) => (
-                  <Stack.Item key={portIndex}>
-                    <Port
-                      act={act}
-                      connection={connected_list[con_ref.ref]}
-                      {...PortOptions}
-                    />
-                  </Stack.Item>
+                  <Port
+                    key={portIndex}
+                    act={act}
+                    connection={connected_list[con_ref.ref]}
+                    {...PortOptions}
+                  />
                 ))}
               </Stack>
             </Stack.Item>
             <Stack.Item ml={5} width="100%">
               <Stack vertical>
                 {outgoing_connections.map((con_ref, portIndex) => (
-                  <Stack.Item key={portIndex}>
-                    <Port
-                      act={act}
-                      connection={connected_list[con_ref.ref]}
-                      {...PortOptions}
-                      isOutput
-                    />
-                  </Stack.Item>
+                  <Port
+                    key={portIndex}
+                    act={act}
+                    connection={connected_list[con_ref.ref]}
+                    {...PortOptions}
+                    isOutput
+                  />
                 ))}
                 <Stack.Item align="flex-end">
                   <Button
@@ -569,42 +565,22 @@ class PlaneMaster extends Component<PlaneMasterProps> {
   }
 }
 
-type PortProps = {
-  connection: Connected;
-  isOutput?: boolean;
-  onPortMouseDown?: Function;
-  act: Function;
-};
 class Port extends Component<PortProps> {
-  // Ok so like, we're basically treating iconRef as a string here
-  // Mostly so svg can work later. You're really not supposed to do this.
-  // Should really be a RefObject<Element>
-  // But it's how it was being done in circuit code, so eh
-  iconRef: RefObject<SVGCircleElement> | RefObject<HTMLSpanElement> | any;
+  iconRef: RefObject<SVGCircleElement | HTMLSpanElement> = createRef();
 
-  constructor() {
-    super();
-    this.iconRef = createRef();
-    this.handlePortMouseDown = this.handlePortMouseDown.bind(this);
-  }
-
-  handlePortMouseDown(e) {
-    const {
-      connection,
-      isOutput,
-      onPortMouseDown = noop,
-    } = this.props as PortProps;
+  handlePortMouseDown = (e: MouseEvent) => {
+    const { connection, isOutput, onPortMouseDown = noop } = this.props;
     onPortMouseDown(connection, isOutput, e);
-  }
+  };
 
   render() {
-    const { connection, isOutput, ...rest } = this.props as PortProps;
+    const { connection, isOutput, ...rest } = this.props;
 
     return (
       <Stack {...rest} justify={isOutput ? 'flex-end' : 'flex-start'}>
         <Stack.Item>
           <Box
-            className={classes(['ObjectComponent__Port'])}
+            className="ObjectComponent__Port"
             onMouseDown={this.handlePortMouseDown}
             textAlign="center"
           >
@@ -629,14 +605,17 @@ class Port extends Component<PortProps> {
                 transform="rotate(90, 50, 50)"
               />
               <circle
-                ref={this.iconRef}
+                ref={this.iconRef as RefObject<SVGCircleElement>}
                 cx="50"
                 cy="50"
                 r="50"
                 className={`color-fill-${connection.connect_color}`}
               />
             </svg>
-            <span ref={this.iconRef} className="ObjectComponent__PortPos" />
+            <span
+              ref={this.iconRef as RefObject<HTMLSpanElement>}
+              className="ObjectComponent__PortPos"
+            />
           </Box>
         </Stack.Item>
       </Stack>

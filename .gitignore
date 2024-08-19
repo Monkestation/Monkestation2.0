@@ -244,3 +244,4 @@ config/dbconfig.txt
 
 # Running OpenDream locally
 tgstation.json
+config/word_filter.toml

@@ -228,29 +228,24 @@ export class TguiSay extends Component<{}, State> {
       case KEY.Down:
         event.preventDefault();
         this.handleArrowKeys(event.key);
-        break;
-
-      case KEY.Delete:
-      case KEY.Backspace:
-        this.handleBackspaceDelete();
-        break;
-
+        return;
       case KEY.Enter:
         event.preventDefault();
         this.handleEnter();
-        break;
-
-      case KEY.Tab:
-        event.preventDefault();
-        this.handleIncrementChannel();
-        break;
-
+        return;
       case KEY.Escape:
         this.handleClose();
-        break;
+        return;
+    }
+    // Handle other keys without blocking execution
+
+    if (event.key === KEY.Delete || event.key === KEY.Backspace) {
+      this.handleBackspaceDelete();
+    } else if (event.key === KEY.Tab) {
+      event.preventDefault();
+      this.handleIncrementChannel();
     }
   }
-
   handleOpen = (data: ByondOpen) => {
     setTimeout(() => {
       this.innerRef.current?.focus();

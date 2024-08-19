@@ -5,6 +5,9 @@
 # Anything in here will be blocked from IC interactions, dead chat, and OOC
 [shared]
 "blockedinshared" = "blocked"
+"kys" = "blocked"
+"karma station 13" = "blocked"
+
 # Anything in here is blocked just from IC interactions, such as chat or names, but is allowed in dead chat and OOC
 [ic]
 "blockedinic" = "This message is not allowed IC, please use a different weird test phrase."
@@ -21,6 +24,16 @@
 # Anything in here will warn the player if said ICly, but is allowed in dead chat and OOC, the player must approve their message to send it
 [soft_ic]
 "testsofterblocks" = "This term is commonly considered OOC, only use it with context."
+[soft_ic]
+"Admins" = "This term is commonly considered OOC"
+[soft_ic]
+"admins" = "This term is commonly considered OOC"
+[soft_ic]
+"Admin" = "This term is commonly considered OOC"
+[soft_ic]
+"server" = "This term is commonly considered OOC"
+"lol" = ""This term is commonly considered OOC"
+"lmao" = ""This term is commonly considered OOC"
 
 # Anything in here will warn the player if said ICly *except* PDAs. the player must approve their message to send it
 [soft_ic_outside_pda]
