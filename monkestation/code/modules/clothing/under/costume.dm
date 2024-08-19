@@ -91,7 +91,7 @@
 
 /obj/item/clothing/under/costume/cop_mascot
 	name = "cop mascot suit"
-	desc = "On the chest is a badge with an eye in the middle. It makes you feel like "
+	desc = "On the chest is a badge with an eye in the middle. It makes you feel uneasy."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "cop_mascot"
