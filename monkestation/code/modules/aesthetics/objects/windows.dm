@@ -54,8 +54,8 @@
 /obj/structure/grille/window_sill
 	name = "window grille"
 	desc = "A flimsy framework of iron rods. This one fits a window!"
-	icon = 'icons/obj/structures/window/grille.dmi'
-	icon_state = "grille-0"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "grille"
 	layer = ABOVE_OBJ_LAYER - 0.01
 	base_icon_state = "grille"
 	canSmoothWith = SMOOTH_GROUP_GRILLE
