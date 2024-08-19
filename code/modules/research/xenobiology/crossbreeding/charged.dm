@@ -78,7 +78,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow
 	colour = "yellow"
-	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
+	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
 	new /obj/item/stock_parts/cell/emproof/slime/hypercharged(user.drop_location()) // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof

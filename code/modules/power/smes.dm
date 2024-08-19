@@ -232,6 +232,15 @@
 	var/last_chrg = inputting
 	var/last_onln = outputting
 
+
+	//OLYMPUS Edit
+	//Check for self-recharging cells in stock parts and use them to self-charge
+	for(var/obj/item/stock_parts/cell/Cell in component_parts)
+		if(Cell.self_recharge)
+			charge += min(capacity-charge, Cell.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
+
+
+
 	//inputting
 	if(terminal && input_attempt)
 		input_available = terminal.surplus()

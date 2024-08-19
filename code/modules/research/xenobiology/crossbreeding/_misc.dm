@@ -92,6 +92,7 @@ Slimecrossing Items
 	rating = 7
 	maxcharge = 50000
 	chargerate = 2500
+	self_recharge = 1 //OLYMPUS Edit
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube
