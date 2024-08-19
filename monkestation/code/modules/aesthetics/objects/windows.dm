@@ -51,6 +51,17 @@
     smoothing_groups = SMOOTH_GROUP_GRILLE
     canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 
+/obj/structure/grille/window_sill
+	name = "window grille"
+	desc = "A flimsy framework of iron rods. This one fits a window!"
+	icon = 'icons/obj/structures/window/grille.dmi'
+	icon_state = "grille-0"
+	layer = ABOVE_OBJ_LAYER - 0.01
+	base_icon_state = "grille"
+	canSmoothWith = SMOOTH_GROUP_GRILLE
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GRILLE
+
 /obj/structure/grille/update_overlays(updates=ALL)
     . = ..()
     if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
