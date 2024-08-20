@@ -31,21 +31,24 @@
 
 	var/damage_state
 	switch(smithed_quality)
-		if(0 to 25)
+		if(0 to 24)
 			damage_state = "damage-4"
 			desc += " It looks of poor quality... Quality:[smithed_quality]"
-		if(25 to 50)
+		if(25 to 49)
 			damage_state = "damage-3"
 			desc += " It looks slightly under average. Quality:[smithed_quality]"
-		if(50 to 60)
+		if(50 to 59)
 			damage_state = "damage-2"
 			desc += " It looks pretty average quality. Quality:[smithed_quality]"
-		if(60 to 90)
+		if(60 to 89)
 			damage_state = "damage-1"
 			desc += " It looks well forged! Quality:[smithed_quality]"
-		else
+		if(90 to 99)
 			damage_state = null
 			desc += " It looks about as perfect as can be! Quality:[smithed_quality]"
+		if(100 to 125)
+			damage_state = null
+			desc += " It's utterly flawless! Quality:[smithed_quality]"
 
 	if(damage_state)
 		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('monkestation/code/modules/smithing/icons/forge_items.dmi', damage_state), flags = MASK_INVERSE))
@@ -53,7 +56,10 @@
 
 /obj/item/smithed_part/update_name(updates)
 	. = ..()
-	name = "[material_stats.material_name] [base_name]"
+	if(smithed_quality < 100)
+		name = "[material_stats.material_name] [base_name]"
+	else
+		name = "flawless [material_stats.material_name] [base_name]"
 
 /obj/item/smithed_part/weapon_part
 	var/complete = FALSE
@@ -67,7 +73,10 @@
 /obj/item/smithed_part/weapon_part/update_name(updates)
 	. = ..()
 	if(complete)
-		name = "[material_stats.material_name] [weapon_name]"
+		if(smithed_quality < 100)
+			name = "[material_stats.material_name] [weapon_name]"
+		else
+			name = "flawless [material_stats.material_name] [weapon_name]"
 
 /obj/item/smithed_part/weapon_part/update_overlays()
 	. = ..()

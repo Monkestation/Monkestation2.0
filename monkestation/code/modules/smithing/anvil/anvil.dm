@@ -37,7 +37,7 @@
 
 /obj/structure/anvil/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(anchored)
+	if(anchored && !smithing)
 		if(!chosen_recipe)
 			var/pick = show_radial_menu(user, src, recipes, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
 			if(!pick)
@@ -46,7 +46,7 @@
 				return
 			chosen_recipe = name_to_type[pick]
 
-		if(!smithing && working_material && chosen_recipe && working_material.material_stats)
+		if(working_material && chosen_recipe && working_material.material_stats)
 			var/density_hardness = 0
 			density_hardness = working_material.material_stats.hardness + working_material.material_stats.density
 
@@ -56,7 +56,7 @@
 			smithing = TRUE
 
 /obj/structure/anvil/attack_hand_secondary(mob/user, list/modifiers)
-	if(chosen_recipe)
+	if(chosen_recipe && !smithing)
 		chosen_recipe = null
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	. = ..()
@@ -86,12 +86,12 @@
 	return ..()
 
 /obj/structure/anvil/proc/try_place_item(obj/item/item, mob/living/user)
-	if(working_material)
+	if(working_material && !smithing)
 		working_material.forceMove(get_turf(src))
 		working_material = null
 		visible_message("[user] replaces the ingot on the anvil.")
 
-	if(isstack(item))
+	if(isstack(item) && !smithing)
 		var/obj/item/stack/stack = item
 		if(!stack.material_type)
 			working_material = null
@@ -103,7 +103,7 @@
 			var/obj/item/stack/new_stack = stack.split_stack(user, 1)
 			new_stack.forceMove(src)
 			working_material = new_stack
-	else if(istype(item, /obj/item/merged_material))
+	else if(istype(item, /obj/item/merged_material) && !smithing)
 		item.forceMove(src)
 		working_material = item
 	return TRUE
