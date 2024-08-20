@@ -207,6 +207,7 @@
 	new /obj/item/ammo_box/advanced/s12gauge(src)
 	new /obj/item/ammo_box/advanced/s12gauge(src)
 
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC
