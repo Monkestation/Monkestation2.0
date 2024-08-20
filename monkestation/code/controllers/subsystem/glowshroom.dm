@@ -20,7 +20,9 @@ SUBSYSTEM_DEF(glowshrooms)
 	if(!length(currentrun_spread) && !length(currentrun_decay))
 		list_clear_nulls(glowshrooms)
 		if(length(glowshrooms))
-			sortTim(glowshrooms, GLOBAL_PROC_REF(cmp_glowshroom_spread))
+			// turns out sorting results in a lot of overtime
+			// maybe aneri can fix this in the future idk
+			// sortTim(glowshrooms, GLOBAL_PROC_REF(cmp_glowshroom_spread))
 			currentrun_spread = glowshrooms.Copy()
 			currentrun_decay = glowshrooms.Copy()
 	if(!length(currentrun_new))
@@ -76,8 +78,8 @@ SUBSYSTEM_DEF(glowshrooms)
 	new_glowshrooms = SSglowshrooms.new_glowshrooms
 	..()
 
-/proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
-	return b.last_successful_spread - a.last_successful_spread
+/*/proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
+	return b.last_successful_spread - a.last_successful_spread*/
 
 #undef SSGLOWSHROOMS_RUN_TYPE_INIT
 #undef SSGLOWSHROOMS_RUN_TYPE_DECAY
