@@ -37,22 +37,23 @@
 
 /obj/structure/anvil/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!chosen_recipe)
-		var/pick = show_radial_menu(user, src, recipes, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
-		if(!pick)
-			return
-		if(!(pick in name_to_type))
-			return
-		chosen_recipe = name_to_type[pick]
+	if(anchored)
+		if(!chosen_recipe)
+			var/pick = show_radial_menu(user, src, recipes, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
+			if(!pick)
+				return
+			if(!(pick in name_to_type))
+				return
+			chosen_recipe = name_to_type[pick]
 
-	if(!smithing && working_material && chosen_recipe && working_material.material_stats)
-		var/density_hardness = 0
-		density_hardness = working_material.material_stats.hardness + working_material.material_stats.density
+		if(!smithing && working_material && chosen_recipe && working_material.material_stats)
+			var/density_hardness = 0
+			density_hardness = working_material.material_stats.hardness + working_material.material_stats.density
 
-		var/difficulty_modifier = density_hardness / 30
+			var/difficulty_modifier = density_hardness / 30
 
-		new /datum/anvil_challenge(src, new chosen_recipe, user, difficulty_modifier)
-		smithing = TRUE
+			new /datum/anvil_challenge(src, new chosen_recipe, user, difficulty_modifier)
+			smithing = TRUE
 
 /obj/structure/anvil/attack_hand_secondary(mob/user, list/modifiers)
 	if(chosen_recipe)
@@ -69,6 +70,19 @@
 	if((isstack(attacking_item) || istype(attacking_item, /obj/item/merged_material)) && !smithing)
 		if(try_place_item(attacking_item, user))
 			return
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && !smithing)
+		if(anchored)
+			to_chat(user, span_notice("You start unsecuring the [src]..."))
+			if(attacking_item.use_tool(src,user,40))
+				to_chat(user,span_notice("You unsecure the [src]."))
+				anchored = FALSE
+				return
+		if(!anchored)
+			to_chat(user, span_notice("You start securing the [src]..."))
+			if(attacking_item.use_tool(src,user,40))
+				to_chat(user,span_notice("You secure the [src]."))
+				anchored = TRUE
+				return
 	return ..()
 
 /obj/structure/anvil/proc/try_place_item(obj/item/item, mob/living/user)

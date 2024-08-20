@@ -15,7 +15,7 @@
 /obj/item/smithed_part/Initialize(mapload, obj/item/created_from, quality)
 	. = ..()
 
-	smithed_quality = max(quality, 20)
+	smithed_quality = max(quality, 5)
 
 	if(!created_from)
 		created_from = new /obj/item/stack/sheet/mineral/gold

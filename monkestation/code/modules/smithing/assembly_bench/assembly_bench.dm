@@ -25,6 +25,21 @@
 			. += span_notice("[current_recipe.needed_items[item]] [initial(item.name)] needed.")
 
 /obj/structure/machine/assembly_bench/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && !current_recipe)
+		if(anchored)
+			to_chat(user, span_notice("You start unsecuring the [src]..."))
+			if(attacking_item.use_tool(src,user,40))
+				to_chat(user,span_notice("You unsecure the [src]."))
+				anchored = FALSE
+				return
+		if(!anchored)
+			to_chat(user, span_notice("You start securing the [src]..."))
+			if(attacking_item.use_tool(src,user,40))
+				to_chat(user,span_notice("You secure the [src]."))
+				anchored = TRUE
+				return
+	if(!anchored)
+		return ..()
 	if(!current_recipe)
 		for(var/datum/assembly_recipe/recipe as anything in recipes)
 			if(recipe.item_to_start != attacking_item.type)

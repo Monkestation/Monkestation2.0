@@ -2208,7 +2208,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		refuel(attacking_item, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && forge_temperature >= 20) //Mmm, Spicy strong fuel, but needs a kickstart of fire
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
 		refuel(attacking_item, user, TRUE)
 		return
 
@@ -2235,7 +2235,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		refuel(attacking_item, user, TRUE)
 		return TRUE
 
-	if(istype(attacking_item,/obj/item/stack/sheet/mineral/plasma) && forge_temperature >= 20) //Mmm, Spicy strong fuel, but needs a kickstart of fire
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
 		refuel(attacking_item,user,TRUE)
 		return TRUE
 
@@ -2563,7 +2563,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 #undef SMOKE_STATE_BAD
 #undef SMOKE_STATE_NOT_COOKING
 
-/datum/skill/smithing //Todo: This needs a smithing cape.
+/datum/skill/smithing
 	name = "Smithing"
 	title = "Smithy"
 	desc = "The desperate artist who strives after the flames of the forge."
@@ -2571,6 +2571,16 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		SKILL_SPEED_MODIFIER = list(1, 0.95, 0.9, 0.85, 0.75, 0.6, 0.5),
 		SKILL_PROBS_MODIFIER = list(0, 5, 10, 20, 40, 80, 100)
 	)
+	skill_item_path = /obj/item/clothing/neck/cloak/skill_reward/smithing
+
+/obj/item/clothing/neck/cloak/skill_reward/smithing
+	name = "legendary smith's cloak"
+	desc = "Those who wear this cloak have the knowledge and understanding to create weapons and tools rivaling that of a god. \
+	Often heros' songs are sung about their deeds, but only the wise know the heros' deeds were only possible thanks to a blacksmith."
+	icon = 'monkestation/code/modules/smithing/icons/cloaks.dmi'
+	worn_icon = 'monkestation/code/modules/smithing/icons/neck.dmi'
+	icon_state = "smithingcloak"
+	associated_skill_path = /datum/skill/smithing
 
 /// Called on an object when a tool with wrench capabilities is used to left click an object
 /atom/proc/billow_act(mob/living/user, obj/item/tool)
