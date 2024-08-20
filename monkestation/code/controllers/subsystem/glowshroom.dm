@@ -1,9 +1,14 @@
+#define SSGLOWSHROOMS_RUN_TYPE_SPREAD	1
+#define SSGLOWSHROOMS_RUN_TYPE_DECAY	2
+#define SSGLOWSHROOMS_RUN_TYPE_INIT		3
+
 SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
 	priority = 10
 	wait = 1 SECONDS
 	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	var/run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 	var/list/obj/structure/glowshroom/glowshrooms = list()
 	var/list/obj/structure/glowshroom/new_glowshrooms = list()
 	var/list/obj/structure/glowshroom/currentrun_spread = list()
@@ -11,7 +16,6 @@ SUBSYSTEM_DEF(glowshrooms)
 	var/list/obj/structure/glowshroom/currentrun_new = list()
 
 /datum/controller/subsystem/glowshrooms/fire(resumed)
-	MC_SPLIT_TICK_INIT(3)
 	// just... trust me, this makes COMPLETE sense
 	if(!length(currentrun_spread) && !length(currentrun_decay))
 		list_clear_nulls(glowshrooms)
@@ -23,42 +27,45 @@ SUBSYSTEM_DEF(glowshrooms)
 		list_clear_nulls(new_glowshrooms)
 		currentrun_new = new_glowshrooms.Copy()
 
-	MC_SPLIT_TICK // process spreading
-	var/list/current_run_spread = currentrun_spread
-	while(length(current_run_spread))
-		var/obj/structure/glowshroom/glowshroom = current_run_spread[length(current_run_spread)]
-		current_run_spread.len--
-		if(QDELETED(glowshroom))
-			glowshrooms -= glowshroom
-		else if(COOLDOWN_FINISHED(glowshroom, spread_cooldown))
-			COOLDOWN_START(glowshroom, spread_cooldown, rand(glowshroom.min_delay_spread, glowshroom.max_delay_spread))
-			glowshroom.Spread(wait * 0.1)
-		if(MC_TICK_CHECK)
-			break
+	if(run_type == SSGLOWSHROOMS_RUN_TYPE_SPREAD)
+		var/list/current_run_spread = currentrun_spread
+		while(length(current_run_spread))
+			var/obj/structure/glowshroom/glowshroom = current_run_spread[length(current_run_spread)]
+			current_run_spread.len--
+			if(QDELETED(glowshroom))
+				glowshrooms -= glowshroom
+			else if(COOLDOWN_FINISHED(glowshroom, spread_cooldown))
+				COOLDOWN_START(glowshroom, spread_cooldown, rand(glowshroom.min_delay_spread, glowshroom.max_delay_spread))
+				glowshroom.Spread(wait * 0.1)
+			if(MC_TICK_CHECK)
+				return
+		run_type = SSGLOWSHROOMS_RUN_TYPE_DECAY
 
-	MC_SPLIT_TICK // process decay
-	var/list/current_run_decay = currentrun_decay
-	while(length(current_run_decay))
-		var/obj/structure/glowshroom/glowshroom = current_run_decay[length(current_run_decay)]
-		current_run_decay.len--
-		if(QDELETED(glowshroom))
-			glowshrooms -= glowshroom
-		else
-			glowshroom.Decay(wait * 0.1)
-		if(MC_TICK_CHECK)
-			break
+	if(run_type == SSGLOWSHROOMS_RUN_TYPE_DECAY)
+		var/list/current_run_decay = currentrun_decay
+		while(length(current_run_decay))
+			var/obj/structure/glowshroom/glowshroom = current_run_decay[length(current_run_decay)]
+			current_run_decay.len--
+			if(QDELETED(glowshroom))
+				glowshrooms -= glowshroom
+			else
+				glowshroom.Decay(wait * 0.1)
+			if(MC_TICK_CHECK)
+				return
+		run_type = SSGLOWSHROOMS_RUN_TYPE_INIT
 
-	MC_SPLIT_TICK // process light updates
-	var/list/current_run_new = currentrun_new
-	while(length(current_run_new))
-		var/obj/structure/glowshroom/glowshroom = current_run_new[length(current_run_new)]
-		current_run_new.len--
-		if(!QDELETED(glowshroom))
-			glowshroom.update_light()
-			glowshrooms += glowshroom
-		new_glowshrooms -= glowshroom
-		if(MC_TICK_CHECK)
-			break
+	if(run_type == SSGLOWSHROOMS_RUN_TYPE_INIT)
+		var/list/current_run_new = currentrun_new
+		while(length(current_run_new))
+			var/obj/structure/glowshroom/glowshroom = current_run_new[length(current_run_new)]
+			current_run_new.len--
+			if(!QDELETED(glowshroom))
+				glowshroom.update_light()
+				glowshrooms += glowshroom
+			new_glowshrooms -= glowshroom
+			if(MC_TICK_CHECK)
+				return
+		run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 
 /datum/controller/subsystem/glowshrooms/stat_entry(msg)
 	msg = "P:[length(glowshrooms)] | NEW:[length(new_glowshrooms)]"
@@ -71,3 +78,7 @@ SUBSYSTEM_DEF(glowshrooms)
 
 /proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
 	return b.last_successful_spread - a.last_successful_spread
+
+#undef SSGLOWSHROOMS_RUN_TYPE_INIT
+#undef SSGLOWSHROOMS_RUN_TYPE_DECAY
+#undef SSGLOWSHROOMS_RUN_TYPE_SPREAD
