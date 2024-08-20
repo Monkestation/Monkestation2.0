@@ -208,3 +208,39 @@
   - rscadd: Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)
   flleeppyy:
   - sound: change artist title for some tracks by "Chronoquest" -> "T-87 Sulfurhead"
+2024-08-16:
+  Absolucy:
+  - bugfix: Heretic mobs will not be summoned with AI enabled, and won't turn into
+      small animals instead of summoning a flesh stalker.
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted.
+  - bugfix: Fixed various runtime errors.
+  - bugfix: Broken cameras can no longer somehow report you pissing on the floor.
+  CannibalHunter:
+  - refactor: turned grilles into to types, window grilles and non-window grilles.
+  Kitsunemitsu:
+  - rscadd: Added Blueshield
+  Wisemonster:
+  - bugfix: Ghost critter spawn points are now anchored.
+2024-08-17:
+  Absolucy:
+  - bugfix: Fixed the positioning of the painting in the curator's office on Blueshift.
+2024-08-18:
+  Absolucy:
+  - bugfix: Fixed pouring stuff into beakers trying to play a list as a sound. Hopefully
+      this stops the crashes.
+  - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
+      overcharge.
+  - bugfix: Potential fix for crashes related to drinking sounds.
+2024-08-19:
+  MomoBerri:
+  - rscadd: new light subtypes for mappers
+2024-08-20:
+  Absolucy:
+  - bugfix: The Ashen Forge traitor faction can now actually roll.
+  - bugfix: The Soft-Spoken quirk properly makes you speak softly again.
+  Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3:
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  CannibalHunter:
+  - rscadd: Added new durrcell plushie to the monkeshop!
