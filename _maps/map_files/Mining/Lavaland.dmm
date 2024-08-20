@@ -741,6 +741,10 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
+"fd" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/mine/maintenance/service)
 "fe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2764,6 +2768,12 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
+"pf" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk/mining,
+/obj/machinery/power/rtg/lavaland,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "pg" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/floor/plating,
@@ -4798,6 +4808,10 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
+"BU" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/mine/maintenance/service/comms)
 "BV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6200,6 +6214,12 @@
 "KI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk/mining,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"KJ" = (
+/obj/machinery/power/rtg/lavaland,
 /obj/structure/cable,
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
@@ -7651,6 +7671,7 @@
 	name = "Mining Station Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "TW" = (
@@ -37973,8 +37994,8 @@ Rw
 ON
 zd
 ON
-aj
-aj
+pf
+KJ
 aj
 aj
 aj
@@ -38224,14 +38245,14 @@ ON
 ni
 rZ
 ni
-ON
+fd
 TV
-xD
-xD
-xD
-xD
-aj
-aj
+BU
+BU
+BU
+BU
+pf
+KJ
 aj
 aj
 aj
@@ -38487,8 +38508,8 @@ xD
 BK
 HA
 xD
-aj
-aj
+pf
+KJ
 aj
 aj
 pU
