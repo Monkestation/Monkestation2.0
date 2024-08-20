@@ -152,11 +152,39 @@
 	desc = "An artifact that when inserted into a spellbook increases its power by 100."
 	value = 100
 
-/obj/item/spellbook_charge/afterattack(obj/item/spellbook/book, mob/user)
+/obj/item/spellbook_charge/Initialize(mapload)
 	. = ..()
-	if(!istype(book))
-		to_chat(user, "<span class='warning'>The charge can only increase the power of spellbooks!</span>")
+	AddComponent(/datum/component/charge_adjuster, type_to_charge_to = /obj/item/spellbook, charges_given = value, called_proc_name = TYPE_PROC_REF(/obj/item/spellbook, adjust_charge))
+
+//wizard shield charges
+#define ADDED_MAX_CHARGE 50
+#define MAX_CHARGES_ABSORBED 3
+/obj/item/wizard_armour_charge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/charge_adjuster, type_to_charge_to = /obj/item/spellbook, charges_given = 1, called_proc_name = TYPE_PROC_REF(/obj/item/spellbook, adjust_charge))
+
+/obj/item/wizard_armour_charge/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
 		return
-	book.uses += value
-	to_chat(user, "<span class='notice'>You increase the power of the spellbook by [value] points.</span>")
-	qdel(src)
+
+	var/obj/item/mod/module/energy_shield/wizard/shield = istype(A, /obj/item/mod/module/energy_shield/wizard) || locate(/obj/item/mod/module/energy_shield/wizard) in A.contents
+	if(shield)
+		if(isnum(shield))
+			shield = A
+		if(shield.max_charges >= (initial(shield.max_charges) + (ADDED_MAX_CHARGE * MAX_CHARGES_ABSORBED)))
+			balloon_alert(user, "\The [shield] cannot take more charges, you can put this back into your spellbook to refund it.")
+			return TRUE
+
+		shield.max_charges += ADDED_MAX_CHARGE
+		var/datum/component/shielded/shield_comp = shield.mod?.GetComponent(/datum/component/shielded)
+		if(shield_comp)
+			shield_comp.max_charges += ADDED_MAX_CHARGE
+			shield_comp.current_charges += (ADDED_MAX_CHARGE - initial(shield_comp.charge_recovery))
+		qdel(src) //should still be able to finish the attack chain
+
+#undef ADDED_MAX_CHARGE
+#undef MAX_CHARGES_ABSORBED
+
+/obj/item/mod/module/energy_shield/wizard
+	lose_multiple_charges = TRUE //I dont think we have anything else that uses this var, so all the numbers for this are subject to change

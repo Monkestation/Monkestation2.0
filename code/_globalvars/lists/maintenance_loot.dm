@@ -197,9 +197,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/screwdriver = 1,
 		) = 8,
 
+//monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 4,
+		/obj/item/a_gift/anything/wiz_name = 4,
 		) = 8,
+//monkestation edit end
 
 	list(//construction and crafting
 		/obj/item/beacon = 1,

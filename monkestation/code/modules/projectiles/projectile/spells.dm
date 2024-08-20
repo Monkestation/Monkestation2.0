@@ -36,7 +36,7 @@
 		playsound(src, 'sound/items/dodgeball.ogg', 200, channel = CHANNEL_SOUND_EFFECTS) //this is a very quiet sound
 
 /obj/projectile/magic/fire_ball/on_hit(mob/living/target, blocked, pierce_hit)
-	if(target == true_firer?.resolve())
+	if(target == true_firer?.resolve()) //we do this here instead of on_hit_target due to us having specific logic here with handle_bounce()
 		handle_bounce(target)
 		return BULLET_ACT_BLOCK
 
