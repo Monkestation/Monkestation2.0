@@ -1,17 +1,73 @@
-PROCESSING_SUBSYSTEM_DEF(glowshrooms)
+SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
 	priority = 10
+	wait = 1 SECONDS
+	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	stat_tag = "GSP"
+	var/list/obj/structure/glowshroom/glowshrooms = list()
+	var/list/obj/structure/glowshroom/new_glowshrooms = list()
+	var/list/obj/structure/glowshroom/currentrun_spread = list()
+	var/list/obj/structure/glowshroom/currentrun_decay = list()
+	var/list/obj/structure/glowshroom/currentrun_new = list()
 
-/datum/controller/subsystem/processing/glowshrooms/fire(resumed = FALSE)
-	if(!resumed)
-		sort_processing()
+/datum/controller/subsystem/glowshrooms/fire(resumed)
+	MC_SPLIT_TICK_INIT(3)
+	// just... trust me, this makes COMPLETE sense
+	if(!length(currentrun_spread) && !length(currentrun_decay))
+		list_clear_nulls(glowshrooms)
+		if(length(glowshrooms))
+			sortTim(glowshrooms, GLOBAL_PROC_REF(cmp_glowshroom_spread))
+			currentrun_spread = glowshrooms.Copy()
+			currentrun_decay = glowshrooms.Copy()
+	if(!length(currentrun_new))
+		list_clear_nulls(new_glowshrooms)
+		currentrun_new = new_glowshrooms.Copy()
+
+	MC_SPLIT_TICK // process spreading
+	var/list/current_run_spread = currentrun_spread
+	while(length(current_run_spread))
+		var/obj/structure/glowshroom/glowshroom = current_run_spread[length(current_run_spread)]
+		current_run_spread.len--
+		if(QDELETED(glowshroom))
+			glowshrooms -= glowshroom
+		else if(COOLDOWN_FINISHED(glowshroom, spread_cooldown))
+			COOLDOWN_START(glowshroom, spread_cooldown, rand(glowshroom.min_delay_spread, glowshroom.max_delay_spread))
+			glowshroom.Spread(wait * 0.1)
+		if(MC_TICK_CHECK)
+			break
+
+	MC_SPLIT_TICK // process decay
+	var/list/current_run_decay = currentrun_decay
+	while(length(current_run_decay))
+		var/obj/structure/glowshroom/glowshroom = current_run_decay[length(current_run_decay)]
+		current_run_decay.len--
+		if(QDELETED(glowshroom))
+			glowshrooms -= glowshroom
+		else
+			glowshroom.Decay(wait * 0.1)
+		if(MC_TICK_CHECK)
+			break
+
+	MC_SPLIT_TICK // process light updates
+	var/list/current_run_new = currentrun_new
+	while(length(current_run_new))
+		var/obj/structure/glowshroom/glowshroom = current_run_new[length(current_run_new)]
+		current_run_new.len--
+		if(!QDELETED(glowshroom))
+			glowshroom.update_light()
+			glowshrooms += glowshroom
+		new_glowshrooms -= glowshroom
+		if(MC_TICK_CHECK)
+			break
+
+/datum/controller/subsystem/glowshrooms/stat_entry(msg)
+	msg = "P:[length(glowshrooms)] | NEW:[length(new_glowshrooms)]"
 	return ..()
 
-/datum/controller/subsystem/processing/glowshrooms/proc/sort_processing()
-	list_clear_nulls(processing)
-	sortTim(processing, GLOBAL_PROC_REF(cmp_glowshroom_spread))
+/datum/controller/subsystem/glowshrooms/Recover()
+	glowshrooms = SSglowshrooms.glowshrooms
+	new_glowshrooms = SSglowshrooms.new_glowshrooms
+	..()
 
 /proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
-	return a.last_successful_spread - b.last_successful_spread
+	return b.last_successful_spread - a.last_successful_spread
