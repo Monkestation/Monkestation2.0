@@ -713,6 +713,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		passed_directions.Add(direction)
 
 	if(length(passed_directions))
+		if(!islist(cached_edge_turfs)) // what the fuck???
+			cached_edge_turfs = list()
 		cached_edge_turfs |= checker
 		cached_edge_turfs[checker] = passed_directions
 
