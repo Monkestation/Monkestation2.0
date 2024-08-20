@@ -50,7 +50,9 @@
 		/obj/item/clothing/suit/armor/secduster/cargo = 2,
 		/obj/item/clothing/head/helmet/hat/cowboy/cargo = 2,
 		/obj/item/clothing/suit/armor/secduster/science = 2,
-		/obj/item/clothing/head/helmet/hat/cowboy/science = 2
+		/obj/item/clothing/head/helmet/hat/cowboy/science = 2,
+		/obj/item/clothing/head/cop_mascot = 2,
+		/obj/item/clothing/under/costume/cop_mascot = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC

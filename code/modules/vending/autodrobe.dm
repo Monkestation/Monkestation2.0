@@ -129,8 +129,6 @@
 				/obj/item/clothing/shoes/clown_shoes/yellow = 1,
 				/obj/item/clothing/head/knowingclown = 2,
 				/obj/item/clothing/under/knowingclown = 2,
-				/obj/item/clothing/head/cop_mascot = 2,
-				/obj/item/clothing/under/costume/cop_mascot = 2,
 			),
 		),
 		list(
