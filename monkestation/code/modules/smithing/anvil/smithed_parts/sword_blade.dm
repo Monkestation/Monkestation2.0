@@ -19,6 +19,6 @@
 	attack_speed = CLICK_CD_BULKY_WEAPON
 	stamina_cost = round(40 * (100 / smithed_quality))
 
-	force = round(((material_stats.density + material_stats.hardness) / 10) * (smithed_quality * 0.01))
+	force = round(((material_stats.density + material_stats.hardness) / 15) * (smithed_quality * 0.01))
 	throwforce = force * 0.75
 	w_class = WEIGHT_CLASS_BULKY

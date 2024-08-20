@@ -7547,6 +7547,7 @@
 #include "monkestation\code\modules\smithing\items\merged_material.dm"
 #include "monkestation\code\modules\smithing\machines\arc_forge.dm"
 #include "monkestation\code\modules\smithing\machines\electroplater.dm"
+#include "monkestation\code\modules\smithing\machines\material_alloyer.dm"
 #include "monkestation\code\modules\smithing\machines\material_analyzer.dm"
 #include "monkestation\code\modules\smithing\material_changes\_base_mineral.dm"
 #include "monkestation\code\modules\smithing\material_changes\alloy_stats.dm"

@@ -9,9 +9,9 @@
 	density = TRUE
 
 	idle_power_usage = 10
-	active_power_usage = 3000
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	circuit = null
+	active_power_usage = 2000
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	circuit = /obj/item/circuitboard/machine/electroplater
 
 	light_outer_range = 2
 	light_power = 1.5
@@ -34,6 +34,10 @@
 
 /obj/machinery/electroplater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	if(held_item.tool_behaviour == TOOL_WRENCH && !plating)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle Anchored."
+	if(held_item.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct."
 	if((isstack(held_item) || istype(held_item, /obj/item/merged_material)) && !stored_material)
 		context[SCREENTIP_CONTEXT_LMB] = "Add Material Plate."
 	if(stored_material && held_item)
@@ -79,6 +83,25 @@
 		return
 	return ..()
 
+/obj/machinery/electroplater/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == TOOL_WRENCH && !plating)
+		if(anchored)
+			to_chat(user, span_notice("You start unsecuring the [src]..."))
+			if(weapon.use_tool(src,user,40))
+				to_chat(user,span_notice("You unsecure the [src]."))
+				anchored = FALSE
+				return
+		if(!anchored)
+			to_chat(user, span_notice("You start securing the [src]..."))
+			if(weapon.use_tool(src,user,40))
+				to_chat(user,span_notice("You secure the [src]."))
+				anchored = TRUE
+				return
+	if(weapon.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
+		return default_deconstruction_crowbar(weapon,1,FALSE)
+
+	return ..()
+
 /obj/machinery/electroplater/proc/try_plate()
 	if(!stored_material || !plating_item)
 		return
@@ -110,3 +133,12 @@
 	plating_item = null
 	plating = FALSE
 	icon_state = "plater0"
+
+/obj/item/circuitboard/machine/electroplater
+	name = "electroplater"
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 4
+	)
+	build_path = /obj/machinery/electroplater

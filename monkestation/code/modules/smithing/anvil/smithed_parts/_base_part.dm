@@ -10,6 +10,10 @@
 
 	var/base_name = "generic item"
 
+	var/datum/export/price = null
+
+	var/obj/item/made_of
+
 	var/smithed_quality = 100
 
 /obj/item/smithed_part/Initialize(mapload, obj/item/created_from, quality)
@@ -20,6 +24,7 @@
 	if(!created_from)
 		created_from = new /obj/item/stack/sheet/mineral/gold
 
+	made_of = new created_from.type
 
 	if(isstack(created_from) && !created_from.material_stats)
 		var/obj/item/stack/stack = created_from
@@ -89,3 +94,12 @@
 	lefthand_file = left_weapon_inhand
 	righthand_file = right_weapon_inhand
 	update_appearance()
+
+/datum/export/smithed_part
+	unit_name = "smithed good"
+	k_elasticity = 0
+	export_types = list(/obj/item/smithed_part)
+	cost = 1
+
+/datum/export/smithed_part/get_cost(obj/item/smithed_part/O, apply_elastic)
+	return round(((CARGO_CRATE_VALUE * 0.5) + get_cost(O.made_of)) * (O.smithed_quality/100))
