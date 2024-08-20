@@ -42,11 +42,9 @@ GLOBAL_LIST_INIT_TYPED(event_groups, /datum/event_group, initialize_event_groups
 		var/cooldown = get_cooldown_time()
 		COOLDOWN_START(src, event_cooldown, cooldown)
 		for(var/datum/scheduled_event/scheduled_event in SSgamemode.scheduled_events)
-			if(scheduled_event.event?.event_group != type || !scheduled_event.start_time || (scheduled_event.start_time > src.event_cooldown))
+			if(scheduled_event.event?.event_group != type || !scheduled_event.start_time || (scheduled_event.start_time > src.event_cooldown) || (scheduled_event.start_time <= world.time))
 				continue
 			var/old_start_time = scheduled_event.start_time
-			if(old_start_time <= world.time)
-				continue
 			scheduled_event.start_time += cooldown
 			message_admins("Scheduled event [scheduled_event.event.name] start time pushed back by [DisplayTimeText(cooldown)] ([DisplayTimeText(COOLDOWN_TIMELEFT(scheduled_event, start_time))] from now) due to event group [name] running.")
 			log_storyteller("Scheduled event [scheduled_event.event.name] start time pushed back by [DisplayTimeText(cooldown)] ([old_start_time] -> [scheduled_event.start_time]) due to event group [name] running.", list("group" = "[name]", "cooldown" = cooldown))
