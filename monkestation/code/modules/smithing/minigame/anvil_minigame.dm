@@ -45,7 +45,7 @@
 	notes_left = end_product_recipe.total_notes
 	total_notes = end_product_recipe.total_notes
 
-	difficulty = round(selected_recipe.difficulty + difficulty_modifier)
+	difficulty = max(1,round(selected_recipe.difficulty + difficulty_modifier - (user.mind.get_skill_level(/datum/skill/smithing) - 3))) //Better smiths have easier times
 
 	generate_anvil_beats(TRUE)
 
@@ -153,11 +153,13 @@
 				generate_anvil_beats()
 
 /datum/anvil_challenge/proc/end_minigame()
-	success = max(0, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2))))
+	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were.
+	success = max(user.mind.get_skill_level(/datum/skill/smithing) * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2))))
 	UnregisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY)
 	STOP_PROCESSING(SSfishing, src)
 	anvil_presses = null
 	note_pixels_moved = null
+	user.mind.adjust_experience(/datum/skill/smithing, 2 * (total_notes - failed_notes)) //Every good Hit = 2 XP
 	anvil_hud.end_minigame()
 	QDEL_NULL(anvil_hud)
 	host_anvil.smithing = FALSE

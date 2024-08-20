@@ -11,7 +11,7 @@
 	. = ..()
 	sharpness = SHARP_POINTY
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
-	armour_penetration = 24
+	armour_penetration = 24 * (smithed_quality / 100)
 
 	stamina_cost = round(5 * (100 / smithed_quality))
 

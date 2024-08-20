@@ -1,6 +1,6 @@
 /obj/structure/machine/assembly_bench
 	name = "assembly bench"
-	desc = "Can be used to assemble smithed parts together."
+	desc = "Can be used to assemble smithed parts together. Put in a smithed part to start."
 
 	density = TRUE
 	anchored = TRUE
@@ -67,6 +67,7 @@
 		return
 	if(do_after(user, current_recipe.craft_time, src))
 		current_recipe.complete_recipe()
+		user.mind.adjust_experience(/datum/skill/smithing, 10) //You made a thing! Congrats!
 
 /obj/structure/machine/assembly_bench/attack_hand(mob/living/user, list/modifiers)
 	try_complete_recipe(user)

@@ -15,7 +15,7 @@
 /obj/item/smithed_part/Initialize(mapload, obj/item/created_from, quality)
 	. = ..()
 
-	smithed_quality = max(quality, 25)
+	smithed_quality = max(quality, 20)
 
 	if(!created_from)
 		created_from = new /obj/item/stack/sheet/mineral/gold
@@ -33,14 +33,19 @@
 	switch(smithed_quality)
 		if(0 to 25)
 			damage_state = "damage-4"
+			desc += " It looks of poor quality... Quality:[smithed_quality]"
 		if(25 to 50)
 			damage_state = "damage-3"
+			desc += " It looks slightly under average. Quality:[smithed_quality]"
 		if(50 to 60)
 			damage_state = "damage-2"
+			desc += " It looks pretty average quality. Quality:[smithed_quality]"
 		if(60 to 90)
 			damage_state = "damage-1"
+			desc += " It looks well forged! Quality:[smithed_quality]"
 		else
 			damage_state = null
+			desc += " It looks about as perfect as can be! Quality:[smithed_quality]"
 
 	if(damage_state)
 		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('monkestation/code/modules/smithing/icons/forge_items.dmi', damage_state), flags = MASK_INVERSE))

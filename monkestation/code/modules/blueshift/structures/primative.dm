@@ -1909,7 +1909,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	COOLDOWN_DECLARE(forging_cooldown)
 	/// Is the forge in use or not? If true, prevents most interactions with the forge
 	var/in_use = FALSE
-	/// The current 'level' of the forge, how upgraded is it from zero to three
+	/// The current 'level' of the forge, how upgraded is it from one to seven
 	var/forge_level = FORGE_LEVEL_YOU_PLAY_LIKE_A_NOOB
 	/// What smoke particles should be coming out of the forge
 	var/smoke_state = SMOKE_STATE_NONE
@@ -2208,6 +2208,10 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		refuel(attacking_item, user, TRUE)
 		return
 
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && forge_temperature >= 20) //Mmm, Spicy strong fuel, but needs a kickstart of fire
+		refuel(attacking_item, user, TRUE)
+		return
+
 	if(istype(attacking_item, /obj/item/stack/ore))
 		smelt_ore(attacking_item, user)
 		return
@@ -2229,6 +2233,10 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
 		refuel(attacking_item, user, TRUE)
+		return TRUE
+
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/plasma) && forge_temperature >= 20) //Mmm, Spicy strong fuel, but needs a kickstart of fire
+		refuel(attacking_item,user,TRUE)
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/stack/ore))
@@ -2288,10 +2296,10 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	if(is_strong_fuel)
 		if(forge_fuel_strong >= 5 MINUTES)
-			fail_message(user, "[src] is full on coal")
+			fail_message(user, "[src] is full on regular fuel")
 			return
 	if(forge_fuel_weak >= 5 MINUTES)
-		fail_message(user, "[src] is full on wood")
+		fail_message(user, "[src] is full on weak fuel")
 		return
 
 	balloon_alert_to_viewers("refueling...")
@@ -2339,6 +2347,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	for(var/spawn_ore in 1 to ore_to_sheet_amount)
 		new spawning_item(src_turf)
+		user.mind.adjust_experience(/datum/skill/smithing, 1) //Just a little bit of XP, as a treat.
 
 	in_use = FALSE
 	qdel(ore_item)
@@ -2554,7 +2563,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 #undef SMOKE_STATE_BAD
 #undef SMOKE_STATE_NOT_COOKING
 
-/datum/skill/smithing
+/datum/skill/smithing //Todo: This needs a smithing cape.
 	name = "Smithing"
 	title = "Smithy"
 	desc = "The desperate artist who strives after the flames of the forge."
