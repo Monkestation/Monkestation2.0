@@ -1,3 +1,5 @@
+#define EVAPORATION_MULTIPLIER 5
+
 /datum/round_event_control/scrubber_overflow
 	shared_occurence_type = SHARED_SCRUBBERS
 
@@ -17,6 +19,9 @@
 			new /mob/living/basic/cockroach(vent_turf)
 			new /mob/living/basic/cockroach(vent_turf)
 		vent_turf.add_liquid(reagent_type, reagents_amount, no_react = TRUE)
+		if(vent_turf.liquids?.liquid_group)
+			vent_turf.liquids.liquid_group.always_evaporates = TRUE
+			vent_turf.liquids.liquid_group.evaporation_multiplier += EVAPORATION_MULTIPLIER
 		CHECK_TICK
 
 /datum/round_event/scrubber_overflow/threatening
@@ -27,3 +32,5 @@
 
 /datum/round_event/scrubber_overflow/every_vent
 	reagents_amount = 150
+
+#undef EVAPORATION_MULTIPLIER
