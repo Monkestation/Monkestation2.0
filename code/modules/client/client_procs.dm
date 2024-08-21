@@ -546,10 +546,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
-		interviewee = TRUE
-		register_for_interview()
-
 	if (!interviewee)
 		initialize_menus()
 
