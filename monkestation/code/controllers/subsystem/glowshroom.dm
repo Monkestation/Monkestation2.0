@@ -1,6 +1,6 @@
 #define SSGLOWSHROOMS_RUN_TYPE_SPREAD	1
 #define SSGLOWSHROOMS_RUN_TYPE_DECAY	2
-#define SSGLOWSHROOMS_RUN_TYPE_INIT		3
+//#define SSGLOWSHROOMS_RUN_TYPE_INIT		3
 
 SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
@@ -11,10 +11,10 @@ SUBSYSTEM_DEF(glowshrooms)
 	var/run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 	var/enable_spreading = TRUE
 	var/list/obj/structure/glowshroom/glowshrooms = list()
-	var/list/obj/structure/glowshroom/new_glowshrooms = list()
+	// var/list/obj/structure/glowshroom/new_glowshrooms = list()
 	var/list/obj/structure/glowshroom/currentrun_spread = list()
 	var/list/obj/structure/glowshroom/currentrun_decay = list()
-	var/list/obj/structure/glowshroom/currentrun_new = list()
+	// var/list/obj/structure/glowshroom/currentrun_new = list()
 
 /datum/controller/subsystem/glowshrooms/fire(resumed)
 	// just... trust me, this makes COMPLETE sense
@@ -27,9 +27,9 @@ SUBSYSTEM_DEF(glowshrooms)
 			if(enable_spreading)
 				currentrun_spread = glowshrooms.Copy()
 			currentrun_decay = glowshrooms.Copy()
-	if(!length(currentrun_new))
+	/*if(!length(currentrun_new))
 		list_clear_nulls(new_glowshrooms)
-		currentrun_new = new_glowshrooms.Copy()
+		currentrun_new = new_glowshrooms.Copy()*/
 
 	if(run_type == SSGLOWSHROOMS_RUN_TYPE_SPREAD)
 		if(enable_spreading)
@@ -57,8 +57,9 @@ SUBSYSTEM_DEF(glowshrooms)
 				glowshroom.Decay(wait * 0.1)
 			if(MC_TICK_CHECK)
 				return
-		run_type = SSGLOWSHROOMS_RUN_TYPE_INIT
+		run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 
+/*
 	if(run_type == SSGLOWSHROOMS_RUN_TYPE_INIT)
 		var/list/current_run_new = currentrun_new
 		while(length(current_run_new))
@@ -71,14 +72,16 @@ SUBSYSTEM_DEF(glowshrooms)
 			if(MC_TICK_CHECK)
 				return
 		run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
+*/
 
 /datum/controller/subsystem/glowshrooms/stat_entry(msg)
-	msg = "P:[length(glowshrooms)] | NEW:[length(new_glowshrooms)]"
+	//msg = "P:[length(glowshrooms)] | NEW:[length(new_glowshrooms)]"
+	msg = "P:[length(glowshrooms)]"
 	return ..()
 
 /datum/controller/subsystem/glowshrooms/Recover()
 	glowshrooms = SSglowshrooms.glowshrooms
-	new_glowshrooms = SSglowshrooms.new_glowshrooms
+	//new_glowshrooms = SSglowshrooms.new_glowshrooms
 	..()
 
 /datum/controller/subsystem/glowshrooms/proc/deploy_the_rabbits()
@@ -90,6 +93,6 @@ SUBSYSTEM_DEF(glowshrooms)
 /*/proc/cmp_glowshroom_spread(obj/structure/glowshroom/a, obj/structure/glowshroom/b)
 	return b.last_successful_spread - a.last_successful_spread*/
 
-#undef SSGLOWSHROOMS_RUN_TYPE_INIT
+// #undef SSGLOWSHROOMS_RUN_TYPE_INIT
 #undef SSGLOWSHROOMS_RUN_TYPE_DECAY
 #undef SSGLOWSHROOMS_RUN_TYPE_SPREAD
