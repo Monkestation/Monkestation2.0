@@ -116,6 +116,7 @@
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
 
+/* monkestation edit: replaced in [monkestation\code\modules\admin\verbs\traits.dm]
 /// Allow admin to add or remove traits of datum
 /datum/admins/proc/modify_traits(datum/D)
 	if(!D)
@@ -161,6 +162,7 @@
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
+monkestation end */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
