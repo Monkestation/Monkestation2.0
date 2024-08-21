@@ -132,9 +132,9 @@
 	name = "generic smithed shoes"
 	desc = "generic smithed shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
-	inhand_icon_state = "jackboots"
+	inhand_icon_state = "morningstar_shoes"
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
-	icon_state = "morningstar_shoes"
+	icon_state = "jackboots"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
