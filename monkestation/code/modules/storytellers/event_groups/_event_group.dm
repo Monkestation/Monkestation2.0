@@ -17,6 +17,12 @@ GLOBAL_LIST_INIT_TYPED(event_groups, /datum/event_group, initialize_event_groups
 	/// If [cooldown_time] is set, this will be set to the minimum world.time where the next event in this group can run.
 	COOLDOWN_DECLARE(event_cooldown)
 
+/datum/event_group/Destroy(force)
+	if(!force && GLOB.event_groups[type] == src)
+		stack_trace("Something is trying to destroy the event group ([type]), which is a singleton! This is super duper bad!")
+		return QDEL_HINT_LETMELIVE
+	return ..()
+
 /datum/event_group/proc/get_cooldown_time() as num
 	if(isnum(cooldown_time))
 		return cooldown_time
@@ -37,12 +43,12 @@ GLOBAL_LIST_INIT_TYPED(event_groups, /datum/event_group, initialize_event_groups
 	if(max_occurrences && occurrences >= max_occurrences)
 		return FALSE
 
-/datum/event_group/proc/on_run()
+/datum/event_group/proc/on_run(datum/round_event_control/running_event)
 	if(cooldown_time)
 		var/cooldown = get_cooldown_time()
 		COOLDOWN_START(src, event_cooldown, cooldown)
 		for(var/datum/scheduled_event/scheduled_event in SSgamemode.scheduled_events)
-			if(scheduled_event.event?.event_group != type || !scheduled_event.start_time || (scheduled_event.start_time > src.event_cooldown) || (scheduled_event.start_time <= world.time))
+			if(scheduled_event.event == running_event || scheduled_event.event?.event_group != type || !scheduled_event.start_time || (scheduled_event.start_time > src.event_cooldown) || (scheduled_event.start_time <= world.time))
 				continue
 			var/old_start_time = scheduled_event.start_time
 			scheduled_event.start_time += cooldown

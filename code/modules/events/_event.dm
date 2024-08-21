@@ -210,7 +210,7 @@ Runs the event
 
 	// monkestation start: event groups
 	if(event_group)
-		GLOB.event_groups[event_group].on_run()
+		GLOB.event_groups[event_group].on_run(src)
 	// monkestation end
 
 	if(alert_observers)
