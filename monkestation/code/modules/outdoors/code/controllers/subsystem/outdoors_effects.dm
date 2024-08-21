@@ -98,6 +98,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	                                                   new /datum/time_of_day/midnight())
 	var/next_day = FALSE // Resets when station_time is less than the next start time.
 	var/current_color
+	var/enabled = TRUE // Micro-optimization to avoid having to check config or bitflags
 
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"
@@ -112,6 +113,9 @@ SUBSYSTEM_DEF(outdoor_effects)
 			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
+	if(CONFIG_GET(flag/disable_sunlight_visuals))
+		disable()
+		return SS_INIT_NO_NEED
 	if(SSmapping.config.map_name == "Oshan Station")
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			qdel(listed_time)
@@ -149,6 +153,15 @@ SUBSYSTEM_DEF(outdoor_effects)
 			continue
 		for(var/z in zs)
 			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
+
+/// Disables the subsystem, cleaning up its vars and preventing it from firing.
+/datum/controller/subsystem/outdoor_effects/proc/disable()
+	enabled = FALSE
+	flags |= SS_NO_FIRE
+	QDEL_LIST(time_cycle_steps)
+	QDEL_NULL(current_step_datum)
+	QDEL_NULL(next_step_datum)
+	weather_light_affecting_event = null
 
 /datum/controller/subsystem/outdoor_effects/proc/check_cycle()
 	if(!next_step_datum)
@@ -189,6 +202,8 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 /* set sunlight color + add weather effect to clients */
 /datum/controller/subsystem/outdoor_effects/fire(resumed, init_tick_checks)
+	if(!enabled)
+		return
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
@@ -281,6 +296,8 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 //Transition from our last color to our current color (i.e if it is going from daylight (white) to sunset (red), we transition to red in the first hour of sunset)
 /datum/controller/subsystem/outdoor_effects/proc/transition_sunlight_color(atom/movable/screen/fullscreen/lighting_backdrop/sunlight/SP, time_given)
+	if(!enabled)
+		return
 	/* transistion in an hour or time diff from now to our next step, whichever is smaller */
 	if(!next_step_datum)
 		get_time_of_day()
