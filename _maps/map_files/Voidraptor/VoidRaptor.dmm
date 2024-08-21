@@ -30455,6 +30455,12 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security/greater)
+"iMg" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/iron/kitchen,
+/area/station/security/prison/mess)
 "iMh" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -58113,6 +58119,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/aft)
+"qkQ" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "qlA" = (
 /obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron/textured_large,
@@ -64917,11 +64927,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central/aft)
-"sid" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/turf/open/floor/iron/kitchen,
-/area/station/security/prison/mess)
 "sig" = (
 /obj/machinery/corral_corner{
 	mapping_id = "2"
@@ -134033,7 +134038,7 @@ aNs
 aLb
 sCZ
 tyF
-sid
+aOV
 vBB
 oeM
 fnM
@@ -134290,7 +134295,7 @@ kHq
 exx
 oKn
 iXB
-aOV
+iMg
 mBM
 cSZ
 sKy
@@ -135043,7 +135048,7 @@ dKK
 xbD
 fkx
 wpp
-uZu
+qkQ
 jDe
 qhJ
 dFp
