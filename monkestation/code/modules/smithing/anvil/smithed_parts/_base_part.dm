@@ -10,8 +10,6 @@
 
 	var/base_name = "generic item"
 
-	var/datum/export/price = null
-
 	var/obj/item/made_of
 
 	var/smithed_quality = 100
@@ -98,7 +96,7 @@
 /datum/export/smithed_part
 	unit_name = "smithed good"
 	k_elasticity = 0
-	export_types = list(/obj/item/smithed_part)
+	export_types = list(/obj/item/smithed_part,/obj/item/clothing/smithed_clothes)
 	cost = 1
 
 /datum/export/smithed_part/get_cost(obj/item/smithed_part/O, apply_elastic)

@@ -62,9 +62,16 @@
 	. = ..()
 
 /obj/structure/anvil/proc/generate_item(quality)
-	var/obj/item/smithed_part/new_part = chosen_recipe.output
-	new new_part (get_turf(src), working_material, quality)
-	QDEL_NULL(working_material)
+	var/obj/output = new chosen_recipe.output
+	if(istype(output,/obj/item/smithed_part))
+		var/obj/item/smithed_part/new_part = chosen_recipe.output
+		new new_part (get_turf(src), working_material, quality)
+		QDEL_NULL(working_material)
+	else if(istype(output,/obj/item/clothing/smithed_clothes))
+		var/obj/item/clothing/smithed_clothes/new_part = chosen_recipe.output
+		new new_part (get_turf(src), working_material, quality)
+		QDEL_NULL(working_material)
+	QDEL_NULL(output) //Thanks, bye
 
 /obj/structure/anvil/attackby(obj/item/attacking_item, mob/living/user, params)
 	if((isstack(attacking_item) || istype(attacking_item, /obj/item/merged_material)) && !smithing)
