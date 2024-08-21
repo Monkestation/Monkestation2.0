@@ -90,8 +90,8 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/cop_mascot
-	name = "cop mascot suit"
-	desc = "On the chest is a badge with an eye in the middle. It makes you feel uneasy."
+	name = "policeman mascot suit"
+	desc = "A blue police mascot suit. On the chest is a star badge with an eye in the middle. You feel like you should be chopping people apart with power tools while wearing this."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "cop_mascot"

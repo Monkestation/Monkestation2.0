@@ -61,8 +61,8 @@
 	icon_state = "guardman_helmet"
 
 /obj/item/clothing/head/cop_mascot
-	name = "cop mascot head"
-	desc = "Formly designed to be a part of the BB Horror Film Franchise, it is now used for Police Theater and children's birthday parties."
+	name = "policeman mascot head"
+	desc = "A blue police mascot head. Formly designed to be a part of the BB Horror Film Franchise, it is now used for Police Theater."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "cop_mascot"
