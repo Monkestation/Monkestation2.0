@@ -78,3 +78,9 @@
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
 	item = /obj/item/storage/box/syndie_kit/shotgun_revolver
 	cost = 8
+
+/datum/uplink_item/dangerous/surplus_smg
+	name = "Surplus Smg henchmen Bundle"
+	desc = "A single surplus Plastikov SMG and two extra magazines. A terrible weapon, perfect for henchmen."
+	item = /obj/item/storage/box/syndie_kit/surplus_smg_bundle
+	cost = 3
