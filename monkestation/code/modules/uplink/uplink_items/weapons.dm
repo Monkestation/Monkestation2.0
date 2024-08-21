@@ -34,7 +34,7 @@
 
 /datum/uplink_item/dangerous/renoster
 	name = "Renoster Shotgun Case"
-	desc = "A twelve guage shotgun with an eight shell capacity underneath. Comes with two boxes of Buckshot"
+	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
 	cost = 10
 
