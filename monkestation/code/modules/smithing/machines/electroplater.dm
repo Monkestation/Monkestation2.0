@@ -85,18 +85,7 @@
 
 /obj/machinery/electroplater/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_WRENCH && !plating)
-		if(anchored)
-			to_chat(user, span_notice("You start unsecuring the [src]..."))
-			if(weapon.use_tool(src,user,40))
-				to_chat(user,span_notice("You unsecure the [src]."))
-				anchored = FALSE
-				return
-		if(!anchored)
-			to_chat(user, span_notice("You start securing the [src]..."))
-			if(weapon.use_tool(src,user,40))
-				to_chat(user,span_notice("You secure the [src]."))
-				anchored = TRUE
-				return
+		return default_unfasten_wrench(user,weapon,40)
 	if(weapon.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
 		return default_deconstruction_crowbar(weapon,1,FALSE)
 

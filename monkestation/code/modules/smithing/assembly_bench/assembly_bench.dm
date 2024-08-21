@@ -26,18 +26,7 @@
 
 /obj/structure/machine/assembly_bench/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !current_recipe)
-		if(anchored)
-			to_chat(user, span_notice("You start unsecuring the [src]..."))
-			if(attacking_item.use_tool(src,user,40))
-				to_chat(user,span_notice("You unsecure the [src]."))
-				anchored = FALSE
-				return
-		if(!anchored)
-			to_chat(user, span_notice("You start securing the [src]..."))
-			if(attacking_item.use_tool(src,user,40))
-				to_chat(user,span_notice("You secure the [src]."))
-				anchored = TRUE
-				return
+		return default_unfasten_wrench(user,attacking_item,40)
 	if(!anchored)
 		return ..()
 	if(!current_recipe)

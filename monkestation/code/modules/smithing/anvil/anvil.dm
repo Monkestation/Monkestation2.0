@@ -78,18 +78,7 @@
 		if(try_place_item(attacking_item, user))
 			return
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !smithing)
-		if(anchored)
-			to_chat(user, span_notice("You start unsecuring the [src]..."))
-			if(attacking_item.use_tool(src,user,40))
-				to_chat(user,span_notice("You unsecure the [src]."))
-				anchored = FALSE
-				return
-		if(!anchored)
-			to_chat(user, span_notice("You start securing the [src]..."))
-			if(attacking_item.use_tool(src,user,40))
-				to_chat(user,span_notice("You secure the [src]."))
-				anchored = TRUE
-				return
+		return default_unfasten_wrench(user,attacking_item,40)
 	return ..()
 
 /obj/structure/anvil/proc/try_place_item(obj/item/item, mob/living/user)
