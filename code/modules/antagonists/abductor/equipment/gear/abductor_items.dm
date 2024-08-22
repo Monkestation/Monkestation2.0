@@ -320,6 +320,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
+	var/charges = 1
+	var/max_charges = 1
+	var/list/charge_timers = list()
+	var/charge_time = 200 //20 seconds cooldown
+
+/obj/item/melee/baton/abductor/proc/recharge(mob/user)
+	charges = min(charges+1, max_charges)
+	playsound(src,'sound/machines/twobeep.ogg',10,TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	charge_timers.Remove(charge_timers[1])
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
@@ -383,7 +392,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)
-			SleepAttack(target,user)
+			if(charges <= 0)
+				playsound(src,'sound/weapons/alien_batong_error.ogg',40,TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+				to_chat(user, span_warning("<b>[src] is still recharging!"))
+				return
+			else
+				SleepAttack(target,user)
 		if(BATON_CUFF)
 			CuffAttack(target,user)
 		if(BATON_PROBE)
@@ -411,6 +425,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
 		target.Sleeping(sleep_time)
+		charges --
+		to_chat(user, span_notice("You use [src]. It now has [charges] sleep charge[charges == 1 ? "" : "s"] remaining."))
+		charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 		log_combat(user, target, "put to sleep")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
@@ -490,6 +507,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/examine(mob/user)
 	. = ..()
+	. += span_notice("It has [charges] sleep mode charges remaining.")
+	if (length(charge_timers))
+		. += "[span_notice("<b>A small display on the handle reads:")]</b>"
+	for (var/i in 1 to length(charge_timers))
+		var/timeleft = timeleft(charge_timers[i])
+		var/loadingbar = num2loadingbar(timeleft/charge_time)
+		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([DisplayTimeText(timeleft)])</b>")
 	if(AbductorCheck(user))
 		switch(mode)
 			if(BATON_STUN)
