@@ -19,6 +19,6 @@
 
 	stamina_cost = round(25 * (100 / smithed_quality))
 
-	force = round(((material_stats.density + material_stats.hardness) / 4.5) * (smithed_quality * 0.01))
+	force = round(((material_stats.density + material_stats.hardness) / 5.8) * (smithed_quality * 0.01))
 	throwforce = force * 1.25
 	w_class = WEIGHT_CLASS_BULKY
