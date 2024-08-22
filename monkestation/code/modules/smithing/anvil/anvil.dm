@@ -78,7 +78,8 @@
 		if(try_place_item(attacking_item, user))
 			return
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !smithing)
-		return default_unfasten_wrench(user,attacking_item,40)
+		default_unfasten_wrench(user,attacking_item,40)
+		return
 	return ..()
 
 /obj/structure/anvil/proc/try_place_item(obj/item/item, mob/living/user)

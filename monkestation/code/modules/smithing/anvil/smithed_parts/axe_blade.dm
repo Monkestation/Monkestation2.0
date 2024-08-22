@@ -17,6 +17,6 @@
 
 	tool_behaviour = TOOL_SAW
 
-	force = round(((material_stats.density + material_stats.hardness) / 12) * (smithed_quality * 0.01))
+	force = round(((material_stats.density + material_stats.hardness) / 5) * (smithed_quality * 0.01))
 	throwforce = force * 1.75
 	w_class = WEIGHT_CLASS_SMALL

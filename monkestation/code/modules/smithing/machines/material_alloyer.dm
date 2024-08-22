@@ -29,10 +29,11 @@
 
 /obj/machinery/material_alloyer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "Open Maint. Panel"
-	if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
-		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct."
+	if(held_item)
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_RMB] = "Open Maint. Panel"
+		if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct."
 	if((!slot_one_item || !slot_two_item) && (isstack(held_item) || istype(held_item, /obj/item/merged_material)))
 		context[SCREENTIP_CONTEXT_LMB] = "Add material to alloy."
 	if(slot_one_item && slot_two_item)
@@ -57,9 +58,11 @@
 	return ..()
 /obj/machinery/material_alloyer/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
-		return default_deconstruction_screwdriver(user,"material_alloyer_open","material_alloyer",weapon)
+		default_deconstruction_screwdriver(user,"material_alloyer_open","material_alloyer",weapon)
+		return
 	if(weapon.tool_behaviour == TOOL_CROWBAR)
-		return default_deconstruction_crowbar(weapon)
+		default_deconstruction_crowbar(weapon)
+		return
 	return ..()
 
 /obj/machinery/material_alloyer/proc/try_add_to_buffer(obj/item/adder)

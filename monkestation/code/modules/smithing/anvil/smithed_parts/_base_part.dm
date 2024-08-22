@@ -10,7 +10,7 @@
 
 	var/base_name = "generic item"
 
-	var/obj/item/made_of
+	var/made_of
 
 	var/smithed_quality = 100
 
@@ -22,7 +22,7 @@
 	if(!created_from)
 		created_from = new /obj/item/stack/sheet/mineral/gold
 
-	made_of = new created_from.type
+	made_of = created_from.type
 
 	if(isstack(created_from) && !created_from.material_stats)
 		var/obj/item/stack/stack = created_from
@@ -100,4 +100,10 @@
 	cost = 1
 
 /datum/export/smithed_part/get_cost(obj/item/smithed_part/O, apply_elastic)
-	return round(((CARGO_CRATE_VALUE * 0.5) + get_cost(O.made_of)) * (O.smithed_quality/100))
+	var/obj/item/dummy = new O.made_of
+	var/datum/export_report/export = export_item_and_contents(dummy,dry_run = TRUE)
+	var/price = 0
+	for(var/x in export.total_amount)
+		price += export.total_value[x]
+	QDEL_NULL(dummy)
+	return round(((CARGO_CRATE_VALUE * 0.05) + (price * 2) ) * (O.smithed_quality/100))

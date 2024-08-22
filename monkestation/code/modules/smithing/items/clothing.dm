@@ -72,6 +72,7 @@
 
 /obj/item/clothing/smithed_clothes/gloves
 	name = "generic smithed gloves"
+	desc = "Some smithed gloves."
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
@@ -93,6 +94,8 @@
 	base_name = "gloves"
 
 /obj/item/clothing/smithed_clothes/suit
+	name = "generic smithed suit"
+	desc = "A smithed suit."
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	icon_state = "cuirass"
@@ -110,7 +113,7 @@
 	base_name = "suit"
 /obj/item/clothing/smithed_clothes/helmet
 	name = "generic smithed helmet"
-	desc = "generic smithed helemt"
+	desc = "A smithed helmet."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "knight_green"
@@ -130,11 +133,11 @@
 
 /obj/item/clothing/smithed_clothes/shoes
 	name = "generic smithed shoes"
-	desc = "generic smithed shoes"
-	icon = 'icons/obj/clothing/shoes.dmi'
-	inhand_icon_state = "morningstar_shoes"
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
-	icon_state = "jackboots"
+	desc = "Some smithed shoes."
+	icon = 'monkestation/code/modules/smithing/icons/boots.dmi'
+	inhand_icon_state = "smithed_boots_inhand"
+	worn_icon = 'monkestation/code/modules/smithing/icons/boots.dmi'
+	icon_state = "smithed_boots"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET

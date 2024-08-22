@@ -34,10 +34,11 @@
 
 /obj/machinery/electroplater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item.tool_behaviour == TOOL_WRENCH && !plating)
-		context[SCREENTIP_CONTEXT_LMB] = "Toggle Anchored."
-	if(held_item.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct."
+	if(held_item)
+		if(held_item.tool_behaviour == TOOL_WRENCH && !plating)
+			context[SCREENTIP_CONTEXT_LMB] = "Toggle Anchored."
+		if(held_item.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct."
 	if((isstack(held_item) || istype(held_item, /obj/item/merged_material)) && !stored_material)
 		context[SCREENTIP_CONTEXT_LMB] = "Add Material Plate."
 	if(stored_material && held_item)
@@ -85,9 +86,11 @@
 
 /obj/machinery/electroplater/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_WRENCH && !plating)
-		return default_unfasten_wrench(user,weapon,40)
+		default_unfasten_wrench(user,weapon,40)
+		return
 	if(weapon.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
-		return default_deconstruction_crowbar(weapon,1,FALSE)
+		default_deconstruction_crowbar(weapon,1,FALSE)
+		return
 
 	return ..()
 

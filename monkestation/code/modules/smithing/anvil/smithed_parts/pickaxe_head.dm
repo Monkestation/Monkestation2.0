@@ -14,7 +14,7 @@
 	tool_behaviour = TOOL_MINING
 
 	toolspeed = 1 / round(((material_stats.density + material_stats.hardness) / 10) * (smithed_quality * 0.01))
-	force = round(((material_stats.density + material_stats.hardness) / 15) * (smithed_quality * 0.01))
+	force = round(((material_stats.density + material_stats.hardness) / 5.5) * (smithed_quality * 0.01))
 
 	throwforce = force * 1.5
 	w_class = WEIGHT_CLASS_NORMAL

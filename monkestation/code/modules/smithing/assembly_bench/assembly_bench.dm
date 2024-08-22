@@ -17,6 +17,17 @@
 	. = ..()
 	for(var/datum/assembly_recipe/subtype as anything in subtypesof(/datum/assembly_recipe) - /datum/assembly_recipe/smithed_weapon)
 		recipes += new subtype
+	register_context()
+
+/obj/structure/machine/assembly_bench/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!current_recipe && held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Add to select recipe"
+	else
+		context[SCREENTIP_CONTEXT_LMB] = "Add to progress recipe"
+	if(current_recipe)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Clear Recipe."
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/structure/machine/assembly_bench/examine(mob/user)
 	. = ..()
@@ -24,9 +35,21 @@
 		for(var/obj/item/item as anything in current_recipe.needed_items)
 			. += span_notice("[current_recipe.needed_items[item]] [initial(item.name)] needed.")
 
+/obj/structure/machine/assembly_bench/AltClick(mob/user)
+	if(current_recipe)
+		for(var/obj/item/stored in stored_items)
+			stored.forceMove(user.loc)
+			stored_items -= stored
+		QDEL_NULL(current_recipe)
+		QDEL_NULL(stored_items)
+		return TRUE
+	. = ..()
+
+
 /obj/structure/machine/assembly_bench/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !current_recipe)
-		return default_unfasten_wrench(user,attacking_item,40)
+		default_unfasten_wrench(user,attacking_item,40)
+		return
 	if(!anchored)
 		return ..()
 	if(!current_recipe)

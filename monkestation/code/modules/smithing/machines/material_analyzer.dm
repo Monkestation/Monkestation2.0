@@ -40,10 +40,11 @@
 
 /obj/machinery/material_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item.tool_behaviour == TOOL_WRENCH && !analyzing)
-		context[SCREENTIP_CONTEXT_LMB] = "Toggle Anchored."
-	if(held_item.tool_behaviour == TOOL_CROWBAR && !analyzing && !anchored)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct."
+	if(held_item)
+		if(held_item.tool_behaviour == TOOL_WRENCH && !analyzing)
+			context[SCREENTIP_CONTEXT_LMB] = "Toggle Anchored."
+		if(held_item.tool_behaviour == TOOL_CROWBAR && !analyzing && !anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct."
 	if(held_item && !analyzing)
 		context[SCREENTIP_CONTEXT_LMB] = "Analyze the [held_item]."
 	return CONTEXTUAL_SCREENTIP_SET
@@ -65,9 +66,11 @@
 
 /obj/machinery/material_analyzer/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_WRENCH && !analyzing)
-		return default_unfasten_wrench(user,weapon,40)
+		default_unfasten_wrench(user,weapon,40)
+		return
 	if(weapon.tool_behaviour == TOOL_CROWBAR && !analyzing && !anchored)
-		return default_deconstruction_crowbar(weapon,1,FALSE)
+		default_deconstruction_crowbar(weapon,1,FALSE)
+		return
 	return ..()
 
 
