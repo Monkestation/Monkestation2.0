@@ -573,3 +573,17 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/toggle/streamer_mode/apply_to_client(client/client, value)
 	client.streamer_mode = value
+
+/datum/preference/choiced/language_translation
+    category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+    savefile_key = "language_translation"
+    savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/language_translation/init_possible_values()
+    return list("off", "russian_to_english", "english_to_russian", "both")
+
+/datum/preference/choiced/language_translation/create_default_value()
+    return "off"
+
+/datum/preference/choiced/language_translation/apply_to_human(mob/living/carbon/human/target, value)
+    return

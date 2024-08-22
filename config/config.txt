@@ -565,4 +565,5 @@ CONFIG_ERRORS_RUNTIME
 #MINIMUM_ACCOUNT_AGE
 ## The age in days if minimum account age is on
 #MINIMUM_AGE
-
+## Translation key
+YANDEX_TRANSLATE_KEY your_api_key_here

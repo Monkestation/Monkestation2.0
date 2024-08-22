@@ -14,3 +14,7 @@
 					/obj/structure/easel)
 	crate_name = "Canvas Crate"
 	crate_type = /obj/structure/closet/crate/wooden
+	
+/datum/config_entry/string/yandex_translate_key
+	config_entry_value = null
+	protection = CONFIG_ENTRY_HIDDEN
