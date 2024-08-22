@@ -54,6 +54,13 @@
 	program_type = /datum/nanite_program/dermal_button
 	category = list("Utility Nanites")
 
+/datum/design/nanites/dermal_toggle
+	name = "Dermal Toggle"
+	desc = "Displays a switch on the host's skin, which can be used to send an activation and deactivation signal to the nanites."
+	id = "dermal_toggle_nanites"
+	program_type = /datum/nanite_program/dermal_button/toggle
+	category = list("Utility Nanites")
+
 /datum/design/nanites/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."

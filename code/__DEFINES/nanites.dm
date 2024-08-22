@@ -62,3 +62,5 @@
 #define NES_INVALID_PHRASE "Invalid Phrase"
 #define NES_PHRASE_REPLACEMENT "Phrase Replacement"
 #define NES_REPLACEMENT_MODE "Replacement Mode"
+#define NES_ACTIVATION_CODE "Sent Activation Code"
+#define NES_DEACTIVATION_CODE "Sent Deactivation Code"
