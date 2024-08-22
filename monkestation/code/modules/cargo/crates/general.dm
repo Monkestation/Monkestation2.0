@@ -23,7 +23,8 @@
 		/obj/structure/anvil,
 		/obj/structure/machine/assembly_bench,
 		/obj/item/circuitboard/machine/material_alloyer,
-		/obj/item/circuitboard/machine/electroplater
+		/obj/item/circuitboard/machine/electroplater,
+		/obj/item/circuitboard/machine/material_analyzer
 	)
 	crate_name = "Smithing Crate"
 	crate_type = /obj/structure/closet/crate/large

@@ -40,8 +40,7 @@
 		for(var/obj/item/stored in stored_items)
 			stored.forceMove(user.loc)
 			stored_items -= stored
-		QDEL_NULL(current_recipe)
-		QDEL_NULL(stored_items)
+		clear_recipe()
 		return TRUE
 	. = ..()
 
@@ -104,6 +103,5 @@
 	current_recipe.parent = null
 	held_starting_item = null
 	QDEL_NULL(current_recipe)
-
 	QDEL_LIST(stored_items)
 	stored_items = list()
