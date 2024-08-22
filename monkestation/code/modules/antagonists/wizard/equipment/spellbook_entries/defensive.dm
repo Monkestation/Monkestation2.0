@@ -29,3 +29,6 @@
 	item_path = /obj/item/gun/magic/mirror_shield
 	category = "Defensive"
 	cost = 2
+
+/datum/spellbook_entry/item/armor
+	cost = 1
