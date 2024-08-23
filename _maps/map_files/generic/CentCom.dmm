@@ -5275,7 +5275,7 @@
 "aoo" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aop" = (
 /obj/structure/window/reinforced/spawner/directional/north{
 	color = "#008000";
@@ -6028,7 +6028,7 @@
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aqr" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
@@ -6655,7 +6655,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "asd" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Orbital Drop Pod Loading"
@@ -11298,7 +11298,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/hedge,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aEA" = (
 /obj/machinery/computer/records/security/laptop,
 /obj/structure/table/wood,
@@ -11427,7 +11427,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aER" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /obj/structure/table/reinforced,
@@ -16309,7 +16309,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aSm" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -18538,7 +18538,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/hall)
+/area/centcom/central_command_areas/ghost_blocker)
 "aXW" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
@@ -19574,10 +19574,6 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron/dark/textured_edge,
 /area/centcom/central_command_areas/evacuation)
-"dxt" = (
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "dxL" = (
 /obj/machinery/vending/cigarette/syndicate,
 /obj/effect/turf_decal/bot_white,
@@ -19633,11 +19629,6 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
-"dRZ" = (
-/obj/structure/chair/sofa/corp,
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "dSm" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -19806,10 +19797,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
-"fqO" = (
-/obj/structure/flora/bush/large/style_3,
-/turf/open/floor/grass,
-/area/centcom/central_command_areas/ghost_blocker)
 "fuM" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
@@ -19904,11 +19891,6 @@
 	dir = 4
 	},
 /area/cruiser_dock)
-"gsP" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "gwo" = (
 /obj/structure/closet/cardboard,
 /mob/living/basic/bot/medbot{
@@ -20016,11 +19998,6 @@
 	dir = 1
 	},
 /area/centcom/syndicate_mothership/control)
-"hvF" = (
-/obj/structure/flora/bush/large/style_3,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/grass,
-/area/centcom/central_command_areas/ghost_blocker)
 "hAI" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -20094,6 +20071,12 @@
 "hVj" = (
 /turf/open/floor/iron/stairs/right,
 /area/cruiser_dock)
+"ibl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/ghost_blocker)
 "ifF" = (
 /obj/effect/landmark/start/assaultop,
 /obj/structure/chair/office/light{
@@ -20293,11 +20276,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/ghost_blocker)
-"jPX" = (
-/obj/structure/chair/sofa/corp/right,
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "jYU" = (
 /obj/structure/sign/poster/contraband/masked_men/directional/east,
 /obj/machinery/chem_dispenser/fullupgrade,
@@ -20333,9 +20311,6 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
-"kxz" = (
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ghost_blocker)
 "kxZ" = (
 /obj/structure/railing/wood{
 	dir = 4
@@ -21147,6 +21122,12 @@
 "rdl" = (
 /turf/closed/indestructible/opsglass,
 /area/cruiser_dock)
+"riF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/ghost_blocker)
 "rua" = (
 /turf/closed/indestructible/riveted,
 /area/space)
@@ -21460,12 +21441,6 @@
 	dir = 4
 	},
 /area/cruiser_dock)
-"uCd" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "uFW" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -21596,10 +21571,6 @@
 "vrT" = (
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
-"vvm" = (
-/obj/structure/hedge,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "vvZ" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L5"
@@ -21670,12 +21641,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"wdR" = (
-/obj/structure/hedge,
-/obj/machinery/light/floor/has_bulb,
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "wpF" = (
 /obj/structure/statue/sandstone/venus{
 	dir = 1;
@@ -21800,6 +21765,12 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
+"xuI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/ghost_blocker)
 "xyk" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -21883,6 +21854,12 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
+"yaE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/ghost_blocker)
 "ycD" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 10
@@ -65201,18 +65178,18 @@ acG
 aKb
 apG
 apG
-kxz
-hvF
-qAv
-qAv
-qAv
-uCd
-iUK
-dxt
-qAv
-qAv
-qAv
-fqO
+apG
+aMm
+arj
+arj
+arj
+aXb
+auQ
+ayi
+arj
+arj
+arj
+aFA
 apG
 aaa
 aaa
@@ -65436,7 +65413,7 @@ arj
 aMK
 aEz
 asc
-aOO
+snl
 arj
 arj
 aXb
@@ -65458,18 +65435,18 @@ aRO
 alu
 aFA
 apG
-vvm
-jPX
-qAv
-gsP
-qAv
-uCd
-iUK
-dxt
-qAv
-gsP
-qAv
-qAv
+aMl
+aEv
+arj
+abX
+arj
+aXb
+auQ
+ayi
+arj
+abX
+arj
+arj
 apG
 aaa
 aaa
@@ -65693,7 +65670,7 @@ arj
 aMK
 aEz
 aSl
-arj
+qAv
 arj
 aZP
 aqf
@@ -65715,18 +65692,18 @@ aAj
 aiG
 aXz
 apG
-wdR
-dRZ
-gsP
-qAv
-qAv
-uCd
-jNH
-dxt
-qAv
-qAv
-gsP
-qAv
+anI
+aGS
+abX
+arj
+arj
+aXb
+avp
+ayi
+arj
+arj
+abX
+arj
 apG
 aaa
 aaa
@@ -65950,7 +65927,7 @@ aCu
 ahi
 aEz
 aEQ
-arj
+qAv
 arj
 aXb
 aMl
@@ -66205,9 +66182,9 @@ aaE
 aaE
 aaE
 aaE
-aQl
+riF
 aoo
-aZP
+yaE
 aaE
 aqf
 aod
@@ -66719,9 +66696,9 @@ aET
 aET
 aET
 aET
-aYX
+ibl
 aoo
-aJB
+xuI
 aET
 ahI
 aKy
@@ -66978,7 +66955,7 @@ aWf
 aPe
 aEz
 asc
-arj
+qAv
 arj
 aXb
 aMl
@@ -67235,7 +67212,7 @@ aBa
 ait
 aEz
 aSl
-arj
+qAv
 arj
 aJB
 aET
@@ -67492,7 +67469,7 @@ aFA
 aja
 aEz
 aEQ
-arj
+qAv
 arj
 arj
 aHi
