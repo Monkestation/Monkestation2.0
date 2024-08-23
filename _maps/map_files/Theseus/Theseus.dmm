@@ -15289,6 +15289,9 @@
 "feL" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ffe" = (
@@ -24333,13 +24336,6 @@
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
-"iiz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "iiI" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
@@ -115317,7 +115313,7 @@ imR
 imR
 feL
 cUo
-iiz
+lfp
 mHx
 sOE
 sOE
