@@ -7529,6 +7529,7 @@
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\dagger_blade.dm"
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\pickaxe_head.dm"
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\rapier_blade.dm"
+#include "monkestation\code\modules\smithing\anvil\smithed_parts\shields.dm"
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\spear_blade.dm"
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\staff_head.dm"
 #include "monkestation\code\modules\smithing\anvil\smithed_parts\sword_blade.dm"

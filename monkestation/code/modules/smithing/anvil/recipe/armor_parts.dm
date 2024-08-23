@@ -18,3 +18,13 @@
 	difficulty = 4
 	total_notes = 55
 	output = /obj/item/clothing/smithed_clothes/shoes
+/datum/anvil_recipe/pavise
+	name = "Pavise Shield"
+	difficulty = 4
+	total_notes = 50
+	output = /obj/item/smithed_part/weapon_part/shield/pavise
+/datum/anvil_recipe/buckler
+	name = "Buckler Shield"
+	difficulty = 3
+	total_notes = 50
+	output = /obj/item/smithed_part/weapon_part/shield/buckler

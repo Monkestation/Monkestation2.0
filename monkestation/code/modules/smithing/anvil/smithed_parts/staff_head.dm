@@ -12,6 +12,8 @@
 	reach = 2
 	AddComponent(/datum/component/multi_hit, icon_state = "swipe", width = 3, continues_travel = TRUE)
 
+	block_chance = round(((material_stats.hardness + material_stats.density)/15) * (smithed_quality/100))
+
 	attack_speed = CLICK_CD_LARGE_WEAPON
 	stamina_cost = round(30 * (100 / smithed_quality))
 
