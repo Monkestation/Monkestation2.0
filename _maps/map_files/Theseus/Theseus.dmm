@@ -23184,7 +23184,6 @@
 /turf/closed/wall/r_wall,
 /area/station/security/range)
 "hPf" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
@@ -62315,7 +62314,6 @@
 	name = "Holodeck Door"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "uxw" = (
@@ -71156,7 +71154,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "xpj" = (
