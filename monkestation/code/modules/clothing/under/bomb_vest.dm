@@ -39,7 +39,10 @@
 	boombox = new(src)
 	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_unequipped))
 
-
+/obj/item/clothing/bomb_vest/doStrip(mob/stripper, mob/owner)
+	if(rand(0,100) <= 25 && ready_to_blow && boombox)
+		boombox.process_activation(null) //Uh oh, boom time.
+	. = ..()
 /obj/item/clothing/bomb_vest/proc/on_unequipped()
 	SIGNAL_HANDLER
 	var/mob/M = usr
