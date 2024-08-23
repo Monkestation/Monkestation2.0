@@ -155,8 +155,8 @@ SUBSYSTEM_DEF(polling)
 			var/datum/antagonist/antagonist = new alert_pic
 			poll_image = antagonist.render_poll_preview() || image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 			QDEL_NULL(antagonist)
-		else if(!isnull(alert_pic))
-			poll_image = alert_pic
+		else if(isicon(alert_pic))
+			poll_image = image(alert_pic)
 		else
 			poll_image = image('icons/effects/effects.dmi', icon_state = "static")
 
