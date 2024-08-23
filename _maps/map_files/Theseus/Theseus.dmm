@@ -15641,6 +15641,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "fkG" = (
@@ -22211,6 +22212,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"hxg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "hxo" = (
 /turf/open/floor/iron/stairs/right,
 /area/station/command/heads_quarters/rd)
@@ -71205,11 +71211,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
-"xpG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal/incinerator)
 "xpH" = (
 /obj/machinery/button/door/directional/north{
 	id = "kitchen_counter";
@@ -128443,9 +128444,9 @@ scR
 scR
 scR
 baE
+scR
 xcY
 hjA
-lbZ
 lbZ
 plQ
 nhC
@@ -129473,9 +129474,9 @@ fiN
 igm
 sCg
 uFZ
-xpG
+hxg
 pqh
-xpG
+hxg
 rGf
 hFE
 oNk
