@@ -11,12 +11,12 @@
 	. = ..()
 	sharpness = SHARP_EDGED
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
-	armour_penetration = 25 * (smithed_quality / 100)
+	armour_penetration = 30 * (smithed_quality / 100)
 
 	stamina_cost = round(15 * (100 / smithed_quality))
 
 	tool_behaviour = TOOL_SAW
 
-	force = round(((material_stats.density + material_stats.hardness) / 6.5) * (smithed_quality * 0.01))
+	force = round(((material_stats.density + material_stats.hardness) / 8.9) * (smithed_quality * 0.01))
 	throwforce = force * 1.75
 	w_class = WEIGHT_CLASS_SMALL

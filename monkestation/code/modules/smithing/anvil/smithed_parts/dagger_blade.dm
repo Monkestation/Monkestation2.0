@@ -11,12 +11,12 @@
 	. = ..()
 	sharpness = SHARP_POINTY
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
-	armour_penetration = 24 * (smithed_quality / 100)
+	armour_penetration = 35 * (smithed_quality / 100)
 
 	attack_speed = CLICK_CD_FAST_MELEE
 	stamina_cost = round(5 * (100 / smithed_quality))
 
-	throwforce = round(((material_stats.density + material_stats.hardness) / 6) * (smithed_quality * 0.01))
+	throwforce = round(((material_stats.density + material_stats.hardness) / 9) * (smithed_quality * 0.01))
 	force = throwforce * 0.25
 	w_class = WEIGHT_CLASS_SMALL
 
