@@ -25874,9 +25874,6 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "iHj" = (
-/mob/living/carbon/alien/adult/nova/runner{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -43290,6 +43287,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
+/mob/living/carbon/alien/adult/royal/praetorian,
 /turf/open/floor/engine,
 /area/space)
 "olE" = (
