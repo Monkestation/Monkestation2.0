@@ -47559,6 +47559,10 @@
 	pixel_y = -32
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "odV" = (
@@ -63956,6 +63960,13 @@
 	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
+"toW" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/cargo_shelf/meteor_shield,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
 "toY" = (
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
@@ -160488,7 +160499,7 @@ uNB
 dfW
 fga
 nTm
-jfn
+toW
 jns
 htx
 pvm

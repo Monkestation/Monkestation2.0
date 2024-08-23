@@ -4087,6 +4087,7 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "bsZ" = (
@@ -28538,7 +28539,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/closet/crate/solarpanel_small,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "kcg" = (
@@ -36389,6 +36390,14 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"mQH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron,
+/area/station/ai_monitored/command/storage/eva)
 "mRg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49244,20 +49253,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"rtd" = (
-/obj/machinery/camera/motion/directional/east{
-	c_tag = "E.V.A. Storage"
-	},
-/obj/machinery/requests_console/directional/east{
-	department = "EVA";
-	name = "EVA Requests Console"
-	},
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/ai_monitored/command/storage/eva)
 "rtj" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
@@ -53190,6 +53185,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"sIU" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "EVA";
+	name = "EVA Requests Console"
+	},
+/obj/machinery/camera/motion/directional/east{
+	c_tag = "E.V.A. Storage"
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield/single,
+/turf/open/floor/iron,
+/area/station/ai_monitored/command/storage/eva)
 "sIX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
 	dir = 9
@@ -67155,6 +67163,7 @@
 	pixel_y = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "xFx" = (
@@ -92420,7 +92429,7 @@ qjf
 mXf
 wjQ
 uuv
-wjQ
+mQH
 dLC
 rGm
 gqX
@@ -92932,7 +92941,7 @@ pIm
 uac
 aUK
 aUK
-rtd
+isn
 isn
 uEx
 xBF
@@ -93189,7 +93198,7 @@ tOh
 euj
 rnX
 bsW
-yfL
+sIU
 xFs
 dYb
 gqA

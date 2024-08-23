@@ -3,7 +3,7 @@
 #define DEFAULT_SHELF_VERTICAL_OFFSET 10 // Vertical pixel offset of shelving-related things. Set to 10 by default due to this leaving more of the crate on-screen to be clicked.
 
 /obj/structure/cargo_shelf //Crate shelf port from Shiptest: https://github.com/shiptest-ss13/Shiptest/pull/2374
-	name = "Cargo shelf"
+	name = "cargo shelf"
 	desc = "It's a shelf! For storing crates!"
 	icon = 'monkestation/icons/obj/structures/shelf.dmi'
 	icon_state = "shelf_base"
@@ -14,12 +14,15 @@
 	var/capacity = DEFAULT_SHELF_CAPACITY
 	var/use_delay = DEFAULT_SHELF_USE_DELAY
 	var/list/shelf_contents
+	/// A list of crate typepaths to preload.
+	var/list/preload_crates
 
 /obj/structure/cargo_shelf/debug
 	capacity = 12
 
-/obj/structure/cargo_shelf/Initialize()
+/obj/structure/cargo_shelf/Initialize(mapload)
 	. = ..()
+	register_context()
 	shelf_contents = new/list(capacity) // Initialize our shelf's contents list, this will be used later.
 	var/stack_layer // This is used to generate the sprite layering of the shelf pieces.
 	var/stack_offset // This is used to generate the vertical offset of the shelf pieces.
@@ -30,7 +33,20 @@
 			stack_layer  = BELOW_OBJ_LAYER + (0.02 * i) - 0.01 // Make each shelf piece render above the last, but below the crate that should be on it.
 		stack_offset = DEFAULT_SHELF_VERTICAL_OFFSET * i // Make each shelf piece physically above the last.
 		overlays += image(icon = 'monkestation/icons/obj/structures/shelf.dmi', icon_state = "shelf_stack", layer = stack_layer, pixel_y = stack_offset)
-	return
+	if((mapload || preload_crates) && isturf(loc))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/cargo_shelf/LateInitialize()
+	if(preload_crates)
+		preload_crates = fill_with_ones(preload_crates)
+		for(var/crate_typepath in preload_crates)
+			for(var/amt in 1 to preload_crates[crate_typepath])
+				if(!load(new crate_typepath))
+					CRASH("failed to preload crate [crate_typepath] into [src] at [AREACOORD(src)]")
+	else
+		for(var/obj/structure/closet/crate/crate in loc)
+			if(!load(crate))
+				CRASH("failed to preload crate [crate] at [AREACOORD(crate)] ([crate.type]) into [src] at [AREACOORD(src)]")
 
 /obj/structure/cargo_shelf/Destroy()
 	QDEL_LIST(shelf_contents)
@@ -40,12 +56,18 @@
 	. = ..()
 	. += span_notice("There are some <b>bolts</b> holding [src] together.")
 	if(shelf_contents.Find(null)) // If there's an empty space in the shelf, let the examiner know.
-		. += span_notice("You could <b>drag and drop</b> a crate into [src].")
-	if(contents.len) // If there are any crates in the shelf, let the examiner know.
-		. += span_notice("You could <b>drag and drop</b> a crate out of [src].")
+		. += span_notice("You could <b>drag and drop</b> a crate into [src], or <b>left click while pulling a crate</b>.")
+	if(length(contents)) // If there are any crates in the shelf, let the examiner know.
+		. += span_notice("You could <b>drag and drop</b> a crate out of [src], or <b>right click</b> to take the topmost crate out.")
 		. += span_notice("[src] contains:")
 		for(var/obj/structure/closet/crate/crate in shelf_contents)
 			. += "	[icon2html(crate, user)] [crate]"
+
+/obj/structure/cargo_shelf/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	context[SCREENTIP_CONTEXT_LMB] = "Load pulled crate"
+	if(shelf_contents.Find(null))
+		context[SCREENTIP_CONTEXT_RMB] = "Unload top crate"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/cargo_shelf/attackby(obj/item/item, mob/living/user, params)
 	if (item.tool_behaviour == TOOL_WRENCH && !(flags_1 & NODECONSTRUCT_1))
@@ -72,33 +94,38 @@
 
 /obj/structure/cargo_shelf/proc/handle_visuals()
 	vis_contents = contents // It really do be that shrimple.
-	return
 
-/obj/structure/cargo_shelf/proc/load(obj/structure/closet/crate/crate, mob/user)
+/obj/structure/cargo_shelf/proc/try_load(obj/structure/closet/crate/crate, mob/user)
 	var/next_free = shelf_contents.Find(null) // Find the first empty slot in the shelf.
 	if(!next_free) // If we don't find an empty slot, return early.
 		balloon_alert(user, "shelf full!")
 		return FALSE
+	balloon_alert(user, "loading crate...")
 	if(do_after(user, use_delay, target = crate))
-		if(shelf_contents[next_free] != null)
-			return FALSE // Something has been added to the shelf while we were waiting, abort!
-		if(crate.opened) // If the crate is open, try to close it.
-			if(!crate.close())
-				return FALSE // If we fail to close it, don't load it into the shelf.
-		shelf_contents[next_free] = crate // Insert a reference to the crate into the free slot.
-		crate.forceMove(src) // Insert the crate into the shelf.
-		crate.pixel_y = DEFAULT_SHELF_VERTICAL_OFFSET * (next_free - 1) // Adjust the vertical offset of the crate to look like it's on the shelf.
-		if(next_free >= 3) // If we're at or above three, we'll be on the way to going off the tile we're on. This allows mobs to be below the crate when this happens.
-			crate.layer = ABOVE_MOB_LAYER + 0.02 * (next_free - 1)
-		else
-			crate.layer = BELOW_OBJ_LAYER + 0.02 * (next_free - 1) // Adjust the layer of the crate to look like it's in the shelf.
-		handle_visuals()
-		return TRUE
+		return load(crate, next_free)
 	return FALSE // If the do_after() is interrupted, return FALSE!
 
+/obj/structure/cargo_shelf/proc/load(obj/structure/closet/crate/crate, slot = null)
+	if(!istype(crate) || QDELING(crate))
+		return FALSE
+	if(isnull(slot))
+		slot = shelf_contents.Find(null)
+	if(shelf_contents[slot] != null)
+		return FALSE // Something has been added to the shelf while we were waiting, abort!
+	if(crate.opened && !crate.close()) // If the crate is open, try to close it.
+		return FALSE // If we fail to close it, don't load it into the shelf.
+	shelf_contents[slot] = crate // Insert a reference to the crate into the free slot.
+	crate.forceMove(src) // Insert the crate into the shelf.
+	crate.pixel_y = DEFAULT_SHELF_VERTICAL_OFFSET * (slot - 1) // Adjust the vertical offset of the crate to look like it's on the shelf.
+	if(slot >= 3) // If we're at or above three, we'll be on the way to going off the tile we're on. This allows mobs to be below the crate when this happens.
+		crate.layer = ABOVE_MOB_LAYER + 0.02 * (slot - 1)
+	else
+		crate.layer = BELOW_OBJ_LAYER + 0.02 * (slot - 1) // Adjust the layer of the crate to look like it's in the shelf.
+	handle_visuals()
+	return TRUE
+
 /obj/structure/cargo_shelf/proc/unload(obj/structure/closet/crate/crate, mob/user, turf/unload_turf)
-	if(!unload_turf)
-		unload_turf = get_turf(user) // If a turf somehow isn't passed into the proc, put it at the user's feet.
+	unload_turf ||= get_turf(user) // If a turf somehow isn't passed into the proc, put it at the user's feet.
 	if(!unload_turf.Enter(crate)) // If moving the crate from the shelf to the desired turf would bump, don't do it! Thanks Kapu1178 for the help here. - Generic DM
 		unload_turf.balloon_alert(user, "no room!")
 		return FALSE
@@ -140,6 +167,43 @@
 		transfer_fingerprints_to(newparts)
 	return ..()
 
+/obj/structure/cargo_shelf/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	var/obj/structure/closet/crate/crate = user.pulling
+	if(!istype(crate))
+		return
+	if(!Adjacent(user) || !isturf(user.loc) || user.incapacitated() || user.body_position == LYING_DOWN)
+		return
+	if(min(get_dist(crate, src), get_dist(crate, user)) > 1)
+		return
+	add_fingerprint(user)
+	return try_load(crate, user)
+
+/obj/structure/cargo_shelf/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/next_free = shelf_contents.Find(null)
+	if(next_free <= 1)
+		balloon_alert(user, "no crates to unload!")
+		return
+	var/obj/structure/closet/crate/crate = shelf_contents[next_free - 1]
+	if(QDELETED(crate) || crate.loc != src)
+		return
+	add_fingerprint(user)
+	balloon_alert(user, "unloading crate")
+	var/turf/unload_turf
+	for(var/turf/open/floor as anything in oview(1, user))
+		if(floor == loc)
+			continue
+		if(isopenturf(floor) && !floor.is_blocked_turf())
+			unload_turf = floor
+			break
+	unload(crate, user, unload_turf)
+
 /obj/structure/closet/crate/MouseDrop(atom/drop_atom, src_location, over_location)
 	. = ..()
 	var/mob/living/user = usr
@@ -149,15 +213,15 @@
 		return // If the user is in a weird state, don't bother trying.
 	if(get_dist(drop_atom, src) != 1 || get_dist(drop_atom, user) != 1)
 		return // Check whether the crate is exactly 1 tile from the shelf and the user.
-	if(istype(drop_atom, /turf/open) && istype(loc, /obj/structure/cargo_shelf) && user.Adjacent(drop_atom))
+	if(isopenturf(drop_atom) && istype(loc, /obj/structure/cargo_shelf) && user.Adjacent(drop_atom))
 		var/obj/structure/cargo_shelf/shelf = loc
 		return shelf.unload(src, user, drop_atom) // If we're being dropped onto a turf, and we're inside of a crate shelf, unload.
 	if(istype(drop_atom, /obj/structure/cargo_shelf) && isturf(loc) && user.Adjacent(src))
 		var/obj/structure/cargo_shelf/shelf = drop_atom
-		return shelf.load(src, user) // If we're being dropped onto a crate shelf, and we're in a turf, load.
+		return shelf.try_load(src, user) // If we're being dropped onto a crate shelf, and we're in a turf, load.
 
 /obj/item/rack_parts/cargo_shelf
-	name = "Cargo shelf parts"
+	name = "cargo shelf parts"
 	icon = 'monkestation/icons/obj/structures/shelf.dmi'
 	icon_state = "rack_parts"
 	desc = "Parts of a cargo shelf, for storing crates."
@@ -167,12 +231,11 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a cargo shelf..."))
-	if(do_after(user, 50, target = user, progress=TRUE))
-		if(!user.temporarilyRemoveItemFromInventory(src))
+	if(do_after(user, 5 SECONDS, target = user, progress = TRUE))
+		if(QDELETED(src) || !user.temporarilyRemoveItemFromInventory(src))
 			return
-		var/obj/structure/cargo_shelf/R = new /obj/structure/cargo_shelf(get_turf(src))
-		user.visible_message("<span class='notice'>[user] assembles \a [R].\
-			</span>", span_notice("You assemble \a [R]."))
-		R.add_fingerprint(user)
+		var/obj/structure/cargo_shelf/shelf = new /obj/structure/cargo_shelf(get_turf(src))
+		user.visible_message(span_notice("[user] assembles \a [shelf]."), span_notice("You assemble \a [shelf]."))
+		shelf.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

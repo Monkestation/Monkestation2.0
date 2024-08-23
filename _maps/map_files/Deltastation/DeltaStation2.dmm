@@ -59308,15 +59308,14 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "odw" = (
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
-/obj/structure/table/reinforced,
 /obj/machinery/camera/directional/north{
 	c_tag = "Bridge - E.V.A. Fore";
 	name = "command camera"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/newscaster/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield/single,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "odI" = (
@@ -65852,7 +65851,8 @@
 	supplies_requestable = 1
 	},
 /obj/structure/sign/poster/official/do_not_question/directional/east,
-/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/box,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pJo" = (

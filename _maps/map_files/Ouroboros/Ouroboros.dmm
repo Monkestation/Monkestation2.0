@@ -11474,6 +11474,7 @@
 	pixel_y = -1
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/item/storage/box/smart_metal_foam,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "dwz" = (
@@ -22562,15 +22563,13 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/genetics)
 "gLW" = (
-/obj/structure/table,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/item/storage/box/smart_metal_foam,
-/obj/item/wrench,
-/obj/item/crowbar,
 /obj/machinery/light/cold/directional/east,
 /obj/structure/cable,
+/obj/effect/turf_decal/box,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "gMh" = (
@@ -41047,6 +41046,13 @@
 /obj/structure/sign/warning/yes_smoking/circle/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/department/security/upper)
+"mbo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cargo_shelf/meteor_shield,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "mbp" = (
 /obj/structure/chair/comfy{
 	color = "#596479";
@@ -113967,7 +113973,7 @@ qkl
 nCx
 iLD
 tXY
-bzI
+mbo
 vLV
 aFk
 kyJ

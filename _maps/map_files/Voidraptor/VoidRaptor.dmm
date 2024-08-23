@@ -16,10 +16,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "aau" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron/textured,
 /area/station/engineering/storage_shared)
 "aaA" = (
@@ -15822,7 +15823,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/white/end,
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield/single,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/command/storage/eva)
 "eCy" = (

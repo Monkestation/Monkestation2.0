@@ -12,3 +12,13 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
+
+/obj/structure/closet/crate/engineering/meteor_shields
+	name = "Hard-Kill Meteor Protection Satellites"
+	desc = "Contains a 5 pack of HK-MPS capsules, which can be deployed into a full meteor defense satellite."
+	var/spawn_amt = 5
+
+/obj/structure/closet/crate/engineering/meteor_shields/PopulateContents()
+	. = ..()
+	for(var/i in 1 to spawn_amt)
+		new /obj/item/meteor_shield_capsule(src)

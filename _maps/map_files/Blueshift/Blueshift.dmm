@@ -48770,13 +48770,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
 "jyn" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "jyo" = (
@@ -111302,9 +111297,8 @@
 /turf/open/floor/wood,
 /area/station/service/hydroponics/garden/abandoned)
 "vzs" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/structure/cargo_shelf/meteor_shield,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "vzx" = (
