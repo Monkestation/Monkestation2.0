@@ -52,13 +52,13 @@
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
 	armor_type = temp.generate_new_with_modifiers(list(
-		ACID = round((material_stats.density / 2) * (smithed_quality/100)),
-		BOMB = round(((material_stats.density + material_stats.hardness)/3) * (smithed_quality/100)),
-		BULLET = round(((material_stats.density + material_stats.hardness)/3) * (smithed_quality/100)),
-		ENERGY = round((material_stats.refractiveness / 2) * (smithed_quality/100)),
-		FIRE = round((material_stats.thermal/2) * (smithed_quality/100)),
-		LASER = round(((material_stats.refractiveness + material_stats.density)/3) * (smithed_quality/100)),
-		MELEE = round((material_stats.density + material_stats.hardness)/2 * (smithed_quality/100))
+		ACID = round((material_stats.density / 1.25) * (smithed_quality/100)),
+		BOMB = round(((material_stats.density + material_stats.hardness)/1.5) * (smithed_quality/100)),
+		BULLET = round(((material_stats.density + material_stats.hardness)/1.5) * (smithed_quality/100)),
+		ENERGY = round((material_stats.refractiveness / 1.25) * (smithed_quality/100)),
+		FIRE = round(((100-material_stats.thermal)/1.25) * (smithed_quality/100)),
+		LASER = round(((material_stats.refractiveness + material_stats.density)/1.5) * (smithed_quality/100)),
+		MELEE = round((material_stats.density + material_stats.hardness)/1.25 * (smithed_quality/100))
 	))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 
