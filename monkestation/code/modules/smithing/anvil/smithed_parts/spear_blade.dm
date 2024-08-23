@@ -15,7 +15,7 @@
 	reach = 2
 	AddComponent(/datum/component/multi_hit, icon_state = "stab", height = 2)
 
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_SUITSTORE
 
 	stamina_cost = round(25 * (100 / smithed_quality))
 

@@ -106,4 +106,4 @@
 	for(var/x in export.total_amount)
 		price += export.total_value[x]
 	QDEL_NULL(dummy)
-	return round(((CARGO_CRATE_VALUE * 0.05) + (price * 2) ) * (O.smithed_quality/100))
+	return round((((CARGO_CRATE_VALUE*0.25) + price) * 2) * (O.smithed_quality/100))

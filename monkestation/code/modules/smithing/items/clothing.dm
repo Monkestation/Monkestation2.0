@@ -108,7 +108,7 @@
 	strip_delay = 60
 	equip_delay_other = 40
 	resistance_flags = NONE
-	slot_flags = ITEM_SLOT_ON_BODY
+	slot_flags = ITEM_SLOT_OCLOTHING
 
 	base_name = "suit"
 /obj/item/clothing/smithed_clothes/helmet

@@ -14,7 +14,7 @@
 	bare_wound_bonus = 25
 	armour_penetration = 25 * (smithed_quality / 100)
 
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_SUITSTORE
 
 	attack_speed = CLICK_CD_BULKY_WEAPON
 	stamina_cost = round(40 * (100 / smithed_quality))
