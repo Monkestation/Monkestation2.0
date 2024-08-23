@@ -109,6 +109,11 @@
 	var/px_x = 0
 	var/px_y = 0
 
+	/**
+	 * A copy of the original owner's species datum species_traits list (very hacky)
+	 * It sucks that we have to do this, but due to MUTCOLORS and others, we have to. For now.
+	 */
+
 	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
@@ -886,7 +891,7 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits
+	species_flags_list = owner_species.species_traits.Copy()
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
 	if(owner_species.use_skintones)
@@ -1006,8 +1011,9 @@
 				. += aux_em_block
 		//EMISSIVE CODE END
 
-	//Ok so legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-	if((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG))
+		//No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
+	//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
 			//remove the old, unmasked image
@@ -1271,9 +1277,9 @@
 
 /obj/item/bodypart/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
+	if((. & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
-	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
+	owner?.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
 	// with defines at the time of writing, this is 3 brute and 2 burn
 	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
@@ -1289,7 +1295,7 @@
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
 	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
+	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed, TIMER_DELETE_ME)
 	return TRUE
 
 /obj/item/bodypart/proc/un_paralyze()
