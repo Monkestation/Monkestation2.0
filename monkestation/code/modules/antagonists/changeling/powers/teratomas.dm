@@ -26,8 +26,9 @@
 		"Do you want to play as a living teratoma?",
 		poll_time = 7.5 SECONDS,
 		ignore_category = POLL_IGNORE_TERATOMA,
-		pic_source = /datum/antagonist/teratoma,
-		role_name_text = "living teratoma"
+		alert_pic = /datum/antagonist/teratoma,
+		role_name_text = "living teratoma",
+		chat_text_border_icon = /datum/antagonist/teratoma,
 	)
 	if(!length(candidates)) //if we got at least one candidate, they're teratoma now
 		to_chat(user, span_warning("You fail at creating a tumor. Perhaps you should try again later?"))
