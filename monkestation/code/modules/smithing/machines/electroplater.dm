@@ -1,6 +1,6 @@
 /obj/machinery/electroplater
 	name = "arc electroplater"
-	desc = "An industrial electroplater, using electricity it can coat basically anything in the given materials."
+	desc = "An industrial electroplater, using electricity it can coat basically anything in the given materials;adding it's traits to the item."
 
 	icon_state = "plater0"
 	icon = 'goon/icons/matsci.dmi'

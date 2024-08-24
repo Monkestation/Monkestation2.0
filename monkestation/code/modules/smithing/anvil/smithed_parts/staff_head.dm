@@ -5,6 +5,8 @@
 
 	hilt_icon = 'monkestation/code/modules/smithing/icons/forge_items.dmi'
 	hilt_icon_state = "staff-hilt"
+	worn_icon = 'monkestation/code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon_state = "staff_back"
 
 /obj/item/smithed_part/weapon_part/staff_head/finish_weapon()
 	. = ..()
@@ -14,7 +16,7 @@
 
 	block_chance = round(((material_stats.hardness + material_stats.density)/15) * (smithed_quality/100))
 
-	slot_flags = ITEM_SLOT_SUITSTORE
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
 	attack_speed = CLICK_CD_LARGE_WEAPON
 	stamina_cost = round(30 * (100 / smithed_quality))

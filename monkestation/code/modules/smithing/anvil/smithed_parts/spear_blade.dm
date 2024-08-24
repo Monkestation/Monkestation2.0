@@ -6,6 +6,8 @@
 	weapon_inhand_icon_state = "spear"
 	hilt_icon = 'monkestation/code/modules/smithing/icons/forge_items.dmi'
 	hilt_icon_state = "spear-hilt"
+	worn_icon = 'monkestation/code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon_state = "spear_back"
 
 /obj/item/smithed_part/weapon_part/spear_blade/finish_weapon()
 	. = ..()
@@ -15,7 +17,7 @@
 	reach = 2
 	AddComponent(/datum/component/multi_hit, icon_state = "stab", height = 2)
 
-	slot_flags = ITEM_SLOT_SUITSTORE
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
 	stamina_cost = round(25 * (100 / smithed_quality))
 

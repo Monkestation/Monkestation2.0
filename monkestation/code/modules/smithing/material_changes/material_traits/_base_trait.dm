@@ -3,6 +3,7 @@
 	var/desc = "Does generic material things."
 	var/trait_flags = NONE
 	var/reforges = 4
+	var/value_bonus = 0
 
 /datum/material_trait/proc/on_trait_add(atom/movable/parent)
 
