@@ -8,7 +8,7 @@
 	weapon_inhand_icon_state = "buckler"
 	hilt_icon = 'monkestation/code/modules/smithing/icons/forge_items.dmi'
 	hilt_icon_state = "buckler"
-	worn_icon = 'monkestation/code/modules/smithing/icons/forge_weapons_worn.dmi'
+	worn_icon = 'monkestation/code/modules/smithing/icons/forge_weapon_worn.dmi'
 	worn_icon_state = "buckler_back"
 
 /obj/item/smithed_part/weapon_part/shield/buckler/finish_weapon()
