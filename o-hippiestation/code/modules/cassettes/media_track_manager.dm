@@ -1,5 +1,5 @@
 /datum/controller/subsystem/media_tracks/load_tracks()
-	var/music_list = list(GLOB.jukebox_track_files, "o-hippiestation/code/modules/cassettes/base_tracks.json")
+	var/music_list = list(GLOB.jukebox_track_files, "monkestation/code/modules/cassettes/track_folder/base_tracks.json")
 	for(var/filename in music_list)
 		message_admins("Loading jukebox track(s): [filename]")
 

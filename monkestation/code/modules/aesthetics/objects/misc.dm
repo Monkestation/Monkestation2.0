@@ -20,16 +20,16 @@
 	icon = 'monkestation/icons/obj/machines/research.dmi'
 
 /obj/machinery/disposal
-	icon = 'monkestation/icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 
 /obj/structure/disposalconstruct
-	icon = 'monkestation/icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 
 /obj/structure/disposaloutlet
-	icon = 'monkestation/icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 
 /obj/structure/disposalpipe
-	icon = 'monkestation/icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 
 /obj/item/wallframe/airalarm
 	icon = 'monkestation/code/modules/aesthetics/icons/airalarm.dmi'
@@ -38,10 +38,10 @@
 	icon = 'monkestation/code/modules/aesthetics/icons/airalarm.dmi'
 
 /obj/machinery/power/apc
-	icon = 'monkestation/code/modules/aesthetics/icons/apc.dmi'
+	icon = 'icons/obj/machines/APC.dmi'
 
 /obj/item/wallframe/apc
-	icon = 'monkestation/code/modules/aesthetics/icons/apc.dmi'
+	icon = 'icons/obj/machines/APC.dmi'
 
 /obj/structure/reagent_dispensers
 	icon  = 'monkestation/code/modules/aesthetics/icons/chemical_tanks.dmi'
