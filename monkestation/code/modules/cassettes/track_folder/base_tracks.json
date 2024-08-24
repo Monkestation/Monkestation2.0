@@ -25,7 +25,7 @@
 	"duration": 2450,
 	"artist": "Jeroen Tel (Remixed by Cuboos)",
 	"secret": false,
-	"lobby": false,
+	"lobby": true,
 	"jukebox": true,
 	"genre": "Electronic"
 	},
