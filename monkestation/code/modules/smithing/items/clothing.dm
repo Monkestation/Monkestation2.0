@@ -110,6 +110,13 @@
 	resistance_flags = NONE
 	slot_flags = ITEM_SLOT_OCLOTHING
 
+	allowed = list(
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/storage/belt/holster
+		)
+
 	base_name = "suit"
 /obj/item/clothing/smithed_clothes/helmet
 	name = "generic smithed helmet"

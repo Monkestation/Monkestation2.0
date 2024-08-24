@@ -161,7 +161,12 @@
 	STOP_PROCESSING(SSfishing, src)
 	anvil_presses = null
 	note_pixels_moved = null
-	user.mind.adjust_experience(/datum/skill/smithing, 2 * (total_notes - failed_notes)) //Every good Hit = 2 XP
+	var/obj/item/mat = host_anvil.working_material
+	if(mat.material_stats)
+		//gives bonus XP for harder mats, so no cheese with gold or wood.
+		user.mind.adjust_experience(/datum/skill/smithing,round((total_notes - failed_notes) * 2.5) + round(2 + (mat.material_stats.hardness + mat.material_stats.density)/2.5))
+	else
+		user.mind.adjust_experience(/datum/skill/smithing, round(2.5 * (total_notes - failed_notes))) //Every good Hit = 2 XP
 	anvil_hud.end_minigame()
 	QDEL_NULL(anvil_hud)
 	host_anvil.smithing = FALSE
