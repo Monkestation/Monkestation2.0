@@ -8,7 +8,6 @@
 	hilt_icon_state = "axe-hilt"
 
 /obj/item/smithed_part/weapon_part/axe_blade/finish_weapon()
-	. = ..()
 	sharpness = SHARP_EDGED
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	armour_penetration = 30 * (smithed_quality / 100)
@@ -20,3 +19,4 @@
 	force = round(((material_stats.density + material_stats.hardness) / 8.9) * (smithed_quality * 0.01))
 	throwforce = force * 1.75
 	w_class = WEIGHT_CLASS_SMALL
+	..()

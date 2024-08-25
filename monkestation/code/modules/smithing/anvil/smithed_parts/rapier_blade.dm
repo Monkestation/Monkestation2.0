@@ -7,7 +7,6 @@
 	hilt_icon_state = "rapier-hilt"
 
 /obj/item/smithed_part/weapon_part/rapier_blade/finish_weapon()
-	. = ..()
 	sharpness = SHARP_POINTY
 	wound_bonus = 10
 	bare_wound_bonus = 25
@@ -20,3 +19,4 @@
 	force = round(((material_stats.density + material_stats.hardness) / 9.75) * (smithed_quality * 0.01))
 	throwforce = force * 0.9
 	w_class = WEIGHT_CLASS_NORMAL
+	..()

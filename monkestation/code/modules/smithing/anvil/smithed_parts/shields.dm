@@ -12,7 +12,6 @@
 	worn_icon_state = "buckler_back"
 
 /obj/item/smithed_part/weapon_part/shield/buckler/finish_weapon()
-	. = ..()
 	slot_flags = ITEM_SLOT_BACK
 	var quality = (smithed_quality/100)
 	force = round(10 * quality)
@@ -35,6 +34,7 @@
 		MELEE = round((material_stats.density + material_stats.hardness)/1.75 * (smithed_quality/100))
 	))
 	QDEL_NULL(temp) //Thanks now back to the void with you
+	..()
 
 /obj/item/smithed_part/weapon_part/shield/pavise
 	icon_state = "pavise"
@@ -50,7 +50,6 @@
 	worn_icon_state = "pavise_back"
 
 /obj/item/smithed_part/weapon_part/shield/pavise/finish_weapon()
-	. = ..()
 	slot_flags = ITEM_SLOT_BACK
 	var quality = (smithed_quality/100)
 	force = round(10 * quality)
@@ -73,6 +72,8 @@
 		MELEE = round((material_stats.density + material_stats.hardness)/1.25 * (smithed_quality/100))
 	))
 	QDEL_NULL(temp) //Thanks now back to the void with you
+	..()
+
 
 //Common code
 /obj/item/smithed_part/weapon_part/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)

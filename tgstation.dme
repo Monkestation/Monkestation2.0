@@ -7567,6 +7567,7 @@
 #include "monkestation\code\modules\smithing\material_changes\material_traits\slippery.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\slow_attacks.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\stamina_draining.dm"
+#include "monkestation\code\modules\smithing\material_changes\material_traits\stunning.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\warping.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\weak_weapon.dm"
 #include "monkestation\code\modules\smithing\minigame\anvil_minigame.dm"

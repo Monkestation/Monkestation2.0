@@ -21,7 +21,7 @@
 			starting_datums += new_datum
 			starting_datums[new_datum] = new_datum.weight
 
-	var/datum/mineral_sample_datum/picked = pick(starting_datums)
+	var/datum/mineral_sample_datum/picked = pick_weight(starting_datums)
 	if(length(picked.base_traits))
 		for(var/datum/material_trait/trait as anything in picked.base_traits)
 			material_stats.add_trait(trait)

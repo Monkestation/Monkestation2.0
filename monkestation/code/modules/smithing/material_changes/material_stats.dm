@@ -113,6 +113,7 @@
 	src.parent = parent
 	if(parent)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+		RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,PROC_REF(post_parent_init))
 	START_PROCESSING(SSobj, src)
 
 /datum/material_stats/Destroy(force, ...)
@@ -124,6 +125,11 @@
 	material_traits = null
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
 	parent = null
+
+/datum/material_stats/proc/post_parent_init()
+	for(var/datum/material_trait/trait as anything in material_traits)
+		trait.post_parent_init(parent)
+	UnregisterSignal(parent,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 /datum/material_stats/proc/on_attack(datum/source, atom/target, mob/user)
 	for(var/datum/material_trait/trait as anything in material_traits)

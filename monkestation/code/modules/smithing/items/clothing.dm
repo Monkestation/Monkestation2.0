@@ -5,6 +5,10 @@
 	var/obj/made_of = null
 	var/base_name = "generic smithed clothes"
 
+	armor_type = /datum/armor/smithed_dummy //This isnt actually used, its just a dummy
+
+/datum/armor/smithed_dummy
+
 /obj/item/clothing/smithed_clothes/Initialize(mapload,obj/item/created_from,quality)
 	. = ..()
 	smithed_quality = max(quality, 5)
