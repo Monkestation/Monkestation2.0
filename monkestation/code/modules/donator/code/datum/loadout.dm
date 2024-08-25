@@ -565,3 +565,11 @@
 	item_path = /obj/item/clothing/head/costume/western_wizard_hat
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//Len Kagamine
+/datum/loadout_item/toys/wumpa
+	name = "Wumpa"
+	item_path = /obj/item/donator/wumpa
+	requires_purchase = TRUE
+	donator_only = TRUE
+	//ckeywhitelist = list("V2LenKagamine")
