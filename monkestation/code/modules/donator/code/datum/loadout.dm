@@ -482,6 +482,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/pooba_bee_plush
+	name = "Bumbliest Bee Plushie"
+	item_path = /obj/item/toy/plush/pooba_bee_plush
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //Mr_Sandman02
 /datum/loadout_item/suit/menacing_jacket
 	name = "Menacing Jacket"
@@ -506,6 +512,18 @@
 /datum/loadout_item/toys/cowlophant
 	name = "Cowlephant Plush"
 	item_path = /obj/item/toy/plush/cowlephant
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/holstein_cow_mask
+	name = "Holstein Cow Mask"
+	item_path = /obj/item/clothing/mask/gas/holstein_cow_mask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/holstein_cow_jumpsuit
+	name = "Holstein Cow Jumpsuit"
+	item_path = /obj/item/clothing/under/costume/holstein_cow_jumpsuit
 	donator_only = TRUE
 	requires_purchase = FALSE
 
