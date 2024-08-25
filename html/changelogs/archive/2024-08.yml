@@ -208,3 +208,132 @@
   - rscadd: Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)
   flleeppyy:
   - sound: change artist title for some tracks by "Chronoquest" -> "T-87 Sulfurhead"
+2024-08-16:
+  Absolucy:
+  - bugfix: Heretic mobs will not be summoned with AI enabled, and won't turn into
+      small animals instead of summoning a flesh stalker.
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted.
+  - bugfix: Fixed various runtime errors.
+  - bugfix: Broken cameras can no longer somehow report you pissing on the floor.
+  CannibalHunter:
+  - refactor: turned grilles into to types, window grilles and non-window grilles.
+  Kitsunemitsu:
+  - rscadd: Added Blueshield
+  Wisemonster:
+  - bugfix: Ghost critter spawn points are now anchored.
+2024-08-17:
+  Absolucy:
+  - bugfix: Fixed the positioning of the painting in the curator's office on Blueshift.
+2024-08-18:
+  Absolucy:
+  - bugfix: Fixed pouring stuff into beakers trying to play a list as a sound. Hopefully
+      this stops the crashes.
+  - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
+      overcharge.
+  - bugfix: Potential fix for crashes related to drinking sounds.
+2024-08-19:
+  MomoBerri:
+  - rscadd: new light subtypes for mappers
+2024-08-20:
+  Absolucy:
+  - bugfix: The Ashen Forge traitor faction can now actually roll.
+  - bugfix: The Soft-Spoken quirk properly makes you speak softly again.
+  Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3:
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  CannibalHunter:
+  - rscadd: Added new durrcell plushie to the monkeshop!
+2024-08-21:
+  Absolucy:
+  - bugfix: The "Space Adaptation Effect" symptom now actually works as intended.
+  - bugfix: Fixed some runtimes related to pathology symptoms.
+  - code_imp: Cleaned up the code of some pathology symptoms.
+  - qol: Grey Tide viruses will no longer affect airlocks that lead to space.
+  - bugfix: Fixed a runtime related to ghost hearing.
+  - bugfix: Fixed some dirt tiles at centcom that wasted init time with useless atmos
+      processing.
+  - rscadd: Curators will now spawn with some of the tapes they've had approved (if
+      any) in their cassette rack.
+  - qol: Bulk cassette crates will no longer contain duplicates tapes.
+  Absolucy, 13spacemen, Melbert:
+  - code_imp: Poll alerts support small border pictures in the chat message.
+  - code_imp: Poll alert alert picture and jump target do not have to be the same.
+  - qol: Slime intelligence potions ask the user for a reason, this will be shown
+      to ghosts.
+  - bugfix: Fixes polling for things causing said things to have their planes and
+      layers screwed up (causing random objects or mobs to appear above runechat and
+      blindness, for example)
+  Absolucy, Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
+  KnigTheThrasher:
+  - rscadd: Added wind turbines to lavaland mining base
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  RedBaronFlyer:
+  - qol: Janitorial has had a budget increase. All janitors are now equipped with
+      keyrings.
+  Wisemonster:
+  - rscdel: Removed the stage 2 hunger symptom
+  - bugfix: Fixed one of the bars in box station having flooring that can create chasms
+2024-08-22:
+  Absolucy:
+  - refactor: Implemented batch marking for replays. Basically, this should somewhat
+      reduce lag caused by the replay system in some situations.
+  - bugfix: Fixed messages getting bolded for everyone when ghosts are watching.
+  - bugfix: Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat.
+  TTNT789:
+  - bugfix: makes the rage chemical system not explode you repeatedly apon implantation
+2024-08-23:
+  DragonLee66:
+  - rscadd: gave the cryobeaker a different sprite
+2024-08-24:
+  Absolucy:
+  - bugfix: Role prompts now properly show the preview pics in the chat.
+  - bugfix: Fixed intelligence potions being broken.
+  - bugfix: Fixed blood brother gear choosing being broken.
+2024-08-25:
+  Absolucy:
+  - rscadd: Certain jobs, mostly most medical and the janitor, now have naturally
+      stronger immune systems.
+  - bugfix: Tide viruses now properly exclude external airlocks.
+  - qol: As part of an agreement with the Church of Carp'Sie, the windows and walls
+      for the aquarium on Blueshift-model stations has been reinforced.
+  - bugfix: Heavily optimized glowshrooms, resulting in far less lag during shroomlooses.
+  AlbertNanotracen:
+  - bugfix: Nanotrasen Cookery Command has ended the plague of staff complaining that
+      their tomato dishes are just complicated forms of soup by redefining "tomato
+      soup" to include a dash of cream.
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  - bugfix: ' Infinite spider eggs are no more.'
+  - bugfix: Removed duplicate and incorrect Yaki Imo recipe
+  - qol: "Swapped out the flour in \xC6losterrm\xE6sch with two dough slices, to avoid\
+      \ competing reactions while preparing or cooking"
+  - spellcheck: Chicken nugget will have a description in the craft menu, and fiesta
+      skewers will have a description in general
+  - bugfix: Spell burger now has only one recipe
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  - rscadd: Added 28 new food recipes!
+  - qol: 'Martian fried noodles now requires 2 grown peanuts instead of
+
+      salted peanut packet.'
+  - bugfix: Moussaka now only uses eggplants instead of eggplants and potatoes
+  - bugfix: Pita bread no longer burns on the griddle/oven
+  Tag114:
+  - bugfix: Fixes players being unable to switch back to the default title for Brig
+      Physician after selecting an alternate title.
+  ThePooba:
+  - rscadd: added multiple guns to traitor uplink under conspicious
+  Wisemonster:
+  - rscadd: Replaced the drone dispensers on blueshift and ouroboros with pre-loaded
+      variants
+  ven1883:
+  - bugfix: fixed cyberware quirks being incompatible with eachother
+  - bugfix: Bright Eyes now is incompatible with Body Purist
