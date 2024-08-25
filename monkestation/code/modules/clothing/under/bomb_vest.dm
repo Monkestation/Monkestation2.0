@@ -2,10 +2,10 @@
 	name = "bomb vest"
 	desc = "A bomb that can be strapped to peoples chest. Cant be taken off by the user..."
 
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
-	icon_state = "dinojammies"
-	worn_icon_state = "dinojammies"
+	icon = 'monkestation/icons/obj/clothing/bomb_vest.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/bomb_vest.dmi'
+	icon_state = "obj_off"
+	worn_icon_state = "worn_off"
 
 	body_parts_covered = CHEST
 	slot_flags = ITEM_SLOT_OCLOTHING
@@ -40,7 +40,7 @@
 	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_unequipped))
 
 /obj/item/clothing/bomb_vest/doStrip(mob/stripper, mob/owner)
-	if(rand(0,100) <= 25 && ready_to_blow && boombox)
+	if(prob(25) && ready_to_blow && boombox)
 		boombox.process_activation(null) //Uh oh, boom time.
 	. = ..()
 /obj/item/clothing/bomb_vest/proc/on_unequipped()
@@ -57,9 +57,13 @@
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(ready_to_blow)
 			ready_to_blow = FALSE
+			icon_state = "obj_off"
+			worn_icon_state = "worn_off"
 			to_chat(user, span_warning("You disarm the [src]!"))
 		else
 			ready_to_blow = TRUE
+			icon_state = "obj_on"
+			worn_icon_state = "worn_on"
 			to_chat(user, span_warning("You arm the [src]!"))
 		return
 	if(istype(W,/obj/item/assembly))
@@ -78,12 +82,12 @@
 			if(!user.transferItemToLoc(W, src))
 				return
 			boombox.tank_one = W
-			to_chat(user, span_notice("You attach the tank to the transfer valve."))
+			to_chat(user, span_notice("You attach the tank to the [src]."))
 		else if(!boombox.tank_two)
 			if(!user.transferItemToLoc(W, src))
 				return
 			boombox.tank_two = W
-			to_chat(user, span_notice("You attach the tank to the transfer valve."))
+			to_chat(user, span_notice("You attach the tank to the [src]."))
 	return
 
 /datum/crafting_recipe/bomb_vest
@@ -92,5 +96,5 @@
 
 	result = /obj/item/clothing/bomb_vest
 
-	reqs = list(/obj/item/transfer_valve = 1,/obj/item/stack/cable_coil = 5)
+	reqs = list(/obj/item/transfer_valve = 1,/obj/item/stack/cable_coil = 5,/obj/item/stack/sheet/iron = 2)
 
