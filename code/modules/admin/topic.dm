@@ -1822,4 +1822,14 @@
 		var/client/user_client = target
 		user_client.client_token_holder.reject_token_event()
 		log_admin("[user_client]'s token event has been rejected by [owner].")
+
+	else if(href_list["makecluwne"])
+		if(!check_rights(R_SPAWN))
+			return
+		var/mob/living/carbon/human/human_target = locate(href_list["makecluwne"])
+		if(!istype(human_target))
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
+			return
+		message_admins("[usr] cluwned [human_target]")
+		human_target.cluwne()
 //monkestation edit end

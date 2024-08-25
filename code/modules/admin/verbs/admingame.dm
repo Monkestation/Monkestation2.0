@@ -127,7 +127,14 @@
 			if(isAI(M))
 				body += "<b>AI</b>"
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A>"
+				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A> | "
+
+			//Monkestation Edit Begin
+			if(istype(M, /mob/living/simple_animal/cluwne))
+				body += "<B>Is a Cluwne</B> "
+			else if(ishuman(M))
+				body += "<A href='?_src_=holder;[HrefToken()];makecluwne=[REF(M)]'>Make Cluwne</A>"
+			//Monkestation Edit End
 
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
