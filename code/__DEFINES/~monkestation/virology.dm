@@ -36,6 +36,7 @@
 #define DISEASE_TRANSFORMATION "transformation"
 #define DISEASE_GONDOLA "gondola"
 #define DISEASE_GONDOLA_DIGITAL "digital_gondola"
+#define DISEASE_CLOWNDOLA "clowndola"
 #define DISEASE_XENO "xeno"
 #define DISEASE_CORGI "corgi"
 #define DISEASE_SLIME "slime"

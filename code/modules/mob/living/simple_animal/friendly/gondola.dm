@@ -60,6 +60,28 @@
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
 
+// Olympus Station Edit Start
+/mob/living/simple_animal/pet/gondola/attackby(obj/item/O, mob/user, params)
+
+	if(istype(O, /obj/item/food/grown/banana))
+		to_chat(user, span_notice("You feed [src] the banana. He starts to feel funny..."))
+		addtimer(CALLBACK(src, PROC_REF(transformToClowndola)), 5 SECONDS)
+		src.Disorient(6 SECONDS, 0, paralyze = 3 SECONDS, stack_status = FALSE)
+		qdel(O)
+		return
+	return ..()
+
+/mob/living/simple_animal/pet/gondola/proc/transformToClowndola()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	visible_message(span_warning("[src] transforms into a Clowndola!"))
+	var/mob/living/simple_animal/hostile/retaliate/clowndola/new_clowndola = new(get_turf(src))
+	if(name != "gondola")
+		new_clowndola.name = "[name] the Clowndola"
+	new_clowndola.Disorient(3 SECONDS, 0, paralyze = 3 SECONDS, stack_status = FALSE)
+	qdel(src)
+
+// Olympus Station Edit End
+
 /mob/living/simple_animal/pet/gondola/can_speak(allow_mimes = FALSE)
 	return FALSE // Gondolas are the silent walker.
 

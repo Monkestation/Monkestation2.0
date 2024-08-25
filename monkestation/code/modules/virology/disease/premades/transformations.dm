@@ -3,13 +3,14 @@
 	form = "Gondola Cells"
 	origin = "Gondola Toxins"
 	category = DISEASE_GONDOLA
+	desc = "Consuming the flesh of a Gondola comes at a terrible price."
 
 	symptoms = list(
 		new /datum/symptom/transformation/gondola
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
@@ -20,6 +21,30 @@
 	symptoms = list(
 		new /datum/symptom/transformation/gondola/digital
 	)
+
+/datum/disease/advanced/premade/clowndola
+	name = "Clowndola Transformation"
+	form = "Clowndola Cells"
+	origin = "Clowndola Toxins"
+	category = DISEASE_CLOWNDOLA
+	desc = "Consuming the flesh of a Clowndola comes at an enjoyable price."
+
+	symptoms = list(
+		new /datum/symptom/transformation/clowndola
+	)
+	spread_flags = DISEASE_SPREAD_BLOOD
+	robustness = 75
+
+	cure_text = "Laughter, ingested or injected."
+	cures = list(/datum/reagent/consumable/laughter)
+	cure_chance = 20
+	stage_prob = 5
+	agent = "Delirium"
+
+	infectionchance = 0
+	infectionchance_base = 0
+	stage_variance = 0
+	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/advanced/premade/xeno
 	name = "Xenomorph Transformation"
@@ -32,7 +57,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
@@ -48,7 +73,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
@@ -64,7 +89,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
@@ -80,7 +105,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
@@ -96,7 +121,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0

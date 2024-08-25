@@ -100,6 +100,11 @@
 /datum/symptom/transformation/gondola/digital
 	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
 
+/datum/symptom/transformation/clowndola
+	name = "Clowndola Transformation"
+	max_chance = 50
+	new_form = /mob/living/simple_animal/hostile/retaliate/clowndola
+
 /datum/symptom/anxiety
 	name = "Severe Anxiety"
 	desc = "Causes the host to suffer from severe anxiety"

@@ -2513,6 +2513,21 @@
 		exposed_mob.infect_disease_predefined(disease_cat, TRUE, "[ROUND_TIME()] Gondola Reagent Infections [key_name(exposed_mob)]")
 		//exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
+// Olympus Station Edit Start
+/datum/reagent/clowndola_mutation_toxin
+	name = "Delirium"
+	description = "A highly mutative liquid of unknown origin."
+	color = "#ff9900" //RGB: 154, 103, 80
+	taste_description = "inner chaos"
+	penetrates_skin = NONE
+	var/disease_cat = DISEASE_CLOWNDOLA
+
+/datum/reagent/clowndola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+		exposed_mob.infect_disease_predefined(disease_cat, TRUE, "[ROUND_TIME()] Clowndola Reagent Infections [key_name(exposed_mob)]")
+		//exposed_mob.ForceContractDisease(new clowndola_disease, FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+// Olympus Station Edit End
 
 /datum/reagent/spider_extract
 	name = "Spider Extract"

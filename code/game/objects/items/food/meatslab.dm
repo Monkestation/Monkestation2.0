@@ -360,6 +360,25 @@
 /obj/item/food/meat/slab/gondola/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat) //Add medium rare later maybe?
 
+// Olympus Station Edit Start
+/obj/item/food/meat/slab/clowndola
+	name = "clowndola meat"
+	desc = "According to NT, clowndola are a protected species that must be left alone."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/clowndola_mutation_toxin = 5,
+		/datum/reagent/consumable/cooking_oil = 3
+	)
+	tastes = list("meat" = 4, "delirium" = 1)
+	foodtypes = RAW | MEAT | GORE
+
+/obj/item/food/meat/slab/clowndola/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/clowndola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+
+/obj/item/food/meat/slab/clowndola/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/clowndola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat) //Add medium rare later maybe?
+// Olympus Station Edit End
+
 /obj/item/food/meat/slab/penguin
 	name = "penguin meat"
 	icon_state = "birdmeat"
@@ -507,6 +526,10 @@
 	name = "gondola steak"
 	tastes = list("meat" = 1, "tranquility" = 1)
 
+/obj/item/food/meat/steak/clowndola
+	name = "clowndola steak"
+	tastes = list("meat" = 1, "delirium" = 1)
+
 /obj/item/food/meat/steak/penguin
 	name = "penguin steak"
 	icon_state = "birdsteak"
@@ -631,6 +654,15 @@
 /obj/item/food/meat/rawcutlet/gondola/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/gondola, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat)
 
+// Olympus Station Edit Start
+/obj/item/food/meat/rawcutlet/clowndola
+	name = "raw clowndola cutlet"
+	tastes = list("meat" = 1, "delirium" = 1)
+
+/obj/item/food/meat/rawcutlet/clowndola/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/clowndola, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat)
+// Olympus Station Edit End
+
 /obj/item/food/meat/rawcutlet/penguin
 	name = "raw penguin cutlet"
 	tastes = list("beef" = 1, "cod fish" = 1)
@@ -712,6 +744,12 @@
 /obj/item/food/meat/cutlet/gondola
 	name = "gondola cutlet"
 	tastes = list("meat" = 1, "tranquility" = 1)
+
+// Olympus Station Edit Start
+/obj/item/food/meat/cutlet/clowndola
+	name = "clowndola cutlet"
+	tastes = list("meat" = 1, "delirium" = 1)
+// Olympus Station Edit End
 
 /obj/item/food/meat/cutlet/penguin
 	name = "penguin cutlet"
