@@ -131,7 +131,6 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "knight_green"
-	inhand_icon_state = "helmet"
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -149,9 +148,10 @@
 	name = "generic smithed shoes"
 	desc = "Some smithed shoes."
 	icon = 'monkestation/code/modules/smithing/icons/boots.dmi'
-	inhand_icon_state = "smithed_boots_inhand"
 	worn_icon = 'monkestation/code/modules/smithing/icons/boots.dmi'
-	icon_state = "smithed_boots"
+	icon_state = "smithed_boots_inhand"
+	worn_icon_state = "smithed_boots"
+	inhand_icon_state = "jackboots"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
