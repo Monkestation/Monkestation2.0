@@ -5,11 +5,11 @@
 
 	research_value = 50
 
-/datum/artifact_fault/speech/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/speech/on_trigger()
 	if(!length(speech))
 		return
 
-	var/center_turf = get_turf(component.parent)
+	var/center_turf = get_turf(our_artifact)
 
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")

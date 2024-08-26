@@ -5,11 +5,11 @@
 
 	research_value = 50
 
-/datum/artifact_fault/whisper/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/whisper/on_trigger()
 	if(!length(whispers))
 		return
 
-	var/center_turf = get_turf(component.parent)
+	var/center_turf = get_turf(our_artifact.parent)
 
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")

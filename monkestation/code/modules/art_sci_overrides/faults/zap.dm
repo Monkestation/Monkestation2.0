@@ -7,6 +7,6 @@
 
 	weight = ARTIFACT_RARE
 
-/datum/artifact_fault/tesla_zap/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/tesla_zap/on_trigger()
 	. = ..()
-	tesla_zap(component.holder, rand(4, 7), ZAP_MOB_DAMAGE)
+	tesla_zap(our_artifact.holder, rand(4, 7), ZAP_MOB_DAMAGE)

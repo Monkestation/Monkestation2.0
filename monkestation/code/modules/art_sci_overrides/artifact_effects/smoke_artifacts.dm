@@ -1,6 +1,6 @@
 /datum/artifact_effect/smoke
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Smoke Machine Effect"
+	type_name = "Smoke Machine (Colorful) Effect"
 	activation_message = "starts spewing out smoke!"
 	deactivation_message = "becomes silent."
 
@@ -39,6 +39,7 @@
 
 /datum/artifact_effect/smoke/toxin
 	weight = ARTIFACT_RARE
+	type_name = "Smoke Machine (Harmful) Effect"
 	activation_message = "starts spewing out toxic smoke!"
 	valid_chemicals = list(
 		/datum/reagent/toxin/bonehurtingjuice,
@@ -48,6 +49,7 @@
 	)
 
 /datum/artifact_effect/smoke/flesh
+	type_name = "Smoke Machine (Synthflesh) Effect"
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out flesh mending smoke!"
 	valid_chemicals = list(
@@ -55,6 +57,7 @@
 	)
 
 /datum/artifact_effect/smoke/exotic
+	type_name = "Smoke Machine (Exotic) Effect"
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out exotic smoke!"
 	valid_chemicals = list(

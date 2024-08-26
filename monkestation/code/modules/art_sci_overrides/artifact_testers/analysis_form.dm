@@ -61,7 +61,7 @@
 		if("type")
 			var/trig_type = params["type"]
 			if(trig_type in chosen_effects)
-				chosen_effects-= trig_type
+				chosen_effects -= trig_type
 			else
 				chosen_effects += trig_type
 		if("trigger")
@@ -76,7 +76,7 @@
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	. = ..()
 	var/list/origins_names = list()
-	for(var/datum/artifact_origin/subtype  as anything in subtypesof(/datum/artifact_origin))
+	for(var/datum/artifact_origin/subtype as anything in subtypesof(/datum/artifact_origin))
 		origins_names += initial(subtype.name)
 
 	var/list/trigger_names = list()
@@ -85,6 +85,8 @@
 
 	var/list/artifact_names = list()
 	for(var/datum/artifact_effect/subtype as anything in subtypesof(/datum/artifact_effect))
+		if(subtype.super_secret)
+			continue //shhhhh
 		artifact_names += initial(subtype.type_name)
 
 	.["allorigins"] = origins_names
@@ -153,23 +155,28 @@
 	..()
 
 /obj/item/sticker/analysis_form/proc/analyze_attached()
+	if(!attached)
+		return
 	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
 	if(!to_analyze)
 		return
 	if(chosen_origin)
 		to_analyze.holder.name = to_analyze.generated_name
 	if(chosen_effects)
-		to_analyze.holder.name += " ([chosen_effects])"
+		for(var/effect as anything in chosen_effects)
+			to_analyze.holder.name += " ([effect]) "
+	to_analyze.analysis = src
 
 /obj/item/sticker/analysis_form/proc/deanalyze_attached()
 	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
 	if(!to_analyze)
 		return
 	to_analyze.holder.name = to_analyze.fake_name
+	QDEL_NULL(to_analyze.analysis)
 
 /obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
 	var/baseval = CARGO_CRATE_VALUE
-	var/labeling_bonus = round(CARGO_CRATE_VALUE * 0.5)
+	var/labeling_bonus = round(CARGO_CRATE_VALUE * 2.5)
 	var/bonus = 0
 	for(var/datum/artifact_effect/discovered in art.discovered_effects)
 		if(discovered.discovered_credits)

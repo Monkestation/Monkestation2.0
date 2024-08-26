@@ -16,11 +16,11 @@
 	var/datum/component/artifact/our_artifact
 
 ///called when the artifact gets a stimulus, and passes its trigger chance effect.
-/datum/artifact_fault/proc/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/proc/on_trigger()
 	return
 
 ///Called when the artifact trait comes into existance
-/datum/artifact_fault/proc/on_added(datum/component/artifact/component)
+/datum/artifact_fault/proc/on_added()
 	return
 
 /datum/artifact_fault/shutdown

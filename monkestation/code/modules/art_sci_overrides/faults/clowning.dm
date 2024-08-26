@@ -8,8 +8,8 @@
 
 	weight = ARTIFACT_VERYRARE
 
-/datum/artifact_fault/clown/on_trigger(datum/component/artifact/component)
-	var/center_turf = get_turf(component.parent)
+/datum/artifact_fault/clown/on_trigger()
+	var/center_turf = get_turf(our_artifact.parent)
 
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")

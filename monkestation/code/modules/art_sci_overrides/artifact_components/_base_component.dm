@@ -1,4 +1,4 @@
-#define BASE_MAX_ACTIVATORS 3
+#define BASE_MAX_ACTIVATORS 2
 #define BASE_MAX_EFFECTS 3
 
 /datum/component/artifact
@@ -183,7 +183,6 @@
 		added.our_artifact = src
 		added.setup()
 		all_possible_effects -= effect
-	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))
@@ -275,6 +274,7 @@
 	if(!stimuli)
 		return
 	var/checked_fault = FALSE
+	var/correct_trigger = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
 		if(!(listed_activator.required_stimuli & stimuli) && chosen_fault)
 			if(!triggers_faults)
@@ -301,9 +301,11 @@
 				if(!prob(ranged_activator.hint_prob))
 					continue
 				continue
-		if(active)
-			continue
-		artifact_activate()
+		correct_trigger = TRUE
+		break
+	if(active || !correct_trigger)
+		return
+	artifact_activate()
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
 	if(!QDELETED(target))

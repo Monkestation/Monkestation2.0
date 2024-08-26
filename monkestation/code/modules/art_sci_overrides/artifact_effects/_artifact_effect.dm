@@ -24,6 +24,8 @@
 	///played on deactivation
 	var/deactivation_sound
 
+	///Does this show up on the artifact fourm?
+	var/super_secret = FALSE
 
 	///Research value when discovered
 	var/research_value = 100

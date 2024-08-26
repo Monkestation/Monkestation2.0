@@ -1,15 +1,15 @@
 /datum/artifact_fault/monkey_mode
 	name = "Simian Spawner Fault"
-	trigger_chance = 3
+	trigger_chance = 5
 	visible_message = "summons a mass of simians!"
 
 	research_value = 250
 
 	weight = ARTIFACT_VERYUNCOMMON
 
-/datum/artifact_fault/monkey_mode/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/monkey_mode/on_trigger()
 	var/monkey = rand(1,4)
-	var/center_turf = get_turf(component.parent)
+	var/center_turf = get_turf(our_artifact.parent)
 	var/list/turf/valid_turfs = list()
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
