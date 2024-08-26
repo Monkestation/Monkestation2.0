@@ -1,5 +1,6 @@
 #define BASE_MAX_ACTIVATORS 2
 #define BASE_MAX_EFFECTS 3
+#define STIMULI_CD_TIME 5 SECONDS
 
 /datum/component/artifact
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -81,6 +82,8 @@
 	var/list/datum/artifact_effect/artifact_effects = list()
 	///A list of effects that have been discovered
 	var/list/datum/artifact_effect/discovered_effects = list()
+
+	COOLDOWN_DECLARE(reactivate_cooldown)
 
 /datum/component/artifact/Initialize(forced_origin,forced_effect)
 	. = ..(forced_origin,forced_effect)
@@ -271,7 +274,7 @@
 
 ///Called when the artifact gets something that may activate it. Skips re-activation of artifacts, but passes their triggers to faults.
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
-	if(!stimuli)
+	if(!stimuli || !COOLDOWN_FINISHED(src,reactivate_cooldown))
 		return
 	var/checked_fault = FALSE
 	var/correct_trigger = FALSE
@@ -303,6 +306,7 @@
 				continue
 		correct_trigger = TRUE
 		break
+	COOLDOWN_START(src,reactivate_cooldown,STIMULI_CD_TIME)
 	if(active || !correct_trigger)
 		return
 	artifact_activate()
@@ -316,3 +320,4 @@
 
 #undef BASE_MAX_ACTIVATORS
 #undef BASE_MAX_EFFECTS
+#undef STIMULI_CD_TIME

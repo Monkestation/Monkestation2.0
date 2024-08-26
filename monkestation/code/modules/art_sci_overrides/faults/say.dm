@@ -1,6 +1,6 @@
 /datum/artifact_fault/speech
 	name = "Talkative Fault"
-	trigger_chance = 30
+	trigger_chance = 75
 	var/list/speech = list("Hello there.","I see you.","I know what you've done.")
 
 	research_value = 50
