@@ -14,19 +14,19 @@
 	if(explict_examine)
 		examine_list += explict_examine
 	for(var/datum/artifact_effect/effect in artifact_effects)
-		if(discovered_effects.Find(effect.type))
-			examine_list += effect.examine_discovered
-		else
-			examine_list += effect.examine_hint
+		if(discovered_effects.Find(effect.type) && effect.examine_discovered)
+			examine_list += span_info(effect.examine_discovered)
+		else if (effect.examine_hint)
+			examine_list += span_info(effect.examine_hint)
 
 	for(var/datum/artifact_activator/act in activators)
-		if(discovered_activators.Find(act.type))
-			examine_list += act.discovered_text
-		else
-			examine_list += pick(act.hint_texts)
+		if(discovered_activators.Find(act.type) && act.discovered_text)
+			examine_list += span_info(act.discovered_text)
+		else if(length(act.hint_texts))
+			examine_list += span_info(pick(act.hint_texts))
 
 	if(chosen_fault && chosen_fault.inspect_warning)
-		examine_list += pick(chosen_fault.inspect_warning)
+		examine_list += span_warning(pick(chosen_fault.inspect_warning))
 
 /datum/component/artifact/proc/on_sticker(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER

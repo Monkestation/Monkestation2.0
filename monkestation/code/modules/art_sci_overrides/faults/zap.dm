@@ -5,6 +5,8 @@
 
 	research_value = 200
 
+	weight = ARTIFACT_RARE
+
 /datum/artifact_fault/tesla_zap/on_trigger(datum/component/artifact/component)
 	. = ..()
 	tesla_zap(component.holder, rand(4, 7), ZAP_MOB_DAMAGE)

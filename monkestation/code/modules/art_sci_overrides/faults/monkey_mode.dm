@@ -5,6 +5,8 @@
 
 	research_value = 250
 
+	weight = ARTIFACT_VERYUNCOMMON
+
 /datum/artifact_fault/monkey_mode/on_trigger(datum/component/artifact/component)
 	var/monkey = rand(1,4)
 	var/center_turf = get_turf(component.parent)

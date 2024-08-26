@@ -5,6 +5,8 @@
 
 	research_value = 250
 
+	weight = ARTIFACT_UNCOMMON
+
 /datum/artifact_fault/bioscramble/on_trigger(datum/component/artifact/component)
 	var/center_turf = get_turf(component.parent)
 

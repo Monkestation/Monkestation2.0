@@ -70,14 +70,16 @@
 	var/freebies = 3
 	///if we have a special examine IE borgers
 	var/explict_examine
+	///Fault = weight
+	var/static/list/datum/artifact_fault/fault_weight_list
 
-	//The activators we have discovered.
+	///The activators we have discovered.
 	var/list/datum/artifact_activator/discovered_activators = list()
-	//Have we discovered what the bad is?
+	///Have we discovered what the bad is?
 	var/fault_discovered = FALSE
-	//A list of effects the artifact has
+	///A list of effects the artifact has
 	var/list/datum/artifact_effect/artifact_effects = list()
-	//A list of effects that have been discovered
+	///A list of effects that have been discovered
 	var/list/datum/artifact_effect/discovered_effects = list()
 
 /datum/component/artifact/Initialize(forced_origin,forced_effect)
@@ -88,14 +90,23 @@
 	holder = parent
 	GLOB.running_artifact_list[holder] = src
 
+	if(!length(fault_weight_list))
+		var/list/datum/artifact_fault/valid_faults_pre = typecacheof(/datum/artifact_fault,ignore_root_path = TRUE)
+		var/list/datum/artifact_fault/valid_faults = list()
+		for(var/datum/artifact_fault/fault as anything in valid_faults_pre)
+			valid_faults += fault
+			valid_faults[fault] = fault.weight
+		fault_weight_list = valid_faults
 	if(forced_origin)
 		valid_origins = list(forced_origin)
 	var/picked_origin = pick(valid_origins)
 	artifact_origin = new picked_origin
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
-	if(rand(0,100)<95)
-		var/picked_fault = pick_weight(valid_faults)
+	if(prob(95))
+		var/picked_fault = pick_weight(fault_weight_list)
 		chosen_fault = new picked_fault
+		chosen_fault.our_artifact = src
+		chosen_fault.on_added(src)
 
 	generated_name = artifact_origin.generate_name()
 	if(!generated_name)
@@ -204,9 +215,32 @@
 		COMSIG_ATOM_PULLED,
 	))
 
+///Kinda a legacy proc, but if you need something super special I guess.
 /datum/component/artifact/proc/setup()
 	return
 
+///Replaces the fault on the artifact with a new one. Admin Proc, not called
+/datum/component/artifact/proc/force_replace_fault(new_fault_path)
+	if(new_fault_path && ispath(new_fault_path,/datum/artifact_fault))
+		chosen_fault = new new_fault_path
+		chosen_fault.our_artifact = src
+		chosen_fault.on_added(src)
+		return TRUE
+	return FALSE
+
+///Adds a new artifact effect to the artifact. Ignores all normal checks. Admin Proc. Not called.
+/datum/component/artifact/proc/force_add_effect(new_effect_path,effect_power = null)
+	if(new_effect_path && ispath(new_effect_path,/datum/artifact_effect))
+		var/datum/artifact_effect/added_boogaloo = new new_effect_path
+		artifact_effects += added_boogaloo
+		added_boogaloo.our_artifact = src
+		if(effect_power)
+			added_boogaloo.potency = effect_power
+		added_boogaloo.setup()
+		return TRUE
+	return FALSE
+
+///Activates the artifact.
 /datum/component/artifact/proc/artifact_activate(silent)
 	if(active) //dont activate activated objects
 		return FALSE
@@ -222,6 +256,7 @@
 		effect.effect_activate(silent)
 	return TRUE
 
+///The opposite of activates the artifact
 /datum/component/artifact/proc/artifact_deactivate(silent)
 	if(!active)
 		return
@@ -235,8 +270,9 @@
 	for(var/datum/artifact_effect/effect in artifact_effects)
 		effect.effect_deactivate(silent)
 
+///Called when the artifact gets something that may activate it. Skips re-activation of artifacts, but passes their triggers to faults.
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
-	if(!stimuli || active) // if called without a stimuli dont bother, if active we dont wanna reactivate
+	if(!stimuli)
 		return
 	var/checked_fault = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
@@ -265,6 +301,8 @@
 				if(!prob(ranged_activator.hint_prob))
 					continue
 				continue
+		if(active)
+			continue
 		artifact_activate()
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)

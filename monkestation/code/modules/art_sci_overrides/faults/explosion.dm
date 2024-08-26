@@ -5,6 +5,8 @@
 
 	research_value = 500 //nanotrasen always likes weapons IMO
 
+	weight = ARTIFACT_UNCOMMON
+
 /datum/artifact_fault/explosion/on_trigger(datum/component/artifact/component)
 	component.holder.Shake(duration = 5 SECONDS, shake_interval = 0.08 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(payload), component), 5 SECONDS)

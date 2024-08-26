@@ -6,6 +6,8 @@
 
 	research_value = 250
 
+	weight = ARTIFACT_UNCOMMON
+
 /datum/artifact_fault/warp/on_trigger(datum/component/artifact/component)
 	if(!length(warp_areas))
 		warp_areas = GLOB.the_station_areas

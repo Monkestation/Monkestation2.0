@@ -6,7 +6,7 @@
 	///When you discover this, how many credits does it add to the sell price?
 	var/discovered_credits = CARGO_CRATE_VALUE*0.75
 	///how likely is it that this effect is added to an artifact?
-	var/weight = 1
+	var/weight = ARTIFACT_COMMON
 	///if defined, artifact must be this size to roll
 	var/artifact_size
 	///how strong is this effect,1-100
@@ -15,15 +15,18 @@
 	var/list/valid_activators
 	///If the artifact doesnt have this origin, cant be put on. If null, assume any
 	var/list/valid_origins
-	///sent/played on [de]activation
+	///sent on activation
 	var/activation_message
+	///played on activation
 	var/activation_sound
+	///sent on deactivation
 	var/deactivation_message
+	///played on deactivation
 	var/deactivation_sound
 
 
 	///Research value when discovered
-	var/research_value = 0
+	var/research_value = 100
 	///The artifact we're on.
 	var/datum/component/artifact/our_artifact
 	///Type of effect, shows up in Xray Machine
@@ -52,3 +55,12 @@
 ///Called when the artifact is destroyed
 /datum/artifact_effect/proc/on_destroy(atom/source)
 	return
+///Util, can be called to activate, then de-activate the artifact as a whole swiftly. Wont Re activate already active artifacts.
+/datum/artifact_effect/proc/flick_active(silent)
+	if(!our_artifact.active)
+		our_artifact.artifact_activate(silent)
+	our_artifact.artifact_deactivate(silent)
+	return
+///Util, can be called to swap the artifacts active status quickly.
+/datum/artifact_effect/proc/toggle_active(silent)
+	our_artifact.active ? our_artifact.artifact_deactivate(silent) : our_artifact.artifact_activate(silent)
