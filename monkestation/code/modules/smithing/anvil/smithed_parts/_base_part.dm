@@ -53,6 +53,11 @@
 			damage_state = null
 			desc += " It's utterly flawless! Quality:[smithed_quality]"
 
+	if(material_stats.thermal <= 50)
+		resistance_flags |= FIRE_PROOF
+	if(material_stats.thermal <= 20)
+		resistance_flags |= LAVA_PROOF
+
 	if(damage_state)
 		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('monkestation/code/modules/smithing/icons/forge_items.dmi', damage_state), flags = MASK_INVERSE))
 
