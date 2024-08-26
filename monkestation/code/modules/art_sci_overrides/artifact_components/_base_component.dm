@@ -4,7 +4,7 @@
 /datum/component/artifact
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	//The object we are attached to
-	var/obj/structure/artifact/holder
+	var/obj/holder
 	///size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)
 	var/artifact_size = ARTIFACT_SIZE_LARGE
 	///type name for displaying on analysis forms
