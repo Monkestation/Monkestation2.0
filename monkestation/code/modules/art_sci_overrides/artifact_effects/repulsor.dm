@@ -20,7 +20,7 @@
 	cooldown_time = rand(3,5) SECONDS
 	strength = rand(MOVE_FORCE_DEFAULT,MOVE_FORCE_OVERPOWERING)
 	potency += cooldown_time / 4 + strength / 3000
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), round(10 + (potency/5) SECONDS))
+	addtimer(CALLBACK(our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), round(10 + (potency/5) SECONDS))
 
 /datum/artifact_effect/repulsor/effect_touched(mob/user)
 	if(!COOLDOWN_FINISHED(src,cooldown))

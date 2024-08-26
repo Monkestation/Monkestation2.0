@@ -259,7 +259,7 @@
 	return TRUE
 
 ///The opposite of activates the artifact
-/datum/component/artifact/proc/artifact_deactivate(silent)
+/datum/component/artifact/proc/artifact_deactivate(silent = FALSE)
 	if(!active)
 		return
 	if(deactivation_sound && !silent)
