@@ -378,7 +378,7 @@
 	var/mob/living/L = on_who
 	src.Remove(L)
 
-/datum/action/cooldown/spell/pointed/projectile/spit/InterceptClickOn(mob/living/caller, params, atom/click_target)
+/datum/action/cooldown/spell/pointed/projectile/spit/InterceptClickOn(mob/living/caller, params, atom/target)
 	var/mob/living/spitter = caller
 
 	if(ishuman(spitter))
