@@ -20,6 +20,7 @@
 
 	for(var/mob/living/carbon/mob in range(rand(3, 4), center_turf))
 		mobs += mob
+	if(!length(mobs))
 	human = pick(mobs)
 	if(!human)
 		return
