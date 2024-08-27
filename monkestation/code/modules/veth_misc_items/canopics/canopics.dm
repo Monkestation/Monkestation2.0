@@ -4,7 +4,7 @@
 	desc = "An ornate stone box inscribed with ancient hieroglyphs."
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic_box.dmi'
 	icon_state = "canopic_box"
-	inhand_icon_state = "canopic_box"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
@@ -12,6 +12,11 @@
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
 	illustration = "writing"
+
+/obj/item/storage/box/canopic_box/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = WEIGHT_CLASS_SMALL
+	update_appearance()
 
 /datum/crafting_recipe/canopic_box
 	name = "Canopic box"
@@ -61,7 +66,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_jackal"
-	inhand_icon_state = "canopic_jackal"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
@@ -89,7 +94,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_human"
-	inhand_icon_state = "canopic_human"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
@@ -174,7 +179,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_monke"
-	inhand_icon_state = "canopic_monke"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
@@ -233,7 +238,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_hawk"
-	inhand_icon_state = "canopic_hawk"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
