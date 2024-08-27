@@ -30,7 +30,7 @@
 		icon_state = "mailtokens"
 
 /datum/export/stack/mail_token
-	cost = CARGO_CRATE_VALUE
+	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "mail token"
 	k_elasticity = 0
 	export_types = list(/obj/item/stack/mail_token)
