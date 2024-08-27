@@ -2,7 +2,7 @@
 	examine_hint = "Seems...off somehow."
 	examine_discovered = "Temporarily tears holes in reality."
 	discovered_credits = CARGO_CRATE_VALUE * 100 //GDM
-	weight = ARTIFACT_VERYRARE/4 //Super rare
+	weight = ARTIFACT_VERYRARE/5 //Super rare
 	activation_message = "tears open the fabric of reality!"
 
 	research_value = 10000
@@ -34,6 +34,6 @@
 
 	var/last_position = get_turf(human)
 	human.move_to_error_room()
-	addtimer(CALLBACK(src,PROC_REF(returnthey),human,last_position),10 SECOND)
+	addtimer(CALLBACK(src,PROC_REF(returnthey),human,last_position),5 SECOND)
 	return
 

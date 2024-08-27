@@ -48,7 +48,7 @@
 ///Called when the artifact has been de-activated
 /datum/artifact_effect/proc/effect_deactivate(silent)
 	return
-///Called when the artifact has been touched by a living mob.
+///Called when the artifact has been touched by a living mob,does NOT call faults or activate artifact unless it has the correct touch component!
 /datum/artifact_effect/proc/effect_touched(mob/living/user)
 	return
 ///Called on every artifact subsystem tick.

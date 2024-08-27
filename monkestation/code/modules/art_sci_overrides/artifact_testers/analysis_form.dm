@@ -166,6 +166,7 @@
 		for(var/effect as anything in chosen_effects)
 			to_analyze.holder.name += " ([effect]) "
 	to_analyze.analysis = src
+	to_analyze.process_stimuli(STIMULUS_DATA,TRUE)
 
 /obj/item/sticker/analysis_form/proc/deanalyze_attached()
 	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
@@ -178,9 +179,9 @@
 	var/baseval = CARGO_CRATE_VALUE
 	var/labeling_bonus = round(CARGO_CRATE_VALUE * 2.5)
 	var/bonus = 0
-	for(var/datum/artifact_effect/discovered in art.discovered_effects)
+	for(var/datum/artifact_effect/discovered as anything in art.discovered_effects)
 		if(discovered.discovered_credits)
-			bonus += round(discovered.discovered_credits * (discovered.potency/50))
+			bonus += round(discovered.discovered_credits * ((discovered.potency + 25)/50))
 	if(art.chosen_fault && art.fault_discovered)
 		bonus += art.chosen_fault.discovered_credits
 	if(art.artifact_origin.type_name == chosen_origin)
@@ -189,14 +190,14 @@
 		bonus -= labeling_bonus
 	if(chosen_effects)
 		for(var/name_effect in chosen_effects)
-			for(var/datum/artifact_effect/effect in art.artifact_effects)
+			for(var/datum/artifact_effect/effect as anything in art.artifact_effects)
 				if(effect.type_name != name_effect)
 					bonus -= labeling_bonus
 				else
 					bonus += labeling_bonus
 	if(chosentriggers)
 		for(var/name_trigger in chosentriggers)
-			for(var/datum/artifact_activator/activator in art.activators)
+			for(var/datum/artifact_activator/activator as anything in art.activators)
 				if(activator.name != name_trigger)
 					bonus -= labeling_bonus
 				else

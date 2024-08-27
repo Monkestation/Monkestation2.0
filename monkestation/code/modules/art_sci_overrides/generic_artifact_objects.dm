@@ -10,7 +10,7 @@
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 	var/mutable_appearance/extra_effect
 
-ARTIFACT_SETUP(/obj/structure/artifact, SSobj)
+ARTIFACT_SETUP(/obj/structure/artifact, SSobj, null, forced_effect, null)
 
 /obj/effect/artifact_spawner
 	name = "Random Artifact Spawner"

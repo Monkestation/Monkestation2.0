@@ -30,21 +30,6 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation,
 	)
-	///valid list of faults with their weights [10 is base]
-	var/list/valid_faults = list(
-		/datum/artifact_fault/ignite = 10,
-		/datum/artifact_fault/warp = 10,
-		/datum/artifact_fault/reagent/poison = 10,
-		/datum/artifact_fault/death = 1,
-		/datum/artifact_fault/tesla_zap = 5,
-		/datum/artifact_fault/shrink = 10,
-		/datum/artifact_fault/explosion = 2,
-		/datum/artifact_fault/speech = 10,
-		/datum/artifact_fault/whisper = 8,
-		/datum/artifact_fault/monkey_mode = 4,
-		/datum/artifact_fault/shutdown = 10,
-		/datum/artifact_fault/bioscramble = 5
-	)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin
 	///origin datums to pick
@@ -85,13 +70,15 @@
 
 	COOLDOWN_DECLARE(reactivate_cooldown)
 
-/datum/component/artifact/Initialize(forced_origin,forced_effect)
-	. = ..(forced_origin,forced_effect)
+/datum/component/artifact/Initialize(forced_origin,forced_effect,forced_size)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	holder = parent
 	GLOB.running_artifact_list[holder] = src
+
+	if(forced_size != null)
+		artifact_size = forced_size
 
 	if(!length(fault_weight_list))
 		var/list/datum/artifact_fault/valid_faults_pre = typecacheof(/datum/artifact_fault,ignore_root_path = TRUE)
@@ -102,7 +89,7 @@
 		fault_weight_list = valid_faults
 	if(forced_origin)
 		valid_origins = list(forced_origin)
-	var/picked_origin = pick(valid_origins)
+	var/datum/artifact_origin/picked_origin = pick(valid_origins)
 	artifact_origin = new picked_origin
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 	if(prob(95))
@@ -158,14 +145,16 @@
 		artifact_effects += added_boogaloo
 		added_boogaloo.our_artifact = src
 		added_boogaloo.setup()
-	var/list/datum/artifact_effect/all_possible_effects = GLOB.artifact_effect_rarity["all"]// We need all of them as we check later if ifs a valid origin
-	for(var/j in 1 to BASE_MAX_EFFECTS)
-		if(length(all_possible_effects) <= 0)
+	var/list/datum/artifact_effect/dont_touch = GLOB.artifact_effect_rarity["all"] //Dont touch because below.
+	var/list/datum/artifact_effect/all_possible_effects = dont_touch.Copy() //If you touch it, it actually edits the list, we need a copy. We cant call copy directly because its not a static type list.
+	var/effects_amount = rand(1,BASE_MAX_EFFECTS)
+	while(effects_amount >0)
+		if(effects_amount <= 0)
 			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
-			continue
+			break
 		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
 		if(effect.valid_origins)
-			if(!(picked_origin in effect.valid_origins))
+			if(!(picked_origin.type in effect.valid_origins))
 				all_possible_effects -= effect
 				continue
 		if(effect.valid_activators)
@@ -186,6 +175,7 @@
 		added.our_artifact = src
 		added.setup()
 		all_possible_effects -= effect
+		effects_amount--
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))
@@ -272,9 +262,14 @@
 	for(var/datum/artifact_effect/effect in artifact_effects)
 		effect.effect_deactivate(silent)
 
+/datum/component/artifact/effect_touched(mob/living/user)
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		effect.effect_touched(user)
+	return
+
 ///Called when the artifact gets something that may activate it. Skips re-activation of artifacts, but passes their triggers to faults.
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
-	if(!stimuli || !COOLDOWN_FINISHED(src,reactivate_cooldown))
+	if(!stimuli)
 		return
 	var/checked_fault = FALSE
 	var/correct_trigger = FALSE
@@ -306,10 +301,11 @@
 				continue
 		correct_trigger = TRUE
 		break
-	COOLDOWN_START(src,reactivate_cooldown,STIMULI_CD_TIME)
 	if(active || !correct_trigger)
 		return
-	artifact_activate()
+	if(COOLDOWN_FINISHED(src,reactivate_cooldown))
+		artifact_activate()
+	COOLDOWN_START(src,reactivate_cooldown,STIMULI_CD_TIME)
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
 	if(!QDELETED(target))

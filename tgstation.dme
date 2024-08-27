@@ -6198,6 +6198,7 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_component.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_component_signal_procs.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_subtype_helpers.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_components\ghost_object.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\_artifact_effect.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\bomb.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\bonk.dm"

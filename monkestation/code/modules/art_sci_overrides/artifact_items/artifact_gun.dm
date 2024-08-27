@@ -39,10 +39,9 @@
 	pinless = TRUE
 	recharge_rate = 1
 	antimagic_flags = null
-	var/forced_effect = /datum/artifact_effect/gun
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 
-ARTIFACT_SETUP(/obj/item/gun/magic/artifact, SSobj)
+ARTIFACT_SETUP(/obj/item/gun/magic/artifact, SSobj, null, /datum/artifact_effect/gun, ARTIFACT_SIZE_SMALL)
 
 /obj/item/gun/magic/artifact/can_shoot()
 	return assoc_comp.active

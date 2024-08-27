@@ -12,11 +12,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/special_cooldown_time
 	var/special
-	var/forced_effect = /datum/artifact_effect/melee
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 	COOLDOWN_DECLARE(special_cooldown)
 
-ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj)
+ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj, null, /datum/artifact_effect/melee, ARTIFACT_SIZE_SMALL)
 
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
 	if(!istype(victim) || !assoc_comp.active || !COOLDOWN_FINISHED(src,special_cooldown) || !special || !proximity)

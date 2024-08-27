@@ -15,14 +15,14 @@
 #define ARTIFACT_UNCOMMON 400
 #define ARTIFACT_VERYUNCOMMON 300
 #define ARTIFACT_RARE 250
-#define ARTIFACT_VERYRARE 140
+#define ARTIFACT_VERYRARE 125
 
-//cuts down on boiler plate code
-#define ARTIFACT_SETUP(X,subsystem) ##X/Initialize(mapload, var/forced_origin = null,var/forced_effect = null){\
+//cuts down on boiler plate code, last 3 args can be null.
+#define ARTIFACT_SETUP(X,subsystem,forced_origin,forced_effect,forced_size) ##X/Initialize(mapload){\
 	. = ..();\
 	START_PROCESSING(subsystem, src);\
 	if(assoc_comp) {\
-		assoc_comp = AddComponent(assoc_comp, forced_origin, forced_effect);\
+		assoc_comp = AddComponent(assoc_comp, forced_origin, forced_effect, forced_size);\
 		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete));\
 	}\
 } \

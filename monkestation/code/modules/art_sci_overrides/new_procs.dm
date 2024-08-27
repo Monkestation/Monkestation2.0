@@ -18,14 +18,22 @@
 
 	return rgb(red, green, blue, alpha)
 
-
-/proc/spawn_artifact(turf/loc, forced_origin)
+//Spawn a new artifact
+/proc/spawn_artifact(turf/loc, forced_origin = null, forced_effect = null)
 	if (!loc)
 		return
 	if(!length(GLOB.artifact_effect_rarity))
 		build_weighted_rarities()
 
-	var/obj/structure/artifact/A = new(loc,forced_origin)
+	var/obj/type_of_artifact = pick_weight(list(
+		/obj/structure/artifact = 90,
+		/obj/item/stock_parts/cell/artifact = 2.5,
+		/obj/item/gun/magic/artifact = 2.5,
+		/obj/item/melee/artifact = 2.5,
+		/obj/machinery/power/generator_artifact = 2.5
+	))
+
+	var/obj/structure/artifact/A = new type_of_artifact(loc,forced_origin,forced_effect)
 	return A
 
 

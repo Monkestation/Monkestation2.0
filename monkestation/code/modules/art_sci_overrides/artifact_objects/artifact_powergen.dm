@@ -10,9 +10,8 @@
 	circuit = null
 	density = TRUE
 	anchored = FALSE
-	var/forced_effect = /datum/artifact_effect/generator
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
-ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
+ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum/artifact_effect/generator, null)
 
 /datum/artifact_effect/generator
 	type_name = "Power Generator"

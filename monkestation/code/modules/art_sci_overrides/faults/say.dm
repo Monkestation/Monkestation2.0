@@ -9,7 +9,7 @@
 	if(!length(speech))
 		return
 
-	var/center_turf = get_turf(our_artifact)
+	var/center_turf = get_turf(our_artifact.parent)
 
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
