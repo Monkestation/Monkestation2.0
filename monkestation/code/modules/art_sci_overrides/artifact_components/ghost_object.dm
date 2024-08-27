@@ -5,8 +5,8 @@
 	var/mob/living/basic/shade/bound_spirit
 	///do we make a callback to retry untill someone posesses it?
 	var/repolling= FALSE
-	///How often can this thing move?
-	var/speed= (1/3) SECONDS
+	///How often can this thing move in seconds
+	var/speed= 1.25
 	COOLDOWN_DECLARE(move_cooldown)
 /datum/component/ghost_object_control/Initialize(repoll = FALSE,move_speed = null)
 	if(!ismovable(parent)) //you may apply this to mobs, I take no responsibility for how that works out
@@ -31,6 +31,7 @@
 ///Moves the object. Yippee!
 /datum/component/ghost_object_control/proc/move_host(atom/movable/movable_parent,mob/buckled_mob,dir_to_move)
 	SIGNAL_HANDLER
+
 	if(!COOLDOWN_FINISHED(src, move_cooldown))
 		return COMSIG_BLOCK_RELAYMOVE
 	var/turf/next = get_step(movable_parent, dir_to_move)
@@ -44,7 +45,7 @@
 
 	step(movable_parent, dir_to_move)
 	var/last_move_diagonal = ((dir_to_move & (dir_to_move - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, move_cooldown, (last_move_diagonal ? 2 : 1) * speed)
+	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 2 : 1) * speed) SECOND)
 
 	if(QDELETED(src))
 		return COMSIG_BLOCK_RELAYMOVE

@@ -145,6 +145,8 @@
 		artifact_effects += added_boogaloo
 		added_boogaloo.our_artifact = src
 		added_boogaloo.setup()
+	if(!length(GLOB.artifact_effect_rarity["all"]))
+		build_weighted_rarities()
 	var/list/datum/artifact_effect/dont_touch = GLOB.artifact_effect_rarity["all"] //Dont touch because below.
 	var/list/datum/artifact_effect/all_possible_effects = dont_touch.Copy() //If you touch it, it actually edits the list, we need a copy. We cant call copy directly because its not a static type list.
 	var/effects_amount = rand(1,BASE_MAX_EFFECTS)
