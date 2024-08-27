@@ -24,15 +24,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
-	armor_type = temp.generate_new_with_modifiers(list(
-		ACID = round((material_stats.density / 1.75) * (smithed_quality/100)),
-		BOMB = round(((material_stats.density + material_stats.hardness)/2.25) * (smithed_quality/100)),
-		BULLET = round(((material_stats.density + material_stats.hardness)/2.25) * (smithed_quality/100)),
-		ENERGY = round((material_stats.refractiveness / 1.75) * (smithed_quality/100)),
-		FIRE = round(((100-material_stats.thermal)/1.75) * (smithed_quality/100)),
-		LASER = round(((material_stats.refractiveness + material_stats.density)/2.25) * (smithed_quality/100)),
-		MELEE = round((material_stats.density + material_stats.hardness)/1.75 * (smithed_quality/100))
-	))
+	set_armor(temp.generate_new_with_modifiers(list(
+		ACID = min(round((material_stats.density / 1.75) * (smithed_quality/100)), 40),
+		BOMB = min(round(((material_stats.density + material_stats.hardness)/3.5) * (smithed_quality/100)), 40),
+		BULLET = min(round(((material_stats.density + material_stats.hardness)/3.5) * (smithed_quality/100)), 40),
+		ENERGY = min(round((material_stats.refractiveness / 1.75) * (smithed_quality/100)), 40),
+		FIRE = min(round(((100-material_stats.thermal)/1.75) * (smithed_quality/100)), 40),
+		LASER = min(round(((material_stats.refractiveness + material_stats.density)/3.5) * (smithed_quality/100)), 40),
+		MELEE = min(round(((material_stats.density + material_stats.hardness)/2) * (smithed_quality/100)), 40)
+	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
 
@@ -62,15 +62,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
-	armor_type = temp.generate_new_with_modifiers(list(
-		ACID = round((material_stats.density / 1.25) * (smithed_quality/100)),
-		BOMB = round(((material_stats.density + material_stats.hardness)/1.5) * (smithed_quality/100)),
-		BULLET = round(((material_stats.density + material_stats.hardness)/1.5) * (smithed_quality/100)),
-		ENERGY = round((material_stats.refractiveness / 1.25) * (smithed_quality/100)),
-		FIRE = round(((100-material_stats.thermal)/1.25) * (smithed_quality/100)),
-		LASER = round(((material_stats.refractiveness + material_stats.density)/1.5) * (smithed_quality/100)),
-		MELEE = round((material_stats.density + material_stats.hardness)/1.25 * (smithed_quality/100))
-	))
+	set_armor(temp.generate_new_with_modifiers(list(
+		ACID = min(round((material_stats.density / 1.5) * (smithed_quality/100)), 70),
+		BOMB = min(round(((material_stats.density + material_stats.hardness)/3) * (smithed_quality/100)), 70),
+		BULLET = min(round(((material_stats.density + material_stats.hardness)/3) * (smithed_quality/100)), 70),
+		ENERGY = min(round((material_stats.refractiveness / 1.5) * (smithed_quality/100)), 70),
+		FIRE = min(round(((100-material_stats.thermal)/1.5) * (smithed_quality/100)), 70),
+		LASER = min(round(((material_stats.refractiveness + material_stats.density)/3) * (smithed_quality/100)), 70),
+		MELEE = min(round(((material_stats.density + material_stats.hardness)/2) * (smithed_quality/100)), 70)
+	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
 
