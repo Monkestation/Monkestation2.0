@@ -76,9 +76,10 @@
 	if(age > (seed.lifespan + repeated_harvest_value) && !bio_boosted)
 		adjust_health(src, -rand(1, 5))
 
+/* OLYMPUS EDIT
 	for(var/datum/reagent/reagent as anything in planter_reagents.reagent_list)
 		reagent.on_plant_apply(parent)
-
+*/
 	update_plant_visuals()
 
 /datum/component/growth_information/proc/update_growth_information()
