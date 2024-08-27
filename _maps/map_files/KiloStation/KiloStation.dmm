@@ -39082,7 +39082,8 @@
 	name = "Private Study";
 	req_access = list("library")
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/library)
 "mjG" = (
 /obj/effect/turf_decal/bot,
