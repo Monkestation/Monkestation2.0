@@ -44,16 +44,6 @@
 				But please do stop sending power soon, as we cannot hold much more. Consequences will arise if power output continues to be unmoderated.\
 			"
 
-		if(1 AW)
-			message = "The onboard PTL has successfully exported 1 Raynawatt worth of power"
-			flavor_text = "\
-				Great job, geniuses! You've just vaporized an entire sector. \
-				Do you have any idea how much paperwork that is? \
-				We're talking about a bureaucratic nightmare of epic proportions. \
-				I hope you're ready to spend the next decade filling out forms, because that's what it's going to take to clean up this mess. \
-				So, congratulations, you've made history. Now get ready to pay for it in triplicate.\
-			"
-
 		else // should not be achievable because it would require 1+36e power, but for safety reasons lets leave it here
 			message = "The onboard PTL has successfully exported extremelly high amounts of power"
 			flavor_text = "We ran out of orders of magnitude that are currently categorized, good work!"
@@ -92,9 +82,6 @@
 
 		if(1 EW to INFINITY)
 			readable_power = "[total_power / (1 EW)] Exowatts"
-
-		if(INFINITY + 1 to 999 AW) // for when infinity is not enough...
-			readable_power = "[total_power / (1 QW)] Quettawatts (1+30e watts, for your information)"
 
 	priority_announce(
 		sender_override = "[command_name()] energy unit",

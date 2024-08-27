@@ -11,5 +11,4 @@
 #define ZW EW * 1000 // 1+21e
 #define YW ZW * 1000 // 1+24e
 #define RW YW * 1000 // 1+27e
-#define QW RW * 1000 // 1+30e, beyond this point, the wiki offers no help
-#define AW QW * 1000 // 1+33e Probably the highest possible magnitude of power
+#define QW RW * 1000 // 1+30e
