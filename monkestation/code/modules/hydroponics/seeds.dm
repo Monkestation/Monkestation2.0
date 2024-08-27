@@ -40,6 +40,7 @@
 	if(yield_amount >= 10)
 		yield_amount = 10 + log(1.02) * (getYield() - 1)
 	while(t_amount < yield_amount)
+/* OLYMPUS EDIT
 		var/picked_object = pick(produce_list)
 		if(prob(10))
 			var/obj/item/seeds/seed_prod
@@ -59,11 +60,13 @@
 				t_prod = new produced_item(output_loc)
 			else
 				t_prod = new picked_object(output_loc, src)
-			result.Add(t_prod) // User gets a consumable
-			if(!t_prod)
-				return
-			t_amount++
-			product_name = t_prod.seed.plantname
+OLYMPUS END */
+		var/obj/item/food/grown/t_prod = new product(output_loc, src)
+		result.Add(t_prod) // User gets a consumable
+		if(!t_prod)
+			return
+		t_amount++
+		product_name = t_prod.seed.plantname
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
 

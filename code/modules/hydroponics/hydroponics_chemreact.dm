@@ -7,6 +7,15 @@
 	if(myseed)
 		myseed.on_chem_reaction(reagents) //In case seeds have some special interactions with special chems, currently only used by vines
 
+// OLYMPUS EDIT BEGIN
+
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		reagent.on_plant_apply(reagents)
+
+		reagents.clear_reagents()
+
+
+// OLYMPUS EDIT END
 
 /obj/machinery/hydroponics/proc/mutation_roll(mob/user)
 	switch(rand(100))

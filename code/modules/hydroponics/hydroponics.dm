@@ -186,7 +186,8 @@
 	for (var/datum/stock_part/manipulator/manipulator in component_parts)
 		rating = manipulator.tier
 	maxwater = tmp_capacity * 50 // Up to 300
-	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
+	//maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
+	maxnutri = tmp_capacity * 5 // OLYMPUS EDIT Up to 30
 	reagents.maximum_volume = maxnutri
 	nutriment_drain_precent = 10/rating
 
