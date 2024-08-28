@@ -27,12 +27,12 @@
 	name = "Heat Sensisty"
 	required_stimuli = STIMULUS_HEAT
 	hint_range = 20
-	highest_trigger_amount = 15000
+	highest_trigger_amount = 5000
 	hint_texts = list("It feels like someone messed with the thermostat.", "It feels unpleasent being near")
 	discovered_text = "Activated by Thermal Energy"
 
 /datum/artifact_activator/range/heat/New()
-	base_trigger_amount = rand(350, 1000)
+	base_trigger_amount = rand(350, 750)
 
 /datum/artifact_activator/range/shock
 	name = "Electrical Charged"
@@ -48,7 +48,7 @@
 /datum/artifact_activator/range/radiation
 	name = "Radioactivity"
 	required_stimuli = STIMULUS_RADIATION
-	highest_trigger_amount = 10
+	highest_trigger_amount = 5
 	hint_range = 2
 	base_trigger_amount = 1 //x-ray machine goes from 1-10
 	hint_texts = list("Emits a hum that resembles the Super Matter", "You could swear you saw your bones for a second")

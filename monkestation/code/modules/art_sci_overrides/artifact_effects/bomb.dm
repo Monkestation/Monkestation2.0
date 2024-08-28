@@ -85,6 +85,7 @@
 	var/devast
 	var/heavy
 	var/light
+	examine_discovered = span_danger("It appears to explode in a large radius!")
 
 /datum/artifact_effect/bomb/explosive/New()
 	. = ..()
@@ -119,6 +120,7 @@
 /datum/artifact_effect/bomb/gas
 	type_name = "Atmospheric Bomb"
 	weight = ARTIFACT_RARE
+	examine_discovered = span_warning("It appears to explode, leaving gasses in its wake!")
 	initial_warning = "begins rattling violenty!"
 	final_message = "reaches a critical pressure, cracks forming at its surface!"
 	var/datum/gas/payload_gas

@@ -1,12 +1,12 @@
 /datum/artifact_effect/smoke
 	weight = ARTIFACT_UNCOMMON
 	type_name = "Smoke Machine (Colorful) Effect"
-	activation_message = "starts spewing out smoke!"
+	activation_message = "starts spewing out colorful smoke!"
 	deactivation_message = "becomes silent."
 
 	research_value = 250
 
-	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer")
+	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer for coloring things")
 
 	var/list/valid_chemicals = list(
 		/datum/reagent/colorful_reagent,
@@ -47,6 +47,7 @@
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/spewium,
 	)
+	examine_discovered = span_danger("It appears to be some sort of checmical aerolyzer for harming things!")
 
 /datum/artifact_effect/smoke/flesh
 	type_name = "Smoke Machine (Synthflesh) Effect"
@@ -55,11 +56,14 @@
 	valid_chemicals = list(
 		/datum/reagent/medicine/c2/synthflesh
 	)
+	examine_discovered = span_info("It appears to be some sort of checmical aerolyzer for healing things!")
 
 /datum/artifact_effect/smoke/exotic
 	type_name = "Smoke Machine (Exotic) Effect"
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out exotic smoke!"
+
+	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer for... not sure actually.")
 	valid_chemicals = list(
 		/datum/reagent/wittel,
 		/datum/reagent/medicine/omnizine/protozine,

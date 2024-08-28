@@ -35,6 +35,7 @@
 	var/chosen_origin = ""
 	var/list/chosentriggers = list()
 	var/list/chosen_effects = list()
+	var/chosen_fault = ""
 
 /obj/item/sticker/analysis_form/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/pen))
@@ -64,6 +65,8 @@
 				chosen_effects -= trig_type
 			else
 				chosen_effects += trig_type
+		if("fault")
+			chosen_fault = params["fault"]
 		if("trigger")
 			var/trig_act = params["trigger"]
 			if(trig_act in chosentriggers)
@@ -79,6 +82,10 @@
 	for(var/datum/artifact_origin/subtype as anything in subtypesof(/datum/artifact_origin))
 		origins_names += initial(subtype.name)
 
+	var/list/allfaults = list()
+	for(var/datum/artifact_fault/subtype as anything in subtypesof(/datum/artifact_fault))
+		allfaults += initial(subtype.name)
+
 	var/list/trigger_names = list()
 	for(var/datum/artifact_activator/subtype as anything in subtypesof(/datum/artifact_activator))
 		trigger_names += initial(subtype.name)
@@ -90,6 +97,7 @@
 		artifact_names += initial(subtype.type_name)
 
 	.["allorigins"] = origins_names
+	.["allfaults"] = allfaults
 	.["alltypes"] = artifact_names
 	.["alltriggers"] = trigger_names
 	return
@@ -97,6 +105,7 @@
 /obj/item/sticker/analysis_form/ui_data(mob/user)
 	. = ..()
 	.["chosenorigin"] = chosen_origin
+	.["chosenfault"] = chosen_fault
 	.["chosentype"] = chosen_effects
 	.["chosentriggers"] = chosentriggers
 	return .
@@ -162,6 +171,8 @@
 		return
 	if(chosen_origin)
 		to_analyze.holder.name = to_analyze.generated_name
+	if(chosen_fault)
+		to_analyze.holder.name += " ![chosen_fault]! "
 	if(chosen_effects)
 		for(var/effect as anything in chosen_effects)
 			to_analyze.holder.name += " ([effect]) "

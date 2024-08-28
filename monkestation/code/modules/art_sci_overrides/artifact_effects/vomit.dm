@@ -33,8 +33,10 @@
 		potency += spew_range
 	bloody_vomit = prob(50)
 	potency += (range) * 4
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), round(30 * (potency * 10) SECONDS))
 
+
+/datum/artifact_effect/vomit/effect_activate(silent)
+	addtimer(CALLBACK(our_artifact, TYPE_PROC_REF(/datum/component/artifact,artifact_deactivate)),30 SECONDS)
 
 /datum/artifact_effect/vomit/effect_process()
 	for(var/mob/living/carbon/viewed in view(range, src))
