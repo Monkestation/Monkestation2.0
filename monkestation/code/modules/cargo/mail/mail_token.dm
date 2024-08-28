@@ -1,19 +1,21 @@
 /obj/item/stack/mail_token
-    name = "mail token"
-    desc = "A plastic mail token. Part of a new program to get Nanotrasen cargo employees to deliver mail. Can be exported to Central Command for an increase to the budget."
-    singular_name = "mail token"
-    icon = 'monkestation/code/modules/cargo/mail/mail.dmi'
-    w_class = WEIGHT_CLASS_TINY
-    icon_state = "mailtokens"
-    item_flags = NOBLUDGEON
-    resistance_flags = FLAMMABLE
-    merge_type = /obj/item/stack/mail_token
-    max_amount = 10
-    novariants = TRUE
+	name = "mail token"
+	desc = "A plastic mail token. Part of a new program to get Nanotrasen cargo employees to deliver mail. Can be exported to Central Command for an increase to the budget. The face of the token seems to have barcode on it for handling tips."
+	singular_name = "mail token"
+	icon = 'monkestation/code/modules/cargo/mail/mail.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	icon_state = "mailtokens"
+	item_flags = NOBLUDGEON
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/mail_token
+	max_amount = 10
+	novariants = TRUE
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
+	var/datum/bank_account/token_handler_account
 
 /obj/item/stack/mail_token/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-    . = ..()
-    update_appearance()
+	. = ..()
+	update_appearance()
 
 /obj/item/stack/mail_token/update_icon_state()
 	. = ..()
