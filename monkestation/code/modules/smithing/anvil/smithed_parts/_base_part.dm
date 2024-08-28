@@ -99,7 +99,9 @@
 	update_appearance()
 	if(material_stats)
 		for(var/datum/material_trait/trait as anything in material_stats.material_traits)
-			trait.post_parent_init() //Why are we calling this here? Because we modify force and other stats that are normally in init
+			var/datum/material_trait/newtrait = new trait.type
+			//Why are we calling this here? Because we modify force and other stats that are normally in init
+			newtrait.post_parent_init(src)
 
 /datum/export/smithed_part
 	unit_name = "smithed good"

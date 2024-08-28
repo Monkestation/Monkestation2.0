@@ -36,7 +36,7 @@
 	hardness = 70
 	thermal = 1
 	liquid_flow = 65
-	material_traits = list(/datum/material_trait/honk_blessed,/datum/material_trait/stunning)
+	material_traits = list(/datum/material_trait/honk_blessed, /datum/material_trait/stunning)
 
 /datum/material/mythril
 	liquid_flow = 80

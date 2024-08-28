@@ -94,7 +94,7 @@
 	var/refractiveness = 0
 
 	///list of material traits to work with
-	var/list/material_traits = list()
+	var/list/datum/material_trait/material_traits = list()
 
 	///our coolass color
 	var/merged_color
@@ -178,7 +178,7 @@
 
 
 	for(var/datum/material_trait/trait as anything in material_traits)
-		material_traits[trait]--
+		material_traits[trait] -= 1
 		if(material_traits[trait] <= 0)
 			trait.on_remove(parent)
 			material_traits -= trait

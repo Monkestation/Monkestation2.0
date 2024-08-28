@@ -3,7 +3,7 @@
 	desc = "Changes the weapon damage type to stamina."
 	value_bonus = 50
 
-/datum/material_trait/weak_weapon/post_parent_init(atom/movable/parent)
+/datum/material_trait/stunning/post_parent_init(atom/movable/parent)
 	if(isobj(parent))
 		var/obj/obj = parent
 		obj.damtype = STAMINA
