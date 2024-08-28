@@ -11,7 +11,7 @@
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
-	illustration = "hieroglyphs"
+	illustration = FALSE
 
 /datum/crafting_recipe/canopic_box
 	name = "Canopic box"
@@ -68,7 +68,7 @@
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
-	illustration = "hieroglyphs"
+	illustration = FALSE
 
 /datum/crafting_recipe/canopic_jackal
 	name = "Jackal Canopic jar"
@@ -96,7 +96,7 @@
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
-	illustration = "hieroglyphs"
+	illustration = FALSE
 /obj/item/storage/box/canopic_human/Initialize(mapload)
 	. = ..()
 
@@ -180,7 +180,7 @@
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
-	illustration = "hieroglyphs"
+	illustration = FALSE
 
 /datum/crafting_recipe/canopic_monke //creates the crafting recipe
 	name = "Monke Canopic jar"
