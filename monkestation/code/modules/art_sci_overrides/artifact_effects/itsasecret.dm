@@ -11,11 +11,15 @@
 
 	super_secret = TRUE
 
+	COOLDOWN_DECLARE(trigger_cd)
+
 /datum/artifact_effect/toeverybody/proc/returnthey(mob/living/carbon/human,turf/last_position)
 	human.forceMove(last_position)
 	return
 
 /datum/artifact_effect/toeverybody/effect_activate(silent)
+	if(!COOLDOWN_FINISHED(src,trigger_cd))
+		return
 	var/list/mobs = list()
 	var/mob/living/carbon/human
 
@@ -34,6 +38,7 @@
 
 	var/last_position = get_turf(human)
 	human.move_to_error_room()
+	COOLDOWN_START(src,trigger_cd,5 MINUTE)
 	addtimer(CALLBACK(src,PROC_REF(returnthey),human,last_position),5 SECOND)
 	return
 

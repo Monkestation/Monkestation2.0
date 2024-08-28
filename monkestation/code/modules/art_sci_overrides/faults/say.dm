@@ -1,7 +1,7 @@
 /datum/artifact_fault/speech
 	name = "Talkative Fault"
-	trigger_chance = 75
-	var/list/speech = list("Hello there.","I see you.","I know what you've done.")
+	trigger_chance = 25
+	var/list/speech = list("Hello there.","I see you.","I know what you've done.","So hows your shift?","HELP ARTIFACT IS MAKING ME SPEAK","All is one.","One is all.")
 
 	research_value = 50
 
@@ -15,7 +15,7 @@
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
 
 	for(var/mob/living/living in range(rand(7, 10), center_turf))
-		if(prob(50))
+		if(prob(10))
 			living.say("; [pick(speech)]")
 		else
 			living.say("[pick(speech)]")

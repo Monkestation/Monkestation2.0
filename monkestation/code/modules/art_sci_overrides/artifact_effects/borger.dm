@@ -1,5 +1,5 @@
 /datum/artifact_effect/borger
-	weight = ARTIFACT_UNCOMMON
+	weight = ARTIFACT_RARE
 	type_name = "Borger Effect"
 	activation_message = "opens up!"
 	deactivation_message = "closes up."

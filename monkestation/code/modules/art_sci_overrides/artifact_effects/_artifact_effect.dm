@@ -11,9 +11,9 @@
 	var/artifact_size
 	///how strong is this effect,1-100
 	var/potency
-	///If the artifact doesnt have the right activator, cant be put on. If null, assume any
+	///If the artifact doesnt have the right activator, cant be put on. If null, assume any.
 	var/list/valid_activators
-	///If the artifact doesnt have this origin, cant be put on. If null, assume any
+	///If the artifact doesnt have this origin, cant be put on. If null, assume any.
 	var/list/valid_origins
 	///sent on activation
 	var/activation_message

@@ -21,4 +21,4 @@
 		boi.AddComponent(/datum/component/ghost_object_control,boi,TRUE)
 		var/datum/component/ghost_object_control/spiritholder = boi.GetComponent(/datum/component/ghost_object_control)
 		if(!(spiritholder.bound_spirit))
-			spiritholder.request_control(1)
+			spiritholder.request_control(0.6)

@@ -1,5 +1,5 @@
 #define BASE_MAX_ACTIVATORS 2
-#define BASE_MAX_EFFECTS 3
+#define BASE_MAX_EFFECTS 2
 #define STIMULI_CD_TIME 5 SECONDS
 
 /datum/component/artifact
@@ -155,24 +155,27 @@
 			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
 			break
 		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
-		if(effect.valid_origins)
-			if(!(picked_origin.type in effect.valid_origins))
+		var/datum/artifact_effect/added = new effect //We need it now, becasue for some reason we cant read the lists from just the raw datum.
+		if(length(added.valid_origins))
+			if(!(picked_origin.type in added.valid_origins))
 				all_possible_effects -= effect
+				QDEL_NULL(added)
 				continue
-		if(effect.valid_activators)
+		if(length(added.valid_activators))
 			var/good_activators = FALSE
-			for(var/datum/artifact_activator/activator in activators) //Only need one to be correct.
-				if(activator.type in effect.valid_activators)
+			for(var/datum/artifact_activator/activator as anything in activators) //Only need one to be correct.
+				if(activator.type in added.valid_activators)
 					good_activators = TRUE
 					break
 			if(!good_activators)
 				all_possible_effects -= effect
+				QDEL_NULL(added)
 				continue
-		if(effect.artifact_size)
-			if(artifact_size != effect.artifact_size)
+		if(added.artifact_size)
+			if(artifact_size != added.artifact_size)
 				all_possible_effects -=effect
+				QDEL_NULL(added)
 				continue
-		var/datum/artifact_effect/added = new effect
 		artifact_effects += added
 		added.our_artifact = src
 		added.setup()
