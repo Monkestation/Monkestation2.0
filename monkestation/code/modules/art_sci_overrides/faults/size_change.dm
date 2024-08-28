@@ -20,15 +20,19 @@
 	trigger_chance = 13
 	visible_message = "starts to grow."
 
+	var/trigger_count = 0
 /datum/artifact_fault/grow/on_trigger()
-	our_artifact.holder.transform = matrix(our_artifact.holder.transform, 1.05, 1.05, MATRIX_SCALE)
+	trigger_count++
+	if(trigger_count<5)
+		our_artifact.holder.transform = matrix(our_artifact.holder.transform, 1.1, 1.1, MATRIX_SCALE)
+	else
+		our_artifact.holder.visible_message("[our_artifact.holder] can't possibly grow any larger!")
+		return
 	if(!isitem(our_artifact.holder))
 		return
 	var/obj/item/item = our_artifact.holder
 	if(item.w_class > WEIGHT_CLASS_HUGE)
 		return
-
-	our_artifact.holder.transform = matrix(our_artifact.holder.transform, 1.05, 1.05, MATRIX_SCALE)
 
 	item.w_class++
 	if(item.w_class > WEIGHT_CLASS_HUGE)
