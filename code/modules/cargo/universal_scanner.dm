@@ -206,9 +206,9 @@
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
 	// MONKESTATION EDIT START * Handling tip for mail tokens
-		if(istype(target, /obj/item/stack/mail_token))
-			var/token_handler_tip = 0.75
-			var/obj/item/stack/mail_token/token = target
+		if(istype(target, /obj/item/cargo/mail_token))
+			var/token_handler_tip = 0.5
+			var/obj/item/cargo/mail_token/token = target
 			var/datum/bank_account/scanner_account = scan_human.get_bank_account()
 
 			if(!istype(get_area(token), /area/shuttle/supply))

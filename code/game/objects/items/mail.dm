@@ -125,7 +125,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
-	user.put_in_hands(new /obj/item/stack/mail_token) // MONKESTATION EDIT
+	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -296,7 +296,7 @@
 		/obj/item/mail,
 		/obj/item/delivery/small,
 		/obj/item/paper,
-		/obj/item/stack/mail_token, // monkestation edit
+		/obj/item/cargo/mail_token, // monkestation edit
 	))
 
 /obj/item/paper/fluff/junkmail_redpill
