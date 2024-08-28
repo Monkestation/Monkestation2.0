@@ -99,6 +99,31 @@
 	alternate_worn_layer = GLOVES_LAYER
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/crueltysquad_under
+	name = "CSIJ level I body armor"
+	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "crueltysquad_under"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/infinity_under
+	name = "infinity shorts"
+	desc = "Worn by those who want more matching team colors."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "infinity_shorts"
+	body_parts_covered = CHEST|GROIN|LEGS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/bb_dress
+	name = "bb dress"
+	desc = "Howdy, it's me BB. Zines, zines, zines."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "bb_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */

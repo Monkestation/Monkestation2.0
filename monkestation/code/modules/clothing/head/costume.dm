@@ -69,6 +69,22 @@
 	worn_y_offset = 1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 
+/obj/item/clothing/head/thekiller_head
+	name = "the killer's head"
+	desc = "A red drinky bird mask. The mascot of violence."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "thekiller_head"
+	worn_y_offset = 1
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+
+/obj/item/clothing/head/bb_wig
+	name = "bb wig"
+	desc = "Well known movie mascot BB, this wig is either worn by a notorious killer or some sort of girl-mouse."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "bb_wig"
+	flags_inv = HIDEHAIR
 /*
 BUNNY EARS
 */
