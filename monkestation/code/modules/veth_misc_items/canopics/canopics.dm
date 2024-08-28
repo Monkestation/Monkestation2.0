@@ -239,6 +239,7 @@
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
 /datum/crafting_recipe/canopic_hawk //creates the crafting recipe
 	name = "hawk canopic jar"
 	result = /obj/item/storage/box/canopic_hawk
