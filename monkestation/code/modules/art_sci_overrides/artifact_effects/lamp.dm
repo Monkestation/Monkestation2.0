@@ -4,7 +4,6 @@
 	type_name = "Lamp"
 	activation_message = "starts shining!"
 	deactivation_message = "stops shining."
-
 	examine_discovered = span_warning("It appears to be some sort of light source")
 
 	research_value = 250
@@ -19,10 +18,12 @@
 			range = rand(2,5)
 		if(76 to 100)
 			range = rand(4,10)
-			power = rand(2,10) // the sun
+			power = rand(5,10) // the sun
 
 	if(our_artifact.artifact_origin.type_name == ORIGIN_NARSIE && prob(40))
 		color = COLOR_BLACK
+	our_artifact.holder.light_system = COMPLEX_LIGHT //We need this to avoid a crash for wrong lighting system.
+	our_artifact.holder.set_light(range, round(range*1.25),power,l_color = color,l_on = FALSE)
 	our_artifact.holder.set_light_range_power_color(range, power, color)
 	potency += (range + power) * 2
 

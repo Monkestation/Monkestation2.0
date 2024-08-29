@@ -27,7 +27,7 @@
 	///Does this show up on the artifact fourm?
 	var/super_secret = FALSE
 
-	///Research value when discovered
+	///Research value when discovered For reference,5000 is one node
 	var/research_value = 100
 	///The artifact we're on.
 	var/datum/component/artifact/our_artifact
@@ -51,7 +51,7 @@
 ///Called when the artifact has been touched by a living mob,does NOT call faults or activate artifact unless it has the correct touch component!
 /datum/artifact_effect/proc/effect_touched(mob/living/user)
 	return
-///Called on every artifact subsystem tick.
+///Called on process() IF the artifact is active.
 /datum/artifact_effect/proc/effect_process()
 	return
 ///Called when the artifact is destroyed

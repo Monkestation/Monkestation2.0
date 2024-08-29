@@ -49,7 +49,7 @@
 		our_artifact.holder.visible_message(span_notice("[our_artifact.holder] wheezes, shutting down."))
 		our_artifact.artifact_deactivate(TRUE)
 		return
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
+	addtimer(CALLBACK(our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
 	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
 
 /datum/artifact_effect/emotegen/effect_process()

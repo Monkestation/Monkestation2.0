@@ -92,3 +92,6 @@
 
 /obj/machinery/artifact_zapper/crowbar_act(mob/living/user, obj/item/tool)
 	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)
+
+/obj/machinery/artifact_zapper/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? TOOL_ACT_SIGNAL_BLOCKING : default_unfasten_wrench(user, tool)

@@ -64,7 +64,7 @@
 		var/obj/field = new /obj/structure/artifact_forcefield(floor)
 		field.icon_state = shield_iconstate
 		projected_forcefields += field
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
+	addtimer(CALLBACK(our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
 	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
 
 /datum/artifact_effect/forcegen/effect_deactivate()

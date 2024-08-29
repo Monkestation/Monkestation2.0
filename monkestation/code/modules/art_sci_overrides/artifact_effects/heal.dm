@@ -48,9 +48,6 @@
 	COOLDOWN_START(src, heal_cooldown, 5 SECONDS)
 
 /datum/artifact_effect/heal/effect_process()
-	if(potency < 75)
-		return
-
 	process_count++
 	if(process_count < PROCESSES_PER_HEAL)
 		return

@@ -173,7 +173,7 @@
 				continue
 		if(added.artifact_size)
 			if(artifact_size != added.artifact_size)
-				all_possible_effects -=effect
+				all_possible_effects -= effect
 				QDEL_NULL(added)
 				continue
 		artifact_effects += added
