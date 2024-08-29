@@ -1,10 +1,11 @@
-#define EVAPORATION_MULTIPLIER 5
+#define BASE_EVAPORATION_MULTIPLIER 10
 
 /datum/round_event_control/scrubber_overflow
 	shared_occurence_type = SHARED_SCRUBBERS
 
 /datum/round_event/scrubber_overflow
 	reagents_amount = 100
+	var/evaporation_multiplier = BASE_EVAPORATION_MULTIPLIER
 
 /datum/round_event/scrubber_overflow/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent as anything in scrubbers)
@@ -21,16 +22,19 @@
 		vent_turf.add_liquid(reagent_type, reagents_amount, no_react = TRUE)
 		if(vent_turf.liquids?.liquid_group)
 			vent_turf.liquids.liquid_group.always_evaporates = TRUE
-			vent_turf.liquids.liquid_group.evaporation_multiplier += EVAPORATION_MULTIPLIER
+			vent_turf.liquids.liquid_group.evaporation_multiplier += evaporation_multiplier
 		CHECK_TICK
 
 /datum/round_event/scrubber_overflow/threatening
 	reagents_amount = 150
+	evaporation_multiplier = BASE_EVAPORATION_MULTIPLIER * 1.5
 
 /datum/round_event/scrubber_overflow/catastrophic
 	reagents_amount = 200
+	evaporation_multiplier = BASE_EVAPORATION_MULTIPLIER * 2
 
 /datum/round_event/scrubber_overflow/every_vent
 	reagents_amount = 150
+	evaporation_multiplier = BASE_EVAPORATION_MULTIPLIER * 1.5
 
-#undef EVAPORATION_MULTIPLIER
+#undef BASE_EVAPORATION_MULTIPLIER
