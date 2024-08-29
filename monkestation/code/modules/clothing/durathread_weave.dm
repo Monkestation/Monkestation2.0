@@ -2,11 +2,15 @@
 
 GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	/obj/item/clothing/gloves/mod,
+	/obj/item/clothing/head/beanie/durathread,
+	/obj/item/clothing/head/beret/durathread,
 	/obj/item/clothing/head/costume/crown,
+	/obj/item/clothing/head/helmet/durathread,
 	/obj/item/clothing/head/helmet/space,
 	/obj/item/clothing/head/hooded/ablative,
 	/obj/item/clothing/head/mod,
 	/obj/item/clothing/head/utility,
+	/obj/item/clothing/mask/bandana/durathread,
 	/obj/item/clothing/shoes/magboots,
 	/obj/item/clothing/shoes/mod,
 	/obj/item/clothing/shoes/sandal,
@@ -15,6 +19,8 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	/obj/item/clothing/suit/hooded/ablative,
 	/obj/item/clothing/suit/mod,
 	/obj/item/clothing/suit/space,
+	/obj/item/clothing/under/misc/durathread,
+	/obj/item/clothing/under/rank/cargo/miner,
 )))
 
 /obj/item/stack/sheet/durathread/examine(mob/user)
