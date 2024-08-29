@@ -60,6 +60,13 @@
 	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "bb_slippers"
+
+/obj/item/clothing/shoes/civilprotection_boots
+	name = "civil protection boots"
+	desc = "for the officers chasing engineers."
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_state = "civilprotection_boots"
 //START HEELS
 
 /obj/item/clothing/shoes/heels

@@ -69,6 +69,24 @@
 	worn_y_offset = 1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 
+/obj/item/clothing/head/helmet/civilprotection_helmet
+	name = "civil protection helmet"
+	desc = "I don't know about you, but I'm ready to join Civil Protection just to get a decent meal."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "civilprotection_helmet"
+	custom_premium_price = PAYCHECK_COMMAND * 2
+	var/on = FALSE
+	actions_types = list(/datum/action/item_action/flip)
+
+/obj/item/clothing/head/helmet/civilprotection_helmet/attack_self(mob/user)
+	on = !on
+	if(on == TRUE)
+		icon_state = "civilprotection_helmet"
+	if(on == FALSE)
+		icon_state = "civilprotection_helmet_closed"
+	user.update_worn_head()
+
 /obj/item/clothing/head/thekiller_head
 	name = "the killer's head"
 	desc = "A red drinky bird mask. The mascot of violence."

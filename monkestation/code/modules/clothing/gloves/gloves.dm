@@ -16,6 +16,13 @@
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "crueltysquad_gloves"
 
+/obj/item/clothing/gloves/civilprotection_gloves
+	name = "civil protection gloves"
+	desc = "Armored gloves for beating anticitizens."
+	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon_state = "civilprotection_gloves"
+
 /obj/item/clothing/gloves/infinity_gloves
 	name = "infinity wristbands"
 	desc = "The bands are oddly moist... let's hope it's not blood."
