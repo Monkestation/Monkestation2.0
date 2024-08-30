@@ -4,11 +4,8 @@
 
 /datum/component/garys_item/Initialize(mob/living/basic/chicken/gary/attached_gary)
 	. = ..()
-
 	src.attached_gary = WEAKREF(attached_gary)
-
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(looter))
-
 
 /datum/component/garys_item/UnregisterFromParent()
 	. = ..()

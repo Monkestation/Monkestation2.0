@@ -674,6 +674,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"amN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/start/gary/uncommon,
+/turf/open/floor/plating,
+/area/station/medical/abandoned)
 "amV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -14311,6 +14319,7 @@
 "flS" = (
 /obj/item/storage/toolbox/emergency,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "fma" = (
@@ -18739,6 +18748,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "gUt" = (
@@ -29889,6 +29899,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"kBt" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "kBu" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding/purple/corner{
@@ -30196,6 +30210,7 @@
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/wood,
 /area/station/service/library)
 "kJH" = (
@@ -38717,6 +38732,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "nDP" = (
@@ -40179,6 +40195,7 @@
 /area/station/command/teleporter)
 "ofQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ofS" = (
@@ -40363,6 +40380,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ojo" = (
@@ -43995,6 +44013,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/wood,
 /area/station/smithing)
 "pzz" = (
@@ -44746,6 +44765,7 @@
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pOj" = (
@@ -51758,6 +51778,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "shs" = (
@@ -56486,6 +56507,10 @@
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/lesser)
+"tQr" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "tQJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -60701,6 +60726,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"vqA" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "vqN" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
@@ -61148,6 +61177,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "vBY" = (
@@ -62181,6 +62211,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "vUM" = (
@@ -63695,6 +63726,10 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"wwi" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "wwt" = (
 /obj/machinery/door/airlock/research{
 	name = "Mech Bay"
@@ -66674,6 +66709,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"xxV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "xxZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -83177,7 +83218,7 @@ pOa
 pOa
 jUb
 xqn
-uxS
+wwi
 fQZ
 ehv
 sBL
@@ -85499,7 +85540,7 @@ jUb
 xRB
 dqN
 dqN
-dqN
+vqA
 cNS
 eNV
 dqN
@@ -88605,7 +88646,7 @@ xGk
 tBJ
 xOP
 ijF
-qjV
+amN
 mMO
 hdo
 hzG
@@ -105826,7 +105867,7 @@ arg
 hIZ
 qlG
 fPD
-fPD
+kBt
 eQY
 fPD
 nTd
@@ -109125,7 +109166,7 @@ eol
 fWA
 dxk
 cNm
-izp
+tQr
 ret
 qHO
 bNn
@@ -109844,7 +109885,7 @@ cyS
 izd
 jlM
 jlM
-kXx
+xxV
 kXx
 aIC
 kVs

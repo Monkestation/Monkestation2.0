@@ -235,6 +235,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "aga" = (
@@ -1636,6 +1637,7 @@
 "aBx" = (
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/landmark/blobstart,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "aBM" = (
@@ -2368,6 +2370,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
+"aOI" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/wood,
+/area/station/maintenance/fore)
 "aOS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5647,6 +5654,7 @@
 /obj/machinery/light/directional/west,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
 "bLq" = (
@@ -5948,6 +5956,7 @@
 /area/station/smithing)
 "bPx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
 /area/station/construction)
 "bPz" = (
@@ -7455,6 +7464,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "cmX" = (
@@ -14137,6 +14147,7 @@
 "erU" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "erV" = (
@@ -16486,6 +16497,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"ffs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/iron/white,
+/area/station/maintenance/port/fore)
 "ffG" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -19030,6 +19048,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/greater)
 "fZV" = (
@@ -20589,6 +20608,7 @@
 /area/station/security/prison/rec)
 "gzY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "gAd" = (
@@ -23311,6 +23331,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/wood,
 /area/station/service/library)
 "huH" = (
@@ -26036,6 +26057,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "iqr" = (
@@ -37351,6 +37373,7 @@
 /obj/effect/decal/cleanable/generic,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/landmark/blobstart,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "lUU" = (
@@ -40740,6 +40763,10 @@
 /obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"nbS" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "nbT" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/delivery,
@@ -53158,6 +53185,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "qTZ" = (
@@ -53543,6 +53571,7 @@
 	dir = 0
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "qZT" = (
@@ -58102,6 +58131,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/chapel)
 "sAC" = (
@@ -59319,6 +59349,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/fore/lesser)
 "sWx" = (
@@ -59465,6 +59496,7 @@
 "sYE" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -59844,6 +59876,11 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
+"tha" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "thA" = (
 /turf/open/genturf/blue,
 /area/icemoon/underground/unexplored/rivers/deep/shoreline)
@@ -60007,6 +60044,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/stone,
 /area/station/smithing)
 "tke" = (
@@ -225033,7 +225071,7 @@ qDI
 xQB
 whv
 rSe
-lXq
+ffs
 ckQ
 xJD
 lJO
@@ -239164,7 +239202,7 @@ skl
 skl
 skl
 nTK
-tnP
+aOI
 cIK
 jOQ
 skl
@@ -250474,7 +250512,7 @@ bln
 bln
 kKL
 xpE
-gGF
+tha
 wMT
 kKL
 lli
@@ -255946,7 +255984,7 @@ rDZ
 pcX
 bgx
 jCl
-jCl
+nbS
 jCl
 vzD
 geJ

@@ -2074,6 +2074,13 @@
 	dir = 1
 	},
 /area/station/security/brig/entrance)
+"aGu" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/landmark/start/gary/uncommon,
+/turf/open/floor/iron,
+/area/station/service/forge)
 "aGx" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -3712,6 +3719,7 @@
 /obj/item/crowbar/large{
 	pixel_y = 20
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "bgb" = (
@@ -14734,6 +14742,10 @@
 /obj/machinery/light/red/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"eqT" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "erd" = (
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -15021,6 +15033,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "evI" = (
@@ -15635,6 +15648,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/abandon_diner)
 "eFo" = (
@@ -28344,6 +28358,7 @@
 "iuN" = (
 /obj/item/restraints/legcuffs/beartrap/prearmed,
 /obj/item/stack/sheet/iron/five,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "iuO" = (
@@ -30842,6 +30857,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Library - Public Lounge"
 	},
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
 "jfD" = (
@@ -32210,6 +32226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/ammo_casing/c45,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "jCE" = (
@@ -43647,6 +43664,14 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
+"mOU" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/lesser)
 "mOW" = (
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high{
@@ -50300,6 +50325,11 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
+"oOP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "oPz" = (
 /obj/structure/fluff/paper/stack,
 /obj/effect/mapping_helpers/broken_floor,
@@ -57230,6 +57260,11 @@
 /obj/structure/marker_beacon/lime,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qUo" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "qUr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -121230,7 +121265,7 @@ ogC
 lzn
 yiW
 dxe
-nkv
+qUo
 nkv
 pAJ
 gqN
@@ -171819,7 +171854,7 @@ iNr
 wEl
 lpC
 mMv
-mMv
+mOU
 jiJ
 xaP
 eGr
@@ -173925,7 +173960,7 @@ oxw
 dZR
 gfP
 jqJ
-ygD
+oOP
 jut
 rmw
 tzq
@@ -174178,7 +174213,7 @@ wUS
 gfP
 qEB
 oPK
-jNS
+eqT
 uHH
 gfP
 gfP
@@ -176241,7 +176276,7 @@ sah
 qyI
 gqd
 fuQ
-jNS
+eqT
 jNS
 rmw
 tzq
@@ -189307,7 +189342,7 @@ eOE
 pWC
 wAS
 ggA
-jDi
+aGu
 eol
 eol
 eol

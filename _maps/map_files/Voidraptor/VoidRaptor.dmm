@@ -1210,6 +1210,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/wood,
 /area/station/maintenance/department/engine/atmos)
 "art" = (
@@ -4308,6 +4309,11 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/commons/storage/primary)
+"bld" = (
+/obj/effect/spawner/liquids_spawner,
+/obj/effect/landmark/start/gary/rare,
+/turf/open/floor/lowered/iron/pool,
+/area/station/common/pool)
 "bls" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7301,6 +7307,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/effect/landmark/start/gary,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "cie" = (
@@ -8959,6 +8966,7 @@
 /area/station/security/checkpoint/customs)
 "cHS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/carpet/black,
 /area/station/commons/dorms)
 "cIc" = (
@@ -13438,6 +13446,10 @@
 /obj/effect/turf_decal/siding/red,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/office)
+"dUk" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "dUw" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/dirt,
@@ -15299,6 +15311,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
 "eux" = (
@@ -36224,6 +36237,7 @@
 "kpn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/starboard/fore)
 "kpq" = (
@@ -37871,6 +37885,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/generic_maintenance_landmark,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/fore)
 "kLl" = (
@@ -46982,6 +46997,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/generic_maintenance_landmark,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/starboard/fore)
 "nmB" = (
@@ -49490,6 +49506,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/generic_maintenance_landmark,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/fore)
 "nWq" = (
@@ -50465,6 +50482,7 @@
 "olf" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/greater)
 "olo" = (
@@ -52184,6 +52202,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron/large,
 /area/station/commons/vacant_room/commissary)
 "oKR" = (
@@ -53161,6 +53180,7 @@
 /obj/item/trash/popcorn,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "oXI" = (
@@ -64291,6 +64311,7 @@
 "rXL" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "rXU" = (
@@ -64348,6 +64369,7 @@
 /area/station/hallway/primary/aft)
 "rYT" = (
 /obj/item/robot_suit,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
 "rYX" = (
@@ -64761,6 +64783,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/iron/sepia,
 /area/station/service/library)
 "sgk" = (
@@ -69156,6 +69179,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/fake_stairs/wood/directional/east,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "tne" = (
@@ -69831,6 +69855,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/wood/parquet,
 /area/station/common/night_club)
 "tvM" = (
@@ -76158,6 +76183,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/gary/rare,
 /turf/open/floor/iron/kitchen{
 	dir = 1
 	},
@@ -78390,6 +78416,7 @@
 /area/station/engineering/storage/tech)
 "vPk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "vPl" = (
@@ -82390,6 +82417,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/generic_maintenance_landmark,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft/greater)
 "wTj" = (
@@ -107162,7 +107190,7 @@ sbU
 xtV
 dUO
 lQt
-eMd
+dUk
 oxA
 oxA
 oxA
@@ -124842,7 +124870,7 @@ eWh
 eWh
 eWh
 eWh
-eWh
+bld
 aCq
 lRS
 oNR
