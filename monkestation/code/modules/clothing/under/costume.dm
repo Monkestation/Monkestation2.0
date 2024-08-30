@@ -124,6 +124,14 @@
 	icon_state = "bb_dress"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/citizen_uniform
+	name = "citizen uniform"
+	desc = "A blue matching uniform. It makes you feel like you're in a labor camp."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "citizen_uniform"
+	can_adjust = FALSE
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */
