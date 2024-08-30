@@ -313,6 +313,10 @@
 	if(!.)
 		return
 
+	if (locate(/datum/action/cooldown/spell/pointed/projectile/spit) in user.actions)
+		to_chat(user, "<B>You already have spit in your mouth!</B>")
+		return FALSE
+
 	var/datum/action/cooldown/spell/pointed/projectile/spit/spit_action = new(src)
 
 	if(ishuman(user))
