@@ -8,7 +8,7 @@
 	circuit = /obj/item/circuitboard/machine/artifactxray
 	use_power = IDLE_POWER_USE
 	///max radiation level
-	var/max_radiation = 3
+	var/max_radiation = 4
 	///chosen radiation level
 	var/chosen_level = 1
 	var/pulse_time = 4 SECONDS
@@ -16,6 +16,14 @@
 	var/list/last_results = list("NO DATA")
 	var/pulsing = FALSE
 	var/datum/techweb/stored_research
+	///Chance to get a disk for an artifact trait on scan. Better scanner, better chance.
+	var/disk_chance = 20
+	///Are we going for disks, at the risk of destorying artifact?
+	var/destroy_artifact_mode = FALSE
+	///Chance we accidentally destory the artifact on destuctive scan. Better laser, less chance.
+	var/destroy_chance = 75
+	///The disk we have inside of us, maybe.
+	var/obj/item/disk/artifact/our_disk
 	COOLDOWN_DECLARE(message_cooldown)
 	COOLDOWN_DECLARE(pulse_cooldown)
 
@@ -46,10 +54,13 @@
 /obj/machinery/artifact_xray/RefreshParts()
 	. = ..()
 	var/power_usage = 250
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		max_radiation = round(2.5 * laser.rating)
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		max_radiation = laser.tier
+		destroy_chance = round(75 - (15* laser.tier))
 	for(var/datum/stock_part/capacitor/capac in component_parts)
-		power_usage -= 30 * capac.tier
+		power_usage -= round(30 * capac.tier)
+	for(var/datum/stock_part/scanning_module/scanner in component_parts)
+		disk_chance = round(20 * scanner.tier)
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
 
 /obj/machinery/artifact_xray/update_icon_state()
@@ -60,6 +71,10 @@
 	. = ..()
 	if(!can_interact(user))
 		return
+	if(our_disk)
+		to_chat(user,"You eject the [our_disk.name]")
+		our_disk.forceMove(get_turf(user))
+		our_disk = null
 	toggle_open()
 /obj/machinery/artifact_xray/proc/toggle_open()
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
@@ -75,9 +90,21 @@
 	if(HAS_TRAIT(item, TRAIT_NODROP))
 		to_chat(user, span_warning("[item] is stuck to your hand, you can't put it inside [src]!"))
 		return
-	if(state_open && COOLDOWN_FINISHED(src,pulse_cooldown))
-		close_machine(item)
+	if(istype(item,/obj/item/disk/artifact))
+		if(our_disk)
+			to_chat(user,"You swap [our_disk.name] for [item.name]")
+			our_disk.forceMove(get_turf(user))
+			item.forceMove(src)
+			our_disk = item
+		else
+			to_chat(user,"You insert [item.name]")
+			item.forceMove(src)
+			our_disk = item
 		return
+	if(state_open)
+		if(COOLDOWN_FINISHED(src,pulse_cooldown))
+			close_machine(item)
+			return
 	..()
 /obj/machinery/artifact_xray/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -110,7 +137,7 @@
 		return
 	if(isliving(occupant))
 		if(!(obj_flags & EMAGGED))
-			say("Cannot pulse with a living being inside!")
+			say("ERROR: Life-signs detected in chamber!")
 			return
 	var/datum/component/artifact/component = occupant.GetComponent(/datum/component/artifact)
 	if(component)
@@ -157,9 +184,24 @@
 		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
 		if(research_added > 0 )
 			src.visible_message(span_notice("The [src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
+		if(our_disk && destroy_artifact_mode)
+			destructive_scan_artifact(artifact)
 	else
 		last_results = list("INCONCLUSIVE;", "NO SPECIAL PROPERTIES DETECTED OR NO RESEARCH CONSOLE LINKED.")
+	return
 
+/obj/machinery/artifact_xray/proc/destructive_scan_artifact(datum/component/artifact/the_artifact)
+	if(prob(disk_chance))
+		our_disk.effect = pick(the_artifact.artifact_effects)
+		our_disk.activator = pick(the_artifact.activators)
+		if(prob(100-destroy_chance)) //Better scanners means better chance of NOT getting fault
+			our_disk.fault = the_artifact.chosen_fault
+		our_disk.update_name()
+		src.visible_message(span_robot("NOTICE: DATA DISK RECORDED."))
+	if(prob(destroy_chance))
+		the_artifact.clear_out()
+		src.visible_message(span_robot("WARNING: ARTIFACT RENDERED BLANK."))
+	return
 
 /obj/machinery/artifact_xray/ui_data(mob/user)
 	. = ..()
@@ -194,11 +236,17 @@
 	else if(!occupant_atom.anchored)
 		return TRUE
 
-/obj/machinery/artifact_xray/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/artifact_xray/wrench_act(mob/living/user, obj/item/tool)
 	if(pulsing)
 		return TOOL_ACT_SIGNAL_BLOCKING
-	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
+	destroy_artifact_mode = !destroy_artifact_mode
+	var/modestring = destroy_artifact_mode ? "DESTRUCTIVE SCAN" : "NON-DESTRUCTIVE SCAN"
+	to_chat(user,span_notice("[src] switched to [modestring] mode."))
+	return TOOL_ACT_MELEE_CHAIN_BLOCKING
 
+
+/obj/machinery/artifact_xray/screwdriver_act(mob/living/user, obj/item/tool)
+	return pulsing ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_screwdriver(user, "xray-maint", "xray-1", tool)
 
 /obj/machinery/artifact_xray/crowbar_act(mob/living/user, obj/item/tool)
 	return pulsing ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)

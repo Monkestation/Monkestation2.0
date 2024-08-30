@@ -18,7 +18,7 @@
 
 	return rgb(red, green, blue, alpha)
 
-//Spawn a new artifact
+///Spawn a new artifact
 /proc/spawn_artifact(turf/loc, forced_origin = null, forced_effect = null)
 	if (!loc)
 		return

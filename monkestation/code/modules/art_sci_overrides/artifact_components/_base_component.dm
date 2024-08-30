@@ -19,7 +19,7 @@
 	///activators that activate the artifact
 	var/list/datum/artifact_activator/activators = list()
 	var/max_activators = BASE_MAX_ACTIVATORS
-	///Valid activators to pick
+	///Valid activators to pick,mostly legacy code.
 	var/list/valid_activators = list(
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon,
@@ -30,9 +30,9 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation,
 	)
-	///origin datum
+	///this artifacts origin
 	var/datum/artifact_origin/artifact_origin
-	///origin datums to pick
+	///Just any effect that is real and can be added to an artifact. Mostly legacy
 	var/list/valid_origins = list(
 		/datum/artifact_origin/narsie,
 		/datum/artifact_origin/wizard,
@@ -150,56 +150,16 @@
 	var/list/datum/artifact_effect/dont_touch = GLOB.artifact_effect_rarity["all"] //Dont touch because below.
 	var/list/datum/artifact_effect/all_possible_effects = dont_touch.Copy() //If you touch it, it actually edits the list, we need a copy. We cant call copy directly because its not a static type list.
 	var/effects_amount = rand(1,BASE_MAX_EFFECTS)
-	/*
-	* Long function, but basically:
-	* For every effect rolled on the artifact:
-	* If it has valid types, check to make sure its of the right type path. So you cant roll something that requires a structure on an item.
-	* If it has valid origins, and the artifact isnt that origin, move on.
-	* If it has valid activators, and the artifact has none of them, move on.
-	* If it has a valid size, and the artifact isnt that size, move on.
-	* Then, if all is well, slam it on the artifact, call setup() on the effect, and remove it from the list.
-	*/
-	while(effects_amount >0)
+
+	while(effects_amount > 0)
 		if(effects_amount <= 0)
 			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
 			break
 		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
-		var/datum/artifact_effect/added = new effect //We need it now, becasue for some reason we cant read the lists from just the raw datum.
-		if(length(added.valid_type_paths))
-			var/bad_path = FALSE
-			for(var/path in added.valid_type_paths)
-				if(!istype(holder,path))
-					bad_path = TRUE
-					break
-			if(bad_path)
-				all_possible_effects -= effect
-				QDEL_NULL(added)
-				continue
-		if(length(added.valid_origins))
-			if(!(picked_origin.type_name in added.valid_origins))
-				all_possible_effects -= effect
-				QDEL_NULL(added)
-				continue
-		if(length(added.valid_activators))
-			var/good_activators = FALSE
-			for(var/datum/artifact_activator/activator as anything in activators) //Only need one to be correct.
-				if(activator.type in added.valid_activators)
-					good_activators = TRUE
-					break
-			if(!good_activators)
-				all_possible_effects -= effect
-				QDEL_NULL(added)
-				continue
-		if(added.artifact_size)
-			if(artifact_size != added.artifact_size)
-				all_possible_effects -= effect
-				QDEL_NULL(added)
-				continue
-		artifact_effects += added
-		added.our_artifact = src
-		added.setup()
 		all_possible_effects -= effect
-		effects_amount--
+		if(try_add_effect(effect))
+			effects_amount--
+
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))
@@ -230,17 +190,104 @@
 		COMSIG_ATOM_NO_LONGER_PULLED,
 		COMSIG_ATOM_PULLED,
 	))
+///This just clears all the effects,activators,and faults of the artifact, so we can add new ones with a proc.
+/datum/component/artifact/proc/clear_out()
+	activators = list() //this probably causes a memory leak. Too bad!
+	QDEL_NULL(chosen_fault)
+	fault_discovered = FALSE
+	artifact_effects = list()
+	discovered_effects = list()
+	return
+///Adds an activator, returns TRUE/FALSE based on success.
+/datum/component/artifact/proc/add_activator(datum/artifact_activator/new_activator,forced_potency = 0)
+	if(!new_activator)
+		return FALSE
+	if(length(activators) >= BASE_MAX_ACTIVATORS)
+		return FALSE
+	var/datum/artifact_activator/created
+	if(ispath(new_activator))
+		created = new new_activator()
+	else
+		created = new_activator
+	activators += created
+	if(forced_potency > 0 )
+		created.setup(forced_potency)
+	else
+		created.setup(rand(1,100))
+	return TRUE
+///changes the fault of the artifact, returns TRUE/FALSE based on success.
+/datum/component/artifact/proc/change_fault(datum/artifact_fault/new_fault)
+	if(new_fault)
+		return force_replace_fault(new_fault)
+	else
+		chosen_fault = new new_fault
+	return TRUE
+
+/*
+* Long function, but basically:
+* For given effect:
+* If it has valid types, check to make sure its of the right type path. So you cant roll something that requires a structure on an item.
+* If it has valid origins, and the artifact isnt that origin, return FALSE.
+* If it has valid activators, and the artifact has none of them,  return FALSE.
+* If it has a valid size, and the artifact isnt that size,  return FALSE.
+* Then, if all is well, slam it on the artifact, call setup() on the effect, return TRUE
+*/
+/datum/component/artifact/proc/try_add_effect(datum/artifact_effect/effect)
+	var/datum/artifact_effect/added
+	if(ispath(effect))
+		added = new effect //We need it now, becasue for some reason we cant read the lists from just the raw datum.
+	else
+		added = effect //Skip the checks, just add it.
+		artifact_effects += added
+		added.our_artifact = src
+		added.setup()
+		return TRUE
+	if(length(added.valid_type_paths))
+		var/bad_path = FALSE
+		for(var/path in added.valid_type_paths)
+			if(!istype(holder,path))
+				bad_path = TRUE
+				break
+		if(bad_path)
+			QDEL_NULL(added)
+			return FALSE
+	if(length(added.valid_origins))
+		if(!(artifact_origin.type_name in added.valid_origins))
+			QDEL_NULL(added)
+			return FALSE
+	if(length(added.valid_activators))
+		var/good_activators = FALSE
+		for(var/datum/artifact_activator/activator as anything in activators) //Only need one to be correct.
+			if(activator.type in added.valid_activators)
+				good_activators = TRUE
+				break
+		if(!good_activators)
+			QDEL_NULL(added)
+			return FALSE
+	if(added.artifact_size)
+		if(artifact_size != added.artifact_size)
+			QDEL_NULL(added)
+			return FALSE
+	artifact_effects += added
+	added.our_artifact = src
+	added.setup()
+	return TRUE
 
 ///Kinda a legacy proc, but if you need something super special I guess.
 /datum/component/artifact/proc/setup()
 	return
 
-///Replaces the fault on the artifact with a new one. Admin Proc, not called
-/datum/component/artifact/proc/force_replace_fault(new_fault_path)
-	if(new_fault_path && ispath(new_fault_path,/datum/artifact_fault))
-		chosen_fault = new new_fault_path
-		chosen_fault.our_artifact = src
-		chosen_fault.on_added(src)
+///Replaces the fault on the artifact with a new one.
+/datum/component/artifact/proc/force_replace_fault(new_fault)
+	if(new_fault)
+		if(ispath(new_fault))
+			chosen_fault = new new_fault
+			chosen_fault.our_artifact = src
+			chosen_fault.on_added(src)
+		else
+			chosen_fault = new_fault
+			chosen_fault.our_artifact = src
+			chosen_fault.on_added(src)
 		return TRUE
 	return FALSE
 

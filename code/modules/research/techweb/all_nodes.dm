@@ -679,6 +679,8 @@
 		"reactive_armour",
 		"artifact_heater",
 		"artifact_xray",
+		"disk_artifact", //MONKESTATION EDIT ADDITION
+		"artifact_wand" //MONKESTATION EDIT ADDITION
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
