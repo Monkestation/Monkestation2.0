@@ -53,6 +53,6 @@
 
 /obj/machinery/door/puzzle/keycard/syndicate_suit_storage
 	name = "Heavy Operation Suit Storage"
-	desc = "You heard legends of that suit. The Syndicate considers it overkill in most operations."
+	desc = "You heard legends of that suit. The Syndicate considers it overkill for most operations."
 	puzzle_id = "syndicate_suit_storage"
 // MONKESTATION EDIT STOP
