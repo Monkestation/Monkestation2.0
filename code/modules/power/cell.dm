@@ -32,6 +32,7 @@
 	var/corrupted = FALSE
 	///how much power is given every tick in a recharger
 	var/chargerate = 100
+	var/self_recharge = 0 //OLYMPUS Edit
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -48,6 +49,7 @@
 
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
+	START_PROCESSING(SSobj, src) //OLYMPUS Edit for self charge
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
@@ -66,6 +68,11 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+//OLYMPUS Edit
+/obj/item/stock_parts/cell/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
  *
@@ -81,12 +88,12 @@
 
 	. = COMPONENT_ITEM_CHARGED
 
-	if(prob(80))
-		maxcharge -= 200
-
-	if(maxcharge <= 1) // Div by 0 protection
-		maxcharge = 1
-		. |= COMPONENT_ITEM_BURNT_OUT
+	if(!self_recharge) //OLYMPUS Edit
+		if(prob(80))
+			maxcharge -= 200
+		if(maxcharge <= 1) // Div by 0 protection
+			maxcharge = 1
+			. |= COMPONENT_ITEM_BURNT_OUT
 
 	charge = maxcharge
 	update_appearance()
@@ -128,11 +135,21 @@
 	if(vname == NAMEOF(src, maxcharge))
 		if(charge > vval)
 			charge = vval
+	if(vname == NAMEOF(src, self_recharge))
+		if(vval)
+			START_PROCESSING(SSobj, src)
+		else
+			STOP_PROCESSING(SSobj, src)
 	if(vname == NAMEOF(src, corrupted) && vval && !corrupted)
 		corrupt(TRUE)
 		return TRUE
 	return ..()
 
+/obj/item/stock_parts/cell/process(delta_time)
+	if(self_recharge)
+		give(chargerate * 0.125 * delta_time)
+	else
+		return PROCESS_KILL
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
