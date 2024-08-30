@@ -23,7 +23,8 @@
 	var/deactivation_message
 	///played on deactivation
 	var/deactivation_sound
-
+	///list of paths the artifacts holder is allowed to be, if null, may be on any artifact datum holder.
+	var/list/valid_type_paths
 	///Does this show up on the artifact fourm?
 	var/super_secret = FALSE
 

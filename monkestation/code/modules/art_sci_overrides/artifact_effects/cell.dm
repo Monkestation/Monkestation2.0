@@ -7,6 +7,7 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
+	valid_type_paths = list(/obj/item/stock_parts/cell/artifact)
 	research_value = 500
 	examine_discovered = span_warning("It appears to hold power")
 

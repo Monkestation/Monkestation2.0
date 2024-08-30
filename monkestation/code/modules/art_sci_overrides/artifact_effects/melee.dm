@@ -16,6 +16,7 @@
 	var/active_reach
 	var/active_woundbonus = 0
 
+	valid_type_paths = list(/obj/item/melee/artifact)
 	research_value = 500
 
 	examine_discovered = span_warning("It appears to be some sort of melee weapon")

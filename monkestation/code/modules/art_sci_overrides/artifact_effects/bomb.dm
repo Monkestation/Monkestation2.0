@@ -43,7 +43,7 @@
 	timer_id = addtimer(CALLBACK(src, PROC_REF(finale)), explode_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(do_alert && is_station_level(our_artifact.holder.z))
 		priority_announce("A highly unstable object has been activated at [get_area(our_artifact.holder)]. It has been marked on GPS, The crew is advised to get rid of it IMMEDIATELY.", null, SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
-		our_artifact.AddComponent(/datum/component/gps, "Unstable Object")
+		our_artifact.holder.AddComponent(/datum/component/gps, "Unstable Object")
 
 /datum/artifact_effect/bomb/effect_deactivate()
 	deltimer(timer_id)

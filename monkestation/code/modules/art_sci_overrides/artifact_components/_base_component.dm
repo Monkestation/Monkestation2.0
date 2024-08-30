@@ -150,14 +150,33 @@
 	var/list/datum/artifact_effect/dont_touch = GLOB.artifact_effect_rarity["all"] //Dont touch because below.
 	var/list/datum/artifact_effect/all_possible_effects = dont_touch.Copy() //If you touch it, it actually edits the list, we need a copy. We cant call copy directly because its not a static type list.
 	var/effects_amount = rand(1,BASE_MAX_EFFECTS)
+	/*
+	* Long function, but basically:
+	* For every effect rolled on the artifact:
+	* If it has valid types, check to make sure its of the right type path. So you cant roll something that requires a structure on an item.
+	* If it has valid origins, and the artifact isnt that origin, move on.
+	* If it has valid activators, and the artifact has none of them, move on.
+	* If it has a valid size, and the artifact isnt that size, move on.
+	* Then, if all is well, slam it on the artifact, call setup() on the effect, and remove it from the list.
+	*/
 	while(effects_amount >0)
 		if(effects_amount <= 0)
 			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
 			break
 		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
 		var/datum/artifact_effect/added = new effect //We need it now, becasue for some reason we cant read the lists from just the raw datum.
+		if(length(added.valid_type_paths))
+			var/bad_path = FALSE
+			for(var/path in added.valid_type_paths)
+				if(!istype(holder,path))
+					bad_path = TRUE
+					break
+			if(bad_path)
+				all_possible_effects -= effect
+				QDEL_NULL(added)
+				continue
 		if(length(added.valid_origins))
-			if(!(picked_origin.type in added.valid_origins))
+			if(!(picked_origin.type_name in added.valid_origins))
 				all_possible_effects -= effect
 				QDEL_NULL(added)
 				continue

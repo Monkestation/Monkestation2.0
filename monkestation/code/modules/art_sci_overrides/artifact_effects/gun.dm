@@ -10,6 +10,7 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
+	valid_type_paths = list(/obj/item/gun/magic/artifact)
 
 	research_value = 500
 
