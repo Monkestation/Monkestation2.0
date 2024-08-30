@@ -4,13 +4,14 @@
 	desc = "An ornate stone box inscribed with ancient hieroglyphs."
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic_box.dmi'
 	icon_state = "canopic_box"
-	inhand_icon_state = "canopic_box"
-	lefthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic_box.dmi'
-	righthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic_box.dmi'
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
 
 /datum/crafting_recipe/canopic_box
 	name = "Canopic box"
@@ -60,13 +61,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_jackal"
-	inhand_icon_state = "canopic_jackal"
-	lefthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
-	righthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
+
 /datum/crafting_recipe/canopic_jackal
 	name = "Jackal Canopic jar"
 	result = /obj/item/storage/box/canopic_jackal
@@ -86,13 +89,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_human"
-	inhand_icon_state = "canopic_human"
-	lefthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
-	righthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
 /obj/item/storage/box/canopic_human/Initialize(mapload)
 	. = ..()
 
@@ -169,13 +173,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_monke"
-	inhand_icon_state = "canopic_monke"
-	lefthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
-	righthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
 
 /datum/crafting_recipe/canopic_monke //creates the crafting recipe
 	name = "Monke Canopic jar"
@@ -227,13 +232,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
 	icon_state = "canopic_hawk"
-	inhand_icon_state = "canopic_hawk"
-	lefthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
-	righthand_file = 'monkestation/code/modules/veth_misc_items/canopics/icons/canopic.dmi'
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_drop.ogg'
 	pickup_sound = 'monkestation/code/modules/veth_misc_items/canopics/sounds/canopic_pickup.ogg'
 	foldable_result = FALSE
+	illustration = FALSE
 /datum/crafting_recipe/canopic_hawk //creates the crafting recipe
 	name = "hawk canopic jar"
 	result = /obj/item/storage/box/canopic_hawk
