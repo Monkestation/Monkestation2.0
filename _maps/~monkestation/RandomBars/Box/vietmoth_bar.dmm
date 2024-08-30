@@ -51,10 +51,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/misc/dirt/jungle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "gM" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -78,7 +76,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "jB" = (
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "jK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -205,9 +203,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/wood,
 /obj/item/instrument/violin,
 /turf/open/floor/grass,
@@ -233,9 +229,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/service/theater)
 "wF" = (
@@ -380,7 +374,7 @@
 /area/station/commons/lounge)
 "Mu" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "MI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -394,11 +388,11 @@
 	name = "service camera"
 	},
 /obj/machinery/airalarm/directional/south,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "Ol" = (
 /obj/item/radio/intercom/directional/south,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "Oz" = (
 /obj/structure/chair/wood{

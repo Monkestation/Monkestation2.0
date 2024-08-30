@@ -98,6 +98,8 @@
 		"sec_beanbag_slug",
 		"sec_dart",
 		"buckshot_shell",
+		"sec_buckshot_shell",
+		"sec_shotgun_slug",
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
@@ -281,6 +283,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -752,6 +755,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
@@ -1282,6 +1286,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"dna_disk",
+		"dnainfuser",
 		"dnascanner",
 		"scan_console",
 	)
@@ -1487,6 +1492,7 @@
 		"seed_extractor",
 		"adv_watering_can",
 		"plantgenes",
+		"composters", // monkestation edit: build composters
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
