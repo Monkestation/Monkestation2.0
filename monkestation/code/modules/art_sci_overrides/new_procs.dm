@@ -27,7 +27,8 @@
 
 	var/obj/type_of_artifact = pick_weight(list(
 		/obj/structure/artifact = 70,
-		/obj/item/artifact_item = 20,
+		/obj/item/artifact_item = 10,
+		/obj/item/artifact_item_tiny = 10,
 		/obj/item/stock_parts/cell/artifact = 2.5,
 		/obj/item/gun/magic/artifact = 2.5,
 		/obj/item/melee/artifact = 2.5,
