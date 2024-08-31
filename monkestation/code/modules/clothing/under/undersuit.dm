@@ -91,3 +91,11 @@
 	bullet = 5
 	energy = 5
 	wound = 5
+
+/obj/item/clothing/under/tramsec
+	name = "tram security uniform"
+	desc = "someone has to make sure nobody is trying to run someone over"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_state = "tramsec"
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	can_adjust = FALSE

@@ -33,6 +33,7 @@
 		/obj/item/clothing/suit/armor/secduster = 3,
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
+		/obj/item/clothing/under/tramsec = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/constable = 3, //Monkestation edit
 		/obj/item/clothing/under/rank/security/brig_physician = 3, //Monkestation edit
 		/obj/item/clothing/under/rank/security/brig_physician/skirt = 3, //Monkestation edit
