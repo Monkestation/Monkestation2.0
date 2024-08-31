@@ -73257,7 +73257,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock{
-	id_tag = "commissarydoor2";
+	id_tag = "commissarydoors";
 	name = "Vacant Commissary"
 	},
 /obj/machinery/door/firedoor,
