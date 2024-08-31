@@ -36,7 +36,7 @@
 /obj/machinery/artifact_xray/Destroy()
 	if(stored_research)
 		log_research("[src] disconnected from techweb [stored_research] (destroyed).")
-		QDEL_NULL(stored_research)
+		stored_research = null
 	QDEL_NULL(wires)
 	return ..()
 
