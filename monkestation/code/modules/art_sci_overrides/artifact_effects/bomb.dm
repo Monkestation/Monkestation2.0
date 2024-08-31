@@ -32,13 +32,13 @@
 		dud = TRUE
 
 /datum/artifact_effect/bomb/effect_activate()
-	if(!our_artifact)
+	if(!our_artifact || !our_artifact.holder)
 		return
-	if(!COOLDOWN_FINISHED(src,explode_cooldown_time))
-		our_artifact.holder.visible_message(span_warning("[our_artifact] [deactivation_message]")) //rekt
+	if(!COOLDOWN_FINISHED(src,activation_cooldown))
+		our_artifact.holder.visible_message(span_warning("[our_artifact.holder] [deactivation_message]")) //rekt
 		addtimer(CALLBACK(src.our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), 1 SECONDS)
 		return
-	our_artifact.holder.visible_message(span_bolddanger("[our_artifact] [initial_warning]"))
+	our_artifact.holder.visible_message(span_bolddanger("[our_artifact.holder] [initial_warning]"))
 	COOLDOWN_START(src,activation_cooldown,explode_cooldown_time)
 	timer_id = addtimer(CALLBACK(src, PROC_REF(finale)), explode_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(do_alert && is_station_level(our_artifact.holder.z))
@@ -50,7 +50,7 @@
 
 /datum/artifact_effect/bomb/effect_process()
 	. = ..()
-	if(our_artifact.active && COOLDOWN_FINISHED(src,alarm_cooldown) && (COOLDOWN_TIMELEFT(src,alarm_cooldown) <= finale_delay))
+	if(our_artifact.active && (COOLDOWN_FINISHED(src,alarm_cooldown) || (COOLDOWN_TIMELEFT(src,alarm_cooldown) <= finale_delay)))
 		playsound(our_artifact, active_alarm, 30, 1)
 		our_artifact.holder.Shake(duration = 1 SECONDS, shake_interval = 0.08 SECONDS)
 		COOLDOWN_START(src,alarm_cooldown, alarm_cooldown_time)
@@ -64,9 +64,9 @@
 	else
 		payload()
 
-/datum/artifact_effect/bomb/on_destroy(/datum/source)
+/datum/artifact_effect/bomb/on_destroy(datum/source)
 	. = ..()
-	if(our_artifact.active)
+	if(our_artifact.active && source != src)//Prevents infinite bakoom.
 		payload()
 		deltimer(timer_id)
 
@@ -97,8 +97,8 @@
 /datum/artifact_effect/bomb/explosive/payload()
 	if(!..())
 		return FALSE
-	explosion(our_artifact, devast,heavy,light,light*1.5)
-	on_destroy()
+	explosion(our_artifact.holder, devast,heavy,light,light*1.5)
+	on_destroy(src)
 
 /// DEVESTATING BOMB
 
@@ -110,9 +110,9 @@
 
 /datum/artifact_effect/bomb/explosive/devastating/New()
 	..()
-	devast = rand(3,7)
-	heavy = rand(7,12)
-	light = rand(10,25)
+	devast = rand(2,4)
+	heavy = rand(4,6)
+	light = rand(6,16)
 	potency = (devast + heavy + light) * 2.25 // get real
 
 /// GAS BOMB
@@ -141,7 +141,7 @@
 	if(!..())
 		our_artifact.artifact_deactivate()
 		return FALSE
-	var/turf/open/O = get_turf(our_artifact)
+	var/turf/open/O = get_turf(our_artifact.holder)
 	if(!isopenturf(O))
 		our_artifact.artifact_deactivate()
 		return FALSE
