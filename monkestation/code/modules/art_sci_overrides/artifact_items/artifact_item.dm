@@ -8,10 +8,10 @@
 	inhand_icon_state = "plasmashiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	obj_flags = CAN_BE_HIT
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 
 ARTIFACT_SETUP(/obj/item/artifact_item, SSobj, null, null, ARTIFACT_SIZE_SMALL)
-
 
 /obj/item/artifact_item_tiny
 	//This is literally just an artifact, but s m o l for item generation of traits that require it.
@@ -21,5 +21,7 @@ ARTIFACT_SETUP(/obj/item/artifact_item, SSobj, null, null, ARTIFACT_SIZE_SMALL)
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	icon = 'icons/obj/artifacts.dmi'
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact
+	obj_flags = CAN_BE_HIT
 
 ARTIFACT_SETUP(/obj/item/artifact_item_tiny, SSobj, null, null, ARTIFACT_SIZE_TINY)
+

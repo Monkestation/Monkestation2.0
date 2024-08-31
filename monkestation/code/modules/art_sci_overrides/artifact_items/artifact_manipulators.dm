@@ -11,13 +11,30 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
 	var/obj/item/disk/artifact/slotted_disk
-	var/blank_mode = TRUE
+	var/selected_mode = 0
+	/// modes are- 0 = random, 1 = blank artifact,2 = disk copy, 3 = disc activator, 4 = disc fault, 5 = disc effect.
+	var/max_modes = 5
 
 /obj/item/artifact_summon_wand/attack_self(mob/user, modifiers)
 	. = ..()
-	blank_mode = !blank_mode
-	var/text_mod = blank_mode ? "a blank artifact." : "an artifact with effects from a slotted disk."
-	to_chat(user,span_notice("You set [src] to create [text_mod]"))
+	selected_mode++
+	if(selected_mode > max_modes)
+		selected_mode = 0
+	var/display_text = "cause a bug. Tell the coders quick!"
+	switch(selected_mode)
+		if(0)
+			display_text = "create a random artifact."
+		if(1)
+			display_text = "create a blank artifact."
+		if(2)
+			display_text = "create a copy of inserted disk"
+		if(3)
+			display_text = "create or modify an artifact with just the inserted disks activator."
+		if(4)
+			display_text = "create or modify an artifact with just the inserted disks fault."
+		if(5)
+			display_text = "create or modify an artifact with just the inserted disks effect."
+	to_chat(user,span_notice("You set [src] to [display_text]"))
 
 /obj/item/artifact_summon_wand/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
@@ -47,19 +64,33 @@
 		if(!art_comp)
 			visible_message(span_notice("Something goes wrong, and [src] fizzles!"))
 			return
-		if(blank_mode)
-			art_comp.clear_out()
-		else if (slotted_disk)
-			art_comp.clear_out()
-			if(slotted_disk.activator)
-				art_comp.add_activator(slotted_disk.activator)
-			if(slotted_disk.fault)
-				art_comp.change_fault(slotted_disk.fault)
-			if(slotted_disk.effect)
-				art_comp.try_add_effect(slotted_disk.effect)
+		switch(selected_mode)//0 left blank, as we don't need to do anything else.
+			if(1)
+				art_comp.clear_out()
+			if(2)
+				art_comp.clear_out()
+				if(slotted_disk.activator)
+					art_comp.add_activator(slotted_disk.activator)
+				if(slotted_disk.fault)
+					art_comp.change_fault(slotted_disk.fault)
+				if(slotted_disk.effect)
+					art_comp.try_add_effect(slotted_disk.effect)
+			if(3)
+				art_comp.clear_out()
+				if(slotted_disk.activator)
+					art_comp.add_activator(slotted_disk.activator)
+			if(4)
+				art_comp.clear_out()
+				if(slotted_disk.fault)
+					art_comp.change_fault(slotted_disk.fault)
+			if(5)
+				art_comp.clear_out()
+				if(slotted_disk.effect)
+					art_comp.try_add_effect(slotted_disk.effect)
 		visible_message(span_notice("[new_artifact] appears from nowhere!"),span_notice("You summon [new_artifact], and [src] disintegrates!"))
 		if(slotted_disk)
-			slotted_disk.forceMove(get_turf(user))
+			if(!user.put_in_active_hand(slotted_disk))
+				slotted_disk.forceMove(get_turf(user))
 		slotted_disk = null
 		qdel(src)
 	else
@@ -71,27 +102,44 @@
 		. += span_notice("Contains [slotted_disk]")
 
 /obj/item/artifact_summon_wand/attack_atom(atom/attacked_atom, mob/living/user, params)
-	. = ..()
 	var/datum/component/artifact/art_comp = attacked_atom.GetComponent(/datum/component/artifact)
 	if(art_comp && slotted_disk)
 		visible_message(span_notice("[user] begins trying to configure [attacked_atom] with [src]!"),span_notice("You begin trying to configure the [attacked_atom] with [src]..."))
 		if(do_after(user,5 SECOND))
 			var/added_anything = FALSE
-			if(slotted_disk.activator)
-				added_anything |= art_comp.add_activator(slotted_disk.activator)
-			if(slotted_disk.fault)
-				added_anything |= art_comp.change_fault(slotted_disk.fault)
-			if(slotted_disk.effect)
-				added_anything |= art_comp.try_add_effect(slotted_disk.effect)
+			switch(selected_mode)
+				if(0)
+					visible_message(span_notice("...but nothing changed!"))
+				if(1)
+					art_comp.clear_out()
+					visible_message(span_notice("[attacked_atom] is rendered inert!"))
+					added_anything = TRUE
+				if(2)
+					if(slotted_disk.activator)
+						added_anything |= art_comp.add_activator(slotted_disk.activator)
+					if(slotted_disk.fault)
+						added_anything |= art_comp.change_fault(slotted_disk.fault)
+					if(slotted_disk.effect)
+						added_anything |= art_comp.try_add_effect(slotted_disk.effect)
+				if(3)
+					if(slotted_disk.activator)
+						added_anything |= art_comp.add_activator(slotted_disk.activator)
+				if(4)
+					if(slotted_disk.fault)
+						added_anything |= art_comp.change_fault(slotted_disk.fault)
+				if(5)
+					if(slotted_disk.effect)
+						added_anything |= art_comp.try_add_effect(slotted_disk.effect)
 			if(added_anything)
 				visible_message(span_notice("[user] configures the [attacked_atom] with [src]!"),span_notice("You configure the [attacked_atom] with [src], which switftly disintegrates!"))
 				if(slotted_disk)
-					slotted_disk.forceMove(get_turf(user))
+					if(!user.put_in_active_hand(slotted_disk))
+						slotted_disk.forceMove(get_turf(user))
 				slotted_disk = null
 				qdel(src)
 			else
 				visible_message(span_notice("...but nothing changed!"))
 		else
 			visible_message(span_notice("Something goes wrong, and [src] fizzles!"))
-
+	return ..() //I TAKE NO RESPONSIBILITY FOR CALLING THIS L A S T.
 

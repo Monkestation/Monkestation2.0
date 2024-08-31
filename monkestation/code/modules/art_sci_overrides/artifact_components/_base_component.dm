@@ -192,10 +192,10 @@
 	))
 ///This just clears all the effects,activators,and faults of the artifact, so we can add new ones with a proc.
 /datum/component/artifact/proc/clear_out()
-	activators = list() //this probably causes a memory leak. Too bad!
+	QDEL_LIST(activators)
 	QDEL_NULL(chosen_fault)
+	QDEL_LIST(artifact_effects)
 	fault_discovered = FALSE
-	artifact_effects = list()
 	discovered_effects = list()
 	return
 ///Adds an activator, returns TRUE/FALSE based on success.
@@ -220,6 +220,7 @@
 	if(new_fault)
 		return force_replace_fault(new_fault)
 	else
+		qdel(chosen_fault)
 		chosen_fault = new new_fault
 	return TRUE
 
@@ -280,6 +281,7 @@
 ///Replaces the fault on the artifact with a new one.
 /datum/component/artifact/proc/force_replace_fault(new_fault)
 	if(new_fault)
+		qdel(chosen_fault)
 		if(ispath(new_fault))
 			chosen_fault = new new_fault
 			chosen_fault.our_artifact = src

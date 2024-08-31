@@ -73,8 +73,10 @@
 		return
 	if(our_disk)
 		to_chat(user,"You eject the [our_disk.name]")
-		our_disk.forceMove(get_turf(user))
+		if(!user.put_in_active_hand(our_disk))
+			our_disk.forceMove(get_turf(user))
 		our_disk = null
+		return
 	toggle_open()
 /obj/machinery/artifact_xray/proc/toggle_open()
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
@@ -85,6 +87,8 @@
 	else
 		flick("xray-opening", src)
 		open_machine()
+		if(our_disk)
+			our_disk.forceMove(src)//Hacky way of keeping the disk inside.
 
 /obj/machinery/artifact_xray/attackby(obj/item/item, mob/living/user, params)
 	if(HAS_TRAIT(item, TRAIT_NODROP))
@@ -93,7 +97,8 @@
 	if(istype(item,/obj/item/disk/artifact))
 		if(our_disk)
 			to_chat(user,"You swap [our_disk.name] for [item.name]")
-			our_disk.forceMove(get_turf(user))
+			if(!user.put_in_inactive_hand(our_disk))
+				our_disk.forceMove(get_turf(user))
 			item.forceMove(src)
 			our_disk = item
 		else
@@ -191,14 +196,14 @@
 	return
 
 /obj/machinery/artifact_xray/proc/destructive_scan_artifact(datum/component/artifact/the_artifact)
-	if(prob(disk_chance))
+	if(prob(disk_chance + (5*chosen_level)))
 		our_disk.effect = pick(the_artifact.artifact_effects)
 		our_disk.activator = pick(the_artifact.activators)
 		if(prob(100-destroy_chance)) //Better scanners means better chance of NOT getting fault
 			our_disk.fault = the_artifact.chosen_fault
 		our_disk.update_name()
 		src.visible_message(span_robot("NOTICE: DATA DISK RECORDED."))
-	if(prob(destroy_chance))
+	if(prob(destroy_chance + round(2.5 * chosen_level)))
 		the_artifact.clear_out()
 		src.visible_message(span_robot("WARNING: ARTIFACT RENDERED BLANK."))
 	return
