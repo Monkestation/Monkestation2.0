@@ -868,7 +868,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Ce" = (
@@ -981,7 +980,6 @@
 "EG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/clock/directional/south,
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "EK" = (
@@ -1672,7 +1670,7 @@
 "Zr" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
 
