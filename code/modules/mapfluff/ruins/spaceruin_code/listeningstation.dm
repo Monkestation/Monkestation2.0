@@ -36,13 +36,14 @@
 	<br>
 	<br> It's not like anyone but me reads these, why else should I talk about my base upkeep? Today: the "lobby".
 "}
-
+//monkestation edit: goliath
 /obj/item/paper/fluff/ruins/listeningstation/reports/june/goliath
 	name = "hastily-written report"
 	default_raw_text = {"Heard some strange noises in the lobby, leaving this in case something happens.
 	<br> Some sorta loud banging behind one of the walls. I'm going to go take a look.
-	<br> I've got my gun loaded, and hopefully it'll be handled soon.
+	<br> Got my gun just in case, hopefully it isn't anything I need to use it for.
 "}
+//monkey business end
 
 // "Anderson" starts writing here
 /obj/item/paper/fluff/ruins/listeningstation/reports/july
@@ -122,7 +123,7 @@
 	<br>You may view intelligence reports from your predecessors in the filing cabinet in your office.
 	"}
 
-
+// MONKESTATION EDIT: monkestation new listening post. im not making a seperate file for modularising something that already exists on tg. please god.
 /obj/item/paper/fluff/ruins/listeningstation/engineer
 	name = "message from syndicate engineering"
 	default_raw_text = {"This outpost's pretty messy compared to other models, so here's the basic rundown of every room and whatnot:
@@ -135,3 +136,4 @@
 	<br>There's also a pile of garden equipment in the excavation near medical - have fun with that.
 	<br>
 	<br>Enjoy your assignment."}
+// end monkey business
