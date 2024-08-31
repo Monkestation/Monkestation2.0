@@ -77,7 +77,7 @@
 	name = "Cursed Bunny (British)"
 	uniform = /obj/item/clothing/under/costume/playbunny/british
 	suit = /obj/item/clothing/suit/jacket/tailcoat/british
-	shoes = /obj/item/clothing/shoes/heels/blue
+	shoes = /obj/item/clothing/shoes/heels/brightblue
 	head = /obj/item/clothing/head/playbunnyears/british
 	neck = /obj/item/clothing/neck/tie/bunnytie/blue/tied
 
@@ -85,7 +85,7 @@
 	name = "Cursed Bunny (Communist)"
 	uniform = /obj/item/clothing/under/costume/playbunny/communist
 	suit = /obj/item/clothing/suit/jacket/tailcoat/communist
-	shoes = /obj/item/clothing/shoes/heels/red
+	shoes = /obj/item/clothing/shoes/heels/brightred
 	head = /obj/item/clothing/head/playbunnyears/communist
 	neck = /obj/item/clothing/neck/tie/bunnytie/communist/tied
 
@@ -93,7 +93,7 @@
 	name = "Cursed Bunny (USA)"
 	uniform = /obj/item/clothing/under/costume/playbunny/usa
 	suit = /obj/item/clothing/suit/jacket/tailcoat/usa
-	shoes = /obj/item/clothing/shoes/heels/red
+	shoes = /obj/item/clothing/shoes/heels/brightred
 	head = /obj/item/clothing/head/playbunnyears/usa
 	neck = /obj/item/clothing/neck/tie/bunnytie/blue/tied
 
