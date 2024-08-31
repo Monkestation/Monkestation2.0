@@ -65,7 +65,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 		var/throwtarget = get_edge_target_turf(get_turf(user), get_dir(owner_turf, get_step_away(user, owner_turf)))
 		user.safe_throw_at(throwtarget, power_gen / 38 KW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 	if(damage > 400 && prob(50))
-		user.dust(just_ash = TRUE, drop_items = TRUE)
+		user.death(FALSE)
 		our_artifact.artifact_deactivate() //shortcircuit
 
 	if(prob(20)) //try to get yourself shocked with insuls many times to shortcircuit it (in retrospect this sucks)
