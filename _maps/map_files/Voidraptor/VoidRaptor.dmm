@@ -82596,6 +82596,7 @@
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast Door"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/port)
 "wXr" = (
