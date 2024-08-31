@@ -319,13 +319,9 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		var/hasHead = FALSE
 
-		for(var/obj/item/bodypart/parts in human_user.bodyparts)
-			if(istype(parts, /obj/item/bodypart/head))
-				hasHead = TRUE
-
-		if(!hasHead)//Aint got no HEAD what da hell
+		if(!(human_user.get_bodypart(BODY_ZONE_HEAD)))
+			//Aint got no HEAD what da hell
 			to_chat(user,"<B>You try to spit but you have no head!</B>")
 			return FALSE
 
