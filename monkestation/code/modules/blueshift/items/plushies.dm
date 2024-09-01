@@ -81,7 +81,7 @@
 
 /obj/item/toy/plush/nova/sarmieplush
 	name = "cosplayer plushie"
-	desc = "A stuffed toy who look like a familiar cosplayer, <b>he looks sad.</b>"
+	desc = "A stuffed toy who looks like a familiar cosplayer, <b>he looks sad.</b>"
 	icon_state = "plushie_sarmie"
 	attack_verb_continuous = list("baps")
 	attack_verb_simple = list("bap")
@@ -90,7 +90,7 @@
 
 /obj/item/toy/plush/nova/sharknet
 	name = "gluttonous shark plushie"
-	desc = "A heavy plushie of a rather large and hungry shark"
+	desc = "A heavy plushie of a rather large and hungry shark."
 	icon_state = "plushie_sharknet"
 	attack_verb_continuous = list("cuddles", "squishes", "wehs")
 	attack_verb_simple = list("cuddle", "squish", "weh")
