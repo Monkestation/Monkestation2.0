@@ -12,7 +12,7 @@
 	weather_messages = list("It's snowing!", "You feel a chill")
 
 	damage_type = BURN
-	damage_per_tick = 0.1
+	damage_per_tick = 4
 	min_severity = 1
 	max_severity = 10
 	max_severity_change = 5
@@ -39,7 +39,7 @@
 	weather_messages = list("You feel a chill", "The cold wind is freezing you to the bone", "How can a man who is warm, understand a man who is cold?")
 
 	damage_type = BURN
-	damage_per_tick = 0.5
+	damage_per_tick = 2
 	min_severity = 40
 	max_severity = 100
 	max_severity_change = 60

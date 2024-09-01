@@ -82,7 +82,6 @@
 		return
 
 	set_light(l_outer_range = 0)
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()

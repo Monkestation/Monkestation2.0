@@ -62,7 +62,6 @@
 	sleep(destroy_after)
 
 	particle.loc = null
-	qdel(particle)
 
 ///Returns a list of (x,y) coordinates, in pixel offsets.
 /mob/proc/get_hand_pixels()

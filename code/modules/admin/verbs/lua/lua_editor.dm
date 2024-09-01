@@ -103,7 +103,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!check_rights_for(usr.client, R_ADMIN))
+	if(!check_rights_for(usr.client, R_DEBUG))
 		return
 	if(action == "runCodeFile")
 		params["code"] = file2text(input(usr, "Input File") as null|file)
@@ -236,7 +236,7 @@
 /client/proc/open_lua_editor()
 	set name = "Open Lua Editor"
 	set category = "Debug"
-	if(!check_rights_for(src, R_ADMIN))
+	if(!check_rights_for(src, R_DEBUG))
 		return
 	var/datum/lua_editor/editor = new()
 	editor.ui_interact(usr)
