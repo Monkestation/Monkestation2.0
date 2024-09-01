@@ -3381,7 +3381,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/corner,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "aWG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -3623,6 +3623,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/textured,
 /area/station/service/hydroponics/garden/abandoned)
+"aZP" = (
+/turf/closed/wall,
+/area/station/commons/vacant_room)
 "aZT" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/table,
@@ -8631,7 +8634,7 @@
 	name = "Vacant Commissary Shutters"
 	},
 /turf/open/floor/iron/large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "cEh" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -13760,7 +13763,7 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "dYR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16036,7 +16039,7 @@
 	name = "Vacant Commissary Shutters"
 	},
 /turf/open/floor/iron/large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "eEU" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -16923,7 +16926,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "eSv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17112,7 +17115,7 @@
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "eVk" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
@@ -17431,7 +17434,7 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "eZa" = (
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/bridge)
@@ -20762,7 +20765,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "gcy" = (
 /obj/structure/trash_pile,
 /turf/open/floor/iron/textured,
@@ -23239,7 +23242,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/edge,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "gLP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
@@ -24824,7 +24827,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/edge,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "hih" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -27924,7 +27927,7 @@
 	name = "Vacant Commissary Shutters"
 	},
 /turf/open/floor/iron/large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "icf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36657,7 +36660,7 @@
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "kxd" = (
 /obj/structure/training_machine,
 /obj/item/target/syndicate,
@@ -46136,7 +46139,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "naz" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/firealarm/directional/north,
@@ -56950,7 +56953,7 @@
 /obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "pXI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66853,7 +66856,7 @@
 	c_tag = "Vacant Room"
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "sJy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70517,7 +70520,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "tEA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -73063,7 +73066,7 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "urb" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -84745,7 +84748,7 @@
 /obj/item/storage/briefcase,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
+/area/station/commons/vacant_room)
 "xFz" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -118577,7 +118580,7 @@ cbs
 eBT
 hqX
 hvK
-syE
+aZP
 pXG
 uqY
 dYG
@@ -118834,7 +118837,7 @@ gHl
 vJT
 xjX
 iMZ
-syE
+aZP
 hhT
 eSl
 aWD
@@ -119095,7 +119098,7 @@ nar
 gLO
 gcr
 eUT
-syE
+aZP
 dto
 bdp
 pII
@@ -119348,11 +119351,11 @@ efl
 vJT
 xjX
 hvK
-syE
+aZP
 tEz
 kwX
 xFy
-syE
+aZP
 qgT
 ewN
 hcq
@@ -119605,11 +119608,11 @@ nEb
 mzb
 hEA
 jHI
-syE
+aZP
 eEN
 cDV
 ibV
-syE
+aZP
 nJS
 pGh
 mTF
