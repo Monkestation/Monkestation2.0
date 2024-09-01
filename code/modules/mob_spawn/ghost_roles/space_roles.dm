@@ -87,6 +87,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/stack/medical/bruise_pack
 
+//monkestation edits begin
 ///asteroid comms agent
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space
@@ -129,7 +130,7 @@
 	new_spawn.adjustOrganLoss(ORGAN_SLOT_EYES, 100) //AAAARGH MY EYES
 	new_spawn.adjustOrganLoss(ORGAN_SLOT_LIVER, 35) //not completely out, but it's not having a good day
 
-
+//monkey business end
 ///battlecruiser stuff
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser
