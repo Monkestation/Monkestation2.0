@@ -38,10 +38,10 @@
 	icon = 'monkestation/code/modules/aesthetics/icons/airalarm.dmi'
 
 /obj/machinery/power/apc
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 
 /obj/item/wallframe/apc
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 
 /obj/structure/reagent_dispensers
 	icon  = 'monkestation/code/modules/aesthetics/icons/chemical_tanks.dmi'
