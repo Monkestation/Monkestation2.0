@@ -36,6 +36,7 @@
 		SSticker.OnRoundend(roundend_callback)
 	Read_Memory()
 	AddComponent(/datum/component/simple_access, REGION_ACCESS_ALL_STATION) // gary actually balls
+	AddComponent(/datum/component/regenerator)
 	add_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_GOES_THROUGH_WOODEN_BARRICADES, TRAIT_WATER_BREATHING), INNATE_TRAIT) // gary REALLY balls (also gary making a hideout in a pool is funny)
 	set_home(home)
 	// remove unused chicken components for gary

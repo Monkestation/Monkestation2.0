@@ -2,10 +2,11 @@
 	///the gary that created us
 	var/datum/weakref/attached_gary
 
-/datum/component/garys_item/Initialize(mob/living/basic/chicken/gary/attached_gary)
+/datum/component/garys_item/Initialize(mob/living/basic/chicken/gary/gary)
 	. = ..()
-	src.attached_gary = WEAKREF(attached_gary)
+	src.attached_gary = WEAKREF(gary)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(looter))
+	SEND_SIGNAL(parent, COMSIG_ITEM_GARY_STASHED, gary)
 
 /datum/component/garys_item/UnregisterFromParent()
 	. = ..()
@@ -17,4 +18,5 @@
 	gary.held_shinies -= source_item.type
 	gary.hideout.remove_item(source_item)
 	gary.adjust_happiness(-5, taker)
+	SEND_SIGNAL(parent, COMSIG_ITEM_GARY_LOOTED, gary)
 	SEND_SIGNAL(gary, COMSIG_FRIENDSHIP_CHANGE, taker, -50)// womp womp

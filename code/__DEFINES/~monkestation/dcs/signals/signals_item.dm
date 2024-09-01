@@ -10,3 +10,9 @@
 
 /// the comsig for clockwork items checking turf
 #define COMSIG_CHECK_TURF_CLOCKWORK "check_turf_clockwork"
+
+/// Sent when an item is stashed in Gary's hideout.
+#define COMSIG_ITEM_GARY_STASHED "gary_stashed"
+
+/// Sent when an item is taken/looted from Gary's hideout.
+#define COMSIG_ITEM_GARY_LOOTED "gary_looted"

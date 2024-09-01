@@ -155,6 +155,7 @@
 
 	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
 		held_item.forceMove(get_turf(target))
+		SEND_SIGNAL(held_item, COMSIG_ITEM_GARY_LOOTED, pawn)
 		finish_action(controller, FALSE)
 		return FALSE
 
@@ -165,6 +166,7 @@
 		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
 	else
 		target.put_in_hands(held_item)
+	SEND_SIGNAL(held_item, COMSIG_ITEM_GARY_LOOTED, pawn)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/gary_give_item/finish_action(datum/ai_controller/controller, succeeded, ...)
