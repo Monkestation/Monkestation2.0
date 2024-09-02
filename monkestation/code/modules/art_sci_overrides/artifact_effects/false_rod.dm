@@ -8,6 +8,8 @@
 
 	var/list/first_touched
 
+	var/mob/living/our_victim
+
 	COOLDOWN_DECLARE(touch_cooldown)
 
 /datum/artifact_effect/false_rod/setup()
@@ -28,10 +30,15 @@
 	addtimer(CALLBACK(src,PROC_REF(post_pickup),user),(0.2 SECOND))
 	return
 
+/datum/artifact_effect/false_rod/on_destroy(atom/source)
+	our_victim?.remove_status_effect(/datum/status_effect/forced_oath)
+	. = ..()
+
 /datum/artifact_effect/false_rod/proc/post_pickup(mob/living/user)
 	to_chat(user,span_danger("[our_artifact.holder] forcefully melds with you, and a healing aura surrounds you!"))
 	ADD_TRAIT(our_artifact.holder,TRAIT_NODROP,CURSED_ITEM_TRAIT(our_artifact.holder.type))
-	user.apply_status_effect(/datum/component/aura_healing)
+	user.apply_status_effect(/datum/status_effect/forced_oath)
+	our_victim = user
 	return
 
 /datum/status_effect/forced_oath
@@ -63,7 +70,7 @@
 
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.show_to(owner)
-	return ..()
+	return TRUE
 /datum/status_effect/forced_oath/on_remove()
 	QDEL_NULL(our_aura)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
