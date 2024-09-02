@@ -12,3 +12,8 @@ ARTIFACT_SETUP(/obj/item/stock_parts/cell/artifact, SSobj, null, /datum/artifact
 	. = FALSE
 	if(assoc_comp.active)
 		return ..()
+
+/obj/item/stock_parts/cell/artifact/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user,span_notice("You squeeze the [src] tightly."))
+	on_artifact_touched(src,user,modifiers)

@@ -24,8 +24,6 @@
 		color = COLOR_BLACK
 	our_artifact.holder.light_system = COMPLEX_LIGHT //We need this to avoid a crash for wrong lighting system.
 	our_artifact.holder.set_light(range, round(range*1.25),power,l_color = color,l_on = FALSE)
-	our_artifact.holder.set_light_range_power_color(range, power, color)
-	potency += (range + power) * 2
 
 /datum/artifact_effect/lamp/effect_touched(mob/user)
 	our_artifact.holder.set_light_on(!our_artifact.holder.light_on) //toggle

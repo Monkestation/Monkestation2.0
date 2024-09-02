@@ -3,7 +3,7 @@
 
 /datum/artifact_activator/range
 	name = "Generic Range Trigger"
-	//the upper range of the weapon basically between amount, and upper_range
+
 	var/upper_range = 0
 	///Hint range goes like amount - hint_range to upper_range + hint_range
 	var/hint_range = 0
@@ -12,7 +12,6 @@
 
 /datum/artifact_activator/range/setup(potency)
 	. = ..()
-	upper_range = amount + (hint_range * 2)
 
 /datum/artifact_activator/range/force
 	name = "Physical Trauma"
@@ -23,6 +22,9 @@
 	hint_texts = list("You almost want to start hitting things.", "A good whack might fix this.")
 	discovered_text = "Activated by Kinetic Energy"
 
+/datum/artifact_activator/range/force/New()
+	base_trigger_amount = rand(2,highest_trigger_amount)
+
 /datum/artifact_activator/range/heat
 	name = "Heat Sensisty"
 	required_stimuli = STIMULUS_HEAT
@@ -32,7 +34,7 @@
 	discovered_text = "Activated by Thermal Energy"
 
 /datum/artifact_activator/range/heat/New()
-	base_trigger_amount = rand(350, 750)
+	base_trigger_amount = rand(350, highest_trigger_amount)
 
 /datum/artifact_activator/range/shock
 	name = "Electrical Charged"
@@ -43,7 +45,7 @@
 	discovered_text = "Activated by Electrical Energy"
 
 /datum/artifact_activator/range/shock/New()
-	base_trigger_amount = rand(400, 1200)
+	base_trigger_amount = rand(400, highest_trigger_amount)
 
 /datum/artifact_activator/range/radiation
 	name = "Radioactivity"

@@ -17,6 +17,11 @@
 
 ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj, null, /datum/artifact_effect/melee, ARTIFACT_SIZE_SMALL)
 
+/obj/item/melee/artifact/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user,span_notice("You squeeze the [src] tightly."))
+	on_artifact_touched(src,user,modifiers)
+
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
 	if(!istype(victim) || !assoc_comp.active || !COOLDOWN_FINISHED(src,special_cooldown) || !special || !proximity)
 		return

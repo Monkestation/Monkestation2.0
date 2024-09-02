@@ -45,6 +45,8 @@
 	var/deactivation_message
 	var/deactivation_sound
 	var/mutable_appearance/act_effect
+	///Have we been xray scanned at least once?
+	var/researched = FALSE
 
 	///we store our analysis form var here
 	var/obj/item/sticker/analysis_form/analysis
@@ -208,7 +210,7 @@
 	if(ispath(new_activator))
 		created = new new_activator()
 	else
-		created = new_activator
+		created = new new_activator.type
 	activators += created
 	if(forced_potency > 0 )
 		created.setup(forced_potency)
@@ -218,7 +220,7 @@
 ///changes the fault of the artifact, returns TRUE/FALSE based on success.
 /datum/component/artifact/proc/change_fault(datum/artifact_fault/new_fault)
 	if(new_fault)
-		return force_replace_fault(new_fault)
+		return force_replace_fault(new_fault.type)
 	else
 		qdel(chosen_fault)
 		chosen_fault = new new_fault
@@ -238,7 +240,7 @@
 	if(ispath(effect))
 		added = new effect //We need it now, becasue for some reason we cant read the lists from just the raw datum.
 	else
-		added = effect //Skip the checks, just add it.
+		added = new effect.type //Skip the checks, just add it.
 		artifact_effects += added
 		added.our_artifact = src
 		added.setup()
@@ -366,11 +368,7 @@
 		if(istype(listed_activator, /datum/artifact_activator/range))
 			var/datum/artifact_activator/range/ranged_activator = listed_activator
 			//if we fail the range check check if we are in hint range to send out the hint
-			if(!ISINRANGE(stimuli_value, ranged_activator.amount, ranged_activator.upper_range))
-				if(!ISINRANGE(stimuli_value, ranged_activator.amount - ranged_activator.hint_range, ranged_activator.upper_range + ranged_activator.hint_range))
-					continue
-				if(!prob(ranged_activator.hint_prob))
-					continue
+			if(stimuli_value < ranged_activator.amount)
 				continue
 		correct_trigger = TRUE
 		break

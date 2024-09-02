@@ -1,6 +1,6 @@
 /obj/item/artifact_summon_wand
 	name = "artifact manipulation wand"
-	desc = "A one-use device capable of summoning an artifact from... somewhere. Using the item will change if the artifact should be a blank artifact or a random one. Slap an artifact with it to modify it with the inserted disk."
+	desc = "A one-use device capable of summoning an artifact from... somewhere.Use the item in hand to change modes. Right Click a disk onto it to load the disk. Right Click the item to attempt to summon an artifact, or slap an existing one to modify it."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer2"
 	inhand_icon_state = "electronic"
@@ -100,6 +100,19 @@
 	. = ..()
 	if(slotted_disk)
 		. += span_notice("Contains [slotted_disk]")
+	switch (selected_mode)
+		if(0)
+			. += span_notice("Will currently try to summon a random artifact.")
+		if(1)
+			. += span_notice("Will currently try to summon a blank artifact")
+		if(2)
+			. += span_notice("Will currently try to copy the disk to a new or existing artifact.")
+		if(3)
+			. += span_notice("Will currently try to copy the disk activator to a new or existing artifact.")
+		if(4)
+			. += span_notice("Will currently try to copy the disk fault to a new or existing artifact.")
+		if(5)
+			. += span_notice("Will currently try to copy the disk effect to a new or existing artifact.")
 
 /obj/item/artifact_summon_wand/attack_atom(atom/attacked_atom, mob/living/user, params)
 	var/datum/component/artifact/art_comp = attacked_atom.GetComponent(/datum/component/artifact)

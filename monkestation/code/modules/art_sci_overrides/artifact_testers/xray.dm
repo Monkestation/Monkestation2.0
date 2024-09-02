@@ -165,30 +165,28 @@
 			artifact.freebies = 0 //No more freebies, you know what it does now.
 			artifact.fault_discovered = TRUE
 			research_added += artifact.chosen_fault.research_value
-			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = artifact.chosen_fault.research_value))
 		if(artifact.chosen_fault)
 			last_results = list("ARTIFACT FAULT DISCOVERED: [artifact.chosen_fault.name]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		else
 			research_added += 2500
-			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 2500))
 			last_results = list("FLAWLESS ARTIFACT. NO FAULTS.", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		if(length(artifact.discovered_effects) != length(artifact.artifact_effects))
 			for(var/datum/artifact_effect/eff in artifact.artifact_effects)
 				artifact.discovered_effects += eff.type
 				research_added += eff.research_value
-				stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = eff.research_value))
 			last_results += "ARTIFACT EFFECTS REVEALED."
 		if(!length(artifact.artifact_effects))
 			last_results += "MUNDANE ARTIFACT DETECTED. NO NOTEABLE EFFECTS."
 		if(length(artifact.activators) != length(artifact.activators))
 			for(var/datum/artifact_activator/activator in artifact.activators)
 				artifact.discovered_activators += activator.type
-				stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = activator.research_value))
 				research_added += activator.research_value
 			last_results += "ARTIFACT ACTIVATORS REVEALED."
 		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
-		if(research_added > 0 )
+		if(research_added > 0 && !artifact.researched)
+			artifact.researched = TRUE
 			src.visible_message(span_notice("The [src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
+			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_added))
 		if(our_disk && destroy_artifact_mode)
 			destructive_scan_artifact(artifact)
 	else

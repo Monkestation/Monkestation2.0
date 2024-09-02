@@ -13,6 +13,12 @@
 
 ARTIFACT_SETUP(/obj/item/artifact_item, SSobj, null, null, ARTIFACT_SIZE_SMALL)
 
+/obj/item/artifact_item/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user,span_notice("You squeeze the [src] tightly."))
+	on_artifact_touched(src,user,modifiers)
+
+
 /obj/item/artifact_item_tiny
 	//This is literally just an artifact, but s m o l for item generation of traits that require it.
 
@@ -25,3 +31,7 @@ ARTIFACT_SETUP(/obj/item/artifact_item, SSobj, null, null, ARTIFACT_SIZE_SMALL)
 
 ARTIFACT_SETUP(/obj/item/artifact_item_tiny, SSobj, null, null, ARTIFACT_SIZE_TINY)
 
+/obj/item/artifact_item_tiny/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user,span_notice("You squeeze the [src] tightly."))
+	on_artifact_touched(src,user,modifiers)

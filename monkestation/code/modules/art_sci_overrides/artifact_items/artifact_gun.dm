@@ -43,6 +43,11 @@
 
 ARTIFACT_SETUP(/obj/item/gun/magic/artifact, SSobj, null, /datum/artifact_effect/gun, ARTIFACT_SIZE_SMALL)
 
+/obj/item/gun/magic/artifact/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user,span_notice("You squeeze the [src] tightly."))
+	on_artifact_touched(src,user,modifiers)
+
 /obj/item/gun/magic/artifact/can_shoot()
 	return assoc_comp.active
 

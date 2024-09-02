@@ -50,13 +50,13 @@
 	our_aura = owner.AddComponent( \
 		/datum/component/aura_healing, \
 		range = 5, \
-		brute_heal = 0.7, \
-		burn_heal = 0.7, \
-		toxin_heal = 0.7, \
-		suffocation_heal = 0.7, \
-		stamina_heal = 0.7, \
+		brute_heal = 1, \
+		burn_heal = 1, \
+		toxin_heal = 1, \
+		suffocation_heal = 1, \
+		stamina_heal = 1, \
 		clone_heal = 0.2, \
-		simple_heal = 0.7, \
+		simple_heal = 1, \
 		organ_healing = organ_healing, \
 		healing_color = "#375637", \
 	)
@@ -77,10 +77,10 @@
 		if(iscarbon(owner))
 			if(owner.health < owner.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(owner), "#375637")
-				owner.adjustBruteLoss(-0.7)
-				owner.adjustFireLoss(-0.7)
-				owner.adjustToxLoss(-0.7, forced = TRUE) //Because Slime People are people too
-				owner.adjustOxyLoss(-0.7, forced = TRUE)
-				owner.stamina.adjust(0.7)
-				owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.7)
+				owner.adjustBruteLoss(-1)
+				owner.adjustFireLoss(-1)
+				owner.adjustToxLoss(-1, forced = TRUE) //Because Slime People are people too
+				owner.adjustOxyLoss(-1, forced = TRUE)
+				owner.stamina.adjust(1)
+				owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 				owner.adjustCloneLoss(-0.25) //Becasue apparently clone damage is the bastion of all health
