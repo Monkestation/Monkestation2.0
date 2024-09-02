@@ -18,7 +18,7 @@
 
 	var/obj/item/organ/internal/cyberimp/brain/nif/nif = patient.get_organ_slot(ORGAN_SLOT_BRAIN_NIF)
 
-	return nif?.is_calibrated && patient.stat != DEAD && patient.get_organ_slot(ORGAN_SLOT_BRAIN)
+	return nif?.is_calibrated && patient.stat != DEAD && patient.client && patient.get_organ_slot(ORGAN_SLOT_BRAIN)
 
 /datum/surgery_step/debond_nif
 	name = "debond NIF (scalpel)"
