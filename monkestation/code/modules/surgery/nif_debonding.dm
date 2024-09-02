@@ -35,7 +35,8 @@
 
 /datum/surgery_step/debond_nif/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(tgui_alert(target, "Would you like to have your NIF debonded from you by [user]?", "NIF Debonding", list("Yes", "No"), timeout = 5 SECONDS) != "Yes")
-		target?.balloon_alert(user, "unwilling!")
+		if(user && target)
+			target.balloon_alert(user, "unwilling!")
 		return SURGERY_STEP_FAIL
 
 	display_results(
