@@ -11900,7 +11900,6 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/light/directional/north,
 /obj/structure/closet/crate/critter,
-/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "dVk" = (
@@ -31381,6 +31380,10 @@
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"kuW" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "kvh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -89677,7 +89680,7 @@ jEi
 dOt
 fUs
 cLZ
-jEi
+kuW
 bnl
 nYd
 vmV

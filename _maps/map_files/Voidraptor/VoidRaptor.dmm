@@ -3882,6 +3882,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
@@ -4471,6 +4472,9 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer{
+	dir = 4
+	},
 /turf/open/floor/carpet/black,
 /area/station/cargo/quartermaster)
 "boe" = (
@@ -43460,6 +43464,9 @@
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/machinery/modular_computer/preset/cargochat{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "mna" = (
@@ -51444,6 +51451,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "ozq" = (

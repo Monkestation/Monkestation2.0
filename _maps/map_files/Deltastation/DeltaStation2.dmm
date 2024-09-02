@@ -34777,7 +34777,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/industrial/loader,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "ilG" = (
@@ -42147,13 +42148,11 @@
 "jWq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/structure/table,
-/obj/item/storage/box/lights/mixed,
 /obj/machinery/airalarm/directional/north,
-/obj/item/stock_parts/cell/high/empty,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jWG" = (

@@ -8528,6 +8528,10 @@
 	},
 /turf/open/floor/iron/shuttle/arrivals/airless,
 /area/space/nearstation)
+"bHM" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/smooth_large,
+/area/station/cargo/storage)
 "bHU" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/cable,
@@ -54615,6 +54619,9 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/modular_computer/preset/cargochat/cargo{
+	dir = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "kAG" = (
@@ -118264,6 +118271,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/quartermaster)
 "wPG" = (
@@ -164802,7 +164810,7 @@ iYD
 hRq
 eFn
 gsY
-oTl
+bHM
 sAs
 ipg
 oTl

@@ -37,7 +37,7 @@
 /turf/open/floor/grass,
 /area/station/security/prison/safe)
 "aaT" = (
-/obj/effect/spawner/random/structure/crate,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "abb" = (
@@ -4820,6 +4820,7 @@
 /area/mine/mechbay)
 "bzN" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "bzQ" = (
@@ -53175,6 +53176,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light_switch/directional/south,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "qUe" = (
@@ -67273,7 +67275,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -162625,7 +162626,7 @@ gjq
 gjq
 gjq
 jpS
-oXo
+aaT
 yef
 baV
 svy
@@ -162882,7 +162883,7 @@ eJf
 eJf
 eJf
 jpS
-aaT
+oXo
 bWV
 fPB
 ljz

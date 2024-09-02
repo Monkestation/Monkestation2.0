@@ -67946,6 +67946,9 @@
 /obj/machinery/requests_console/auto_name/directional/west,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/modular_computer/preset/cargochat/cargo{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "uhn" = (
@@ -77643,6 +77646,15 @@
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin/carbon{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/large,
 /area/station/cargo/quartermaster)
