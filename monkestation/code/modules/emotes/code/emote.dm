@@ -313,22 +313,23 @@
 	if(!.)
 		return
 
-	var/datum/action/cooldown/spell/pointed/projectile/spit/spit_action = new(src)
+	if (locate(/datum/action/cooldown/spell/pointed/projectile/spit) in user.actions)
+		to_chat(user, "<B>You already have spit in your mouth!</B>")
+		return FALSE
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/hasHead = FALSE
+		var/mob/living/carbon/human/human_user = user
 
-		for(var/obj/item/bodypart/parts in H.bodyparts)
-			if(istype(parts, /obj/item/bodypart/head))
-				hasHead = TRUE
-
-		if(HAS_TRAIT(H, TRAIT_MIMING))//special spit action for mimes
-			spit_action = new /datum/action/cooldown/spell/pointed/projectile/spit/mime()
-
-		if(!hasHead)//Aint got no HEAD what da hell
+		if(!(human_user.get_bodypart(BODY_ZONE_HEAD)))
+			//Aint got no HEAD what da hell
 			to_chat(user,"<B>You try to spit but you have no head!</B>")
 			return FALSE
+
+	var/datum/action/cooldown/spell/pointed/projectile/spit/spit_action
+	if(HAS_TRAIT(user, TRAIT_MIMING))//special spit action for mimes
+		spit_action = new /datum/action/cooldown/spell/pointed/projectile/spit/mime(src)
+	else
+		spit_action = new /datum/action/cooldown/spell/pointed/projectile/spit(src)
 
 	spit_action.Grant(user)
 
@@ -366,10 +367,17 @@
 	build_all_button_icons()
 
 	var/mob/living/spitter = on_who
-	spitter.audible_message("[emote_gurgle_msg].", deaf_message = "<span class='emote'>You see <b>[spitter]</b> gurgle their mouth.</span>", audible_message_flags = EMOTE_MESSAGE)
+	spitter.audible_message("[emote_gurgle_msg].", deaf_message = span_emote("You see <b>[spitter]</b> gurgle their mouth."), audible_message_flags = EMOTE_MESSAGE)
 
 	if(boolPlaySound)
-		playsound(spitter, 'monkestation/code/modules/emotes/sound/spit_windup.ogg', 50, TRUE)
+		playsound(
+			spitter,
+			'monkestation/code/modules/emotes/sound/spit_windup.ogg',
+			vol = 50,
+			vary = TRUE,
+			ignore_walls = FALSE,
+			mixer_channel = CHANNEL_MOB_EMOTES,
+		)
 
 	return TRUE
 
@@ -384,16 +392,31 @@
 	if(ishuman(spitter))
 		var/mob/living/carbon/human/humanoid = caller
 		if(humanoid.is_mouth_covered())
-			humanoid.audible_message("[emote_spit_msg] in their mask!", deaf_message = "<span class='emote'>You see <b>[spitter]</b> spit in their mask.</span>", audible_message_flags = EMOTE_MESSAGE)
+			humanoid.audible_message("[emote_spit_msg] in their mask!", deaf_message = span_emote("You see <b>[spitter]</b> spit in their mask."), audible_message_flags = EMOTE_MESSAGE)
 			if(boolPlaySound)
-				playsound(spitter, 'monkestation/code/modules/emotes/sound/spit_release.ogg', 50, TRUE)
+				playsound(
+					spitter,
+					'monkestation/code/modules/emotes/sound/spit_release.ogg',
+					vol = 50,
+					vary = TRUE,
+					ignore_walls = FALSE,
+					mixer_channel = CHANNEL_MOB_EMOTES,
+				)
 			src.Remove(caller)
 			return
 
 	. = ..()
-	spitter.audible_message("[emote_spit_msg].", deaf_message = "<span class='emote'>You see <b>[spitter]</b> spit.</span>", audible_message_flags = EMOTE_MESSAGE)
+	spitter.audible_message("[emote_spit_msg].", deaf_message = span_emote("You see <b>[spitter]</b> spit."), audible_message_flags = EMOTE_MESSAGE)
 	if(boolPlaySound)
-		playsound(spitter, 'monkestation/code/modules/emotes/sound/spit_release.ogg', 50, TRUE)
+		playsound(
+			spitter,
+			'monkestation/code/modules/emotes/sound/spit_release.ogg',
+			vol = 50,
+			vary = TRUE,
+			extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE,
+			ignore_walls = FALSE,
+			mixer_channel = CHANNEL_MOB_EMOTES,
+		)
 	src.Remove(caller)
 
 

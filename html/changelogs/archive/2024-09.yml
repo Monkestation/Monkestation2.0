@@ -1,0 +1,39 @@
+2024-09-01:
+  Absolucy:
+  - bugfix: The Blah-Sucker and Ashtongue languages no longer conflict over the ",l"
+      prefix, as Ashtongue now uses ",a"
+  BoltonsHead:
+  - rscadd: the Policeman Mascot Head and Policeman Mascot Suit to the Secdrobe, where
+      you can purchase 2 in the premium section for 100 credits.
+  - rscadd: four more costumes! Alongside it is the Cruelty Squad main character clothing
+      to the autodrobe,
+  - rscadd: Infinity Jersey, wristbands, shorts, and sneakers to the autodrobe,
+  - rscadd: BB's wig, dress, and slippers to the autodrobe,
+  - rscadd: and The Killer's robe and head to the autodrobe.
+  - rscadd: Metrocop uniform to sectech drobe.
+  - rscadd: Citizen uniform to clothesmate.
+  SirNightKnight:
+  - bugfix: Made stamina a lil less wonky
+  ThePooba:
+  - balance: gchanged some nukeops gun prices
+2024-09-02:
+  DexeeXI:
+  - bugfix: fixed solars on blueshift to wire correctly.
+  - rscadd: correctional officer lockers now require an id card. get buzzed, prisoner
+      scum.
+  - bugfix: swapped the empty industrial suit locker on blueshift for one with a loader
+      MOD. now move crates, cargo.
+  - bugfix: dumped the command livery for quartermaster on voidraptor. they are not
+      command.
+  - bugfix: blueshift qm office de-commanded.
+  - rscadd: air alarm and apc added to qm's office on blueshift.
+  - bugfix: ouroboros qm office de-commanded.
+  - bugfix: voidraptor atmos door now requires atmos perms. fuck off greytiders.
+  - bugfix: icebox's BP office found its missing cables.
+  - bugfix: plumbing constructor on meta now found.
+  - bugfix: voidraptor "command maintenance" now is actually radshielded.
+  SirNightKnight:
+  - rscadd: The Cybersun Juggernaut suit is now available for purchase for 20 TC from
+      the Syndicate uplink.
+  flleeppyy:
+  - bugfix: no more unlimited spit

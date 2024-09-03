@@ -565,3 +565,17 @@
 	item_path = /obj/item/clothing/head/costume/western_wizard_hat
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//NoobskyBoi
+/datum/loadout_item/head/noobskyboi_golden_tophat
+	name = "Golden Tophat"
+	item_path = /obj/item/clothing/head/costume/noobskyboi_golden_tophat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Len Kagamine
+/datum/loadout_item/toys/wumpa
+	name = "Wumpa"
+	item_path = /obj/item/donator/wumpa
+	donator_only = TRUE
+	requires_purchase = FALSE
