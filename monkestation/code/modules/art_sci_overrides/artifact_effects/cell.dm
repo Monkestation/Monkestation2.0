@@ -13,7 +13,6 @@
 
 /datum/artifact_effect/cell/setup()
 	var/obj/item/stock_parts/cell/artifact/cell = our_artifact.holder
-	cell.corrupted = prob(10) //trolled
 	cell.maxcharge = rand(5 KW, 500 MW) // the heavenly battery
 	cell.charge = cell.maxcharge / 2
 	cell.chargerate = rand(5000, round(cell.maxcharge * 0.4))
