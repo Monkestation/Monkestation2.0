@@ -89,6 +89,7 @@
 
 	dispensable_reagents.Cut()
 
+	//MONKESTATION EDIT STAT
 	for (var/obj/item/reagent_containers/B in contents)
 		if(beaker && B == beaker)
 			continue
@@ -98,7 +99,7 @@
 				dispensable_reagents[key] = list()
 				dispensable_reagents[key]["reagents"] = list()
 			dispensable_reagents[key]["reagents"] += B.reagents
-
+	//MONKESTATION EDIT END
 	return
 
 /obj/item/storage/portable_chem_mixer/Exited(atom/movable/gone, direction)
@@ -193,7 +194,7 @@ MONKESTATION REMOVAL END */
 /obj/item/storage/portable_chem_mixer/ui_status(mob/user, datum/ui_state/state)
 	if(loc != user)
 		return UI_CLOSE
-	if(!atom_storage.locked)
+	if(!atom_storage.locked) //MONKESTATION ADDITION
 		return UI_DISABLED
 	return ..()
 
@@ -228,6 +229,7 @@ MONKESTATION REMOVAL END */
 		if(temp)
 			var/chemname = temp.name
 			var/total_volume = 0
+			//MONKESTATION EDIT START
 			for (var/datum/reagents/rs in dispensable_reagents[reagent_type]["reagents"])
 				var/datum/reagent/RG = rs.has_reagent(reagent_type)
 				if(RG)
@@ -235,6 +237,7 @@ MONKESTATION REMOVAL END */
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
 			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "volume" = total_volume, "pH" = reagent_type.ph)))
+			//MONKESTATION EDIT END
 	data["chemicals"] = chemicals
 	var/beakerContents[0]
 	if(!QDELETED(beaker))
@@ -266,7 +269,7 @@ MONKESTATION REMOVAL END */
 				var/datum/reagents/R = beaker.reagents
 				var/actual = min(amount, 1000, R.maximum_volume - R.total_volume)
 				for (var/datum/reagents/source in dispensable_reagents[reagent]["reagents"])
-					actual -= source.trans_id_to(beaker, reagent, min(source.total_volume, actual))
+					actual -= source.trans_id_to(beaker, reagent, min(source.total_volume, actual)) //MONKESTATION EDIT
 					if(actual <= 0)
 						break
 			. = TRUE
