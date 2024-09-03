@@ -533,6 +533,7 @@
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
 			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
 
+//MONKESTATION ADDITION START
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
 
@@ -585,6 +586,7 @@
 
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+//MONKESTATION ADDITION END
 
 /obj/item/healthanalyzer/simple
 	name = "wound analyzer"
