@@ -698,6 +698,16 @@
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
 
+/datum/greyscale_config/ballgown
+	name = "Ballgown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown.json'
+
+/datum/greyscale_config/ballgown_worn
+	name = "Worn Ballgown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+
 /datum/greyscale_config/beanie
 	name = "Beanie"
 	icon_file = 'icons/obj/clothing/head/beanie.dmi'
