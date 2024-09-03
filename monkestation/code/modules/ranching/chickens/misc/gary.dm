@@ -29,6 +29,8 @@
 	var/datum/hideout/hideout
 	var/datum/callback/roundend_callback = null
 
+	var/max_w_class = WEIGHT_CLASS_SMALL
+
 /mob/living/basic/chicken/gary/Initialize(mapload, turf/open/home)
 	. = ..()
 	if(!memory_saved)
@@ -123,9 +125,12 @@
 	return held_shinies
 
 /mob/living/basic/chicken/gary/attackby(obj/item/attacking_item, mob/living/user)
-	if(attacking_item.w_class <= WEIGHT_CLASS_SMALL)
+	if((user.istate & ISTATE_HARM) || !user.Adjacent(src))
+		return ..()
+	if(attacking_item.w_class <= max_w_class)
 		if(held_item)
-			return ..()
+			to_chat(user, span_warning("[src] is already holding [held_item]!"))
+			return FALSE
 		if(istype(attacking_item, /obj/item/knife))
 			attack_sound = 'sound/weapons/bladeslice.ogg'
 			melee_damage_upper = attacking_item.force //attack dmg inherits knife dmg
@@ -148,4 +153,6 @@
 			ai_controller.blackboard[BB_GARY_HAS_SHINY] = TRUE
 			SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, 200) //gary hungers for trinkets and baubles.
 			return TRUE
-	. = ..()
+	else
+		to_chat(user, span_warning("[held_item] is too big for [src] to hold!"))
+		return TRUE
