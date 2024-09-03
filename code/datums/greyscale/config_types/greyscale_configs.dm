@@ -698,6 +698,7 @@
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
 
+//MONKESTATION ADDITION START
 /datum/greyscale_config/ballgown
 	name = "Ballgown"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
@@ -707,6 +708,7 @@
 	name = "Worn Ballgown"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+//MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
 	name = "Beanie"

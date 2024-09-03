@@ -81,6 +81,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sundress_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+//MONKESTATION ADDITIONS
 /obj/item/clothing/under/dress/ballgown
 	name = "ballgown"
 	desc = "A luxurious ballgown best worn before midnight. A signature of the letters 'VA` is stitched on the hem."
