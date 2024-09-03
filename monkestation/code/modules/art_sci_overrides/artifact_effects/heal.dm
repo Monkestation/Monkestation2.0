@@ -13,14 +13,11 @@
 
 	research_value = 250
 
-	///list of damage types we heal, this is randomly removed from at setup
+	///list of what we heal
 	var/list/damage_types = list(
 		BRUTE,
 		BURN,
-		TOX,
-		OXY,
-		BRAIN,
-		CLONE,
+		TOX
 	)
 	///how much do we heal
 	var/heal_amount
@@ -29,20 +26,13 @@
 	COOLDOWN_DECLARE(heal_cooldown)
 
 /datum/artifact_effect/heal/setup()
-	heal_amount = rand(1,15)
-	potency += heal_amount
-	var/type_amount = prob(75) ? 4 : rand(2,4) //75% to remove 4 types for 1 heal type or 25% for 2 or 4 types removed
-	while(type_amount)
-		type_amount--
-		damage_types -= pick(damage_types)
-	potency += 5 * (length(damage_types) - 1)
+	heal_amount = rand(5,10)
 
 /datum/artifact_effect/heal/effect_touched(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
 		return
-	var/damage_length = length(damage_types)
 	for(var/dam_type in damage_types)
-		user.heal_damage_type( (heal_amount / damage_length), dam_type)
+		user.heal_damage_type( (heal_amount), dam_type)
 	to_chat(user, span_notice("You feel slightly refreshed!"))
 	new /obj/effect/temp_visual/heal(get_turf(user), COLOR_HEALING_CYAN)
 	COOLDOWN_START(src, heal_cooldown, 5 SECONDS)

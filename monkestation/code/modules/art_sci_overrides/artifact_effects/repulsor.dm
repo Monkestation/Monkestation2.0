@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/repulsor
-	weight = ARTIFACT_COMMON
+	weight = ARTIFACT_UNCOMMON
 	type_name = "Repulsor/Impulsor Effect"
 	activation_message = "opens up, a weird aura starts emitting from it!"
 	deactivation_message = "closes up."

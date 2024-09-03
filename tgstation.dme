@@ -6215,6 +6215,7 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\injector.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\itsasecret.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\lamp.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_effects\meat.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\melee.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\money.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\narsieoffering.dm"
