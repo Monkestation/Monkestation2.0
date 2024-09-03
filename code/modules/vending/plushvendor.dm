@@ -52,8 +52,8 @@
 		/obj/item/toy/plush/shark = 1,
 	)
 	refill_canister = /obj/item/vending_refill/plushvendor
-	default_price = PAYCHECK_COMMAND * 4 //should be expensive
-	extra_price = PAYCHECK_COMMAND * 6
+	default_price = PAYCHECK_COMMAND * 3 //should be expensive
+	extra_price = PAYCHECK_COMMAND * 5
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/plushvendor/build_products_from_categories() //snowflake code to randomize plushies, breaks icon spreadsheets for random products

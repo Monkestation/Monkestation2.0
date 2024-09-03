@@ -2,6 +2,7 @@
 /obj/item/toy/plush/nova
 	icon = 'monkestation/code/modules/blueshift/icons/plushes.dmi'
 	inhand_icon_state = null
+	custom_price = PAYCHECK_COMMAND * 4
 
 /obj/item/toy/plush/nova/borbplushie
 	name = "borb plushie"
