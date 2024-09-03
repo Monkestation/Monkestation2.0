@@ -22,6 +22,7 @@ import {
   Tabs,
   TextArea,
   Slider,
+  NoticeBox,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
@@ -75,6 +76,7 @@ export const SettingsPanel = (props, context) => {
         {activeTab === 'general' && <SettingsGeneral />}
         {activeTab === 'chatPage' && <ChatPageSettings />}
         {activeTab === 'textHighlight' && <TextHighlightSettings />}
+        {activeTab === 'statPanel' && <SettingsStatPanel />}
         {activeTab === 'experimental' && <ExperimentalSettings />}
       </Stack.Item>
     </Stack>
@@ -82,11 +84,12 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight, statLinked, statFontSize } =
-    useSelector(context, selectSettings);
+  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
+    context,
+    selectSettings,
+  );
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
-  const [statFont, setStatFont] = useLocalState('statFont', false);
 
   return (
     <Section>
@@ -177,46 +180,14 @@ export const SettingsGeneral = (props, context) => {
                 stepPixelSize={20}
                 minValue={8}
                 maxValue={32}
-                value={statFont ? statFontSize : fontSize}
+                value={fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
                 onChange={(e, value) =>
-                  dispatch(
-                    updateSettings({
-                      [statFont ? 'statFontSize' : 'fontSize']: value,
-                    }),
-                  )
+                  dispatch(updateSettings({ fontSize: value }))
                 }
               />
             </Stack.Item>
-            <Stack.Item>
-              <Button
-                width={statFont ? 7.3 : 10}
-                onClick={() => setStatFont(!statFont)}
-              >
-                {statFont ? 'Stat Panel' : 'Chat'}
-              </Button>
-            </Stack.Item>
-            {!!statFont && (
-              <Stack.Item>
-                <Button
-                  tooltip={
-                    statLinked
-                      ? 'Unlink Stat Panel settings from chat'
-                      : 'Link Stat Panel settings to chat'
-                  }
-                  icon={statLinked ? 'link' : 'link-slash'}
-                  color={statLinked ? 'bad' : 'good'}
-                  onClick={() =>
-                    dispatch(
-                      updateSettings({
-                        statLinked: !statLinked,
-                      }),
-                    )
-                  }
-                />
-              </Stack.Item>
-            )}
           </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
@@ -533,6 +504,78 @@ const ExperimentalSettings = (props, context) => {
               />
             </LabeledList.Item>
           </LabeledList>
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+};
+
+const TabsViews = ['default', 'classic', 'scrollable'];
+const LinkedToChat = () => (
+  <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
+);
+
+const SettingsStatPanel = (props, context) => {
+  const { statLinked, statFontSize, statTabsStyle } = useSelector(
+    context,
+    selectSettings,
+  );
+  const dispatch = useDispatch(context);
+
+  return (
+    <Section fill>
+      <Stack fill vertical>
+        <Stack.Item>
+          <LabeledList>
+            <LabeledList.Item label="Tabs" verticalAlign="middle">
+              {TabsViews.map((view) => (
+                <Button
+                  key={view}
+                  color="transparent"
+                  selected={statTabsStyle === view}
+                  onClick={() =>
+                    dispatch(updateSettings({ statTabsStyle: view }))
+                  }
+                >
+                  {capitalize(view)}
+                </Button>
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Font size">
+              <Stack.Item grow>
+                {statLinked ? (
+                  <LinkedToChat />
+                ) : (
+                  <Slider
+                    width="100%"
+                    step={1}
+                    stepPixelSize={20}
+                    minValue={8}
+                    maxValue={32}
+                    value={statFontSize}
+                    unit="px"
+                    format={(value) => toFixed(value)}
+                    onChange={(e, value) =>
+                      dispatch(updateSettings({ statFontSize: value }))
+                    }
+                  />
+                )}
+              </Stack.Item>
+            </LabeledList.Item>
+          </LabeledList>
+        </Stack.Item>
+        <Stack.Divider mt={2.5} />
+        <Stack.Item textAlign="center">
+          <Button
+            fluid
+            icon={statLinked ? 'unlink' : 'link'}
+            color={statLinked ? 'bad' : 'good'}
+            onClick={() =>
+              dispatch(updateSettings({ statLinked: !statLinked }))
+            }
+          >
+            {statLinked ? 'Unlink from chat' : 'Link to chat'}
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>
