@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	/// How much health you gain per level
 	var/health_per_level = 2.5
 	/// How much health regen you gain per level
-	var/health_regen_per_level = 0.02
+	var/health_regen_per_level = 0.002
 
 	/// How much more chemical storage you gain per level
 	var/chem_storage_per_level = 20
@@ -185,8 +185,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	/// What the host gains or loses with the borer
 	var/list/hosts_abilities = list()
 
-	/// Multiplies the current health up to the max health
-	var/health_regen = 1.02
+	/// How much health we regen per second while in a host (scales with max health) CODER NOTE: The value was 10.02 before. Assuming the first health_regen_per_level should be added to this. (0.002 as of now, so 0.102 instead of 0.1)
+	var/health_regen = 0.102
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	//this is regenerating health
 	if(health < maxHealth)
 		if(!(upgrade_flags & BORER_STEALTH_MODE))
-			health = min(health * health_regen, maxHealth)
+			adjustBruteLoss(maxHealth * -health_regen)
 
 	//this is so they can evolve
 	if(timed_maturity < world.time)
