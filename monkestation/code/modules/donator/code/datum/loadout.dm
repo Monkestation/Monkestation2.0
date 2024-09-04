@@ -515,6 +515,18 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/mask/holstein_cow_mask
+	name = "Holstein Cow Mask"
+	item_path = /obj/item/clothing/mask/gas/holstein_cow_mask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/holstein_cow_jumpsuit
+	name = "Holstein Cow Jumpsuit"
+	item_path = /obj/item/clothing/under/costume/holstein_cow_jumpsuit
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //av4l0n
 /datum/loadout_item/toys/sheep_plush_av4l0n
 	name = "Sheep Plush"
@@ -551,5 +563,33 @@
 /datum/loadout_item/head/western_wizard_hat
 	name = "Western Wizard Hat"
 	item_path = /obj/item/clothing/head/costume/western_wizard_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+
+//CaptainShiba
+/datum/loadout_item/effects/darkscug
+    ckeywhitelist = list("CaptainShiba")
+    name = "Nightcat Transformation"
+    item_path = /obj/item/effect_granter/donator/darkscug
+    requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/darkscug
+	name = "Pet Delivery Beacon - Nightcat"
+	item_path = /obj/item/choice_beacon/pet/donator/darkscug
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("CaptainShiba")
+//NoobskyBoi
+/datum/loadout_item/head/noobskyboi_golden_tophat
+	name = "Golden Tophat"
+	item_path = /obj/item/clothing/head/costume/noobskyboi_golden_tophat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Len Kagamine
+/datum/loadout_item/toys/wumpa
+	name = "Wumpa"
+	item_path = /obj/item/donator/wumpa
 	donator_only = TRUE
 	requires_purchase = FALSE
