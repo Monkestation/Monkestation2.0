@@ -20,7 +20,6 @@
 		)
 
 /datum/immune_system/Destroy(force)
-	. = ..()
 	host = null
 	antibodies = null
 	return ..()
