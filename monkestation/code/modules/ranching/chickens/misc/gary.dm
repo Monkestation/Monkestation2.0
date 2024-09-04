@@ -154,5 +154,5 @@
 			SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, 200) //gary hungers for trinkets and baubles.
 			return TRUE
 	else
-		to_chat(user, span_warning("[held_item] is too big for [src] to hold!"))
+		to_chat(user, span_warning("[attacking_item] is too big for [src] to hold!"))
 		return TRUE
