@@ -254,3 +254,15 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("CaptainShiba")
+
+/mob/living/basic/frog/hypnotoad
+	name = "hypnotoad"
+	desc = "WOAH, a hypnotoad!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "hypnotoad"
+	icon_living = "hypnotoad"
+	icon_dead = "hypnotoad-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Ophaq")

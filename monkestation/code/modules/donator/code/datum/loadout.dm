@@ -593,3 +593,29 @@
 	item_path = /obj/item/donator/wumpa
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//Ophaq
+/datum/loadout_item/suit/ophaq_rainbowcoat
+	name = "Rainbow Coat"
+	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/kindle_kicks_jackboot
+	name = "Jackboot Kindle Kicks"
+	item_path = /obj/item/clothing/shoes/kindle_kicks/jackboot
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/toadie_wan_kenfrog
+	name = "Toadie Wan Kenfrog"
+	item_path = /obj/item/toy/plush/toadie_wan_kenfrog
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/darkscug
+	name = "Pet Delivery Beacon - Hypnotoad"
+	item_path = /obj/item/choice_beacon/pet/donator/hypnotoad
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Ophaq")
