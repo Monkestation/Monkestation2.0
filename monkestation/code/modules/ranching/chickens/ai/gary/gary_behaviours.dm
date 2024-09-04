@@ -34,9 +34,11 @@
 			pawn.fading_leap_down()
 
 	controller.blackboard[BB_GARY_HAS_SHINY] = FALSE
-	pawn.held_item.forceMove(get_turf(pawn))
-	pawn.held_shinies += pawn.held_item.type
-	pawn.held_item.AddComponent(/datum/component/garys_item)
+	var/obj/item/shiny = pawn.held_item
+	shiny?.forceMove(get_turf(pawn))
+	if(!QDELETED(shiny))
+		pawn.held_shinies += shiny.type
+		shiny.AddComponent(/datum/component/garys_item)
 	pawn.held_item = null
 
 /datum/ai_behavior/setup_hideout
