@@ -13,5 +13,5 @@
 
 	max_chemical_storage = 250
 	chemical_storage = 250
-	chem_regen_per_level = 1.5
+	chem_regen_per_level = 0.75
 	chem_storage_per_level = 25
