@@ -1,8 +1,9 @@
 /datum/artifact_effect/narsieoffering
 	examine_discovered = "Makes an offering to the dark gods."
 	type_name = "Dark Altar Effect"
-	weight = ARTIFACT_UNCOMMON //Uncommon because can only be on carbon touch narsie
+	weight = ARTIFACT_COMMON //Common because can only be on carbon touch narsie
 
+	examine_hint = span_warning("You feel safe and complacent around this...")
 	valid_origins = list(ORIGIN_NARSIE)
 
 	valid_activators = list(/datum/artifact_activator/touch/carbon)

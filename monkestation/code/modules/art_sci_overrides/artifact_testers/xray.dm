@@ -1,6 +1,6 @@
 /obj/machinery/artifact_xray
 	name = "artifact x-ray machine"
-	desc = "An x-ray machine, used to scan artifacts for what they do and research them. Can be Wrenched to turn on Destructive Scan mode."
+	desc = "An x-ray machine, used to scan artifacts for what they do and research them. Can be Wrenched to turn on Destructive Scan mode, which when given a disk, may record artifact data."
 	icon = 'icons/obj/machines/artifact_machines.dmi'
 	icon_state = "xray-0"
 	base_icon_state = "xray"
@@ -203,7 +203,7 @@
 		src.visible_message(span_robot("NOTICE: DATA DISK RECORDED."))
 	if(prob(destroy_chance + round(2.5 * chosen_level)))
 		the_artifact.clear_out()
-		src.visible_message(span_robot("WARNING: ARTIFACT RENDERED BLANK."))
+		src.visible_message(span_robot("WARNING: ARTIFACT RENDERED INERT."))
 	return
 
 /obj/machinery/artifact_xray/ui_data(mob/user)

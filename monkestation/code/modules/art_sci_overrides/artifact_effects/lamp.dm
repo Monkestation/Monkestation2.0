@@ -6,6 +6,8 @@
 	deactivation_message = "stops shining."
 	examine_discovered = span_warning("It appears to be some sort of light source")
 
+	artifact_size = ARTIFACT_SIZE_LARGE
+
 	research_value = 250
 
 /datum/artifact_effect/lamp/setup()

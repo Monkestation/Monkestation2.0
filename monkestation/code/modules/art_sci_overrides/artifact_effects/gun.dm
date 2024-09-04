@@ -14,7 +14,7 @@
 
 	research_value = 500
 
-	examine_discovered = span_warning("It appears to be some sort of projectile weapon")
+	examine_discovered = span_warning("It appears to be some sort of projectile weapon!")
 
 	//list of projectile exclusive projectiles
 	///damage each shot does
@@ -40,10 +40,7 @@
 	var/list/damage_types = list(
 		BRUTE,
 		BURN,
-		TOX,
-		OXY,
-		BRAIN,
-		STAMINA
+		TOX
 	)
 
 /datum/artifact_effect/gun/setup()
@@ -56,7 +53,7 @@
 		spread += 0.1
 
 	spread += prob(65) ? rand(0.0, 0.2) : rand(0.3, 1.0)
-	damage = rand(-5, 25)
+	damage = rand(-10, 30)
 
 	projectile_icon = pick("energy","scatterlaser","toxin","energy","spell","pulse1","bluespace","gauss","gaussweak","gaussstrong","redtrac","omnilaser","heavylaser","laser","infernoshot","cryoshot","arcane_barrage")
 	dam_type = pick(damage_types)

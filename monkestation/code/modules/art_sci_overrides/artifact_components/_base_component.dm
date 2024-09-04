@@ -365,10 +365,8 @@
 					holder.visible_message("[holder] [chosen_fault.visible_message]")
 			continue
 		checked_fault = TRUE
-		if(istype(listed_activator, /datum/artifact_activator/range))
-			var/datum/artifact_activator/range/ranged_activator = listed_activator
-			//if we fail the range check check if we are in hint range to send out the hint
-			if(stimuli_value < ranged_activator.amount)
+		if((listed_activator.required_stimuli & stimuli) && istype(listed_activator, /datum/artifact_activator/range))
+			if(stimuli_value < listed_activator.amount)
 				continue
 		correct_trigger = TRUE
 		break

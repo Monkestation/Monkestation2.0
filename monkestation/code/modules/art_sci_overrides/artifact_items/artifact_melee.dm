@@ -10,6 +10,7 @@
 	inhand_icon_state = "plasmashiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	obj_flags = CAN_BE_HIT
 	var/special_cooldown_time
 	var/special
 	var/datum/component/artifact/assoc_comp = /datum/component/artifact

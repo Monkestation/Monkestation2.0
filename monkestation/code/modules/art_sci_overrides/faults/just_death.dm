@@ -18,7 +18,7 @@
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
 
-	for(var/mob/living/carbon/mob in range(rand(3, 4), center_turf))
+	for(var/mob/living/carbon/mob in range(rand(2, 3), center_turf))
 		mobs += mob
 	if(!length(mobs))
 		return
