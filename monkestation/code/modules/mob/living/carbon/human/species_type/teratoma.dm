@@ -6,13 +6,13 @@
 	mutantbrain = /obj/item/organ/internal/brain/primate
 
 	species_traits = list(
-		NO_UNDERWEAR,
-		NOEYESPRITES,
+		NOAUGMENTS,
 		NOBLOODOVERLAY,
+		NOEYESPRITES,
 		NOTRANSSTING,
 		NOZOMBIE,
 		NO_DNA_COPY,
-		NOAUGMENTS,
+		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
 		TRAIT_BADDNA,
@@ -33,12 +33,12 @@
 	)
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/teratoma,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/teratoma,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/teratoma,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/teratoma,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/teratoma,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/teratoma,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/teratoma,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/teratoma,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/teratoma,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/teratoma,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/teratoma,
 	)
 
 	maxhealthmod = 0.75
@@ -61,29 +61,43 @@
 /datum/species/teratoma/on_species_gain(mob/living/carbon/human/idiot, datum/species/old_species, pref_load)
 	. = ..()
 	misfortune = idiot.AddComponent(/datum/component/omen/teratoma)
+	RegisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 
 /datum/species/teratoma/on_species_loss(mob/living/carbon/human/idiot, datum/species/new_species, pref_load)
 	. = ..()
 	QDEL_NULL(misfortune)
+	UnregisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 /datum/species/teratoma/random_name(gender, unique, lastname)
 	return "teratoma ([rand(1, 999)])"
 
 // Don't let them use chems that could potential change them into something non-teratoma.
 /datum/species/teratoma/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/goober, seconds_per_tick, times_fired)
-	var/static/list/disallowed_chems_typecache
-	if(!disallowed_chems_typecache)
-		disallowed_chems_typecache = typecacheof(list(
-			/datum/reagent/cyborg_mutation_nanomachines,
-			/datum/reagent/gluttonytoxin,
-			/datum/reagent/magillitis,
-			/datum/reagent/mutationtoxin,
-			/datum/reagent/xenomicrobes,
-		))
-	if(is_type_in_typecache(chem, disallowed_chems_typecache))
+	if(is_banned_chem(chem))
 		chem.holder?.del_reagent(chem.type)
 		return TRUE
 	return ..()
+
+// removes banned reagents from the list of reagents that'll be exposed
+/datum/species/teratoma/proc/prevent_banned_reagent_exposure(datum/source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+	SIGNAL_HANDLER
+	for(var/datum/reagent/reagent as anything in reagents)
+		if(is_banned_chem(reagent))
+			reagents -= reagent
+
+/datum/species/teratoma/proc/is_banned_chem(reagent)
+	var/static/list/disallowed_chems_typecache
+	if(!disallowed_chems_typecache)
+		disallowed_chems_typecache = typecacheof(list(
+			/datum/reagent/aslimetoxin,
+			/datum/reagent/cyborg_mutation_nanomachines,
+			/datum/reagent/gluttonytoxin,
+			/datum/reagent/magillitis,
+			/datum/reagent/mulligan,
+			/datum/reagent/mutationtoxin,
+			/datum/reagent/xenomicrobes,
+		))
+	return is_type_in_typecache(reagent, disallowed_chems_typecache)
 
 /datum/species/teratoma/get_scream_sound(mob/living/carbon/human/monkey)
 	return pick(
