@@ -176,14 +176,6 @@
 
 	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
-/datum/wound_pregen_data/flesh_pierce
-	abstract = TRUE
-
-	required_limb_biostate = (BIO_FLESH)
-	required_wounding_types = list(WOUND_PIERCE)
-
-	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
-
 /datum/wound/pierce/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly perforated.")
 
