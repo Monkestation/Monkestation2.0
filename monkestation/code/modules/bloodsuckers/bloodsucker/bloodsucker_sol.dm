@@ -148,12 +148,19 @@
 	tick_interval = -1
 	alert_type = /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	var/list/datum/action/cooldown/bloodsucker/burdened_actions
+	var/static/list/sol_traits = list(
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_NO_SPRINT,
+	)
 
 /datum/status_effect/bloodsucker_sol/on_apply()
 	if(!SSsunlight.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
 		return FALSE
 	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
+	owner.add_traits(sol_traits, id)
+	owner.remove_filter(id)
+	owner.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 3, offset = 1.5, color = "#ee7440"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)
 	to_chat(owner, span_userdanger("Sol has risen! Your powers are suppressed, your body is burdened, and you will not heal outside of a coffin!"), type = MESSAGE_TYPE_INFO)
@@ -174,6 +181,8 @@
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsunlight, COMSIG_SOL_END)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	owner.remove_traits(sol_traits, id)
+	owner.remove_filter(id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)
 	if(ishuman(owner))
