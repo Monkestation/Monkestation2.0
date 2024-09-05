@@ -38,7 +38,7 @@
 	shiny?.forceMove(get_turf(pawn))
 	if(!QDELETED(shiny))
 		pawn.held_shinies += shiny.type
-		shiny.AddComponent(/datum/component/garys_item)
+		shiny.AddComponent(/datum/component/garys_item, pawn)
 	pawn.held_item = null
 
 /datum/ai_behavior/setup_hideout
@@ -59,7 +59,7 @@
 			continue
 		var/obj/item/spawned = new shiny_object(current_home)
 		pawn.hideout.add_item(spawned)
-		spawned.AddComponent(/datum/component/garys_item)
+		spawned.AddComponent(/datum/component/garys_item, pawn)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/setup_hideout/perform(seconds_per_tick, datum/ai_controller/controller, ...)
