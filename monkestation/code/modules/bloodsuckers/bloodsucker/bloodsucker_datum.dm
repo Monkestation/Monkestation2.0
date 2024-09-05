@@ -91,6 +91,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
 		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
@@ -107,8 +108,13 @@
 		TRAIT_FAKEDEATH,
 		TRAIT_NODEATH,
 		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE
+		TRAIT_RESISTLOWPRESSURE,
 	)
+	/// A typecache of organs we'll expel during Torpor.
+	var/static/list/yucky_organ_typecache = typecacheof(list(
+		/obj/item/organ/internal/body_egg,
+		/obj/item/organ/internal/zombie_infection,
+	))
 
 /**
  * Apply innate effects is everything given to the mob
