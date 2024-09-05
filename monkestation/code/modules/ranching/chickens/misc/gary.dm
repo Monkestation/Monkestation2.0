@@ -125,7 +125,7 @@
 	return held_shinies
 
 /mob/living/basic/chicken/gary/attackby(obj/item/attacking_item, mob/living/user)
-	if((user.istate & ISTATE_HARM) || !user.Adjacent(src))
+	if(stat != CONSCIOUS || (user.istate & ISTATE_HARM) || !user.Adjacent(src))
 		return ..()
 	if(attacking_item.w_class <= max_w_class)
 		if(held_item)
