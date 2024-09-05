@@ -37,8 +37,6 @@
 #define TRAIT_BYPASS_COMPRESS_CHECK "can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)
 #define TRAIT_TRASH_ITEM "trash_item"
-/// A durathread weave has been used on this item.
-#define TRAIT_DURATHREAD_INFUSED "durathread_infused"
 
 #define ABDUCTOR_GLAND_VENTCRAWLING_TRAIT "abductor_gland_ventcrawling"
 #define TRAIT_BETTER_CYBERCONNECTOR "better_cyberconnector_hacking"

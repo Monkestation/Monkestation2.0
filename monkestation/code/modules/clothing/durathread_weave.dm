@@ -1,3 +1,5 @@
+/// A durathread weave has been used on this item.
+#define TRAIT_DURATHREAD_INFUSED "durathread_infused"
 #define DOAFTER_SOURCE_DURATHREAD_WEAVE 	"doafter_durathread_weave"
 
 GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
