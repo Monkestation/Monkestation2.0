@@ -94,7 +94,6 @@
 	var/bruteheal = min(user.getBruteLoss_nonProsthetic(), actual_regen) // BRUTE: Always Heal
 	var/fireheal = 0 // BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 	// Checks if you're in a coffin here, additionally checks for Torpor right below it.
-	var/amInCoffin = istype(user.loc, /obj/structure/closet/crate/coffin)
 	if(in_torpor)
 		if(istype(user.loc, /obj/structure/closet/crate/coffin))
 			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, bloodsucker_spam_healing)))
