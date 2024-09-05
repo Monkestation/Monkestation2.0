@@ -187,6 +187,9 @@
 		power.build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_STATUS)
 	LAZYNULL(burdened_actions)
 
+/datum/status_effect/bloodsucker_sol/get_examine_text()
+	return span_warning("[owner.p_They()] seem[owner.p_s()] sickly and painfully overburned!")
+
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
 	SIGNAL_HANDLER
 	if(!QDELING(src))
@@ -200,7 +203,7 @@
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	name = "Solar Flares"
-	desc = "Solar flares bombard the station, heavily weakening your vampiric abilities and burdening your body!"
+	desc = "Solar flares bombard the station, heavily weakening your vampiric abilities and burdening your body!\nSleep in a coffin to avoid the effects of the solar flare!"
 	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
 	icon_state = "sol_alert"
 
