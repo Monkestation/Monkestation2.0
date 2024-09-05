@@ -70,6 +70,8 @@
 #define BP_CANT_USE_WHILE_INCAPACITATED (1<<3)
 /// This Power can't be used while unconscious
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
+/// This Power can't be used during Sol
+#define BP_CANT_USE_DURING_SOL (1<<5)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)

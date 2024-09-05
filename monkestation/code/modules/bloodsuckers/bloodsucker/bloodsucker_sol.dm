@@ -147,18 +147,29 @@
 	id = "bloodsucker_sol"
 	tick_interval = -1
 	alert_type = /atom/movable/screen/alert/status_effect/bloodsucker_sol
+	var/list/datum/action/cooldown/bloodsucker/burdened_actions
 
 /datum/status_effect/bloodsucker_sol/on_apply()
 	if(!SSsunlight.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
 		return FALSE
 	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)
 	to_chat(owner, span_userdanger("Sol has risen! Your powers are suppressed, your body is burdened, and you will not heal outside of a coffin!"), type = MESSAGE_TYPE_INFO)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology?.damage_resistance -= 50
+	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
+		if(power.sol_multiplier)
+			power.bloodcost *= power.sol_multiplier
+			power.constant_bloodcost *= power.sol_multiplier
+			if(power.active)
+				to_chat(owner, span_warning("[power.name] is harder to upkeep during Sol, now requiring [power.constant_bloodcost] blood while the solar flares last!"), type = MESSAGE_TYPE_INFO)
+			LAZYSET(burdened_actions, power, TRUE)
+		power.update_desc(rebuild = FALSE)
+		power.build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_STATUS)
+	return TRUE
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsunlight, COMSIG_SOL_END)
@@ -168,6 +179,13 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology?.damage_resistance += 50
+	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
+		if(LAZYACCESS(burdened_actions, power))
+			power.bloodcost /= power.sol_multiplier
+			power.constant_bloodcost /= power.sol_multiplier
+		power.update_desc(rebuild = FALSE)
+		power.build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_STATUS)
+	LAZYNULL(burdened_actions)
 
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
 	SIGNAL_HANDLER
