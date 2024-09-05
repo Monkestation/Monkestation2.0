@@ -85,7 +85,7 @@
 	if(!in_torpor && (HAS_TRAIT(owner.current, TRAIT_MASQUERADE) || owner.current.has_status_effect(/datum/status_effect/bloodsucker_sol)))
 		return FALSE
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
-	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult, updating_health = FALSE)
+	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult) //adjustBrainLoss(-1 * (actual_regen * 4) * mult, 0)
 	if(!iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		return
@@ -111,13 +111,12 @@
 		else
 			fireheal = min(user.getFireLoss_nonProsthetic(), actual_regen) / 1.2 // 20% slower than being in a coffin
 			mult *= 3
-	. = TRUE
 	// Heal if Damaged
 	if((bruteheal + fireheal > 0) && mult > 0) // Just a check? Don't heal/spend, and return.
 		// We have damage. Let's heal (one time)
 		user.heal_overall_damage(brute = bruteheal * mult, burn = fireheal * mult) // Heal BRUTE / BURN in random portions throughout the body.
 		AddBloodVolume(((bruteheal * -0.5) + (fireheal * -1)) * costMult * mult) // Costs blood to heal
-	owner.current.updatehealth()
+		return TRUE
 
 /datum/antagonist/bloodsucker/proc/check_limbs(costMult = 1)
 	var/limb_regen_cost = 50 * -costMult
