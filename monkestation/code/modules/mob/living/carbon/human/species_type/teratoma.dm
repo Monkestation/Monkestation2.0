@@ -79,7 +79,7 @@
 	return ..()
 
 // removes banned reagents from the list of reagents that'll be exposed
-/datum/species/teratoma/proc/prevent_banned_reagent_exposure(datum/source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+/datum/species/teratoma/proc/prevent_banned_reagent_exposure(datum/source, list/reagents, datum/reagents/holder, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 	for(var/datum/reagent/reagent as anything in reagents)
 		if(is_banned_chem(reagent))
