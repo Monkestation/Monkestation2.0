@@ -5,6 +5,7 @@
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 
 	dmg_overlay_type = "monkey"
 
@@ -15,6 +16,7 @@
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 
 	dmg_overlay_type = "monkey"
 
@@ -24,6 +26,7 @@
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 
 	dmg_overlay_type = "monkey"
 
@@ -33,6 +36,7 @@
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 
 	dmg_overlay_type = "monkey"
 
@@ -42,6 +46,7 @@
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 /obj/item/bodypart/leg/right/teratoma
@@ -50,6 +55,7 @@
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	should_draw_greyscale = FALSE
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 
 	dmg_overlay_type = "monkey"
