@@ -9,13 +9,13 @@
 	use_power = NO_POWER_USE
 
 	/// Templates available to succ in
-	var/list/datum/mining_template/available_templates
+	var/list/datum/map_template/asteroid/available_templates
 	/// All templates in the "map".
-	var/list/datum/mining_template/templates_on_map
+	var/list/datum/map_template/asteroid/templates_on_map
 	/// The map that stores asteroids
 	var/datum/cartesian_plane/map
 	/// The currently selected template
-	var/datum/mining_template/selected_template
+	var/datum/map_template/asteroid/selected_template
 
 	/// Center turf X, set in mapping
 	VAR_PRIVATE/center_x = 0
@@ -55,13 +55,18 @@
 			return INITIALIZE_HINT_QDEL
 
 	center_turf = locate(center_x, center_y, z)
-	available_templates = list()
+	available_templates = typecacheof(/datum/map_template/asteroid,ignore_root_path = TRUE)
+	for(var/datum/map_template/asteroid/roid as anything in available_templates)
+		if(roid.asteroid_weight)
+			available_templates[roid] = roid.asteroid_weight
+		else
+			available_templates[roid] = 100
 	templates_on_map = list()
 
 	GenerateMap()
 
 /obj/machinery/asteroid_magnet/proc/ping(coords_x, coords_y)
-	var/datum/mining_template/T = map.return_coordinate(coords_x, coords_y)
+	var/datum/map_template/asteroid/T = map.return_coordinate(coords_x, coords_y)
 	if(T && !T.found)
 		T.found = TRUE
 		available_templates |= T
@@ -69,9 +74,9 @@
 		ping_result = "LOCATED"
 		return
 
-	var/datum/mining_template/closest
+	var/datum/map_template/asteroid/closest
 	var/lowest_dist = INFINITY
-	for(var/datum/mining_template/asteroid as anything in templates_on_map)
+	for(var/datum/map_template/asteroid/asteroid as anything in templates_on_map)
 		// Get the euclidean distance between the ping and the asteroid.
 		var/dist = sqrt(((asteroid.x - coords_x) ** 2) + ((asteroid.y - coords_y) ** 2))
 		if(dist < lowest_dist)
@@ -85,14 +90,49 @@
 		var/angle = arccos(dy / sqrt((dx ** 2) + (dy ** 2)))
 		if(dx < 0) // If the X-axis distance is negative, put it between 181 and 359. 180 and 360/0 are impossible, as that requires X == 0.
 			angle = 360 - angle
-
-		ping_result = "AZIMUTH [round(angle, 0.01)]"
+		var/human_angle = round(angle, 0.01)
+		switch(human_angle) //cardinals, subcardinals, generic direction.
+			if(0)
+				ping_result = "NORTH"
+			if(90)
+				ping_result = "EAST"
+			if(180)
+				ping_result = "SOUTH"
+			if(270)
+				ping_result = "WEST"
+			if(45)
+				ping_result = "NORTH-EAST"
+			if(135)
+				ping_result = "SOUTH-EAST"
+			if(225)
+				ping_result = "SOUTH-WEST"
+			if(315)
+				ping_result = "NORTH-WEST"
+			if(0 to 45)
+				ping_result = "NORTH-NORTH-EAST"
+			if(45 to 90)
+				ping_result = "EAST-NORTH-EAST"
+			if(90 to 135)
+				ping_result = "EAST-SOUTH-EAST"
+			if(135 to 180)
+				ping_result = "SOUTH-SOUTH-EAST"
+			if(180 to 225)
+				ping_result = "SOUTH-SOUTH-WEST"
+			if(225 to 270)
+				ping_result = "WEST-SOUTH-WEST"
+			if(270 to 315)
+				ping_result = "WEST-NORTH-WEST"
+			if(315 to 360) //Yes I know 360 isnt possible. Deal with it.
+				ping_result = "NORTH-NORTH-WEST"
+		ping_result += "AZIMUTH [human_angle]"
 	else
-		ping_result = "UKNOWN ERROR, NO ASTEROIDS DETECTED. PLEASE CONTACT CENTCOM TECHNICIANS"
+		ping_result = "LOCATING NEW ASTEROIDS[ellipsis()]"
+		COOLDOWN_START(src,summon_cd,2.5 MINUTE)
+		GenerateMap(FALSE)
 
 /// Test to see if we should clear the magnet area.
 /// Returns FALSE if it can clear, returns a string error message if it can't.
-/obj/machinery/asteroid_magnet/proc/check_for_magnet_errors(datum/mining_template/template)
+/obj/machinery/asteroid_magnet/proc/check_for_magnet_errors(datum/map_template/asteroid/template)
 	. = FALSE
 	if(summon_in_progress)
 		return "ERROR: ASTEROID ALREADY BEING SUMMONED"
@@ -111,7 +151,7 @@
 			return "ERROR: HEAT SIGNATURES DETECTED ON THE ASTEROID"
 
 /// Performs a full summoning sequence, including putting up boundaries, clearing out the area, and bringing in the new asteroid.
-/obj/machinery/asteroid_magnet/proc/summon_sequence(datum/mining_template/template)
+/obj/machinery/asteroid_magnet/proc/summon_sequence(datum/map_template/asteroid/template)
 	var/magnet_error = check_for_magnet_errors(template)
 	if(magnet_error)
 		status = magnet_error
@@ -139,7 +179,7 @@
 		_FinishSummonSequence(template, forcefields)
 	return
 
-/obj/machinery/asteroid_magnet/proc/_FinishSummonSequence(datum/mining_template/template, list/forcefields)
+/obj/machinery/asteroid_magnet/proc/_FinishSummonSequence(datum/map_template/asteroid/template, list/forcefields)
 	QDEL_LIST(forcefields)
 
 	var/area/station/cargo/mining/asteroid_magnet/A = get_area(center_turf)
@@ -152,9 +192,9 @@
 	updateUsrDialog()
 
 /// Summoning part of summon_sequence()
-/obj/machinery/asteroid_magnet/proc/PlaceTemplate(datum/mining_template/template)
+/obj/machinery/asteroid_magnet/proc/PlaceTemplate(datum/map_template/asteroid/template)
 	PRIVATE_PROC(TRUE)
-	template.Generate()
+	template.load(center_turf,TRUE)
 
 /// Places the forcefield boundary during summon_sequence
 /obj/machinery/asteroid_magnet/proc/PlaceForcefield()
@@ -183,34 +223,24 @@
 
 
 /// Generates the random map for the magnet.
-/obj/machinery/asteroid_magnet/proc/GenerateMap()
+/obj/machinery/asteroid_magnet/proc/GenerateMap(initial = TRUE)
 	PRIVATE_PROC(TRUE)
-	map = new(-100, 100, -100, 100)
-
+	if(initial)
+		map = new(-100, 100, -100, 100)
 	// Generate common templates
-	if(length(SSmaterials.template_paths_by_rarity["[MINING_COMMON]"]))
+	if(length(available_templates))
 		for(var/i in 1 to 12)
-			InsertTemplateToMap(pick(SSmaterials.template_paths_by_rarity["[MINING_COMMON]"]))
-
-	/*
-	// Generate uncommon templates
-	for(var/i in 1 to 4)
-		InsertTemplateToMap(pick(SSmaterials.template_paths_by_rarity["[MINING_UNCOMMON]"]))
-	// Generate rare templates
-	for(var/i in 1 to 2)
-		InsertTemplateToMap(pick(SSmaterials.template_paths_by_rarity["[MINING_RARE]"]))
-	*/
+			InsertTemplateToMap(pick(available_templates))
 
 /obj/machinery/asteroid_magnet/proc/InsertTemplateToMap(path)
 	PRIVATE_PROC(TRUE)
 
 	var/collisions = 0
-	var/datum/mining_template/template
+	var/datum/map_template/asteroid/template
 	var/x
 	var/y
 
 	template = new path(center_turf, area_size)
-	template.randomize()
 	templates_on_map += template
 
 	do
@@ -245,12 +275,12 @@
 	data["Auto_pinging"] = Auto_pinging
 
 	var/list/asteroid_data = list()
-	for(var/datum/mining_template/asteroid as anything in available_templates)
+	for(var/datum/map_template/asteroid/asteroid as anything in available_templates)
 		asteroid_data += list(list(
 			"name" = "[asteroid.name] ([asteroid.x] [asteroid.y])",
 			"ref" = REF(asteroid),
 			"size" = asteroid.size,
-			"rarity" = asteroid.rarity,
+			"rarity" = asteroid.asteroid_weight,
 		))
 	data["asteroids"] = asteroid_data
 
@@ -297,7 +327,7 @@
 			ping(coords_x, coords_y)
 
 		if("select")
-			var/datum/mining_template/asteroid = locate(params["asteroid_reference"]) in available_templates
+			var/datum/map_template/asteroid/asteroid = locate(params["asteroid_reference"]) in available_templates
 			selected_template = asteroid
 			summon_sequence(selected_template)
 
