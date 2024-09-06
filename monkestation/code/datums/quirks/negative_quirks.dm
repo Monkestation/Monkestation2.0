@@ -218,7 +218,7 @@
 	name = "Tunnel Vision"
 	desc = "You spent too long scoped in. You cant see behind you!"
 	value = -2
-	icon = FA_ICON_EXCLAMATION
+	icon = FA_ICON_QUESTION
 	gain_text = span_notice("You have trouble focusing on what you left behind.")
 	lose_text = span_notice("You feel paranoid, constantly checking your back...")
 	medical_record_text = "Patient had trouble noticing people walking up from behind during the examination."
