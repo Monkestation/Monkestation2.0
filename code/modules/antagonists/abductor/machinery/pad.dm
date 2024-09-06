@@ -48,9 +48,9 @@
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)  
  	flick("alien-pad", src)
 	for(var/atom/movable/target in get_turf(src))
- 	if(isliving(target) || istype(target, /obj/item/toy/plush))
-  	        target.forceMove(place)
-   	        new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
+ 		if(isliving(target) || istype(target, /obj/item/toy/plush))
+  	        	target.forceMove(place)
+   	        	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	new /obj/effect/temp_visual/teleport_abductor(place)
