@@ -16,7 +16,6 @@
 	if(!target.buckled)
 		target.forceMove(get_turf(src))
 
-
 /obj/machinery/abductor/pad/proc/Send()
 	if(teleport_target == null)
 		teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
@@ -45,7 +44,6 @@
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	new /obj/effect/temp_visual/teleport_abductor(place)
 	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
-
 
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)  
 	flick("alien-pad", src)
