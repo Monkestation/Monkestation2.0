@@ -22,13 +22,13 @@
     		teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
    	flick("alien-pad", src)
    	for(var/atom/movable/target in loc)
-    	if(isliving(target) || istype(target, /obj/item/toy/plush))
-   		target.forceMove(teleport_target)
-  	        new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
-   	        if(isliving(target))
-  	        	var/mob/living/L = target
- 	        	to_chat(L, span_warning("The instability of the warp leaves you disoriented!"))
- 	        	L.Stun(60)
+    		if(isliving(target) || istype(target, /obj/item/toy/plush))
+   			target.forceMove(teleport_target)
+  			new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
+   	        	if(isliving(target))
+  	        		var/mob/living/abductedTarget = target
+ 	        		to_chat(abductedTarget, span_warning("The instability of the warp leaves you disoriented!"))
+ 	        		abductedTarget.Stun(60)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)
