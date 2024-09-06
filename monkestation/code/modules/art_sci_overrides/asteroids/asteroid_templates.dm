@@ -1,7 +1,7 @@
 /datum/map_template/asteroid
 	name = "Base Asteroid Template"
 	///This is just a reminder, set the path will you? cant load what we cant find.
-	//path
+	//path =
 
 	///X wise, where are we on the Cartesian Plane?
 	var/x
