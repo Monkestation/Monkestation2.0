@@ -167,7 +167,7 @@
 
 /datum/symptom/wendigo_warning/activate(mob/living/mob)
 	to_chat(mob, span_warning("[pick(host_messages)]"))
-	mob.adjust_nutrition(-25)
+	mob.adjust_nutrition(-10)
 
 
 /datum/symptom/cult_hallucination
@@ -418,12 +418,12 @@
 
 /datum/symptom/plasma_heal/first_activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 	. = ..()
-	ADD_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	ADD_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 	to_chat(mob, span_notice("You suddenly love plasma."))
 
 /datum/symptom/plasma_heal/side_effect(mob/living/mob)
 	. = ..()
-	REMOVE_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	REMOVE_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 
 /datum/symptom/plasma_heal/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 	. = ..()
