@@ -66,7 +66,7 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
-	channel = _channel
+	channel ||= _channel
 
 	if(start_immediately)
 		start()

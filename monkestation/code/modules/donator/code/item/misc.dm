@@ -33,4 +33,5 @@
 	extra_range = 3
 	falloff_exponent = 100
 	falloff_distance = 3
+	channel = CHANNEL_SQUEAK
 
