@@ -214,3 +214,16 @@
 	if(isipc(quirk_holder)) //monkestation addition
 		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
 
+/datum/quirk/tunnel_vision
+	name = "Tunnel Vision"
+	desc = "You spent too long scoped in. You cant see behind you!"
+	value = -2
+	icon = FA_ICON_EYE_SLASH
+	gain_text = span_notice("You have trouble focusing on what you left behind.")
+	lose_text = span_notice("You feel paranoid, constantly checking your back...")
+	medical_record_text = "Patient had trouble noticing people walking up from behind during the examination."
+/datum/quirk/tunnel_vision/add()
+	quirk_holder.add_fov_trait("tunnel vision quirk", FOV_90_DEGREES)
+
+/datum/quirk/tunnel_vision/remove()
+	quirk_holder.remove_fov_trait("tunnel vision quirk", FOV_90_DEGREES)
