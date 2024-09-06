@@ -23746,8 +23746,8 @@
 /area/station/service/kitchen)
 "hxD" = (
 /obj/machinery/asteroid_magnet{
-	center_x = 128;
-	center_y = 58;
+	center_x = 176;
+	center_y = 174;
 	area_size = 3
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
