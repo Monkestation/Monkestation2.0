@@ -16,6 +16,7 @@
 	if(!target.buckled)
 		target.forceMove(get_turf(src))
 
+// Monkestation Edit
 /obj/machinery/abductor/pad/proc/Send()
     if(teleport_target == null)
         teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
@@ -43,7 +44,8 @@
 	new /obj/effect/temp_visual/teleport_abductor(place)
 	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
 
-/obj/machinery/abductor/pad/proc/doPadToLoc(place)
+// Monkestation Edit
+/obj/machinery/abductor/pad/proc/doPadToLoc(place)  
     flick("alien-pad", src)
     for(var/atom/movable/target in get_turf(src))
         if(isliving(target) || istype(target, /obj/item/toy/plush))
