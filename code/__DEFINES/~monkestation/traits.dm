@@ -16,10 +16,14 @@
 #define TRAIT_PERFECT_SURGEON "perfect_surgeon"
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// Ethereals with this trait will not suffer negative effects from overcharge.
+#define TRAIT_ETHEREAL_NO_OVERCHARGE "ethereal_no_overcharge"
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST "removed_from_manifest"
 /// Station trait for when the clown has bridge access *shudders*
 #define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
+/// Things with this trait can pass through wooden barricades.
+#define TRAIT_GOES_THROUGH_WOODEN_BARRICADES "goes_through_wooden_barricades"
 
 // /datum/mind
 /// Prevents any sort of antagonist/brainwashing conversion.
@@ -48,6 +52,9 @@
 #define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"
 /// Liquids cannot spread over this turf.
 #define TRAIT_BLOCK_LIQUID_SPREAD			"block_liquid_spread"
+/// Replacement for GLOB.typecache_elevated_structures
+#define TRAIT_TURF_HAS_ELEVATED_STRUCTURE "turf_has_elevated_structure"
 
 ///added to structures we want the mobs to be able to target.
 #define TRAIT_MOB_DESTROYABLE "mob_destroyable"
+

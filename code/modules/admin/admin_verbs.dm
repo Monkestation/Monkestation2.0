@@ -43,6 +43,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/toggleooc, /*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/togglelooc, /*MONKESTATION EDIT; toggles looc on/off for everyone*/
+	/datum/admins/proc/toggledeadchat, /*MONKESTATION EDIT; toggles deadchat on/off for everyone*/
 	/datum/admins/proc/trophy_manager,
 	/datum/admins/proc/view_all_circuits,
 	/datum/admins/proc/open_artifactpanel,
@@ -198,7 +199,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/adventure_manager,
-	/client/proc/hard_deletion_toggle,
 	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,

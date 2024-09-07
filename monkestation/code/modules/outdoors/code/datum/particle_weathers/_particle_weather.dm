@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	initiator_ref = particle_weather
 	start_process()
 
-/datum/weather_event/Destroy(force, ...)
+/datum/weather_event/Destroy(force)
 	. = ..()
 	if(initiator_ref)
 		initiator_ref.weather_additional_ongoing_events -= src
@@ -67,10 +67,11 @@ GLOBAL_LIST_EMPTY(siren_objects)
 				else
 					playsound_z(SSmapping.levels_by_trait(ZTRAIT_ECLIPSE), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
 		if(GLE_STAGE_THIRD)
-			color_animating = SSoutdoor_effects.current_color
+			if(SSoutdoor_effects.enabled)
+				color_animating = SSoutdoor_effects.current_color
 			animate_flags = CIRCULAR_EASING | EASE_IN
 
-	if(color_animating)
+	if(color_animating && SSoutdoor_effects.enabled)
 		for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
 			animate(plane, color = color_animating, easing = animate_flags, time = duration)
 
@@ -82,9 +83,10 @@ GLOBAL_LIST_EMPTY(siren_objects)
 		sleep(duration)
 
 	else if(stage > max_stages)
-		SSoutdoor_effects.weather_light_affecting_event = null
-		for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
-			SSoutdoor_effects.transition_sunlight_color(plane)
+		if(SSoutdoor_effects.enabled)
+			SSoutdoor_effects.weather_light_affecting_event = null
+			for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
+				SSoutdoor_effects.transition_sunlight_color(plane)
 		qdel(src)
 		return
 
@@ -430,9 +432,13 @@ GLOBAL_LIST_EMPTY(siren_objects)
 				var/weather_message = weather_warnings["message"]
 				message += weather_message
 			for(var/mob/living/carbon/human/affected_human in GLOB.alive_mob_list)
-				if(!affected_human.stat && affected_human.client && (affected_human.z in affected_zlevels))
-					affected_human.playsound_local('monkestation/code/modules/outdoors/sound/effects/radiostatic.ogg', affected_human.loc, 25, FALSE, mixer_channel = CHANNEL_MACHINERY)
-					affected_human.play_screen_text("<span class='langchat' style=font-size:16pt;text-align:center valign='top'><u>Weather Alert:</u></span><br>" + message["human"], /atom/movable/screen/text/screen_text/command_order, rgb(103, 214, 146))
+				if(affected_human.stat || QDELETED(affected_human.client))
+					continue
+				var/turf/affected_turf = get_turf(affected_human)
+				if(!(affected_turf?.z in affected_zlevels))
+					continue
+				affected_human.playsound_local('monkestation/code/modules/outdoors/sound/effects/radiostatic.ogg', affected_human.loc, 25, FALSE, mixer_channel = CHANNEL_MACHINERY)
+				affected_human.play_screen_text("<span class='langchat' style=font-size:16pt;text-align:center valign='top'><u>Weather Alert:</u></span><br>" + message["human"], /atom/movable/screen/text/screen_text/command_order, rgb(103, 214, 146))
     return FALSE
 
 /datum/looping_sound/dust_storm
