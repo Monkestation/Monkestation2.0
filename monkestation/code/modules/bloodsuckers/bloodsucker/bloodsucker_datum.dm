@@ -101,6 +101,7 @@
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_OOZELING_NO_CANNIBALIZE,
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(

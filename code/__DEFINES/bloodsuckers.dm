@@ -18,6 +18,9 @@
 /// Once blood is this high, will exit Frenzyshak
 #define FRENZY_THRESHOLD_EXIT 250
 
+/// Minimum blood required for bloodsucker oozelings to auto-revive
+#define OOZELING_MIN_REVIVE_BLOOD_THRESHOLD (FRENZY_THRESHOLD_ENTER * 10)
+
 /**
  * Vassal defines
  */

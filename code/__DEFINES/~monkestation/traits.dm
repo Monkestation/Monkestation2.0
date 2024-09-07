@@ -18,6 +18,8 @@
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
 /// Ethereals with this trait will not suffer negative effects from overcharge.
 #define TRAIT_ETHEREAL_NO_OVERCHARGE "ethereal_no_overcharge"
+/// Oozelings with this trait will not lose limbs from low blood/nutrition.
+#define TRAIT_OOZELING_NO_CANNIBALIZE "oozeling_no_cannibalize"
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST "removed_from_manifest"
 /// Station trait for when the clown has bridge access *shudders*
