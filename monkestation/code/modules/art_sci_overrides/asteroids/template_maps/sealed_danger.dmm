@@ -1,0 +1,14 @@
+"a" = (/turf/closed/mineral/random/asteroid,/area/space)
+"e" = (/mob/living/basic/mining/goliath/ancient,/turf/open/misc/asteroid/airless/tospace,/area/space)
+"p" = (/turf/open/misc/asteroid/airless/tospace,/area/space)
+"T" = (/turf/open/space/basic,/area/space)
+
+(1,1,1) = {"
+TaaaaaT
+aaaaaaa
+aaapaaa
+aapepaa
+aaapaaa
+aaaaaaa
+TaaaaaT
+"}

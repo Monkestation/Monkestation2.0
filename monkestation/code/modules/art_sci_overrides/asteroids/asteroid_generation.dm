@@ -2,6 +2,58 @@
 	explodable = TRUE
 	baseturfs = /turf/baseturf_bottom
 	turf_type = /turf/open/misc/asteroid/airless/tospace
+/// Breaks down to an asteroid floor that breaks down to space
+/turf/closed/mineral/random/asteroid/tospace
+	baseturfs = /turf/open/misc/asteroid/airless/tospace
+/turf/closed/mineral/random/asteroid/tospace/highchance
+	mineralChance = 26
+/turf/closed/mineral/random/asteroid/tospace/lowchance
+	mineralChance = 6
+/turf/closed/mineral/random/asteroid/tospace/mineral_chances()
+	return list(
+		/obj/item/stack/ore/diamond = 2.5,
+		/obj/item/stack/ore/gold = 5,
+		/obj/item/stack/ore/iron = 15,
+		/obj/item/stack/ore/plasma = 2.5,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/silver = 6,
+		/obj/item/stack/ore/titanium = 8,
+		/obj/item/stack/ore/uranium = 5,
+		/turf/closed/mineral/artifact = 5,
+		/turf/closed/mineral/mineral_sample = 5,
+	)
+/// Mapping Stuff
+/turf/closed/mineral/asteroid/tospace
+	baseturfs = /turf/open/misc/asteroid/airless/tospace
+	name = "rock"
+	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
+	icon_state = "rock"
+/turf/closed/mineral/asteroid/tospace/uranium
+	mineralType = /obj/item/stack/ore/uranium
+	scan_state = "rock_Uranium"
+/turf/closed/mineral/asteroid/tospace/diamond
+	mineralType = /obj/item/stack/ore/diamond
+	scan_state = "rock_Diamond"
+/turf/closed/mineral/asteroid/tospace/gold
+	mineralType = /obj/item/stack/ore/gold
+	scan_state = "rock_Gold"
+/turf/closed/mineral/asteroid/tospace/silver
+	mineralType = /obj/item/stack/ore/silver
+	scan_state = "rock_Silver"
+/turf/closed/mineral/asteroid/tospace/titanium
+	mineralType = /obj/item/stack/ore/titanium
+	scan_state = "rock_Titanium"
+/turf/closed/mineral/asteroid/tospace/plasma
+	mineralType = /obj/item/stack/ore/plasma
+	scan_state = "rock_Plasma"
+/turf/closed/mineral/asteroid/tospace/bananium
+	mineralType = /obj/item/stack/ore/bananium
+	mineralAmt = 3
+	scan_state = "rock_Bananium"
+/turf/closed/mineral/asteroid/tospace/bscrystal
+	mineralType = /obj/item/stack/ore/bluespace_crystal
+	mineralAmt = 1
+	scan_state = "rock_BScrystal"
 
 
 /obj/effect/forcefield/asteroid_magnet
@@ -35,23 +87,6 @@
 			});
 			</script>
 	"}
-
-/// Breaks down to an asteroid floor that breaks down to space
-/turf/closed/mineral/random/asteroid/tospace
-	baseturfs = /turf/open/misc/asteroid/airless/tospace
-
-/turf/closed/mineral/random/asteroid/tospace/mineral_chances()
-	return list(
-		/obj/item/stack/ore/diamond = 2,
-		/obj/item/stack/ore/gold = 4,
-		/obj/item/stack/ore/iron = 20,
-		/obj/item/stack/ore/plasma = 10,
-		/obj/item/stack/ore/silver = 2,
-		/obj/item/stack/ore/titanium = 2,
-		/obj/item/stack/ore/uranium = 2,
-		/turf/closed/mineral/artifact = 25,
-		/turf/closed/mineral/mineral_sample = 25,
-	)
 /// Cleanup our currently loaded mining template
 /proc/CleanupAsteroidMagnet(turf/center, size)
 	var/list/turfs_to_destroy = ReserveTurfsForAsteroidGeneration(center, size, baseturf_only = FALSE)
@@ -74,7 +109,7 @@
 	for(var/turf/T as anything in turfs)
 		if(baseturf_only && !islevelbaseturf(T))
 			continue
-		if(!(istype(T.loc, /area/station/cargo/mining/asteroid_magnet)))
+		if(!(istype(get_area(T.loc), /area/station/cargo/mining/asteroid_magnet)))
 			continue
 		. += T
 		CHECK_TICK

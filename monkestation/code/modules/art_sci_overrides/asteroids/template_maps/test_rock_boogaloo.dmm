@@ -1,0 +1,21 @@
+"a" = (/turf/open/space/basic,/area/space)
+"K" = (/turf/open/misc/asteroid/airless/tospace,/area/space)
+"M" = (/turf/closed/mineral/random/asteroid/tospace,/area/space)
+
+(1,1,1) = {"
+aaaaaaaMaaaaaaa
+aaaaaMMMMMaaaaa
+aaaMMMMMMMMMaaa
+aaMMMMMMMMMMMaa
+aaMMMKMMMKMMMaa
+aMMMMMMMMMMMMMa
+aMMMMMMMMMMMMMa
+MMMMMMMKMMMMMMM
+aMMMMMMMMMMMMMa
+aMMMMMMMMMMMMMa
+aaMMMKKKKKMMMaa
+aaMMKMMMMMKMMaa
+aaaMMMMMMMMMaaa
+aaaaaMMMMMaaaaa
+aaaaaaaMaaaaaaa
+"}

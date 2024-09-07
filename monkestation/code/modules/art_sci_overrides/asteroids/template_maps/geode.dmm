@@ -1,0 +1,15 @@
+"a" = (/turf/closed/mineral/asteroid/tospace/gold,/area/space)
+"e" = (/turf/closed/mineral/asteroid/tospace/diamond,/area/space)
+"h" = (/turf/closed/mineral/asteroid/tospace/bscrystal,/area/space)
+"O" = (/turf/closed/mineral/random/asteroid,/area/space)
+"S" = (/turf/open/space/basic,/area/space)
+
+(1,1,1) = {"
+SOOOOOS
+OOOaOOO
+OOaeaOO
+OaeheaO
+OOaeaOO
+OOOaOOO
+SOOOOOS
+"}

@@ -8,8 +8,8 @@
 	resistance_flags = INDESTRUCTIBLE
 	use_power = NO_POWER_USE
 
-	/// Templates available to succ in
-	var/list/datum/map_template/asteroid/available_templates
+	/// Every Asteroid Template defined, [Asteroid] = [Weight]
+	var/static/list/datum/map_template/asteroid/available_templates
 	/// All templates in the "map".
 	var/list/datum/map_template/asteroid/templates_on_map
 	/// The map that stores asteroids
@@ -45,7 +45,6 @@
 /obj/machinery/asteroid_magnet/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		SSmaterials.InitializeTemplates()
 		if(!center_x || !center_y)
 			stack_trace("Asteroid magnet does not have X or Y coordinates, deleting.")
 			return INITIALIZE_HINT_QDEL
@@ -69,8 +68,6 @@
 	var/datum/map_template/asteroid/T = map.return_coordinate(coords_x, coords_y)
 	if(T && !T.found)
 		T.found = TRUE
-		available_templates |= T
-		templates_on_map -= T
 		ping_result = "LOCATED"
 		return
 
@@ -91,15 +88,23 @@
 		if(dx < 0) // If the X-axis distance is negative, put it between 181 and 359. 180 and 360/0 are impossible, as that requires X == 0.
 			angle = 360 - angle
 		var/human_angle = round(angle, 0.01)
-		switch(human_angle) //cardinals, subcardinals, generic direction.
-			if(0)
-				ping_result = "NORTH"
-			if(90)
-				ping_result = "EAST"
-			if(180)
-				ping_result = "SOUTH"
-			if(270)
-				ping_result = "WEST"
+		switch(human_angle) //Generic Direction, Sub-cardinals, then Cardinals
+			if(0.01 to 44.99)
+				ping_result = "NORTH-NORTH-EAST"
+			if(45.01 to 89.99)
+				ping_result = "EAST-NORTH-EAST"
+			if(90.01 to 134.99)
+				ping_result = "EAST-SOUTH-EAST"
+			if(135.01 to 179.99)
+				ping_result = "SOUTH-SOUTH-EAST"
+			if(180.01 to 224.99)
+				ping_result = "SOUTH-SOUTH-WEST"
+			if(225.01 to 269.99)
+				ping_result = "WEST-SOUTH-WEST"
+			if(270.01 to 314.99)
+				ping_result = "WEST-NORTH-WEST"
+			if(315.01 to 359.99)
+				ping_result = "NORTH-NORTH-WEST"
 			if(45)
 				ping_result = "NORTH-EAST"
 			if(135)
@@ -108,26 +113,18 @@
 				ping_result = "SOUTH-WEST"
 			if(315)
 				ping_result = "NORTH-WEST"
-			if(0 to 45)
-				ping_result = "NORTH-NORTH-EAST"
-			if(45 to 90)
-				ping_result = "EAST-NORTH-EAST"
-			if(90 to 135)
-				ping_result = "EAST-SOUTH-EAST"
-			if(135 to 180)
-				ping_result = "SOUTH-SOUTH-EAST"
-			if(180 to 225)
-				ping_result = "SOUTH-SOUTH-WEST"
-			if(225 to 270)
-				ping_result = "WEST-SOUTH-WEST"
-			if(270 to 315)
-				ping_result = "WEST-NORTH-WEST"
-			if(315 to 360) //Yes I know 360 isnt possible. Deal with it.
-				ping_result = "NORTH-NORTH-WEST"
-		ping_result += "AZIMUTH [human_angle]"
+			if(0)
+				ping_result = "NORTH"
+			if(90)
+				ping_result = "EAST"
+			if(180)
+				ping_result = "SOUTH"
+			if(270)
+				ping_result = "WEST"
+		ping_result += ": AZIMUTH [human_angle]"
 	else
-		ping_result = "LOCATING NEW ASTEROIDS[ellipsis()]"
-		COOLDOWN_START(src,summon_cd,2.5 MINUTE)
+		ping_result = "LOCATING NEW ASTEROID FIELD[ellipsis()]"
+		COOLDOWN_START(src,summon_cd,3 MINUTE)
 		GenerateMap(FALSE)
 
 /// Test to see if we should clear the magnet area.
@@ -148,7 +145,7 @@
 
 	for(var/mob/M as mob in range(area_size + 1, center_turf))
 		if(isliving(M))
-			return "ERROR: HEAT SIGNATURES DETECTED ON THE ASTEROID"
+			return "ERROR: HEAT SIGNATURES DETECTED IN MAGNET RANGE"
 
 /// Performs a full summoning sequence, including putting up boundaries, clearing out the area, and bringing in the new asteroid.
 /obj/machinery/asteroid_magnet/proc/summon_sequence(datum/map_template/asteroid/template)
@@ -171,7 +168,6 @@
 	CleanupTemplate()
 	PlaceTemplate(template)
 
-	/// This process should take ATLEAST 20 seconds
 	time = (world.timeofday + 20 SECONDS) - time
 	if(time > 0)
 		addtimer(CALLBACK(src, PROC_REF(_FinishSummonSequence), template, forcefields), time)
@@ -186,8 +182,7 @@
 	A.area_flags &= ~NOTELEPORT // Annnnd done
 	summon_in_progress = FALSE
 	template.summoned = TRUE
-	COOLDOWN_START(src, summon_cd, 1 MINUTE)
-
+	COOLDOWN_START(src, summon_cd, 1.5 MINUTE)
 	status = STATUS_OKAY
 	updateUsrDialog()
 
@@ -212,7 +207,6 @@
 	var/list/turfs_to_destroy = ReserveTurfsForAsteroidGeneration(center_turf, area_size, baseturf_only = FALSE)
 	for(var/turf/T as anything in turfs_to_destroy)
 		CHECK_TICK
-
 		for(var/atom/movable/AM as anything in T)
 			CHECK_TICK
 			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || !(ismob(AM) || isobj(AM)))
@@ -230,7 +224,10 @@
 	// Generate common templates
 	if(length(available_templates))
 		for(var/i in 1 to 12)
-			InsertTemplateToMap(pick(available_templates))
+			var/datum/map_template/asteroid/possible = pick_weight(available_templates)
+			if(possible.size > area_size)
+				continue
+			InsertTemplateToMap(possible)
 
 /obj/machinery/asteroid_magnet/proc/InsertTemplateToMap(path)
 	PRIVATE_PROC(TRUE)
@@ -275,7 +272,9 @@
 	data["Auto_pinging"] = Auto_pinging
 
 	var/list/asteroid_data = list()
-	for(var/datum/map_template/asteroid/asteroid as anything in available_templates)
+	for(var/datum/map_template/asteroid/asteroid as anything in templates_on_map)
+		if(!asteroid.found)
+			continue
 		asteroid_data += list(list(
 			"name" = "[asteroid.name] ([asteroid.x] [asteroid.y])",
 			"ref" = REF(asteroid),
@@ -327,9 +326,11 @@
 			ping(coords_x, coords_y)
 
 		if("select")
-			var/datum/map_template/asteroid/asteroid = locate(params["asteroid_reference"]) in available_templates
+			var/datum/map_template/asteroid/asteroid = locate(params["asteroid_reference"]) in templates_on_map
+			templates_on_map -= asteroid
 			selected_template = asteroid
 			summon_sequence(selected_template)
+
 
 #undef MAX_COLLISIONS_BEFORE_ABORT
 #undef STATUS_OKAY

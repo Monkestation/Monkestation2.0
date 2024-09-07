@@ -1,0 +1,21 @@
+"a" = (/turf/closed/mineral/random/asteroid/tospace,/area/space)
+"z" = (/turf/open/space/basic,/area/space)
+"H" = (/turf/open/misc/asteroid/airless/tospace,/area/space)
+
+(1,1,1) = {"
+zzzzzzzazzzzzzz
+zzzzzaaaaazzzzz
+zzzaaaaaaaaazzz
+zzaaaaaaaaaaazz
+zzaaaHaaaHaaazz
+zaaaaaaaaaaaaaz
+zaaaaaaaaaaaaaz
+aaaaaaaHaaaaaaa
+zaaHaaaaaaaHaaz
+zaaaHaaaaaHaaaz
+zzaaaHHHHHaaazz
+zzaaaaaaaaaaazz
+zzzaaaaaaaaazzz
+zzzzzaaaaazzzzz
+zzzzzzzazzzzzzz
+"}

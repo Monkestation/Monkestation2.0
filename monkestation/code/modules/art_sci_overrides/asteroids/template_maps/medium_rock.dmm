@@ -1,0 +1,14 @@
+"a" = (/turf/open/space/basic,/area/space)
+"s" = (/turf/closed/mineral/artifact,/area/space)
+
+(1,1,1) = {"
+aaasssaaa
+asssssssa
+asssssssa
+sssssssss
+sssssssss
+sssssssss
+asssssssa
+asssssssa
+aaasssaaa
+"}
