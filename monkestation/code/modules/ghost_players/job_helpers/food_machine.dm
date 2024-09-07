@@ -8,7 +8,8 @@
 
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
-
+	///typesof() these types will not be able to be spawned
+	blacklisted_types = list(/obj/item/food/grown/kudzupod)
 
 /obj/structure/food_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
