@@ -221,5 +221,5 @@
 	id = ACTIONSPEED_ID_BLOODSUCKER_SOL
 
 /datum/movespeed_modifier/bloodsucker_sol
-	multiplicative_slowdown = 0.35
+	multiplicative_slowdown = 0.45
 	id = ACTIONSPEED_ID_BLOODSUCKER_SOL
