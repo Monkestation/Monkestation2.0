@@ -24,6 +24,7 @@
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NOCRITDAMAGE, // We do our own handling of crit damage.
 		TRAIT_NO_DNA_COPY,
+		TRAIT_RDS_COMPATIBLE,
 	)
 
 	species_traits = list(
