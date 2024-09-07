@@ -29,6 +29,7 @@
 		"Artist",
 		"Off-Duty Staff",
 		"Off-Duty Crew",
+		"Test Subject",
 	)
 
 /datum/job/atmospheric_technician
@@ -70,6 +71,7 @@
 
 /datum/job/brig_physician
 	alt_titles = list(
+		"Brig Physician",
 		"Jail Doctor",
 		"Brig Orderly",
 		"Prison Medic",
@@ -141,6 +143,7 @@
 		"Jester",
 		"Joker",
 		"Comedian",
+		"Professional Nuisance",
 	)
 
 /datum/job/cook
@@ -150,6 +153,7 @@
 		"Butcher",
 		"Culinary Artist",
 		"Sous-Chef",
+		"Pizzaiolo",
 	)
 
 /datum/job/curator

@@ -676,7 +676,7 @@
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
+/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/living/user)
 	if(being_used || !isliving(dumb_mob))
 		return
 	if(dumb_mob.ckey) //only works on animals that aren't player controlled
@@ -694,7 +694,7 @@
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "[span_danger(user)] is offering [span_notice(dumb_mob)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		question = "[span_danger("[user.real_name || user.name]")] is offering [span_notice("[dumb_mob.real_name || dumb_mob.name]")] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 20 SECONDS,
 		checked_target = dumb_mob,
@@ -1054,9 +1054,10 @@
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
 	..()
-	var/area/A = get_area(src)
-	for(var/turf/T in A)
-		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-	A.area_flags |= XENOBIOLOGY_COMPATIBLE
+	var/area/area = get_area(src)
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	area.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)
