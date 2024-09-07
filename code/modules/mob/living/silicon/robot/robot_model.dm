@@ -664,7 +664,7 @@
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/cyborg, //MONKESTATION EDIT
 		/obj/item/reagent_containers/borghypo/medical,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
@@ -805,6 +805,7 @@
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
+		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
