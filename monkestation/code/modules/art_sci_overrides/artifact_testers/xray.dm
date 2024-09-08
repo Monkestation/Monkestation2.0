@@ -185,7 +185,7 @@
 		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
 		if(research_added > 0 && !artifact.researched)
 			artifact.researched = TRUE
-			src.visible_message(span_notice("The [src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
+			src.visible_message(span_notice("[src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
 			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_added))
 		if(our_disk && destroy_artifact_mode)
 			destructive_scan_artifact(artifact)
