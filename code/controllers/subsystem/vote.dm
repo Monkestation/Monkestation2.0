@@ -311,7 +311,7 @@ SUBSYSTEM_DEF(vote)
 				"countMethod" = current_vote.count_method,
 				"choices" = choices,
 				"vote" = vote_data,
-				"canVote" = current_vote.can_vote(), // monkestation edit
+				"canVote" = current_vote.can_vote(user), // monkestation edit
 			)
 
 		all_vote_data += list(vote_data)
