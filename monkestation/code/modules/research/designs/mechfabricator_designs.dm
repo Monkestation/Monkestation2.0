@@ -82,3 +82,39 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/ipc_part_chest_ipc_construction
+	name = "IPC Chest (IPC Construction)"
+	id = "ipc_chest_ipc_construction"
+	build_type = MECHFAB
+	construction_time = 100
+	materials = list(/datum/material/iron = 20000, /datum/material/titanium = 500)
+	build_path = /obj/item/ipc_chest
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/ipc_part_posibrain
+	name = "Compact Positronic Brain"
+	id = "ipc_posibrain"
+	build_type = MECHFAB
+	construction_time = 150
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*3.4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.7, /datum/material/gold =SMALL_MATERIAL_AMOUNT*10, /datum/material/diamond =SMALL_MATERIAL_AMOUNT*10)
+	build_path = /obj/item/mmi/posibrain/ipc
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/ipc_part_charger
+	name = "Recharging Electronics"
+	id = "ipc_charger"
+	build_type = MECHFAB
+	construction_time = 100
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

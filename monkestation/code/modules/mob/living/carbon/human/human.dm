@@ -1,2 +1,5 @@
 /mob/living/carbon/human/species/arachnid
     race = /datum/species/arachnid
+
+/mob/living/carbon/human/species/ipc
+    race = /datum/species/ipc
