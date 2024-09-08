@@ -159,6 +159,9 @@ SUBSYSTEM_DEF(gamemode)
 
 	var/total_valid_antags = 0
 
+	var/doing_transfer_vote = FALSE
+	COOLDOWN_DECLARE(next_transfer_vote)
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 	// Populate event pools
 	for(var/track in event_tracks)
@@ -189,6 +192,9 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+	if(CONFIG_GET(number/transfer_vote_time))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(crew_transfer_setup)))
+
 	if(CONFIG_GET(flag/disable_storyteller)) // we're just gonna disable firing but still initialize, so we don't have any weird runtimes
 		flags |= SS_NO_FIRE
 		return SS_INIT_NO_NEED
@@ -203,16 +209,19 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/scheduled_event/sch_event in scheduled_events)
 		if(world.time >= sch_event.start_time)
 			sch_event.try_fire()
-		else if(!sch_event.alerted_admins && world.time >= sch_event.start_time - 1 MINUTES)
+		else if(!sch_event.alerted_admins && world.time >= (sch_event.start_time - 1 MINUTES))
 			///Alert admins 1 minute before running and allow them to cancel or refund the event, once again.
 			sch_event.alerted_admins = TRUE
 			message_admins("Scheduled Event: [sch_event.event] will run in [(sch_event.start_time - world.time) / 10] seconds. (<a href='?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='?src=[REF(sch_event)];action=refund'>REFUND</a>)")
 
-	if(!halted_storyteller && next_storyteller_process <= world.time && storyteller)
+	if(!halted_storyteller && (next_storyteller_process <= world.time) && storyteller)
 		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
 		update_crew_infos()
 		next_storyteller_process = world.time + STORYTELLER_WAIT_TIME
 		storyteller.process(STORYTELLER_WAIT_TIME * 0.1)
+
+	if(can_run_transfer_vote())
+		SSvote.initiate_vote(/datum/vote/crew_transfer, "server", forced = TRUE)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -226,6 +235,47 @@ SUBSYSTEM_DEF(gamemode)
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/gamemode/proc/can_run_transfer_vote()
+	. = TRUE
+	if(doing_transfer_vote)
+		return FALSE
+	if(!CONFIG_GET(number/transfer_vote_time))
+		return FALSE
+	if(!SSticker.IsRoundInProgress())
+		return FALSE
+	if(!next_transfer_vote || !COOLDOWN_FINISHED(src, next_transfer_vote))
+		return FALSE
+	if(SSvote.current_vote)
+		return FALSE
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return FALSE
+	if(SSshuttle.supermatter_cascade)
+		return FALSE
+
+/datum/controller/subsystem/gamemode/proc/crew_transfer_setup()
+	COOLDOWN_START(src, next_transfer_vote, CONFIG_GET(number/transfer_vote_time))
+
+/datum/controller/subsystem/gamemode/proc/crew_transfer_passed()
+	if(!SSticker.IsRoundInProgress())
+		CRASH("Somehow tried to initiate crew transfer, even tho there is not ongoing round!")
+	if(SSshuttle.emergency?.mode == SHUTTLE_DISABLED || EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return
+	SSshuttle.emergency_no_recall = TRUE
+	if(EMERGENCY_IDLE_OR_RECALLED)
+		SSshuttle.emergency.request(
+			reason = "\n\nReason: Crew transfer initiated.",
+			red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+		)
+	crew_transfer_continue() // safety measure
+
+/datum/controller/subsystem/gamemode/proc/crew_transfer_continue()
+	SSgamemode.point_gain_multipliers[EVENT_TRACK_ROLESET]++
+	var/subsequent_transfer_vote_time = CONFIG_GET(number/subsequent_transfer_vote_time)
+	if(!subsequent_transfer_vote_time)
+		next_transfer_vote = 0
+		return
+	COOLDOWN_START(src, next_transfer_vote, subsequent_transfer_vote_time)
 
 /// Gets the number of antagonists the antagonist injection events will stop rolling after.
 /datum/controller/subsystem/gamemode/proc/get_antag_cap()
