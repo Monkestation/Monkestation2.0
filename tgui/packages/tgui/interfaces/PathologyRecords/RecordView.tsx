@@ -1,14 +1,22 @@
-import { Input, Box, Stack, Section, NoticeBox, LabeledList, Button } from 'tgui/components';
+import {
+  Input,
+  Box,
+  Stack,
+  Section,
+  NoticeBox,
+  LabeledList,
+  Button,
+} from 'tgui/components';
 import { getMedicalRecord } from './helpers';
 import { useBackend, useLocalState } from '../../backend';
 import { MedicalRecordData } from './types';
 
 /** Views a selected record. */
-export const MedicalRecordView = (props, context) => {
-  const foundRecord = getMedicalRecord(context);
+export const MedicalRecordView = (props) => {
+  const foundRecord = getMedicalRecord();
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
-  const { act, data } = useBackend<MedicalRecordData>(context);
+  const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view, station_z } = data;
 
   const {
@@ -43,7 +51,8 @@ export const MedicalRecordView = (props, context) => {
           fill
           scrollable
           title={name}
-          wrap>
+          wrap
+        >
           <LabeledList>
             <LabeledList.Item label="Name">
               <EditableText
@@ -84,15 +93,14 @@ type Props = {
   text: string;
 };
 
-const EditableText = (props: Props, context) => {
+const EditableText = (props: Props) => {
   const { color, field, target_ref, text } = props;
   if (!field) return <> </>;
 
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   const [editing, setEditing] = useLocalState<boolean>(
-    context,
     `editing_${field}`,
-    false
+    false,
   );
 
   return editing ? (
@@ -120,7 +128,8 @@ const EditableText = (props: Props, context) => {
             'text-decoration-thickness': '1px',
             'text-underline-offset': '1px',
           }}
-          onClick={() => setEditing(true)}>
+          onClick={() => setEditing(true)}
+        >
           {!text ? '(none)' : text}
         </Box>
       </Stack.Item>

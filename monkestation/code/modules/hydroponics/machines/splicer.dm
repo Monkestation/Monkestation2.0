@@ -144,7 +144,7 @@
 	new_seed.icon_dead = first_seed.icon_dead
 	new_seed.growthstages = first_seed.growthstages
 	new_seed.growing_icon = first_seed.growing_icon
-	new_seed.seed_offset = first_seed.seed_offset
+	new_seed.plant_icon_offset = first_seed.plant_icon_offset
 
 	new_seed.reagents_add = first_seed.reagents_add.Copy()
 
@@ -239,6 +239,6 @@
 	seed_1.adjust_maturation(stats["maturation_change"])
 
 	seed_1.check_infusions(held_beaker.reagents.reagent_list)
-	held_beaker.reagents.remove_any(held_beaker.reagents.total_volume)
+	held_beaker.reagents.remove_all(held_beaker.reagents.total_volume)
 	stats = list()
 	potential_damage = 0

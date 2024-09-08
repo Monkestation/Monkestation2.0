@@ -70,17 +70,23 @@
 #else
 #define TEST_OUTPUT_GREEN(text) (text)
 #endif
+/// Change color to yellow on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
+#define TEST_OUTPUT_YELLOW(text) "\x1B\x5B1;33m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_YELLOW(text) (text)
+#endif
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
 // BEGIN_INCLUDE
+#include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
 #include "antag_moodlets.dm"
-#include "antag_special_roles.dm"
 #include "area_contents.dm"
 #include "armor_verification.dm"
 #include "autowiki.dm"
@@ -135,9 +141,11 @@
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "language_key_conflicts.dm"
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "linked_xenobio_pens.dm"
 #include "load_map_security.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"
@@ -151,6 +159,7 @@
 #include "mob_chains.dm"
 #include "mob_faction.dm"
 #include "mob_spawn.dm"
+#include "modify_fantasy_variable.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
 #include "mouse_bite_cable.dm"
@@ -179,6 +188,7 @@
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "required_map_items.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
@@ -203,6 +213,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spell_timestop.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "station_trait_tests.dm"

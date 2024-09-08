@@ -34,6 +34,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
 		list("Bilingual", "Foreigner"),
+		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
+		list("Body Purist", "Hosed"),
+		list("Body Purist", "Neuralinked"),
+		list("Body Purist", "Bright Eyes")
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

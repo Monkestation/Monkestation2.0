@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(SSlighting.initialized)
 		// Space tiles should never have lighting objects
 		//monkestation addition start
-		if(SSoutdoor_effects.initialized)
+		if(SSoutdoor_effects.initialized && SSoutdoor_effects.enabled)
 			outdoor_effect = old_outdoor_effect
 			get_sky_and_weather_states()
 
@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 				stashed_group.display_turf(new_turf)
 	else
 		for(var/turf/open/adjacent_turf as anything in atmos_adjacent_turfs)
-			if(QDELETED(adjacent_turf))
+			if(QDELETED(adjacent_turf) || !adjacent_turf.atmos_adjacent_turfs)
 				continue
 			adjacent_turf.atmos_adjacent_turfs -= src
 		atmos_adjacent_turfs = null

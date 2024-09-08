@@ -40,12 +40,14 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BLUESHIELD "Blueshield" //Monke edit
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
 #define JOB_PERSONAL_AI "Personal AI"
 //Security
 #define JOB_WARDEN "Warden"
+#define JOB_BRIG_PHYSICIAN "Brig Physician"
 #define JOB_DETECTIVE "Detective"
 #define JOB_SECURITY_OFFICER "Security Officer"
 #define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
@@ -119,6 +121,7 @@
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
+#define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -150,9 +153,11 @@
 #define JOB_DISPLAY_ORDER_GENETICIST 31
 #define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 32
 #define JOB_DISPLAY_ORDER_WARDEN 33
-#define JOB_DISPLAY_ORDER_DETECTIVE 34
-#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 35
-#define JOB_DISPLAY_ORDER_PRISONER 36
+#define JOB_DISPLAY_ORDER_BRIG_PHYSICIAN 34
+#define JOB_DISPLAY_ORDER_DETECTIVE 35
+#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 36
+#define JOB_DISPLAY_ORDER_SECURITY_ASSISTANT 37 // monkestation edit: security assistants
+#define JOB_DISPLAY_ORDER_PRISONER 38
 
 
 #define DEPARTMENT_UNASSIGNED "No Department"

@@ -16,7 +16,7 @@
 	if(length(guardians) && !allow_multiple)
 		balloon_alert(user, "already have one!")
 		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
 		to_chat(user, ling_failure)
 		return
 	if(used)
@@ -37,7 +37,7 @@
 			check_jobban = ROLE_PAI,
 			poll_time = 10 SECONDS,
 			ignore_category = POLL_IGNORE_HOLOPARASITE,
-			pic_source = guardian_path,
+			alert_pic = guardian_path,
 			role_name_text = "guardian spirit",
 		)
 		if(LAZYLEN(candidates))

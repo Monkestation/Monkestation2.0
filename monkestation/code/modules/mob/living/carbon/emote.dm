@@ -51,7 +51,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "nothing"
-	item_flags = DROPDEL | HAND_ITEM
+	item_flags = DROPDEL | HAND_ITEM | ABSTRACT
 	force = 0
 	throwforce = 0
 	load_sound_volume = 0
@@ -64,7 +64,7 @@
 	clumsy_check = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	gun_flags = NONE
-	mag_type = /obj/item/ammo_box/magazine/fingergun_emote
+	accepted_magazine_type = /obj/item/ammo_box/magazine/fingergun_emote
 	spawnwithmagazine = TRUE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT

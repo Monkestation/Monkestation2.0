@@ -64,6 +64,7 @@
 			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
 			ACCOUNT_CAR = COLOR_BEIGE,
 			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+			ACCOUNT_CMD = COLOR_BLUE_GRAY,
 		)
 
 	// Icons
@@ -124,6 +125,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
+	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -293,7 +295,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/cargo/mail_token, // monkestation edit
 	))
 
 /obj/item/paper/fluff/junkmail_redpill

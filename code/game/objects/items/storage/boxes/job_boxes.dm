@@ -42,6 +42,9 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
+	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
+		new /obj/item/climbing_hook/emergency(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -291,6 +294,8 @@
 /obj/item/storage/box/skillchips/science/PopulateContents()
 	new/obj/item/skillchip/job/roboticist(src)
 	new/obj/item/skillchip/job/roboticist(src)
+	new/obj/item/skillchip/cyberjacker(src)
+	new/obj/item/skillchip/cyberjacker(src)
 
 /obj/item/storage/box/skillchips/engineering
 	name = "box of engineering job skillchips"

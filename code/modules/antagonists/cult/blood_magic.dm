@@ -332,7 +332,7 @@
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | HAND_ITEM // monkestation edit: add HAND_ITEM
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -399,6 +399,7 @@
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
+/* overriden in monkestation/code/modules/antagonists/cult/blood_magic.dm
 /obj/item/melee/blood_magic/stun/afterattack(mob/living/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
 		return
@@ -439,6 +440,7 @@
 				carbon_target.set_jitter_if_lower(30 SECONDS)
 		uses--
 	..()
+*/
 
 //Teleportation
 /obj/item/melee/blood_magic/teleport

@@ -1,10 +1,17 @@
 import { useBackend } from '../../backend';
-import { Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
+import {
+  Stack,
+  Button,
+  Section,
+  Box,
+  ProgressBar,
+  LabeledList,
+} from '../../components';
 import { KelvinZeroCelcius, OperatorData } from './data';
 import { toFixed } from 'common/math';
 
-export const MechStatPane = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+export const MechStatPane = (props) => {
+  const { act, data } = useBackend<OperatorData>();
   const {
     name,
     integrity,
@@ -45,7 +52,8 @@ export const MechStatPane = (props, context) => {
             <LabeledList.Item label="Safety">
               <Button
                 color={weapons_safety ? 'red' : ''}
-                onClick={() => act('toggle_safety')}>
+                onClick={() => act('toggle_safety')}
+              >
                 {weapons_safety ? 'Dis' : 'En'}able
               </Button>
             </LabeledList.Item>
@@ -58,7 +66,8 @@ export const MechStatPane = (props, context) => {
             <LabeledList.Item label="Air Source">
               <Button
                 disabled={!airtank_present}
-                onClick={() => act('toggle_airsource')}>
+                onClick={() => act('toggle_airsource')}
+              >
                 {air_source}
               </Button>
             </LabeledList.Item>
@@ -66,7 +75,8 @@ export const MechStatPane = (props, context) => {
               <Box
                 color={
                   cabin_pressure > cabin_dangerous_highpressure ? 'red' : null
-                }>
+                }
+              >
                 {cabin_pressure} kPa
               </Box>
             </LabeledList.Item>
@@ -90,7 +100,8 @@ export const MechStatPane = (props, context) => {
                 onClick={() => act('toggle_maintenance')}
                 selected={
                   mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
-                }>
+                }
+              >
                 {mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
                   ? 'En'
                   : 'Dis'}
@@ -100,9 +111,8 @@ export const MechStatPane = (props, context) => {
             <LabeledList.Item label="ID reader panel">
               <Button
                 onClick={() => act('toggle_id_panel')}
-                selected={
-                  mecha_flags & mechflag_keys['ADDING_ACCESS_POSSIBLE']
-                }>
+                selected={mecha_flags & mechflag_keys['ADDING_ACCESS_POSSIBLE']}
+              >
                 {mecha_flags & mechflag_keys['ADDING_ACCESS_POSSIBLE']
                   ? 'En'
                   : 'Dis'}
@@ -112,7 +122,8 @@ export const MechStatPane = (props, context) => {
             <LabeledList.Item label="Port connection">
               <Button
                 onClick={() => act('toggle_port')}
-                selected={port_connected}>
+                selected={port_connected}
+              >
                 {port_connected ? 'C' : 'Disc'}onnected
               </Button>
             </LabeledList.Item>
@@ -129,8 +140,8 @@ const GetTempFormat = (temp) => {
   );
 };
 
-const EnviromentalAir = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+const EnviromentalAir = (props) => {
+  const { act, data } = useBackend<OperatorData>();
   const { airtank_pressure, airtank_temp } = data;
   if (airtank_temp === null) {
     return <Box>No air tank detected</Box>;
@@ -148,8 +159,8 @@ const EnviromentalAir = (props, context) => {
   }
 };
 
-const DNABody = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+const DNABody = (props) => {
+  const { act, data } = useBackend<OperatorData>();
   const { dna_lock } = data;
   if (dna_lock === null) {
     return (
@@ -184,8 +195,8 @@ const DNABody = (props, context) => {
   }
 };
 
-const PowerBar = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+const PowerBar = (props) => {
+  const { act, data } = useBackend<OperatorData>();
   const { power_level, power_max } = data;
   if (power_max === null) {
     return <Box content={'No Power cell installed!'} />;

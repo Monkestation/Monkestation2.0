@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controller)
+
 /obj/item/wallframe/slime_pen_controller
 	name = "slime pen management frame"
 	desc = "Used for building slime pen consoles."
@@ -21,12 +23,17 @@
 
 /obj/machinery/slime_pen_controller/Initialize(mapload)
 	. = ..()
+	GLOB.slime_pen_controllers += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/slime_pen_controller/LateInitialize()
 	. = ..()
 	locate_machinery()
+
+/obj/machinery/slime_pen_controller/Destroy()
+	GLOB.slime_pen_controllers -= src
+	return ..()
 
 /obj/machinery/slime_pen_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -49,10 +56,13 @@
 		data["slimes"] = list()
 		data["corral_upgrades"] = list()
 		data["buyable_upgrades"] = list()
+		data["capacity"] = "0/0"
 
 	else
 		data["slimes"] = list()
 		linked_data.update_slimes()
+		data["capacity"] = "[length(linked_data.managed_slimes)]/[linked_data.max_capacity]"
+
 		for(var/mob/living/basic/slime/slime as anything in linked_data.managed_slimes)
 			var/list/slime_data = list()
 			slime_data += list(
@@ -173,13 +183,20 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	. = ..()
 	if(!multitool_check_buffer(user, multitool) || QDELETED(multitool.buffer))
 		return
 	var/obj/machinery/corral_corner/pad = multitool.buffer
 	if(!istype(pad) || !pad.connected_data)
 		return
+	if(linked_data)
+		UnregisterSignal(linked_data, COMSIG_QDELETING)
 	linked_data = pad.connected_data
-	balloon_alert_to_viewers("linked pad")
+	RegisterSignal(linked_data, COMSIG_QDELETING, PROC_REF(clear_data))
+	balloon_alert_to_viewers("linked pen")
 	pad.balloon_alert_to_viewers("linked to controller")
 	to_chat(user, span_notice("You link the [pad] to the [src]."))
+	return TRUE
+
+/obj/machinery/slime_pen_controller/proc/clear_data()
+	UnregisterSignal(linked_data, COMSIG_QDELETING)
+	linked_data = null

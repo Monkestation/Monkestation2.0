@@ -6,8 +6,6 @@
 	visual_gender = FALSE
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		LIPS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	external_organs = list(
@@ -83,6 +81,12 @@
 			SPECIES_PERK_NAME = "Maybe Too Many Eyes",
 			SPECIES_PERK_DESC = "Arachnids cannot equip any kind of eyewear, requiring \
 			alternatives like welding helmets or implants. Their eyes have night vision however.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Arachnid Biology",
+			SPECIES_PERK_DESC = "Fly swatters  and pest killer will deal significantly higher amounts of damage to an Arachnid.",
 		),
 	)
 

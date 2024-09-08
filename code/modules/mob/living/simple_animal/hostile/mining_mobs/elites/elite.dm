@@ -190,18 +190,10 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
-			var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(
-				"Do you want to play as a lavaland elite?",
-				role = ROLE_SENTIENCE,
-				poll_time = 5 SECONDS,
-				target_mob = src,
-				ignore_category = POLL_IGNORE_LAVALAND_ELITE,
-				pic_source = src,
-				role_name_text = "lavaland elite"
-			)
-			if(length(candidates))
+			var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, alert_pic = src, role_name_text = "lavaland elite")
+			if(chosen_one)
 				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
-				elitemind = pick(candidates)
+				elitemind = chosen_one
 				elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
 				to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\n\
 					Your attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\n\
@@ -222,7 +214,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
-		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
+		notify_ghosts(
+			"\A [mychild] has been awakened in \the [get_area(src)]!",
+			source = mychild,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Lavaland Elite awakened",
+		)
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
 	RegisterSignal(mychild, COMSIG_QDELETING, PROC_REF(onEliteLoss))
@@ -236,7 +234,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-		notify_ghosts("\A [mychild] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
+		notify_ghosts(
+			"\A [mychild] has been challenged in \the [get_area(src)]!",
+			source = mychild,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Lavaland Elite challenged",
+		)
 	mychild.log_message("has been challenged by [key_name(activator)]!", LOG_GAME, color="#960000")
 
 /obj/structure/elite_tumor/Initialize(mapload)
@@ -357,7 +361,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor. Note, it's your only way to heal.\n\
 			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
 			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
-		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
 
 /obj/item/tumor_shard
 	name = "tumor shard"

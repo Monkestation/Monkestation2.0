@@ -69,7 +69,7 @@
 		to_delete = TRUE
 		return
 	LAZYADD(holder.reaction_list, src)
-	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
+	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] attempts")
 
 
 /datum/equilibrium/Destroy()
@@ -210,11 +210,11 @@
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overheated reaction steps")
 			reaction.overheated(holder, src, step_volume_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overheated reaction steps")
 			reaction.overheated(holder, src, step_volume_added)
 
 	//is our product too impure?
@@ -223,7 +223,7 @@
 		if(!reagent) //might be missing from overheat exploding
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overly impure reaction steps")
 			reaction.overly_impure(holder, src, step_volume_added)
 
 	//did we explode?
@@ -336,6 +336,7 @@
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
+		/* monkestation removal: we don't use ph or purity
 		//Apply pH changes
 		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
@@ -343,6 +344,7 @@
 		else //Default adds pH independant of volume
 			pH_adjust = (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod)
 		holder.adjust_specific_reagent_ph(reagent, pH_adjust)
+		monkestation end */
 
 	var/step_add
 	for(var/product in reaction.results)
@@ -351,6 +353,7 @@
 		//Default handiling
 		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 
+		/* monkestation removal: we don't use ph or purity
 		//Apply pH changes
 		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
@@ -358,6 +361,7 @@
 		else
 			pH_adjust = step_add*(reaction.H_ion_release*h_ion_mod)
 		holder.adjust_specific_reagent_ph(product, pH_adjust)
+		MONKESTATION END */
 		reacted_vol += step_add
 		total_step_added += step_add
 

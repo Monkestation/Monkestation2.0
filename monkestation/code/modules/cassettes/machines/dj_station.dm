@@ -35,6 +35,7 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	GLOB.dj_booth = src
 	register_context()
 
@@ -182,8 +183,9 @@ GLOBAL_VAR(dj_booth)
 
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM, ZTRAIT_RESERVED))
 	for(var/mob/person as anything in GLOB.player_list)
-		if(isAI(person) || isobserver(person) || isaicamera(person) || iscyborg(person))
+		if(issilicon(person) || isobserver(person) || isaicamera(person) || isbot(person))
 			active_listeners |=	person.client
+			continue
 		if(iscarbon(person))
 			var/mob/living/carbon/anything = person
 			if(!(anything in people_with_signals))

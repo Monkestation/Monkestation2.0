@@ -43,6 +43,7 @@
 	)
 	blacklisted_types = list(
 		/obj/item/ammo_box/magazine/internal,
+		/obj/item/gun/magic/artifact,
 		/obj/item/gun/energy/e_gun/dragnet,
 		/obj/item/gun/energy/ionrifle,
 		/obj/item/gun/energy/laser/instakill,
@@ -84,8 +85,6 @@
 	anchored = TRUE
 
 /obj/effect/gun_check_blocker/CanPass(atom/movable/mover, border_dir)
-	if(istype(mover, /obj/item/gun))
-		return FALSE
 	for(var/object in mover.get_all_contents())
 		if(istype(object, /obj/item/gun))
 			return FALSE

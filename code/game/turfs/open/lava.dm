@@ -222,13 +222,9 @@
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	//if anything matching this typecache is found in the lava, we don't burn things
-	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile, /obj/structure/lattice/lava))
-	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
-	for(var/obj/structure/stone_tile/S in found_safeties)
-		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
+	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
+		return TRUE
+	return FALSE
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0
@@ -327,6 +323,9 @@
 		return TRUE
 
 	return FALSE
+
+/turf/open/lava/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 /turf/open/lava/smooth
 	name = "lava"

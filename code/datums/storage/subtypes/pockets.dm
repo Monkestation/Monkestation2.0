@@ -77,6 +77,7 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/t_scanner/adv_mining_scanner/lesser,
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
 		/obj/item/pen,
@@ -93,6 +94,7 @@
 		/obj/item/suppressor,
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m35, //Monkestation Edit
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/ammo_casing,
@@ -113,6 +115,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/pen,
 		/obj/item/scalpel,

@@ -57,9 +57,9 @@
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
-/datum/component/anti_magic/Destroy(force, silent)
-	QDEL_NULL(drain_antimagic)
-	QDEL_NULL(expiration)
+/datum/component/anti_magic/Destroy(force)
+	drain_antimagic = null
+	expiration = null
 	return ..()
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)

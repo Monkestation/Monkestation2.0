@@ -16,9 +16,14 @@
 #define CHANNEL_INSTRUMENTS_ROBOT 1010
 #define CHANNEL_MOB_SOUNDS 1009
 #define CHANNEL_Z 1008
-#define CHANNEL_WALKMAN 1007 //monkestation edit
+// monkestation edit
+#define CHANNEL_WALKMAN 1007
 #define CHANNEL_MASTER_VOLUME 1006
-#define CHANNEL_PRUDE 1007
+#define CHANNEL_PRUDE 1005
+#define CHANNEL_SQUEAK 1004
+#define CHANNEL_MOB_EMOTES 1003
+#define CHANNEL_SILICON_EMOTES 1002
+// monkestation end
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -35,7 +40,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1007 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 1002 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -95,7 +100,7 @@
 #define SOUND_ENVIROMENT_PHASED list(1.8, 0.5, -1000, -4000, 0, 5, 0.1, 1, -15500, 0.007, 2000, 0.05, 0.25, 1, 1.18, 0.348, -5, 2000, 250, 0, 3, 100, 63)
 
 //"sound areas": easy way of keeping different types of areas consistent.
-#define SOUND_AREA_STANDARD_STATION SOUND_ENVIRONMENT_PARKING_LOT
+#define SOUND_AREA_STANDARD_STATION SOUND_ENVIRONMENT_HANGAR
 #define SOUND_AREA_LARGE_ENCLOSED SOUND_ENVIRONMENT_QUARRY
 #define SOUND_AREA_SMALL_ENCLOSED SOUND_ENVIRONMENT_BATHROOM
 #define SOUND_AREA_TUNNEL_ENCLOSED SOUND_ENVIRONMENT_STONEROOM
@@ -126,6 +131,7 @@
 #define ANNOUNCER_SHUTTLEDOCK "announcer_shuttledock"
 #define ANNOUNCER_SHUTTLERECALLED "announcer_shuttlerecalled"
 #define ANNOUNCER_SPANOMALIES "announcer_spanomalies"
+#define ANNOUNCER_ICARUS "announcer_icarus"
 
 /// Global list of all of our announcer keys.
 GLOBAL_LIST_INIT(announcer_keys, list(
@@ -145,6 +151,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_SHUTTLEDOCK,
 	ANNOUNCER_SHUTTLERECALLED,
 	ANNOUNCER_SPANOMALIES,
+	ANNOUNCER_ICARUS,
 ))
 
 /// List of all of our sound keys.

@@ -17,6 +17,10 @@
 	  */
 	var/gc_destroyed
 
+	/// Open uis owned by this datum
+	/// Lazy, since this case is semi rare
+	var/list/open_uis
+
 	/// Active timers with this datum as the target
 	var/list/_active_timers
 	/// Status traits attached to this datum. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
@@ -56,13 +60,21 @@
 	var/list/filter_data
 
 #ifdef REFERENCE_TRACKING
-	var/running_find_references
+	/// When was this datum last touched by a reftracker?
+	/// If this value doesn't match with the start of the search
+	/// We know this datum has never been seen before, and we should check it
 	var/last_find_references = 0
+	/// How many references we're trying to find when searching
+	var/references_to_clear = 0
 	#ifdef REFERENCE_TRACKING_DEBUG
 	///Stores info about where refs are found, used for sanity checks and testing
 	var/list/found_refs
 	#endif
 #endif
+
+	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I wanna cover my bases
+	var/harddel_deets_dumped = FALSE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
@@ -93,7 +105,7 @@
  *
  * Returns [QDEL_HINT_QUEUE]
  */
-/datum/proc/Destroy(force=FALSE, ...)
+/datum/proc/Destroy(force = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -117,13 +129,14 @@
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components
 	if(dc)
-		var/all_components = dc[/datum/component]
-		if(length(all_components))
-			for(var/datum/component/component as anything in all_components)
-				qdel(component, FALSE, TRUE)
-		else
-			var/datum/component/C = all_components
-			qdel(C, FALSE, TRUE)
+		for(var/component_key in dc)
+			var/component_or_list = dc[component_key]
+			if(islist(component_or_list))
+				for(var/datum/component/component as anything in component_or_list)
+					qdel(component, FALSE)
+			else
+				var/datum/component/C = component_or_list
+				qdel(C, FALSE)
 		dc.Cut()
 
 	_clear_signal_refs()
@@ -193,7 +206,7 @@
 
 ///Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
-	. = serialize_list(options)
+	. = serialize_list(options, list())
 	if(!islist(.))
 		. = null
 	else
@@ -302,7 +315,7 @@
 
 /// Reapplies all the filters.
 /datum/proc/update_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	atom_cast.filters = null
 	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
@@ -364,7 +377,7 @@
 
 /// Returns the filter associated with the passed key
 /datum/proc/get_filter(name)
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	if(filter_data && filter_data[name])
 		var/atom/atom_cast = src // filters only work with images or atoms.
 		return atom_cast.filters[filter_data.Find(name)]
@@ -387,7 +400,13 @@
 	update_filters()
 
 /datum/proc/clear_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
 	atom_cast.filters = null
+
+/// Return text from this proc to provide extra context to hard deletes that happen to it
+/// Optional, you should use this for cases where replication is difficult and extra context is required
+/// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
+/datum/proc/dump_harddel_info()
+	return

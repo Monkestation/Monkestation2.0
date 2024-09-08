@@ -383,8 +383,9 @@
 		icon_state = "pod_0"
 		return
 
-	if(!mob_occupant)
+	if(QDELETED(mob_occupant) || !exp_clone_check(mob_occupant))
 		return
+
 	current_insurance = null
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
@@ -412,6 +413,9 @@
 	unattached_flesh.Cut()
 
 	occupant = null
+
+/obj/machinery/clonepod/proc/exp_clone_check(mob_occupant)
+	return TRUE
 
 /obj/machinery/clonepod/proc/malfunction()
 	var/mob/living/mob_occupant = occupant

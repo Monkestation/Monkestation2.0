@@ -3,9 +3,7 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	species_traits = list(
-		LIPS,
 		HAS_MARKINGS,
-		HAIR // monke edit: moths can have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -108,6 +106,12 @@
 			SPECIES_PERK_DESC = "Moths need an extra layer of flash protection to protect \
 				themselves, such as against security officers or when welding. Welding \
 				masks will work.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Insectoid Biology",
+			SPECIES_PERK_DESC = "Fly swatters will deal higher amounts of damage to a Moth.",
 		),
 	)
 

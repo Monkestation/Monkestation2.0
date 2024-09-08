@@ -84,7 +84,7 @@
 	SIGNAL_HANDLER
 
 	for(var/datum/disease/disease as anything in diseases)
-		disease.cure(FALSE)
+		disease.cure(add_resistance = TRUE, target = src) // monkestation edit - virology bs
 
 /**
  * On gain of TRAIT_TOXIMMUNE

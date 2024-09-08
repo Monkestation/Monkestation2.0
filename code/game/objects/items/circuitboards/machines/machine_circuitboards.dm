@@ -71,7 +71,6 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -640,7 +639,8 @@
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
 		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
-		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",)
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -1065,6 +1065,19 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
 //Service
+/obj/item/circuitboard/machine/photobooth
+	name = "Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/photobooth
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/manipulator = 1,
+	)
+
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
@@ -1185,7 +1198,7 @@
 /obj/item/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/machinery/hydroponics/constructable
+	build_path = /obj/machinery/growing/tray
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/manipulator = 1,

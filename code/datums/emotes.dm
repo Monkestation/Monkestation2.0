@@ -111,7 +111,7 @@
 		//MONKESTATION EDIT START - Allows sounds to vary based on their calling conditions.
 		//playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS) //MONKESTATION EDIT ORIGINAL
 		var/tmp_vary = should_vary(user)
-		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = CHANNEL_MOB_SOUNDS)
+		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = get_mixer_channel(user, params, type_override, intentional))
 		//MONKESTATION EDIT END
 
 	var/user_turf = get_turf(user)
@@ -131,6 +131,7 @@
 				to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
+	SSblackbox.record_feedback("tally", "emote_used", 1, name)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.

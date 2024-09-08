@@ -324,3 +324,156 @@
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
+
+/obj/item/clothing/suit/jacket/kimono_kumi
+	name = "shrine keeper's kimono"
+	desc = "An ornately patterned shrine keeper's kimono, it seems a little big?"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "kimono_kumi"
+
+/obj/item/clothing/under/sarashi_kumi
+	name = "shrine keeper's sarashi"
+	desc = "Some chest wraps paired with a skirt. It digs at the waist a little."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sarashi_kumi"
+	can_adjust = FALSE
+
+/obj/item/clothing/shoes/sandal/kumi
+	name = "shrine keeper's sandals"
+	desc = "A fancy pair of sandals made of hinoki."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sandals_kumi"
+
+/obj/item/clothing/neck/bell
+	name = "bell necklace"
+	desc = "A bell attached to some string. We really are living in the future."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "neck_bell"
+
+/obj/item/clothing/gloves/fingerless/long
+	name = "long fingerless gloves"
+	desc = "A pair of fingerless gloves that reaches the elbow."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "fingerless_long"
+
+
+/obj/item/clothing/suit/toggle/jacket_oliver
+	name = "scarved jacket"
+	desc = "A jacket that has a scarf. Dandy."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "jacket_oliver"
+	toggle_noun = "scarf"
+
+/obj/item/clothing/suit/toggle/jacket_oliver/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/flashlight,
+		/obj/item/lighter,
+		/obj/item/modular_computer/pda,
+		/obj/item/radio,
+		/obj/item/storage/bag/books,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+	)
+/obj/item/clothing/glasses/hud/security/terminated
+	name = "terminated security HUD"
+	desc = "My job is to protect you."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sechud_terminated"
+
+
+/obj/item/clothing/suit/costume/gumball_wizard_robe
+	name = "\improper Gumball Wizard Robe"
+	desc = "A robe adorned with brightly colored gumballs."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "gumball_wizard_robe"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS|LEGS
+
+/obj/item/clothing/head/costume/gumball_wizard_hat
+	name = "\improper Gumball Wizard Robe"
+	desc = "A hat adorned with a brightly colored jewel."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "gumball_wizard_hat"
+	inhand_icon_state = null
+
+/obj/item/clothing/mask/breath/poob_mask
+	name = "yellow gas mask"
+	desc = "An old mask that seems fitted for a lizard person, it's yellow with straps everywhere."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "poob_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/suit/toggle/menacing_jacket
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "menacing_jacket"
+	name = "menacing jacket"
+	desc = "There can only be one dragon."
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/mask/gas/bluedragon66_trenchbiomask
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bluedragon66_trenchbiomask"
+	name = "plague doctor bio-mask"
+	desc = "A respiratory mask and hood combo used to keep the wearer from breathing in viral biohazards. Comes with an insulated gas tube. Unlike normal gas masks, it has a long and unnerving beak-shape, resembling the medieval plague doctors of old."
+
+/obj/item/clothing/suit/bio_suit/bluedragon66_biocoat
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bluedragon66_biocoat"
+	name = "plague doctor bio-suit"
+	desc = "A sterile biosuit under a thick coat, offering two layers of protection against potential biohazards. Although it's meant to be paired together with it's counterpart, it's sleek and functional- making it quite appealing."
+
+/obj/item/clothing/head/costume/western_wizard_hat
+	name = "western wizard hat"
+	desc = "A man, a hero, a traveler- the western wizard."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "western_wizard_hat"
+	inhand_icon_state = null
+	worn_y_offset = 16
+
+/obj/item/clothing/mask/gas/holstein_cow_mask
+	name = "holstein cow mask"
+	desc = "It's an internals mask covered in paper mache and paint to look like a cow's head. It smells like grass."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "holstein_cow_mask"
+	worn_icon_state = "holstein_cow_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/under/costume/holstein_cow_jumpsuit
+	name = "holstein cow jumpsuit"
+	desc = "A frumpy black and white holstein cow jumpsuit. It smells like grass."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "holstein_cow_jumpsuit"
+	worn_icon_state = "holstein_cow_jumpsuit"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/noobskyboi_golden_tophat
+	name = "golden tophat"
+	desc = "A golden tophat. It smells like sulfur and chocolate?"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
+	icon_state = "noobskyboi_golden_tophat"
+	worn_icon_state = "noobskyboi_golden_tophat"
+	inhand_icon_state = null

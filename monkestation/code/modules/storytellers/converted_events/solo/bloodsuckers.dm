@@ -12,14 +12,16 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
 	)
 	min_players = 20
-	weight = 5
+	weight = 10
 	maximum_antags = 2
 
 /datum/round_event_control/antagonist/solo/bloodsucker/roundstart

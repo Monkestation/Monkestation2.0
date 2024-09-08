@@ -41,7 +41,7 @@
 "cL" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/airalarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -141,9 +141,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/wood,
 /area/station/service/theater)
 "mB" = (
@@ -157,9 +155,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/wood,
 /obj/item/instrument/violin,
 /turf/open/floor/wood,
@@ -212,6 +208,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "zF" = (

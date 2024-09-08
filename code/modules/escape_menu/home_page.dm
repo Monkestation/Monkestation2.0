@@ -92,6 +92,12 @@
 			redirect = "DeltaStation"
 		if("Tramstation")
 			redirect = "TramStation"
+		if("Blueshift")
+			redirect = "Blueshift"
+		if("Ouroboros")
+			redirect = "Ouroboros"
+		if("Void Raptor")
+			redirect = "VoidRaptor"
 	if(client)
 		client << link("https://maps.monkestation.com/Monke/[redirect]/")
 
@@ -131,7 +137,7 @@
 
 /atom/movable/screen/escape_menu/home_button/Destroy()
 	escape_menu = null
-	QDEL_NULL(on_click_callback)
+	on_click_callback = null
 
 	return ..()
 

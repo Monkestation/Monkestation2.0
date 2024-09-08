@@ -227,8 +227,8 @@
 	custom_price = PAYCHECK_LOWER * 0.8
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
-	. = ..()
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
+	. = ..()
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()
@@ -451,6 +451,7 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
 	isGlass = FALSE
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/reagent_containers/cup/glass/flask/gold
 	name = "captain's flask"

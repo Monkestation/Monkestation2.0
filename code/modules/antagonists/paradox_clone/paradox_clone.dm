@@ -9,13 +9,19 @@
 	///Weakref to the mind of the original, the clone's target.
 	var/datum/weakref/original_ref
 
-/datum/antagonist/paradox_clone/get_preview_icon()
+// monkestation start: refactor to use [get_base_preview_icon] for better midround polling images
+/datum/antagonist/paradox_clone/get_base_preview_icon()
+	RETURN_TYPE(/icon)
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
 
 	final_icon.Blend(make_background_clone_icon(preview_outfit), ICON_UNDERLAY, -8, 0)
-	final_icon.Scale(64, 64)
+	return final_icon
 
-	return finish_preview_icon(final_icon)
+/datum/antagonist/paradox_clone/get_preview_icon()
+	var/icon/base_preview = get_base_preview_icon()
+	base_preview.Scale(64, 64)
+	return finish_preview_icon(base_preview)
+// monkestation end
 
 /datum/antagonist/paradox_clone/proc/make_background_clone_icon(datum/outfit/clone_fit)
 	var/mob/living/carbon/human/dummy/consistent/clone = new
@@ -103,9 +109,10 @@
 
 
 /datum/antagonist/paradox_clone/antag_token(datum/mind/hosts_mind, mob/spender)
-	hosts_mind.current.unequip_everything()
-	new /obj/effect/holy(hosts_mind.current.loc)
-	QDEL_IN(hosts_mind.current, 20)
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 20)
 
 	var/list/possible_spawns = list()
 	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
@@ -116,7 +123,7 @@
 		return MAP_ERROR
 
 
-	var/datum/mind/player_mind = new /datum/mind(hosts_mind.key)
+	var/datum/mind/player_mind = new /datum/mind(spender.ckey)
 	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/clone_victim = find_original()

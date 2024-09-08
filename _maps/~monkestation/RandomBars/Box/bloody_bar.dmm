@@ -169,7 +169,7 @@
 /area/station/commons/lounge)
 "zU" = (
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/airalarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -252,9 +252,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "HA" = (
@@ -380,6 +378,7 @@
 "WG" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "WM" = (
@@ -392,9 +391,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/wood/fancy/red,
 /obj/item/instrument/violin,
 /turf/open/floor/wood/large,

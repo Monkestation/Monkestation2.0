@@ -44,6 +44,7 @@
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	update_appearance()
+	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -344,3 +345,6 @@
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/effect/spawner/random/decoration/generic(src)
+
+/obj/structure/closet/crate/add_to_roundstart_list()
+	return

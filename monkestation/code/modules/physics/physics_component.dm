@@ -121,13 +121,11 @@
 	src.stop_callback = stop_callback
 	set_angle(angle)
 
-/datum/component/movable_physics/Destroy(force, silent)
-	. = ..()
-	if(bounce_callback)
-		QDEL_NULL(bounce_callback)
-	if(stop_callback)
-		QDEL_NULL(stop_callback)
+/datum/component/movable_physics/Destroy(force)
+	bounce_callback = null
+	stop_callback = null
 	cached_transform = null
+	return ..()
 
 /datum/component/movable_physics/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))

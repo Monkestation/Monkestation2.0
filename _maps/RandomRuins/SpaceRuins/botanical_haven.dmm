@@ -17,11 +17,11 @@
 "f" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light/warm/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "g" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "h" = (
@@ -197,7 +197,7 @@
 /area/ruin/space/has_grav/powered/botanical_haven)
 "U" = (
 /obj/effect/turf_decal/stripes/asteroid/corner,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/red/dim/directional/south,
 /obj/item/kirbyplants/fern,
 /turf/open/floor/plating/airless,

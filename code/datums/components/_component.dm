@@ -74,13 +74,12 @@
  * * force - makes it not check for and remove the component from the parent
  * * silent - deletes the component without sending a [COMSIG_COMPONENT_REMOVING] signal
  */
-/datum/component/Destroy(force=FALSE, silent=FALSE)
+/datum/component/Destroy(force = FALSE)
 	if(!parent)
 		return ..()
 	if(!force)
 		_RemoveFromParent()
-	if(!silent)
-		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
+	SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
 	return ..()
 
@@ -237,12 +236,12 @@
  */
 /datum/component/proc/_GetInverseTypeList(our_type = type)
 	//we can do this one simple trick
+	. = list(our_type)
 	var/current_type = parent_type
-	. = list(our_type, current_type)
 	//and since most components are root level + 1, this won't even have to run
 	while (current_type != /datum/component)
+		. += current_type
 		current_type = type2parent(current_type)
-	. += current_type
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -478,15 +477,16 @@
 	var/list/dc = _datum_components
 	if(!dc)
 		return
-	var/comps = dc[/datum/component]
-	if(islist(comps))
-		for(var/datum/component/I in comps)
-			if(I.can_transfer)
-				target.TakeComponent(I)
-	else
-		var/datum/component/C = comps
-		if(C.can_transfer)
-			target.TakeComponent(comps)
+	for(var/component_key in dc)
+		var/component_or_list = dc[component_key]
+		if(islist(component_or_list))
+			for(var/datum/component/I in component_or_list)
+				if(I.can_transfer)
+					target.TakeComponent(I)
+		else
+			var/datum/component/C = component_or_list
+			if(C.can_transfer)
+				target.TakeComponent(C)
 
 /**
  * Return the object that is the host of any UI's that this component has

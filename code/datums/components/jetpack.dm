@@ -67,7 +67,8 @@
 
 /datum/component/jetpack/Destroy()
 	QDEL_NULL(trail)
-	QDEL_NULL(check_on_move)
+	check_on_move = null
+	get_mover = null
 	return ..()
 
 /datum/component/jetpack/proc/setup_trail()
@@ -118,7 +119,7 @@
 
 /datum/component/jetpack/proc/pre_move_react(mob/user)
 	SIGNAL_HANDLER
-	trail.oldposition = get_turf(user)
+	trail?.oldposition = get_turf(user)
 
 /datum/component/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER

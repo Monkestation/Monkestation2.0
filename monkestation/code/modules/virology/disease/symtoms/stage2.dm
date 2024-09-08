@@ -74,17 +74,6 @@
 					strength -= 30
 					i++
 
-/datum/symptom/hungry
-	name = "Appetiser Effect"
-	desc = "Starves the infected."
-	stage = 2
-	badness = EFFECT_DANGER_ANNOYING
-	multiplier = 10
-	max_multiplier = 20
-
-/datum/symptom/hungry/activate(mob/living/mob)
-	mob.nutrition = max(0, mob.nutrition - 20*multiplier)
-
 /datum/symptom/fridge
 	name = "Refridgerator Syndrome"
 	desc = "Causes the infected to shiver at random."
@@ -189,7 +178,7 @@
 			blood.diseases |= virus_copylist(mob.diseases)
 
 
-/*	//commented out until i can figure out how to make this work without shoving static lights on moving objects
+//commented out until i can figure out how to make this work without shoving static lights on moving objects
 /datum/symptom/lantern
 	name = "Lantern Syndrome"
 	desc = "Causes the infected to glow."
@@ -197,13 +186,20 @@
 	badness = EFFECT_DANGER_HELPFUL
 	multiplier = 4
 	max_multiplier = 10
+	chance = 10
+	max_chance = 15
 	var/uncolored = 0
 	var/flavortext = 0
 	var/color = rgb(255, 255, 255)
+	var/obj/effect/dummy/lighting_obj/moblight
 
 /datum/symptom/lantern/activate(mob/living/mob)
+	if(!moblight)
+		moblight = new(mob)
 	if(ismouse(mob))
-		mob.set_light(multiplier, multiplier/3, l_color = color)
+		moblight.set_light_range(multiplier)
+		moblight.set_light_power(multiplier / 3)
+		moblight.set_light_color(color)
 		return
 	if(mob.reagents.has_reagent(/datum/reagent/space_cleaner))
 		uncolored = 1	//Having spacecleaner in your system when the effect activates will permanently make the color white.
@@ -214,13 +210,15 @@
 	if(!flavortext)
 		to_chat(mob, span_notice("You are glowing!"))
 		flavortext = 1
-	mob.set_light(multiplier, multiplier, multiplier/3, l_color = color)
+	moblight.set_light_range(multiplier)
+	moblight.set_light_power(multiplier / 3)
+	moblight.set_light_color(color)
 
 /datum/symptom/lantern/deactivate(mob/living/mob)
-	mob.set_light(0, 0, 0, l_color = rgb(0,0,0))
+	QDEL_NULL(moblight)
 	to_chat(mob, span_notice("You don't feel as bright."))
 	flavortext = 0
-*/
+
 
 /datum/symptom/vitreous
 	name = "Vitreous resonance"
@@ -370,30 +368,16 @@
 /datum/symptom/famine/activate(mob/living/mob)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/victim = mob
-		if(victim.dna)
-			if(ispodperson(victim)) //Plantmen take a LOT of damage
-				victim.adjustCloneLoss(5 * multiplier)
+		if(ispodperson(victim))
+			victim.adjustCloneLoss(5 * multiplier) //Plantmen take a LOT of damag
 
-	for(var/obj/machinery/hydroponics/plantbox in range(3*multiplier,mob))
-		switch(rand(1,3))
-			if(1)
-				plantbox.adjust_waterlevel(-rand(1,10))
-				plantbox.adjust_plant_nutriments(-rand(1,5))
-			if(2)
-				plantbox.adjust_toxic(rand(1,50))
-			if(3)
-				plantbox.adjust_weedlevel(10)
-				plantbox.adjust_pestlevel(10)
-				if(prob(5))
-					plantbox.plantdies()
-
-
-	for(var/obj/item/food/grown/crop in range(2*multiplier,mob))
-		crop.visible_message("<span class = 'warning'>\The [crop] rots at an alarming rate!</span>")
+	for(var/obj/item/food/grown/crop in range(2 * multiplier,mob))
+		crop.visible_message(span_warning("\The [crop] rots at an alarming rate!"))
 		new /obj/item/food/badrecipe(get_turf(crop))
 		qdel(crop)
-		if(prob(30/multiplier))
+		if(prob(30 / multiplier))
 			break
+
 /datum/symptom/cyborg_vomit
 	name = "Oleum Syndrome"
 	desc = "Causes the infected to internally synthesize oil and other inorganic material."
@@ -401,12 +385,8 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/cyborg_vomit/activate(mob/living/mob)
-	if((HAS_TRAIT(mob, TRAIT_NOHUNGER)))
+	if(HAS_TRAIT(mob, TRAIT_NOHUNGER) || !mob.has_mouth())
 		return
-
-	if(!(mob.has_mouth()))
-		return
-
 	if(prob(90))		//90% chance for just oil
 		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
 		mob.adjustToxLoss(-3)
@@ -418,7 +398,7 @@
 		sleep(100)
 		var/list/possible_bots = list(
 			/mob/living/simple_animal/bot/cleanbot,
-			/mob/living/simple_animal/bot/medbot,
+			/mob/living/basic/bot/medbot,
 			/mob/living/simple_animal/bot/secbot,
 			/mob/living/simple_animal/bot/floorbot,
 			/mob/living/simple_animal/bot/buttbot
@@ -527,11 +507,11 @@
 	max_count = 1
 
 /datum/symptom/disfiguration/activate(mob/living/carbon/mob)
-	ADD_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	ADD_TRAIT(mob, TRAIT_DISFIGURED, type)
 	mob.visible_message(span_warning("[mob]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
 
 /datum/symptom/disfiguration/deactivate(mob/living/carbon/mob)
-	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, type)
 
 /datum/symptom/blindness
 	name = "Hyphema"

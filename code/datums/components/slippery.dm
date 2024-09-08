@@ -47,6 +47,11 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
 
+/datum/component/slippery/Destroy(force)
+	callback = null
+	holder = null
+	return ..()
+
 /datum/component/slippery/proc/apply_fantasy_bonuses(obj/item/source, bonus)
 	SIGNAL_HANDLER
 	knockdown_time = source.modify_fantasy_variable("knockdown_time", knockdown_time, bonus)
@@ -62,6 +67,7 @@
 	knockdown_time = source.reset_fantasy_variable("knockdown_time", knockdown_time)
 	paralyze_time = source.reset_fantasy_variable("paralyze_time", paralyze_time)
 	var/previous_lube_flags = LAZYACCESS(source.fantasy_modifications, "lube_flags")
+	LAZYREMOVE(source.fantasy_modifications, "lube_flags")
 	if(!isnull(previous_lube_flags))
 		lube_flags = previous_lube_flags
 
@@ -95,6 +101,10 @@
 	SIGNAL_HANDLER
 	if(!isliving(arrived))
 		return
+	if(lube_flags & SLIPPERY_TURF)
+		var/turf/turf = get_turf(source)
+		if(HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLIPPERY))
+			return
 	var/mob/living/victim = arrived
 	if(!(victim.movement_type & (FLYING | FLOATING)) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)

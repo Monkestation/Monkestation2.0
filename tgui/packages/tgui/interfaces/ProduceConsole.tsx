@@ -1,7 +1,18 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Icon,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -50,19 +61,18 @@ const findAmount = (item_amts, name) => {
   return amount.amt;
 };
 
-const ShoppingTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const ShoppingTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
   const [shopCategory, setShopCategory] = useLocalState(
-    context,
     'shopCategory',
-    order_categories[0]
+    order_categories[0],
   );
-  const [condensed] = useLocalState(context, 'condensed', false);
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [condensed] = useLocalState('condensed', false);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<OrderDatum>(
     searchItem,
-    (order_datums) => order_datums.name
+    (order_datums) => order_datums.name,
   );
   let goods =
     searchItem.length > 0
@@ -84,7 +94,8 @@ const ShoppingTab = (props, context) => {
                   if (searchItem.length > 0) {
                     setSearchItem('');
                   }
-                }}>
+                }}
+              >
                 {category}
               </Tabs.Tab>
             ))}
@@ -187,8 +198,8 @@ const ShoppingTab = (props, context) => {
   );
 };
 
-const CheckoutTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const CheckoutTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const {
     credit_type,
     purchase_tooltip,
@@ -203,7 +214,7 @@ const CheckoutTab = (props, context) => {
   } = data;
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
   const checkout_list = order_datums.filter(
-    (food) => food && (findAmount(item_amts, food.name) || 0)
+    (food) => food && (findAmount(item_amts, food.name) || 0),
   );
   return (
     <Stack vertical fill>
@@ -306,7 +317,7 @@ const CheckoutTab = (props, context) => {
   );
 };
 
-const OrderSent = (props, context) => {
+const OrderSent = (props) => {
   return (
     <Dimmer>
       <Stack vertical>
@@ -321,11 +332,11 @@ const OrderSent = (props, context) => {
   );
 };
 
-export const ProduceConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const ProduceConsole = (props) => {
+  const { data } = useBackend<Data>();
   const { points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
-  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>

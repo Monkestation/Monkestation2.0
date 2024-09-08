@@ -146,7 +146,7 @@
 /datum/station_trait/bot_languages/on_round_start()
 	. = ..()
 	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
+	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/revenge_of_pun_pun
@@ -340,7 +340,7 @@
 /datum/station_trait/revolutionary_trashing/proc/trash_this_place()
 	for(var/area/station/command/area_to_trash in GLOB.areas)
 
-		for(var/turf/current_turf as anything in area_to_trash.get_contained_turfs())
+		for(var/turf/current_turf as anything in area_to_trash.get_turfs_from_all_zlevels())
 			if(isclosedturf(current_turf))
 				continue
 			if(prob(25))

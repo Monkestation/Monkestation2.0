@@ -342,12 +342,14 @@
 				ROLE_SENTIENCE,
 			),
 			"Antagonist Positions" = list(
+				ROLE_PLAGUERAT,
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,
 				ROLE_BROTHER,
 				ROLE_BLOODSUCKER,
 				ROLE_BLOODSUCKERBREAKOUT,
+				ROLE_CORTICAL_BORER, // MONKESTATION ADDITION -- CORTICAL_BORERS
 				ROLE_CHANGELING,
 				ROLE_CLOCK_CULTIST,
 				ROLE_CULTIST,
@@ -369,6 +371,8 @@
 				ROLE_TRAITOR,
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
+				BAN_OPFOR,
+				ROLE_ASSAULT_OPERATIVE,
 			),
 		)
 		for(var/department in long_job_lists)
@@ -1054,7 +1058,9 @@
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
 		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
-			qdel(player_client)
+			SSgarbage.HardDelete(player_client)
+			if(player_client)
+				qdel(player_client)
 
 	for(var/client/other_player_client in GLOB.clients - player_client)
 		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
@@ -1063,7 +1069,9 @@
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
-				qdel(other_player_client)
+				SSgarbage.HardDelete(other_player_client)
+				if(other_player_client)
+					qdel(other_player_client)
 
 #undef MAX_ADMINBANS_PER_ADMIN
 #undef MAX_ADMINBANS_PER_HEADMIN

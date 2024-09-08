@@ -8,9 +8,12 @@
 	radio_host = TRUE
 	command = TRUE
 
+	lossless = TRUE
+
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
+	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 
 	/// overlay when speaker is on
 	overlay_speaker_idle = null
@@ -25,6 +28,8 @@
 
 /obj/item/radio/radio_mic/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+
 	frequency = FREQ_RADIO
 	broadcasting = TRUE
 	use_command = TRUE

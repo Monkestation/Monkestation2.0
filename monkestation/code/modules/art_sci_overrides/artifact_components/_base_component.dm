@@ -213,6 +213,7 @@
 				continue
 			checked_fault = TRUE
 			if(prob(chosen_fault.trigger_chance))
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[parent]'s fault has been triggered, trigger type [chosen_fault].")
 				chosen_fault.on_trigger(src)
 				if(chosen_fault.visible_message)
 					holder.visible_message("[holder] [chosen_fault.visible_message]")
@@ -231,7 +232,8 @@
 		artifact_activate()
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
-	process_stimuli(STIMULUS_HEAT, target.return_air().temperature, FALSE)
+	if(!QDELETED(target))
+		process_stimuli(STIMULUS_HEAT, target.return_air().temperature, FALSE)
 
 /datum/component/artifact/proc/stimulate_from_rad_act(intensity)
 	process_stimuli(STIMULUS_RADIATION, intensity)

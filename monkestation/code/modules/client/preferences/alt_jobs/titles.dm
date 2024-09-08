@@ -29,6 +29,7 @@
 		"Artist",
 		"Off-Duty Staff",
 		"Off-Duty Crew",
+		"Test Subject",
 	)
 
 /datum/job/atmospheric_technician
@@ -68,12 +69,23 @@
 		"Rancher",
 	)
 
+/datum/job/brig_physician
+	alt_titles = list(
+		"Brig Physician",
+		"Jail Doctor",
+		"Brig Orderly",
+		"Prison Medic",
+		"Chief Tickler",
+		"Navy Corpsman",
+	)
+
 /datum/job/captain
 	alt_titles = list(
 		"Captain",
 		"Station Commander",
 		"Commanding Officer",
 		"Site Manager",
+		"Criminally Underpaid Babysitter",
 	)
 
 /datum/job/cargo_technician
@@ -131,6 +143,7 @@
 		"Jester",
 		"Joker",
 		"Comedian",
+		"Professional Nuisance",
 	)
 
 /datum/job/cook
@@ -140,6 +153,7 @@
 		"Butcher",
 		"Culinary Artist",
 		"Sous-Chef",
+		"Pizzaiolo",
 	)
 
 /datum/job/curator
@@ -247,6 +261,7 @@
 		"Convict",
 		"Felon",
 		"Inmate",
+		"Gamer",
 	)
 
 /datum/job/psychologist
@@ -340,6 +355,7 @@
 		"Pathologist",
 		"Fish Doctor",
 		"Junior Pathologist",
+		"Plague Doctor",
 	)
 
 /datum/job/warden

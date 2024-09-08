@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		//inform atoms on the turf that their area has changed
 		for(var/atom/stuff as anything in the_turf)
 			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, oldA)
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
 			//register the stuff to its new area. special exception for apc as its not registered to this signal
 			if(istype(stuff, /obj/machinery/power/apc))
@@ -174,6 +174,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	if(!isarea(area_choice) && newA.static_lighting)
 		newA.create_area_lighting_objects()
 
+	newA.ambient_buzz = null //no
 	//convert map to list
 	var/list/area/area_list = list()
 	for(var/area_name in affected_areas)
@@ -272,13 +273,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	// Now their turfs
 	var/list/turfs = list()
 	for(var/area/pull_from as anything in areas_to_pull)
-		var/list/our_turfs = pull_from.get_contained_turfs()
-		if(target_z == 0)
-			turfs += our_turfs
+		if (target_z == 0)
+			for (var/list/zlevel_turfs as anything in pull_from.get_zlevel_turf_lists())
+				turfs += zlevel_turfs
 		else
-			for(var/turf/turf_in_area as anything in our_turfs)
-				if(target_z == turf_in_area.z)
-					turfs += turf_in_area
+			turfs += pull_from.get_turfs_by_zlevel(target_z)
 	return turfs
 
 

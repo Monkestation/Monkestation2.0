@@ -21,7 +21,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_SEC
+	paycheck_department = ACCOUNT_CMD
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
@@ -79,7 +79,7 @@
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/captain,
+		/obj/item/stamp/head/captain,
 		)
 	implants = list(/obj/item/implant/mindshield)
 	skillchips = list(/obj/item/skillchip/disk_verifier)

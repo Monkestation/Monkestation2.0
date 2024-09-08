@@ -179,6 +179,32 @@
 	)
 	job = /datum/job/bitrunner
 
+/datum/id_trim/job/blueshield
+	assignment = "Blueshield"
+	trim_state = "trim_blueshield"
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_SECURITY_RED
+	sechud_icon_state = SECHUD_BLUESHIELD
+	minimal_access = list(
+		ACCESS_MEDICAL,
+		ACCESS_SCIENCE,
+		ACCESS_SERVICE,
+		ACCESS_CONSTRUCTION,
+		ACCESS_SECURITY,
+		ACCESS_BRIG_ENTRANCE,
+		ACCESS_COMMAND,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_WEAPONS,
+		)
+	extra_access = list(
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS
+		)
+	job = /datum/job/blueshield
+
 /datum/id_trim/job/botanist
 	assignment = "Botanist"
 	trim_state = "trim_botanist"
@@ -482,7 +508,7 @@
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
 	department_color = COLOR_SCIENCE_PINK
-	subdepartment_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_GENETICIST
 	minimal_access = list(
 		ACCESS_GENETICS,
@@ -593,6 +619,7 @@
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
@@ -939,6 +966,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	extra_access = list(
 		ACCESS_DETECTIVE,
@@ -1151,6 +1179,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		) // See /datum/job/warden/get_access()
 	extra_access = list(
 		ACCESS_DETECTIVE,

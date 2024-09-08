@@ -634,10 +634,9 @@
 	icon_file = 'icons/obj/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ties.json'
 
-/datum/greyscale_config/ties_worn
-	name = "Worn Ties"
+/datum/greyscale_config/ties/worn
+	name = "Ties (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
 
 /datum/greyscale_config/heck_suit
 	name = "H.E.C.K. Suit"
@@ -698,6 +697,18 @@
 	name = "Worn Sundress"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
+
+//MONKESTATION ADDITION START
+/datum/greyscale_config/ballgown
+	name = "Ballgown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown.json'
+
+/datum/greyscale_config/ballgown_worn
+	name = "Worn Ballgown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+//MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
 	name = "Beanie"

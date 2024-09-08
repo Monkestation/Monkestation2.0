@@ -66,39 +66,37 @@
 #define CLONER_FRESH_CLONE "fresh"
 #define CLONER_MATURE_CLONE "mature"
 
+
+
 //species traits for mutantraces
 #define MUTCOLORS 1
-#define HAIR 2
-#define FACEHAIR 3
-#define EYECOLOR 4
-#define LIPS 5
-#define NOTRANSSTING 7
-#define NOZOMBIE 8
-#define NO_UNDERWEAR 9
-#define NO_DNA_COPY 10
-#define DRINKSBLOOD 11
-#define SKINTONES 12
-#define ANIME 13
-#define MUTCOLORS_SECONDARY 14
-#define SPECIES_FUR 15
+#define NOTRANSSTING 2
+#define NOZOMBIE 3
+#define NO_UNDERWEAR 4
+#define NO_DNA_COPY 5
+#define DRINKSBLOOD 6
+#define ANIME 7
+#define MUTCOLORS_SECONDARY 8
+#define SPECIES_FUR 9
+#define SKINTONES 10
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 16
-#define AGENDER 17
+#define DYNCOLORS 7
+#define AGENDER 8
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 18
+#define NOEYESPRITES 9
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 19
+#define HAS_MARKINGS 10
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 20
+#define NOBLOODOVERLAY 11
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 21
+#define NOAUGMENTS 12
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 22
+#define BLOOD_CLANS 13
 
-#define REVIVESBYHEALING 23
-#define NOHUSK 24
-#define NOMOUTH 25
+#define REVIVESBYHEALING 14
+#define NOHUSK 15
+#define NOMOUTH 16
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -126,6 +124,11 @@
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
 #define ORGAN_SLOT_BUTT "butt"
 #define ORGAN_SLOT_BLADDER "bladder"
+#define ORGAN_SLOT_LINK "cyber_link"
+#define ORGAN_SLOT_RIGHT_LEG_AUG "r_leg_device"
+#define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
+#define ORGAN_SLOT_SPINAL "spinal_implant"
+#define ORGAN_SLOT_BRAIN_NIF "nif"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -141,6 +144,7 @@
 #define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 #define ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM "anime_bottom"
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
+#define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
@@ -170,9 +174,13 @@
 /// Exists so Life()'s organ process order is consistent
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
+	ORGAN_SLOT_LINK,
+	ORGAN_SLOT_SPINAL,
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_RIGHT_LEG_AUG,
+	ORGAN_SLOT_LEFT_LEG_AUG,
 	ORGAN_SLOT_STOMACH,
 	ORGAN_SLOT_STOMACH_AID,
 	ORGAN_SLOT_BREATHING_TUBE,

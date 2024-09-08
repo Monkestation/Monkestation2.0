@@ -13,7 +13,7 @@
 
 /obj/structure/organ_creator/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/list/all_internals = subtypesof(/obj/item/organ/internal) - typesof(/obj/item/organ/internal/zombie_infection) - typesof(/obj/item/organ/internal/alien) - typesof(/obj/item/organ/internal/body_egg) - typesof(/obj/item/organ/internal/heart/gland) - /obj/item/organ/internal/butt/atomic - typesof(/obj/item/organ/internal/alien)
+	var/list/all_internals = subtypesof(/obj/item/organ/internal) - typesof(/obj/item/organ/internal/zombie_infection) - typesof(/obj/item/organ/internal/alien) - typesof(/obj/item/organ/internal/body_egg) - typesof(/obj/item/organ/internal/heart/gland) - /obj/item/organ/internal/butt/atomic - typesof(/obj/item/organ/internal/alien) - /obj/item/organ/internal/borer_body - /obj/item/organ/internal/empowered_borer_egg // bit long aint it
 	var/list/all_externals = subtypesof(/obj/item/organ/external)
 
 	var/list/all_bodyparts = subtypesof(/obj/item/bodypart)
@@ -31,10 +31,12 @@
 			choice_list = all_bodyparts
 
 	var/atom/second_choice = tgui_input_list(user, "Choose what to fabricate", "[choice]", choice_list)
+	if(!second_choice || !ispath(second_choice, /obj/item))
+		return
 
 	new second_choice(get_turf(src))
 	say("Organic Matter Fabricated")
-	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/ding.ogg', vol = 50, vary = TRUE)
 
 
 /obj/structure/organ_creator/attackby(obj/item/attacking_item, mob/user, params)
@@ -45,4 +47,4 @@
 		return
 	qdel(attacking_item)
 	say("Organic Matter Reclaimed")
-	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/ding.ogg', vol = 50, vary = TRUE)

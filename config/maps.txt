@@ -25,6 +25,8 @@ map deltastation
 endmap
 
 map kilostation
+	minplayers 5
+	votable
 endmap
 
 map icebox
@@ -42,18 +44,27 @@ map northstar
 	votable
 endmap
 
-
 map runtimestation
 endmap
 
 map multiz_debug
 endmap
 
-map oshan
+map boxstation
+	minplayers 25
 	votable
 endmap
 
-map boxstation
-	minplayers 25
+map blueshift
+	minplayers 75
+	votable
+endmap
+
+map voidraptor
+	minplayers 40
+	votable
+endmap
+
+map ouroboros
 	votable
 endmap

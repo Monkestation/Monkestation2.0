@@ -665,6 +665,7 @@
 		newname = "Pet Slime"
 	M.name = newname
 	M.real_name = newname
+	M.update_name_tag(newname) // monkestation edit: name tags
 	qdel(src)
 
 /obj/item/slimepotion/slime/sentience
@@ -672,11 +673,10 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
+/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/living/user)
 	if(being_used || !isliving(dumb_mob))
 		return
 	if(dumb_mob.ckey) //only works on animals that aren't player controlled
@@ -688,31 +688,38 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-
+	var/potion_reason = tgui_input_text(user, "For what reason?", "Intelligence Potion", multiline = TRUE, timeout = 2 MINUTES)
+	if(isnull(potion_reason))
+		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
-
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as [dumb_mob.name]",
-		role = ROLE_SENTIENCE,
-		poll_time = 5 SECONDS,
-		target_mob = dumb_mob,
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "[span_danger("[user.real_name || user.name]")] is offering [span_notice("[dumb_mob.real_name || dumb_mob.name]")] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 20 SECONDS,
+		checked_target = dumb_mob,
 		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
-		pic_source = dumb_mob,
-		role_name_text = "sentient mob"
+		alert_pic = dumb_mob,
+		role_name_text = "intelligence potion",
+		chat_text_border_icon = src,
 	)
-	if(!LAZYLEN(candidates))
+	on_poll_concluded(user, dumb_mob, chosen_one)
+
+/// Assign the chosen ghost to the mob
+/obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		balloon_alert(user, "try again later!")
 		being_used = FALSE
-		return ..()
+		return
 
-	var/mob/dead/observer/C = pick(candidates)
-	dumb_mob.key = C.key
+	dumb_mob.key = ghost.key
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+
 	if(isanimal(dumb_mob))
 		var/mob/living/simple_animal/smart_animal = dumb_mob
 		smart_animal.sentience_act()
+
 	dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
 	balloon_alert(user, "success")
 	after_success(user, dumb_mob)
@@ -790,16 +797,18 @@
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		to_chat(user, span_warning("The steroid only works on baby slimes!"))
+		to_chat(user, span_warning("The steroid only works on slimes!")) // monkestation edit: not baby slimes only, no
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
+	// monkestation start: xenobio rework
 	if(M.ooze_production >= 50)
 		to_chat(user, span_warning("The slime is already producing too much ooze!"))
 		return
 	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
-	M.ooze_production++
+	M.ooze_production = min(M.ooze_production + 20, 50)
+	// monkestation end
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
@@ -872,7 +881,7 @@
 		return
 	if(isitem(C))
 		var/obj/item/I = C
-		if(I.slowdown <= 0 || I.obj_flags & IMMUTABLE_SLOW)
+		if(I.slowdown <= 0 || (I.item_flags & IMMUTABLE_SLOW))
 			to_chat(user, span_warning("The [C] can't be made any faster!"))
 			return ..()
 		I.slowdown = 0
@@ -1045,9 +1054,10 @@
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
 	..()
-	var/area/A = get_area(src)
-	for(var/turf/T in A)
-		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-	A.area_flags |= XENOBIOLOGY_COMPATIBLE
+	var/area/area = get_area(src)
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	area.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)

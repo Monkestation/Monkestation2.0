@@ -17,12 +17,6 @@
 	///The afflicted must be above this health value in order for the toxin to deal damage
 	var/health_required = -100
 
-// Are you a bad enough dude to poison your own plants?
-/datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
-
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(toxpwr && affected_mob.health > health_required)
 		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
@@ -68,9 +62,10 @@
 	affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype)
 	return ..()
 
-/datum/reagent/toxin/mutagen/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/toxin/mutagen/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	target.instability += min(25, volume)
 
+/*
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!myseed)
 		return
@@ -80,6 +75,7 @@
 	if(prob(10))
 		chems.remove_all_type(type, chems.get_reagent_amount(type))
 		mytray.mutatespecie_new()
+*/
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
@@ -350,16 +346,6 @@
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// Plant-B-Gone is just as bad
-/datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
-		mytray.adjust_weedlevel(-rand(4,8))
-
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
@@ -395,14 +381,6 @@
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//Weed Spray
-/datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
-		mytray.adjust_weedlevel(-rand(1,2))
-
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
@@ -410,14 +388,6 @@
 	toxpwr = 1
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-//Pest Spray
-/datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -431,14 +401,6 @@
 	color = "#4b2400" // rgb: 75, 0, 75
 	toxpwr = 1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-//Pest Spray
-/datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
-		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -1048,14 +1010,6 @@
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-// ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
-/datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
-		mytray.adjust_weedlevel(-rand(1,2))
-
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!istype(exposed_carbon))
@@ -1093,14 +1047,6 @@
 	acidpwr = 42.0
 	ph = 0.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-// SERIOUSLY
-/datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
-		mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -1361,3 +1307,35 @@
 	SIGNAL_HANDLER
 	if(current_cycle >= 28)
 		return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM
+	name = "Radiomagnetic Disruptor"
+	color = "#1d5a1aae" // grayish dark green
+	description = "A toxic chemical that rapidly destroys nanites and causes highly localized EMPs."
+	taste_description = "radio waves"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	self_consuming = TRUE
+	toxpwr = 1
+	var/purge_rate = 10
+
+/datum/reagent/toxin/radiomagnetic_disruptor/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	handle_effects(affected_mob, seconds_per_tick)
+
+/datum/reagent/toxin/radiomagnetic_disruptor/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	. = ..()
+	handle_effects(affected_mob, seconds_per_tick)
+
+/datum/reagent/toxin/radiomagnetic_disruptor/proc/handle_effects(mob/living/carbon/affected_mob, seconds_per_tick)
+	if (SPT_PROB(2, seconds_per_tick))
+		empulse(affected_mob, heavy_range = 0, light_range = 1)
+	var/datum/component/nanites/nanites = affected_mob.GetComponent(/datum/component/nanites)
+	if (nanites)
+		nanites.adjust_nanites(null, -(overdosed ? purge_rate * 2 : purge_rate) * seconds_per_tick)
+
+/datum/reagent/toxin/radiomagnetic_disruptor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if (SPT_PROB(4, seconds_per_tick))
+		empulse(affected_mob, heavy_range = 1, light_range = 1)

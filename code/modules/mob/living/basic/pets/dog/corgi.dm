@@ -353,6 +353,7 @@
 
 /mob/living/basic/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
@@ -378,7 +379,7 @@
 
 /mob/living/basic/pet/dog/corgi/ian/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, i_will_survive) //cleanup the survival callback
-	QDEL_NULL(i_will_survive)
+	i_will_survive = null
 	return ..()
 
 /mob/living/basic/pet/dog/corgi/ian/death()

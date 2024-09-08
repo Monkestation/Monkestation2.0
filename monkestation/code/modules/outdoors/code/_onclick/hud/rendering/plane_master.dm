@@ -8,6 +8,12 @@
 	allows_offsetting = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
+
+/atom/movable/screen/plane_master/weather_overlay/eclipse
+	name = "weather overlay master eclipse z"
+	plane = WEATHER_OVERLAY_PLANE_ECLIPSE
+	render_target = WEATHER_ECLIPSE_RENDER_TARGET
+
 /atom/movable/screen/plane_master/weather_overlay/check_outside_bounds()
 	return FALSE
 
@@ -20,11 +26,13 @@
 	render_relay_planes = list(RENDER_PLANE_GAME)
 	allows_offsetting = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
+	var/z_type = "Default"
 
 /atom/movable/screen/plane_master/weather_effect/Initialize()
 	. = ..()
 	//filters += filter(type="alpha", render_source=WEATHER_RENDER_TARGET)
-	SSoutdoor_effects.weather_planes_need_vis |= src
+	if(SSoutdoor_effects.enabled)
+		SSoutdoor_effects.weather_planes_need_vis |= src
 
 /atom/movable/screen/plane_master/weather_effect/Destroy()
 	. = ..()
@@ -32,6 +40,16 @@
 
 /atom/movable/screen/plane_master/weather_effect/check_outside_bounds()
 	return FALSE
+
+/atom/movable/screen/plane_master/weather_effect/misc
+	name = "weather effect misc plane master"
+	plane = WEATHER_EFFECT_PLANE_MISC
+	z_type = "Misc"
+
+/atom/movable/screen/plane_master/weather_effect/eclipse
+	name = "weather effect eclipse plane master"
+	plane = WEATHER_EFFECT_PLANE_ECLIPSE
+	z_type = "Eclipse"
 
 //Contains all sunlight overlays
 /atom/movable/screen/plane_master/sunlight

@@ -218,11 +218,12 @@
 
 	return ..()
 
-/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist)
+/obj/machinery/rnd/production/proc/do_print(atom/path, amount, list/matlist)
 	for(var/i in 1 to amount)
 		new path(get_turf(src))
 
-	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[initial(name)]", "[initial(path.name)]"))
+	finalize_build()
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -334,6 +335,8 @@
 	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats), (32 * time_coefficient * print_quantity) ** 0.8)
 
 	return TRUE
+
+/obj/machinery/rnd/production/proc/finalize_build()
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = materials.mat_container

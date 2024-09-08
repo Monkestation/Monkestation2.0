@@ -19,13 +19,16 @@
 			visible_message(span_warning("[src] fizzles on contact with [victim]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		if(plant_tray.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
-			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
-			return PROJECTILE_DELETE_WITHOUT_HITTING
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			if(seed.get_gene(/datum/plant_gene/trait/anti_magic))
+				visible_message(span_warning("[src] fizzles on contact with [target]!"))
+				return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -46,12 +49,14 @@
 		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
 
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.set_weedlevel(0) // even the weeds perish
-		plant_tray.plantdies()
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			SEND_SIGNAL(seed, COMSIG_ADJUST_PLANT_HEALTH, -300)
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -73,11 +78,14 @@
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
 
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.set_plant_health(plant_tray.myseed.endurance, forced = TRUE)
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			SEND_SIGNAL(seed, COMSIG_ADJUST_PLANT_HEALTH, 1000)
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -159,12 +167,6 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
-
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.polymorph()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
@@ -391,24 +393,23 @@
 
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [target.real_name]?"
+	var/poll_message = "Do you want to play as [span_danger(target.real_name)]?"
 	if(target.mind)
-		poll_message = "[poll_message] Job:[target.mind.assigned_role.title]."
+		poll_message = "[poll_message] Job:[span_notice(target.mind.assigned_role.title)]."
 	if(target.mind && target.mind.special_role)
-		poll_message = "[poll_message] Status:[target.mind.special_role]."
+		poll_message = "[poll_message] Status:[span_boldnotice(target.mind.special_role)]."
 	else if(target.mind)
 		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, target_mob = target, pic_source = target, role_name_text = "bolt of possession")
+			poll_message = "[poll_message] Status:[span_boldnotice(A.name)]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
 	if(target.stat == DEAD)//boo.
 		return
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/ghost = pick(candidates)
+	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = ghost.key
+		target.key = chosen_one.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()

@@ -250,12 +250,12 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(C.nutrition <= NUTRITION_LEVEL_STARVING) //It's the nanite programmer's job to make sure nanites don't starve the host, also allows a saboteur to starve everyone who has nanites.
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.adjust_nutrition(-0.5)
+	host_mob.adjust_nutrition(-0.25)
 
 /datum/nanite_program/access
 	name = "Subdermal ID"
@@ -360,6 +360,49 @@
 			return
 		fault.software_error()
 		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
+
+/datum/nanite_program/repeat
+	name = "Signal Repeater"
+	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat
+	name = "Relay Signal Repeater"
+	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/relay_repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_RELAY_CHANNEL] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/relay_repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat/send_code()
+	var/datum/nanite_extra_setting/relay = extra_settings[NES_RELAY_CHANNEL]
+	if(activated && relay.get_value())
+		for(var/X in SSnanites.nanite_relays)
+			var/datum/nanite_program/relay/N = X
+			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
+			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"

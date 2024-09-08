@@ -31,18 +31,6 @@
 		icon_state = hair_style.icon_state
 	return ..()
 
-
-/obj/item/clothing/head/wig/build_worn_icon(
-	default_layer = 0,
-	default_icon_file = null,
-	isinhands = FALSE,
-	female_uniform = NO_FEMALE_UNIFORM,
-	override_state = null,
-	override_file = null,
-	use_height_offset = TRUE,
-)
-	return ..(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, use_height_offset = FALSE)
-
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)
@@ -82,13 +70,19 @@
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
 			return
 
+	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
+	if(!noggin)
+		to_chat(user, span_warning("[target.p_they(TRUE)] have no head!"))
+		return
+
+
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
 	if(istype(target.head, /obj/item/clothing/head/wig))
 		var/obj/item/clothing/head/wig/wig = target.head
 		selected_hairstyle = wig.hairstyle
 		selected_hairstyle_color = wig.color
-	else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+	else if((noggin.head_flags & HEAD_HAIR) && target.hairstyle != "Bald")
 		selected_hairstyle = target.hairstyle
 		selected_hairstyle_color = "[target.hair_color]"
 

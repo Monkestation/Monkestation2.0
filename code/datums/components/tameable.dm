@@ -32,6 +32,10 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
+/datum/component/tameable/Destroy(force)
+	after_tame = null
+	return ..()
+
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
 	if(!is_type_in_list(food, food_types))
@@ -64,7 +68,7 @@
 /datum/component/tameable/proc/on_tame(datum/source, mob/living/tamer, atom/food)
 	SIGNAL_HANDLER
 	after_tame?.Invoke(tamer, food)//Run custom behavior if needed
-	
+
 	if(isliving(source))
 		var/mob/living/potentially_dead_horse = source
 		potentially_dead_horse.faction += FACTION_TAMED

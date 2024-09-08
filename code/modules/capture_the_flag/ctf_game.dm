@@ -500,17 +500,24 @@
 
 	var/ctf_enabled = FALSE
 	ctf_enabled = ctf_controller.toggle_ctf()
-	for(var/obj/machinery/power/emitter/emitter in ctf_area)
-		emitter.active = ctf_enabled
+	for(var/turf/ctf_turf as anything in get_area_turfs(ctf_area))
+		for(var/obj/machinery/power/emitter/emitter in ctf_turf)
+			emitter.active = ctf_enabled
 	if(user)
 		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)
 		message_admins("CTF has finished a round and automatically restarted.")
-		notify_ghosts("CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",
+			'sound/effects/ghost2.ogg',
+		)
 	else
 		message_admins("The players have spoken! Voting has enabled CTF!")
 	if(!automated)
-		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",
+			'sound/effects/ghost2.ogg',
+		)
 
 #undef CTF_LOADING_UNLOADED
 #undef CTF_LOADING_LOADING

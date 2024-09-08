@@ -70,15 +70,12 @@
 
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
-/datum/component/material_container/Destroy(force, silent)
+/datum/component/material_container/Destroy(force)
 	materials = null
 	allowed_materials = null
-	if(insertion_check)
-		QDEL_NULL(insertion_check)
-	if(precondition)
-		QDEL_NULL(precondition)
-	if(after_insert)
-		QDEL_NULL(after_insert)
+	insertion_check = null
+	precondition = null
+	after_insert = null
 	return ..()
 
 
