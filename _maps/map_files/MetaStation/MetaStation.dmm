@@ -11559,9 +11559,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "elc" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Dock"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/effect/mapping_helpers/airlock/access/any/science/general,
 /obj/machinery/door/airlock/mining/glass{
