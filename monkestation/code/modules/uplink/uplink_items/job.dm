@@ -71,5 +71,3 @@
 	cost = 8
 	item = /obj/item/clothing/gloves/color/yellow/power_gloves
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
-=======
-
