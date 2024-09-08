@@ -91,10 +91,12 @@
 #define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
 
 // /turf/open
-/// If a trait is considered as having "coverage" by a meteor shield.
-#define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"
 /// Liquids cannot spread over this turf.
 #define TRAIT_BLOCK_LIQUID_SPREAD			"block_liquid_spread"
+/// If a trait is considered as having "coverage" by a meteor shield.
+#define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"
+/// Replacement for GLOB.typecache_elevated_structures
+#define TRAIT_TURF_HAS_ELEVATED_STRUCTURE	"turf_has_elevated_structure"
 
 
 // /obj
@@ -110,6 +112,10 @@
 #define TRAIT_BYPASS_COMPRESS_CHECK "can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)
 #define TRAIT_TRASH_ITEM "trash_item"
+
+// /atom/movable
+/// Things with this trait can pass through wooden barricades.
+#define TRAIT_GOES_THROUGH_WOODEN_BARRICADES "goes_through_wooden_barricades"
 
 // Traits related directly to Clockwork Cult
 /// Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.

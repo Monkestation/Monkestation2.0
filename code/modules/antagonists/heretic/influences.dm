@@ -21,7 +21,7 @@
 	/// List of minds with the ability to see influences
 	var/list/datum/mind/tracked_heretics = list()
 
-/datum/reality_smash_tracker/Destroy(force, ...)
+/datum/reality_smash_tracker/Destroy(force)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
@@ -256,7 +256,7 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(being_drained)
-		balloon_alert(user, "already being drained!")
+		loc.balloon_alert(user, "already being drained!")
 	else
 		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 1)
 
@@ -288,15 +288,15 @@
 /obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain)
 
 	being_drained = TRUE
-	balloon_alert(user, "draining influence...")
+	loc.balloon_alert(user, "draining influence...")
 
 	if(!do_after(user, 10 SECONDS, src))
 		being_drained = FALSE
-		balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, "interrupted!")
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
-	balloon_alert(user, "influence drained")
+	loc.balloon_alert(user, "influence drained")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
