@@ -52,23 +52,23 @@
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
-#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+#define TRAIT_CANT_SIGN_SPELLS	"cant_sign_spells"
 /// You have special interactions with bloodsuckers and the occult.
-#define TRAIT_OCCULTIST "occultist"
+#define TRAIT_OCCULTIST			"occultist"
 
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
-#define TRAIT_REMOVED_FROM_MANIFEST "removed_from_manifest"
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
 
 // Traits related to food
 /// Trait for Fire Burps
-#define TRAIT_FOOD_FIRE_BURPS "food_buff_fire_burps"
-/// Traut for fast sliding
-#define TRAIT_FOOD_SLIDE "food_slide_buff"
+#define TRAIT_FOOD_FIRE_BURPS	"food_buff_fire_burps"
+/// Trait for fast sliding
+#define TRAIT_FOOD_SLIDE		"food_slide_buff"
 /// Trait for hand picked crops to be of a higher stats (ignores cap)
-#define TRAIT_FOOD_JOB_BOTANIST "food_job_botanist"
+#define TRAIT_FOOD_JOB_BOTANIST	"food_job_botanist"
 /// Trait for rocks to randomly drop ore.
-#define TRAIT_FOOD_JOB_MINER "food_job_miner"
+#define TRAIT_FOOD_JOB_MINER	"food_job_miner"
 
 // Traits given by quirks
 #define TRAIT_ANIME				"anime"
@@ -101,28 +101,28 @@
 
 // /obj
 /// added to structures we want the mobs to be able to target.
-#define TRAIT_MOB_DESTROYABLE "mob_destroyable"
+#define TRAIT_MOB_DESTROYABLE		"mob_destroyable"
 /// This object cannot have its export value be shown by export scanner (shows as unknown)
-#define TRAIT_HIDDEN_EXPORT_VALUE "hiddenexportvalue"
+#define TRAIT_HIDDEN_EXPORT_VALUE	"hiddenexportvalue"
 
 // /obj/item
 /// Applied to a satchel that is being worn on the belt.
-#define TRAIT_BELT_SATCHEL "belt_satchel"
+#define TRAIT_BELT_SATCHEL 			"belt_satchel"
 /// Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.
-#define TRAIT_BYPASS_COMPRESS_CHECK "can_compress_anyways"
+#define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)
-#define TRAIT_TRASH_ITEM "trash_item"
+#define TRAIT_TRASH_ITEM			"trash_item"
 
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.
-#define TRAIT_GOES_THROUGH_WOODEN_BARRICADES "goes_through_wooden_barricades"
+#define TRAIT_GOES_THROUGH_WOODEN_BARRICADES	"goes_through_wooden_barricades"
 
 // Traits related directly to Clockwork Cult
 /// Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.
-#define TRAIT_FASTER_SLAB_INVOKE "faster_slab_invoke"
+#define TRAIT_FASTER_SLAB_INVOKE	"faster_slab_invoke"
 /// Prevents the invocation of clockwork scriptures.
-#define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
+#define TRAIT_NO_SLAB_INVOKE		"no_slab_invoke"
 /// Has an item been enchanted by a clock cult Stargazer?
-#define TRAIT_STARGAZED "stargazed"
+#define TRAIT_STARGAZED				"stargazed"
 
 // END TRAIT DEFINES
