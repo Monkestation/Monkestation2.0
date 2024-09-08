@@ -103,6 +103,10 @@ SUBSYSTEM_DEF(vote)
 		return
 	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
+	// monkestation start
+	if(!current_vote.can_vote(voter))
+		return
+	// monkestation end
 
 	// If user has already voted, remove their specific vote
 	if(voter.ckey in current_vote.choices_by_ckey)
@@ -133,9 +137,12 @@ SUBSYSTEM_DEF(vote)
 		return
 	if(!voter?.ckey)
 		return
+	// monkestation start
+	if(!current_vote.can_vote(voter))
+		return
+	// monkestation end
 	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
-
 	else
 		voted += voter.ckey
 
@@ -304,6 +311,7 @@ SUBSYSTEM_DEF(vote)
 				"countMethod" = current_vote.count_method,
 				"choices" = choices,
 				"vote" = vote_data,
+				"canVote" = current_vote.can_vote(), // monkestation edit
 			)
 
 		all_vote_data += list(vote_data)

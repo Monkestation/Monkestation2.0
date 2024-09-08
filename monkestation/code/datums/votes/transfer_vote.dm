@@ -39,5 +39,12 @@
 		else
 			CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")
 
+/datum/vote/crew_transfer/can_vote(mob/voter)
+	. = TRUE
+	if(voter.client?.holder)
+		return TRUE
+	if(isobserver(voter) || voter.stat == DEAD || !(voter.ckey in GLOB.joined_player_list)) // only living crew gets to vote
+		return FALSE
+
 #undef CHOICE_CONTINUE
 #undef CHOICE_TRANSFER
