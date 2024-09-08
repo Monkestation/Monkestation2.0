@@ -14,8 +14,8 @@
 	fire = 80
 
 /datum/action/cooldown/spell/pointed/glove_zap
-	name = "Nerd Blast"
-	desc = "Blast your foes with the electricity surging beneath your feet!"
+	name = "Unleash Electricity"
+	desc = "INFINITE POWAHHH!!! Blast your foes with the electricity surging beneath your feet!"
 	button_icon_state = "lightning"
 	cooldown_time = 10 SECONDS
 	spell_max_level = 1
