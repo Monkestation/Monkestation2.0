@@ -26,7 +26,7 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /area/centcom/central_command_areas/supply
-	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA
+	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
 
 /area/centcom/central_command_areas/borbop
 	name = "Borbop's Bar"
@@ -76,7 +76,7 @@
 	area_flags = NOTELEPORT
 
 /area/centcom/central_command_areas/admin
-	area_flags = NOTELEPORT
+	area_flags = NOTELEPORT | GHOST_AREA | NO_GHOSTS_DURING_ROUND
 
 /area/centcom/central_command_areas/firing_range
 	name = "Centcom Firing Range"
