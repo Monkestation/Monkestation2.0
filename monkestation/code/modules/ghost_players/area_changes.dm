@@ -34,6 +34,10 @@
 	icon_state = "borbop"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
+/area/centcom/central_command_areas/adminroom
+	name = "Private Admin Room"
+	area_flags = UNIQUE_AREA | NOTELEPORT
+
 /area/centcom/central_command_areas/kitchen
 	name = "Papa's Pizzeria"
 	icon = 'monkestation/icons/area/areas_centcom.dmi'
@@ -62,7 +66,7 @@
 	name = "Admin Hangout"
 	icon = 'monkestation/icons/area/areas_centcom.dmi'
 	icon_state = "centcom_hangout"
-	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA
+	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
 
 /area/centcom/central_command_areas/ghost_blocker
 	name = "During Round Ghost Blocker"
