@@ -1,0 +1,17 @@
+"a" = (/turf/closed/mineral/random/asteroid,/area/space)
+"f" = (/obj/effect/mob_spawn/corpse/human/miner/explorer,/obj/effect/decal/cleanable/blood,/turf/open/misc/asteroid/airless/tospace,/area/space)
+"l" = (/turf/open/space/basic,/area/space)
+"q" = (/obj/item/reagent_containers/hypospray/medipen,/obj/effect/decal/cleanable/blood,/turf/open/misc/asteroid/airless/tospace,/area/space)
+"w" = (/obj/effect/mob_spawn/corpse/goliath,/obj/effect/decal/cleanable/blood,/turf/open/misc/asteroid/airless/tospace,/area/space)
+"x" = (/obj/item/pickaxe,/obj/effect/decal/cleanable/blood,/turf/open/misc/asteroid/airless/tospace,/area/space)
+"P" = (/obj/effect/decal/cleanable/blood,/turf/open/misc/asteroid/airless/tospace,/area/space)
+
+(1,1,1) = {"
+laaaaal
+aaaaaaa
+aafxPaa
+aaqPPaa
+aaPPwaa
+aaaaaaa
+laaaaal
+"}

@@ -96,3 +96,9 @@
 	size = 3
 
 	asteroid_weight = 80
+/datum/map_template/asteroid/mutual_destruction_rock
+	name = "Asteroid"
+	suffix = "mad_rock.dmm"
+	size = 3
+
+	asteroid_weight = 50
