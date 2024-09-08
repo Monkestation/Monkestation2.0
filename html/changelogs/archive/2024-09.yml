@@ -88,3 +88,85 @@
   lmenvs:
   - rscadd: adds CaptainShiba's pet transformation and pet! Thank you for your patronage!
       Sprites by AbberantQuerist.
+2024-09-06:
+  Absolucy:
+  - bugfix: You can no longer cryo someone if their soul is in a soulcatcher.
+  - qol: Unarmed attacks with carp jaws now uses a bite effect rather than a punch
+      effect.
+  - qol: Scrubber overflows now use liquids instead of foam.
+  - qol: Sandstorm event announcement now uses normal direction names.
+  - rscadd: Added Grant All and Remove All buttons to ID consoles and agent IDs.
+  - qol: Clicking floor tiles now also closes curator/morgue doors, like with normal
+      airlocks.
+  - bugfix: Nanite defibrillation will no longer spam your ghost with notifications
+      when you can't be defibbed anyways.
+  KnigTheThrasher:
+  - bugfix: fixed asteroid magnet on kilostation
+  - rscadd: Updated nova permabrigs with monke content
+  LordVoidron:
+  - bugfix: Trashbag sprites while filled and worn no longer missing.
+  MichiRecRoom:
+  - rscadd: pAIs cards now have a clarity disclaimer in their examine text, regarding
+      their incompatibility with magic. Yes, this means silicons (including pAIs)
+      not seeing runes is intentional.
+  PotatoTomahto:
+  - rscadd: Adds a ballgown to the autodrobe and clothesmate.
+  - qol: Medical cyborg can use their health analyzer when in the dark or blind.
+  - bugfix: Fixes fugitive hunter victory end round text.
+  - bugfix: Restored old HOS trenchcoat sprite. Winter trenchcoat sprite also fixed.
+  - bugfix: 'Plush refill canister is actually in maint loot now.
+
+      :cl:'
+  RikuTheKiller:
+  - rscadd: You can now permanently remove NIFs through a surgery on the head called
+      "NIF debonding", but it requires OOC consent.
+  - bugfix: Cortical borers can regenerate as intended.
+  - bugfix: Cortical borer life ticks now follow subsystem delays, making them resistant
+      to lag.
+  - spellcheck: Cortical borer objectives are now better worded and have proper spelling
+      and punctuation.
+  The-Black-Screen:
+  - rscdel: removed kitchen and robotics access helpers from the morgue maintenance
+      airlock.
+  - bugfix: fixed the access helpers on the morgue medical airlock being the wrong
+      type.
+  Wisemonster:
+  - bugfix: The round-start status summary will only be green-shift if the current
+      storyteller is Ghost
+  - bugfix: Fixes Poly freezing up after speaking
+  - rscadd: Added 4 surgery duffel bags to the centcom practice surgery area.
+  catmanpop:
+  - qol: Chemical Dispenser now actually upgrades with manipulators instead of a dump
+      at T4 and adds a few more
+2024-09-07:
+  Absolucy:
+  - refactor: Heavily optimized code related to food decomposition.
+  - code_imp: Cleaned up some code related to sign language.
+  - qol: Sign language messages won't be italicized in low-pressure.
+  - bugfix: Blood Cult hand spells will no longer interfere with sign language, consistent
+      with other touch spells.
+  - rscadd: Gary now spawns on all maps.
+  - rscadd: Gary will usually spawn near some pre-set locations scattered around maints,
+      however they can rarely choose a completely random location in maints!
+  - rscadd: Gary is now immune to shocks, and can pass through grilles, flaps, and
+      wooden barricades.
+  - qol: Gary is now always visible from the ghost orbit menu.
+  - bugfix: Fixed some minor runtime errors.
+  - bugfix: Holomap visualizations of meteor shield coverage on multi-z maps are more
+      accurate now.
+  - bugfix: Empty blood brother teams will now be cleaned up, instead of clogging
+      up the roundend report.
+  - bugfix: (Melbert) Spawning on a table or other elevated object does not offset
+      you forever
+  - bugfix: (Comxy) Fixes Star Gazer getting buckled.
+  - image: (Comxy) Removes Star Gazer alpha pixels.
+  - balance: Abductor batons now have 3 charges, with a single charge regenerating
+      every 5 seconds. A charge is needed to stun or sleep someone with the baton.
+  Absolucy, LT3, Majkl-J:
+  - code_imp: Added TGUI mobility check bypass.
+  - qol: You can now use your PDA while laying down.
+  MrBagHead:
+  - rscadd: Abductor telepads can now send plushies, adding more opportunities for
+      fun interactions.
+  ThePooba:
+  - bugfix: stop centcom breaking
