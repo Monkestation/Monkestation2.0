@@ -31,8 +31,8 @@
 	var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round( 5*(ROOT (4, (power)))), max_damage) + rand(-5, 5)) : 0
 	//24 damage at 10 KW, 75 damage at 1 MW, 132 at 10 MW, 420 at 1 GW (nice)
 	var/mob/living/electrocute_victim = target
-	var/dust_power = 10000000000
-	var/heavy_emp_threshold = 1000000
+	var/dust_power = 10 GW
+	var/heavy_emp_threshold = 1 MW
 
 	source.Beam(target, icon_state="lightning[rand(1,12)]", time = 5) //Creates lightning beam
 	var/zapdir = get_dir(source, target)
@@ -47,7 +47,7 @@
 
 	if(issilicon(target)) //sillycons get emp'd
 		var/mob/living/silicon/silicon_target = target
-		if (power <= 10000)
+		if (power <= 10 KW)
 			silicon_target.emp_act(EMP_LIGHT)
 		else if (power <=heavy_emp_threshold)
 			silicon_target.emp_act(EMP_HEAVY)
@@ -55,12 +55,12 @@
 /datum/action/cooldown/spell/pointed/glove_zap/proc/glove_nerd_zap(atom/target, /mob/living/owner, var/zap_range = 6)
 	var/turf/owner_turf = get_turf(owner)
 	var/obj/structure/cable/cable_target = owner_turf.get_cable_node() //Gets power from underfoot node
-	var/heavy_zap = 100000000
+	var/heavy_zap = 100 MW
 	if(!cable_target)
 		return FALSE
 
 	var/surplus = cable_target.surplus()
-	if (surplus <= 1000)
+	if (surplus <= 1 KW)
 		owner.balloon_alert (owner,"Not enough power in the grid!")
 
 	if (get_dist(owner, target) >= zap_range)
