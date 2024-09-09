@@ -54,7 +54,7 @@
 			return INITIALIZE_HINT_QDEL
 
 	center_turf = locate(center_x, center_y, z)
-	available_templates = typecacheof(/datum/map_template/asteroid,ignore_root_path = TRUE)
+	available_templates = typecacheof(/datum/map_template/asteroid, ignore_root_path = TRUE)
 	for(var/datum/map_template/asteroid/roid as anything in available_templates)
 		if(roid.asteroid_weight)
 			available_templates[roid] = roid.asteroid_weight

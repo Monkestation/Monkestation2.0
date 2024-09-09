@@ -5,10 +5,13 @@
 /// Breaks down to an asteroid floor that breaks down to space
 /turf/closed/mineral/random/asteroid/tospace
 	baseturfs = /turf/open/misc/asteroid/airless/tospace
+
 /turf/closed/mineral/random/asteroid/tospace/highchance
 	mineralChance = 26
+
 /turf/closed/mineral/random/asteroid/tospace/lowchance
 	mineralChance = 6
+
 /turf/closed/mineral/random/asteroid/tospace/mineral_chances()
 	return list(
 		/obj/item/stack/ore/diamond = 2.5,
@@ -28,33 +31,40 @@
 	name = "rock"
 	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
+
 /turf/closed/mineral/asteroid/tospace/uranium
 	mineralType = /obj/item/stack/ore/uranium
 	scan_state = "rock_Uranium"
+
 /turf/closed/mineral/asteroid/tospace/diamond
 	mineralType = /obj/item/stack/ore/diamond
 	scan_state = "rock_Diamond"
+
 /turf/closed/mineral/asteroid/tospace/gold
 	mineralType = /obj/item/stack/ore/gold
 	scan_state = "rock_Gold"
+
 /turf/closed/mineral/asteroid/tospace/silver
 	mineralType = /obj/item/stack/ore/silver
 	scan_state = "rock_Silver"
+
 /turf/closed/mineral/asteroid/tospace/titanium
 	mineralType = /obj/item/stack/ore/titanium
 	scan_state = "rock_Titanium"
+
 /turf/closed/mineral/asteroid/tospace/plasma
 	mineralType = /obj/item/stack/ore/plasma
 	scan_state = "rock_Plasma"
+
 /turf/closed/mineral/asteroid/tospace/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
 	scan_state = "rock_Bananium"
+
 /turf/closed/mineral/asteroid/tospace/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
 	scan_state = "rock_BScrystal"
-
 
 /obj/effect/forcefield/asteroid_magnet
 	name = "magnetic field"
@@ -90,26 +100,26 @@
 /// Cleanup our currently loaded mining template
 /proc/CleanupAsteroidMagnet(turf/center, size)
 	var/list/turfs_to_destroy = ReserveTurfsForAsteroidGeneration(center, size, baseturf_only = FALSE)
-	for(var/turf/T as anything in turfs_to_destroy)
+	for(var/turf/turf as anything in turfs_to_destroy)
 		CHECK_TICK
 
-		for(var/atom/movable/AM as anything in T)
+		for(var/atom/movable/AM as anything in turf)
 			CHECK_TICK
 			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || iseminence(AM) || ismob(AM))
 				continue
 			qdel(AM)
 
-		T.ChangeTurf(/turf/baseturf_bottom)
+		turf.ChangeTurf(/turf/baseturf_bottom)
 
 /// Sanitizes a block of turfs to prevent writing over undesired locations
 /proc/ReserveTurfsForAsteroidGeneration(turf/center, size, baseturf_only = TRUE)
 	. = list()
 
 	var/list/turfs = RANGE_TURFS(size, center)
-	for(var/turf/T as anything in turfs)
-		if(baseturf_only && !islevelbaseturf(T))
+	for(var/turf/turf as anything in turfs)
+		if(baseturf_only && !islevelbaseturf(turf))
 			continue
-		if(!(istype(get_area(T.loc), /area/station/cargo/mining/asteroid_magnet)))
+		if(!(istype(get_area(turf.loc), /area/station/cargo/mining/asteroid_magnet)))
 			continue
-		. += T
+		. += turf
 		CHECK_TICK

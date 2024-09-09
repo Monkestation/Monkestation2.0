@@ -16,7 +16,7 @@
 	///How likely is this to generate? We'll assume a base weight of 100 if not defined.
 	var/asteroid_weight
 	///Where folder-wise is this map?
-	var/prefix = "monkestation/code/modules/art_sci_overrides/asteroids/template_maps/"
+	var/prefix = "_maps/~monkestation/asteroid_maps/"
 	///What is the map's name?
 	var/suffix
 
