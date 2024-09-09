@@ -562,7 +562,6 @@
 								/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
-								/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/shotgun)))
 		to_chat(user, span_warning("[src] is not compatible with [KA]."))
 		return FALSE
