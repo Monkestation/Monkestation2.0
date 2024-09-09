@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
-/datum/preferences/Destroy(force, ...)
+/datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -210,7 +210,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	switch (action)
 		if ("update_body")
-			character_preview_view?.update_body()
+			// monkestation start: janky bugfixing for runtimes
+			if(!QDELETED(character_preview_view))
+				character_preview_view.update_body()
+			else
+				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
+			// monkestation end
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -224,7 +229,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.on_new_character(usr)
 
-			character_preview_view.update_body()
+			// monkestation start: janky bugfixing for runtimes
+			if(!QDELETED(character_preview_view))
+				character_preview_view.update_body()
+			else
+				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
+			// monkestation end
 
 			return TRUE
 		if ("rotate")

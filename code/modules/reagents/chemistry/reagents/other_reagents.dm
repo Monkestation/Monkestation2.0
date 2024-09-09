@@ -2453,7 +2453,7 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	metabolized_traits = list(CHANGELING_HIVEMIND_MUTE)
+	metabolized_traits = list(TRAIT_CHANGELING_HIVEMIND_MUTE)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	if(target.mind)
@@ -2657,15 +2657,15 @@
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
-	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
+	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0, can_override = TRUE)), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_metabolize(mob/living/affected_mob)
-	affected_mob.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
+	affected_mob.AddElement(/datum/element/forced_gravity, 0, can_override = TRUE) //0 is the gravity, and in this case weightless
 	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.RemoveElement(/datum/element/forced_gravity, 0)
+	affected_mob.RemoveElement(/datum/element/forced_gravity, 0, can_override = TRUE)
 
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
