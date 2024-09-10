@@ -163,8 +163,8 @@
 		cached_flat_icon.Crop(ID_ICON_BORDERS)
 	return cached_flat_icon
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[ma2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	if(isitem(old_loc))

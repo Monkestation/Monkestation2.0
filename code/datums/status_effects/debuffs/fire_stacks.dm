@@ -144,6 +144,12 @@
 	/// Cached particle type
 	var/cached_state
 
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+	if(owner.on_fire)
+		return
+
+	return "[owner.p_They()] [owner.p_are()] covered in something flammable."
+
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks, times_fired)
 	var/turf/source_turf = get_turf(owner)
 	if(istype(source_turf, /turf/open/floor/plating/ocean))
