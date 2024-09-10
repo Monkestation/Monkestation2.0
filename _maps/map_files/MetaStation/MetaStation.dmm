@@ -59902,7 +59902,9 @@
 "vae" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/flasher/directional/east,
+/obj/machinery/flasher/directional/east{
+	id = "IsolationFlash"
+	},
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 4
 	},
