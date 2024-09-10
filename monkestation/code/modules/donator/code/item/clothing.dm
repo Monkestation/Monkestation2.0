@@ -511,6 +511,3 @@
 	icon_state = "jackboot_kindle_kicks"
 	name = "jackboot kindle kicks"
 	desc = "They look just like kindle kicks! But these are boots!"
-/datum/action/item_action/kindle_kicks/jackboot
-	button_icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	button_icon_state = "jackboot_kindle_kicks"

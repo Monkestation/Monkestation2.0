@@ -257,7 +257,7 @@
 
 /mob/living/basic/frog/hypnotoad
 	name = "hypnotoad"
-	desc = "WOAH, a hypnotoad!"
+	desc = "All glory to the hypnotoad."
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "hypnotoad"
 	icon_living = "hypnotoad"

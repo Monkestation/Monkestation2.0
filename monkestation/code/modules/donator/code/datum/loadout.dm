@@ -607,15 +607,21 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/toys/toadie_wan_kenfrog
-	name = "Toadie Wan Kenfrog"
-	item_path = /obj/item/toy/plush/toadie_wan_kenfrog
+/datum/loadout_item/toys/toadie_wan_kenfrogi
+	name = "Toadie Wan Kenfrogi"
+	item_path = /obj/item/toy/plush/toadie_wan_kenfrogi
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/pocket_items/donator/darkscug
+/datum/loadout_item/pocket_items/donator/hypnotoad
 	name = "Pet Delivery Beacon - Hypnotoad"
 	item_path = /obj/item/choice_beacon/pet/donator/hypnotoad
 	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Ophaq")
+
+/datum/loadout_item/effects/hypnotoad
+	name = "Hypnotoad Transformation"
+	item_path = /obj/item/effect_granter/donator/hypnotoad
 	requires_purchase = FALSE
 	ckeywhitelist = list("Ophaq")
