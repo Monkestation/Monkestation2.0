@@ -16,7 +16,7 @@
 	desc = "A standard medicinal sleeper used to treat small and major injuries alike. It appears to be locked up, and you can see a gas mask through the fogged-up windows..."
 	icon_state = "sleeper"
 	you_are_text = "You are a Syndicate reconnaisance agent who went blind in an accident..."
-	flavour_text = "Your painkillers have ran out, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
+	flavour_text = "Your painkillers are running low, your memories are getting foggy, and all you can remember is the codename 'Anderson'. You were about to hurl yourself out into space, but you heard the intercom announce that the backup was getting unfrozen... maybe you'll see again?"
 	important_text = "DO NOT leave the base, you're inevitably doomed without it!"
 	outfit = /datum/outfit/lavaland_syndicate/comms/anderson
 
