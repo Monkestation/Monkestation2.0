@@ -340,11 +340,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/sign/poster/contraband/syndicate_medical/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "js" = (
@@ -439,63 +439,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
-"nn" = (
-/obj/item/poster/random_contraband{
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/obj/item/poster/random_contraband{
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/item/poster/random_contraband{
-	pixel_x = -4;
-	pixel_y = -6
-	},
-/obj/item/poster/random_contraband{
-	pixel_x = -3;
-	pixel_y = -4
-	},
-/obj/item/poster/random_contraband{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/structure/closet/crate,
-/obj/item/wirecutters{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/poster/random_official{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/poster/random_official{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/poster/random_official{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/poster/random_official{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/poster/random_official{
-	pixel_x = -6;
-	pixel_y = 0
-	},
-/obj/item/poster/random_official{
-	pixel_x = -8;
-	pixel_y = -2
-	},
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband{
-	pixel_x = -1;
-	pixel_y = -2
-	},
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "nB" = (
 /obj/structure/toilet{
 	pixel_y = 18
@@ -902,6 +845,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
 /obj/item/storage/bag/trash,
+/obj/structure/sign/poster/contraband/shipstation/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "BN" = (
@@ -1014,6 +958,9 @@
 	amount = 21
 	},
 /turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
+"Eo" = (
+/turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "Er" = (
 /obj/structure/cable,
@@ -1269,8 +1216,62 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
-"Mf" = (
-/turf/closed/wall,
+"Mi" = (
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/structure/closet/crate,
+/obj/item/wirecutters{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/poster/random_official{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/poster/random_official{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/poster/random_official{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/poster/random_official{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/poster/random_official{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/poster/random_official{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "My" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -2122,7 +2123,7 @@ VK
 VK
 VK
 VK
-nn
+Mi
 VK
 VK
 rE
@@ -2196,7 +2197,7 @@ VK
 VK
 VK
 VK
-Mf
+Eo
 gA
 yK
 Vg
