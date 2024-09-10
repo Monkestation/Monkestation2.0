@@ -42391,9 +42391,9 @@
 /area/station/security/checkpoint/supply)
 "nnB" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "nnM" = (
