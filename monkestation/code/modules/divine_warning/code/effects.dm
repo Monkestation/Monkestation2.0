@@ -21,10 +21,10 @@
 	clear_fullscreen("divine", time)
 
 /mob/living/death(gibbed)
-	. = ..(gibbed)
+	. = ..()
 	if (!client || !src.mind || stat == DEAD) return
 
-	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0)
+	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role)
 		SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/divine.ogg', 80))
 		last_divine_sound = world.time
 
