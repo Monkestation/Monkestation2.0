@@ -65,7 +65,6 @@
 			if(-INFINITY to -95)
 				severity = 7
 				heaven_flags |= HEAVEN_TIMETOGO
-		if(health < -90)
 			if (heaven_flags & HEAVEN_TIMETOGO && !(heaven_flags & HEAVEN_TIMETOGO_PLAYED))
 				SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/heaven_time.ogg'))
 				heaven_flags |= HEAVEN_TIMETOGO_PLAYED
