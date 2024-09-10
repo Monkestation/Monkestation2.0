@@ -6,6 +6,7 @@
 	is_dimorphic = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_LIPS | HEAD_DEBRAIN
 
 	dmg_overlay_type = "monkey"
 
