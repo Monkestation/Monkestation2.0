@@ -10715,9 +10715,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "dXR" = (
-/obj/machinery/camera/directional/west{
-	network = list("ss13","isolation")
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -44960,10 +44957,11 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "pQx" = (
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "isolation room monitor";
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching output from station security cameras.";
+	name = "Isolation Chamber Monitor";
 	network = list("isolation");
-	pixel_y = 31
+	pixel_y = 30
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -52021,6 +52019,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_red/anticorner,
+/obj/machinery/camera/directional/east{
+	network = list("ss13","prison","isolation")
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "smg" = (
