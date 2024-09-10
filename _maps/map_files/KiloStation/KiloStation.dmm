@@ -52352,6 +52352,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/chemical_manufacturer,
+/obj/item/integrated_circuit/chemical,
+/obj/item/multitool,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "qyA" = (
