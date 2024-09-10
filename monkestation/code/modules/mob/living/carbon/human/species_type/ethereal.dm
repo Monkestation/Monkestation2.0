@@ -116,6 +116,7 @@
 
 
 /datum/species/ethereal/spec_life(mob/living/carbon/human/ethereal, seconds_per_tick, times_fired)
+	. = ..()
 	if(ethereal.stat == DEAD)
 		return
 	adjust_charge(ethereal, -ETHEREAL_BLOOD_CHARGE_FACTOR * seconds_per_tick, TRUE)

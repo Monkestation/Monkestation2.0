@@ -5433,8 +5433,6 @@
 #include "code\modules\surgery\organs\internal\stomach\stomach_ethereal.dm"
 #include "code\modules\surgery\organs\internal\tongue\_tongue.dm"
 #include "code\modules\surgery\organs\internal\vocal_cords\_vocal_cords.dm"
-#include "code\modules\surgery\organs\stomach\_stomach.dm"
-#include "code\modules\surgery\organs\stomach\stomach_ethereal.dm"
 #include "code\modules\tgchat\message.dm"
 #include "code\modules\tgchat\to_chat.dm"
 #include "code\modules\tgs\includes.dm"

@@ -45,6 +45,7 @@
 	ass_image = 'icons/ass/asspodperson.png'
 
 /datum/species/floran/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+	. = ..()
 	if(H.stat == DEAD)
 		return
 
@@ -69,7 +70,8 @@
 		)
 	return ..()
 
-/datum/species/floran/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/floran/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+	. = ..()
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
@@ -78,7 +80,6 @@
 		to_chat(H, span_danger("You feel your skin bubble and pop painfully!"))
 		H.adjustBruteLoss(10*REM, FALSE)
 		return TRUE
-	return ..()
 
 /datum/species/floran/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)

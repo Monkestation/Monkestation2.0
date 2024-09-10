@@ -20,6 +20,8 @@ Assistant
 
 	department_for_prefs = /datum/job_department/assistant
 
+	liver_traits = list(TRAIT_MAINTENANCE_METABOLISM)
+
 	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 
 	mail_goodies = list(

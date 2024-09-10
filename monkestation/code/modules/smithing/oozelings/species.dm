@@ -206,7 +206,8 @@
 /// CHEMICAL HANDLING
 /// Here's where slimes heal off plasma and where they hate drinking water.
 
-/datum/species/oozeling/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+/datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+	. = ..()
 	// slimes use plasma to fix wounds, and if they have enough blood, organs
 	var/static/list/organs_we_mend = list(
 		ORGAN_SLOT_BRAIN,
@@ -236,9 +237,6 @@
 		slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if (SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
-
-	return ..()
-
 
 /datum/reagent/toxin/slimeooze
 	name = "Slime Ooze"
