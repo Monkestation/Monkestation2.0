@@ -3,10 +3,13 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = 10
+	pixel_x = -1;
+	pixel_y = 1
 	},
-/obj/item/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/syndicate_access,
@@ -52,19 +55,30 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
 /obj/item/flashlight{
-	pixel_y = -12
+	pixel_y = -5;
+	pixel_x = -9
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/stamp/chameleon,
+/obj/item/paper_bin{
+	pixel_x = 9;
+	pixel_y = -8
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = -7
+	},
+/obj/item/stamp/chameleon{
+	pixel_x = 12;
+	pixel_y = 7
+	},
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	desc = "Beer. In space. A faded label on it reads 'use to avoid loneliness'. Seems to have already been used.";
-	pixel_x = 11
+	pixel_x = 9;
+	pixel_y = 22
 	},
 /obj/item/taperecorder{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_y = 9;
+	pixel_x = -6
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
@@ -92,6 +106,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/sign/poster/official/safety_internals/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "cj" = (
@@ -220,7 +235,9 @@
 /area/ruin/space/has_grav/listeningstation/support)
 "gA" = (
 /obj/item/flashlight/lantern/syndicate{
-	on = 1
+	on = 1;
+	pixel_x = 7;
+	pixel_y = 1
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
@@ -371,7 +388,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/item/pai_card{
-	pixel_x = 12
+	pixel_x = 16;
+	pixel_y = 2
 	},
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /turf/open/floor/iron/grimy,
@@ -421,6 +439,63 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
+"nn" = (
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/poster/random_contraband{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/structure/closet/crate,
+/obj/item/wirecutters{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/poster/random_official{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/poster/random_official{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/poster/random_official{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/poster/random_official{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/poster/random_official{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/poster/random_official{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "nB" = (
 /obj/structure/toilet{
 	pixel_y = 18
@@ -518,8 +593,14 @@
 "rT" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/high,
-/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high{
+	pixel_x = -3;
+	pixel_y = 0
+	},
+/obj/machinery/cell_charger{
+	pixel_x = -2;
+	pixel_y = 0
+	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
@@ -783,13 +864,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/food/chocolatebar{
-	pixel_y = 8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_y = 12;
 	pixel_x = -3
 	},
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /obj/item/lighter{
-	pixel_x = 7;
+	pixel_x = 11;
 	pixel_y = -3
 	},
 /obj/structure/table_frame,
@@ -1186,6 +1269,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
+"Mf" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "My" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1414,7 +1500,8 @@
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Sx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/asteroid/airless,
+/obj/machinery/light/small/maintenance/directional/east,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "Sz" = (
 /obj/item/reagent_containers/cup/bucket/wooden,
@@ -1502,18 +1589,20 @@
 "Va" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
-	pixel_x = -2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = -1
 	},
 /obj/item/storage/box/donkpockets{
-	pixel_x = 2
+	pixel_x = 5;
+	pixel_y = -8
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -6
+	pixel_x = -9;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
@@ -1951,8 +2040,8 @@ AV
 AV
 VK
 VK
-Sx
-Sx
+yK
+yK
 VK
 VK
 VK
@@ -1990,7 +2079,7 @@ AV
 VK
 VK
 VK
-Sx
+yK
 VK
 VK
 VK
@@ -2028,12 +2117,12 @@ AV
 VK
 VK
 VK
-Sx
+yK
 VK
 VK
 VK
 VK
-QI
+nn
 VK
 VK
 rE
@@ -2066,10 +2155,10 @@ AV
 VK
 VK
 VK
-Sx
-Sx
-Sx
 yK
+yK
+yK
+Sx
 yK
 yK
 QI
@@ -2107,7 +2196,7 @@ VK
 VK
 VK
 VK
-VK
+Mf
 gA
 yK
 Vg
@@ -2579,7 +2668,7 @@ LR
 RK
 FK
 VK
-VK
+QI
 AO
 VK
 VK
