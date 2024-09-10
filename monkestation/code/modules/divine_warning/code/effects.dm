@@ -21,7 +21,7 @@
 	clear_fullscreen("divine", time)
 
 /mob/living/death(gibbed)
-	. = ..(gibbed)
+	. = ..()
 	if (!client || !src.mind || stat == DEAD) return
 
 	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0)
