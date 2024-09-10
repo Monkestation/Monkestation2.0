@@ -28996,6 +28996,10 @@
 	pixel_x = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/camera/directional/east{
+	c_tag = "Prison Isolation Cell";
+	network = list("ss13","prison","isolation")
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "gQz" = (
@@ -33504,13 +33508,11 @@
 /area/station/maintenance/department/science)
 "hXi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engine.";
-	dir = 4;
-	layer = 4;
-	name = "Engine Monitor";
+/obj/machinery/computer/security/telescreen/interrogation{
+	name = "isolation room monitor";
 	network = list("isolation");
-	pixel_x = -24
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
@@ -80258,9 +80260,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/orange/anticorner{
 	dir = 8
-	},
-/obj/machinery/camera/directional/south{
-	network = list("ss13","prison","isolation")
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
