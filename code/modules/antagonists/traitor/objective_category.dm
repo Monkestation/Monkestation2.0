@@ -31,7 +31,7 @@
 		var/list/category_list = list()
 		for(var/value in category.objectives)
 			if(islist(value))
-				var/list/objective_category = filter_invalid_objective_list(value, progression_points, uplink_flag) //monkestation edit:: adds uplink_flag
+				var/list/objective_category = filter_invalid_objective_list(value, progression_points, uplink_flag) //monkestation edit: adds uplink_flag
 				if(!length(objective_category))
 					continue
 				category_list[objective_category] = category.objectives[value]

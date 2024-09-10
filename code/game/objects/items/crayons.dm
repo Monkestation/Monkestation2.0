@@ -323,14 +323,14 @@
 		rand_items += list(list("item" = i))
 
 
-/obj/item/toy/crayon/ui_data()
+/obj/item/toy/crayon/ui_data(mob/user) //monkestation "edit": makes the user arg be passed
 	var/static/list/crayon_drawables
 
 	if (!crayon_drawables)
 		crayon_drawables = staticDrawables()
 
 	. = list()
-	.["drawables"] = crayon_drawables
+	.["drawables"] = crayon_drawables + formatted_additional_drawables //monkestation edit: adds formatted_additional_drawables
 	.["selected_stencil"] = drawtype
 	.["text_buffer"] = text_buffer
 
@@ -351,7 +351,7 @@
 				. = TRUE
 		if("select_stencil")
 			var/stencil = params["item"]
-			if(stencil in all_drawables + randoms)
+			if(stencil in all_drawables + randoms + formatted_additional_drawables) //monkestation edit: adds additional_drawables
 				drawtype = stencil
 				. = TRUE
 				text_buffer = ""

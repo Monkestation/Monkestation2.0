@@ -193,7 +193,7 @@
 		return
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
-	data["progression_points"] = uplink_handler.progression_points
+	data["progression_points"] = uplink_handler.progression_points * (istype(uplink_handler, /datum/uplink_handler/gang) ? 60 : 1) //monkestation edit: adds gang check(pain)
 	data["current_expected_progression"] = SStraitor.current_global_progression
 	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
 	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
