@@ -1,0 +1,219 @@
+2024-09-01:
+  Absolucy:
+  - bugfix: The Blah-Sucker and Ashtongue languages no longer conflict over the ",l"
+      prefix, as Ashtongue now uses ",a"
+  BoltonsHead:
+  - rscadd: the Policeman Mascot Head and Policeman Mascot Suit to the Secdrobe, where
+      you can purchase 2 in the premium section for 100 credits.
+  - rscadd: four more costumes! Alongside it is the Cruelty Squad main character clothing
+      to the autodrobe,
+  - rscadd: Infinity Jersey, wristbands, shorts, and sneakers to the autodrobe,
+  - rscadd: BB's wig, dress, and slippers to the autodrobe,
+  - rscadd: and The Killer's robe and head to the autodrobe.
+  - rscadd: Metrocop uniform to sectech drobe.
+  - rscadd: Citizen uniform to clothesmate.
+  SirNightKnight:
+  - bugfix: Made stamina a lil less wonky
+  ThePooba:
+  - balance: gchanged some nukeops gun prices
+2024-09-02:
+  DexeeXI:
+  - bugfix: fixed solars on blueshift to wire correctly.
+  - rscadd: correctional officer lockers now require an id card. get buzzed, prisoner
+      scum.
+  - bugfix: swapped the empty industrial suit locker on blueshift for one with a loader
+      MOD. now move crates, cargo.
+  - bugfix: dumped the command livery for quartermaster on voidraptor. they are not
+      command.
+  - bugfix: blueshift qm office de-commanded.
+  - rscadd: air alarm and apc added to qm's office on blueshift.
+  - bugfix: ouroboros qm office de-commanded.
+  - bugfix: voidraptor atmos door now requires atmos perms. fuck off greytiders.
+  - bugfix: icebox's BP office found its missing cables.
+  - bugfix: plumbing constructor on meta now found.
+  - bugfix: voidraptor "command maintenance" now is actually radshielded.
+  SirNightKnight:
+  - rscadd: The Cybersun Juggernaut suit is now available for purchase for 20 TC from
+      the Syndicate uplink.
+  flleeppyy:
+  - bugfix: no more unlimited spit
+2024-09-03:
+  Absolucy:
+  - balance: Alien surgical tables are now 20% faster.
+2024-09-04:
+  Absolucy:
+  - refactor: Cleaned up code related to name tags.
+  - qol: Improved the font for name tags, making them easier to read.
+  - qol: The curator booth's radio is now lossless - it is unaffected by exospheric
+      anomalies.
+  - qol: Sitting in a chair no longer stops you from doing most actions.
+  - qol: You can now reach around filing cabinets and the radio microphone.
+  Flleeppyy, Punny:
+  - image: Added burnt emag and hack-o-lantern designs by PunnyPunny
+  - code_imp: added some more features to the microwave, items can now return COMPONENT_MICROWAVE
+      - "DONTEJECT", "DONTDIRTY", and "DONTOPEN"
+  PotatoTomahto:
+  - rscadd: Flasks can now be worn on the belt slot
+  RikuTheKiller:
+  - bugfix: Fixed a health update bug with Longevity Syndrome.
+  Sorenon:
+  - bugfix: reconnected atmos in kilo station science department
+  V2LenKagamine:
+  - rscadd: Axe Smithed Item
+  - rscadd: Spear Smithed Item
+  - rscadd: Blacksmith Cape
+  - rscadd: Industrial Electroplater. Ever wanted the shine of gold and the damage
+      of Plastitanium? -- Now buildable with boards
+  - rscadd: Material Alloyer. Allows you to alloy to materials, blending their stats!
+      Works with Smithed Items!-- Now buildable with boards
+  - rscadd: Material Analizer. For seeing aforementioned stats. -- Now buildable with
+      boards
+  - rscadd: Sell Smithed items for credits based on how well they're made and what
+      they're made of
+  - rscadd: 'Armor Smithing Items: Boots, Gloves, Helmet, and Chestplate.'
+  - rscadd: 'Smithing Crate: Now for all avid-smithy-goers! Contains an anvil,assembly
+      bench,material alloy board, material Analizer board,and industrial electroplater
+      board!'
+  - qol: Forges now Accept plasma Sheets as Fuel
+  - balance: Smithed tools are affected by their quality more.
+  - bugfix: Comment in primative.dm saying there were only 3 levels of smith. there
+      are 7.
+  - bugfix: The ability to rip something off the anvil mid-smithing has been removed.
+  - refactor: anvil and bench recipe files now not 'sword' and now human readable
+  Wisemonster:
+  - bugfix: Fixed Poly getting stuck in a hoarding loop
+  - bugfix: Fixed Poly being unable to speak
+  flleeppyy:
+  - admin: new Server verb for toggling deadchat "Toggle Deadchat"
+  lmenvs:
+  - rscadd: adds CaptainShiba's pet transformation and pet! Thank you for your patronage!
+      Sprites by AbberantQuerist.
+2024-09-06:
+  Absolucy:
+  - bugfix: You can no longer cryo someone if their soul is in a soulcatcher.
+  - qol: Unarmed attacks with carp jaws now uses a bite effect rather than a punch
+      effect.
+  - qol: Scrubber overflows now use liquids instead of foam.
+  - qol: Sandstorm event announcement now uses normal direction names.
+  - rscadd: Added Grant All and Remove All buttons to ID consoles and agent IDs.
+  - qol: Clicking floor tiles now also closes curator/morgue doors, like with normal
+      airlocks.
+  - bugfix: Nanite defibrillation will no longer spam your ghost with notifications
+      when you can't be defibbed anyways.
+  KnigTheThrasher:
+  - bugfix: fixed asteroid magnet on kilostation
+  - rscadd: Updated nova permabrigs with monke content
+  LordVoidron:
+  - bugfix: Trashbag sprites while filled and worn no longer missing.
+  MichiRecRoom:
+  - rscadd: pAIs cards now have a clarity disclaimer in their examine text, regarding
+      their incompatibility with magic. Yes, this means silicons (including pAIs)
+      not seeing runes is intentional.
+  PotatoTomahto:
+  - rscadd: Adds a ballgown to the autodrobe and clothesmate.
+  - qol: Medical cyborg can use their health analyzer when in the dark or blind.
+  - bugfix: Fixes fugitive hunter victory end round text.
+  - bugfix: Restored old HOS trenchcoat sprite. Winter trenchcoat sprite also fixed.
+  - bugfix: 'Plush refill canister is actually in maint loot now.
+
+      :cl:'
+  RikuTheKiller:
+  - rscadd: You can now permanently remove NIFs through a surgery on the head called
+      "NIF debonding", but it requires OOC consent.
+  - bugfix: Cortical borers can regenerate as intended.
+  - bugfix: Cortical borer life ticks now follow subsystem delays, making them resistant
+      to lag.
+  - spellcheck: Cortical borer objectives are now better worded and have proper spelling
+      and punctuation.
+  The-Black-Screen:
+  - rscdel: removed kitchen and robotics access helpers from the morgue maintenance
+      airlock.
+  - bugfix: fixed the access helpers on the morgue medical airlock being the wrong
+      type.
+  Wisemonster:
+  - bugfix: The round-start status summary will only be green-shift if the current
+      storyteller is Ghost
+  - bugfix: Fixes Poly freezing up after speaking
+  - rscadd: Added 4 surgery duffel bags to the centcom practice surgery area.
+  catmanpop:
+  - qol: Chemical Dispenser now actually upgrades with manipulators instead of a dump
+      at T4 and adds a few more
+2024-09-07:
+  Absolucy:
+  - refactor: Heavily optimized code related to food decomposition.
+  - code_imp: Cleaned up some code related to sign language.
+  - qol: Sign language messages won't be italicized in low-pressure.
+  - bugfix: Blood Cult hand spells will no longer interfere with sign language, consistent
+      with other touch spells.
+  - rscadd: Gary now spawns on all maps.
+  - rscadd: Gary will usually spawn near some pre-set locations scattered around maints,
+      however they can rarely choose a completely random location in maints!
+  - rscadd: Gary is now immune to shocks, and can pass through grilles, flaps, and
+      wooden barricades.
+  - qol: Gary is now always visible from the ghost orbit menu.
+  - bugfix: Fixed some minor runtime errors.
+  - bugfix: Holomap visualizations of meteor shield coverage on multi-z maps are more
+      accurate now.
+  - bugfix: Empty blood brother teams will now be cleaned up, instead of clogging
+      up the roundend report.
+  - bugfix: (Melbert) Spawning on a table or other elevated object does not offset
+      you forever
+  - bugfix: (Comxy) Fixes Star Gazer getting buckled.
+  - image: (Comxy) Removes Star Gazer alpha pixels.
+  - balance: Abductor batons now have 3 charges, with a single charge regenerating
+      every 5 seconds. A charge is needed to stun or sleep someone with the baton.
+  Absolucy, LT3, Majkl-J:
+  - code_imp: Added TGUI mobility check bypass.
+  - qol: You can now use your PDA while laying down.
+  MrBagHead:
+  - rscadd: Abductor telepads can now send plushies, adding more opportunities for
+      fun interactions.
+  ThePooba:
+  - bugfix: stop centcom breaking
+2024-09-08:
+  Absolucy:
+  - bugfix: Actually fix Light Step.
+  - rscdel: Remove bounties that just deprive station resources, such as water/welder
+      tanks, pens, plants, etc.
+  - sound: Added a new meow sound that has a 5% chance to play when meow emoting.
+  - rscadd: 'Added new emotes: *mggaow and *purr'
+  - qol: Added short audio cooldowns to several audible emotes.
+  - code_imp: Cleaned up some emote code.
+  - rscadd: (ChungusGamer666) Books can now be burned just like any other paper item.
+  - rscadd: (ChungusGamer666) You can cut pages out of books with any sharp item,
+      not just knives or wirecutters.
+  - bugfix: (ZephyrTFA) Book's no longer take your formatting and throw it out the
+      window.
+  - refactor: (ZephyrTFA) Book display and rendering.
+  - rscadd: (ChungusGamer666) You can burn bibles now! But heresy has a steep cost...
+  - bugfix: Ensure blood volume is restored to normal levels whenever TRAIT_NOBLOOD
+      is lost.
+  - rscadd: You can now reinforce clothing with 5 durathread and a welder, giving
+      it additional armor.
+  - rscadd: Added the "speen" emote.
+  - balance: Cosmic Fields now block projectiles, if they were shot by someone with
+      a star mark.
+  DexeeXI:
+  - bugfix: tables can no longer be flipped by ghosts
+  - bugfix: tables can no longer be flipped by people viewing through cameras.
+  Wisemonster:
+  - bugfix: Fixed the disease from the random heart attack event not progressing into
+      later stages.
+2024-09-10:
+  Absolucy:
+  - bugfix: Fixed name tags being incredibly off-center for some mobs.
+  - bugfix: Name tags should be properly updated when VVing a mob's name now.
+  - qol: Name tags are now always right-side up, rather than rotating with the mob.
+  - qol: Name tags no longer inherit their mob's color.
+  - qol: Trying to take off your own memento mori will ask you if you're *really*
+      sure first.
+  - refactor: Refactored heretic sacrifices to track minds instead of bodies.
+  - bugfix: Heretics can now properly sacrifice oozeling cores.
+  - bugfix: Heretic sacrifice targets will still be valid if they somehow change bodies,
+      i.e if they're cloned.
+  - qol: Heretic roundend report will now bold the names of targets who were actually
+      sacrificed.
+  - qol: Heretics will no longer roll off-station, non-crew, disconnected, or AFK
+      players as targets.
+  Odairu:
+  - rscadd: ability to pixel shift items and player characters

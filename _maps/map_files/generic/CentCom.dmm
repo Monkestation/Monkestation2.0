@@ -3706,11 +3706,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"ajM" = (
-/mob/living/basic/bot/cleanbot/medbay,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/medical)
 "ajN" = (
 /obj/structure/flora/tree/dead/style_random,
 /obj/structure/flora/grass/both/style_random,
@@ -11218,16 +11213,6 @@
 /obj/structure/railing/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
-"aDh" = (
-/obj/structure/bookcase,
-/obj/item/book/granter/action/spell/random,
-/obj/item/storage/book/bible,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/random,
-/obj/item/book/random,
-/obj/item/book/random,
-/turf/open/floor/plating/abductor,
-/area/centcom/central_command_areas/admin)
 "aDi" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/ai_multicam_room)
@@ -16273,11 +16258,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
-"aQx" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Sub-Laboratory Elevator"
-	},
-/area/centcom/syndicate_mothership/control)
 "aQy" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -20121,6 +20101,17 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"dCp" = (
+/obj/structure/table/reinforced,
+/obj/item/tank/jetpack/oxygen/harness{
+	pixel_y = 10;
+	pixel_x = -2
+	},
+/obj/item/gun/ballistic/automatic/plastikov{
+	pixel_y = -3
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "dEH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -20165,6 +20156,25 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"eFs" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_x = 6
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_x = -6
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "eHN" = (
 /obj/effect/turf_decal/loading_area/white{
 	dir = 4
@@ -20263,6 +20273,24 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/misc/asteroid,
 /area/cruiser_dock)
+"hjn" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lantern/syndicate{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/ammo_box/magazine/plastikov9mm{
+	pixel_x = -8
+	},
+/obj/item/ammo_box/magazine/plastikov9mm{
+	pixel_x = -4
+	},
+/obj/item/ammo_box/magazine/plastikov9mm,
+/obj/item/ammo_box/magazine/plastikov9mm{
+	pixel_x = 4
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "hkm" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/smooth,
@@ -20344,6 +20372,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/cruiser_dock)
+"jdT" = (
+/mob/living/basic/bot/cleanbot/medbay,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "jhk" = (
 /obj/structure/marker_beacon/teal,
 /turf/open/misc/asteroid,
@@ -20366,6 +20398,11 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"jQq" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/hardsuit/juggernaut,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "kqc" = (
 /turf/open/floor/iron/stairs/left{
 	dir = 4
@@ -20445,6 +20482,11 @@
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"nKN" = (
+/obj/item/storage/toolbox/syndicate,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "nUK" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -20534,6 +20576,12 @@
 	},
 /turf/open/floor/carpet/red,
 /area/cruiser_dock)
+"pMp" = (
+/obj/machinery/door/puzzle/keycard/syndicate_suit_storage,
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
+/area/centcom/syndicate_mothership/control)
 "qaG" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -20562,6 +20610,15 @@
 "qwu" = (
 /turf/open/floor/plating,
 /area/cruiser_dock)
+"qCv" = (
+/obj/machinery/light/small/directional/west,
+/obj/item/stack/cable_coil,
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "qCL" = (
 /obj/structure/closet/crate/cardboard,
 /obj/item/reagent_containers/cup/glass/bottle/champagne,
@@ -20584,6 +20641,16 @@
 "rdl" = (
 /turf/closed/indestructible/opsglass,
 /area/cruiser_dock)
+"rwj" = (
+/obj/structure/bookcase,
+/obj/item/book/granter/action/spell/random,
+/obj/item/book/bible,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/book/random,
+/obj/item/book/random,
+/obj/item/book/random,
+/turf/open/floor/plating/abductor,
+/area/centcom/central_command_areas/admin)
 "rHE" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -22837,9 +22904,9 @@ aCp
 aCp
 aOd
 aku
-ark
-ark
-ark
+dCp
+jQq
+qCv
 aPL
 avM
 aUe
@@ -23094,9 +23161,9 @@ avL
 avu
 aHg
 aku
+hjn
 ark
-ark
-ark
+nKN
 aPL
 ajG
 acX
@@ -23352,7 +23419,7 @@ aJP
 azB
 aku
 anK
-aQx
+pMp
 anK
 aPL
 amz
@@ -58849,7 +58916,7 @@ azX
 azX
 aqN
 aGY
-aDh
+rwj
 aOn
 aaa
 aaa
@@ -68054,8 +68121,8 @@ aaa
 aaa
 aaa
 awe
-ajM
-aNb
+eFs
+jdT
 acu
 aNb
 aXW
