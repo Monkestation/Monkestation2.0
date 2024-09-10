@@ -3124,13 +3124,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
-"aip" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/evacuation)
 "aiq" = (
 /obj/machinery/computer/records/security/laptop{
 	dir = 4
@@ -11824,13 +11817,6 @@
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
-"aFe" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/evacuation)
 "aFf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -12046,6 +12032,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/item/kirbyplants/random,
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
 "aFI" = (
@@ -14717,11 +14705,6 @@
 /obj/machinery/power/shuttle_engine/large,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/evacuation/ship)
-"aMN" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/grass,
-/area/centcom/central_command_areas/hall)
 "aMO" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22";
@@ -16945,7 +16928,8 @@
 /area/centcom/central_command_areas/admin)
 "aSJ" = (
 /obj/machinery/light/directional/east,
-/obj/structure/flora/tree/jungle/style_3,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/hall)
 "aSK" = (
@@ -19854,7 +19838,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "bYA" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -19880,12 +19864,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"ckM" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "coC" = (
 /obj/structure/sign/poster/quirk/engineering_slogan,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -19931,7 +19909,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "cIh" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
@@ -19951,12 +19929,6 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
-"ddI" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "dki" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
@@ -20322,7 +20294,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "gMl" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 6
@@ -20352,16 +20324,6 @@
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
-"gUS" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/structure/railing/wood{
-	dir = 1
-	},
-/obj/structure/railing/wood{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "gXq" = (
 /obj/structure/punching_bag,
 /turf/open/floor/plating,
@@ -20382,6 +20344,11 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/misc/asteroid,
 /area/cruiser_dock)
+"hfx" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/railing/wood,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation)
 "hke" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -20525,12 +20492,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
-"iCf" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "iCr" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 4
@@ -20544,13 +20505,18 @@
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "iKz" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"iQv" = (
+/obj/structure/flora/bush/large/style_3,
+/obj/item/toy/plush/lizard_plushie,
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/hall)
 "iQV" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/smooth_large,
@@ -20638,6 +20604,13 @@
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/dirt,
 /area/centcom/central_command_areas/retirement_yard)
+"kcm" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/railing/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation)
 "khW" = (
 /obj/machinery/light/small/maintenance/directional/west,
 /obj/effect/spawner/random/trash/garbage{
@@ -20672,7 +20645,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/hedge,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "kIi" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -20686,6 +20659,14 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"kTQ" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/railing/wood{
+	dir = 8
+	},
+/obj/structure/railing/wood,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation)
 "kUz" = (
 /turf/open/floor/iron/stairs/left{
 	dir = 1
@@ -20718,12 +20699,6 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
-"liN" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "lwC" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -20736,7 +20711,7 @@
 "lKm" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "lMm" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -20825,12 +20800,6 @@
 /obj/machinery/fax,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"mMe" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "nbv" = (
 /obj/effect/turf_decal/siding/white,
 /turf/open/misc/dirt,
@@ -20914,12 +20883,6 @@
 	},
 /turf/open/floor/plating,
 /area/cruiser_dock)
-"nVo" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "nWh" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 4
@@ -21097,13 +21060,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"phI" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/structure/railing/wood{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "plB" = (
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
@@ -21136,7 +21092,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "pXo" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
@@ -21179,13 +21135,6 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
-"qpu" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/structure/railing/wood{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "qqF" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -21217,7 +21166,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "qKe" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
@@ -21369,9 +21318,6 @@
 /obj/structure/sign/poster/contraband/free_drone/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"sKU" = (
-/turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_blocker)
 "sNq" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/juggernaut,
@@ -21550,7 +21496,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
+/area/centcom/central_command_areas/hall)
 "tWT" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -21564,11 +21510,6 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/misc/asteroid,
 /area/cruiser_dock)
-"urD" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "uuc" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -21703,16 +21644,22 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
+"vrG" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/railing/wood{
+	dir = 1
+	},
+/obj/structure/railing/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation)
 "vtr" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/evacuation)
-"vuD" = (
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_blocker)
 "vAz" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
@@ -21755,10 +21702,6 @@
 /obj/effect/landmark/ctf,
 /turf/open/space/basic,
 /area/space)
-"vTA" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/ghost_blocker)
 "vZP" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -65524,9 +65467,9 @@ aXb
 auQ
 ayi
 avk
-vTA
-vTA
-urD
+arj
+arj
+aOO
 arj
 arj
 aOO
@@ -65545,7 +65488,7 @@ arj
 aMK
 kEZ
 qGX
-urD
+aOO
 arj
 arj
 aXb
@@ -65782,8 +65725,8 @@ avp
 aNV
 aQl
 bWo
-vTA
-vTA
+arj
+arj
 arj
 arj
 arj
@@ -65802,7 +65745,7 @@ arj
 aMK
 kEZ
 pVf
-vTA
+arj
 arj
 aZP
 aqf
@@ -66039,8 +65982,8 @@ aFA
 aMl
 ayi
 tWL
-qpu
-qpu
+aCu
+aCu
 aCu
 aCu
 aCu
@@ -66059,7 +66002,7 @@ aCu
 ahi
 kEZ
 gHM
-vTA
+arj
 arj
 aXb
 aMl
@@ -66295,9 +66238,6 @@ aod
 aDC
 ang
 aNV
-nVo
-nVo
-nVo
 aaE
 aaE
 aaE
@@ -66314,9 +66254,12 @@ aaE
 aaE
 aaE
 aaE
-liN
+aaE
+aaE
+aaE
+aQl
 lKm
-ckM
+aZP
 aaE
 aqf
 aod
@@ -66552,9 +66495,9 @@ aQo
 aeT
 anh
 avp
-sKU
-sKU
-vuD
+auQ
+auQ
+avp
 auQ
 auQ
 auQ
@@ -66809,9 +66752,6 @@ aKy
 arX
 aMG
 aDj
-mMe
-mMe
-mMe
 aET
 aET
 aET
@@ -66821,6 +66761,9 @@ aET
 aET
 aET
 aET
+aTF
+auQ
+aTF
 aET
 aET
 aET
@@ -66828,9 +66771,9 @@ aET
 aET
 aET
 aET
-ddI
+aYX
 lKm
-iCf
+aJB
 aET
 ahI
 aKy
@@ -67066,19 +67009,19 @@ aMl
 aFA
 aMl
 ayi
-gUS
-phI
-phI
+aZB
 arl
 arl
 arl
 arl
 arl
-acg
-acg
-aNO
-acg
-acg
+arl
+arl
+kTQ
+aTg
+abM
+aml
+vrG
 aOg
 aEy
 acS
@@ -67087,7 +67030,7 @@ aWf
 aPe
 kEZ
 qGX
-vTA
+arj
 arj
 aXb
 aMl
@@ -67324,27 +67267,27 @@ avp
 aDj
 aYX
 bWo
-vTA
-vTA
 arj
 arj
 arj
 arj
 arj
-acg
-aip
-azU
-aFe
-acg
+arj
+arj
+hfx
+aTg
+jmZ
+aml
+kcm
 aUB
-aMN
+aeT
 aoW
 aXz
 aBa
 ait
 kEZ
 pVf
-vTA
+arj
 arj
 aJB
 aET
@@ -67580,28 +67523,28 @@ aXb
 auQ
 ayi
 aZB
-vTA
-vTA
-vTA
+arj
+arj
+arj
 aHi
 arj
 arj
 arj
 arj
-acg
+hfx
 aBt
 aFH
 aPa
-acg
+kcm
 aSJ
 aUB
-aFA
+iQv
 ayz
 aFA
 aja
 kEZ
 gHM
-vTA
+arj
 arj
 arj
 aHi
