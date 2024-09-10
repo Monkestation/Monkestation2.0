@@ -251,6 +251,9 @@
 	possible_transfer_amounts = list(1,5)
 	volume = 5
 
+/obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
+	return
+
 // Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
 /obj/item/reagent_containers/syringe/crude/tribal
 	name = "tribal syringe"
@@ -309,4 +312,4 @@
 	list_reagents = list(/datum/reagent/toxin/fentanyl = 15)
 
 /obj/item/reagent_containers/syringe/contraband/morphine
-	list_reagents = list(/datum/reagent/medicine/morphine = 15)
+	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 15)

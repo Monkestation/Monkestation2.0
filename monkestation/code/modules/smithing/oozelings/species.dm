@@ -9,8 +9,6 @@
 
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		HAIR,FACEHAIR,
 		)
 
 	hair_color = "mutcolor"
@@ -21,7 +19,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/slime
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
-	//mutanttongue = /obj/item/organ/interal/tongue/oozeling
+	mutanttongue = /obj/item/organ/internal/tongue/jelly
 
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -107,6 +105,7 @@
 	if(core_signal)
 		core_signal.Remove(C)
 	..()
+	C.blood_volume = BLOOD_VOLUME_SAFE
 
 /datum/species/oozeling/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()

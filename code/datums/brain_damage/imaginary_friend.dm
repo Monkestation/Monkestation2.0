@@ -52,7 +52,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
-		pic_source = owner,
+		alert_pic = owner,
 		role_name_text = "imaginary friend"
 	)
 	if(LAZYLEN(candidates))
@@ -101,6 +101,11 @@
  */
 /mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
 	. = ..()
+
+	//Monkestation Edit Begin
+	if(istype(src, /mob/camera/imaginary_friend/mentor))
+		return
+	//Monkestation Edit End
 
 	owner = imaginary_friend_owner
 

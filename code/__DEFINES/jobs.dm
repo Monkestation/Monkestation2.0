@@ -40,6 +40,7 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BLUESHIELD "Blueshield" //Monke edit
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -120,6 +121,7 @@
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
+#define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -182,6 +184,9 @@
 #define DEPARTMENT_CAPTAIN "Captain"
 #define DEPARTMENT_BITFLAG_SPOOKTOBER (1<<10)
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
+
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
+#define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.

@@ -69,7 +69,7 @@
 /datum/ui_module/volume_mixer/proc/set_channel_volume(channel, vol, mob/user)
 	if((channel == CHANNEL_LOBBYMUSIC) || (channel == CHANNEL_MASTER_VOLUME))
 		if(isnewplayer(user))
-			user.client.media.update_volume(0.5 + (vol * 0.05))
+			user.client.media.update_volume((vol))
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE
@@ -113,3 +113,9 @@
 			return "Mob Sounds"
 		if(CHANNEL_PRUDE)
 			return "Prude Sounds"
+		if(CHANNEL_SQUEAK)
+			return "Squeaks / Plushies"
+		if(CHANNEL_MOB_EMOTES)
+			return "Mob Emotes"
+		if(CHANNEL_SILICON_EMOTES)
+			return "Silicon Emotes"

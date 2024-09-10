@@ -80,7 +80,13 @@ Burning extracts:
 	effect_desc = "Instantly destroys walls around you."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
-	for(var/turf/closed/wall/W in range(1,get_turf(user)))
+//monkestation edit start
+	var/turf/our_turf = get_turf(src)
+	if(GLOB.clock_ark && on_reebe(our_turf) && get_dist(our_turf, GLOB.clock_ark) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
+		balloon_alert(user, "a near by energy source is stopping \the [src] from activating!")
+		return FALSE
+//monkestation edit end
+	for(var/turf/closed/wall/W in range(1, our_turf)) //monkestation edit: replaces get_turf(src) with our_turf
 		W.dismantle_wall(1)
 		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
 	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
@@ -182,12 +188,13 @@ Burning extracts:
 	effect_desc = "Shatters all lights in the current room."
 
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
+	var/area/user_area = get_area(user)
+	if(isnull(user_area.apc))
+		user.visible_message(span_danger("[src] releases a colorful wave of energy, but nothing seems to happen."))
+		return
+
+	user_area.apc.break_lights()
 	user.visible_message(span_danger("[src] releases a colorful wave of energy, which shatters the lights!"))
-	var/area/A = get_area(user.loc)
-	for(var/obj/machinery/light/L in A) //Shamelessly copied from the APC effect.
-		L.on = TRUE
-		L.break_light_tube()
-		stoplag()
 	..()
 
 /obj/item/slimecross/burning/red

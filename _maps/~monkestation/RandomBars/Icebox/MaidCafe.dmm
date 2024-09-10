@@ -624,9 +624,6 @@
 /obj/structure/table/wood,
 /obj/item/food/grown/tea/astra,
 /obj/item/food/grown/soybeans,
-/obj/structure/sign/poster/traitor/random{
-	pixel_y = -28
-	},
 /obj/machinery/button{
 	pixel_x = 8;
 	pixel_y = 9;
@@ -636,6 +633,7 @@
 	pixel_y = -4;
 	pixel_x = 6
 	},
+/obj/structure/sign/poster/official/ue_no/directional/south,
 /turf/open/floor/carpet/black,
 /area/station/service/bar)
 "Sl" = (
@@ -731,6 +729,10 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
+/turf/open/floor/wood/tile,
+/area/station/service/bar)
+"UW" = (
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "VG" = (
@@ -929,7 +931,7 @@ zS
 WR
 Jg
 pA
-pA
+UW
 OZ
 Lh
 ax

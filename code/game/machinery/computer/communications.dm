@@ -287,8 +287,13 @@
 			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated(usr) || issilicon(usr) || syndicate)
+			var/clock_user = IS_CLOCK(usr) //monkestation edit
+			if (!authenticated(usr) || issilicon(usr) || syndicate || (clock_user && GLOB.main_clock_cult?.member_recalled)) //monkestation edit: adds the CWC check
 				return
+//monkestation edit start
+			if(clock_user)
+				GLOB.main_clock_cult?.member_recalled = TRUE
+//monkestation edit end
 			SSshuttle.cancelEvac(usr)
 		if ("requestNukeCodes")
 			if (!authenticated_as_non_silicon_captain(usr))
@@ -612,6 +617,7 @@
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
+						"occupancy_limit" = shuttle_template.occupancy_limit,
 						"creditCost" = shuttle_template.credit_cost,
 						"initial_cost" = initial(shuttle_template.credit_cost),
 						"emagOnly" = shuttle_template.emag_only,

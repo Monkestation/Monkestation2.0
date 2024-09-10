@@ -115,6 +115,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
 		return
 
+	//Monkestation Edit Begin
+	if(mentor_friend(href_list))
+		return
+	//Monkestation Edit End
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -961,6 +966,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(failed && !(ckey in GLOB.interviews.approved_ckeys))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
+
+	if(ckey in GLOB.interviews.approved_ckeys)
+		return FALSE
+
 	return failed
 
 /client/Click(atom/object, atom/location, control, params)

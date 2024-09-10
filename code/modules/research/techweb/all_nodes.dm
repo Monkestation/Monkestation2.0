@@ -15,6 +15,11 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"big_manipulator",
+		"assembler",
+		"manipulator_filter",
+		"manipulator_filter_cargo",
+		"manipulator_filter_internal",
 		"bodybag",
 		"bounced_radio",
 		"bowl",
@@ -63,6 +68,8 @@
 		"infrared_emitter",
 		"intercom_frame",
 		"kitchen_knife",
+		"recipe_card",
+		"bottling_kit",
 		"laptop",
 		"light_bulb",
 		"light_replacer",
@@ -98,6 +105,8 @@
 		"sec_beanbag_slug",
 		"sec_dart",
 		"buckshot_shell",
+		"sec_buckshot_shell",
+		"sec_shotgun_slug",
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
@@ -281,6 +290,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -449,6 +459,7 @@
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
+		"surgical_gloves", //Monkestation Edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
@@ -752,6 +763,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
@@ -1282,6 +1294,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"dna_disk",
+		"dnainfuser",
 		"dnascanner",
 		"scan_console",
 	)
@@ -1424,6 +1437,9 @@
 		"borg_upgrade_damagemod",
 		"borg_upgrade_rangemod",
 		"cargoexpress",
+		"b_smelter",
+		"b_refinery",
+		"brm",
 		"cooldownmod",
 		"damagemod",
 		"drill",
@@ -1487,6 +1503,7 @@
 		"seed_extractor",
 		"adv_watering_can",
 		"plantgenes",
+		"composters", // monkestation edit: build composters
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,

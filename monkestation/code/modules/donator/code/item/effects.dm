@@ -91,3 +91,16 @@
 	name = "orangutan transformation"
 	icon_state = "orangutan"
 	animal_transformation = /mob/living/basic/pet/orangutan
+
+
+//Bluedragon66
+/obj/item/effect_granter/donator/fluffykobold
+	name = "fluffy kobold transformation"
+	icon_state = "Bluedragon66"
+	animal_transformation = /mob/living/basic/pet/fluffykobold
+
+/obj/item/effect_granter/donator/darkscug
+	name = "night slugcat transformation"
+	icon = 'icons/mob/simple/slugcats.dmi'
+	icon_state = "scug_nightcat"
+	animal_transformation = /mob/living/basic/pet/darkscug

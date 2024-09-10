@@ -149,7 +149,7 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.caller_ref.resolve()
+	var/atom/movable/our_movable = pass_info.caller_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
@@ -161,6 +161,9 @@
 	// Create plating under tiled floor we try to create directly onto the air
 	PlaceOnTop(/turf/open/floor/plating, flags = flags)
 	PlaceOnTop(new_floor_path, flags = flags)
+
+/turf/open/openspace/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

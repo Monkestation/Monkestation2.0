@@ -17,7 +17,9 @@
 
 /obj/structure/window_sill/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
+	tool.play_tool_sound(src, 100)
 	deconstruct()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window_sill/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	new /obj/item/stack/sheet/iron(get_turf(src))
@@ -57,6 +59,14 @@
 			return FALSE
 		if(do_after(user, 2 SECONDS, src))
 			new /obj/structure/window/fulltile(get_turf(src))
+			stack_item.amount -= 2
+			return TRUE
+
+	if(istype(attacking_item, /obj/item/stack/rods))
+		if(stack_item.amount < 2)
+			return FALSE
+		if(do_after(user, 2 SECONDS, src))
+			new /obj/structure/grille/window_sill(get_turf(src))
 			stack_item.amount -= 2
 			return TRUE
 
