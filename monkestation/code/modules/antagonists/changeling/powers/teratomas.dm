@@ -41,6 +41,9 @@
 		return FALSE
 	var/mob/living/carbon/human/species/teratoma/goober = new(user.drop_location())
 	goober.key = candidate.key
+	if(!goober.mind)
+		goober.mind_initialize()
+	goober.mind.add_antag_datum(/datum/antagonist/teratoma)
 	to_chat(goober, span_notice("You burst out from [user]'s chest!"))
 	SEND_SOUND(goober, sound('sound/effects/blobattack.ogg'))
 	return TRUE
