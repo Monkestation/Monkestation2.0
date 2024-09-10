@@ -19886,9 +19886,15 @@
 /area/station/science/research/abandoned)
 "eKF" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/orange/anticorner,
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -5
+	},
+/obj/item/toy/crayon/orange{
+	pixel_x = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "eKL" = (
@@ -22042,6 +22048,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "fju" = (
@@ -28986,6 +28993,7 @@
 	pixel_y = 24;
 	pixel_x = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "gQz" = (
@@ -33494,12 +33502,17 @@
 /area/station/maintenance/department/science)
 "hXi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/door/directional/south{
 	pixel_x = -7;
 	id = "Isolation"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 4;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("isolation");
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
@@ -59163,9 +59176,6 @@
 /area/station/engineering/atmos)
 "oaO" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "oaU" = (
@@ -62252,17 +62262,12 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "oPp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/orange/half{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -5
-	},
-/obj/item/toy/crayon/orange{
-	pixel_x = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "oPz" = (
@@ -80244,9 +80249,11 @@
 /area/station/ai_monitored/security/armory)
 "tew" = (
 /obj/structure/cable,
-/obj/machinery/camera/directional/south,
 /obj/effect/turf_decal/tile/orange/anticorner{
 	dir = 8
+	},
+/obj/machinery/camera/directional/south{
+	network = list("ss13","isolation")
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
@@ -81775,12 +81782,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "tzp" = (
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 4;
-	pixel_x = -30;
-	network = list("isolation");
-	name = "isolation room monitor"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "tzK" = (
@@ -83238,7 +83242,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "tPG" = (
@@ -151427,8 +151430,8 @@ mcb
 hLz
 mSe
 mSe
-mSe
 fjl
+mSe
 vgQ
 hYa
 nHx
@@ -151941,7 +151944,7 @@ vVa
 onT
 ydH
 qfM
-krO
+mog
 oaO
 dwV
 dEv

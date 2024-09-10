@@ -10715,7 +10715,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "dXR" = (
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/directional/west{
+	network = list("ss13","isolation")
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -35500,8 +35502,7 @@
 /area/station/maintenance/department/engine)
 "mzD" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/station/security/prison/safe)
 "mzI" = (
 /obj/machinery/door/airlock/grunge{
