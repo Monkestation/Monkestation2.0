@@ -25,7 +25,7 @@
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = TRUE
 
-/datum/component/riding/creature/Destroy(force, silent)
+/datum/component/riding/creature/Destroy(force)
 	unequip_buckle_inhands(parent)
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
@@ -316,8 +316,10 @@
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
 		if(istype(robot_parent.model))
-			rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
-			rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
+			if(dir2text(dir) in robot_parent.model.ride_offset_x)
+				rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
+			if(dir2text(dir) in robot_parent.model.ride_offset_y)
+				rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
 
 //now onto every other ridable mob//
 
@@ -401,7 +403,7 @@
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 
-/datum/component/riding/creature/goliath/Destroy(force, silent)
+/datum/component/riding/creature/goliath/Destroy(force)
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 	return ..()

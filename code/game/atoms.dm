@@ -492,7 +492,7 @@
 		if(mobile_docking_port.launch_status != check_for_launch_status)
 			continue
 		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-			if(current_turf in shuttle_area.get_contained_turfs())
+			if(shuttle_area == current_turf.loc)
 				return TRUE
 
 	return FALSE
@@ -561,7 +561,8 @@
 	return null
 
 ///Return the current air environment in this atom
-/atom/proc/return_air()
+/atom/proc/return_air() as /datum/gas_mixture
+	RETURN_TYPE(/datum/gas_mixture)
 	if(loc)
 		return loc.return_air()
 	else
@@ -2114,6 +2115,7 @@
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
+	var/misc_context = ""
 
 	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
@@ -2175,8 +2177,17 @@
 				if (shift_lmb_ctrl_shift_lmb_line != "")
 					extra_lines++
 
+				if(SCREENTIP_CONTEXT_MISC in context)
+					misc_context += context[SCREENTIP_CONTEXT_MISC]
+
+				if (misc_context != "")
+					extra_lines++
+
 				if(extra_lines)
-					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					if(misc_context != "")
+						extra_context = "<br><span class='subcontext'>[misc_context]\n[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					else
+						extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 					//first extra line pushes atom name line up 11px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
 					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
 

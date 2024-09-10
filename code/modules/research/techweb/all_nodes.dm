@@ -15,6 +15,11 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"big_manipulator",
+		"assembler",
+		"manipulator_filter",
+		"manipulator_filter_cargo",
+		"manipulator_filter_internal",
 		"bodybag",
 		"bounced_radio",
 		"bowl",
@@ -63,6 +68,8 @@
 		"infrared_emitter",
 		"intercom_frame",
 		"kitchen_knife",
+		"recipe_card",
+		"bottling_kit",
 		"laptop",
 		"light_bulb",
 		"light_replacer",
@@ -452,6 +459,7 @@
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
+		"surgical_gloves", //Monkestation Edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
@@ -1429,6 +1437,9 @@
 		"borg_upgrade_damagemod",
 		"borg_upgrade_rangemod",
 		"cargoexpress",
+		"b_smelter",
+		"b_refinery",
+		"brm",
 		"cooldownmod",
 		"damagemod",
 		"drill",

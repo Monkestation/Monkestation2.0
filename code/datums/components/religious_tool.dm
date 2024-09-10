@@ -14,7 +14,7 @@
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
 	///Sets the type for catalyst
-	var/catalyst_type = /obj/item/storage/book/bible
+	var/catalyst_type = /obj/item/book/bible
 	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
 	var/force_catalyst_afterattack = FALSE
 	var/datum/callback/after_sect_select_cb
@@ -28,7 +28,7 @@
 	if(override_catalyst_type)
 		catalyst_type = override_catalyst_type
 
-/datum/component/religious_tool/Destroy(force, silent)
+/datum/component/religious_tool/Destroy(force)
 	easy_access_sect = null
 	performing_rite = null
 	catalyst_type = null
