@@ -241,6 +241,10 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
+"gn" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "go" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/maintenance/directional/east,
@@ -249,9 +253,10 @@
 "gA" = (
 /obj/item/flashlight/lantern/syndicate{
 	on = 1;
-	pixel_x = 7;
-	pixel_y = 1
+	pixel_x = -12;
+	pixel_y = -10
 	},
+/obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "gJ" = (
@@ -2912,7 +2917,7 @@ rG
 rG
 VK
 VK
-VK
+gn
 QI
 VK
 VK
@@ -2943,7 +2948,7 @@ VK
 VK
 VK
 VK
-QI
+gn
 ym
 fz
 QI
