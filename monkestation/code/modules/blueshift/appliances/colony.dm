@@ -7,7 +7,10 @@
 		but good old electricity."
 	icon = 'monkestation/code/modules/blueshift/icons/chemistry_machines.dmi'
 	icon_state = "water_synth"
+	active_power_usage = 0
+	amount = 100
 	anchored = FALSE
+	reagent_id = /datum/reagent/water
 	/// Reagents that this can dispense, overrides the default list on init
 	var/static/list/synthesizable_reagents = list(
 		/datum/reagent/water,
@@ -20,6 +23,9 @@
 	dispensable_reagents = synthesizable_reagents
 	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
+
+/obj/machinery/plumbing/synthesizer/water_synth/ui_interact(mob/user, datum/tgui/ui)
+	return FALSE // nah its a flat 100 with no drain
 
 // Deployable item for cargo for the water synth
 
@@ -541,9 +547,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cell_charger_multi/wall_mounted, 29)
 	layer = ABOVE_MOB_LAYER
 	can_change_cable_layer = TRUE
 	/// How much power the turbine makes without a storm
-	var/regular_power_production = 2500
+	var/regular_power_production = 25 KW
 	/// How much power the turbine makes during a storm
-	var/storm_power_production = 10000
+	var/storm_power_production = 100 KW
 	/// Is our pressure too low to function?
 	var/pressure_too_low = FALSE
 	/// Minimum external pressure needed to work

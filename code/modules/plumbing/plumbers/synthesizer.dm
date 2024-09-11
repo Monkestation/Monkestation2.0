@@ -20,6 +20,7 @@
 	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
+		/datum/reagent/brine,
 		/datum/reagent/carbon,
 		/datum/reagent/chlorine,
 		/datum/reagent/copper,
@@ -43,6 +44,7 @@
 		/datum/reagent/toxin/acid,
 		/datum/reagent/water,
 		/datum/reagent/fuel,
+		/datum/reagent/silver
 	)
 
 /obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt, layer)

@@ -92,3 +92,13 @@
 		/datum/stock_part/manipulator = 1,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/matter_bin = 10)
+
+/obj/item/circuitboard/machine/composters
+	name = "NT-Brand Auto Composter (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	desc = "Comes with a small amount solder of arranged in the corner: \"If you can read this, you're too close.\""
+	build_path = /obj/machinery/composters
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/manipulator = 1,
+	)

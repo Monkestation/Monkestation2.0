@@ -173,6 +173,8 @@
 	I.disease_contact(src, check_zone(user.zone_selected))
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[initial(I.name)]"))
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
+	if(I.pain_damage)
+		cause_pain(target_area, I.pain_damage, I.damtype)
 
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, src)
@@ -194,12 +196,24 @@
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
 	apply_damage(15, BRUTE, wound_bonus=10)
 
-/mob/living/carbon/human/attack_hand(mob/user, list/modifiers)
+/mob/living/carbon/human/attack_hand(mob/living/user, list/modifiers)
 	if(..()) //to allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		dna.species.spec_attack_hand(H, src, null, modifiers)
+
+
+	var/touch_zone = zone_selected
+	var/used_bodypart = HANDS
+	var/block = 0
+	var/bleeding = 0
+	// biting causes the check to consider that both sides are bleeding, allowing for blood-only disease transmission through biting.
+	if ((user.check_contact_sterility(used_bodypart)) || check_contact_sterility(touch_zone))//only one side has to wear protective clothing to prevent contact infection
+		block = 1
+	if ((user.check_bodypart_bleeding(used_bodypart)) && (check_bodypart_bleeding(touch_zone)))//both sides have to be bleeding to allow for blood infections
+		bleeding = 1
+	share_contact_diseases(user,block,bleeding)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

@@ -9,8 +9,6 @@
 
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		HAIR,FACEHAIR,
 		)
 
 	hair_color = "mutcolor"
@@ -107,6 +105,7 @@
 	if(core_signal)
 		core_signal.Remove(C)
 	..()
+	C.blood_volume = BLOOD_VOLUME_SAFE
 
 /datum/species/oozeling/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()

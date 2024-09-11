@@ -342,6 +342,7 @@
 				ROLE_SENTIENCE,
 			),
 			"Antagonist Positions" = list(
+				ROLE_PLAGUERAT,
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,
@@ -371,6 +372,7 @@
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
 				BAN_OPFOR,
+				ROLE_ASSAULT_OPERATIVE,
 			),
 		)
 		for(var/department in long_job_lists)
@@ -1056,7 +1058,7 @@
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
 		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
-			SSgarbage.HardDelete(player_client, override = TRUE)
+			SSgarbage.HardDelete(player_client)
 			if(player_client)
 				qdel(player_client)
 
@@ -1067,7 +1069,7 @@
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
-				SSgarbage.HardDelete(other_player_client, override = TRUE)
+				SSgarbage.HardDelete(other_player_client)
 				if(other_player_client)
 					qdel(other_player_client)
 

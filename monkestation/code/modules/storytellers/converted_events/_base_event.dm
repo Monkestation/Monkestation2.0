@@ -252,17 +252,22 @@
 					role = antag_flag,
 					poll_time = 20 SECONDS,
 					group = list(picked_mob),
-					pic_source = antag_datum,
+					alert_pic = antag_datum,
 					role_name_text = lowertext(cast_control.name),
+					chat_text_border_icon = antag_datum,
+					show_candidate_amount = FALSE,
 				)
 		else
+			if(!length(weighted_candidates))
+				break
 			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
 			var/mob/picked_mob = picked_client.mob
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
+
 	for(var/i in 1 to antag_count)
-		if(!length(weighted_candidates))
+		if(!length(candidates))
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
@@ -316,14 +321,15 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			pic_source = antag_datum,
+			alert_pic = antag_datum,
 			role_name_text = lowertext(cast_control.name),
+			chat_text_border_icon = antag_datum,
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	for(var/i in 1 to antag_count)
-		if(!length(candidates))
+		if(!length(weighted_candidates))
 			break
 
 		var/client/mob_client = pick_n_take_weighted(weighted_candidates)

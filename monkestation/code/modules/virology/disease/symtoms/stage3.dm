@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		var/mob/living/carbon/human/H = mob
 		H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 50)
 	else
-		mob.setCloneLoss(50)
+		mob.setToxLoss(50)
 
 /datum/symptom/hallucinations
 	name = "Hallucinational Syndrome"
@@ -451,8 +451,12 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Causes the infected to oversynthesize stem cells engineered towards organ generation, causing damage to the host's organs in the process. Said generated organs are expelled from the body upon completion."
 	stage = 3
 	badness = EFFECT_DANGER_HARMFUL
+	COOLDOWN_DECLARE(organ_cooldown)
 
 /datum/symptom/teratoma/activate(mob/living/carbon/mob)
+	if(!COOLDOWN_FINISHED(src, organ_cooldown))
+		return
+	COOLDOWN_START(src, organ_cooldown, 2 MINUTES)
 	var/fail_counter = 0
 	var/not_passed = TRUE
 	var/obj/item/organ/spawned_organ
@@ -667,10 +671,9 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	name = "Metabolic Boost"
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 		but also causing increased hunger."
-	max_multiplier = 5
+	max_multiplier = 10
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
-
 
 /datum/symptom/metabolism/activate(mob/living/carbon/mob)
 	if(!iscarbon(mob))
@@ -700,3 +703,124 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 			if(3)
 				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
+
+
+/datum/symptom/darkness
+	name = "Nocturnal Regeneration"
+	desc = "The virus is able to mend the host's flesh when in conditions of low light, repairing physical damage. More effective against brute damage."
+	max_multiplier = 8
+	stage = 3
+	max_chance = 33
+	var/passive_message = span_notice("You feel tingling on your skin as light passes over it.")
+
+/datum/symptom/darkness/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	. = ..()
+	switch(round(multiplier))
+		if(4, 5, 6, 7, 8)
+			if(!CanHeal(mob))
+				return
+			if(passive_message_condition(mob))
+				to_chat(mob, passive_message)
+			Heal(mob, multiplier)
+		else
+			multiplier = min(multiplier + 0.1, max_multiplier)
+
+/datum/symptom/darkness/proc/CanHeal(mob/living/carbon/mob)
+	var/light_amount = 0
+	if(isturf(mob.loc)) //else, there's considered to be no light
+		var/turf/mob_turf = mob.loc
+		light_amount = min(1, mob_turf.get_lumcount()) - 0.5
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			return power
+
+/datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
+	var/heal_amt = 2 * actual_power
+	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+	if(!length(parts))
+		return
+	if(prob(5))
+		to_chat(victim, span_notice("The darkness soothes and mends your wounds."))
+	var/brute_heal = heal_amt / length(parts)
+	var/burn_heal = brute_heal * 0.5
+	victim.heal_overall_damage(brute = brute_heal, burn = burn_heal, required_bodytype = BODYTYPE_ORGANIC)
+	return TRUE
+
+/datum/symptom/darkness/proc/passive_message_condition(mob/living/victim)
+	if(victim.getBruteLoss() || victim.getFireLoss())
+		return TRUE
+	return FALSE
+
+/datum/symptom/coma
+	name = "Regenerative Coma"
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
+	max_multiplier = 15
+	max_chance = 100
+	stage = 3
+
+	var/passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
+	var/added_to_mob = FALSE
+	var/active_coma = FALSE //to prevent multiple coma procs
+
+/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	. = ..()
+	if(!added_to_mob && max_multiplier >= 12)
+		added_to_mob = TRUE
+		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
+
+	var/effectiveness = CanHeal(mob)
+	if(!effectiveness)
+		return
+	if(passive_message_condition(mob))
+		to_chat(mob, passive_message)
+	Heal(mob, effectiveness)
+	return
+
+/datum/symptom/coma/side_effect(mob/living/mob)
+	if(active_coma)
+		uncoma()
+	if(!added_to_mob)
+		return
+	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
+
+/datum/symptom/coma/proc/CanHeal(mob/living/victim)
+	if(HAS_TRAIT(victim, TRAIT_DEATHCOMA))
+		return multiplier
+	if(victim.IsSleeping())
+		return multiplier * 0.25 //Voluntary unconsciousness yields lower healing.
+	switch(victim.stat)
+		if(UNCONSCIOUS, HARD_CRIT)
+			return multiplier * 0.9
+		if(SOFT_CRIT)
+			return multiplier * 0.5
+	if((victim.getBruteLoss() + victim.getFireLoss()) >= 70 && !active_coma)
+		to_chat(victim, span_warning("You feel yourself slip into a regenerative coma..."))
+		active_coma = TRUE
+		addtimer(CALLBACK(src, PROC_REF(coma), victim), 6 SECONDS)
+	return FALSE
+
+/datum/symptom/coma/proc/coma(mob/living/victim)
+	if(QDELETED(victim) || victim.stat == DEAD)
+		return
+	victim.fakedeath("regenerative_coma", TRUE)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 30 SECONDS)
+
+/datum/symptom/coma/proc/uncoma(mob/living/victim)
+	if(QDELETED(victim) || !active_coma)
+		return
+	active_coma = FALSE
+	victim.cure_fakedeath("regenerative_coma")
+
+/datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
+	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
+	if(!length(parts))
+		return
+	var/heal_amt = (4 * actual_power) / length(parts)
+	victim.heal_overall_damage(brute = heal_amt, burn = heal_amt)
+	if(active_coma && (victim.getBruteLoss() + victim.getFireLoss()) == 0)
+		uncoma(victim)
+	return TRUE
+
+/datum/symptom/coma/proc/passive_message_condition(mob/living/victim)
+	if((victim.getBruteLoss() + victim.getFireLoss()) > 30)
+		return TRUE
+	return FALSE
