@@ -89,6 +89,10 @@
 "bH" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/listeningstation/lobby)
+"bK" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "ca" = (
 /obj/item/ammo_box/magazine/m9mm{
 	pixel_x = 7;
@@ -161,10 +165,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
-"dB" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "dW" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/hydroponics/soil,
@@ -590,6 +590,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/computer/stationalert,
+/obj/item/circuitboard/computer/powermonitor{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/airlock_painter/decal,
+/obj/item/airlock_painter/decal/tile{
+	pixel_x = -1;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/support)
 "qD" = (
@@ -2936,7 +2947,7 @@ rG
 rG
 go
 go
-dB
+bK
 QI
 go
 go
@@ -2967,7 +2978,7 @@ go
 go
 go
 go
-dB
+bK
 ym
 fz
 QI
