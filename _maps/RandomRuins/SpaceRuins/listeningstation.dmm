@@ -90,18 +90,24 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "ca" = (
-/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 7;
+	pixel_y = 2
+	},
 /obj/structure/closet/syndicate,
 /obj/item/clothing/under/color/black,
 /obj/item/clothing/head/soft/black{
-	pixel_x = 1;
-	pixel_y = -1
+	pixel_x = -5;
+	pixel_y = 9
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/storage/toolbox/emergency,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
@@ -479,10 +485,6 @@
 /obj/item/bodypart/arm/right/robot/surplus,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
-"nU" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "of" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -771,6 +773,10 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/listeningstation/asteroid)
+"xv" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "xR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2919,7 +2925,7 @@ rG
 rG
 go
 go
-nU
+xv
 QI
 go
 go
@@ -2950,7 +2956,7 @@ go
 go
 go
 go
-nU
+xv
 ym
 fz
 QI
