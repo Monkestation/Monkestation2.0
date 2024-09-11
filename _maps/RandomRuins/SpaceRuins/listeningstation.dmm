@@ -87,7 +87,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "bH" = (
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/rust,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "ca" = (
 /obj/item/ammo_box/magazine/m9mm,
@@ -372,10 +372,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
-"kr" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "kt" = (
 /obj/item/storage/bag/trash/filled,
 /turf/open/misc/asteroid,
@@ -1900,6 +1896,10 @@
 /obj/structure/bed/medical/emergency,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
+"ZB" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 
 (1,1,1) = {"
 AV
@@ -2915,7 +2915,7 @@ rG
 rG
 go
 go
-kr
+ZB
 QI
 go
 go
@@ -2946,7 +2946,7 @@ go
 go
 go
 go
-kr
+ZB
 ym
 fz
 QI
