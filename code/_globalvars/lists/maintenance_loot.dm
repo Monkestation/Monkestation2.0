@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 //monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 4,
-		/obj/item/a_gift/anything/wiz_name = 4,
+		/obj/item/a_gift/anything/wiz_name = 2,
 		) = 8,
 //monkestation edit end
 
