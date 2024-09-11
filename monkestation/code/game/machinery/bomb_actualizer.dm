@@ -44,6 +44,7 @@
 	var/beepsound = 'sound/items/timer.ogg'
 	var/scarywarning = 'sound/misc/bloblarm.ogg'
 	var/verybadsound = 'sound/machines/engine_alert1.ogg'
+	var/youdied = 'sound/misc/guitarreverb.ogg'
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -172,7 +173,10 @@
 			radio.talk_into(src, "FAILSAFE DISENGAGED, DETONATION IMMINENT", common_channel)
 			playsound(loc, verybadsound, 80, FALSE)
 			stage++
-
+	if(seconds_remaining() == 1)
+		if(stage == 3)
+			playsound(loc, youdied, 100, FALSE, falloff_distance = 45)
+			stage++
 
 	if(active && (timer <= world.time))
 		active = FALSE
