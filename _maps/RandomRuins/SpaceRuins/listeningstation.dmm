@@ -100,6 +100,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/emergency,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "ch" = (
@@ -336,11 +339,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
-	req_access = list("syndicate");
-	name = "Emergency Stasis Pod"
-	},
 /turf/open/floor/circuit/red/anim,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "jq" = (
@@ -479,6 +477,10 @@
 "nM" = (
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/bodypart/arm/right/robot/surplus,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
+"nU" = (
+/obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "of" = (
@@ -813,10 +815,13 @@
 	dir = 4
 	},
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/blood/o_minus{
+	pixel_x = -5;
+	pixel_y = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/medical)
@@ -1291,6 +1296,9 @@
 "Lk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "Lq" = (
@@ -1896,10 +1904,6 @@
 /obj/structure/bed/medical/emergency,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
-"ZB" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 
 (1,1,1) = {"
 AV
@@ -2915,7 +2919,7 @@ rG
 rG
 go
 go
-ZB
+nU
 QI
 go
 go
@@ -2946,7 +2950,7 @@ go
 go
 go
 go
-ZB
+nU
 ym
 fz
 QI
