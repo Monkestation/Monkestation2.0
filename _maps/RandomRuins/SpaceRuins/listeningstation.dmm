@@ -105,10 +105,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/item/storage/toolbox/emergency{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "ch" = (
@@ -345,6 +341,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/circuit/red/anim,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "jq" = (
@@ -397,6 +394,7 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "la" = (
@@ -755,6 +753,10 @@
 /obj/item/stock_parts/manipulator,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"wy" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "wA" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/delivery,
@@ -773,10 +775,6 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/has_grav/listeningstation/asteroid)
-"xv" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "xR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -842,9 +840,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "zp" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/closet/emcloset/wall/directional/north,
+/obj/item/crowbar/red,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "zv" = (
@@ -2925,7 +2924,7 @@ rG
 rG
 go
 go
-xv
+wy
 QI
 go
 go
@@ -2956,7 +2955,7 @@ go
 go
 go
 go
-xv
+wy
 ym
 fz
 QI
