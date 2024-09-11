@@ -22,6 +22,13 @@
 	if(usr?.client)
 		usr.client.running_find_references = type
 
+#ifdef UNIT_TESTS
+	if(world.system_type == UNIX)
+		log_reftracker("Currently sleeping procs [byond_status()]")
+	else
+		log_reftracker("Sleeping procs info not available on [world.system_type]")
+#endif
+
 	log_reftracker("Beginning search for references to a [type].")
 
 	var/starting_time = world.time

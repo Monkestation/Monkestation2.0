@@ -63,6 +63,8 @@ jobs:
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
+          cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
+          chmod +x ~/.byond/bin/libbyond_sleeping_procs.so
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
         if: always()
