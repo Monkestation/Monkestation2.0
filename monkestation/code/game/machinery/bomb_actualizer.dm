@@ -26,7 +26,7 @@
 	//combined gasmix to determine the simulation to reality
 	var/datum/gas_mixture/combined_gasmix
 	//Timer till detonation in seconds
-	var/default_time = 42 SECONDS
+	var/default_time = 420 SECONDS
 	//used to track current world time
 	var/timer = null
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
@@ -138,9 +138,9 @@
 			countdown.start()
 			active = TRUE
 			next_beep = world.time + 1 SECONDS
-			timer = world.time + (default_time * 1 SECONDS)
+			timer = world.time + (default_time)
 			begin_processing()
-			priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity \
+			priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity. \
 						Remove the tampering device within 7 Minutes or evacuate the localized areas. \
 						Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
 			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
@@ -163,22 +163,19 @@
 
 		playsound(loc, beepsound, volume, FALSE)
 		next_beep = world.time +10
-	if(seconds_remaining() == 60)
-		radio.talk_into(src, "WARNING: DETONATION IN ONE MINUTE.", common_channel)
-		if(!stage)
+	if(seconds_remaining() <= 60)
+		if(stage == 0)
+			radio.talk_into(src, "WARNING: DETONATION IN ONE MINUTE.", common_channel)
 			playsound(loc, scarywarning, volume, FALSE)
 			stage++
-	if(seconds_remaining() == 10)
-		if(stage)
+	if(seconds_remaining() <= 10)
+		if(stage == 1)
 			radio.talk_into(src, "FAILSAFE DISENGAGED, DETONATION IMMINENT", common_channel)
 			playsound(loc, verybadsound, 80, FALSE)
 			stage++
-	if(seconds_remaining() == 1)
-		if(stage == 3)
-			playsound(loc, youdied, 100, FALSE, falloff_distance = 45)
-			stage++
 
 	if(active && (timer <= world.time))
+		playsound(loc, youdied, 100, FALSE, 45)
 		active = FALSE
 		stage = 0
 		update_appearance()
@@ -187,7 +184,7 @@
 
 /obj/machinery/bomb_actualizer/proc/seconds_remaining()
 	if(active)
-		. = max(0, round((timer - world.time) / 1 SECONDS))
+		. = max(0, round(timer - world.time) / 10)
 
 	else
 		. = 420
