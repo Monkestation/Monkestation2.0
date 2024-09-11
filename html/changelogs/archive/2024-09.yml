@@ -199,3 +199,45 @@
   Wisemonster:
   - bugfix: Fixed the disease from the random heart attack event not progressing into
       later stages.
+2024-09-10:
+  Absolucy:
+  - bugfix: Fixed name tags being incredibly off-center for some mobs.
+  - bugfix: Name tags should be properly updated when VVing a mob's name now.
+  - qol: Name tags are now always right-side up, rather than rotating with the mob.
+  - qol: Name tags no longer inherit their mob's color.
+  - qol: Trying to take off your own memento mori will ask you if you're *really*
+      sure first.
+  - refactor: Refactored heretic sacrifices to track minds instead of bodies.
+  - bugfix: Heretics can now properly sacrifice oozeling cores.
+  - bugfix: Heretic sacrifice targets will still be valid if they somehow change bodies,
+      i.e if they're cloned.
+  - qol: Heretic roundend report will now bold the names of targets who were actually
+      sacrificed.
+  - qol: Heretics will no longer roll off-station, non-crew, disconnected, or AFK
+      players as targets.
+  Odairu:
+  - rscadd: ability to pixel shift items and player characters
+2024-09-11:
+  Absolucy:
+  - balance: The NPCs from the Syndicate Shocktroops event now have much less health,
+      deal less damage, and have very slightly longer attack cooldowns. This does
+      not affect the NPCs in the space ruins and such, only the ones from the event.
+  - bugfix: Syndicate Shocktroops will no longer spawn in stupid places like in the
+      middle of a wall.
+  DexeeXI:
+  - bugfix: BP can now access the medical records laptop.
+  - balance: All Maps, BP access is restricted to only the medbay front doors, side
+      doors, appropriate maintenance doors and the medbay treatment center only. BP
+      may only gain full medical access during skeleton crew manning.
+  - rscadd: BP now has a new, wicked sick PDA.
+  - balance: BP now has a revised list of default PDA programs.
+  - qol: BP's locker now has a BP dufflebag for surgical instead. More drip!
+  PotatoTomahto:
+  - bugfix: Weird portable chemical mixer behavior fixed, with some improved usability.
+  - bugfix: Window sills deconstruct correctly.
+  ThePooba:
+  - balance: Prisoners now need 5 hours of security, no more freeloading
+  - rscadd: Adds "Black" Surgical Latex Gloves
+  - rscadd: ' timelock for brig physicians'
+  Wisemonster:
+  - balance: Increased the chance of signs from the heart attack symptom appearing
