@@ -13,11 +13,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
-/obj/item/clothing/head/bio_hood/Initialize(mapload)
-	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-
 /datum/armor/head_bio_hood
 	bio = 100
 	fire = 30
