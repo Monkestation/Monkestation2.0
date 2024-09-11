@@ -210,7 +210,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "eZ" = (
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/rust,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1167,7 +1167,7 @@
 /area/ruin/space/has_grav/listeningstation/medical)
 "Gr" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation/support)
 "GR" = (
 /obj/effect/turf_decal/sand/plating,
@@ -2184,9 +2184,9 @@ rE
 rE
 Om
 iv
-rE
+cj
 JX
-rE
+cj
 OQ
 BN
 jq
@@ -2224,13 +2224,13 @@ rE
 rE
 rE
 LJ
-rE
+cj
 RG
-rE
-rE
-rE
 cj
 cj
+rE
+rE
+rE
 VK
 VK
 VK
@@ -2262,13 +2262,13 @@ VK
 VK
 rE
 au
-rE
+cj
 Xs
-rE
+cj
 of
 qx
 Ch
-cj
+rE
 VK
 VK
 VK
@@ -2299,14 +2299,14 @@ yK
 QI
 VK
 LP
-rE
-rE
+cj
+cj
 xR
 gO
 cE
 wL
 XG
-cj
+rE
 VK
 VK
 VK
@@ -2343,8 +2343,8 @@ yx
 Pz
 Pz
 cj
-cj
-cj
+rE
+rE
 VK
 VK
 VK
@@ -2381,7 +2381,7 @@ NR
 Pz
 NI
 Ay
-cj
+rE
 DS
 VK
 VK
@@ -2419,7 +2419,7 @@ Fl
 OO
 JD
 wk
-cj
+rE
 QI
 VK
 VK
@@ -2457,7 +2457,7 @@ db
 Pz
 eM
 Xc
-Pz
+LP
 VK
 VK
 VK
@@ -2495,7 +2495,7 @@ xR
 Pz
 Pz
 Pz
-Pz
+LP
 VK
 VK
 VK
@@ -2569,7 +2569,7 @@ qV
 Pz
 MV
 Gr
-OT
+ME
 eZ
 CR
 Gj
