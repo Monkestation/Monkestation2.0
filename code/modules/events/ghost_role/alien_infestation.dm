@@ -1,11 +1,12 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation
 	name = "Alien Infestation"
 	typepath = /datum/round_event/antagonist/solo/ghost/alien_infestation
-	weight = 5
+	weight = 3
+	max_occurrences = 1
 
 	min_players = 35 //monkie edit: 10 to 35 (tg what the fuck)
 
-	earliest_start = 45 MINUTES //monkie edit: 20 to 90
+	earliest_start = 60 MINUTES //monkie edit: 20 to 90
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
@@ -22,7 +23,6 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 5
-	max_occurrences = 1
 	prompted_picking = TRUE
 
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
@@ -67,8 +67,9 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			pic_source = antag_datum,
+			alert_pic = /mob/living/carbon/alien/larva,
 			role_name_text = lowertext(cast_control.name),
+			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)

@@ -241,3 +241,28 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Bluedragon66")
+
+
+/mob/living/basic/pet/darkscug
+	name = "night slugcat"
+	desc = "ITS A FUGGIN SCRUG"
+	icon = 'icons/mob/simple/slugcats.dmi'
+	icon_state = "scug_nightcat"
+	icon_living = "scug_nightcat"
+	icon_dead = "scug_dead_nightcat"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("CaptainShiba")
+
+/mob/living/basic/frog/hypnotoad
+	name = "hypnotoad"
+	desc = "All glory to the hypnotoad."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "hypnotoad"
+	icon_living = "hypnotoad"
+	icon_dead = "hypnotoad-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Ophaq")

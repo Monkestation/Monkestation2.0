@@ -22,9 +22,6 @@
 	species_traits = list(
 		DYNCOLORS,
 		NO_UNDERWEAR,
-		HAIR,
-		EYECOLOR,
-		FACEHAIR,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/energybar
@@ -37,6 +34,7 @@
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 180
+	facial_hair_alpha = 180
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
@@ -134,7 +132,10 @@
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/ethereal, seconds_per_tick, times_fired)
 	brutemod = 1.15
 	var/word = pick("like you can't breathe","your lungs locking up","extremely lethargic")
-	switch(ethereal.blood_volume)
+	var/blood_volume = ethereal.blood_volume
+	if(HAS_TRAIT(ethereal, TRAIT_ETHEREAL_NO_OVERCHARGE))
+		blood_volume = min(blood_volume, ETHEREAL_BLOOD_CHARGE_FULL)
+	switch(blood_volume)
 		if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
 			ethereal.add_mood_event("charge", /datum/mood_event/decharged)
 			ethereal.clear_alert("ethereal_overcharge")
