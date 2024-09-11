@@ -582,6 +582,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
+"oJ" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "qx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -751,10 +755,6 @@
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/manipulator,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
-"wy" = (
-/obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "wA" = (
@@ -1024,6 +1024,7 @@
 /obj/machinery/firealarm/directional/east,
 /obj/structure/closet/crate/bin,
 /obj/item/storage/bag/trash,
+/obj/machinery/light/small/red/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Cm" = (
@@ -2924,7 +2925,7 @@ rG
 rG
 go
 go
-wy
+oJ
 QI
 go
 go
@@ -2955,7 +2956,7 @@ go
 go
 go
 go
-wy
+oJ
 ym
 fz
 QI
