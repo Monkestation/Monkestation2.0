@@ -1,3 +1,4 @@
+/* monkestation removal: refactored in [monkestation\code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_knowledge.dm]
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
@@ -526,3 +527,4 @@
 
 #undef SACRIFICE_SLEEP_DURATION
 #undef SACRIFICE_REALM_DURATION
+monkestation end */
