@@ -161,6 +161,10 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
+"dB" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/listeningstation/asteroid)
 "dW" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/hydroponics/soil,
@@ -582,10 +586,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
-"oJ" = (
-/obj/structure/fluff/minepost,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
 "qx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -1652,10 +1652,21 @@
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "SI" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/item/circuitboard/machine/ore_redemption,
+/obj/item/circuitboard/machine/ore_redemption{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /obj/structure/closet/crate/secure/plasma{
 	req_access = list("syndicate");
 	name = "refinery crate"
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/card/id/advanced/mining{
+	pixel_x = 0;
+	pixel_y = -6
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
@@ -2925,7 +2936,7 @@ rG
 rG
 go
 go
-oJ
+dB
 QI
 go
 go
@@ -2956,7 +2967,7 @@ go
 go
 go
 go
-oJ
+dB
 ym
 fz
 QI
