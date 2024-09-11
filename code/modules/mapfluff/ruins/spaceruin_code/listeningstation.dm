@@ -123,7 +123,7 @@
 	<br>You may view intelligence reports from your predecessors in the filing cabinet in your office.
 	"}
 
-// MONKESTATION EDIT: monkestation new listening post. im not making a seperate file for modularising something that already exists on tg. please god.
+// MONKESTATION EDIT: monkestation new listening post. im not making a seperate file for modularising some goddamn fluff on the other side of a file. this is why git exists
 /obj/item/paper/fluff/ruins/listeningstation/engineer
 	name = "message from syndicate engineering"
 	default_raw_text = {"This outpost's pretty messy compared to other models, so here's the basic rundown of every room and whatnot:
