@@ -508,7 +508,9 @@
 /datum/mood/proc/update_mood_hud(datum/mood_event/type)
 	if (!ispath(type))
 		CRASH("A non path ([type]), was used to change a mood hud. This shouldn't be happening.")
-	if(QDELETED(mob_parent) || initial(type.hidden) || !initial(type.mood_change))
+	if(QDELETED(mob_parent) || !istype(mob_parent.hud_list))
+		return
+	if(initial(type.hidden) || !initial(type.mood_change))
 		return
 	var/image/holder = mob_parent.hud_list[MOOD_HUD]
 	var/icon/I = icon(mob_parent.icon, mob_parent.icon_state, mob_parent.dir)
