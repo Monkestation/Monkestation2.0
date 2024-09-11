@@ -10,11 +10,10 @@
 	max_integrity = 250
 	circuit = /obj/item/circuitboard/machine/portagrav
 	armor_type = /datum/armor/portable_gravity
-	interaction_flags_click = ALLOW_SILICON_REACH
 	//We don't use area power
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	///Is the machine on?
 	var/on = FALSE
 	/// do we use power from wire instead
@@ -89,27 +88,27 @@
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/portagrav/crowbar_act(mob/living/user, obj/item/tool)
 	. = NONE
 	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/power/portagrav/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/power/portagrav/attackby(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+	if(!istype(tool, /obj/item/stock_parts/cell))
 		return
 	if(!panel_open)
 		balloon_alert(user, "must open panel!")
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(cell)
 		balloon_alert(user, "already has a cell!")
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(!user.transferItemToLoc(tool, src))
-		return ITEM_INTERACT_FAILURE
+		return
 	cell = tool
-	return ITEM_INTERACT_SUCCESS
+	return TRUE
 
 /obj/machinery/power/portagrav/should_have_node()
 	return anchored
@@ -130,14 +129,14 @@
 	else
 		disconnect_from_network()
 	update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/portagrav/get_cell()
 	return cell
 
 /obj/machinery/power/portagrav/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
-	if(!panel_open || isnull(cell) || !istype(user) || user.combat_mode)
+	if(!panel_open || isnull(cell) || !istype(user) || (user.istate & ISTATE_HARM))
 		return
 	if(user.put_in_hands(cell))
 		cell = null
