@@ -44,8 +44,6 @@
 		on = TRUE
 	update_brightness()
 	register_context()
-	if(toggle_context)
-		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	// single use lights can be toggled on once
@@ -269,12 +267,12 @@
 		setDir(user.dir)
 
 /// when hit by a light disruptor - turns the light off, forces the light to be disabled for a few seconds
-/obj/item/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/item/flashlight/pen
 	name = "penlight"

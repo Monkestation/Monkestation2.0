@@ -122,8 +122,6 @@
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
@@ -131,11 +129,11 @@
 		QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/radio/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
 		set_broadcasting(FALSE)
-		return COMSIG_SABOTEUR_SUCCESS
+		return TRUE
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)

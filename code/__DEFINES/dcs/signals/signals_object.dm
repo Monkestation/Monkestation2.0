@@ -385,10 +385,6 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
-/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
-#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
-	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
-
 // /obj/vehicle/sealed/car/vim signals
 
 ///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
