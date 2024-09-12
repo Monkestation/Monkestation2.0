@@ -15,18 +15,23 @@
 	/// Whether or not we transfer our pixel_x and pixel_y to the splatter, only works for floor splatters though
 	var/messy_splatter = TRUE
 
+/obj/effect/decal/cleanable/blood/particle/Initialize(mapload)
+	. = ..()
+	if(QDELETED(loc))
+		return INITIALIZE_HINT_QDEL
+
 /obj/effect/decal/cleanable/blood/particle/can_bloodcrawl_in()
 	return FALSE
 
 /obj/effect/decal/cleanable/blood/particle/proc/start_movement(movement_angle)
-	var/datum/component/movable_physics/movable_physics = GetComponent(/datum/component/movable_physics)
-	if(!movable_physics)
-		movable_physics = initialize_physics()
+	var/datum/component/movable_physics/movable_physics = get_or_init_physics()
 	if(!isnull(movement_angle))
-		movable_physics.set_angle(movement_angle)
+		movable_physics?.set_angle(movement_angle)
 
-/obj/effect/decal/cleanable/blood/particle/proc/initialize_physics()
-	return AddComponent(/datum/component/movable_physics, \
+/obj/effect/decal/cleanable/blood/particle/proc/get_or_init_physics() as /datum/component/movable_physics
+	if(QDELETED(src))
+		return
+	return LoadComponent(/datum/component/movable_physics, \
 		horizontal_velocity = rand(3 * 100, 5.5 * 100) * 0.01, \
 		vertical_velocity = rand(4 * 100, 4.5 * 100) * 0.01, \
 		horizontal_friction = rand(0.05 * 100, 0.1 * 100) * 0.01, \
@@ -38,7 +43,9 @@
 	)
 
 /obj/effect/decal/cleanable/blood/particle/proc/on_bounce()
-	if(!isturf(loc) || !splatter_type_floor)
+	if(QDELETED(src))
+		return
+	else if(!isturf(loc) || QDELING(loc) || !splatter_type_floor)
 		qdel(src)
 		return
 	var/obj/effect/decal/cleanable/splatter
@@ -73,7 +80,7 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/blood/particle/proc/on_bump(atom/bumped_atom)
-	if(!isturf(loc) || !splatter_type_wall)
+	if(QDELETED(src) || !isturf(loc) || QDELING(loc) || QDELETED(bumped_atom) || !splatter_type_wall)
 		return
 	if(iswallturf(bumped_atom))
 		//Adjust pixel offset to make splatters appear on the wall
@@ -119,8 +126,8 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/effect/decal/cleanable/blood/splatter/stacking/Destroy()
-	. = ..()
 	splat_overlays = null
+	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter/stacking/update_overlays()
 	. = ..()
