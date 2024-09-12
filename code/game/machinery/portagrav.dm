@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	icon_state = "portagrav"
 	base_icon_state = "portagrav"
-	name = "Portable Gravity Unit"
+	name = "\improper Portable Gravity Unit"
 	desc = "Generates gravity around itself. Powered by wire or cell. Must be anchored before use."
 	max_integrity = 250
 	circuit = /obj/item/circuitboard/machine/portagrav
@@ -87,7 +87,7 @@
 
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/portagrav/crowbar_act(mob/living/user, obj/item/tool)
@@ -95,7 +95,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/power/portagrav/attackby(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/power/portagrav/attackby(obj/item/tool, mob/living/user, params)
 	. = NONE
 	if(!istype(tool, /obj/item/stock_parts/cell))
 		return
