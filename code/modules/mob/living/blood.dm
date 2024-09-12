@@ -410,9 +410,11 @@
  * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
  */
 /mob/living/proc/spray_blood(splatter_direction, splatter_strength = 3)
-	if(!isturf(loc) || !blood_volume || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(QDELETED(src) || !isturf(loc) || QDELING(loc) || !blood_volume || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
+	if(QDELETED(our_splatter))
+		return
 	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
@@ -421,10 +423,12 @@
  * Helper proc for throwing blood particles around, similar to the spray_blood proc.
  */
 /mob/living/proc/blood_particles(amount = rand(1, 3), angle = rand(0,360), min_deviation = -30, max_deviation = 30, min_pixel_z = 0, max_pixel_z = 6)
-	if(!isturf(loc) || !blood_volume ||HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(QDELETED(src) || !isturf(loc) || QDELING(loc) || !blood_volume || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	for(var/i in 1 to amount)
 		var/obj/effect/decal/cleanable/blood/particle/droplet = new(loc)
+		if(QDELETED(droplet)) // if they're deleting upon init, let's not waste any more time, any others will prolly just do the same thing
+			return
 		droplet.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 		droplet.pixel_z = rand(min_pixel_z, max_pixel_z)
 		droplet.start_movement(angle + rand(min_deviation, max_deviation))
