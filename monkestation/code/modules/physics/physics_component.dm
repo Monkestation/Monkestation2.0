@@ -126,6 +126,7 @@
 	set_angle(angle)
 
 /datum/component/movable_physics/Destroy(force)
+	STOP_PROCESSING(SSmovable_physics, src)
 	bounce_callback = null
 	stop_callback = null
 	cached_transform = null
@@ -150,7 +151,7 @@
 // NOTE: This component will work very poorly at anything less than ticking 10 times per second
 /datum/component/movable_physics/process(seconds_per_tick)
 	var/atom/movable/moving_atom = parent
-	if(!isturf(moving_atom.loc) || !has_movement())
+	if(!isturf(moving_atom.loc) || QDELING(moving_atom.loc) || !has_movement())
 		stop_movement()
 		return PROCESS_KILL
 
