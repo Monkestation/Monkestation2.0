@@ -22,8 +22,19 @@
 	liked_food = GORE | MEAT | SEAFOOD
 	maxhealthmod = 1.1
 	stunmod = 1.2
-	speedmod = 0.1
+	//speedmod = 0.1
 	payday_modifier = 1
+
+/datum/species/oni/on_species_gain(mob/living/carbon/owner, datum/species/old_species, pref_load)
+	. = ..()
+#if defined(TRAIT_FEATHERED) && (defined(SPACEMAN_DMM) || defined(OPENDREAM) || defined(CIBUILDING))
+	#warn 3301 has been merged, remove this stupid hacky movespeed modifier
+#endif
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/oni)
+
+/datum/species/oni/on_species_loss(mob/living/carbon/human/owner, datum/species/new_species, pref_load)
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/oni)
 
 /mob/living/carbon/human/species/oni
     race = /datum/species/oni
@@ -109,3 +120,7 @@
 	race = /datum/species/oni
 	taste_description = "hellfire"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
+
+/datum/movespeed_modifier/oni
+	movetypes = ~FLYING
+	multiplicative_slowdown = 0.1
