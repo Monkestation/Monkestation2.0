@@ -44,7 +44,7 @@
 
 	maxhealthmod = 0.75
 	stunmod = 1.4
-	speedmod = -0.15 // stupid gremlins
+	//speedmod = -0.15 // stupid gremlins
 
 	no_equip_flags = ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN
@@ -61,11 +61,16 @@
 
 /datum/species/teratoma/on_species_gain(mob/living/carbon/human/idiot, datum/species/old_species, pref_load)
 	. = ..()
+#if defined(TRAIT_FEATHERED) && (defined(SPACEMAN_DMM) || defined(OPENDREAM) || defined(CIBUILDING))
+	#warn 3301 has been merged, remove this stupid hacky movespeed modifier
+#endif
+	idiot.add_movespeed_modifier(/datum/movespeed_modifier/teratoma)
 	misfortune = idiot.AddComponent(/datum/component/omen/teratoma)
 	RegisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 
 /datum/species/teratoma/on_species_loss(mob/living/carbon/human/idiot, datum/species/new_species, pref_load)
 	. = ..()
+	idiot.remove_movespeed_modifier(/datum/movespeed_modifier/teratoma)
 	QDEL_NULL(misfortune)
 	UnregisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS)
 
@@ -118,3 +123,7 @@
 
 /mob/living/carbon/human/species/teratoma
 	race = /datum/species/teratoma
+
+/datum/movespeed_modifier/teratoma
+	movetypes = ~FLYING
+	multiplicative_slowdown = -0.15
