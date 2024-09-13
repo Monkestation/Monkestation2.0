@@ -6,10 +6,6 @@
 	sexes = TRUE
 	species_traits = list(
 		MUTCOLORS,
-		LIPS,
-		EYECOLOR,
-		HAIR,
-		FACEHAIR
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	inherent_traits = list(
@@ -105,3 +101,11 @@
 	)
 
 	return to_add
+
+/datum/reagent/mutationtoxin/oni
+	name = "Oni Mutation Toxin"
+	description = "A demonic toxin."
+	color = "#F11514" // RGB: 241, 21, 20
+	race = /datum/species/oni
+	taste_description = "hellfire"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
