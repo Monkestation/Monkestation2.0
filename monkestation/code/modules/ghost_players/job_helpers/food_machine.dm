@@ -8,7 +8,9 @@
 
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
-
+	blacklisted_items = list(
+		/obj/item/food/grown/kudzupod
+)
 
 /obj/structure/food_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
