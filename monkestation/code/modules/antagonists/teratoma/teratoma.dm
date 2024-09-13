@@ -2,6 +2,12 @@
 	name = "Teratomas"
 	member_name = "teratoma"
 
+/datum/team/teratoma/roundend_report()
+	var/list/parts = list()
+	parts += span_header("The teratomas were:")
+	parts += printplayerlist(members)
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
 /datum/antagonist/teratoma
 	name = "\improper Teratoma"
 	show_in_antagpanel = TRUE
