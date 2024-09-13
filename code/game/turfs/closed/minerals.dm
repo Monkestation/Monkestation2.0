@@ -140,7 +140,7 @@
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, initial(mineralType.name))
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(HAS_TRAIT(H, FOOD_JOB_MINER))
+		if(HAS_TRAIT(H, TRAIT_FOOD_JOB_MINER))
 			var/obj/item/stack/ore/picked_ore
 			if(prob(20))
 				switch(rand(122))
@@ -172,10 +172,12 @@
 	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	mined.update_visuals()
+	var/turf/open/mined = ScrapeAway(null, flags)
+	if(!QDELETED(src))
+		addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
+	if(!QDELETED(mined))
+		mined.update_visuals()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	balloon_alert(user, "digging...")

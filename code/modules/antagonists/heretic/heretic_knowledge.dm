@@ -232,7 +232,7 @@
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
 
-/datum/heretic_knowledge/limited_amount/Destroy(force, ...)
+/datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
 	return ..()
 
@@ -576,8 +576,10 @@
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
 
+	/* monkestation removal: heretic refactoring
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
+	monkestation end */
 
 	return TRUE
 

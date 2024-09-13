@@ -337,3 +337,80 @@
   ven1883:
   - bugfix: fixed cyberware quirks being incompatible with eachother
   - bugfix: Bright Eyes now is incompatible with Body Purist
+2024-08-27:
+  Absolucy:
+  - bugfix: Etheral disco balls now lag the server much less
+  - bugfix: Fixed the Overwatch subsystem initialization being reported as erroring,
+      despite the fact it initialized just fine.
+  ThePooba:
+  - rscadd: Choke on this smite
+  V2LenKagamine:
+  - rscadd: New Bomb Vest, strap it to someone for a little trolling
+2024-08-28:
+  Absolucy:
+  - bugfix: Androids can no longer be transform stung by changelings.
+  - bugfix: Androids no longer suffer from liver failure.
+  - bugfix: Facehuggers no longer waste their lives trying to hug androids (who can't
+      host an embryo anyways.)
+  - bugfix: Cleaned up some more roundstart active turfs, leading to slightly better
+      init times.
+  - qol: The curator's PDA no longer disables ringer by default.
+  - rscadd: NT-Brand Auto Composters can now be built and deconstructed.
+  PotatoTomahto:
+  - bugfix: fixes holomap cursor and area hover text
+  Veth-s:
+  - rscadd: Malphy's canopics have been added to the game!
+2024-08-29:
+  Absolucy:
+  - bugfix: Railings can now actually be deconstructed.
+  DexeeXI:
+  - qol: admin mods now have anti rad built it. it's shrimple.
+  - bugfix: fixes the cyka blyat id cards.
+  Gboster-0:
+  - rscadd: New magnitude of power, Raynawatt for all your PTL exporting needs
+  PotatoTomahto:
+  - bugfix: Liquid pump actually works now.
+  V2LenKagamine:
+  - rscadd: Wumpa.
+  Veth-s:
+  - rscadd: Added malphy's canopics to the game.
+  Wisemonster:
+  - bugfix: Heart disease (contracted from the heart attack random event) now has
+      the correct badness level
+  - bugfix: Fixed the radiation leak event, super-matter surge event, and random artifact
+      event not triggering.
+2024-08-30:
+  Absolucy:
+  - bugfix: Fixed hydroponics trays not being able to go above 10% self-sustenance.
+  - bugfix: Fixed plants with >100 potency having small sprites when harvested.
+  RedBaronFlyer:
+  - qol: make the cart hold 2.5x more water
+  ThePooba:
+  - bugfix: now you can buy the worst gun in the game from your uplink for your henchmen
+2024-08-31:
+  Absolucy:
+  - bugfix: Ghost messages are no longer bolded for speakers on another z-level.
+  - rscadd: Added an "event groups" mechanic to event/storyteller logic.
+  - rscadd: Events in the same group will all have a shared cooldown, and some groups
+      have a set maximum amount of times they can run.
+  - rscadd: The more times events in a group have been ran, the cooldown will become
+      more biased towards the upper bound of the possible cooldown time with each
+      run.
+  - rscadd: As an example, the "Anomalies" event group has a cooldown between 10 to
+      25 minutes.
+  - sound: Spitting sounds now respect the volume mixer, and can't be heard from the
+      next room over.
+  SirNightKnight:
+  - rscadd: Nanotrasen has launched a new program to incentivize delivering mail.
+      Mail tokens are now found in every letter and can be returned to Central Command
+      for a decent bit of credits.
+  - qol: The supplying company has further genetically modified their tobacco seeds
+      to remove  nutriment for an easier smoking experience.
+  - rscadd: Nanotrasen has approved Assistants signing up as Test Subjects. Peace
+      to the Intern Union!
+  - bugfix: The smoking pipe and cobpipe don't default to an error texture when lit.
+  - bugfix: Adjusted the smoking pipe texture to look better.
+  Wisemonster:
+  - balance: Removed the access requirements from the maint shutters leading to Blueshifts
+      north-west and north-east upper maints.
+  - balance: Reduced the stage 1 hunger symptom nutrition drain from 25 to 10

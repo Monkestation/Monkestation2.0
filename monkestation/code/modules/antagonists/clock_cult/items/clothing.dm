@@ -409,7 +409,6 @@
 	sec_hud.show_to(wearer)
 
 	add_traits(list(TRAIT_KNOW_ENGI_WIRES, TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION, TRAIT_KNOW_ROBO_WIRES, TRAIT_NOFLASH), CLOTHING_TRAIT)
-
 	color_cutoffs = list(50, 10, 30)
 	wearer.update_sight()
 
@@ -423,9 +422,7 @@
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	sec_hud.hide_from(wearer)
 
-
 	remove_traits(list(TRAIT_KNOW_ENGI_WIRES, TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION, TRAIT_KNOW_ROBO_WIRES, TRAIT_NOFLASH), CLOTHING_TRAIT)
-
 	color_cutoffs = null
 	wearer.update_sight()
 

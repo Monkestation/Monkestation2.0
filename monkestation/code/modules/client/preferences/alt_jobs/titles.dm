@@ -29,6 +29,7 @@
 		"Artist",
 		"Off-Duty Staff",
 		"Off-Duty Crew",
+		"Test Subject",
 	)
 
 /datum/job/atmospheric_technician
@@ -291,6 +292,7 @@
 		"Biorobotics Director",
 		"Research Supervisor",
 		"Chief Science Officer",
+		"Chief Artificer",
 	)
 
 /datum/job/roboticist
@@ -317,6 +319,7 @@
 		"Xenoarchaeologist",
 		"Research Assistant",
 		"Graduate Student",
+		"Artificer"
 	)
 
 /datum/job/security_officer

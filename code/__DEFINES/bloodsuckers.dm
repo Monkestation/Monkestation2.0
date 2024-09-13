@@ -1,9 +1,6 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
 //#define BLOODSUCKER_TESTING
 
-/// You have special interactions with bloodsuckers and the occult
-#define TRAIT_OCCULTIST "occultists"
-
 /**
  * Blood-level defines
  */
@@ -17,6 +14,9 @@
 #define FRENZY_THRESHOLD_ENTER 25
 /// Once blood is this high, will exit Frenzyshak
 #define FRENZY_THRESHOLD_EXIT 250
+
+/// Minimum blood required for bloodsucker oozelings to auto-revive
+#define OOZELING_MIN_REVIVE_BLOOD_THRESHOLD (FRENZY_THRESHOLD_ENTER * 10)
 
 /**
  * Vassal defines
@@ -70,6 +70,8 @@
 #define BP_CANT_USE_WHILE_INCAPACITATED (1<<3)
 /// This Power can't be used while unconscious
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
+/// This Power can't be used during Sol
+#define BP_CANT_USE_DURING_SOL (1<<5)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)
@@ -151,32 +153,6 @@
 #define ROLE_BLOODSUCKERBREAKOUT "Bloodsucker Breakout"
 #define ROLE_MONSTERHUNTER "Monster Hunter"
 #define ROLE_INFILTRATOR "Infiltrator"
-
-/**
- * Traits
- */
-/// Falsifies Health analyzer blood levels
-#define TRAIT_MASQUERADE "masquerade"
-/// Your body is literal room temperature. Does not make you immune to the temp
-#define TRAIT_COLDBLOODED "coldblooded"
-
-/**
- * Sources
- */
-/// Source trait for Bloodsuckers-related traits
-#define BLOODSUCKER_TRAIT "bloodsucker_trait"
-/// Source trait for bloodsuckers in torpor.
-#define TORPOR_TRAIT "torpor_trait"
-/// Source trait for bloodsuckers using fortitude.
-#define FORTITUDE_TRAIT "fortitude_trait"
-/// Source trait for bloodsucker mesmerization.
-#define MESMERIZED_TRAIT "mesmerized_trait"
-/// Source trait for Monster Hunter-related traits
-#define HUNTER_TRAIT "monsterhunter_trait"
-/// Source trait while Feeding
-#define FEED_TRAIT "feed_trait"
-/// Source trait during a Frenzy
-#define FRENZY_TRAIT "frenzy_trait"
 
 /**
  * Macros
