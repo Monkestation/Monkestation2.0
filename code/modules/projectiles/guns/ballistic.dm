@@ -269,7 +269,7 @@
 				casing.bounce_away(bounce_angle = bounce_angle, still_warm = TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			chambered = null
+			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
