@@ -157,7 +157,7 @@
 
 //A logarithm that converts an integer to a number scaled between 0 and 1.
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
-#define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*(input))/(max))**2 )
+#define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*min(input,max))/(max))**2 )
 
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
@@ -255,3 +255,6 @@
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
+
+/// Returns a random decimal between x and y.
+#define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())

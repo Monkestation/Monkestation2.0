@@ -49,7 +49,7 @@
 	return ..()
 
 /datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
-	SIGNAL_HANDLER
+	//SIGNAL_HANDLER
 
 	if (flashed.stat == DEAD)
 		return
@@ -62,6 +62,12 @@
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
+
+	// monkestation edit: dont try to convert banned people
+	if(is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
+		flashed.balloon_alert(source, "cannot become brother!")
+		return
+	// monkestation end
 
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
@@ -202,6 +208,9 @@
 		return
 	. = ..()
 	member.remove_antag_datum(/datum/antagonist/brother)
+	if (!length(members))
+		qdel(src)
+		return
 	if (isnull(member.current))
 		return
 	for (var/datum/mind/brother_mind as anything in members)

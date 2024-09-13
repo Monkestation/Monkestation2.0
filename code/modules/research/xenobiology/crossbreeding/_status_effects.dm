@@ -7,6 +7,7 @@
 	id = "rainbow_protection"
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -37,6 +38,7 @@
 	id = "slimeskin"
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -1010,7 +1012,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_EXTRACT_TRAIT)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -1022,7 +1024,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_EXTRACT_TRAIT)
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

@@ -189,6 +189,9 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+	if(CONFIG_GET(flag/disable_storyteller)) // we're just gonna disable firing but still initialize, so we don't have any weird runtimes
+		flags |= SS_NO_FIRE
+		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
 
 
@@ -262,8 +265,7 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			// I split these checks up to make the code more readable ~Lucy
 			var/is_on_station = is_station_level(player.z)
-			var/is_late_arrival = HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(get_area(player), /area/shuttle/arrival)
-			if(!is_on_station && !is_late_arrival)
+			if(!is_on_station && !is_late_arrival(player))
 				continue
 			candidate_candidates += player
 

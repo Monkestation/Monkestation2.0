@@ -23,6 +23,8 @@
 	COOLDOWN_DECLARE(bloodsucker_spam_sol_burn)
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
+	/// Cooldown for bloodsuckers going into Frenzy.
+	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
 
 	///Used for assigning your name
 	var/bloodsucker_name
@@ -89,6 +91,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
 		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
@@ -96,7 +99,9 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NO_MIRROR_REFLECTION
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_OOZELING_NO_CANNIBALIZE,
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(
@@ -104,8 +109,13 @@
 		TRAIT_FAKEDEATH,
 		TRAIT_NODEATH,
 		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE
+		TRAIT_RESISTLOWPRESSURE,
 	)
+	/// A typecache of organs we'll expel during Torpor.
+	var/static/list/yucky_organ_typecache = typecacheof(list(
+		/obj/item/organ/internal/body_egg,
+		/obj/item/organ/internal/zombie_infection,
+	))
 
 /**
  * Apply innate effects is everything given to the mob

@@ -364,7 +364,45 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+/mob/living/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
+		return TRUE
+	var/starting_dir = dir
+	if(nutrition < 100 && !blood && !force)
+		if(message)
+			visible_message(span_warning("[src] dry heaves!"), \
+							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
+		if(stun)
+			Stun(20 SECONDS)
+		return TRUE
+	if(message)
+		visible_message(span_danger("[src] throws up!"), span_userdanger("You throw up!"))
+		if(!isflyperson(src))
+			add_mood_event("vomit", /datum/mood_event/vomit)
+
+	if(stun)
+		Stun(8 SECONDS)
+
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+	var/turf/T = get_turf(src)
+	if(!blood)
+		adjust_nutrition(-lost_nutrition)
+		adjustToxLoss(-3)
+	for(var/i=0 to distance)
+		if(blood)
+			if(T)
+				add_splatter_floor(T)
+			if(harm)
+				adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+		T = get_step(T, starting_dir)
+		if (T?.is_blocked_turf())
+			break
+	return TRUE
+
+/mob/living/carbon/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
@@ -457,12 +495,12 @@
 	if(isnull(.))
 		return
 	if(new_value == LYING_DOWN)
-		if(HAS_TRAIT(src, FOOD_SLIDE))
+		if(HAS_TRAIT(src, TRAIT_FOOD_SLIDE))
 			add_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
 		else
 			add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 	else
-		if(HAS_TRAIT(src, FOOD_SLIDE))
+		if(HAS_TRAIT(src, TRAIT_FOOD_SLIDE))
 			remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
@@ -1337,24 +1375,6 @@
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
-
-/**
- * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
- *
- * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
- *
- * Arguments:
- * * splatter_direction: Which direction the blood is flying
- * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
- */
-/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
-	if(!isturf(loc))
-		return
-	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
-	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
-	our_splatter.blood_dna_info = get_blood_dna_list()
-	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
-	our_splatter.fly_towards(targ, splatter_strength)
 
 /mob/living/carbon/ominous_nosebleed()
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
