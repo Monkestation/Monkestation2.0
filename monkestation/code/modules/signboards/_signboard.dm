@@ -17,7 +17,7 @@
 	/// If true, the text cannot be changed by players.
 	var/locked = FALSE
 	/// If text should be shown while unanchored.
-	var/show_while_unanchored = TRUE
+	var/show_while_unanchored = FALSE
 	/// If TRUE, the sign can be edited without a pen.
 	var/edit_by_hand = FALSE
 	/// Holder for signboard maptext

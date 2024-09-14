@@ -4,6 +4,7 @@
 	icon_state = "holographic_sign"
 	base_icon_state = "holographic_sign"
 	edit_by_hand = TRUE
+	show_while_unanchored = TRUE
 	/// If set, only IDs with this name can (un)lock the sign.
 	var/registered_owner
 	/// The current color of the sign.
