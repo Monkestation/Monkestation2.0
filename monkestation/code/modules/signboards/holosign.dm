@@ -131,6 +131,7 @@
 		return null
 
 /obj/structure/signboard/holosign/proc/set_color(new_color)
+	set waitfor = FALSE
 	new_color = sanitize_color(new_color)
 	if(!new_color)
 		current_color = null

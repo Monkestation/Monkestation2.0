@@ -133,9 +133,6 @@
 		balloon_alert(user, "cleared text")
 		investigate_log("([key_name(user)]) cleared the text", INVESTIGATE_SIGNBOARD)
 
-/obj/structure/signboard/proc/try_clear_sign(mob/user)
-	. = TRUE
-
 /obj/structure/signboard/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
@@ -197,6 +194,7 @@
 	LAZYREMOVE(update_on_z, client_image)
 
 /obj/structure/signboard/proc/add_to_all_clients()
+	set waitfor = FALSE
 	if(QDELETED(src))
 		return
 	remove_from_all_clients()
@@ -208,6 +206,7 @@
 		add_client(client)
 
 /obj/structure/signboard/proc/remove_from_all_clients()
+	set waitfor = FALSE
 	for(var/client/client as anything in client_maptext_images)
 		remove_client(client)
 	LAZYNULL(client_maptext_images)
@@ -258,6 +257,12 @@
 	. = ..()
 	if(!istype(loc, /obj/structure/signboard) || QDELING(loc))
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/abstract/signboard_holder/Destroy(force)
+	if(!force && istype(loc, /obj/structure/signboard) && !QDELING(loc))
+		stack_trace("Tried to delete a signboard holder that's inside of a non-deleted signboard!")
+		return QDEL_HINT_LETMELIVE
+	return ..()
 
 /obj/effect/abstract/signboard_holder/forceMove(atom/destination, no_tp = FALSE, harderforce = FALSE)
 	if(harderforce)
