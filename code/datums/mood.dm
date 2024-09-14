@@ -557,9 +557,10 @@
 	holder.layer = LOW_MOB_LAYER
 	holder.icon_state = null
 	if(initial(type.mood_change) > 0)
-		flick("hud_good_mood", holder)
+		holder.icon_state = "hud_good_mood"
 	else
-		flick("hud_bad_mood", holder)
+		holder.icon_state = "hud_bad_mood"
+	addtimer(VARSET_CALLBACK(holder, icon_state, null), 19, (TIMER_UNIQUE|TIMER_OVERRIDE))
 //MONKESTATION ADDITION END
 
 #undef MINOR_INSANITY_PEN
