@@ -513,6 +513,8 @@
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
+		/obj/item/slimecross,
+		/obj/item/autoslime,
 		/obj/item/swab,
 		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
