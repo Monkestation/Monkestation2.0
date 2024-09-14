@@ -5,6 +5,11 @@
 	base_icon_state = "holographic_sign"
 	edit_by_hand = TRUE
 	show_while_unanchored = TRUE
+	light_system = OVERLAY_LIGHT
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 0.3
+	light_color = COLOR_CARP_TEAL
+	light_on = FALSE
 	/// If set, only IDs with this name can (un)lock the sign.
 	var/registered_owner
 	/// The current color of the sign.
@@ -42,6 +47,11 @@
 		desc += span_warning("<br>Its locking mechanisms appear to be shorted out!")
 	else if(registered_owner)
 		desc += span_info("<br>It is locked to the ID of [span_name(registered_owner)].")
+
+/obj/structure/signboard/holosign/update_overlays()
+	. = ..()
+	if(sign_text)
+		. += emissive_appearance(icon, "holographic_sign_e", src)
 
 /obj/structure/signboard/holosign/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, color) || var_name == NAMEOF(src, current_color))
@@ -89,6 +99,10 @@
 		client_image?.color = current_color
 	return client_image
 
+/obj/structure/signboard/holosign/set_text(new_text, force)
+	. = ..()
+	set_light_on(!!sign_text)
+
 /obj/structure/signboard/holosign/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -103,7 +117,7 @@
 	if(check_locked(user))
 		return
 	var/new_color = sanitize_color(tgui_color_picker(user, "Set Sign Color", full_capitalize(name), current_color))
-	if(new_color && is_color_dark_with_saturation(new_color, 50))
+	if(new_color && is_color_dark_with_saturation(new_color, 25))
 		balloon_alert(user, "color too dark!")
 		return
 	if(check_locked(user))
@@ -140,6 +154,7 @@
 	else
 		current_color = new_color
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	set_light_color(current_color || initial(light_color))
 	for(var/client/client as anything in client_maptext_images)
 		if(QDELETED(client))
 			continue
