@@ -20,11 +20,15 @@
 	var/show_while_unanchored = TRUE
 	/// If TRUE, the sign can be edited without a pen.
 	var/edit_by_hand = FALSE
+	/// Holder for signboard maptext
+	var/obj/effect/abstract/signboard_holder/text_holder
 	/// Lazy assoc list of clients to images
 	VAR_PROTECTED/list/client_maptext_images
 
 /obj/structure/signboard/Initialize(mapload)
 	. = ..()
+	text_holder = new(src)
+	vis_contents += text_holder
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, PROC_REF(on_mob_login))
 	if(sign_text)
 		set_text(sign_text, force = TRUE)
@@ -35,6 +39,8 @@
 /obj/structure/signboard/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN)
 	remove_from_all_clients()
+	vis_contents -= text_holder
+	QDEL_NULL(text_holder)
 	return ..()
 
 /obj/structure/signboard/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -215,7 +221,7 @@
 	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center'>[html_encode(sign_text)]</span>")
 	var/mheight
 	WXH_TO_HEIGHT(user.MeasureText(text_html, null, SIGNBOARD_WIDTH), mheight)
-	var/image/maptext_holder = image(loc = src, layer = CHAT_LAYER + 0.1)
+	var/image/maptext_holder = image(loc = text_holder, layer = CHAT_LAYER + 0.1)
 	SET_PLANE_EXPLICIT(maptext_holder, HUD_PLANE, src)
 	maptext_holder.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	maptext_holder.alpha = 160
@@ -241,6 +247,21 @@
 		sign_text = null
 		remove_from_all_clients()
 	update_appearance()
+
+/obj/effect/abstract/signboard_holder
+	name = ""
+	icon = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_PLANE
+
+/obj/effect/abstract/signboard_holder/Initialize(mapload)
+	. = ..()
+	if(!istype(loc, /obj/structure/signboard) || QDELING(loc))
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/abstract/signboard_holder/forceMove(atom/destination, no_tp = FALSE, harderforce = FALSE)
+	if(harderforce)
+		return ..()
 
 #undef SIGNBOARD_HEIGHT
 #undef SIGNBOARD_WIDTH
