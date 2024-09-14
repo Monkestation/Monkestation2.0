@@ -208,6 +208,7 @@
 	doing_update = FALSE
 
 /obj/structure/signboard/proc/add_to_all_clients_unsafe()
+	PRIVATE_PROC(TRUE)
 	if(QDELETED(src))
 		return
 	remove_from_all_clients_unsafe()
@@ -233,6 +234,7 @@
 	doing_update = FALSE
 
 /obj/structure/signboard/proc/remove_from_all_clients_unsafe()
+	PRIVATE_PROC(TRUE)
 	for(var/client/client as anything in client_maptext_images)
 		remove_client(client)
 	LAZYNULL(client_maptext_images)
