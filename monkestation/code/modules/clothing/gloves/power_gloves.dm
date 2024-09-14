@@ -96,11 +96,8 @@
 	if (owner.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		zap.Remove(owner)
 
-/datum/action/cooldown/spell/pointed/glove_zap/InterceptClickOn(mob/living/owner, params, atom/target)
+/datum/action/cooldown/spell/pointed/glove_zap/InterceptClickOn(owner, params, atom/target)
 	. = ..()
-	if (!isliving(target))
-		return FALSE
-	else
-		glove_nerd_zap(target, owner)
-		return TRUE
+	glove_nerd_zap(target, owner)
+	return TRUE
 
