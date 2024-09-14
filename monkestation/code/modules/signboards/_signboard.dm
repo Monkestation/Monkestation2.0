@@ -214,14 +214,15 @@
 	if(!should_display_text())
 		return
 	var/list/shown_first = list()
-	add_client(usr?.client)
+	var/client/usr_client = usr?.client
+	add_client(usr_client)
 	for(var/mob/mob in viewers(world.view, src))
 		if(QDELING(mob) || QDELETED(mob.client) || mob == usr)
 			continue
 		add_client(mob.client)
 		shown_first[mob.client] = TRUE
 	for(var/client/client as anything in GLOB.clients)
-		if(QDELETED(client) || shown_first[client])
+		if(QDELETED(client) || shown_first[client] || client == usr_client)
 			continue
 		add_client(client)
 
