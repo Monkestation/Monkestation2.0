@@ -47,16 +47,24 @@
 
 /obj/structure/signboard/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(!locked && (edit_by_hand || istype(held_item, /obj/item/pen)) && (anchored || show_while_unanchored))
-		context[SCREENTIP_CONTEXT_LMB] = "Set Displayed Text"
-		if(sign_text)
-			context[SCREENTIP_CONTEXT_ALT_RMB] = "Clear Sign"
-		. = CONTEXTUAL_SCREENTIP_SET
+	if(!is_locked(user))
+		if(held_item?.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+			return CONTEXTUAL_SCREENTIP_SET
+		if((edit_by_hand || istype(held_item, /obj/item/pen)) && (anchored || show_while_unanchored))
+			context[SCREENTIP_CONTEXT_LMB] = "Set Displayed Text"
+			if(sign_text)
+				context[SCREENTIP_CONTEXT_ALT_RMB] = "Clear Sign"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/signboard/examine(mob/user)
 	. = ..()
 	if(!edit_by_hand)
 		. += span_info("You need a <b>pen</b> to write on the sign!")
+	if(anchored)
+		. += span_info("It is secured to the floor, you could use a <i>wrench</i> to unsecure and move it.")
+	else
+		. += span_info("It is unsecured, you could use a <i>wrench</i> to secure it in place.")
 	if(sign_text)
 		. += span_boldnotice("\nIt currently displays the following:")
 		. += span_info(html_encode(sign_text))
