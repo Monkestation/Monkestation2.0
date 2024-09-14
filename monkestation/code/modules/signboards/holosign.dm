@@ -85,7 +85,7 @@
 	RETURN_TYPE(/image)
 	var/image/client_image = ..()
 	if(current_color)
-		client_image.color = current_color
+		client_image?.color = current_color
 	return client_image
 
 /obj/structure/signboard/holosign/attack_hand_secondary(mob/user, list/modifiers)
