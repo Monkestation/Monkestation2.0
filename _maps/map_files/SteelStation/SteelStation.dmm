@@ -5180,7 +5180,6 @@
 /area/station/command/bridge)
 "bYN" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "bYP" = (
@@ -9694,7 +9693,6 @@
 /area/station/command/heads_quarters/captain)
 "dIJ" = (
 /obj/structure/altar_of_gods,
-/obj/item/storage/book/bible,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
@@ -37190,10 +37188,8 @@
 /area/station/hallway/primary/fore)
 "nJT" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
+/obj/item/book/bible,
+/turf/open/floor/carpet,
 /area/station/service/chapel)
 "nKa" = (
 /obj/structure/table/wood,
@@ -47850,7 +47846,6 @@
 /area/space/nearstation)
 "rFH" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
 /obj/machinery/camera/directional/west,
 /turf/open/floor/iron/chapel{
 	dir = 1
@@ -81000,7 +80995,7 @@ xDg
 xCV
 wNN
 gts
-nJT
+hsP
 rFH
 pYJ
 vQM
@@ -83050,7 +83045,7 @@ qMR
 dcN
 dcN
 dcN
-bSj
+nJT
 xCV
 dqv
 mfB
@@ -85109,7 +85104,7 @@ vQM
 vQM
 aDk
 rXo
-rXo
+aDk
 aJg
 aDk
 laa
@@ -91324,7 +91319,7 @@ hzf
 sXi
 bwb
 pJh
-mpy
+sXi
 nHu
 dsV
 oXZ
@@ -92334,7 +92329,7 @@ gXN
 sXi
 ayd
 ayd
-mpy
+sXi
 sXi
 mpy
 ayd
@@ -93888,7 +93883,7 @@ gFm
 jzE
 joC
 sXi
-mpy
+sXi
 ttV
 keM
 lHp
@@ -94149,7 +94144,7 @@ sfW
 mpy
 ayd
 pJh
-mpy
+sXi
 mpy
 hXb
 bFg
@@ -94406,7 +94401,7 @@ mpy
 mpy
 gfR
 pJh
-mpy
+sXi
 mpy
 bFg
 bFg
@@ -95840,7 +95835,7 @@ prr
 pZP
 prr
 klb
-prr
+pZP
 kNW
 noS
 prr
@@ -96097,7 +96092,7 @@ pZP
 jOR
 prr
 prr
-prr
+pZP
 kNW
 pZP
 pZP
@@ -96209,7 +96204,7 @@ gXN
 mpy
 sXi
 mpy
-mpy
+sXi
 tAz
 sXi
 ocU
@@ -96611,7 +96606,7 @@ prr
 pZP
 prr
 nSA
-prr
+pZP
 kNW
 xCj
 aMv
@@ -98147,7 +98142,7 @@ pZP
 pZP
 qlc
 prr
-prr
+pZP
 prr
 prr
 noS
@@ -98519,7 +98514,7 @@ sXi
 sXi
 sXi
 mpy
-mpy
+sXi
 ttV
 sXi
 mpy
@@ -99542,8 +99537,8 @@ mpy
 sXi
 joC
 ttV
-mpy
-mpy
+sXi
+sXi
 sXi
 mpy
 mpy
@@ -100047,7 +100042,7 @@ vQI
 suR
 jdH
 vaQ
-mpy
+sXi
 sXi
 irM
 sXi
@@ -100316,8 +100311,8 @@ sXi
 mpy
 mpy
 ttV
-mpy
-mpy
+sXi
+sXi
 sXi
 sXi
 sXi
@@ -100571,7 +100566,7 @@ joC
 joC
 sXi
 mpy
-mpy
+sXi
 mpy
 mpy
 mpy
@@ -102631,7 +102626,7 @@ sXi
 ttV
 irM
 irM
-mpy
+sXi
 sXi
 mpy
 joC
@@ -102886,7 +102881,7 @@ nTE
 sXi
 iXI
 mpy
-mpy
+sXi
 mpy
 mpy
 sXi
@@ -103665,7 +103660,7 @@ bFg
 mpy
 joC
 sXi
-mpy
+dZQ
 mpy
 juf
 qof
@@ -104684,7 +104679,7 @@ mpy
 mpy
 irM
 mpy
-mpy
+sXi
 sXi
 mpy
 sXi
@@ -105204,7 +105199,7 @@ dXL
 sXi
 mpy
 joC
-mpy
+sXi
 sXi
 sXi
 sXi
@@ -105632,7 +105627,7 @@ pZP
 pZP
 pZP
 prr
-prr
+pZP
 prr
 oYS
 hRV
@@ -105961,7 +105956,7 @@ cNy
 mpy
 sXi
 joC
-mpy
+sXi
 mpy
 sXi
 sXi
@@ -106146,7 +106141,7 @@ klb
 prr
 noS
 prr
-prr
+pZP
 klb
 oYS
 gWb
@@ -106224,13 +106219,13 @@ mpy
 sXi
 mpy
 sXi
-mpy
+sXi
 mpy
 mpy
 sXi
 iPJ
 mpy
-mpy
+sXi
 joC
 xoj
 sXi
@@ -106738,8 +106733,8 @@ mpy
 mpy
 mpy
 sXi
-mpy
-mpy
+sXi
+sXi
 mpy
 sXi
 lEL
@@ -106915,7 +106910,7 @@ pZP
 pZP
 klb
 wgg
-prr
+pZP
 pZP
 fmq
 prr
@@ -107169,7 +107164,7 @@ prr
 pZP
 fmq
 prr
-prr
+pZP
 prr
 prr
 klb
@@ -107683,12 +107678,12 @@ kUF
 pZP
 dUt
 prr
-prr
+pZP
 prr
 pZP
 prr
 prr
-klb
+wWm
 prr
 nFO
 mil
@@ -107761,7 +107756,7 @@ eUZ
 nBr
 rKC
 mpy
-mpy
+sXi
 sXi
 mpy
 ovA
@@ -107939,8 +107934,8 @@ aHz
 prr
 pZP
 klb
-prr
-prr
+pZP
+pZP
 fQr
 pZP
 prr
@@ -108456,7 +108451,7 @@ pZP
 pZP
 prr
 prr
-prr
+pZP
 klb
 dUt
 oLt
