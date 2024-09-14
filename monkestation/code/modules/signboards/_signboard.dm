@@ -141,12 +141,12 @@
 
 /obj/structure/signboard/set_anchored(anchorvalue)
 	. = ..()
-	add_to_all_clients()
+	INVOKE_ASYNC(src, PROC_REF(add_to_all_clients))
 
 /obj/structure/signboard/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(!isturf(old_loc) || !isturf(loc))
-		add_to_all_clients()
+		INVOKE_ASYNC(src, PROC_REF(add_to_all_clients))
 
 /obj/structure/signboard/proc/is_locked(mob/user)
 	. = locked
@@ -242,10 +242,10 @@
 	new_text = trimtext(copytext_char(new_text, 1, max_length))
 	if(length(new_text))
 		sign_text = new_text
-		add_to_all_clients()
+		INVOKE_ASYNC(src, PROC_REF(add_to_all_clients))
 	else
 		sign_text = null
-		remove_from_all_clients()
+		INVOKE_ASYNC(src, PROC_REF(remove_from_all_clients))
 	update_appearance()
 
 /obj/effect/abstract/signboard_holder

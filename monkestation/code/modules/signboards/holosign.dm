@@ -13,7 +13,7 @@
 /obj/structure/signboard/holosign/Initialize(mapload)
 	. = ..()
 	if(current_color)
-		set_color(current_color)
+		INVOKE_ASYNC(src, PROC_REF(set_color), current_color)
 
 /obj/structure/signboard/holosign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -44,7 +44,7 @@
 
 /obj/structure/signboard/holosign/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, color) || var_name == NAMEOF(src, current_color))
-		set_color(var_value)
+		INVOKE_ASYNC(src, PROC_REF(set_color), var_value)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
 	return ..()
@@ -107,10 +107,10 @@
 		return
 	if(check_locked(user))
 		return
-	set_color(new_color)
-	if(current_color)
-		balloon_alert(user, "set color to [current_color]")
-		investigate_log("([key_name(user)]) set the color to [current_color || "(none)"]", INVESTIGATE_SIGNBOARD)
+	INVOKE_ASYNC(src, PROC_REF(set_color), new_color)
+	if(new_color)
+		balloon_alert(user, "set color to [new_color]")
+		investigate_log("([key_name(user)]) set the color to [new_color || "(none)"]", INVESTIGATE_SIGNBOARD)
 	else
 		balloon_alert(user, "unset color")
 		investigate_log("([key_name(user)]) cleared the color", INVESTIGATE_SIGNBOARD)
@@ -132,7 +132,6 @@
 		return null
 
 /obj/structure/signboard/holosign/proc/set_color(new_color)
-	set waitfor = FALSE
 	new_color = sanitize_color(new_color)
 	if(!new_color)
 		current_color = null
