@@ -21078,6 +21078,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"hQB" = (
+/obj/structure/table/wood,
+/obj/item/book/bible,
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "hQE" = (
 /obj/structure/table,
 /obj/item/hfr_box/corner,
@@ -33364,6 +33369,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mnn" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "mnD" = (
 /obj/structure/bed/double,
 /obj/effect/landmark/start/hangover,
@@ -35772,6 +35783,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/exit/departure_lounge)
+"nkq" = (
+/obj/structure/cable,
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "nkG" = (
 /obj/machinery/camera/directional/east,
 /turf/open/floor/wood,
@@ -37187,10 +37205,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "nJT" = (
-/obj/structure/table/wood,
-/obj/item/book/bible,
-/turf/open/floor/carpet,
-/area/station/service/chapel)
+/obj/structure/chair/sofa/bench{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "nKa" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur{
@@ -55721,6 +55740,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"uwr" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "uwy" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -59368,6 +59391,10 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"vOO" = (
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "vOR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -64548,6 +64575,11 @@
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/medical/medbay/central)
+"xMI" = (
+/obj/structure/cable,
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "xML" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/firecloset,
@@ -83045,7 +83077,7 @@ qMR
 dcN
 dcN
 dcN
-nJT
+hQB
 xCV
 dqv
 mfB
@@ -94367,8 +94399,8 @@ pIz
 aPt
 aPt
 wXv
-wXv
-wXv
+nkq
+xMI
 xOR
 nWN
 fnm
@@ -94624,8 +94656,8 @@ spy
 riy
 riy
 cMU
-cMU
-cMU
+nJT
+uwr
 eqa
 wle
 oOq
@@ -94881,8 +94913,8 @@ wQE
 riy
 riy
 cMU
-cMU
-cMU
+nJT
+uwr
 bii
 brS
 fnm
@@ -95138,8 +95170,8 @@ qxO
 riy
 riy
 cMU
-cMU
-cMU
+nJT
+uwr
 bii
 kRb
 aHk
@@ -95395,8 +95427,8 @@ cMU
 cMU
 cMU
 cMU
-cMU
-cMU
+nJT
+uwr
 bii
 tXR
 aHk
@@ -95652,8 +95684,8 @@ cMU
 cMU
 cMU
 cMU
-cMU
-cMU
+mnn
+vOO
 bii
 ajC
 aHk
