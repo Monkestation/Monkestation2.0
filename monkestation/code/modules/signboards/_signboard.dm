@@ -135,7 +135,8 @@
 
 /obj/structure/signboard/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
+	if(!anchored || !check_locked(user))
+		default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/signboard/set_anchored(anchorvalue)
