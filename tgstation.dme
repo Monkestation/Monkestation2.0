@@ -390,6 +390,7 @@
 #include "code\__DEFINES\traits\sources.dm"
 #include "code\__DEFINES\traits\monkestation\declarations.dm"
 #include "code\__DEFINES\traits\monkestation\sources.dm"
+#include "code\__DEFINES\~monkestation\_helpers.dm"
 #include "code\__DEFINES\~monkestation\_patreon.dm"
 #include "code\__DEFINES\~monkestation\abberant_organs.dm"
 #include "code\__DEFINES\~monkestation\access.dm"

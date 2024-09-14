@@ -24,6 +24,8 @@
 	var/obj/effect/abstract/signboard_holder/text_holder
 	/// Lazy assoc list of clients to images
 	VAR_PROTECTED/list/client_maptext_images
+	/// If a mass client add/removal is currently being done.
+	VAR_PRIVATE/doing_update = FALSE
 
 /obj/structure/signboard/Initialize(mapload)
 	. = ..()
@@ -38,7 +40,7 @@
 
 /obj/structure/signboard/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN)
-	remove_from_all_clients()
+	remove_from_all_clients_unsafe()
 	vis_contents -= text_holder
 	QDEL_NULL(text_holder)
 	return ..()
@@ -167,7 +169,12 @@
 
 /obj/structure/signboard/proc/on_mob_login(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(add_client), user?.client)
+	var/client/client = user?.client
+	ASYNC
+		UNTIL_WHILE_EXISTS(src, !doing_update)
+		doing_update = TRUE
+		add_client(client)
+		doing_update = FALSE
 
 /obj/structure/signboard/proc/add_client(client/user)
 	if(QDELETED(user) || !should_display_text())
@@ -195,23 +202,36 @@
 	LAZYREMOVE(update_on_z, client_image)
 
 /obj/structure/signboard/proc/add_to_all_clients()
+	UNTIL_WHILE_EXISTS(src, !doing_update)
+	doing_update = TRUE
+	add_to_all_clients_unsafe()
+	doing_update = FALSE
+
+/obj/structure/signboard/proc/add_to_all_clients_unsafe()
 	if(QDELETED(src))
 		return
-	remove_from_all_clients()
+	remove_from_all_clients_unsafe()
 	if(!should_display_text())
 		return
 	var/list/shown_first = list()
+	add_client(usr?.client)
 	for(var/mob/mob in viewers(world.view, src))
-		if(QDELING(mob) || QDELETED(mob.client))
+		if(QDELING(mob) || QDELETED(mob.client) || mob == usr)
 			continue
 		add_client(mob.client)
-		shown_first += mob.client
-	for(var/client/client as anything in GLOB.clients - shown_first)
-		if(QDELETED(client))
+		shown_first[mob.client] = TRUE
+	for(var/client/client as anything in GLOB.clients)
+		if(QDELETED(client) || shown_first[client])
 			continue
 		add_client(client)
 
 /obj/structure/signboard/proc/remove_from_all_clients()
+	UNTIL_WHILE_EXISTS(src, !doing_update)
+	doing_update = TRUE
+	remove_from_all_clients_unsafe()
+	doing_update = FALSE
+
+/obj/structure/signboard/proc/remove_from_all_clients_unsafe()
 	for(var/client/client as anything in client_maptext_images)
 		remove_client(client)
 	LAZYNULL(client_maptext_images)
