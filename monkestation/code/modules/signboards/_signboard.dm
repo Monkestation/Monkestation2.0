@@ -5,7 +5,7 @@
 	name = "sign"
 	desc = "A foldable sign."
 	icon = 'monkestation/icons/obj/structures/signboards.dmi'
-	icon_state = "sign_blank"
+	icon_state = "sign"
 	base_icon_state = "sign"
 	density = TRUE
 	anchored = TRUE

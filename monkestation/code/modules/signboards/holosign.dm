@@ -1,6 +1,7 @@
 /obj/structure/signboard/holosign
 	name = "holographic sign"
 	desc = "A holographic signboard, projecting text above it."
+	icon_state = "holographic_sign"
 	base_icon_state = "holographic_sign"
 	edit_by_hand = TRUE
 	/// If set, only IDs with this name can (un)lock the sign.
