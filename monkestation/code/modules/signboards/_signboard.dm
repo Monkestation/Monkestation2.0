@@ -195,19 +195,23 @@
 	LAZYREMOVE(update_on_z, client_image)
 
 /obj/structure/signboard/proc/add_to_all_clients()
-	set waitfor = FALSE
 	if(QDELETED(src))
 		return
 	remove_from_all_clients()
 	if(!should_display_text())
 		return
-	for(var/client/client as anything in GLOB.clients)
+	var/list/shown_first = list()
+	for(var/mob/mob in viewers(world.view, src))
+		if(QDELING(mob) || QDELETED(mob.client))
+			continue
+		add_client(mob.client)
+		shown_first += mob.client
+	for(var/client/client as anything in GLOB.clients - shown_first)
 		if(QDELETED(client))
 			continue
 		add_client(client)
 
 /obj/structure/signboard/proc/remove_from_all_clients()
-	set waitfor = FALSE
 	for(var/client/client as anything in client_maptext_images)
 		remove_client(client)
 	LAZYNULL(client_maptext_images)
