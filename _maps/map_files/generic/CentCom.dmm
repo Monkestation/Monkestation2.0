@@ -9895,13 +9895,6 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "aAa" = (
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/chasm{
 	name = "Pooba's Hole of Dead Body Storage +1"
 	},
@@ -20473,7 +20466,9 @@
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
 "hpt" = (
-/obj/machinery/telecomms/relay/preset/ruskie,
+/obj/machinery/telecomms/relay/preset/ruskie{
+	use_power = 0
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
 "hpU" = (
@@ -20783,6 +20778,7 @@
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
 /obj/item/radio/headset/syndicate/alt/leader,
 /obj/item/clothing/under/costume/syndie_pajamas,
+/obj/item/storage/backpack/duffelbag/syndie,
 /turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
@@ -20812,6 +20808,7 @@
 /obj/machinery/computer/communications/syndicate{
 	dir = 4
 	},
+/obj/structure/railing,
 /turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
@@ -21377,10 +21374,6 @@
 /obj/structure/railing/wood,
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
-"qCb" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/adminroom)
 "qCL" = (
 /obj/structure/closet/crate/cardboard,
 /obj/item/reagent_containers/cup/glass/bottle/champagne,
@@ -21563,10 +21556,6 @@
 /obj/item/clothing/suit/space/hardsuit/juggernaut,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
-"sOJ" = (
-/obj/structure/window/reinforced/spawner/directional,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/adminroom)
 "sOU" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -21741,6 +21730,10 @@
 	},
 /area/centcom/central_command_areas/evacuation)
 "tNY" = (
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
@@ -54738,8 +54731,8 @@ azQ
 azQ
 azQ
 kpH
-qCb
-sOJ
+kpH
+kpH
 acd
 aYn
 aNE
