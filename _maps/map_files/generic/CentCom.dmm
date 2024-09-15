@@ -19795,10 +19795,10 @@
 /turf/open/floor/iron/dark/textured_edge,
 /area/centcom/central_command_areas/evacuation)
 "blr" = (
-/obj/machinery/door/puzzle{
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/airlock/hatch{
 	name = "Pooba's Observatory"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
