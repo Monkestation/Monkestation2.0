@@ -67,21 +67,22 @@
 		return FALSE
 
 	var/surplus = cable_target.surplus()
-	if (surplus <= 1 KW)
+	if(surplus <= 1 KW)
 		owner.balloon_alert (owner, "Not enough power in the grid!")
-
-	if (get_dist(owner, target) >= zap_range)
+	if(get_dist(owner, target) >= zap_range)
 		owner.balloon_alert (owner, "Unable to lock on! Move closer!")
 	else
 		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
-		if (do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE))
-			if (get_dist(owner, target) > zap_range)
+		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE))
+			for(var/obj/machinery/light/light in get_area(owner))
+				light.flicker()
+			if(get_dist(owner, target) > zap_range)
 				owner.balloon_alert(owner, "Target moved out of range!")
 			else
 				var/calculated_power = surplus/20 //Calc_power, change division to balance
 				target_tesla_zap(owner, target, calculated_power, SHOCK_NOSTUN, max_damage = INFINITY)
 				StartCooldown()
-				if (surplus <= heavy_zap) //plays a separate sound at 2 MW excess
+				if(surplus <= heavy_zap) //plays a separate sound at 2 MW excess
 					playsound(target, 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 				else
 					playsound(target, 'sound/magic/lightningbolt.ogg', 50, TRUE, -1)
@@ -96,8 +97,8 @@
 	if (owner.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		zap.Remove(owner)
 
-/datum/action/cooldown/spell/pointed/glove_zap/InterceptClickOn(owner, params, atom/target)
+/datum/action/cooldown/spell/pointed/glove_zap/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
-	glove_nerd_zap(target, owner)
+	glove_nerd_zap(target, caller)
 	return TRUE
 
