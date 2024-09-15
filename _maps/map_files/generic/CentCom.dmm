@@ -21948,10 +21948,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"wAw" = (
-/turf/closed/indestructible/fakeglass,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/adminroom)
 "wAD" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
@@ -56699,7 +56695,7 @@ aaa
 aaa
 aaa
 aaa
-wAw
+kpH
 yhF
 aAl
 aAl
