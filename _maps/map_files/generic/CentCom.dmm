@@ -1976,7 +1976,6 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "afl" = (
-/turf/open/floor/mineral/titanium/tiled/white,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/centcom/central_command_areas/adminroom)
 "afn" = (
@@ -19821,7 +19820,6 @@
 /mob/living/basic/xenofauna/possum{
 	name = "Auriga"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/centcom/central_command_areas/adminroom)
 "bTZ" = (
@@ -19835,7 +19833,6 @@
 /mob/living/simple_animal/bot/vibebot{
 	name = "\improper Helpdesk Vibebot"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/centcom/central_command_areas/adminroom)
 "bWo" = (
