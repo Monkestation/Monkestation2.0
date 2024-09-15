@@ -2,12 +2,6 @@
 	name = "Teratomas"
 	member_name = "teratoma"
 
-/datum/team/teratoma/roundend_report()
-	var/list/parts = list()
-	parts += span_header("The teratomas were:")
-	parts += printplayerlist(members)
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
-
 /datum/antagonist/teratoma
 	name = "\improper Teratoma"
 	show_in_antagpanel = TRUE
@@ -34,12 +28,15 @@
 	if(!new_team)
 		if(!main_teratoma_team)
 			main_teratoma_team = new
-			main_teratoma_team.add_objective(/datum/objective/teratoma)
+			main_teratoma_team.add_objective(new /datum/objective/teratoma)
 		new_team = main_teratoma_team
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	team = new_team
 	objectives |= team.objectives
+
+/datum/antagonist/teratoma/get_team()
+	return team
 
 /datum/antagonist/teratoma/get_base_preview_icon()
 	RETURN_TYPE(/icon)
