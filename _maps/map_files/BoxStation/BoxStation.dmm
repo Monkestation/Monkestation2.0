@@ -4656,7 +4656,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "bzX" = (
-/obj/machinery/light/floor/has_bulb,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/auxlab)
 "bAg" = (
@@ -7552,8 +7552,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "cxf" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "cxk" = (
@@ -38480,7 +38480,6 @@
 /turf/open/floor/iron/vaporwave,
 /area/station/command/heads_quarters/rd)
 "mSe" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mopbucket,
 /obj/item/mop,
@@ -42133,6 +42132,11 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"oaX" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "obc" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4
@@ -50279,7 +50283,7 @@
 	name = "Chief Engineer's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
-/turf/open/floor/iron/textured,
+/turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/ce)
 "qSu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -55540,7 +55544,6 @@
 /area/station/science/research)
 "sJl" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/south,
 /obj/structure/closet/crate,
 /obj/item/stack/ore/glass/basalt,
 /obj/item/stack/ore/glass/basalt,
@@ -55930,6 +55933,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/red,
 /area/station/security/courtroom)
+"sPm" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/science/auxlab)
 "sPy" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -59013,7 +59020,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/reinforced,
+/turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "tPw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -65221,7 +65228,6 @@
 /area/station/cargo/drone_bay)
 "vPR" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/broken/directional/south,
 /obj/structure/closet/crate,
 /obj/item/stack/ore/silver,
 /obj/item/stack/ore/silver,
@@ -109098,7 +109104,7 @@ mjz
 mjz
 aVH
 icx
-aGG
+bzX
 icx
 hDE
 hlP
@@ -109355,7 +109361,7 @@ mjz
 mjz
 aVH
 aFe
-bzX
+aGG
 rkF
 hhs
 ikm
@@ -109612,7 +109618,7 @@ mjz
 mjz
 aVH
 icx
-aGG
+sPm
 icx
 fck
 lHF
@@ -123566,7 +123572,7 @@ bOr
 nBE
 cxf
 bQm
-bQm
+oaX
 nBE
 bOr
 bOr
