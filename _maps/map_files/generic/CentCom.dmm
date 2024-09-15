@@ -6875,7 +6875,7 @@
 /obj/machinery/quantum_server{
 	name = "NT Quantum Server Relay"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "asf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -15217,7 +15217,7 @@
 "aOk" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/vending/liberationstation,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "aOl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -17826,7 +17826,7 @@
 "aVc" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stamp/centcom,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "aVd" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -19741,7 +19741,7 @@
 /obj/machinery/fax{
 	name = "NT Helpdesk Fax Machine"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "bkY" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -19939,13 +19939,13 @@
 /obj/structure/server{
 	name = "NT Helpdesk Server"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "diV" = (
 /obj/structure/closet/abductor{
 	name = "Sentient Locker of Transport"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "dki" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -19994,7 +19994,7 @@
 /area/cruiser_dock)
 "dtE" = (
 /obj/machinery/modular_computer/preset/id/centcom,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "duq" = (
 /obj/structure/railing/wood{
@@ -20031,7 +20031,7 @@
 "dQc" = (
 /obj/machinery/door/window/left/directional/north,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "dRD" = (
 /obj/structure/chair/plastic,
@@ -20066,7 +20066,7 @@
 /obj/machinery/doppler_array{
 	name = "Deckard Tachyon-Doppler Array"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "exy" = (
 /obj/effect/turf_decal/plaque{
@@ -20351,7 +20351,7 @@
 	delay_multiplier = 0.2;
 	power_usage = 0
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "gMl" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -20574,7 +20574,7 @@
 /obj/item/shell/server{
 	name = "NT Helpdesk Backup Server Assembly"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "ivR" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -20607,7 +20607,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "iQv" = (
 /obj/structure/flora/bush/large/style_3,
@@ -21156,7 +21156,7 @@
 /obj/machinery/movement_lever{
 	name = "NT Helpdesk Server Shutdown Lever"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "oNH" = (
 /obj/machinery/light/neon_lining{
@@ -53367,10 +53367,10 @@ azQ
 azQ
 azQ
 kpH
-aYn
-aYn
-aYn
-aYn
+kpH
+kpH
+kpH
+kpH
 aTd
 aTd
 aTd
@@ -53627,7 +53627,7 @@ kpH
 ivR
 kjO
 aAa
-aYn
+kpH
 aTd
 aTd
 aTd
@@ -53884,7 +53884,7 @@ kpH
 aKc
 gBq
 tNY
-aYn
+kpH
 aTd
 aTd
 aTd
@@ -54141,7 +54141,7 @@ kpH
 kpH
 kpH
 blr
-aYn
+kpH
 aTd
 aTd
 aTd
@@ -54398,7 +54398,7 @@ xjq
 fan
 xjq
 rYm
-aYn
+kpH
 amD
 amD
 amD
@@ -54655,7 +54655,7 @@ kpH
 kpH
 kpH
 acd
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -54912,7 +54912,7 @@ kpH
 ayR
 hAP
 ayR
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -55169,7 +55169,7 @@ kpH
 iew
 lRs
 kch
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -55426,7 +55426,7 @@ kpH
 kpH
 kpH
 kpH
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -55680,10 +55680,10 @@ aAl
 aAl
 hpU
 oJx
-ayg
+aAl
 iOc
 bjH
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -55937,10 +55937,10 @@ afl
 afl
 aJv
 aOk
-ayg
+aAl
 aVc
 gJY
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -56194,10 +56194,10 @@ afl
 afl
 aAl
 dQc
-ayg
+aAl
 dtE
-ayg
-aYn
+aAl
+kpH
 aNE
 aNE
 aNE
@@ -56451,10 +56451,10 @@ afl
 bTx
 aAl
 ase
-ayg
-ayg
-ayg
-aYn
+aAl
+aAl
+aAl
+kpH
 aNE
 aNE
 aNE
@@ -56711,7 +56711,7 @@ erK
 ins
 cQL
 diV
-aYn
+kpH
 aNE
 aNE
 aNE
@@ -56964,11 +56964,11 @@ ePC
 mUv
 aaW
 tiz
-aYn
-aYn
-aYn
-aYn
-aYn
+kpH
+kpH
+kpH
+kpH
+kpH
 aQC
 aQC
 amD
