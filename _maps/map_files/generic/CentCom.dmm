@@ -815,7 +815,6 @@
 	name = "Pooba's Bedroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "ace" = (
@@ -6876,9 +6875,6 @@
 /obj/machinery/quantum_server{
 	name = "NT Quantum Server Relay"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "asf" = (
@@ -13393,8 +13389,6 @@
 	name = "Zuko"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/light/colour_cycle/dancefloor_a,
-/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "aJw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -13644,7 +13638,6 @@
 /area/centcom/central_command_areas/hall)
 "aKc" = (
 /obj/machinery/computer/camera_advanced/syndie,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "aKd" = (
@@ -15224,9 +15217,6 @@
 "aOk" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/vending/liberationstation,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "aOl" = (
@@ -17836,9 +17826,6 @@
 "aVc" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stamp/centcom,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "aVd" = (
@@ -18109,12 +18096,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
-"aVI" = (
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/green,
-/area/centcom/central_command_areas/adminroom)
 "aVJ" = (
 /obj/structure/window/plasma/spawner/directional/east,
 /obj/machinery/photocopier/gratis,
@@ -19017,11 +18998,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
-"aYd" = (
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/light/colour_cycle/dancefloor_a,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/adminroom)
 "aYf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -19765,9 +19741,6 @@
 /obj/machinery/fax{
 	name = "NT Helpdesk Fax Machine"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "bkY" = (
@@ -19792,7 +19765,6 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Pooba's Observatory"
 	},
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "blD" = (
@@ -19967,18 +19939,12 @@
 /obj/structure/server{
 	name = "NT Helpdesk Server"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "diV" = (
 /obj/structure/closet/abductor{
 	name = "Sentient Locker of Transport"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "dki" = (
@@ -20028,9 +19994,6 @@
 /area/cruiser_dock)
 "dtE" = (
 /obj/machinery/modular_computer/preset/id/centcom,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "duq" = (
@@ -20068,9 +20031,6 @@
 "dQc" = (
 /obj/machinery/door/window/left/directional/north,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "dRD" = (
@@ -20106,9 +20066,6 @@
 /obj/machinery/doppler_array{
 	name = "Deckard Tachyon-Doppler Array"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "exy" = (
@@ -20195,7 +20152,6 @@
 /area/centcom/central_command_areas/evacuation)
 "fan" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "fcP" = (
@@ -20351,7 +20307,6 @@
 "gBq" = (
 /obj/machinery/light/directional/east,
 /obj/structure/chair/office/tactical,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "gBx" = (
@@ -20396,9 +20351,6 @@
 	delay_multiplier = 0.2;
 	power_usage = 0
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "gMl" = (
@@ -20496,7 +20448,6 @@
 /area/cruiser_dock)
 "hAP" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "hAZ" = (
@@ -20585,18 +20536,10 @@
 "hVj" = (
 /turf/open/floor/iron/stairs/right,
 /area/cruiser_dock)
-"ids" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/green,
-/area/centcom/central_command_areas/adminroom)
 "iew" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/syndie/double,
 /obj/item/toy/plush/pooba_bee_plush,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "ifF" = (
@@ -20631,8 +20574,6 @@
 /obj/item/shell/server{
 	name = "NT Helpdesk Backup Server Assembly"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "ivR" = (
@@ -20640,7 +20581,6 @@
 /obj/machinery/fax{
 	name = "Pooba's Fax Machine"
 	},
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "iCr" = (
@@ -20667,9 +20607,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "iQv" = (
@@ -20779,7 +20716,6 @@
 /obj/item/radio/headset/syndicate/alt/leader,
 /obj/item/clothing/under/costume/syndie_pajamas,
 /obj/item/storage/backpack/duffelbag/syndie,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "kcm" = (
@@ -20809,7 +20745,6 @@
 	dir = 4
 	},
 /obj/structure/railing,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "kpH" = (
@@ -20930,7 +20865,6 @@
 "lRs" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/clothing/mask/breath/poob_mask,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "lWT" = (
@@ -21222,9 +21156,6 @@
 /obj/machinery/movement_lever{
 	name = "NT Helpdesk Server Shutdown Lever"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/circuit/telecomms,
-/turf/open/floor/circuit/telecomms,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
 "oNH" = (
@@ -21507,7 +21438,6 @@
 /area/cruiser_dock)
 "rYm" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "saC" = (
@@ -21734,7 +21664,6 @@
 	dir = 8;
 	layer = 4.1
 	},
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "tWL" = (
@@ -22031,10 +21960,6 @@
 	dir = 8
 	},
 /area/cruiser_dock)
-"wMr" = (
-/turf/open/floor/wood/large,
-/turf/open/floor/carpet/orange,
-/area/centcom/central_command_areas/adminroom)
 "wMv" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/lizard_plushie,
@@ -22081,7 +22006,6 @@
 	name = "Pooba's Lair"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/wood/large,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "xno" = (
@@ -22199,9 +22123,6 @@
 /obj/structure/easel,
 /obj/item/canvas/twentyfour_twentyfour,
 /obj/item/canvas/twentyfour_twentyfour,
-/obj/item/canvas/twentyfour_twentyfour,
-/turf/open/floor/mineral/titanium/tiled/white,
-/turf/open/floor/light/colour_cycle/dancefloor_a,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "yhG" = (
@@ -54988,9 +54909,9 @@ azQ
 azQ
 azQ
 kpH
-wMr
+ayR
 hAP
-wMr
+ayR
 aYn
 aNE
 aNE
@@ -55755,11 +55676,11 @@ aaa
 aaa
 kpH
 rxE
-aYd
+aAl
 aAl
 hpU
 oJx
-aVI
+ayg
 iOc
 bjH
 aYn
@@ -56010,13 +55931,13 @@ aaa
 aaa
 aaa
 aaa
-eHz
+aua
 bVz
 afl
 afl
 aJv
 aOk
-aVI
+ayg
 aVc
 gJY
 aYn
@@ -56267,15 +56188,15 @@ aaa
 aaa
 aaa
 aaa
-eHz
+aua
 afl
 afl
 afl
-aYd
+aAl
 dQc
-aVI
+ayg
 dtE
-ids
+ayg
 aYn
 aNE
 aNE
@@ -56524,15 +56445,15 @@ aaa
 aaa
 aaa
 aaa
-eHz
+aua
 afl
 afl
 bTx
-aYd
+aAl
 ase
-aVI
-aVI
-aVI
+ayg
+ayg
+ayg
 aYn
 aNE
 aNE
@@ -56783,9 +56704,9 @@ aaa
 aaa
 wAw
 yhF
-aYd
-aYd
-aYd
+aAl
+aAl
+aAl
 erK
 ins
 cQL
