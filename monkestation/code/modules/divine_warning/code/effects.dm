@@ -7,11 +7,11 @@
 	layer = EMISSIVE_LAYER_UNBLOCKABLE
 	alpha = 120
 
-/mob/living/proc/flash_divine_overlay(alpha = 120, soundvolume = 80, time = 2 SECONDS)
+/mob/living/proc/flash_divine_overlay(alpha = 120, soundvolume = 80, time = 2 SECONDS, force = FALSE)
 	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
 		clear_fullscreen("divine", time)
 		return
-	if (COOLDOWN_FINISHED(src, divine_cooldown))
+	if (COOLDOWN_FINISHED(src, divine_cooldown) || force)
 		soundvolume *= 0.8
 		SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/divine.ogg', volume = soundvolume))
 		overlay_fullscreen("divine", /atom/movable/screen/fullscreen/divine, 1, alpha)
@@ -35,8 +35,7 @@
 	// if (!client || !HAS_TRAIT(src, TRAIT_DIVINE)) return
 	if (!client || !src?.mind) return
 
-	// if(health <= hardcrit_threshold && (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0) && stat != DEAD)
-	if(health <= hardcrit_threshold && stat != DEAD)
+	if(health <= hardcrit_threshold && (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0) && stat != DEAD)
 		// playsound(src, 'monkestation/code/modules/divine_warning/sounds/divine.ogg', 60, TRUE, use_reverb = TRUE, pressure_affected = FALSE, )
 		var/severity = 0.2
 		switch(health)
