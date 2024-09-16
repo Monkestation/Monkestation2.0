@@ -256,10 +256,9 @@
 	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center'>[html_encode(sign_text)]</span>")
 	var/mheight
 	WXH_TO_HEIGHT(user.MeasureText(text_html, null, SIGNBOARD_WIDTH), mheight)
-	var/image/maptext_holder = image(loc = text_holder, layer = CHAT_LAYER + 0.1)
-	SET_PLANE_EXPLICIT(maptext_holder, HUD_PLANE, src)
+	var/image/maptext_holder = image(loc = text_holder, layer = ABOVE_ALL_MOB_LAYER)
 	maptext_holder.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
-	maptext_holder.alpha = 160
+	maptext_holder.alpha = 192
 	maptext_holder.maptext = text_html
 	maptext_holder.maptext_x = (SIGNBOARD_WIDTH - bwidth) * -0.5
 	maptext_holder.maptext_y = bheight
