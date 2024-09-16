@@ -31577,12 +31577,6 @@
 	},
 /area/station/service/chapel)
 "jIX" = (
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel";
-	pixel_y = 4
-	},
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
 	listening = 0;
@@ -31606,6 +31600,13 @@
 	name = "AI Chamber Lockdown";
 	pixel_x = -24;
 	req_access = list("ai_upload")
+	},
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = 4;
+	listening = 0
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
