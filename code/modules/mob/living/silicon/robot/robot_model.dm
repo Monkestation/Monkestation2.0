@@ -664,7 +664,7 @@
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/cyborg, //MONKESTATION EDIT
 		/obj/item/reagent_containers/borghypo/medical,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
@@ -679,7 +679,7 @@
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
-		/obj/item/roller/robo,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
@@ -760,7 +760,7 @@
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	to_chat(loc, "<span class='userdanger'>You are an Enforcer and Upholder of your active lawset. \
 	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
 /obj/item/robot_model/security
@@ -805,6 +805,7 @@
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
+		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
@@ -885,7 +886,9 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/roller/robo,
+		/obj/item/bonesetter,
+		/obj/item/blood_filter,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,

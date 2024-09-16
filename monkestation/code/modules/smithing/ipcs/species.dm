@@ -22,16 +22,11 @@
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_LITERATE,
 		TRAIT_REVIVES_BY_HEALING,
-		TRAIT_NOCRITDAMAGE, // We do our own handling of crit damage.
 		TRAIT_NO_DNA_COPY,
 	)
 
 	species_traits = list(
 		NO_DNA_COPY,
-		EYECOLOR,
-		LIPS,
-		HAIR,
-		NOEYESPRITES,
 		NOTRANSSTING,
 		NOHUSK
 	)
@@ -75,6 +70,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/ipc,
 	)
 
+	brutemod = 1.5
 	coldmod = 1.2
 	heatmod = 2 // TWO TIMES DAMAGE FROM BEING TOO HOT?! WHAT?! No wonder lava is literal instant death for us.
 	siemens_coeff = 1.4 // Not more because some shocks will outright crit you, which is very unfun

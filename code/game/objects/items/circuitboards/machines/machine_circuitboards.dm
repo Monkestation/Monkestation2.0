@@ -639,7 +639,8 @@
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
 		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
-		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",)
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -1039,7 +1040,7 @@
 	req_components = list()
 
 /obj/item/circuitboard/machine/botpad
-	name = "Bot launchpad"
+	name = "Bot Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/botpad
 	req_components = list()

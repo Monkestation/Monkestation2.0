@@ -168,13 +168,13 @@
 		if(target_ling)
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-			if(target_bloodsucker.bloodsucker_blood_volume >= target_bloodsucker.max_blood_volume * 0.4)
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS)
-				target_bloodsucker.bloodsucker_blood_volume -= target_bloodsucker.max_blood_volume * 0.15
+			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	rebuilt = FALSE
 	victim.transfer_observers_to(src)
@@ -226,9 +226,10 @@
 		item.forceMove(turf)
 	stored_items.Cut()
 
-/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE)
+/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE) as /mob/living/carbon/human
+	RETURN_TYPE(/mob/living/carbon/human)
 	if(rebuilt)
-		return
+		return owner
 	set_organ_damage(-maxHealth) // heals the brain fully
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
@@ -239,13 +240,13 @@
 	brainmob?.mind?.grab_ghost()
 	if(isnull(brainmob))
 		user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
-		return TRUE
+		return null
 	if(isnull(brainmob.stored_dna))
 		user?.balloon_alert(user, "This brain does not contain any dna!")
-		return TRUE
+		return null
 	if(isnull(brainmob.client))
 		user?.balloon_alert(user, "This brain does not contain a mind!")
-		return TRUE
+		return null
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
 	rebuilt = TRUE
@@ -287,3 +288,4 @@
 	transfer_observers_to(new_body)
 
 	drop_items_to_ground(new_body.drop_location())
+	return new_body

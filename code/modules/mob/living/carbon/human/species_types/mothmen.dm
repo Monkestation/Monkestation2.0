@@ -3,9 +3,7 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	species_traits = list(
-		LIPS,
 		HAS_MARKINGS,
-		HAIR // monke edit: moths can have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -66,7 +64,6 @@
 
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
-
 
 /datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)

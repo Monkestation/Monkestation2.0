@@ -44,14 +44,9 @@
 	glass_color_blend_to_ratio = 0.5
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
-/obj/structure/window/reinforced/tinted/fulltile
-	icon = 'monkestation/icons/obj/structures/window/tinted_window.dmi'
-	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
-	base_icon_state = "reinforced_window"
-	icon_state = "reinforced_window-0"
-	smooth_adapters = SMOOTH_ADAPTERS_WALLS
-
-/obj/structure/grille
+/obj/structure/grille/window_sill
+	name = "window grille"
+	desc = "A flimsy framework of iron rods. This one fits a window!"
 	icon = 'monkestation/icons/obj/structures/window/grille.dmi'
 	icon_state = "grille-0"
 	layer = ABOVE_OBJ_LAYER - 0.01

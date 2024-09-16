@@ -34,7 +34,6 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "ew" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -51,10 +50,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/misc/dirt/jungle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "gM" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -62,9 +59,9 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "gY" = (
-/obj/machinery/media/jukebox,
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass,
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/water/jungle,
 /area/station/commons/lounge)
 "hS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -78,7 +75,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "jB" = (
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "jK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -175,7 +172,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "py" = (
-/obj/machinery/barsign/directional/north,
+/obj/machinery/media/jukebox,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "pP" = (
@@ -205,9 +202,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/wood,
 /obj/item/instrument/violin,
 /turf/open/floor/grass,
@@ -233,9 +228,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/service/theater)
 "wF" = (
@@ -304,6 +297,8 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "CX" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/barsign/directional/north,
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -380,7 +375,7 @@
 /area/station/commons/lounge)
 "Mu" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "MI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -394,11 +389,11 @@
 	name = "service camera"
 	},
 /obj/machinery/airalarm/directional/south,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "Ol" = (
 /obj/item/radio/intercom/directional/south,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/service/theater)
 "Oz" = (
 /obj/structure/chair/wood{
@@ -467,9 +462,9 @@ nj
 jK
 nj
 OY
-Oz
 nR
 Oz
+nR
 po
 nj
 YM
@@ -482,7 +477,7 @@ yJ
 "}
 (2,1,1) = {"
 Ub
-py
+nj
 jK
 Bs
 jK
@@ -509,7 +504,7 @@ nj
 jK
 QO
 dx
-dx
+vy
 Dg
 xk
 AS
@@ -519,8 +514,8 @@ EB
 yJ
 "}
 (4,1,1) = {"
-tT
-nB
+Ub
+py
 nj
 nj
 FS
@@ -538,8 +533,8 @@ vc
 yJ
 "}
 (5,1,1) = {"
-Ub
-ew
+vv
+nj
 QO
 nj
 Oz
@@ -557,8 +552,8 @@ zv
 Im
 "}
 (6,1,1) = {"
-Ub
-gY
+tT
+nj
 nj
 lY
 Ke
@@ -576,8 +571,8 @@ ZC
 ZC
 "}
 (7,1,1) = {"
-Ub
-BD
+vv
+nj
 mL
 mL
 mL
@@ -595,8 +590,8 @@ jB
 jB
 "}
 (8,1,1) = {"
-tT
-mL
+Ub
+gY
 mL
 Yt
 FS
@@ -634,9 +629,9 @@ Ol
 "}
 (10,1,1) = {"
 Ub
-qi
-FS
-HA
+ew
+nB
+BD
 Ub
 vv
 Hh

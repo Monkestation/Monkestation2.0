@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	if(invokers_required > 1)
 		desc += " Requires [invokers_required] invokers, should you be in a group."
 
-/datum/scripture/Destroy(force, ...)
+/datum/scripture/Destroy(force)
 	invoker = null
 	invoking_slab = null
 	return ..()
@@ -404,7 +404,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	return ..()
 
 
-/datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/user, params, atom/target)
 	parent_scripture?.click_on(target)
 
 /// Generate all scriptures in a global assoc of name:ref. Only needs to be done once

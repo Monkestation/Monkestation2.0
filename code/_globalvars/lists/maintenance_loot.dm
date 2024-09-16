@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/fountain = 1,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/restraints/legcuffs/bola = 1,
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
 		/obj/item/market_uplink/blackmarket = 1,
@@ -197,9 +197,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/screwdriver = 1,
 		) = 8,
 
+//monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 4,
+		/obj/item/a_gift/anything/wiz_name = 2,
 		) = 8,
+//monkestation edit end
 
 	list(//construction and crafting
 		/obj/item/beacon = 1,
@@ -286,6 +289,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/instrument/violin/golden = 2,
 		) = 2,
 
+	list(//MONKESTATION ADDITION: misc
+		/obj/item/vending_refill/plushvendor = 1,
+		) = 2,
+
 	list(//fakeout items, keep this list at low relative weight
 		/obj/item/clothing/shoes/jackboots = 1,
 		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
@@ -305,6 +312,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,
+		/obj/item/spess_knife = 1,
 		) = 1,
 
 	list(//equipment
@@ -344,14 +352,15 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		) = 1,
 
 	list(//misc
-		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1,
+		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1, //monkestation edit: added maint_gun
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
-		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1,
+		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1, //monkestation edit
 		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
+		/obj/item/seeds/tree/money = 1, //monkestation edit
 		) = 1,
 
 ))
@@ -402,6 +411,13 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
 	GLOB.maint_fauna = maint_fauna_weight,
+	))
+
+//Monke, loot pool of uncommon or better loot, used in maint god rituals
+GLOBAL_LIST_INIT(good_maintenance_loot, list(
+	GLOB.uncommon_loot = maint_uncommon_weight,
+	GLOB.rarity_loot = maint_rarity_weight,
+	GLOB.oddity_loot = maint_oddity_weight,
 	))
 
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.

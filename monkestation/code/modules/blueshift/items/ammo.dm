@@ -286,7 +286,7 @@
 
 /obj/projectile/bullet/c35sol
 	name = ".35 Sol Short bullet"
-	damage = 20
+	damage = 15
 
 	wound_bonus = -5 // Normal bullets are 20
 	bare_wound_bonus = 5
@@ -369,7 +369,7 @@
 
 /obj/projectile/bullet/c35sol/ripper
 	name = ".35 Sol ripper bullet"
-	damage = 15
+	damage = 12
 
 	weak_against_armour = TRUE
 
@@ -662,7 +662,7 @@
 
 /obj/item/ammo_box/c585trappiste
 	name = "ammo box (.585 Trappiste lethal)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges."
+	desc = "A box of .585 Trappiste pistol rounds, holds thirty-two cartridges."
 
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
 	icon_state = "585box"
@@ -673,7 +673,7 @@
 
 	caliber = CALIBER_585TRAPPISTE
 	ammo_type = /obj/item/ammo_casing/c585trappiste
-	max_ammo = 12
+	max_ammo = 32
 
 // .585 Trappiste equivalent to a rubber bullet
 
@@ -700,7 +700,7 @@
 
 /obj/item/ammo_box/c585trappiste/incapacitator
 	name = "ammo box (.585 Trappiste flathead)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges. The blue stripe indicates that it should hold less lethal rounds."
+	desc = "A box of .585 Trappiste pistol rounds, holds thirty-two cartridges. The blue stripe indicates that it should hold less lethal rounds."
 
 	icon_state = "585box_disabler"
 
@@ -728,7 +728,7 @@
 
 /obj/item/ammo_box/c585trappiste/hollowpoint
 	name = "ammo box (.585 Trappiste hollowhead)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges. The purple stripe indicates that it should hold hollowpoint-like rounds."
+	desc = "A box of .585 Trappiste pistol rounds, holds 32 cartridges. The purple stripe indicates that it should hold hollowpoint-like rounds."
 
 	icon_state = "585box_shrapnel"
 

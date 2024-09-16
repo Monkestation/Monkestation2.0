@@ -147,7 +147,7 @@
 	var/volume = 40
 	var/true_instability = fart_instability
 
-	if(istype(Location, /turf/open/floor/iron/kitchen_coldroom/freezerfloor))
+	if(istype(Location, /turf/open/floor/iron/kitchen_coldroom) || istype(Location, /turf/open/floor/iron/freezer))
 		new /obj/item/stack/sheet/mineral/frozen_fart(Location)
 
 	//TRAIT CHECKS
@@ -160,7 +160,7 @@
 
 	//BIBLEFART
 	//This goes above all else because it's an instagib.
-	for(var/obj/item/storage/book/bible/Holy in Location)
+	for(var/obj/item/book/bible/Holy in Location)
 		if(Holy)
 			cooling_down = TRUE
 			var/turf/T = get_step(get_step(Person, NORTH), NORTH)
