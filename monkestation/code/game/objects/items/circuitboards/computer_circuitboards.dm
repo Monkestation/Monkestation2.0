@@ -17,3 +17,8 @@
 	name = "Nanite Cloud Control (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/goldeneye_cruiser
+	name = "Goldeneye Cruiser"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/goldeneye_cruiser
