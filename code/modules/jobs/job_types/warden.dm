@@ -10,8 +10,9 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 600 //monkestation edit changed warden to require 10 hours as sec instead of 5 hours as crew
 	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "WARDEN"
 
@@ -49,9 +50,9 @@
 	id_trim = /datum/id_trim/job/warden
 	uniform = /obj/item/clothing/under/rank/security/warden
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
-	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
+		/obj/item/gun/energy/disabler = 1, //monkestation edit: moved disabler to bag
 		)
 	belt = /obj/item/modular_computer/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
