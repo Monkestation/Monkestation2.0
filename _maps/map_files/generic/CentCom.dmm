@@ -21934,7 +21934,7 @@
 /area/cruiser_dock)
 "uIG" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Abraxis' Office"
+	name = "NT Helpdesk"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/mineral/titanium/tiled/white,
