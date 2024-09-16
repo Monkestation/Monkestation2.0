@@ -67,6 +67,7 @@
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 
+/*
 /mob/living/basic/pet/potty/attackby(obj/item/thing, mob/user, params)
 	// no forcing it into the hands of a sentient craig
 	if(QDELETED(client) && istype(thing, /obj/item/reagent_containers/cup/watering_can))
@@ -74,6 +75,7 @@
 			user.put_in_hands(thing)
 		return TRUE
 	return ..()
+*/
 
 /mob/living/basic/pet/potty/proc/pick_up_watering_can(obj/item/reagent_containers/cup/watering_can/can, mob/living/feedback)
 	// make sure it's actually a watering can, and that its not deleted
