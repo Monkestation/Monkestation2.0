@@ -1272,11 +1272,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"avI" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "avL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1428,11 +1423,6 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/brig)
-"ayE" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/tank_dispenser,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "azm" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -6614,15 +6604,6 @@
 /obj/structure/showcase/horrific_experiment,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"chs" = (
-/obj/structure/table,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/rods/fifty,
-/obj/item/stack/rods/fifty,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "chv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/chair_maintenance{
@@ -7710,14 +7691,6 @@
 "cCp" = (
 /obj/machinery/air_sensor/plasma_tank,
 /turf/open/floor/engine/plasma,
-/area/station/engineering/atmos)
-"cCr" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/pipedispenser/disposal,
-/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "cCv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15687,13 +15660,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"fjY" = (
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "fkC" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/effect/turf_decal/tile/blue{
@@ -17279,6 +17245,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
+"fMS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "fNe" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
@@ -27871,6 +27845,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"jjt" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/pen/blue{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "jjx" = (
 /obj/machinery/cryopod{
 	dir = 8
@@ -34307,6 +34292,17 @@
 /obj/machinery/space_heater,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
+"lsg" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/telecomms/traffic{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "lst" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/layer3,
@@ -45749,6 +45745,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
+"pgW" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/signal_technician,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "phb" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -55582,6 +55586,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"syL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "syP" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/chair/office{
@@ -59120,6 +59129,15 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
+"tIr" = (
+/obj/structure/table,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "tIw" = (
 /obj/structure/sign/painting/library{
 	pixel_y = -32
@@ -59807,6 +59825,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
+"tUS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/pipedispenser/disposal,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "tUT" = (
@@ -67691,14 +67717,6 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/checker,
 /area/station/science/lab)
-"wBY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "wCb" = (
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/decal/cleanable/dirt,
@@ -70420,20 +70438,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"xxB" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/item/paper_bin,
-/obj/item/pen/blue{
-	pixel_y = 5
-	},
-/obj/item/pen,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "xxI" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/line{
@@ -99305,7 +99309,7 @@ vLf
 kag
 dBU
 jWy
-xxB
+lsg
 sMO
 brU
 sBS
@@ -99563,7 +99567,7 @@ kag
 kag
 jWy
 jpQ
-fjY
+pgW
 wKG
 jdg
 hkf
@@ -99819,7 +99823,7 @@ vLf
 kag
 vLf
 jWy
-avI
+jjt
 eNi
 ryc
 nBk
@@ -104971,11 +104975,11 @@ qOG
 paK
 tRM
 bGY
-cCr
+tUS
 pfo
 son
 xBk
-ayE
+syL
 mDv
 bMM
 pXp
@@ -105228,11 +105232,11 @@ elU
 kuC
 qZC
 bGY
-wBY
+fMS
 pfo
 bXv
 pfo
-chs
+tIr
 mDv
 mDv
 mDv

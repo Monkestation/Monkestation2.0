@@ -106,7 +106,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/mob/living/carbon/human/human_speaker = speaker
 		namepart = "[human_speaker.get_visible_name()]"
 	//End name span.
-	var/endspanpart = "</span>"
+//	var/endspanpart = "</span>" // MONKESTATION EDIT OLD -- NTSL
+	var/endspanpart = "</span></a>" // MONKESTATION EDIT NEW
 
 	//Message
 	var/messagepart
