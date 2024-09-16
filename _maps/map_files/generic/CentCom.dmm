@@ -21348,7 +21348,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Admin Retirement Home"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/retirement_yard)
 "peK" = (
 /obj/structure/railing/wood{
