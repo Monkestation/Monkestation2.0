@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(station_coloring)
 					wall.change_trim_color(color)
 
 /datum/controller/subsystem/station_coloring/proc/get_default_color()
-	var/static/default_color = pick(list("#1a356e", "#305a6d", "#164f41"))
+	var/static/default_color = pick(list("#1a356e", "#305a6d", "#3a75d9"))
 
 	return default_color
 
