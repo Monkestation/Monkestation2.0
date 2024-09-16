@@ -19868,10 +19868,6 @@
 /obj/structure/sign/poster/quirk/engineering_slogan,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/central_command_areas/evacuation/ship)
-"cvB" = (
-/obj/machinery/armament_station/assault_operatives,
-/turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
 "cvJ" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
@@ -21610,7 +21606,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "viC" = (
-/obj/structure/hedge,
+/obj/machinery/armament_station/assault_operatives,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "voA" = (
@@ -78252,7 +78248,7 @@ axV
 vJI
 xPB
 sAG
-cvB
+rXO
 lWT
 xPB
 vJI
