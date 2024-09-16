@@ -3,9 +3,7 @@
 /turf/closed/indestructible/hive,
 /area/station/hive/four)
 "c" = (
-/obj/structure/hive_exit{
-	anchored = 1
-},
+/obj/structure/hive_exit,
 /turf/closed/indestructible/hive,
 /area/station/hive/one)
 "k" = (
@@ -21,9 +19,7 @@
 /turf/open/indestructible/hive,
 /area/station/hive/four)
 "B" = (
-/obj/structure/hive_exit{
-	anchored = 1
-},
+/obj/structure/hive_exit,
 /turf/closed/indestructible/hive,
 /area/station/hive/four)
 "C" = (
@@ -39,15 +35,11 @@
 /turf/open/indestructible/hive,
 /area/station/hive/three)
 "N" = (
-/obj/structure/hive_exit{
-	anchored = 1
-},
+/obj/structure/hive_exit,
 /turf/closed/indestructible/hive,
 /area/station/hive/two)
 "O" = (
-/obj/structure/hive_exit{
-	anchored = 1
-},
+/obj/structure/hive_exit,
 /turf/closed/indestructible/hive,
 /area/station/hive/three)
 
