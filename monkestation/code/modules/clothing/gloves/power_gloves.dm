@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/color/yellow/power_gloves
 	name = "Power Gloves"
-	desc = "Insulated gloves with onboard machinery that appears to be able to redirect the electrical current towards a creature."
+	desc = "Insulated gloves with onboard machinery that appears to be able to redirect the electrical current towards a creature. It only works if there is a powered cable underneath the user."
 	armor_type = /datum/armor/power_gloves
 	var/datum/action/cooldown/spell/pointed/glove_zap/zap = new
 
@@ -64,13 +64,16 @@
 	var/obj/structure/cable/cable_target = owner_turf.get_cable_node() //Gets power from underfoot node
 	var/heavy_zap = 100 MW
 	if(!cable_target)
-		return FALSE
+		owner.balloon_alert(owner, "Stand on a cable!")
+		return
 
 	var/surplus = cable_target.surplus()
 	if(surplus <= 1 KW)
-		owner.balloon_alert (owner, "Not enough power in the grid!")
+		owner.balloon_alert(owner, "Not enough power in the grid!")
+		return
 	if(get_dist(owner, target) >= zap_range)
-		owner.balloon_alert (owner, "Unable to lock on! Move closer!")
+		owner.balloon_alert(owner, "Unable to lock on! Move closer!")
+		return
 	else
 		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
 		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE))
@@ -78,9 +81,10 @@
 				light.flicker()
 			if(get_dist(owner, target) > zap_range)
 				owner.balloon_alert(owner, "Target moved out of range!")
+				return
 			else
 				var/calculated_power = surplus/20 //Calc_power, change division to balance
-				target_tesla_zap(owner, target, calculated_power, SHOCK_NOSTUN, max_damage = INFINITY)
+				target_tesla_zap(owner, target, calculated_power, SHOCK_NOSTUN, INFINITY)
 				StartCooldown()
 				if(surplus <= heavy_zap) //plays a separate sound at 2 MW excess
 					playsound(target, 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
