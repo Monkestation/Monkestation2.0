@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	icon_state = "hive_exit"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
+	move_resist = INFINITY
 
 	var/obj/structure/beebox/hive/linked_hive
 
