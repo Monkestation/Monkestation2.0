@@ -18,7 +18,7 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	ui_theme = "hackerman"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT // | ITEM_SLOT_BACK
 	inbuilt_modules = list(
 		/obj/item/mod/module/storage/belt,
 		/obj/item/mod/module/chameleon/contractor,
