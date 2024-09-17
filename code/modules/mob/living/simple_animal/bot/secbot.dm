@@ -108,7 +108,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
 	. = ..()
-	update_transform(1.4)
+	update_transform(1.2)
 //monkestation edit end
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
