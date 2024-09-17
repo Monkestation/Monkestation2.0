@@ -115,7 +115,8 @@
 		// And roughly 50% of their items will take a smack, too
 		for(var/obj/item/thing in carbon_owner.get_all_gear())
 			if(!QDELETED(thing) && prob(50))
-				thing.take_damage(50) //monkestation edit end
+				if(!istype(thing, /obj/item/card/id))
+					thing.take_damage(50) //monkestation edit end
 
 	return ..()
 
