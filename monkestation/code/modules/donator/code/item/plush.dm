@@ -142,7 +142,7 @@
 
 /obj/item/toy/plush/pooba_bee_plush
 	name = "bumbliest bee plushie"
-	desc = "God damn thats a cute bee."
+	desc = "God damn that's a cute bee."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "poba_fat_bee"
 
