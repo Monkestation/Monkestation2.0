@@ -60,11 +60,6 @@
 	src.speech_action_icon_state = speech_action_icon_state
 	src.speech_action_background_icon_state = speech_action_background_icon_state
 
-	if(ispath(linker_action_path))
-		linker_action = new linker_action_path(src)
-		linker_action.Grant(owner)
-	else
-		stack_trace("[type] was created without a valid linker_action_path. No one will be able to link to it.")
 /*
 	master_speech = new(src)
 	master_speech.Grant(owner)
