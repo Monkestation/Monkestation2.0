@@ -717,6 +717,13 @@
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
+/datum/status_effect/fake_virus/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	return TRUE
+
 /datum/status_effect/fake_virus/tick()
 	var/fake_msg = ""
 	var/fake_emote = ""
@@ -845,6 +852,9 @@
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return

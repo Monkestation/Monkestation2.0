@@ -8,6 +8,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
+	animate_movement = NO_STEPS //Use SLIDE_STEPS in conjunction with legacy
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
 	wound_bonus = CANT_WOUND // can't wound by default
@@ -314,8 +315,9 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
-				if(prob(33))
-					living_target.add_splatter_floor(target_turf)
+				if(prob(damage))
+					living_target.blood_particles(amount = rand(1, 1 + round(damage/20, 1)), angle = src.Angle)
+
 			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
 				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
@@ -517,8 +519,10 @@
 		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
-	if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
-		qdel(src)
+	var/signal_bitfield = SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) //monkestation edit
+	if (signal_bitfield & PROJECTILE_INTERRUPT_HIT)
+		if(!(signal_bitfield & PROJECTILE_INTERRUPT_BLOCK_QDEL)) //monkestation edit
+			qdel(src)
 		return BULLET_ACT_BLOCK
 	if(mode == PROJECTILE_PIERCE_HIT)
 		++pierces
@@ -917,7 +921,7 @@
 		process_homing()
 	var/forcemoved = FALSE
 	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
-		if(QDELETED(src))
+		if(QDELETED(src) || !trajectory) //monkestation edit: adds the trajectory check
 			return
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
