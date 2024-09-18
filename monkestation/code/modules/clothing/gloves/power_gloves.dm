@@ -17,8 +17,9 @@
 	name = "Unleash Electricity"
 	desc = "INFINITE POWAHHH!!! Blast your foes with the electricity surging beneath your feet!"
 	button_icon_state = "lightning"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 15 SECONDS
 	spell_max_level = 1
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
 	sparks_amt = 4
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	antimagic_flags = NONE
@@ -76,7 +77,7 @@
 		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
 		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE))
 			for(var/obj/machinery/light/light in get_area(owner))
-				light.flicker()
+				light.flicker(amount = rand(3, 6))
 			if(get_dist(owner, target) >= cast_range)
 				owner.balloon_alert(owner, "Target moved out of range!")
 				return
