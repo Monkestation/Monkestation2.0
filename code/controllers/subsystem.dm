@@ -106,6 +106,10 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+	var/avg_iter_count = 0
+	var/avg_drift = 0
+	var/list/enqueue_log = list()
+
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
 
@@ -191,9 +195,38 @@
 	var/queue_node_priority
 	var/queue_node_flags
 
+	var/iter_count = 0
+	var/drift_next_warn = 1
+
+	var/is_shitfuck = (Failsafe.defcon <= 3)
+
+	enqueue_log.Cut()
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
+		iter_count++
+		if(avg_drift)
+			var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
+			if(is_shitfuck || (drift >= drift_next_warn))
+				drift_next_warn = drift * 1.1 // warn every 10% increase
+				log_enqueue(
+					"[src] drift is really high, something is probably really wrong!! ([round(drift * 100, 0.1)]%)",
+					list(
+						"subsystem" = "[type]",
+						"head" = "[Master.queue_head || "(none)"]",
+						"node" = "[queue_node || "(none)"]",
+						"next" = "[queue_node.queue_next || "(none)"]",
+						"enqueue_log" = enqueue_log,
+					)
+				)
+
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
+
+		enqueue_log += list(list(
+			"node" = "[queue_node]",
+			"next" = "[queue_node.queue_next || "(none)"]",
+			"priority" = queue_node_priority,
+			"flags" = queue_node_flags,
+		))
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
@@ -214,6 +247,28 @@
 				break
 			if (queue_node_priority < SS_priority)
 				break
+
+	if(iter_count > 0)
+		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
+		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
+		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
+		if(is_shitfuck || (drift > avg_drift))
+			log_enqueue(
+				"[src]: [iter_count] iters, [avg_iter_count] average, [round(drift * 100, 0.1)]% drift, [round(avg_drift * 100, 0.1)]% average drift. queue: [json_encode(enqueue_log)]",
+				list(
+					"subsystem" = "[type]",
+					"priority" = SS_priority,
+					"flags" = SS_flags,
+					"iters" = iter_count,
+					"avg_iters" = avg_iter_count,
+					"drift" = drift,
+					"avg_drift" = avg_drift,
+					"fired" = times_fired,
+					"queue_head" = "[Master.queue_head || "(none)"]",
+					"queue_node" = "[queue_node || "(none)"]",
+					"enqueue_log" = enqueue_log,
+				)
+			)
 
 	queued_time = world.time
 	queued_priority = SS_priority
@@ -325,5 +380,7 @@
 	out["relation_id_SS"] = "[ss_id]-[time_stamp()]-[rand(100, 10000)]" // since we insert custom into its own table we want to add a relational id to fetch from the custom data and the subsystem
 	out["cost"] = cost
 	out["tick_usage"] = tick_usage
+	out["avg_iter_count"] = avg_iter_count
+	out["avg_drift"] = avg_drift
 	out["custom"] = list() // Override as needed on child
 	return out
