@@ -3034,9 +3034,13 @@
 "aid" = (
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /obj/machinery/door/airlock/vault{
-	name = "Pooba's Lair"
+	name = "Pooba's Inner Lair";
+	cyclelinkeddir = 1
 	},
-/turf/open/floor/carpet/orange,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = pooba
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "aie" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
@@ -9907,10 +9911,13 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "aAa" = (
-/turf/open/chasm{
-	name = "Pooba's Hole of Dead Body Storage +1"
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supply"
 	},
-/area/centcom/central_command_areas/adminroom)
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/indestructible/plating,
+/area/centcom/central_command_areas/admin)
 "aAb" = (
 /obj/structure/railing/wood,
 /obj/structure/railing/wood{
@@ -19794,7 +19801,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Pooba's Observatory"
 	},
-/turf/open/floor/carpet/donk,
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "blD" = (
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
@@ -19813,6 +19820,16 @@
 /obj/item/pizzabox/pineapple,
 /turf/open/floor/carpet/red,
 /area/cruiser_dock)
+"bAD" = (
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/airlock/vault{
+	name = "Pooba's Lair"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = pooba
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
 "bBh" = (
 /obj/structure/table,
 /turf/open/floor/carpet/red,
@@ -19911,7 +19928,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
 "cxr" = (
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "cyj" = (
 /obj/machinery/suit_storage_unit/industrial/assault_operative,
@@ -19977,7 +19994,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "diV" = (
 /obj/structure/closet/abductor{
@@ -20004,6 +20021,9 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"dpZ" = (
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
 "dqh" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/dark/textured_large,
@@ -20077,11 +20097,17 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "dQc" = (
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/obj/machinery/door/airlock/wood/glass{
-	name = "Pooba's Bedroom"
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/coffeemaker/impressa,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_y = -2;
+	pixel_x = -6
 	},
-/turf/open/floor/carpet/orange,
+/obj/item/reagent_containers/cup/coffeepot/bluespace{
+	pixel_y = 9;
+	pixel_x = 5
+	},
+/turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "dRD" = (
 /obj/structure/chair/plastic,
@@ -20214,7 +20240,7 @@
 /area/centcom/central_command_areas/evacuation)
 "fan" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/carpet/orange,
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "fcP" = (
 /obj/machinery/light/neon_lining{
@@ -20549,6 +20575,13 @@
 /area/cruiser_dock)
 "hAP" = (
 /obj/machinery/light/directional/west,
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/item/food/burger/cheese,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/food/ready_donk/mac_n_cheese,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "hAZ" = (
@@ -20833,7 +20866,7 @@
 /area/centcom/central_command_areas/evacuation)
 "jUj" = (
 /obj/structure/fake_stairs/wood/directional/north,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "kch" = (
 /obj/structure/closet/cabinet{
@@ -20843,9 +20876,9 @@
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 /obj/item/lighter/skull,
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
-/obj/item/radio/headset/syndicate/alt/leader,
 /obj/item/clothing/under/costume/syndie_pajamas,
 /obj/item/storage/backpack/duffelbag/syndie,
+/obj/item/clothing/mask/breath/poob_mask,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "kcm" = (
@@ -20873,6 +20906,11 @@
 "kjO" = (
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"koe" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/microwave,
+/turf/open/floor/carpet/orange,
+/area/centcom/central_command_areas/adminroom)
 "kpH" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/adminroom)
@@ -21086,7 +21124,7 @@
 /area/centcom/central_command_areas/admin)
 "nbv" = (
 /obj/effect/turf_decal/siding/white,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "ncQ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
@@ -21204,8 +21242,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
 "odD" = (
-/obj/structure/railing,
-/obj/structure/chair/office/tactical,
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "ofy" = (
@@ -21655,6 +21694,14 @@
 /obj/structure/billboard/space_cola,
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
+"sxY" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/paper/monitorkey,
+/obj/item/card/id/advanced/chameleon,
+/obj/item/clothing/mask/chameleon,
+/obj/item/radio/headset/syndicate/alt/leader,
+/turf/open/floor/carpet/donk,
+/area/centcom/central_command_areas/adminroom)
 "sAG" = (
 /turf/open/floor/iron/smooth_edge,
 /area/cruiser_dock)
@@ -21725,7 +21772,6 @@
 /area/centcom/central_command_areas/adminroom)
 "tiz" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/clothing/mask/breath/poob_mask,
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
@@ -21862,12 +21908,8 @@
 	},
 /area/centcom/central_command_areas/evacuation)
 "tNY" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/turf/open/floor/carpet/donk,
-/area/centcom/central_command_areas/adminroom)
+/turf/open/indestructible/plating,
+/area/centcom/central_command_areas/admin)
 "tWL" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/railing/wood{
@@ -22229,9 +22271,8 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "xkv" = (
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+/obj/machinery/computer/message_monitor{
+	dir = 1
 	},
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
@@ -22332,11 +22373,13 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "xXl" = (
-/obj/structure/railing{
-	dir = 1
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supply"
 	},
-/turf/open/floor/carpet/donk,
-/area/centcom/central_command_areas/adminroom)
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/indestructible/plating,
+/area/centcom/central_command_areas/supply)
 "yaU" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -49170,7 +49213,7 @@ kpH
 cQL
 aaW
 xkv
-jAA
+ivR
 kpH
 aaa
 aiF
@@ -49424,10 +49467,10 @@ mUv
 yhF
 aDM
 kpH
-ivR
+dQc
 odD
-aAa
-xXl
+sxY
+jAA
 kpH
 aaa
 aiF
@@ -49683,7 +49726,7 @@ iOc
 kpH
 aKc
 jth
-tNY
+jAA
 jAA
 kpH
 aaa
@@ -50196,8 +50239,8 @@ yhF
 yhF
 aid
 fan
-ayR
-ayR
+bAD
+dpZ
 fan
 kpH
 aaa
@@ -50455,7 +50498,7 @@ kpH
 kpH
 kpH
 kpH
-dQc
+blr
 kpH
 aaa
 aiF
@@ -50711,7 +50754,7 @@ egP
 kpH
 rYm
 hAP
-ayR
+koe
 ayR
 kpH
 aaa
@@ -51485,9 +51528,9 @@ kpH
 kpH
 kpH
 kpH
-aaa
+aOn
 aiF
-aiF
+xXl
 aiN
 aiF
 aiF
@@ -51740,12 +51783,12 @@ kjO
 erK
 erK
 erK
+aAa
+tNY
+tNY
+tNY
+tNY
 aOn
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
