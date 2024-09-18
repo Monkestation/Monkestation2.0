@@ -1,5 +1,5 @@
 /obj/item/clothing/gloves/color/yellow/power_gloves
-	name = "Power Gloves"
+	name = "power gloves"
 	desc = "Insulated gloves with onboard machinery that appears to be able to redirect the electrical current towards a creature. It only works if there is a powered cable underneath the user."
 	armor_type = /datum/armor/power_gloves
 	var/datum/action/cooldown/spell/pointed/glove_zap/zap = new
