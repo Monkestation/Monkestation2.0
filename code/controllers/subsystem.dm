@@ -196,7 +196,7 @@
 	var/queue_node_flags
 
 	var/iter_count = 0
-	var/drift_next_warn = 1
+	var/drift_next_warn = 20 // 2,000% drift seems like a reasonable minimum
 
 	var/is_shitfuck = (Failsafe.defcon <= 3)
 
@@ -208,7 +208,7 @@
 			if(is_shitfuck || (drift >= drift_next_warn))
 				drift_next_warn = drift * 1.1 // warn every 10% increase
 				log_enqueue(
-					"[src] drift is really high, something is probably really wrong!! ([round(drift * 100, 0.1)]%)",
+					"[is_shitfuck ? "(EMERGENCY) " : ""][src] drift is really high, something is probably really wrong!! ([round(drift * 100, 0.1)]%)",
 					list(
 						"subsystem" = "[type]",
 						"head" = "[Master.queue_head || "(none)"]",
@@ -252,9 +252,9 @@
 		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
 		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
 		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
-		if(is_shitfuck || (drift > avg_drift))
+		if(is_shitfuck || (drift > (avg_drift * 1.5)))
 			log_enqueue(
-				"[src]: [iter_count] iters, [avg_iter_count] average, [round(drift * 100, 0.1)]% drift, [round(avg_drift * 100, 0.1)]% average drift. queue: [json_encode(enqueue_log)]",
+				"[is_shitfuck ? "(EMERGENCY) " : ""][src]: [iter_count] iters, [avg_iter_count] average, [round(drift * 100, 0.1)]% drift, [round(avg_drift * 100, 0.1)]% average drift. queue: [json_encode(enqueue_log)]",
 				list(
 					"subsystem" = "[type]",
 					"priority" = SS_priority,
