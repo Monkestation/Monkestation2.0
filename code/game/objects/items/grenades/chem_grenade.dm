@@ -625,7 +625,10 @@
 	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
 	stage = GRENADE_READY
 
+// MONKESTATION EDIT START
+// MONKESTATION EDIT ORIGINAL /obj/item/grenade/chem_grenade/bioterrorfoam/Initialize(mapload)
 /obj/item/grenade/chem_grenade/large/bioterrorfoam/Initialize(mapload)
+// MONKESTATION EDIT END
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_two = new(src)
