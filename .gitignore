@@ -244,4 +244,3 @@ config/dbconfig.txt
 
 # Running OpenDream locally
 tgstation.json
-config/game_options.txt
