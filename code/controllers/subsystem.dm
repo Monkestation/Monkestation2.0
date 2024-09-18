@@ -214,19 +214,19 @@
 						"head" = "[Master.queue_head || "(none)"]",
 						"node" = "[queue_node || "(none)"]",
 						"next" = "[queue_node.queue_next || "(none)"]",
-						"enqueue_log" = enqueue_log,
+						"enqueue_log" = json_encode(enqueue_log),
 					)
 				)
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		enqueue_log += list(list(
+		enqueue_log["[iter_count]"] = list(
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
 			"flags" = queue_node_flags,
-		))
+		)
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
@@ -266,7 +266,7 @@
 					"fired" = times_fired,
 					"queue_head" = "[Master.queue_head || "(none)"]",
 					"queue_node" = "[queue_node || "(none)"]",
-					"enqueue_log" = enqueue_log,
+					"enqueue_log" = json_encode(enqueue_log),
 				)
 			)
 
