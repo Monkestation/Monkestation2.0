@@ -3032,14 +3032,8 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
 "aid" = (
+/obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/obj/machinery/door/airlock/vault{
-	name = "Pooba's Inner Lair";
-	cyclelinkeddir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = pooba
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "aie" = (
@@ -19820,16 +19814,6 @@
 /obj/item/pizzabox/pineapple,
 /turf/open/floor/carpet/red,
 /area/cruiser_dock)
-"bAD" = (
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/obj/machinery/door/airlock/vault{
-	name = "Pooba's Lair"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = pooba
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/adminroom)
 "bBh" = (
 /obj/structure/table,
 /turf/open/floor/carpet/red,
@@ -20879,6 +20863,7 @@
 /obj/item/clothing/under/costume/syndie_pajamas,
 /obj/item/storage/backpack/duffelbag/syndie,
 /obj/item/clothing/mask/breath/poob_mask,
+/obj/item/mod/control/pre_equipped/elite/flamethrower,
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "kcm" = (
@@ -50239,7 +50224,7 @@ yhF
 yhF
 aid
 fan
-bAD
+aid
 dpZ
 fan
 kpH
