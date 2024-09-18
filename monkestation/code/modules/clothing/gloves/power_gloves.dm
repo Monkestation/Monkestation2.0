@@ -24,6 +24,8 @@
 	antimagic_flags = NONE
 	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	overlay_icon_state = "bg_default_border"
+	active_msg = "You feel a faint buzz of electricity from beneath your feet."
+	deactive_msg = "You feel the buzz of electricity dissipate."
 
 //had to recreate tesla zap into a pointed version
 /datum/action/cooldown/spell/pointed/glove_zap/proc/target_tesla_zap(atom/source, atom/target, power, zap_flags = ZAP_DEFAULT_FLAGS, max_damage = INFINITY)
@@ -59,27 +61,23 @@
 		else if (power <=heavy_emp_threshold)
 			silicon_target.emp_act(EMP_HEAVY)
 
-/datum/action/cooldown/spell/pointed/glove_zap/proc/glove_nerd_zap(atom/target, /mob/living/owner, var/zap_range = 6)
+/datum/action/cooldown/spell/pointed/glove_zap/proc/glove_nerd_zap(atom/target, /mob/living/owner)
 	var/turf/owner_turf = get_turf(owner)
 	var/obj/structure/cable/cable_target = owner_turf.get_cable_node() //Gets power from underfoot node
 	var/heavy_zap = 100 MW
 	if(!cable_target)
 		owner.balloon_alert(owner, "Stand on a cable!")
 		return
-
 	var/surplus = cable_target.surplus()
 	if(surplus <= 1 KW)
 		owner.balloon_alert(owner, "Not enough power in the grid!")
-		return
-	if(get_dist(owner, target) >= zap_range)
-		owner.balloon_alert(owner, "Unable to lock on! Move closer!")
 		return
 	else
 		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
 		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE))
 			for(var/obj/machinery/light/light in get_area(owner))
 				light.flicker()
-			if(get_dist(owner, target) > zap_range)
+			if(get_dist(owner, target) >= cast_range)
 				owner.balloon_alert(owner, "Target moved out of range!")
 				return
 			else
