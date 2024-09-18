@@ -71,6 +71,9 @@
 	name = "CentCom Logistics"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "aal" = (
@@ -20050,6 +20053,14 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
+"dve" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/closed/indestructible/fakeglass{
+	color = "#ffe599"
+	},
+/area/centcom/central_command_areas/adminroom)
 "dwU" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -20183,6 +20194,14 @@
 /obj/structure/window/reinforced/tinted/frosted,
 /obj/structure/closet/mini_fridge,
 /turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/adminroom)
+"eJZ" = (
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
+	},
+/turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/adminroom)
 "eOz" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -20626,6 +20645,9 @@
 	name = "Admin Retirement Home"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/admin)
 "hHJ" = (
@@ -21499,6 +21521,13 @@
 /obj/structure/railing/wood,
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
+"qzu" = (
+/obj/machinery/door/airlock/vault{
+	name = "Pooba's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
 "qCL" = (
 /obj/structure/closet/crate/cardboard,
 /obj/item/reagent_containers/cup/glass/bottle/champagne,
@@ -21511,6 +21540,15 @@
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
+"qIh" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/adminroom)
 "qKe" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
@@ -21547,6 +21585,11 @@
 /area/centcom/central_command_areas/admin)
 "rsi" = (
 /obj/structure/chair/office/light,
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "rtD" = (
@@ -21975,6 +22018,9 @@
 	name = "Admin Auxillary Offices"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/admin)
 "uSs" = (
@@ -49445,7 +49491,7 @@ gXN
 aAl
 gXN
 exk
-eHz
+aIS
 bVz
 yhF
 mUv
@@ -49959,7 +50005,7 @@ aAl
 aAl
 aAl
 aAl
-eHz
+qIh
 yhF
 yhF
 mUv
@@ -50222,7 +50268,7 @@ yhF
 mUv
 yhF
 yhF
-aid
+qzu
 fan
 aid
 dpZ
@@ -50473,7 +50519,7 @@ aAl
 aOk
 aZr
 aAl
-eHz
+aIS
 yhF
 yhF
 mUv
@@ -50773,7 +50819,7 @@ abD
 agn
 agn
 blD
-ahs
+dve
 agn
 aOn
 aOn
@@ -50987,14 +51033,14 @@ aAl
 aOk
 aZr
 aAl
-eHz
+aIS
 oJx
 yhF
 mUv
 yhF
 dtE
 kpH
-ayR
+eJZ
 ayR
 ayR
 ayR
@@ -51244,7 +51290,7 @@ aAl
 aOk
 aZr
 ePC
-eHz
+aIS
 oJx
 yhF
 mUv
