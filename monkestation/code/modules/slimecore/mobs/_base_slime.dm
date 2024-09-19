@@ -57,7 +57,7 @@
 	///our list of slime traits
 	var/list/slime_traits = list()
 	///used to help our name changes so we don't rename named slimes
-	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) (cleaner )?(cat)?slime \\(\\d+\\)")
 	///our number
 	var/number
 
@@ -142,12 +142,10 @@
 		recompile_ai_tree()
 
 /mob/living/basic/slime/death(gibbed)
-	. = ..()
-	if(buckled)
-		buckled?.unbuckle_all_mobs()
+	buckled?.unbuckle_mob(src, force = TRUE)
+	return ..()
 
 /mob/living/basic/slime/Destroy()
-	. = ..()
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		remove_trait(trait)
 	UnregisterSignal(src, list(
@@ -162,6 +160,7 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
+	return ..()
 
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
 	if(!SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_FRIEND))
@@ -188,7 +187,7 @@
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
-		unbuckle_all_mobs()
+		buckled?.unbuckle_mob(src, force = TRUE)
 		return
 	else if(CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
 		AddComponent(/datum/component/latch_feeding, target, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
@@ -232,6 +231,7 @@
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/flee_target)
 
 	if(slime_flags & CLEANER_SLIME)
+		ai_controller.clear_blackboard_key(BB_CLEAN_TARGET)
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
@@ -308,6 +308,7 @@
 	var/datum/slime_trait/new_trait = new added_trait
 	new_trait.on_add(src)
 	slime_traits += new_trait
+	update_name()
 	return TRUE
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -317,6 +318,7 @@
 			continue
 		slime_traits -= trait
 		qdel(trait)
+		update_name()
 		return
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -331,10 +333,16 @@
 	if(slime_name_regex.Find(name))
 		if(!number)
 			number = rand(1, 1000)
+		var/slime_variant = "slime"
+		if(has_slime_trait(/datum/slime_trait/visual/cat))
+			slime_variant = "catslime"
+		if(slime_flags & CLEANER_SLIME)
+			slime_variant = "cleaner [slime_variant]"
+
 		if(overriding_name_prefix)
-			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] slime ([number])"
+			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		else
-			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] slime ([number])"
+			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		real_name = name
 	update_name_tag()
 	return ..()
@@ -460,15 +468,13 @@
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))
 		var/turf/open/my_our_turf = loc
-		if(my_our_turf.pollution)
-			my_our_turf.pollution.touch_act(src)
+		my_our_turf.pollution?.touch_act(src)
 	. = ..()
 
 /mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	if(!client)
-		if(buckled)
-			unbuckle_mob(buckled, TRUE)
+	adjustBruteLoss(rand(15, 20))
+	if(QDELETED(client))
+		buckled?.unbuckle_mob(src, force = TRUE)
 	return
 
 /mob/living/basic/slime/proc/latch_callback(mob/living/target)

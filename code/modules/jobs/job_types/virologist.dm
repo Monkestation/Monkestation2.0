@@ -44,7 +44,7 @@
 		// End Monkestation Addition
 	)
 	rpg_title = "Plague Doctor"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/outfit/job/virologist
@@ -54,7 +54,7 @@
 	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	backpack_contents = list(
-//		/obj/item/extrapolator = 1, //monkestation edit - extrapolator is useless with pathology.
+		/obj/item/extrapolator = 1, //monkestation edit
 		/obj/item/storage/box/tube = 1,
 	)
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist

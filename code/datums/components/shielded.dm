@@ -56,7 +56,7 @@
 	if(recharge_start_delay)
 		START_PROCESSING(SSdcs, src)
 
-/datum/component/shielded/Destroy(force, silent)
+/datum/component/shielded/Destroy(force)
 	if(wearer)
 		shield_icon = "broken"
 		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
@@ -186,5 +186,5 @@
 	. = COMPONENT_NO_AFTERATTACK
 
 	adjust_charge(charge_recovery)
-	to_chat(user, span_notice("You charge \the [parent]. It can now absorb [current_charges] hits."))
+	to_chat(user, span_notice("You charge \the [parent]. It can now absorb [current_charges] [lose_multiple_charges ? "damage" : "hits"].")) //monke edit: adds the multiple charges check
 	qdel(recharge_rune)

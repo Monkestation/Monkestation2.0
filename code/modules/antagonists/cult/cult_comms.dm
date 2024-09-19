@@ -100,8 +100,25 @@
 /datum/action/innate/cult/mastervote/Activate()
 	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
 	if(choice == "Yes" && IsAvailable())
-		var/datum/antagonist/cult/cult_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
-		poll_cultists_for_leader(owner, cult_antag.cult_team)
+		var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+		start_poll_cultists_for_leader(owner, mind_cult_datum.cult_team)
+
+///Start the poll for Cult Leaeder.
+/proc/start_poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
+	if(world.time < CULT_POLL_WAIT)
+		to_chat(nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
+		return
+	team.cult_vote_called = TRUE
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current)
+			continue
+		team_member.current.update_mob_action_buttons()
+		if(team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
+		to_chat(team_member.current, span_cultlarge("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(poll_cultists_for_leader), nominee, team), 10 SECONDS)
 
 ///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
 /proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
@@ -126,7 +143,7 @@
 		question = "[span_notice(nominee.name)] seeks to lead your cult, do you support [nominee.p_them()]?",
 		poll_time = 30 SECONDS,
 		group = asked_cultists,
-		pic_source = nominee,
+		alert_pic = nominee,
 		role_name_text = "cult master nomination",
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have pledged your allegience to [nominee].",
@@ -267,8 +284,8 @@
 /datum/action/innate/cult/master/cultmark/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, cult_mark_cooldown)
 
-/datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
-	var/turf/caller_turf = get_turf(caller)
+/datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/user, params, atom/clicked_on)
+	var/turf/caller_turf = get_turf(user)
 	if(!isturf(caller_turf))
 		return FALSE
 
@@ -277,8 +294,8 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, atom/clicked_on)
-	var/datum/antagonist/cult/cultist = caller.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+/datum/action/innate/cult/master/cultmark/do_ability(mob/living/user, atom/clicked_on)
+	var/datum/antagonist/cult/cultist = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
 
@@ -287,17 +304,17 @@
 		CRASH("[type] was casted by a cultist without a cult team datum.")
 
 	if(cult_team.blood_target)
-		to_chat(caller, span_cult("The cult has already designated a target!"))
+		to_chat(user, span_cult("The cult has already designated a target!"))
 		return FALSE
 
-	if(cult_team.set_blood_target(clicked_on, caller, cult_mark_duration))
-		unset_ranged_ability(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
+	if(cult_team.set_blood_target(clicked_on, user, cult_mark_duration))
+		unset_ranged_ability(user, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		build_all_button_icons()
 		addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), cult_mark_cooldown_duration + 1)
 		return TRUE
 
-	unset_ranged_ability(caller, span_cult("The marking rite failed!"))
+	unset_ranged_ability(user, span_cult("The marking rite failed!"))
 	return TRUE
 
 /datum/action/innate/cult/ghostmark //Ghost version
@@ -397,44 +414,44 @@
 /datum/action/innate/cult/master/pulse/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
-	var/turf/caller_turf = get_turf(caller)
+/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/user, params, atom/clicked_on)
+	var/turf/caller_turf = get_turf(user)
 	if(!isturf(caller_turf))
 		return FALSE
 
 	if(!(clicked_on in view(7, caller_turf)))
 		return FALSE
 
-	if(clicked_on == caller)
+	if(clicked_on == user)
 		return FALSE
 
 	return ..()
 
-/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/cult/master/pulse/do_ability(mob/living/user, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 
 	if(QDELETED(throwee))
-		to_chat(caller, span_cult("You lost your target!"))
+		to_chat(user, span_cult("You lost your target!"))
 		throwee = null
 		throwee_ref = null
 		return FALSE
 
 	if(throwee)
 		if(get_dist(throwee, clicked_on) >= 16)
-			to_chat(caller, span_cult("You can't teleport [clicked_on.p_them()] that far!"))
+			to_chat(user, span_cult("You can't teleport [clicked_on.p_them()] that far!"))
 			return FALSE
 
 		var/turf/throwee_turf = get_turf(throwee)
 
 		playsound(throwee_turf, 'sound/magic/exit_blood.ogg')
-		new /obj/effect/temp_visual/cult/sparks(throwee_turf, caller.dir)
+		new /obj/effect/temp_visual/cult/sparks(throwee_turf, user.dir)
 		throwee.visible_message(
 			span_warning("A pulse of magic whisks [throwee] away!"),
 			span_cult("A pulse of blood magic whisks you away..."),
 		)
 
 		if(!do_teleport(throwee, clicked_on, channel = TELEPORT_CHANNEL_CULT))
-			to_chat(caller, span_cult("The teleport fails!"))
+			to_chat(user, span_cult("The teleport fails!"))
 			throwee.visible_message(
 				span_warning("...Except they don't go very far"),
 				span_cult("...Except you don't appear to have moved very far."),
@@ -442,15 +459,15 @@
 			return FALSE
 
 		throwee_turf.Beam(clicked_on, icon_state = "sendbeam", time = 0.4 SECONDS)
-		new /obj/effect/temp_visual/cult/sparks(get_turf(clicked_on), caller.dir)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(clicked_on), user.dir)
 		throwee.visible_message(
 			span_warning("[throwee] appears suddenly in a pulse of magic!"),
 			span_cult("...And you appear elsewhere."),
 		)
 
 		COOLDOWN_START(src, pulse_cooldown, pulse_cooldown_duration)
-		to_chat(caller, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
-		caller.click_intercept = null
+		to_chat(user, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
+		user.click_intercept = null
 		throwee_ref = null
 		build_all_button_icons()
 		addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), pulse_cooldown_duration + 1)
@@ -462,13 +479,13 @@
 			var/mob/living/living_clicked = clicked_on
 			if(!IS_CULTIST(living_clicked))
 				return FALSE
-			SEND_SOUND(caller, sound('sound/weapons/thudswoosh.ogg'))
-			to_chat(caller, span_cultbold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
+			SEND_SOUND(user, sound('sound/weapons/thudswoosh.ogg'))
+			to_chat(user, span_cultbold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
 			throwee_ref = WEAKREF(clicked_on)
 			return TRUE
 
 		if(istype(clicked_on, /obj/structure/destructible/cult))
-			to_chat(caller, span_cultbold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
+			to_chat(user, span_cultbold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
 			throwee_ref = WEAKREF(clicked_on)
 			return TRUE
 

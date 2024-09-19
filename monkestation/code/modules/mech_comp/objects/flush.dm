@@ -19,15 +19,19 @@
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
-			trunk = locate() in src.loc
-			if(trunk)
-				trunk.linked = src
+			trunk_check()
 		else
 			trunk = null
 
 /obj/item/mcobject/flusher/proc/flush(datum/mcmessage/input)
+	trunk_check()
 	if(!trunk || !COOLDOWN_FINISHED(src, flush_cd) || !input?.cmd)
 		return
+
+	if(QDELETED(trunk))
+		trunk = null
+		return
+
 	var/count = 0
 	for(var/atom/movable/listed_movable in src.loc)
 		if(listed_movable.anchored)
@@ -56,3 +60,10 @@
 
 	H.vent_gas(loc)
 	qdel(H)
+
+/obj/item/mcobject/flusher/proc/trunk_check()
+	trunk = locate() in src.loc
+	if(trunk)
+		trunk.linked = src
+	else
+		trunk = null

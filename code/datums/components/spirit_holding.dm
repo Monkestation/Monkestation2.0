@@ -13,7 +13,7 @@
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/spirit_holding/Destroy(force, silent)
+/datum/component/spirit_holding/Destroy(force)
 	. = ..()
 	if(bound_spirit)
 		QDEL_NULL(bound_spirit)
@@ -62,7 +62,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
-		pic_source = parent,
+		alert_pic = parent,
 		role_name_text = "possessed blade",
 	)
 	if(!LAZYLEN(candidates))

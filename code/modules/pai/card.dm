@@ -68,6 +68,7 @@
 	. = ..()
 	update_appearance()
 	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!"))
@@ -221,8 +222,18 @@
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	balloon_alert(user, "pAI assistance requested")
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
-	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+	notify_ghosts(
+		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
+		source = user,
+		alert_overlay = alert_overlay,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "pAI Request!",
+		ignore_key = POLL_IGNORE_PAI,
+	)
+
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_DELETE_ME)
 	return TRUE
 
 /**

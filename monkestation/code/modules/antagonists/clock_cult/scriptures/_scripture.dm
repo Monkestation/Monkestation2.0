@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	if(invokers_required > 1)
 		desc += " Requires [invokers_required] invokers, should you be in a group."
 
-/datum/scripture/Destroy(force, ...)
+/datum/scripture/Destroy(force)
 	invoker = null
 	invoking_slab = null
 	return ..()
@@ -199,6 +199,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/true_invocation_time = invocation_time
 	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
 		true_invocation_time = invocation_time * fast_invoke_mult
+
+	if(istype(src, /datum/scripture/create_structure) && GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
+		true_invocation_time *= (iscogscarab(invoking_mob) ? 2.5 : 5)
 
 	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
@@ -401,7 +404,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	return ..()
 
 
-/datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/user, params, atom/target)
 	parent_scripture?.click_on(target)
 
 /// Generate all scriptures in a global assoc of name:ref. Only needs to be done once

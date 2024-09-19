@@ -43,11 +43,13 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/toggleooc, /*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/togglelooc, /*MONKESTATION EDIT; toggles looc on/off for everyone*/
+	/datum/admins/proc/toggledeadchat, /*MONKESTATION EDIT; toggles deadchat on/off for everyone*/
 	/datum/admins/proc/trophy_manager,
 	/datum/admins/proc/view_all_circuits,
 	/datum/admins/proc/open_artifactpanel,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/kick_player_by_ckey, //MONKESTATION ADDITION - kick a player by their ckey
+	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -147,6 +149,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/spawn_liquid, //monkestation addition
+	/client/proc/spawn_sunbeam,
 	/client/proc/spawn_pollution, //monkestation addition
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition
@@ -196,7 +199,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/adventure_manager,
-	/client/proc/hard_deletion_toggle,
 	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,
@@ -259,6 +261,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,
+	/client/proc/server_memory_stats,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -273,6 +276,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 		var/rights = holder.rank_flags()
 		add_verb(src, GLOB.admin_verbs_default)
+		add_verb(src, GLOB.mentor_verbs) // monkestation edit: mentors
 		if(rights & R_BUILD)
 			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
@@ -319,7 +323,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
-		/client/proc/readmin
+		/client/proc/readmin,
+		GLOB.mentor_verbs //Monkestation Edit
 		))
 
 /client/proc/hide_verbs()

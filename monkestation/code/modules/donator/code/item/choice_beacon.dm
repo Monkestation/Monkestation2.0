@@ -90,3 +90,18 @@
 	name = "Orangutan"
 	default_name = "Orangutan"
 	donator_pet = 	/mob/living/basic/pet/orangutan
+
+/obj/item/choice_beacon/pet/donator/fluffykobold
+	name = "fluffy kobold"
+	default_name = "fluffy kobold"
+	donator_pet = 	/mob/living/basic/pet/fluffykobold
+
+/obj/item/choice_beacon/pet/donator/darkscug
+	name = "night slugcat"
+	default_name ="night slugcat"
+	donator_pet = 	/mob/living/basic/pet/darkscug
+
+/obj/item/choice_beacon/pet/donator/hypnotoad
+	name = "hypnotoad"
+	default_name ="hypnotoad"
+	donator_pet = 	/mob/living/basic/frog/hypnotoad

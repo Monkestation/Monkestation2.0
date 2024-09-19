@@ -234,6 +234,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		// Initialize subsystems.
 		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			init_subsystem(subsystem)
+			if(world.system_type == MS_WINDOWS)
+				var/ss_name = "[subsystem.name]"
+				var/memory_summary = call_ext("memorystats", "get_memory_stats")()
+				var/file = file("data/mem_stat/[GLOB.round_id]-memstat.txt")
+
+				var/string = "[ss_name] [memory_summary]"
+				WRITE_FILE(file, string)
 
 			CHECK_TICK
 		current_initializing_subsystem = null
@@ -250,8 +257,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
+
+	initialize_cooking_recipes()
+
 	to_chat(world, span_boldannounce("[msg]"))
 	log_world(msg)
+
+	// monkestation edit below
+	// basically, most songs end around the 5 minute mark,
+	// so lets give them time to actually play. we're resetting the countdown back to default
+	// because who knows how long we took for initializations, and whatever.
+	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // monkestation edit
 
 
 	if(world.system_type == MS_WINDOWS && CONFIG_GET(flag/toast_notification_on_init) && !length(GLOB.clients))

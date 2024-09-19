@@ -65,9 +65,9 @@
 	if(stage < 6)
 		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
 		var/slowdown = 1
-		if(ishuman(owner))
-			var/mob/living/carbon/human/baby_momma = owner
-			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		if(!isnull(owner)) // it gestates out of bodies.
+			if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+				slowdown *= 2 // spaceacillin doubles the time it takes to grow
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
 
@@ -97,7 +97,7 @@
 		check_jobban = ROLE_ALIEN,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
-		pic_source = /mob/living/carbon/alien/larva,
+		alert_pic = /mob/living/carbon/alien/larva,
 		role_name_text = "alien larva"
 	)
 

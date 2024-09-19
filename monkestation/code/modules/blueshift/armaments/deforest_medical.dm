@@ -212,9 +212,15 @@
 	subcategory = "Cybernetic Implants"
 	cost = PAYCHECK_COMMAND * 3
 
+/datum/armament_entry/company_import/deforest/cyber_implants/nif_repair_kit
+	name = "Cerulean NIF Regenerator"
+	item_type = /obj/item/nif_repair_kit
+	cost = PAYCHECK_COMMAND * 2
+
 /datum/armament_entry/company_import/deforest/cyber_implants/razorwire
 	name = "Razorwire Spool Implant"
 	item_type = /obj/item/organ/internal/cyberimp/arm/item_set/razorwire
+	cost = CARGO_CRATE_VALUE * 4
 // Modsuit Modules from the medical category, here instead of in Nakamura because nobody buys from this company
 
 /datum/armament_entry/company_import/deforest/medical_modules

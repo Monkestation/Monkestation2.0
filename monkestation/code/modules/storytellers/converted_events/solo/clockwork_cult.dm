@@ -8,6 +8,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
 		JOB_DETECTIVE,
@@ -30,8 +31,7 @@
 	required_enemies = 5
 	base_antags = 4
 	maximum_antags = 4
-	// I give up, just there should be enough heads with 35 players...
-	min_players = 30
+	min_players = 45
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4

@@ -157,7 +157,7 @@
 	name = "Light Step"
 	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful. Also, your hands and clothes will not get messed in case of stepping in blood."
 	icon = FA_ICON_SHOE_PRINTS
-	value = 4
+	value = 2 //MONKESTATION EDIT: changed 4 to 2 (on pair with hardned soles, the difference is less bloody clothes vs no knockdown when stepping on glass)
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = span_notice("You walk with a little more litheness.")
 	lose_text = span_danger("You start tromping around like a barbarian.")
@@ -292,7 +292,7 @@
 	lose_text = span_danger("You lose faith!")
 	medical_record_text = "Patient reports a belief in a higher power."
 	mail_goodies = list(
-		/obj/item/storage/book/bible/booze,
+		/obj/item/book/bible/booze,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater,
 		/obj/item/bedsheet/chaplain,
 		/obj/item/toy/cards/deck/tarot,

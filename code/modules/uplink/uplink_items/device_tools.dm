@@ -38,7 +38,7 @@
 			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
 			of the originals, these inferior copies are still quite useful, being able to provide \
 			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
-	item = /obj/item/storage/book/bible/syndicate
+	item = /obj/item/book/bible/syndicate
 	cost = 5
 
 /datum/uplink_item/device_tools/tram_remote
@@ -263,3 +263,9 @@
 			bright lights. Effective, affordable, and nigh undetectable."
 	item = /obj/item/syndicate_contacts
 	cost = 2 // monke: lower cost to 2TC
+
+/datum/uplink_item/device_tools/syndicate_climbing_hook
+	name = "Syndicate Climbing Hook"
+	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
+	item = /obj/item/climbing_hook/syndicate
+	cost = 1

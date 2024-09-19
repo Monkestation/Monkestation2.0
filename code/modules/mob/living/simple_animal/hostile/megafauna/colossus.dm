@@ -380,16 +380,13 @@
 /datum/crystal_warp_theme/proc/transform_area(area/target_area)
 	if (target_area.outdoors)
 		return FALSE
-	for(var/atom/thing in target_area)
-		if(isturf(thing))
-			replace_turf(thing)
-			continue
-		if(chair && istype(thing, /obj/structure/chair))
-			replace_object(thing, chair)
-			continue
-		if(table && istype(thing, /obj/structure/table))
-			replace_object(thing, table)
-			continue
+	for(var/turf/area_turf as anything in target_area.get_turfs_from_all_zlevels())
+		replace_turf(area_turf)
+		for(var/turf_obj in area_turf)
+			if(chair && istype(turf_obj, /obj/structure/chair))
+				replace_object(turf_obj, chair)
+			else if(table && istype(turf_obj, /obj/structure/table))
+				replace_object(turf_obj, table)
 	return TRUE
 
 /// Replaces a turf with a different themed turf
@@ -517,7 +514,13 @@
 	if(..() && !ready_to_deploy)
 		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_PLAY, header = "Anomalous crystal activated")
+		notify_ghosts(
+			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			source = src,
+			action = NOTIFY_PLAY,
+			header = "Anomalous crystal activated",
+		)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()

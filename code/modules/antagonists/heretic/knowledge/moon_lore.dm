@@ -162,7 +162,7 @@
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood.set_sanity(target.mob_mood.sanity - 10)
+	target.mob_mood?.set_sanity(target.mob_mood.sanity - 10)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -206,7 +206,7 @@
 		text = "[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
 				The truth shall finally devour the lie! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'monkestation/sound/ambience/antag/heretic/ascend_moon.ogg',
+		sound = 'sound/ambience/antag/heretic/ascend_moon.ogg',
 		color_override = "pink",
 	)
 
