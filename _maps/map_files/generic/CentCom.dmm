@@ -2262,9 +2262,10 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "agf" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/records/security/laptop,
-/turf/open/floor/iron/dark,
+/obj/machinery/modular_computer/preset/id/centcom{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "agg" = (
 /obj/machinery/light/small/maintenance/directional/east,
@@ -7844,9 +7845,9 @@
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/hall)
 "auD" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/records/medical/laptop,
-/turf/open/floor/iron/dark,
+/obj/item/kirbyplants/organic/plant18,
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "auE" = (
 /obj/structure/hedge,
@@ -10979,7 +10980,9 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
 "aCS" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	name = "Cassiel's Office"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
@@ -12668,10 +12671,11 @@
 	},
 /area/centcom/central_command_areas/adminroom)
 "aHp" = (
-/obj/machinery/modular_computer/preset/id/centcom{
-	dir = 4
+/obj/machinery/light/directional/east{
+	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/obj/structure/grandfatherclock,
+/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "aHq" = (
 /obj/effect/turf_decal/siding/wood{
@@ -13466,10 +13470,17 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
 "aJC" = (
-/obj/structure/chair/office{
-	dir = 1
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/computer/records/security/laptop,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 13;
+	pixel_y = 3
 	},
-/turf/open/floor/iron/dark,
+/obj/item/reagent_containers/cup/glass/bottle/champagne{
+	pixel_y = 10;
+	pixel_x = -14
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/admin)
 "aJD" = (
 /obj/machinery/door/airlock{
@@ -18920,8 +18931,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/centcom/syndicate_mothership/control)
 "aXN" = (
-/obj/structure/chair/office,
-/turf/open/floor/iron/dark,
+/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "aXO" = (
 /obj/machinery/light/floor/has_bulb,
@@ -20008,6 +20018,27 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"dlL" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/storage/fancy/cigarettes/cigpack_robustgold{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/lighter/skull{
+	name = "Cassiel's Zippo";
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/phone{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/storage/pill_bottle/stimulant{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/admin)
 "dpZ" = (
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
@@ -20119,6 +20150,13 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+"egl" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "egP" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 9
@@ -20271,6 +20309,14 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"fkR" = (
+/obj/structure/chair/sofa/left,
+/obj/item/toy/plush/slimeplushie,
+/obj/item/clothing/head/cowboy/white{
+	pixel_y = 10
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "flN" = (
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/fax{
@@ -21151,6 +21197,22 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
+"nny" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/soda_cans/grey_bull{
+	pixel_y = 6;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/cup/soda_cans/grey_bull{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/food/chips{
+	pixel_x = 15;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "npG" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -21323,6 +21385,14 @@
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"ozb" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk";
+	name = "Cassiel's Fax Machine"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/admin)
 "oDh" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
@@ -21352,6 +21422,14 @@
 /obj/structure/sign/poster/abductor/ayy_over_tizira/directional/north,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+"oGn" = (
+/obj/structure/chair/sofa/right,
+/obj/machinery/light/directional/east{
+	dir = 8
+	},
+/obj/item/toy/plush/carpplushie,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "oHu" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/cruiser_dock)
@@ -21439,6 +21517,24 @@
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"pxo" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
+"pyK" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/pen/fourcolor{
+	pixel_y = 4
+	},
+/obj/item/stamp/centcom{
+	pixel_x = -12;
+	pixel_y = 12
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/admin)
 "pCB" = (
 /obj/structure/table/wood,
 /obj/item/trash/tray,
@@ -21509,6 +21605,9 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
+"qul" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/admin)
 "qwj" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 1
@@ -21765,6 +21864,12 @@
 /obj/structure/chair/plastic,
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
+"sWC" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/admin)
 "sYg" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -21924,6 +22029,12 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"tKG" = (
+/obj/structure/closet/crate/bin{
+	name = "treat storage"
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "tLg" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -22211,6 +22322,10 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+"wiE" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "wkZ" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -22258,6 +22373,19 @@
 /obj/item/toy/plush/lizard_plushie,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/adminroom)
+"wPT" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/plate/large{
+	pixel_y = 3
+	},
+/obj/item/food/bread/banana{
+	pixel_y = 9
+	},
+/obj/item/knife/hunting{
+	pixel_y = -2
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/admin)
 "wQY" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/showcase/machinery/tv{
@@ -52112,11 +52240,11 @@ aMc
 aMc
 aMc
 aOn
-api
-api
-api
-auD
-agf
+oGn
+nny
+aXN
+aXN
+aXN
 aHp
 aOn
 aSI
@@ -52369,12 +52497,12 @@ aMc
 aMc
 aMc
 eSA
-api
-api
+fkR
+egl
 aXN
-aeU
-api
-api
+aXN
+ozb
+dlL
 aZf
 api
 api
@@ -52626,12 +52754,12 @@ aMc
 adQ
 aMc
 aCS
-api
-api
 aXN
-aNK
+aXN
+aXN
+wiE
 aJC
-api
+sWC
 aZf
 api
 ahw
@@ -52883,12 +53011,12 @@ aMc
 aMc
 aMc
 aOn
-api
-api
-api
-api
-api
-api
+tKG
+aXN
+aXN
+aXN
+pyK
+qul
 aZf
 alQ
 aeU
@@ -53140,12 +53268,12 @@ qXd
 aMc
 aMc
 aOn
-aEK
-api
-aSI
-aSI
-mKK
-aLy
+auD
+agf
+wPT
+aXN
+aXN
+pxo
 aOn
 aqa
 app
