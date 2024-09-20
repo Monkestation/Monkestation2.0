@@ -20,7 +20,8 @@
 
 /mob/living/death(gibbed)
 	. = ..()
-	if (!client || !src.mind || stat == DEAD) return
+	if (QDELETED(client) || stat == DEAD)
+		return
 
 	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role)
 		SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/divine.ogg', 80))
