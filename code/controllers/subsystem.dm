@@ -196,27 +196,18 @@
 	var/queue_node_flags
 
 	var/iter_count = 0
-	var/drift_next_warn = 20 // 2,000% drift seems like a reasonable minimum
-
-	var/is_shitfuck = (Failsafe.defcon <= 3)
 
 	enqueue_log.Cut()
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
-		if(avg_drift)
-			var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
-			if(is_shitfuck || (drift >= drift_next_warn))
-				drift_next_warn = drift * 1.1 // warn every 10% increase
-				log_enqueue(
-					"[is_shitfuck ? "(EMERGENCY) " : ""][src] drift is really high, something is probably really wrong!! ([round(drift * 100, 0.1)]%)",
-					list(
-						"subsystem" = "[type]",
-						"head" = "[Master.queue_head || "(none)"]",
-						"node" = "[queue_node || "(none)"]",
-						"next" = "[queue_node.queue_next || "(none)"]",
-						"enqueue_log" = json_encode(enqueue_log),
-					)
-				)
+		if(iter_count >= ENQUEUE_SANITY)
+			to_chat_immediate(GLOB.admins, examine_block(span_userdanger("ERROR: [src] subsystem has likely entered an infinite loop, restarting MC immediately!")), type = MESSAGE_TYPE_DEBUG)
+			log_enqueue("[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY!!!", list("enqueue_log" = enqueue_log.Copy()))
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY! Round ID: [GLOB.round_id]")
+			enqueue_log.Cut()
+			Recreate_MC()
+			return
+
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
@@ -252,23 +243,6 @@
 		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
 		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
 		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
-		if(is_shitfuck || (drift > (avg_drift * 1.5)))
-			log_enqueue(
-				"[is_shitfuck ? "(EMERGENCY) " : ""][src]: [iter_count] iters, [avg_iter_count] average, [round(drift * 100, 0.1)]% drift, [round(avg_drift * 100, 0.1)]% average drift. queue: [json_encode(enqueue_log)]",
-				list(
-					"subsystem" = "[type]",
-					"priority" = SS_priority,
-					"flags" = SS_flags,
-					"iters" = iter_count,
-					"avg_iters" = avg_iter_count,
-					"drift" = drift,
-					"avg_drift" = avg_drift,
-					"fired" = times_fired,
-					"queue_head" = "[Master.queue_head || "(none)"]",
-					"queue_node" = "[queue_node || "(none)"]",
-					"enqueue_log" = json_encode(enqueue_log),
-				)
-			)
 
 	queued_time = world.time
 	queued_priority = SS_priority
