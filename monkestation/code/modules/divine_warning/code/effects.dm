@@ -43,7 +43,7 @@
 		switch(health)
 			if(-40 to -30)
 				severity = 0.5
-				heaven_flags = 0
+				heaven_flags = NONE
 			if(-50 to -40)
 				severity = 1
 				heaven_flags = 0
