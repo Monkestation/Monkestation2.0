@@ -94,7 +94,7 @@
 
 	var/list/data = list()
 	var/list/immunity = B.data["immunity"]
-	if(istype(immunity) && immunity.len > 0)
+	if(length(immunity))
 		data["antigen"] = immunity[2]
 
 	product.reagents.add_reagent(/datum/reagent/vaccine, 30, data)
