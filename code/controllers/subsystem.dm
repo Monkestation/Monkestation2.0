@@ -205,6 +205,7 @@
 			log_enqueue("[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY!!!", list("enqueue_log" = enqueue_log.Copy()))
 			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY! Round ID: [GLOB.round_id]")
 			enqueue_log.Cut()
+			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
 			Recreate_MC()
 			return
 
