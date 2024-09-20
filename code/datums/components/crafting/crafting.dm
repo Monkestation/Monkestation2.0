@@ -345,10 +345,9 @@
 				var/atom/movable/AM = locate(part) in Deletion
 				//MONKESTATION EDIT START
 				var/datum/reagents/reagents = AM.reagents
-				if(reagents)
-					for(var/datum/reagent/reagent as anything in reagents.reagent_list) //Purge diseases from food
-						if(reagent.data && reagent.data["viruses"])
-							reagent.data["viruses"] = list()
+				for(var/datum/reagent/reagent as anything in reagents?.reagent_list) //Purge diseases from food
+					if(reagent.data?["viruses"])
+						reagent.data["viruses"] = list()
 				//MONKESTATION EDIT END
 				. += AM
 				Deletion -= AM
