@@ -342,7 +342,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_PSYKER "Psyker Shikaris"
 
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG (1 << 0)
+#define FLAG_FAKE_ANTAG			(1 << 0)
+// monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.
+#define FLAG_ANTAG_CAP_IGNORE	(1 << 1)
+// monkestation addition: The storyteller will count everyone on this antag's team as a singular antag instead.
+#define FLAG_ANTAG_CAP_TEAM		(1 << 2)
 
 #define FREEDOM_IMPLANT_CHARGES 4
 
