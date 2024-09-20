@@ -367,8 +367,9 @@ CREATE TABLE `player` (
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
   `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
-	`antag_tokens` tinyint(4) unsigned DEFAULT '0',
+  `antag_tokens` tinyint(4) unsigned DEFAULT '0',
   `metacoins` int(10) unsigned NOT NULL DEFAULT '0',
+  `twitch_rank` VARCHAR(32) NOT NULL DEFAULT '',
   `patreon_key` VARCHAR(32) NOT NULL DEFAULT 'None',
   `patreon_rank` VARCHAR(32) NOT NULL DEFAULT 'None',
   PRIMARY KEY (`ckey`),
@@ -494,6 +495,7 @@ CREATE TABLE `round` (
   `shuttle_name` VARCHAR(64) NULL,
   `map_name` VARCHAR(32) NULL,
   `station_name` VARCHAR(80) NULL,
+  `log_directory` VARCHAR(255) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

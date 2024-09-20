@@ -372,7 +372,7 @@
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
-	weight = 5
+	weight = 0
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
@@ -585,8 +585,6 @@
 
 	var/mob/living/basic/space_dragon/S = new (pick(spawn_locs))
 	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	player_mind.special_role = ROLE_SPACE_DRAGON
 	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
 
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)

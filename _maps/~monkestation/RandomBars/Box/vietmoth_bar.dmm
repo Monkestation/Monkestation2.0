@@ -34,7 +34,6 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "ew" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -60,9 +59,8 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "gY" = (
-/obj/machinery/media/jukebox,
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass,
+/obj/machinery/light/small/directional/north,
+/turf/open/water/jungle,
 /area/station/commons/lounge)
 "hS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -173,7 +171,8 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "py" = (
-/obj/machinery/barsign/directional/north,
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/media/jukebox,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "pP" = (
@@ -266,11 +265,6 @@
 "yJ" = (
 /turf/template_noop,
 /area/template_noop)
-"zh" = (
-/obj/machinery/camera/autoname/directional/east,
-/obj/machinery/computer/slot_machine,
-/turf/open/floor/grass,
-/area/station/commons/lounge)
 "zv" = (
 /obj/structure/table/wood,
 /obj/item/instrument/saxophone,
@@ -298,6 +292,8 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "CX" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/barsign/directional/north,
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -324,8 +320,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "GX" = (
-/obj/machinery/camera/autoname/directional/east,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -410,8 +405,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "OY" = (
-/obj/machinery/camera/autoname/directional/west,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -461,9 +455,9 @@ nj
 jK
 nj
 OY
-Oz
 nR
 Oz
+nR
 po
 nj
 YM
@@ -476,7 +470,7 @@ yJ
 "}
 (2,1,1) = {"
 Ub
-py
+nj
 jK
 Bs
 jK
@@ -503,18 +497,18 @@ nj
 jK
 QO
 dx
-dx
+vy
 Dg
 xk
 AS
-zh
+AS
 oa
 EB
 yJ
 "}
 (4,1,1) = {"
-tT
-nB
+Ub
+py
 nj
 nj
 FS
@@ -532,8 +526,8 @@ vc
 yJ
 "}
 (5,1,1) = {"
-Ub
-ew
+vv
+nj
 QO
 nj
 Oz
@@ -551,8 +545,8 @@ zv
 Im
 "}
 (6,1,1) = {"
-Ub
-gY
+tT
+nj
 nj
 lY
 Ke
@@ -570,8 +564,8 @@ ZC
 ZC
 "}
 (7,1,1) = {"
-Ub
-BD
+vv
+nj
 mL
 mL
 mL
@@ -589,8 +583,8 @@ jB
 jB
 "}
 (8,1,1) = {"
-tT
-mL
+Ub
+gY
 mL
 Yt
 FS
@@ -628,9 +622,9 @@ Ol
 "}
 (10,1,1) = {"
 Ub
-qi
-FS
-HA
+ew
+nB
+BD
 Ub
 vv
 Hh

@@ -270,14 +270,6 @@ See the examinemore module for information.
 #define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
 #define BOOT_SEAL_MESSAGE "seal around your feet"
 
-/// Colors for pride week
-#define COLOR_PRIDE_RED "#FF6666"
-#define COLOR_PRIDE_ORANGE "#FC9F3C"
-#define COLOR_PRIDE_YELLOW "#EAFF51"
-#define COLOR_PRIDE_GREEN "#41FC66"
-#define COLOR_PRIDE_BLUE "#42FFF2"
-#define COLOR_PRIDE_PURPLE "#5D5DFC"
-
 /// Trait that changes the ending effects of twitch leaving your system
 #define TRAIT_TWITCH_ADAPTED "twitch_adapted"
 
@@ -329,4 +321,4 @@ GLOBAL_LIST_INIT(antag_opt_in_colors, list(
 #define OPT_IN_DEFAULT_LEVEL OPT_IN_YES_KILL
 
 /// If the player has any non-ghost role antags enabled, they are forced to use a minimum of this.
-#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_TEMP
+#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_KILL
