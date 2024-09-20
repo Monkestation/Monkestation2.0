@@ -204,8 +204,8 @@
 			to_chat_immediate(GLOB.admins, examine_block(span_userdanger("ERROR: [src] subsystem has likely entered an infinite loop, restarting MC immediately!")), type = MESSAGE_TYPE_DEBUG)
 			log_enqueue("[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY!!!", list("enqueue_log" = enqueue_log.Copy()))
 			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY! Round ID: [GLOB.round_id]")
-			enqueue_log.Cut()
 			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
+			enqueue_log.Cut()
 			Recreate_MC()
 			return
 
