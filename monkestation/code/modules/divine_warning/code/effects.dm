@@ -23,7 +23,7 @@
 	if (QDELETED(client) || stat == DEAD)
 		return
 
-	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role)
+	if (HAS_TRAIT(src, TRAIT_SPIRITUAL) || mind?.holy_role)
 		SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/divine.ogg', 80))
 		COOLDOWN_START(src, divine_cooldown, 2.5 SECONDS)
 
