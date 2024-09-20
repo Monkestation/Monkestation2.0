@@ -327,7 +327,7 @@
 			var/datum/reagent/RG = locate(part) in Deletion
 			if(RG.volume > partlist[part])
 				RG.volume = partlist[part]
-			if(RG.data && RG.data["viruses"]) //Purge diseases from food
+			if(RG.data?["viruses"]) //Purge diseases from food
 				RG.data["viruses"] = list()
 			//MONKESTATION EDIT END
 			. += RG
