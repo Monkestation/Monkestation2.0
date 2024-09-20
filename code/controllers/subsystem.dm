@@ -201,9 +201,16 @@
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
-			to_chat_immediate(GLOB.admins, examine_block(span_userdanger("ERROR: [src] subsystem has likely entered an infinite loop, restarting MC immediately!")), type = MESSAGE_TYPE_DEBUG)
-			log_enqueue("[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY!!!", list("enqueue_log" = enqueue_log.Copy()))
-			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[src] HAS LIKELY ENTERED AN INFINITE LOOP, RESTARTING MC IMMEDIATELY! Round ID: [GLOB.round_id]")
+			var/msg = "[src] subsystem has likely entered an infinite enqueue loop, restarting MC immediately!"
+			to_chat_immediate(
+				GLOB.admins,
+				examine_block(span_userdanger("ERROR: [msg]")),
+				type = MESSAGE_TYPE_DEBUG
+			)
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+#if defined(INIT_ORDER_PLEXORA) && !defined(UNIT_TESTS)
+			SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
+#endif
 			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
 			enqueue_log.Cut()
 			Recreate_MC()
