@@ -69,8 +69,7 @@
 			SEND_SOUND(src, sound('monkestation/code/modules/divine_warning/sounds/heaven_time.ogg'))
 			heaven_flags |= HEAVEN_TIMETOGO_PLAYED
 
-		var/atom/movable/screen/fullscreen/divine/base_divine
-		var/alpha = initial(base_divine.alpha) * (severity / 10)
+		var/alpha = /atom/movable/screen/fullscreen/divine/base_divine::alpha * (severity / 10)
 		var/soundvolume = 100 * (severity / 10)
 		flash_divine_overlay(alpha, soundvolume)
 
