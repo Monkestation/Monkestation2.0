@@ -34,7 +34,8 @@
 /mob/living/update_damage_hud()
 	. = ..()
 	// if (!client || !HAS_TRAIT(src, TRAIT_DIVINE)) return
-	if (!client || !src?.mind) return
+	if (QDELETED(client))
+		return
 
 	if(health <= hardcrit_threshold && (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0) && stat != DEAD)
 		// playsound(src, 'monkestation/code/modules/divine_warning/sounds/divine.ogg', 60, TRUE, use_reverb = TRUE, pressure_affected = FALSE, )
