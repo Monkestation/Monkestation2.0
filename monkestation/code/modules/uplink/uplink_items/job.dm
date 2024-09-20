@@ -3,7 +3,7 @@
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
 	progression_minimum = 5 MINUTES
 	cost = 1
-	item = /obj/item/storage/book/bible/mini
+	item = /obj/item/book/bible/mini
 	restricted_roles = list(JOB_CHAPLAIN, JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
@@ -64,6 +64,13 @@
 	pod.RefreshParts()
 	pod.locked = TRUE // The pod shouldn't be eligible for cloner event.
 
+/datum/uplink_item/role_restricted/syndicate_plant_gene
+	name = "Catalytic Inhibitor Serum Plant Data Disk"
+	desc = "This plant data disk contains the genetic blueprint for the Catalytic Inhibitor Serum gene.\
+			enabling plants to produce a serum that halts all internal chemical reactions"
+	item = /obj/item/disk/plantgene/syndicate
+	cost = 20
+	restricted_roles = list(JOB_BOTANIST)
 
 /datum/uplink_item/role_restricted/power_gloves
 	name = "Power Gloves"

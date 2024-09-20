@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		var/mob/living/carbon/human/H = mob
 		H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 50)
 	else
-		mob.setCloneLoss(50)
+		mob.setToxLoss(50)
 
 /datum/symptom/hallucinations
 	name = "Hallucinational Syndrome"
@@ -106,11 +106,12 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	stage = 3
 	badness = EFFECT_DANGER_HINDRANCE
 	max_multiplier = 5
-	max_chance = 15
+	symptom_delay_min = 1
+	symptom_delay_max = 5
 
 /datum/symptom/confusion/activate(mob/living/carbon/mob)
-	to_chat(mob, span_notice("You have trouble telling right and left apart all of a sudden."))
-	mob.adjust_confusion(1 SECONDS * multiplier)
+	to_chat(mob, span_warning("You have trouble telling right and left apart all of a sudden!"))
+	mob.adjust_confusion_up_to(1 SECONDS * multiplier, 20 SECONDS)
 
 /datum/symptom/groan
 	name = "Groaning Syndrome"
@@ -451,8 +452,12 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Causes the infected to oversynthesize stem cells engineered towards organ generation, causing damage to the host's organs in the process. Said generated organs are expelled from the body upon completion."
 	stage = 3
 	badness = EFFECT_DANGER_HARMFUL
+	COOLDOWN_DECLARE(organ_cooldown)
 
 /datum/symptom/teratoma/activate(mob/living/carbon/mob)
+	if(!COOLDOWN_FINISHED(src, organ_cooldown))
+		return
+	COOLDOWN_START(src, organ_cooldown, 2 MINUTES)
 	var/fail_counter = 0
 	var/not_passed = TRUE
 	var/obj/item/organ/spawned_organ

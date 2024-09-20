@@ -15,6 +15,11 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"big_manipulator",
+		"assembler",
+		"manipulator_filter",
+		"manipulator_filter_cargo",
+		"manipulator_filter_internal",
 		"bodybag",
 		"bounced_radio",
 		"bowl",
@@ -63,6 +68,8 @@
 		"infrared_emitter",
 		"intercom_frame",
 		"kitchen_knife",
+		"recipe_card",
+		"bottling_kit",
 		"laptop",
 		"light_bulb",
 		"light_replacer",
@@ -452,6 +459,7 @@
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
+		"surgical_gloves", //Monkestation Edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
@@ -677,11 +685,24 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
-		"artifact_heater",
-		"artifact_xray",
+		//"artifact_heater", //MONKESTATION EDIT REMOVAL
+		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-
+//MONKEYSTATION ADDITION START
+/datum/techweb_node/artifact
+	id = "artifact_research"
+	display_name = "Artifact Research"
+	description = "Properly concuct research on the various artifacts found around."
+	prereq_ids = list("base")
+	design_ids = list(
+		"artifact_heater",
+		"artifact_xray",
+		"disk_artifact",
+		"artifact_wand"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+//MONKESTATION ADDITION END
 /datum/techweb_node/high_efficiency
 	id = "high_efficiency"
 	display_name = "High Efficiency Parts"
@@ -1429,6 +1450,9 @@
 		"borg_upgrade_damagemod",
 		"borg_upgrade_rangemod",
 		"cargoexpress",
+		"b_smelter",
+		"b_refinery",
+		"brm",
 		"cooldownmod",
 		"damagemod",
 		"drill",
