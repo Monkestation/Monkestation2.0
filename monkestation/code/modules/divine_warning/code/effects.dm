@@ -37,7 +37,7 @@
 	if (QDELETED(client))
 		return
 
-	if(health <= hardcrit_threshold && (HAS_TRAIT(src, TRAIT_SPIRITUAL) || src.mind.holy_role > 0) && stat != DEAD)
+	if(health <= hardcrit_threshold && (HAS_TRAIT(src, TRAIT_SPIRITUAL) || mind?.holy_role) && stat != DEAD)
 		// playsound(src, 'monkestation/code/modules/divine_warning/sounds/divine.ogg', 60, TRUE, use_reverb = TRUE, pressure_affected = FALSE, )
 		var/severity = 0.2
 		switch(health)
