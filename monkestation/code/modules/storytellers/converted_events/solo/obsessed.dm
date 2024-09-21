@@ -18,13 +18,13 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	weight = 6
-	max_occurrences = 3
+	weight = 0 // disabled
+	max_occurrences = 0 // disabled
 
 /datum/round_event_control/antagonist/solo/obsessed/midround
 	name = "Compulsive Obsession"
 	prompted_picking = TRUE
-	maximum_antags = 4
+	maximum_antags = 0 // disabled
 
 /datum/round_event/antagonist/solo/obsessed
 
