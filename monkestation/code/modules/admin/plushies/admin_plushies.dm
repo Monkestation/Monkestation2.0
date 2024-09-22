@@ -143,3 +143,16 @@
 	name = "Richard Deckard Plush"
 	item_path = /obj/item/toy/plush/admin/richard_deckard
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/marisa
+	name = "marisa"
+	desc = "It's Marisa! THE GOOBER- LOOK AT HER!"
+	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon_state = "marisa"
+/datum/loadout_item/toys/marisa
+	name = "marisa plush"
+	item_path = /obj/item/toy/plush/admin/marisa
+/datum/store_item/toys/marisa
+	name = "Marisa Plush"
+	item_path = /obj/item/toy/plush/admin/marisa
+	item_cost = 7500
