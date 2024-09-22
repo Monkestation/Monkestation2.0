@@ -244,7 +244,7 @@
 /datum/quirk/soullessdoor
 	name = "Soulless"
 	desc = "How come the door cameras can't see me!"
-	value = -1
+	value = -2
 	icon = FA_ICON_GHOST
 	gain_text = span_notice("You have trouble with the doors not opening when you approach.")
 	lose_text = span_notice("You feel like the doors can see you again.. what.")
