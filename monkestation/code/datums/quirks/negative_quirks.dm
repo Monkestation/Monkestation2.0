@@ -240,3 +240,11 @@
 */
 /datum/quirk/tunnel_vision/remove()
 	quirk_holder.remove_fov_trait("tunnel vision quirk")
+
+/datum/quirk/soullessdoor
+	name = "Soulless"
+	desc = "How come the door cameras can't see me!"
+	value = -1
+	icon = FA_ICON_GHOST
+	gain_text = span_notice("You have trouble with the doors not opening when you approach.")
+	lose_text = span_notice("You feel like the doors can see you again.. what.")
