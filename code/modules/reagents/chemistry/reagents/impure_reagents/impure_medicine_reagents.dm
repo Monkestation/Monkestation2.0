@@ -546,7 +546,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(!back_from_the_dead)
-		affected_mob.adjustToxLoss(0.1 * seconds_per_tick) // MONKESTATION EDIT
+		affected_mob.adjustToxLoss(0.2 * seconds_per_tick) // MONKESTATION EDIT: Lower toxin from 0.5/s to 0.2/s and only apply it if inert.
 		return ..()
 	//Following is for those brought back from the dead only
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
