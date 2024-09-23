@@ -81,6 +81,7 @@ I take the 2s interval period and divide it by the number of hands I want to mak
 Basically, we fill the time between now and 2s from now with hands based off the current lag.
 */
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	owner.adjustToxLoss(0.125 * seconds_per_tick) // MONKESTATION EDIT
 	spawn_hands(owner)
 	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
 	seconds_per_tick = FLOOR(seconds_per_tick, 1)
@@ -504,7 +505,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 ///If they OD, their heart explodes (if they were brought back from the dead)
 /datum/reagent/inverse/penthrite
 	name = "Nooartrium"
-	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
+	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart. Mildly toxic when inert in a patient."
 	ph = 14
 	metabolization_rate = 0.05 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
@@ -545,6 +546,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(!back_from_the_dead)
+		affected_mob.adjustToxLoss(0.1 * seconds_per_tick) // MONKESTATION EDIT
 		return ..()
 	//Following is for those brought back from the dead only
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
