@@ -922,6 +922,13 @@
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
 
+/datum/design/surgery/robot_healing // Apparently this helps the code not scream looking at other examples?
+	name = "Repair Robotic Limbs"
+	desc = "A surgical procedure that provides highly effective repairs and maintenance to robotic limbs."
+	surgery = /datum/surgery/robot_healing
+	id = "surgery_heal_robot_base"
+	research_icon_state = "surgery_chest"
+
 /datum/design/surgery/robot_healing/upgraded
 	name = "Repair Robotic Limbs (Physical) Upgrade"
 	desc = "A surgical procedure that provides highly effective repairs and maintenance to robotic limbs. Is somewhat more efficient when the patient is severely damaged."
