@@ -4,7 +4,7 @@
 /obj/item/toy/plush/admin/ben_mothman
 	name = "ben mothman"
 	desc = "HAH this guy is short! Laugh at him.. this is an order! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "ben"
 /datum/loadout_item/toys/ben_mothman
 	name = "ben mothman plush"
@@ -17,7 +17,7 @@
 /obj/item/toy/plush/admin/abraxis
 	name = "abraxis"
 	desc = "This feller is always up to something.. he's even got that huge company I forgot the name of... "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "abraxis"
 /datum/loadout_item/toys/abraxis
 	name = "abraxis plush"
@@ -30,7 +30,7 @@
 /obj/item/toy/plush/admin/brad
 	name = "brad"
 	desc = "Woah.. they're BLUE, and they've also got a cane! How fancy dancy. "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "brad"
 /datum/loadout_item/toys/brad
 	name = "brad plush"
@@ -43,7 +43,7 @@
 /obj/item/toy/plush/admin/andrea
 	name = "andrea"
 	desc = "Best combat medic around.. if you're legs are blown off and you see this fellah comming around- you're lucky. "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "andrea"
 /datum/loadout_item/toys/andrea
 	name = "andrea plush"
@@ -56,7 +56,7 @@
 /obj/item/toy/plush/admin/pippi
 	name = "pippi"
 	desc = "... "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "pippi"
 /datum/loadout_item/toys/pippi
 	name = "pippi plush"
@@ -69,7 +69,7 @@
 /obj/item/toy/plush/admin/syndi_kate
 	name = "syndi-kate"
 	desc = "''GLORY TO THE SYNDICATE!'' "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "syndi_kate"
 /datum/loadout_item/toys/syndi_kate
 	name = "syndi-kate plush"
@@ -82,7 +82,7 @@
 /obj/item/toy/plush/admin/jace
 	name = "jace"
 	desc = "It's Jace! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "jace"
 /datum/loadout_item/toys/jace
 	name = "jace plush"
@@ -95,7 +95,7 @@
 /obj/item/toy/plush/admin/lavender
 	name = "lavender"
 	desc = "It's Lavender! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "lavender"
 /datum/loadout_item/toys/lavender
 	name = "lavender plush"
@@ -108,7 +108,7 @@
 /obj/item/toy/plush/admin/waffles
 	name = "waffles"
 	desc = "It's Waffles! What a wierdo! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "waffles"
 /datum/loadout_item/toys/waffles
 	name = "waffles plush"
@@ -121,7 +121,7 @@
 /obj/item/toy/plush/admin/vicky
 	name = "vicky"
 	desc = "It's Vicky! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "vicky"
 /datum/loadout_item/toys/vicky
 	name = "vicky plush"
@@ -134,7 +134,7 @@
 /obj/item/toy/plush/admin/richard_deckard
 	name = "richard deckard"
 	desc = "It's Richard Deckard! "
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "richard_deckard"
 /datum/loadout_item/toys/richard_deckard
 	name = "richard deckard plush"
@@ -147,7 +147,7 @@
 /obj/item/toy/plush/admin/marisa
 	name = "marisa"
 	desc = "It's Marisa! THE GOOBER- LOOK AT HER!"
-	icon = 'monkestation/code/modules/admin/plushies/admin_plushies.dmi'
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
 	icon_state = "marisa"
 /datum/loadout_item/toys/marisa
 	name = "marisa plush"
