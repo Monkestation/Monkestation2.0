@@ -60,11 +60,12 @@
 // .45 (Lever Rifle and Long Revolver)
 
 /obj/item/ammo_casing/g45l
-	name= ".45 Long Rubber bullet casing"
-	desc = "An .45 Long bullet casing."
+	name = ".45 Long bullet casing "
+	desc = "A .45 Long bullet casing."
+	projectile_type = /obj/projectile/bullet/g45l
+
+/obj/item/ammo_casing/g45l/rubber
+	name = ".45 Long rubber bullet casing"
+	desc = "A .45 Long rubber bullet casing."
 	caliber = ".45l"
 	projectile_type = /obj/projectile/bullet/g45l/rubber
-
-/obj/item/ammo_casing/g45l/lethal
-	name = ".45 Long bullet casing "
-	projectile_type = /obj/projectile/bullet/g45l

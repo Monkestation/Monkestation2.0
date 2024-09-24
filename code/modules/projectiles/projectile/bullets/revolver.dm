@@ -130,7 +130,7 @@
 // .45 (Lever Rifle and Long Revolver)
 
 /obj/projectile/bullet/g45l/rubber
-	name = ".45 Long Rubber bullet"
+	name = ".45 Long rubber bullet"
 	damage = 5
 	stamina = 35
 	weak_against_armour = TRUE
@@ -138,7 +138,7 @@
 	embedding = null
 
 /obj/projectile/bullet/g45l
-	name = ".45 Long Lethal bullet"
+	name = ".45 Long bullet"
 	damage = 35
 	wound_bonus = -5
 	sharpness = SHARP_EDGED

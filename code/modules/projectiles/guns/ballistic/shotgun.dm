@@ -337,8 +337,21 @@
 
 // Lever gun
 /obj/item/gun/ballistic/shotgun/leveraction
-	name = "brush gun (.45 Long)"
+	name = "brush gun"
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
+	bolt_wording = "Lever"
+	cartridge_wording = "bullet"
+	projectile_wound_bonus = 10
+	projectile_damage_multiplier = 1.1
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BACK
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_HEAVY
+
