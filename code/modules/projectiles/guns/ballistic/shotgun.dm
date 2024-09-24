@@ -334,3 +334,11 @@
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+// Lever gun
+/obj/item/gun/ballistic/shotgun/leveraction
+	name = "brush gun (.45 Long)"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
+	icon_state = "brushgun"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
