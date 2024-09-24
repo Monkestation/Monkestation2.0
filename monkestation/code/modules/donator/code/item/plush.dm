@@ -152,8 +152,3 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "toadie_wan_kenfrogi"
 
-/obj/item/toy/plush/eeble
-	name = "Eeble plushie"
-	desc = "Eeble is Eeble"
-	icon = 'monkestation/icons/obj/plushes.dmi'
-	icon_state = "eeble"
