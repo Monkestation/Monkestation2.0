@@ -56,3 +56,15 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+// .45 (Lever Rifle and Long Revolver)
+
+/obj/item/ammo_casing/g45l
+	name= ".45 Long Rubber bullet casing"
+	desc = "An .45 Long bullet casing."
+	caliber = ".45l"
+	projectile_type = /obj/projectile/bullet/g45l/rubber
+
+/obj/item/ammo_casing/g45l/lethal
+	name = ".45 Long bullet casing "
+	projectile_type = /obj/projectile/bullet/g45l

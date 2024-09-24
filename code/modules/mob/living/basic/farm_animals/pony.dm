@@ -62,7 +62,7 @@
 	if (prob(33))
 		whinny_angrily()
 
-/mob/living/basic/pony/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/pony/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 
 	if (!.)
@@ -72,7 +72,7 @@
 
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
