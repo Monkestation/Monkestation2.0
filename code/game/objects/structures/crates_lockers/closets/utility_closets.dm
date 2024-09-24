@@ -35,7 +35,7 @@
 	new /obj/item/storage/box/emergency_eva(src)
 	//MONKESTATION EDIT STOP
 
-	switch (pick_weight(list("small" = 80, "aid" = 50, "tank" = 60, "both" = 20, "nothing" = 4))) //monkestation edit
+	switch (pick_weight(list("small" = 50, "aid" = 50, "tank" = 50, "both" = 50, "nothing" = 4))) //monkestation edit
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -54,6 +54,9 @@
 		if ("both")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/tank/internals/oxygen(src) // monkestation edit
+			new /obj/item/clothing/mask/breath(src) // monkestion edit
+
 
 		if ("nothing")
 			// doot
