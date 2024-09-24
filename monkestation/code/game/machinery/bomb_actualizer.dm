@@ -206,18 +206,18 @@
 		var/flame = 0
 		var/flash = 0
 		var/turf/location = get_turf(src)
-		var/actualizer_multiplier = 0.25
+		var/actualizer_multiplier = 0.40
 		var/capped_heavy
 		var/capped_medium
 		var/capped_light
 
-		if(heavy > 3)
+		if(heavy > 12)
 			capped_heavy = (GLOB.MAX_EX_DEVESTATION_RANGE + (heavy * actualizer_multiplier))
 
-		if(medium > 7)
+		if(medium > 12)
 			capped_medium = (GLOB.MAX_EX_HEAVY_RANGE + (medium * actualizer_multiplier))
 
-		if(light > 14)
+		if(light > 12)
 			capped_light = (GLOB.MAX_EX_LIGHT_RANGE + (light * actualizer_multiplier))
 
 		SSexplosions.explode(location, capped_heavy, capped_medium, capped_light, flame, flash, TRUE, TRUE, FALSE, FALSE)
