@@ -344,6 +344,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
 	bolt_wording = "Lever"
 	cartridge_wording = "bullet"
+	worn_icon_state = null
 	projectile_wound_bonus = 10
 	projectile_damage_multiplier = 1.1
 	w_class = WEIGHT_CLASS_BULKY
