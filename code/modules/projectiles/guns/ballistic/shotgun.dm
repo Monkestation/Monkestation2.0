@@ -341,10 +341,13 @@
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_icon_state = "shotgun"
+	worn_icon_state = null
 	bolt_wording = "Lever"
 	cartridge_wording = "bullet"
-	worn_icon_state = null
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
 	projectile_wound_bonus = 10
 	projectile_damage_multiplier = 1.1
 	w_class = WEIGHT_CLASS_BULKY
