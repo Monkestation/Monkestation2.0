@@ -59,7 +59,7 @@
 /datum/supply_pack/imports/Lrevolvercrate
 	name = "Long Revolver Crate"
 	desc = "We got these old revolvers from a unnamed man, enjoy them"
-	cost = CARGO_CRATE_VALUE * 2.4
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/gun/ballistic/revolver/r45l = 2,
 		/obj/item/ammo_box/g45l = 1,
@@ -73,7 +73,7 @@
 /datum/supply_pack/imports/Briflecrate
 	name = "Bush Rifle Crate"
 	desc = "These old rifles were sold to us by a unnamed man, quite the bargin"
-	cost = CARGO_CRATE_VALUE * 2.2
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/leveraction = 3,
 		/obj/item/ammo_box/g45l = 2,
