@@ -341,7 +341,6 @@
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
-	worn_icon_state = null
 	bolt_wording = "Lever"
 	cartridge_wording = "bullet"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
