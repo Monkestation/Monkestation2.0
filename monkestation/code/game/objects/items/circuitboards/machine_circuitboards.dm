@@ -91,7 +91,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 1,
 		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/matter_bin = 10)
+		/datum/stock_part/matter_bin = 5)
 
 /obj/item/circuitboard/machine/composters
 	name = "NT-Brand Auto Composter (Machine Board)"

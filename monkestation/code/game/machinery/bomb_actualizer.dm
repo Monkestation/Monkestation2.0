@@ -206,7 +206,7 @@
 		var/flame = 0
 		var/flash = 0
 		var/turf/location = get_turf(src)
-		var/actualizer_multiplier = 0.40
+		var/actualizer_multiplier = 0.5
 		var/capped_heavy
 		var/capped_medium
 		var/capped_light
