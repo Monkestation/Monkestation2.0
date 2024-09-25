@@ -15,6 +15,7 @@
 	desc = "A cheap, flimsy metal box used to hold an emergency spacesuit. There seems to be a warning label in fine print..."
 	icon_state = "internals"
 	illustration = "writing"
+	resistance_flags = FIRE_PROOF
 	foldable_result = /obj/item/stack/sheet/iron
 	w_class = WEIGHT_CLASS_BULKY //just so nobody thinks to pocket these
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'

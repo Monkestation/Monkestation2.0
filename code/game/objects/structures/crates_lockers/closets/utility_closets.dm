@@ -33,6 +33,10 @@
 	//	new /obj/item/storage/toolbox/emergency(src)
 	new /obj/item/storage/toolbox/emergency(src)
 	new /obj/item/storage/box/emergency_eva(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/clothing/mask/breath(src)
 	//MONKESTATION EDIT STOP
 
 	switch (pick_weight(list("small" = 50, "aid" = 50, "tank" = 50, "both" = 50, "nothing" = 4))) //monkestation edit
