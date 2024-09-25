@@ -347,7 +347,6 @@
 	projectile_wound_bonus = 10
 	projectile_damage_multiplier = 1.1
 	w_class = WEIGHT_CLASS_BULKY
-	worn_icon_state = null
 	force = 10
 	flags_1 = CONDUCT_1
 	semi_auto = FALSE
