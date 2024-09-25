@@ -491,7 +491,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "aeL" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /turf/closed/wall/rust,
 /area/station/engineering/atmos)
 "aeS" = (
@@ -1548,7 +1548,7 @@
 /area/station/science/xenobiology)
 "awG" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow{
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall/rust,
@@ -3733,7 +3733,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "blX" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /turf/closed/wall,
 /area/station/engineering/atmos)
 "blZ" = (
@@ -72633,7 +72633,7 @@
 /area/station/hallway/primary/port)
 "wGd" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow{
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
