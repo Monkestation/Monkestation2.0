@@ -491,7 +491,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "aeL" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow,
 /turf/closed/wall/rust,
 /area/station/engineering/atmos)
 "aeS" = (
@@ -1547,10 +1547,10 @@
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "awG" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow{
 	dir = 4
 	},
-/obj/machinery/meter,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/atmos)
 "awR" = (
@@ -3733,7 +3733,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "blX" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow,
 /turf/closed/wall,
 /area/station/engineering/atmos)
 "blZ" = (
@@ -54248,6 +54248,12 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
+"raH" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/effect/landmark/start/chief_medical_officer,
+/turf/open/floor/iron/showroomfloor,
+/area/station/command/heads_quarters/cmo)
 "raK" = (
 /obj/effect/landmark/start/scientist,
 /obj/effect/decal/cleanable/dirt,
@@ -72626,10 +72632,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "wGd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow{
 	dir = 4
 	},
-/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "wGe" = (
@@ -75644,6 +75650,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
 "xCy" = (
@@ -96241,7 +96248,7 @@ xtt
 xxk
 msR
 uxn
-rLp
+raH
 dhX
 gHC
 mYS
