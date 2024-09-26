@@ -41,7 +41,7 @@
 	earliest_start = 25 MINUTES
 	category = EVENT_CATEGORY_ENTITIES
 	track = EVENT_TRACK_MAJOR
-	description = "Anrgy monkeys pour out of portals."
+	description = "Angry monkies pour out of portals."
 
 /datum/round_event/portal_storm/portal_storm_monkey
 	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
