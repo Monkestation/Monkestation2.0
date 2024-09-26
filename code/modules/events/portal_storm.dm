@@ -44,10 +44,12 @@
 	description = "Anrgy monkeys pour out of portals."
 
 /datum/round_event/portal_storm/portal_storm_monkey
+	sound_to_playing_players('monkestation/sound/misc/monkeystorm.ogg')
 	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
 	hostile_types = list(
 		/mob/living/carbon/human/species/monkey/angry = 10,
 	)
+
 
 //end monkestation edit
 /datum/round_event/portal_storm
