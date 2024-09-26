@@ -1,3 +1,4 @@
+Calamity
 Ceci N'est Pas Une Mime
 Cousteau
 Eastern Standard Mime
@@ -29,6 +30,7 @@ Omerta
 Oreo
 Oui Oui
 Pantomime
+Pandemonium
 Parles Francais
 Partner in Mime
 Quiet
