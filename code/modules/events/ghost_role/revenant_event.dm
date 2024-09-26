@@ -4,6 +4,7 @@
 	name = "Spawn Revenant" // Did you mean 'griefghost'?
 	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
+	track = EVENT_TRACK_MAJOR //monkie edit
 	max_occurrences = 1
 	min_players = 5
 	//dynamic_should_hijack = TRUE

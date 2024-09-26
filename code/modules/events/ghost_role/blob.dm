@@ -2,6 +2,7 @@
 	name = "Blob"
 	typepath = /datum/round_event/ghost_role/blob
 	weight = 5  //monkie edit: 10 to 5
+	track = EVENT_TRACK_MAJOR //monkie edit
 	max_occurrences = 1
 
 	min_players = 35  //monkie edit: 20 to 35
