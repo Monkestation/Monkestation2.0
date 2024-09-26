@@ -32,6 +32,24 @@
 		/mob/living/basic/construct/wraith/hostile = 6,
 	)
 
+//begin monkestation edit
+/datum/round_event_control/portal_storm_monkey
+	name = "Portal Storm: Monkeys"
+	typepath = /datum/round_event/portal_storm/portal_storm_monkey
+	weight = 4
+	max_occurrences = 1
+	earliest_start = 25 MINUTES
+	category = EVENT_CATEGORY_ENTITIES
+	track = EVENT_TRACK_MAJOR
+	description = "Anrgy monkeys pour out of portals."
+
+/datum/round_event/portal_storm/portal_storm_monkey
+	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
+	hostile_types = list(
+		/mob/living/carbon/human/species/monkey/angry = 10,
+	)
+
+//end monkestation edit
 /datum/round_event/portal_storm
 	start_when = 7
 	end_when = 999
