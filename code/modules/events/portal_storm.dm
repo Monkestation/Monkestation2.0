@@ -44,12 +44,18 @@
 	description = "Anrgy monkeys pour out of portals."
 
 /datum/round_event/portal_storm/portal_storm_monkey
-	sound_to_playing_players('monkestation/sound/misc/monkeystorm.ogg')
 	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
 	hostile_types = list(
 		/mob/living/carbon/human/species/monkey/angry = 10,
 	)
 
+/datum/round_event/portal_storm/portal_storm_monkey/announce(fake)
+	set waitfor = 0
+	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
+	sleep(8 SECONDS)
+	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
+	sleep(2 SECONDS)
+	sound_to_playing_players('monkestation/sound/misc/monkeystorm.ogg')
 
 //end monkestation edit
 /datum/round_event/portal_storm
