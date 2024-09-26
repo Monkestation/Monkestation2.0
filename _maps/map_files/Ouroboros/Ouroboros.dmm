@@ -32700,6 +32700,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/medipen_refiller,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "jJu" = (
@@ -69964,12 +69965,12 @@
 /obj/machinery/light/directional/west,
 /mob/living/basic/pet/bumbles,
 /obj/item/chicken_feed,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/openspace,
 /area/station/service/hydroponics/upper)
 "uKn" = (

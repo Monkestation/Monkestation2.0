@@ -1853,18 +1853,6 @@
 /obj/machinery/camera/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"aDx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=HOP";
-	location = "Security";
-	name = "security navigation beacon"
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "aDF" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -12103,7 +12091,7 @@
 /obj/item/seeds/onion,
 /obj/item/paper/guides/jobs/hydroponics,
 /obj/item/seeds/tree,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "dRF" = (
@@ -17667,7 +17655,7 @@
 /obj/effect/turf_decal/trimline/green/end{
 	dir = 8
 	},
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fBt" = (
@@ -30641,11 +30629,11 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/toy/figure/botanist,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -31589,12 +31577,6 @@
 	},
 /area/station/service/chapel)
 "jIX" = (
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel";
-	pixel_y = 4
-	},
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
 	listening = 0;
@@ -31618,6 +31600,13 @@
 	name = "AI Chamber Lockdown";
 	pixel_x = -24;
 	req_access = list("ai_upload")
+	},
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = 4;
+	listening = 0
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
@@ -40500,10 +40489,10 @@
 "mFm" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/table/glass,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
 /obj/item/chicken_scanner{
 	pixel_x = 6
 	},
@@ -69231,6 +69220,15 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"vHR" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=HOP";
+	location = "Security";
+	name = "security navigation beacon"
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "vHS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -102209,7 +102207,7 @@ hyc
 ihl
 hyc
 pUa
-aDx
+dZA
 qOC
 lNf
 eHH
@@ -104008,7 +104006,7 @@ ych
 ych
 ych
 vVt
-aOe
+vHR
 sQa
 cfL
 pRP
