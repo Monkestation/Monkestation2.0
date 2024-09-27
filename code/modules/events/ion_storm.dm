@@ -2,7 +2,6 @@
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
 	weight = 15
-	track = EVENT_TRACK_MAJOR //monkie edit
 	min_players = 2
 	category = EVENT_CATEGORY_AI
 	description = "Gives the AI a new, randomized law."
