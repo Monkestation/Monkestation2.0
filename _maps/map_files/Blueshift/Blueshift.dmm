@@ -80736,7 +80736,7 @@
 /area/station/maintenance/starboard/fore)
 "pHX" = (
 /obj/effect/turf_decal/bot_red,
-/obj/structure/frame/machine,
+/obj/machinery/autolathe,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics/lab)
 "pHY" = (
