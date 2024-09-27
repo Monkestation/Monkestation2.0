@@ -87280,7 +87280,7 @@
 "xvK" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/pathology,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/machinery/requests_console/directional/north{

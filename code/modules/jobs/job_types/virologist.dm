@@ -69,3 +69,5 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/virology
 
 	box = /obj/item/storage/box/survival/medical
+
+	glasses = /obj/item/clothing/glasses/pathology //monkestation edit

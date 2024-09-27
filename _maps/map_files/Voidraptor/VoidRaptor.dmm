@@ -74959,7 +74959,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/pathology,
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 6
 	},

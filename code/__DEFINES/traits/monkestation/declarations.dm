@@ -53,6 +53,8 @@
 #define TRAIT_REVIVES_BY_HEALING "trait_revives_by_healing"
 /// This mob is a ghost critter.
 #define TRAIT_GHOST_CRITTER "ghost_critter"
+/// The mob can see pathogen clouds and such.
+#define TRAIT_VIRUS_SCANNER "virus_scanner"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.

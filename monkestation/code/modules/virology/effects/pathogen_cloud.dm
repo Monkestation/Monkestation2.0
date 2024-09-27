@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(pathogen_clouds, list())
-GLOBAL_LIST_INIT(science_goggles_wearers, list())
+GLOBAL_LIST_INIT(virus_viewers, list())
 
 /obj/effect/pathogen_cloud
 	name = ""
@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	pathogen = image('monkestation/code/modules/virology/icons/96x96.dmi',src,"pathogen_airborne")
 	pathogen.plane = HUD_PLANE
 	pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-	for (var/mob/living/L as anything in GLOB.science_goggles_wearers)
+	for (var/mob/living/L as anything in GLOB.virus_viewers)
 		if (L.client)
 			L.client.images |= pathogen
 
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		SSpathogen_clouds.current_run_clouds -= src
 
 	if (pathogen)
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
+		for (var/mob/living/L in GLOB.virus_viewers)
 			if (L.client)
 				L.client.images -= pathogen
 		pathogen = null
