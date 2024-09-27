@@ -73,7 +73,7 @@
 	hat_type = "red"
 	dog_fashion = null
 	name = "firefighter helmet"
-	//clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT monkestation edit
+	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
