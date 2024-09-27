@@ -5055,11 +5055,6 @@
 /obj/item/storage/bag/egg,
 /obj/item/storage/bag/egg,
 /obj/item/storage/bag/egg,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/upper)
 "bwv" = (
@@ -18952,6 +18947,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/carpet/stellar,
 /area/station/service/chapel/funeral)
+"fyh" = (
+/obj/structure/bookcase/manuals/botany,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/upper)
 "fys" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 1
@@ -53822,10 +53821,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
-/obj/item/book/manual/hydroponics_pod_people{
-	pixel_x = 7;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/bot,
 /obj/item/pen{
 	pixel_x = -6;
@@ -63976,11 +63971,6 @@
 	name = "service camera"
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -126427,7 +126417,7 @@ cqI
 xiF
 kVo
 fYs
-eKx
+fyh
 jpR
 uKN
 kAB

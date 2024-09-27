@@ -51877,11 +51877,6 @@
 /area/station/commons/storage/tools)
 "mnA" = (
 /obj/structure/table/glass,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
@@ -59757,6 +59752,7 @@
 "oiZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ojb" = (
@@ -80907,11 +80903,6 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "tpE" = (

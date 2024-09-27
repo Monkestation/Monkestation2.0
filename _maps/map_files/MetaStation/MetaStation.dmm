@@ -11571,7 +11571,6 @@
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/table/glass,
-/obj/item/book/manual/hydroponics_pod_people,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
@@ -53792,7 +53791,6 @@
 /area/station/science/cytology)
 "sRb" = (
 /obj/structure/table,
-/obj/item/book/manual/hydroponics_pod_people,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -61376,11 +61374,6 @@
 /obj/item/clothing/suit/apron,
 /obj/item/clothing/accessory/armband/hydro,
 /obj/item/wrench,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -63311,7 +63304,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/kirbyplants/random,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wlt" = (
@@ -66512,11 +66505,6 @@
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
-/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "xsn" = (
