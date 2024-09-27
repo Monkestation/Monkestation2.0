@@ -26733,6 +26733,7 @@
 	pixel_y = 13;
 	pixel_x = -9
 	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "iQd" = (

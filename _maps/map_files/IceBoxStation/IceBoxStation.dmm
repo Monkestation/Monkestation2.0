@@ -5918,6 +5918,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pathology)
 "bPP" = (
@@ -19222,6 +19223,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/table/glass,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gbH" = (

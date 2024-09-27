@@ -52223,6 +52223,10 @@
 	pixel_y = 18;
 	pixel_x = 8
 	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 21;
+	pixel_x = -1
+	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/pathology)
 "soW" = (
@@ -53793,6 +53797,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/west,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sRf" = (
@@ -64450,16 +64455,16 @@
 	},
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/item/reagent_containers/cup/bottle/synaptizine{
-	pixel_y = 17;
-	pixel_x = -9
-	},
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_y = 21;
-	pixel_x = -1
+	pixel_y = 19;
+	pixel_x = -10
 	},
 /obj/item/reagent_containers/cup/bottle/sugar{
 	pixel_y = 17;
-	pixel_x = 6
+	pixel_x = -5
+	},
+/obj/machinery/smartfridge/disks{
+	pixel_x = 8;
+	pixel_y = 15
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/pathology)

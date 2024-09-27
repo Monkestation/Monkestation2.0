@@ -1989,6 +1989,7 @@
 /area/station/hallway/primary/central)
 "auS" = (
 /obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/disposalpipe/segment,
@@ -3959,6 +3960,10 @@
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
 /obj/effect/turf_decal/trimline/green/filled/end{
 	dir = 4
+	},
+/obj/machinery/smartfridge/disks{
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)

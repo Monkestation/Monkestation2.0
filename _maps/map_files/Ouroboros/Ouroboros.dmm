@@ -39209,6 +39209,7 @@
 /obj/structure/table,
 /obj/item/wrench,
 /obj/item/crowbar,
+/obj/item/watertank,
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics)
 "lBx" = (
@@ -41783,11 +41784,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "mmM" = (
-/obj/item/watertank,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/directional/north,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics)
 "mmP" = (
@@ -79020,6 +79021,10 @@
 /area/station/medical/surgery/theatre)
 "xoS" = (
 /obj/machinery/disease2/incubator,
+/obj/machinery/smartfridge/disks{
+	pixel_x = -4;
+	pixel_y = 14
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "xoT" = (

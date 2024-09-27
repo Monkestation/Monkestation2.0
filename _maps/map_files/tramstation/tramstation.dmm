@@ -8648,6 +8648,10 @@
 	},
 /obj/structure/table,
 /obj/item/stack/sheet/cardboard,
+/obj/item/paper{
+	default_raw_text = "buy more donk pockets";
+	name = "To-Do List"
+	},
 /obj/item/food/donkpocket/pizza,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medical - Virology Break Room";
@@ -41615,10 +41619,7 @@
 	},
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
-/obj/item/paper{
-	default_raw_text = "buy more donk pockets";
-	name = "To-Do List"
-	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "miE" = (
@@ -49280,6 +49281,8 @@
 /obj/machinery/light/directional/north,
 /obj/structure/sign/clock/directional/north,
 /obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "oIo" = (

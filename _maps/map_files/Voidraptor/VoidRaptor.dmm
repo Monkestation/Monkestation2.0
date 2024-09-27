@@ -37013,9 +37013,15 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 5
+	amount = 5;
+	pixel_x = 11;
+	pixel_y = 0
 	},
-/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five{
+	pixel_x = 15;
+	pixel_y = 0
+	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -61075,7 +61081,11 @@
 /obj/machinery/smartfridge,
 /obj/machinery/splicer{
 	pixel_y = 12;
-	pixel_x = -6
+	pixel_x = -8
+	},
+/obj/machinery/smartfridge/disks{
+	pixel_x = 9;
+	pixel_y = 14
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/hydroponics)
