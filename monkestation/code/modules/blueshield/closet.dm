@@ -34,3 +34,5 @@
 	new /obj/item/storage/bag/garment/blueshield(src)
 	new /obj/item/mod/control/pre_equipped/blueshield(src)
 	new /obj/item/sensor_device/blueshield(src)
+	new /obj/item/radio/headset/headset_bs(src)
+	new /obj/item/radio/headset/headset_bs/alt(src)

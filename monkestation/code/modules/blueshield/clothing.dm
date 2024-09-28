@@ -209,6 +209,7 @@
 	keyslot2 = /obj/item/encryptionkey/headset_cent
 
 /obj/item/radio/headset/headset_bs/alt
+	name = "\proper the blueshield's bowman headset"
 	icon_state = "bshield_headset_alt"
 	worn_icon_state = "bshield_headset_alt"
 
