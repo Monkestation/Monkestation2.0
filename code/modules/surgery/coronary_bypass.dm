@@ -129,7 +129,7 @@
 	return FALSE
 
 /datum/surgery/coronary_bypass/mechanic
-	name = "Gastrectomy"
+	name = "Prosthesis Coronary Bypass"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	target_mobtypes = list(/mob/living/carbon/human) // Simpler mobs don't have bodypart types
 	steps = list(
