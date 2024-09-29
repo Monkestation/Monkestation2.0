@@ -1,7 +1,21 @@
 //	This is where all of the MonkeStation Admin Plushies SHOULD be stored
 
-//	Plushies
-/obj/item/toy/plush/admin/ben_mothman
+// Plushies
+/obj/item/toy/plush/admin
+	name = "admin plushie"
+	desc = "if you're seeing this there's an issue."
+	icon = 'monkestation/icons/obj/admin_plushies.dmi'
+	icon_state = ""
+	/// A string of text that is optionaly added to the objects desc, it SHOULD be the admin's CKEY.
+	var/adminCKey = null
+
+/obj/item/toy/plush/admin/Initialize(mapload)
+	. = ..()
+	if(adminCKey)
+		desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
+	else
+		desc = "[desc]" + " " + "(A member of our beloved admin team)"
+
 	name = "ben mothman"
 	desc = "HAH this guy is short! Laugh at him.. this is an order!"
 	icon_state = "ben"
