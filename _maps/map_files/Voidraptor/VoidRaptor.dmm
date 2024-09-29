@@ -6300,6 +6300,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -10065,13 +10066,6 @@
 	icon_state = "dark_large"
 	},
 /area/space/nearstation)
-"cZm" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 6
-	},
-/turf/open/space/basic,
-/area/space)
 "cZv" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
@@ -12373,14 +12367,6 @@
 	},
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
-"dFX" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/vending/coffee,
-/obj/structure/railing{
-	dir = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "dGf" = (
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
@@ -48938,14 +48924,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
-"nNb" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "nNc" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table{
@@ -51505,14 +51483,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/command)
-"oxp" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/closet/crate,
-/turf/open/space/basic,
-/area/space)
 "oxv" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -53615,6 +53585,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/science/auxlab)
 "paS" = (
@@ -56070,13 +56041,17 @@
 /area/station/command/heads_quarters/nt_rep)
 "pIl" = (
 /obj/structure/table,
-/obj/item/binoculars{
-	pixel_x = -5;
-	pixel_y = 5
+/obj/item/poster/random_official{
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/binoculars{
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/binoculars{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /obj/item/storage/box/disks_nanite{
 	pixel_x = 5;
@@ -58629,13 +58604,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
-"qpa" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "qpe" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -59052,6 +59020,7 @@
 "qvI" = (
 /obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -66562,10 +66531,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/carpet/black,
 /area/station/commons/dorms)
-"sDH" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "sDI" = (
 /obj/machinery/power/solar{
 	id = "aftport";
@@ -84225,6 +84190,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/auxlab)
 "xsG" = (
@@ -111912,8 +111878,8 @@ sVi
 caV
 ttw
 ttw
-dFX
-qpa
+ttw
+ttw
 odJ
 vPV
 ttw
@@ -112169,8 +112135,8 @@ eyq
 caV
 ttw
 ttw
-oxp
-sDH
+ttw
+ttw
 xMq
 cLN
 ttw
@@ -112426,8 +112392,8 @@ sVi
 caV
 ttw
 ttw
-nNb
-cZm
+ttw
+ttw
 odJ
 vPV
 ttw
