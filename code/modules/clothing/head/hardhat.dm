@@ -93,7 +93,7 @@
 	icon_state = "hardhat0_white"
 	inhand_icon_state = null
 	hat_type = "white"
-	//clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT monkestation edit
+	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -166,7 +166,7 @@
 	inhand_icon_state = null
 	light_outer_range = 4 //Boss always takes the best stuff
 	hat_type = "white"
-	//clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT monkestation edit
+	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
