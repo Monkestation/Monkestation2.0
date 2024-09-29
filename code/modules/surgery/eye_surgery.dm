@@ -1,6 +1,5 @@
 /datum/surgery/eye_surgery
 	name = "Eye surgery"
-	requires_bodypart_type = NONE
 	organ_to_manipulate = ORGAN_SLOT_EYES
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	steps = list(
@@ -74,3 +73,15 @@
 		)
 		display_pain(target, "You feel a visceral stabbing pain right through your head!") // dunno who can feel pain w/o a brain but may as well be consistent.
 	return FALSE
+
+/datum/surgery/eye_surgery/mechanic
+	name = "Eye surgery"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	target_mobtypes = list(/mob/living/carbon/human) 
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/fix_eyes,
+		/datum/surgery_step/mechanic_close,
+	)
