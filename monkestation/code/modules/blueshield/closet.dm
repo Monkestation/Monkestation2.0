@@ -14,6 +14,12 @@
 	new /obj/item/clothing/suit/armor/vest/blueshield/jacket(src)
 	new /obj/item/clothing/neck/mantle/bsmantle(src)
 
+/obj/item/storage/belt/security/blueshield/PopulateContents()
+		new /obj/item/grenade/flashbang(src)
+		new /obj/item/assembly/flash/handheld(src)
+		new /obj/item/reagent_containers/spray/pepper(src)
+		new /obj/item/restraints/handcuffs(src)
+
 /obj/structure/closet/secure_closet/blueshield
 	name = "blueshield's locker"
 	icon_state = "bs"
@@ -24,10 +30,6 @@
 	..()
 	new /obj/item/storage/briefcase/secure(src)
 	new /obj/item/storage/belt/security/blueshield(src)
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/reagent_containers/spray/pepper(src)
-	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/melee/baton/telescopic(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/storage/medkit/frontier/stocked(src)
