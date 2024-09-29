@@ -5355,7 +5355,6 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -6301,6 +6300,7 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/random/directional/west,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
