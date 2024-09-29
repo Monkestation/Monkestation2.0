@@ -54,7 +54,7 @@
 
 /obj/item/toy/plush/admin/andrea
 	name = "andrea"
-	desc = "Best combat medic around.. if you're legs are blown off and you see this fellah comming around- you're lucky."
+	desc = "Best combat medic around.. if your legs are blown off and you see this fellah comming around- you're lucky."
 	icon_state = "andrea"
 /datum/loadout_item/toys/andrea
 	name = "Andrea Plush"
@@ -186,7 +186,7 @@
 
 /obj/item/toy/plush/admin/amunsethep
 	name = "amun set hep"
-	desc = "SAND CURRSSEEE BE UPON YOU!!!"
+	desc = "CURSE OF THE SANDS BE UPON YOU!!!"
 	icon_state = "amunsethep"
 /datum/loadout_item/toys/amunsethep
 	name = "Amun Set Hep Plush"
@@ -198,7 +198,7 @@
 
 /obj/item/toy/plush/admin/tendsthefire
 	name = "tends-the-fire"
-	desc = "It's Tends-The-Fire!"
+	desc = "It's Tends-The-Fire!, what a lovable little lizard!"
 	icon_state = "tendsthefire"
 /datum/loadout_item/toys/tendsthefire
 	name = "Tends-The-Fire Plush"
@@ -246,7 +246,7 @@
 
 /obj/item/toy/plush/admin/veth
 	name = "veth"
-	desc = "It's Veth!"
+	desc = "It's Veth! Suprisingly not upside down!"
 	icon_state = "veth"
 /datum/loadout_item/toys/veth
 	name = "Veth Plush"
