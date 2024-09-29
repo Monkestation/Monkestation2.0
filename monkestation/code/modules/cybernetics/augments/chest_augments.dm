@@ -556,12 +556,20 @@
 
 	return TRUE
 
+/datum/bodypart_overlay/simple/dualwield
+	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
+	icon_state = "ccms_overlay"
+	layers = EXTERNAL_ADJACENT
+
 /obj/item/organ/internal/cyberimp/chest/dualwield
 	name = "C.C.M.S implant"
 	desc = "Short for Complementary Combat Maneuvering System, it processes spinal nerve signals and enacts forced complementary maneuvers on the opposite side of the user's body when they attack. In layman's terms, it lets you dual wield."
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "ccms"
-	//encode_info = AUGMENT_SYNDICATE_LEVEL
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+
+	visual_implant = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield
 
 /obj/item/organ/internal/cyberimp/chest/dualwield/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -613,10 +621,15 @@
 /obj/item/organ/internal/cyberimp/chest/dualwield/proc/handle_side_effects(obj/item/item, mob/target)
 	return FALSE // Returning true means we misfired, i.e. failed to dual wield even though it should have triggered under normal circumstances.
 
+/datum/bodypart_overlay/simple/dualwield/refurbished
+	icon_state = "ccms_overlay_refurbished"
+
 /obj/item/organ/internal/cyberimp/chest/dualwield/refurbished
 	name = "refurbished C.C.M.S implant"
 	desc = "A refurbished dual wielding implant. It looks old and the nerve filaments have degraded, but it's still functional."
 	icon_state = "ccms_refurbished"
+
+	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield/refurbished
 
 /obj/item/organ/internal/cyberimp/chest/dualwield/refurbished/handle_side_effects(obj/item/item, mob/target)
 	if(prob(20)) // Low probability for it to not work at all.
@@ -626,7 +639,7 @@
 		)
 		return TRUE // Cancels the complementary attack.
 
-	if(prob(30)) // Higher probability for it to cause some damage, but still work.
+	if(prob(30)) // And if it does work, it might cause some damage.
 		owner.visible_message(
 			message = span_warning("[owner]'s arm spazzes out!"),
 			self_message = span_danger("Your arm spazzes out!")
