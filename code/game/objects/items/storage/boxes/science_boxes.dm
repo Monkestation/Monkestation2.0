@@ -32,11 +32,11 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-obj/item/storage/box/nanitecontrol
+/obj/item/storage/box/nanitecontrol
 	name = "Nanite Controller Box"
 	illustration = "disk_kit"
 
-obj/item/storage/box/nanitecontrol/PopulateContents()
+/obj/item/storage/box/nanitecontrol/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/nanite_remote = 3,
 		/obj/item/nanite_scanner = 3,
