@@ -39,7 +39,7 @@ obj/item/storage/box/nanitecontrol
 obj/item/storage/box/nanitecontrol/PopulateContents()
 	/obj/item/nanite_remote = 3,
 	/obj/item/nanite_scanner = 3,
-	/obj/item/nanite_injector = 1, //Its been legal and known about on blueshift during its the maps entire existance, give it some love elsewhere.
+	// /obj/item/nanite_injector = 1, //coded out as its been on blueshift and noones had issues with it but there probably should be a discussion before added everywhere.
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
