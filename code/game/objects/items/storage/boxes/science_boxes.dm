@@ -32,6 +32,15 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
+obj/item/storage/box/nanitecontrol
+	name = "Nanite Controller Box"
+	illustration = "disk_kit"
+
+obj/item/storage/box/nanitecontrol/PopulateContents()
+	/obj/item/nanite_remote = 3,
+	/obj/item/nanite_scanner = 3,
+	/obj/item/nanite_injector = 1, //Its been legal and known about on blueshift during its the maps entire existance, give it some love elsewhere.
+
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
