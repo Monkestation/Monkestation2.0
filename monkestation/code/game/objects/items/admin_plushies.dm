@@ -15,7 +15,7 @@
 		desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
 	else
 		desc = "[desc]" + " " + "(A member of our beloved admin team)"
-		
+
 /obj/item/toy/plush/admin/ben_mothman
 	name = "ben mothman"
 	desc = "HAH this guy is short! Laugh at him.. this is an order!"
