@@ -40,7 +40,8 @@ obj/item/storage/box/nanitecontrol/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/nanite_remote = 3,
 		/obj/item/nanite_scanner = 3,
-		// /obj/item/nanite_injector = 1, //coded out as its been on blueshift and noones had issues with it but there probably should be a discussion before added everywhere.
+		// /obj/item/nanite_injector = 1,
+		//coded out as its been on blueshift and noones had issues with it but there probably should be a discussion before added everywhere.
 	)
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
