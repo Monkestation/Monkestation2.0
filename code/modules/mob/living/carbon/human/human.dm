@@ -1078,6 +1078,10 @@
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
 
+/mob/living/carbon/human/species/tundra
+	race = /datum/species/tundra
+
+
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush
 
