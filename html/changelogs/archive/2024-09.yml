@@ -595,6 +595,12 @@
   Absolucy:
   - bugfix: Fixed malkavian bloodsuckers not getting an objective when another bloodsucker
       breaks the masquerade.
+  - bugfix: Fixed some logic relating to antag selection (roundstart, midround, and
+      ghost roles), hopefully reducing hard deletes and potential issues.
+  Gw0sty:
+  - bugfix: Fix Delta's hydroponics railings to be on a lower layer than the machines
+  - rscadd: Added spawners for Science security officers, Research Directors, robotists,
+      and scientists on Tram Station.
   KnigTheThrasher:
   - rscadd: Added layer adapters to atmos
   - bugfix: Added cmo spawner to kilo
@@ -609,3 +615,26 @@
       watch it explode bigger and bettert than before
   Wisemonster:
   - balance: Added a telescopic baton to the blueshield's locker
+2024-09-28:
+  Absolucy:
+  - server: Profiler logs now sort by overtime and have a proper timestamp in the
+      filename.
+  Absolucy, Kocma-san:
+  - bugfix: Fixed lights stopping emitting light in some situations.
+  RikuTheKiller:
+  - balance: Blood Brothers can now convert members of security if their mindshields
+      are removed.
+  - balance: IPCs are no longer immune to being converted by revolutionaries and blood
+      brothers.
+  - qol: You now get a balloon alert if you get a second flash as a Blood Brother.
+2024-09-29:
+  CannibalHunter:
+  - rscadd: Added several more admin plushies to the monkeshop
+  ThePooba:
+  - rscadd: monkeystorm
+  - bugfix: loneop less
+2024-09-30:
+  Gw0sty:
+  - bugfix: Removed the second windoor on delta botany.
+  Shoddd:
+  - balance: syndicate bible can now provide anti-magic from pocket and belt
