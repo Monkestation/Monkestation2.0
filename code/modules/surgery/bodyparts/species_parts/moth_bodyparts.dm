@@ -50,3 +50,57 @@
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
+
+// Parts used by tundra moths
+/obj/item/bodypart/head/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_head"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
+
+/obj/item/bodypart/chest/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_chest_m"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	is_dimorphic = TRUE
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_l_arm"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	should_draw_greyscale = FALSE
+	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/arm/right/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_r_arm"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	should_draw_greyscale = FALSE
+	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/leg/left/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_l_leg"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/right/tundramoth
+	icon = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	icon_state = "tundramoth_r_leg"
+	icon_static = 'icons/mob/species/moth/tundrabodyparts.dmi'
+	limb_id = SPECIES_TUNDRA
+	should_draw_greyscale = FALSE
