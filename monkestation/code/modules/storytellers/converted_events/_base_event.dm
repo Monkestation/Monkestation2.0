@@ -248,7 +248,7 @@
 
 	while(length(weighted_candidates) && length(candidates) < antag_count) //both of these pick_n_take from weighted_candidates so this should be fine
 		if(prompted_picking)
-			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = SSgamemode.pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
 			if(QDELETED(picked_client))
 				continue
@@ -267,7 +267,7 @@
 					show_candidate_amount = FALSE,
 				)
 		else
-			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = SSgamemode.pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
 			if(QDELETED(picked_client))
 				continue
@@ -281,7 +281,7 @@
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
-		var/mob/candidate = pick_n_take(candidates)
+		var/mob/candidate = SSgamemode.pick_n_take(candidates)
 		log_storyteller("Antag event spawned mob: [candidate], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
 
 		candidate.client?.prefs.reset_antag_rep()
@@ -297,7 +297,7 @@
 	setup = TRUE
 	control.generate_image(picked_mobs)
 	if(LAZYLEN(extra_spawned_events))
-		var/event_type = pick_weight(extra_spawned_events)
+		var/event_type = SSgamemode.rng.pick_weighted(extra_spawned_events)
 		if(!event_type)
 			return
 		var/datum/round_event_control/triggered_event = locate(event_type) in SSgamemode.control
@@ -314,7 +314,7 @@
 /datum/round_event/antagonist/solo/proc/spawn_extra_events()
 	if(!LAZYLEN(extra_spawned_events))
 		return
-	var/datum/round_event_control/event = pick_weight(extra_spawned_events)
+	var/datum/round_event_control/event = SSgamemode.rng.pick_weighted(extra_spawned_events)
 	event?.run_event(random = FALSE, event_cause = "storyteller")
 
 /datum/round_event/antagonist/solo/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob, qdel_old_mob = TRUE)
@@ -367,7 +367,7 @@
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 	var/selected_count = 0
 	while(length(weighted_candidates) && selected_count < antag_count)
-		var/candidate_ckey = pick_n_take_weighted(weighted_candidates)
+		var/candidate_ckey = SSgamemode.pick_n_take_weighted(weighted_candidates)
 		var/client/candidate_client = GLOB.directory[candidate_ckey]
 		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
 			continue
