@@ -20192,13 +20192,6 @@
 	},
 /turf/open/water,
 /area/centcom/central_command_areas/admin)
-"fnh" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/herringbone,
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/admin)
 "foe" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/wood,
@@ -21076,7 +21069,6 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark/herringbone,
-/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "jth" = (
 /obj/machinery/light/directional/east,
@@ -21792,7 +21784,6 @@
 /area/centcom/central_command_areas/admin)
 "nVx" = (
 /obj/effect/turf_decal/siding/dark,
-/turf/open/floor/iron/dark/herringbone,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
 "nVD" = (
@@ -49100,7 +49091,7 @@ aHw
 aHw
 aHw
 aHw
-fnh
+aHw
 jsm
 aOn
 aaa
@@ -49352,7 +49343,7 @@ quF
 quF
 quF
 iad
-oeI
+quF
 quF
 quF
 quF
@@ -49609,7 +49600,7 @@ quF
 quF
 quF
 quF
-oeI
+quF
 quF
 quF
 quF
@@ -49866,7 +49857,7 @@ quF
 quF
 quF
 quF
-oeI
+quF
 quF
 quF
 quF
@@ -50382,10 +50373,10 @@ quF
 quF
 quF
 quF
+quF
+quF
 oeI
-oeI
-oeI
-oeI
+quF
 nVx
 aOn
 aaa
@@ -50638,11 +50629,11 @@ quF
 quF
 iad
 quF
-oeI
-oeI
-oeI
-oeI
-nUX
+quF
+quF
+quF
+quF
+iad
 nVx
 aOn
 aaa
@@ -50895,7 +50886,7 @@ quF
 quF
 quF
 quF
-oeI
+quF
 quF
 quF
 quF
@@ -51152,7 +51143,7 @@ quF
 quF
 quF
 quF
-oeI
+quF
 quF
 quF
 quF
@@ -51407,9 +51398,9 @@ quF
 quF
 quF
 quF
+quF
 oeI
-oeI
-oeI
+quF
 quF
 quF
 quF
@@ -51666,7 +51657,7 @@ quF
 quF
 quF
 quF
-oeI
+quF
 quF
 quF
 quF
@@ -51917,13 +51908,13 @@ aaO
 aqx
 aqx
 ioO
+quF
+quF
+quF
+quF
+iad
 oeI
-oeI
-oeI
-oeI
-nUX
-oeI
-oeI
+quF
 oeI
 oeI
 oeI
