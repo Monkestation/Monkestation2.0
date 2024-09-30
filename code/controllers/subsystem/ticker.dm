@@ -81,6 +81,9 @@ SUBSYSTEM_DEF(ticker)
 	/// (monkestation addition) The station integrity at roundend.
 	var/roundend_station_integrity
 
+	/// (monkestation addition) Length of the roundend sound, in deciseconds.
+	var/round_end_sound_length = 0
+
 /datum/controller/subsystem/ticker/Initialize()
 	// monkestation start: fix-lobby-music
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
@@ -594,6 +597,7 @@ SUBSYSTEM_DEF(ticker)
 	// login_music = SSticker.login_music
 	//monkestation removal end
 	round_end_sound = SSticker.round_end_sound
+	round_end_sound_length = SSticker.round_end_sound_length // monkestation edit: aneri
 
 	minds = SSticker.minds
 
@@ -736,6 +740,7 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	round_end_sound_sent = FALSE
 	round_end_sound = fcopy_rsc(the_sound)
+	round_end_sound_length = null // monkestation edit: aneri
 	for(var/thing in GLOB.clients)
 		var/client/C = thing
 		if (!C)
@@ -785,11 +790,17 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = choose_round_end_song()
+		round_end_sound_length = aneri_audio_length(round_end_sound) // monkestation edit: aneri
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
 			SEND_SOUND(M.client, end_of_round_sound_ref)
+
+	// monkestation start: aneri
+	if(round_end_sound_length)
+		sleep(min(round_end_sound_length, 10 SECONDS))
+	// monkestation end
 
 	// monkestation removal start: fix-lobby-music
 	// text2file(login_music, "data/last_round_lobby_music.txt")

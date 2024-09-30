@@ -5,15 +5,17 @@
 
 /datum/controller/subsystem/persistence/proc/load_delamination_counter()
 	if (fexists(DELAMINATION_HIGHSCORE_FILEPATH))
-		delam_highscore = text2num(file2text(DELAMINATION_HIGHSCORE_FILEPATH))
+		delam_highscore = text2num(aneri_file_read(DELAMINATION_HIGHSCORE_FILEPATH)) // monkestation edit: aneri
 	for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
 		sign.update_delam_count(rounds_since_engine_exploded, delam_highscore)
 
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
-	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
+	// monkestation start: aneri
+	aneri_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
 	if((rounds_since_engine_exploded + 1) > delam_highscore)
-		rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_HIGHSCORE_FILEPATH)
+		aneri_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_HIGHSCORE_FILEPATH)
+	// monkestation end
 
 
 /datum/controller/subsystem/persistence/proc/load_tram_counter()
@@ -22,7 +24,7 @@
 	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
 
 /datum/controller/subsystem/persistence/proc/save_tram_counter()
-		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
+	aneri_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH) // monkestation edit: aneri
 
 #undef DELAMINATION_COUNT_FILEPATH
 #undef DELAMINATION_HIGHSCORE_FILEPATH

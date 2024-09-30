@@ -93,6 +93,7 @@
 	else
 		return FALSE
 
+
 /**
  * Convert random parts of a passed in message to stars
  *
@@ -100,10 +101,12 @@
  * * probability - probability any character gets changed
  *
  * This proc is dangerously laggy, avoid it or die
+ * (monkestation edit: no it's not, we offloaded this to aneri)
  */
 /proc/stars(phrase, probability = 25)
 	if(probability <= 0)
 		return phrase
+	/* monkestation edit: aneri time!
 	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
@@ -115,6 +118,8 @@
 		else
 			. += "*"
 	return sanitize(.)
+	monkestation end */
+	return sanitize(aneri_rand_replace_chars_prob(html_decode(phrase), "*", probability, TRUE))
 
 /**
  * Turn text into complete gibberish!

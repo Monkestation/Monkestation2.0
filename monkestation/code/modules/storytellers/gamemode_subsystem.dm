@@ -103,6 +103,8 @@ SUBSYSTEM_DEF(gamemode)
 		)
 
 
+	/// The RNG used for the storyteller/gamemode
+	var/datum/rng/rng
 
 	/// Associative list of control events by their track category. Compiled in Init
 	var/list/event_pools = list()
@@ -159,6 +161,8 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/triggered_round_events = list()
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
+	rng = new
+
 	// Populate event pools
 	for(var/track in event_tracks)
 		event_pools[track] = list()
@@ -192,7 +196,6 @@ SUBSYSTEM_DEF(gamemode)
 		flags |= SS_NO_FIRE
 		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
-
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(!resumed)
@@ -372,7 +375,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/calc_value = base_amt + (gain_amt * ready_players)
 		calc_value *= roundstart_point_multipliers[track]
 		calc_value *= storyteller.starting_point_multipliers[track]
-		calc_value *= (rand(100 - storyteller.roundstart_points_variance,100 + storyteller.roundstart_points_variance)/100)
+		calc_value *= (rng.ranged_uint(100 - storyteller.roundstart_points_variance, 100 + storyteller.roundstart_points_variance) / 100)
 		event_track_points[track] = round(calc_value)
 
 	/// If the storyteller guarantees an antagonist roll, add points to make it so.
@@ -727,7 +730,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
 	while(possible.len && goal_weights < 1) // station goal budget is 1
-		var/datum/station_goal/picked = pick_n_take(possible)
+		var/datum/station_goal/picked = src.pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		GLOB.station_goals += new picked
 
@@ -811,7 +814,7 @@ SUBSYSTEM_DEF(gamemode)
 		return
 	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
 		secret_storyteller = TRUE
-		selected_storyteller = pick_weight(get_valid_storytellers(TRUE))
+		selected_storyteller = rng.pick_weighted(get_valid_storytellers(TRUE))
 		return
 	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE)
 
@@ -827,7 +830,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/added_storytellers = 0
 	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
 		added_storytellers++
-		var/picked_storyteller = pick_weight(pick_from)
+		var/picked_storyteller = rng.pick_weighted(pick_from)
 		final_choices[picked_storyteller] = 0
 		pick_from -= picked_storyteller
 	return final_choices
@@ -1208,6 +1211,22 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			listed.occurrences++
 			listed.occurrences++
+
+/// Pick a random element from the list and remove it from the list.
+/// The same as the global proc, except it uses the SSgamemode rng.
+/datum/controller/subsystem/gamemode/proc/pick_n_take_weighted(list/list_to_pick)
+	RETURN_TYPE(list_to_pick[_].type)
+	if(length(list_to_pick))
+		. = rng.pick_weighted(list_to_pick)
+		list_to_pick -= .
+
+/// Pick a random element from the list and remove it from the list.
+/// The same as the global proc, except it uses the SSgamemode rng.
+/datum/controller/subsystem/gamemode/proc/pick_n_take(list/list_to_pick)
+	RETURN_TYPE(list_to_pick[_].type)
+	if(length(list_to_pick))
+		. = rng.pick_from(list_to_pick)
+		list_to_pick -= .
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
