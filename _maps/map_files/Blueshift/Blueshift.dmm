@@ -1996,10 +1996,6 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
-/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
