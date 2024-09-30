@@ -12,7 +12,7 @@
 //also boxed emergency space suits cus why not
 /obj/item/storage/box/emergency_eva
 	name = "boxed space suit and helmet"
-	desc = "A cheap, flimsy metal box used to hold an emergency spacesuit. There seems to be a warning label in fine print..."
+	desc = "A cheap, flimsy metal box used to hold an emergency spacesuit."
 	icon_state = "internals"
 	illustration = "writing"
 	resistance_flags = FIRE_PROOF
@@ -22,17 +22,10 @@
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
 	flags_1 = CONDUCT_1
 
-/obj/item/storage/box/emergency_eva/examine_more(mob/user)
-	. = ..()
-	. += span_notice("WARNING: OXYGEN MAY NOT BE INCLUDED")
-
 /obj/item/storage/box/emergency_eva/PopulateContents()
 	new /obj/item/clothing/suit/space/fragile(src)
 	new /obj/item/clothing/head/helmet/space/fragile(src)
-	if(prob(50))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/emergency_oxygen/empty(src) //tough luck
+	new /obj/item/tank/internals/emergency_oxygen(src)
 
 /obj/item/storage/box/emergency_eva/Initialize(mapload)
 	. = ..()
