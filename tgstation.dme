@@ -7300,7 +7300,6 @@
 #include "monkestation\code\modules\mob\living\basic\pets\cat.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\crab.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\dog_subtypes.dm"
-#include "monkestation\code\modules\mob\living\basic\pets\farm_animals.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\fox.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\hamster.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\lizard.dm"
