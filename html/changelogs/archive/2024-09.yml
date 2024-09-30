@@ -627,3 +627,14 @@
   - balance: IPCs are no longer immune to being converted by revolutionaries and blood
       brothers.
   - qol: You now get a balloon alert if you get a second flash as a Blood Brother.
+2024-09-29:
+  CannibalHunter:
+  - rscadd: Added several more admin plushies to the monkeshop
+  ThePooba:
+  - rscadd: monkeystorm
+  - bugfix: loneop less
+2024-09-30:
+  Gw0sty:
+  - bugfix: Removed the second windoor on delta botany.
+  Shoddd:
+  - balance: syndicate bible can now provide anti-magic from pocket and belt
