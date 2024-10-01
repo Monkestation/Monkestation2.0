@@ -123,6 +123,8 @@
 	name = "\improper Tundra Moth"
 	plural_form = "Tundra Moths"
 	id = SPECIES_TUNDRA
+	coldmod = 0.7
+	heatmod = 1.3
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,
