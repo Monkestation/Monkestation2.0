@@ -23236,11 +23236,10 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "vDH" = (
-/obj/machinery/door/airlock/security/glass{
+/turf/open/floor/carpet,
+/turf/closed/indestructible/fakedoor/glass_airlock{
 	name = "SuperJail Cell"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/carpet,
 /area/centcom/central_command_areas/prison)
 "vEF" = (
 /obj/structure/fence,
