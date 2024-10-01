@@ -23239,7 +23239,6 @@
 /turf/closed/indestructible/fakedoor/glass_airlock{
 	name = "SuperJail Cell"
 	},
-/turf/open/floor/carpet,
 /area/centcom/central_command_areas/prison)
 "vEF" = (
 /obj/structure/fence,
