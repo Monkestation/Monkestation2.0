@@ -6014,6 +6014,7 @@
 #include "monkestation\code\modules\aesthetics\objects\windows.dm"
 #include "monkestation\code\modules\aesthetics\subsystem\coloring.dm"
 #include "monkestation\code\modules\aesthetics\walls\iron.dm"
+#include "monkestation\code\modules\aesthetics\walls\mineral_walls.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_datum.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_hud.dm"
 #include "monkestation\code\modules\antagonists\abductor\abductor.dm"
