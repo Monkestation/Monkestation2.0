@@ -244,3 +244,5 @@ config/dbconfig.txt
 
 # Running OpenDream locally
 tgstation.json
+_maps/map_files/debug/wallsanddoorstest.dmm
+_maps/wallsanddoorstest.json
