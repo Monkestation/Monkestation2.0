@@ -53,7 +53,9 @@
 
 // Parts used by tundra moths
 /obj/item/bodypart/head/tundramoth
+	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "tundramoth_head"
+	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
