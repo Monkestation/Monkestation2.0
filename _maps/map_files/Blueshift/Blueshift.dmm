@@ -93,8 +93,8 @@
 	dir = 9
 	},
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/botanical_lexicon,
-/obj/item/chicken_book,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/common/night_club/back_stage)
 "abG" = (
@@ -1989,16 +1989,13 @@
 /area/station/hallway/primary/central)
 "auS" = (
 /obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -3959,6 +3956,10 @@
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
 /obj/effect/turf_decal/trimline/green/filled/end{
 	dir = 4
+	},
+/obj/machinery/smartfridge/disks{
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -6306,8 +6307,18 @@
 /area/station/medical/medbay/lobby)
 "bmD" = (
 /obj/structure/table/glass,
-/obj/item/storage/bag/plants/portaseeder,
 /obj/machinery/light/directional/east,
+/obj/item/seeds/grape{
+	pixel_x = -6
+	},
+/obj/item/seeds/lime{
+	pixel_x = 6
+	},
+/obj/item/seeds/watermelon,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/banana,
+/obj/item/storage/bag/plants/portaseeder,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -8392,7 +8403,6 @@
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "bFO" = (
@@ -13469,7 +13479,7 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/light/directional/west,
 /obj/structure/disposalpipe/segment,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cCM" = (
@@ -16920,24 +16930,11 @@
 /area/station/commons/dorms/room8)
 "djt" = (
 /obj/structure/table,
-/obj/item/surgical_drapes{
-	pixel_x = 7;
-	pixel_y = -2
-	},
-/obj/item/circular_saw{
-	pixel_y = 12
-	},
-/obj/item/healthanalyzer{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/scalpel{
-	pixel_y = 19
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/science/robotics)
 "djv" = (
@@ -25982,6 +25979,10 @@
 	dir = 4
 	},
 /area/station/security/prison/safe)
+"eWk" = (
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics)
 "eWl" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -28104,18 +28105,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "fqR" = (
-/obj/structure/table/glass,
-/obj/item/seeds/lime{
-	pixel_x = 6
-	},
-/obj/item/seeds/grape{
-	pixel_x = -6
-	},
-/obj/item/seeds/watermelon,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/banana,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -28434,7 +28425,7 @@
 "fuX" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "fuY" = (
@@ -32457,14 +32448,15 @@
 /area/station/common/night_club/changing_room)
 "gme" = (
 /obj/structure/table,
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/wrench,
-/obj/item/crowbar,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics/lab)
@@ -41549,7 +41541,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "hZP" = (
@@ -65653,8 +65645,8 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
-/obj/item/botanical_lexicon,
-/obj/item/chicken_book,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/common/night_club/back_stage)
 "mKX" = (
@@ -72671,7 +72663,7 @@
 /area/station/security/checkpoint/supply)
 "ofS" = (
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ofT" = (
@@ -78596,8 +78588,8 @@
 	dir = 10
 	},
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/botanical_lexicon,
-/obj/item/chicken_book,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/common/night_club/back_stage)
 "pmq" = (
@@ -80737,7 +80729,7 @@
 /area/station/maintenance/starboard/fore)
 "pHX" = (
 /obj/effect/turf_decal/bot_red,
-/obj/structure/frame/machine,
+/obj/machinery/autolathe,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics/lab)
 "pHY" = (
@@ -83799,8 +83791,8 @@
 "qoo" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/botanical_lexicon,
-/obj/item/chicken_book,
+/obj/item/book/manual/botanical_lexicon,
+/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/common/night_club/back_stage)
 "qow" = (
@@ -84644,10 +84636,10 @@
 	name = "hallway camera"
 	},
 /obj/machinery/feed_machine,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
+/obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -99783,8 +99775,10 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/dorms/room3)
 "tpV" = (
-/obj/machinery/smartfridge/organ,
 /obj/machinery/firealarm/directional/north,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "tqc" = (
@@ -109136,6 +109130,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
+"vfq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/medipen_refiller,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "vfB" = (
 /obj/structure/lattice,
 /turf/open/openspace/airless,
@@ -119735,21 +119734,16 @@
 /area/station/cargo/warehouse)
 "xej" = (
 /obj/structure/table,
-/obj/item/retractor,
-/obj/item/hemostat{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/item/cautery{
-	pixel_x = -5;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 14;
-	pixel_y = -1
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/healthanalyzer{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics)
@@ -219666,7 +219660,7 @@ kky
 aXQ
 rlz
 sXt
-hbU
+eWk
 vXP
 bDH
 uor
@@ -224783,7 +224777,7 @@ ksY
 vNX
 oYi
 vNX
-bst
+vfq
 bql
 exf
 frF

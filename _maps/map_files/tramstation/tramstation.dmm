@@ -2526,6 +2526,11 @@
 "ajF" = (
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"ajG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "ajI" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -6708,6 +6713,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"bax" = (
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/glass/reinforced,
+/area/station/science/research)
 "bay" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7863,6 +7872,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "buQ" = (
@@ -8648,6 +8658,10 @@
 	},
 /obj/structure/table,
 /obj/item/stack/sheet/cardboard,
+/obj/item/paper{
+	default_raw_text = "buy more donk pockets";
+	name = "To-Do List"
+	},
 /obj/item/food/donkpocket/pizza,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medical - Virology Break Room";
@@ -14776,11 +14790,14 @@
 /area/station/security/checkpoint/supply)
 "dGd" = (
 /obj/structure/table/glass,
-/obj/item/chicken_feed,
-/obj/item/chicken_feed,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "dGh" = (
@@ -16035,6 +16052,7 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/item/radio/intercom/directional/south,
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "eal" = (
@@ -17338,11 +17356,6 @@
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -26974,6 +26987,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "hFJ" = (
@@ -29737,6 +29751,7 @@
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron,
 /area/station/science/lower)
 "iyi" = (
@@ -33425,6 +33440,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"jFW" = (
+/obj/effect/landmark/start/roboticist,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "jGa" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -34686,6 +34705,8 @@
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/chicken_feed,
+/obj/item/chicken_feed,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "kaD" = (
@@ -35771,6 +35792,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"ksh" = (
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/iron/white,
+/area/station/science/ordnance)
 "ksq" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -37288,7 +37313,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/closet/crate/hydroponics,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /obj/item/seeds/tree,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/seeds/pumpkin,
@@ -41615,10 +41640,7 @@
 	},
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
-/obj/item/paper{
-	default_raw_text = "buy more donk pockets";
-	name = "To-Do List"
-	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "miE" = (
@@ -43203,11 +43225,6 @@
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
 /obj/machinery/plantgenes,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "mJh" = (
@@ -43617,6 +43634,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "mQa" = (
@@ -43907,6 +43925,7 @@
 "mWe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "mWj" = (
@@ -46231,6 +46250,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "nHW" = (
@@ -47704,6 +47724,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "ogp" = (
@@ -49280,6 +49301,8 @@
 /obj/machinery/light/directional/north,
 /obj/structure/sign/clock/directional/north,
 /obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "oIo" = (
@@ -56384,6 +56407,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/research_director,
 /turf/open/floor/glass/reinforced,
 /area/station/command/heads_quarters/rd)
 "qUF" = (
@@ -62792,6 +62816,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "sVV" = (
@@ -67840,6 +67865,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/machinery/medipen_refiller,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "uAC" = (
@@ -75758,12 +75784,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/table/glass,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "wUL" = (
@@ -77538,6 +77559,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "xBD" = (
@@ -78995,6 +79017,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "ybX" = (
@@ -131563,7 +131586,7 @@ lkK
 aeg
 gPB
 qOo
-qOo
+ksh
 jGx
 aej
 oAn
@@ -132847,7 +132870,7 @@ dWM
 frV
 frV
 rsQ
-rmr
+ajG
 xLN
 tho
 sQZ
@@ -187577,7 +187600,7 @@ dzu
 doK
 uJH
 uJH
-uJH
+jFW
 ukS
 soq
 rsL
@@ -191689,7 +191712,7 @@ cli
 oPf
 jRy
 odC
-dzx
+bax
 tqA
 rBb
 rrL
