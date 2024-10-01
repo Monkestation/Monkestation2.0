@@ -5486,10 +5486,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/fax{
-	fax_name = "Cargo Office";
-	name = "Central Command Logistics Office Fax Machine"
-	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "aoN" = (
@@ -20171,10 +20167,6 @@
 /area/centcom/central_command_areas/admin)
 "flN" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/fax{
-	name = "NT Helpdesk Fax Machine";
-	fax_name = "NT Helpdesk"
-	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
