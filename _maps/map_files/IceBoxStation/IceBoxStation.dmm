@@ -1372,11 +1372,8 @@
 /area/station/hallway/primary/port)
 "awK" = (
 /obj/structure/table,
-/obj/item/hemostat,
-/obj/item/cautery{
-	pixel_x = 4
-	},
 /obj/item/radio/intercom/directional/north,
+/obj/item/razor,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "axc" = (
@@ -1684,7 +1681,7 @@
 	spawn_all_loot = 1;
 	spawn_random_offset = 1
 	},
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "aCA" = (
@@ -5918,6 +5915,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pathology)
 "bPP" = (
@@ -19222,6 +19220,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/table/glass,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gbH" = (
@@ -27112,11 +27111,8 @@
 /area/station/hallway/primary/central)
 "iII" = (
 /obj/structure/table,
-/obj/item/circular_saw,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
 /obj/machinery/light/directional/north,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "iIW" = (
@@ -30879,11 +30875,6 @@
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -33063,7 +33054,7 @@
 /area/mine/laborcamp)
 "kBT" = (
 /obj/structure/table,
-/obj/item/retractor,
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "kBV" = (
@@ -45145,17 +45136,13 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
+/obj/item/watertank,
 /obj/item/cultivator,
 /obj/item/plant_analyzer,
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "opu" = (
@@ -61088,9 +61075,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tCs" = (
-/obj/structure/table,
-/obj/item/book/manual/hydroponics_pod_people,
-/obj/item/watertank,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tCx" = (
@@ -68000,8 +67985,6 @@
 "vPE" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
-/obj/item/surgical_drapes,
-/obj/item/razor,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -73857,6 +73840,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/medipen_refiller,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "xGp" = (

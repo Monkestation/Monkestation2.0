@@ -102,6 +102,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
 #define isfloran(A) (is_species(A, /datum/species/floran)) //Monkestation Addition
 #define isarachnid(A) (is_species(A, /datum/species/arachnid)) //Monkestation Addition
+#define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
 
 
 //More carbon mobs
@@ -286,7 +287,7 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
-)))
+	/obj/item/infuser_book)))
 
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))
