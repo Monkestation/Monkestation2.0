@@ -93,7 +93,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/cbrn
 	name = "CBRN hardsuit helmet"
 	desc = "A special helmet designed for CBRN operatives. Has radiation shielding."
-	icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
+	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
 	icon_state = "CBRN_helmet"
 	hardsuit_type = "CBRN"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
@@ -110,8 +111,9 @@
 /obj/item/clothing/suit/space/hardsuit/cbrn
 	name = "CBRN hardsuit"
 	desc = "A special hardsuit designed for CBRN operatives. Has radiation shielding."
-	icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
 	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/hardsuit/CBRN-digi.dmi'
+	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
 	icon_state = "CBRN"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
@@ -135,10 +137,9 @@
 	light_outer_range = 5
 	light_power = 1
 	light_on = FALSE
-	light_color = LIGHT_COLOR_BROWN
 	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit,/datum/action/item_action/toggle_suit_flashlight)
-	slowdown = 2
-	strip_delay = 70
+	slowdown = 0.25
+	strip_delay = 60
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut/Initialize(mapload)
 	. = ..()
