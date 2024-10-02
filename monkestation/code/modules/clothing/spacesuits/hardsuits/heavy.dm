@@ -93,7 +93,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/cbrn
 	name = "CBRN hardsuit helmet"
 	desc = "A special helmet designed for CBRN operatives. Has radiation shielding."
-	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
+	icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
 	icon_state = "CBRN_helmet"
 	hardsuit_type = "CBRN"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
@@ -101,7 +101,7 @@
 	armor_type = /datum/armor/hardsuit/cbrn
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | HEADINTERNALS
 	actions_types = null
-	worn_icon_snouted = 'monkestation/icons/obj/clothing/hardsuits/CBRN-digi.dmi'
+	worn_icon_snouted = 'monkestation/icons/mob/clothing/hardsuit/CBRN-digi.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/cbrn/Initialize(mapload)
 	. = ..()
@@ -110,8 +110,8 @@
 /obj/item/clothing/suit/space/hardsuit/cbrn
 	name = "CBRN hardsuit"
 	desc = "A special hardsuit designed for CBRN operatives. Has radiation shielding."
-	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
-	worn_icon_digitigrade = 'monkestation/icons/obj/clothing/hardsuits/CBRN-digi.dmi'
+	icon = 'monkestation/icons/mob/clothing/hardsuit/CBRN.dmi'
+	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/hardsuit/CBRN-digi.dmi'
 	icon_state = "CBRN"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
