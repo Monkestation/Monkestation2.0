@@ -1,0 +1,10 @@
+{
+	"greyopera_gloves": [
+		{
+			"type": "icon_state",
+			"icon_state": "opera_gloves",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -52,3 +52,15 @@
 
 /datum/armor/surgeon
     bio = 100
+
+/obj/item/clothing/gloves/operagloves
+	name = "opera gloves"
+	desc = "Long, silky gloves made for the finest of events. Under the internal hem has 'VA' embroidered"
+	inhand_icon_state = null
+	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon_state = "opera_gloves"
+	greyscale_colors = "#FFFFFF"
+	greyscale_config = /datum/greyscale_config/opera_gloves
+	greyscale_config_worn = /datum/greyscale_config/opera_gloves_worn
+	flags_1 = IS_PLAYER_COLORABLE_1

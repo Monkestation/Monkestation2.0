@@ -168,6 +168,7 @@
 				/obj/item/clothing/suit/costume/cheongsam_blue = 1,
 				/obj/item/clothing/under/wonka = 1,
 				/obj/item/clothing/shoes/heels = 4, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/gloves/operagloves = 1,
 			),
 		),
 		list(
@@ -281,6 +282,7 @@
 		/obj/item/clothing/suit/costume/drfreeze_coat = 1,
 		/obj/item/clothing/under/costume/drfreeze = 1,
 		/obj/item/clothing/head/costume/drfreezehat = 1,
+		/obj/item/clothing/head/costume/minicrown = 1,
 	)
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = PAYCHECK_CREW * 0.8 //Default of 40.
