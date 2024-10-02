@@ -90,7 +90,7 @@
 
 // CBRN Hardsuit
 
-/obj/item/clothing/head/helmet/space/hardsuit/hazard
+/obj/item/clothing/head/helmet/space/hardsuit/cbrn
 	name = "CBRN hardsuit helmet"
 	desc = "A special helmet designed for CBRN operatives. Has radiation shielding."
 	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
@@ -98,16 +98,16 @@
 	hardsuit_type = "CBRN"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	armor_type = /datum/armor/hardsuit/hazard
+	armor_type = /datum/armor/hardsuit/cbrn
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | HEADINTERNALS
 	actions_types = null
 	worn_icon_snouted = 'monkestation/icons/obj/clothing/hardsuits/CBRN-digi.dmi'
 
-/obj/item/clothing/head/helmet/space/hardsuit/hazard/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/cbrn/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/space/hardsuit/hazard
+/obj/item/clothing/suit/space/hardsuit/cbrn
 	name = "CBRN hardsuit"
 	desc = "A special hardsuit designed for CBRN operatives. Has radiation shielding."
 	icon = 'monkestation/icons/obj/clothing/hardsuits/CBRN.dmi'
@@ -128,8 +128,8 @@
 		/obj/item/gun,
 		/obj/item/tank/jetpack/oxygen/captain
 	)
-	armor_type = /datum/armor/hardsuit/hazard
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/hazard
+	armor_type = /datum/armor/hardsuit/cbrn
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cbrn
 	cell = /obj/item/stock_parts/cell/super
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 5
@@ -144,10 +144,10 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/space/hardsuit/hazard
+/obj/item/clothing/suit/space/hardsuit/cbrn
 	var/on = FALSE
 
-/obj/item/clothing/suit/space/hardsuit/hazard/ui_action_click(mob/user, actiontype)
+/obj/item/clothing/suit/space/hardsuit/cbrn/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_suit_flashlight))
 		on = !on
 		if(on == FALSE)

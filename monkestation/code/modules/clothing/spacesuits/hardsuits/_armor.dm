@@ -52,7 +52,7 @@
 	acid = 100
 	bomb = 100
 
-/datum/armor/hardsuit/hazard
+/datum/armor/hardsuit/cbrn
 	melee = 50
 	bullet = 15
 	laser = 30
