@@ -410,7 +410,7 @@
 /obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
 	set_density(density_to_set)
-		if (!density)
+	if (!density)
 		update_appearance()
 		return
 	if(!target)
