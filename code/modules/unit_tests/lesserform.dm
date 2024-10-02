@@ -6,7 +6,7 @@
 	changeling.mind_initialize()
 	var/datum/mind/mind = changeling.mind
 	var/datum/antagonist/changeling/changeling_datum = mind.add_antag_datum(/datum/antagonist/changeling)
-	changeling_datum.adjust_chemicals(10000) // We don't care about how many chemicals they have
+	changeling_datum.adjust_chemicals(INFINITY) // We don't care about how many chemicals they have
 	var/datum/action/changeling/lesserform/transform_ability = new(changeling)
 	transform_ability.transform_instantly = TRUE
 	transform_ability.Grant(changeling)
