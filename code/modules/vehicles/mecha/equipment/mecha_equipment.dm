@@ -4,7 +4,7 @@
  */
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/mob/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
@@ -12,8 +12,14 @@
 	var/equipment_slot = MECHA_WEAPON
 	///Cooldown in ticks required between activations of the equipment
 	var/equip_cooldown = 0
-	///used for equipment that can be turned on/off, boolean
-	var/activated = TRUE
+	///Whether you can turn this module on/off with a button
+	var/can_be_toggled = FALSE
+	///Whether you can trigger this module with a button (activation only)
+	var/can_be_triggered = FALSE
+	///Whether the module is currently active
+	var/active = TRUE
+	///Label used in the ui next to the Activate/Enable/Disable buttons
+	var/active_label = "Status"
 	///Chassis power cell quantity used on activation
 	var/energy_drain = 0
 	///Reference to mecha that this equipment is currently attached to
@@ -31,15 +37,16 @@
 
 	///what equipment flags does this have
 	var/equipment_flags
-	var/movedelay = 0
+	/// The weight of this equipment. Adds 1 movement delay per 100 kg above the limit.
+	var/equip_weight = 0
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
-		detach(get_turf(src))
-		log_message("[src] is destroyed.", LOG_MECHA)
 		if(LAZYLEN(chassis.occupants))
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_danger("[src] is destroyed!")]")
 			playsound(chassis, destroy_sound, 50)
+		detach(get_turf(src))
+		log_message("[src] is destroyed.", LOG_MECHA)
 		chassis = null
 	return ..()
 
@@ -56,14 +63,17 @@
 
 /obj/item/mecha_parts/mecha_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("detach")
+			chassis.ui_selected_module_index = null
 			if(equipment_flags & NOT_ABLE_TO_REMOVE_FROM_MECHA) //monkestation edit
 				return //monkestation edit
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")
-			activated = !activated
+			set_active(!active)
 			return TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
@@ -75,7 +85,7 @@
 			return FALSE
 
 /**
- * Checks whether this mecha equipment can be activated
+ * Checks whether this mecha equipment can be active
  * Returns a bool
  * Arguments:
  * * target: atom we are activating/clicked on
@@ -85,7 +95,7 @@
 		return FALSE
 	if(!chassis)
 		return FALSE
-	if(!activated)
+	if(!active)
 		return FALSE
 	if(energy_drain && !chassis?.has_charge(energy_drain))
 		return FALSE
@@ -129,8 +139,8 @@
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
 	return chassis && (get_dir(chassis, target) & chassis.dir)
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE, mob/user)
-	return default_can_attach(M, attach_right, user)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE, mob/user)
+	return default_can_attach(mecha, attach_right, user)
 
 /obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
 	if(!(mech_flags & mech.mech_type))
@@ -165,21 +175,21 @@
 /obj/item/mecha_parts/mecha_equipment/proc/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	LAZYADD(M.flat_equipment, src)
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	LAZYADD(new_mecha.flat_equipment, src)
 	var/to_equip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
 			to_equip_slot = MECHA_R_ARM
 		else
 			to_equip_slot = MECHA_L_ARM
-	if(islist(M.equip_by_category[to_equip_slot]))
-		M.equip_by_category[to_equip_slot] += src
+	if(islist(new_mecha.equip_by_category[to_equip_slot]))
+		new_mecha.equip_by_category[to_equip_slot] += src
 	else
-		M.equip_by_category[to_equip_slot] = src
-	chassis = M
+		new_mecha.equip_by_category[to_equip_slot] = src
+	chassis = new_mecha
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
-	forceMove(M)
+	forceMove(new_mecha)
 	log_message("[src] initialized.", LOG_MECHA)
 
 /**
@@ -190,6 +200,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
+	playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)
@@ -204,6 +215,9 @@
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
+
+/obj/item/mecha_parts/mecha_equipment/proc/set_active(active)
+	src.active = active
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
@@ -231,7 +245,3 @@
 /// AI mech pilot: returns TRUE if the Ai should try to reload the mecha
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
-
-/// Equipment returns its slowdown or speedboost.
-/obj/item/mecha_parts/mecha_equipment/proc/get_movedelay()
-	return movedelay
