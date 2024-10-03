@@ -21198,7 +21198,7 @@
 /area/centcom/central_command_areas/admin)
 "jUj" = (
 /obj/structure/fake_stairs/wood/directional/north,
-/turf/open/space/basic,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "jVm" = (
 /obj/effect/turf_decal/weather/dirt{
