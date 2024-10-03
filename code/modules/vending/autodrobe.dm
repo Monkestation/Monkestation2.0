@@ -85,7 +85,7 @@
 				/obj/item/clothing/head/costume/witchwig = 1,
 				/obj/item/staff/broom = 1,
 				/obj/item/clothing/suit/wizrobe/fake = 1,
-				/obj/item/clothing/head/wizard/fake = 1,
+				/obj/item/clothing/head/costume/crew_wizhat = 1,
 				/obj/item/staff = 3,
 				/obj/item/clothing/head/costume/shrine_wig = 1,
 				/obj/item/clothing/suit/costume/shrine_maiden = 1,

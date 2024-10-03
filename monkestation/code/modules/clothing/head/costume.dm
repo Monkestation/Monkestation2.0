@@ -172,3 +172,15 @@ BUNNY EARS
 /*
 END OF BUNNY EARS
 */
+
+/obj/item/clothing/head/costume/crew_wizhat
+	name = "wizard hat"
+	desc = "Just a regular wizard hat. There is nothing magical about this."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "crew_wizhat"
+	worn_icon_state = "crew_wizhat"
+	greyscale_colors = "#555555"
+	greyscale_config = /datum/greyscale_config/crew_wizhat
+	greyscale_config_worn = /datum/greyscale_config/crew_wizhat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
