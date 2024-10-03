@@ -168,7 +168,6 @@
 				/obj/item/clothing/suit/costume/cheongsam_blue = 1,
 				/obj/item/clothing/under/wonka = 1,
 				/obj/item/clothing/shoes/heels = 4, // MONKESTATION EDIT ADDITION
-				/obj/item/clothing/gloves/operagloves = 1,
 			),
 		),
 		list(

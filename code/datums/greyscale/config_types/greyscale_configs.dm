@@ -107,16 +107,6 @@
 	icon_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/gloves_inhand.json'
 
-/datum/greyscale_config/opera_gloves
-	name = "Opera gloves"
-	icon_file = 'monkestation/icons/obj/clothing/gloves.dmi'
-	json_config = 'code/datums/greyscale/json_configs/opera_gloves.json'
-
-/datum/greyscale_config/opera_gloves_worn
-	name = "Opera gloves worn"
-	icon_file = 'monkestation/icons/mob/clothing/gloves.dmi'
-	json_config = 'code/datums/greyscale/json_configs/opera_gloves.json'
-
 /datum/greyscale_config/jumpsuit
 	name = "Jumpsuit"
 	icon_file = 'icons/obj/clothing/under/color.dmi'
