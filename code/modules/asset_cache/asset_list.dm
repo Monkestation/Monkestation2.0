@@ -376,6 +376,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 // APPARENTLY IT MAKES ICONS IMMUTABLE
 // LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+#ifdef UNIT_TESTS
+	if (I && icon_state && !(icon_state in icon_states(I))) // check the base icon prior to extracting the state we want
+		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [I] into spritesheet [name] ([type])")
+		return
+#endif
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
