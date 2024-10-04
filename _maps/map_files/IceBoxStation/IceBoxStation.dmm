@@ -2491,6 +2491,7 @@
 /area/station/medical/treatment_center)
 "aRj" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "aRl" = (
@@ -15961,6 +15962,7 @@
 /area/station/command/heads_quarters/hop)
 "eWj" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "eWn" = (
@@ -16014,6 +16016,7 @@
 /area/station/command/bridge)
 "eWQ" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "eWT" = (
@@ -16159,6 +16162,7 @@
 /area/station/service/hydroponics)
 "eZc" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "eZi" = (
@@ -54876,8 +54880,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Plasma to Pure";
-	piping_layer = 4
+	name = "Plasma to Pure"
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -60106,6 +60109,7 @@
 /area/station/engineering/storage_shared)
 "tln" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "tlo" = (
