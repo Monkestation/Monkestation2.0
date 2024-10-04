@@ -1977,7 +1977,7 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUITS_MISC
 	)
 
-	/datum/design/module/mirage
+/datum/design/module/mirage
 	name = "Mirage Grenade Dispenser Module"
 	id = "mod_mirage_grenade"
 	materials = list(
@@ -1988,5 +1988,4 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
-
 // MONKE END - changed/added lots of department_flags
