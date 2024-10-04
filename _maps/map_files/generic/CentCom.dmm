@@ -7857,6 +7857,10 @@
 /obj/structure/window/reinforced/fulltile/indestructible,
 /obj/structure/window_sill,
 /obj/structure/grille/window_sill,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 8;
+	id = "vaultg7window"
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "avg" = (
@@ -19696,6 +19700,9 @@
 	pixel_y = 9;
 	id = "vaultg7inner"
 	},
+/obj/machinery/button/door/indestructible{
+	id = "vaultg7window"
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "cFh" = (
@@ -20325,7 +20332,7 @@
 	},
 /obj/effect/turf_decal/trimline/red/real_red/filled/line,
 /obj/machinery/door/airlock/centcom{
-	name = "sssssssssss"
+	name = "Vault Checkpoint"
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
@@ -20746,7 +20753,8 @@
 /obj/structure/chair/office/tactical{
 	dir = 8
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "hbQ" = (
 /obj/effect/turf_decal/siding/wood,
@@ -20843,6 +20851,9 @@
 /mob/living/basic/ggg/glerm{
 	name = "Springus";
 	health = 9999
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
@@ -21015,7 +21026,10 @@
 	pixel_y = 11;
 	pixel_x = 7
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "hJy" = (
 /obj/structure/table/glass/plasmaglass,
@@ -21130,10 +21144,10 @@
 /area/centcom/central_command_areas/adminroom)
 "iow" = (
 /obj/machinery/field/generator/anchored,
-/obj/machinery/light/directional/east{
+/obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/light/small/red/dim/directional/north{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -21191,6 +21205,15 @@
 /obj/effect/turf_decal/trimline/red/real_red/filled/line{
 	dir = 6
 	},
+/obj/item/reagent_containers/hypospray/medipen/stimulants{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/hypospray/medipen/stimulants,
+/obj/item/reagent_containers/hypospray/medipen/stimulants{
+	pixel_x = -6;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
 "iAf" = (
@@ -21225,10 +21248,8 @@
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
 "iMs" = (
-/obj/machinery/light/directional/east{
-	dir = 8
-	},
-/turf/open/floor/carpet/orange,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "iOc" = (
 /obj/effect/turf_decal/siding/white{
@@ -21335,7 +21356,10 @@
 /obj/machinery/computer/terminal{
 	dir = 4
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "jmZ" = (
 /turf/open/floor/wood/large,
@@ -21405,15 +21429,15 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/adminroom)
 "jCy" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/soda_cans/dr_gibb{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "jEO" = (
 /obj/structure/fence/door{
@@ -21460,7 +21484,7 @@
 "jNQ" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/door_assembly/door_assembly_centcom,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/plating,
 /area/centcom/central_command_areas/admin)
 "jNS" = (
 /obj/structure/decorative/shelf/crates,
@@ -22067,6 +22091,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"nsW" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/sandy_dirt,
+/area/centcom/central_command_areas/admin)
 "nvZ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -22222,14 +22250,14 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/arcade)
 "ocR" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/computer/terminal{
 	dir = 8
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "ode" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -22433,6 +22461,19 @@
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
+"oSV" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Checkpoint Office"
+	},
+/obj/effect/turf_decal/trimline/red/real_red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/real_red/filled/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "oWK" = (
 /obj/machinery/fishing_portal_generator,
 /turf/open/floor/sandy_dirt,
@@ -22951,8 +22992,10 @@
 /area/centcom/central_command_areas/adminroom)
 "rmL" = (
 /obj/machinery/field/generator/anchored,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/small/broken{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -23145,7 +23188,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Vault G-07"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/plating,
 /area/centcom/central_command_areas/admin)
 "rVD" = (
 /obj/effect/turf_decal/siding/white{
@@ -23601,18 +23644,15 @@
 	},
 /area/centcom/central_command_areas/evacuation)
 "tOS" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/structure/chair/office/tactical{
 	dir = 4
 	},
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "tPa" = (
-/obj/machinery/light/directional/east{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/red/real_red/filled/line{
 	dir = 8
 	},
@@ -23833,6 +23873,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "IS Containment Cell"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
 "vgV" = (
@@ -24383,6 +24424,12 @@
 /obj/machinery/coffeemaker/impressa,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"xAF" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "xDC" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -24474,8 +24521,7 @@
 	},
 /area/centcom/central_command_areas/adminroom)
 "yaE" = (
-/obj/machinery/vending/cola,
-/turf/closed/indestructible/riveted,
+/turf/open/floor/plating/reinforced,
 /area/centcom/central_command_areas/admin)
 "yaU" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -63148,9 +63194,9 @@ aul
 aul
 aul
 xqY
+aul
+aul
 faY
-aUa
-aUa
 sJK
 vvk
 kUJ
@@ -63662,9 +63708,9 @@ bdM
 ajh
 xdY
 aOn
-dld
+xAF
 gZm
-aUa
+dld
 jSt
 aOn
 aOn
@@ -63920,8 +63966,8 @@ pWj
 agD
 aOn
 tOS
-aUa
-aUa
+iMs
+dld
 jSt
 aZf
 jUG
@@ -64178,7 +64224,7 @@ aOn
 aOn
 ocR
 hIB
-aUa
+dld
 sJK
 vvk
 qia
@@ -64433,9 +64479,9 @@ aGq
 aGq
 aGq
 crx
+aGq
+aGq
 dxs
-aUa
-aUa
 jSt
 aZf
 bpz
@@ -64942,7 +64988,7 @@ aeB
 aeB
 aeB
 aOn
-yaE
+aOn
 aOn
 aOn
 aOn
@@ -65200,7 +65246,7 @@ aeB
 aeB
 aOn
 vxz
-iMs
+pWj
 aJK
 aBM
 pWj
@@ -66225,7 +66271,7 @@ aeB
 exa
 aur
 aOn
-exa
+mkj
 iow
 aCZ
 aOn
@@ -66482,8 +66528,8 @@ exa
 exa
 nFR
 rUF
-exa
-exa
+mkj
+yaE
 gBi
 nNA
 aEJ
@@ -66735,11 +66781,11 @@ aeB
 aeB
 aeB
 exa
-exa
+pMg
 exa
 nSa
 aOn
-exa
+mkj
 aOn
 api
 aOn
@@ -66996,7 +67042,7 @@ aeB
 exa
 pMg
 jNQ
-exa
+mkj
 api
 mgg
 tBz
@@ -67247,13 +67293,13 @@ exa
 aeB
 exa
 exa
-exa
+nsW
 aeB
 aeB
 aeB
 aur
 aOn
-exa
+mkj
 rmL
 hLv
 aOn
@@ -67774,7 +67820,7 @@ xbt
 oAG
 acW
 xiF
-xbt
+oSV
 oAG
 acW
 bhE
