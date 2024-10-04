@@ -24,7 +24,7 @@
 	worn_icon_state = "satchel"
 	inhand_icon_state = "backpack"
 
-/obj/item/storage/backpack/industrial/frontier_colonist/Initialize(mapload)
+/obj/item/storage/backpack/satchel/eng/frontier_colonist/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
 
