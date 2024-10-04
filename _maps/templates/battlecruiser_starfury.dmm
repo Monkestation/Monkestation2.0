@@ -5010,7 +5010,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/medkit/brute,
-/obj/item/mod/module/energy_shield,
+/obj/item/mod/module/anomaly_locked/energy_shield,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},

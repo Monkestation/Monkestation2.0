@@ -65,6 +65,7 @@
 	cooldown_time = 5 SECONDS
 	overlay_state_inactive = "module_pepper"
 	overlay_state_use = "module_pepper_used"
+	var/reagent = /datum/reagent/consumable/condensedcapsaicin
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
@@ -78,7 +79,7 @@
 		return
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	var/datum/reagents/capsaicin_holder = new(10)
-	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
+	capsaicin_holder.add_reagent(reagent, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
 	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
 	smoke.start(log = TRUE)
@@ -91,8 +92,16 @@
 		return
 	if(!check_power(use_power_cost))
 		return
-	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
+	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a defensive spray!"), span_notice("Your [src] releases a cloud of defensive spray!")) //Could I make a variable to hold what kind of string to output?
 	on_use()
+	
+/obj/item/mod/module/pepper_shoulders/clown
+	name = "MOD lube shoulders module"
+	desc = "Clown Planet's imitation of Nanotrasen's pepper shoulder module, with an ingenious twist, they make it spray lube instead."
+	icon_state = "clown_shoulder"
+	reagent = /datum/reagent/lube
+	overlay_state_inactive = "module_lube"
+	overlay_state_use = "module_lube_used"
 
 ///Holster - Instantly holsters any not huge gun.
 /obj/item/mod/module/holster
@@ -385,3 +394,29 @@
 		creatures_detected++
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
+
+/obj/item/mod/module/armor_booster/crew
+	name = "MOD security armor booster module"
+	desc = "A low tech version of the syndicate's armor booster module, \
+		this version provides less protection, and takes a large amount of space in the suit."
+	removable = TRUE
+	complexity = 4
+	speed_added = 0.25 //Less than antag, but still something.
+	
+/datum/armor/mod_module_armor_boost_crew
+	melee = 20
+	bullet = 20
+	laser = 15
+	energy = 15
+	wound = 5
+
+/obj/item/mod/module/anomaly_locked/energy_shield/crew
+	name = "MOD prototype energy shield module"
+	desc = "Nanotrasen's attempt at replicating syndicate shield technology. \
+		Unfortunately, due to a lack of technology, it was neccesary to use an anomaly core to replicate the deflection effect."
+	prebuilt = FALSE
+	shield_icon = "shield-old"
+	complexity = 4
+	
+/obj/item/mod/module/anomaly_locked/energy_shield/crew/prebuilt
+	prebuilt = TRUE

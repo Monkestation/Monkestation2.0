@@ -1809,6 +1809,7 @@
 		"mod_sonar",
 		"mod_projectile_dampener",
 		"mod_criminalcapture",
+		"mod_pepperspray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1822,6 +1823,7 @@
 		"mod_bikehorn",
 		"mod_microwave_beam",
 		"mod_waddle",
+		"mod_lubespray"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1833,6 +1835,7 @@
 	design_ids = list(
 		"mod_antigrav",
 		"mod_teleporter",
+		"mod_energyshield",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -2277,6 +2280,8 @@
 		"rapidsyringe",
 		"suppressor",
 		"super_pointy_tape",
+		"mod_crewarmor",
+		"mod_emp_shield_advanced",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
