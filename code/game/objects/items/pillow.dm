@@ -148,6 +148,7 @@
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
 	desc = "The final piece of the pillow juggernaut"
+	body_parts_covered = HEAD
 	icon = 'icons/obj/pillow.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillowcase_hat"
