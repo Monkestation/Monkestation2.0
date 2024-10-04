@@ -7298,6 +7298,7 @@
 #include "monkestation\code\modules\mob\living\basic\ggg\glerm.dm"
 #include "monkestation\code\modules\mob\living\basic\ggg\susflash.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\parrot\parrot_ai\parroting_action.dm"
+#include "monkestation\code\modules\mob\living\basic\space_fauna\slugcat\slugcat.dm"
 #include "monkestation\code\modules\mob\living\basic\trooper\syndicate.dm"
 #include "monkestation\code\modules\mob\living\basic\vermin\frog.dm"
 #include "monkestation\code\modules\mob\living\basic\vermin\mouse.dm"
