@@ -124,8 +124,7 @@
 	plural_form = "Tundra Moths"
 	id = SPECIES_TUNDRA
 	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
-	coldmod = 0.7
-	heatmod = 1.3
+	external_organs = list(/obj/item/organ/external/wings/moth = "Tundra", /obj/item/organ/external/antennae = "Tundra")
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,
