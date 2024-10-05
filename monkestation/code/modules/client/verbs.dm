@@ -1,10 +1,10 @@
 GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 
 #define ANTAG_TOKEN_CONFIG_FILE "config/monkestation/antag-tokens.toml"
-#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
-#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
-#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
-#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
+#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
+#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"

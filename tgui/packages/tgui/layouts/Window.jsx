@@ -208,7 +208,7 @@ const TitleBar = (props) => {
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}
         >
-          {Byond.IS_LTE_IE8 ? 'x' : '×'}
+          ×
         </div>
       )}
     </div>

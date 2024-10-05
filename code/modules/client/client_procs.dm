@@ -224,6 +224,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 
 /client/New(TopicData)
+	// TODO: Remove with 516
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, null, "browser-options=byondstorage,find")
+
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
 
@@ -1254,7 +1258,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
 		return
-	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
+	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
 /**
  * Initializes dropdown menus on client
