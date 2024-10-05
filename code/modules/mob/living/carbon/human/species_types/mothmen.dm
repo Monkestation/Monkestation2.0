@@ -123,6 +123,7 @@
 	name = "\improper Tundra Moth"
 	plural_form = "Tundra Moths"
 	id = SPECIES_TUNDRA
+	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
 	coldmod = 0.7
 	heatmod = 1.3
 
