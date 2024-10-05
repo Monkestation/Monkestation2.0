@@ -19509,6 +19509,7 @@
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/orange,
 /obj/item/reagent_containers/spray/cleaner,
+/obj/machinery/light/small/maintenance/directional/east,
 /turf/open/floor/bitrunning_transport,
 /area/centcom/central_command_areas/admin)
 "bNV" = (
@@ -20160,10 +20161,13 @@
 /area/centcom/central_command_areas/evacuation)
 "eyO" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Fortune's Desk";
-	name = "Fortune's Fax Machine";
-	desc = "Bluespace technologies on the application of bureaucracy. This one has been graciously rented to Intern Fortune"
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
@@ -22235,15 +22239,6 @@
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
 "neL" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 3
-	},
 /obj/machinery/flasher/directional/west{
 	id = "fortuneflash"
 	},
@@ -22676,12 +22671,6 @@
 /obj/effect/turf_decal/siding/white,
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/admin)
-"oMX" = (
-/obj/machinery/hypnochair{
-	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."s"; name = "enhancedinterrogationchamber"s"
-	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/central_command_areas/admin)
 "oNH" = (
 /obj/machinery/light/neon_lining{
@@ -23660,10 +23649,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
-"sOW" = (
-/obj/machinery/light/small/maintenance/directional/east,
-/turf/open/floor/iron/dark/small,
-/area/centcom/central_command_areas/admin)
 "sQp" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8
@@ -54632,7 +54617,7 @@ aOn
 eyO
 neL
 dCT
-oMX
+aXN
 aXN
 aHp
 kpH
@@ -55144,7 +55129,7 @@ adQ
 aMc
 aCS
 kKc
-sOW
+kKc
 aOn
 aNK
 aJC
