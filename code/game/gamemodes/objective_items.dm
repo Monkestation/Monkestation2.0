@@ -252,22 +252,13 @@
 
 /datum/objective_item/steal/hosgun
 	name = "the head of security's personal gun"
-	targetitem = list(/obj/item/choice_beacon/hos, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos, /obj/item/gun/ballistic/shotgun/automatic/combat/hos)
+	targetitem = list(/obj/item/choice_beacon/hos)
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 
-/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
-
 /obj/item/choice_beacon/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
-
-/obj/item/gun/energy/e_gun/lawbringer/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/automatic/combat/hos)
+	return add_item_to_steal(src, /obj/item/choice_beacon/hos, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
