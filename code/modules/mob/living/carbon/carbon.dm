@@ -245,6 +245,21 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
+	// MONKESTATION ADDITION START
+	SEND_SIGNAL(src, COMSIG_CARBON_CUFF_RESIST, I, breakouttime, cuff_break)
+
+	if(cuff_break != INSTANT_CUFFBREAK && HAS_TRAIT(src, TRAIT_CUFF_BREAKER))
+		visible_message(
+			message = span_bolddanger("[src] tears apart [I] with pure strength!"),
+			self_message = span_danger("You tear apart [I] with pure strength!"),
+			blind_message = span_hear("You hear a snap!")
+		)
+		emote("scream")
+		playsound(src, 'sound/effects/snap.ogg', vol = 100, vary = TRUE)
+		qdel(I) // GONE, REDUCED TO ATOMS
+		return TRUE
+	// MONKESTATION ADDITION END
+
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [I]!"))
 		return

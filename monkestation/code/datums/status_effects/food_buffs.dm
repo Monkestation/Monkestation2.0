@@ -294,7 +294,7 @@
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		user.stamina.regen_rate += regen_increase
+		user.stamina.regen_rate -= regen_increase
 
 
 

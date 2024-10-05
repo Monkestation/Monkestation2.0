@@ -138,6 +138,10 @@
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_per_tick, times_fired)
+	if(HAS_TRAIT(owner, TRAIT_NO_EXTINGUISH)) // MONKESTATION EDIT: TRAIT_NO_EXTINGUISH shall be absolute! (needed for vampire stuff)
+		deal_damage(seconds_per_tick)
+		return
+
 	var/turf/source_turf = get_turf(owner)
 	if(istype(source_turf, /turf/open/floor/plating/ocean))
 		qdel(src)

@@ -1273,7 +1273,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 		user.do_attack_animation(target, atk_effect)
 
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high) * user.physiology.unarmed_damage_mod // MONKESTATION EDIT: unarmed_damage_mod
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
@@ -1321,7 +1321,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "punched")
 
-		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
+		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold * user.physiology.unarmed_damage_mod) // MONKESTATION EDIT: unarmed_damage_mod doesn't affect stun
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You knock [target] down!"))
@@ -1535,15 +1535,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
-	//Only stabilise core temp when alive and not in statis
-	if(humi.stat < DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
+	//Only stabilise core temp when alive and not in stasis
+	if(humi.stat < DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLDBLOODED)) // MONKESTATION EDIT: TRAIT_COLDBLOODED (what it does is rather obvious)
 		body_temperature_core(humi, seconds_per_tick, times_fired)
 
-	//These do run in statis
+	//These do run in stasis
 	body_temperature_skin(humi, seconds_per_tick, times_fired)
 	body_temperature_alerts(humi, seconds_per_tick, times_fired)
 
-	//Do not cause more damage in statis
+	//Do not cause more damage in stasis
 	if(!HAS_TRAIT(humi, TRAIT_STASIS))
 		body_temperature_damage(humi, seconds_per_tick, times_fired)
 

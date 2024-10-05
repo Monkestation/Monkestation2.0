@@ -381,7 +381,7 @@
 	// Blood Level
 	if(target.has_dna())
 		var/mob/living/carbon/carbontarget = target
-		var/blood_id = carbontarget.get_blood_id()
+		var/blood_id = carbontarget.get_blood_id(allow_fake_blood = TRUE) // MONKESTATION EDIT: TRAIT_FAKEBLOOD support
 		if(blood_id)
 			if(carbontarget.is_bleeding())
 				render_list += "<span class='alert ml-1'><b>Subject is bleeding!</b></span>\n"

@@ -411,7 +411,7 @@
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
+				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER)) // MONKESTATION EDIT: is_strong_grab
 					C.grippedby(src)
 
 			update_pull_movespeed()
@@ -968,9 +968,7 @@
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	if(health <= HEALTH_THRESHOLD_DEAD)
-		return FALSE
-	return TRUE
+	return health > HEALTH_THRESHOLD_DEAD || HAS_TRAIT(src, TRAIT_NODEATH) // monkestation edit
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -1151,6 +1149,19 @@
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+		// MONKESTATION EDIT START: TRAIT_GRAB_BREAKER
+		if(HAS_TRAIT(src, TRAIT_GRAB_BREAKER))
+			visible_message(
+				message = span_danger("[src] violently breaks free of [pulledby]'s grip!"),
+				self_message = span_danger("You violently break free of [pulledby]'s grip!"),
+				ignored_mobs = pulledby
+			)
+			to_chat(pulledby, span_warning("[src] violently breaks free of your grip!"))
+			log_combat(pulledby, src, "instantly broke grab (TRAIT_GRAB_BREAKER)")
+			pulledby.stop_pulling()
+			return FALSE
+		// MONKESTATION EDIT END: TRAIT_GRAB_BREAKER
+
 		var/altered_grab_state = pulledby.grab_state
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
@@ -2174,7 +2185,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(HARD_CRIT)
 			if(. != UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_TRAIT)
-			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			if(!HAS_TRAIT(src, TRAIT_NOHARDCRIT)) // MONKESTATION EDIT START: TRAIT_NOHARDCRIT needs to be a bit more universal.
+				add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			else
+				remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT) // MONKESTATION EDIT END
 		if(DEAD)
 			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()

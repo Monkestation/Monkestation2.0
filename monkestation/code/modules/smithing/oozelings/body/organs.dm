@@ -170,11 +170,12 @@
 				target_ling.oozeling_revives--
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
-		if(IS_BLOODSUCKER(brainmob))
+		/* ONGOING VAMPIRE REWORK, FIX THIS ONCE YOU KNOW WTF TO DO WITH IT
+		if(IS_VAMPIRE(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
+			if(target_bloodsucker.bloodsucker_blood_volume >= target_bloodsucker.max_blood_volume * 0.4)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS)
+				target_bloodsucker.bloodsucker_blood_volume -= target_bloodsucker.max_blood_volume * 0.15*/
 
 	rebuilt = FALSE
 	victim.transfer_observers_to(src)

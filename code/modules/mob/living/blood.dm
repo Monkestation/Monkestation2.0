@@ -277,23 +277,24 @@
 		blood_data["quirks"] += T.type
 	return blood_data
 
-//get the id of the substance this mob use as blood.
-/mob/proc/get_blood_id()
+/// Get the id of the substance this mob uses as blood. Setting allow_fakeblood to true will allow TRAIT_FAKEBLOOD to bypass TRAIT_NOBLOOD in edge cases.
+/mob/proc/get_blood_id(allow_fake_blood) // MONKESTATION EDIT: TRAIT_FAKEBLOOD support
 	return
 
-/mob/living/simple_animal/get_blood_id()
+/mob/living/simple_animal/get_blood_id(allow_fake_blood) // MONKESTATION EDIT: TRAIT_FAKEBLOOD support
 	if(blood_volume)
 		return /datum/reagent/blood
 
-/mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+/mob/living/carbon/human/get_blood_id(allow_fake_blood) // MONKESTATION EDIT: TRAIT_FAKEBLOOD support
+	/*if(HAS_TRAIT(src, TRAIT_HUSK)) MONKESTATION EDIT: Replaced by a cascade_trait from TRAIT_HUSK to TRAIT_NOBLOOD. May break shit.
+		return*/
+	// MONKESTATION EDIT: Added TRAIT_FAKEBLOOD support and moved the TRAIT_NOBLOOD check above the special blood type checks.
+	if(allow_fake_blood ? HAS_TRAIT_NOT_PAIRED_WITH(src, TRAIT_NOBLOOD, TRAIT_FAKEBLOOD) : HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return
 	return /datum/reagent/blood
 
 // This is has more potential uses, and is probably faster than the old proc.

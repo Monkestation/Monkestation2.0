@@ -55,6 +55,10 @@
 #define TRAIT_GHOST_CRITTER "ghost_critter"
 /// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// Allows user to instantly break any grabs.
+#define TRAIT_GRAB_BREAKER "grab_breaker"
+/// Allows user to instantly break any cuffs.
+#define TRAIT_CUFF_BREAKER "cuff_breaker"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.

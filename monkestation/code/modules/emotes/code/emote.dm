@@ -494,3 +494,9 @@
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'
 //End
+
+/datum/emote/living/flinch // created mainly for vampire wrist feed
+	key = "flinch"
+	key_third_person = "flinches"
+	message = "flinches!"
+	emote_type = EMOTE_VISIBLE

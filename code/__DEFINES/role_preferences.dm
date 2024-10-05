@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 	ROLE_CLOCK_CULTIST = 14,
-	ROLE_BLOODSUCKER = 0,
+	ROLE_VAMPIRE = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
 
 	// Midround
@@ -171,7 +171,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
-	ROLE_BLOODSUCKERBREAKOUT = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

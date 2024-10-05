@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, status_check = TRUE) // MONKESTATION EDIT: Add a status_check var to allow forcing emotes while dead.
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -31,7 +31,7 @@
 		if(!P.check_cooldown(src, intentional))
 			silenced = TRUE
 			continue
-		if(P.run_emote(src, param, m_type, intentional))
+		if(P.run_emote(src, param, m_type, intentional, status_check)) // MONKESTATION EDIT: Pass status_check to run_emote for the bypass to work.
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
 			return TRUE
