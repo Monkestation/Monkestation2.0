@@ -600,23 +600,7 @@
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
-//LOCKER OVERRIDES//
-/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
-	. = ..()
 
-	// Traitor steal objectives
-	new /obj/item/gun/energy/e_gun/lawbringer(src)
-
-//OBJECTIVE OVERRIDES//
-/datum/objective_item/steal/lawbringer
-	name = "the head of security's lawbringer"
-	targetitem = /obj/item/gun/energy/e_gun/lawbringer
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
-	exists_on_map = TRUE
-
-/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

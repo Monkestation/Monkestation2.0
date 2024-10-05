@@ -73,7 +73,7 @@
 	. = ..()
 
 	// Traitor steal objectives
-	//new /obj/item/gun/energy/e_gun/hos(src) monkestation removal
+	new /obj/item/choice_beacon/hos(src)
 	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
