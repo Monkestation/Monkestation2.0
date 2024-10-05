@@ -22961,7 +22961,7 @@
 "pYR" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/pod/old/syndicate{
-	desc = "Fortune's "stateoftheart" work computer";
+	desc = "Fortune's 'stateoftheart' work computer";
 	name = "Fortune's Desktop Computer"
 	},
 /turf/open/floor/iron/dark/small,
