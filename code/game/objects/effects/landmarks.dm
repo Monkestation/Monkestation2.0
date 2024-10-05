@@ -703,3 +703,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
+
+//Monke edit
+/obj/effect/landmark/navigate_destination/servicehallway
+	location = "Service Hallway"
+
+/obj/effect/landmark/navigate_destination/cryo
+	location = "Cryogentic Crew Storage"
+//End of monke edit
