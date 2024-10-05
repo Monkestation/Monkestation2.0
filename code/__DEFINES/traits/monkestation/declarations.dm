@@ -131,4 +131,7 @@
 /// Has an item been enchanted by a clock cult Stargazer?
 #define TRAIT_STARGAZED				"stargazed"
 
+/// Makes you able to bloodcrawl with your items
+#define TRAIT_BLOODCRAWL_WITH_ITEMS "bloodcrawl_with_items"
+
 // END TRAIT DEFINES
