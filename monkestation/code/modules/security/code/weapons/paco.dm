@@ -26,6 +26,10 @@
 		name = "\improper FS HG .35 Auto \"Taco\" LE"
 		desc += " <font color=#FFE733>You notice a small difference on the side of the pistol... An engraving depicting a taco! It's a Limited Run model!</font>"
 
+/obj/item/gun/ballistic/automatic/pistol/paco/hos
+	name = "\improper FS HG .35 Auto \"Taco\""
+	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines. This one is a limited run model with the HoS' name engraved"
+
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag
 	spawnwithmagazine = FALSE
 
