@@ -175,3 +175,17 @@
 	GLOB.holy_armor_type = choice_path
 	return ..()
 
+/obj/item/choice_beacon/hos
+	name = "gun beacon"
+	desc = "A single use beacon to deliver a gunset of your choice to help with security detail."
+	company_source = "Central Command"
+	company_message = span_bold("Supply Pod incoming, please stand back.")
+
+/obj/item/choice_beacon/hos/generate_display_names()
+	var/static/list/selectable_guns = list(
+		"X-01 MultiPhase Energy Gun" = /obj/item/gun/energy/e_gun/hos,
+		"Lawbringer" = /obj/item/gun/energy/e_gun/lawbringer,
+		"Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat,
+	)
+	return selectable_guns
+
