@@ -611,7 +611,7 @@
 	var/static/list/selectable_guns = list(
 		"X-01 MultiPhase Energy Gun" = /obj/item/gun/energy/e_gun/hos,
 		"Lawbringer" = /obj/item/gun/energy/e_gun/lawbringer,
-		"Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+		"Compact Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 	)
 	return selectable_guns
 
