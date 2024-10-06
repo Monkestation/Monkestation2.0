@@ -295,7 +295,7 @@
 /area/station/hallway/primary/fore)
 "acF" = (
 /obj/structure/sign/warning/radiation,
-/turf/closed/wall/rust,
+/turf/closed/wall,
 /area/station/engineering/atmos)
 "acK" = (
 /obj/structure/lattice/catwalk,
@@ -492,10 +492,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
-"aeL" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/turf/closed/wall/rust,
-/area/station/engineering/atmos)
 "aeS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2045,7 +2041,7 @@
 "aGs" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/machinery/meter,
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "aGu" = (
 /obj/effect/turf_decal/delivery,
@@ -14151,12 +14147,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"eAs" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/turf/closed/wall/rust,
-/area/station/engineering/atmos)
 "eAu" = (
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
@@ -21328,10 +21318,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"gJK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/closed/wall/rust,
-/area/station/maintenance/disposal/incinerator)
 "gJN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
@@ -25719,6 +25705,12 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/hos)
+"hYV" = (
+/obj/effect/turf_decal/vg_decals/atmos/nitrous_oxide{
+	dir = 1
+	},
+/turf/open/floor/engine/n2o,
+/area/station/engineering/atmos)
 "hZd" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
@@ -33980,9 +33972,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"kCk" = (
-/turf/closed/wall/rust,
-/area/station/maintenance/disposal/incinerator)
 "kCx" = (
 /obj/item/reagent_containers/syringe/contraband/morphine{
 	pixel_x = 6;
@@ -41111,12 +41100,6 @@
 	},
 /turf/open/floor/carpet/neon/simple/green,
 /area/station/science/xenobiology)
-"mSf" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/turf/closed/wall/rust,
-/area/station/engineering/atmos)
 "mSm" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -42791,6 +42774,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science/research)
+"nvF" = (
+/obj/effect/turf_decal/vg_decals/atmos/plasma{
+	dir = 1
+	},
+/turf/open/floor/engine/plasma,
+/area/station/engineering/atmos)
 "nvI" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -45502,9 +45491,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"osW" = (
-/turf/closed/wall/rust,
-/area/station/engineering/atmos)
 "otr" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/yellow,
@@ -52953,7 +52939,7 @@
 /area/station/hallway/primary/central/fore)
 "qNH" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan,
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/aft)
 "qNJ" = (
 /obj/machinery/modular_computer/preset/id{
@@ -53534,6 +53520,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"qVr" = (
+/obj/effect/turf_decal/vg_decals/atmos/carbon_dioxide{
+	dir = 1
+	},
+/turf/open/floor/engine/co2,
+/area/station/engineering/atmos)
 "qVs" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 1
@@ -58930,7 +58922,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/r_wall,
 /area/station/engineering/atmos/pumproom)
 "sDQ" = (
 /obj/structure/curtain,
@@ -65038,7 +65030,7 @@
 /area/station/hallway/primary/port)
 "uAE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
-/turf/closed/wall/rust,
+/turf/closed/wall,
 /area/station/engineering/atmos/pumproom)
 "uAH" = (
 /obj/machinery/airalarm/directional/south,
@@ -73058,6 +73050,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
+"wTD" = (
+/obj/structure/plaque/static_plaque/atmos,
+/turf/closed/wall,
+/area/station/engineering/atmos)
 "wTP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -99798,8 +99794,8 @@ aaa
 aaa
 aaa
 aeu
-kCk
-kCk
+mLN
+mLN
 oOW
 pNg
 oOW
@@ -100055,7 +100051,7 @@ aaa
 aaa
 aaa
 mLN
-kCk
+mLN
 gFW
 sDv
 mrz
@@ -100063,8 +100059,8 @@ qjv
 gin
 qjv
 aGd
-kCk
-kCk
+mLN
+mLN
 aeu
 aeu
 aeU
@@ -102121,7 +102117,7 @@ mMZ
 mMZ
 mMZ
 vHP
-gJK
+pNg
 pNg
 iSQ
 xbk
@@ -102623,7 +102619,7 @@ aaa
 aaa
 aaa
 aaa
-kCk
+mLN
 mLN
 jFZ
 mMZ
@@ -102635,7 +102631,7 @@ mjR
 rqV
 mMZ
 tBR
-gJK
+pNg
 pNg
 iSQ
 qyR
@@ -102880,7 +102876,7 @@ jAp
 aaa
 aaa
 aaa
-kCk
+mLN
 qqJ
 krr
 fla
@@ -102892,7 +102888,7 @@ gab
 ubz
 mMZ
 tPz
-kCk
+mLN
 acm
 yma
 yma
@@ -103133,11 +103129,11 @@ iMX
 uWz
 gTD
 rTi
-agt
+anH
 vku
 bzb
-kCk
-kCk
+mLN
+mLN
 dyC
 qAx
 wzY
@@ -103406,7 +103402,7 @@ wzr
 lNp
 oix
 sAV
-kCk
+mLN
 acm
 acm
 aeo
@@ -103648,7 +103644,7 @@ xLM
 uhp
 rTi
 acm
-osW
+wRU
 vqj
 mLN
 vWW
@@ -103905,7 +103901,7 @@ acm
 oaK
 acm
 acm
-osW
+wRU
 oNr
 mLN
 nqn
@@ -104147,24 +104143,24 @@ xXz
 gmG
 kNz
 gmG
-mjh
-jwV
+cfL
+sSZ
 esZ
 vId
 aYu
 xAI
-mSf
+esZ
 msS
 aYu
-osW
-eAs
+wRU
+hSv
 oup
 hSv
 wRU
 wRU
 acF
 aWF
-kCk
+mLN
 eyx
 mMZ
 bfA
@@ -104661,7 +104657,7 @@ rqm
 gmG
 rtc
 uwP
-mjh
+cfL
 ofA
 hGa
 dKT
@@ -105691,7 +105687,7 @@ sfI
 biP
 cfL
 cfL
-jwV
+sSZ
 bDQ
 ouC
 kHQ
@@ -105966,7 +105962,7 @@ acT
 xLM
 fDS
 kox
-xha
+qVr
 rTi
 acK
 acm
@@ -106209,7 +106205,7 @@ dgu
 dva
 anF
 iwT
-ikt
+wTD
 ylD
 gYK
 vqv
@@ -106461,7 +106457,7 @@ biP
 sfI
 vmg
 gmG
-mjh
+cfL
 gyM
 hkL
 kuf
@@ -106475,7 +106471,7 @@ iLQ
 lVf
 gzC
 nCK
-osW
+wRU
 vfO
 rTi
 cCe
@@ -106718,7 +106714,7 @@ biP
 gmG
 pRP
 vpX
-mjh
+cfL
 hDV
 gIE
 kuf
@@ -106994,7 +106990,7 @@ vfO
 xLM
 vns
 trt
-mvW
+nvF
 rTi
 acK
 aaa
@@ -108022,7 +108018,7 @@ vfO
 xLM
 oYN
 qms
-lNn
+hYV
 rTi
 acK
 acm
@@ -108266,7 +108262,7 @@ jzm
 vXI
 dof
 wgq
-osW
+wRU
 eKA
 bdU
 jYc
@@ -108274,7 +108270,7 @@ tNB
 cUA
 aal
 gZm
-aeL
+blX
 eQf
 fOH
 gyn
