@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger/hunger
 
