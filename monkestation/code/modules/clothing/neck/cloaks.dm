@@ -165,7 +165,7 @@
 	item_cost = 20000
 
 /obj/item/clothing/neck/linjacket
-	name = "tassled coat"
+	name = "oranate coat"
 	desc = "You'll hold this weight."
 	icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
@@ -177,10 +177,10 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /datum/loadout_item/neck/linjacket
-	name = "Tassled Coat"
+	name = "Ornate Coat"
 	item_path = /obj/item/clothing/neck/linjacket
 
 /datum/store_item/neck/linjacket
-	name = "Tassled Coat"
+	name = "Ornate Coat"
 	item_path = /obj/item/clothing/neck/linjacket
 	item_cost = 5000
