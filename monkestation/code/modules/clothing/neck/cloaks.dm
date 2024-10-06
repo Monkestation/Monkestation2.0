@@ -179,6 +179,10 @@
 /datum/loadout_item/neck/linjacket
 	name = "Tassled Coat"
 	item_path = /obj/item/clothing/neck/linjacket
+<<<<<<< HEAD
+=======
+	requires_purchase = FALSE
+>>>>>>> c4daabea007b93d58b07350b6e9a115e1a99ea30
 
 /datum/store_item/neck/linjacket
 	name = "Tassled Coat"
