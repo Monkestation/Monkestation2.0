@@ -3845,7 +3845,6 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
-/obj/item/wrench/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "bnN" = (
@@ -8121,9 +8120,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/corner,
 /area/station/hallway/primary/central/fore)
-"cDh" = (
-/turf/closed/wall/rust,
-/area/station/medical/office)
 "cDH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -19344,6 +19340,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
+"gex" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "oproompriv";
+	name = "Emergency Medical Lockdown Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/medical/surgery/fore)
 "gey" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -28311,6 +28315,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "iJm" = (
@@ -30706,11 +30714,15 @@
 "jvL" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/glass,
-/obj/item/reagent_containers/cup/bottle/multiver{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/storage/medkit/regular{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = 6;
+	pixel_y = 9
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "jvR" = (
@@ -43113,9 +43125,9 @@
 "nBZ" = (
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/fore)
 "nCc" = (
@@ -47704,6 +47716,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
+"pez" = (
+/mob/living/basic/bot/cleanbot/medbay,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/treatment_center)
 "peC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49519,9 +49535,6 @@
 /obj/item/kirbyplants,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"pGi" = (
-/turf/closed/wall/r_wall/rust,
-/area/station/medical/pathology)
 "pGj" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -49658,7 +49671,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
 "pIa" = (
@@ -55295,9 +55307,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"rwr" = (
-/turf/closed/wall/rust,
-/area/station/medical/psychology)
 "rwu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/secure_area/directional/north{
@@ -56122,9 +56131,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"rKk" = (
-/turf/closed/wall/rust,
-/area/station/medical/surgery/aft)
 "rKm" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/atmos_alert,
@@ -56657,9 +56663,6 @@
 "rSg" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/port/aft)
-"rSi" = (
-/turf/closed/wall/rust,
-/area/station/medical/surgery/fore)
 "rSI" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -62669,8 +62672,8 @@
 /area/station/science/ordnance)
 "tNL" = (
 /obj/machinery/button/door/directional/north{
-	id = "emmd";
-	name = "Medical Lockdown Toggle"
+	id = "oproompriv";
+	name = "Operating Theater A Privacy Shutters"
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
@@ -75628,9 +75631,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
-"xNc" = (
-/turf/closed/wall/r_wall/rust,
-/area/station/command/heads_quarters/cmo)
 "xNe" = (
 /turf/closed/wall,
 /area/station/cargo/sorting)
@@ -94842,7 +94842,7 @@ oAd
 mbL
 tMR
 cNz
-kLH
+pez
 fdw
 xyl
 vbD
@@ -95109,7 +95109,7 @@ rhl
 lWI
 vjh
 wFG
-ycx
+vjh
 vjh
 csa
 csa
@@ -95347,7 +95347,7 @@ cJq
 dye
 cta
 hGy
-xNc
+xxk
 rxf
 nuV
 mRl
@@ -95618,7 +95618,7 @@ lrD
 exm
 sJM
 sJM
-rSi
+sJM
 sJM
 sJM
 vXf
@@ -95873,7 +95873,7 @@ jvL
 iJh
 oXN
 qvj
-gbf
+gex
 nBZ
 gbd
 woB
@@ -96387,11 +96387,11 @@ aJO
 vuE
 eno
 rcQ
-gbf
+gex
 wVD
 wGE
 ouD
-rSi
+sJM
 rzB
 jMa
 suQ
@@ -96651,7 +96651,7 @@ fth
 sJM
 hpv
 htS
-rKk
+hpv
 hpv
 fYw
 sHr
@@ -96902,7 +96902,7 @@ vQh
 cwv
 lWI
 sJM
-rSi
+sJM
 cuU
 gbf
 sJM
@@ -97140,12 +97140,12 @@ eRC
 tlJ
 pVz
 mMP
-xBI
+pVz
 bQB
 ukO
 gZX
 czD
-rwr
+eUN
 uIr
 kpm
 hVw
@@ -97397,7 +97397,7 @@ ntb
 qLO
 qEs
 yiN
-xBI
+pVz
 sFu
 jIg
 pdI
@@ -97430,7 +97430,7 @@ jbK
 qQX
 xbp
 qNW
-pGi
+uvA
 qon
 xDc
 xDc
@@ -97913,9 +97913,9 @@ xBI
 iSx
 pVz
 pVz
-jUU
 dkh
-jUU
+dkh
+dkh
 dkh
 qGK
 wlL
@@ -98195,13 +98195,13 @@ pIT
 uvA
 iQB
 isf
-pGi
+uvA
 nEr
 rTK
 jVH
 vrE
 upb
-pGi
+uvA
 hRD
 xDc
 hMq
@@ -98683,12 +98683,12 @@ pVz
 sRL
 cVn
 pVz
-xBI
+pVz
 jKQ
 gGR
 fgB
 axp
-cDh
+lOd
 dkU
 gIH
 lCT
@@ -98715,7 +98715,7 @@ mTC
 jjR
 wur
 clv
-pGi
+uvA
 tGn
 wHJ
 vrb
@@ -98969,7 +98969,7 @@ qQX
 uvA
 jFQ
 nLM
-pGi
+uvA
 uvA
 uvA
 uvA
@@ -99971,14 +99971,14 @@ pNk
 xjz
 hsJ
 dkh
-jUU
+dkh
 dkh
 dkh
 dkh
 fCf
 rSK
 vfG
-cDh
+lOd
 xhK
 gOh
 fkK
