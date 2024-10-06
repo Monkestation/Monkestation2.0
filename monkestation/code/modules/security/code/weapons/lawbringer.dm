@@ -600,6 +600,17 @@
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
+// Steal Objective, not just for Lawbringer but all their guns
+/datum/objective_item/steal/hosgun
+	name = "the head of security's personal weapon"
+	targetitem = /obj/item/choice_beacon/hos
+	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
+	item_owner = list(JOB_HEAD_OF_SECURITY)
+	exists_on_map = TRUE
+
+/obj/item/choice_beacon/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
 
 
 //THE MANUAL//

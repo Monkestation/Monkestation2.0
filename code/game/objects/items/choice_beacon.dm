@@ -175,6 +175,7 @@
 	GLOB.holy_armor_type = choice_path
 	return ..()
 
+// HoS weapon beacon Monkestation Edit
 /obj/item/choice_beacon/hos
 	name = "gun beacon"
 	desc = "A single use beacon to deliver a gunset of your choice to help with security detail."

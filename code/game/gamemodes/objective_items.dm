@@ -250,18 +250,15 @@
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
 
-//MONKESTATION EDIT START
-/datum/objective_item/steal/hosgun
-	name = "the head of security's personal weapon"
-	targetitem = /obj/item/choice_beacon/hos
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
-	exists_on_map = TRUE
+/* //monkestation removal
+/datum/objective_item/steal/hoslaser
+	name = "the head of security's personal laser gun"
+	targetitem = /obj/item/gun/energy/e_gun/hos
 
-/obj/item/choice_beacon/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
-//MONKESTATION EDIT END
+
+/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
+*/
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
