@@ -9223,7 +9223,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/machinery/light/street_lamp,
+/obj/machinery/light/street_lamp{
+	dir = 1
+	},
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
 "ayN" = (
@@ -10179,6 +10181,11 @@
 "aBn" = (
 /obj/machinery/light/directional/east{
 	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
 	},
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/admin)
@@ -19975,7 +19982,7 @@
 /area/centcom/central_command_areas/evacuation)
 "dCT" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "dEH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -20072,6 +20079,12 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
+"efj" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/central_command_areas/retirement_yard)
 "efG" = (
 /obj/effect/turf_decal/weather,
 /obj/effect/turf_decal/weather/dirt{
@@ -20322,6 +20335,17 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
+"fex" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/admin)
 "ffV" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -21188,6 +21212,9 @@
 /area/centcom/central_command_areas/evacuation)
 "hUX" = (
 /obj/structure/curtain/cloth,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/admin)
 "hVj" = (
@@ -21384,6 +21411,15 @@
 /obj/machinery/light/street_lamp,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"iPD" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/retirement_yard)
 "iQv" = (
 /obj/structure/flora/bush/large/style_3,
 /obj/item/toy/plush/lizard_plushie,
@@ -22344,6 +22380,9 @@
 /area/centcom/central_command_areas/admin)
 "nBv" = (
 /obj/structure/curtain/cloth,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/adminroom)
 "nDJ" = (
@@ -22672,6 +22711,13 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"oMX" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid";
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/central_command_areas/admin)
 "oNH" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -22952,6 +22998,12 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"pXI" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/retirement_yard)
 "pYm" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -22961,7 +23013,7 @@
 "pYR" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/pod/old/syndicate{
-	desc = "Fortune's 'stateoftheart' work computer";
+	desc = "Fortune's "stateoftheart" work computer";
 	name = "Fortune's Desktop Computer"
 	},
 /turf/open/floor/iron/dark/small,
@@ -23016,6 +23068,15 @@
 	},
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"qiU" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/retirement_yard)
 "qja" = (
 /turf/closed/indestructible/wood,
 /area/centcom/central_command_areas/adminroom)
@@ -23089,6 +23150,15 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
+"qCm" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/retirement_yard)
 "qCL" = (
 /obj/structure/closet/crate/cardboard,
 /obj/item/reagent_containers/cup/glass/bottle/champagne,
@@ -23305,6 +23375,11 @@
 /area/centcom/central_command_areas/admin)
 "rsi" = (
 /obj/structure/chair/office/light,
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "rtD" = (
@@ -23359,6 +23434,12 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
+"rGe" = (
+/obj/machinery/light/street_lamp{
+	dir = 4
+	},
+/turf/open/floor/sandy_dirt,
+/area/centcom/central_command_areas/admin)
 "rHE" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -23649,6 +23730,12 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
+"sOW" = (
+/obj/machinery/light/street_lamp{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/central_command_areas/admin)
 "sQp" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8
@@ -24032,7 +24119,9 @@
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
 "uwL" = (
-/obj/machinery/light/street_lamp,
+/obj/machinery/light/street_lamp{
+	dir = 1
+	},
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "uyk" = (
@@ -24068,6 +24157,9 @@
 	name = "NT Helpdesk"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "uNf" = (
@@ -24397,6 +24489,18 @@
 /obj/effect/landmark/ctf,
 /turf/open/space/basic,
 /area/space)
+"vZN" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/centcom/central_command_areas/retirement_yard)
 "vZP" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -24695,7 +24799,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/machinery/light/street_lamp,
+/obj/machinery/light/street_lamp{
+	dir = 1
+	},
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "xkv" = (
@@ -24857,6 +24963,13 @@
 /obj/item/clothing/suit/armor/vest,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"xUt" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "donutstealthisid"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
 "xWM" = (
 /obj/structure/closet/crate/cardboard/mothic,
 /obj/item/storage/box/mothic_rations,
@@ -51993,7 +52106,7 @@ gXN
 aAl
 gXN
 exk
-eHz
+aIS
 bVz
 yhF
 mUv
@@ -52507,12 +52620,12 @@ aAl
 aAl
 aAl
 aAl
-eHz
+aIS
 yhF
 yhF
 mUv
 yhF
-yhF
+oMX
 kpH
 kpH
 kpH
@@ -52769,9 +52882,9 @@ yhF
 yhF
 mUv
 yhF
-yhF
+oMX
 qzu
-fan
+xUt
 eNq
 nbv
 fan
@@ -53021,12 +53134,12 @@ aAl
 aOk
 aZr
 aAl
-eHz
+aIS
 yhF
 yhF
 mUv
 yhF
-yhF
+oMX
 kpH
 kpH
 kpH
@@ -53535,7 +53648,7 @@ aAl
 aOk
 aZr
 aAl
-eHz
+aIS
 oJx
 yhF
 mUv
@@ -53792,7 +53905,7 @@ aAl
 aOk
 aZr
 ePC
-eHz
+aIS
 oJx
 yhF
 mUv
@@ -54831,7 +54944,7 @@ kjO
 kjO
 erK
 aOn
-afC
+pXI
 afC
 aCV
 cxr
@@ -55088,7 +55201,7 @@ cQz
 cQz
 rnC
 aOn
-acd
+iPD
 acd
 bjH
 dwU
@@ -55345,7 +55458,7 @@ yhF
 yhF
 yhF
 uOq
-aYr
+efj
 aYr
 aYr
 aYr
@@ -55602,7 +55715,7 @@ oDI
 oDI
 oDI
 aOn
-bTx
+vZN
 bTx
 bTx
 bTx
@@ -55859,7 +55972,7 @@ yhF
 yhF
 yhF
 hGa
-aYr
+efj
 aYr
 aYr
 aYr
@@ -56116,7 +56229,7 @@ auh
 auh
 xjq
 aOn
-gJY
+qCm
 gJY
 iRM
 iRM
@@ -56373,7 +56486,7 @@ erK
 erK
 uun
 aOn
-afC
+qiU
 afC
 aGD
 aCV
@@ -57389,7 +57502,7 @@ tDe
 bdR
 bdR
 bdR
-lgW
+sOW
 lgW
 lgW
 lgW
@@ -58424,7 +58537,7 @@ xfe
 xfe
 mAo
 hzS
-lgW
+sOW
 aOn
 aft
 aft
@@ -58923,7 +59036,7 @@ pCH
 wso
 wso
 wso
-exa
+rGe
 exa
 qja
 voy
@@ -59163,7 +59276,7 @@ aaa
 aaa
 aaa
 blK
-cnR
+fex
 jJi
 cmN
 ijQ
@@ -60461,7 +60574,7 @@ gjz
 exa
 qZk
 qZk
-exa
+rGe
 exa
 exa
 exa
@@ -61219,7 +61332,7 @@ aaa
 aaa
 aaa
 blK
-cnR
+fex
 vPE
 cmN
 ijQ
@@ -62517,7 +62630,7 @@ wrH
 exa
 pkc
 qZk
-exa
+rGe
 exa
 exa
 exa
@@ -63275,7 +63388,7 @@ aaa
 aaa
 aaa
 blK
-cnR
+fex
 vPE
 cmN
 ijQ
