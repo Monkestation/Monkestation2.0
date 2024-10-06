@@ -5,7 +5,7 @@
 	e_cost = 200
 	harmful = FALSE
 
-/obj/item/ammo_casing/energy/electrode/hos
+/obj/item/ammo_casing/energy/electrode/hos //monkestation edit
 	e_cost = 300
 
 /obj/item/ammo_casing/energy/electrode/spec

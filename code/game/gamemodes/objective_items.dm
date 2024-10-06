@@ -250,6 +250,7 @@
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
 
+//MONKESTATION EDIT START
 /datum/objective_item/steal/hosgun
 	name = "the head of security's personal weapon"
 	targetitem = /obj/item/choice_beacon/hos
@@ -260,6 +261,7 @@
 
 /obj/item/choice_beacon/hos/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
+//MONKESTATION EDIT END
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
