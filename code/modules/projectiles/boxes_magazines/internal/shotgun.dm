@@ -23,7 +23,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/com/compact
 	name = "compact shotgun internal magazine"
-	max_ammo = 5
+	max_ammo = 6 //Monkestation edit
 
 /obj/item/ammo_box/magazine/internal/shot/dual
 	name = "double-barrel shotgun internal magazine"
