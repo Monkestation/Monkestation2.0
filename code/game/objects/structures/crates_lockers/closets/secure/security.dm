@@ -72,7 +72,7 @@
 	. = ..()
 
 	// Traitor steal objectives
-	new /obj/item/gun/ballistic/automatic/pistol/paco/hos(src) //monkestation edit: paco sec
+	new /obj/item/choice_beacon/hos(src) //monkestation edit
 	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden

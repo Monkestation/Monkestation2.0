@@ -251,14 +251,15 @@
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
 
 /datum/objective_item/steal/hosgun
-	name = "the head of security's prized paco"
-	targetitem = /obj/item/gun/ballistic/automatic/pistol/paco/hos
+	name = "the head of security's personal weapon"
+	targetitem = /obj/item/choice_beacon/hos
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 
-/obj/item/gun/ballistic/automatic/pistol/paco/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/ballistic/automatic/pistol/paco/hos)
+/obj/item/choice_beacon/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
