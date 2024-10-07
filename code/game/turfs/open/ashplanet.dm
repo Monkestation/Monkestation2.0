@@ -68,8 +68,3 @@
 /turf/open/misc/ashplanet/wateryrock/Initialize(mapload)
 	icon_state = "[icon_state][rand(1, 9)]"
 	. = ..()
-
-// Monke Edit
-/turf/open/misc/ashplanet/rocky/safe
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-// End of Monke Edit
