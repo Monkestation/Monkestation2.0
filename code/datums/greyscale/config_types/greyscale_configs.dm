@@ -1319,4 +1319,3 @@
 	name = "Worn Wizard Hat"
 	icon_file = 'monkestation/icons/mob/clothing/head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/crew_wizhat_worn.json'
-  
