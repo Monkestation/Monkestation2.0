@@ -2228,12 +2228,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"aYP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "aZa" = (
 /obj/structure/toilet{
 	dir = 4
@@ -28056,7 +28050,6 @@
 "nif" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nig" = (
@@ -36234,7 +36227,6 @@
 /turf/closed/wall,
 /area/station/maintenance/solars/starboard/aft)
 "rkv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -134723,7 +134715,7 @@ xzN
 xzN
 xzN
 xzN
-aYP
+nWg
 nWg
 nWg
 nWg
