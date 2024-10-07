@@ -51,6 +51,7 @@
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 
+// Monkestation addition
 // Parts used by tundra moths
 /obj/item/bodypart/head/tundramoth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
