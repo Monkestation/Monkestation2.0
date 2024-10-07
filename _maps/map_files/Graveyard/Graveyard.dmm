@@ -35812,14 +35812,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "qXA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/structure/disposalpipe/junction{
+	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/upper)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "qYv" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel's Emergency Quarters"
@@ -36368,8 +36368,6 @@
 /area/station/science/genetics)
 "rpb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -37325,8 +37323,6 @@
 /area/station/service/theater)
 "rMn" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall,
 /area/station/maintenance/fore/greater)
 "rMs" = (
@@ -44298,6 +44294,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "vjr" = (
@@ -50785,10 +50784,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ygm" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/autoname/directional/west,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "ygz" = (
@@ -157560,7 +157562,7 @@ auM
 asN
 iTU
 nfc
-uGa
+qXA
 vQA
 vig
 sMn
@@ -158074,12 +158076,12 @@ auM
 pyX
 vig
 kWV
-yea
-kWV
-kWV
-dNO
-qXA
 ygm
+qzt
+qzt
+iuH
+hCb
+qzt
 aRp
 iuH
 hok
