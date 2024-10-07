@@ -32,6 +32,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#3A4E7D#DEB63D"
 	icon_state = "beret_badge_police"
+	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/head/beret/blueshield/navy
 	name = "navy blueshield's beret"
