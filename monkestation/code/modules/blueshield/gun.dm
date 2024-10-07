@@ -37,7 +37,7 @@
 /obj/item/gun/ballistic/revolver/takbok/blueshield/examine_more(mob/user)
 	. = ..()
     //Basically, it is a short continuation story of the original takbok about fans continuing their passion for an idea or project. Still, the original company stopped them despite the innovations they brought. And the ‘C’ is a callback to their inspirational figure ‘Cawgo’
-	. += "After the production run of the original Takbok \
+	. = "After the production run of the original Takbok \
 		ended in 2523 alongside its popularity, enthusiasts of the sidearm continued\
 		to tinker with the make of the weapon to keep it with modern standards for \
 		firearms, despite Trappiste's license on the design. This unusual passion \
