@@ -483,7 +483,7 @@
 "amG" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "amL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2048,7 +2048,7 @@
 /area/station/engineering/lobby)
 "aVj" = (
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "aVy" = (
 /obj/structure/bed,
 /obj/machinery/light/small/directional/north,
@@ -3284,7 +3284,7 @@
 "bwB" = (
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "bwG" = (
 /obj/structure/closet/wardrobe/black,
 /obj/effect/landmark/start/hangover/closet,
@@ -5241,7 +5241,7 @@
 "csM" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "ctc" = (
 /obj/machinery/atmospherics/pipe/color_adapter,
 /turf/open/floor/iron,
@@ -6061,7 +6061,7 @@
 /area/station/command/heads_quarters/blueshield)
 "cLN" = (
 /turf/open/floor/plating,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "cMj" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern{
@@ -7002,7 +7002,7 @@
 "dlh" = (
 /obj/structure/marker_beacon/bronze,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "dlj" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/maintenance,
@@ -7813,7 +7813,7 @@
 /obj/effect/landmark/start/virologist,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "dFl" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/spawner/random/trash/mess,
@@ -9343,10 +9343,6 @@
 /obj/item/stamp/head/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
-"exd" = (
-/obj/structure/sign/plaques/tram,
-/turf/open/misc/asteroid,
-/area/graveyard/tunnels)
 "exl" = (
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
@@ -9481,7 +9477,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "ezi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -12754,7 +12750,7 @@
 	name = "eeblefly"
 	},
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "gdk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -13264,7 +13260,7 @@
 "gqu" = (
 /obj/structure/ore_box,
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "gqD" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/trimline/gray/filled/line{
@@ -15189,7 +15185,7 @@
 "hjy" = (
 /obj/effect/spawner/random/trash/grime,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "hjY" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -19298,7 +19294,7 @@
 "jfk" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "jfv" = (
 /obj/effect/turf_decal/trimline/piss_yellow/filled/line{
 	dir = 4
@@ -24295,7 +24291,7 @@
 "lAH" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "lAN" = (
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -24713,7 +24709,7 @@
 "lMq" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "lMy" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera/autoname/directional/west,
@@ -38113,7 +38109,7 @@
 "sky" = (
 /obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "skA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 10
@@ -38996,7 +38992,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "sEY" = (
 /obj/machinery/vending/games,
 /obj/structure/sign/painting/library{
@@ -39552,7 +39548,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/iron,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "sUe" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2{
 	dir = 6
@@ -41558,7 +41554,7 @@
 "tRk" = (
 /obj/effect/landmark/start/virologist,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "tRo" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -45853,7 +45849,7 @@
 /area/station/command/heads_quarters/captain/private)
 "vUs" = (
 /turf/closed/wall,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "vUx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/duct,
@@ -46283,7 +46279,7 @@
 "wfd" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/misc/asteroid,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "wfn" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
 	dir = 4
@@ -47575,7 +47571,7 @@
 /area/station/service/chapel/office)
 "wJR" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "wKq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -50986,7 +50982,7 @@
 /obj/structure/ladder,
 /obj/structure/ladder,
 /turf/open/floor/plating,
-/area/graveyard/tunnels)
+/area/graveyard/tunnels/mobspawngen)
 "yjT" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -93021,7 +93017,7 @@ aVj
 aVj
 aVj
 aVj
-exd
+aVj
 aVj
 aVj
 aVj

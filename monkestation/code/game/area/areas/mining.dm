@@ -54,7 +54,9 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 	always_unpowered = TRUE
 	outdoors = FALSE
-	sound_environment = SOUND_AREA_ASTEROID
+	sound_environment = SOUND_AREA_LAVALAND
+
+/area/graveyard/tunnels/mobspawngen // todo get custom generator done for mobs in the tunnels
 
 /area/graveyard/tunnels/safe
 	icon_state = "explored"
