@@ -141,10 +141,6 @@
 	slowdown = 0.25
 	strip_delay = 60
 
-/obj/item/clothing/suit/space/hardsuit/juggernaut/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
-
 /obj/item/clothing/suit/space/hardsuit/cbrn
 	var/on = FALSE
 
@@ -161,3 +157,11 @@
 		toggle_spacesuit(user)
 	else if(istype(actiontype, /datum/action/item_action/toggle_helmet))
 		ToggleHelmet()
+
+/obj/item/clothing/suit/space/hardsuit/cbrn/equipped(mob/user, slot)
+	. = ..()
+	AddComponent(/datum/component/geiger_sound)
+
+/obj/item/clothing/suit/space/hardsuit/cbrn/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
