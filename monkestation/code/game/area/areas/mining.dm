@@ -17,10 +17,14 @@
 	icon_state = "space"
 	ambience_index = AMBIENCE_CREEPY
 
+/area/graveyard/surface/randomgen
+	map_generator = /datum/map_generator/jungle_generator
+
 /area/graveyard/surface/structures
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	outdoors = FALSE
+	ambience_index = null
 
 /area/graveyard/surface/structures/departurepark
 	name = "Departures Park"
