@@ -15,7 +15,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
 // Blueshields custom takbok revolver.
 /obj/item/gun/ballistic/revolver/takbok/blueshield
-	name = "ghost takbok revolver" //Ghost as in its lack of tracibility. Give it a unique prefix compared hellfire's 'modified' to stand out
+	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notabley lacking any of the company's orginal markings or tracablable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, and wield_recoil =1.
@@ -30,6 +30,7 @@
 /obj/item/gun/ballistic/revolver/takbok/blueshield/examine_more(mob/user)
 	. = ..()
     //Basically, it is a short continuation story of the original takbok about fans continuing their passion for an idea or project. Still, the original company stopped them despite the innovations they brought. And the ‘C’ is a callback to their inspirational figure ‘Cawgo’
+	. += ""
 	. += "After the production run of the original Takbok \
 		ended in 2523 alongside its popularity, enthusiasts of the sidearm continued\
 		to tinker with the make of the weapon to keep it with modern standards for \
@@ -43,7 +44,7 @@
 // Gunset for the custom Takbok Revolver
 
 /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield
-	name = "Ghost 'Takbok' gunset"
+	name = "Unmarked 'Takbok' gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/revolver/takbok/blueshield
 
@@ -56,7 +57,7 @@
 
 /obj/item/choice_beacon/blueshield/generate_display_names()
 	var/static/list/selectable_gun_types = list(
-		"Ghost Takbok Revolver Set" = /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield,
+		"Unmarked Takbok Revolver Set" = /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield,
 		"Custom Hellfire Laser Rifle" = /obj/item/gun/energy/laser/hellgun/blueshield,
 		"Bogseo Submachinegun Gunset" = /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo,
 		"Tech-9" = /obj/item/storage/toolbox/guncase/skyrat/pistol/tech_9,
