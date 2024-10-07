@@ -8,6 +8,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/plasmaman_head.dmi'
 	icon_state = "bs_envirohelm"
+	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/under/plasmaman/blueshield
 	name = "blueshield envirosuit"
