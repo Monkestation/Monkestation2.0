@@ -12965,7 +12965,7 @@
 /area/station/hallway/primary/starboard)
 "gqL" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "funeral parlor maintenance"
+	name = "Funeral Parlor Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/plating,
@@ -21328,7 +21328,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "kwK" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "funeral parlor maintenance"
+	name = "Funeral Parlor Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/plating,
