@@ -24,7 +24,7 @@
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	outdoors = FALSE
-	ambience_index = null
+	ambience_index = AMBIENCE_GENERIC
 
 /area/graveyard/surface/structures/departurepark
 	name = "Departures Park"
