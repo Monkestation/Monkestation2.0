@@ -111,3 +111,5 @@
 	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
 	icon_state = "secure_bunker"
 
+/area/graveyard/bunker/public
+	name = "Public Tunnels Access"
