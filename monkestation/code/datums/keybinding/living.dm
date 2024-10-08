@@ -113,6 +113,6 @@
 	if(.)
 		return
 	var/mob/mob = user.mob
-	var/obj/item/item = M.get_active_held_item()
-	if(I.GetComponent(/datum/component/two_handed)) // does our active item have a two_handed component? if so let's ctrl click it!
-		I.CtrlClick(M)
+	var/obj/item/item = mob.get_active_held_item()
+	if(item.GetComponent(/datum/component/two_handed)) // does our active item have a two_handed component? if so let's ctrl click it!
+		item.CtrlClick(mob)
