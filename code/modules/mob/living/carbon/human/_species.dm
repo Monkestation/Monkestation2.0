@@ -148,8 +148,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
 	var/breathid = "o2"
-	///are we a furry little guy?
-	var/uses_fur = FALSE
 	///What anim to use for dusting
 	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
@@ -679,7 +677,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
 	species_human.remove_overlay(FACE_LAYER)
-	var/height_offset = species_human.get_top_offset() // From high changed by varying limb height
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
@@ -692,9 +689,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eye_organ)
 				eye_organ.refresh(call_update = FALSE)
-				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
-					eye_overlay.pixel_y += height_offset
-					standing += eye_overlay
+				standing += eye_organ.generate_body_overlay(species_human)
 
 		// organic body markings
 		if(HAS_MARKINGS in species_traits)
@@ -708,22 +703,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!HAS_TRAIT(species_human, TRAIT_HUSK))
 					if(noggin && (IS_ORGANIC_LIMB(noggin)))
 						var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
-						markings_head_overlay.pixel_y += height_offset
 						standing += markings_head_overlay
 
 					if(chest && (IS_ORGANIC_LIMB(chest)))
 						var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
-						markings_chest_overlay.pixel_y += height_offset
 						standing += markings_chest_overlay
 
 					if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
 						var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
-						markings_r_arm_overlay.pixel_y += height_offset
 						standing += markings_r_arm_overlay
 
 					if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
 						var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
-						markings_l_arm_overlay.pixel_y += height_offset
 						standing += markings_l_arm_overlay
 
 					if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
@@ -746,7 +737,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
-				underwear_overlay.pixel_y += height_offset
 				standing += underwear_overlay
 
 		if(species_human.undershirt)
@@ -757,7 +747,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-				working_shirt.pixel_y += height_offset
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
@@ -771,7 +760,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 				if(!socks.use_static)
 					socks_overlay.color = species_human.socks_color
-				socks_overlay.pixel_y += height_offset
 				standing += socks_overlay
 			//MONKESTATION EDITS END
 
@@ -1040,12 +1028,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
-			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
-				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-					if(!disable_warning)
-						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
-					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)

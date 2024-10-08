@@ -39,9 +39,6 @@
 #define DNA_SKIN_TONE_BLOCK 3
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
-/// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 16
-
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
@@ -57,7 +54,11 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
-#define DNA_MUTANT_COLOR_SECONDARY 16
+#define DNA_MONKEY_TAIL_BLOCK 16
+#define DNA_MUTANT_COLOR_SECONDARY 17
+
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 17
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8

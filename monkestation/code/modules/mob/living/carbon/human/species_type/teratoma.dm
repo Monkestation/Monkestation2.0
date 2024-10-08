@@ -21,7 +21,6 @@
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_GENELESS,
 		TRAIT_ILLITERATE,
-		TRAIT_KLEPTOMANIAC,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_JUMPSUIT,
 		TRAIT_NO_ZOMBIFY,
@@ -61,6 +60,7 @@
 
 /datum/species/teratoma/on_species_gain(mob/living/carbon/human/idiot, datum/species/old_species, pref_load)
 	. = ..()
+	idiot.gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
 	misfortune = idiot.AddComponent(/datum/component/omen/teratoma)
 	RegisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 

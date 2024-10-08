@@ -109,7 +109,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["spines"] = "None"
 	target.dna.features["tail_cat"] = "None"
 	target.dna.features["tail_lizard"] = "Smooth"
-	target.dna.features["tail_monkey"] = "Chimp" //Monkestation Addition
+	target.dna.features["tail_monkey"] = "Monkey"
 	target.dna.features["pod_hair"] = "Ivy"
 	target.dna.features["ethereal_horns"] = "None" //Monkestation Addition
 	target.dna.features["ethereal_tail"] = "None" //Monkestation Addition
