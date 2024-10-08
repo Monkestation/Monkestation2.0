@@ -228,9 +228,9 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Griffon Head"
 	item_path = /obj/item/clothing/head/costume/griffin
 
-/datum/loadout_item/head/wizard
-	name = "Wizard Hat"
-	item_path = /obj/item/clothing/head/wizard/fake
+/datum/loadout_item/head/wizhat
+	name = "Colorable Wizard Hat"
+	item_path = /obj/item/clothing/head/costume/crew_wizhat
 
 /datum/loadout_item/head/witch
 	name = "Witch Hat"

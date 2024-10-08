@@ -1,0 +1,10 @@
+{
+    "crew_wizhat": [
+        {
+            "type": "icon_state",
+            "icon_state": "crew_wizhat",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}

@@ -1309,3 +1309,13 @@
 	name = "Worn Tassled Jacket"
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
+
+/datum/greyscale_config/crew_wizhat
+	name = "Wizard Hat"
+	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/crew_wizhat.json'
+
+/datum/greyscale_config/crew_wizhat_worn
+	name = "Worn Wizard Hat"
+	icon_file = 'monkestation/icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/crew_wizhat_worn.json'
