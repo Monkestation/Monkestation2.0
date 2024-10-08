@@ -24019,6 +24019,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "hHU" = (
+/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "hHV" = (
@@ -33539,6 +33540,10 @@
 /obj/item/plant_analyzer,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"kKt" = (
+/obj/machinery/vending/barbervend,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/bar)
 "kKv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
@@ -177796,7 +177801,7 @@ fWU
 fWU
 dMS
 fkJ
-hHU
+kKt
 hHU
 dMS
 nCJ

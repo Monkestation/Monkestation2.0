@@ -811,6 +811,9 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
+		/obj/item/scissors/cyborg //anything you can do borgs can do better
+		/obj/item/hairbrush
+		/obj/item/dyespray
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,

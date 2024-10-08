@@ -2363,20 +2363,24 @@
 /obj/structure/table,
 /obj/item/razor{
 	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -6;
-	pixel_y = 2
+	pixel_y = 1
 	},
 /obj/item/reagent_containers/cup/bottle{
 	desc = "A small bottle of Barber's Aid.";
 	list_reagents = list(/datum/reagent/barbers_aid=30);
 	name = "Barber's Aid bottle";
-	pixel_x = -2;
-	pixel_y = 10
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -7;
+	pixel_y = 6
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/obj/item/scissors{
+	pixel_x = 1;
+	pixel_y = 2
+	},
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "aiT" = (
@@ -12923,27 +12927,15 @@
 	},
 /area/station/command/teleporter)
 "dau" = (
-/obj/structure/table,
-/obj/item/clothing/head/wig,
-/obj/item/clothing/head/wig{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/clothing/head/wig{
+/obj/structure/closet,
+/obj/item/clothing/head/soft/red,
+/obj/item/clothing/head/soft/green{
 	pixel_x = 4;
-	pixel_y = -5
+	pixel_y = -1
 	},
-/obj/item/clothing/mask/fakemoustache,
-/obj/item/clothing/mask/fakemoustache{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/clothing/mask/fakemoustache,
-/obj/item/clothing/mask/fakemoustache{
-	pixel_x = 8;
-	pixel_y = -5
-	},
-/turf/open/floor/plating,
+/obj/item/clothing/suit/apron/overalls,
+/obj/item/clothing/suit/apron/overalls,
+/turf/open/floor/iron/checker,
 /area/station/service/barber)
 "daQ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -16345,7 +16337,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "eep" = (
-/turf/open/floor/plating,
+/turf/open/floor/iron/checker,
 /area/station/service/barber)
 "eer" = (
 /obj/structure/chair/pew,
@@ -40637,7 +40629,7 @@
 	id_tag = "commissarydoor";
 	name = "Barber Storage"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/checker,
 /area/station/service/barber)
 "lTx" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -61853,23 +61845,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"sHA" = (
-/obj/structure/table,
-/obj/item/razor,
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/cup/bottle{
-	desc = "A small bottle of Barber's Aid.";
-	list_reagents = list(/datum/reagent/barbers_aid=30);
-	name = "Barber's Aid bottle";
-	pixel_x = 10;
-	pixel_y = 3
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/turf/open/floor/wood/large,
-/area/station/service/barber)
 "sHH" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/ce)
@@ -72849,8 +72824,47 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vZB" = (
+/obj/structure/rack/wooden,
+/obj/item/perfume/amber{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/perfume/cologne{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/perfume/wood{
+	pixel_y = 10
+	},
+/obj/item/perfume/mint{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/perfume/cherry{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/item/perfume/jasmine{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/perfume/pear{
+	pixel_y = -5
+	},
+/obj/item/perfume/rose{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/perfume/vanilla{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/perfume/strawberry{
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/wood/large,
+/turf/open/floor/wood,
 /area/station/service/barber)
 "vZD" = (
 /obj/item/kirbyplants/random/dead,
@@ -73676,7 +73690,27 @@
 /area/station/security/checkpoint/supply)
 "wna" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/item/clothing/head/wig,
+/obj/item/clothing/head/wig{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/wig{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/clothing/mask/fakemoustache,
+/obj/item/clothing/mask/fakemoustache,
+/obj/item/clothing/mask/fakemoustache{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/clothing/mask/fakemoustache{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/checker,
 /area/station/service/barber)
 "wng" = (
 /obj/structure/cable,
@@ -74352,15 +74386,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "wxa" = (
-/obj/structure/closet,
-/obj/item/clothing/head/soft/red,
-/obj/item/clothing/head/soft/green{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/apron/overalls,
-/obj/item/clothing/suit/apron/overalls,
-/turf/open/floor/plating,
+/obj/machinery/vending/barbervend,
+/turf/open/floor/iron/checker,
 /area/station/service/barber)
 "wxb" = (
 /obj/structure/cable,
@@ -115348,7 +115375,7 @@ iRL
 cXm
 ykX
 mGw
-sHA
+aiL
 sYl
 unD
 sYl
