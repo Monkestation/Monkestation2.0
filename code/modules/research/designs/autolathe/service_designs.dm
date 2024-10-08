@@ -72,7 +72,7 @@
 
 /datum/design/scissors
 	name = "Barber's Scissors"
-	id = "Scissors"
+	id = "scissors"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/scissors
