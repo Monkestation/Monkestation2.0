@@ -58,6 +58,30 @@
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
+/// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
+/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
+	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
+	if(ROLE_SYNDICATE in attacked_mob.faction)
+		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
+	//not an antag datum check so it applies to wizard minions as well
+	if(ROLE_WIZARD in attacked_mob.faction)
+		guilty(attacked_mob, "for blasphemous magicks!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
+		guilty(attacked_mob, "for blasphemous worship!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_EVIL))
+		guilty(attacked_mob, "an almost fanatical commitment to EEEEVIL!")
+	if(attacked_mob.mind)
+		var/datum/mind/guilty_conscience = attacked_mob.mind
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))
+			guilty(attacked_mob, "for their blatant surgical malice...")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/nightmare))
+			guilty(attacked_mob, "for being a light-consuming nightmare!")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/ninja))
+			guilty(attacked_mob, "for their misaligned association with the Spider Clan!")
+		var/datum/antagonist/heretic/heretic_datum = guilty_conscience.has_antag_datum(/datum/antagonist/heretic)
+		if(heretic_datum?.ascended)
+			guilty(attacked_mob, "for blasphemous, heretical, out of control worship!")
+
 /**
  * Called by hooked signals whenever someone attacks the person with this trauma
  * Checks if the attacker should be considered guilty and adds them to the guilty list if true
