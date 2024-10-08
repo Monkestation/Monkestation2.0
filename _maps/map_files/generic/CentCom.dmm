@@ -19799,6 +19799,14 @@
 	},
 /turf/open/floor/plating,
 /area/cruiser_dock)
+"cJh" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/closed/wall/mineral/titanium{
+	paint_color = "#5f6361"
+	},
+/area/centcom/central_command_areas/admin)
 "cKq" = (
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
@@ -20185,6 +20193,14 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
+"eoP" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium{
+	paint_color = "#5f6361"
+	},
+/area/centcom/central_command_areas/admin)
 "erK" = (
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
@@ -22755,6 +22771,14 @@
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"otX" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium{
+	paint_color = "#5f6361"
+	},
+/area/centcom/central_command_areas/admin)
 "oum" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -23476,7 +23500,9 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/turf/open/water,
+/turf/closed/wall/mineral/titanium{
+	paint_color = "#5f6361"
+	},
 /area/centcom/central_command_areas/admin)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -55350,11 +55376,11 @@ aaa
 aaa
 aOn
 jZA
-wco
+eoP
 bwZ
 bwZ
 bwZ
-pnO
+cJh
 jZA
 jZA
 jZA
@@ -57667,7 +57693,7 @@ rjG
 bwZ
 bwZ
 bwZ
-lAc
+otX
 jZA
 jZA
 wLm
