@@ -20,7 +20,7 @@
 	// We need to regenerate everything for height
 	regenerate_icons()
 	if(isdummy(src))
-		apply_height_filters(src, TRUE)
+		apply_height_filters(src, only_apply_in_prefs = TRUE)
 	// No more passtable for you, bub
 
 /mob/living/carbon/human/proc/on_gain_giant_trait(datum/source)

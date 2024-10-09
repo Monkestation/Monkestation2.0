@@ -845,8 +845,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!(HAS_TRAIT(source, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(accessory.color_src)
-						if(SKINTONES)
-							accessory_overlay.color = skintone2hex(source.skin_tone)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = fixed_mut_color

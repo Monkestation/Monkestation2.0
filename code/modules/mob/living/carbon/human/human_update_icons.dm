@@ -912,7 +912,7 @@ generate/load female uniform sprites matching all previously decided variables
 /**
  * Applies a filter to an appearance according to mob height
  */
-/mob/living/carbon/human/proc/apply_height_filters(image/appearance)
+/mob/living/carbon/human/proc/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")

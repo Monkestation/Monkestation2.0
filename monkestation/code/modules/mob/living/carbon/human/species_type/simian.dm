@@ -4,7 +4,6 @@
 	species_traits = list(
 		NO_UNDERWEAR,
 		SPECIES_FUR,
-		SKINTONES,
 	)
 	inherent_traits = list(
 		TRAIT_VAULTING,
@@ -28,6 +27,8 @@
 	stunmod = 1.3
 	speedmod = -0.1 //lil bit faster
 	payday_modifier = 1
+
+	eyes_icon = 'monkestation/icons/mob/species/simian/bodyparts.dmi'
 
 	give_monkey_species_effects = FALSE
 
@@ -81,7 +82,6 @@
 /datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 	human_who_gained_species.gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
-	handle_mutant_bodyparts(human_who_gained_species)
 
 /datum/species/monkey/simian/random_name(gender,unique,lastname)
 	if(unique)

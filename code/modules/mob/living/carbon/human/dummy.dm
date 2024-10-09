@@ -20,7 +20,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	harvest_organs()
-	return ..()
+	. = ..()
+	if(pref_load)
+		apply_height_filters(src, only_apply_in_prefs = TRUE)
 
 ///Let's extract our dummies organs and limbs for storage, to reduce the cache missed that spamming a dummy cause
 /mob/living/carbon/human/dummy/proc/harvest_organs()
@@ -111,6 +113,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["tail_lizard"] = "Smooth"
 	target.dna.features["tail_monkey"] = "Monkey"
 	target.dna.features["pod_hair"] = "Ivy"
+	target.dna.features["fur"] = COLOR_WHITE //Monkestation Addition
 	target.dna.features["ethereal_horns"] = "None" //Monkestation Addition
 	target.dna.features["ethereal_tail"] = "None" //Monkestation Addition
 	target.dna.features["ipc_screen"] = "BSOD" //Monkestation Addition
