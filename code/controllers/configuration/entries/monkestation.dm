@@ -62,3 +62,7 @@
 	. = ..()
 	if(.)
 		config_entry_value *= 600 // documented as minutes
+
+/// The base URL for a ss13-yt-wrap server (https://github.com/Absolucy/ss13-yt-wrap) to use.
+/datum/config_entry/string/yt_wrap_url
+	protection = CONFIG_ENTRY_LOCKED

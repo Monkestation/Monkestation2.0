@@ -16,10 +16,10 @@
 
 
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/device/cassette_tape) || !user.client)
+	if(!istype(weapon, /obj/item/cassette_tape) || !user.client)
 		return
 
-	var/obj/item/device/cassette_tape/attacked_tape = weapon
+	var/obj/item/cassette_tape/attacked_tape = weapon
 
 	var/list/admin_count = get_admin_counts(R_FUN)
 	if(!length(admin_count["present"]))

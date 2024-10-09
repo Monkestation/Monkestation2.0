@@ -236,9 +236,9 @@
 		SSpersistence.load_modular_persistence(humanc.get_organ_slot(ORGAN_SLOT_BRAIN))
 
 		//monkestation edit start
-		if(GLOB.dj_booth)
-			var/obj/machinery/cassette/dj_station/dj = GLOB.dj_booth
-			dj.add_new_player(humanc)
+		if(GLOB.old_dj_booth)
+			var/obj/machinery/cassette/old_dj_station/dj = GLOB.old_dj_booth
+			//dj.add_new_player(humanc)
 		//monkestation edit end
 
 		if(GLOB.curse_of_madness_triggered)

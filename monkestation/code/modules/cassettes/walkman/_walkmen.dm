@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/walkman/play_pause,/datum/action/item_action/walkman/next_song,/datum/action/item_action/walkman/restart_song)
 	///the cassette tape object
-	var/obj/item/device/cassette_tape/tape
+	var/obj/item/cassette_tape/tape
 	///if the walkman is paused or not
 	var/paused = TRUE
 	///songs inside the current playlist
@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	. = ..()
 
 /obj/item/device/walkman/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return
 	if(!tape)
 		insert_tape(cassette)
@@ -102,10 +102,11 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	if(link_play)
 		listener.tgui_panel?.stop_music()
 		GLOB.youtube_exempt["walkman"] -= listener
-		if(GLOB.dj_booth && GLOB.dj_broadcast)
-			var/obj/machinery/cassette/dj_station/dj = GLOB.dj_booth
+		/*if(GLOB.old_dj_booth && GLOB.dj_broadcast)
+			var/obj/machinery/cassette/old_dj_station/dj = GLOB.old_dj_booth
 			if(iscarbon(current_listener))
 				dj.check_solo_broadcast(current_listener)
+		*/
 		return
 	var/sound/break_sound = sound(null, 0, 0, CHANNEL_WALKMAN)
 	break_sound.priority = 255
@@ -232,9 +233,9 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 
 
 /*Called when
- *Arguments: obj/item/device/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
+ *Arguments: obj/item/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
  */
-/obj/item/device/walkman/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/item/device/walkman/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 

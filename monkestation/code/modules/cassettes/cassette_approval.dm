@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(cassette_reviews, list())
 
 #define ADMIN_OPEN_REVIEW(id) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];open_music_review=[id]'>Open Review</a>)"
-/proc/submit_cassette_for_review(obj/item/device/cassette_tape/submitted, mob/user)
+/proc/submit_cassette_for_review(obj/item/cassette_tape/submitted, mob/user)
 	if(!user.client)
 		return
 	var/datum/cassette_review/new_review = new
@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 															has requested a review on their cassette."))]")
 	to_chat(user, span_notice("Your Cassette has been sent to the Space Board of Music for review, you will be notified when an outcome has been made."))
 
-/obj/item/device/cassette_tape/proc/generate_cassette_json()
+/obj/item/cassette_tape/proc/generate_cassette_json()
 	if(approved_tape)
 		return
 	if(!length(GLOB.approved_ids))
@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			"song_url" = list()
 		)
 	)
-	var/obj/item/device/cassette_tape/submitted_tape
+	var/obj/item/cassette_tape/submitted_tape
 
 	var/action_taken = FALSE
 

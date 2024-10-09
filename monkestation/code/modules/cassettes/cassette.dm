@@ -1,5 +1,5 @@
 
-/obj/item/device/cassette_tape
+/obj/item/cassette_tape
 	name = "Debug Cassette Tape"
 	desc = "You shouldn't be seeing this!"
 	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
@@ -28,7 +28,7 @@
 	var/random = FALSE
 	var/cassette_desc_string = "Generic Desc"
 
-/obj/item/device/cassette_tape/Initialize(mapload, spawned_id)
+/obj/item/cassette_tape/Initialize(mapload, spawned_id)
 	. = ..()
 	if(!length(GLOB.approved_ids))
 		GLOB.approved_ids = initialize_approved_ids()
@@ -57,13 +57,13 @@
 
 	update_appearance()
 
-/obj/item/device/cassette_tape/attack_self(mob/user)
+/obj/item/cassette_tape/attack_self(mob/user)
 	..()
 	icon_state = flipped ? side1_icon : side2_icon
 	flipped = !flipped
 	to_chat(user, span_notice("You flip [src]."))
 
-/obj/item/device/cassette_tape/update_desc(updates)
+/obj/item/cassette_tape/update_desc(updates)
 	. = ..()
 	desc = cassette_desc_string
 	desc += "\n"
@@ -72,7 +72,7 @@
 	if(author_name)
 		desc += span_notice("Mixed by [author_name]\n")
 
-/obj/item/device/cassette_tape/attackby(obj/item/item, mob/living/user)
+/obj/item/cassette_tape/attackby(obj/item/item, mob/living/user)
 	if(!istype(item, /obj/item/pen))
 		return ..()
 	var/choice = tgui_input_list(usr, "What would you like to change?", items = list("Cassette Name", "Cassette Description", "Cancel"))
@@ -122,8 +122,8 @@
 	var/list/songs = list("side1" = list(),
 						  "side2" = list())
 
-/obj/item/device/cassette_tape/blank
+/obj/item/cassette_tape/blank
 	id = "blank"
 
-/obj/item/device/cassette_tape/friday
+/obj/item/cassette_tape/friday
 	id = "friday"
