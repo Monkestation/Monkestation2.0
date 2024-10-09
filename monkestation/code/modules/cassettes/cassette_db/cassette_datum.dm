@@ -46,7 +46,7 @@
 /datum/cassette_data/proc/generate_cassette(turf/location)
 	if(!location)
 		return
-	var/obj/item/device/cassette_tape/new_tape = new(location)
+	var/obj/item/cassette_tape/new_tape = new(location)
 	new_tape.name = cassette_name
 	new_tape.cassette_desc_string = cassette_desc
 	new_tape.icon_state = cassette_design_front
