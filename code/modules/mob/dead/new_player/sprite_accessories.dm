@@ -2204,7 +2204,7 @@ MONKESTATION EDIT
 	name = "Moffra"
 	icon_state = "moffra"
 
-/datum/sprite_accessory/moth_wings/tundra
+/datum/sprite_accessory/moth_wings/tundra // Monkestation addition
 	name = "Tundra"
 	icon_state = "tundra"
 
@@ -2299,7 +2299,7 @@ MONKESTATION EDIT
 	name = "Moffra"
 	icon_state = "moffra"
 
-/datum/sprite_accessory/moth_antennae/tundra
+/datum/sprite_accessory/moth_antennae/tundra // Monkestation addition
 	name = "Tundra"
 	icon_state = "tundra"
 
@@ -2367,6 +2367,6 @@ MONKESTATION EDIT
 	name = "Witch Wing"
 	icon_state = "witchwing"
 
-/datum/sprite_accessory/moth_markings/tundra
+/datum/sprite_accessory/moth_markings/tundra // Monkestation addition
 	name = "Tundra"
 	icon_state = "tundra"
