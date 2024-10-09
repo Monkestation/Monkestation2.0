@@ -30,11 +30,10 @@
 
 		var/icon/final_icon = icon(simian_chest)
 		if(tail.icon_state != "none")
-			var/icon/tail_icon = icon(tail.icon, "m_tail_monkey_[tail.icon_state]_BEHIND", SOUTH)
+			var/icon/tail_icon = icon(tail.icon, "m_tail_monkey_[tail.icon_state]_FRONT", NORTH)
 			final_icon.Blend(tail_icon, ICON_OVERLAY)
-		final_icon.Crop(10, 8, 22, 23)
-		final_icon.Scale(26, 32)
-		final_icon.Crop(-2, 1, 29, 32)
+		final_icon.Crop(8, 8, 30, 30)
+		final_icon.Scale(32, 32)
 		values[tail.name] = final_icon
 
 	return values
