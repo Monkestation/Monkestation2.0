@@ -117,7 +117,7 @@
 	return to_add
 
 
-///// Monkestation addition Tundra Moths
+///// Monkestation addition
 
 /datum/species/moth/tundra
 	name = "\improper Tundra Moth"
