@@ -38,7 +38,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "ba" = (
 /obj/effect/turf_decal/siding/wood{
@@ -76,7 +76,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "bG" = (
 /obj/effect/turf_decal/siding/wood{
@@ -108,7 +108,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "ct" = (
 /obj/structure/table/wood,
@@ -504,7 +504,7 @@
 /area/shuttle/escape)
 "kh" = (
 /obj/effect/turf_decal/siding/wood/corner,
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "kl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1380,7 +1380,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "yV" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -1574,7 +1574,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "Cw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1713,7 +1713,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "Fj" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2305,7 +2305,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "Qz" = (
 /obj/structure/closet/emcloset,
@@ -2319,7 +2319,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "QR" = (
 /obj/effect/turf_decal/siding/wood,
@@ -2371,7 +2371,7 @@
 	pixel_x = -9
 	},
 /obj/effect/turf_decal/siding/wood/corner,
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "RL" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2635,7 +2635,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/dirt/jungle/dark,
+/turf/open/misc/dirt/station/jungle/dark,
 /area/shuttle/escape)
 "Wo" = (
 /turf/closed/wall/mineral/titanium,
@@ -2756,7 +2756,7 @@
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "ZT" = (
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/shuttle/escape)
 "ZW" = (
 /obj/structure/table/reinforced,
