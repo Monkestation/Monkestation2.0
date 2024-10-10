@@ -2,7 +2,7 @@
 	savefile_key = "feature_goblin_ears"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Goblin Ears"
+	main_feature_name = "Big Ears"
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/goblin_ears/init_possible_values()
