@@ -8,7 +8,10 @@
 	cost = 3
 
 /datum/armament_entry/assault_operatives/explosives/bioterror
-	item_type = /obj/item/grenade/chem_grenade/bioterrorfoam
+	// MONKESTATION EDIT START
+	// MONKESTATION EDIT ORIGINAL item_type = /obj/item/grenade/chem_grenade/bioterrorfoam
+	item_type = /obj/item/grenade/chem_grenade/large/bioterrorfoam
+	// MONKESTATION EDIT END
 	cost = 1
 
 /datum/armament_entry/assault_operatives/explosives/minibomb
