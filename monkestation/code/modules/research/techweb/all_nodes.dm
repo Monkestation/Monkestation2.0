@@ -59,6 +59,7 @@
 		"conductive_nanites",
 		"cryo_nanites",
 		"dermal_button_nanites",
+		"dermal_toggle_nanites",
 		"emp_nanites",
 		"hardening_nanites",
 		"refractive_nanites",
