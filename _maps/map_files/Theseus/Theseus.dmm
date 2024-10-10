@@ -9858,11 +9858,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"cWn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/service/hydroponics/garden)
 "cWu" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -21108,10 +21103,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
-"gsB" = (
-/obj/machinery/duct,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "gsK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -21485,6 +21476,10 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
 /area/station/security/brig/entrance)
+"gyI" = (
+/obj/machinery/duct,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "gyL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -29395,6 +29390,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness)
+"iQp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/service/hydroponics/garden)
 "iQq" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
@@ -49606,10 +49606,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"oPT" = (
-/obj/machinery/duct,
-/turf/open/floor/iron/stairs/left,
-/area/station/service/hydroponics/garden)
 "oPZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -63852,6 +63848,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"taO" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/stairs/left,
+/area/station/service/hydroponics/garden)
 "taQ" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/syringe,
@@ -80116,8 +80116,6 @@
 /obj/effect/spawner/random/food_or_drink/seed,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/duct,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "xLC" = (
@@ -111073,7 +111071,7 @@ wUT
 aud
 bvU
 rOj
-gsB
+gyI
 lRn
 tGd
 cwk
@@ -111585,7 +111583,7 @@ bJS
 bJS
 bJS
 neU
-cWn
+iQp
 tGd
 tGd
 tGd
@@ -111842,7 +111840,7 @@ nhC
 nhC
 bJS
 alc
-oPT
+taO
 sbO
 mis
 tGd
