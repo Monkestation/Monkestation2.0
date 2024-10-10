@@ -21083,6 +21083,7 @@
 "gDW" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/newscaster/directional/south,
+/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/wood,
 /area/station/maintenance/department/crew_quarters/bar)
 "gEo" = (
@@ -23116,6 +23117,7 @@
 "hlP" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/vending/barbervend,
 /turf/open/floor/wood,
 /area/station/maintenance/department/crew_quarters/bar)
 "hlW" = (

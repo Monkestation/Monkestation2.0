@@ -21326,14 +21326,11 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/item/reagent_containers/cup/bowl{
-	pixel_y = 3
-	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8;
 	pixel_y = 23
 	},
-/obj/structure/table,
+/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/barber)
 "fco" = (
@@ -26751,12 +26748,21 @@
 	desc = "A white smock used by barbers to remain hair free.";
 	name = "barber smock"
 	},
+/obj/item/scissors{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /obj/item/razor{
 	pixel_x = 3;
 	pixel_y = 4
 	},
+/obj/item/scissors{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /obj/item/razor{
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/barber)
@@ -48693,10 +48699,8 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "lzM" = (
-/obj/item/paper/pamphlet/violent_video_games,
-/obj/effect/spawner/random/entertainment/money_small,
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/barbervend,
 /turf/open/floor/iron/dark,
 /area/station/service/barber)
 "lzQ" = (

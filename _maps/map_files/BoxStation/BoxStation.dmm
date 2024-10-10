@@ -38427,8 +38427,7 @@
 /area/station/command/heads_quarters/rd)
 "mSe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/mopbucket,
-/obj/item/mop,
+/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "mSx" = (
@@ -57663,7 +57662,7 @@
 /area/station/commons/dorms)
 "tsD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/caution_sign,
+/obj/machinery/vending/barbervend,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tsL" = (
