@@ -22,6 +22,10 @@
 	suffix = "kilo"
 	name = "arrival shuttle (Kilo)"
 
+/datum/map_template/shuttle/arrival/steel
+	suffix = "Steel"
+	name = "arrival shuttle (Steel)"
+
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
