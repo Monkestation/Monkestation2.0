@@ -1782,10 +1782,22 @@ MONKESTATION EDIT
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
-/datum/sprite_accessory/tails/monkey
+/datum/sprite_accessory/tails/monkey/none
+	name = "None"
+	icon = 'monkestation/icons/mob/species/simian/monkey_tail.dmi'
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon_state = "monkey"
+	icon = 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon_state = "default"
 	color_src = FALSE
+
+/datum/sprite_accessory/tails/monkey/chimp
+	name = "Chimp"
+	icon = 'monkestation/icons/mob/species/simian/monkey_tail.dmi'
+	icon_state = "chimp"
+	color_src = MUTANT_COLOR
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/species/podperson_hair.dmi'

@@ -83,7 +83,6 @@
 #define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_JAILBIRD			"jailbird"
-#define TRAIT_KLEPTOMANIAC		"kleptomaniac"
 #define TRAIT_LOUD_ASS			"loud_ass"
 #define TRAIT_MINING_CALLOUTS	"miner_callouts"
 #define TRAIT_PARANOIA			"paranoia"

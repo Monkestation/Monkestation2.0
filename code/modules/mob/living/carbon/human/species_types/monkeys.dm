@@ -5,7 +5,7 @@
 	id = SPECIES_MONKEY
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
-		/obj/item/organ/external/tail/simian = "Chimp"
+		/obj/item/organ/external/tail/monkey = "Monkey",
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/monkey
 	mutantbrain = /obj/item/organ/internal/brain/primate
@@ -18,6 +18,7 @@
 		NOTRANSSTING,
 		NOAUGMENTS,
 	)
+
 	inherent_traits = list(
 		TRAIT_GUN_NATURAL,
 		TRAIT_VENTCRAWLER_NUDE,
@@ -45,26 +46,24 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-
+	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
 	var/randname = "monkey ([rand(1,999)])"
-
 	return randname
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	H.pass_flags |= PASSTABLE
-	H.butcher_results = knife_butcher_results
-	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	H.dna.activate_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_on(human_who_gained_species, SPECIES_TRAIT)
+		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
+		human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
 
-
-/datum/species/monkey/on_species_loss(mob/living/carbon/C)
+/datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
-	C.pass_flags = initial(C.pass_flags)
-	C.butcher_results = null
-	C.dna.remove_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_off(C, SPECIES_TRAIT)
+		C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them
@@ -126,7 +125,8 @@
 	return TRUE
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// Check ID specifically so all subtypes aren't eligible on Monkey day.
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
 
@@ -140,6 +140,9 @@
 		'sound/creatures/monkey/monkey_screech_6.ogg',
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
+
+/datum/species/monkey/get_laugh_sound(mob/living/carbon/human/human)
+	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
 
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
