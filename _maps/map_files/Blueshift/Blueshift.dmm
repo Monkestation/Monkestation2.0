@@ -71846,11 +71846,11 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/prison)
 "nXK" = (
-/obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "nXL" = (
@@ -74079,6 +74079,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/component_printer,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "osx" = (
@@ -81676,7 +81677,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "pRV" = (
-/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
 	dir = 10
@@ -92897,7 +92897,6 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/machinery/chem_mass_spec,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "saM" = (
