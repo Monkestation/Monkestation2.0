@@ -136,6 +136,31 @@
 	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
 
+/// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
+/// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
+/datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
+	var/atom/movable/created = new item(user.loc)
+
+	if(isgun(created))
+		replace_pin(created)
+
+	if(isobj(created))
+		var/obj/created_obj = created
+		LAZYREMOVE(created_obj.req_access, ACCESS_SYNDICATE)
+		LAZYREMOVE(created_obj.req_one_access, ACCESS_SYNDICATE)
+
+	return created
+
+/// Used by spawn_item_for_generic_use to replace the pin of a gun with a normal one
+/datum/uplink_item/proc/replace_pin(obj/item/gun/gun_reward)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
+
 /datum/uplink_category/discounts
 	name = "Discounted Gear"
 	weight = -1
@@ -151,6 +176,7 @@
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = /datum/uplink_category/discounts
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
@@ -159,6 +185,7 @@
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
 	illegal_tech = FALSE
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
 	..()
