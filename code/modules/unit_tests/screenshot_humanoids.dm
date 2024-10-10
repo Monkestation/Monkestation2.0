@@ -24,6 +24,14 @@
 	test_screenshot("[/datum/species/moth]", get_flat_icon_for_all_directions(moth))
 
 	//MONKESTATION ADDITION START
+	var/mob/living/carbon/human/tundramoth = allocate(/mob/living/carbon/human/dummy/consistent)
+	moth.dna.features["moth_antennae"] = "Tundra"
+	moth.dna.features["moth_markings"] = "Tundra"
+	moth.dna.features["moth_wings"] = "Tundra"
+	moth.set_species(/datum/species/moth/tundra)
+	moth.equipOutfit(/datum/outfit/job/cmo, visualsOnly = TRUE)
+	test_screenshot("[/datum/species/moth/tundra]", get_flat_icon_for_all_directions(tundramoth))
+
 	var/mob/living/carbon/human/apid = allocate(/mob/living/carbon/human/dummy/consistent)
 	apid.dna.features["apid_antenna"] = "Horns"
 	apid.dna.features["apid_wings"] = "Normal" // Just in case someone ever adds more
@@ -33,7 +41,7 @@
 	//MONKESTATION ADDITION END
 
 	// The rest of the species
-	for (var/datum/species/species_type as anything in subtypesof(/datum/species) - /datum/species/moth - /datum/species/lizard - /datum/species/apid)
+	for (var/datum/species/species_type as anything in subtypesof(/datum/species) - /datum/species/moth - /datum/species/lizard - /datum/species/apid - /datum/species/moth/tundra)
 		test_screenshot("[species_type]", get_flat_icon_for_all_directions(make_dummy(species_type, /datum/outfit/job/assistant/consistent)))
 
 /datum/unit_test/screenshot_humanoids/proc/make_dummy(species, job_outfit)
