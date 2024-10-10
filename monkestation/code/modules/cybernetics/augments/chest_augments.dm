@@ -110,6 +110,7 @@
 		/datum/reagent/drug/bath_salts = 3 ,
 		/datum/reagent/medicine/omnizine = 3,
 		/datum/reagent/medicine/brain_healer = 5,
+		/datum/reagent/medicine/salglu_solution = 5,
 	)
 
 	var/mutable_appearance/overlay
