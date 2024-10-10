@@ -234,6 +234,7 @@
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite = 4,
 		/turf/closed/mineral/artifact = 1,
+		/turf/closed/mineral/strange_rock = 8,
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)
@@ -284,6 +285,7 @@
 		/obj/item/stack/ore/silver = 50,
 		/obj/item/stack/ore/titanium = 45,
 		/obj/item/stack/ore/uranium = 35,
+		/turf/closed/mineral/strange_rock = 10,
 	)
 
 /turf/closed/mineral/random/high_chance/volcanic
@@ -319,6 +321,7 @@
 		/obj/item/stack/ore/uranium = 2,
 		/turf/closed/mineral/gibtonite = 2,
 		/turf/closed/mineral/artifact = 2,
+		/turf/closed/mineral/strange_rock = 5,
 	)
 
 //extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
@@ -397,6 +400,7 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
+		/turf/closed/mineral/strange_rock = 8,
 	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
