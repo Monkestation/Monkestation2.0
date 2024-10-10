@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;plasma_extraction_hub&#x2F;part&#x2F;pipe - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/plasma_extraction_hub/part/pipe.html#var">Var Details</a> - <a href="obj/structure/plasma_extraction_hub/part/pipe.html#proc">Proc Details</a></header>
+<main>
+<h1>pipe <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/plasma_extraction_hub/part.html">structure/plasma_extraction_hub/part</a>/<a href="obj/structure/plasma_extraction_hub/part/pipe.html">pipe</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 37"/></a></h1>
+
+<p>Plasma extraction machine pipe
+There's 3 of these on each plasma extraction machine, one of which is the owner of the rest.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe.html#var/connected_pipes">connected_pipes</a></th><td>List of all pipes connected to this extraction part.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe.html#var/currently_functional">currently_functional</a></th><td>Boolean on whether the extraction hub is currently functioning.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe.html#var/last_pipe">last_pipe</a></th><td>Reference to the 'ending' pipe, the last one to be built. This has to exist for t he machien to work.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe.html#proc/check_parts">check_parts</a></th><td>Returns whether the pipe is able to drill. If it can't, and it currently is drilling, we'll stop.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe.html#proc/on_pipe_destroyed">on_pipe_destroyed</a></th><td>Called when a pipe with a reference to us is destroyed,
+we'll give the pipe right before it the ability to lay pipes again,
+then destroy every single pipe made after it, and make sure they are out of our list, too.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/connected_pipes"><aside class="declaration">var </aside>connected_pipes
+            <aside>&ndash; /list/obj/structure/liquid_plasma_extraction_pipe</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 40"/></a></h3>
+        <p>List of all pipes connected to this extraction part.</p><h3 id="var/currently_functional"><aside class="declaration">var </aside>currently_functional
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L44">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 44"/></a></h3>
+        <p>Boolean on whether the extraction hub is currently functioning.</p><h3 id="var/last_pipe"><aside class="declaration">var </aside>last_pipe
+            <aside>&ndash; /<a href="obj.html">obj</a>/structure/liquid_plasma_ending</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L42">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 42"/></a></h3>
+        <p>Reference to the 'ending' pipe, the last one to be built. This has to exist for t he machien to work.</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_parts"><aside class="declaration">proc </aside>check_parts<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L90">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 90"/></a></aside>
+        </h3>
+        <p>Returns whether the pipe is able to drill. If it can't, and it currently is drilling, we'll stop.</p><h3 id="proc/on_pipe_destroyed"><aside class="declaration">proc </aside>on_pipe_destroyed<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure/liquid_plasma_extraction_pipe.html">structure/liquid_plasma_extraction_pipe</a>/broken_pipe) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/hub.dm#L60">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;hub.dm 60"/></a></aside>
+        </h3>
+        <p>Called when a pipe with a reference to us is destroyed,
+we'll give the pipe right before it the ability to lay pipes again,
+then destroy every single pipe made after it, and make sure they are out of our list, too.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/5ec044d8f10eca064a83a85761afc58f2a675e1f">5ec044d</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ&#x2F;internal&#x2F;heart&#x2F;roach - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ/internal/heart/roach.html#var">Var Details</a> - <a href="obj/item/organ/internal/heart/roach.html#proc">Proc Details</a></header>
+<main>
+<h1>roach <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/heart/roach.html">heart/roach</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/code/game/machinery/dna_infuser/organ_sets/roach_organs.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;dna_infuser&#x2F;organ_sets&#x2F;roach_organs.dm 49"/></a></h1>
+
+<p>Roach heart:
+Reduces damage taken from brute attacks from behind,
+but increases duration of knockdowns</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/heart/roach.html#var/defense_timerid">defense_timerid</a></th><td>Timer ID for resetting the damage resistance applied from attacks from behind</td></tr>
+            <tr><th><a href="obj/item/organ/internal/heart/roach.html#var/roach_shell">roach_shell</a></th><td>Bodypart overlay applied to the chest the heart is in</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ/internal/heart/roach.html#proc/modify_damage">modify_damage</a></th><td>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_main.html#define/COMSIG_MOB_APPLY_DAMAGE" title="COMSIG_MOB_APPLY_DAMAGE">COMSIG_MOB_APPLY_DAMAGE</a></td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/defense_timerid"><aside class="declaration">var </aside>defense_timerid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/code/game/machinery/dna_infuser/organ_sets/roach_organs.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;dna_infuser&#x2F;organ_sets&#x2F;roach_organs.dm 60"/></a></h3>
+        <p>Timer ID for resetting the damage resistance applied from attacks from behind</p><h3 id="var/roach_shell"><aside class="declaration">var </aside>roach_shell
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/bodypart_overlay.html">bodypart_overlay</a>/<a href="datum/bodypart_overlay/simple.html">simple</a>/roach_shell</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/code/game/machinery/dna_infuser/organ_sets/roach_organs.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;dna_infuser&#x2F;organ_sets&#x2F;roach_organs.dm 64"/></a></h3>
+        <p>Bodypart overlay applied to the chest the heart is in</p><h2 id="proc">Proc Details</h2><h3 id="proc/modify_damage"><aside class="declaration">proc </aside>modify_damage<aside>(/<a href="datum.html">datum</a>/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/attacking_item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/code/game/machinery/dna_infuser/organ_sets/roach_organs.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;dna_infuser&#x2F;organ_sets&#x2F;roach_organs.dm 110"/></a></aside>
+        </h3>
+        <p>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_main.html#define/COMSIG_MOB_APPLY_DAMAGE" title="COMSIG_MOB_APPLY_DAMAGE">COMSIG_MOB_APPLY_DAMAGE</a></p>
+<p>Being hit with brute damage in the back will impart a large damage resistance bonus for a very short period.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/5ec044d8f10eca064a83a85761afc58f2a675e1f">5ec044d</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

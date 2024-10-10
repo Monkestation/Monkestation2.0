@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;bouldertech&#x2F;brm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/bouldertech/brm.html#var">Var Details</a> - <a href="obj/machinery/bouldertech/brm.html#proc">Proc Details</a></header>
+<main>
+<h1>brm <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/bouldertech.html">bouldertech</a>/<a href="obj/machinery/bouldertech/brm.html">brm</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 18"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#var/manual_teleport_cooldown">manual_teleport_cooldown</a></th><td>Cooldown used for left click teleportation.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#var/teleportation_time">teleportation_time</a></th><td>How long does it take to collect a boulder?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#var/toggled_on">toggled_on</a></th><td>Are we trying to actively collect boulders automatically?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#proc/collect_boulder">collect_boulder</a></th><td>Collects a boulder from the available boulders list in SSore_generation.
+Handles the movement of the boulder as well as visual effects on the BRM.
+@param obj/item/boulder/random_boulder The boulder to collect.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#proc/handle_teleport_conditions">handle_teleport_conditions</a></th><td>Handles qualifiers for enabling teleportation of boulders.
+Returns TRUE if the teleportation can proceed, FALSE otherwise.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#proc/pre_collect_boulder">pre_collect_boulder</a></th><td>Begins to collect a boulder from the available boulders list in SSore_generation.
+Boulders must not be processed by another BRM or machine, and must be in the available boulders list.
+A selected boulder is picked randomly.
+The actual movement is then handled by collect_boulder() after a timed callback.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech/brm.html#proc/toggle_auto_on">toggle_auto_on</a></th><td>Toggles automatic boulder retrieval on.
+Adjusts the teleportation sound, icon state, and begins processing.
+@param mob/user The user who toggled the BRM.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/manual_teleport_cooldown"><aside class="declaration">var </aside>manual_teleport_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L31">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 31"/></a></h3>
+        <p>Cooldown used for left click teleportation.</p><h3 id="var/teleportation_time"><aside class="declaration">var </aside>teleportation_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 29"/></a></h3>
+        <p>How long does it take to collect a boulder?</p><h3 id="var/toggled_on"><aside class="declaration">var </aside>toggled_on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 27"/></a></h3>
+        <p>Are we trying to actively collect boulders automatically?</p><h2 id="proc">Proc Details</h2><h3 id="proc/collect_boulder"><aside class="declaration">proc </aside>collect_boulder<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/boulder.html">boulder</a>/random_boulder) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L169">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 169"/></a></aside>
+        </h3>
+        <p>Collects a boulder from the available boulders list in SSore_generation.
+Handles the movement of the boulder as well as visual effects on the BRM.
+@param obj/item/boulder/random_boulder The boulder to collect.</p><h3 id="proc/handle_teleport_conditions"><aside class="declaration">proc </aside>handle_teleport_conditions<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L134">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 134"/></a></aside>
+        </h3>
+        <p>Handles qualifiers for enabling teleportation of boulders.
+Returns TRUE if the teleportation can proceed, FALSE otherwise.</p><h3 id="proc/pre_collect_boulder"><aside class="declaration">proc </aside>pre_collect_boulder<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L149">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 149"/></a></aside>
+        </h3>
+        <p>Begins to collect a boulder from the available boulders list in SSore_generation.
+Boulders must not be processed by another BRM or machine, and must be in the available boulders list.
+A selected boulder is picked randomly.
+The actual movement is then handled by collect_boulder() after a timed callback.</p><h3 id="proc/toggle_auto_on"><aside class="declaration">proc </aside>toggle_auto_on<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/5ec044d8f10eca064a83a85761afc58f2a675e1f/monkestation/code/modules/factory_type_beat/processing/brm.dm#L190">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;brm.dm 190"/></a></aside>
+        </h3>
+        <p>Toggles automatic boulder retrieval on.
+Adjusts the teleportation sound, icon state, and begins processing.
+@param mob/user The user who toggled the BRM.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/5ec044d8f10eca064a83a85761afc58f2a675e1f">5ec044d</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
