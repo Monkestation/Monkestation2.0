@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(init_profiler)
 	var/list/current_profile_data = world.Profile(PROFILE_REFRESH, format = "json")
 	current_profile_data = json_decode(current_profile_data) // yes this is stupid but this gets us a list in a non-awful format
 	CHECK_TICK
-	sortTim(current_profile_data, GLOBAL_PROC_REF(sort_overtime_dsc))
+	current_profile_data = aneri_sort_with_proc(current_profile_data, GLOBAL_PROC_REF(sort_overtime_dsc))
 
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")

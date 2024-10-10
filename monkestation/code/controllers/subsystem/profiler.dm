@@ -18,9 +18,9 @@
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
 
-	/*timer = TICK_USAGE_REAL
-	sortTim(current_profile_data, GLOBAL_PROC_REF(sort_overtime_dsc))
-	sort_cost = MC_AVERAGE(sort_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))*/
+	timer = TICK_USAGE_REAL
+	current_profile_data = aneri_sort_with_proc(current_profile_data, GLOBAL_PROC_REF(sort_overtime_dsc))
+	sort_cost = MC_AVERAGE(sort_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	var/timestamp = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
 	var/prof_file = "[GLOB.log_directory]/profiler/profiler-[timestamp].json"
