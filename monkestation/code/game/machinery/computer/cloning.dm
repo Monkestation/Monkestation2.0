@@ -545,11 +545,11 @@
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
-		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
+		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly, upgraded sensors needed.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
-	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
+	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA) && (src.scanner.scan_level < 4))
+		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery, state-of-the-art sensors needed to scan.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if (!body_only && isnull(mob_occupant.mind))
