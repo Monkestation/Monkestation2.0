@@ -381,6 +381,10 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
+"WP" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
 "WW" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -404,6 +408,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/tdome/arena/actual)
+"Zq" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
 "ZZ" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plastic,
@@ -426,7 +434,7 @@ TW
 hD
 OK
 Wh
-bs
+Zq
 bs
 YF
 hA
@@ -595,7 +603,7 @@ hD
 JH
 Wh
 bs
-bs
+WP
 YF
 kj
 yW

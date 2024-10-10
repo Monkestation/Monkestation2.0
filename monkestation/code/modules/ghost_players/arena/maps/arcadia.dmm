@@ -89,6 +89,10 @@
 /obj/item/food/pizza/donkpocket,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/tdome/arena/actual)
+"oZ" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/eighties,
+/area/centcom/tdome/arena/actual)
 "pW" = (
 /obj/structure/table/reinforced,
 /obj/item/food/pizza/meat,
@@ -161,6 +165,10 @@
 /area/centcom/tdome/arena/actual)
 "zF" = (
 /obj/item/stack/arcadeticket,
+/turf/open/floor/eighties/red,
+/area/centcom/tdome/arena/actual)
+"Ae" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/floor/eighties/red,
 /area/centcom/tdome/arena/actual)
 "Ci" = (
@@ -375,7 +383,7 @@ aN
 Lb
 Lb
 MS
-Lb
+oZ
 de
 MS
 de
@@ -519,7 +527,7 @@ aJ
 It
 It
 iW
-It
+Ae
 zF
 iW
 It

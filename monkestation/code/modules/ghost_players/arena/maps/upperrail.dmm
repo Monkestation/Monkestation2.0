@@ -211,6 +211,10 @@
 "rl" = (
 /turf/open/floor/iron/stairs/right,
 /area/centcom/tdome/arena/actual)
+"rR" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
 "rW" = (
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -308,6 +312,7 @@
 	alpha = 240;
 	pixel_x = -28
 	},
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "Cs" = (
@@ -589,7 +594,7 @@ TX
 Yb
 KY
 YL
-Cs
+rR
 Cs
 zr
 "}

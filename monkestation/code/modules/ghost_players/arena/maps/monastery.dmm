@@ -171,6 +171,10 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
+"yZ" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
 "At" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -315,6 +319,10 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
+"Yr" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
 "Yy" = (
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/window/reinforced{
@@ -343,7 +351,7 @@ rX
 Tw
 Oz
 TW
-Mk
+yZ
 ox
 ox
 NQ
@@ -511,7 +519,7 @@ Eb
 rX
 Oz
 TW
-Mk
+Yr
 wf
 wf
 NQ

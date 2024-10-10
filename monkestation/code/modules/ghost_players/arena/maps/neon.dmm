@@ -260,6 +260,7 @@
 /area/centcom/tdome/arena/actual)
 "vh" = (
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
 /turf/open/floor/carpet/blue,
 /area/centcom/tdome/arena/actual)
 "vV" = (
@@ -282,6 +283,7 @@
 /area/centcom/tdome/arena/actual)
 "wL" = (
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
 "xX" = (

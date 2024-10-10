@@ -60,6 +60,11 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
+"u" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
 "x" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/shower/directional/east,
@@ -124,6 +129,11 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/centcom/tdome/arena/actual)
+"Q" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
 "S" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -152,7 +162,7 @@ l
 "}
 (2,1,1) = {"
 l
-a
+Q
 a
 l
 l
@@ -327,7 +337,7 @@ l
 l
 l
 a
-a
+u
 l
 "}
 (17,1,1) = {"

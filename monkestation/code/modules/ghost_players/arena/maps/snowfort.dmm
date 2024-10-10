@@ -53,6 +53,10 @@
 	},
 /turf/open/floor/fakeice/slippery,
 /area/centcom/tdome/arena/actual)
+"t" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
 "u" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/snow/actually_safe,
@@ -67,6 +71,10 @@
 /obj/item/toy/snowball,
 /obj/item/toy/snowball,
 /obj/item/toy/snowball,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
 "C" = (
@@ -133,7 +141,7 @@ b
 a
 a
 w
-a
+A
 a
 w
 a
@@ -301,7 +309,7 @@ a
 b
 a
 w
-a
+t
 a
 w
 a

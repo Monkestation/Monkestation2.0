@@ -102,6 +102,7 @@
 /obj/structure/stone_tile/burnt{
 	dir = 4
 	},
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "lo" = (
@@ -211,6 +212,7 @@
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
 	},
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "xt" = (

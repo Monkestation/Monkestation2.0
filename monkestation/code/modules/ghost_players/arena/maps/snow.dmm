@@ -237,6 +237,10 @@
 /obj/structure/fence/post,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
+"Ih" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
 "Ju" = (
 /obj/structure/railing{
 	color = "#8a7453";
@@ -252,6 +256,10 @@
 "Pb" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"PL" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
 "Re" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -326,7 +334,7 @@ EZ
 Tr
 By
 pD
-EZ
+Ih
 EZ
 mv
 EZ
@@ -494,7 +502,7 @@ GL
 Tr
 bl
 pD
-EZ
+PL
 EZ
 oa
 EZ

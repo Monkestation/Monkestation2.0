@@ -8,6 +8,11 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 
+	maptext_height = 256
+	maptext_width = 128
+	maptext_x = -32
+	maptext_y = 18
+
 	///player vars
 	var/mob/living/carbon/human/ghost/player_one
 	var/mob/living/carbon/human/ghost/player_two
@@ -15,8 +20,6 @@
 	var/obj/item/weapon_of_choice = /obj/item/storage/toolbox
 	///the wager in monkecoins thats paid out to the winner
 	var/payout = 0
-	///list of weakrefs to spawned weapons for deletion on duel end
-	var/list/spawned_weapons = list()
 
 	///what weapons can players choose to duel with
 	var/list/weapon_choices = list(
@@ -45,22 +48,26 @@
 	context[SCREENTIP_CONTEXT_RMB] = "Leave Duel"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/fight_button/proc/get_duel_data()
+	. = "Player One: [player_one ? player_one.real_name : "No One"]"
+	. += "\nPlayer Two: [player_two ? player_two.real_name : "No One"]"
+	. += "\nWeapon: [initial(weapon_of_choice.name)]"
+	. += "\nWager: [payout]"
+
 /obj/structure/fight_button/proc/update_maptext()
-	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One:[player_one ? "[player_one.real_name]" : "No One"] \nPlayer Two:[player_two ? "[player_two.real_name]" : "No One"] \nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]</span></span>"
+	maptext = "<span class='ol c pixel'><span style='color: #40b0ff;'>[src.get_duel_data()]</span></span>"
 
-	maptext_height = 256
-	maptext_width = 128
-	maptext_x = -32
-	maptext_y = 18
-
-	maptext = string
-
-	desc = "A button that displays your intent to duel aswell as the weapon of choice and stakes of the duel.Player One:[player_one ? "[player_one.real_name]" : "No One"] \nPlayer Two:[player_two ? "[player_two.real_name]" : "No One"] \nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]"
-
+/obj/structure/fight_button/examine(mob/user)
+	. = ..()
+	. += span_info(src.get_duel_data())
 
 /obj/structure/fight_button/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!istype(user, /mob/living/carbon/human/ghost))
+		return
+
+	if(user.GetComponent(/datum/component/centcom_dueler))
+		to_chat(user, span_notice("You're already signed up for a duel. Wait around and see if someone wants to challenge you!"))
 		return
 
 	if(!player_one)
@@ -68,6 +75,7 @@
 			return
 		player_one = user
 		player_one.linked_button = src
+		player_one.AddComponent(/datum/component/centcom_dueler, src)
 		update_maptext()
 	else if(!player_two && user != player_one)
 		if(user.client.prefs.metacoins < payout)
@@ -76,8 +84,12 @@
 		var/choice = tgui_alert(user, "Do you wish to enter the duel? The wager is [payout].", "[src.name]", list("Yes", "No"))
 		if(choice != "Yes")
 			return
+		if(player_two)
+			to_chat(user, span_warning("Someone else signed up as player two before you could. Try again later."))
+			return
 		player_two = user
 		player_two.linked_button = src
+		player_two.AddComponent(/datum/component/centcom_dueler, src)
 		if(player_one && player_two)
 			update_maptext()
 			addtimer(CALLBACK(src, PROC_REF(prep_round)), 5 SECONDS)
@@ -85,24 +97,18 @@
 
 /obj/structure/fight_button/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(user == player_one)
-		break_off_game()
-		player_one = null
-		update_maptext()
-
-	else if(user == player_two)
-		player_two.linked_button = null
-		player_two = null
-		update_maptext()
-
+	src.remove_user(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fight_button/proc/remove_user(mob/living/carbon/human/ghost/vanisher)
 	if(player_one == vanisher)
 		break_off_game()
+		qdel(player_one.GetComponent(/datum/component/centcom_dueler))
 		player_one = null
 		update_maptext()
-	if(player_two == vanisher)
+	else if(player_two == vanisher)
+		qdel(player_two.GetComponent(/datum/component/centcom_dueler))
+		player_two.linked_button = null
 		player_two = null
 		update_maptext()
 
@@ -120,11 +126,16 @@
 	var/choice = tgui_input_number(user, "How much would you like to wager?", "[src.name]", default = min(max_amount, 100), max_value = max_amount, min_value = 0)
 	if(!isnum(choice))
 		return FALSE
-	payout = choice
 
 	var/weapon_choice = tgui_input_list(user, "Choose the dueling weapon", "[src.name]", weapon_choices)
 	if(!weapon_choice)
 		return FALSE
+
+	if(player_one)
+		to_chat(user, span_warning("Someone else signed up as player one before you could. Try again later."))
+		return FALSE
+
+	payout = choice
 	weapon_of_choice = weapon_choice
 	return TRUE
 
@@ -134,32 +145,28 @@
 		say("One or more of the players have left the area, match has been cancelled!")
 		return
 
+	var/obj/effect/landmark/duel_arena/dueler_spawn/one/spawn_one = locate() in GLOB.landmarks_list
+	var/obj/effect/landmark/duel_arena/dueler_spawn/two/spawn_two = locate() in GLOB.landmarks_list
+	if(!spawn_one || !spawn_two)
+		say("An error occurred while trying to start the match: The currently spawned arena does not have the proper spawn points. Please report this issue to the coders, including a description of the current duel arena.")
+		CRASH("The spawned duel arena is missing one or more dueler spawns. Please check that it has a dueler spawner for both player one and player two.")
+
 	if(!player_one.client.prefs.adjust_metacoins(player_one.ckey, -payout, "Added to the Payout"))
 		return
 	if(!player_two.client.prefs.adjust_metacoins(player_two.ckey, -payout, "Added to the Payout"))
-		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout, "Opponent left, reimbursed.")
+		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout, "Opponent did not have enough funds, reimbursed.", donator_multipler = FALSE)
 		return
 
-	var/turf/player_one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
-	prep_player(player_one, player_one_spot)
-	var/turf/player_two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
-	prep_player(player_two, player_two_spot)
+	prep_player(player_one, spawn_one)
+	prep_player(player_two, spawn_two)
 
-/obj/structure/fight_button/proc/prep_player(mob/living/carbon/human/ghost/player, turf/move_to)
+/obj/structure/fight_button/proc/prep_player(mob/living/carbon/human/ghost/player, obj/effect/landmark/duel_arena/dueler_spawn/spawn_location)
 	player.unequip_everything()
-	player.fully_heal()
-
-	if(HAS_TRAIT(player, TRAIT_PACIFISM))
-		to_chat(player, span_notice("Your pacifism has been removed."))
-		// null will remove the trait from all sources
-		REMOVE_TRAIT(player, TRAIT_PACIFISM, null)
-
 	var/obj/item/weapon = new weapon_of_choice(src)
-	spawned_weapons += WEAKREF(weapon)
-	player.forceMove(move_to)
-	player.equipOutfit(/datum/outfit/ghost_player)
+	player.forceMove(get_turf(spawn_location))
 	player.put_in_active_hand(weapon, TRUE)
-	player.dueling = TRUE
+	weapon.AddElement(/datum/element/area_locked, list(get_turf(spawn_location)))
+
 	SEND_SIGNAL(player, COMSIG_HUMAN_BEGIN_DUEL)
 
 /obj/structure/fight_button/proc/end_duel(mob/living/carbon/human/ghost/loser)
@@ -169,10 +176,6 @@
 		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout * 2, "Won Duel.", donator_multipler = FALSE)
 	addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_arena_area)), 5 SECONDS)
 
-	player_one.linked_button = null
-	player_two.linked_button = null
-	player_one.dueling = FALSE
-	player_two.dueling = FALSE
 	SEND_SIGNAL(player_one, COMSIG_HUMAN_END_DUEL)
 	SEND_SIGNAL(player_two, COMSIG_HUMAN_END_DUEL)
 
@@ -181,7 +184,44 @@
 
 	payout = 0
 	update_maptext()
-	for(var/datum/weakref/weapon in spawned_weapons)
-		var/obj/item/spawned_weapon = weapon?.resolve()
-		if(spawned_weapon)
-			qdel(spawned_weapon)
+
+/datum/component/centcom_dueler
+	var/mob/living/carbon/human/ghost/dueler
+	/// The button we are tied to for dueling
+	var/obj/structure/fight_button/linked_fight_button
+
+/datum/component/centcom_dueler/Initialize(
+	obj/structure/fight_button/fight_button,
+)
+	if(!istype(parent, /mob/living/carbon/human/ghost))
+		return COMPONENT_INCOMPATIBLE
+	if(!istype(fight_button))
+		return COMPONENT_INCOMPATIBLE
+
+	src.dueler = parent
+	src.linked_fight_button = fight_button
+
+/datum/component/centcom_dueler/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_HUMAN_BEGIN_DUEL, PROC_REF(begin_duel))
+	RegisterSignal(parent, COMSIG_HUMAN_END_DUEL, PROC_REF(end_duel))
+
+/datum/component/centcom_dueler/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_HUMAN_BEGIN_DUEL, COMSIG_HUMAN_END_DUEL))
+
+/datum/component/centcom_dueler/proc/begin_duel()
+	src.dueler.fully_heal()
+
+	if(HAS_TRAIT(src.dueler, TRAIT_PACIFISM))
+		to_chat(src.dueler, span_notice("Your pacifism has been removed."))
+		// null will remove the trait from all sources
+		REMOVE_TRAIT(src.dueler, TRAIT_PACIFISM, null)
+
+	src.dueler.equipOutfit(/datum/outfit/ghost_player)
+	src.dueler.dueling = TRUE
+
+	// TODO: We still need to handle spawning weapons and moving the player to their spawn location
+
+/datum/component/centcom_dueler/proc/end_duel()
+	src.dueler.dueling = FALSE
+
+	qdel(src)

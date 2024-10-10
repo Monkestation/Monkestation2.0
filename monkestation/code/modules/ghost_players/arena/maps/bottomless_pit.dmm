@@ -16,6 +16,10 @@
 /obj/structure/flora/bush/grassy/style_3,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
+"j" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
 "l" = (
 /obj/effect/decal/fakelattice,
 /obj/effect/turf_decal/sand{
@@ -65,6 +69,10 @@
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"y" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "z" = (
 /obj/structure/window/reinforced{
@@ -233,7 +241,7 @@ a
 q
 a
 f
-a
+y
 a
 f
 i
@@ -377,7 +385,7 @@ a
 a
 a
 f
-a
+j
 a
 f
 a

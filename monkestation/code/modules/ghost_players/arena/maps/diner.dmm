@@ -4,6 +4,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
+"ba" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
 "bl" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar,
@@ -341,6 +346,10 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
+"MT" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
 "NQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -457,7 +466,7 @@ GL
 (2,1,1) = {"
 aQ
 Mp
-NQ
+ba
 GL
 GL
 Mp
@@ -625,7 +634,7 @@ GL
 (16,1,1) = {"
 ix
 Mp
-GL
+MT
 GL
 GL
 Mp

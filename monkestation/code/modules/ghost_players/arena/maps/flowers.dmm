@@ -13,6 +13,10 @@
 /obj/item/toy/plush/beeplushie,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
+"l" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/one,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
 "m" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
@@ -92,6 +96,10 @@
 /mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
+"Z" = (
+/obj/effect/landmark/duel_arena/dueler_spawn/two,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
 
 (1,1,1) = {"
 Y
@@ -111,7 +119,7 @@ P
 C
 I
 V
-V
+l
 V
 V
 u
@@ -278,7 +286,7 @@ V
 C
 P
 S
-V
+Z
 V
 V
 V
