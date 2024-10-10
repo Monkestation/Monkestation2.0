@@ -1,7 +1,6 @@
 //Head surgery to fix the ears organ
 /datum/surgery/ear_surgery
 	name = "Ear surgery"
-	requires_bodypart_type = NONE
 	organ_to_manipulate = ORGAN_SLOT_EARS
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
@@ -24,9 +23,10 @@
 
 /datum/surgery/ear_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/ears/target_ears = target.get_organ_slot(ORGAN_SLOT_EARS)
-	if(!target_ears)
-		return FALSE
-	return TRUE
+	if(target_ears)
+		if(target_ears.damage > 0) // ear surgery is repeatable so no worries about wasting the surgery
+			return TRUE
+	return FALSE
 
 /datum/surgery_step/fix_ears/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -73,3 +73,15 @@
 		)
 		display_pain(target, "You feel a visceral stabbing pain right through your head!") // dunno who can feel pain w/o a brain but may as well be consistent.
 	return FALSE
+
+/datum/surgery/ear_surgery/mechanic
+	name = "Ear surgery"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	target_mobtypes = list(/mob/living/carbon/human) 
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/fix_ears,
+		/datum/surgery_step/mechanic_close,
+	)

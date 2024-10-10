@@ -1,6 +1,5 @@
 /datum/surgery/eye_surgery
 	name = "Eye surgery"
-	requires_bodypart_type = NONE
 	organ_to_manipulate = ORGAN_SLOT_EYES
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	steps = list(
@@ -22,10 +21,10 @@
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
-	if(!target_eyes)
-		to_chat(user, span_warning("It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any."))
-		return FALSE
-	return TRUE
+	if(target_eyes)
+		if(target_eyes.damage > 0) // Eyes surgery is repeatable so only give the option if damaged.
+			return TRUE
+	return FALSE
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -74,3 +73,15 @@
 		)
 		display_pain(target, "You feel a visceral stabbing pain right through your head!") // dunno who can feel pain w/o a brain but may as well be consistent.
 	return FALSE
+
+/datum/surgery/eye_surgery/mechanic
+	name = "Eye surgery"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	target_mobtypes = list(/mob/living/carbon/human) 
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/fix_eyes,
+		/datum/surgery_step/mechanic_close,
+	)
