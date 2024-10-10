@@ -52,3 +52,4 @@
 
 /datum/armor/surgeon
     bio = 100
+
