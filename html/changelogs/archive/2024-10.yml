@@ -1,0 +1,180 @@
+2024-10-01:
+  flleeppyy:
+  - admin: '"Play Internet Sound" now has a "Custom Title" option'
+2024-10-02:
+  dravo:
+  - rscadd: Expanded CC with additional office space and a more useful fishing spot
+2024-10-03:
+  Absolucy:
+  - bugfix: Fixes sentient slimes getting taken over by AI when splitting/vaccumed.
+  - qol: Malkavian bloodsucker ramblings now have a proper cooldown.
+  - qol: Moved the plant dna disk design from Botanical Engineering to roundstart
+      tech.
+  - bugfix: Fix the icebox magbar being spaced roundstart.
+  Absolucy, ancient-engineer:
+  - rscadd: Added signboards, player craftable signs that display text above them
+      in the world that everyone can see!
+  - rscadd: Wooden signboards can be crafted with 5 wooden planks, but need a pen
+      to edit/clear.
+  - rscadd: Holographic signboards can be crafted with 5 iron, 5 cables, and 1 micro-laser,
+      and can change color, alongside allowing you to lock it to your ID, so that
+      only you can edit or clear it. An emag will permanently break the lock, tho!
+  - image: Signboard sprites by @ancient-engineer.
+  - admin: Admins can see logs about signboard edits/changes via the "Signboards"
+      investigate log category.
+  DexeeXI:
+  - admin: corrected exploitive issues on CC.
+  GoldenAlpharex:
+  - bugfix: Biogenerators now display the accurate price of their products after having
+      been upgraded, as they no longer visually apply the efficiency discount twice.
+  Shoddd:
+  - bugfix: frontier modsuit helmet now airtight
+  SirNightKnight:
+  - rscadd: Frying pans and flyswatters can be sharpened.
+  Veth-s:
+  - rscadd: ITS VETH'S BIRTHDAY HECK YES
+  manray:
+  - rscadd: atmos holofan to engiborg's default toolkit
+  ven1883:
+  - rscdel: Removes bunnywand from wiz item selection
+2024-10-05:
+  Gw0sty:
+  - rscadd: Blueshield's headset and Blueshield's bowman headset added to their private
+      locker
+  - bugfix: Changed the Blueshield alt head set name to a bowman headset and added
+      descriptions to both.
+  - qol: Cleaned the locker a bit by moving all the items that can fit into blueshields
+      belt into the belt.
+  - rscadd: Made frontier satchels and messenger bags actual satchel types
+  - rscadd: Ported Joint Torsion Ratchet module
+  - rscadd: Made mirage grenade module researchable.
+  - rscadd: Made mirage grenade modules useable while mod suit is depowered
+  - bugfix: Makes ablative trench coat properly hide hair and ears.
+  Hardly:
+  - rscadd: Pets can now be worn as a hat
+  - rscadd: Hamsters, obtainable through pet beacons
+  Meowosers:
+  - rscadd: Space Cleaner can now be made with Urine and Water
+  - bugfix: Satchel Medical kits and First Responder Surgical kits have their intended
+      storages now (For better or worse).
+  PotatoTomahto:
+  - rscadd: The lizard and bee plushies can now be worn in the head slot.
+  Shoddd:
+  - image: New sprites for Godslayer, Beserker, Ash drake, and adamantine armor
+  - balance: AIs can no longer track nearly fully invisible people
+  - bugfix: AIs can no longer track people in vents or objects such as lockers
+  SirNightKnight:
+  - rscadd: Added emergency EVA suits to emergency closets.
+  - rscadd: Implemented oxygen candles, they can be found in emergency toolboxes.
+  - rscadd: Added the Emergency EVA crate and Liquid Pump crate to Cargo
+  - qol: Made emergency closet contents more consistent.
+  - qol: Oxygen candles are more potent.
+  - qol: Hazard vests can hold large oxygen tanks.
+  - balance: Cybersun Juggernaut Suit now has shove protection akin to riot armour.
+  - bugfix: Helmets no longer have the flammable quality.
+  ThePooba:
+  - bugfix: zompies no feel pain
+  necromanceranne, SapphicOverload:
+  - bugfix: Restores a lost feature, Clarkes and Odysseus mechs once again can pivot
+      on a dime and step in the same button press.
+  - qol: Mechs universally have diagonal movement as to avoid unresponsive movement,
+      as block diagonal movement was having unintended side effects and was actually
+      intended for pivot step mechs.
+  - bugfix: You can once again use alt to turn while strafing in a mech
+2024-10-06:
+  Absolucy:
+  - qol: Monster Hunters can now see rabbits through walls.
+  - qol: Monster Hunters interacting with a rabbit will now automatically pickup the
+      loot if they have room in their hands.
+  - refactor: Made the rabbit code a bit less shit (in exchange for some annoyingly
+      necessary jank)
+  - qol: The slowdown from bloodsilver bullets is now a status effect, and will be
+      refreshed if another bullet hits before it finishes.
+  Glyphee:
+  - rscadd: Vault at CC
+  Shoddd:
+  - bugfix: falling in a chasm no longer breaks your ghost
+2024-10-07:
+  Absolucy:
+  - bugfix: Reworks the loadout store UI to use a spritesheet, fixing a major source
+      of lag.
+  - bugfix: Fixed some errors related to picking roundstart spawn points.
+  - bugfix: (Hopefully) fixed runtimes related to NIF persistence.
+  Gw0sty:
+  - rscadd: Adds borer cages as a medical express order.
+  - bugfix: fixed A/S maintenance APC being unconnected on Theseus.
+  Shoddd:
+  - qol: Report Issues is now Report bugs
+  - rscadd: Gives hos a gun beacon, choose from multiphase, law bringer, or a combat
+      shotgun
+  - rscadd: Gives multiphase a bigger battery and tase option
+  - rscadd: Compact combat shotgun from TG
+  - balance: Beanbags and rubbershot now account for 250 stamina
+  ThePooba:
+  - rscadd: added Kams office back to centcom and Fortunes office
+  Wisemonster:
+  - balance: Turned off telecomms and SM air conditioning, and lowered the cold room
+      air conditioning temperature to prevent the rooms from heating up too much.
+2024-10-08:
+  MomoBerri:
+  - bugfix: Fixed several issues on theseus, including mismatched IDs on buttons and
+      access issues on doors. Also fixes the engine gas filter to filter nitrogen.
+      AI Upload turrets now function properly.
+  Syndicat-Meow:
+  - rscadd: Many kinds of mobs can now be brought back to life through revival surgery.
+  - rscadd: Dogs can wear eyepatches.
+  Veth-s:
+  - rscadd: Added Veth's Plantery to the Admin Offices.
+2024-10-09:
+  Absolucy:
+  - bugfix: Experimental fix for the numerous pathology symptom-related errors.
+  - balance: The job overflow station trait no longer affects the Head of Security
+      or Blueshield.
+  - balance: The bureaucratic error event will no longer affect Blueshield slots.
+  Gw0sty:
+  - rscadd: Gives all the blueshield's head options which didnt have armor, armor.
+  RikuTheKiller:
+  - rscadd: Added the C.C.M.S dual wielding implant available on the black market
+      and traitor uplinks.
+  - spellcheck: There are now better descriptions for some traitor uplink implant
+      bundles.
+  ThePooba:
+  - rscadd: floridaman now randomizes character and name
+  - bugfix: abductee now has very clear instructions to not remember aliens at all
+  Yarinoi:
+  - rscdel: Removes degeneracy from the bunny wand.
+  - rscadd: Adds silly easter costumes to the bunny wand.
+  - rscadd: Adds silly easter costume to the autodrobe.
+  - balance: Plasmamen can now remove the bunny costumes added by the bunny wand because
+      i dont really feel like making easter bunny envirosuits
+2024-10-10:
+  Absolucy:
+  - bugfix: Speech artifact faults no longer make the dead speak.
+  - refactor: Refactored the paranoia/stalking phantoms trauma. In-game behavior should
+      be the same.
+  - qol: The curator's radio channel frequency is now reserved, and can only be broadcast
+      to by the radio booth's mic.
+  Gw0sty:
+  - rscadd: Adds hairbrush, comb, and the gothic coat to the Monke shop
+  - spellcheck: Fixes the name of ornate coat
+  - rscadd: Adjusts psychologists' primary door to a solid airlock and their access.
+  - rscadd: Made it so the void cloak stops pressure damage when hooded.
+  - rscadd: Adds the 'Unmarked Takbok Revolver', a variation of the Trapiste Takbok
+      revolver that has less recoil and fires slightly faster.
+  - rscadd: ' Replaces the Takbok revolver in the BlueShield''s gun beacon with a
+      new addition, the ''Unmarked Takbok Revolver'''
+  - rscadd: Camera system to meta virology
+  - rscadd: Added sink to Theseus's garden
+  - bugfix: Adjusted the windows of meta morgue chute to not block the chute.
+  - bugfix: Fixed upside engi map in blueshift's bridge so the captain pilots the
+      ship in the right direction
+  RikuTheKiller:
+  - balance: Inverse reagents no longer cause toxin damage unless it's explicitly
+      one of their effects.
+  Veth-s:
+  - bugfix: Fixed some of the doors in CC showing as "Veth's Plantery" (against my
+      will).
+  - bugfix: Fixed Fortune's CC office.
+  catmanpop:
+  - bugfix: fixed a mapping issue in void raptor regarding an area of maints and the
+      prison not having rad storm protection
