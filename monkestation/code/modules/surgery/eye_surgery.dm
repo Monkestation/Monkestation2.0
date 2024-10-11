@@ -1,3 +1,6 @@
+/datum/surgery/eye_surgery
+	requires_bodypart_type = BODYTYPE_ORGANIC
+
 /datum/surgery/eye_surgery/mechanic
 	name = "Eye surgery"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
