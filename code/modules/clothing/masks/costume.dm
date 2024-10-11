@@ -54,6 +54,8 @@
 	greyscale_config = /datum/greyscale_config/kitsune
 	greyscale_config_worn = /datum/greyscale_config/kitsune/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "kitsune"
 
 /obj/item/clothing/mask/kitsune/examine(mob/user)
 	. = ..()
