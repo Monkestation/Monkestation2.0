@@ -64,18 +64,5 @@
 		. += "Use in-hand to tie it up to wear as a hat!"
 
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
-	adjust_visor(user)
+	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
-
-/obj/item/clothing/mask/rebellion
-	name = "rebellion mask"
-	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
-	icon_state = "rebellion_mask"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
-	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	custom_price = PAYCHECK_CREW
-	greyscale_colors = COLOR_VERY_LIGHT_GRAY
-	greyscale_config = /datum/greyscale_config/rebellion_mask
-	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
