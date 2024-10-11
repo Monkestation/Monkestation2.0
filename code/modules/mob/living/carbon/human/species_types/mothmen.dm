@@ -135,3 +135,5 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/tundramoth,
 	)
 
+	coldmod = 0.67
+	heatmod = 1.5
