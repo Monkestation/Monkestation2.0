@@ -24,7 +24,6 @@
 	changesource_flags = parent_type::changesource_flags & ~(WABBAJACK | SLIME_EXTRACT)
 	maxhealthmod = 0.85 //small = weak
 	stunmod = 1.3
-	speedmod = -0.1 //lil bit faster
 	payday_modifier = 1
 
 	eyes_icon = 'monkestation/icons/mob/species/simian/bodyparts.dmi'
