@@ -25,11 +25,11 @@
 
 	//MONKESTATION ADDITION START
 	var/mob/living/carbon/human/tundramoth = allocate(/mob/living/carbon/human/dummy/consistent)
-	moth.dna.features["moth_antennae"] = "Tundra"
-	moth.dna.features["moth_markings"] = "Tundra"
-	moth.dna.features["moth_wings"] = "Tundra"
-	moth.set_species(/datum/species/moth/tundra)
-	moth.equipOutfit(/datum/outfit/job/cmo, visualsOnly = TRUE)
+	tundramoth.dna.features["moth_antennae"] = "Tundra"
+	tundramoth.dna.features["moth_markings"] = "Tundra"
+	tundramoth.dna.features["moth_wings"] = "Tundra"
+	tundramoth.set_species(/datum/species/moth/tundra)
+	tundramoth.equipOutfit(/datum/outfit/job/doctor, visualsOnly = TRUE)
 	test_screenshot("[/datum/species/moth/tundra]", get_flat_icon_for_all_directions(tundramoth))
 
 	var/mob/living/carbon/human/apid = allocate(/mob/living/carbon/human/dummy/consistent)
