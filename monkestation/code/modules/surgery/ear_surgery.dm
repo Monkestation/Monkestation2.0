@@ -1,3 +1,6 @@
+/datum/surgery/ear_surgery
+	requires_bodypart_type = BODYTYPE_ORGANIC
+
 /datum/surgery/ear_surgery/mechanic
 	name = "Ear surgery"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
