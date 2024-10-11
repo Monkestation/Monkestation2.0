@@ -2,13 +2,8 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "fur"
-	relevant_species_trait = SPECIES_FUR
+	relevant_inherent_trait = TRAIT_FUR_COLORS
 	priority = PREFERENCE_PRIORITY_BODY_TYPE //done after species
-
-/datum/preference/color/fur_color/apply_to_human(mob/living/carbon/human/target, value)
-	if(!(relevant_species_trait in target.dna.species.species_traits))
-		return
-	target.dna.features["mcolor"] = value
 
 /datum/preference/choiced/monkey_tail
 	main_feature_name = "Monkey Tail"

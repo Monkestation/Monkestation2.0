@@ -1,11 +1,10 @@
 /datum/species/monkey/simian
 	name = "Simian"
 	id = SPECIES_SIMIAN
-	species_traits = list(
-		NO_UNDERWEAR,
-		SPECIES_FUR,
-	)
 	inherent_traits = list(
+		TRAIT_FUR_COLORS,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_VAULTING,
 		TRAIT_MONKEYFRIEND,
 	)
@@ -32,7 +31,7 @@
 
 	give_monkey_species_effects = FALSE
 
-/datum/species/monkey/simian/get_species_description()
+/datum/species/simian/get_species_description()
 	return "Monke."
 
 /datum/species/monkey/simian/create_pref_unique_perks()
