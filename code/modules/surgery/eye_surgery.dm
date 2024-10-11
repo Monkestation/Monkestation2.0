@@ -21,9 +21,8 @@
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
-	if(target_eyes)
-		if(target_eyes.damage > 0) // Eyes surgery is repeatable so only give the option if damaged.
-			return TRUE
+	if(target_eyes?.damage > 0) // monkestation edit: eye surgery is repeatable so only give the option if damaged.
+		return TRUE
 	return FALSE
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
