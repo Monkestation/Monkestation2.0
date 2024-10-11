@@ -30,7 +30,7 @@
 
 	give_monkey_species_effects = FALSE
 
-/datum/species/simian/get_species_description()
+/datum/species/monkey/simian/get_species_description()
 	return "Monke."
 
 /datum/species/monkey/simian/create_pref_unique_perks()
