@@ -13,7 +13,7 @@
 			"color_ids": [ 2 ]
 		}
 	],
-	"kitsune_up": [
+	"kitsuneup": [
 		{
 			"type": "icon_state",
 			"icon_state": "kitsune_base_up",
