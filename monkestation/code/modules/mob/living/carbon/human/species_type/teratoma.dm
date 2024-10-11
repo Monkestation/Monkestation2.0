@@ -5,18 +5,19 @@
 	mutantbrain = /obj/item/organ/internal/brain/primate
 
 	inherent_traits = list(
-		TRAIT_NO_TRANSFORMATION_STING,
-		TRAIT_NO_BLOOD_OVERLAY,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_BADDNA,
 		TRAIT_CAN_STRIP,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_GENELESS,
 		TRAIT_ILLITERATE,
 		TRAIT_KLEPTOMANIAC,
+		TRAIT_NOBREATH,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_JUMPSUIT,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_ZOMBIFY,
 		TRAIT_PRIMITIVE,
 		TRAIT_UNCONVERTABLE, // DEAR GOD NO
@@ -46,15 +47,18 @@
 	gib_anim = "gibbed-m"
 
 	var/datum/component/omen/teratoma/misfortune
+	var/datum/component/regenerator/teratoma/oh_god_why
 
 /datum/species/teratoma/on_species_gain(mob/living/carbon/human/idiot, datum/species/old_species, pref_load)
 	. = ..()
+	oh_god_why = idiot.AddComponent(/datum/component/regenerator/teratoma, health_per_second = 1, outline_colour = COLOR_RED_LIGHT)
 	misfortune = idiot.AddComponent(/datum/component/omen/teratoma)
 	RegisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 
 /datum/species/teratoma/on_species_loss(mob/living/carbon/human/idiot, datum/species/new_species, pref_load)
 	. = ..()
 	QDEL_NULL(misfortune)
+	QDEL_NULL(oh_god_why)
 	UnregisterSignal(idiot, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 /datum/species/teratoma/random_name(gender, unique, lastname)
@@ -85,6 +89,11 @@
 	incidents_left = INFINITY
 	luck_mod = 0.75
 	damage_mod = 0.2
+
+/datum/component/regenerator/teratoma/do_heal(amt)
+	var/mob/living/living_parent = parent
+	living_parent.heal_overall_damage(brute = amt, burn = amt, updating_health = FALSE)
+	living_parent.adjustToxLoss(-(amt * 0.5), updating_health = TRUE)
 
 /mob/living/carbon/human/species/teratoma
 	race = /datum/species/teratoma
