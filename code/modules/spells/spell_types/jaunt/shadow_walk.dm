@@ -33,6 +33,7 @@
 	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
+	check_passive_nightmare_snuff(owner, start = cast_turf) // monkestation edit
 	if(cast_turf.get_lumcount() >= light_threshold)
 		if(feedback)
 			to_chat(owner, span_warning("It isn't dark enough here!"))
@@ -121,6 +122,7 @@
  */
 
 /obj/effect/dummy/phased_mob/shadow/proc/check_light_level(atom/location_to_check)
+	check_passive_nightmare_snuff(jaunter, start = location_to_check) // monkestation edit
 	var/turf/light_turf = get_turf(location_to_check)
 	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
 
