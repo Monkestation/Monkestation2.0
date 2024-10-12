@@ -6,8 +6,8 @@ obj/item/gun/ballistic/automatic/ar/tactical
 	can_suppress = TRUE
 	suppressor_x_offset = 8
 	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 11
+	knife_x_offset = 20 // if you ever have to adjust this again just keep editing the variable in-game
+	knife_y_offset = 11 // i wish i knew that sooner
 	pin = /obj/item/firing_pin/implant/mindshield
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m556/ar
 
