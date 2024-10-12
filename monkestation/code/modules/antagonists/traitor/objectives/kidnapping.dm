@@ -69,8 +69,9 @@
 		/datum/job/paramedic,
 		// Service
 		/datum/job/cook,
-		// Monkestation edit: security assistants
+		// Monkestation edit: security assistants & brig docs
 		/datum/job/security_assistant,
+		/datum/job/brig_physician,
 	)
 	alive_bonus = 4
 
@@ -100,6 +101,8 @@
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
+		// Monkestation edit: Blueshields
+		/datum/job/blueshield,
 	)
 	alive_bonus = 6
 
