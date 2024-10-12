@@ -57,3 +57,4 @@
 	source.update_appearance()
 	is_charging = FALSE
 	source.balloon_alert(user, "charged")
+	SEND_SIGNAL(source, COMSIG_GUN_CRANKED, user) // monkestation edit

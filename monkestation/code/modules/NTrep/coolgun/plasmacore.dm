@@ -1,14 +1,15 @@
 /obj/item/gun/energy/laser/plasmacore
 	name = "PlasmaCore-6e"
-	icon = 'monkestation/code/modules/NT_rep/cool_gun/plasmacoresixe.dmi'
+	icon = 'monkestation/code/modules/NTrep/coolgun/plasmacoresixe.dmi'
 	icon_state = "plasma_core_six"
 	charge_sections = 6
 	cell_type = /obj/item/stock_parts/cell/plasmacore
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+	can_charge = FALSE
 
 
-/obj/item/gun/energy/laser/plasmacore/Initialize(mapload) //it takes two hand slots and costs 12 tc, they deserve fast recharging
+/obj/item/gun/energy/laser/plasmacore/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/gun_crank, \
@@ -18,6 +19,12 @@
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
+	RegisterSignal(src, COMSIG_GUN_CRANKED, PROC_REF(on_cranked))
+
+/obj/item/gun/energy/laser/plasmacore/proc/on_cranked(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(cell.charge == cell.maxcharge)
+		say("Glory to Nanotrasen")
 
 /obj/item/stock_parts/cell/plasmacore
 	name = "PlasmaCore-6e experimental cell"

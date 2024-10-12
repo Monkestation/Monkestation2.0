@@ -468,6 +468,7 @@
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_atom.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_blueshift.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_carbon.dm"
+#include "code\__DEFINES\~monkestation\dcs\signals\signals_component.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_element.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_food.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_guns.dm"
