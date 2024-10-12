@@ -6836,6 +6836,7 @@
 #include "monkestation\code\modules\cassettes\machines\media\track.dm"
 #include "monkestation\code\modules\cassettes\machines\media\subsystem\media_track_manager.dm"
 #include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"
+#include "monkestation\code\modules\CBRN\equipment.dm"
 #include "monkestation\code\modules\client\preference_savefile.dm"
 #include "monkestation\code\modules\client\preferences.dm"
 #include "monkestation\code\modules\client\verbs.dm"
