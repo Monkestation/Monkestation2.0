@@ -20,6 +20,9 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey/simian,
 	)
 
+	//they get a normal brain instead of a monkey one,
+	//which removes the tripping stuff and gives them literacy/advancedtooluser and removes primitive (unable to use mechs)
+	mutantbrain = /obj/item/organ/internal/brain
 	no_equip_flags = NONE
 	changesource_flags = parent_type::changesource_flags & ~(WABBAJACK | SLIME_EXTRACT)
 	maxhealthmod = 0.85 //small = weak
