@@ -71,7 +71,6 @@
 		/datum/job/cook,
 		// Monkestation edit: security assistants & brig docs
 		/datum/job/security_assistant,
-		/datum/job/brig_physician,
 	)
 	alive_bonus = 4
 
@@ -90,6 +89,8 @@
 		/datum/job/detective,
 		/datum/job/security_officer,
 		/datum/job/warden,
+		// Monkestation edit: brig docs
+		/datum/job/brig_physician,
 	)
 	alive_bonus = 5
 
