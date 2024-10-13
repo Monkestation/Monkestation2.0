@@ -147,7 +147,7 @@ export const RADIO_CHANNELS = [
   },
   {
     name: 'Radio',
-    freq: 1361, // monkestation edit
+    freq: 1361,
     color: '#FFC0CB',
   },
 ] as const;
