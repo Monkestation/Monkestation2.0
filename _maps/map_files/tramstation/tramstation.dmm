@@ -48938,6 +48938,10 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"ozL" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "ozQ" = (
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
@@ -56532,6 +56536,10 @@
 	},
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
+"qUd" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "qUg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -95267,7 +95275,7 @@ oVM
 lRi
 qIq
 dUv
-svE
+ozL
 aAa
 pZW
 fRK
@@ -96809,7 +96817,7 @@ qPW
 lRi
 hPH
 cym
-svE
+qUd
 lQM
 eMJ
 gMq
