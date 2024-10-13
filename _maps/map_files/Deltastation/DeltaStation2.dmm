@@ -99355,6 +99355,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"xFe" = (
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "xFh" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/directions/engineering{
@@ -142880,7 +142884,7 @@ dvy
 lSl
 pwG
 pCc
-voW
+xFe
 cZk
 piR
 vEl

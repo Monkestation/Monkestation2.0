@@ -28936,12 +28936,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"kgr" = (
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/command/gateway)
 "kgy" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -80803,7 +80797,7 @@ aox
 yjd
 kOv
 fPh
-kgr
+fIo
 uBH
 aDb
 aDa
