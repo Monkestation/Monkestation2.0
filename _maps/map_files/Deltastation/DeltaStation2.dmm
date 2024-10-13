@@ -9642,6 +9642,10 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"ciO" = (
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "cjh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
@@ -77103,6 +77107,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "sqI" = (
@@ -99355,10 +99360,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"xFe" = (
-/mob/living/basic/drone/snowflake/bardrone,
-/turf/open/floor/carpet/green,
-/area/station/command/heads_quarters/nt_rep)
 "xFh" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/directions/engineering{
@@ -142884,7 +142885,7 @@ dvy
 lSl
 pwG
 pCc
-xFe
+ciO
 cZk
 piR
 vEl
