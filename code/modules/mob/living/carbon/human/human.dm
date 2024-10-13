@@ -1071,9 +1071,10 @@
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
 
+//MONKESTATION ADDITION START
 /mob/living/carbon/human/species/moth/tundra
 	race = /datum/species/moth/tundra
-
+//MONKESTATION ADDITION END
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush
