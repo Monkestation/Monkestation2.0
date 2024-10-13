@@ -16594,10 +16594,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
-"fml" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/command/gateway)
 "fmn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -107737,7 +107733,7 @@ aeo
 aeo
 aeo
 acm
-fml
+lac
 roc
 kTl
 roc
