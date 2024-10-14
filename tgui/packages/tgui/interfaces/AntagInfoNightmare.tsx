@@ -47,8 +47,8 @@ export const AntagInfoNightmare = (props) => {
                   <br />
                   <span style={tipstyle}>Tip #4:&ensp;</span>
                   Since your light eater automatically snuffs out nearby lights,
-                  you don't have to worry about things like the green glow of
-                  APCs. This works even while jaunting, allowing you to black
+                  you don&apos;t have to worry about things like the green glow
+                  of APCs. This works even while jaunting, allowing you to black
                   out entire rooms in seconds if the power is off.
                 </Stack.Item>
               </Stack>
@@ -75,7 +75,7 @@ export const AntagInfoNightmare = (props) => {
                 <LabeledList.Item label="Light Eater">
                   Your twisted appendage. It will consume the light of what it
                   touches, be it victim or object. When unobstructed by bright
-                  light, it'll lash out at anything dim in your vicinity,
+                  light, it&apos;ll lash out at anything dim in your vicinity,
                   completely hiding you in the shadows.
                 </LabeledList.Item>
               </LabeledList>
