@@ -21754,7 +21754,6 @@
 	name = "coven corner"
 	},
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "jFt" = (
