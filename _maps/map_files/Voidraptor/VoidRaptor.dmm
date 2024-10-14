@@ -5262,6 +5262,7 @@
 /obj/item/clothing/mask/muzzle,
 /obj/structure/sink/directional/south,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "bzu" = (
@@ -6784,6 +6785,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white/textured_edge,
 /area/station/security/medical)
 "caV" = (
@@ -13167,15 +13169,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dQr" = (
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
-/obj/item/bedsheet/medical,
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /obj/machinery/light/cold/directional/east,
+/obj/structure/table/optable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -75008,16 +75006,14 @@
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "uPL" = (
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
-/obj/item/bedsheet/medical,
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
