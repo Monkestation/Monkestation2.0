@@ -26,6 +26,10 @@
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
+	offset_features = list(
+		OFFSET_HEAD = list(0,1),
+		)
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
