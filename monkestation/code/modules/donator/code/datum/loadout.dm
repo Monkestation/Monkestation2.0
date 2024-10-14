@@ -687,7 +687,7 @@
 	ckeywhitelist = list("Eacles13")
 
 /datum/loadout_item/effects/albino_ghost_ian
-	ckeywhitelist = list("bidlink2")
+	ckeywhitelist = list("Eacles13")
 	name = "Ghost Ian Transformation"
 	item_path = /obj/item/effect_granter/donator/albino_ghost_ian
 	requires_purchase = FALSE
