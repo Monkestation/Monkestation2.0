@@ -1,7 +1,6 @@
 /obj/item/storage/toolbox/brig_physician
 	name = "Brig Phyiscan's Toolbox"
 	desc = "Capable of robusting and repairing any troublesome robots after the fact."
-	icon = 'monkestation/icons/obj/clothing/jobs/brig_physician.dmi'
 	icon_state = "toolbox-brigphys"
 	inhand_icon_state = "toolbox-brigphys"
 	lefthand_file = 'monkestation/icons/mob/inhands/equipment/brigphys_lefthand.dmi'
