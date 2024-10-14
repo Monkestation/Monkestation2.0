@@ -105,24 +105,3 @@
 	)
 
 	return to_add
-
-//MONKESTATION EDIT START
-/datum/species/moth/tundra
-	name = "\improper Tundra Moth"
-	plural_form = "Tundra Moths"
-	id = SPECIES_TUNDRA
-	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
-	external_organs = list(/obj/item/organ/external/wings/moth = "Tundra", /obj/item/organ/external/antennae = "Tundra")
-
-	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/tundramoth,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/tundramoth,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/tundramoth,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/tundramoth,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/tundramoth,
-	)
-
-	coldmod = 0.67
-	heatmod = 1.5
-//MONKESTATION EDIT END
