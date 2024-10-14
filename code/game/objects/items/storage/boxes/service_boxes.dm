@@ -231,15 +231,14 @@
 		new /obj/item/sticker/googly(src)
 
 /obj/item/storage/box/pillbottles/psych_pills
-	name = "Box of psychiatric pills bottles"
+	name ='Box of psychiatric pills bottles'
 	desc = "A box full of pills bottles for various psychiartic uses"
 
 /obj/item/storage/box/pillbottles/psych_pills/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/storage/pill_bottle/happinesspsych = 1,
-		/obj/item/storage/pill_bottle/lsdpsych = 1,
-		/obj/item/storage/pill_bottle/mannitol = 1,
-		/obj/item/storage/pill_bottle/paxpsych = 1,
-		/obj/item/storage/pill_bottle/psicodine = 1,
+		/obj/item/storage/pill_bottle/happinesspsych,
+		/obj/item/storage/pill_bottle/lsdpsych,
+		/obj/item/storage/pill_bottle/mannitol,
+		/obj/item/storage/pill_bottle/paxpsych,
+		/obj/item/storage/pill_bottle/psicodine,
 	)
-	generate_items_inside(items_inside,src)
