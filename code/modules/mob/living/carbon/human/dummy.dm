@@ -20,9 +20,20 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	harvest_organs()
+	return ..()
+
+// To speed up the preference menu, we apply 1 filter to the entire mob
+/mob/living/carbon/human/dummy/regenerate_icons()
 	. = ..()
-	if(pref_load)
-		apply_height_filters(src, only_apply_in_prefs = TRUE)
+	apply_height_filters(src, only_apply_in_prefs = TRUE)
+
+/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
+	if(only_apply_in_prefs)
+		return ..()
+
+// Not necessary with above
+/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
+	return
 
 ///Let's extract our dummies organs and limbs for storage, to reduce the cache missed that spamming a dummy cause
 /mob/living/carbon/human/dummy/proc/harvest_organs()
@@ -82,17 +93,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
-	return
-
-
-/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
-	if(QDELETED(src))
-		return
-	if(only_apply_in_prefs)
-		return ..()
-
-// Not necessary with above
-/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
 	return
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
