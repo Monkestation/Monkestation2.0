@@ -81,3 +81,127 @@
       as block diagonal movement was having unintended side effects and was actually
       intended for pivot step mechs.
   - bugfix: You can once again use alt to turn while strafing in a mech
+2024-10-06:
+  Absolucy:
+  - qol: Monster Hunters can now see rabbits through walls.
+  - qol: Monster Hunters interacting with a rabbit will now automatically pickup the
+      loot if they have room in their hands.
+  - refactor: Made the rabbit code a bit less shit (in exchange for some annoyingly
+      necessary jank)
+  - qol: The slowdown from bloodsilver bullets is now a status effect, and will be
+      refreshed if another bullet hits before it finishes.
+  Glyphee:
+  - rscadd: Vault at CC
+  Shoddd:
+  - bugfix: falling in a chasm no longer breaks your ghost
+2024-10-07:
+  Absolucy:
+  - bugfix: Reworks the loadout store UI to use a spritesheet, fixing a major source
+      of lag.
+  - bugfix: Fixed some errors related to picking roundstart spawn points.
+  - bugfix: (Hopefully) fixed runtimes related to NIF persistence.
+  Gw0sty:
+  - rscadd: Adds borer cages as a medical express order.
+  - bugfix: fixed A/S maintenance APC being unconnected on Theseus.
+  Shoddd:
+  - qol: Report Issues is now Report bugs
+  - rscadd: Gives hos a gun beacon, choose from multiphase, law bringer, or a combat
+      shotgun
+  - rscadd: Gives multiphase a bigger battery and tase option
+  - rscadd: Compact combat shotgun from TG
+  - balance: Beanbags and rubbershot now account for 250 stamina
+  ThePooba:
+  - rscadd: added Kams office back to centcom and Fortunes office
+  Wisemonster:
+  - balance: Turned off telecomms and SM air conditioning, and lowered the cold room
+      air conditioning temperature to prevent the rooms from heating up too much.
+2024-10-08:
+  MomoBerri:
+  - bugfix: Fixed several issues on theseus, including mismatched IDs on buttons and
+      access issues on doors. Also fixes the engine gas filter to filter nitrogen.
+      AI Upload turrets now function properly.
+  Syndicat-Meow:
+  - rscadd: Many kinds of mobs can now be brought back to life through revival surgery.
+  - rscadd: Dogs can wear eyepatches.
+  Veth-s:
+  - rscadd: Added Veth's Plantery to the Admin Offices.
+2024-10-09:
+  Absolucy:
+  - bugfix: Experimental fix for the numerous pathology symptom-related errors.
+  - balance: The job overflow station trait no longer affects the Head of Security
+      or Blueshield.
+  - balance: The bureaucratic error event will no longer affect Blueshield slots.
+  Gw0sty:
+  - rscadd: Gives all the blueshield's head options which didnt have armor, armor.
+  RikuTheKiller:
+  - rscadd: Added the C.C.M.S dual wielding implant available on the black market
+      and traitor uplinks.
+  - spellcheck: There are now better descriptions for some traitor uplink implant
+      bundles.
+  ThePooba:
+  - rscadd: floridaman now randomizes character and name
+  - bugfix: abductee now has very clear instructions to not remember aliens at all
+  Yarinoi:
+  - rscdel: Removes degeneracy from the bunny wand.
+  - rscadd: Adds silly easter costumes to the bunny wand.
+  - rscadd: Adds silly easter costume to the autodrobe.
+  - balance: Plasmamen can now remove the bunny costumes added by the bunny wand because
+      i dont really feel like making easter bunny envirosuits
+2024-10-10:
+  Absolucy:
+  - bugfix: Speech artifact faults no longer make the dead speak.
+  - refactor: Refactored the paranoia/stalking phantoms trauma. In-game behavior should
+      be the same.
+  - qol: The curator's radio channel frequency is now reserved, and can only be broadcast
+      to by the radio booth's mic.
+  Gw0sty:
+  - rscadd: Adds hairbrush, comb, and the gothic coat to the Monke shop
+  - spellcheck: Fixes the name of ornate coat
+  - rscadd: Adjusts psychologists' primary door to a solid airlock and their access.
+  - rscadd: Made it so the void cloak stops pressure damage when hooded.
+  - rscadd: Adds the 'Unmarked Takbok Revolver', a variation of the Trapiste Takbok
+      revolver that has less recoil and fires slightly faster.
+  - rscadd: ' Replaces the Takbok revolver in the BlueShield''s gun beacon with a
+      new addition, the ''Unmarked Takbok Revolver'''
+  - rscadd: Camera system to meta virology
+  - rscadd: Added sink to Theseus's garden
+  - bugfix: Adjusted the windows of meta morgue chute to not block the chute.
+  - bugfix: Fixed upside engi map in blueshift's bridge so the captain pilots the
+      ship in the right direction
+  RikuTheKiller:
+  - balance: Inverse reagents no longer cause toxin damage unless it's explicitly
+      one of their effects.
+  Veth-s:
+  - bugfix: Fixed some of the doors in CC showing as "Veth's Plantery" (against my
+      will).
+  - bugfix: Fixed Fortune's CC office.
+  catmanpop:
+  - bugfix: fixed a mapping issue in void raptor regarding an area of maints and the
+      prison not having rad storm protection
+2024-10-11:
+  DexeeXI:
+  - rscadd: Component printer now in the pharmacy.
+  - rscdel: Removed useless chromatography machines (no fermichem)
+  - bugfix: spooky
+  Gw0sty:
+  - rscadd: Added robotic versions of the organ repair surgeries
+  - qol: Made eye/ear surgery only appears if the organ is damaged.
+  KnigTheThrasher:
+  - bugfix: fixed tram disposals around science
+  ven1883:
+  - bugfix: fixed lobby music exclude being broken
+2024-10-12:
+  Absolucy:
+  - bugfix: Fixed more roundstart active turfs at centcom.
+  - bugfix: Fixed some items (primarily greyscale/recolorable items) having incorrect
+      icons in the loadout shop UI.
+  - qol: Made the loadout shop UI slightly wider, to better fit the category names
+      at the top.
+  - bugfix: Fixed a runtime error when a player logged out while having the loadout
+      shop open.
+2024-10-13:
+  Absolucy:
+  - bugfix: Fixed the radio mic being delayed by 2 seconds.
+2024-10-14:
+  DexeeXI:
+  - rscdel: removes a series of plushies that should have not been added to the codebase.
