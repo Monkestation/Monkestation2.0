@@ -32,19 +32,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-/obj/item/storage/box/nanitecontrol
-	name = "Nanite Controller Box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/nanitecontrol/PopulateContents()
-	new /obj/item/nanite_remote(src)
-	new /obj/item/nanite_remote(src)
-	new /obj/item/nanite_remote(src)
-	new /obj/item/nanite_scanner(src)
-	new /obj/item/nanite_scanner(src)
-	new /obj/item/nanite_scanner(src)
-	///obj/item/nanite_injector(src)
-	//coded out as its been on blueshift and noones had issues with it but there probably should be a discussion before added everywhere.
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
