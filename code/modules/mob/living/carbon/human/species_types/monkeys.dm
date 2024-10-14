@@ -73,10 +73,9 @@
 			return TRUE
 		return ..()
 
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
+	// calls parent if it's not attacking a mob, used for places like opening inventory while in crit.
+	if(!isliving(target))
+		return ..()
 	var/mob/living/carbon/victim = target
 	if(user.is_muzzled())
 		return TRUE // cannot bite them if we're muzzled
