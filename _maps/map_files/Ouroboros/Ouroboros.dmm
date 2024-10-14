@@ -41201,13 +41201,14 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "mep" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/mid_joiner{
 	dir = 1
+	},
+/obj/machinery/computer/operating{
+	dir = 8
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/medical)
@@ -54529,8 +54530,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "qbe" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
+/obj/structure/table/optable,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/medical)
 "qbf" = (
