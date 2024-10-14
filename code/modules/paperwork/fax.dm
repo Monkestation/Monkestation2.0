@@ -51,7 +51,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/card,
 		/obj/item/folder/biscuit,
 		//MONKESTATION EDIT START, also edits icons/obj/fax.dmi
-		/obj/item/clothing/head/mob_holder, //if i could it'd just be mothroaches but they ALL use this.
 		/obj/item/gun, // remote robbery, https://www.youtube.com/watch?v=xtHaplmap7I
 		/obj/item/restraints/handcuffs,
 		/obj/item/grown/bananapeel, //remote slippage
