@@ -329,17 +329,16 @@
 /obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-	var/reagent_max = 0
+	var/total_reagents = 0
+	var/potency_rate = potency/100
 	for(var/rid in reagents_add)
-		reagent_max += reagents_add[rid]
+		total_reagents += reagents_add[rid] * potency_rate
 	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
+		var/grown_edible_volume = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
+		var/fitting_proportion = min(1/total_reagents, 1)
 		for(var/rid in reagents_add)
-			var/reagent_overflow_mod = reagents_add[rid]
-			if(reagent_max > 1)
-				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
-			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
-			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+			var/amount = max(1, round(grown_edible_volume * potency_rate * reagents_add[rid] * fitting_proportion, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = /datum/blood_type/crew/human/o_minus)
