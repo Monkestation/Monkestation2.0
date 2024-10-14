@@ -691,3 +691,9 @@
 	name = "Ghost Ian Transformation"
 	item_path = /obj/item/effect_granter/donator/albino_ghost_ian
 	requires_purchase = FALSE
+
+/datum/loadout_item/neck/mist_cloak
+	name = "Mist Cloak"
+	item_path = /obj/item/clothing/neck/mist_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE

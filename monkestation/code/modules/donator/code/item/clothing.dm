@@ -562,3 +562,11 @@
 	desc = "A comfortable jacket with a yellow scorpion on the back! It seems well made."
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/neck/mist_cloak
+	name = "mist cloak"
+	desc = "It's a mist cloak. When someone grabs it, it somewhat rips it self appart so that thier enemy can't use the cloak to thier advantage."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mist_cloak"
+	worn_icon_state = "mist_cloak"
