@@ -19,26 +19,26 @@
 
 // Body parts
 /obj/item/bodypart/head/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_head"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
 
 /obj/item/bodypart/chest/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_chest_m"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_l_arm"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
@@ -47,9 +47,9 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/right/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_r_arm"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
@@ -58,15 +58,15 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/leg/left/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_l_leg"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/tundramoth
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
+	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	icon_state = "tundra_moth_r_leg"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
