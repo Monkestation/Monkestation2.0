@@ -96,6 +96,11 @@
 		to_chat(user, span_warning("It really would not be wise to go into space."))
 		return FALSE
 	if(check_light_level(.))
+		// MONKESTATION EDIT START
+		SEND_SIGNAL(user, COMSIG_NIGHTMARE_SNUFF_CHECK, .) // Snuffs nearby lights as if we had already moved to the tile.
+		if(!check_light_level(.)) // Now we check again after snuffing any dim lights.
+			return
+		// MONKESTATION EDIT END
 		if(!light_step_warning())
 			return FALSE
 

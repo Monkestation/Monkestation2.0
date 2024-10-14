@@ -33,3 +33,6 @@
 
 #define COMSIG_LIVING_TRACKER_REMOVED "tracker_removed"
 #define COMSIG_CLEAR_SEE "clear_see"
+
+/// Initiates a nightmare snuff check (eats dim lights on everything within 2 tiles) with the given args. (turf/start_turf)
+#define COMSIG_NIGHTMARE_SNUFF_CHECK "nightmare_snuff_check"
