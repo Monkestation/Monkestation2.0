@@ -50,7 +50,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/folder/biscuit,
-		//MONKESTATION EDIT START
+		//MONKESTATION EDIT START, also edits icons/obj/fax.dmi
 		/obj/item/clothing/head/mob_holder, //if i could it'd just be mothroaches but they ALL use this.
 		/obj/item/gun, // remote robbery, https://www.youtube.com/watch?v=xtHaplmap7I
 		/obj/item/restraints/handcuffs,
@@ -415,6 +415,12 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return "[state_prefix]_tcg"
 	if (istype(item, /obj/item/folder/biscuit))
 		return "[state_prefix]_pbiscuit"
+	if (istype(item, /obj/item/gun))//MONKESTATION EDIT START
+		return "[state_prefix]_gun"
+	if (istype(item, /obj/item/restraints/handcuffs))
+		return "[state_prefix]_handcuffs"
+	if (istype(item, /obj/item/grown/bananapeel))
+		return "[state_prefix]_peel" //MONKESTATION EDIT END
 	return "[state_prefix]_paper"
 
 /**
