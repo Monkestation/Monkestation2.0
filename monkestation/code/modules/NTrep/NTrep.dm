@@ -1,5 +1,5 @@
 /datum/job/nanotrasen_representative
-	title = JOB_BLUESHIELD
+	title = JOB_NANOTRASEN_REPRESENTATIVE
 	description = "Protect the heads of staff with your life. You are not a sec officer, and cannot perform arrests."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("CentCom")
@@ -15,7 +15,7 @@
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "NANOTRASEN_REPRESENTATIVE"
 
-	outfit = /datum/outfit/job/representative
+	outfit = /datum/outfit/job/nanotrasen_representative
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 
 	paycheck = PAYCHECK_COMMAND
