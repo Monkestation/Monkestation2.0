@@ -287,7 +287,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if("send_special")
 			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
 			if(!istype(fax_paper))
-				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax can only paper on this protected network, sorry.")) // MONKESTATION EDIT: cannot send all above > can only send
+				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax can only send paper on this protected network, sorry.")) // MONKESTATION EDIT: cannot send all above > can only send
 				return
 
 			fax_paper.request_state = TRUE
