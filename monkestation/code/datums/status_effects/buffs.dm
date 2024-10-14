@@ -70,7 +70,7 @@
 	var/obj/item/restraints = user.get_item_by_slot(slot)
 
 	owner.visible_message(
-		message = span_warning("[user] shatters their [restraints.name]!"),
+		message = span_warning("[user] shatters [user.p_their()] [restraints.name]!"),
 		self_message = span_notice("You shatter your [restraints.name]!"),
 		blind_message = span_hear("You hear something shatter!")
 	)
