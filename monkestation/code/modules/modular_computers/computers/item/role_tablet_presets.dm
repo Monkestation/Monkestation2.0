@@ -7,7 +7,7 @@
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/radar/lifeline // For finding security officers
+		/datum/computer_file/program/radar/lifeline, // For finding security officers
 	)
 
 /obj/item/modular_computer/pda/engineering
@@ -20,9 +20,10 @@
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/borg_monitor,
+	)
 
 /obj/item/modular_computer/pda/psychologist
-	name = "medical PDA"
+	name = "Psychologist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#242424#333333"
 	starting_programs = list(
