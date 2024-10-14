@@ -8,6 +8,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/plasmaman_head.dmi'
 	icon_state = "bs_envirohelm"
+	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/under/plasmaman/blueshield
 	name = "blueshield envirosuit"
@@ -32,6 +33,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#3A4E7D#DEB63D"
 	icon_state = "beret_badge_police"
+	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/head/beret/blueshield/navy
 	name = "navy blueshield's beret"
@@ -201,6 +203,7 @@
 
 /obj/item/radio/headset/headset_bs
 	name = "\proper the blueshield's headset"
+	desc = "The headset of the guy who keeps the administration alive."
 	icon = 'monkestation/code/modules/blueshield/icons/radio.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/ears.dmi'
 	icon_state = "bshield_headset"
@@ -209,6 +212,8 @@
 	keyslot2 = /obj/item/encryptionkey/headset_cent
 
 /obj/item/radio/headset/headset_bs/alt
+	name = "\proper the blueshield's bowman headset"
+	desc = "The headset of the guy who keeps the administration alive. Protects your ears from flashbangs."
 	icon_state = "bshield_headset_alt"
 	worn_icon_state = "bshield_headset_alt"
 
