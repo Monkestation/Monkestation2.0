@@ -1,3 +1,17 @@
+/obj/item/light_eater
+	var/datum/proximity_monitor/advanced/nightmare_snuff/nightmare_snuff
+
+	COOLDOWN_DECLARE(message_cooldown)
+
+/obj/item/light_eater/equipped(mob/user, slot, initial)
+	. = ..()
+	if(get_turf(user)) // If the user is in fucking nullspace, don't make a proximity monitor.
+		nightmare_snuff = new(_host = src, range = 2, _ignore_if_not_on_turf = FALSE)
+
+/obj/item/light_eater/dropped(mob/user, silent)
+	. = ..()
+	QDEL_NULL(nightmare_snuff)
+
 /obj/item/light_eater/attack_atom(atom/attacked_atom, mob/living/user, params)
 	if(!istype(attacked_atom, /obj/machinery/door/airlock) && !istype(attacked_atom, /obj/machinery/door/window))
 		return ..()
@@ -13,11 +27,13 @@
 		return ..()
 
 	if(has_power)
-		opening.balloon_alert(user, "powered!")
+		if(check_message_cd())
+			opening.balloon_alert(user, "powered!")
 		return ..()
 
 	if(opening.locked)
-		opening.balloon_alert(user, "bolted!")
+		if(check_message_cd())
+			opening.balloon_alert(user, "bolted!")
 		return ..()
 
 	user.visible_message(
@@ -27,3 +43,8 @@
 	)
 
 	opening.open(BYPASS_DOOR_CHECKS)
+
+/obj/item/light_eater/proc/check_message_cd()
+	. = COOLDOWN_FINISHED(src, message_cooldown)
+	if(.)
+		COOLDOWN_START(src, message_cooldown, 5 SECONDS)

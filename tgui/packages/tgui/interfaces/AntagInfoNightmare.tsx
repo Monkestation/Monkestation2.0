@@ -55,7 +55,8 @@ export const AntagInfoNightmare = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Shadow Walk">
                   You are allowed unlimited, unrestricted movement in the dark.
-                  Light will pull you out of this.
+                  While jaunting, your natural healing is amplified. Light will
+                  pull you out of this.
                 </LabeledList.Item>
                 <LabeledList.Item label="Heart of Darkness">
                   Your heart invites the shadows. If you die in the darkness,
