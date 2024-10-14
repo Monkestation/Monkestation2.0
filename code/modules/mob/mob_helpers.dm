@@ -240,11 +240,6 @@
 	// Else, return FALSE.
 	return (faker && allow_fake_antags)
 
-
-/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
-	return TRUE
-
-
 /**
  * Fancy notifications for ghosts
  *
@@ -294,7 +289,7 @@
 			continue
 
 		var/custom_link = enter_link ? " [enter_link]" : ""
-		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+		var/link = " <a href='byond://?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
 
