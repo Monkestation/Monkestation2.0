@@ -27,8 +27,10 @@
 /datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 //MONKESTATION EDIT START
-	//desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
+	/*
+	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately."
+	*/
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately. \
 			The chameleon technology can be locked and unlocked using a multitool, hiding it from others."
