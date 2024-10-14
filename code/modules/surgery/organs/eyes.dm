@@ -688,12 +688,6 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
 
-/obj/item/organ/internal/eyes/moth/tundra
-	name = "tundra moth eyes"
-	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
-	eye_icon_state = "tundramotheyes"
-	icon_state = "eyeballs-tundramoth"
-
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"
 	desc = "These eyes seem to glow."

@@ -71,3 +71,45 @@
 	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
+
+// Eyes
+/obj/item/organ/internal/eyes/moth/tundra
+	name = "tundra moth eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	eye_icon_state = "tundramotheyes"
+	icon_state = "eyeballs-tundramoth"
+
+// Wings, Antennae, and Markings
+
+// Tundra
+/datum/sprite_accessory/moth_wings/tundra
+	name = "Tundra"
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_wings.dmi'
+	icon_state = "tundra"
+
+/datum/sprite_accessory/moth_antennae/tundra
+	name = "Tundra"
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_antennae.dmi'
+	icon_state = "tundra"
+
+/datum/sprite_accessory/moth_markings/tundra
+	name = "Tundra"
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_markings.dmi'
+	icon_state = "tundra"
+
+// Bluespace
+/datum/sprite_accessory/moth_wings/bluespace
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_wings.dmi'
+	name = "Bluespace"
+	icon_state = "bluespace"
+
+/datum/sprite_accessory/moth_antennae/bluespace
+	name = "Bluespace"
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_antennae.dmi'
+	icon_state = "bluespace"
+
+// Twilight
+/datum/sprite_accessory/moth_antennae/twilight
+	name = "Twilight"
+	icon = 'monkestation/icons/mob/species/tundramoths/moth_antennae.dmi'
+	icon_state = "twilight"
