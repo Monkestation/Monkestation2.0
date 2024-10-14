@@ -335,7 +335,7 @@
 		total_reagents += reagents_add[rid] * potency_rate
 	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
-		var/grown_edible_volume = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
+		var/grown_edible_volume = grown_edible.reagents.maximum_volume
 		var/fitting_proportion = min(1/total_reagents, 1)
 		for(var/rid in reagents_add)
 			var/amount = max(1, round(grown_edible_volume * potency_rate * reagents_add[rid] * fitting_proportion, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
