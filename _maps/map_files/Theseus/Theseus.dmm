@@ -8638,25 +8638,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/upper)
-"cCS" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 10
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 3
-	},
-/obj/machinery/light_switch/directional/west{
-	pixel_y = -6
-	},
-/obj/machinery/computer/message_monitor{
-	dir = 1
-	},
-/obj/item/paper/monitorkey,
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "cCY" = (
 /turf/closed/wall,
 /area/station/service/bar/backroom)
@@ -9449,6 +9430,32 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
+"cPX" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/computer_disk{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/computer_disk{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/storage/box/disks_nanite{
+	pixel_y = 10;
+	pixel_x = 6
+	},
+/obj/item/storage/box/nanitecontrol{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark/side,
+/area/station/science/circuits)
 "cPY" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/stripes/line,
@@ -15706,6 +15713,14 @@
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
+"eLH" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/computer/telecomms/traffic,
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "eLL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16306,6 +16321,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"eVo" = (
+/obj/machinery/light_switch/directional/east,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/wrench,
+/obj/item/radio/off,
+/obj/item/book/manual/wiki/tcomms{
+	pixel_x = 4
+	},
+/obj/item/multitool,
+/obj/item/screwdriver{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "eVw" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 6
@@ -27379,6 +27414,18 @@
 /obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"imd" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/landmark/start/signal_technician,
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "img" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
@@ -29929,26 +29976,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"iZQ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 5
-	},
-/obj/structure/table,
-/obj/item/folder/blue{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/folder/yellow,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/pen,
-/obj/item/pen/blue{
-	pixel_y = 5
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "jac" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30344,6 +30371,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"jfu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/folder/blue{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/folder/yellow,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/pen,
+/obj/item/pen/blue{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "jfB" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/chem_master,
@@ -48825,6 +48872,10 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"oCl" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "oCp" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/dark/half,
@@ -50397,14 +50448,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
-"pdc" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 9
-	},
-/obj/item/radio/intercom/directional/west,
-/obj/machinery/computer/telecomms/traffic,
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "pdi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58346,6 +58389,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"rti" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 3
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -6
+	},
+/obj/machinery/computer/message_monitor{
+	dir = 1
+	},
+/obj/item/paper/monitorkey,
+/turf/open/floor/iron/dark/small,
+/area/station/tcommsat/computer)
 "rtj" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "radioblast";
@@ -58721,18 +58783,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"ryd" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/structure/chair/office{
-	dir = 1
-	},
-/obj/effect/landmark/start/signal_technician,
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "ryf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -62569,10 +62619,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
-"sFo" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "sFt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66918,26 +66964,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"tSc" = (
-/obj/machinery/light_switch/directional/east,
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/wrench,
-/obj/item/radio/off,
-/obj/item/book/manual/wiki/tcomms{
-	pixel_x = 4
-	},
-/obj/item/multitool,
-/obj/item/screwdriver{
-	pixel_y = 5
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/computer)
 "tSe" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
@@ -69496,32 +69522,6 @@
 /obj/machinery/camera/directional/west,
 /turf/open/floor/lowered/iron/pool/cobble,
 /area/station/commons/fitness)
-"uDR" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/white/filled/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/computer_disk{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/computer_disk{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 10;
-	pixel_x = 6
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 2;
-	pixel_x = 10
-	},
-/turf/open/floor/iron/dark/side,
-/area/station/science/circuits)
 "uDT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -104242,7 +104242,7 @@ kqa
 hIR
 dMz
 lLR
-uDR
+cPX
 kVg
 lHp
 xOp
@@ -114507,9 +114507,9 @@ aVk
 aFa
 aFa
 xNK
-pdc
-ryd
-cCS
+eLH
+imd
+rti
 aOy
 xTT
 ejx
@@ -114765,7 +114765,7 @@ abt
 egU
 ira
 hMs
-sFo
+oCl
 ffR
 aOy
 hoo
@@ -115279,7 +115279,7 @@ xNW
 sLj
 ira
 tRM
-iZQ
+jfu
 pLx
 aOy
 gxX
@@ -115536,7 +115536,7 @@ aFa
 ihS
 spY
 bdb
-tSc
+eVo
 aPf
 aOy
 fTz
