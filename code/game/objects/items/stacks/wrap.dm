@@ -183,6 +183,7 @@
 			balloon_alert(user, "not enough paper!")
 			return
 
+	// MONKESTATION EDIT START
 	else if(istype(target, /obj/structure/fermentation_keg))
 		var/obj/structure/fermentation_keg/keg = target
 		if(!keg.ready_to_bottle)
@@ -202,7 +203,7 @@
 		else
 			balloon_alert(user, "not enough paper!")
 			return
-
+	// MONKESTATION EDIT END
 
 	else
 		balloon_alert(user, "can't wrap!")
