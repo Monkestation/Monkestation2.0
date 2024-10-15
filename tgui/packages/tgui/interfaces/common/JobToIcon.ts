@@ -11,6 +11,7 @@ const BASEICONS = {
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
   Captain: 'crown',
+  'Candy Salesman': 'cookie-bite',
   'Cargo Technician': 'box',
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
@@ -28,7 +29,11 @@ const BASEICONS = {
   'Cyber Police': 'qrcode',
   Cyborg: 'robot',
   Detective: 'user-secret',
+  'Diet Wizard': 'hat-wizard',
+  'Discount Godzilla': 'ticket-alt' //like a movie ticket? IDK theres not many good icons for this.
   Geneticist: 'dna',
+  Ghost: 'ghost',
+  Gorilla: 'monkey',
   'Head of Personnel': 'dog',
   'Head of Security': 'user-shield',
   Janitor: 'soap',
@@ -50,10 +55,12 @@ const BASEICONS = {
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
   'Shaft Miner': 'digging',
+  skeleton: 'skull',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
   Virologist: 'virus',
   Warden: 'handcuffs',
+  'Yellow Clown': 'lemon', //yellow lemon.
 } as const;
 
 const ALTTITLES = {
@@ -238,6 +245,10 @@ const ALTTITLES = {
   'Security Operative': BASEICONS['Security Officer'],
   Peacekeeper: BASEICONS['Security Officer'],
   'Security Cadet': BASEICONS['Security Officer'],
+  //Security Assistant - file-invoice-dollar
+  'Hall Monitor': BASEICONS['Security Assistant'],
+  'Assistant Officer': BASEICONS['Security Assistant'],
+  'Professional Snitch': BASEICONS['Security Assistant'],
   // Shaft Miner - digging
   'Union Miner': BASEICONS['Shaft Miner'],
   Excavator: BASEICONS['Shaft Miner'],
