@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/his_grace,
 	/obj/item/bodybag/bluespace,
 	/obj/item/mod/control,
-	/obj/item/clothing/head/mob_holder,
 	/obj/item/mcobject/interactor,
 	/obj/item/mcobject/collector, //now frankly I have no idea if this will even help, because then we'd honestly have to blacklist every other storage thing but I dunno if yall want it to be this way
 )))
