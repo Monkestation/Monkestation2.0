@@ -7453,6 +7453,7 @@
 #include "monkestation\code\modules\modular_guns\crafting\part_recipes.dm"
 #include "monkestation\code\modules\modular_guns\makeshift_effects\__base_effect.dm"
 #include "monkestation\code\modules\NTrep\NTrep.dm"
+#include "monkestation\code\modules\NTrep\clothing\NTrep_clothing.dm"
 #include "monkestation\code\modules\NTrep\coolgun\plasmacore.dm"
 #include "monkestation\code\modules\ocean_content\department_consoles\engineering.dm"
 #include "monkestation\code\modules\ocean_content\fluff\barrier.dm"
