@@ -51,6 +51,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/card,
 		/obj/item/folder/biscuit,
 		//MONKESTATION EDIT START, also edits icons/obj/fax.dmi
+		/obj/item/clothing/head/mob_holder, //if i could it'd just be mothroaches but they ALL use this.
 		/obj/item/gun, // remote robbery, https://www.youtube.com/watch?v=xtHaplmap7I
 		/obj/item/restraints/handcuffs,
 		/obj/item/grown/bananapeel, //remote slippage
@@ -343,6 +344,11 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			balloon_alert(usr, "destination port jammed")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
+		if (is_centcom_level(FAX.z) && istype(loaded, /obj/item/clothing/head/mob_holder) ) //MONKESTATION EDIT START mob_holders, expectedly, hold mobs, which include amogi, this prevents CC breakins.
+			do_sparks(5, TRUE, src)
+			balloon_alert(usr, "destination port firewalled")
+			playsound(src, 'sound/machines/terminal_error.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			return FALSE //MONKESTATION EDIT END
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
@@ -537,3 +543,10 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	return .
 
+//Monkestation edit start
+/// Admin Fax subtype
+/obj/machinery/fax/messageadmins
+	allow_exotic_faxes = TRUE
+	recieve_notifies_admins = TRUE
+
+//Monkestation edit end
