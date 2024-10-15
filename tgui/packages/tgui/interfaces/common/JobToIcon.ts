@@ -6,6 +6,7 @@ const BASEICONS = {
   Bartender: 'cocktail',
   'Bit Avatar': 'code',
   Bitrunner: 'gamepad',
+  Blueshield: 'chess-rook',
   Botanist: 'seedling',
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
@@ -42,6 +43,7 @@ const BASEICONS = {
   'Research Director': 'user-graduate',
   Roboticist: 'battery-half',
   Scientist: 'flask',
+  'Security Assistant': 'file-invoice-dollar',
   'Security Officer (Cargo)': 'shield-halved',
   'Security Officer (Engineering)': 'shield-halved',
   'Security Officer (Medical)': 'shield-halved',
