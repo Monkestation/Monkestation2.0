@@ -78,6 +78,10 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
+	skillchips = list(
+		/obj/item/skillchip/disk_verifier,
+	)
+
 /datum/outfit/job/nanotrasen_representative/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
