@@ -19,3 +19,4 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	icon_state = "minicrown"
 	inhand_icon_state = null
+
