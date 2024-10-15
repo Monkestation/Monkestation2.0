@@ -16,10 +16,3 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
-
-
-/obj/item/clothing/head/costume/minicrown
-	name = "Mini crown"
-	desc = "A cute crown for the cutest prince or princess. Has the initials 'VA' embroidered inside of the cap.."
-	icon_state = "minicrown"
-	inhand_icon_state = null
