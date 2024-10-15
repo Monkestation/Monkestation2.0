@@ -478,7 +478,7 @@
 		ui_status_only_living(user, owner),
 		ui_status_user_has_free_hands(user, owner),
 		ui_status_user_is_adjacent(user, owner, allow_tk = FALSE),
-		HAS_TRAIT(user, TRAIT_CAN_STRIP) && HAS_TRAIT(user, TRAIT_CANT_STRIP) ? UI_INTERACTIVE : UI_UPDATE, // monkestation edit
+		HAS_TRAIT(user, TRAIT_CAN_STRIP) && !HAS_TRAIT(user, TRAIT_CANT_STRIP) ? UI_INTERACTIVE : UI_UPDATE, // monkestation edit
 		max(
 			ui_status_user_is_conscious_and_lying_down(user),
 			ui_status_user_is_abled(user, owner),
