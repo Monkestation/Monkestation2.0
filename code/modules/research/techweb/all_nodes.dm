@@ -39,7 +39,7 @@
 		"coffee_cartridge",
 		"coffeemaker",
 		"coffeepot",
-		"comb",
+		"comb", //monkestation edit
 		"condenser",
 		"conveyor_belt",
 		"conveyor_switch",
@@ -49,7 +49,7 @@
 		"desttagger",
 		"doppler_array",
 		"drinking_glass",
-		"dyespray",
+		"dyespray", //monkestation edit
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
@@ -61,9 +61,9 @@
 		"fluid_ducts",
 		"foam_dart",
 		"fork",
-		"fur_dyer",
+		"fur_dyer", //monkestation edit
 		"gas_filter",
-		"hairbrush",
+		"hairbrush", //monkestation edit
 		"handcuffs_s",
 		"handlabel",
 		"health_sensor",
@@ -105,7 +105,7 @@
 		"rglass",
 		"roll",
 		"rollerbed",
-		"scissors",
+		"scissors", //monkestation edit
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",

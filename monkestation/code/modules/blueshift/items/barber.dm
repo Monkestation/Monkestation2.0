@@ -268,7 +268,6 @@
 			user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 
-
 /obj/item/reagent_containers/dropper/precision
 	name = "pipette"
 	desc = "A high precision pippette. Holds 1 unit."
@@ -312,7 +311,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
-		/obj/item/secateurs = 1, //plant
+		/obj/item/secateurs = 1, //monkestation edit: plant
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
