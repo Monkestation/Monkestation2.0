@@ -13,7 +13,7 @@ for example, adding in their job after their name
 
 - code\datums\chatmessage.dm -- Added a if(!speaker); return; due to NTSL code not passing a speaker when you use broadcast()
 - code\datums\id_trim\jobs.dm -- Added the ACCESS_TCOMMS_ADMIN to the CE's trim
-- code\game\say.dm -- Adds a </a> to the end of endspanpart
+- code\game\say.dm -- Adds a </a> to the end of endspanpart, also a lot of stuff for AI tracking
 - code\game\machinery\telecomms\telecomunications.dm -- Added some logging if there's a wrong filter path
 - code\game\machinery\telecomms\broadcasting.dm -- Added a lvls var to the signal, needed for broadcast() on comms to work
 - code\game\machinery\telecomms\machines\server.dm -- Added stuff to make the servers actually compile NTSL
