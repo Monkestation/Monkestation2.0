@@ -62,12 +62,6 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "lief_flos"
 
-/obj/item/toy/plush/quilark
-	name = "quilark plush"
-	desc = "A plush of the Lizard Basil. ~Handcrafted lovingly for quilark"
-	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
-	icon_state = "quilark"
-
 /obj/item/toy/plush/gumball_goblin
 	name = "gumball goblin plush"
 	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs. Help. ~Handcrafted lovingly for elliethedarksun"
@@ -152,3 +146,8 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "toadie_wan_kenfrogi"
 
+/obj/item/toy/plush/trax_the_coward
+	name = "trax the coward plush"
+	desc = "A plushie of trax the coward. They're wearing a captains uniform."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "trax_the_coward"
