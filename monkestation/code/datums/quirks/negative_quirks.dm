@@ -250,7 +250,7 @@
 	lose_text = span_notice("You feel like the doors can see you again.. what.")
 
 /datum/quirk/soullessdoor/add()
-	RegisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROF_REF(on_bump))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump))
 
 /datum/quirk/soullessdoor/remove()
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN)
