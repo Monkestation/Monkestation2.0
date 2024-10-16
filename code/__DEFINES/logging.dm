@@ -51,7 +51,7 @@
 #define LOG_SPEECH_INDICATORS (1 << 21)
 #define LOG_CLONING (1 << 22)
 #define LOG_MECHCOMP (1 << 23)
-#define LOG_NTSL (1 << 24) // MONKESTATION ADDITION: NTSL
+#define LOG_NTSL (1 << 24) // MONKESTATION ADDITION -- NTSL
 #define LOG_BLACKMARKET (1 << 25)
 
 //Individual logging panel pages

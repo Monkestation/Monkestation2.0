@@ -19,10 +19,10 @@ for example, adding in their job after their name
 - code\game\machinery\telecomms\machines\server.dm -- Added stuff to make the servers actually compile NTSL
 - code\modules\research\techweb\all_nodes.dm -- Added the programming console thingy to the telecomms techweb
 
-- interface\skin.dmf -- Added stuff to make NTSL code editing UI work... im sorry... i really need to turn it to TGUI
-
 - icons\ui_icons\achievements.dmi -- Added the achievement icon for loud and silent birb
 - icons\obj\card.dmi -- Added the icon for signal techs
+
+- tgui\packages\tgui\interfaces\common\JobToIcon.ts -- Added an icon state to the signal techs so they show up in TGUI
 
 ### Included files that are not contained in this module:
 
@@ -31,6 +31,8 @@ for example, adding in their job after their name
 
 - monkestation\icons\obj\clothing\uniforms.dmi
 - monkestation\icons\mob\clothing\uniform.dmi
+
+- tgui\packages\tgui\interfaces\NTSLCoding.js -- Interface for the traffic console
 
 ### Defines:
 
