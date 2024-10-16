@@ -318,21 +318,6 @@
 		update_appearance()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user)
-	// MONKESTATION ADDITION START
-	if(user.has_quirk(/datum/quirk/soullessdoor))
-		if(ishuman(user) && prob(95) && density)
-			var/mob/living/carbon/human/H = user
-			if(Adjacent(user))
-				playsound(src, 'sound/effects/bang.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
-				if(!istype(H.head, /obj/item/clothing/head/helmet))
-					H.visible_message(span_danger("[user] headbutts the airlock."), span_userdanger("You headbutt the airlock!"))
-					H.Paralyze(1)
-					H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
-					H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
-				else
-					visible_message(span_danger("[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet."))
-		return
-	// MONKESTATION ADDITION END
 	if(!hasPower())
 		return
 

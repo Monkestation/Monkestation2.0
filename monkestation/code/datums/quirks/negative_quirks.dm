@@ -248,3 +248,22 @@
 	icon = FA_ICON_GHOST
 	gain_text = span_notice("You have trouble with the doors not opening when you approach.")
 	lose_text = span_notice("You feel like the doors can see you again.. what.")
+
+/datum/quirk/soullessdoor/add()
+	RegisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROF_REF(on_bump))
+
+/datum/quirk/soullessdoor/remove()
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN)
+
+/datum/quirk/soullessdoor/proc/on_bump(/mob/living/carbon/user)
+	if(ishuman(user) && prob(95) && density)
+		if(Adjacent(user))
+			playsound(src, 'sound/effects/bang.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+			if(!istype(user.head, /obj/item/clothing/head/helmet))
+				user.visible_message(span_danger("[user] headbutts the airlock."), span_userdanger("You headbutt the airlock!"))
+				user.Paralyze(1)
+				user.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
+				user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+			else
+				visible_message(span_danger("[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet."))
+	return STOP_BUMP
