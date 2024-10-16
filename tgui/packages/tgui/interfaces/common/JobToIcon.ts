@@ -47,6 +47,7 @@ const BASEICONS = {
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
+  'Signal Technician': 'signal',
   'Shaft Miner': 'digging',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
@@ -236,6 +237,9 @@ const ALTTITLES = {
   'Security Operative': BASEICONS['Security Officer'],
   Peacekeeper: BASEICONS['Security Officer'],
   'Security Cadet': BASEICONS['Security Officer'],
+  // 'Signal Technician' - signal
+  'Network Admin': BASEICONS['Signal Technician'],
+  'Telecomunications Engineer': BASEICONS['Signal Technician'], //how the alt title is currently split
   // Shaft Miner - digging
   'Union Miner': BASEICONS['Shaft Miner'],
   Excavator: BASEICONS['Shaft Miner'],
