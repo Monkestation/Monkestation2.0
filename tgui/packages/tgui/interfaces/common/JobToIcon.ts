@@ -30,10 +30,10 @@ const BASEICONS = {
   Cyborg: 'robot',
   Detective: 'user-secret',
   'Diet Wizard': 'hat-wizard',
-  'Discount Godzilla': 'ticket-alt' //like a movie ticket? IDK theres not many good icons for this.
+  'Discount Godzilla': 'ticket-alt', //like a movie ticket? IDK theres not many good icons for this.
   Geneticist: 'dna',
   Ghost: 'ghost',
-  Gorilla: 'monkey',
+  Gorilla: 'exclamation-triangle',
   'Head of Personnel': 'dog',
   'Head of Security': 'user-shield',
   Janitor: 'soap',
@@ -55,7 +55,7 @@ const BASEICONS = {
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
   'Shaft Miner': 'digging',
-  skeleton: 'skull',
+  Skeleton: 'skull-crossbones',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
   Virologist: 'virus',
