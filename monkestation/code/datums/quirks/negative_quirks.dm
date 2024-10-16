@@ -255,15 +255,15 @@
 /datum/quirk/soullessdoor/remove()
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN)
 
-/datum/quirk/soullessdoor/proc/on_bump(mob/living/carbon/user)
-	if(ishuman(user) && prob(95) && density)
-		if(Adjacent(user))
+/datum/quirk/soullessdoor/proc/on_bump(mob/living/carbon/user, /obj/machinery/door/airlock/bumped)
+	if(bumped.density && ishuman(user) && prob(95))
+		if(bumped.Adjacent(user))
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			if(!istype(user.head, /obj/item/clothing/head/helmet))
-				user.visible_message(span_danger("[user] headbutts the airlock."), span_userdanger("You headbutt the airlock!"))
+				user.visible_message(span_danger("[user] headbutts \the [bumped]."), span_userdanger("You headbutt \the [bumped]!"))
 				user.Paralyze(1)
 				user.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 				user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 			else
-				visible_message(span_danger("[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet."))
+				visible_message(span_danger("[user] headbutts \the [bumped]. Good thing [user.p_theyre()] wearing a helmet."))
 	return STOP_BUMP
