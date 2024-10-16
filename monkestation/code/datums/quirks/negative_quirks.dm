@@ -255,7 +255,7 @@
 /datum/quirk/soullessdoor/remove()
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN)
 
-/datum/quirk/soullessdoor/proc/on_bump(/mob/living/carbon/user)
+/datum/quirk/soullessdoor/proc/on_bump(mob/living/carbon/user)
 	if(ishuman(user) && prob(95) && density)
 		if(Adjacent(user))
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
