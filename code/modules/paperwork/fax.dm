@@ -56,7 +56,10 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/restraints/handcuffs,
 		/obj/item/grown/bananapeel, //remote slippage
 		/obj/item/food/butterslice, //the only thing on the edit list that "realistically" could be faxxed, as long as your fax is a teleporter. which thankfully these are.
-		/obj/item/grenade // :3 (mails you a pipebomb) (people on the discord wanted this)
+		/obj/item/grenade, // :3 (mails you a pipebomb) (people on the discord wanted this)
+		/obj/item/food/breadslice,
+		/obj/item/food/griddle_toast,
+		/obj/item/food/cakeslice
 		//MONKESTATION EDIT END
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
@@ -426,7 +429,9 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	if (istype(item, /obj/item/restraints/handcuffs))
 		return "[state_prefix]_handcuffs"
 	if (istype(item, /obj/item/grown/bananapeel))
-		return "[state_prefix]_peel" //MONKESTATION EDIT END
+		return "[state_prefix]_peel"
+	if (istype(item, /obj/item/grenade))
+		return ("[state_prefix]_grenade") //MONKESTATION EDIT END
 	return "[state_prefix]_paper"
 
 /**
