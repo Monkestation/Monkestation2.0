@@ -1,7 +1,7 @@
 /datum/species/teratoma
 	name = "Teratoma"
 	id = SPECIES_TERATOMA
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	mutantbrain = /obj/item/organ/internal/brain/primate
 
 	inherent_traits = list(
