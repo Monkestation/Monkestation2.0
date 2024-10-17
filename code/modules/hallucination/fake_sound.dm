@@ -174,6 +174,7 @@
 		'sound/ambience/antag/malf.ogg',
 		//'sound/ambience/antag/new_clock.ogg', // This one's much louder than the others, otherwise I would
 		'sound/ambience/antag/ops.ogg',
+		'sound/ambience/antag/spy.ogg',
 		'sound/ambience/antag/tatoralert.ogg',
 	)
 
