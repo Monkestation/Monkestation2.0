@@ -30,6 +30,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/allow_exotic_faxes = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
+	/// MONKESTATION EDIT: If true admins get messaged when it recieves a fax, for CC offices or other schnanigans.
+	var/recieve_notifies_admins = FALSE
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/paper,
@@ -48,6 +50,17 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/folder/biscuit,
+		//MONKESTATION EDIT START, also edits icons/obj/fax.dmi
+		/obj/item/clothing/head/mob_holder, //if i could it'd just be mothroaches but they ALL use this.
+		/obj/item/gun, // remote robbery, https://www.youtube.com/watch?v=xtHaplmap7I
+		/obj/item/restraints/handcuffs,
+		/obj/item/grown/bananapeel, //remote slippage
+		/obj/item/food/butterslice, //the only thing on the edit list that "realistically" could be faxxed, as long as your fax is a teleporter. which thankfully these are.
+		/obj/item/grenade, // :3 (mails you a pipebomb) (people on the discord wanted this)
+		/obj/item/food/breadslice,
+		/obj/item/food/griddle_toast,
+		/obj/item/food/cakeslice
+		//MONKESTATION EDIT END
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
@@ -278,7 +291,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if("send_special")
 			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
 			if(!istype(fax_paper))
-				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax cannot send all above paper on this protected network, sorry."))
+				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax can only send paper on this protected network, sorry.")) // MONKESTATION EDIT: cannot send all above > can only send
 				return
 
 			fax_paper.request_state = TRUE
@@ -335,6 +348,11 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			balloon_alert(usr, "destination port jammed")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
+		if (is_centcom_level(FAX.z) && istype(loaded, /obj/item/clothing/head/mob_holder) ) //MONKESTATION EDIT START mob_holders, expectedly, hold mobs, which include amogi, this prevents CC breakins.
+			do_sparks(5, TRUE, src)
+			balloon_alert(usr, "destination port firewalled")
+			playsound(src, 'sound/machines/terminal_error.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			return FALSE //MONKESTATION EDIT END
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
@@ -355,6 +373,10 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
+	//MONKESTATION EDIT Admin Faxes
+	if (recieve_notifies_admins == TRUE)
+		message_admins("<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> sent a fax message from Fax Machine [sender_name] to Fax Machine [src] (AKA [fax_name]) [ADMIN_FLW(src)].")
+	//MONKESTATION EDIT END
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 
 /**
@@ -402,6 +424,14 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return "[state_prefix]_tcg"
 	if (istype(item, /obj/item/folder/biscuit))
 		return "[state_prefix]_pbiscuit"
+	if (istype(item, /obj/item/gun))//MONKESTATION EDIT START
+		return "[state_prefix]_gun"
+	if (istype(item, /obj/item/restraints/handcuffs))
+		return "[state_prefix]_handcuffs"
+	if (istype(item, /obj/item/grown/bananapeel))
+		return "[state_prefix]_peel"
+	if (istype(item, /obj/item/grenade))
+		return ("[state_prefix]_grenade") //MONKESTATION EDIT END
 	return "[state_prefix]_paper"
 
 /**
@@ -417,7 +447,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		vend.throw_at(get_edge_target_turf(drop_location(), pick(GLOB.alldirs)), rand(1, 4), EMBED_THROWSPEED_THRESHOLD)
 	if (is_type_in_list(vend, exotic_types) && prob(20))
 		do_sparks(5, TRUE, src)
-		jammed = TRUE
+		// jammed = TRUE MONKESTATION EDIT: NO JAMMING
 
 /**
  * A procedure that makes entries in the history of fax transactions.
@@ -519,3 +549,10 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	return .
 
+//Monkestation edit start
+/// Admin Fax subtype
+/obj/machinery/fax/messageadmins
+	allow_exotic_faxes = TRUE
+	recieve_notifies_admins = TRUE
+
+//Monkestation edit end
