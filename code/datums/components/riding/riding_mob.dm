@@ -92,7 +92,7 @@
 	return ..()
 
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown) || !Process_Spacemove())
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	if(!keycheck(user))
 		if(ispath(keytype, /obj/item))
@@ -335,6 +335,9 @@
 
 /datum/component/riding/creature/cow/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.25
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -343,6 +346,9 @@
 
 /datum/component/riding/creature/pig/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.25
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -351,7 +357,10 @@
 
 /datum/component/riding/creature/pony/handle_specials()
 	. = ..()
-	vehicle_move_delay = 1.5
+//MONKESTATION EDIT START
+	//vehicle_move_delay = 1.5
+	vehicle_move_delay = 1.1
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(-2, 9), TEXT_WEST = list(2, 9)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -389,6 +398,9 @@
 
 /datum/component/riding/creature/carp/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.1
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-2, 12), TEXT_WEST = list(2, 12)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -398,6 +410,9 @@
 
 /datum/component/riding/creature/megacarp/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.2
+//MONKESTATION EDIT END
 	var/atom/movable/movable_parent = parent
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
 	set_vehicle_dir_offsets(SOUTH, movable_parent.pixel_x, 0)
@@ -415,6 +430,9 @@
 
 /datum/component/riding/creature/vatbeast/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.2
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -461,6 +479,9 @@
 
 /datum/component/riding/creature/guardian/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -477,6 +498,9 @@
 
 /datum/component/riding/creature/goldgrub/handle_specials()
 	. = ..()
+//MONKESTATION EDIT START
+	vehicle_move_delay = 1.2
+//MONKESTATION EDIT END
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(11, 3), TEXT_SOUTH = list(11, 3), TEXT_EAST = list(9, 3), TEXT_WEST = list(14, 3)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
