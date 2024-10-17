@@ -244,7 +244,7 @@
 		// eyes
 		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
-			var/eye_icon = owner?.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi'
+			var/eye_icon = owner?.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
 			var/image/eye_left = image(eye_icon, "[eyes.eye_icon_state]_l", -FACE_LAYER, SOUTH)
 			var/image/eye_right = image(eye_icon, "[eyes.eye_icon_state]_r", -FACE_LAYER, SOUTH)
 			if(head_flags & HEAD_EYECOLOR)

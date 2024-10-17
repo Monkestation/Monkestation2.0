@@ -1799,7 +1799,7 @@ MONKESTATION EDIT
 	icon_state = "default"
 	color_src = FALSE
 
-/datum/sprite_accessory/tails/monkey/chimp
+/datum/sprite_accessory/tails/monkey/chimp //Non-Modular change - Adds Simian tail
 	name = "Chimp"
 	icon = 'monkestation/icons/mob/species/simian/monkey_tail.dmi'
 	icon_state = "chimp"

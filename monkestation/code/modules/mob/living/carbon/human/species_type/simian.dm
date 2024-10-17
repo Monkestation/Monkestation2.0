@@ -29,6 +29,7 @@
 	stunmod = 1.3
 	payday_modifier = 1
 
+	//Simians use their own icons because the default ones have them on the wrong side in side-view.
 	eyes_icon = 'monkestation/icons/mob/species/simian/bodyparts.dmi'
 
 	give_monkey_species_effects = FALSE

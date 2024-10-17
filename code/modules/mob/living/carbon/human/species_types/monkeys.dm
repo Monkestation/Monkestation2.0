@@ -26,6 +26,7 @@
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
+	//Non-Modular change - Makes hats appear 1 pixel above so the eyes are still visible.
 	offset_features = list(
 		OFFSET_HEAD = list(0,1),
 		)
@@ -45,6 +46,7 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
+	//Non-Modular change - Lets us exclude monkey effects from subtypes.
 	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)

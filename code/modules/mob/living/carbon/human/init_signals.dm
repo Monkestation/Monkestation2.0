@@ -19,7 +19,7 @@
 
 	// We need to regenerate everything for height
 	regenerate_icons()
-/* // No more passtable for you, bub
+/* //Non-Modular change - Remove passtable from dwarves.
 	if(HAS_TRAIT(src, TRAIT_DWARF))
 		passtable_on(src, TRAIT_DWARF)
 	else

@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	///Override of the eyes icon file, used for Vox and maybe more in the future - The future is now, with Teshari using it too
+	///Override of the eyes icon file, used for Simians.
 	var/eyes_icon
 	///our color palette
 	var/datum/color_palette/color_palette
