@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;plasma_extraction_hub&#x2F;part&#x2F;pipe&#x2F;main - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#var">Var Details</a> - <a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#proc">Proc Details</a></header>
+<main>
+<h1>main <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/plasma_extraction_hub/part.html">structure/plasma_extraction_hub/part</a>/<a href="obj/structure/plasma_extraction_hub/part/pipe.html">pipe</a>/<a href="obj/structure/plasma_extraction_hub/part/pipe/main.html">main</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 6"/></a></h1>
+
+<p>The 'Main' extractor hub, that owns all the rest.
+Also known as the 'bottom middle piece', which also works as a pipe in itself.
+This was split into its own file just cause the readability sucked.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#var/display_panel_ref">display_panel_ref</a></th><td>Reference to the plasma hud bar to show how much concentrated plasma has been collected.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#var/drilling">drilling</a></th><td>Boolean on whether we're trying to drill, regardless of whether we can or not.
+This is used to tell recently repaired pipes that they should get back to working.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#var/hub_parts">hub_parts</a></th><td>List of all parts connected to the extraction hub, not including ourselves.</td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#var/percentage_of_plasma_mined">percentage_of_plasma_mined</a></th><td>A number representing the percentage of plasma that has been mined.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/plasma_extraction_hub/part/pipe/main.html#proc/setup_parts">setup_parts</a></th><td>Copied over from Gravity Generator, this sets up the parts of the plasma extraction hub, and its
+3 pipe starting points.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/display_panel_ref"><aside class="declaration">var </aside>display_panel_ref
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/effect/bar_hud_display.html">effect/bar_hud_display</a>/plasma_bar</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 9"/></a></h3>
+        <p>Reference to the plasma hud bar to show how much concentrated plasma has been collected.</p><h3 id="var/drilling"><aside class="declaration">var </aside>drilling
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 14"/></a></h3>
+        <p>Boolean on whether we're trying to drill, regardless of whether we can or not.
+This is used to tell recently repaired pipes that they should get back to working.</p><h3 id="var/hub_parts"><aside class="declaration">var </aside>hub_parts
+            <aside>&ndash; /list/obj/structure/plasma_extraction_hub</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 16"/></a></h3>
+        <p>List of all parts connected to the extraction hub, not including ourselves.</p><h3 id="var/percentage_of_plasma_mined"><aside class="declaration">var </aside>percentage_of_plasma_mined
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 11"/></a></h3>
+        <p>A number representing the percentage of plasma that has been mined.</p><h2 id="proc">Proc Details</h2><h3 id="proc/setup_parts"><aside class="declaration">proc </aside>setup_parts<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/33a6e2f5f9d000196b14e1b46db75e542e6c28d5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/structures/extractor/main.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;structures&#x2F;extractor&#x2F;main.dm 30"/></a></aside>
+        </h3>
+        <p>Copied over from Gravity Generator, this sets up the parts of the plasma extraction hub, and its
+3 pipe starting points.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/33a6e2f5f9d000196b14e1b46db75e542e6c28d5">33a6e2f</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
