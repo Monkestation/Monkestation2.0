@@ -31982,7 +31982,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "rdrnd";
 	name = "Research and Development Containment Control";
-	req_access = list("security)
+	req_access = list("security")
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
