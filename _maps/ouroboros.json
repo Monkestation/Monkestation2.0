@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"map_name": "Ouroboros",
-	"map_path": "map_files/Ouroboros",
+	"map_path": "map_files/deprecated_maps/Ouroboros",
 	"map_file": "Ouroboros.dmm",
 	"space_ruin_levels": 3,
 	"shuttles": {

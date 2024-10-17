@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"map_name": "Void Raptor",
-	"map_path": "map_files/Voidraptor",
+	"map_path": "map_files/deprecated_maps/Voidraptor",
 	"map_file": "VoidRaptor.dmm",
 	"shuttles": {
 		"emergency": "emergency_nova",
