@@ -29,7 +29,7 @@
 
 /datum/storage/cassette_rack/New()
 	. = ..()
-	set_holdable(/obj/item/device/cassette_tape)
+	set_holdable(/obj/item/cassette_tape)
 
 // Allow opening on a normal left click
 /datum/storage/cassette_rack/on_attack(datum/source, mob/user)
@@ -50,9 +50,9 @@
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(spawn_curator_tapes))
 	for(var/i in 1 to spawn_blanks)
-		new /obj/item/device/cassette_tape/blank(src)
+		new /obj/item/cassette_tape/blank(src)
 	for(var/id in unique_random_tapes(spawn_random))
-		new /obj/item/device/cassette_tape(src, id)
+		new /obj/item/cassette_tape(src, id)
 	update_appearance()
 
 /obj/structure/cassette_rack/prefilled/Destroy()
@@ -72,7 +72,7 @@
 	if(!length(user_tapes))
 		return FALSE
 	var/list/existing_tapes = list()
-	for(var/obj/item/device/cassette_tape/tape in src)
+	for(var/obj/item/cassette_tape/tape in src)
 		if(tape.id)
 			existing_tapes[tape.id] = TRUE
 	for(var/iter in 1 to max_amt)
@@ -81,7 +81,7 @@
 		var/datum/cassette_data/tape = pick_n_take(user_tapes)
 		if(existing_tapes[tape.cassette_id])
 			continue
-		new /obj/item/device/cassette_tape(src, tape.cassette_id)
+		new /obj/item/cassette_tape(src, tape.cassette_id)
 	if(expand_max_size && !QDELETED(atom_storage))
 		atom_storage.max_slots += max_amt
 		atom_storage.max_total_storage += max_amt * WEIGHT_CLASS_SMALL
