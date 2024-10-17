@@ -1,64 +1,93 @@
 //Strained Muscles: Temporary speed boost at the cost of rapid damage
 //Limited because of space suits and such; ideally, used for a quick getaway
 
+//////////////////////
+// MONKE REFACTORED //
+//////////////////////
+
 /datum/action/changeling/strained_muscles
 	name = "Strained Muscles"
-	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
+	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster. Costs 10 chemicals to activate."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like space suits, still apply. Cannot be used in lesser form."
 	button_icon_state = "strained_muscles"
-	chemical_cost = 0
+	chemical_cost = 10
 	dna_cost = 1
 	req_human = TRUE
-	var/stacks = 0 //Increments every 5 seconds; damage increases over time
 	active = FALSE //Whether or not you are a hedgehog
 	disabled_by_fire = FALSE
 
+	/// How long this has been on in seconds.
+	var/accumulation = 0
+
+	/// Whether we've warned the user about their exhaustion.
+	var/warning_given = FALSE
+
 /datum/action/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	..()
-	active = !active
-	if(active)
-		to_chat(user, span_notice("Our muscles tense and strengthen."))
-	else
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-		to_chat(user, span_notice("Our muscles relax."))
-		if(stacks >= 10)
-			to_chat(user, span_danger("We collapse in exhaustion."))
-			user.Paralyze(60)
-			user.emote("gasp")
 
-	INVOKE_ASYNC(src, PROC_REF(muscle_loop), user)
+	if(active)
+		stop(user)
+	else
+		start(user)
 
 	return TRUE
 
 /datum/action/changeling/strained_muscles/Remove(mob/user)
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+	stop(user, removed = TRUE)
 	return ..()
 
-/datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
-	while(active)
-		if(QDELETED(src) || QDELETED(user))
-			return
+/datum/action/changeling/strained_muscles/proc/start(mob/living/carbon/user)
+	active = TRUE
+	warning_given = FALSE
+	chemical_cost = initial(chemical_cost)
+	user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/exhaustion)
 
-		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
-			active = !active
-			to_chat(user, span_notice("Our muscles relax without the energy to strengthen them."))
-			user.Paralyze(40)
-			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-			break
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(user, COMSIG_LIVING_STAMINA_STUN, PROC_REF(on_stamina_stun))
+	RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
-		stacks++
+	to_chat(user, span_notice("Our muscles tense and strengthen."))
 
-		user.stamina.adjust(-stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+/datum/action/changeling/strained_muscles/proc/stop(mob/living/carbon/user, removed = FALSE, forced = FALSE)
+	SIGNAL_HANDLER
 
-		if(stacks == 11) //Warning message that the stacks are getting too high
-			to_chat(user, span_warning("Our legs are really starting to hurt..."))
+	active = FALSE
+	chemical_cost = 0
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+	user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/exhaustion)
 
-		sleep(4 SECONDS)
+	UnregisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_STAMINA_STUN))
 
-	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
-		if(QDELETED(src) || QDELETED(user))
-			return
+	if(removed) // Don't collapse or send any messages if we've been removed, just remove the effects.
+		return
 
-		stacks--
-		sleep(2 SECONDS)
+	if(forced)
+		user.balloon_alert(user, "relaxed!")
+
+	to_chat(user, forced ? span_warning("Our muscles relax, stripped of energy to strengthen them.") : span_notice("Our muscles relax."))
+
+	if(accumulation > 40)
+		user.balloon_alert(user, "you collapse!")
+		user.Paralyze(6 SECONDS)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "gasp")
+
+/datum/action/changeling/strained_muscles/proc/on_life(mob/living/carbon/user, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
+	accumulation += DELTA_WORLD_TIME(SSmobs)
+
+	if(accumulation > 40 && !warning_given)
+		to_chat(user, span_userdanger("Our legs are really starting to hurt..."))
+		warning_given = TRUE
+
+	user.stamina.adjust(STAMINA_MAX * -0.001 * accumulation * seconds_per_tick)
+
+/datum/action/changeling/strained_muscles/proc/on_stamina_stun(mob/living/carbon/user)
+	SIGNAL_HANDLER
+	stop(user, forced = TRUE)
+
+/datum/action/changeling/strained_muscles/proc/on_stat_change(mob/living/carbon/user, new_stat, old_stat)
+	SIGNAL_HANDLER
+	if(new_stat != CONSCIOUS)
+		stop(user, forced = TRUE)
