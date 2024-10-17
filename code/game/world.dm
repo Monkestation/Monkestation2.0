@@ -114,6 +114,7 @@ GLOBAL_VAR(tracy_log)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+	aneri_cleanup() // monkestation edit: aneri
 	log_world("World loaded at [time_stamp()]!")
 
 	// From a really fucking old commit (91d7150)
@@ -191,7 +192,7 @@ GLOBAL_VAR(tracy_log)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = ANERI_CALL("unix_timestamp")
 	return data
 
 /world/proc/SetupLogs()
@@ -233,6 +234,9 @@ GLOBAL_VAR(tracy_log)
 	// but those are both private, so let's put the commit info in the runtime
 	// log which is ultimately public.
 	log_runtime(GLOB.revdata.get_log_message())
+
+	// monke edit: set aneri panic output folder
+	ANERI_CALL("set_panic_output_folder", "[GLOB.log_directory || "./data"]/aneri")
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")
@@ -336,6 +340,7 @@ GLOBAL_VAR(tracy_log)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
 			auxcleanup()
+			aneri_cleanup() // monkestation edit: aneri
 			TgsEndProcess()
 			return ..()
 
@@ -343,6 +348,7 @@ GLOBAL_VAR(tracy_log)
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	auxcleanup()
+	aneri_cleanup() // monkestation edit: aneri
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
@@ -356,6 +362,7 @@ GLOBAL_VAR(tracy_log)
 
 /world/Del()
 	auxcleanup()
+	aneri_cleanup() // monkestation edit: aneri
 	. = ..()
 
 /world/proc/update_status()

@@ -100,7 +100,7 @@
 			message_admins(message)
 
 			future_traits = new_future_traits
-			rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
+			aneri_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE) // monkestation edit: aneri
 
 			return TRUE
 		if ("clear_future_traits")
@@ -112,7 +112,7 @@
 			log_admin(message)
 			message_admins(message)
 
-			fdel(FUTURE_STATION_TRAITS_FILE)
+			aneri_file_delete(FUTURE_STATION_TRAITS_FILE) // monkestation edit: aneri
 			future_traits = null
 
 			return TRUE
