@@ -17,8 +17,14 @@
 /turf/open/water/beach/biodome/sinking
 	name = "Water"
 	desc = "You get the feeling that somebody's bothered to actually make this water partly functional..."
+	baseturfs = /turf/open/floor/plating
 	sinking = TRUE
 
 //the tram beachside bar has 1 tile of this
 /turf/open/water/beach/biodome/sinking/deep
 	max_sinkage = 28
+
+/turf/open/water/jungle/station
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+	baseturfs = /turf/open/floor/plating
