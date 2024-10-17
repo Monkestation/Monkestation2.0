@@ -67,9 +67,9 @@ endmap
 
 map voidraptor
 	minplayers 40
-	votable
+	disabled
 endmap
 
 map ouroboros
-	votable
+	disabled
 endmap
