@@ -878,7 +878,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			sample_overlay = new overlay_path()
 			organs_to_randomize[overlay_path] = sample_overlay
 
-		var/new_look = sample_overlay.get_random_appearance().name
+		var/new_look = pick(sample_overlay.get_global_feature_list())
 		human_mob.dna.features["[sample_overlay.feature_key]"] = new_look
 		mutant_bodyparts["[sample_overlay.feature_key]"] = new_look
 
