@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_MOVABLE_TOGGLE_HIDING">COMSIG_MOVABLE_TOGGLE_HIDING</a></th><td>The signal sent when an atom/movable should try to toggle their hiding.
+Gets called on the target, with (hiding, play_feedback = TRUE) as its args.
+Used for <code>/datum/element/can_hide</code></td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_ATOM_RATVAR_ACT">COMSIG_ATOM_RATVAR_ACT</a></th><td>from base of atom/ratvar_act()</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_CLOCKWORK_SIGNAL_RECEIVED">COMSIG_CLOCKWORK_SIGNAL_RECEIVED</a></th><td>datum/component/clockwork_trap signals: ()</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_ATOM_EMINENCE_ACT">COMSIG_ATOM_EMINENCE_ACT</a></th><td>from base of atom/eminence_act() : (mob/living/eminence/user)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_CELL_CHANGE_POWER">COMSIG_CELL_CHANGE_POWER</a></th><td>Called by either cell/proc/give or cell/proc/use</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_TRY_HACKING_INTERACT">COMSIG_TRY_HACKING_INTERACT</a></th><td>Mob is trying to open the hacking menu of a target <a href="atom.html" title="/atom">/atom</a>, from /datum/hacking/interactable(): (mob/user)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/dcs/signals/signals_atom.html#define/COMSIG_CHECK_TURF_GENERIC">COMSIG_CHECK_TURF_GENERIC</a></th><td>generic turf checker signal</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/COMSIG_ATOM_EMINENCE_ACT"><aside class="declaration">#define </aside>COMSIG_ATOM_EMINENCE_ACT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 13"/></a>
+    </h3>
+    <p>from base of atom/eminence_act() : (mob/living/eminence/user)</p><h3 id="define/COMSIG_ATOM_RATVAR_ACT"><aside class="declaration">#define </aside>COMSIG_ATOM_RATVAR_ACT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 7"/></a>
+    </h3>
+    <p>from base of atom/ratvar_act()</p><h3 id="define/COMSIG_CELL_CHANGE_POWER"><aside class="declaration">#define </aside>COMSIG_CELL_CHANGE_POWER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 16"/></a>
+    </h3>
+    <p>Called by either cell/proc/give or cell/proc/use</p><h3 id="define/COMSIG_CHECK_TURF_GENERIC"><aside class="declaration">#define </aside>COMSIG_CHECK_TURF_GENERIC
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 24"/></a>
+    </h3>
+    <p>generic turf checker signal</p><h3 id="define/COMSIG_CLOCKWORK_SIGNAL_RECEIVED"><aside class="declaration">#define </aside>COMSIG_CLOCKWORK_SIGNAL_RECEIVED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 10"/></a>
+    </h3>
+    <p>datum/component/clockwork_trap signals: ()</p><h3 id="define/COMSIG_MOVABLE_TOGGLE_HIDING"><aside class="declaration">#define </aside>COMSIG_MOVABLE_TOGGLE_HIDING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 4"/></a>
+    </h3>
+    <p>The signal sent when an atom/movable should try to toggle their hiding.
+Gets called on the target, with (hiding, play_feedback = TRUE) as its args.
+Used for <code>/datum/element/can_hide</code></p><h3 id="define/COMSIG_TRY_HACKING_INTERACT"><aside class="declaration">#define </aside>COMSIG_TRY_HACKING_INTERACT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/code/__DEFINES/~monkestation/dcs/signals/signals_atom.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;dcs&#x2F;signals&#x2F;signals_atom.dm 20"/></a>
+    </h3>
+    <p>Mob is trying to open the hacking menu of a target <a href="atom.html" title="/atom">/atom</a>, from /datum/hacking/interactable(): (mob/user)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6">2393d02</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;bouldertech - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/bouldertech.html#var">Var Details</a> - <a href="obj/machinery/bouldertech.html#proc">Proc Details</a></header>
+<main>
+<h1>bouldertech <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/bouldertech.html">bouldertech</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/allows_boulders">allows_boulders</a></th><td>do we allow boulders</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/boulders_contained">boulders_contained</a></th><td>What boulder(s) are we holding?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/boulders_held_max">boulders_held_max</a></th><td>How many boulders can we hold maximum?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/boulders_processing_max">boulders_processing_max</a></th><td>How many boulders can we process maximum per loop?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/export_side">export_side</a></th><td>our export side</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/holds_minerals">holds_minerals</a></th><td>Does this machine have a mineral storage link to the silo?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/holds_mining_points">holds_mining_points</a></th><td>Does this machine hold mining points?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/points_held">points_held</a></th><td>Mining points held by the machine for miners.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/processable_materials">processable_materials</a></th><td>What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/refining_efficiency">refining_efficiency</a></th><td>What is the efficiency of minerals produced by the machine?</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/silo_materials">silo_materials</a></th><td>Silo link to it's materials list.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/sound_cooldown">sound_cooldown</a></th><td>Cooldown associated with the usage_sound played.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#var/usage_sound">usage_sound</a></th><td>What sound plays when a thing operates?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/CanAllowThrough">CanAllowThrough</a></th><td>How many boulders can we touch this process() call</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/accept_boulder">accept_boulder</a></th><td>Artifacts give bonus points!
+Accepts a boulder into the machine. Used when a boulder is first placed into the machine.
+@param new_boulder The boulder to be accepted.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/breakdown_boulder">breakdown_boulder</a></th><td>Accepts a boulder into the machinery, then converts it into minerals.
+If the boulder can be fully processed by this machine, we take the materials, insert it into the silo, and destroy the boulder.
+If the boulder has materials left, we make a copy of the boulder to hold the processable materials, take the processable parts, and eject the original boulder.
+@param chosen_boulder The boulder to being breaking down into minerals.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/check_for_boosts">check_for_boosts</a></th><td>Looks for a boost to the machine's efficiency, and applies it if found.
+Applied more on the chemistry integration but can be used for other things if desired.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/check_for_processable_materials">check_for_processable_materials</a></th><td>Checks if a custom_material is in a list of processable materials in the machine.
+@param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/remove_boulder">remove_boulder</a></th><td>Ejects a boulder from the machine. Used when a boulder is finished processing, or when a boulder can't be processed.
+@param drop_turf The location to eject the boulder to. If null, it will eject to the machine's drop_location().
+@param specific_boulder The boulder to be ejected.</td></tr>
+            <tr><th><a href="obj/machinery/bouldertech.html#proc/update_boulder_count">update_boulder_count</a></th><td>Getter proc to determine how many boulders are contained in the machine.
+Also adds their reference to the boulders_contained list.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/allows_boulders"><aside class="declaration">var </aside>allows_boulders
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L41">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 41"/></a></h3>
+        <p>do we allow boulders</p><h3 id="var/boulders_contained"><aside class="declaration">var </aside>boulders_contained
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 14"/></a></h3>
+        <p>What boulder(s) are we holding?</p><h3 id="var/boulders_held_max"><aside class="declaration">var </aside>boulders_held_max
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 16"/></a></h3>
+        <p>How many boulders can we hold maximum?</p><h3 id="var/boulders_processing_max"><aside class="declaration">var </aside>boulders_processing_max
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 12"/></a></h3>
+        <p>How many boulders can we process maximum per loop?</p><h3 id="var/export_side"><aside class="declaration">var </aside>export_side
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 39"/></a></h3>
+        <p>our export side</p><h3 id="var/holds_minerals"><aside class="declaration">var </aside>holds_minerals
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 18"/></a></h3>
+        <p>Does this machine have a mineral storage link to the silo?</p><h3 id="var/holds_mining_points"><aside class="declaration">var </aside>holds_mining_points
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L35">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 35"/></a></h3>
+        <p>Does this machine hold mining points?</p><h3 id="var/points_held"><aside class="declaration">var </aside>points_held
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L37">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 37"/></a></h3>
+        <p>Mining points held by the machine for miners.</p><h3 id="var/processable_materials"><aside class="declaration">var </aside>processable_materials
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 20"/></a></h3>
+        <p>What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.</p><h3 id="var/refining_efficiency"><aside class="declaration">var </aside>refining_efficiency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 10"/></a></h3>
+        <p>What is the efficiency of minerals produced by the machine?</p><h3 id="var/silo_materials"><aside class="declaration">var </aside>silo_materials
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/remote_materials.html">remote_materials</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 33"/></a></h3>
+        <p>Silo link to it's materials list.</p><h3 id="var/sound_cooldown"><aside class="declaration">var </aside>sound_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L30">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 30"/></a></h3>
+        <p>Cooldown associated with the usage_sound played.</p><h3 id="var/usage_sound"><aside class="declaration">var </aside>usage_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L28">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 28"/></a></h3>
+        <p>What sound plays when a thing operates?</p><h2 id="proc">Proc Details</h2><h3 id="proc/CanAllowThrough"><aside class="parent"><a title="/atom" href="atom.html#proc/CanAllowThrough">&uarr;</a></aside>CanAllowThrough<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/mover, border_dir) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L189">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 189"/></a></aside>
+        </h3>
+        <p>How many boulders can we touch this process() call</p><h3 id="proc/accept_boulder"><aside class="declaration">proc </aside>accept_boulder<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/boulder.html">boulder</a>/new_boulder) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L267">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 267"/></a></aside>
+        </h3>
+        <p>Artifacts give bonus points!
+Accepts a boulder into the machine. Used when a boulder is first placed into the machine.
+@param new_boulder The boulder to be accepted.</p><h3 id="proc/breakdown_boulder"><aside class="declaration">proc </aside>breakdown_boulder<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/boulder.html">boulder</a>/chosen_boulder) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L211">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 211"/></a></aside>
+        </h3>
+        <p>Accepts a boulder into the machinery, then converts it into minerals.
+If the boulder can be fully processed by this machine, we take the materials, insert it into the silo, and destroy the boulder.
+If the boulder has materials left, we make a copy of the boulder to hold the processable materials, take the processable parts, and eject the original boulder.
+@param chosen_boulder The boulder to being breaking down into minerals.</p><h3 id="proc/check_for_boosts"><aside class="declaration">proc </aside>check_for_boosts<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L340">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 340"/></a></aside>
+        </h3>
+        <p>Looks for a boost to the machine's efficiency, and applies it if found.
+Applied more on the chemistry integration but can be used for other things if desired.</p><h3 id="proc/check_for_processable_materials"><aside class="declaration">proc </aside>check_for_processable_materials<aside>(/list/boulder_mats) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L347">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 347"/></a></aside>
+        </h3>
+        <p>Checks if a custom_material is in a list of processable materials in the machine.
+@param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.</p><h3 id="proc/remove_boulder"><aside class="declaration">proc </aside>remove_boulder<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/boulder.html">boulder</a>/specific_boulder, /<a href="turf.html">turf</a>/drop_turf) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L292">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 292"/></a></aside>
+        </h3>
+        <p>Ejects a boulder from the machine. Used when a boulder is finished processing, or when a boulder can't be processed.
+@param drop_turf The location to eject the boulder to. If null, it will eject to the machine's drop_location().
+@param specific_boulder The boulder to be ejected.</p><h3 id="proc/update_boulder_count"><aside class="declaration">proc </aside>update_boulder_count<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/factory_type_beat/processing/bouldertech.dm#L321">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;factory_type_beat&#x2F;processing&#x2F;bouldertech.dm 321"/></a></aside>
+        </h3>
+        <p>Getter proc to determine how many boulders are contained in the machine.
+Also adds their reference to the boulders_contained list.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6">2393d02</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

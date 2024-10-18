@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;artifact - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/artifact.html#var">Var Details</a> - <a href="datum/component/artifact.html#proc">Proc Details</a></header>
+<main>
+<h1>artifact <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/artifact.html">artifact</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/activators">activators</a></th><td>activators that activate the artifact</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/active">active</a></th><td>Is the artifact active?</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/analysis">analysis</a></th><td>we store our analysis form var here</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/artifact_effects">artifact_effects</a></th><td>A list of effects the artifact has</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/artifact_origin">artifact_origin</a></th><td>this artifacts origin</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/artifact_size">artifact_size</a></th><td>size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/chosen_fault">chosen_fault</a></th><td>the fault we picked from the listed ones. Can be null!</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/discovered_activators">discovered_activators</a></th><td>The activators we have discovered.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/discovered_effects">discovered_effects</a></th><td>A list of effects that have been discovered</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/explict_examine">explict_examine</a></th><td>if we have a special examine IE borgers</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/fake_name">fake_name</a></th><td>fake name for when unanalyzed</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/fault_discovered">fault_discovered</a></th><td>Have we discovered what the bad is?</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/fault_weight_list">fault_weight_list</a></th><td>Fault = weight</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/freebies">freebies</a></th><td>the amount of times an artifact WONT do something bad, even though it should have</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/generated_name">generated_name</a></th><td>the randomly generated name using our origin</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/researched">researched</a></th><td>Have we been xray scanned at least once?</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/type_name">type_name</a></th><td>type name for displaying on analysis forms</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/valid_activators">valid_activators</a></th><td>Valid activators to pick,mostly legacy code.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#var/valid_origins">valid_origins</a></th><td>Just any effect that is real and can be added to an artifact. Mostly legacy</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/add_activator">add_activator</a></th><td>Adds an activator, returns TRUE/FALSE based on success.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/artifact_activate">artifact_activate</a></th><td>Activates the artifact.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/artifact_deactivate">artifact_deactivate</a></th><td>The opposite of activates the artifact</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/change_fault">change_fault</a></th><td>changes the fault of the artifact, returns TRUE/FALSE based on success.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/clear_out">clear_out</a></th><td>This just clears all the effects,activators,and faults of the artifact, so we can add new ones with a proc.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/force_add_effect">force_add_effect</a></th><td>Adds a new artifact effect to the artifact. Ignores all normal checks. Admin Proc. Not called.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/force_replace_fault">force_replace_fault</a></th><td>Replaces the fault on the artifact with a new one.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/on_update_overlays">on_update_overlays</a></th><td>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/process_stimuli">process_stimuli</a></th><td>Called when the artifact gets something that may activate it. Skips re-activation of artifacts, but passes their triggers to faults.</td></tr>
+            <tr><th><a href="datum/component/artifact.html#proc/setup">setup</a></th><td>Kinda a legacy proc, but if you need something super special I guess.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/activators"><aside class="declaration">var </aside>activators
+            <aside>&ndash; /list/datum/artifact_activator</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 20"/></a></h3>
+        <p>activators that activate the artifact</p><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 18"/></a></h3>
+        <p>Is the artifact active?</p><h3 id="var/analysis"><aside class="declaration">var </aside>analysis
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/sticker.html">sticker</a>/analysis_form</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 52"/></a></h3>
+        <p>we store our analysis form var here</p><h3 id="var/artifact_effects"><aside class="declaration">var </aside>artifact_effects
+            <aside>&ndash; /list/datum/artifact_effect</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L69">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 69"/></a></h3>
+        <p>A list of effects the artifact has</p><h3 id="var/artifact_origin"><aside class="declaration">var </aside>artifact_origin
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/artifact_origin.html">artifact_origin</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 34"/></a></h3>
+        <p>this artifacts origin</p><h3 id="var/artifact_size"><aside class="declaration">var </aside>artifact_size
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 10"/></a></h3>
+        <p>size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)</p><h3 id="var/chosen_fault"><aside class="declaration">var </aside>chosen_fault
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/artifact_fault.html">artifact_fault</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L56">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 56"/></a></h3>
+        <p>the fault we picked from the listed ones. Can be null!</p><h3 id="var/discovered_activators"><aside class="declaration">var </aside>discovered_activators
+            <aside>&ndash; /list/datum/artifact_activator</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L65">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 65"/></a></h3>
+        <p>The activators we have discovered.</p><h3 id="var/discovered_effects"><aside class="declaration">var </aside>discovered_effects
+            <aside>&ndash; /list/datum/artifact_effect</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L71">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 71"/></a></h3>
+        <p>A list of effects that have been discovered</p><h3 id="var/explict_examine"><aside class="declaration">var </aside>explict_examine
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L60">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 60"/></a></h3>
+        <p>if we have a special examine IE borgers</p><h3 id="var/fake_name"><aside class="declaration">var </aside>fake_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 14"/></a></h3>
+        <p>fake name for when unanalyzed</p><h3 id="var/fault_discovered"><aside class="declaration">var </aside>fault_discovered
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L67">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 67"/></a></h3>
+        <p>Have we discovered what the bad is?</p><h3 id="var/fault_weight_list"><aside class="declaration">var </aside>fault_weight_list
+            <aside>&ndash; /static/list/datum/artifact_fault</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 62"/></a></h3>
+        <p>Fault = weight</p><h3 id="var/freebies"><aside class="declaration">var </aside>freebies
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L58">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 58"/></a></h3>
+        <p>the amount of times an artifact WONT do something bad, even though it should have</p><h3 id="var/generated_name"><aside class="declaration">var </aside>generated_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 16"/></a></h3>
+        <p>the randomly generated name using our origin</p><h3 id="var/researched"><aside class="declaration">var </aside>researched
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L49">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 49"/></a></h3>
+        <p>Have we been xray scanned at least once?</p><h3 id="var/type_name"><aside class="declaration">var </aside>type_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 12"/></a></h3>
+        <p>type name for displaying on analysis forms</p><h3 id="var/valid_activators"><aside class="declaration">var </aside>valid_activators
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 23"/></a></h3>
+        <p>Valid activators to pick,mostly legacy code.</p><h3 id="var/valid_origins"><aside class="declaration">var </aside>valid_origins
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 36"/></a></h3>
+        <p>Just any effect that is real and can be added to an artifact. Mostly legacy</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_activator"><aside class="declaration">proc </aside>add_activator<aside>(/<a href="datum.html">datum</a>/<a href="datum/artifact_activator.html">artifact_activator</a>/new_activator, forced_potency) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L213">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 213"/></a></aside>
+        </h3>
+        <p>Adds an activator, returns TRUE/FALSE based on success.</p><h3 id="proc/artifact_activate"><aside class="declaration">proc </aside>artifact_activate<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L320">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 320"/></a></aside>
+        </h3>
+        <p>Activates the artifact.</p><h3 id="proc/artifact_deactivate"><aside class="declaration">proc </aside>artifact_deactivate<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L336">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 336"/></a></aside>
+        </h3>
+        <p>The opposite of activates the artifact</p><h3 id="proc/change_fault"><aside class="declaration">proc </aside>change_fault<aside>(/<a href="datum.html">datum</a>/<a href="datum/artifact_fault.html">artifact_fault</a>/new_fault) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L230">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 230"/></a></aside>
+        </h3>
+        <p>changes the fault of the artifact, returns TRUE/FALSE based on success.</p><h3 id="proc/clear_out"><aside class="declaration">proc </aside>clear_out<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L205">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 205"/></a></aside>
+        </h3>
+        <p>This just clears all the effects,activators,and faults of the artifact, so we can add new ones with a proc.</p><h3 id="proc/force_add_effect"><aside class="declaration">proc </aside>force_add_effect<aside>(new_effect_path, effect_power) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L308">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 308"/></a></aside>
+        </h3>
+        <p>Adds a new artifact effect to the artifact. Ignores all normal checks. Admin Proc. Not called.</p><h3 id="proc/force_replace_fault"><aside class="declaration">proc </aside>force_replace_fault<aside>(new_fault) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L293">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 293"/></a></aside>
+        </h3>
+        <p>Replaces the fault on the artifact with a new one.</p><h3 id="proc/on_update_overlays"><aside class="declaration">proc </aside>on_update_overlays<aside>(/<a href="atom.html">atom</a>/parent_atom, /list/overlays) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component_signal_procs.dm#L45">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component_signal_procs.dm 45"/></a></aside>
+        </h3>
+        <p>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="proc/process_stimuli"><aside class="declaration">proc </aside>process_stimuli<aside>(stimuli, stimuli_value, triggers_faults) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L355">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 355"/></a></aside>
+        </h3>
+        <p>Called when the artifact gets something that may activate it. Skips re-activation of artifacts, but passes their triggers to faults.</p><h3 id="proc/setup"><aside class="declaration">proc </aside>setup<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6/monkestation/code/modules/art_sci_overrides/artifact_components/_base_component.dm#L289">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_components&#x2F;_base_component.dm 289"/></a></aside>
+        </h3>
+        <p>Kinda a legacy proc, but if you need something super special I guess.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2393d02bf90903f848b65bd3ec60bf52f8e3f1f6">2393d02</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
