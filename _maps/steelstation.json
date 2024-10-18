@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"map_name": "SteelStation",
+	"map_path": "map_files/SteelStation",
+	"map_file": "SteelStation.dmm",
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_meta",
+		"emergency": "emergency_steel"
+	},
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/auxkitchen"]
+		}
+	}
+}
