@@ -48,7 +48,7 @@
 
 /obj/item/clothing/mask/translator/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Click while in hand to select output language.</span>"
+	. += span_notice("Click while in hand to select output language.")
 
 /obj/item/clothing/mask/translator/emag_act()
 	if(obj_flags & EMAGGED)
