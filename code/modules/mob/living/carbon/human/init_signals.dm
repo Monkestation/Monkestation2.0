@@ -19,9 +19,12 @@
 
 	// We need to regenerate everything for height
 	regenerate_icons()
-	if(isdummy(src))
-		apply_height_filters(src, TRUE)
-	// No more passtable for you, bub
+/* //Non-Modular change - Remove passtable from dwarves.
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		passtable_on(src, TRAIT_DWARF)
+	else
+		passtable_off(src, TRAIT_DWARF)
+*/
 
 /mob/living/carbon/human/proc/on_gain_giant_trait(datum/source)
 	SIGNAL_HANDLER
