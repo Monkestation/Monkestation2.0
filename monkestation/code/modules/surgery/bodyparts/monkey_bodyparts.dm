@@ -1,4 +1,5 @@
 /obj/item/bodypart/head/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -14,6 +15,7 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/chest/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -30,6 +32,7 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/arm/left/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -49,6 +52,7 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/arm/right/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -68,6 +72,7 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/leg/left/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -88,6 +93,7 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/leg/right/monkey
+	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
