@@ -80,9 +80,6 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
-	/// Determines if this is considered "sane" for the purpose of [/proc/randomize_human_normie]
-	/// Basically this is to blacklist the extremely wacky stuff from being picked in random human generation.
-	var/natural_spawn = TRUE
 
 	var/datum/color_palette/palette
 	var/palette_key
@@ -1803,7 +1800,6 @@ MONKESTATION EDIT
 /datum/sprite_accessory/tails/monkey/none
 	name = "None"
 	icon_state = "none"
-	natural_spawn = FALSE
 	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
