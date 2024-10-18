@@ -2,6 +2,7 @@
 	name = "Simian"
 	id = SPECIES_SIMIAN
 	inherent_traits = list(
+		TRAIT_NO_AUGMENTS, //Their bodytype doesn't allow augments, this prevents the futile effort.
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_FUR_COLORS,
 		TRAIT_MUTANT_COLORS,
