@@ -29,6 +29,7 @@
 	//Non-Modular change - Makes hats appear 1 pixel above so the eyes are still visible.
 	offset_features = list(
 		OFFSET_HEAD = list(0,1),
+		OFFSET_BELT = list(0,-1),
 		)
 
 	bodypart_overrides = list(
