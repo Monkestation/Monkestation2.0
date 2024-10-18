@@ -101,7 +101,8 @@
 	var/bound_width = movable_loc.bound_width || world.icon_size
 	maptext_width = NAME_TAG_WIDTH
 	maptext_height = world.icon_size * 1.5
-	maptext_x = (NAME_TAG_WIDTH - bound_width) * -0.5
+	maptext_x = ((NAME_TAG_WIDTH - bound_width + loc.base_pixel_x) * -0.5)
+	maptext_y = src::maptext_y + loc.base_pixel_y
 	RegisterSignal(loc, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z))
 
 /obj/effect/abstract/name_tag/Destroy(force)
