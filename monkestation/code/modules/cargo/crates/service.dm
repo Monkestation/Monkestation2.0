@@ -45,13 +45,13 @@
 
 /datum/supply_pack/service/cassettes/fill(obj/structure/closet/crate/our_crate)
 	for(var/id in unique_random_tapes(10))
-		new /obj/item/device/cassette_tape(our_crate, id)
+		new /obj/item/cassette_tape(our_crate, id)
 
 /datum/supply_pack/service/blankcassettes
 	name = "Blank Cassettes Crate"
 	desc = "in the VERY unlikely event you have run out of blank cassettes, you can get 10 blank ones here. Contains 10 blank cassettes for use in Walkmans."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/device/cassette_tape/blank = 10)
+	contains = list(/obj/item/cassette_tape/blank = 10)
 	crate_name = "cassette crate"
 
 /datum/supply_pack/service/walkmen
