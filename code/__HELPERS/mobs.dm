@@ -163,7 +163,7 @@
 		"ipc_screen" = pick(GLOB.ipc_screens_list), //Monkestation Addition
 		"ipc_antenna" = pick(GLOB.ipc_antennas_list), //Monkestation Addition
 		"ipc_chassis" = pick(GLOB.ipc_chassis_list), //Monkestation Addition
-		"tail_monkey" = pick(GLOB.tails_list_monkey),
+		"tail_monkey" = "Monkey", //Monkestation change: Default to monkey tail.
 		"pod_hair" = pick(GLOB.pod_hair_list),
 		"anime_top" = pick(GLOB.anime_top_list), //Monkestation Addition
 		"anime_middle" = pick(GLOB.anime_middle_list), //Monkestation Addition

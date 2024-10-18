@@ -35,6 +35,7 @@
 		cavity_item = null
 	return ..()
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -48,6 +49,7 @@
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
+*/
 
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -73,6 +75,7 @@
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -89,6 +92,7 @@
 	unarmed_damage_low = 2 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+*/
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -103,7 +107,7 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/arm/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -120,6 +124,7 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+*/
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -229,6 +234,7 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/leg/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -245,6 +251,7 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+*/
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -323,6 +330,7 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/leg/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -339,6 +347,7 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+*/
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'

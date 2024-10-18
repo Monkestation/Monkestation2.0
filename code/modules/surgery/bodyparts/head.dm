@@ -341,6 +341,7 @@
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -353,6 +354,7 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	is_dimorphic = FALSE
 	head_flags = HEAD_LIPS|HEAD_DEBRAIN
+*/
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'

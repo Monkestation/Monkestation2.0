@@ -20,17 +20,14 @@
 		TRAIT_GUN_NATURAL,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
+		//Non-Modular change: Gives Monkeys fur colors.
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
-
-	//Non-Modular change - Makes hats appear 1 pixel above so the eyes are still visible.
-	offset_features = list(
-		OFFSET_HEAD = list(0,1),
-		OFFSET_BELT = list(0,-1),
-		)
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
@@ -47,7 +44,17 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-	//Non-Modular change - Lets us exclude monkey effects from subtypes.
+	// NON-MODULAR CHANGES BELOW
+
+	//Makes hats appear 1 pixel above so the eyes are still visible, and brings belt items down 1 pixel so they fit on the chest.
+	offset_features = list(
+		OFFSET_HEAD = list(0,1),
+		OFFSET_BELT = list(0,-1),
+		)
+	//Default eyes have the side portrait icons on the wrong side, this fixes that.
+	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
+	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
 	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
@@ -66,6 +73,9 @@
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
 		C.dna.remove_mutation(/datum/mutation/human/race)
+
+/datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them

@@ -2,23 +2,20 @@
 	name = "Simian"
 	id = SPECIES_SIMIAN
 	inherent_traits = list(
-		TRAIT_NO_AUGMENTS, //Their bodytype doesn't allow augments, this prevents the futile effort.
 		TRAIT_NO_UNDERWEAR,
-		TRAIT_FUR_COLORS,
+		TRAIT_NO_AUGMENTS, //Their bodytype doesn't allow augments, this prevents the futile effort.
 		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
+		//Simian unique traits
 		TRAIT_VAULTING,
 		TRAIT_MONKEYFRIEND,
-	)
-	external_organs = list(
-		/obj/item/organ/external/tail/monkey = "Chimp",
-	)
-	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey/simian,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey/simian,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey/simian,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey/simian,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey/simian,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey/simian,
+		/*Monkey traits that Simians don't have, and why.
+		TRAIT_NO_BLOOD_OVERLAY, //let's them have a blood overlay, why not?
+		TRAIT_NO_TRANSFORMATION_STING, //Simians are a roundstart species and can equip all, unlike monkeys.
+		TRAIT_GUN_NATURAL, //Simians are Advanced tool users, this lets monkeys use guns without being smart.
+		TRAIT_VENTCRAWLER_NUDE, //We don't want a roundstart species that can ventcrawl.
+		TRAIT_WEAK_SOUL, //Crew innately giving less to Revenants for no real reason sucks for the rev.
+		*/
 	)
 
 	//they get a normal brain instead of a monkey one,
@@ -29,9 +26,6 @@
 	maxhealthmod = 0.85 //small = weak
 	stunmod = 1.3
 	payday_modifier = 1
-
-	//Simians use their own icons because the default ones have them on the wrong side in side-view.
-	eyes_icon = 'monkestation/icons/mob/species/simian/bodyparts.dmi'
 
 	give_monkey_species_effects = FALSE
 

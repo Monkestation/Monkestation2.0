@@ -22,7 +22,7 @@
 /// The mob's nanites are sending a monitoring signal visible on diag HUD.
 #define TRAIT_NANITE_MONITORING "nanite_monitoring"
 /// This mob can vault over climable structures.
-#define TRAIT_VAULTING "vaulting" //simian trait
+#define TRAIT_VAULTING "vaulting"
 /// Ethereals with this trait will not suffer negative effects from overcharge.
 #define TRAIT_ETHEREAL_NO_OVERCHARGE "ethereal_no_overcharge"
 /// Oozelings with this trait will not lose limbs from low blood/nutrition.

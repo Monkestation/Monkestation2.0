@@ -80,6 +80,9 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
+	/// Determines if this is considered "sane" for the purpose of [/proc/randomize_human_normie]
+	/// Basically this is to blacklist the extremely wacky stuff from being picked in random human generation.
+	var/natural_spawn = TRUE
 
 	var/datum/color_palette/palette
 	var/palette_key
@@ -1788,22 +1791,20 @@ MONKESTATION EDIT
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
-/datum/sprite_accessory/tails/monkey/none
-	name = "None"
-	icon = 'monkestation/icons/mob/species/simian/monkey_tail.dmi'
-	icon_state = "none"
+/datum/sprite_accessory/tails/monkey
 
+//Non-Modular change - Removes monkey tails, adds Simian tails instead.
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon = 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'monkestation/icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
-	color_src = FALSE
+	color_src = MUTANT_COLOR //Original: FALSE
 
-/datum/sprite_accessory/tails/monkey/chimp //Non-Modular change - Adds Simian tail
-	name = "Chimp"
-	icon = 'monkestation/icons/mob/species/simian/monkey_tail.dmi'
-	icon_state = "chimp"
-	color_src = MUTANT_COLOR
+/datum/sprite_accessory/tails/monkey/none
+	name = "None"
+	icon_state = "none"
+	natural_spawn = FALSE
+	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/species/podperson_hair.dmi'
