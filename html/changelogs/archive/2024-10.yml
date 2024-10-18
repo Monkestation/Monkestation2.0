@@ -199,3 +199,121 @@
       at the top.
   - bugfix: Fixed a runtime error when a player logged out while having the loadout
       shop open.
+2024-10-13:
+  Absolucy:
+  - bugfix: Fixed the radio mic being delayed by 2 seconds.
+2024-10-14:
+  Absolucy:
+  - bugfix: Fixed speech artifacts EXCLUSIVELY making dead/mute mobs speak.
+  - bugfix: Plant splicers and DNA manipulators can now be (un)wrenched and deconstructed.
+  - rscadd: Plant splicers can now be constructed.
+  - bugfix: Fixed magic mirrors requiring you to select hair first, before being able
+      to change anything else.
+  Absolucy, Aylong, jlsnow301:
+  - refactor: Added a better system of displaying object icons in tgui.
+  - refactor: Botany seed extractors now use aforementioned system to display seed
+      icons.
+  Absolucy, LT3:
+  - bugfix: Ctrl+click on equipped uniforms enables suit sensors as expected.
+  Absolucy, mc-oofert:
+  - bugfix: Fixed the xeno resin floor layer.
+  CannibalHunter:
+  - rscadd: Added new wield keybind to hold firearms in both hands!
+  DexeeXI:
+  - rscdel: removes a series of plushies that should have not been added to the codebase.
+  Gw0sty:
+  - rscadd: Adds new greyscale kitsune mask to vendors and the monkeshop.
+  - bugfix: Fixed the visuals of radio frequency showing on its old frequency spot.
+  t-toasted:
+  - image: Resprited the Centcom Officer Turtleneck.
+  - rscadd: Added the NT Rep Office to Meta, Delta, and Icebox.
+  - qol: Moved Gateway on Meta above arrivals.
+  - bugfix: Various minor fixes.
+2024-10-15:
+  Absolucy:
+  - rscdel: Removed mood change indicator huds for ghosts due to potential major lag.
+  Gw0sty:
+  - rscadd: Gives yellow clown bridge access during Clown Bridge Access station trait.
+  - rscadd: Adds Blueshields and brig physicians to the kidnapping objectives target
+      lists.
+  - rscadd: Added Nanite room to Void Raptor.
+  - rscadd: Added nanite chamber & console to Ouroboros.
+  - qol: Added a box of nanite remotes.
+  - bugfix: Redefined circuit lab to circuit lab from aux lab,
+  - rscadd: Added a new PDA for the Psychlogist with mass messaging.
+  - rscadd: Gave Blueshield's PDA's Lifeline predownloaded
+  - rscadd: Gave Robotistic's PDA's Silliconnect Predownloaded
+  - rscadd: Gave Engineers's PDA Canary predownloaded
+  - qol: moved all the Psychlogist round start pills into a pill box in their inventory.
+  KnigTheThrasher:
+  - rscadd: Updated kilostation atmospherics
+  - rscadd: Added Nanotrasen Consultant's office to kilo
+  - rscdel: Tweaked the amount of decals in kilostation
+  Meowosers:
+  - bugfix: Blueshields no longer have a missing security HUD icon.
+  MomoBerri:
+  - bugfix: meta's engi security post can now use the cam viewer with a singularity.
+  MrBagHead:
+  - bugfix: The Bioterror foam grenade now uses a large grenade casing to fit its
+      bluespace beakers.
+  RafRoq:
+  - bugfix: Plant reagent genes no longer take all the plant volume if there are other
+      reagents
+  Shoddd:
+  - balance: beanbags now properly two shot stam crit
+  - bugfix: Beanbags no longer stam crit in one shot
+  Sylphily:
+  - rscadd: more contraband to the cig vendors
+  Wisemonster:
+  - rscadd: Gives the Blueshield 5 new alt titles
+  YehnBeep:
+  - rscadd: Secasses can now select the "Correctional Officer" alt title
+  ven1883:
+  - bugfix: character and inherent armor have been fixed. unknown how many things
+      this will affect, but includes nanite armor
+  - code_imp: modified carbon/human/proc/check_armor() to check src.armor during calculations
+  - code_imp: you can now use "set_armor" on human subtypes
+  - refactor: for people using debuggers, you can watch "inherent_armor_rating" to
+      see the inherent armor stats of a character being damaged.
+  - refactor: uses / 100 instead of * 0.01. No change in function as far as I know
+2024-10-16:
+  Absolucy:
+  - qol: Jaunts/teleports now work at centcom after roundend.
+  - rscadd: Add a preference to disable roundend credits. (Game Preferences -> UI
+      -> Show Roundend Credits)
+  - bugfix: Fixed a runtime error related to stopping the roundend credits before
+      they end.
+  Gw0sty:
+  - rscadd: Added icons for Blueshield and Secass
+  - rscadd: Added icons for all Spooktober roles
+  Shoddd:
+  - rscadd: Adds ball gown and mini crown to loadout menu
+  - rscadd: Mini crown, in loadout and autodrobe
+  - bugfix: Minicrown sprite centered
+2024-10-17:
+  Absolucy:
+  - refactor: Refactored how loadout shop items are displayed. (again)
+  - image: Properly centered the Sunset Sarsaparilla sprite.
+  - refactor: (Melbert) Refactored how vending machine icons are displayed, please
+      report if you see any broken icons. Also if all the icons look like missing
+      file icons for you, you gotta update byond man, you're like a year out of date.
+  - image: (MTandi) Made chem master container icons not blurry.
+  - bugfix: Stamina regeneration and stuns/incapacitation wearing off should hopefully
+      be more consistent regardless of server lag.
+  - bugfix: Fixed a variety of random minor errors.
+  - rscdel: HoPs can no longer open more Blueshield job slots.
+  Absolucy, LemonInTheDark:
+  - bugfix: Fixed a major source of lag related to hallucinations.
+  Meowosers:
+  - rscadd: Placed a Biogenerator on the front desk of Icebox Station's Hydroponics
+  - qol: Rearranged Icebox Station's Kitchen
+  RikuTheKiller:
+  - bugfix: Toxin damage is no longer doubled. (LMAO)
+  Wisemonster:
+  - bugfix: Fixed Theseus having brig access doors in place of perma ones.
+  - bugfix: Fixed Delta having general security access airlocks instead of perma ones.
+  - bugfix: Fixed Box almost only using general security access doors.
+2024-10-18:
+  Absolucy:
+  - qol: The heretic living heart now displays up-to-date appearances of its targets
+      when used.
