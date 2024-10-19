@@ -375,10 +375,11 @@ const TraitTooltip = (props) => {
   );
 };
 
-function createSearchableString(seedData: SeedData): string {
-  const reagentNames = seedData.reagents.map((reagent) => reagent.name).join(' ');
-  
+const createSearchableString = (seedData: SeedData): string => {
+  const reagentNames = seedData.reagents
+    .map((reagent) => reagent.name)
+    .join(' ');
   const searchableString = `${seedData.name} ${reagentNames}`;
-  
+
   return searchableString;
-}
+};
