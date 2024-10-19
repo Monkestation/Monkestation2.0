@@ -11,6 +11,7 @@
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
+	blood_overlay_type = "uniform"
 
 	/// Has this undersuit been freshly laundered and, as such, imparts a mood bonus for wearing
 	var/freshly_laundered = FALSE
@@ -88,8 +89,6 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 	if(accessory_overlay)
 		. += accessory_overlay
 
@@ -99,6 +98,7 @@
 		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
 		cabling.use(1)
 		has_sensor = HAS_SENSORS
+		update_wearer_status()
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/clothing/accessory))
@@ -120,6 +120,7 @@
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
+	update_wearer_status()
 	update_appearance()
 
 /obj/item/clothing/under/emp_act(severity)
@@ -141,10 +142,7 @@
 			var/mob/M = loc
 			to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
 
-	if(ishuman(loc))
-		var/mob/living/carbon/human/ooman = loc
-		if(ooman.w_uniform == src)
-			ooman.update_suit_sensors()
+	update_wearer_status()
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	. = ..()
@@ -163,6 +161,14 @@
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
 		freshly_laundered = FALSE
 		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
+
+/obj/item/clothing/under/proc/update_wearer_status()
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/ooman = loc
+	ooman.update_suit_sensors()
+	ooman.med_hud_set_status()
 
 /mob/living/carbon/human/update_suit_sensors()
 	. = ..()
@@ -315,10 +321,7 @@
 			if(SENSOR_COORDS)
 				to_chat(user_mob, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
+	update_wearer_status()
 
 /obj/item/clothing/under/CtrlClick(mob/user)
 	. = ..()
@@ -329,6 +332,7 @@
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
+	update_wearer_status()
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)

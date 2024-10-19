@@ -63,6 +63,8 @@ SUBSYSTEM_DEF(ticker)
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
+	var/end_station_state
+
 	/// People who have been commended and will receive a heart
 	var/list/hearts
 
@@ -73,6 +75,11 @@ SUBSYSTEM_DEF(ticker)
 	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
 	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
 	var/list/jobs_to_reward = list(JOB_JANITOR,)
+
+	var/list/popcount
+
+	/// (monkestation addition) The station integrity at roundend.
+	var/roundend_station_integrity
 
 /datum/controller/subsystem/ticker/Initialize()
 	// monkestation start: fix-lobby-music

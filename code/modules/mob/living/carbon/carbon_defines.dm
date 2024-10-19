@@ -2,7 +2,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,SENSOR_HUD,MOOD_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,SENSOR_HUD)
 	has_limbs = TRUE
 	held_items = list(null, null)
 	num_legs = 0 //Populated on init through list/bodyparts
@@ -87,11 +87,6 @@
 	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
 	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
-
-	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
-	var/heat_protection = 0 // No heat protection
-	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
-	var/cold_protection = 0 // No cold protection
 
 	/// Timer id of any transformation
 	var/transformation_timer

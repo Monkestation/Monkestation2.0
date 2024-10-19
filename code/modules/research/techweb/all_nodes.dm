@@ -426,6 +426,8 @@
 		"defibrillator",
 		"genescanner",
 		"healthanalyzer",
+		"scanning_pad",
+		"vitals_monitor",
 		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
@@ -438,6 +440,9 @@
 		"diseaseanalyzer",
 		"centrifuge",
 		"path_data",
+		"heat_pack",
+		"cold_pack",
+		"medical_crutch",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	discount_experiments = list(/datum/experiment/dissection/human = 1000)
@@ -449,6 +454,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"crewpinpointer",
+		"vitals_monitor_advanced",
 		"defibrillator_compact",
 		"harvester",
 		"healthanalyzer_advanced",
@@ -1517,7 +1523,10 @@
 		"seed_extractor",
 		"adv_watering_can",
 		"plantgenes",
-		"composters", // monkestation edit: build composters
+		// monkestation edit: our hydroponics stuff
+		"composters",
+		"splicer",
+		// monkestation end
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
