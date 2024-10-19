@@ -50,7 +50,7 @@ const jobToColor = (jobId: number) => {
   if (jobId >= 60 && jobId < 200) {
     return COLORS.department.service;
   }
-  if (jobId >= 200 && jobId < 240) { // monkestation edit: Exapands CC department range so blueshield shows up.
+  if (jobId >= 200 && jobId < 240) {
     return COLORS.department.centcom;
   }
   return COLORS.department.other;
