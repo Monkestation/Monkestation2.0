@@ -95,6 +95,12 @@
 	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
+	// monkestation start: use a typecache to blacklist certain items
+	var/static/list/damage_blacklist_typecache
+	if(!damage_blacklist_typecache)
+		damage_blacklist_typecache = typecacheof(list(/obj/item/card/id, /obj/item/grenade))
+	// monkestation end
+
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		var/static/list/organs_to_damage = list(
@@ -109,14 +115,15 @@
 
 		// Roughly 25% of their organs will take a bit of damage
 		for(var/organ_slot in organs_to_damage)
-			if(prob(25)) //monkestation edit begin : Changes rust to not be busted as shit
+			if(prob(25)) // monkestation edit: prob(75) -> prob(25)
 				carbon_owner.adjustOrganLoss(organ_slot, 20)
 
 		// And roughly 50% of their items will take a smack, too
 		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(50))
-				if(!istype(thing, /obj/item/card/id))
-					thing.take_damage(50) //monkestation edit end
+			if(is_type_in_typecache(thing, damage_blacklist_typecache)) // monkestation edit: blacklist certain items from being damaged
+				continue
+			if(!QDELETED(thing) && prob(50)) // monkestation edit: prob(75) -> prob(25)
+				thing.take_damage(50) // monkestation edit: 100 -> 50 damage
 
 	return ..()
 
