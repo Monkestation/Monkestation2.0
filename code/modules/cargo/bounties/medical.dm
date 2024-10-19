@@ -4,7 +4,7 @@
 	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(
 		/obj/item/organ/internal/heart = TRUE,
-		/obj/item/organ/internal/heart/synth = FALSE,
+		/obj/item/organ/internal/heart/synth = FALSE, // monkestation edit: prevent easy bounties
 		/obj/item/organ/internal/heart/cybernetic = FALSE,
 		/obj/item/organ/internal/heart/cybernetic/tier2 = TRUE,
 		/obj/item/organ/internal/heart/cybernetic/tier3 = TRUE,
@@ -17,7 +17,7 @@
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/internal/lungs = TRUE,
-		/obj/item/organ/internal/lungs/synth = FALSE,
+		/obj/item/organ/internal/lungs/synth = FALSE, // monkestation edit: prevent easy bounties
 		/obj/item/organ/internal/lungs/cybernetic = FALSE,
 		/obj/item/organ/internal/lungs/cybernetic/tier2 = TRUE,
 		/obj/item/organ/internal/lungs/cybernetic/tier3 = TRUE,
@@ -36,7 +36,7 @@
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/internal/ears = TRUE,
-		/obj/item/organ/internal/ears/synth = FALSE,
+		/obj/item/organ/internal/ears/synth = FALSE,// monkestation edit: prevent easy bounties
 		/obj/item/organ/internal/ears/cybernetic = FALSE,
 		/obj/item/organ/internal/ears/cybernetic/upgraded = TRUE,
 	)
@@ -48,7 +48,7 @@
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/internal/liver = TRUE,
-		/obj/item/organ/internal/liver/synth = FALSE,
+		/obj/item/organ/internal/liver/synth = FALSE,// monkestation edit: prevent easy bounties
 		/obj/item/organ/internal/liver/cybernetic = FALSE,
 		/obj/item/organ/internal/liver/cybernetic/tier2 = TRUE,
 		/obj/item/organ/internal/liver/cybernetic/tier3 = TRUE,
@@ -61,7 +61,7 @@
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/internal/eyes = TRUE,
-		/obj/item/organ/internal/eyes/synth = FALSE,
+		/obj/item/organ/internal/eyes/synth = FALSE,// monkestation edit: prevent easy bounties
 		/obj/item/organ/internal/eyes/robotic = FALSE,
 	)
 

@@ -922,27 +922,6 @@
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
 
-/datum/design/surgery/robot_healing // Apparently this helps the code not scream looking at other examples?
-	name = "Repair Robotic Limbs"
-	desc = "A surgical procedure that provides highly effective repairs and maintenance to robotic limbs."
-	surgery = /datum/surgery/robot_healing
-	id = "surgery_heal_robot_base"
-	research_icon_state = "surgery_chest"
-	
-/datum/design/surgery/robot_healing/upgraded
-	name = "Repair Robotic Limbs (Physical) Upgrade"
-	desc = "A surgical procedure that provides highly effective repairs and maintenance to robotic limbs. Is somewhat more efficient when the patient is severely damaged."
-	surgery = /datum/surgery/robot_healing/upgraded
-	id = "surgery_heal_robot_upgrade"
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/robot_healing/upgraded_2
-	name = "Repair Robotic Limbs (Physical) Upgrade"
-	desc = "A surgical procedure that quickly provides highly effective repairs and maintenance to robotic limbs. Is moderately more efficient when the patient is severely damaged."
-	surgery = /datum/surgery/robot_healing/experimental
-	id = "surgery_heal_robot_upgrade_femto"
-	research_icon_state = "surgery_chest"
-
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
