@@ -23,14 +23,11 @@
 /obj/item/rabbit_locator/attack_self(mob/user, modifiers)
 	if(!COOLDOWN_FINISHED(src, locator_timer))
 		return
-	if(QDELETED(hunter))
-		to_chat(user,span_warning("It's just a normal playing card!"))
-		return
-	if(hunter.owner.current != user)
-		to_chat(user,span_warning("It's just a normal playing card!"))
+	if(QDELETED(hunter) || hunter.owner?.current != user)
+		to_chat(user, span_warning("It's just a normal playing card!"))
 		return
 	var/turf/user_turf = get_turf(user)
-	if(QDELETED(user_turf) || !is_station_level(user_turf.z))
+	if(!is_station_level(user_turf?.z))
 		to_chat(user, span_warning("The card cannot be used here..."))
 		return
 	var/obj/effect/bnuuy = get_nearest_rabbit(user)
