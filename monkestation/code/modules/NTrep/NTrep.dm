@@ -18,9 +18,6 @@
 	outfit = /datum/outfit/job/nanotrasen_representative
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 
-	allow_bureaucratic_error = FALSE
-	allow_overflow = FALSE
-
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_CIV
 
@@ -30,6 +27,7 @@
 	bounty_types = CIV_JOB_BASIC
 	departments_list = list(
 		/datum/job_department/central_command,
+		/datum/job_department/command,
 		)
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/lighter, /obj/item/reagent_containers/cup/glass/flask)
@@ -108,8 +106,6 @@
 		ACCESS_BAR,
 		)
 	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS
 		)
 	job = /datum/job/nanotrasen_representative
 
