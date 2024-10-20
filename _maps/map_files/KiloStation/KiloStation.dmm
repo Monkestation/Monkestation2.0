@@ -29755,6 +29755,7 @@
 	name = "Kitchen Cold Room Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/bridge)
 "jgC" = (
@@ -69272,9 +69273,9 @@
 /obj/machinery/door/airlock/freezer{
 	name = "Kitchen Coldroom"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
 "vMX" = (
