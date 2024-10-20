@@ -1,6 +1,6 @@
 /datum/job/nanotrasen_representative
 	title = JOB_NANOTRASEN_REPRESENTATIVE
-	description = "Ensure company interests and Standard Operating Procedure are upheld onboard the station, and get out as soon as you can when it inevitably falls apart."
+	description = "Ensure company interests and Standard Operating Procedure is upheld onboard the station, and get out as soon as you can when it inevitably falls apart."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("CentCom")
 	faction = FACTION_STATION
