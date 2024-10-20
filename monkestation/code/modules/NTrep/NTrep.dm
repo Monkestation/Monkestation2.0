@@ -8,8 +8,8 @@
 	spawn_positions = 1
 	supervisors = "Central Command"
 	req_admin_notify = 1
-	minimal_player_age = 14
-	exp_requirements = 900
+	minimal_player_age = 30
+	exp_requirements = 9000
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
@@ -32,7 +32,7 @@
 		/datum/job_department/central_command,
 		)
 
-	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/clothing/head/beret/sec)
+	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/lighter, /obj/item/reagent_containers/cup/glass/flask)
 
 	mail_goodies = list(
 		/obj/item/pen/fountain = 30,
@@ -41,10 +41,12 @@
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne = 15,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne/cursed = 5,
-		/obj/item/clothing/head/hats/centhat = 20,
 	)
+	exclusive_mail_goodies = TRUE
 	rpg_title = "Diplomat"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+
+	voice_of_god_power = 1.4 //Command staff has authority
 
 	alt_titles = list(
 		"Corporate Liaison",
@@ -58,8 +60,9 @@
 	jobtype = /datum/job/nanotrasen_representative
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/job/nanotrasen_representative
-	uniform = /obj/item/clothing/under/rank/centcom/official
-	back = /obj/item/storage/backpack/satchel/leather
+	uniform = /obj/item/clothing/under/rank/centcom/nanotrasen_representative
+	suit = /obj/item/clothing/suit/armor/vest/nanotrasen_representative
+	head = /obj/item/clothing/head/hats/nanotrasen_representative
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
 		/obj/item/melee/baton/telescopic = 1,
@@ -69,31 +72,23 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/pen/fountain
 	r_pocket = /obj/item/modular_computer/pda/heads
+	l_hand = /obj/item/storage/secure/briefcase/cash
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_cent
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 
-	box = /obj/item/storage/box/survival
+	chameleon_extras = list(
+		/obj/item/gun/energy/laser/plasmacore,
+		/obj/item/stamp/centcom,
+		)
 
 	implants = list(/obj/item/implant/mindshield)
-
+	pda_slot = ITEM_SLOT_RPOCKET
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
 	)
-
-/datum/outfit/job/nanotrasen_representative/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.imprint_id(H.real_name, "Nanotrasen Representative")
-
-	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-	return ..()
+	job_tone = "incoming message"
 
 /datum/id_trim/job/nanotrasen_representative
 	assignment = "Nanotrasen Representative"

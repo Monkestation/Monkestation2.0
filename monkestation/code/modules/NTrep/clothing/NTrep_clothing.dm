@@ -30,7 +30,6 @@
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative
 	name = "representative's armored vest"
 	desc = "The pen is mightier than the sword but a sword still hurts."
-	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_vest"
@@ -41,7 +40,7 @@
 
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative/bathrobe
-	name = "Nanotrasen representative's suit"
+	name = "representative's bathrobe"
 	desc = "For those who are lazy and fit right in this time and place."
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
@@ -58,3 +57,36 @@
 	fire = -10 //more flammable
 	acid = 10
 	wound = 10
+
+/obj/item/storage/secure/briefcase/cash
+// LOADSAMONEY
+/obj/item/storage/secure/briefcase/cash/PopulateContents()
+	..()
+	for(var/iterator in 1 to 5)
+		new /obj/item/stack/spacecash/c500(src)
+
+/obj/item/storage/bag/garment/nanotrasen_representative
+	name = "representative's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the Nanotrasen representative."
+
+/obj/item/storage/bag/garment/nanotrasen_representative/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative(src)
+	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirt(src)
+	new /obj/item/clothing/head/hats/nanotrasen_representative(src)
+	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative/bathrobe(src)
+	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/shoes/laceup(src)
+
+/obj/item/storage/bag/garment/stolen
+	name = "stolen garment bag"
+	desc = "Somewhere a CentCom commander is livid about their drycleaning going missing."
+
+/obj/item/storage/bag/garment/stolen/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom/commander(src)
+	new /obj/item/clothing/head/hats/centhat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
+	new /obj/item/clothing/shoes/laceup(src)
+
+
+
