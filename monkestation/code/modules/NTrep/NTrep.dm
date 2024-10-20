@@ -54,6 +54,7 @@
 		"Nanotrasen Official",
 		"Nanotrasen Informant",
 	)
+	job_tone = "incoming message"
 
 /datum/outfit/job/nanotrasen_representative
 	name = "Nanotrasen Representative"
@@ -88,7 +89,6 @@
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
 	)
-	job_tone = "incoming message"
 
 /datum/id_trim/job/nanotrasen_representative
 	assignment = "Nanotrasen Representative"
@@ -100,16 +100,16 @@
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_COMMAND,
 		ACCESS_MAINT_TUNNELS,
-		ACCESS_MINERAL_STOREROOM,
 		ACCESS_WEAPONS,
 		ACCESS_CENT_GENERAL,
 		ACCESS_CENT_LIVING,
 		)
 	extra_access = list(
+		ACCESS_BAR,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
+		ACCESS_CHANGE_IDS
 		)
 	job = /datum/job/nanotrasen_representative
 

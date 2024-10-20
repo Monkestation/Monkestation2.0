@@ -83,8 +83,9 @@
 	desc = "Somewhere a CentCom commander is livid about their drycleaning going missing."
 
 /obj/item/storage/bag/garment/stolen/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom/commander(src)
 	new /obj/item/clothing/head/hats/centhat(src)
+	new /obj/item/clothing/under/rank/centcom/commander(src)
+	new /obj/item/clothing/suit/armor/centcom_formal(src)
 	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/shoes/laceup(src)
 

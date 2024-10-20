@@ -22,7 +22,7 @@
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
-	var/mutable_appearance =  mutable_appearance(icon, "plasma_core_six_cell_backwards")
+	mutable_appearance(icon, "plasma_core_six_cell_backwards")
 	RegisterSignal(src, COMSIG_GUN_CRANKING, PROC_REF(on_cranking))
 	RegisterSignal(src, COMSIG_GUN_CRANKED, PROC_REF(on_cranked))
 
