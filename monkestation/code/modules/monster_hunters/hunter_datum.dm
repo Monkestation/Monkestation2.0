@@ -81,8 +81,7 @@
 		grant_drop_ability(droppod_contract)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
 	RegisterSignal(src, COMSIG_BEASTIFY, PROC_REF(turn_beast))
-	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf()
+	for(var/turf/rabbit_hole as anything in select_bnnuy_turfs())
 		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
@@ -90,6 +89,45 @@
 	track.Grant(owner.current)
 
 	return ..()
+
+/datum/antagonist/monsterhunter/proc/select_bnnuy_turfs(amount = 5) as /list
+	RETURN_TYPE(/list)
+	var/static/list/forbidden_areas
+	forbidden_areas ||= typecacheof(list(
+		/area/station/ai_monitored,
+		/area/station/asteroid,
+		/area/station/comms,
+		/area/station/engineering/supermatter,
+		/area/station/maintenance,
+		/area/station/solars,
+		/area/station/tcommsat,
+	))
+	var/list/categorized_areas = list()
+	for(var/area/area as anything in GLOB.the_station_areas)
+		if(is_type_in_typecache(area, forbidden_areas) || area::outdoors || !GLOB.areas_by_type[area])
+			continue
+		var/category = area::airlock_wires || "N/A"
+		LAZYADD(categorized_areas[category], area)
+	var/list/grouped_areas = flatten_list(categorized_areas)
+	if(!length(grouped_areas))
+		CRASH("Somehow no valid areas were found")
+	var/list/chosen_turfs = list()
+	var/sanity = 0
+	while((sanity < 500) && (length(chosen_turfs) < amount))
+		sanity++
+		var/area/area_type = pick_weight_recursive(grouped_areas)
+		if(!area_type)
+			CRASH("Failed to pick random area")
+		var/list/area_turfs = get_area_turfs(area_type) - chosen_turfs
+		if(!length(area_turfs))
+			continue
+		var/turf/chosen_turf = pick(area_turfs)
+		if(!is_safe_turf(chosen_turf))
+			continue
+		chosen_turfs += chosen_turf
+	if(length(chosen_turfs) < amount)
+		stack_trace("Tried to found [amount] turfs, but only found [length(chosen_turfs)]!")
+	return chosen_turfs
 
 /datum/antagonist/monsterhunter/proc/setup_bnuuy_images()
 	SIGNAL_HANDLER
