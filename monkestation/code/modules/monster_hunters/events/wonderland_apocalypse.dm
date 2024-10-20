@@ -156,7 +156,7 @@
 
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
-	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST))
+	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST, COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
 	for(var/datum/action/action as anything in registered_actions)
 		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
 	LAZYNULL(registered_actions)
