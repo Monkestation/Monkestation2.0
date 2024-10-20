@@ -139,6 +139,7 @@
 		/datum/action/innate/cult/comm = FALSE,
 		/datum/action/innate/clockcult/quick_bind = TRUE,
 		/datum/action/cooldown/bloodsucker = TRUE,
+		/datum/action/changeling = TRUE,
 	))
 
 /datum/status_effect/wonderland_district/on_apply()
