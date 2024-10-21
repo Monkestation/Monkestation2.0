@@ -19,7 +19,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 
 	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_CMD
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 

@@ -2,9 +2,9 @@
 	name = "representative's suit"
 	desc = "Worn by those who work for the company. But don't let that fool you, they are pretty okay."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing-digi.dmi'
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing-digi.dmi'
 	icon_state = "representative_jumpsuit"
 	can_adjust = FALSE
 
@@ -14,7 +14,7 @@
 	desc = "Worn by those who work for the company. But don't let that fool you, they are pretty okay."
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_jumpskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
@@ -24,14 +24,14 @@
 	desc = "Born to be obsessive and snotty."
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_hat"
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative
 	name = "representative's armored vest"
 	desc = "The pen is mightier than the sword but a sword still hurts."
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_vest"
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative/Initialize(mapload)
@@ -44,7 +44,7 @@
 	desc = "For those who are lazy and fit right in this time and place."
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_bathrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/nanotrasen_representative_bathrobe
