@@ -113,6 +113,10 @@
 	for(var/X in paralysis_traits)
 		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
+/datum/brain_trauma/severe/paralysis/crushed
+	random_gain = FALSE
+	paralysis_type = pick("legs", "arms", "body", "left", "right")
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/severe/paralysis/paraplegic
 	random_gain = FALSE
