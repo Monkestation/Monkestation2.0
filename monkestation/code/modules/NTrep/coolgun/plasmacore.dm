@@ -1,7 +1,7 @@
 /obj/item/gun/energy/laser/plasmacore
 	name = "PlasmaCore-6e"
 	desc = "The PlasmaCore-6e is the newest gun in Nanotrasen's cutting edge line of laser weaponry. Featuring an experimental plasma based cell that can be mechanically recharged. Glory to Nanotrasen."
-	icon = 'monkestation/code/modules/NTrep/coolgun/plasmacoresixe.dmi'
+	icon = 'monkestation/icons/obj/weapons/guns/plasmacoresixe.dmi'
 	icon_state = "plasma_core_six"
 	charge_sections = 6
 	cell_type = /obj/item/stock_parts/cell/plasmacore
