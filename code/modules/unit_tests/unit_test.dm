@@ -326,7 +326,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
 	///we need to use json_decode to run randoms properly
-	ignore += typesof(/obj/item/device/cassette_tape)
+	ignore += typesof(/obj/item/cassette_tape)
 	ignore += typesof(/datum/cassette/cassette_tape)
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
 	ignore += typesof(/datum/weather_event)

@@ -52,6 +52,6 @@
 	switch(action)
 		if("spawn")
 			if (params["id"])
-				new/obj/item/device/cassette_tape(usr.loc, params["id"])
+				new/obj/item/cassette_tape(usr.loc, params["id"])
 				SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Mixtape")
 				log_admin("[key_name(usr)] created mixtape [params["id"]] at [usr.loc].")

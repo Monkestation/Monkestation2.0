@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(approved_ids, initialize_approved_ids())
 		return list()
 	return json_decode(file2text(ids_exist))
 
-/obj/item/device/cassette_tape/random
+/obj/item/cassette_tape/random
 	name = "Not Correctly Created Random Cassette"
 	desc = "How did this happen?"
 	random = TRUE
