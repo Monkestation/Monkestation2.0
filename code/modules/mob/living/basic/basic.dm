@@ -112,6 +112,11 @@
 	if(!real_name)
 		real_name = name
 
+	// MONKESTATION ADDITION START
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
+	//MONKESTATION ADDITION END
+
 	/* MONKESTATION REMOVAL - This is totally valid to create a mob in nullspace, its not valid to move a client onto it, this seems weird.
 	if(!loc)
 		stack_trace("Basic mob being instantiated in nullspace")
