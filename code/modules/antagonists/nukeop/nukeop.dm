@@ -367,7 +367,7 @@
 
 /datum/team/nuclear/proc/are_all_operatives_dead()
 	for(var/datum/mind/operative_mind as anything in members)
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
+		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD) && !(operative_mind.assigned_role.title == JOB_PRISONER)) //Monke edit, prisoners don't count for if all operatives aare dead.
 			return FALSE
 	return TRUE
 
