@@ -32934,7 +32934,6 @@
 /obj/structure/bed/dogbed{
 	pixel_x = 3
 	},
-/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jUk" = (
@@ -63864,7 +63863,6 @@
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/tile/neutral/half,
 /obj/effect/turf_decal/trimline/dark_red/end,
-/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "taV" = (
