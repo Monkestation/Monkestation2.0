@@ -22,7 +22,6 @@
 /obj/item/clothing/head/hats/nanotrasen_representative
 	name = "representative's hat"
 	desc = "Born to be obsessive and snotty."
-	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_hat"
