@@ -13,7 +13,7 @@
 	name = "representative's suitskirt"
 	desc = "Worn by those who work for the company. But don't let that fool you, they are pretty okay."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_jumpskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -23,14 +23,14 @@
 	name = "representative's hat"
 	desc = "Born to be obsessive and snotty."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_hat"
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative
 	name = "representative's armored vest"
 	desc = "The pen is mightier than the sword but a sword still hurts."
-	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_vest"
 
@@ -43,7 +43,7 @@
 	name = "representative's bathrobe"
 	desc = "For those who are lazy and fit right in this time and place."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/code/modules/NTrep/clothing/nanotrasen_representative_clothing_item.dmi'
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_bathrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
