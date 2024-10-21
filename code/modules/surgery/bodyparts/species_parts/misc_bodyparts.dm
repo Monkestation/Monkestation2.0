@@ -310,7 +310,7 @@
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN
+	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON

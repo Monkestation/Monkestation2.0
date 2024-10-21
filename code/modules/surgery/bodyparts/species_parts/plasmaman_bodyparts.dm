@@ -7,7 +7,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	head_flags = HEAD_EYESPRITES
+	head_flags = HEAD_EYESPRITES | HEAD_HAIR
 
 /obj/item/bodypart/chest/plasmaman
 	icon = 'icons/mob/species/plasmaman/bodyparts.dmi'
