@@ -827,7 +827,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!dna?.species)
 		return
 
-	var/obj/item/bodypart/HD = get_bodypart("head")
+	var/obj/item/bodypart/HD = get_bodypart(BODY_ZONE_HEAD)
 
 	if(!istype(HD))
 		return
