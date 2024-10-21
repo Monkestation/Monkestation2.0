@@ -6,7 +6,7 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
-$color: #ffffff !default;
+$color: #c90000 !default;
 $background-color: #000000 !default;
 $border-radius: base.$border-radius !default;
 
@@ -15,6 +15,7 @@ $border-radius: base.$border-radius !default;
   padding: 0.5em 0.75em;
   pointer-events: none;
   text-align: left;
+  font-weight: bold;
   transition: opacity 150ms ease-out;
   background-color: $background-color;
   color: $color;
