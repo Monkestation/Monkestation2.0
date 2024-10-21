@@ -89,7 +89,6 @@
 		randname += " [lastname]"
 	return randname
 
-/datum/species/monkey/simian/after_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source = null)
-	qdel(H.wear_neck)
-	var/obj/item/clothing/mask/translator/T = new /obj/item/clothing/mask/translator
-	H.equip_to_slot(T, ITEM_SLOT_NECK)
+/datum/species/monkey/simian/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	var/obj/item/clothing/mask/translator/simian_translator = new /obj/item/clothing/mask/translator(equipping.loc)
+	equipping.equip_to_slot(simian_translator, ITEM_SLOT_NECK)
