@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;species - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/species.html#var">Var Details</a> - <a href="datum/species.html#proc">Proc Details</a></header>
+<main>
+<h1>species datum <aside>/<a href="datum.html">datum</a>/<a href="datum/species.html">species</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 17"/></a></h1>
+
+<p>Datum that handles different species in the game.</p>
+<p>This datum handles species in the game, such as lizardpeople, mothmen, zombies, skeletons, etc.
+It is used in <a href="mob/living/carbon/human.html" title="/mob/living/carbon/human">carbon humans</a> to determine various things about them, like their food preferences, if they have biological genders, their damage resistances, and more.
+-- Extensions of species and species procs. --</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/species.html#var/ai_controlled_species">ai_controlled_species</a></th><td>This supresses the &quot;dosen't appear to be himself&quot; examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.</td></tr>
+            <tr><th><a href="datum/species.html#var/allow_numbers_in_name">allow_numbers_in_name</a></th><td>Are we allowed to have numbers in the name</td></tr>
+            <tr><th><a href="datum/species.html#var/armor">armor</a></th><td>Percentage modifier for overall defense of the race, or less defense, if it's negative.</td></tr>
+            <tr><th><a href="datum/species.html#var/blood_deficiency_drain_rate">blood_deficiency_drain_rate</a></th><td>The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that</td></tr>
+            <tr><th><a href="datum/species.html#var/bodypart_overrides">bodypart_overrides</a></th><td>The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.</td></tr>
+            <tr><th><a href="datum/species.html#var/bodytemp_cold_damage_limit">bodytemp_cold_damage_limit</a></th><td>The body temperature limit the body can take before it starts taking damage from cold.</td></tr>
+            <tr><th><a href="datum/species.html#var/bodytemp_heat_damage_limit">bodytemp_heat_damage_limit</a></th><td>The body temperature limit the body can take before it starts taking damage from heat.</td></tr>
+            <tr><th><a href="datum/species.html#var/bodytemp_normal">bodytemp_normal</a></th><td>The natural temperature for a body</td></tr>
+            <tr><th><a href="datum/species.html#var/bodytype">bodytype</a></th><td>A bitfield of &quot;bodytypes&quot;, updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()</td></tr>
+            <tr><th><a href="datum/species.html#var/breathid">breathid</a></th><td>What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]</td></tr>
+            <tr><th><a href="datum/species.html#var/brutemod">brutemod</a></th><td>multiplier for brute damage</td></tr>
+            <tr><th><a href="datum/species.html#var/burnmod">burnmod</a></th><td>multiplier for burn damage</td></tr>
+            <tr><th><a href="datum/species.html#var/cellular_damage_desc">cellular_damage_desc</a></th><td>Examine text when the person has cellular damage.</td></tr>
+            <tr><th><a href="datum/species.html#var/changesource_flags">changesource_flags</a></th><td>Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See <a href="code/__DEFINES/mobs.html" title="code/__DEFINES/mobs.dm">mob defines</a> for possible sources.</td></tr>
+            <tr><th><a href="datum/species.html#var/coldmod">coldmod</a></th><td>multiplier for damage from cold temperature</td></tr>
+            <tr><th><a href="datum/species.html#var/color_palette">color_palette</a></th><td>our color palette</td></tr>
+            <tr><th><a href="datum/species.html#var/custom_worn_icons">custom_worn_icons</a></th><td>Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X =&gt; /icon</td></tr>
+            <tr><th><a href="datum/species.html#var/damage_modifier">damage_modifier</a></th><td>Flat modifier on all damage taken via <a href="mob/living.html#proc/apply_damage" title="/mob/living">apply_damage</a> (so being punched, shot, etc.)
+IE: 10 = 10% less damage taken.</td></tr>
+            <tr><th><a href="datum/species.html#var/death_sound">death_sound</a></th><td>Used to set the mob's death_sound upon species change</td></tr>
+            <tr><th><a href="datum/species.html#var/digitigrade_customization">digitigrade_customization</a></th><td>Never, Optional, or Forced digi legs?</td></tr>
+            <tr><th><a href="datum/species.html#var/dust_anim">dust_anim</a></th><td>What anim to use for dusting</td></tr>
+            <tr><th><a href="datum/species.html#var/examine_limb_id">examine_limb_id</a></th><td>This is used for children, it will determine their default limb ID for use of examine. See <a href="mob/living.html#proc/examine" title="/mob/living">/mob/living/carbon/human/proc/examine</a>.</td></tr>
+            <tr><th><a href="datum/species.html#var/exotic_bloodtype">exotic_bloodtype</a></th><td>If your race uses a non standard bloodtype (typepath)</td></tr>
+            <tr><th><a href="datum/species.html#var/external_organs">external_organs</a></th><td>List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = &quot;Round Beautiful BDSM Snout&quot;). Still WIP</td></tr>
+            <tr><th><a href="datum/species.html#var/eyes_icon">eyes_icon</a></th><td>Override of the eyes icon file, used for Vox and maybe more in the future - The future is now, with Teshari using it too</td></tr>
+            <tr><th><a href="datum/species.html#var/facial_hair_alpha">facial_hair_alpha</a></th><td>The alpha used by the facial hair. 255 is completely solid, 0 is invisible.</td></tr>
+            <tr><th><a href="datum/species.html#var/fallback_clothing_path">fallback_clothing_path</a></th><td>If this species needs special 'fallback' sprites, what is the path to the file that contains them?</td></tr>
+            <tr><th><a href="datum/species.html#var/family_heirlooms">family_heirlooms</a></th><td>List of family heirlooms this species can get with the family heirloom quirk. List of types.</td></tr>
+            <tr><th><a href="datum/species.html#var/fire_dmi">fire_dmi</a></th><td>The icon of the fire overlay added when sufficently ablaze</td></tr>
+            <tr><th><a href="datum/species.html#var/fire_overlay">fire_overlay</a></th><td>The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi</td></tr>
+            <tr><th><a href="datum/species.html#var/fixed_hair_color">fixed_hair_color</a></th><td>A fixed hair color that's independent of the mcolor feature in DNA.</td></tr>
+            <tr><th><a href="datum/species.html#var/fixed_mut_color">fixed_mut_color</a></th><td>To use TRAIT_MUTANT_COLORS with a fixed color that's independent of the mcolor feature in DNA.</td></tr>
+            <tr><th><a href="datum/species.html#var/gib_anim">gib_anim</a></th><td>What anim to use for gibbing</td></tr>
+            <tr><th><a href="datum/species.html#var/grab_sound">grab_sound</a></th><td>Special sound for grabbing</td></tr>
+            <tr><th><a href="datum/species.html#var/hair_alpha">hair_alpha</a></th><td>The alpha used by the hair. 255 is completely solid, 0 is invisible.</td></tr>
+            <tr><th><a href="datum/species.html#var/hair_color">hair_color</a></th><td>This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If &quot;mutcolor&quot;, it uses the H's mutant_color. If &quot;fixedmutcolor&quot;, it uses fixedmutcolor</td></tr>
+            <tr><th><a href="datum/species.html#var/heatmod">heatmod</a></th><td>multiplier for damage from hot temperature</td></tr>
+            <tr><th><a href="datum/species.html#var/id">id</a></th><td>If the game needs to manually check your race to do something not included in a proc here, it will use this.</td></tr>
+            <tr><th><a href="datum/species.html#var/inert_mutation">inert_mutation</a></th><td>Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache</td></tr>
+            <tr><th><a href="datum/species.html#var/inherent_biotypes">inherent_biotypes</a></th><td>List of biotypes the mob belongs to. Used by diseases.</td></tr>
+            <tr><th><a href="datum/species.html#var/inherent_factions">inherent_factions</a></th><td>List of factions the mob gain upon gaining this species.</td></tr>
+            <tr><th><a href="datum/species.html#var/inherent_respiration_type">inherent_respiration_type</a></th><td>The type of respiration the mob is capable of doing. Used by adjustOxyLoss.</td></tr>
+            <tr><th><a href="datum/species.html#var/inherent_traits">inherent_traits</a></th><td>Generic traits tied to having the species.</td></tr>
+            <tr><th><a href="datum/species.html#var/knife_butcher_results">knife_butcher_results</a></th><td>List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount</td></tr>
+            <tr><th><a href="datum/species.html#var/max_bodypart_count">max_bodypart_count</a></th><td>The maximum number of bodyparts this species can have.</td></tr>
+            <tr><th><a href="datum/species.html#var/maxhealthmod">maxhealthmod</a></th><td>health mod of a species</td></tr>
+            <tr><th><a href="datum/species.html#var/meat">meat</a></th><td>What the species drops when gibbed by a gibber machine.</td></tr>
+            <tr><th><a href="datum/species.html#var/mutant_bodyparts">mutant_bodyparts</a></th><td>Visible CURRENT bodyparts that are unique to a species.
+DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
+SHIT UP! Changes to this list for non-species specific bodyparts (ie
+cat ears and tails) should be assigned at organ level if possible.
+Assoc values are defaults for given bodyparts, also modified by aforementioned organs.
+They also allow for faster '[]' list access versus 'in'. Other than that, they are useless right now.
+Layer hiding is handled by <a href="datum/species.html#proc/handle_mutant_bodyparts" title="/datum/species">/datum/species/proc/handle_mutant_bodyparts</a> below.</td></tr>
+            <tr><th><a href="datum/species.html#var/mutant_organs">mutant_organs</a></th><td>Internal organs that are unique to this race, like a tail.</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantappendix">mutantappendix</a></th><td>Replaces default appendix with a different organ.</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantbladder">mutantbladder</a></th><td>Replaces default bladder with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantbrain">mutantbrain</a></th><td>Replaces default brain with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantbutt">mutantbutt</a></th><td>Replaces default butt with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantears">mutantears</a></th><td>Replaces default ears with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutanteyes">mutanteyes</a></th><td>Replaces default eyes with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantheart">mutantheart</a></th><td>Replaces default heart with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantliver">mutantliver</a></th><td>Replaces default liver with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantlungs">mutantlungs</a></th><td>Replaces default lungs with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutantstomach">mutantstomach</a></th><td>Replaces default stomach with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/mutanttongue">mutanttongue</a></th><td>Replaces default tongue with a different organ</td></tr>
+            <tr><th><a href="datum/species.html#var/name">name</a></th><td>This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.</td></tr>
+            <tr><th><a href="datum/species.html#var/no_equip_flags">no_equip_flags</a></th><td>flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.</td></tr>
+            <tr><th><a href="datum/species.html#var/offset_features">offset_features</a></th><td>Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.</td></tr>
+            <tr><th><a href="datum/species.html#var/outfit_important_for_life">outfit_important_for_life</a></th><td>A path to an outfit that is important for species life e.g. plasmaman outfit</td></tr>
+            <tr><th><a href="datum/species.html#var/outfit_override_registry">outfit_override_registry</a></th><td>A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].</td></tr>
+            <tr><th><a href="datum/species.html#var/payday_modifier">payday_modifier</a></th><td>multiplier for money paid at payday</td></tr>
+            <tr><th><a href="datum/species.html#var/plural_form">plural_form</a></th><td>The formatting of the name of the species in plural context. Defaults to &quot;[name]\s&quot; if unset.
+Ex &quot;[Plasmamen] are weak&quot;, &quot;[Mothmen] are strong&quot;, &quot;[Lizardpeople] don't like&quot;, &quot;[Golems] hate&quot;</td></tr>
+            <tr><th><a href="datum/species.html#var/preload">preload</a></th><td>Should we preload this species's organs?</td></tr>
+            <tr><th><a href="datum/species.html#var/prevent_perspective_change">prevent_perspective_change</a></th><td>Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.</td></tr>
+            <tr><th><a href="datum/species.html#var/properly_gained">properly_gained</a></th><td>Was on_species_gain ever actually called?
+Species code is really odd...</td></tr>
+            <tr><th><a href="datum/species.html#var/roundstart_changed">roundstart_changed</a></th><td>Was the species changed from its original type at the start of the round?</td></tr>
+            <tr><th><a href="datum/species.html#var/sexes">sexes</a></th><td>Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows</td></tr>
+            <tr><th><a href="datum/species.html#var/siemens_coeff">siemens_coeff</a></th><td>Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.</td></tr>
+            <tr><th><a href="datum/species.html#var/skinned_type">skinned_type</a></th><td>What skin the species drops when gibbed by a gibber machine.</td></tr>
+            <tr><th><a href="datum/species.html#var/species_cookie">species_cookie</a></th><td>Unique cookie given by admins through prayers</td></tr>
+            <tr><th><a href="datum/species.html#var/species_gibs">species_gibs</a></th><td>what type of gibs we leave</td></tr>
+            <tr><th><a href="datum/species.html#var/species_language_holder">species_language_holder</a></th><td>What languages this species can understand and say. Use a <a href="datum/language_holder.html" title="/datum/language_holder">language holder datum</a> in this var.</td></tr>
+            <tr><th><a href="datum/species.html#var/species_pain_mod">species_pain_mod</a></th><td>Pain modifier that this species receives.</td></tr>
+            <tr><th><a href="datum/species.html#var/stunmod">stunmod</a></th><td>multiplier for stun durations</td></tr>
+            <tr><th><a href="datum/species.html#var/temperature_homeostasis_speed">temperature_homeostasis_speed</a></th><td>Modifier to how fast/slow the body normalizes its temperature to standard temp</td></tr>
+            <tr><th><a href="datum/species.html#var/temperature_normalization_speed">temperature_normalization_speed</a></th><td>Modifier to how fast/slow the body normalizes its temperature to the environment.</td></tr>
+            <tr><th><a href="datum/species.html#var/visual_gender">visual_gender</a></th><td>does our chosen bodytype have visual difference</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/species.html#proc/check_head_flags">check_head_flags</a></th><td>Checks if the species has a head with these head flags, by default.
+Admittedly, this is a very weird and seemingly redundant proc, but it
+gets used by some preferences (such as hair style) to determine whether
+or not they are accessible.</td></tr>
+            <tr><th><a href="datum/species.html#proc/check_roundstart_eligible">check_roundstart_eligible</a></th><td>Checks if a species is eligible to be picked at roundstart.</td></tr>
+            <tr><th><a href="datum/species.html#proc/copy_properties_from">copy_properties_from</a></th><td>Copies some vars and properties over that should be kept when creating a copy of this species.</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_fresh_body">create_fresh_body</a></th><td>Creates body parts for the target completely from scratch based on the species</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_biotypes_perks">create_pref_biotypes_perks</a></th><td>Adds adds any perks related to the species' inherent_biotypes flags.</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_blood_perks">create_pref_blood_perks</a></th><td>Adds adds any perks related to the species' blood (or lack thereof).</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_damage_perks">create_pref_damage_perks</a></th><td>Adds adds any perks related to sustaining damage.
+For example, brute damage vulnerability, or fire damage resistance.</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_language_perk">create_pref_language_perk</a></th><td>Adds in a language perk based on all the languages the species
+can speak by default (according to their language holder).</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_temperature_perks">create_pref_temperature_perks</a></th><td>Adds adds any perks related to how the species deals with temperature.</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_traits_perks">create_pref_traits_perks</a></th><td>Adds adds any perks related to the species' inherent_traits list or override body traits.</td></tr>
+            <tr><th><a href="datum/species.html#proc/create_pref_unique_perks">create_pref_unique_perks</a></th><td>Used to add any species specific perks to the perk list.</td></tr>
+            <tr><th><a href="datum/species.html#proc/generate_custom_worn_icon">generate_custom_worn_icon</a></th><td>Allow for custom clothing icon generation. Only called if the species is BODYTYPE_CUSTOM
+If null is returned, use default human icon.
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/generate_custom_worn_icon_fallback">generate_custom_worn_icon_fallback</a></th><td>Generate a fallback worn icon, if the species supports it. You must call it in an override of generate_custom_worn_icon()</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_custom_worn_config_fallback">get_custom_worn_config_fallback</a></th><td>Modularly get the species' fallback greyscale config.
+Only used if you use generate_custom_worn_icon_fallback()
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_custom_worn_icon">get_custom_worn_icon</a></th><td>Modularly returns one of worn_icon_vox, worn_icon_teshari, etc.
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_custom_worn_icon_cached">get_custom_worn_icon_cached</a></th><td>Read from freely usable cache of generated icons for your species.
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_features">get_features</a></th><td>Returns a list of strings representing features this species has.
+Used by the preferences UI to know what buttons to show.</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_mutant_organ_type_for_slot">get_mutant_organ_type_for_slot</a></th><td>Gets the default mutant organ for the species based on the provided slot.</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_species_description">get_species_description</a></th><td>Gets a short description for the specices. Should be relatively succinct.
+Used in the preference menu.</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_species_diet">get_species_diet</a></th><td>Translate the species liked foods from bitfields into strings
+and returns it in the form of an associated list.</td></tr>
+            <tr><th><a href="datum/species.html#proc/get_species_perks">get_species_perks</a></th><td>Generates a list of &quot;perks&quot; related to this species
+(Postives, neutrals, and negatives)
+in the format of a list of lists.
+Used in the preference menu.</td></tr>
+            <tr><th><a href="datum/species.html#proc/give_important_for_life">give_important_for_life</a></th><td>Equip the outfit required for life. Replaces items currently worn.</td></tr>
+            <tr><th><a href="datum/species.html#proc/go_bald">go_bald</a></th><td>Makes the target human bald.</td></tr>
+            <tr><th><a href="datum/species.html#proc/handle_body">handle_body</a></th><td>Handles the body of a human</td></tr>
+            <tr><th><a href="datum/species.html#proc/handle_chemical">handle_chemical</a></th><td>Handling special reagent types.</td></tr>
+            <tr><th><a href="datum/species.html#proc/handle_mutant_bodyparts">handle_mutant_bodyparts</a></th><td>Handles the mutant bodyparts of a human</td></tr>
+            <tr><th><a href="datum/species.html#proc/handle_radiation">handle_radiation</a></th><td>Species based handling for irradiation</td></tr>
+            <tr><th><a href="datum/species.html#proc/harm">harm</a></th><td>This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...</td></tr>
+            <tr><th><a href="datum/species.html#proc/on_owner_login">on_owner_login</a></th><td>Owner login</td></tr>
+            <tr><th><a href="datum/species.html#proc/pre_equip_species_outfit">pre_equip_species_outfit</a></th><td>Equips the necessary species-relevant gear before putting on the rest of the uniform.</td></tr>
+            <tr><th><a href="datum/species.html#proc/prepare_human_for_preview">prepare_human_for_preview</a></th><td>Given a human, will adjust it before taking a picture for the preferences UI.
+This should create a CONSISTENT result, so the icons don't randomly change.</td></tr>
+            <tr><th><a href="datum/species.html#proc/random_name">random_name</a></th><td>Generates a random name for a carbon.</td></tr>
+            <tr><th><a href="datum/species.html#proc/randomize_active_underwear">randomize_active_underwear</a></th><td>Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob</td></tr>
+            <tr><th><a href="datum/species.html#proc/randomize_active_underwear_only">randomize_active_underwear_only</a></th><td>Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
+but will not update the body right away.</td></tr>
+            <tr><th><a href="datum/species.html#proc/randomize_external_organs">randomize_external_organs</a></th><td>Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob</td></tr>
+            <tr><th><a href="datum/species.html#proc/randomize_features">randomize_features</a></th><td>Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs</td></tr>
+            <tr><th><a href="datum/species.html#proc/randomize_main_appearance_element">randomize_main_appearance_element</a></th><td>Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob</td></tr>
+            <tr><th><a href="datum/species.html#proc/replace_body">replace_body</a></th><td>Handles replacing all of the bodyparts with their species version during set_species()</td></tr>
+            <tr><th><a href="datum/species.html#proc/set_custom_worn_icon">set_custom_worn_icon</a></th><td>Modularly set one of worn_icon_vox, worn_icon_teshari, etc.
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/set_custom_worn_icon_cached">set_custom_worn_icon_cached</a></th><td>Write to a freely usable cache of generated icons for your species.
+Arguments:</td></tr>
+            <tr><th><a href="datum/species.html#proc/spec_stun">spec_stun</a></th><td>Triggers force say events</td></tr>
+            <tr><th><a href="datum/species.html#proc/spec_unarmedattack">spec_unarmedattack</a></th><td>Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/ai_controlled_species"><aside class="declaration">var </aside>ai_controlled_species
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 228"/></a></h3>
+        <p>This supresses the &quot;dosen't appear to be himself&quot; examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.</p><h3 id="var/allow_numbers_in_name"><aside class="declaration">var </aside>allow_numbers_in_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 148"/></a></h3>
+        <p>Are we allowed to have numbers in the name</p><h3 id="var/armor"><aside class="declaration">var </aside>armor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 104"/></a></h3>
+        <p>Percentage modifier for overall defense of the race, or less defense, if it's negative.</p><h3 id="var/blood_deficiency_drain_rate"><aside class="declaration">var </aside>blood_deficiency_drain_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 69"/></a></h3>
+        <p>The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that</p><h3 id="var/bodypart_overrides"><aside class="declaration">var </aside>bodypart_overrides
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 91"/></a></h3>
+        <p>The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.</p><h3 id="var/bodytemp_cold_damage_limit"><aside class="declaration">var </aside>bodytemp_cold_damage_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L123">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 123"/></a></h3>
+        <p>The body temperature limit the body can take before it starts taking damage from cold.</p><h3 id="var/bodytemp_heat_damage_limit"><aside class="declaration">var </aside>bodytemp_heat_damage_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 121"/></a></h3>
+        <p>The body temperature limit the body can take before it starts taking damage from heat.</p><h3 id="var/bodytemp_normal"><aside class="declaration">var </aside>bodytemp_normal
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 115"/></a></h3>
+        <p>The natural temperature for a body</p><h3 id="var/bodytype"><aside class="declaration">var </aside>bodytype
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 31"/></a></h3>
+        <p>A bitfield of &quot;bodytypes&quot;, updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()</p><h3 id="var/breathid"><aside class="declaration">var </aside>breathid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 140"/></a></h3>
+        <p>What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]</p><h3 id="var/brutemod"><aside class="declaration">var </aside>brutemod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 106"/></a></h3>
+        <p>multiplier for brute damage</p><h3 id="var/burnmod"><aside class="declaration">var </aside>burnmod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 108"/></a></h3>
+        <p>multiplier for burn damage</p><h3 id="var/cellular_damage_desc"><aside class="declaration">var </aside>cellular_damage_desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 61"/></a></h3>
+        <p>Examine text when the person has cellular damage.</p><h3 id="var/changesource_flags"><aside class="declaration">var </aside>changesource_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L207">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 207"/></a></h3>
+        <p>Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See <a href="code/__DEFINES/mobs.html" title="code/__DEFINES/mobs.dm">mob defines</a> for possible sources.</p><h3 id="var/coldmod"><aside class="declaration">var </aside>coldmod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 184"/></a></h3>
+        <p>multiplier for damage from cold temperature</p><h3 id="var/color_palette"><aside class="declaration">var </aside>color_palette
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/color_palette.html">color_palette</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L246">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 246"/></a></h3>
+        <p>our color palette</p><h3 id="var/custom_worn_icons"><aside class="declaration">var </aside>custom_worn_icons
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 240"/></a></h3>
+        <p>Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X =&gt; /icon</p><h3 id="var/damage_modifier"><aside class="declaration">var </aside>damage_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 182"/></a></h3>
+        <p>Flat modifier on all damage taken via <a href="mob/living.html#proc/apply_damage" title="/mob/living">apply_damage</a> (so being punched, shot, etc.)
+IE: 10 = 10% less damage taken.</p><h3 id="var/death_sound"><aside class="declaration">var </aside>death_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 200"/></a></h3>
+        <p>Used to set the mob's death_sound upon species change</p><h3 id="var/digitigrade_customization"><aside class="declaration">var </aside>digitigrade_customization
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 65"/></a></h3>
+        <p>Never, Optional, or Forced digi legs?</p><h3 id="var/dust_anim"><aside class="declaration">var </aside>dust_anim
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 142"/></a></h3>
+        <p>What anim to use for dusting</p><h3 id="var/examine_limb_id"><aside class="declaration">var </aside>examine_limb_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 63"/></a></h3>
+        <p>This is used for children, it will determine their default limb ID for use of examine. See <a href="mob/living.html#proc/examine" title="/mob/living">/mob/living/carbon/human/proc/examine</a>.</p><h3 id="var/exotic_bloodtype"><aside class="declaration">var </aside>exotic_bloodtype
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/blood_type.html">blood_type</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 67"/></a></h3>
+        <p>If your race uses a non standard bloodtype (typepath)</p><h3 id="var/external_organs"><aside class="declaration">var </aside>external_organs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 101"/></a></h3>
+        <p>List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = &quot;Round Beautiful BDSM Snout&quot;). Still WIP</p><h3 id="var/eyes_icon"><aside class="declaration">var </aside>eyes_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L242">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 242"/></a></h3>
+        <p>Override of the eyes icon file, used for Vox and maybe more in the future - The future is now, with Teshari using it too</p><h3 id="var/facial_hair_alpha"><aside class="declaration">var </aside>facial_hair_alpha
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 58"/></a></h3>
+        <p>The alpha used by the facial hair. 255 is completely solid, 0 is invisible.</p><h3 id="var/fallback_clothing_path"><aside class="declaration">var </aside>fallback_clothing_path
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 50"/></a></h3>
+        <p>If this species needs special 'fallback' sprites, what is the path to the file that contains them?</p><h3 id="var/family_heirlooms"><aside class="declaration">var </aside>family_heirlooms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L213">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 213"/></a></h3>
+        <p>List of family heirlooms this species can get with the family heirloom quirk. List of types.</p><h3 id="var/fire_dmi"><aside class="declaration">var </aside>fire_dmi
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 128"/></a></h3>
+        <p>The icon of the fire overlay added when sufficently ablaze</p><h3 id="var/fire_overlay"><aside class="declaration">var </aside>fire_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 126"/></a></h3>
+        <p>The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi</p><h3 id="var/fixed_hair_color"><aside class="declaration">var </aside>fixed_hair_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 196"/></a></h3>
+        <p>A fixed hair color that's independent of the mcolor feature in DNA.</p><h3 id="var/fixed_mut_color"><aside class="declaration">var </aside>fixed_mut_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 194"/></a></h3>
+        <p>To use TRAIT_MUTANT_COLORS with a fixed color that's independent of the mcolor feature in DNA.</p><h3 id="var/gib_anim"><aside class="declaration">var </aside>gib_anim
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 144"/></a></h3>
+        <p>What anim to use for gibbing</p><h3 id="var/grab_sound"><aside class="declaration">var </aside>grab_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 202"/></a></h3>
+        <p>Special sound for grabbing</p><h3 id="var/hair_alpha"><aside class="declaration">var </aside>hair_alpha
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 56"/></a></h3>
+        <p>The alpha used by the hair. 255 is completely solid, 0 is invisible.</p><h3 id="var/hair_color"><aside class="declaration">var </aside>hair_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 54"/></a></h3>
+        <p>This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If &quot;mutcolor&quot;, it uses the H's mutant_color. If &quot;fixedmutcolor&quot;, it uses fixedmutcolor</p><h3 id="var/heatmod"><aside class="declaration">var </aside>heatmod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 186"/></a></h3>
+        <p>multiplier for damage from hot temperature</p><h3 id="var/id"><aside class="declaration">var </aside>id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 19"/></a></h3>
+        <p>If the game needs to manually check your race to do something not included in a proc here, it will use this.</p><h3 id="var/inert_mutation"><aside class="declaration">var </aside>inert_mutation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 198"/></a></h3>
+        <p>Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache</p><h3 id="var/inherent_biotypes"><aside class="declaration">var </aside>inherent_biotypes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 133"/></a></h3>
+        <p>List of biotypes the mob belongs to. Used by diseases.</p><h3 id="var/inherent_factions"><aside class="declaration">var </aside>inherent_factions
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 137"/></a></h3>
+        <p>List of factions the mob gain upon gaining this species.</p><h3 id="var/inherent_respiration_type"><aside class="declaration">var </aside>inherent_respiration_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 135"/></a></h3>
+        <p>The type of respiration the mob is capable of doing. Used by adjustOxyLoss.</p><h3 id="var/inherent_traits"><aside class="declaration">var </aside>inherent_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 131"/></a></h3>
+        <p>Generic traits tied to having the species.</p><h3 id="var/knife_butcher_results"><aside class="declaration">var </aside>knife_butcher_results
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L216">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 216"/></a></h3>
+        <p>List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount</p><h3 id="var/max_bodypart_count"><aside class="declaration">var </aside>max_bodypart_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 52"/></a></h3>
+        <p>The maximum number of bodyparts this species can have.</p><h3 id="var/maxhealthmod"><aside class="declaration">var </aside>maxhealthmod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L238">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 238"/></a></h3>
+        <p>health mod of a species</p><h3 id="var/meat"><aside class="declaration">var </aside>meat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 71"/></a></h3>
+        <p>What the species drops when gibbed by a gibber machine.</p><h3 id="var/mutant_bodyparts"><aside class="declaration">var </aside>mutant_bodyparts
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 87"/></a></h3>
+        <p>Visible CURRENT bodyparts that are unique to a species.
+DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
+SHIT UP! Changes to this list for non-species specific bodyparts (ie
+cat ears and tails) should be assigned at organ level if possible.
+Assoc values are defaults for given bodyparts, also modified by aforementioned organs.
+They also allow for faster '[]' list access versus 'in'. Other than that, they are useless right now.
+Layer hiding is handled by <a href="datum/species.html#proc/handle_mutant_bodyparts" title="/datum/species">/datum/species/proc/handle_mutant_bodyparts</a> below.</p><h3 id="var/mutant_organs"><aside class="declaration">var </aside>mutant_organs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 89"/></a></h3>
+        <p>Internal organs that are unique to this race, like a tail.</p><h3 id="var/mutantappendix"><aside class="declaration">var </aside>mutantappendix
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/appendix</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 174"/></a></h3>
+        <p>Replaces default appendix with a different organ.</p><h3 id="var/mutantbladder"><aside class="declaration">var </aside>mutantbladder
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/bladder.html">bladder</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 179"/></a></h3>
+        <p>Replaces default bladder with a different organ</p><h3 id="var/mutantbrain"><aside class="declaration">var </aside>mutantbrain
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/brain.html">brain</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 158"/></a></h3>
+        <p>Replaces default brain with a different organ</p><h3 id="var/mutantbutt"><aside class="declaration">var </aside>mutantbutt
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/butt</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 176"/></a></h3>
+        <p>Replaces default butt with a different organ</p><h3 id="var/mutantears"><aside class="declaration">var </aside>mutantears
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/ears</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 166"/></a></h3>
+        <p>Replaces default ears with a different organ</p><h3 id="var/mutanteyes"><aside class="declaration">var </aside>mutanteyes
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/eyes.html">eyes</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 164"/></a></h3>
+        <p>Replaces default eyes with a different organ</p><h3 id="var/mutantheart"><aside class="declaration">var </aside>mutantheart
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/heart</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 160"/></a></h3>
+        <p>Replaces default heart with a different organ</p><h3 id="var/mutantliver"><aside class="declaration">var </aside>mutantliver
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/liver.html">liver</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 170"/></a></h3>
+        <p>Replaces default liver with a different organ</p><h3 id="var/mutantlungs"><aside class="declaration">var </aside>mutantlungs
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/lungs.html">lungs</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 162"/></a></h3>
+        <p>Replaces default lungs with a different organ</p><h3 id="var/mutantstomach"><aside class="declaration">var </aside>mutantstomach
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/stomach.html">stomach</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 172"/></a></h3>
+        <p>Replaces default stomach with a different organ</p><h3 id="var/mutanttongue"><aside class="declaration">var </aside>mutanttongue
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/tongue.html">tongue</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 168"/></a></h3>
+        <p>Replaces default tongue with a different organ</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 21"/></a></h3>
+        <p>This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.</p><h3 id="var/no_equip_flags"><aside class="declaration">var </aside>no_equip_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 75"/></a></h3>
+        <p>flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.</p><h3 id="var/offset_features"><aside class="declaration">var </aside>offset_features
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 33"/></a></h3>
+        <p>Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.</p><h3 id="var/outfit_important_for_life"><aside class="declaration">var </aside>outfit_important_for_life
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/outfit.html">outfit</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 204"/></a></h3>
+        <p>A path to an outfit that is important for species life e.g. plasmaman outfit</p><h3 id="var/outfit_override_registry"><aside class="declaration">var </aside>outfit_override_registry
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L235">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 235"/></a></h3>
+        <p>A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].</p><h3 id="var/payday_modifier"><aside class="declaration">var </aside>payday_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 190"/></a></h3>
+        <p>multiplier for money paid at payday</p><h3 id="var/plural_form"><aside class="declaration">var </aside>plural_form
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 24"/></a></h3>
+        <p>The formatting of the name of the species in plural context. Defaults to &quot;[name]\s&quot; if unset.
+Ex &quot;[Plasmamen] are weak&quot;, &quot;[Mothmen] are strong&quot;, &quot;[Lizardpeople] don't like&quot;, &quot;[Golems] hate&quot;</p><h3 id="var/preload"><aside class="declaration">var </aside>preload
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L219">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 219"/></a></h3>
+        <p>Should we preload this species's organs?</p><h3 id="var/prevent_perspective_change"><aside class="declaration">var </aside>prevent_perspective_change
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 222"/></a></h3>
+        <p>Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.</p><h3 id="var/properly_gained"><aside class="declaration">var </aside>properly_gained
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L232">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 232"/></a></h3>
+        <p>Was on_species_gain ever actually called?
+Species code is really odd...</p><h3 id="var/roundstart_changed"><aside class="declaration">var </aside>roundstart_changed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L225">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 225"/></a></h3>
+        <p>Was the species changed from its original type at the start of the round?</p><h3 id="var/sexes"><aside class="declaration">var </aside>sexes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 27"/></a></h3>
+        <p>Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows</p><h3 id="var/siemens_coeff"><aside class="declaration">var </aside>siemens_coeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 192"/></a></h3>
+        <p>Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.</p><h3 id="var/skinned_type"><aside class="declaration">var </aside>skinned_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 73"/></a></h3>
+        <p>What skin the species drops when gibbed by a gibber machine.</p><h3 id="var/species_cookie"><aside class="declaration">var </aside>species_cookie
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L210">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 210"/></a></h3>
+        <p>Unique cookie given by admins through prayers</p><h3 id="var/species_gibs"><aside class="declaration">var </aside>species_gibs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 146"/></a></h3>
+        <p>what type of gibs we leave</p><h3 id="var/species_language_holder"><aside class="declaration">var </aside>species_language_holder
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/language_holder.html">language_holder</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 77"/></a></h3>
+        <p>What languages this species can understand and say. Use a <a href="datum/language_holder.html" title="/datum/language_holder">language holder datum</a> in this var.</p><h3 id="var/species_pain_mod"><aside class="declaration">var </aside>species_pain_mod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/can_spessmen_feel_pain/pain/species.dm#L4">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;species.dm 4"/></a></h3>
+        <p>Pain modifier that this species receives.</p><h3 id="var/stunmod"><aside class="declaration">var </aside>stunmod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 188"/></a></h3>
+        <p>multiplier for stun durations</p><h3 id="var/temperature_homeostasis_speed"><aside class="declaration">var </aside>temperature_homeostasis_speed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 119"/></a></h3>
+        <p>Modifier to how fast/slow the body normalizes its temperature to standard temp</p><h3 id="var/temperature_normalization_speed"><aside class="declaration">var </aside>temperature_normalization_speed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 117"/></a></h3>
+        <p>Modifier to how fast/slow the body normalizes its temperature to the environment.</p><h3 id="var/visual_gender"><aside class="declaration">var </aside>visual_gender
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 29"/></a></h3>
+        <p>does our chosen bodytype have visual difference</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_head_flags"><aside class="declaration">proc </aside>check_head_flags<aside>(check_flags) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1934">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1934"/></a></aside>
+        </h3>
+        <p>Checks if the species has a head with these head flags, by default.
+Admittedly, this is a very weird and seemingly redundant proc, but it
+gets used by some preferences (such as hair style) to determine whether
+or not they are accessible.</p><h3 id="proc/check_roundstart_eligible"><aside class="declaration">proc </aside>check_roundstart_eligible<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L297">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 297"/></a></aside>
+        </h3>
+        <p>Checks if a species is eligible to be picked at roundstart.</p>
+<p>Checks the config to see if this species is allowed to be picked in the character setup menu.
+Used by <a href="global.html#proc/generate_selectable_species_and_languages" title="/global">/proc/generate_selectable_species_and_languages</a>.</p><h3 id="proc/copy_properties_from"><aside class="declaration">proc </aside>copy_properties_from<aside>(/<a href="datum.html">datum</a>/<a href="datum/species.html">species</a>/old_species) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L335">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 335"/></a></aside>
+        </h3>
+        <p>Copies some vars and properties over that should be kept when creating a copy of this species.</p>
+<p>Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
+Arguments:</p>
+<ul>
+<li>old_species - The species that the carbon used to be before copying</li>
+</ul><h3 id="proc/create_fresh_body"><aside class="declaration">proc </aside>create_fresh_body<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1924">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1924"/></a></aside>
+        </h3>
+        <p>Creates body parts for the target completely from scratch based on the species</p><h3 id="proc/create_pref_biotypes_perks"><aside class="declaration">proc </aside>create_pref_biotypes_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1853">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1853"/></a></aside>
+        </h3>
+        <p>Adds adds any perks related to the species' inherent_biotypes flags.</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_blood_perks"><aside class="declaration">proc </aside>create_pref_blood_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1775">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1775"/></a></aside>
+        </h3>
+        <p>Adds adds any perks related to the species' blood (or lack thereof).</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_damage_perks"><aside class="declaration">proc </aside>create_pref_damage_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1670">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1670"/></a></aside>
+        </h3>
+        <p>Adds adds any perks related to sustaining damage.
+For example, brute damage vulnerability, or fire damage resistance.</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_language_perk"><aside class="declaration">proc </aside>create_pref_language_perk<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1873">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1873"/></a></aside>
+        </h3>
+        <p>Adds in a language perk based on all the languages the species
+can speak by default (according to their language holder).</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_temperature_perks"><aside class="declaration">proc </aside>create_pref_temperature_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1731">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1731"/></a></aside>
+        </h3>
+        <p>Adds adds any perks related to how the species deals with temperature.</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_traits_perks"><aside class="declaration">proc </aside>create_pref_traits_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1803">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1803"/></a></aside>
+        </h3>
+        <p>Adds adds any perks related to the species' inherent_traits list or override body traits.</p>
+<p>Returns a list containing perks, or an empty list.</p><h3 id="proc/create_pref_unique_perks"><aside class="declaration">proc </aside>create_pref_unique_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1661">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1661"/></a></aside>
+        </h3>
+        <p>Used to add any species specific perks to the perk list.</p>
+<p>Returns null by default. When overriding, return a list of perks.</p><h3 id="proc/generate_custom_worn_icon"><aside class="declaration">proc </aside>generate_custom_worn_icon<aside>(item_slot, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L63">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 63"/></a></aside>
+        </h3>
+        <p>Allow for custom clothing icon generation. Only called if the species is BODYTYPE_CUSTOM
+If null is returned, use default human icon.
+Arguments:</p>
+<ul>
+<li>item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.</li>
+<li>item: The item being rendered.</li>
+</ul><h3 id="proc/generate_custom_worn_icon_fallback"><aside class="declaration">proc </aside>generate_custom_worn_icon_fallback<aside>(item_slot, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L87">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 87"/></a></aside>
+        </h3>
+        <p>Generate a fallback worn icon, if the species supports it. You must call it in an override of generate_custom_worn_icon()</p><h3 id="proc/get_custom_worn_config_fallback"><aside class="declaration">proc </aside>get_custom_worn_config_fallback<aside>(item_slot, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 29"/></a></aside>
+        </h3>
+        <p>Modularly get the species' fallback greyscale config.
+Only used if you use generate_custom_worn_icon_fallback()
+Arguments:</p>
+<ul>
+<li>item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.</li>
+<li>item: The item being rendered.</li>
+</ul><h3 id="proc/get_custom_worn_icon"><aside class="declaration">proc </aside>get_custom_worn_icon<aside>(item_slot, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 9"/></a></aside>
+        </h3>
+        <p>Modularly returns one of worn_icon_vox, worn_icon_teshari, etc.
+Arguments:</p>
+<ul>
+<li>item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.</li>
+<li>item is the item we're checking.</li>
+</ul><h3 id="proc/get_custom_worn_icon_cached"><aside class="declaration">proc </aside>get_custom_worn_icon_cached<aside>(file_to_use, state_to_use, meta) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L42">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 42"/></a></aside>
+        </h3>
+        <p>Read from freely usable cache of generated icons for your species.
+Arguments:</p>
+<ul>
+<li>file_to_use: icon you're substituting</li>
+<li>state_to_use: icon state you're substituting</li>
+<li>meta: string containing other info.</li>
+</ul><h3 id="proc/get_features"><aside class="declaration">proc </aside>get_features<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1497">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1497"/></a></aside>
+        </h3>
+        <p>Returns a list of strings representing features this species has.
+Used by the preferences UI to know what buttons to show.</p><h3 id="proc/get_mutant_organ_type_for_slot"><aside class="declaration">proc </aside>get_mutant_organ_type_for_slot<aside>(slot) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L341">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 341"/></a></aside>
+        </h3>
+        <p>Gets the default mutant organ for the species based on the provided slot.</p><h3 id="proc/get_species_description"><aside class="declaration">proc </aside>get_species_description<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1569">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1569"/></a></aside>
+        </h3>
+        <p>Gets a short description for the specices. Should be relatively succinct.
+Used in the preference menu.</p>
+<p>Returns a string.</p><h3 id="proc/get_species_diet"><aside class="declaration">proc </aside>get_species_diet<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1587">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1587"/></a></aside>
+        </h3>
+        <p>Translate the species liked foods from bitfields into strings
+and returns it in the form of an associated list.</p>
+<p>Returns a list, or null if they have no diet.</p><h3 id="proc/get_species_perks"><aside class="declaration">proc </aside>get_species_perks<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1618">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1618"/></a></aside>
+        </h3>
+        <p>Generates a list of &quot;perks&quot; related to this species
+(Postives, neutrals, and negatives)
+in the format of a list of lists.
+Used in the preference menu.</p>
+<p>&quot;Perk&quot; format is as followed:
+list(
+SPECIES_PERK_TYPE = type of perk (postiive, negative, neutral - use the defines)
+SPECIES_PERK_ICON = icon shown within the UI
+SPECIES_PERK_NAME = name of the perk on hover
+SPECIES_PERK_DESC = description of the perk on hover
+)</p>
+<p>Returns a list of lists.
+The outer list is an assoc list of [perk type]s to a list of perks.
+The innter list is a list of perks. Can be empty, but won't be null.</p><h3 id="proc/give_important_for_life"><aside class="declaration">proc </aside>give_important_for_life<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_to_equip) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1114"/></a></aside>
+        </h3>
+        <p>Equip the outfit required for life. Replaces items currently worn.</p><h3 id="proc/go_bald"><aside class="declaration">proc </aside>go_bald<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1156">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1156"/></a></aside>
+        </h3>
+        <p>Makes the target human bald.</p>
+<p>Arguments:</p>
+<ul>
+<li><a href="mob/living/carbon/human.html" title="/mob/living/carbon/human">target</a>: The mob to make go bald.</li>
+</ul><h3 id="proc/handle_body"><aside class="declaration">proc </aside>handle_body<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/species_human) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L622">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 622"/></a></aside>
+        </h3>
+        <p>Handles the body of a human</p>
+<p>Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
+Calls <a href="datum/species.html#proc/handle_mutant_bodyparts" title="/datum/species">handle_mutant_bodyparts</a>
+Arguments:</p>
+<ul>
+<li>species_human - Human, whoever we're handling the body for</li>
+</ul><h3 id="proc/handle_chemical"><aside class="declaration">proc </aside>handle_chemical<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/chem, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/affected, seconds_per_tick, times_fired) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1080">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1080"/></a></aside>
+        </h3>
+        <p>Handling special reagent types.</p>
+<p>Return False to run the normal on_mob_life() for that reagent.
+Return True to not run the normal metabolism effects.
+NOTE: If you return TRUE, that reagent will not be removed liike normal! You must handle it manually.</p><h3 id="proc/handle_mutant_bodyparts"><aside class="declaration">proc </aside>handle_mutant_bodyparts<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/source, forced_colour) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L739">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 739"/></a></aside>
+        </h3>
+        <p>Handles the mutant bodyparts of a human</p>
+<p>Handles the adding and displaying of, layers, colors, and overlays of mutant bodyparts and accessories.
+Handles digitigrade leg displaying and squishing.
+Arguments:</p>
+<ul>
+<li>H - Human, whoever we're handling the body for</li>
+<li>forced_colour - The forced color of an accessory. Leave null to use mutant color.</li>
+</ul><h3 id="proc/handle_radiation"><aside class="declaration">proc </aside>handle_radiation<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/source, time_since_irradiated, seconds_per_tick) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1128"/></a></aside>
+        </h3>
+        <p>Species based handling for irradiation</p>
+<p>Arguments:</p>
+<ul>
+<li><a href="mob/living/carbon/human.html" title="/mob/living/carbon/human">source</a>: The mob requesting handling</li>
+<li>time_since_irradiated: The amount of time since the mob was first irradiated</li>
+<li>seconds_per_tick: The amount of time that has passed since the last tick</li>
+</ul><h3 id="proc/harm"><aside class="declaration">proc </aside>harm<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/user, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/target, /<a href="datum.html">datum</a>/<a href="datum/martial_art.html">martial_art</a>/attacker_style) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1197">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1197"/></a></aside>
+        </h3>
+        <p>This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...</p><h3 id="proc/on_owner_login"><aside class="declaration">proc </aside>on_owner_login<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/owner) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1560">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1560"/></a></aside>
+        </h3>
+        <p>Owner login</p>
+<p>A simple proc to be overwritten if something needs to be done when a mob logs in. Does nothing by default.</p>
+<p>Arguments:</p>
+<ul>
+<li>owner - The owner of our species.</li>
+</ul><h3 id="proc/pre_equip_species_outfit"><aside class="declaration">proc </aside>pre_equip_species_outfit<aside>(/<a href="datum.html">datum</a>/<a href="datum/job.html">job</a>/job, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/equipping, visuals_only) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1070">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1070"/></a></aside>
+        </h3>
+        <p>Equips the necessary species-relevant gear before putting on the rest of the uniform.</p><h3 id="proc/prepare_human_for_preview"><aside class="declaration">proc </aside>prepare_human_for_preview<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1526">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1526"/></a></aside>
+        </h3>
+        <p>Given a human, will adjust it before taking a picture for the preferences UI.
+This should create a CONSISTENT result, so the icons don't randomly change.</p><h3 id="proc/random_name"><aside class="declaration">proc </aside>random_name<aside>(gender, unique, last_name) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L311">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 311"/></a></aside>
+        </h3>
+        <p>Generates a random name for a carbon.</p>
+<p>This generates a random unique name based on a human's species and gender.
+Arguments:</p>
+<ul>
+<li>gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.</li>
+<li>unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.</li>
+<li>last_name - Do we use a given last name or pick a random new one?</li>
+</ul><h3 id="proc/randomize_active_underwear"><aside class="declaration">proc </aside>randomize_active_underwear<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L876">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 876"/></a></aside>
+        </h3>
+        <p>Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob</p><h3 id="proc/randomize_active_underwear_only"><aside class="declaration">proc </aside>randomize_active_underwear_only<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L870">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 870"/></a></aside>
+        </h3>
+        <p>Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
+but will not update the body right away.</p><h3 id="proc/randomize_external_organs"><aside class="declaration">proc </aside>randomize_external_organs<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L881">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 881"/></a></aside>
+        </h3>
+        <p>Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob</p><h3 id="proc/randomize_features"><aside class="declaration">proc </aside>randomize_features<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L891">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 891"/></a></aside>
+        </h3>
+        <p>Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs</p><h3 id="proc/randomize_main_appearance_element"><aside class="declaration">proc </aside>randomize_main_appearance_element<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L864">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 864"/></a></aside>
+        </h3>
+        <p>Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob</p><h3 id="proc/replace_body"><aside class="declaration">proc </aside>replace_body<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target, /<a href="datum.html">datum</a>/<a href="datum/species.html">species</a>/new_species) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1901">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1901"/></a></aside>
+        </h3>
+        <p>Handles replacing all of the bodyparts with their species version during set_species()</p><h3 id="proc/set_custom_worn_icon"><aside class="declaration">proc </aside>set_custom_worn_icon<aside>(item_slot, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item, /icon/icon) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 19"/></a></aside>
+        </h3>
+        <p>Modularly set one of worn_icon_vox, worn_icon_teshari, etc.
+Arguments:</p>
+<ul>
+<li>item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.</li>
+<li>item is the item we're updating.</li>
+<li>icon is the icon we're setting to the var.</li>
+</ul><h3 id="proc/set_custom_worn_icon_cached"><aside class="declaration">proc </aside>set_custom_worn_icon_cached<aside>(file_to_use, state_to_use, meta, cached_value) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/mob/living/carbon/human/custom_bodytype.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;custom_bodytype.dm 53"/></a></aside>
+        </h3>
+        <p>Write to a freely usable cache of generated icons for your species.
+Arguments:</p>
+<ul>
+<li>file_to_use: icon you're substituting</li>
+<li>state_to_use: icon state you're substituting</li>
+<li>meta: string containing other info.</li>
+<li>cached_value: Cached value</li>
+</ul><h3 id="proc/spec_stun"><aside class="declaration">proc </aside>spec_stun<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/H, amount) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1464">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1464"/></a></aside>
+        </h3>
+        <p>Triggers force say events</p><h3 id="proc/spec_unarmedattack"><aside class="declaration">proc </aside>spec_unarmedattack<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/user, /<a href="atom.html">atom</a>/target, modifiers) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/mob/living/carbon/human/_species.dm#L1492">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;_species.dm 1492"/></a></aside>
+        </h3>
+        <p>Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/a870daf03499064f57e357246d9b9b27a8d748d1">a870daf</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

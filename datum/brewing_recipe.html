@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;brewing_recipe - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/brewing_recipe.html#var">Var Details</a></header>
+<main>
+<h1>brewing_recipe <aside>/<a href="datum.html">datum</a>/<a href="datum/brewing_recipe.html">brewing_recipe</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/brew_time">brew_time</a></th><td>our brewing time in deci seconds should use the SECONDS MINUTES HOURS helpers</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/brewed_amount">brewed_amount</a></th><td>amount of brewed creations used when either canning or bottling</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/brewed_item">brewed_item</a></th><td>typepath of our output if set we also make this item</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/brewed_item_count">brewed_item_count</a></th><td>amount of brewed items</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/cargo_valuation">cargo_valuation</a></th><td>the price this gets at cargo</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/display_name">display_name</a></th><td>our display name</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/helpful_hints">helpful_hints</a></th><td>helpful hints</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/needed_crops">needed_crops</a></th><td>the crops typepath we need goes typepath = amount. Amount is not just how many based on potency value up to a cap it adds values.</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/needed_items">needed_items</a></th><td>list of items that aren't crops we need</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/needed_reagents">needed_reagents</a></th><td>the type paths of needed reagents in typepath = amount</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/per_brew_amount">per_brew_amount</a></th><td>each bottle or canning gives how this much reagents</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/pre_reqs">pre_reqs</a></th><td>pre-reqs: Essentially do we need past recipes made of this, uses the reagent_to_brew var to know if this has been done</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/reagent_to_brew">reagent_to_brew</a></th><td>the type path of the reagent</td></tr>
+            <tr><th><a href="datum/brewing_recipe.html#var/secondary_name">secondary_name</a></th><td>if we have a secondary name some do if you want to hide the ugly info</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/brew_time"><aside class="declaration">var </aside>brew_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 15"/></a></h3>
+        <p>our brewing time in deci seconds should use the SECONDS MINUTES HOURS helpers</p><h3 id="var/brewed_amount"><aside class="declaration">var </aside>brewed_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 19"/></a></h3>
+        <p>amount of brewed creations used when either canning or bottling</p><h3 id="var/brewed_item"><aside class="declaration">var </aside>brewed_item
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 27"/></a></h3>
+        <p>typepath of our output if set we also make this item</p><h3 id="var/brewed_item_count"><aside class="declaration">var </aside>brewed_item_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 29"/></a></h3>
+        <p>amount of brewed items</p><h3 id="var/cargo_valuation"><aside class="declaration">var </aside>cargo_valuation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 17"/></a></h3>
+        <p>the price this gets at cargo</p><h3 id="var/display_name"><aside class="declaration">var </aside>display_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 5"/></a></h3>
+        <p>our display name</p><h3 id="var/helpful_hints"><aside class="declaration">var </aside>helpful_hints
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 23"/></a></h3>
+        <p>helpful hints</p><h3 id="var/needed_crops"><aside class="declaration">var </aside>needed_crops
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 9"/></a></h3>
+        <p>the crops typepath we need goes typepath = amount. Amount is not just how many based on potency value up to a cap it adds values.</p><h3 id="var/needed_items"><aside class="declaration">var </aside>needed_items
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 13"/></a></h3>
+        <p>list of items that aren't crops we need</p><h3 id="var/needed_reagents"><aside class="declaration">var </aside>needed_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 11"/></a></h3>
+        <p>the type paths of needed reagents in typepath = amount</p><h3 id="var/per_brew_amount"><aside class="declaration">var </aside>per_brew_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 21"/></a></h3>
+        <p>each bottle or canning gives how this much reagents</p><h3 id="var/pre_reqs"><aside class="declaration">var </aside>pre_reqs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 7"/></a></h3>
+        <p>pre-reqs: Essentially do we need past recipes made of this, uses the reagent_to_brew var to know if this has been done</p><h3 id="var/reagent_to_brew"><aside class="declaration">var </aside>reagent_to_brew
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 3"/></a></h3>
+        <p>the type path of the reagent</p><h3 id="var/secondary_name"><aside class="declaration">var </aside>secondary_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/brewin_and_chewin/brewing/recipes/_base.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;brewin_and_chewin&#x2F;brewing&#x2F;recipes&#x2F;_base.dm 25"/></a></h3>
+        <p>if we have a secondary name some do if you want to hide the ugly info</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/a870daf03499064f57e357246d9b9b27a8d748d1">a870daf</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

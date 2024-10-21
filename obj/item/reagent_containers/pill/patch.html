@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;reagent_containers&#x2F;pill&#x2F;patch - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/reagent_containers/pill/patch.html#var">Var Details</a> - <a href="obj/item/reagent_containers/pill/patch.html#proc">Proc Details</a></header>
+<main>
+<h1>patch <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/<a href="obj/item/reagent_containers/pill.html">pill</a>/<a href="obj/item/reagent_containers/pill/patch.html">patch</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/reagent_containers/patch.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;reagent_containers&#x2F;patch.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#var/attached">attached</a></th><td>The thing we are attached to</td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#var/patch_overlay">patch_overlay</a></th><td>The overlay we apply to things we stick to</td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#var/reagent_consumption_rate">reagent_consumption_rate</a></th><td>rate at which chemicals are injected per process in a precentage</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#proc/on_attached_qdel">on_attached_qdel</a></th><td>Signal handler for COMSIG_QDELETING, deletes this patch if the attached object is deleted</td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#proc/on_ignite">on_ignite</a></th><td>Signal handler for COMSIG_LIVING_IGNITED, deletes this patch, if it is flammable</td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#proc/peel">peel</a></th><td>Makes this patch move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.</td></tr>
+            <tr><th><a href="obj/item/reagent_containers/pill/patch.html#proc/register_signals">register_signals</a></th><td>Registers signals to the object it is attached to</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/attached"><aside class="declaration">var </aside>attached
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 9"/></a></h3>
+        <p>The thing we are attached to</p><h3 id="var/patch_overlay"><aside class="declaration">var </aside>patch_overlay
+            <aside>&ndash; /mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 13"/></a></h3>
+        <p>The overlay we apply to things we stick to</p><h3 id="var/reagent_consumption_rate"><aside class="declaration">var </aside>reagent_consumption_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 6"/></a></h3>
+        <p>rate at which chemicals are injected per process in a precentage</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_attached_qdel"><aside class="declaration">proc </aside>on_attached_qdel<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L80">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 80"/></a></aside>
+        </h3>
+        <p>Signal handler for COMSIG_QDELETING, deletes this patch if the attached object is deleted</p><h3 id="proc/on_ignite"><aside class="declaration">proc </aside>on_ignite<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L72">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 72"/></a></aside>
+        </h3>
+        <p>Signal handler for COMSIG_LIVING_IGNITED, deletes this patch, if it is flammable</p><h3 id="proc/peel"><aside class="declaration">proc </aside>peel<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L86">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 86"/></a></aside>
+        </h3>
+        <p>Makes this patch move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.</p><h3 id="proc/register_signals"><aside class="declaration">proc </aside>register_signals<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/patches_if_they_were_cool/_base_patch_changes.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;patches_if_they_were_cool&#x2F;_base_patch_changes.dm 54"/></a></aside>
+        </h3>
+        <p>Registers signals to the object it is attached to</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/a870daf03499064f57e357246d9b9b27a8d748d1">a870daf</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

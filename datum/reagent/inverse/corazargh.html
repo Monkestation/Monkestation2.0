@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;reagent&#x2F;inverse&#x2F;corazargh - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/reagent/inverse/corazargh.html#var">Var Details</a> - <a href="datum/reagent/inverse/corazargh.html#proc">Proc Details</a></header>
+<main>
+<h1>corazargh <aside>/<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/<a href="datum/reagent/inverse/corazargh.html">inverse/corazargh</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L671">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 671"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#var/manual_heart">manual_heart</a></th><td>The new heart that's temp added</td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#var/original_heart">original_heart</a></th><td>The old heart we're swapping for</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#proc/on_gained_organ">on_gained_organ</a></th><td>Intercepts the new heart and creates a new cursed heart - putting the old inside of it</td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#proc/on_mob_end_metabolize">on_mob_end_metabolize</a></th><td>We're done - remove the curse and restore the old one</td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#proc/on_mob_metabolize">on_mob_metabolize</a></th><td>Creates a new cursed heart and puts the old inside of it, then replaces the position of the old</td></tr>
+            <tr><th><a href="datum/reagent/inverse/corazargh.html#proc/on_removed_organ">on_removed_organ</a></th><td>If we're ejecting out the organ - replace it with the original</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/manual_heart"><aside class="declaration">var </aside>manual_heart
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/<a href="obj/item/organ/internal/heart/cursed.html">heart/cursed</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L686">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 686"/></a></h3>
+        <p>The new heart that's temp added</p><h3 id="var/original_heart"><aside class="declaration">var </aside>original_heart
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/internal.html">internal</a>/heart</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L682">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 682"/></a></h3>
+        <p>The old heart we're swapping for</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_gained_organ"><aside class="declaration">proc </aside>on_gained_organ<aside>(/<a href="mob.html">mob</a>/affected_mob, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/organ) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L706">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 706"/></a></aside>
+        </h3>
+        <p>Intercepts the new heart and creates a new cursed heart - putting the old inside of it</p><h3 id="proc/on_mob_end_metabolize">on_mob_end_metabolize<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/affected_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L729">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 729"/></a></aside>
+        </h3>
+        <p>We're done - remove the curse and restore the old one</p><h3 id="proc/on_mob_metabolize">on_mob_metabolize<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/affected_mob) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L687">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 687"/></a></aside>
+        </h3>
+        <p>Creates a new cursed heart and puts the old inside of it, then replaces the position of the old</p><h3 id="proc/on_removed_organ"><aside class="declaration">proc </aside>on_removed_organ<aside>(/<a href="mob.html">mob</a>/prev_owner, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/organ) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/code/modules/reagents/chemistry/reagents/impure_reagents/impure_medicine_reagents.dm#L720">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;reagents&#x2F;impure_reagents&#x2F;impure_medicine_reagents.dm 720"/></a></aside>
+        </h3>
+        <p>If we're ejecting out the organ - replace it with the original</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/a870daf03499064f57e357246d9b9b27a8d748d1">a870daf</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

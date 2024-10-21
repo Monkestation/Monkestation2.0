@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;artifact_effect - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/artifact_effect.html#var">Var Details</a> - <a href="datum/artifact_effect.html#proc">Proc Details</a></header>
+<main>
+<h1>artifact_effect <aside>/<a href="datum.html">datum</a>/<a href="datum/artifact_effect.html">artifact_effect</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/activation_message">activation_message</a></th><td>sent on activation</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/activation_sound">activation_sound</a></th><td>played on activation</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/artifact_size">artifact_size</a></th><td>if defined, artifact must be this size to roll</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/deactivation_message">deactivation_message</a></th><td>sent on deactivation</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/deactivation_sound">deactivation_sound</a></th><td>played on deactivation</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/discovered_credits">discovered_credits</a></th><td>When you discover this, how many credits does it add to the sell price?</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/examine_discovered">examine_discovered</a></th><td>string added to artifact desc, if the effect has been discovered</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/examine_hint">examine_hint</a></th><td>string added to artifact desc, if not discovered.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/our_artifact">our_artifact</a></th><td>The artifact we're on.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/potency">potency</a></th><td>how strong is this effect,1-100</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/research_value">research_value</a></th><td>Research value when discovered For reference,5000 is one node</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/super_secret">super_secret</a></th><td>Does this show up on the artifact fourm?</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/type_name">type_name</a></th><td>Type of effect, shows up in Xray Machine</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/valid_activators">valid_activators</a></th><td>If the artifact doesnt have the right activator, cant be put on. If null, assume any.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/valid_origins">valid_origins</a></th><td>If the artifact doesnt have this origin, cant be put on. If null, assume any.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/valid_type_paths">valid_type_paths</a></th><td>list of paths the artifacts holder is allowed to be, if null, may be on any artifact datum holder.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#var/weight">weight</a></th><td>how likely is it that this effect is added to an artifact?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/effect_activate">effect_activate</a></th><td>Called when the artifact has been activated</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/effect_deactivate">effect_deactivate</a></th><td>Called when the artifact has been de-activated</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/effect_process">effect_process</a></th><td>Called on process() IF the artifact is active.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/effect_touched">effect_touched</a></th><td>Called when the artifact has been touched by a living mob,does NOT call faults or activate artifact unless it has the correct touch component!</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/flick_active">flick_active</a></th><td>Util, can be called to activate, then de-activate the artifact as a whole swiftly. Wont Re activate already active artifacts.</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/on_destroy">on_destroy</a></th><td>Called when the artifact/effect is destroyed is destroyed</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/setup">setup</a></th><td>Called when the artifact has been created</td></tr>
+            <tr><th><a href="datum/artifact_effect.html#proc/toggle_active">toggle_active</a></th><td>Util, can be called to swap the artifacts active status quickly.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/activation_message"><aside class="declaration">var </aside>activation_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 19"/></a></h3>
+        <p>sent on activation</p><h3 id="var/activation_sound"><aside class="declaration">var </aside>activation_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 21"/></a></h3>
+        <p>played on activation</p><h3 id="var/artifact_size"><aside class="declaration">var </aside>artifact_size
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 11"/></a></h3>
+        <p>if defined, artifact must be this size to roll</p><h3 id="var/deactivation_message"><aside class="declaration">var </aside>deactivation_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 23"/></a></h3>
+        <p>sent on deactivation</p><h3 id="var/deactivation_sound"><aside class="declaration">var </aside>deactivation_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 25"/></a></h3>
+        <p>played on deactivation</p><h3 id="var/discovered_credits"><aside class="declaration">var </aside>discovered_credits
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 7"/></a></h3>
+        <p>When you discover this, how many credits does it add to the sell price?</p><h3 id="var/examine_discovered"><aside class="declaration">var </aside>examine_discovered
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 5"/></a></h3>
+        <p>string added to artifact desc, if the effect has been discovered</p><h3 id="var/examine_hint"><aside class="declaration">var </aside>examine_hint
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 3"/></a></h3>
+        <p>string added to artifact desc, if not discovered.</p><h3 id="var/our_artifact"><aside class="declaration">var </aside>our_artifact
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/artifact.html">artifact</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L34">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 34"/></a></h3>
+        <p>The artifact we're on.</p><h3 id="var/potency"><aside class="declaration">var </aside>potency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 13"/></a></h3>
+        <p>how strong is this effect,1-100</p><h3 id="var/research_value"><aside class="declaration">var </aside>research_value
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L32">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 32"/></a></h3>
+        <p>Research value when discovered For reference,5000 is one node</p><h3 id="var/super_secret"><aside class="declaration">var </aside>super_secret
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L29">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 29"/></a></h3>
+        <p>Does this show up on the artifact fourm?</p><h3 id="var/type_name"><aside class="declaration">var </aside>type_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L36">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 36"/></a></h3>
+        <p>Type of effect, shows up in Xray Machine</p><h3 id="var/valid_activators"><aside class="declaration">var </aside>valid_activators
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 15"/></a></h3>
+        <p>If the artifact doesnt have the right activator, cant be put on. If null, assume any.</p><h3 id="var/valid_origins"><aside class="declaration">var </aside>valid_origins
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 17"/></a></h3>
+        <p>If the artifact doesnt have this origin, cant be put on. If null, assume any.</p><h3 id="var/valid_type_paths"><aside class="declaration">var </aside>valid_type_paths
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L27">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 27"/></a></h3>
+        <p>list of paths the artifacts holder is allowed to be, if null, may be on any artifact datum holder.</p><h3 id="var/weight"><aside class="declaration">var </aside>weight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 9"/></a></h3>
+        <p>how likely is it that this effect is added to an artifact?</p><h2 id="proc">Proc Details</h2><h3 id="proc/effect_activate"><aside class="declaration">proc </aside>effect_activate<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 50"/></a></aside>
+        </h3>
+        <p>Called when the artifact has been activated</p><h3 id="proc/effect_deactivate"><aside class="declaration">proc </aside>effect_deactivate<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 53"/></a></aside>
+        </h3>
+        <p>Called when the artifact has been de-activated</p><h3 id="proc/effect_process"><aside class="declaration">proc </aside>effect_process<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L59">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 59"/></a></aside>
+        </h3>
+        <p>Called on process() IF the artifact is active.</p><h3 id="proc/effect_touched"><aside class="declaration">proc </aside>effect_touched<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L56">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 56"/></a></aside>
+        </h3>
+        <p>Called when the artifact has been touched by a living mob,does NOT call faults or activate artifact unless it has the correct touch component!</p><h3 id="proc/flick_active"><aside class="declaration">proc </aside>flick_active<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L65">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 65"/></a></aside>
+        </h3>
+        <p>Util, can be called to activate, then de-activate the artifact as a whole swiftly. Wont Re activate already active artifacts.</p><h3 id="proc/on_destroy"><aside class="declaration">proc </aside>on_destroy<aside>(/<a href="atom.html">atom</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L62">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 62"/></a></aside>
+        </h3>
+        <p>Called when the artifact/effect is destroyed is destroyed</p><h3 id="proc/setup"><aside class="declaration">proc </aside>setup<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L47">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 47"/></a></aside>
+        </h3>
+        <p>Called when the artifact has been created</p><h3 id="proc/toggle_active"><aside class="declaration">proc </aside>toggle_active<aside>(silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/a870daf03499064f57e357246d9b9b27a8d748d1/monkestation/code/modules/art_sci_overrides/artifact_effects/_artifact_effect.dm#L71">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;art_sci_overrides&#x2F;artifact_effects&#x2F;_artifact_effect.dm 71"/></a></aside>
+        </h3>
+        <p>Util, can be called to swap the artifacts active status quickly.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/a870daf03499064f57e357246d9b9b27a8d748d1">a870daf</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
