@@ -142,4 +142,7 @@
 /// Mob does not homeostasize body temperature
 #define TRAIT_COLD_BLOODED "cold_blooded"
 
+/// Makes you able to bloodcrawl with your items
+#define TRAIT_BLOODCRAWL_WITH_ITEMS "bloodcrawl_with_items"
+
 // END TRAIT DEFINES
