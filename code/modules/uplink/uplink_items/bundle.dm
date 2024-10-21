@@ -7,6 +7,7 @@
 	category = /datum/uplink_category/bundle
 	surplus = 0
 	cant_discount = TRUE
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/random
 	name = "Random Item"
@@ -69,7 +70,7 @@
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/bundles_tc/bundle_b
 	name = "Syndi-kit Special"
@@ -81,7 +82,7 @@
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
@@ -187,5 +188,5 @@
 	cost = 20
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

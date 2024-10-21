@@ -16,6 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_SPY "Spy"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
@@ -27,6 +28,7 @@
 #define ROLE_BLOB_INFECTION "Blob Infection"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
 #define ROLE_CYBER_POLICE "Cyber Police"
+#define ROLE_DEFECTOR "Defector"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
@@ -131,6 +133,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_SPY = 0,
 	ROLE_CLOCK_CULTIST = 14,
 	ROLE_BLOODSUCKER = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
@@ -142,6 +145,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB_INFECTION = 0,
 	ROLE_CHANGELING_MIDROUND = 0,
 	ROLE_CYBER_POLICE = 0,
+	ROLE_DEFECTOR = 0,
 	ROLE_FUGITIVE = 0,
 	ROLE_LONE_OPERATIVE = 14,
 	ROLE_MALF_MIDROUND = 0,

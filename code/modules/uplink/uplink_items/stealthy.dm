@@ -102,4 +102,4 @@
 	item = /obj/item/melee/baton/telescopic/contractor_baton
 	cost = 12
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY
