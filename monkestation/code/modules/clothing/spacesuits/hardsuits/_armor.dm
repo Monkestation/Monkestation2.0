@@ -52,3 +52,12 @@
 	acid = 100
 	bomb = 100
 
+/datum/armor/hardsuit/cbrn
+	melee = 60
+	bullet = 30
+	laser = 30
+	energy = 40
+	fire = 100
+	wound = 20
+	acid = 90
+	bomb = 50
