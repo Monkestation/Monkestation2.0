@@ -298,7 +298,7 @@
 		if(!LAZYLEN(part_overlays))
 			continue
 
-		damage_overlay ||= mutable_appearance(layer = -DAMAGE_LAYER)
+		damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
 		damage_overlay.overlays += part_overlays
 
 	if(isnull(damage_overlay))

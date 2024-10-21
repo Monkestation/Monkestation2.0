@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	///Override of the eyes icon file, used for Simians.
+	///Override of the eyes icon file, used for Monkeys.
 	var/eyes_icon
 	///our color palette
 	var/datum/color_palette/color_palette
@@ -622,11 +622,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
-	species_human.remove_overlay(FACE_LAYER)
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
-	var/list/standing_face = list()
 
 	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
 		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
@@ -711,11 +709,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(standing.len)
 		species_human.overlays_standing[BODY_LAYER] = standing
-	if(standing_face.len)
-		species_human.overlays_standing[FACE_LAYER] = standing_face
 
 	species_human.apply_overlay(BODY_LAYER)
-	species_human.apply_overlay(FACE_LAYER)
 	handle_mutant_bodyparts(species_human)
 
 /**
@@ -775,7 +770,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!accessory || accessory.icon_state == "none")
 				continue
 
-			var/mutable_appearance/accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
+			var/mutable_appearance/accessory_overlay = mutable_appearance(accessory.icon, layer = -layer, appearance_flags = KEEP_TOGETHER)
 
 			if(accessory.gender_specific)
 				accessory_overlay.icon_state = "[g]_[bodypart]_[accessory.icon_state]_[layertext]"
