@@ -239,8 +239,9 @@ GLOBAL_LIST_EMPTY(siren_objects)
 				SSparticle_weather.weather_special_effect = new weather_special_effect(src)
 			if("Eclipse")
 				SSparticle_weather.weather_special_effect_eclipse = new weather_special_effect(src)
+			else
+				stack_trace("[src] had invalid plane_type [plane_type]")
 	change_severity()
-
 
 /datum/particle_weather/proc/change_severity(as_step = TRUE)
 	if(!running)
@@ -262,6 +263,8 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			SSparticle_weather.particle_effect?.animate_severity(severity_mod())
 		if("Eclipse")
 			SSparticle_weather.particle_effect_eclipse?.animate_severity(severity_mod())
+		else
+			stack_trace("[src] had invalid plane_type [plane_type]")
 
 	if(last_message != scale_range_pick(min_severity, max_severity, severity, weather_messages))
 		messaged_mobs = list()
@@ -276,6 +279,8 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			SSparticle_weather.particle_effect?.animate_severity(severity_mod())
 		if("Eclipse")
 			SSparticle_weather.particle_effect_eclipse?.animate_severity(severity_mod())
+		else
+			stack_trace("[src] had invalid plane_type [plane_type]")
 
 	//Wait for the last particle to fade, then qdel yourself
 	addtimer(CALLBACK(src, PROC_REF(end)), SSparticle_weather.particle_effect.lifespan + SSparticle_weather.particle_effect.fade)
@@ -332,6 +337,8 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			if("Eclipse")
 				if(!SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_ECLIPSE)))
 					stop_weather_sound_effect(target)
+			else
+				stack_trace("[src] had invalid plane_type [plane_type]")
 		messaged_mobs -= target
 
 /datum/particle_weather/proc/affect_mob_effect(mob/living/target, delta_time, calculated_damage)

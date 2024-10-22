@@ -59,21 +59,26 @@ SUBSYSTEM_DEF(particle_weather)
 
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(enabled)
-		if(running_weather?.running)
-			var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left) / 10
-			var/time_left_eclipse = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left) / 10
-			if(running_weather?.display_name)
-				msg = "P:Current event station: [running_weather.display_name] - [time_left] seconds left, Current event Eclipse: [running_eclipse_weather.display_name] - [time_left_eclipse] seconds left"
-			else if(running_weather)
-				msg = "P:Current event of unknown type ([running_weather]) - [time_left] seconds left"
+		if(running_weather?.running || running_eclipse_weather?.running)
+			var/station_msg = "Idle"
+			if(running_weather)
+				var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left)
+				var/weather_name = running_weather.display_name || "[running_weather]"
+				station_msg = "[weather_name], [DisplayTimeText(time_left)] left"
+			var/eclipse_msg = "Idle"
+			if(running_eclipse_weather)
+				var/time_left = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left)
+				var/weather_name = running_eclipse_weather.display_name || "[running_eclipse_weather]"
+				eclipse_msg = "[weather_name], [DisplayTimeText(time_left)] left"
+			msg = "Station: [station_msg] | Eclipse: [eclipse_msg]"
 		else if(running_weather)
 			var/time_left = COOLDOWN_TIMELEFT(src, next_weather_start)
 			if(running_weather?.display_name)
-				msg = "P:Next event: [running_weather.display_name] hit in [time_left] seconds"
+				msg = "Next event: [running_weather.display_name] hits in [DisplayTimeText(time_left)]"
 			else if(running_weather)
-				msg = "P:Next event of unknown type ([running_weather]) hit in [time_left] seconds"
+				msg = "Next event of unknown type ([running_weather]) hits in [DisplayTimeText(time_left)]"
 		else
-			msg = "P:No event"
+			msg = "No event"
 	else
 		msg = "Disabled"
 	return ..()
