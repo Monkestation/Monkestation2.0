@@ -80,37 +80,43 @@ SUBSYSTEM_DEF(particle_weather)
 
 /datum/controller/subsystem/particle_weather/fire()
 	// process active weather
-	if(QDELETED(running_weather) && next_hit && COOLDOWN_FINISHED(src, next_weather_start))
-		run_weather(next_hit)
-
-	if(QDELETED(running_eclipse_weather) && next_hit_eclipse && COOLDOWN_FINISHED(src, next_weather_start_eclipse))
-		run_weather(next_hit_eclipse, eclipse = TRUE)
-
-	if(QDELETED(running_weather) && !next_hit && length(eligible_weathers))
-		for(var/our_event in eligible_weathers)
-			if(our_event && prob(eligible_weathers[our_event]))
+	if(QDELETED(running_weather))
+		if(next_hit && COOLDOWN_FINISHED(src, next_weather_start))
+			run_weather(next_hit)
+		else if(!next_hit && length(eligible_weathers))
+			for(var/our_event in eligible_weathers)
+				if(!our_event)
+					continue
+				if(!prob(eligible_weathers[our_event]))
+					continue
 				next_hit = new our_event()
 				COOLDOWN_START(src, next_weather_start, rand(-3000, 3000) + initial(next_hit.weather_duration_upper) / 5)
 				break
 
-	if(QDELETED(running_eclipse_weather) && !next_hit_eclipse && length(eligible_eclipse_weathers))
-		for(var/our_event in eligible_eclipse_weathers)
-			if(our_event && prob(eligible_eclipse_weathers[our_event]))
+	if(QDELETED(running_eclipse_weather))
+		if(next_hit_eclipse && COOLDOWN_FINISHED(src, next_weather_start_eclipse))
+			run_weather(next_hit_eclipse, eclipse = TRUE)
+		else if(!next_hit_eclipse && length(eligible_eclipse_weathers))
+			for(var/our_event in eligible_eclipse_weathers)
+				if(!our_event)
+					continue
+				if(!prob(eligible_eclipse_weathers[our_event]))
+					continue
 				next_hit_eclipse = new our_event("Eclipse")
 				COOLDOWN_START(src, next_weather_start_eclipse, rand(-3000, 3000) + initial(next_hit_eclipse.weather_duration_upper) / 5)
 				break
-
-	if(!QDELETED(running_eclipse_weather))
-		running_eclipse_weather.tick()
-
-		if(weather_special_effect_eclipse)
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_EFFECT, weather_special_effect_eclipse)
 
 	if(!QDELETED(running_weather))
 		running_weather.tick()
 
 		if(weather_special_effect)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_EFFECT, weather_special_effect)
+
+	if(!QDELETED(running_eclipse_weather))
+		running_eclipse_weather.tick()
+
+		if(weather_special_effect_eclipse)
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_EFFECT, weather_special_effect_eclipse)
 
 /datum/controller/subsystem/particle_weather/proc/disable()
 	flags |= SS_NO_FIRE
@@ -121,11 +127,10 @@ SUBSYSTEM_DEF(particle_weather)
 	if(!enabled)
 		return
 	if(eclipse)
-		if(running_eclipse_weather)
-			if(force)
-				running_eclipse_weather.end()
-			else
+		if(!QDELETED(running_eclipse_weather))
+			if(!force)
 				return
+			running_eclipse_weather.end()
 
 		if(!istype(weather_datum_type, /datum/particle_weather))
 			CRASH("run_weather called with invalid weather_datum_type: [weather_datum_type || "null"]")
@@ -134,11 +139,10 @@ SUBSYSTEM_DEF(particle_weather)
 		running_eclipse_weather.start()
 		weather_datum_type = null
 	else
-		if(running_weather)
-			if(force)
-				running_weather.end()
-			else
+		if(!QDELETED(running_weather))
+			if(!force)
 				return
+			running_weather.end()
 
 		if(!istype(weather_datum_type, /datum/particle_weather))
 			CRASH("run_weather called with invalid weather_datum_type: [weather_datum_type || "null"]")
