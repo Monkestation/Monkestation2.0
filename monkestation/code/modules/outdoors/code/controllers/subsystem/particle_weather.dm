@@ -3,8 +3,8 @@ SUBSYSTEM_DEF(particle_weather)
 	flags = SS_BACKGROUND
 	wait = 30 SECONDS
 	runlevels = RUNLEVEL_GAME
-	var/list/elligble_weathers = list()
-	var/list/elligble_eclipse_weathers = list()
+	var/list/eligible_weathers = list()
+	var/list/eligible_eclipse_weathers = list()
 	var/datum/particle_weather/running_weather
 	var/datum/particle_weather/running_eclipse_weather
 
@@ -32,10 +32,10 @@ SUBSYSTEM_DEF(particle_weather)
 	for(var/particle_weather_type in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/particle_weather = new particle_weather_type
 		if(particle_weather.target_trait in SSmapping.config.particle_weathers)
-			elligble_weathers[particle_weather_type] = particle_weather.probability
+			eligible_weathers[particle_weather_type] = particle_weather.probability
 
 		if(particle_weather.eclipse)
-			elligble_eclipse_weathers[particle_weather_type] = particle_weather.probability
+			eligible_eclipse_weathers[particle_weather_type] = particle_weather.probability
 
 	return SS_INIT_SUCCESS
 
@@ -86,16 +86,16 @@ SUBSYSTEM_DEF(particle_weather)
 	if(QDELETED(running_eclipse_weather) && next_hit_eclipse && COOLDOWN_FINISHED(src, next_weather_start_eclipse))
 		run_weather(next_hit_eclipse, eclipse = TRUE)
 
-	if(QDELETED(running_weather) && !next_hit && length(elligble_weathers))
-		for(var/our_event in elligble_weathers)
-			if(our_event && prob(elligble_weathers[our_event]))
+	if(QDELETED(running_weather) && !next_hit && length(eligible_weathers))
+		for(var/our_event in eligible_weathers)
+			if(our_event && prob(eligible_weathers[our_event]))
 				next_hit = new our_event()
 				COOLDOWN_START(src, next_weather_start, rand(-3000, 3000) + initial(next_hit.weather_duration_upper) / 5)
 				break
 
-	if(QDELETED(running_eclipse_weather) && !next_hit_eclipse && length(elligble_eclipse_weathers))
-		for(var/our_event in elligble_eclipse_weathers)
-			if(our_event && prob(elligble_eclipse_weathers[our_event]))
+	if(QDELETED(running_eclipse_weather) && !next_hit_eclipse && length(eligible_eclipse_weathers))
+		for(var/our_event in eligible_eclipse_weathers)
+			if(our_event && prob(eligible_eclipse_weathers[our_event]))
 				next_hit_eclipse = new our_event("Eclipse")
 				COOLDOWN_START(src, next_weather_start_eclipse, rand(-3000, 3000) + initial(next_hit_eclipse.weather_duration_upper) / 5)
 				break
@@ -148,7 +148,7 @@ SUBSYSTEM_DEF(particle_weather)
 		weather_datum_type = null
 
 /datum/controller/subsystem/particle_weather/proc/make_eligible(datum/particle_weather/possible_weather, probability = 10)
-	elligble_weathers[possible_weather] = probability
+	eligible_weathers[possible_weather] = probability
 
 /datum/controller/subsystem/particle_weather/proc/get_weather_effect(atom/movable/screen/plane_master/weather_effect/weather_plane_master)
 	switch(weather_plane_master.z_type)
