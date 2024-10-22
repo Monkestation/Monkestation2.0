@@ -37,7 +37,6 @@
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
-	regenerate_icons()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
