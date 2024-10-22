@@ -21,6 +21,18 @@
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS
 
+/datum/job/cyborg/get_latejoin_spawn_point()
+	var/turf/open/picked_turf = get_random_open_turf_in_area()
+	return picked_turf
+
+/datum/job/cyborg/proc/get_random_open_turf_in_area()
+	var/list/turfs = get_area_turfs(/area/station/ai_monitored/turret_protected/ai_upload)
+	var/turf/open/target_turf = null
+	while(!target_turf)
+		var/turf/turf = pick(turfs)
+		if(!turf.density)
+			target_turf = turf
+	return target_turf
 
 /datum/job/cyborg/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
