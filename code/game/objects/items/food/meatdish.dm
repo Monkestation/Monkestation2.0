@@ -51,7 +51,7 @@
 
 /obj/item/food/fishmeat/salmon
 	name = "salmon fillet"
-	desc = "a chunky, fatty fillet of salmon meat."
+	desc = "A chunky, fatty fillet of salmon meat."
 	icon_state = "salmon"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
