@@ -103,8 +103,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
-	file_data["additional data"]["station integrity"] = station_integrity
+	roundend_station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
+	file_data["additional data"]["station integrity"] = roundend_station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
 
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
 	.["all_mobs_on_shuttle"] = list_of_mobs_on_shuttle
 	.["human_escapees_list"] = list_of_human_escapees
-	.["station_integrity"] = station_integrity
+	.["station_integrity"] = roundend_station_integrity
 
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
@@ -225,6 +225,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 
+	popcount = gather_roundend_feedback()
+
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
@@ -233,7 +235,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 
-	popcount = gather_roundend_feedback()
 	display_report(popcount)
 
 	CHECK_TICK
@@ -254,6 +255,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	log_game("The round has ended.")
 	send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), CONFIG_GET(string/channel_announce_end_game))
 	send2adminchat("Server", "Round just ended.")
+
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
@@ -302,6 +304,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
 	send2roundend_webhook(embed)
+	SSplexora.roundended()
 	// monkestation end
 	standard_reboot()
 
