@@ -60,8 +60,8 @@ SUBSYSTEM_DEF(particle_weather)
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(enabled)
 		if(running_weather?.running)
-			var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left)/10
-			var/time_left_eclipse = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left)/10
+			var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left) / 10
+			var/time_left_eclipse = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left) / 10
 			if(running_weather?.display_name)
 				msg = "P:Current event station: [running_weather.display_name] - [time_left] seconds left, Current event Eclipse: [running_eclipse_weather.display_name] - [time_left_eclipse] seconds left"
 			else if(running_weather)

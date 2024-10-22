@@ -325,10 +325,13 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			affect_mob_effect(target, delta_time)
 	else
 		var/turf/mob_turf = get_turf(target)
-		if(plane_type == "Default" && !SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_STATION)))
-			stop_weather_sound_effect(target)
-		if(plane_type == "Eclipse" && !SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_ECLIPSE)))
-			stop_weather_sound_effect(target)
+		switch(plane_type)
+			if("Default")
+				if(!SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_STATION)))
+					stop_weather_sound_effect(target)
+			if("Eclipse")
+				if(!SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_ECLIPSE)))
+					stop_weather_sound_effect(target)
 		messaged_mobs -= target
 
 /datum/particle_weather/proc/affect_mob_effect(mob/living/target, delta_time, calculated_damage)
@@ -354,8 +357,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			if(!current_sound.loop_started) //don't restart already playing sounds
 				current_sound.start()
 			return
-		if(current_sound)
-			current_sound.stop()
+		current_sound?.stop()
 		var/temp_sound = scale_range_pick(min_severity, max_severity, severity, weather_sounds)
 		if(temp_sound)
 			current_sound = new temp_sound(hearer, FALSE, TRUE, FALSE, CHANNEL_WEATHER)
@@ -371,8 +373,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			if(!current_sound.loop_started) //don't restart already playing sounds
 				current_sound.start()
 			return
-		if(current_sound)
-			current_sound.stop()
+		current_sound?.stop()
 		var/temp_sound = scale_range_pick(min_severity, max_severity, severity, indoor_weather_sounds)
 		if(temp_sound)
 			current_sound = new temp_sound(hearer, FALSE, TRUE, FALSE, CHANNEL_WEATHER)
