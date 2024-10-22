@@ -9,9 +9,9 @@
 	supervisors = "Central Command"
 	req_admin_notify = 1
 	minimal_player_age = 30
-	exp_requirements = 9000
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
-	exp_required_type_department = EXP_TYPE_COMMAND
+	exp_required_type_department = EXP_TYPE_CENTRAL_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "NANOTRASEN_REPRESENTATIVE"
 
