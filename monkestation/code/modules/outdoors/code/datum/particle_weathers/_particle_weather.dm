@@ -206,8 +206,8 @@ GLOBAL_LIST_EMPTY(siren_objects)
 /datum/particle_weather/Destroy()
 	messaged_mobs = null
 	QDEL_LIST(weather_additional_ongoing_events)
-	QDEL_LIST(current_sounds)
-	QDEL_LIST(current_wind_sounds)
+	QDEL_LIST_ASSOC_VAL(current_sounds)
+	QDEL_LIST_ASSOC_VAL(current_wind_sounds)
 	return ..()
 
 /datum/particle_weather/proc/severity_mod()
