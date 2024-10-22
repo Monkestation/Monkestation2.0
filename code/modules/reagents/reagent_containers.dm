@@ -294,7 +294,7 @@
 					targets_loc.add_liquid_from_reagents(reagents)
 			else
 				targets_loc = get_step_towards(targets_loc, thrown_by)
-				targets_loc.add_liquid_from_reagents(reagents) //not perfect but i can't figure out how to move something to the nearest visible turf from throw_target
+				targets_loc?.add_liquid_from_reagents(reagents) //not perfect but i can't figure out how to move something to the nearest visible turf from throw_target
 		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
