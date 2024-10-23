@@ -71,6 +71,12 @@
 	for(var/admin_setup_type in admin_setup_types)
 		admin_setup += new admin_setup_type(src)
 
+// monkestation start: fix some hard deletes
+/datum/round_event_control/Destroy(force)
+	QDEL_LIST(admin_setup)
+	return ..()
+// monkestation end
+
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
@@ -96,8 +102,6 @@
 		return FALSE
 	if(roundstart && ((SSticker.round_start_time && (world.time - SSticker.round_start_time) >= 2 MINUTES) || (SSgamemode.ran_roundstart && !fake_check)))
 		return FALSE
-	if(istype(src, /datum/round_event_control/antagonist/solo/from_ghosts) && (SSautotransfer.starttime + 85 MINUTES <= world.time))
-		return TRUE // we allow all ghost roles to run at this point and dont care about other checks
 // monkestation end
 	if(occurrences >= max_occurrences)
 		return FALSE

@@ -38,7 +38,7 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
@@ -121,13 +121,11 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			qdel(spawning.ears)
 		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
 
-	//monkestation edit start: add dept sec outfits
+	//monkestation edit start: add dept sec outfitsif(suit)
 	if(suit)
-		for(var/obj/item/gun/ballistic/automatic/pistol/paco/no_mag/stored in spawning.contents)
-			if(spawning.wear_suit)
-				qdel(spawning.wear_suit)
-			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
-			spawning.equip_to_slot_or_del(stored,ITEM_SLOT_SUITSTORE)
+		if(spawning.wear_suit)
+			qdel(spawning.wear_suit)
+		spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
 	if(head)
 		if(spawning.head && !isplasmaman(spawning))
 			qdel(spawning.head)
@@ -224,10 +222,10 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer
 	head = /obj/item/clothing/head/helmet/hat/cowboy //monkestation edit: cowboy sec
 	suit = /obj/item/clothing/suit/armor/secduster //monkestation edit: cowboy sec
-	suit_store = /obj/item/gun/ballistic/automatic/pistol/paco/no_mag //monkestation edit: Paco sec
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
-		/obj/item/ammo_box/magazine/m35/rubber = 2, //monkestation edit: Paco sec
+		/obj/item/ammo_box/magazine/m35/rubber = 2,
+		/obj/item/gun/ballistic/automatic/pistol/paco/no_mag, //monkestation edit: Paco sec
 		)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt

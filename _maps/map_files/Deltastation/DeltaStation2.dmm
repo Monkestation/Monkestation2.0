@@ -5787,11 +5787,11 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bqC" = (
-/obj/machinery/seed_extractor,
 /obj/effect/turf_decal/bot,
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/machinery/seed_extractor,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bqF" = (
@@ -50110,14 +50110,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "lPs" = (
-/obj/machinery/biogenerator,
 /obj/effect/turf_decal/bot,
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/machinery/biogenerator,
 /obj/structure/railing{
 	dir = 4;
-	layer = 4.1
+	layer = 4.1;
+	pixel_x = 5
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -51877,11 +51878,6 @@
 /area/station/commons/storage/tools)
 "mnA" = (
 /obj/structure/table/glass,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
-/obj/item/chicken_book,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
 /obj/item/chicken_scanner,
@@ -55073,7 +55069,9 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "mZA" = (
-/obj/machinery/door/window/left/directional/west,
+/obj/machinery/door/window/left/directional/west{
+	name = "Hydroponics Center"
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -59757,6 +59755,7 @@
 "oiZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ojb" = (
@@ -61766,19 +61765,21 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "oJj" = (
-/obj/structure/reagent_dispensers/watertank/high,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1;
+	pixel_x = 5
+	},
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
+/obj/structure/railing{
+	dir = 1;
+	pixel_x = 5
+	},
+/obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "oJy" = (
@@ -66384,6 +66385,7 @@
 	dir = 9
 	},
 /obj/machinery/light/small/directional/west,
+/obj/item/paper_bin,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white,
@@ -67931,11 +67933,10 @@
 /area/station/security/detectives_office)
 "qgR" = (
 /obj/structure/table/reinforced,
-/obj/item/retractor,
-/obj/item/hemostat,
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
+/obj/item/healthanalyzer,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "qgU" = (
@@ -70630,13 +70631,17 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/machinery/composters,
 /obj/structure/railing{
-	dir = 1
+	dir = 1;
+	pixel_x = -5
 	},
 /obj/structure/railing{
 	dir = 8;
-	layer = 4.1
+	layer = 4.1;
+	pixel_x = -5
+	},
+/obj/machinery/composters{
+	pixel_x = -1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
@@ -72444,6 +72449,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/glass,
 /obj/item/food/grown/poppy/geranium,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rlQ" = (
@@ -80905,11 +80911,6 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "tpE" = (
@@ -81018,7 +81019,9 @@
 	pixel_x = 32
 	},
 /obj/structure/table/wood/fancy/blue,
-/obj/machinery/door/window/left/directional/west,
+/obj/machinery/door/window/left/directional/west{
+	name = "Hydroponics Center"
+	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
@@ -84291,6 +84294,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"ucY" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/medipen_refiller,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "udb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -86704,14 +86712,10 @@
 /area/station/security/lockers)
 "uHW" = (
 /obj/structure/table/reinforced,
-/obj/item/scalpel{
-	pixel_y = 8
-	},
-/obj/item/circular_saw,
-/obj/item/cautery,
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/cold/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/item/surgery_tray,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "uHZ" = (
@@ -86985,7 +86989,7 @@
 /area/station/maintenance/starboard/aft)
 "uMc" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /obj/item/seeds/tree,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/seeds/pumpkin,
@@ -92152,14 +92156,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "vZo" = (
-/obj/machinery/smartfridge,
 /obj/effect/turf_decal/bot,
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/machinery/smartfridge,
 /obj/structure/railing{
 	dir = 8;
-	layer = 4.1
+	layer = 4.1;
+	pixel_x = -5
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -97700,6 +97705,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1;
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xpr" = (
@@ -100792,7 +100802,7 @@
 "yba" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/right/directional/west{
+/obj/machinery/door/window/left/directional/west{
 	name = "Hydroponics Center"
 	},
 /turf/open/floor/iron/dark,
@@ -101101,9 +101111,9 @@
 	},
 /obj/machinery/status_display/evac/directional/east,
 /obj/structure/table/glass,
-/obj/item/paper_bin,
 /obj/item/folder/white,
 /obj/item/pen/red,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "yeZ" = (
@@ -142421,7 +142431,7 @@ mpk
 wTb
 gkI
 fNm
-dnj
+ucY
 pGo
 ntX
 tVM
