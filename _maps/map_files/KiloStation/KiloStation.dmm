@@ -59809,7 +59809,6 @@
 /obj/item/integrated_circuit/chemical,
 /obj/item/multitool,
 /obj/item/stock_parts/cell/high,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
