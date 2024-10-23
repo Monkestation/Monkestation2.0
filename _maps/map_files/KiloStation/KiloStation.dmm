@@ -15922,7 +15922,6 @@
 	dir = 1
 	},
 /obj/structure/closet/firecloset/wall/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "fcs" = (
@@ -72198,7 +72197,6 @@
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/structure/table/glass,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "wMP" = (
