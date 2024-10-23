@@ -20738,10 +20738,8 @@
 /area/centcom/central_command_areas/adminroom)
 "gwo" = (
 /obj/structure/closet/cardboard,
-/mob/living/basic/bot/medbot{
-	faction = list("Syndicate");
-	name = "Kahn";
-	radio_channel = "Syndicate"
+/mob/living/basic/bot/medbot/nukie/assop{
+	name = "Kahn"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
