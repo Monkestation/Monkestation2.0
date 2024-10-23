@@ -51,6 +51,8 @@
 	if(obliteration_range_flatten_override)
 		obliteration_range_flatten = obliteration_range_flatten_override
 
+	SSpoints_of_interest.make_point_of_interest(src)
+
 	START_PROCESSING(SSfastprocess, src)
 	update_appearance()
 	if(scale_x || scale_y)
