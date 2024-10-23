@@ -30,6 +30,8 @@
 	mech_type = EXOSUIT_MODULE_CLARKE
 	enter_delay = 40
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
+	allow_diagonal_movement = FALSE
+	pivot_step = TRUE
 
 /datum/armor/mecha_clarke
 	melee = 20

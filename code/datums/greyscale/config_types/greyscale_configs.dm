@@ -1170,6 +1170,15 @@
 *	MASKS
 */
 
+/datum/greyscale_config/kitsune
+	name = "Kitsune mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/kitsune.json'
+
+/datum/greyscale_config/kitsune/worn
+	name = "Kitsune mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
 // BANDANAS
 
 /datum/greyscale_config/bandana_worn/snouted
@@ -1299,3 +1308,13 @@
 	name = "Manipulator Hand"
 	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_hand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/manipulator_hand.json'
+
+/datum/greyscale_config/linjacket
+	name = "Tassled Jacket"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket.json'
+
+/datum/greyscale_config/linjacket_worn
+	name = "Worn Tassled Jacket"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'

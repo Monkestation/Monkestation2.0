@@ -164,7 +164,7 @@
 	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
-	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
+	var/list/output = list("<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
 	<input type='checkbox' id='keycheck' name='keycheck' value='1'[player_key ? " checked": ""]>
@@ -601,6 +601,27 @@
 	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][is_server_ban ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
 	log_admin_private("[kn] [msg][is_server_ban ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
 	message_admins("[kna] [msg][is_server_ban ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
+	// MONKESTATION EDIT: START - Plexora
+	// Mock player just in case they disconnect and we lose their preferences
+	var/datum/client_interface/mock_player = new(player_key)
+	mock_player.prefs = new /datum/preferences(mock_player)
+
+	var/list/plexora_ban = list(
+		"ckey" = player_ckey,
+		"roles" = roles_to_ban,
+		"expiration_time" = duration,
+		"expiration_interval" = interval,
+		"reason" = reason,
+		"admin_ckey" = admin_ckey,
+		"admin_key_name" = key_name(usr),
+		"round_id" = GLOB.round_id,
+		"round_timer" = ROUND_TIME(),
+		"world_time" = world.time,
+	)
+
+	plexora_ban["total_playtime"] = mock_player.get_exp_living()
+	SSplexora.new_ban(plexora_ban)
+	// MONKESTATION EDIT: END
 	if(applies_to_admins)
 		send2adminchat("BAN ALERT","[kn] [msg]")
 	if(player_ckey)
@@ -625,7 +646,7 @@
 	var/datum/browser/unban_panel = new(usr, "unbanpanel", "Unbanning Panel", 850, 600)
 	unban_panel.add_stylesheet("unbanpanelcss", 'html/admin/unbanpanel.css')
 	var/list/output = list("<div class='searchbar'>")
-	output += {"<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]
+	output += {"<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]
 	<input type='hidden' name='src' value='[REF(src)]'>
 	Key:<input type='text' name='searchunbankey' size='18' value='[player_key]'>
 	Admin Key:<input type='text' name='searchunbanadminkey' size='18' value='[admin_key]'>

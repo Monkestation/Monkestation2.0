@@ -3,7 +3,6 @@
 	name = "\improper Odysseus"
 	icon_state = "odysseus"
 	base_icon_state = "odysseus"
-	allow_diagonal_movement = TRUE
 	movedelay = 2
 	maximum_weight = 100
 	max_temperature = 15000
@@ -11,6 +10,7 @@
 	wreckage = /obj/structure/mecha_wreckage/odysseus
 	mech_type = EXOSUIT_MODULE_ODYSSEUS
 	step_energy_drain = 6
+	pivot_step = TRUE
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()
