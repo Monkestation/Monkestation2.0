@@ -139,6 +139,7 @@
 		var/datum/antagonist/evil_clone/antag_object = new
 		antag_object.objectives += new evil_objective()
 		mob_occupant.mind.add_antag_datum(antag_object)
+		mob_occupant.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS) //Only emag/emp/event clones get red eyes, 20 tc clone kit clones don't get red eyes.
 	return TRUE
 
 /obj/machinery/clonepod/experimental/proc/get_clone_preview(datum/dna/clone_dna)
