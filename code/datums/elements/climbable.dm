@@ -54,7 +54,7 @@
 
 
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
-	if(!can_climb(climbed_thing, user))
+	if(!can_climb(climbed_thing, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING))
 		return
 	climbed_thing.add_fingerprint(user)
 	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
@@ -154,6 +154,8 @@
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
+	if(DOING_INTERACTION(bumpee, DOAFTER_SOURCE_CLIMBING))
+		return
 	if(HAS_TRAIT(bumpee, TRAIT_FREERUNNING))
 		if(do_after(bumpee, climb_time, source, interaction_key = DOAFTER_SOURCE_CLIMBING))
 			do_climb(source, bumpee)
