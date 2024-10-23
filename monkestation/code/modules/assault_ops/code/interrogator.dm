@@ -218,8 +218,6 @@
 	SSgoldeneye.extract_mind(human_occupant.mind)
 	var/obj/structure/closet/supplypod/pod = new
 	new /obj/effect/pod_landingzone(landingzone, pod, new_key)
-	for(var/datum/status_effect/goldeneye_pinpointer/iterating_pinpointer in GLOB.goldeneye_pinpointers)
-		iterating_pinpointer.set_target(new_key)
 
 	notify_ghosts("GoldenEye key launched!",
 		source = new_key,
