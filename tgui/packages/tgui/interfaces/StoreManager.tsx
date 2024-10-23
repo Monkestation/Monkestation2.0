@@ -1,8 +1,17 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Section, Stack, Tabs, Table } from '../components';
+import {
+  Box,
+  Button,
+  DmIcon,
+  Section,
+  Stack,
+  Tabs,
+  Table,
+  Icon,
+} from '../components';
 import { PreferencesMenuData } from './PreferencesMenu/data';
 import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
+import { classes } from 'common/react';
 
 export const StoreManager = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -17,7 +26,7 @@ export const StoreManager = (props) => {
   );
 
   return (
-    <Window title="Store Manager" width={850} height={500} theme="generic">
+    <Window title="Store Manager" width={900} height={500} theme="generic">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -69,15 +78,27 @@ export const StoreManager = (props) => {
                       backgroundColor={index % 2 === 0 ? '#19181e' : '#16151b'}
                     >
                       <Table.Cell>
-                        <Box
-                          as="img"
-                          src={resolveAsset(item.icon)}
-                          height="32px"
-                          style={{
-                            '-ms-interpolation-mode': 'nearest-neighbor',
-                            'image-rendering': 'pixelated',
-                          }}
-                        />
+                        {item.icon && item.icon_state ? (
+                          <DmIcon
+                            icon={item.icon}
+                            icon_state={item.icon_state}
+                            verticalAlign="middle"
+                            height={'32px'}
+                            width={'32px'}
+                            fallback={<Icon name="spinner" size={2} spin />}
+                          />
+                        ) : (
+                          <Box
+                            inline
+                            verticalAlign="middle"
+                            width={'32px'}
+                            height={'32px'}
+                            className={classes([
+                              'loadout_store32x32',
+                              item.icon,
+                            ])}
+                          />
+                        )}
                       </Table.Cell>
                       <Table.Cell>
                         <Button
@@ -101,12 +122,12 @@ export const StoreManager = (props) => {
                         <Box display="flex" justifyContent="flex-end">
                           <Button.Confirm
                             content={
-                              owned_items.includes(item.item_path)
+                              owned_items.includes(item.path)
                                 ? 'Owned'
                                 : 'Purchase'
                             }
                             disabled={
-                              owned_items.includes(item.item_path) ||
+                              owned_items.includes(item.path) ||
                               total_coins < item.cost
                             }
                             onClick={() =>

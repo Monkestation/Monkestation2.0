@@ -677,7 +677,7 @@
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
 		if (isAI(receiver_mob))
-			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+			sender_title = "<a href='byond://?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
@@ -686,7 +686,7 @@
 		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && should_ring)
-		computer.ring(ringtone)
+		computer.ring(ringtone, list(receiver_mob))
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
