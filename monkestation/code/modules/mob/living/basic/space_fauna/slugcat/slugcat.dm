@@ -1,7 +1,8 @@
 /mob/living/basic/slugcat
 	death_sound = 'monkestation/sound/effects/slugcat/death.ogg'
 
-	language_holder = /datum/language_holder/slugcat
+	// language_holder = /datum/language_holder/slugcat
+	initial_language_holder = /datum/language_holder/slugcat
 
 /datum/language/wawa
 	name = "scugyan"
@@ -14,10 +15,9 @@
 	icon = 'monkestation/icons/misc/language.dmi'
 
 /datum/language_holder/slugcat
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/wawa = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/wawa = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/common = list(LANGUAGE_MIND),
+								/datum/language/wawa = list(LANGUAGE_MIND))
+	spoken_languages = list(/datum/language/wawa = list(LANGUAGE_MIND))
 
 // wawa
 /datum/emote/living/wawa
