@@ -19695,7 +19695,10 @@
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
 "cvB" = (
-/obj/machinery/armament_station/assault_operatives,
+/obj/structure/signboard{
+	locked = 1;
+	sign_text = "Your armament points is effectively your uplink, use it in-hand!"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
 "cvJ" = (
