@@ -66,6 +66,7 @@
 	soundloop = new(src, TRUE)
 
 /obj/effect/sunbeam/Destroy(force)
+	target_atom = null
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -77,7 +78,7 @@
 		. += beam_overlay
 
 /obj/effect/sunbeam/process(seconds_per_tick)
-	if(target_atom && COOLDOWN_FINISHED(src, movement_delay))
+	if(!QDELETED(target_atom) && COOLDOWN_FINISHED(src, movement_delay))
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
 
