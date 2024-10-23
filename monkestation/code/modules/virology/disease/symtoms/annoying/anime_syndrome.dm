@@ -73,16 +73,10 @@
 					affected.equip_to_slot(kitty, ITEM_SLOT_HEAD)
 
 			if(multiplier >= 2.5 && !katana_ref && !QDELETED(mob.client) && !mob.client.is_afk()) // if you wish to use the weapon of an anime protagonist, you must accept the consequences of looking like one
-				if(multiplier >= 3)
-					//REAL katana /obj/item/katana
-					var/obj/item/katana/real_katana = new /obj/item/katana
-					affected.put_in_hands(real_katana)
-					katana_ref = WEAKREF(real_katana)
-				else
-					//Toy katana /obj/item/toy/katana
-					var/obj/item/toy/katana/fake_katana = new /obj/item/toy/katana
-					affected.put_in_hands(fake_katana)
-					katana_ref = WEAKREF(fake_katana)
+				var/katana_type = (multiplier >= 3) ? /obj/item/katana : /obj/item/toy/katana
+				var/obj/item/katana = new katana_type
+				if(affected.put_in_hands(katana, del_on_fail = TRUE))
+					katana_ref = WEAKREF(katana)
 
 /datum/symptom/anime_hair/deactivate(mob/living/carbon/mob)
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
