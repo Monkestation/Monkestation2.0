@@ -483,7 +483,7 @@
 "wb" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
-/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/defibrillator_mount/loaded/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/cruiser/medical)
 "ws" = (
@@ -945,7 +945,6 @@
 "ZC" = (
 /obj/structure/rack/shelf,
 /obj/effect/turf_decal/bot_white,
-/obj/item/defibrillator/loaded,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/cruiser/medical)
