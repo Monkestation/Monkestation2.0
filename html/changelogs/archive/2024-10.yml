@@ -335,3 +335,101 @@
   - bugfix: Fixed incorrect door access on Theseus's BlueShield's Office.
   RafRoq:
   - qol: You can now search for reagents in the seed extractor
+2024-10-21:
+  Absolucy:
+  - bugfix: Spades and such no longer damage Craig (or planter trays) if you or them
+      move.
+  - bugfix: Name tags now take the mob's base offset into account.
+  - bugfix: Signboards no longer have a delay or update inconsistently when their
+      text is changed.
+  - rscadd: PDA ringtones now show a balloon alert to the PDA holder.
+  - refactor: Refactored how some screen alerts, such as aura healing, show atom overlays.
+  DexeeXI:
+  - rscadd: Metastation now has a justice/education injection locker.
+  - bugfix: Cell timers for all cells in jail not work on Blueshift.
+  Gw0sty:
+  - rscdel: Removed sentient disease from showing in antag preferences
+  - rscadd: Made upgraded robotic wound tending a researchable surgery
+  - rscadd: Gave Exp. Robotic wound tending part to the clockwork operating terminal
+  - qol: Adjusted IPC brain surgery steps to clarify tools more
+  - rscadd: Gave prisoners and NT rep's postions in crew tracking on crew monitors.
+  - qol: Removes quartermasters from blueshield's handheld devices tracking.
+  - balance: Removes IPC organ smuggling from the Medbays bounty pool.
+  - rscadd: Adds powercable cybernetics as a researchable and printable technology
+  dwasint:
+  - balance: TWitch now requires you have a heart to function
+  - balance: Toxic Compensation now requires that you are not immune to toxin damage
+  ven1883:
+  - refactor: fixes character armor to be inline with style requirements
+2024-10-22:
+  Absolucy, mc-oofert:
+  - qol: Slaughter/laughter demons have a cooler round end report.
+  - qol: You may not bodyslam yourself as a demon
+  - code_imp: Slaughter and laughter demons are given their antag datum when their
+      mind initializes.
+  DexeeXI:
+  - rscadd: Voidraptor's BP office is now upgraded and working as intended.
+  - rscadd: shower drains to BP offices on all maps but ouroboros (thanks Moberry)
+  - bugfix: QM's office on Theseus is now cargo brown without command stuff.
+  - rscdel: removed a redundant (very well hidden on SDMM) fire extinguisher cabinet
+      from the BP office on Theseus.
+  Gw0sty:
+  - rscadd: Added a new final objective for obsessed, 'Protect 'Target' from any harm'
+  - rscadd: Obsessed trauma now disguises itself as another trauma until time is spent
+      with the target.
+  - rscadd: Added more greet text when becoming obsessed.
+  KnigTheThrasher:
+  - rscadd: Added portable rtg's to cargo warehouse that's in space
+  - balance: Updated kilo solars
+  - bugfix: Fixed John Gamers health being 1200 instead of 200
+  - bugfix: Fixed medbay security outpost wall items being on the floor
+  RikuTheKiller:
+  - balance: Nightmares now automatically break dim lighting. Fire alarm emergency
+      lighting is unaffected.
+  - balance: Nightmares are now immune to pain and slowly heal wounds while in the
+      dark as well.
+  - balance: Light eaters can now forcibly open unpowered doors (and powered firelocks)
+      like a crowbar.
+  - balance: Shadow walk can now be cast even while in soft crit.
+  - bugfix: Light eaten objects can't blind nightmares anymore.
+  - balance: Mayhem in a bottle now makes you deal 5x damage to fauna.
+  - balance: Mayhem now has a much stabler, better defined set of effects.
+  - balance: Mayhem now breaks restraints and clears stuns on application.
+  - balance: Mayhem makes you heal brute, burn, tox, oxy and stamina damage rapidly.
+  - balance: Mayhem gives you lifesteal, which is much stronger against fauna.
+  - balance: Mayhem now only lasts 1 minute, down from 2.
+  - balance: Mayhem gives you a speed boost, but disables sprinting.
+  - balance: Mayhem no longer makes you immune to projectiles.
+  - qol: Mayhem in a bottle stops you from hitting yourself or opening the strip menu.
+  - bugfix: You can no longer turn off the mayhem chainsaw.
+  - bugfix: The mayhem chainsaw is now indestructible and actually undroppable.
+  - rscadd: Added "Storage Cavity", a new changeling ability that can store a few
+      small items, especially IDs.
+  Shoddd:
+  - bugfix: Making a mob sentient no longer gives you all of their factions.
+  - qol: Miner Iceboots are now fireproof
+  - qol: Holoparasites, guardian spirits, and power miners are now ash storm proof.
+  Sylphily:
+  - bugfix: prop hat, and sec cap, now fit monkeys better
+  flleeppyy:
+  - rscadd: added Plexora subsystem for Plexora bot integration
+  - admin: Admin and Mentor tickets will be relayed to the Discord server via Plexora.
+  - admin: 'External PM''s from the Discord will show usernames as `usernamehere(Plexora/External)`.
+
+      server:'
+  ven1883:
+  - balance: tribal claw rebalance
+  - balance: Tribal Claw now costs 10 TC, an increase of 3.
+  - balance: Tribal Claw now gives you 20% armor against melee, bullets, and lasers,
+      as well as giving you wound resistance.
+  - balance: Tribal Claw now gives Hard Soles (run on glass my pretties)
+  - balance: Tribal Claw now has a 60% block chance against melee when in throw mode.
+  - balance: Face Scratch now deals 30 damage instead of 10 as well as its original
+      effects
+  - balance: Jugular Cut now deals 10 oxygen damage and causes breath loss for 10
+      seconds per combo hit, capping out at 50 seconds.
+  - balance: Jugular Cut has a strong attack on sleeping or neck grabbed targets,
+      which deals 60 damage and a Weeping Avulsion.
+  - balance: Jugular Cut has a weak attack on standing targets for 15 damage, but
+      only does a Open Laceration
+  - code_imp: minor code fixes in Tribal Claw
