@@ -70,7 +70,7 @@
 				if(!affected.head)
 					affected.equip_to_slot(kitty, ITEM_SLOT_HEAD)
 
-			if(multiplier >= 2.5 && !given_katana)
+			if(multiplier >= 2.5 && !given_katana && !QDELETED(mob.client) && !mob.client.is_afk()) // if you wish to use the weapon of an anime protaganist, you must accept the consequences of looking like one
 				if(multiplier >= 3)
 					//REAL katana /obj/item/katana
 					var/obj/item/katana/real_katana = new /obj/item/katana
