@@ -33,7 +33,7 @@
 		return existing_grille.rcd_vals(user, the_rcd)
 	return rcd_result_with_memory(
 		list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
-		get_turf(src), RCD_MEMORY_WINDOWGRILLE,
+		loc, RCD_MEMORY_WINDOWGRILLE,
 	)
 
 /obj/structure/window_sill/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
