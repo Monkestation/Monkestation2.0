@@ -51,8 +51,7 @@
 	message_mime = "wa's silently!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
-	cooldown = 10
-	audio_cooldown = 10
+	audio_cooldown = 1.8 SECONDS
 
 /datum/emote/living/wa/get_sound(mob/living/user)
 	return pick(
