@@ -63,7 +63,7 @@
 	if(!round_started || disable_distribution) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
 
-	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
+	if(!guarantees_roundstart_roleset && SSgamemode.rng.chance(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
 
 	if(SSgamemode.current_roundstart_event && !SSgamemode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
@@ -133,7 +133,7 @@
 			message_admins("Storyteller failed to pick an event for track of [track].")
 			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
 			return
-		picked_event = pick_weight(valid_events)
+		picked_event = SSgamemode.rng.pick_weighted(valid_events)
 		if(!picked_event)
 			if(length(valid_events))
 				var/added_string = ""
