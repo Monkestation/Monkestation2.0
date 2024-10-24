@@ -178,6 +178,12 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/hats/bowler
 	item_cost = 3000
 
+
+/datum/store_item/head/mini_crown
+	name = "Mini Crown"
+	item_path = /obj/item/clothing/head/costume/minicrown
+	item_cost = 3000
+
 /*
 *	HALLOWEEN
 */
@@ -451,6 +457,26 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 /datum/store_item/head/floral_garland //BUYABLE
 	name = "Floral Garland"
 	item_path = /obj/item/clothing/head/costume/garland
+	item_cost = 3000
+
+/datum/store_item/head/rainbowbunch //BUYABLE
+	name = "Rainbow Flower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/rainbowbunch
+	item_cost = 5000
+
+/datum/store_item/head/sunflower_crown //BUYABLE
+	name = "Sunflower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/sunflower
+	item_cost = 3000
+
+/datum/store_item/head/poppy_crown //BUYABLE
+	name = "Poppy Crown"
+	item_path = /obj/item/clothing/head/costume/garland/poppy
+	item_cost = 3000
+
+/datum/store_item/head/lily_crown //BUYABLE
+	name = "Lily Crown"
+	item_path = /obj/item/clothing/head/costume/garland/lily
 	item_cost = 3000
 
 /datum/store_item/head/sombrero //BUYABLE
