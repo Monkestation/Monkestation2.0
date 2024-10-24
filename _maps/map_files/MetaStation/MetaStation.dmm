@@ -3716,6 +3716,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/captain,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
+"bnb" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/secure_closet/barber,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "bno" = (
 /obj/structure/transit_tube/diagonal,
 /turf/open/space,
@@ -13294,6 +13299,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
+"eSi" = (
+/obj/structure/table,
+/obj/item/scissors{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/razor{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "eSl" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple{
@@ -20531,6 +20548,15 @@
 "huG" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
+"huL" = (
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/closet/secure_closet/injection{
+	name = "justice injections locker"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/execution/education)
 "huX" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -38332,6 +38358,20 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"nqm" = (
+/obj/structure/table,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/storage/backpack/duffelbag/sec/surgery{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5
+	},
+/obj/item/clothing/mask/balaclava,
+/obj/item/flashlight/lamp,
+/turf/open/floor/iron/dark,
+/area/station/security/execution/education)
 "nqo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -40126,20 +40166,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
-"nYv" = (
-/obj/effect/turf_decal/stripes/end,
-/obj/machinery/shower/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/security/medical)
 "nYJ" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -44908,6 +44934,20 @@
 /obj/effect/landmark/navigate_destination/eva,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
+"pIn" = (
+/obj/effect/turf_decal/stripes/end,
+/obj/machinery/shower/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/security/medical)
 "pIt" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
@@ -51621,20 +51661,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
-"rXB" = (
-/obj/structure/table,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 5
-	},
-/obj/item/clothing/mask/balaclava,
-/obj/item/flashlight/lamp,
-/turf/open/floor/iron/dark,
-/area/station/security/execution/education)
 "rXF" = (
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
@@ -61473,11 +61499,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"vwi" = (
-/obj/structure/table,
-/obj/item/clothing/mask/cigarette/pipe,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "vwN" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -63723,6 +63744,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
+"wla" = (
+/obj/machinery/vending/barbervend,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "wlt" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
@@ -64423,15 +64448,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
-"wAp" = (
-/obj/item/radio/intercom/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/structure/closet/secure_closet/injection{
-	name = "justice injections locker"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/execution/education)
 "wAA" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66531,6 +66547,15 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"xjS" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance/three,
+/obj/item/clothing/mask/cigarette/pipe{
+	pixel_x = 0;
+	pixel_y = 16
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "xjY" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
@@ -85991,7 +86016,7 @@ lMY
 pOa
 mrN
 gXe
-vwi
+eSi
 tql
 pOa
 aDl
@@ -86503,7 +86528,7 @@ fjD
 tmI
 fjD
 pOa
-cIW
+xjS
 rwB
 tYi
 vXH
@@ -87276,8 +87301,8 @@ oyx
 pOa
 xgG
 vJY
-gDZ
-wev
+bnb
+wla
 pOa
 uOH
 uOH
@@ -92345,8 +92370,8 @@ tUX
 drq
 qax
 cwa
-rXB
-wAp
+nqm
+huL
 wqE
 wPM
 tdW
@@ -93905,7 +93930,7 @@ wsX
 wsX
 fTm
 nRZ
-nYv
+pIn
 ieN
 gEK
 dah

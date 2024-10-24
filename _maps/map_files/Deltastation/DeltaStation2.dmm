@@ -21412,20 +21412,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"fcl" = (
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/item/reagent_containers/cup/bowl{
-	pixel_y = 3
-	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -8;
-	pixel_y = 23
-	},
-/obj/structure/table,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/barber)
 "fco" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -22130,16 +22116,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/station/solars/starboard/fore)
-"fjl" = (
-/obj/machinery/door/airlock/security{
-	name = "Isolation Cell"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/security/prison/safe)
 "fju" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -23702,17 +23678,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"fBH" = (
-/obj/effect/turf_decal/stripes/end,
-/obj/machinery/shower/directional/south,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/security/medical)
 "fBK" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -26903,25 +26868,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"gqf" = (
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/effect/turf_decal/bot_red,
-/obj/item/clothing/suit/apron/chef{
-	desc = "A white smock used by barbers to remain hair free.";
-	name = "barber smock"
-	},
-/obj/item/razor{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/razor{
-	pixel_x = -2
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/service/barber)
 "gqm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -32658,21 +32604,6 @@
 	dir = 1
 	},
 /area/station/commons/fitness/recreation)
-"hJK" = (
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/airlock/security/old/glass{
-	name = "Prison Wing"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/execution/transfer)
 "hJM" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/recharge_floor,
@@ -40526,6 +40457,21 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
+"jAA" = (
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "perma-entrance"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/security/old/glass{
+	name = "Prison Wing"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/execution/transfer)
 "jAI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -44977,6 +44923,17 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/detectives_office)
+"kBr" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -8;
+	pixel_y = 23
+	},
+/obj/structure/closet/secure_closet/barber,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/barber)
 "kBz" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -49010,13 +48967,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/research)
-"lzM" = (
-/obj/item/paper/pamphlet/violent_video_games,
-/obj/effect/spawner/random/entertainment/money_small,
-/obj/structure/rack,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark,
-/area/station/service/barber)
 "lzQ" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -54071,6 +54021,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
+"mJk" = (
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "perma-entrance"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/machinery/door/airlock/security/old/glass{
+	name = "Prison Wing"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/execution/transfer)
 "mJm" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research/glass{
@@ -75192,6 +75158,34 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
+"rQE" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/bot_red,
+/obj/item/clothing/suit/apron/chef{
+	desc = "A white smock used by barbers to remain hair free.";
+	name = "barber smock"
+	},
+/obj/item/scissors{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/razor{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/scissors{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/razor{
+	pixel_x = -2;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/service/barber)
 "rQI" = (
 /obj/machinery/airlock_sensor/incinerator_atmos{
 	pixel_x = 24
@@ -77302,6 +77296,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"ssv" = (
+/obj/effect/turf_decal/stripes/end,
+/obj/machinery/shower/directional/south,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/security/medical)
 "ssy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -85200,6 +85205,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"ulS" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/barbervend,
+/turf/open/floor/iron/dark,
+/area/station/service/barber)
 "umb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -85772,6 +85782,24 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
+"utM" = (
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "perma-entrance"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/security/old/glass{
+	name = "Prison Wing"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/execution/transfer)
 "utN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -87627,24 +87655,6 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"uQg" = (
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/airlock/security/old/glass{
-	name = "Prison Wing"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/execution/transfer)
 "uQh" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -91245,22 +91255,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
-"vHC" = (
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/obj/machinery/door/airlock/security/old/glass{
-	name = "Prison Wing"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/execution/transfer)
 "vHT" = (
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
@@ -92578,6 +92572,16 @@
 /obj/effect/turf_decal/trimline/hot_pink/corner,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/workout)
+"waB" = (
+/obj/machinery/door/airlock/security{
+	name = "Isolation Cell"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/prison/safe)
 "waG" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
@@ -133150,7 +133154,7 @@ nXK
 qAQ
 aej
 wce
-lzM
+ulS
 dvG
 kKK
 bNh
@@ -135206,7 +135210,7 @@ nXK
 qAQ
 qtE
 tBf
-gqf
+rQE
 dvG
 tGq
 iEl
@@ -135461,7 +135465,7 @@ wjF
 uED
 saD
 lpq
-fcl
+kBr
 xpI
 qAQ
 dvG
@@ -151621,7 +151625,7 @@ mcb
 hLz
 mSe
 mSe
-fjl
+waB
 mSe
 vgQ
 hYa
@@ -152901,10 +152905,10 @@ bWw
 kxj
 wDX
 xNU
-uQg
+utM
 cMf
 ygY
-uQg
+utM
 hwQ
 yiA
 olQ
@@ -153415,10 +153419,10 @@ bWw
 wDX
 wDX
 krt
-vHC
+mJk
 lAt
 jLj
-hJK
+jAA
 vyO
 krO
 hAo
@@ -153936,7 +153940,7 @@ hLz
 iCo
 nYt
 lET
-fBH
+ssv
 eWX
 mSb
 jOW
