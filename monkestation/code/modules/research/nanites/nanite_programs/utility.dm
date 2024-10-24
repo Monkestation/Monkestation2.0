@@ -419,31 +419,56 @@
 	. = ..()
 	var/datum/nanite_extra_setting/bn_name = extra_settings[NES_BUTTON_NAME]
 	var/datum/nanite_extra_setting/bn_icon = extra_settings[NES_ICON]
-	if(!button)
+	if(QDELETED(button))
 		button = new(src, bn_name.get_value(), bn_icon.get_value())
 	button.target = host_mob
 	button.Grant(host_mob)
 
 /datum/nanite_program/dermal_button/disable_passive_effect()
 	. = ..()
-	if(button)
-		button.Remove(host_mob)
+	button?.Remove(host_mob)
 
 /datum/nanite_program/dermal_button/on_mob_remove()
 	. = ..()
 	QDEL_NULL(button)
 
 /datum/nanite_program/dermal_button/proc/press()
-	if(activated)
-		host_mob.visible_message(span_notice("[host_mob] presses a button on [host_mob.p_their()] forearm."),
-								span_notice("You press the nanite button on your forearm."), null, 2)
-		var/datum/nanite_extra_setting/sent_code = extra_settings[NES_SENT_CODE]
-		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code.get_value(), "a [name] program")
+	if(!activated)
+		return
+	host_mob.visible_message(span_notice("[host_mob] presses a button on [host_mob.p_their()] forearm."),
+							span_notice("You press the nanite button on your forearm."), vision_distance = 2)
+	var/datum/nanite_extra_setting/sent_code = extra_settings[NES_SENT_CODE]
+	var/sent_value = sent_code?.get_value()
+	if(sent_value)
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_value, "a [name] program")
+
+/datum/nanite_program/dermal_button/toggle
+	name = "Dermal Toggle"
+	desc = "Displays a switch on the host's skin, which can be used to send an activation and deactivation signal to the nanites."
+	var/active = FALSE
+
+/datum/nanite_program/dermal_button/toggle/register_extra_settings()
+	extra_settings[NES_ACTIVATION_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_DEACTIVATION_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_BUTTON_NAME] = new /datum/nanite_extra_setting/text("Toggle")
+	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("blank","one","two","three","four","five","plus","minus","exclamation","question","cross","info","heart","skull","brain","brain_damage","injection","blood","shield","reaction","network","power","radioactive","electricity","magnetism","scan","repair","id","wireless","say","sleep","bomb"))
+
+/datum/nanite_program/dermal_button/toggle/press()
+	if(!activated)
+		return
+	var/datum/nanite_extra_setting/icon = extra_settings[NES_ICON]
+	var/datum/nanite_extra_setting/sent_code = extra_settings[active ? NES_DEACTIVATION_CODE : NES_ACTIVATION_CODE]
+	host_mob.visible_message(span_notice("[host_mob] flicks a switch on [host_mob.p_their()] forearm."),
+								span_notice("You flick the nanite button on your forearm [active ? "off" : "on"]."), vision_distance = 2)
+	active = !active
+	var/sent_value = sent_code?.get_value()
+	if(sent_value)
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_value, "a [name] program")
 
 /datum/action/innate/nanite_button
 	name = "Button"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	button_icon_state = "nanite_power"
 	var/datum/nanite_program/dermal_button/program
 
@@ -452,6 +477,10 @@
 	program = _program
 	name = _name
 	button_icon_state = "nanite_[_icon]"
+
+/datum/action/innate/nanite_button/Destroy()
+	program = null
+	return ..()
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
