@@ -18,7 +18,7 @@
 	progression_minimum = 5 MINUTES
 	cost = 20
 	item = /obj/item/storage/box/clonearmy
-	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER) // Experimental cloners were traditionally bought by cargo.
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_ASSISTANT) // Experimental cloners were traditionally bought by cargo.
 
 ///I know this probably isn't the right place to put it, but I don't know where I should put it, and I can move it later.
 /obj/item/disk/clonearmy
