@@ -28,9 +28,14 @@ for example, adding in their job after their name
 
 - monkestation\code\modules\jobs\job_types\signal_technician.dm
 - monkestation\code\modules\clothing\under\jobs\engineering.dm
+- monkestation\code\modules\clothing\spacesuits\plasmamen.dm
 
 - monkestation\icons\obj\clothing\uniforms.dmi
 - monkestation\icons\mob\clothing\uniform.dmi
+- monkestation\icons\obj\clothing\plasmaman.dmi
+- monkestation\icons\mob\clothing\plasmaman.dmi
+- monkestation\icons\obj\clothing\plasmaman_head.dmi
+- monkestation\icons\mob\clothing\plasmaman_head.dmi
 
 - tgui\packages\tgui\interfaces\NTSLCoding.js -- Interface for the traffic console
 

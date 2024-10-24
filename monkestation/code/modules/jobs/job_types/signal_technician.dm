@@ -14,7 +14,7 @@
 	config_tag = "SIGNAL_TECH"
 
 	outfit = /datum/outfit/job/signal_tech
-//	plasmaman_outfit = /datum/outfit/plasmaman/signal_tech TODO
+	plasmaman_outfit = /datum/outfit/plasmaman/signal_tech
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG
@@ -73,6 +73,12 @@
 
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
+/datum/outfit/plasmaman/signal_tech
+	name = "Signal Technician Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/engineering/signal_tech
+	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer
+	head = /obj/item/clothing/head/helmet/space/plasmaman/signal_tech
 
 /datum/id_trim/job/signal_technician
 	assignment = JOB_SIGNAL_TECHNICIAN
