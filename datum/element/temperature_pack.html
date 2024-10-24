@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;element&#x2F;temperature_pack - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/element/temperature_pack.html#var">Var Details</a> - <a href="datum/element/temperature_pack.html#proc">Proc Details</a></header>
+<main>
+<h1>temperature_pack <aside>/<a href="datum.html">datum</a>/<a href="datum/element.html">element</a>/<a href="datum/element/temperature_pack.html">temperature_pack</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L6">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 6"/></a></h1>
+
+<p>Element to make an item into a &quot;temperature pack&quot;.
+Temperature packs are hot or cold things that can be pressed against
+limbs experiencing pain to reduce it.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#var/pain_heal_rate">pain_heal_rate</a></th><td>Amount of pain we restore every tick in the targeted limb.</td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#var/pain_modifier_on_limb">pain_modifier_on_limb</a></th><td>Pain modifier put on the limb we're targeting.</td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#var/temperature_change">temperature_change</a></th><td>Body temperature change per tick.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#proc/apply_to_limb">apply_to_limb</a></th><td>Actually apply [parent] temperature pack to [targeted_zone] limb on [target] mob from [user].</td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#proc/get_examine_text">get_examine_text</a></th><td>Edit the examine text to show the item can be used as a temperature pack.</td></tr>
+            <tr><th><a href="datum/element/temperature_pack.html#proc/try_apply_to_limb">try_apply_to_limb</a></th><td>Try to apply [source] item onto [target] mob from [user].</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/pain_heal_rate"><aside class="declaration">var </aside>pain_heal_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 10"/></a></h3>
+        <p>Amount of pain we restore every tick in the targeted limb.</p><h3 id="var/pain_modifier_on_limb"><aside class="declaration">var </aside>pain_modifier_on_limb
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 12"/></a></h3>
+        <p>Pain modifier put on the limb we're targeting.</p><h3 id="var/temperature_change"><aside class="declaration">var </aside>temperature_change
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 14"/></a></h3>
+        <p>Body temperature change per tick.</p><h2 id="proc">Proc Details</h2><h3 id="proc/apply_to_limb"><aside class="declaration">proc </aside>apply_to_limb<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/parent, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target, /<a href="mob.html">mob</a>/user, targeted_zone) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L85">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 85"/></a></aside>
+        </h3>
+        <p>Actually apply [parent] temperature pack to [targeted_zone] limb on [target] mob from [user].</p><h3 id="proc/get_examine_text"><aside class="declaration">proc </aside>get_examine_text<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source, /<a href="mob.html">mob</a>/examiner, /list/examine_list) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 39"/></a></aside>
+        </h3>
+        <p>Edit the examine text to show the item can be used as a temperature pack.</p><h3 id="proc/try_apply_to_limb"><aside class="declaration">proc </aside>try_apply_to_limb<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source, /<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/elements/temperature_pack.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;elements&#x2F;temperature_pack.dm 48"/></a></aside>
+        </h3>
+        <p>Try to apply [source] item onto [target] mob from [user].</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

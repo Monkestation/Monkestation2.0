@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;bomb_actualizer - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/bomb_actualizer.html#var">Var Details</a> - <a href="obj/machinery/bomb_actualizer.html#proc">Proc Details</a></header>
+<main>
+<h1>bomb_actualizer <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/bomb_actualizer.html">bomb_actualizer</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/common_channel">common_channel</a></th><td>The common channel</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/countdown">countdown</a></th><td>The countdown that'll show up to ghosts regarding the bomb's timer.</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/inserted_bomb">inserted_bomb</a></th><td>The TTV inserted in the machine.</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/radio">radio</a></th><td>The countdown that'll show up to ghosts regarding the bomb's timer.
+Our internal radio</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/radio_key">radio_key</a></th><td>The key our internal radio uses</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#var/stage">stage</a></th><td>Stages for countdown warnings and alerts.
+0 = no major alerts,
+1 = the timer has reached 60 seconds,
+2 = the timer has reached 10 seconds (it will reset to zero immediately after)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#proc/modify_explosion">modify_explosion</a></th><td>catches the parameters of the TTV's explosion as it happens internally,
+cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
+while REDUCING the theoretical size by actualizer multiplier
+(actualizer_multiplier 0.25 would mean the 200 size theoretical bomb is only 12 + (200*0.25) in size )</td></tr>
+            <tr><th><a href="obj/machinery/bomb_actualizer.html#proc/start_detonation">start_detonation</a></th><td>Starts the Detonation Sequence</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/common_channel"><aside class="declaration">var </aside>common_channel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L54">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 54"/></a></h3>
+        <p>The common channel</p><h3 id="var/countdown"><aside class="declaration">var </aside>countdown
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/countdown/bomb_actualizer</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 33"/></a></h3>
+        <p>The countdown that'll show up to ghosts regarding the bomb's timer.</p><h3 id="var/inserted_bomb"><aside class="declaration">var </aside>inserted_bomb
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/transfer_valve.html">transfer_valve</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 25"/></a></h3>
+        <p>The TTV inserted in the machine.</p><h3 id="var/radio"><aside class="declaration">var </aside>radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L50">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 50"/></a></h3>
+        <p>The countdown that'll show up to ghosts regarding the bomb's timer.
+Our internal radio</p><h3 id="var/radio_key"><aside class="declaration">var </aside>radio_key
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 52"/></a></h3>
+        <p>The key our internal radio uses</p><h3 id="var/stage"><aside class="declaration">var </aside>stage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 21"/></a></h3>
+        <p>Stages for countdown warnings and alerts.
+0 = no major alerts,
+1 = the timer has reached 60 seconds,
+2 = the timer has reached 10 seconds (it will reset to zero immediately after)</p><h2 id="proc">Proc Details</h2><h3 id="proc/modify_explosion"><aside class="declaration">proc </aside>modify_explosion<aside>(/<a href="atom.html">atom</a>/source, /list/arguments) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L200">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 200"/></a></aside>
+        </h3>
+        <p>catches the parameters of the TTV's explosion as it happens internally,
+cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
+while REDUCING the theoretical size by actualizer multiplier
+(actualizer_multiplier 0.25 would mean the 200 size theoretical bomb is only 12 + (200*0.25) in size )</p><h3 id="proc/start_detonation"><aside class="declaration">proc </aside>start_detonation<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/game/machinery/bomb_actualizer.dm#L121">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;machinery&#x2F;bomb_actualizer.dm 121"/></a></aside>
+        </h3>
+        <p>Starts the Detonation Sequence</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

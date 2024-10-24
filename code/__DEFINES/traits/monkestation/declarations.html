@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/traits/monkestation/declarations.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/traits/monkestation/declarations.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_MONKEYFRIEND">TRAIT_MONKEYFRIEND</a></th><td>Monkeys are friendly/neutral to this mob by defaulot.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_EXHAUSTED">TRAIT_EXHAUSTED</a></th><td>User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_SPRINTING">TRAIT_SPRINTING</a></th><td>User is sprinting, full speed ahead.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_DISORIENTED">TRAIT_DISORIENTED</a></th><td>Slows the user, with additional effects based on the source.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_NO_SPRINT">TRAIT_NO_SPRINT</a></th><td>User cannot sprint.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_WATER_BREATHING">TRAIT_WATER_BREATHING</a></th><td>One can breath under water, you get me?</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_NO_BLOODLOSS_DAMAGE">TRAIT_NO_BLOODLOSS_DAMAGE</a></th><td>Does not take damage from bloodloss (or any blood shenanigans)</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_ROBOT_CAN_BLEED">TRAIT_ROBOT_CAN_BLEED</a></th><td>Do IPC's dream of doomsday? The answer is yes</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_HARD_SOLES">TRAIT_HARD_SOLES</a></th><td>Tough feets for the satyrs.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_NANITE_MONITORING">TRAIT_NANITE_MONITORING</a></th><td>The mob's nanites are sending a monitoring signal visible on diag HUD.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_VAULTING">TRAIT_VAULTING</a></th><td>This mob can vault over climable structures.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_ETHEREAL_NO_OVERCHARGE">TRAIT_ETHEREAL_NO_OVERCHARGE</a></th><td>Ethereals with this trait will not suffer negative effects from overcharge.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_OOZELING_NO_CANNIBALIZE">TRAIT_OOZELING_NO_CANNIBALIZE</a></th><td>Oozelings with this trait will not lose limbs from low blood/nutrition.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_HELIUM">TRAIT_HELIUM</a></th><td>Indicates that they've inhaled helium.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_ALL_SURGERIES">TRAIT_ALL_SURGERIES</a></th><td>Allows the user to start any surgery, anywhere. Mostly used by abductor scientists.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_PERFECT_SURGEON">TRAIT_PERFECT_SURGEON</a></th><td>Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_BETTER_CYBERCONNECTOR">TRAIT_BETTER_CYBERCONNECTOR</a></th><td>Reduces the complexity of any cyberlink hacking minigames for the user.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FAST_CLIMBER">TRAIT_FAST_CLIMBER</a></th><td>Allows the user to climb tables and such faster.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_SHOVE_RESIST">TRAIT_SHOVE_RESIST</a></th><td>The user is more resistant to being shoved.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_INSTANT_RELOAD">TRAIT_INSTANT_RELOAD</a></th><td>Allows the user to instantly reload.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_SLIME_HYDROPHOBIA">TRAIT_SLIME_HYDROPHOBIA</a></th><td>If an oozeling is currently protecting themselves from water.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_MASQUERADE">TRAIT_MASQUERADE</a></th><td>Falsifies Health analyzer blood levels</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_COLDBLOODED">TRAIT_COLDBLOODED</a></th><td>Your body is literal room temperature. Does not make you immune to the temp</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_CANT_STAMCRIT">TRAIT_CANT_STAMCRIT</a></th><td>Prevents the user from entering stamina crit.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_REVIVES_BY_HEALING">TRAIT_REVIVES_BY_HEALING</a></th><td>This mob will automatically revive when healed enough.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_GHOST_CRITTER">TRAIT_GHOST_CRITTER</a></th><td>This mob is a ghost critter.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_CONVERSION_FLASHED">TRAIT_CONVERSION_FLASHED</a></th><td>This mob is <em>currently</em> being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_CANT_SIGN_SPELLS">TRAIT_CANT_SIGN_SPELLS</a></th><td>Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_OCCULTIST">TRAIT_OCCULTIST</a></th><td>You have special interactions with bloodsuckers and the occult.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_REMOVED_FROM_MANIFEST">TRAIT_REMOVED_FROM_MANIFEST</a></th><td>Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FOOD_FIRE_BURPS">TRAIT_FOOD_FIRE_BURPS</a></th><td>Trait for Fire Burps</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FOOD_SLIDE">TRAIT_FOOD_SLIDE</a></th><td>Trait for fast sliding</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FOOD_JOB_BOTANIST">TRAIT_FOOD_JOB_BOTANIST</a></th><td>Trait for hand picked crops to be of a higher stats (ignores cap)</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FOOD_JOB_MINER">TRAIT_FOOD_JOB_MINER</a></th><td>Trait for rocks to randomly drop ore.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/STATION_TRAIT_CLOWN_BRIDGE">STATION_TRAIT_CLOWN_BRIDGE</a></th><td>Station trait for when the clown has bridge access <em>shudders</em></td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_BLOCK_LIQUID_SPREAD">TRAIT_BLOCK_LIQUID_SPREAD</a></th><td>Liquids cannot spread over this turf.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_COVERED_BY_METEOR_SHIELD">TRAIT_COVERED_BY_METEOR_SHIELD</a></th><td>If a trait is considered as having &quot;coverage&quot; by a meteor shield.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_TURF_HAS_ELEVATED_STRUCTURE">TRAIT_TURF_HAS_ELEVATED_STRUCTURE</a></th><td>Replacement for GLOB.typecache_elevated_structures</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_MOB_DESTROYABLE">TRAIT_MOB_DESTROYABLE</a></th><td>added to structures we want the mobs to be able to target.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_HIDDEN_EXPORT_VALUE">TRAIT_HIDDEN_EXPORT_VALUE</a></th><td>This object cannot have its export value be shown by export scanner (shows as unknown)</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_BELT_SATCHEL">TRAIT_BELT_SATCHEL</a></th><td>Applied to a satchel that is being worn on the belt.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_BYPASS_COMPRESS_CHECK">TRAIT_BYPASS_COMPRESS_CHECK</a></th><td>Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_TRASH_ITEM">TRAIT_TRASH_ITEM</a></th><td>This item is considered &quot;trash&quot; (and will be eaten by cleaner slimes)</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_GOES_THROUGH_WOODEN_BARRICADES">TRAIT_GOES_THROUGH_WOODEN_BARRICADES</a></th><td>Things with this trait can pass through wooden barricades.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_FASTER_SLAB_INVOKE">TRAIT_FASTER_SLAB_INVOKE</a></th><td>Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_NO_SLAB_INVOKE">TRAIT_NO_SLAB_INVOKE</a></th><td>Prevents the invocation of clockwork scriptures.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_STARGAZED">TRAIT_STARGAZED</a></th><td>Has an item been enchanted by a clock cult Stargazer?</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_LABOURED_BREATHING">TRAIT_LABOURED_BREATHING</a></th><td>Skip a breath once in every x breaths (where x is ticks between breaths)</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_ASSISTED_BREATHING">TRAIT_ASSISTED_BREATHING</a></th><td>Blocks losebreath from accumulating from things such as heart attacks or choking</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_NO_ORGAN_DECAY">TRAIT_NO_ORGAN_DECAY</a></th><td>Stops organs from decaying while dead</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_COLD_BLOODED">TRAIT_COLD_BLOODED</a></th><td>Mob does not homeostasize body temperature</td></tr>
+        <tr><th><a href="code/__DEFINES/traits/monkestation/declarations.html#define/TRAIT_CANT_STRIP">TRAIT_CANT_STRIP</a></th><td>Mob can't strip other mobs, overrides TRAIT_CAN_STRIP. Importantly, they cannot <em>open</em> strip menus, so this is used for mayhem in a bottle.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/STATION_TRAIT_CLOWN_BRIDGE"><aside class="declaration">#define </aside>STATION_TRAIT_CLOWN_BRIDGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 97"/></a>
+    </h3>
+    <p>Station trait for when the clown has bridge access <em>shudders</em></p><h3 id="define/TRAIT_ALL_SURGERIES"><aside class="declaration">#define </aside>TRAIT_ALL_SURGERIES
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 33"/></a>
+    </h3>
+    <p>Allows the user to start any surgery, anywhere. Mostly used by abductor scientists.</p><h3 id="define/TRAIT_ASSISTED_BREATHING"><aside class="declaration">#define </aside>TRAIT_ASSISTED_BREATHING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 139"/></a>
+    </h3>
+    <p>Blocks losebreath from accumulating from things such as heart attacks or choking</p><h3 id="define/TRAIT_BELT_SATCHEL"><aside class="declaration">#define </aside>TRAIT_BELT_SATCHEL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 116"/></a>
+    </h3>
+    <p>Applied to a satchel that is being worn on the belt.</p><h3 id="define/TRAIT_BETTER_CYBERCONNECTOR"><aside class="declaration">#define </aside>TRAIT_BETTER_CYBERCONNECTOR
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 37"/></a>
+    </h3>
+    <p>Reduces the complexity of any cyberlink hacking minigames for the user.</p><h3 id="define/TRAIT_BLOCK_LIQUID_SPREAD"><aside class="declaration">#define </aside>TRAIT_BLOCK_LIQUID_SPREAD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 101"/></a>
+    </h3>
+    <p>Liquids cannot spread over this turf.</p><h3 id="define/TRAIT_BYPASS_COMPRESS_CHECK"><aside class="declaration">#define </aside>TRAIT_BYPASS_COMPRESS_CHECK
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 118"/></a>
+    </h3>
+    <p>Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.</p><h3 id="define/TRAIT_CANT_SIGN_SPELLS"><aside class="declaration">#define </aside>TRAIT_CANT_SIGN_SPELLS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 61"/></a>
+    </h3>
+    <p>Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.</p><h3 id="define/TRAIT_CANT_STAMCRIT"><aside class="declaration">#define </aside>TRAIT_CANT_STAMCRIT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 51"/></a>
+    </h3>
+    <p>Prevents the user from entering stamina crit.</p><h3 id="define/TRAIT_CANT_STRIP"><aside class="declaration">#define </aside>TRAIT_CANT_STRIP
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 146"/></a>
+    </h3>
+    <p>Mob can't strip other mobs, overrides TRAIT_CAN_STRIP. Importantly, they cannot <em>open</em> strip menus, so this is used for mayhem in a bottle.</p><h3 id="define/TRAIT_COLDBLOODED"><aside class="declaration">#define </aside>TRAIT_COLDBLOODED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 49"/></a>
+    </h3>
+    <p>Your body is literal room temperature. Does not make you immune to the temp</p><h3 id="define/TRAIT_COLD_BLOODED"><aside class="declaration">#define </aside>TRAIT_COLD_BLOODED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 143"/></a>
+    </h3>
+    <p>Mob does not homeostasize body temperature</p><h3 id="define/TRAIT_CONVERSION_FLASHED"><aside class="declaration">#define </aside>TRAIT_CONVERSION_FLASHED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 57"/></a>
+    </h3>
+    <p>This mob is <em>currently</em> being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.</p><h3 id="define/TRAIT_COVERED_BY_METEOR_SHIELD"><aside class="declaration">#define </aside>TRAIT_COVERED_BY_METEOR_SHIELD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 103"/></a>
+    </h3>
+    <p>If a trait is considered as having &quot;coverage&quot; by a meteor shield.</p><h3 id="define/TRAIT_DISORIENTED"><aside class="declaration">#define </aside>TRAIT_DISORIENTED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 11"/></a>
+    </h3>
+    <p>Slows the user, with additional effects based on the source.</p><h3 id="define/TRAIT_ETHEREAL_NO_OVERCHARGE"><aside class="declaration">#define </aside>TRAIT_ETHEREAL_NO_OVERCHARGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 27"/></a>
+    </h3>
+    <p>Ethereals with this trait will not suffer negative effects from overcharge.</p><h3 id="define/TRAIT_EXHAUSTED"><aside class="declaration">#define </aside>TRAIT_EXHAUSTED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 7"/></a>
+    </h3>
+    <p>User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD.</p><h3 id="define/TRAIT_FASTER_SLAB_INVOKE"><aside class="declaration">#define </aside>TRAIT_FASTER_SLAB_INVOKE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 128"/></a>
+    </h3>
+    <p>Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.</p><h3 id="define/TRAIT_FAST_CLIMBER"><aside class="declaration">#define </aside>TRAIT_FAST_CLIMBER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 39"/></a>
+    </h3>
+    <p>Allows the user to climb tables and such faster.</p><h3 id="define/TRAIT_FOOD_FIRE_BURPS"><aside class="declaration">#define </aside>TRAIT_FOOD_FIRE_BURPS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 71"/></a>
+    </h3>
+    <p>Trait for Fire Burps</p><h3 id="define/TRAIT_FOOD_JOB_BOTANIST"><aside class="declaration">#define </aside>TRAIT_FOOD_JOB_BOTANIST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 75"/></a>
+    </h3>
+    <p>Trait for hand picked crops to be of a higher stats (ignores cap)</p><h3 id="define/TRAIT_FOOD_JOB_MINER"><aside class="declaration">#define </aside>TRAIT_FOOD_JOB_MINER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 77"/></a>
+    </h3>
+    <p>Trait for rocks to randomly drop ore.</p><h3 id="define/TRAIT_FOOD_SLIDE"><aside class="declaration">#define </aside>TRAIT_FOOD_SLIDE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 73"/></a>
+    </h3>
+    <p>Trait for fast sliding</p><h3 id="define/TRAIT_GHOST_CRITTER"><aside class="declaration">#define </aside>TRAIT_GHOST_CRITTER
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 55"/></a>
+    </h3>
+    <p>This mob is a ghost critter.</p><h3 id="define/TRAIT_GOES_THROUGH_WOODEN_BARRICADES"><aside class="declaration">#define </aside>TRAIT_GOES_THROUGH_WOODEN_BARRICADES
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 124"/></a>
+    </h3>
+    <p>Things with this trait can pass through wooden barricades.</p><h3 id="define/TRAIT_HARD_SOLES"><aside class="declaration">#define </aside>TRAIT_HARD_SOLES
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 21"/></a>
+    </h3>
+    <p>Tough feets for the satyrs.</p><h3 id="define/TRAIT_HELIUM"><aside class="declaration">#define </aside>TRAIT_HELIUM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 31"/></a>
+    </h3>
+    <p>Indicates that they've inhaled helium.</p><h3 id="define/TRAIT_HIDDEN_EXPORT_VALUE"><aside class="declaration">#define </aside>TRAIT_HIDDEN_EXPORT_VALUE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 112"/></a>
+    </h3>
+    <p>This object cannot have its export value be shown by export scanner (shows as unknown)</p><h3 id="define/TRAIT_INSTANT_RELOAD"><aside class="declaration">#define </aside>TRAIT_INSTANT_RELOAD
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 43"/></a>
+    </h3>
+    <p>Allows the user to instantly reload.</p><h3 id="define/TRAIT_LABOURED_BREATHING"><aside class="declaration">#define </aside>TRAIT_LABOURED_BREATHING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 137"/></a>
+    </h3>
+    <p>Skip a breath once in every x breaths (where x is ticks between breaths)</p><h3 id="define/TRAIT_MASQUERADE"><aside class="declaration">#define </aside>TRAIT_MASQUERADE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 47"/></a>
+    </h3>
+    <p>Falsifies Health analyzer blood levels</p><h3 id="define/TRAIT_MOB_DESTROYABLE"><aside class="declaration">#define </aside>TRAIT_MOB_DESTROYABLE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 110"/></a>
+    </h3>
+    <p>added to structures we want the mobs to be able to target.</p><h3 id="define/TRAIT_MONKEYFRIEND"><aside class="declaration">#define </aside>TRAIT_MONKEYFRIEND
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 5"/></a>
+    </h3>
+    <p>Monkeys are friendly/neutral to this mob by defaulot.</p><h3 id="define/TRAIT_NANITE_MONITORING"><aside class="declaration">#define </aside>TRAIT_NANITE_MONITORING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 23"/></a>
+    </h3>
+    <p>The mob's nanites are sending a monitoring signal visible on diag HUD.</p><h3 id="define/TRAIT_NO_BLOODLOSS_DAMAGE"><aside class="declaration">#define </aside>TRAIT_NO_BLOODLOSS_DAMAGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 17"/></a>
+    </h3>
+    <p>Does not take damage from bloodloss (or any blood shenanigans)</p><h3 id="define/TRAIT_NO_ORGAN_DECAY"><aside class="declaration">#define </aside>TRAIT_NO_ORGAN_DECAY
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 141"/></a>
+    </h3>
+    <p>Stops organs from decaying while dead</p><h3 id="define/TRAIT_NO_SLAB_INVOKE"><aside class="declaration">#define </aside>TRAIT_NO_SLAB_INVOKE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 130"/></a>
+    </h3>
+    <p>Prevents the invocation of clockwork scriptures.</p><h3 id="define/TRAIT_NO_SPRINT"><aside class="declaration">#define </aside>TRAIT_NO_SPRINT
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 13"/></a>
+    </h3>
+    <p>User cannot sprint.</p><h3 id="define/TRAIT_OCCULTIST"><aside class="declaration">#define </aside>TRAIT_OCCULTIST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 63"/></a>
+    </h3>
+    <p>You have special interactions with bloodsuckers and the occult.</p><h3 id="define/TRAIT_OOZELING_NO_CANNIBALIZE"><aside class="declaration">#define </aside>TRAIT_OOZELING_NO_CANNIBALIZE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 29"/></a>
+    </h3>
+    <p>Oozelings with this trait will not lose limbs from low blood/nutrition.</p><h3 id="define/TRAIT_PERFECT_SURGEON"><aside class="declaration">#define </aside>TRAIT_PERFECT_SURGEON
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 35"/></a>
+    </h3>
+    <p>Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.</p><h3 id="define/TRAIT_REMOVED_FROM_MANIFEST"><aside class="declaration">#define </aside>TRAIT_REMOVED_FROM_MANIFEST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 67"/></a>
+    </h3>
+    <p>Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.</p><h3 id="define/TRAIT_REVIVES_BY_HEALING"><aside class="declaration">#define </aside>TRAIT_REVIVES_BY_HEALING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 53"/></a>
+    </h3>
+    <p>This mob will automatically revive when healed enough.</p><h3 id="define/TRAIT_ROBOT_CAN_BLEED"><aside class="declaration">#define </aside>TRAIT_ROBOT_CAN_BLEED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 19"/></a>
+    </h3>
+    <p>Do IPC's dream of doomsday? The answer is yes</p><h3 id="define/TRAIT_SHOVE_RESIST"><aside class="declaration">#define </aside>TRAIT_SHOVE_RESIST
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 41"/></a>
+    </h3>
+    <p>The user is more resistant to being shoved.</p><h3 id="define/TRAIT_SLIME_HYDROPHOBIA"><aside class="declaration">#define </aside>TRAIT_SLIME_HYDROPHOBIA
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 45"/></a>
+    </h3>
+    <p>If an oozeling is currently protecting themselves from water.</p><h3 id="define/TRAIT_SPRINTING"><aside class="declaration">#define </aside>TRAIT_SPRINTING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 9"/></a>
+    </h3>
+    <p>User is sprinting, full speed ahead.</p><h3 id="define/TRAIT_STARGAZED"><aside class="declaration">#define </aside>TRAIT_STARGAZED
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 132"/></a>
+    </h3>
+    <p>Has an item been enchanted by a clock cult Stargazer?</p><h3 id="define/TRAIT_TRASH_ITEM"><aside class="declaration">#define </aside>TRAIT_TRASH_ITEM
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 120"/></a>
+    </h3>
+    <p>This item is considered &quot;trash&quot; (and will be eaten by cleaner slimes)</p><h3 id="define/TRAIT_TURF_HAS_ELEVATED_STRUCTURE"><aside class="declaration">#define </aside>TRAIT_TURF_HAS_ELEVATED_STRUCTURE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 105"/></a>
+    </h3>
+    <p>Replacement for GLOB.typecache_elevated_structures</p><h3 id="define/TRAIT_VAULTING"><aside class="declaration">#define </aside>TRAIT_VAULTING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 25"/></a>
+    </h3>
+    <p>This mob can vault over climable structures.</p><h3 id="define/TRAIT_WATER_BREATHING"><aside class="declaration">#define </aside>TRAIT_WATER_BREATHING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/traits/monkestation/declarations.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits&#x2F;monkestation&#x2F;declarations.dm 15"/></a>
+    </h3>
+    <p>One can breath under water, you get me?</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

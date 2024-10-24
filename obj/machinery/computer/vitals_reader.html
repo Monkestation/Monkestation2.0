@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;computer&#x2F;vitals_reader - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/computer/vitals_reader.html#var">Var Details</a> - <a href="obj/machinery/computer/vitals_reader.html#proc">Proc Details</a></header>
+<main>
+<h1>vitals_reader <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/computer.html">computer</a>/<a href="obj/machinery/computer/vitals_reader.html">vitals_reader</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 24"/></a></h1>
+
+<p>A wall mounted screen that showcases the vitals of a patient nearby.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#var/active">active</a></th><td>Whether we are on or off</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#var/advanced">advanced</a></th><td>Whether we perform an advanced scan on examine or not, currently admin only</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#var/connectable_typecache">connectable_typecache</a></th><td>Static typecache of things the vitals display can connect to.
+By default it will connect to these and grab their occupant to display as a patient.</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#var/frame">frame</a></th><td>Typepath to spawn when deconstructed</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#var/patient">patient</a></th><td>Reference to the mob that is being tracked / scanned</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/construct_overlay">construct_overlay</a></th><td>Helper to construct an overlay for the vitals display</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/find_active_patient">find_active_patient</a></th><td>Recursively checks all nearby machines to find a patient to track.</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/get_humanoid_overlays">get_humanoid_overlays</a></th><td>Returns all overlays to be shown when a humanoid patient is detected</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/get_scanning_overlays">get_scanning_overlays</a></th><td>Returns overlays to be used when active but without a patient detected</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/get_simple_mob_overlays">get_simple_mob_overlays</a></th><td>Returns all overlays to be shown when a simple / basic animal patient is detected</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/percent_to_bar">percent_to_bar</a></th><td>Converts a percentage to a bar icon state</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/percent_to_color">percent_to_color</a></th><td>Converts a percentage to a color</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/set_patient">set_patient</a></th><td>Sets the passed mob as the active patient
+If there is already a patient, it will be unset first.</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/toggle_active">toggle_active</a></th><td>Toggles whether the display is active or not</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/unset_patient">unset_patient</a></th><td>Unset the current patient.</td></tr>
+            <tr><th><a href="obj/machinery/computer/vitals_reader.html#proc/update_overlay_on_signal">update_overlay_on_signal</a></th><td>Signal proc to update the display when a signal is received.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L47">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 47"/></a></h3>
+        <p>Whether we are on or off</p><h3 id="var/advanced"><aside class="declaration">var </aside>advanced
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L43">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 43"/></a></h3>
+        <p>Whether we perform an advanced scan on examine or not, currently admin only</p><h3 id="var/connectable_typecache"><aside class="declaration">var </aside>connectable_typecache
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 52"/></a></h3>
+        <p>Static typecache of things the vitals display can connect to.
+By default it will connect to these and grab their occupant to display as a patient.</p><h3 id="var/frame"><aside class="declaration">var </aside>frame
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L45">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 45"/></a></h3>
+        <p>Typepath to spawn when deconstructed</p><h3 id="var/patient"><aside class="declaration">var </aside>patient
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L49">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 49"/></a></h3>
+        <p>Reference to the mob that is being tracked / scanned</p><h2 id="proc">Proc Details</h2><h3 id="proc/construct_overlay"><aside class="declaration">proc </aside>construct_overlay<aside>(state_to_use, color_to_use, y_offset) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L311">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 311"/></a></aside>
+        </h3>
+        <p>Helper to construct an overlay for the vitals display</p>
+<ul>
+<li>state_to_use - icon state to use, required</li>
+<li>color_to_use - color to use, optional</li>
+<li>y_offset - offset to apply to the y position of the overlay, defaults to 0</li>
+</ul><h3 id="proc/find_active_patient"><aside class="declaration">proc </aside>find_active_patient<aside>(scan_attempts) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L361">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 361"/></a></aside>
+        </h3>
+        <p>Recursively checks all nearby machines to find a patient to track.</p>
+<p>This can (and should be) signal driven in the future, but machines don't have a set_occupant proc yet,
+so this will do for the moment.</p>
+<ul>
+<li>scan_attempts - number of times this has been called, used to prevent infinite loops</li>
+</ul><h3 id="proc/get_humanoid_overlays"><aside class="declaration">proc </aside>get_humanoid_overlays<aside>(hp_color) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L182">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 182"/></a></aside>
+        </h3>
+        <p>Returns all overlays to be shown when a humanoid patient is detected</p>
+<ul>
+<li>hp_color - color being used for general, overrall health</li>
+</ul><h3 id="proc/get_scanning_overlays"><aside class="declaration">proc </aside>get_scanning_overlays<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L158">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 158"/></a></aside>
+        </h3>
+        <p>Returns overlays to be used when active but without a patient detected</p><h3 id="proc/get_simple_mob_overlays"><aside class="declaration">proc </aside>get_simple_mob_overlays<aside>(hp_color) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L169">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 169"/></a></aside>
+        </h3>
+        <p>Returns all overlays to be shown when a simple / basic animal patient is detected</p>
+<ul>
+<li>hp_color - color being used for general, overrall health</li>
+</ul><h3 id="proc/percent_to_bar"><aside class="declaration">proc </aside>percent_to_bar<aside>(percent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L276">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 276"/></a></aside>
+        </h3>
+        <p>Converts a percentage to a bar icon state</p><h3 id="proc/percent_to_color"><aside class="declaration">proc </aside>percent_to_color<aside>(percent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L257">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 257"/></a></aside>
+        </h3>
+        <p>Converts a percentage to a color</p><h3 id="proc/set_patient"><aside class="declaration">proc </aside>set_patient<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/new_patient) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L388">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 388"/></a></aside>
+        </h3>
+        <p>Sets the passed mob as the active patient
+If there is already a patient, it will be unset first.</p><h3 id="proc/toggle_active"><aside class="declaration">proc </aside>toggle_active<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L342">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 342"/></a></aside>
+        </h3>
+        <p>Toggles whether the display is active or not</p><h3 id="proc/unset_patient"><aside class="declaration">proc </aside>unset_patient<aside>(...) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L405">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 405"/></a></aside>
+        </h3>
+        <p>Unset the current patient.</p><h3 id="proc/update_overlay_on_signal"><aside class="declaration">proc </aside>update_overlay_on_signal<aside>(...) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/blood_datum/vital_monitor/vital_reader.dm#L427">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;blood_datum&#x2F;vital_monitor&#x2F;vital_reader.dm 427"/></a></aside>
+        </h3>
+        <p>Signal proc to update the display when a signal is received.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

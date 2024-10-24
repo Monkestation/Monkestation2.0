@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;regenerative_extract - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/regenerative_extract.html#var">Var Details</a></header>
+<main>
+<h1>regenerative_extract <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/regenerative_extract.html">regenerative_extract</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/base_healing_amt">base_healing_amt</a></th><td>The damage healed (for each type) per tick.
+This is multipled against the multiplier derived from cooldowns.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/diminish_time">diminish_time</a></th><td>How long the subsequent cooldown effect will last.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/diminishing_multiplier">diminishing_multiplier</a></th><td>The multiplier that the cooldown applied after the effect ends will use.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/extra_traits">extra_traits</a></th><td>Extra traits given to the owner, added to the base traits.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/given_traits">given_traits</a></th><td>Base traits given to the owner.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/multiplier">multiplier</a></th><td>The number multiplied against the base healing amount,
+used for the &quot;diminishing returns&quot; cooldown effect.</td></tr>
+            <tr><th><a href="datum/status_effect/regenerative_extract.html#var/nutrition_heal_cap">nutrition_heal_cap</a></th><td>The maximum nutrition level this regenerative extract can heal up to.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/base_healing_amt"><aside class="declaration">var </aside>base_healing_amt
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 10"/></a></h3>
+        <p>The damage healed (for each type) per tick.
+This is multipled against the multiplier derived from cooldowns.</p><h3 id="var/diminish_time"><aside class="declaration">var </aside>diminish_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 17"/></a></h3>
+        <p>How long the subsequent cooldown effect will last.</p><h3 id="var/diminishing_multiplier"><aside class="declaration">var </aside>diminishing_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 15"/></a></h3>
+        <p>The multiplier that the cooldown applied after the effect ends will use.</p><h3 id="var/extra_traits"><aside class="declaration">var </aside>extra_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L25">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 25"/></a></h3>
+        <p>Extra traits given to the owner, added to the base traits.</p><h3 id="var/given_traits"><aside class="declaration">var </aside>given_traits
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 21"/></a></h3>
+        <p>Base traits given to the owner.</p><h3 id="var/multiplier"><aside class="declaration">var </aside>multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 13"/></a></h3>
+        <p>The number multiplied against the base healing amount,
+used for the &quot;diminishing returns&quot; cooldown effect.</p><h3 id="var/nutrition_heal_cap"><aside class="declaration">var </aside>nutrition_heal_cap
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/slimecore/crossbreeding/regenerative/effect.dm#L19">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;slimecore&#x2F;crossbreeding&#x2F;regenerative&#x2F;effect.dm 19"/></a></h3>
+        <p>The maximum nutrition level this regenerative extract can heal up to.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

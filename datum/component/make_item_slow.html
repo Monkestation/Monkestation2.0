@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;make_item_slow - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/make_item_slow.html#var">Var Details</a> - <a href="datum/component/make_item_slow.html#proc">Proc Details</a></header>
+<main>
+<h1>make_item_slow <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/make_item_slow.html">make_item_slow</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 5"/></a></h1>
+
+<p>Simple component that handles making an item slow the person holding it,
+as well as reverting it to its prior state when deleted.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/make_item_slow.html#var/applied_slowdown">applied_slowdown</a></th><td>The amount of slowdown applied to the item.</td></tr>
+            <tr><th><a href="datum/component/make_item_slow.html#var/initial_slowdown">initial_slowdown</a></th><td>The slowdown of [parent] before the component was applied.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/make_item_slow.html#proc/InheritComponent">InheritComponent</a></th><td>If this component is applied to a parent that already has the same typer component, just update the slowness to the new value.</td></tr>
+            <tr><th><a href="datum/component/make_item_slow.html#proc/make_slow">make_slow</a></th><td>Apply our slowness to the attatched item.</td></tr>
+            <tr><th><a href="datum/component/make_item_slow.html#proc/revert_slow">revert_slow</a></th><td>Remove our slowness from the attatched item.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/applied_slowdown"><aside class="declaration">var </aside>applied_slowdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L8">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 8"/></a></h3>
+        <p>The amount of slowdown applied to the item.</p><h3 id="var/initial_slowdown"><aside class="declaration">var </aside>initial_slowdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 10"/></a></h3>
+        <p>The slowdown of [parent] before the component was applied.</p><h2 id="proc">Proc Details</h2><h3 id="proc/InheritComponent"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/InheritComponent">&uarr;</a></aside>InheritComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/make_item_slow.html">make_item_slow</a>/passed_component, original, applied_slowdown) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L33">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 33"/></a></aside>
+        </h3>
+        <p>If this component is applied to a parent that already has the same typer component, just update the slowness to the new value.</p><h3 id="proc/make_slow"><aside class="declaration">proc </aside>make_slow<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L40">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 40"/></a></aside>
+        </h3>
+        <p>Apply our slowness to the attatched item.</p><h3 id="proc/revert_slow"><aside class="declaration">proc </aside>revert_slow<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/components/make_item_slow.dm#L53">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;components&#x2F;make_item_slow.dm 53"/></a></aside>
+        </h3>
+        <p>Remove our slowness from the attatched item.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

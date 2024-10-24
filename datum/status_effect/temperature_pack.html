@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;temperature_pack - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/temperature_pack.html#var">Var Details</a> - <a href="datum/status_effect/temperature_pack.html#proc">Proc Details</a></header>
+<main>
+<h1>temperature_pack <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/temperature_pack.html">temperature_pack</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L2">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 2"/></a></h1>
+
+<p>Status effects applied when pressing a hot or cold item onto a bodypart, to soothe pain.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/holder">holder</a></th><td>The mob holding the [pressed_item] to [owner]. Can be [owner].</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/pain_heal_amount">pain_heal_amount</a></th><td>The amount we heal per tick. Positive number.</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/pain_modifier">pain_modifier</a></th><td>The pain modifier placed on the limb.</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/pressed_item">pressed_item</a></th><td>The item we're using to heal pain.</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/targeted_zone">targeted_zone</a></th><td>The zone we're healing.</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#var/temperature_change">temperature_change</a></th><td>The change in temperature while applied.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#proc/check_adjacency">check_adjacency</a></th><td>Check on move whether [holder] is still adjacent to [owner].</td></tr>
+            <tr><th><a href="datum/status_effect/temperature_pack.html#proc/stop_effects">stop_effects</a></th><td>Stop the effects of this status effect, deleting it, and sending a message if [silent] is TRUE.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/holder"><aside class="declaration">var </aside>holder
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 12"/></a></h3>
+        <p>The mob holding the [pressed_item] to [owner]. Can be [owner].</p><h3 id="var/pain_heal_amount"><aside class="declaration">var </aside>pain_heal_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L16">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 16"/></a></h3>
+        <p>The amount we heal per tick. Positive number.</p><h3 id="var/pain_modifier"><aside class="declaration">var </aside>pain_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L18">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 18"/></a></h3>
+        <p>The pain modifier placed on the limb.</p><h3 id="var/pressed_item"><aside class="declaration">var </aside>pressed_item
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 10"/></a></h3>
+        <p>The item we're using to heal pain.</p><h3 id="var/targeted_zone"><aside class="declaration">var </aside>targeted_zone
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L14">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 14"/></a></h3>
+        <p>The zone we're healing.</p><h3 id="var/temperature_change"><aside class="declaration">var </aside>temperature_change
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 20"/></a></h3>
+        <p>The change in temperature while applied.</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_adjacency"><aside class="declaration">proc </aside>check_adjacency<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L92">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 92"/></a></aside>
+        </h3>
+        <p>Check on move whether [holder] is still adjacent to [owner].</p><h3 id="proc/stop_effects"><aside class="declaration">proc </aside>stop_effects<aside>(/<a href="datum.html">datum</a>/source, silent) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/can_spessmen_feel_pain/pain/status_effects/temp_pack.dm#L101">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;can_spessmen_feel_pain&#x2F;pain&#x2F;status_effects&#x2F;temp_pack.dm 101"/></a></aside>
+        </h3>
+        <p>Stop the effects of this status effect, deleting it, and sending a message if [silent] is TRUE.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

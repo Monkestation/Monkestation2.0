@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/~monkestation/living.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/~monkestation/living.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/COMSIG_LIVING_SET_PULL_OFFSET">COMSIG_LIVING_SET_PULL_OFFSET</a></th><td>from base of living/set_pull_offset(): (mob/living/pull_target, grab_state)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/COMSIG_LIVING_RESET_PULL_OFFSETS">COMSIG_LIVING_RESET_PULL_OFFSETS</a></th><td>from base of living/reset_pull_offsets(): (mob/living/pull_target, override)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/COMSIG_LIVING_CAN_ALLOW_THROUGH">COMSIG_LIVING_CAN_ALLOW_THROUGH</a></th><td>from base of living/CanAllowThrough(): (atom/movable/mover, border_dir)</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/COMPONENT_LIVING_PASSABLE">COMPONENT_LIVING_PASSABLE</a></th><td>Allow to movable atoms to pass through this living mob</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/IS_RIGHT">IS_RIGHT</a></th><td>Checks if the value is &quot;left&quot;
+Used primarily for hand or foot indexes</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/IS_LEFT">IS_LEFT</a></th><td>Checks if the value is &quot;right&quot;
+Used primarily for hand or foot indexes</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/SELECT_LEFT_OR_RIGHT">SELECT_LEFT_OR_RIGHT</a></th><td>Helper for picking between left or right when given a value
+Used primarily for hand or foot indexes</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/living.html#define/MAX_OXYLOSS">MAX_OXYLOSS</a></th><td>Calculates oxyloss cap</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/COMPONENT_LIVING_PASSABLE"><aside class="declaration">#define </aside>COMPONENT_LIVING_PASSABLE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 8"/></a>
+    </h3>
+    <p>Allow to movable atoms to pass through this living mob</p><h3 id="define/COMSIG_LIVING_CAN_ALLOW_THROUGH"><aside class="declaration">#define </aside>COMSIG_LIVING_CAN_ALLOW_THROUGH
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 6"/></a>
+    </h3>
+    <p>from base of living/CanAllowThrough(): (atom/movable/mover, border_dir)</p><h3 id="define/COMSIG_LIVING_RESET_PULL_OFFSETS"><aside class="declaration">#define </aside>COMSIG_LIVING_RESET_PULL_OFFSETS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 4"/></a>
+    </h3>
+    <p>from base of living/reset_pull_offsets(): (mob/living/pull_target, override)</p><h3 id="define/COMSIG_LIVING_SET_PULL_OFFSET"><aside class="declaration">#define </aside>COMSIG_LIVING_SET_PULL_OFFSET
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 2"/></a>
+    </h3>
+    <p>from base of living/set_pull_offset(): (mob/living/pull_target, grab_state)</p><h3 id="define/IS_LEFT"><aside class="declaration">#define </aside>IS_LEFT
+            <aside>(value)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 15"/></a>
+    </h3>
+    <p>Checks if the value is &quot;right&quot;
+Used primarily for hand or foot indexes</p><h3 id="define/IS_RIGHT"><aside class="declaration">#define </aside>IS_RIGHT
+            <aside>(value)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 12"/></a>
+    </h3>
+    <p>Checks if the value is &quot;left&quot;
+Used primarily for hand or foot indexes</p><h3 id="define/MAX_OXYLOSS"><aside class="declaration">#define </aside>MAX_OXYLOSS
+            <aside>(maxHealth)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 22"/></a>
+    </h3>
+    <p>Calculates oxyloss cap</p><h3 id="define/SELECT_LEFT_OR_RIGHT"><aside class="declaration">#define </aside>SELECT_LEFT_OR_RIGHT
+            <aside>(value, left, right)</aside>
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/living.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;living.dm 18"/></a>
+    </h3>
+    <p>Helper for picking between left or right when given a value
+Used primarily for hand or foot indexes</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

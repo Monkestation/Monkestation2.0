@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/~monkestation/clock_cult.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/~monkestation/clock_cult.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_BASE">ARK_STATE_BASE</a></th><td>base state the ark is created in, any state besides this will be a hostile environment</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_CHARGING">ARK_STATE_CHARGING</a></th><td>state for the grace period after the cult has reached its member count max and have enough activing anchoring crystals to summon</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_GRACE">ARK_STATE_GRACE</a></th><td>state for after the cult has been annouced and are preparing for the portals to open</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_ACTIVE">ARK_STATE_ACTIVE</a></th><td>state for the first half of the assault</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_SUMMONING">ARK_STATE_SUMMONING</a></th><td>state for the halfway point of ark activation</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_STATE_FINAL">ARK_STATE_FINAL</a></th><td>the ark has either finished opening or been destroyed in this state</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/MAX_IMPORTANT_CLOCK_DAMAGE">MAX_IMPORTANT_CLOCK_DAMAGE</a></th><td>max damage taken per hit by &quot;important&quot; clock structures</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ANCHORING_CRYSTALS_TO_SUMMON">ANCHORING_CRYSTALS_TO_SUMMON</a></th><td>how many anchoring crystals need to be active before the ark can open</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/REEBE_MAP_PATH">REEBE_MAP_PATH</a></th><td>the map path of the reebe map</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ANCHORING_CRYSTAL_COOLDOWN">ANCHORING_CRYSTAL_COOLDOWN</a></th><td>how long between uses of the anchoring crystal scripture, also how long the hostile environment lasts if the crystal is not destroyed</td></tr>
+        <tr><th><a href="code/__DEFINES/~monkestation/clock_cult.html#define/ARK_TURF_DESTRUCTION_BLOCK_RANGE">ARK_TURF_DESTRUCTION_BLOCK_RANGE</a></th><td>up to how many tiles away will the ark stop certain things from breaking turfs</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ANCHORING_CRYSTALS_TO_SUMMON"><aside class="declaration">#define </aside>ANCHORING_CRYSTALS_TO_SUMMON
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 27"/></a>
+    </h3>
+    <p>how many anchoring crystals need to be active before the ark can open</p><h3 id="define/ANCHORING_CRYSTAL_COOLDOWN"><aside class="declaration">#define </aside>ANCHORING_CRYSTAL_COOLDOWN
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 33"/></a>
+    </h3>
+    <p>how long between uses of the anchoring crystal scripture, also how long the hostile environment lasts if the crystal is not destroyed</p><h3 id="define/ARK_STATE_ACTIVE"><aside class="declaration">#define </aside>ARK_STATE_ACTIVE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 17"/></a>
+    </h3>
+    <p>state for the first half of the assault</p><h3 id="define/ARK_STATE_BASE"><aside class="declaration">#define </aside>ARK_STATE_BASE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 11"/></a>
+    </h3>
+    <p>base state the ark is created in, any state besides this will be a hostile environment</p><h3 id="define/ARK_STATE_CHARGING"><aside class="declaration">#define </aside>ARK_STATE_CHARGING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 13"/></a>
+    </h3>
+    <p>state for the grace period after the cult has reached its member count max and have enough activing anchoring crystals to summon</p><h3 id="define/ARK_STATE_FINAL"><aside class="declaration">#define </aside>ARK_STATE_FINAL
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 21"/></a>
+    </h3>
+    <p>the ark has either finished opening or been destroyed in this state</p><h3 id="define/ARK_STATE_GRACE"><aside class="declaration">#define </aside>ARK_STATE_GRACE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 15"/></a>
+    </h3>
+    <p>state for after the cult has been annouced and are preparing for the portals to open</p><h3 id="define/ARK_STATE_SUMMONING"><aside class="declaration">#define </aside>ARK_STATE_SUMMONING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 19"/></a>
+    </h3>
+    <p>state for the halfway point of ark activation</p><h3 id="define/ARK_TURF_DESTRUCTION_BLOCK_RANGE"><aside class="declaration">#define </aside>ARK_TURF_DESTRUCTION_BLOCK_RANGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 36"/></a>
+    </h3>
+    <p>up to how many tiles away will the ark stop certain things from breaking turfs</p><h3 id="define/MAX_IMPORTANT_CLOCK_DAMAGE"><aside class="declaration">#define </aside>MAX_IMPORTANT_CLOCK_DAMAGE
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 24"/></a>
+    </h3>
+    <p>max damage taken per hit by &quot;important&quot; clock structures</p><h3 id="define/REEBE_MAP_PATH"><aside class="declaration">#define </aside>REEBE_MAP_PATH
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/code/__DEFINES/~monkestation/clock_cult.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;~monkestation&#x2F;clock_cult.dm 30"/></a>
+    </h3>
+    <p>the map path of the reebe map</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

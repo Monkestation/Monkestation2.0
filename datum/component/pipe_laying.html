@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;pipe_laying - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/pipe_laying.html#var">Var Details</a> - <a href="datum/component/pipe_laying.html#proc">Proc Details</a></header>
+<main>
+<h1>pipe_laying <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/pipe_laying.html">pipe_laying</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L1">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/building_pipes">building_pipes</a></th><td>Boolean on whether pipes are currently being built, to prevent spam and/or other players.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/current_target_weakref">current_target_weakref</a></th><td>A weakref to the tile currently being targeted by the lockon component.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/lockon_component">lockon_component</a></th><td>A ref to our lockon component, which is created and destroyed on activation and deactivation.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/part_hub">part_hub</a></th><td>The extraction part hub that owns the whole pipe layers, including ones we make.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/pipe_overlay_appearance">pipe_overlay_appearance</a></th><td>The overlay put in the path of where our cursor is hovering, to tell where pipes will be built.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/pipe_placer">pipe_placer</a></th><td>The user that is placing the pipes, and ahs the lock on component.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/pipe_placing">pipe_placing</a></th><td>The pipe dispenser we're checking for placing pipes.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/start_one_tile_ahead">start_one_tile_ahead</a></th><td>Boolean on whether the pipe needs to start a tile in front of parent when building.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#var/turfs_hovering">turfs_hovering</a></th><td>List of all turfs that is currently being hovered over, and has the pipe overlay appearance.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/build_pipes">build_pipes</a></th><td>#build_pipes</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/clear_click_catch">clear_click_catch</a></th><td>Removes all overlays and clears the list of turfs, essentially resetting the component back to default,
+ready to use again later (if possible).</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/holding_pipe_check">holding_pipe_check</a></th><td>Checks if the user is still holding the pipe dispenser that they started the task with in the first place.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/on_attackby">on_attackby</a></th><td>Called when attacking this with an item
+If it's a pipe dispenser, we'll set the user and pipe dispenser,
+and give the lock on component so we can listen in on where they are trying
+to build.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/on_catcher_click">on_catcher_click</a></th><td>Called when the user clicks on something, which we just redirect to build pipes.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/on_dispenser_move">on_dispenser_move</a></th><td>Called when the pipe dispenser moves at all, which includes in the inventory and/or being dropped, instantly clearing everything.
+do_after in build_pipes will cancel itself out, but this also works while you're simply in the stage of looking where to place the pipes down.</td></tr>
+            <tr><th><a href="datum/component/pipe_laying.html#proc/on_lockon_component">on_lockon_component</a></th><td>Called when the lock on component sets their target to what the cursor is hovering over.
+We'll get the path to said target from parent, and give them a general idea of where
+the pipes they are trying to place will be built via an overlay.
+We'll only give this overlay if it doesn't already have it, and only remove it if it's no longer supposed to,
+this is to prevent a 'flashing' effect for tiles that already have the overlay but are supposed to keep it.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/building_pipes"><aside class="declaration">var </aside>building_pipes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L12">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 12"/></a></h3>
+        <p>Boolean on whether pipes are currently being built, to prevent spam and/or other players.</p><h3 id="var/current_target_weakref"><aside class="declaration">var </aside>current_target_weakref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L15">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 15"/></a></h3>
+        <p>A weakref to the tile currently being targeted by the lockon component.</p><h3 id="var/lockon_component"><aside class="declaration">var </aside>lockon_component
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/lock_on_cursor.html">lock_on_cursor</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 17"/></a></h3>
+        <p>A ref to our lockon component, which is created and destroyed on activation and deactivation.</p><h3 id="var/part_hub"><aside class="declaration">var </aside>part_hub
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/structure/plasma_extraction_hub/part.html">structure/plasma_extraction_hub/part</a>/<a href="obj/structure/plasma_extraction_hub/part/pipe.html">pipe</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 7"/></a></h3>
+        <p>The extraction part hub that owns the whole pipe layers, including ones we make.</p><h3 id="var/pipe_overlay_appearance"><aside class="declaration">var </aside>pipe_overlay_appearance
+            <aside>&ndash; /static/mutable_appearance</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 24"/></a></h3>
+        <p>The overlay put in the path of where our cursor is hovering, to tell where pipes will be built.</p><h3 id="var/pipe_placer"><aside class="declaration">var </aside>pipe_placer
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 5"/></a></h3>
+        <p>The user that is placing the pipes, and ahs the lock on component.</p><h3 id="var/pipe_placing"><aside class="declaration">var </aside>pipe_placing
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/pipe_dispenser.html">pipe_dispenser</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 3"/></a></h3>
+        <p>The pipe dispenser we're checking for placing pipes.</p><h3 id="var/start_one_tile_ahead"><aside class="declaration">var </aside>start_one_tile_ahead
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L10">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 10"/></a></h3>
+        <p>Boolean on whether the pipe needs to start a tile in front of parent when building.</p><h3 id="var/turfs_hovering"><aside class="declaration">var </aside>turfs_hovering
+            <aside>&ndash; /list/turf</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L20">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 20"/></a></h3>
+        <p>List of all turfs that is currently being hovered over, and has the pipe overlay appearance.</p><h2 id="proc">Proc Details</h2><h3 id="proc/build_pipes"><aside class="declaration">proc </aside>build_pipes<aside>(/<a href="turf.html">turf</a>/ending_location, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L138">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 138"/></a></aside>
+        </h3>
+        <p>#build_pipes</p>
+<p>This is in several steps.
+Basically, we start off by getting the path from parent to the ending location, then we check if said path exists.
+If the path exists, we'll start manually placing every pipe down like this:</p>
+<ul>
+<li>Check if there's a plasma geyser - if so, we'll place a plasma ending pipe there and stop.</li>
+<li>Place an extraction pipe down, everything beyond this is purely just for direction handling.</li>
+<li>Check if it's the last one in the list, if so then we won't curve, we'll simply take the direction of the previous pipe and copy it.</li>
+<li>Otherwise, we'll check if it's the first one in the list, if so then we'll take the direction of the hub and place it.</li>
+<li>If it's neither, then we'll check the direction of the next and previous pipe, and place it accordingly, so diagonals work.
+Once this is all done, we'll check if our starting point has been a pipe, if so then we'll modify it to fit the direction of the pipe we placed down, to fit.</li>
+</ul>
+<p>Once all pipes are built, we'll give the component to keep this construction chain going to the last pipe built, and delete ourselves.
+That is, if we haven't placed the last pipe (at a geyser), and actually placed something down (in which case, we do nothing).</p><h3 id="proc/clear_click_catch"><aside class="declaration">proc </aside>clear_click_catch<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L101">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 101"/></a></aside>
+        </h3>
+        <p>Removes all overlays and clears the list of turfs, essentially resetting the component back to default,
+ready to use again later (if possible).</p><h3 id="proc/holding_pipe_check"><aside class="declaration">proc </aside>holding_pipe_check<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L215">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 215"/></a></aside>
+        </h3>
+        <p>Checks if the user is still holding the pipe dispenser that they started the task with in the first place.</p><h3 id="proc/on_attackby"><aside class="declaration">proc </aside>on_attackby<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/weapon, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L52">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 52"/></a></aside>
+        </h3>
+        <p>Called when attacking this with an item
+If it's a pipe dispenser, we'll set the user and pipe dispenser,
+and give the lock on component so we can listen in on where they are trying
+to build.</p><h3 id="proc/on_catcher_click"><aside class="declaration">proc </aside>on_catcher_click<aside>(/<a href="turf.html">turf</a>/location, control, params, user) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L115">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 115"/></a></aside>
+        </h3>
+        <p>Called when the user clicks on something, which we just redirect to build pipes.</p><h3 id="proc/on_dispenser_move"><aside class="declaration">proc </aside>on_dispenser_move<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/mover, /<a href="atom.html">atom</a>/oldloc, direction) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L221">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 221"/></a></aside>
+        </h3>
+        <p>Called when the pipe dispenser moves at all, which includes in the inventory and/or being dropped, instantly clearing everything.
+do_after in build_pipes will cancel itself out, but this also works while you're simply in the stage of looking where to place the pipes down.</p><h3 id="proc/on_lockon_component"><aside class="declaration">proc </aside>on_lockon_component<aside>(/list/locked_weakrefs) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2ddb49cc97be5eb6907799ed79999f27931a35e5/monkestation/code/modules/map_gen_expansions/mushroom/extraction/components/pipe_layer.dm#L75">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;map_gen_expansions&#x2F;mushroom&#x2F;extraction&#x2F;components&#x2F;pipe_layer.dm 75"/></a></aside>
+        </h3>
+        <p>Called when the lock on component sets their target to what the cursor is hovering over.
+We'll get the path to said target from parent, and give them a general idea of where
+the pipes they are trying to place will be built via an overlay.
+We'll only give this overlay if it doesn't already have it, and only remove it if it's no longer supposed to,
+this is to prevent a 'flashing' effect for tiles that already have the overlay but are supposed to keep it.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2ddb49cc97be5eb6907799ed79999f27931a35e5">2ddb49c</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
