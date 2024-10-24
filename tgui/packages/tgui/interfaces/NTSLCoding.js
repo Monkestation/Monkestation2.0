@@ -62,10 +62,20 @@ const ScriptEditor = (props) => {
 
 const MainMenu = (props) => {
   const { act, data } = useBackend();
-  const { emagged, user_name } = data;
+  const { emagged, user_name, admin_view } = data;
   const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
   return (
     <>
+      {admin_view === 1 ? (
+        <Button
+          icon="power-off"
+          color="red"
+          content="!!!(ADMIN) reset code and compile!!!"
+          onClick={() => act('admin_reset')}
+        />
+      ) : (
+        ''
+      )}
       <Section width="240px">
         {user_name ? (
           <Stack>

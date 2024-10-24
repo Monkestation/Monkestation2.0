@@ -94,10 +94,30 @@
 	data["access_log"] = access_log.Copy()
 	data["compiler_output"] = compiler_output.Copy()
 	data["emagged"] = ((obj_flags & EMAGGED) > 0)
+
+	data["admin_view"] = FALSE
+	if(user.client.holder) // enables an admin-only button in case of severe grief
+		data["admin_view"] = TRUE
+
 	return data
 
 /obj/machinery/computer/telecomms/traffic/ui_act(action, list/params)
 	. = ..()
+	if(action == "admin_reset") // something to note, this will runtime when clicked on by an admin ghost. But still works.
+		if(!usr.client.holder)
+			message_admins("[key_name_admin(usr)] has attempted to call \"admin_reset\" on a traffic console, this should not be possible as a non-admin and could have been an attempted javascript injection.")
+			return
+		network = "tcommsat"
+		refresh_servers()
+		for(var/obj/machinery/telecomms/server/server as anything in servers)
+			server.rawcode = "def process_signal(sig){ return sig;" // bare minimum
+		qdel(compiler_output)
+		compiler_output = compile_all(usr)
+		var/message = "[key_name_admin(usr)] has completelly cleared the NTSL console of code and re-compiled as an admin, this should only be done in severe rule infractions."
+		message_admins(message)
+		logger.Log(LOG_NTSL, "[key_name(src)] [message] [loc_name(src)]")
+		access_log += "\[[get_timestamp()]\] ERR !NTSL REMOTELLY CLEARED BY NANOTRASEN STAFF!"
+		return TRUE
 	if(.)
 		return
 
