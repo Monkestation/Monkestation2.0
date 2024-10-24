@@ -193,7 +193,7 @@
 			<li>The "DNA data disk" inside is actually a sophisticated device that can be used to hijack an experimental cloner, giving the clones a directive they must follow.</li>\
 			<li>In order to use this disk, use it in your hand, and input your desired directive, before hitting the cloner with the disk. You can input and upload a new objective to replace the old one if you ever feel like it, the disk is infinitely reusable.</li>\
 			<li>The clones will be given basic access, including syndicate, maintenance, genetics, and mineral storage. They will also be given an implanted syndicate radio and automatically taught codespeak. Syndicate turrets and the like will recognize the clones as a member of the syndicate.</li>\
-			<li>Be wary, the clones will have obviously evil red eyes, which will alert anyone who sees them with no eye covering that something is wrong with them. Also, don't try to use this on newer cloning models, Nanotrasen fixed the vulnerability that lets the disk work in their newer models.</li>\
+			<li>Don't try to use this on newer cloning models, Nanotrasen fixed the vulnerability that lets the disk work in their newer models.</li>\
 			<li>When hacked, a cloner will begin to operate slower, and anyone who examines it closely will be able to see that the cloner is malfunctioning.</li>\
 			<li>A tip, any activated mutations in the person being scanned, will be present in the clones produced, allowing you to give the clones some intrinsic powers. Make sure to use activators, not mutators.</li>\
 			</ul>
