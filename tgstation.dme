@@ -7140,6 +7140,7 @@
 #include "monkestation\code\modules\jobs\job_types\head_of_security.dm"
 #include "monkestation\code\modules\jobs\job_types\psychologist.dm"
 #include "monkestation\code\modules\jobs\job_types\security_assistant.dm"
+#include "monkestation\code\modules\jobs\job_types\shaft_miner.dm"
 #include "monkestation\code\modules\jobs\job_types\skeleton.dm"
 #include "monkestation\code\modules\jobs\job_types\yellowclown.dm"
 #include "monkestation\code\modules\library\bookcase.dm"
