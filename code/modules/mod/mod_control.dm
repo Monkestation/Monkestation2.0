@@ -560,7 +560,7 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-	if(active)
+	if(active && new_module.has_required_parts(mod_parts, need_extended = TRUE))
 		new_module.on_suit_activation()
 	if(user)
 		balloon_alert(user, "[new_module] added")
@@ -657,8 +657,6 @@
 			part.forceMove(src)
 			return
 		retract(wearer, part)
-		if(active)
-			INVOKE_ASYNC(src, PROC_REF(toggle_activate), wearer, TRUE)
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER

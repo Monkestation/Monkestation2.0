@@ -936,6 +936,9 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
 
+/// We need gloves to layer on top of modsuit chestplates because we need the hole in the suit filled in if the user lacks a limb
+#define MOD_CHESTPLATE_LAYER (GLOVES_LAYER+0.5)
+
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
 /// If reading is required to perform action (can't read a book if you are illiterate)
