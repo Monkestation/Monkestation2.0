@@ -109,9 +109,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SLIME, 0.5, -11)
 	AddElement(/datum/element/soft_landing)
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_CAREFUL_STEPS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_LIGHTWEIGHT, INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_CAREFUL_STEPS, TRAIT_LIGHTWEIGHT), INNATE_TRAIT)
 
 	if(!passed_color)
 		current_color = new current_color
@@ -155,10 +153,7 @@
 		COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET),
 		))
 
-	for(var/datum/slime_mutation_data/mutation as anything in possible_color_mutations)
-		possible_color_mutations -= mutation
-		qdel(mutation)
-
+	QDEL_LIST(possible_color_mutations)
 	QDEL_NULL(current_color)
 	return ..()
 
@@ -269,21 +264,18 @@
 		icon_state = icon_dead
 
 	update_name()
-	if(!chemical_injection)
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
-	else
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection, ooze_production, 10 SECONDS)
+	SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection || current_color.secretion_path, ooze_production, 10 SECONDS)
 
 /mob/living/basic/slime/update_overlays()
 	. = ..()
 	if(worn_accessory)
 		if(slime_flags & ADULT_SLIME)
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
+			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
 		else
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
+			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
 
 /mob/living/basic/slime/proc/check_secretion()
-	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & STORED_SLIME) || (slime_flags & MUTATING_SLIME) || (slime_flags & NOOOZE_SLIME))
+	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & (STORED_SLIME | MUTATING_SLIME | NOOOZE_SLIME)))
 		return FALSE
 	if(stat == DEAD)
 		return FALSE
@@ -371,8 +363,11 @@
 		new_slime.add_trait(trait.type)
 	new_slime.recompile_ai_tree()
 
-/mob/living/basic/slime/proc/start_mutating(random = FALSE)
-	if(!pick_mutation(random))
+/mob/living/basic/slime/proc/start_mutating(random = FALSE, force)
+	if(force)
+		mutating_into = force
+		GLOB.mutated_slime_colors[mutating_into.type] = TRUE
+	else if(!pick_mutation(random))
 		return FALSE
 
 	ai_controller.set_ai_status(AI_STATUS_OFF)
@@ -418,14 +413,7 @@
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
 	mutating_into = null
 	var/list/valid_choices = list()
-	for(var/datum/slime_mutation_data/listed as anything in possible_color_mutations)
-		if(!random && !listed.can_mutate)
-			continue
-		if(random && listed.syringe_blocked)
-			continue
-		valid_choices += listed
-		if(!(listed.type in GLOB.mutated_slime_colors))
-			listed.weight *= 100
+	for(var/datum/slime_mutation_data/listed as anything in get_valid_mutations(random))
 		valid_choices[listed] = listed.weight
 	if(!length(valid_choices))
 		return FALSE
@@ -434,14 +422,16 @@
 	if(!picked)
 		return FALSE
 	mutating_into = picked.output
-	if(!(mutating_into.type in GLOB.mutated_slime_colors))
-		GLOB.mutated_slime_colors |= mutating_into.type
+	GLOB.mutated_slime_colors[mutating_into] = TRUE
 	return TRUE
 
 /mob/living/basic/slime/proc/attempt_change(datum/source, hunger_precent)
 	if(slime_flags & NOEVOLVE_SLIME)
 		return
-	if(prob(mutation_chance)) // we try to mutate 30% of the time
+	var/datum/slime_mutation_data/forced_mutation = can_mutate_into_unmutated()
+	if(forced_mutation)
+		start_mutating(force = forced_mutation.output)
+	else if(prob(mutation_chance)) // we try to mutate 30% of the time
 		if(!start_mutating())
 			start_split()
 	else
@@ -484,6 +474,23 @@
 		return FALSE
 	target.reagents.add_reagent(chemical_injection, 3) // guh
 	return TRUE
+
+/mob/living/basic/slime/proc/get_valid_mutations(random = FALSE)
+	. = list()
+	for(var/datum/slime_mutation_data/listed as anything in possible_color_mutations)
+		if(random)
+			if(listed.syringe_blocked)
+				continue
+		else
+			if(!listed.can_mutate)
+				continue
+		. += listed
+
+/mob/living/basic/slime/proc/can_mutate_into_unmutated() as /datum/slime_mutation_data
+	for(var/datum/slime_mutation_data/mutation as anything in get_valid_mutations())
+		if(!GLOB.mutated_slime_colors[mutation.output])
+			return mutation
+	return null
 
 /mob/living/basic/slime/rainbow
 	current_color = /datum/slime_color/rainbow
