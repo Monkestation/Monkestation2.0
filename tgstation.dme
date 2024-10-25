@@ -5940,6 +5940,7 @@
 #include "monkestation\code\game\objects\items\circuitboards\holy_weapons.dm"
 #include "monkestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "monkestation\code\game\objects\items\devices\compression_kit.dm"
+#include "monkestation\code\game\objects\items\devices\pocket_heater.dm"
 #include "monkestation\code\game\objects\items\devices\scanners.dm"
 #include "monkestation\code\game\objects\items\devices\radio\encryptionkey.dm"
 #include "monkestation\code\game\objects\items\devices\radio\headset.dm"
