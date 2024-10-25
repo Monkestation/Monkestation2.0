@@ -9,11 +9,14 @@
 	supervisors = "Central Command"
 	req_admin_notify = 1
 	minimal_player_age = 30
-	exp_requirements = 1200
+	exp_requirements = 3000
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_CENTRAL_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "NANOTRASEN_REPRESENTATIVE"
+
+	allow_bureaucratic_error = FALSE
+	allow_overflow = FALSE
 
 	outfit = /datum/outfit/job/nanotrasen_representative
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
