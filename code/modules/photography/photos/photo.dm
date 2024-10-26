@@ -32,7 +32,6 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
-
 	if(!P.see_ghosts) ///Dont bother with this last bit if we can't see ghosts
 		return
 	for(var/datum/weakref/seen_ref in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
@@ -70,6 +69,8 @@
 		return
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(!user.can_write(P))
+			return
+		if(picture.has_blueprints && user.mind?.has_antag_datum(/datum/antagonist/spy))
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
 		if(txt && user.can_perform_action(src))
