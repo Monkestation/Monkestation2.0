@@ -14,9 +14,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
-	mind_traits = list(TRAIT_NAIVE)
-	liver_traits = list(TRAIT_COMEDY_METABOLISM)
-
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	departments_list = list(
 		/datum/job_department/service,
@@ -38,7 +35,7 @@
 	name = "Barber"
 	jobtype = /datum/job/barber
 
-	id = /obj/item/card/id/service
+	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/job/barber
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 	suit = /obj/item/clothing/suit/toggle/lawyer/purple
@@ -50,10 +47,6 @@
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket =/obj/item/scissors
-
-	backpack = /obj/item/storage/backpack
-	satchel = /obj/item/storage/satchel
-	duffelbag = /obj/item/storage/backpack/duffelbag
 
 	box = /obj/item/storage/box/survival
 
