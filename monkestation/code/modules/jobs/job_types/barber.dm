@@ -6,7 +6,8 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
-	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "BARBER"
+	exp_granted_type = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/barber
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
