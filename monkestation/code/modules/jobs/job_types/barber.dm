@@ -9,22 +9,23 @@
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/barber
-	plasmaman_outfit = /datum/outfit/plasmaman/clown
+	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	departments_list = list(
-		/datum/job_department/service,
+		/datum/job_department/late,
 		)
 
 	mail_goodies = list(
-		/obj/item/food/grown/banana = 100,
-		/obj/item/food/pie/cream = 50,
-		/obj/item/clothing/shoes/clown_shoes/combat = 10,
-		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
-		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
+		/obj/item/reagent_containers/spray/barbers_aid = 100,
+		/obj/item/clothing/head/hair_tie = 50,
+		/obj/item/reagent_containers/spray/baldium = 10, //good way to get valid'd
+		/obj/item/dyespray = 20,
+		/obj/item/lipstick/quantum = 1,
+		/obj/item/reagent_containers/spray/super_barbers_aid = 1,
 	)
 
 	family_heirlooms = list(/obj/item/bikehorn/golden)
@@ -42,6 +43,7 @@
 	backpack_contents = list(
 		/obj/item/razor = 1,
 		/obj/item/reagent_containers/spray/quantum_hair_dye = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
 		)
 	belt = /obj/item/modular_computer/pda/barber
 	ears = /obj/item/radio/headset/headset_srv
