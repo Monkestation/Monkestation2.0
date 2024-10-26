@@ -43,7 +43,7 @@
 		/obj/item/razor = 1,
 		/obj/item/reagent_containers/spray/quantum_hair_dye = 1,
 		)
-	belt = /obj/item/modular_computer/pda/service
+	belt = /obj/item/modular_computer/pda/barber
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket =/obj/item/scissors
