@@ -26,7 +26,7 @@
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
+	head_flags = /obj/item/bodypart/head/moth::head_flags
 
 /obj/item/bodypart/chest/tundramoth
 	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
