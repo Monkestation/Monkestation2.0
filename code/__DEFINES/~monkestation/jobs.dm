@@ -4,3 +4,5 @@
 
 /// Whether this job is enabled/disabled by the spooktober config
 #define JOB_SPOOKTOBER (1<<16)
+
+#define JOB_LATEJOIN_BARBER "BARBER"
