@@ -124,6 +124,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
 	overlay_state_inactive = "module_insignia"
+	mask_worn_overlay = TRUE
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -177,6 +178,7 @@
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
+	step_change = 0.1
 
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
 	. = ..()
@@ -186,12 +188,6 @@
 	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
 	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
-
-/obj/item/mod/module/springlock/bite_of_87/on_install()
-	mod.activation_step_time *= 0.1
-
-/obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
