@@ -242,7 +242,7 @@
 	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
-/datum/antagonist/monsterhunter/proc/insight_gained()
+/datum/antagonist/monsterhunter/proc/insight_gained(datum/source, obj/effect/bnnuy/bnnuy)
 	SIGNAL_HANDLER
 
 	var/description
@@ -269,6 +269,30 @@
 
 	rabbits_spotted++
 	to_chat(owner.current, span_boldnotice("[description]"))
+
+	var/area/bnnuy_area = get_area(bnnuy)
+	switch(rabbits_spotted)
+		if(2)
+			to_chat(owner.current, span_warning("Finding more white rabbits will begin to break the seal between fantasy and reality, alerting the crew."))
+		if(3)
+			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
+			corrupt_surrounding_area(bnnuy, 3)
+		if(4)
+			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
+			corrupt_surrounding_area(bnnuy, 7)
+		if(5)
+			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
+			corrupt_surrounding_area(bnnuy, 9)
+
+/datum/antagonist/monsterhunter/proc/corrupt_surrounding_area(origin, range)
+	var/datum/dimension_theme/wonderland/theme = new
+	var/list/turf/target_turfs = spiral_range_turfs(range, get_turf(origin))
+	for(var/turf/target in target_turfs)
+		if(prob(15))
+			continue
+		theme.apply_theme(target)
+	QDEL_NULL(theme)
+
 
 /datum/objective/assassinate/hunter
 	///has our target been discovered?

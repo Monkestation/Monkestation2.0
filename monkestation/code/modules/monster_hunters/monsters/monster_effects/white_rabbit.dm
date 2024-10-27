@@ -53,7 +53,7 @@
 		return
 	being_used = TRUE
 	spotted(user)
-	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT)
+	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT, src)
 	icon = 'monkestation/icons/bloodsuckers/rabbit.dmi'
 	real_icon_state = "rabbit_hole"
 	pixel_x = 0
