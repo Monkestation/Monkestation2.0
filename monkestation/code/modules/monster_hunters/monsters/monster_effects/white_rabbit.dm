@@ -7,8 +7,7 @@
 	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	appearance_flags = PIXEL_SCALE | KEEP_TOGETHER
-	pixel_x = -240
-	pixel_y = -240
+	SET_BASE_PIXEL(-240, -240)
 	/// The icon state applied to the image created for this rabbit.
 	var/real_icon_state = "bnnuy"
 	/// The antag datum of the monster hunter that can see us.
