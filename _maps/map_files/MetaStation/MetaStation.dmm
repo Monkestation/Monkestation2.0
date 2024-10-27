@@ -7216,12 +7216,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"cFe" = (
-/obj/structure/table,
-/obj/item/food/mint,
-/obj/item/reagent_containers/cup/beaker/large,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "cFp" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -19231,6 +19225,9 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 9
 	},
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gXp" = (
@@ -21357,12 +21354,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"hGK" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/kitchen/rollingpin,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "hGL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -35623,6 +35614,9 @@
 "msT" = (
 /obj/structure/table,
 /obj/item/food/dough,
+/obj/item/knife{
+	pixel_x = -13
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "msW" = (
@@ -52003,6 +51997,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "rXJ" = (
@@ -67355,7 +67350,10 @@
 "xqv" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/storage/bag/tray,
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xqI" = (
@@ -69788,10 +69786,6 @@
 "ykj" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ykn" = (
@@ -105781,8 +105775,8 @@ iJM
 esv
 xbw
 mtX
-hGK
-cFe
+ykj
+gWh
 lPi
 cgR
 uIs
