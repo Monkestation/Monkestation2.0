@@ -270,23 +270,24 @@
 	rabbits_spotted++
 	to_chat(owner.current, span_boldnotice("[description]"))
 
+	var/turf/origin = get_turf(bnnuy)
 	var/area/bnnuy_area = get_area(bnnuy)
 	switch(rabbits_spotted)
 		if(2)
 			to_chat(owner.current, span_warning("Finding more white rabbits will begin to break the seal between fantasy and reality, alerting the crew."))
 		if(3)
 			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
-			corrupt_surrounding_area(bnnuy, 3)
+			INVOKE_ASYNC(src, PROC_REF(corrupt_surrounding_area), origin, 3)
 		if(4)
 			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
-			corrupt_surrounding_area(bnnuy, 7)
+			INVOKE_ASYNC(src, PROC_REF(corrupt_surrounding_area), origin, 7)
 		if(5)
 			priority_announce("Localized reality instabilities detected in [bnnuy_area.name].", "[command_name()] Higher Dimensional Affairs")
-			corrupt_surrounding_area(bnnuy, 9)
+			INVOKE_ASYNC(src, PROC_REF(corrupt_surrounding_area), origin, 9)
 
-/datum/antagonist/monsterhunter/proc/corrupt_surrounding_area(origin, range)
+/datum/antagonist/monsterhunter/proc/corrupt_surrounding_area(turf/origin, range)
 	var/datum/dimension_theme/wonderland/theme = new
-	var/list/turf/target_turfs = spiral_range_turfs(range, get_turf(origin))
+	var/list/turf/target_turfs = spiral_range_turfs(range, origin)
 	for(var/turf/target in target_turfs)
 		if(prob(15))
 			continue
