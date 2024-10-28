@@ -240,3 +240,19 @@
 */
 /datum/quirk/tunnel_vision/remove()
 	quirk_holder.remove_fov_trait("tunnel vision quirk")
+
+/datum/quirk/dnr
+	name = "Do Not Revive"
+	desc = "For whatever reason, you have been blacklisted from revival. Death Is Permanent."
+	value = -6
+	icon = FA_ICON_HEART
+	gain_text = span_danger("You have one shot left.")
+	lose_text = span_notice("Something feels better about your medical record status.")
+	medical_record_text = "Patient cannot be revived whatsoever due to a blacklist from revival. Ensure heightened care."
+
+/datum/quirk/dnr/add()
+	ADD_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
+
+/datum/quirk/dnr/remove()
+	REMOVE_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
+
