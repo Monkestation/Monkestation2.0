@@ -528,6 +528,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
+		"surgery_heal_robot_upgrade", // monkestation edit: robot surgeries
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
@@ -541,6 +542,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade_femto",
 		"surgery_heal_burn_upgrade_femto",
+		"surgery_heal_robot_upgrade_femto", // monkestation edit: robot surgeries
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
@@ -1275,6 +1277,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"s_traffic", // MONKESTATION ADDITION -- NTSL -- The board to actually program in NTSL
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1472,6 +1475,7 @@
 		"triggermod",
 		"mining_scanner",
 		"mat_analyzer",
+		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
