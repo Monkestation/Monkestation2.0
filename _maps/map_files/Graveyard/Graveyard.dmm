@@ -17625,6 +17625,7 @@
 	name = "Cell 3"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "hAE" = (
@@ -23639,6 +23640,7 @@
 /area/station/maintenance/fore/greater)
 "kiO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "kjc" = (
@@ -32741,10 +32743,6 @@
 	dir = 1
 	},
 /area/station/ai_monitored/security/armory)
-"nUi" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/wood,
-/area/station/command/meeting_room/council)
 "nUn" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 4
@@ -33061,7 +33059,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "ocn" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/disposaloutlet{
 	dir = 4;
 	name = "Prisoner Delivery"
@@ -34224,7 +34221,6 @@
 	name = "Cell 4"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
@@ -54207,9 +54203,8 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "xnS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "xnV" = (
@@ -148332,7 +148327,7 @@ rHn
 kWN
 hkA
 xGu
-nUi
+rHn
 iXC
 kta
 kta
