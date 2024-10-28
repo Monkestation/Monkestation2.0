@@ -28,6 +28,8 @@
 	mutantbrain = /obj/item/organ/internal/brain/teratoma
 	mutanttongue = /obj/item/organ/internal/tongue/teratoma
 	mutantliver = /obj/item/organ/internal/liver/teratoma
+	mutantlungs = null
+	mutantappendix = null
 
 	maxhealthmod = 0.75
 	stunmod = 1.4
@@ -86,7 +88,7 @@
 
 /obj/item/organ/internal/liver/teratoma/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	oh_god_why = organ_owner.AddComponent(/datum/component/regenerator/teratoma, health_per_second = 1, ignore_damage_types = list(OXY, STAMINA), outline_colour = COLOR_RED_LIGHT) // ignore oxy damage so they can regen while in crit if you just leave them there
+	oh_god_why = organ_owner.AddComponent(/datum/component/regenerator/teratoma, health_per_second = 1, ignore_damage_types = list(STAMINA), outline_colour = COLOR_RED_LIGHT) // ignore oxy damage so they can regen while in crit if you just leave them there
 	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
@@ -130,4 +132,3 @@
 	var/mob/living/living_parent = parent
 	living_parent.heal_overall_damage(brute = amt, burn = amt, updating_health = FALSE)
 	living_parent.adjustToxLoss(-(amt * 0.5), updating_health = FALSE)
-	living_parent.adjustOxyLoss(-(amt * 2), updating_health = TRUE)
