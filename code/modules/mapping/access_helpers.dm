@@ -51,7 +51,6 @@
 	access_list += ACCESS_MINISAT
 	return access_list
 
-
 /obj/effect/mapping_helpers/airlock/access/any/command/gateway/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_GATEWAY
@@ -277,13 +276,6 @@
 	var/list/access_list = ..()
 	access_list += list(ACCESS_SECURITY, ACCESS_MAINT_TUNNELS)
 	return access_list
-
-/// MONKESTATION EDIT BEGIN
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician/get_access()
-	var/list/access_list = ..()
-	access_list += ACCESS_BRIG_PHYSICIAN
-	return access_list
-/// MONKESTATION EDIT END
 
 // -------------------- Service access helpers
 /obj/effect/mapping_helpers/airlock/access/any/service
