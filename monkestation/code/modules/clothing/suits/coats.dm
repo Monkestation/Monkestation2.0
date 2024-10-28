@@ -54,7 +54,6 @@
 	icon = 'monkestation/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon_state = "coat_signal_tech"
-	inhand_icon_state = "coat_signal_tech"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/signal_tech
 
 /obj/item/clothing/head/hooded/winterhood/engineering/signal_tech
