@@ -14,8 +14,8 @@
 	ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
 
 /datum/antagonist/teratoma/on_removal()
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
+	return ..()
 
 /datum/antagonist/teratoma/greet()
 	var/list/parts = list()
