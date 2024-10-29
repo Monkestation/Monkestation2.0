@@ -124,7 +124,7 @@
 	id = "mod_balloon"
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/mod/module/balloon
-		category = list(
+	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE  // Lore descibes being a mime module
