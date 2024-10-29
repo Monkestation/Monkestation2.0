@@ -4,7 +4,7 @@
 	name = "Bloater Zombie"
 	bodypart_overlay_icon_states = list(BODY_ZONE_CHEST = "bloater-chest", BODY_ZONE_R_ARM = "generic-right-hand", BODY_ZONE_L_ARM = "generic-left-hand")
 	granted_action_types = list(
-		/*/datum/action/cooldown/zombie/melt_wall,*/
+		/datum/action/cooldown/zombie/melt_wall,
 		/datum/action/cooldown/zombie/explode,
 	)
 
@@ -67,6 +67,7 @@
 	button_icon_state = "zombie_vomit"
 	background_icon_state = "bg_zombie"
 	cooldown_time = 10
+	click_to_activate = TRUE
 
 /datum/action/cooldown/zombie/melt_wall/set_click_ability(mob/on_who)
 	. = ..()
