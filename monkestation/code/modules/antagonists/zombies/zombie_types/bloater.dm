@@ -109,7 +109,7 @@
 /datum/action/cooldown/zombie/explode
 	name = "Explode"
 	button_icon_state = "explode"
-	desc = "Trigger the explosive cocktail residing in your body, causing a devastating explosion. Triggers automatically on death."
+	desc = "Trigger the explosive cocktail residing in your body, causing a devastating explosion that infects nearby targets. Triggers automatically on death."
 	check_flags = NONE
 
 /datum/action/cooldown/zombie/explode/Activate(atom/target)
