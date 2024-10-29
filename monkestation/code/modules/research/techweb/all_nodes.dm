@@ -238,7 +238,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 
 // Maint mods
-
 /datum/techweb_node/springlock
 	id = "mod_springlock"
 	display_name = "MOD Springlock Module"

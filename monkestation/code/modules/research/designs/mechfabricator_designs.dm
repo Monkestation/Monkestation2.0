@@ -97,7 +97,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 // Maint modules
-
 /datum/design/module/mod_springlock
 	name = "Springlock Module"
 	id = "mod_springlock"
