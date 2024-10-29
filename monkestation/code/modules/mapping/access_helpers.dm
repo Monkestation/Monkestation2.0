@@ -48,5 +48,5 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_NT_REPRESENTITVE
+	access_list += ACCESS_NT_REPRESENTATVE
 	return access_list
