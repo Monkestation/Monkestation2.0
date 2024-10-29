@@ -308,7 +308,7 @@
 	description = "Become the master of all paperwork, and annoy everyone with ondemand paper airplanes."
 	prereq_ids = list("mod_advanced")
 	design_ids = list(
-		"paper_dispenser",
+		"mod_paper_dispenser",
 	)
 
 	boost_item_paths = list(
