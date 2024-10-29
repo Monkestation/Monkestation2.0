@@ -4,7 +4,7 @@
 	name = "Bloater Zombie"
 	bodypart_overlay_icon_states = list(BODY_ZONE_CHEST = "bloater-chest", BODY_ZONE_R_ARM = "generic-right-hand", BODY_ZONE_L_ARM = "generic-left-hand")
 	granted_action_types = list(
-		/datum/action/cooldown/zombie/melt_wall,
+		/*/datum/action/cooldown/zombie/melt_wall,*/
 		/datum/action/cooldown/zombie/explode,
 	)
 
@@ -30,14 +30,23 @@
 
 	var/infects = 0
 
-	for(var/mob/living/carbon/infectee in oview(4, user))
-		to_chat(infectee, span_userdanger("Some of the gibs flew onto you!"))
+	for(var/mob/living/target in oview(4, user))
+		to_chat(target, span_userdanger("Some of the gibs flew onto you!"))
 
-		var/datum/client_colour/colour = infectee.add_client_colour(/datum/client_colour/bloodlust)
+		var/datum/client_colour/colour = target.add_client_colour(/datum/client_colour/bloodlust)
 		QDEL_IN(colour, 1.1 SECONDS)
 
-		if(!prob(20 + 80 / max(1, get_dist(user, infectee)))) // A minimum of a 40% chance to infect.
+		var/dist = max(1, get_dist(user, target))
+
+		target.adjustBruteLoss(100 / dist)
+		target.adjustFireLoss(50 / dist)
+
+		target.throw_at(get_edge_target_turf(user, get_dir(user, target)), range = 4 / dist, speed = 2, spin = FALSE)
+
+		if(!iscarbon(target) || !prob(20 + 80 / max(1, dist))) // A minimum of a 40% chance to infect.
 			continue
+
+		var/mob/living/carbon/infectee = target
 
 		var/obj/item/organ/internal/zombie_infection/infection
 		infection = infectee.get_organ_slot(ORGAN_SLOT_ZOMBIE)
@@ -50,18 +59,13 @@
 	if(infects > 0)
 		to_chat(user, span_alien("In your final moments, you managed to infect [infects] [infects == 1 ? "person" : "people"]."))
 
-	var/explosion_turf = get_turf(user)
-
 	user.gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE, safe_gib = FALSE)
-
-	explosion(explosion_turf, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, explosion_cause = user)
 
 /datum/action/cooldown/zombie/melt_wall
 	name = "Stomach Acid"
 	desc = "Drench an object in stomach acid, destroying it over time."
 	button_icon_state = "zombie_vomit"
 	background_icon_state = "bg_zombie"
-	overlay_icon_state = "bg_zombie_border"
 	cooldown_time = 10
 
 /datum/action/cooldown/zombie/melt_wall/set_click_ability(mob/on_who)
