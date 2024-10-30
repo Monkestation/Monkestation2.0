@@ -3111,6 +3111,7 @@
 /area/station/engineering/atmos/hallway)
 "bif" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/graveyard/surface/structures/departurepark)
 "bii" = (
@@ -10498,7 +10499,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "egS" = (
-/obj/structure/bodycontainer/crematorium,
+/obj/structure/bodycontainer/crematorium{
+	id = "crematoriumChapel"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/storage)
 "eii" = (
@@ -12441,11 +12444,26 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/east{
-	req_access = list("rd");
+	req_access = list("research");
 	id = "rdoffice";
-	name = "Privacy Control"
+	name = "Privacy Control";
+	pixel_y = 10
 	},
 /obj/effect/turf_decal/tile/dark_purple/fourcorners,
+/obj/machinery/button/door/directional/north{
+	id = "rdlockdown";
+	req_access = list("research");
+	name = "Research Entrances Lockdown";
+	pixel_y = -10;
+	pixel_x = 24
+	},
+/obj/machinery/button/door/directional/north{
+	id = "rdrnd";
+	name = "Research and Development Containment Control";
+	req_access = list("research");
+	pixel_y = 0;
+	pixel_x = 24
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "eVA" = (
@@ -14139,7 +14157,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/firealarm/directional/north,
-/obj/structure/barricade/wooden,
 /turf/open/floor/iron,
 /area/station/science/research)
 "fIY" = (
@@ -26176,7 +26193,7 @@
 /area/station/hallway/primary/central)
 "kAN" = (
 /obj/structure/bodycontainer/morgue{
-	dir = 1
+	dir = 2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/north,
@@ -28467,7 +28484,6 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Library"
 	},
-/obj/structure/barricade/wooden,
 /turf/open/floor/iron,
 /area/station/service/library)
 "ltF" = (
@@ -29887,7 +29903,6 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "lWJ" = (
@@ -29965,7 +29980,15 @@
 /obj/machinery/button/door/directional/east{
 	id = "hosprivacy";
 	name = "Privacy Control";
-	req_access = list("hos")
+	req_access = list("hos");
+	pixel_y = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "secbriglockdown";
+	name = "Brig Lockdown control";
+	pixel_x = 24;
+	req_access = list("armory");
+	pixel_y = -8
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -36291,7 +36314,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "rdrnd";
 	name = "Research and Development Containment Control";
-	req_access = list("security")
+	req_access = list("research")
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
@@ -36985,6 +37008,10 @@
 "oGL" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/transit_tube)
+"oGS" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/misc/asteroid,
+/area/graveyard/tunnels/structures/tunnellounge)
 "oGT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38279,13 +38306,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "pla" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Departure Garden"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/welded,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
+/obj/structure/chair/stool/directional/east,
+/turf/open/misc/asteroid,
+/area/graveyard/tunnels/structures/tunnellounge)
 "plm" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -43401,8 +43424,8 @@
 /obj/machinery/computer/security,
 /obj/machinery/button/door/directional/north{
 	id = "rdlockdown";
-	req_access = list("security");
-	name = "Research Lockdown"
+	req_access = list("research");
+	name = "Research Entrances Lockdown"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
@@ -44259,6 +44282,7 @@
 /area/station/cargo/miningoffice)
 "rLN" = (
 /obj/structure/bed,
+/obj/item/bedsheet/random,
 /turf/open/floor/carpet/royalblue,
 /area/graveyard/bunker/strange)
 "rLR" = (
@@ -48707,6 +48731,10 @@
 /obj/machinery/telecomms/server/presets/medical,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"tDF" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/misc/asteroid,
+/area/graveyard/tunnels/structures/tunnellounge)
 "tDJ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/piss_yellow/filled/line,
@@ -50732,6 +50760,9 @@
 /area/station/hallway/primary/central)
 "usv" = (
 /obj/machinery/light/directional/south,
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/graveyard/bunker/strange)
 "usF" = (
@@ -56787,7 +56818,7 @@
 /area/station/medical/psychology)
 "wPu" = (
 /obj/structure/bodycontainer/morgue{
-	dir = 1
+	dir = 2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/north,
@@ -71711,8 +71742,8 @@ wJR
 cZn
 uQl
 uQl
-cOj
-cOj
+pla
+pla
 uQl
 uQl
 hle
@@ -71967,7 +71998,7 @@ wJR
 wJR
 cZn
 uQl
-cOj
+tDF
 nld
 aOS
 cOj
@@ -72224,7 +72255,7 @@ wJR
 aVj
 irT
 uQl
-cOj
+tDF
 wqM
 lis
 cOj
@@ -72482,8 +72513,8 @@ aVj
 cZn
 uQl
 uQl
-cOj
-cOj
+oGS
+oGS
 uQl
 uQl
 wHa
@@ -90675,8 +90706,8 @@ gYQ
 gYQ
 gYQ
 gYQ
-wJR
-wJR
+gYQ
+gYQ
 lwd
 lwd
 lwd
@@ -90932,9 +90963,9 @@ wJR
 gYQ
 gYQ
 gYQ
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 lwd
 hOL
 nDA
@@ -91189,9 +91220,9 @@ gYQ
 gYQ
 gYQ
 gYQ
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 lwd
 hwR
 nDA
@@ -91446,9 +91477,9 @@ gYQ
 gYQ
 gYQ
 gYQ
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 lwd
 hOL
 nDA
@@ -91703,9 +91734,9 @@ aVj
 gYQ
 feq
 gYQ
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 lwd
 rdt
 hgQ
@@ -96264,7 +96295,7 @@ gYQ
 wJR
 wJR
 wJR
-wJR
+aVj
 aVj
 aVj
 aVj
@@ -96520,8 +96551,8 @@ gYQ
 gYQ
 wJR
 wJR
-wJR
-wJR
+aVj
+aVj
 aVj
 aVj
 aVj
@@ -107399,7 +107430,7 @@ wJR
 gYQ
 aHp
 gYQ
-wJR
+gYQ
 wJR
 wJR
 wJR
@@ -107656,8 +107687,8 @@ wJR
 gYQ
 wkF
 gYQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -107913,8 +107944,8 @@ wJR
 gYQ
 aHp
 gYQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -108171,8 +108202,8 @@ mcX
 cFr
 mcX
 hWQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -108428,8 +108459,8 @@ vny
 hnd
 vny
 hWQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -108567,9 +108598,9 @@ wJR
 wJR
 wJR
 wJR
-wJR
-wJR
-wJR
+aVj
+aVj
+aVj
 aVj
 aVj
 aVj
@@ -108685,8 +108716,8 @@ onB
 nOP
 onB
 hWQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -108823,8 +108854,8 @@ wJR
 wJR
 wJR
 wJR
-wJR
-wJR
+aVj
+aVj
 aVj
 aVj
 aVj
@@ -108942,8 +108973,8 @@ kIj
 dIQ
 kpd
 hWQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -109079,7 +109110,7 @@ wJR
 wJR
 wJR
 wJR
-wJR
+aVj
 aVj
 aVj
 aNZ
@@ -109105,9 +109136,9 @@ hlw
 xwc
 hlw
 hlw
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 wJR
 gYQ
 gYQ
@@ -109199,8 +109230,8 @@ kIj
 dIQ
 uIn
 hWQ
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -109361,9 +109392,9 @@ pLX
 csf
 tsE
 hlw
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 wJR
 wJR
 gYQ
@@ -109456,9 +109487,9 @@ kIj
 dIQ
 kIj
 hWQ
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -109618,8 +109649,8 @@ qwa
 qwa
 tsE
 hlw
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -109875,8 +109906,8 @@ hZr
 jeQ
 tsE
 hlw
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 wJR
@@ -110132,7 +110163,7 @@ dIF
 eED
 wYH
 hlw
-wJR
+gYQ
 wJR
 wJR
 wJR
@@ -110389,8 +110420,8 @@ hlw
 byT
 qqF
 hlw
-wJR
-wJR
+gYQ
+gYQ
 wJR
 wJR
 gYQ
@@ -110646,9 +110677,9 @@ bQK
 eED
 jns
 hlw
-wJR
-wJR
-wJR
+gYQ
+gYQ
+gYQ
 wJR
 gYQ
 gYQ
@@ -110904,8 +110935,8 @@ eED
 qqF
 hlw
 wJR
-wJR
-wJR
+gYQ
+gYQ
 gYQ
 gYQ
 gYQ
@@ -111161,8 +111192,8 @@ anO
 hlw
 hlw
 wJR
-wJR
-wJR
+gYQ
+gYQ
 gYQ
 gYQ
 gYQ
@@ -111384,10 +111415,10 @@ wJR
 wJR
 wJR
 wJR
-oCg
-oCg
-oCg
-oCg
+wJR
+wJR
+wJR
+wJR
 wJR
 wJR
 mPy
@@ -111639,12 +111670,12 @@ wJR
 wJR
 wJR
 wJR
-oCg
-oCg
-oCg
+fAp
 fAp
 vOd
-oCg
+fAp
+fAp
+wJR
 wJR
 wJR
 mPy
@@ -111895,8 +111926,8 @@ wJR
 wJR
 wJR
 wJR
-oCg
-oCg
+fAp
+fAp
 fAp
 fAp
 fAp
@@ -112152,7 +112183,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 fAp
 gYQ
@@ -112409,7 +112440,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 gYQ
@@ -112666,7 +112697,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 feq
@@ -112923,7 +112954,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 gYQ
@@ -113180,7 +113211,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 gYQ
@@ -113437,7 +113468,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 gYQ
@@ -113694,7 +113725,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 feq
@@ -113951,7 +113982,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 gYQ
 gYQ
@@ -114208,7 +114239,7 @@ wJR
 wJR
 wJR
 wJR
-oCg
+fAp
 fAp
 fAp
 gYQ
@@ -114465,8 +114496,8 @@ wJR
 wJR
 wJR
 wJR
-oCg
-oCg
+fAp
+fAp
 fAp
 fAp
 fAp
@@ -114723,10 +114754,10 @@ wJR
 wJR
 wJR
 wJR
-oCg
-oCg
-oCg
-oCg
+fAp
+fAp
+fAp
+fAp
 oCg
 kqh
 dPm
@@ -154869,7 +154900,7 @@ vHp
 utk
 rKD
 nmi
-pla
+uUn
 uNX
 uNX
 wIT
@@ -156668,7 +156699,7 @@ dOv
 sBj
 aUl
 rzX
-pla
+uUn
 uNX
 hYl
 uNX
@@ -159291,10 +159322,10 @@ jZV
 mSN
 eys
 nlE
-tyg
+fND
 uee
 qhB
-fND
+tyg
 nlE
 kOk
 mSN
@@ -159548,10 +159579,10 @@ jZV
 mSN
 bft
 nlE
-tyg
-qhB
-qhB
 fND
+qhB
+qhB
+tyg
 nlE
 mSN
 mSN
@@ -159808,7 +159839,7 @@ nlE
 kAN
 qhB
 gVs
-fND
+tyg
 nlE
 mSN
 mSN
@@ -160065,7 +160096,7 @@ nlE
 wPu
 sEF
 qhB
-fND
+tyg
 nlE
 mSN
 mSN
@@ -160319,10 +160350,10 @@ jZV
 mSN
 eys
 nlE
-tyg
-qhB
-qhB
 fND
+qhB
+qhB
+tyg
 nlE
 cuF
 mSN
