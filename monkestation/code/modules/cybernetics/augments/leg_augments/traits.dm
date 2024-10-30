@@ -57,3 +57,29 @@
 	if(tackler)
 		qdel(tackler)
 	return ..()
+
+/obj/item/organ/internal/cyberimp/leg/sprinter
+	name = "accelerator  leg implant"
+	desc = "Mechicanical servos in ones leg that increases one's natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
+	encode_info = AUGMENT_NT_LOWLEVEL
+	double_legged = TRUE
+
+/obj/item/organ/internal/cyberimp/leg/sprinter/update_implants()
+	if(!check_compatibility())
+		REMOVE_TRAIT(owner,TRAIT_FREERUNNING,type)
+		REMOVE_TRAIT(owner,TRAIT_LIGHT_STEP,type)
+		return
+	ADD_TRAIT(owner,TRAIT_FREERUNNING,type)
+	ADD_TRAIT(owner,TRAIT_LIGHT_STEP,type)
+
+/obj/item/organ/internal/cyberimp/leg/sprinter/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	if(!check_compatibility())
+		return
+	ADD_TRAIT(owner,TRAIT_FREERUNNING,type)
+	ADD_TRAIT(owner,TRAIT_LIGHT_STEP,type)
+
+/obj/item/organ/internal/cyberimp/leg/sprinter/Remove(mob/living/carbon/M, special)
+	REMOVE_TRAIT(owner,TRAIT_FREERUNNING,type)
+	REMOVE_TRAIT(owner,TRAIT_LIGHT_STEP,type)
+	return ..()
