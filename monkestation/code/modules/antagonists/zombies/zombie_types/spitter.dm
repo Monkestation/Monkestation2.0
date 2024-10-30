@@ -11,15 +11,16 @@
 //Just stole aliens stuff, needs some rewording
 /datum/action/cooldown/zombie/spit
 	name = "Spit"
-	desc = "Spit at someone, causing major burns and having a chance to infect."
+	desc = "Spit at someone, causing them to fall down and get burnt."
 	background_icon_state = "bg_zombie"
 	button_icon_state = "spit_off"
-	cooldown_time = 5 SECONDS
+	cooldown_time = 8 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/zombie/spit/IsAvailable(feedback = FALSE)
 	if(owner.is_muzzled())
 		return FALSE
+
 	if(!isturf(owner.loc))
 		return FALSE
 	return ..()
@@ -61,7 +62,7 @@
 		span_danger("[user] spits!"),
 		span_alert("You spit."),
 	)
-	var/obj/projectile/zombie_spit/spit = new(user.loc)
+	var/obj/projectile/neurotoxin/zombie/spit = new(user.loc)
 	spit.preparePixelProjectile(target, user, modifiers)
 	spit.firer = user
 	spit.fire()
@@ -72,18 +73,8 @@
 /datum/action/cooldown/zombie/spit/Activate(atom/target)
 	return TRUE
 
-/obj/projectile/zombie_spit
+/obj/projectile/neurotoxin/zombie
 	name = "spit"
 	icon_state = "glob_projectile"
-	damage = 50
+	damage = 20
 	damage_type = BURN
-
-/obj/projectile/neurotoxin/zombie/on_hit(atom/target, blocked, pierce_hit)
-	if(iscarbon(target) && prob(30))
-		var/mob/living/carbon/infectee = target
-		var/obj/item/organ/internal/zombie_infection/infection
-		infection = infectee.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-		if(!infection)
-			infection = new()
-			infection.Insert(infectee)
-	return ..()

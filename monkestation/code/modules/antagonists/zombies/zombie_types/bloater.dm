@@ -30,7 +30,7 @@
 
 	var/infects = 0
 
-	for(var/mob/living/target in oview(4, user))
+	for(var/mob/living/target in oview(4, user)) //need to make this not go through glass
 		to_chat(target, span_userdanger("Some of the gibs flew onto you!"))
 
 		var/datum/client_colour/colour = target.add_client_colour(/datum/client_colour/bloodlust)
@@ -38,16 +38,15 @@
 
 		var/dist = max(1, get_dist(user, target))
 
-		target.adjustBruteLoss(100 / dist)
+		target.adjustBruteLoss(50 / dist)
 		target.adjustFireLoss(50 / dist)
 
 		target.throw_at(get_edge_target_turf(user, get_dir(user, target)), range = 4 / dist, speed = 2, spin = FALSE)
 
-		if(!iscarbon(target) || !prob(20 + 80 / max(1, dist))) // A minimum of a 40% chance to infect.
+		if(!iscarbon(target) || !prob(80 / max(1, dist))) // A minimum of a 20% chance to infect.
 			continue
 
 		var/mob/living/carbon/infectee = target
-
 		var/obj/item/organ/internal/zombie_infection/infection
 		infection = infectee.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 		if(!infection)
@@ -66,7 +65,7 @@
 	desc = "Drench an object in stomach acid, destroying it over time."
 	button_icon_state = "zombie_vomit"
 	background_icon_state = "bg_zombie"
-	cooldown_time = 10
+	cooldown_time = 30 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/zombie/melt_wall/set_click_ability(mob/on_who)
