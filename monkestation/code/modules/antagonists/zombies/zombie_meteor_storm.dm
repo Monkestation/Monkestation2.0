@@ -6,8 +6,7 @@
 	max_occurrences = 0
 	category = EVENT_CATEGORY_SPACE
 	description = "Spawn a wave of meteors containing zombies."
-	map_flags = EVENT_SPACE_ONLY
-	admin_setup = list()
+	admin_setup = list(/datum/event_admin_setup/input_number/zombie_meteor_count)
 
 /datum/round_event/zombie_meteor_wave
 	start_when = 1
