@@ -8,6 +8,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_BLUESHIELD,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -41,6 +42,7 @@
 	earliest_start = 0 SECONDS
 	weight = 4
 	max_occurrences = 3
+	event_icon_state = "nukeops"
 
 /datum/round_event/antagonist/solo/nuclear_operative
 	excute_round_end_reports = TRUE

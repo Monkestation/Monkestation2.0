@@ -8,6 +8,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_BLUESHIELD,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
@@ -35,8 +36,9 @@
 	min_players = 45
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 4
+	weight = 0
 	max_occurrences = 1
+	event_icon_state = "clockcult"
 
 /datum/round_event/antagonist/solo/clockcult
 	end_when = 60000
