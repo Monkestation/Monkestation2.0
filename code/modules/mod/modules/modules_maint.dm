@@ -20,10 +20,10 @@
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
 	mod.activation_step_time /= step_change
 
-/obj/item/mod/module/springlock/on_suit_activation()
+/obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))
 
-/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 ///Signal fired when wearer is exposed to reagents
@@ -84,10 +84,10 @@
 		if("autotrigger")
 			autotrigger = text2num(value)
 
-/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_activation()
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(health_check))
 
-/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_deactivation(deleting)
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_part_deactivation(deleting)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE)
 
 /obj/item/mod/module/magboot/corpse_exoskeleton/proc/health_check()

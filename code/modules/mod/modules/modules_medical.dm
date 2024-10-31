@@ -76,10 +76,10 @@
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 	required_slots = list(ITEM_SLOT_GLOVES)
 
-/obj/item/mod/module/quick_carry/on_suit_activation()
+/obj/item/mod/module/quick_carry/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
@@ -362,7 +362,7 @@
 		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
-/obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/thread_ripper/on_part_deactivation(deleting = FALSE)
 	if(!length(ripped_clothing))
 		return
 	for(var/obj/item/clothing as anything in ripped_clothing)

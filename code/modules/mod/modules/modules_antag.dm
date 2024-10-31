@@ -36,7 +36,7 @@
 	. = ..()
 	charges = max_charges
 
-/obj/item/mod/module/energy_shield/on_suit_activation()
+/obj/item/mod/module/energy_shield/on_part_activation()
 	mod.AddComponent(\
 		/datum/component/shielded, \
 		max_charges = max_charges, \
@@ -49,7 +49,7 @@
 		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -92,10 +92,10 @@
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
 	required_slots = list(ITEM_SLOT_BACK)
 
-/obj/item/mod/module/anti_magic/on_suit_activation()
+/obj/item/mod/module/anti_magic/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/anti_magic/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
 
 /obj/item/mod/module/anti_magic/wizard
@@ -107,10 +107,10 @@
 	icon_state = "magic_neutralizer"
 	required_slots = list()
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_activation()
+/obj/item/mod/module/anti_magic/wizard/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.
@@ -170,10 +170,10 @@
 	incompatible_modules = list(/obj/item/mod/module/noslip)
 	required_slots = list(ITEM_SLOT_FEET)
 
-/obj/item/mod/module/noslip/on_suit_activation()
+/obj/item/mod/module/noslip/on_part_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 
-/obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/noslip/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
@@ -189,7 +189,7 @@
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
 	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
-/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+/obj/item/mod/module/springlock/bite_of_87/on_part_activation()
 	..()
 	if(check_holidays(APRIL_FOOLS) || prob(1))
 		mod.set_mod_color("#b17f00")
@@ -363,12 +363,12 @@
 	if(mod.slot_flags & current_slot)
 		current_slot = last_equipped_slot || mod.slot_flags
 
-/obj/item/mod/module/chameleon/on_suit_activation()
+/obj/item/mod/module/chameleon/on_part_activation()
 	undo_disguise()
 	if(current_disguise)
 		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
 
-/obj/item/mod/module/chameleon/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/chameleon/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	disguise()
@@ -459,11 +459,11 @@
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
 
-/obj/item/mod/module/demoralizer/on_suit_activation()
+/obj/item/mod/module/demoralizer/on_part_activation()
 	var/datum/demoralise_moods/module/mood_category = new()
 	demoralizer = new(mod.wearer, 7, TRUE, mood_category)
 
-/obj/item/mod/module/demoralizer/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/demoralizer/on_part_deactivation(deleting = FALSE)
 	QDEL_NULL(demoralizer)
 
 /obj/item/mod/module/infiltrator
@@ -483,7 +483,7 @@
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
 	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
-/obj/item/mod/module/infiltrator/on_suit_activation()
+/obj/item/mod/module/infiltrator/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
 	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -492,7 +492,7 @@
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/infiltrator/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
 	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -547,10 +547,10 @@
 	. = ..()
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 
-/obj/item/mod/module/stealth/wraith/on_suit_activation()
+/obj/item/mod/module/stealth/wraith/on_part_activation()
 	start_stealth()
 
-/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
+/obj/item/mod/module/stealth/wraith/on_part_deactivation(deleting)
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
 	stealth_active = FALSE
