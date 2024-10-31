@@ -4,6 +4,9 @@
 	encode_info = AUGMENT_NT_LOWLEVEL
 	double_legged = TRUE
 
+/obj/item/organ/internal/cyberimp/leg/table_glider/l
+	zone = BODY_ZONE_L_LEG
+
 /obj/item/organ/internal/cyberimp/leg/table_glider/update_implants()
 	if(!check_compatibility())
 		REMOVE_TRAIT(owner,TRAIT_FAST_CLIMBER,type)
@@ -42,6 +45,9 @@
 	REMOVE_TRAIT(owner,TRAIT_SHOVE_RESIST,type)
 	return ..()
 
+/obj/item/organ/internal/cyberimp/leg/shove_resist/l
+	zone = BODY_ZONE_L_LEG
+
 /obj/item/organ/internal/cyberimp/leg/accelerator
 	name = "P.R.Y.Z.H.O.K. accelerator system"
 	desc = "Russian implant that allows you to tackle people. You need to implant this in both of your legs to make it work."
@@ -58,9 +64,12 @@
 		qdel(tackler)
 	return ..()
 
+/obj/item/organ/internal/cyberimp/leg/accelerator/l
+	zone = BODY_ZONE_L_LEG
+
 /obj/item/organ/internal/cyberimp/leg/sprinter
-	name = "accelerator  leg implant"
-	desc = "Mechicanical servos in ones leg that increases one's natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
+	name = "Vacuole ligament system"
+	desc = "Mechicanical servos in ones leg that increases their natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
 	encode_info = AUGMENT_NT_LOWLEVEL
 	double_legged = TRUE
 
@@ -83,3 +92,6 @@
 	REMOVE_TRAIT(owner,TRAIT_FREERUNNING,type)
 	REMOVE_TRAIT(owner,TRAIT_LIGHT_STEP,type)
 	return ..()
+
+/obj/item/organ/internal/cyberimp/leg/sprinter/l
+	zone = BODY_ZONE_L_LEG
