@@ -290,6 +290,11 @@
 
 	var/obj/item/organ/internal/tongue/tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
 	return tongue?.get_laugh_sound(user)
+
+/datum/emote/living/laugh/get_sound(mob/living/basic/user)
+	if(isbasicmob(user))
+		var/mob/living/basic/mob = user
+		. = mob.get_laugh_sound()
 // MonkeStation Edit End
 
 /datum/emote/living/look
