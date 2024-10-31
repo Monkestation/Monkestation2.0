@@ -23,7 +23,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-
 /datum/design/surgery/healing/filter_upgrade
 	name = "Filter Blood Upgrade"
 	desc = "Newfound knowledge allows us to remove the effect of toxins on the body whenever filtering someone's blood."
@@ -53,7 +52,7 @@
 	surgery = /datum/surgery/robot_healing
 	id = "surgery_heal_robot_base"
 	research_icon_state = "surgery_chest"
-	
+
 /datum/design/surgery/robot_healing/upgraded
 	name = "Repair Robotic Limbs (Physical) Upgrade"
 	desc = "A surgical procedure that provides highly effective repairs and maintenance to robotic limbs. Is somewhat more efficient when the patient is severely damaged."
@@ -67,3 +66,16 @@
 	surgery = /datum/surgery/robot_healing/experimental
 	id = "surgery_heal_robot_upgrade_femto"
 	research_icon_state = "surgery_chest"
+
+/datum/design/cyberimp_sprinter
+	name = "Vacuole ligament system"
+	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
+	id = "ci-sprinter"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
