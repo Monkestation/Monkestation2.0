@@ -34,4 +34,6 @@
 		var/obj/item/gun/shot_from = fired_from
 		if(shot_from.chambered == shell)
 			shot_from.chambered = null //Nuke it. Nuke it now.
+		if(shot_from.type = /obj/item/gun/ballistic/revolver/sol)
+			break
 	QDEL_NULL(shell)
