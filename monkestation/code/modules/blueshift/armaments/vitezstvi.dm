@@ -153,8 +153,9 @@
 /datum/armament_entry/company_import/vitezstvi/shot_shells/hornet_nest
 	item_type = /obj/item/ammo_box/advanced/s12gauge/beehive
 
-/datum/armament_entry/company_import/vitezstvi/shot_shells/stardust
-	item_type = /obj/item/ammo_box/advanced/s12gauge/antitide
+/*datum/armament_entry/company_import/vitezstvi/shot_shells/stardust
+	item_type = /obj/item/ammo_box/advanced/s12gauge/antitide */
+	//mfw literally a oneshot ammo
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/confetti
 	item_type = /obj/item/ammo_box/advanced/s12gauge/honkshot

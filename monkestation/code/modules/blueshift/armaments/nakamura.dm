@@ -53,7 +53,7 @@
 /datum/armament_entry/company_import/nakamura_modsuits/plating/clown
 	name = "MOD CosmoHonk (TM) Plating"
 	item_type = /obj/item/mod/construction/plating/cosmohonk
-	cost = PAYCHECK_COMMAND * 2
+	cost = PAYCHECK_COMMAND * 3
 	contraband = TRUE
 
 // MOD modules
@@ -120,11 +120,11 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/retract_plates
 	item_type = /obj/item/mod/module/plate_compression
-	cost = PAYCHECK_COMMAND
+	cost = PAYCHECK_COMMAND * 2
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/magnetic_deploy
 	item_type = /obj/item/mod/module/springlock/contractor
-	cost = PAYCHECK_COMMAND * 2
+	cost = PAYCHECK_COMMAND * 5
 
 // Mobility modules, jetpacks and stuff
 
@@ -193,12 +193,12 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/kinesis
 	item_type = /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
+	cost = PAYCHECK_COMMAND * 45
 
 /datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/antigrav
 	item_type = /obj/item/mod/module/anomaly_locked/antigrav/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
+	cost = PAYCHECK_COMMAND * 45
 
 /datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/teleporter
 	item_type = /obj/item/mod/module/anomaly_locked/teleporter/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 20
+	cost = PAYCHECK_COMMAND * 50
