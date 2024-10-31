@@ -216,7 +216,7 @@
 		/datum/job/botanist = /obj/item/organ/internal/cyberimp/arm/item_set/botany, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/candysalesman =  /obj/item/organ/internal/cyberimp/chest/nutriment/plus, // monkestation edit:
 		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
-		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
+		/datum/job/cargo_technician = /obj/item/organ/internal/cyberimp/leg/sprinter, /obj/item/organ/internal/cyberimp/leg/sprinter/l, //monkestation edit: For all the running they do
 		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
 		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
