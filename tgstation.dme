@@ -5854,6 +5854,7 @@
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\charge_adjuster.dm"
 #include "monkestation\code\datums\components\crafting.dm"
+#include "monkestation\code\datums\components\donotrevive.dm"
 #include "monkestation\code\datums\components\irradiated.dm"
 #include "monkestation\code\datums\components\lock_on_cursor.dm"
 #include "monkestation\code\datums\components\multi_hit.dm"

@@ -243,16 +243,14 @@
 
 /datum/quirk/dnr
 	name = "Do Not Revive"
-	desc = "For whatever reason, you have been blacklisted from revival. Death Is Permanent."
+	desc = "You instantly become soulless upon death. Make your only shot count."
 	value = -6
 	icon = FA_ICON_HEART
-	gain_text = span_danger("You have one shot left.")
-	lose_text = span_notice("Something feels better about your medical record status.")
-	medical_record_text = "Patient cannot be revived whatsoever due to a blacklist from revival. Ensure heightened care."
+	gain_text = span_danger("You have one chance left.")
+	lose_text = span_notice("Your connection to this mortal plane strengthens!")
+	medical_record_text = "The connection between the patient's soul and body is incredibly weak, and attempts to resuscitate after death will fail. Ensure hightened care."
 
 /datum/quirk/dnr/add()
-	ADD_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
+	quirk_holder.AddComponent(/datum/component/donotrevive)
 
-/datum/quirk/dnr/remove()
-	REMOVE_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
-
+// no remove for you, RemoveComponent doesnt exist
