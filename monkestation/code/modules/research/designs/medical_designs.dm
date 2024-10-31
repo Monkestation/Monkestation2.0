@@ -69,7 +69,7 @@
 
 /datum/design/cyberimp_sprinter
 	name = "Vacuole ligament system"
-	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
+	desc = "Mechicanical servos in ones leg that increases their natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
 	id = "ci-sprinter"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
