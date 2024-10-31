@@ -331,8 +331,8 @@
 
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()
-    return
+	return
 /mob/living/basic/proc/get_laugh_sound()
-    return
+	return
 //MONKESTATION EDIT STOP
 
