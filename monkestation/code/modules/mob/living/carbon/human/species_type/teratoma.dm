@@ -1,7 +1,7 @@
 /datum/species/teratoma
 	name = "Teratoma"
 	id = SPECIES_TERATOMA
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 
 	inherent_traits = list(
 		TRAIT_BADDNA,
@@ -70,7 +70,7 @@
 /obj/item/organ/internal/brain/teratoma
 	name = "vaguely brain-shaped mass"
 	desc = "How the hell can this thing even think?!"
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_ILLITERATE, TRAIT_KLEPTOMANIAC)
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_ILLITERATE)
 	var/datum/component/omen/teratoma/misfortune
 
 /obj/item/organ/internal/brain/teratoma/on_insert(mob/living/carbon/organ_owner, special)
