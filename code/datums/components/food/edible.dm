@@ -648,6 +648,7 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "squeaks for more!", "squeaks twice.", "looks at the area where \the [parent] was.")
 		L.manual_emote(satisfaction_text)
+		SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED)
 		qdel(parent)
 	else
 		if(prob(50))
