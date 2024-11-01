@@ -56,3 +56,15 @@
 	obj_flags |= EMAGGED
 	icon_state = "translator_emag"
 	playsound(src, "sparks", 100, 1)
+
+
+/datum/design/monketranslator
+	name = "Monketech Translator"
+	id = "monketranslator"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
+	build_path = /obj/item/clothing/mask/translator
+	category = list(
+		RND_CATEGORY_INITIAL,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_CARGO
