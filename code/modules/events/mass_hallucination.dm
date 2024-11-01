@@ -93,6 +93,8 @@
 		if(hallucinating.z != 0 && !is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
 
+		if(HAS_TRAIT(hallucinating, TRAIT_MADNESS_IMMUNE))
+			continue
 		// Not using the wrapper here because we already have a list / arglist
 		hallucinating._cause_hallucination(hallucination_args)
 
