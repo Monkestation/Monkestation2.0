@@ -174,7 +174,7 @@
 					span_warning("You devour [attack_target], something tastes off..."),
 				)
 				if(health != 0)
-					adjust_health(1)
+					adjust_health(4)
 	//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
