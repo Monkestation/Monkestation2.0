@@ -36,7 +36,7 @@
 			shot_from.chambered = null //Nuke it. Nuke it now.
 		if(istype(shot_from, /obj/item/gun/ballistic/revolver/sol))
 			shot_from.contents[2].stored_ammo[1] = null
-			var/obj/item/ammo_casing/c35sol/ammo = shot_from.contents[2]
-			ammo.stored_ammo[1] = null
+			var/obj/item/ammo_box/magazine/internal/cylinder/c35sol/cylinder = shot_from.contents[2]
+			cylinder.stored_ammo[1] = null
 			return
 	QDEL_NULL(shell)
