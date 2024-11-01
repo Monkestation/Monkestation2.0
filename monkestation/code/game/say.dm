@@ -6,7 +6,7 @@
 			playsound_local(
 				get_turf(src),
 				'goon/sounds/radio_ai.ogg',
-				vol = 100,
+				vol = 150,
 				vary = TRUE,
 				pressure_affected = FALSE,
 				use_reverb = FALSE,
