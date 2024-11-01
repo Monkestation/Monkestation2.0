@@ -73,6 +73,10 @@
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_ILLITERATE)
 	var/datum/component/omen/teratoma/misfortune
 
+/obj/item/organ/internal/brain/teratoma/Initialize(mapload)
+	. = ..()
+	gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+
 /obj/item/organ/internal/brain/teratoma/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	misfortune = organ_owner.AddComponent(/datum/component/omen/teratoma)
@@ -88,7 +92,7 @@
 
 /obj/item/organ/internal/liver/teratoma/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	oh_god_why = organ_owner.AddComponent(/datum/component/regenerator/teratoma, health_per_second = 1, ignore_damage_types = list(STAMINA), outline_colour = COLOR_RED_LIGHT) // ignore oxy damage so they can regen while in crit if you just leave them there
+	oh_god_why = organ_owner.AddComponent(/datum/component/regenerator/teratoma, health_per_second = 1, ignore_damage_types = list(OXY, STAMINA), outline_colour = COLOR_RED_LIGHT) // ignore oxy damage so they can regen while in crit if you just leave them there
 	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(prevent_banned_reagent_exposure))
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
@@ -101,6 +105,12 @@
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
 		human_owner.physiology?.tox_mod /= 0.25
+
+/obj/item/organ/internal/liver/teratoma/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(is_banned_chem(chem))
+		chem.holder?.remove_reagent(chem.type, chem.volume)
+		return COMSIG_MOB_STOP_REAGENT_CHECK
 
 /obj/item/organ/internal/liver/teratoma/proc/is_banned_chem(reagent)
 	var/static/list/disallowed_chems_typecache
@@ -131,4 +141,4 @@
 /datum/component/regenerator/teratoma/do_heal(amt)
 	var/mob/living/living_parent = parent
 	living_parent.heal_overall_damage(brute = amt, burn = amt, updating_health = FALSE)
-	living_parent.adjustToxLoss(-(amt * 0.5), updating_health = FALSE)
+	living_parent.adjustToxLoss(-(amt * 0.5), updating_health = TRUE)
