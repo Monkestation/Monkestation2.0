@@ -1,4 +1,4 @@
-// Carps move 2x faster when ridden in space
+// Carps move 4x faster when ridden in space
 /datum/component/riding/creature/carp/move_delay()
 	. = ..()
 	var/mob/living/living_parent = parent
