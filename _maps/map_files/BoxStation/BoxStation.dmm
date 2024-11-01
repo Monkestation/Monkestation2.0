@@ -39239,7 +39239,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ngl" = (
@@ -52242,7 +52244,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/vending/medical,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rAh" = (

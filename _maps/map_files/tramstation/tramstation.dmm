@@ -30225,6 +30225,10 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"iFC" = (
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/closed/wall/r_wall,
+/area/station/medical/pathology)
 "iFN" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -181434,7 +181438,7 @@ bFq
 ugt
 ugt
 nIr
-ugt
+iFC
 ugt
 ugt
 qSP
