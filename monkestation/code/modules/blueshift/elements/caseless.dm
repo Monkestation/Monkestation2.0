@@ -35,5 +35,6 @@
 		if(shot_from.chambered == shell)
 			shot_from.chambered = null //Nuke it. Nuke it now.
 		if(istype(shot_from, /obj/item/gun/ballistic/revolver/sol))
+			shot_from.contents[2].stored_ammo[1] = null
 			return
 	QDEL_NULL(shell)

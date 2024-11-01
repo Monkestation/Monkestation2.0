@@ -266,6 +266,7 @@
 
 // .35 Sol Short
 // Pistol caliber caseless round used almost exclusively by SolFed weapons
+//CASELESS VAR IS ADDED SO THAT REVOLVER CHAMBERS KNOW WHAT TO DO WITH IT
 
 /obj/item/ammo_casing/c35sol
 	name = ".35 Sol Short lethal bullet casing"
@@ -274,7 +275,6 @@
 	icon_state = "35sol"
 	caliber = CALIBER_SOL35SHORT
 	projectile_type = /obj/projectile/bullet/c35sol
-
 
 /obj/item/ammo_casing/c35sol/Initialize(mapload)
 	. = ..()
