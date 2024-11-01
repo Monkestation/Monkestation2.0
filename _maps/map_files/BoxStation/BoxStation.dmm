@@ -1481,7 +1481,7 @@
 "ayn" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/reagent_dispensers/plumbed{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
