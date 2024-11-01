@@ -34408,9 +34408,7 @@
 /area/station/command/bridge)
 "liB" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/structure/closet/emcloset/wall/directional/east,
-/obj/structure/closet/l3closet/scientist,
-/obj/item/extinguisher,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology/hallway)
 "liC" = (
