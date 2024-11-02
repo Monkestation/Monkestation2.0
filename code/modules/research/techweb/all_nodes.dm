@@ -1277,6 +1277,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"s_traffic", // MONKESTATION ADDITION -- NTSL -- The board to actually program in NTSL
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1474,6 +1475,7 @@
 		"triggermod",
 		"mining_scanner",
 		"mat_analyzer",
+		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

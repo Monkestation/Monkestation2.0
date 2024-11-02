@@ -17,6 +17,7 @@ const BASEICONS = {
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
   'CentCom Official': 'medal',
+  'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
   Chemist: 'prescription-bottle',
@@ -54,6 +55,7 @@ const BASEICONS = {
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
+  'Signal Technician': 'signal', // MONKESTATION ADDITION -- NTSL
   'Shaft Miner': 'digging',
   Skeleton: 'skull-crossbones',
   'Station Engineer': 'gears',
@@ -249,6 +251,9 @@ const ALTTITLES = {
   'Hall Monitor': BASEICONS['Security Assistant'],
   'Assistant Officer': BASEICONS['Security Assistant'],
   'Professional Snitch': BASEICONS['Security Assistant'],
+  // Signal Technician - signal
+  'Network Admin': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
+  'Telecomunications Engineer': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
   // Shaft Miner - digging
   'Union Miner': BASEICONS['Shaft Miner'],
   Excavator: BASEICONS['Shaft Miner'],
