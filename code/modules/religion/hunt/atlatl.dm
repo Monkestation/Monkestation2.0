@@ -1,10 +1,7 @@
 /obj/item/gun/ballistic/atlatl
 	icon = 'icons/obj/weapons/guns/atlatl/atlatl.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
 	icon_state = "atlatl"
-	inhand_icon_state = "bow"
-	base_icon_state = "bow"
+	inhand_icon_state = "default"
 	load_sound = null
 	fire_sound = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/atlatl
@@ -18,6 +15,10 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 
+/obj/item/gun/ballistic/atlatl/update_icon_state()
+	. = ..()
+	icon_state = chambered ? "[base_icon_state]_[chambered ? : "notched"]" : "[base_icon_state]"
+
 /obj/item/gun/ballistic/atlatl/proc/drop_spear()
 	if(chambered)
 		chambered.forceMove(drop_location())
@@ -30,10 +31,9 @@
 	if(slot == ITEM_SLOT_BACK | ITEM_SLOT_BELT && chambered)
 		balloon_alert(user, "the spear falls off!")
 		drop_spear()
-		drawn = FALSE
 		update_appearance()
 
-/obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+/obj/item/gun/ballistic/atlatl/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
@@ -56,9 +56,9 @@
 /obj/item/ammo_casing/caseless/thrownspear
 	name = "throwing spear"
 	desc = "A light spear made for throwing from an atlatl"
-	icon = 'icons/obj/weapons/guns/bows/thrownspear.dmi'
+	icon = 'icons/obj/weapons/guns/atlatl/thrownspear.dmi'
 	icon_state = "thrownspear"
-	inhand_icon_state = "thrownspear"
+	inhand_icon_state = null
 	projectile_type = /obj/projectile/bullet/reusable/thrownspear
 	flags_1 = NONE
 	throwforce = 25
@@ -73,7 +73,7 @@
 
 
 	/obj/projectile/bullet/reusable/thrownspear
-	name = "throwing spear"
+	name = "thrown spear"
 	desc = "Beasts be felled!"
 	icon = 'icons/obj/weapons/guns/bows/thrownspear.dmi'
 	icon_state = "spear_projectile"
@@ -92,8 +92,8 @@
 	name = "large quiver"
 	desc = "A large quiver to hold a few spears for your atlatl"
 	w_class = WEIGHT_CLASS_BULKY
-	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
-	icon_state = "holyquiver"
+	icon = 'icons/obj/weapons/guns/atlatl/spearquivers.dmi'
+	icon_state = "basicquiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 	/// type of arrow the quiver should hold
@@ -102,7 +102,7 @@
 /obj/item/storage/bag/spearquiver/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 10
+	atom_storage.max_slots = 5
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/thrownspear,
