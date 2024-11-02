@@ -20,7 +20,7 @@
 	var/icon = sprite_datum.icon
 	var/finished_icon_state = icon_state_builder.Join("_")
 
-	if(image_layer == -BODY_ADJ_LAYER && istype(limb.owner.dna.species, /datum/species/floran))
+	if(image_layer == -BODY_ADJ_LAYER && istype(limb, /obj/item/bodypart/head/floran))
 		icon = 'monkestation/icons/mob/species/floran/floran_hair.dmi'
 		finished_icon_state = get_base_icon_state()
 
