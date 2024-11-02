@@ -282,7 +282,7 @@ GLOBAL_VAR(dj_booth)
 			///scrubbing the input before putting it in the shell
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			///putting it in the shell
-			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
+			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[shell_scrubbed_input]\"")
 			///any errors
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			///the standard output
@@ -330,10 +330,11 @@ GLOBAL_VAR(dj_booth)
 			if(time_left > 0)
 				music_extra_data["start"] = music_extra_data["duration"] - time_left
 
+		var/cobalt_url = get_cobalt_stream_url(web_sound_input)
 		for(var/client/anything as anything in clients)
 			if(!istype(anything))
 				continue
-			anything.tgui_panel?.play_music(web_sound_url, music_extra_data)
+			anything.tgui_panel?.play_music(cobalt_url || web_sound_url, music_extra_data)
 			GLOB.youtube_exempt["dj-station"] |= anything
 		broadcasting = TRUE
 	waiting_for_yield = FALSE

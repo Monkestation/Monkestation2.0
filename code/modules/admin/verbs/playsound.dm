@@ -77,7 +77,7 @@
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
 	if(istext(input))
-		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[input]\"")
+		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[input]\"")
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
 		var/stdout = output[SHELLEO_STDOUT]
 		var/stderr = output[SHELLEO_STDERR]
@@ -155,13 +155,15 @@
 		to_chat(user, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
 
 		return
+
+	var/cobalt_url = get_cobalt_stream_url(input)
 	if(web_sound_url || stop_web_sounds)
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			var/client/C = M.client
 			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
 				if(!stop_web_sounds)
-					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					C.tgui_panel?.play_music(cobalt_url || web_sound_url, music_extra_data)
 				else
 					C.tgui_panel?.stop_music()
 

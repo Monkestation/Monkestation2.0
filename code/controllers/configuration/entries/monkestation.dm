@@ -62,3 +62,9 @@
 	. = ..()
 	if(.)
 		config_entry_value *= 600 // documented as minutes
+
+/datum/config_entry/string/cobalt_api_url
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/cobalt_api_key
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
