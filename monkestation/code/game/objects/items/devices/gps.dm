@@ -21,6 +21,8 @@
 /obj/item/gps/advanced
 	name = "advanced global positioning system"
 	desc = "An advanced variant of the usual GPS, capable of navigating across vast distances of space without a calibration process."
+	icon = 'monkestation/icons/obj/devices/tracker.dmi'
+	icon_state = "gps-a"
 	requires_z_calibration = FALSE
 	custom_materials = list(
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
