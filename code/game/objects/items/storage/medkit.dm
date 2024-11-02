@@ -375,6 +375,7 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
+		/obj/item/organ/internal/cyberimp/cyberlink/nt_high = 1, //Monkestation edti: unable to use the hacked surgery toolset without this
 	)
 	generate_items_inside(items_inside,src)
 
@@ -716,7 +717,7 @@
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 	user.visible_message(span_suicide("[user] is putting [user.p_their()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!"))
-	user.adjust_bodytemperature(-300)
+	user.adjust_bodytemperature(-INFINITY, min_temp = CELCIUS_TO_KELVIN(10 CELCIUS))
 	user.apply_status_effect(/datum/status_effect/freon)
 	return FIRELOSS
 

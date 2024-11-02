@@ -240,11 +240,6 @@
 	// Else, return FALSE.
 	return (faker && allow_fake_antags)
 
-
-/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
-	return TRUE
-
-
 /**
  * Fancy notifications for ghosts
  *
@@ -294,7 +289,7 @@
 			continue
 
 		var/custom_link = enter_link ? " [enter_link]" : ""
-		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+		var/link = " <a href='byond://?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
 
@@ -362,14 +357,13 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, target_mob = M, pic_source = M, role_name_text = "ghost control")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control", chat_text_border_icon = M)
 
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = C.key
+		M.key = chosen_one.key
 		M.client?.init_verbs()
 		return TRUE
 	else

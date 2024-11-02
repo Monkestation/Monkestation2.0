@@ -29,13 +29,13 @@
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return
 
-	if((NOZOMBIE in target.dna.species.species_traits) || HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
+	if(HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return
 
 	// spaceacillin has a 75% chance to block infection
-	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) && prob(75))
+	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return
 
 	var/obj/item/bodypart/actual_limb = target.get_bodypart(def_zone)

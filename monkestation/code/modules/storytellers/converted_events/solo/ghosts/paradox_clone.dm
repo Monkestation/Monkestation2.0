@@ -46,31 +46,30 @@
 			"Would you like to be a paradox clone?",
 			check_jobban = ROLE_PARADOX_CLONE,
 			poll_time = 20 SECONDS,
-			pic_source = /datum/antagonist/paradox_clone,
+			alert_pic = /datum/antagonist/paradox_clone,
 			role_name_text = "paradox clone",
+			chat_text_border_icon = /datum/antagonist/paradox_clone,
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
-
-	for(var/i in 1 to antag_count)
-		if(!length(candidates))
-			break
-
-		var/client/mob_client = pick_n_take(weighted_candidates)
-		var/mob/candidate = mob_client.mob
-
-		if(candidate.client) //I hate this
-			candidate.client.prefs.reset_antag_rep()
-
+	var/selected_count = 0
+	while(length(weighted_candidates) && selected_count < antag_count)
+		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
+		var/client/candidate_client = GLOB.directory[candidate_ckey]
+		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
+			continue
+		var/mob/candidate = candidate_client.mob
+		candidate_client.prefs?.reset_antag_rep()
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		clone_victim = find_original()
 		new_human = duplicate_object(clone_victim, pick(possible_spawns))
-		new_human.key = candidate.key
+		new_human.ckey = candidate_ckey
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind
+		selected_count++
 	setup = TRUE
 
 

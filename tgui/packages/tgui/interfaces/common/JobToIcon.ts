@@ -3,18 +3,22 @@ const BASEICONS = {
   AI: 'eye',
   Assistant: 'toolbox',
   'Atmospheric Technician': 'fan',
+  Barber: 'cut',
   Bartender: 'cocktail',
   'Bit Avatar': 'code',
   Bitrunner: 'gamepad',
+  Blueshield: 'chess-rook',
   Botanist: 'seedling',
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
   Captain: 'crown',
+  'Candy Salesman': 'cookie-bite',
   'Cargo Technician': 'box',
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
   'CentCom Official': 'medal',
+  'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
   Chemist: 'prescription-bottle',
@@ -27,7 +31,11 @@ const BASEICONS = {
   'Cyber Police': 'qrcode',
   Cyborg: 'robot',
   Detective: 'user-secret',
+  'Diet Wizard': 'hat-wizard',
+  'Discount Godzilla': 'ticket-alt', // like a movie ticket? IDK theres not many good icons for this.
   Geneticist: 'dna',
+  Ghost: 'ghost',
+  Gorilla: 'exclamation-triangle',
   'Head of Personnel': 'dog',
   'Head of Security': 'user-shield',
   Janitor: 'soap',
@@ -42,16 +50,20 @@ const BASEICONS = {
   'Research Director': 'user-graduate',
   Roboticist: 'battery-half',
   Scientist: 'flask',
+  'Security Assistant': 'file-invoice-dollar',
   'Security Officer (Cargo)': 'shield-halved',
   'Security Officer (Engineering)': 'shield-halved',
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
+  'Signal Technician': 'signal', // MONKESTATION ADDITION -- NTSL
   'Shaft Miner': 'digging',
+  Skeleton: 'skull-crossbones',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
   Virologist: 'virus',
   Warden: 'handcuffs',
+  'Yellow Clown': 'lemon', // yellow lemon.
 } as const;
 
 const ALTTITLES = {
@@ -148,6 +160,7 @@ const ALTTITLES = {
   'Forensic Technician': BASEICONS['Detective'],
   'Private Investigator': BASEICONS['Detective'],
   'Forensic Scientist': BASEICONS['Detective'],
+  'Paranormal Investigator': BASEICONS['Detective'],
   // Geneticist - dna
   'Mutation Researcher': BASEICONS['Geneticist'],
   // Head of Personnel - dog
@@ -212,6 +225,7 @@ const ALTTITLES = {
   'Biorobotics Director': BASEICONS['Research Director'],
   'Research Supervisor': BASEICONS['Research Director'],
   'Chief Science Officer': BASEICONS['Research Director'],
+  'Chief Artificer': BASEICONS['Research Director'],
   // Roboticist - battery-half
   'Biomechanical Engineer': BASEICONS['Roboticist'],
   'Mechatronic Engineer': BASEICONS['Roboticist'],
@@ -228,10 +242,19 @@ const ALTTITLES = {
   Xenoarchaeologist: BASEICONS['Scientist'],
   'Research Assistant': BASEICONS['Scientist'],
   'Graduate Student': BASEICONS['Scientist'],
+  Artificer: BASEICONS['Scientist'],
+  Cryptozoologist: BASEICONS['Scientist'],
   // Security Officer - shield-halved
   'Security Operative': BASEICONS['Security Officer'],
   Peacekeeper: BASEICONS['Security Officer'],
   'Security Cadet': BASEICONS['Security Officer'],
+  // Security Assistant - file-invoice-dollar
+  'Hall Monitor': BASEICONS['Security Assistant'],
+  'Assistant Officer': BASEICONS['Security Assistant'],
+  'Professional Snitch': BASEICONS['Security Assistant'],
+  // Signal Technician - signal
+  'Network Admin': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
+  'Telecomunications Engineer': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
   // Shaft Miner - digging
   'Union Miner': BASEICONS['Shaft Miner'],
   Excavator: BASEICONS['Shaft Miner'],

@@ -171,7 +171,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "hands blocked!")
 		return FALSE
-	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT_NOT_FROM(owner, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)) // monkestation edit: don't count buckled as immobile
 		if (feedback)
 			owner.balloon_alert(owner, "can't move!")
 		return FALSE
@@ -312,11 +312,13 @@
  * force - whether an update is forced regardless of existing status
  */
 /datum/action/proc/update_button_status(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(QDELETED(current_button))
+		return
 	current_button.update_keybind_maptext(full_key)
 	if(IsAvailable())
-		current_button?.color = rgb(255,255,255,255)
+		current_button.color = rgb(255,255,255,255)
 	else
-		current_button?.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

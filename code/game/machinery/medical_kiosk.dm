@@ -211,14 +211,14 @@
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
 	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
-	var/blood_type = patient.dna.blood_type
+	var/blood_type = "[patient.get_blood_type() || "None"]"
 	var/blood_warning = " "
 
 	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
-			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
+			sickness_data = "\nName: [D.name].\nType: [D.get_spread_string()].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(patient.has_dna()) //Blood levels Information
 		if(patient.is_bleeding())

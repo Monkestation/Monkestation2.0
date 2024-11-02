@@ -53,6 +53,7 @@
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"
 	icon_gib = null
+	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	basic_mob_flags = FLIP_ON_DEATH
@@ -154,19 +155,6 @@
 
 	ckeywhitelist = list("Rickdude1231")
 
-/mob/living/basic/pet/quilmaid
-	name = "\improper Quil' Maid"
-	desc = "Someone dressed up this Space-e-mon in a maid outfit."
-	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
-	icon_state = "quil_maid"
-	icon_living = "quil_maid"
-	icon_dead = "quil_maid"
-	icon_gib = null
-	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
-
-	ckeywhitelist = list("quilark")
-
 /mob/living/basic/pet/gumball_goblin
 	name = "Gumball Goblin"
 	desc = "AAAAAAAAAAAAAAAA"
@@ -240,3 +228,53 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Bluedragon66")
+
+
+/mob/living/basic/pet/darkscug
+	name = "night slugcat"
+	desc = "ITS A FUGGIN SCRUG"
+	icon = 'icons/mob/simple/slugcats.dmi'
+	icon_state = "scug_nightcat"
+	icon_living = "scug_nightcat"
+	icon_dead = "scug_dead_nightcat"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("CaptainShiba")
+
+/mob/living/basic/frog/hypnotoad
+	name = "hypnotoad"
+	desc = "All glory to the hypnotoad."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "hypnotoad"
+	icon_living = "hypnotoad"
+	icon_dead = "hypnotoad-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Ophaq")
+
+/mob/living/basic/pet/ghastly_evil_demon
+	name = "ghastly evil demon"
+	desc = "It's so scary!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "ghastly_evil_demon"
+	icon_living = "ghastly_evil_demon"
+	icon_dead = "ghastly_evil_demon-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("ThePooba")
+	movement_type = FLYING
+
+/mob/living/basic/pet/albino_ghost_ian
+	name = "ghost ian"
+	desc = "It's an albino corgi!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "albino_ghost_ian"
+	icon_living = "albino_ghost_ian"
+	icon_dead = "albino_ghost_ian-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Eacles13")

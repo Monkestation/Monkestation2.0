@@ -187,7 +187,8 @@
 		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
 
 	for(var/holiday_name in GLOB.holidays)
-		var/obj/item/potential_hat
+		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
+		var/obj/item/potential_hat = holiday_today.holiday_hat
 		if(!isnull(potential_hat) && isnull(default_headwear)) //If our drone type doesn't start with a hat, we take the holiday one.
 			default_headwear = potential_hat
 
@@ -261,7 +262,7 @@
 	alert_drones(DRONE_NET_DISCONNECT)
 
 
-/mob/living/basic/drone/gib()
+/mob/living/basic/drone/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	dust()
 
 /mob/living/basic/drone/examine(mob/user)

@@ -8,6 +8,8 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
 		JOB_CYBORG,
@@ -26,6 +28,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
@@ -39,6 +42,7 @@
 	earliest_start = 0 SECONDS
 	weight = 1 //these are meant to be very rare
 	max_occurrences = 1
+	event_icon_state = "flukeops"
 
 /datum/round_event/antagonist/solo/clown_operative
 	excute_round_end_reports = TRUE
@@ -64,6 +68,7 @@
 	for(var/obj/item/item as anything in items)
 		qdel(item)
 
+	create_human_mob_copy(get_turf(current_mob), current_mob)
 	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
 	antag_mind.special_role = ROLE_CLOWN_OPERATIVE
 
@@ -74,10 +79,11 @@
 	if(!set_leader)
 		set_leader = TRUE
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		var/mob/living/carbon/human/leader_mob = most_experienced.current
+		leader_mob = create_human_mob_copy(get_turf(leader_mob), leader_mob)
 		nuke_team = leader_antag_datum.nuke_team
 		most_experienced.add_antag_datum(leader_antag_datum)
-		var/mob/living/carbon/human/leader = most_experienced.current
-		leader.equip_species_outfit(/datum/outfit/syndicate/clownop/leader)
+		leader_mob.equip_species_outfit(/datum/outfit/syndicate/clownop/leader)
 
 	if(antag_mind == most_experienced)
 		return

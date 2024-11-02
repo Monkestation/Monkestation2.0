@@ -173,7 +173,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/choke_forever = FALSE
 	/// When choking, what is the maximum amount of time we COULD choke for
 	var/choke_time_max = 30 SECONDS // I am mean
-	/// What type of pollution does this produce on smoking, changed to weed pollution sometimes
+	/// What type of pollution does this produce on smoking, changed to weed pollution sometimes, monkestation edit
 	var/pollution_type = /datum/pollutant/smoke
 	/// The particle effect of the smoke rising out of the cigarette when lit
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/cig_smoke
@@ -719,7 +719,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
-	icon_on = "pipeff"  //Note - these are in masks.dmi
+	icon_on = "pipeoff"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	inhand_icon_state = null
 	inhand_icon_on = null
@@ -791,7 +791,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
-	icon_on = "cobpipeff"  //Note - these are in masks.dmi
+	icon_on = "cobpipeoff"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
@@ -937,12 +937,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/human/human_user = user
 	if(!istype(human_user) || HAS_TRAIT(human_user, TRAIT_RESISTHEAT) || HAS_TRAIT(human_user, TRAIT_RESISTHEATHANDS))
 		hand_protected = TRUE
-	else if(!istype(human_user.gloves, /obj/item/clothing/gloves))
-		hand_protected = FALSE
 	else
-		var/obj/item/clothing/gloves/gloves = human_user.gloves
-		if(gloves.max_heat_protection_temperature)
-			hand_protected = (gloves.max_heat_protection_temperature > 360)
+		hand_protected = human_user.gloves?.max_heat_protection_temperature > 360
 
 	if(hand_protected || prob(75))
 		user.visible_message(

@@ -1,0 +1,59 @@
+2024-11-01:
+  DexeeXI:
+  - bugfix: 'Kilo: asteroid magnet resized, now working once more without (for now)
+      showing SHIT IS FUCK.'
+  - rscadd: Blueshield and NT Rep specific permissions.
+  - rscdel: Removed Centcom perms from Blueshield and NT Rep (this is admin only,
+      dont give this to players)
+  - bugfix: 'All Maps except Box: NT Rep and Blueshield doors now accessible by BS
+      and Rep.'
+  - bugfix: 'Icebox: Teleporter doors tweaked to allow Blueshield and NT Rep to go
+      through to the weirdly placed office.'
+  - bugfix: 'All Maps except Box: NT Rep closets and lockers replaced with standardized
+      NT Rep Locker, with perms. Some maps will have medals that were included from
+      previous authors.'
+  - rscadd: NT Rep now has a singular spawn point on all maps, except Box. This singular
+      point is in a comfy chair in the office.
+  JohnFulpWillard:
+  - rscadd: Monkeys can now wear any outfit rather than just the waiter outfit.
+  - rscadd: Simians now use the same height filter system as Monkeys to wear outfits
+      instead of having their own icon for each individual piece of clothing.
+  - rscadd: Monkeys now use the same prefs as Simians, having Fur and eye colors.
+      By default monkeys are all brown, and simians can choose to be brown as well.
+  - rscadd: Simians and monkeys are now at the bottom of the tile they are on, rather
+      than the middle.
+  - rscdel: Big legged species and monkey abominations.
+  - bugfix: Gigantism no longer doubles your size twice.
+  KnigTheThrasher:
+  - bugfix: Fixed security maintenance on kilostation
+  Meowosers:
+  - rscadd: Finished Fermentation Kegs can now be wrapped into parcels
+  RafRoq:
+  - balance: Prickly Adhesion damage halved
+  ThePooba:
+  - bugfix: window sill grills now break instantly instead of becoming glitchy messes
+  - bugfix: windowsills can now be built on once again.
+  - bugfix: Eland can now be reloaded and wont drop its spent caseless ammunition
+  dwasint:
+  - bugfix: some species not healing oxyloss when giving the NOBREATH trait
+  - rscadd: right clicking food items will bring up a radial wheel of foods you can
+      craft, this allows bulk crafting.
+  - balance: Hand crafted foods (using the new system) increases the quality of food
+      buffs.
+  lemonycake:
+  - rscadd: add the alt title "Princess" to captain
+2024-11-02:
+  Gw0sty:
+  - rscadd: Added a new 'Late Join' Category and role, the 'Barber'.
+  - rscadd: Added scissors, hairbrush, combs, dye sprays, and fur dyers from the code
+      into service lathe roundstart!
+  - rscadd: Gave service cyborgs new tools of scissors, hairbrush, and dye sprays.
+  - rscadd: Added barber lockers and vendings to all stations.
+  - code_imp: Changed the voidraptor forge area type from a barber area to a forge
+      area.
+  - qol: Health analyzers now alert if the subject has taken the heavy bleeder trait.
+  - rscadd: Added more cybernetics into the cybernetic revolution station trait.
+  - rscadd: Added new leg cybernetic for research "Vacuole ligament system"
+  Shoddd:
+  - rscadd: Tundra moths, a new species of moth
+  - rscadd: 3 New wings, 2 new antennae, and 1 new marking for moths

@@ -47,18 +47,19 @@
 	thealert.owner = src
 
 	if(new_master)
-		var/old_layer = new_master.layer
-		var/old_plane = new_master.plane
-		new_master.layer = FLOAT_LAYER
-		new_master.plane = FLOAT_PLANE
-		thealert.add_overlay(new_master)
-		new_master.layer = old_layer
-		new_master.plane = old_plane
+		var/mutable_appearance/master_appearance = new(new_master)
+		master_appearance.appearance_flags = KEEP_TOGETHER
+		master_appearance.layer = FLOAT_LAYER
+		master_appearance.plane = FLOAT_PLANE
+		master_appearance.dir = SOUTH
+		master_appearance.pixel_x = new_master.base_pixel_x
+		master_appearance.pixel_y = new_master.base_pixel_y
+		master_appearance.pixel_z = 0 /* new_master.base_pixel_z */
+		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master = new_master
 	else
-		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
-		thealert.severity = severity
+		thealert.set_severity(severity)
 
 	alerts[category] = thealert
 	if(client && hud_used)
@@ -120,6 +121,15 @@
 /atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
 
+/atom/movable/screen/alert/proc/set_severity(new_val)
+	if(severity == new_val)
+		return
+	severity = new_val
+	update_appearance()
+
+/atom/movable/screen/alert/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state || initial(icon_state)][severity]"
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:
@@ -213,15 +223,52 @@
 	icon_state = "gross3"
 
 /atom/movable/screen/alert/hot
-	name = "Too Hot"
-	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	name = "Hot"
 	icon_state = "hot"
 
+/atom/movable/screen/alert/hot/update_name(updates)
+	. = ..()
+	switch(severity)
+		if(1)
+			name = "Warm"
+		if(2)
+			name = "Hot"
+		if(3)
+			name = "Flaming Hot"
+
+/atom/movable/screen/alert/hot/update_desc(updates)
+	. = ..()
+	switch(severity)
+		if(1)
+			desc = "It's pretty warm around here. You might not want to stick around for long, but it won't hurt you unless it gets hotter."
+		if(2)
+			desc = "You're getting pretty hot. You might want to find somewhere cooler soon, or take off any insulating clothing like a fire suit."
+		if(3)
+			desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
+
 /atom/movable/screen/alert/cold
-	name = "Too Cold"
-	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
+	name = "Cold"
 	icon_state = "cold"
 
+/atom/movable/screen/alert/cold/update_name(updates)
+	. = ..()
+	switch(severity)
+		if(1)
+			name = "Chilly"
+		if(2)
+			name = "Cold"
+		if(3)
+			name = "Freezing"
+
+/atom/movable/screen/alert/cold/update_desc(updates)
+	. = ..()
+	switch(severity)
+		if(1)
+			desc = "You feel pretty chilly. You might not want to stick around for long, but it won't hurt you unless it gets colder."
+		if(2)
+			desc = "You're getting pretty cold. You might want to find somewhere warmer soon, or put on some insulating clothing like a space suit or winter coat."
+		if(3)
+			desc = "You're freezing cold! Get somewhere warmer and put on some insulating clothing like a space suit or winter coat."
 /atom/movable/screen/alert/lowpressure
 	name = "Low Pressure"
 	desc = "The air around you is hazardously thin. A space suit would protect you."
@@ -329,7 +376,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * * offerer - The person giving the alert and item
  * * receiving - The item being given by the offerer
  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+/atom/movable/screen/alert/give/proc/setup(mob/living/taker, datum/status_effect/offering/offer)
 	src.offer = offer
 
 	var/mob/living/offerer = offer.owner
@@ -370,12 +417,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	handle_transfer()
 
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
-/atom/movable/screen/alert/give/proc/handle_transfer()
-	var/mob/living/carbon/taker = owner
+/atom/movable/screen/alert/give/proc/handle_transfer(visible_message = TRUE)
+	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	taker.take(offerer, receiving)
+	if(!taker.take(offerer, receiving, visible_message))
+		return FALSE
+
 	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
+	return TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -883,11 +933,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!. || isnull(poll))
 		return
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK) && poll.ignoring_category)
+	if(LAZYACCESS(modifiers, ALT_CLICK))
 		set_never_round()
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
-		jump_to_pic_source()
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		jump_to_jump_target()
 		return
 	handle_sign_up()
 
@@ -899,6 +949,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
+	if(!poll?.ignoring_category)
+		return
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
@@ -907,7 +959,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	poll.undo_never_for_this_round(owner)
 	color = initial(color)
 
-/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+/atom/movable/screen/alert/poll_alert/proc/jump_to_jump_target()
 	if(!poll?.jump_to_me || !isobserver(owner))
 		return
 	var/turf/target_turf = get_turf(poll.jump_to_me)
@@ -921,7 +973,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(href_list["signup"])
 		handle_sign_up()
 	if(href_list["jump"])
-		jump_to_pic_source()
+		jump_to_jump_target()
 		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
@@ -932,7 +984,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/proc/update_candidates_number_overlay()
 	cut_overlay(candidates_num_overlay)
-	if(!length(poll.signed_up))
+	if(!length(poll.signed_up) || !poll.show_candidate_amount)
 		return
 	candidates_num_overlay = new
 	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua'>[length(poll.signed_up)]</span>")
@@ -1057,6 +1109,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	return 1
 
 /atom/movable/screen/alert/Click(location, control, params)
+	SHOULD_CALL_PARENT(TRUE)
+
+	..()
 	if(!usr || !usr.client)
 		return FALSE
 	if(usr != owner)

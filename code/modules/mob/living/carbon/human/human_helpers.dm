@@ -110,24 +110,15 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, seconds_per_tick, times_fired)
-	return dna.species.handle_chemicals(R, src, seconds_per_tick, times_fired)
-	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(check_chunky_fingers())
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
-
-/mob/living/carbon/human/proc/check_chunky_fingers()
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
-		return TRUE
-	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
@@ -272,13 +263,13 @@
 /mob/living/carbon/human/proc/set_mob_height(new_height)
 	if(mob_height == new_height)
 		return FALSE
-	if(new_height == HUMAN_HEIGHT_DWARF)
-		CRASH("Don't set height to dwarf height directly, use dwarf trait")
+	if(new_height == HUMAN_HEIGHT_DWARF || new_height == MONKEY_HEIGHT_DWARF)
+		CRASH("Don't set height to dwarf height directly, use dwarf trait instead.")
+	if(new_height == MONKEY_HEIGHT_MEDIUM)
+		CRASH("Don't set height to monkey height directly, use monkified gene/species instead.")
 
 	mob_height = new_height
 	regenerate_icons()
-	if(isdummy(src))
-		apply_height_filters(src, TRUE)
 	return TRUE
 
 /**
@@ -290,6 +281,12 @@
  */
 /mob/living/carbon/human/proc/get_mob_height()
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		return HUMAN_HEIGHT_DWARF
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_DWARF
+		else
+			return HUMAN_HEIGHT_DWARF
+
+	else if(ismonkey(src))
+		return MONKEY_HEIGHT_MEDIUM
 
 	return mob_height

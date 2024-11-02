@@ -163,10 +163,7 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
 	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/humi = affected_mob
-		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = affected_mob.standard_body_temperature)
 	return ..()
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -212,7 +209,7 @@
 
 /datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	return COMSIG_CARBON_BLOCK_BREATH
+	return BREATHE_BLOCK_BREATH
 
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
@@ -389,11 +386,13 @@
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/pestkiller/on_new(data)
 	. = ..()
-	if(exposed_mob.mob_biotypes & MOB_BUG)
-		var/damage = min(round(0.4*reac_volume, 0.1),10)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
+	AddElement(/datum/element/bugkiller_reagent)
+
+/datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = affected_mob.adjustToxLoss(2 * toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	return ..() || .
 
 /datum/reagent/toxin/pestkiller/organic
 	name = "Natural Pest Killer"
@@ -1306,7 +1305,7 @@
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
 	if(current_cycle >= 28)
-		return COMSIG_CARBON_BLOCK_BREATH
+		return BREATHE_BLOCK_BREATH
 
 /datum/reagent/toxin/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM
 	name = "Radiomagnetic Disruptor"

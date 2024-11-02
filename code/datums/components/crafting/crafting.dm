@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -181,7 +181,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R, time_override = null)
 	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
@@ -191,8 +191,8 @@
 					if(istype(content, R.result))
 						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time, target = a))
-				return "."
+			if(ismob(a) && !do_after(a, time_override ? time_override : R.time, target = a))
+				return ", interrupted."
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
@@ -322,10 +322,14 @@
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
 	for(var/part in R.parts)
-		if(istype(part, /datum/reagent))
+		//MONKESTATION EDIT START
+		if(ispath(part, /datum/reagent))
 			var/datum/reagent/RG = locate(part) in Deletion
 			if(RG.volume > partlist[part])
 				RG.volume = partlist[part]
+			if(RG.data?["viruses"]) //Purge diseases from food
+				RG.data["viruses"] = list()
+			//MONKESTATION EDIT END
 			. += RG
 			Deletion -= RG
 			continue
@@ -339,6 +343,12 @@
 		else
 			while(partlist[part] > 0)
 				var/atom/movable/AM = locate(part) in Deletion
+				//MONKESTATION EDIT START
+				var/datum/reagents/reagents = AM.reagents
+				for(var/datum/reagent/reagent as anything in reagents?.reagent_list) //Purge diseases from food
+					if(reagent.data?["viruses"])
+						reagent.data["viruses"] = list()
+				//MONKESTATION EDIT END
 				. += AM
 				Deletion -= AM
 				partlist[part] -= 1
@@ -461,9 +471,9 @@
 			if(!istext(result)) //We made an item and didn't get a fail message
 				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 					user.put_in_hands(result)
-				else
+				else if(!istype(result, /obj/effect/spawner))
 					result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else
@@ -503,7 +513,7 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name || initial(atom.name)
+	data["name"] = recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result

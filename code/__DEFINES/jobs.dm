@@ -40,6 +40,7 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BLUESHIELD "Blueshield" //Monke edit
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -120,6 +121,8 @@
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
+#define JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE 2.25 //monkestation edit: nanotrasen representative
+#define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -134,6 +137,7 @@
 #define JOB_DISPLAY_ORDER_AI 14
 #define JOB_DISPLAY_ORDER_CYBORG 15
 #define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
+#define JOB_DISPLAY_ORDER_SIGNAL_TECHNICIAN 16.5 // MONKESTATION ADDITION -- NTSL
 #define JOB_DISPLAY_ORDER_STATION_ENGINEER 17
 #define JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN 18
 #define JOB_DISPLAY_ORDER_QUARTERMASTER 19
@@ -183,6 +187,12 @@
 #define DEPARTMENT_BITFLAG_SPOOKTOBER (1<<10)
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
 
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
+#define DEPARTMENT_CENTRAL_COMMAND "Central Command"
+
+#define DEPARTMENT_BITFLAG_LATE (1<<12)
+#define DEPARTMENT_LATE "Late Join"
+
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.
 #define JOB_ANNOUNCE_ARRIVAL (1<<0)
@@ -202,8 +212,11 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
-/// Whether this job is enabled/disabled by the spooktober config
-#define JOB_SPOOKTOBER (1<<9)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

@@ -11,7 +11,6 @@ Addison
 Addyson
 Adeline
 Aden
-Adolph
 Adrian
 Adriana
 Adrianna
@@ -529,6 +528,7 @@ Graeme
 Graham
 Grant
 Gratian
+Grug
 Grayson
 Gregory
 Greta

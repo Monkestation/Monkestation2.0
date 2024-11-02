@@ -16,14 +16,13 @@ GLOBAL_LIST_INIT(bluespace_varient_list, list())
 	last_bluespace_id++
 	bluespace_id = last_bluespace_id
 
-/datum/symptom_varient/bluespace/Destroy(force, ...)
-	. = ..()
+/datum/symptom_varient/bluespace/Destroy(force)
 	GLOB.bluespace_varient_list -= src
+	return ..()
 
 /datum/symptom_varient/bluespace/setup_varient()
 	. = ..()
 	RegisterSignal(host_symptom, COMSIG_SYMPTOM_TRIGGER, PROC_REF(propagate))
-
 
 /datum/symptom_varient/bluespace/proc/propagate()
 	for(var/datum/symptom_varient/bluespace/bluespace as anything in GLOB.bluespace_varient_list)

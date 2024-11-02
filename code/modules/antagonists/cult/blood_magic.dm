@@ -226,12 +226,12 @@
 	enable_text = span_cult("You prepare to horrify a target...")
 	disable_text = span_cult("You dispel the magic...")
 
-/datum/action/innate/cult/blood_spell/horror/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
-	var/turf/caller_turf = get_turf(caller)
+/datum/action/innate/cult/blood_spell/horror/InterceptClickOn(mob/living/user, params, atom/clicked_on)
+	var/turf/caller_turf = get_turf(user)
 	if(!isturf(caller_turf))
 		return FALSE
 
-	if(!ishuman(clicked_on) || get_dist(caller, clicked_on) > 7)
+	if(!ishuman(clicked_on) || get_dist(user, clicked_on) > 7)
 		return FALSE
 
 	var/mob/living/carbon/human/human_clicked = clicked_on
@@ -240,23 +240,23 @@
 
 	return ..()
 
-/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, mob/living/carbon/human/clicked_on)
+/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/user, mob/living/carbon/human/clicked_on)
 
 	clicked_on.set_hallucinations_if_lower(240 SECONDS)
-	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
+	SEND_SOUND(user, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
 	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", sparkle_image, NONE)
 
 	addtimer(CALLBACK(clicked_on, TYPE_PROC_REF(/atom/, remove_alt_appearance), "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
-	to_chat(caller, span_cultbold("[clicked_on] has been cursed with living nightmares!"))
+	to_chat(user, span_cultbold("[clicked_on] has been cursed with living nightmares!"))
 
 	charges--
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	build_all_button_icons()
 	if(charges <= 0)
-		to_chat(caller, span_cult("You have exhausted the spell's power!"))
+		to_chat(user, span_cult("You have exhausted the spell's power!"))
 		qdel(src)
 
 	return TRUE
@@ -332,7 +332,7 @@
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | HAND_ITEM // monkestation edit: add HAND_ITEM
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -762,30 +762,25 @@
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M, icon_state="sendbeam", time = 1 SECONDS)
-		if(istype(target, /obj/effect/decal/cleanable/blood))
+		if(istype(target, /obj/effect/decal/cleanable/blood) || isturf(target))
 			blood_draw(target, user)
 		..()
 
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
-	var/temp = 0
-	var/turf/T = get_turf(target)
-	if(T)
-		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == BLOOD_STATE_HUMAN)
-				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
-					temp += 30
-				else
-					temp += max((B.bloodiness**2)/800,1)
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
-				qdel(B)
-		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
-			qdel(TH)
-		if(temp)
-			user.Beam(T,icon_state="drainbeam", time = 15)
+	var/blood_to_gain = 0
+	var/turf/our_turf = get_turf(target)
+	if(our_turf)
+		for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
+			if(blood_around_us.decal_reagent == /datum/reagent/blood)
+				blood_to_gain += max(blood_around_us.bloodiness * 0.12 * BLOOD_PER_UNIT_MODIFIER, 1)
+				new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
+				qdel(blood_around_us)
+		if(blood_to_gain)
+			user.Beam(our_turf,icon_state="drainbeam", time = 15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-			playsound(T, 'sound/magic/enter_blood.ogg', 50)
-			to_chat(user, span_cultitalic("Your blood rite has gained [round(temp)] charge\s from blood sources around you!"))
-			uses += max(1, round(temp))
+			playsound(our_turf, 'sound/magic/enter_blood.ogg', 50)
+			to_chat(user, span_cultitalic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
+			uses += max(1, round(blood_to_gain))
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(IS_CULTIST(user))

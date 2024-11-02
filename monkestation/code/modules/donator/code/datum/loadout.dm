@@ -365,25 +365,6 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/toys/quilark
-	name = "Quilark Plush"
-	item_path = /obj/item/toy/plush/quilark
-	donator_only = TRUE
-	requires_purchase = FALSE
-
-/datum/loadout_item/pocket_items/donator/quilava
-	name = "Pet Delivery Beacon - Quil Maid"
-	item_path = /obj/item/choice_beacon/pet/donator/quilava
-	donator_only = TRUE
-	requires_purchase = FALSE
-	ckeywhitelist = list("quilark")
-
-/datum/loadout_item/effects/quilava
-	ckeywhitelist = list("quilark")
-	name = "Quil Maid Transformation"
-	item_path = /obj/item/effect_granter/donator/quilava
-	requires_purchase = FALSE
-
 /datum/loadout_item/suit/org_thirteen
 	name = "Organization 13 Cloak"
 	item_path = /obj/item/clothing/suit/hooded/org_thirteen
@@ -482,6 +463,31 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/pooba_bee_plush
+	name = "Bumbliest Bee Plushie"
+	item_path = /obj/item/toy/plush/pooba_bee_plush
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/centcom_jacket
+	name = "Centcom Jacket"
+	item_path = /obj/item/clothing/suit/toggle/centcom_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/ghastly_evil_demon
+	name = "Pet Delivery Beacon - Ghastly Evil Demon"
+	item_path = /obj/item/choice_beacon/pet/donator/ghastly_evil_demon
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("ThePooba")
+
+/datum/loadout_item/effects/ghastly_evil_demon
+	ckeywhitelist = list("ThePooba")
+	name = "Ghastly Evil Demon Transformation"
+	item_path = /obj/item/effect_granter/donator/ghastly_evil_demon
+	requires_purchase = FALSE
+
 //Mr_Sandman02
 /datum/loadout_item/suit/menacing_jacket
 	name = "Menacing Jacket"
@@ -506,6 +512,18 @@
 /datum/loadout_item/toys/cowlophant
 	name = "Cowlephant Plush"
 	item_path = /obj/item/toy/plush/cowlephant
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/holstein_cow_mask
+	name = "Holstein Cow Mask"
+	item_path = /obj/item/clothing/mask/gas/holstein_cow_mask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/holstein_cow_jumpsuit
+	name = "Holstein Cow Jumpsuit"
+	item_path = /obj/item/clothing/under/costume/holstein_cow_jumpsuit
 	donator_only = TRUE
 	requires_purchase = FALSE
 
@@ -545,5 +563,125 @@
 /datum/loadout_item/head/western_wizard_hat
 	name = "Western Wizard Hat"
 	item_path = /obj/item/clothing/head/costume/western_wizard_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+
+//CaptainShiba
+/datum/loadout_item/effects/darkscug
+    ckeywhitelist = list("CaptainShiba")
+    name = "Nightcat Transformation"
+    item_path = /obj/item/effect_granter/donator/darkscug
+    requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/darkscug
+	name = "Pet Delivery Beacon - Nightcat"
+	item_path = /obj/item/choice_beacon/pet/donator/darkscug
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("CaptainShiba")
+//NoobskyBoi
+/datum/loadout_item/head/noobskyboi_golden_tophat
+	name = "Golden Tophat"
+	item_path = /obj/item/clothing/head/costume/noobskyboi_golden_tophat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Len Kagamine
+/datum/loadout_item/toys/wumpa
+	name = "Wumpa"
+	item_path = /obj/item/donator/wumpa
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Ophaq
+/datum/loadout_item/suit/ophaq_rainbowcoat
+	name = "Rainbow Coat"
+	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/kindle_kicks_jackboot
+	name = "Jackboot Kindle Kicks"
+	item_path = /obj/item/clothing/shoes/kindle_kicks/jackboot
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/toadie_wan_kenfrogi
+	name = "Toadie Wan Kenfrogi"
+	item_path = /obj/item/toy/plush/toadie_wan_kenfrogi
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/hypnotoad
+	name = "Pet Delivery Beacon - Hypnotoad"
+	item_path = /obj/item/choice_beacon/pet/donator/hypnotoad
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Ophaq")
+
+/datum/loadout_item/effects/hypnotoad
+	name = "Hypnotoad Transformation"
+	item_path = /obj/item/effect_granter/donator/hypnotoad
+	requires_purchase = FALSE
+	ckeywhitelist = list("Ophaq")
+
+//Jason Farqiour
+/datum/loadout_item/suit/mothysmantle
+	name = "Mothy's Mantle"
+	item_path = /obj/item/clothing/suit/hooded/mothysmantle
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//wisemonster
+/datum/loadout_item/head/purple_gold_tophat_kid
+	name = "Purple And Gold Tophat"
+	item_path = /obj/item/clothing/head/costume/purple_gold_tophat_kid
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Shodd
+/datum/loadout_item/mask/dark_skeletal_visage
+	name = "Dark Skeletal Visage"
+	item_path = /obj/item/clothing/mask/dark_skeletal_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Eacles13
+/datum/loadout_item/suit/traxs_jacket
+	name = "Trax's Jacket"
+	item_path = /obj/item/clothing/suit/toggle/traxs_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/trax_the_coward
+	name = "Trax The Coward Plush"
+	item_path = /obj/item/toy/plush/trax_the_coward
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/albino_ghost_ian
+	name = "Pet Delivery Beacon - Ghost Ian"
+	item_path = /obj/item/choice_beacon/pet/donator/albino_ghost_ian
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Eacles13")
+
+/datum/loadout_item/effects/albino_ghost_ian
+	ckeywhitelist = list("Eacles13")
+	name = "Ghost Ian Transformation"
+	item_path = /obj/item/effect_granter/donator/albino_ghost_ian
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/mist_cloak
+	name = "Mist Cloak"
+	item_path = /obj/item/clothing/neck/mist_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//jimmytombstone
+/datum/loadout_item/neck/linen_tombstone_shroud
+	name = "linen tombstone shroud"
+	item_path = /obj/item/clothing/neck/linen_tombstone_shroud
 	donator_only = TRUE
 	requires_purchase = FALSE

@@ -7,6 +7,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
 		JOB_CYBORG,
@@ -25,6 +26,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
@@ -34,7 +36,7 @@
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
 	earliest_start = 60 MINUTES
-	weight = 4
+	weight = 3
 	max_occurrences = 1
 	prompted_picking = TRUE
 

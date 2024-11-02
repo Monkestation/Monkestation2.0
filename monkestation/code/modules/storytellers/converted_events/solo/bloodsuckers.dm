@@ -4,6 +4,8 @@
 	antag_datum = /datum/antagonist/bloodsucker
 	protected_roles = list(
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -23,6 +25,7 @@
 	min_players = 20
 	weight = 10
 	maximum_antags = 2
+	event_icon_state = "vampires"
 
 /datum/round_event_control/antagonist/solo/bloodsucker/roundstart
 	name = "Bloodsuckers"

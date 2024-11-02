@@ -7,13 +7,16 @@
 	gender = FEMALE
 
 	maxHealth = 15
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 
 	icon = 'monkestation/icons/mob/ranching/chickens.dmi'
 	icon_state = "chicken_white"
 	icon_living = "chicken_white"
 	icon_dead = "dead_state"
 	held_state = "chicken_white"
+	head_icon = 'monkestation/icons/mob/pets_held.dmi'
+	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
 
 	speak_emote = list("clucks","croons")
 
@@ -40,6 +43,7 @@
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
+	head_icon = 'monkestation/icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	health = maxHealth
@@ -68,14 +72,15 @@
 	assign_chicken_icon()
 	if(gender == MALE && breed_name)
 		if(breed_name_male)
-			name = " [breed_name_male]"
+			name = real_name = "[breed_name_male]"
 		else
-			name = "[breed_name] Rooster"
+			name = real_name = "[breed_name] Rooster"
 	else
 		if(breed_name_female)
-			name = " [breed_name_female]"
+			name = real_name = "[breed_name_female]"
 		else
-			name = "[breed_name] Hen"
+			name = real_name = "[breed_name] Hen"
+	update_name_tag()
 
 	build_initial_planning_tree()
 
@@ -267,7 +272,9 @@
 	for(var/mob/living/basic/animals in view(1, src))
 		animal_count ++
 	if(animal_count >= overcrowding)
-		adjust_happiness(-1)
+		eggs_fertile = FALSE
+	else
+		eggs_fertile = TRUE
 
 	if(!stat && prob(3) && current_feed_amount > 0)
 		current_feed_amount--

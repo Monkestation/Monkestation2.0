@@ -10,13 +10,13 @@
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
-	//Monkestation edit: REPLAYS
+	// monkestation start: REPLAYS
 	SSdemo.mark_dirty(src)
 	if(isturf(target))
 		SSdemo.mark_turf(target)
 	else
 		SSdemo.mark_dirty(target)
-	//Monkestation edit: REPLAYS
+	// monkestation end: REPLAYS
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
@@ -223,7 +223,7 @@
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return
 
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params, src) // monkestation edit
 
 	if(item_flags & NOBLUDGEON)
 		return
@@ -243,7 +243,7 @@
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	user.do_attack_animation(target_mob)
+	user.do_attack_animation(target_mob, used_item = src) // MONKESTATION EDIT: Okay so why the FUCK was an attack proc on *item* not passing the fucking *item* to this? WHY?!
 	target_mob.attacked_by(src, user)
 
 	log_combat(user, target_mob, "attacked", src.name, "(ISTATE: [user.log_istate()]) (DAMTYPE: [uppertext(damtype)])")
@@ -265,7 +265,7 @@
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return
 
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params, src) // monkestation edit
 
 	if(item_flags & NOBLUDGEON)
 		return
@@ -334,7 +334,7 @@
 	send_item_attack_message(attacking_item, user)
 	if(!attacking_item.force)
 		return FALSE
-	var/damage = attacking_item.force
+	var/damage = attacking_item.force * user.outgoing_damage_mod
 	if(mob_biotypes & MOB_ROBOTIC)
 		damage *= attacking_item.demolition_mod
 	apply_damage(damage, attacking_item.damtype)

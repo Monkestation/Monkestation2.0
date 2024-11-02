@@ -60,7 +60,7 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_color_picker/Destroy(force, ...)
+/datum/tgui_color_picker/Destroy(force)
 	SStgui.close_uis(src)
 	. = ..()
 
@@ -116,6 +116,10 @@
 			return TRUE
 		if("cancel")
 			closed = TRUE
+			SStgui.close_uis(src)
+			return TRUE
+		if("null")
+			set_choice(null)
 			SStgui.close_uis(src)
 			return TRUE
 

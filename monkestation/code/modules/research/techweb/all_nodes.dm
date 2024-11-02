@@ -3,7 +3,7 @@
 	display_name = "Cloning"
 	description = "We have the technology to make him."
 	prereq_ids = list("biotech")
-	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk")
+	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk", "clonepod_experimental")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////Nanites/////////////////////////
@@ -220,6 +220,19 @@
 		"ipc_arm_left",
 		"ipc_arm_right",
 		"ipc_leg_left",
-		"ipc_leg_right"
+		"ipc_leg_right",
+		"power_cord"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+
+
+/datum/techweb_node/bomb_actualizer
+	id = "bomb_actualizer"
+	display_name = "Bomb Actualization Technology"
+	description = "Using bluespace technology we can increase the actual yield of ordinance to their theoretical maximum on station... to disasterous effect."
+	prereq_ids = list("micro_bluespace", "bluespace_storage", "practical_bluespace")
+	design_ids = list(
+		"bomb_actualizer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)

@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/jaunt/shadow_walk
 	name = "Shadow Walk"
-	desc = "Grants unlimited movement in darkness."
+	desc = "Grants unlimited movement and increased healing in darkness." // monkestation edit
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -8,6 +8,9 @@
 
 	spell_requirements = NONE
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
+
+	/// The max amount of lumens on a turf allowed before we can no longer enter jaunt with this
+	var/light_threshold = SHADOW_SPECIES_LIGHT_THRESHOLD
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
@@ -17,6 +20,12 @@
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
+/datum/action/cooldown/spell/jaunt/shadow_walk/enter_jaunt(mob/living/jaunter, turf/loc_override)
+	var/obj/effect/dummy/phased_mob/shadow/shadow = ..()
+	if(istype(shadow))
+		shadow.light_max = light_threshold
+	return shadow
+
 /datum/action/cooldown/spell/jaunt/shadow_walk/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -24,7 +33,7 @@
 	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
-	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(cast_turf.get_lumcount() >= light_threshold)
 		if(feedback)
 			to_chat(owner, span_warning("It isn't dark enough here!"))
 		return FALSE
@@ -36,7 +45,7 @@
 		exit_jaunt(cast_on)
 		return
 
-	playsound(get_turf(owner), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
 	cast_on.setStaminaLoss(0, FALSE)
@@ -44,6 +53,8 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	/// Max amount of light permitted before being kicked out
+	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
@@ -85,6 +96,11 @@
 		to_chat(user, span_warning("It really would not be wise to go into space."))
 		return FALSE
 	if(check_light_level(.))
+		// MONKESTATION EDIT START
+		SEND_SIGNAL(user, COMSIG_NIGHTMARE_SNUFF_CHECK, .) // Snuffs nearby lights as if we had already moved to the tile.
+		if(!check_light_level(.)) // Now we check again after snuffing any dim lights.
+			return
+		// MONKESTATION EDIT END
 		if(!light_step_warning())
 			return FALSE
 
@@ -96,7 +112,7 @@
 			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
 		else
 			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(reveal_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+		playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 
 	return ..()
 
@@ -109,11 +125,9 @@
  * * location_to_check - The location to have its light level checked.
  */
 
-/obj/effect/dummy/phased_mob/shadow/proc/check_light_level(location_to_check)
-	var/turf/T = get_turf(location_to_check)
-	var/light_amount = T.get_lumcount()
-	if(light_amount > 0.2) // jaunt ends
-		return TRUE
+/obj/effect/dummy/phased_mob/shadow/proc/check_light_level(atom/location_to_check)
+	var/turf/light_turf = get_turf(location_to_check)
+	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
 
 /**
  * Checks if the user should recieve a warning that they're moving into light.

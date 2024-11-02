@@ -11,6 +11,10 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
+///from base of mob/reagent_check(): (datum/reagent/chem, seconds_per_tick, times_fired)
+#define COMSIG_MOB_REAGENT_CHECK "mob_reagent_check"
+	///stops the reagent check call
+	#define COMSIG_MOB_STOP_REAGENT_CHECK (1<<0)
 ///from base of mob/clickon(): (atom/A, params)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
@@ -164,7 +168,7 @@
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 ///from base of atom/attack_hand(): (mob/user, modifiers)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
-///from base of /obj/item/attack(): (mob/M, mob/user)
+///from base of /obj/item/attack(): (mob/M, mob/user, params, obj/item/weapon)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
 ///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
@@ -222,6 +226,9 @@
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
 
+/// from /mob/proc/change_mob_type() : ()
+#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"
 

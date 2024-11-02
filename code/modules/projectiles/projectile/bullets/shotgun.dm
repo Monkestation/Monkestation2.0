@@ -19,7 +19,7 @@
 	name = "beanbag slug"
 	icon_state = "pellet"
 	damage = 10
-	stamina = 55
+	stamina = 65 //monkestation edit
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
@@ -84,7 +84,7 @@
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3
-	stamina = 11
+	stamina = 30 //monkestation edit
 	sharpness = NONE
 	embedding = null
 	speed = 1.2
@@ -128,3 +128,12 @@
 /obj/projectile/bullet/scattershot
 	icon_state = "pellet"
 	damage = 24
+
+//Breaching Ammo
+
+/obj/projectile/bullet/shotgun_breaching
+	name = "12g breaching round"
+	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	damage = 5 //does shit damage to everything except doors and windows
+	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door

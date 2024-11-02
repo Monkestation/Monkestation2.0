@@ -33,7 +33,12 @@
 		if (input["format"] == "json")
 			. = list("error" = .)
 	else
-		. = Run(input)
+		// Monkestation edit start
+		if (input["json"])
+			. = Run(input + json_decode(input["json"]))
+		else
+			. = Run(input)
+		// Monkestation edit end
 	if (input["format"] == "json")
 		. = json_encode(.)
 	else if(islist(.))
@@ -114,7 +119,7 @@
 
 	var/message = "<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
 			the following message (will autoapprove in [soft_filter_passed ? "[extended_time_display]" : "[normal_time_display]"]): \
-			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
+			<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
 			[html_encode(input["message"])]"
 
 	if(soft_filter_passed)
@@ -234,8 +239,13 @@
 	.["bunkered"] = CONFIG_GET(flag/panic_bunker) || FALSE
 	.["interviews"] = CONFIG_GET(flag/panic_bunker_interview) || FALSE
 	if(SSshuttle?.emergency)
-		.["shuttle_mode"] = SSshuttle.emergency.mode
+	// monkestation start: move comments, add emergency reason
 		// Shuttle status, see /__DEFINES/stat.dm
-		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
+		.["shuttle_mode"] = SSshuttle.emergency.mode
 		// Shuttle timer, in seconds
+		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
+		// Shuttle reason
+		.["shuttle_emergency_reason"] = SSticker.emergency_reason
+	// monkestation end
+
 

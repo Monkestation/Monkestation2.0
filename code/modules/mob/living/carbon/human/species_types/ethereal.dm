@@ -234,3 +234,39 @@
 
 	return to_add
 */
+
+/datum/species/ethereal/lustrous //Ethereal pirates with an inherent bluespace prophet trauma.
+	name = "Lustrous"
+	id = SPECIES_ETHEREAL_LUSTROUS
+	examine_limb_id = SPECIES_ETHEREAL
+	mutantbrain = /obj/item/organ/internal/brain/lustrous
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	inherent_traits = list(
+//monkestation temp removal start
+/*
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FIXED_MUTANT_COLORS,
+		TRAIT_AGENDER,
+*/
+//monkestation temp removal end
+		TRAIT_TENACIOUS,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_VIRUSIMMUNE,
+	)
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ethereal,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
+	)
+
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+	..()
+	var/datum/color_palette/generic_colors/palette = new_lustrous.dna.color_palettes[/datum/color_palette/generic_colors]
+	default_color = palette.ethereal_color
+	palette.ethereal_color = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

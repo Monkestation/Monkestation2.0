@@ -28,6 +28,7 @@ export const COLORS = {
     science: '#9b59b6',
     engineering: '#f1c40f',
     cargo: '#f39c12',
+    service: '#7cc46a',
     centcom: '#00c100',
     other: '#c38312',
   },
@@ -146,7 +147,7 @@ export const RADIO_CHANNELS = [
   },
   {
     name: 'Radio',
-    freq: 1443,
+    freq: 1361,
     color: '#FFC0CB',
   },
 ] as const;

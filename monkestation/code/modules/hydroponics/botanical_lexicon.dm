@@ -1,21 +1,23 @@
-/obj/item/botanical_lexicon
+/obj/item/book/manual/botanical_lexicon
 	name = "Botanical Lexicon"
-	desc = "A transcribed list of all known plant mutations and how to aquire them"
+	desc = "A transcribed list of all known plant mutations and how to acquire them"
 	icon = 'monkestation/icons/obj/ranching.dmi'
 	icon_state = "chicken_book"
+	unique = TRUE
 
-/obj/item/botanical_lexicon/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user,src,ui)
+/obj/item/book/manual/botanical_lexicon/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user,src,"BotanicalLexicon")
+		ui = new(user, src, "BotanicalLexicon")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/item/botanical_lexicon/ui_act(action,list/params)
-	if(..())
-		return
+/obj/item/book/manual/botanical_lexicon/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/botanical_lexicon),
+	)
 
-
-/obj/item/botanical_lexicon/ui_static_data(mob/user)
+/obj/item/book/manual/botanical_lexicon/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/plant_list = list()
 	for(var/datum/hydroponics/plant_mutation/mutation as anything in (subtypesof(/datum/hydroponics/plant_mutation) - /datum/hydroponics/plant_mutation/spliced_mutation - /datum/hydroponics/plant_mutation/infusion))
@@ -24,10 +26,10 @@
 		if(!listed_mutation.created_seed)
 			continue
 
-		var/obj/item/seeds/created_seed = new listed_mutation.created_seed
+		var/obj/item/seeds/created_seed = listed_mutation.created_seed
 
-		details["name"] = created_seed.name
-		details["desc"] = created_seed.desc
+		details["name"] = created_seed::name
+		details["desc"] = created_seed::desc
 
 		if(listed_mutation.required_potency.len)
 			details["potency_low"] = listed_mutation.required_potency[1]
@@ -60,15 +62,7 @@
 				reagent_names += initial(listed_reagent.name)
 			details["required_reagents"] = reagent_names.Join(",")
 
-
-		var/icon/plant_icon = getFlatIcon(created_seed)
-		var/md5 = md5(fcopy_rsc(plant_icon))
-		if(!SSassets.cache["photo_[md5]_[created_seed.name]_icon.png"])
-			SSassets.transport.register_asset("photo_[md5]_[created_seed.name]_icon.png", plant_icon)
-		SSassets.transport.send_assets(user, list("photo_[md5]_[created_seed.name]_icon.png" = plant_icon))
-		details["plant_icon"] = SSassets.transport.get_asset_url("photo_[md5]_[created_seed.name]_icon.png")
-
-		qdel(created_seed)
+		details["plant_icon"] = sanitize_css_class_name("[created_seed::icon]_[created_seed::icon_state]")
 		plant_list += list(details)
 		qdel(listed_mutation)
 

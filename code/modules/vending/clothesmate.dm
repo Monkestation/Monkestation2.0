@@ -66,6 +66,7 @@
 				/obj/item/clothing/under/costume/buttondown/shorts = 4,
 				/obj/item/clothing/under/dress/sundress = 2,
 				/obj/item/clothing/under/dress/tango = 2,
+				/obj/item/clothing/under/dress/ballgown = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
 				/obj/item/clothing/under/dress/skirt/turtleskirt = 4,
 				/obj/item/clothing/under/misc/overalls = 2,
@@ -76,6 +77,7 @@
 				/obj/item/clothing/under/dress/sailor = 1,
 				/obj/item/clothing/under/dress/redeveninggown = 1,
 				/obj/item/clothing/suit/apron/purple_bartender = 2,
+				/obj/item/clothing/under/costume/citizen_uniform = 4,
 			),
 		),
 
@@ -138,8 +140,10 @@
 				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
 				/obj/item/clothing/under/ethereal_tunic = 3,
 
+				/obj/item/clothing/mask/kitsune = 3,
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,
+				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,
 				/obj/item/clothing/head/costume/deckers = 20,

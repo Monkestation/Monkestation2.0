@@ -44,6 +44,10 @@
 			footstep_sounds = 'sound/effects/footstep/rustystep1.ogg'
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
+		if(FOOTSTEP_OBJ_SILICON)
+			footstep_sounds = 'sound/effects/footstep/silicon_step.ogg'
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
+			return
 		if(FOOTSTEP_OBJ_MACHINE)
 			footstep_sounds = 'sound/effects/bang.ogg'
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
@@ -146,8 +150,14 @@
 			footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 	else
 		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
-		if(source.dna.species.special_step_sounds)
-			heard_clients = playsound(source.loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
+		var/leg_num = source.step_leg
+		source.step_leg++
+		if(source.step_leg > source.usable_legs)
+			source.step_leg = 1
+		var/bodypart_slot = leg_num == 2 ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG
+		var/obj/item/bodypart/leg/gotten = source.get_bodypart(bodypart_slot)
+		if(gotten?.step_sounds)
+			heard_clients = playsound(source.loc, pick(gotten.step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/static/list/bare_footstep_sounds = GLOB.barefootstep
 

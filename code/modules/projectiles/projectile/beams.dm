@@ -21,6 +21,7 @@
 
 
 /obj/projectile/beam/laser
+	generic_name = "laser beam"
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
@@ -77,6 +78,7 @@
 
 /obj/projectile/beam/practice
 	name = "practice laser"
+	generic_name = "practice laser beam"
 	damage = 0
 
 /obj/projectile/beam/scatter
@@ -103,7 +105,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 45
+	stamina = 35
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -126,6 +128,7 @@
 
 /obj/projectile/beam/pulse
 	name = "pulse"
+	generic_name = "pulse beam"
 	icon_state = "u_laser"
 	damage = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -226,23 +229,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-//a shrink ray that shrinks stuff, which grows back after a short while.
-/obj/projectile/beam/shrink
-	name = "shrink ray"
-	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
-	damage_type = STAMINA
-	armor_flag = ENERGY
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
-	light_color = LIGHT_COLOR_BLUE
-	var/shrink_time = 90
-
-/obj/projectile/beam/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
-		return
-	target.AddComponent(/datum/component/shrink, shrink_time)
-
-/obj/projectile/beam/shrink/is_hostile_projectile()
-	return TRUE
+/obj/projectile/magic/shrink/alien
+	antimagic_flags = NONE
+	shrink_time = 9 SECONDS

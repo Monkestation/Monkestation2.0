@@ -266,28 +266,24 @@
 
 // .35 Sol Short
 // Pistol caliber caseless round used almost exclusively by SolFed weapons
+//CASELESS VAR IS ADDED SO THAT REVOLVER CHAMBERS KNOW WHAT TO DO WITH IT
 
 /obj/item/ammo_casing/c35sol
 	name = ".35 Sol Short lethal bullet casing"
 	desc = "A SolFed standard caseless lethal pistol round."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "35sol"
-
 	caliber = CALIBER_SOL35SHORT
 	projectile_type = /obj/projectile/bullet/c35sol
 
-
 /obj/item/ammo_casing/c35sol/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/caseless)
 
 
 /obj/projectile/bullet/c35sol
 	name = ".35 Sol Short bullet"
-	damage = 20
-
+	damage = 15
 	wound_bonus = -5 // Normal bullets are 20
 	bare_wound_bonus = 5
 	embed_falloff_tile = -4
@@ -296,14 +292,10 @@
 /obj/item/ammo_box/c35sol
 	name = "ammo box (.35 Sol Short lethal)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "35box"
-
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
-
 	w_class = WEIGHT_CLASS_NORMAL
-
 	caliber = CALIBER_SOL35SHORT
 	ammo_type = /obj/item/ammo_casing/c35sol
 	max_ammo = 24
@@ -314,9 +306,7 @@
 /obj/item/ammo_casing/c35sol/incapacitator
 	name = ".35 Sol Short incapacitator bullet casing"
 	desc = "A SolFed standard caseless less-lethal pistol round. Exhausts targets on hit, has a tendency to bounce off walls at shallow angles."
-
 	icon_state = "35sol_disabler"
-
 	projectile_type = /obj/projectile/bullet/c35sol/incapacitator
 	harmful = FALSE
 
@@ -325,10 +315,8 @@
 	name = ".35 Sol Short incapacitator bullet"
 	damage = 5
 	stamina = 30
-
 	wound_bonus = -40
 	bare_wound_bonus = -20
-
 	weak_against_armour = TRUE
 
 	// The stats of the ricochet are a nerfed version of detective revolver rubber ammo
@@ -339,7 +327,6 @@
 	ricochet_incidence_leeway = 50
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
-
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
@@ -348,9 +335,7 @@
 /obj/item/ammo_box/c35sol/incapacitator
 	name = "ammo box (.35 Sol Short incapacitator)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The blue stripe indicates this should hold less-lethal ammunition."
-
 	icon_state = "35box_disabler"
-
 	ammo_type = /obj/item/ammo_casing/c35sol/incapacitator
 
 
@@ -359,25 +344,19 @@
 /obj/item/ammo_casing/c35sol/ripper
 	name = ".35 Sol Short ripper bullet casing"
 	desc = "A SolFed standard caseless ripper pistol round. Causes slashing wounds on targets, but is weak to armor."
-
 	icon_state = "35sol_shrapnel"
 	projectile_type = /obj/projectile/bullet/c35sol/ripper
-
 	custom_materials = AMMO_MATS_RIPPER
 	advanced_print_req = TRUE
 
 
 /obj/projectile/bullet/c35sol/ripper
 	name = ".35 Sol ripper bullet"
-	damage = 15
-
+	damage = 12
 	weak_against_armour = TRUE
-
 	sharpness = SHARP_EDGED
-
 	wound_bonus = 20
 	bare_wound_bonus = 20
-
 	embedding = list(
 		embed_chance = 75,
 		fall_chance = 3,
@@ -395,9 +374,7 @@
 /obj/item/ammo_box/c35sol/ripper
 	name = "ammo box (.35 Sol Short ripper)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The purple stripe indicates this should hold hollowpoint-like ammunition."
-
 	icon_state = "35box_shrapnel"
-
 	ammo_type = /obj/item/ammo_casing/c35sol/ripper
 
 // .40 Sol Long
@@ -406,24 +383,20 @@
 /obj/item/ammo_casing/c40sol
 	name = ".40 Sol Long lethal bullet casing"
 	desc = "A SolFed standard caseless lethal rifle round."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "40sol"
-
 	caliber = CALIBER_SOL40LONG
 	projectile_type = /obj/projectile/bullet/c40sol
 
 
 /obj/item/ammo_casing/c40sol/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/caseless)
 
 
 /obj/projectile/bullet/c40sol
 	name = ".40 Sol Long bullet"
 	damage = 20
-
 	wound_bonus = 10
 	bare_wound_bonus = 20
 
@@ -662,7 +635,7 @@
 
 /obj/item/ammo_box/c585trappiste
 	name = "ammo box (.585 Trappiste lethal)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges."
+	desc = "A box of .585 Trappiste pistol rounds, holds thirty-two cartridges."
 
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
 	icon_state = "585box"
@@ -673,7 +646,7 @@
 
 	caliber = CALIBER_585TRAPPISTE
 	ammo_type = /obj/item/ammo_casing/c585trappiste
-	max_ammo = 12
+	max_ammo = 32
 
 // .585 Trappiste equivalent to a rubber bullet
 
@@ -700,7 +673,7 @@
 
 /obj/item/ammo_box/c585trappiste/incapacitator
 	name = "ammo box (.585 Trappiste flathead)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges. The blue stripe indicates that it should hold less lethal rounds."
+	desc = "A box of .585 Trappiste pistol rounds, holds thirty-two cartridges. The blue stripe indicates that it should hold less lethal rounds."
 
 	icon_state = "585box_disabler"
 
@@ -728,7 +701,7 @@
 
 /obj/item/ammo_box/c585trappiste/hollowpoint
 	name = "ammo box (.585 Trappiste hollowhead)"
-	desc = "A box of .585 Trappiste pistol rounds, holds twelve cartridges. The purple stripe indicates that it should hold hollowpoint-like rounds."
+	desc = "A box of .585 Trappiste pistol rounds, holds 32 cartridges. The purple stripe indicates that it should hold hollowpoint-like rounds."
 
 	icon_state = "585box_shrapnel"
 

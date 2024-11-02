@@ -19,6 +19,8 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
 
 	if(!client_token_holder)
+		if(!prefs?.loaded)
+			CRASH("Tried to load client_token's before prefs were loaded how the fuck?")
 		client_token_holder = new(src)
 
 	var/tier = tgui_input_list(src, "High: [client_token_holder.total_high_threat_tokens] | \
@@ -120,16 +122,18 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 			/datum/antagonist/rev/head,
 			/datum/antagonist/wizard,
 			/datum/antagonist/clock_cultist,
-			/datum/antagonist/ninja
+			/datum/antagonist/ninja,
 		)),
 		MEDIUM_THREAT = init_antag_list(list(
 			/datum/antagonist/heretic,
-			/datum/antagonist/bloodsucker
+			/datum/antagonist/bloodsucker,
+			/datum/antagonist/cortical_borer/hivemind,
 		)),
 		LOW_THREAT = init_antag_list(list(
 			/datum/antagonist/florida_man,
 			/datum/antagonist/traitor,
-			/datum/antagonist/paradox_clone
+			/datum/antagonist/paradox_clone,
+			/datum/antagonist/cortical_borer,
 		))
 	)
 	var/static/list/toml_keys = list(

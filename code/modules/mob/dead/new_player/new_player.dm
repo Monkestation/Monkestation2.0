@@ -285,9 +285,11 @@
 	if(QDELETED(src) || !client)
 		return // Disconnected while checking for the appearance ban.
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
-		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
-		mind.set_original_character(spawning_mob)
+		// transfer_to sets mind to null
+		var/datum/mind/preserved_mind = mind
+		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+		preserved_mind.set_original_character(spawning_mob)
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
@@ -299,6 +301,10 @@
 		return
 	new_character.key = key //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	if(new_character?.client?.media)
+		new_character.client.media.lobby_music = FALSE
+		new_character.client.media.stop_music()
+
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
 		joined_area.on_joining_game(new_character)
@@ -384,7 +390,7 @@
 		remove_verb(mob, verb_path)
 
 	// Then we create the interview form and show it to the client
-	var/datum/interview/I = GLOB.interviews.interview_for_client(mob)
+	var/datum/interview/I = GLOB.interviews.interview_for_client(src)
 	if (I)
 		I.ui_interact(mob)
 

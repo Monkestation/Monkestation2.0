@@ -208,7 +208,7 @@
 	for(var/datum/disease/virus as anything in mod.wearer.diseases)
 		var/list/virus_data = list()
 		virus_data["name"] = virus.name
-		virus_data["type"] = virus.spread_text
+		virus_data["type"] = virus.get_spread_string()
 		virus_data["stage"] = virus.stage
 		virus_data["maxstage"] = virus.max_stages
 		virus_data["cure"] = virus.cure_text
@@ -432,7 +432,7 @@
 	/// Minimum temperature we can set.
 	var/min_temp = 293.15
 	/// Maximum temperature we can set.
-	var/max_temp = 318.15
+	var/max_temp = T20C * 2.25
 
 /obj/item/mod/module/thermal_regulator/get_configuration()
 	. = ..()
@@ -444,7 +444,11 @@
 			temperature_setting = clamp(value + T0C, min_temp, max_temp)
 
 /obj/item/mod/module/thermal_regulator/on_active_process(seconds_per_tick)
-	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * seconds_per_tick))
+	var/mob/living/user = mod.wearer
+	if(user.bodytemperature < temperature_setting)
+		user.adjust_bodytemperature((temperature_setting - user.bodytemperature) * 0.08 * seconds_per_tick, max_temp = temperature_setting)
+	else if(user.bodytemperature > temperature_setting)
+		user.adjust_bodytemperature((temperature_setting - user.bodytemperature) * 0.08 * seconds_per_tick, min_temp = temperature_setting)
 
 ///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock
@@ -643,3 +647,39 @@
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
+/obj/item/mod/module/joint_torsion
+	name = "MOD joint torsion ratchet module"
+	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G."
+	icon_state = "joint_torsion"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
+
+/obj/item/mod/module/joint_torsion/on_suit_activation()
+	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	/// This way we don't even bother to call on_moved() while flying/floating
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movetype_flag_enabled))
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movetype_flag_disabled))
+
+/obj/item/mod/module/joint_torsion/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED))
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(!(old_state & (FLOATING|FLYING)) && flag & (FLOATING|FLYING))
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(old_state & (FLOATING|FLYING) && !(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/obj/item/mod/module/joint_torsion/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+	//Shouldn't work if the wearer isn't really walking/running around.
+	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	mod.core.add_charge(power_per_step)

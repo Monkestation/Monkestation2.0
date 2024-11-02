@@ -376,24 +376,24 @@
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(/datum/mutation/human/dwarfism)
-	locked = TRUE
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+/* handled in init_signals.dm
 	owner.update_transform(1.25)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+*/
 
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
-	//REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	//handled in init_signals.dm
-	//REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+/* handled in init_signals.dm
 	owner.update_transform(0.8)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+*/
 
 /datum/mutation/human/spastic
 	name = "Spastic"
@@ -502,6 +502,7 @@
 	. = ..()
 	if(.)//cant add
 		return TRUE
+
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.zone = BODY_ZONE_CHEST
@@ -510,11 +511,10 @@
 	if(head)
 		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
-		head.dismember(BRUTE)
+		head.dismember(dam_type = BRUTE, silent = TRUE)
 		head.drop_organs()
 		qdel(head)
-		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abortattachment))
+	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abort_attachment))
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
@@ -522,7 +522,7 @@
 		return TRUE
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
-		brain.zone = BODY_ZONE_HEAD
+		brain.zone = initial(brain.zone)
 	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD)
 	if(!successful)
@@ -534,7 +534,7 @@
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 
-/datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+/datum/mutation/human/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
 	SIGNAL_HANDLER
 
 	if(istype(new_limb, /obj/item/bodypart/head))

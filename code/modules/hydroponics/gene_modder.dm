@@ -25,7 +25,7 @@
 	var/max_maturation = 10
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
-	.=..()
+	. = ..()
 	for(var/datum/stock_part/manipulator/M in component_parts)
 		if(M.tier > 3)
 			max_potency = INFINITY
@@ -49,26 +49,49 @@
 		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.tier*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 
-/obj/machinery/plantgenes/update_icon()
-	..()
-	cut_overlays()
-	if((machine_stat & (BROKEN|NOPOWER)))
+/obj/machinery/plantgenes/update_icon_state()
+	. = ..()
+	if((machine_stat & (BROKEN | NOPOWER)) || !anchored)
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"
+
+/obj/machinery/plantgenes/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
+		return
 	if(seed)
-		add_overlay("dnamod-dna")
+		. += "dnamod-dna"
 	if(panel_open)
-		add_overlay("dnamod-open")
+		. += "dnamod-open"
+
+/obj/machinery/plantgenes/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/plantgenes/screwdriver_act(mob/living/user, obj/item/tool)
+	if(..())
+		return TRUE
+	return default_deconstruction_screwdriver(user, "dnamod", "dnamod", tool)
+
+/obj/machinery/plantgenes/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
+
+/obj/machinery/plantgenes/set_anchored(anchorvalue)
+	. = ..()
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/plantgenes/on_set_panel_open(old_value)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
-		update_icon()
-		return
-	if(default_deconstruction_crowbar(I))
-		return
 	if(iscyborg(user))
 		return
+	if(!anchored)
+		return ..()
 
 	if(istype(I, /obj/item/seeds))
 		if (operation)
@@ -95,7 +118,7 @@
 
 /obj/machinery/plantgenes/ui_interact(mob/user)
 	. = ..()
-	if(!user)
+	if(!user || !anchored || panel_open)
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
@@ -164,19 +187,19 @@
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
 			if("insert")
 				dat += "<span class='highlight'>[disk.gene.get_name()]</span> gene into \the <span class='highlight'>[seed]</span>?<br>"
-		dat += "</div><div class='line'><a href='?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
-		dat += "<a href='?src=[REF(src)];abort=1'>Abort</a></div>"
+		dat += "</div><div class='line'><a href='byond://?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
+		dat += "<a href='byond://?src=[REF(src)];abort=1'>Abort</a></div>"
 		popup.set_content(dat)
 		popup.open()
 		return
 
 	dat+= "<div class='statusDisplay'>"
 
-	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=[REF(src)];eject_seed=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='byond://?src=[REF(src)];eject_seed=1'>"
 	dat += seed ? seed.name : "None"
 	dat += "</a></div></div>"
 
-	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=[REF(src)];eject_disk=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='byond://?src=[REF(src)];eject_disk=1'>"
 	if(!disk)
 		dat += "None"
 	else if(!disk.gene)
@@ -200,9 +223,9 @@
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 			if(can_extract)
-				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+				dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
 			if(can_insert && istype(disk.gene, G.type))
-				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
+				dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
 
@@ -214,15 +237,15 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No content-related genes detected in sample.<br>"
 			dat += "</div>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/reagent))
-				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='byond://?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 
 			dat += "<div class='line'><h3>Trait Genes</h3></div><div class='statusDisplay'>"
 			if(trait_genes.len)
@@ -231,14 +254,14 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
-				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='byond://?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
 		dat += "<br>No sample found.<br><span class='highlight'>Please, insert a plant sample to use this device.</span>"
@@ -323,9 +346,8 @@
 							else if(istype(G, /datum/plant_gene/core/weed_chance))
 								gene.value = max(gene.value, min_wchance)
 						disk.update_disk_name()
-						qdel(seed)
-						seed = null
-						update_icon()
+						QDEL_NULL(seed)
+						update_appearance(UPDATE_OVERLAYS)
 				if("replace")
 					if(disk && disk.gene && istype(disk.gene, G.type) && istype(G, /datum/plant_gene/core))
 						seed.genes -= G
@@ -359,7 +381,7 @@
 	S.forceMove(src)
 	seed = S
 	update_genes()
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/plantgenes/proc/eject_disk()
 	if (disk && !operation)
@@ -379,6 +401,7 @@
 		else
 			seed.forceMove(drop_location())
 		seed = null
+		update_appearance(UPDATE_OVERLAYS)
 		update_genes()
 
 /obj/machinery/plantgenes/proc/update_genes()
@@ -425,6 +448,10 @@
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME
+
+/obj/item/disk/plantgene/syndicate // Monkestation item
+	gene = new /datum/plant_gene/trait/noreact
+	read_only = 1
 
 /obj/item/disk/plantgene/Initialize(mapload)
 	. = ..()

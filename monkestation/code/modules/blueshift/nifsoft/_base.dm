@@ -516,23 +516,19 @@ GLOBAL_LIST_INIT(purchasable_nifsofts, list(
 
 	if(remove_nif)
 		qdel(installed_nif)
-		persistence.nif_path = null
-		persistence.nif_examine_text = null
+		remove_nif_data(persistence)
 		return
 
 	if(!installed_nif || (installed_nif && !installed_nif.nif_persistence) || (installed_nif.durability <= 0)) // If you have a NIF on file but leave the round without one installed, you only take a durability loss instead of losing the implant.
 		if(persistence.nif_path)
 			if(persistence.nif_durability <= 0) //There is one round to repair the NIF after it breaks, otherwise it will be lost.
-				persistence.nif_path = null
-				persistence.nif_examine_text = null
-				persistence.nif_durability = null
+				remove_nif_data(persistence)
 				return
 
 			persistence.nif_durability = max((persistence.nif_durability - LOSS_WITH_NIF_UNINSTALLED), 0)
 			return
 
-		persistence.nif_path = null
-		persistence.nif_examine_text = null
+		remove_nif_data(persistence)
 		return
 
 	persistence.nif_path = installed_nif.type
@@ -555,6 +551,18 @@ GLOBAL_LIST_INIT(purchasable_nifsofts, list(
 		persistent_nifsoft_paths += "&[(nifsoft.type)]"
 
 	persistence.persistent_nifsofts = persistent_nifsoft_paths
+
+/// Removes the NIF data for an individual user. JFC turn this into a self-contained datum later PLEASE.
+/mob/living/carbon/human/proc/remove_nif_data(datum/modular_persistence/persistence)
+	persistence.nif_path = null
+	persistence.nif_durability = null
+	persistence.nif_examine_text = null
+	persistence.nif_is_calibrated = null
+	persistence.nif_soulcatcher_rooms = null
+	persistence.nif_theme = null
+	persistence.stored_rewards_points = null
+	persistence.soul_poem_nifsoft_message = null
+	persistence.soul_poem_nifsoft_name = null
 
 /// Loads the NIF data for an individual user.
 /mob/living/carbon/human/proc/load_nif_data(datum/modular_persistence/persistence)
@@ -834,11 +842,11 @@ GLOBAL_LIST_INIT(purchasable_nifsofts, list(
 		return FALSE
 
 	if(!is_type_in_list(target_glasses, glasses_whitelist))
-		balloon_alert("incompatible!")
+		balloon_alert(user, "incompatible!")
 		return FALSE
 
 	if(HAS_TRAIT(target_glasses, TRAIT_NIFSOFT_HUD_GRANTER))
-		balloon_alert("already upgraded!")
+		balloon_alert(user, "already upgraded!")
 		return FALSE
 
 	user.visible_message(span_notice("[user] upgrades [target_glasses] with [src]."), span_notice("You upgrade [target_glasses] to be NIF HUD compatible."))

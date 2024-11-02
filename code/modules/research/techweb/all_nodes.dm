@@ -15,6 +15,11 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"big_manipulator",
+		"assembler",
+		"manipulator_filter",
+		"manipulator_filter_cargo",
+		"manipulator_filter_internal",
 		"bodybag",
 		"bounced_radio",
 		"bowl",
@@ -34,6 +39,7 @@
 		"coffee_cartridge",
 		"coffeemaker",
 		"coffeepot",
+		"comb", //monkestation edit
 		"condenser",
 		"conveyor_belt",
 		"conveyor_switch",
@@ -43,6 +49,7 @@
 		"desttagger",
 		"doppler_array",
 		"drinking_glass",
+		"dyespray", //monkestation edit
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
@@ -54,7 +61,9 @@
 		"fluid_ducts",
 		"foam_dart",
 		"fork",
+		"fur_dyer", //monkestation edit
 		"gas_filter",
+		"hairbrush", //monkestation edit
 		"handcuffs_s",
 		"handlabel",
 		"health_sensor",
@@ -63,6 +72,8 @@
 		"infrared_emitter",
 		"intercom_frame",
 		"kitchen_knife",
+		"recipe_card",
+		"bottling_kit",
 		"laptop",
 		"light_bulb",
 		"light_replacer",
@@ -94,6 +105,7 @@
 		"rglass",
 		"roll",
 		"rollerbed",
+		"scissors", //monkestation edit
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
@@ -132,6 +144,7 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
+		"diskplantgene", // monkestation edit: move to roundstart tech
 	)
 
 /datum/techweb_node/mmi
@@ -283,6 +296,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -417,6 +431,8 @@
 		"defibrillator",
 		"genescanner",
 		"healthanalyzer",
+		"scanning_pad",
+		"vitals_monitor",
 		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
@@ -429,6 +445,9 @@
 		"diseaseanalyzer",
 		"centrifuge",
 		"path_data",
+		"heat_pack",
+		"cold_pack",
+		"medical_crutch",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	discount_experiments = list(/datum/experiment/dissection/human = 1000)
@@ -440,6 +459,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"crewpinpointer",
+		"vitals_monitor_advanced",
 		"defibrillator_compact",
 		"harvester",
 		"healthanalyzer_advanced",
@@ -451,6 +471,7 @@
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
+		"surgical_gloves", //Monkestation Edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
@@ -512,6 +533,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
+		"surgery_heal_robot_upgrade", // monkestation edit: robot surgeries
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
@@ -525,6 +547,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade_femto",
 		"surgery_heal_burn_upgrade_femto",
+		"surgery_heal_robot_upgrade_femto", // monkestation edit: robot surgeries
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
@@ -676,11 +699,24 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
-		"artifact_heater",
-		"artifact_xray",
+		//"artifact_heater", //MONKESTATION EDIT REMOVAL
+		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-
+//MONKEYSTATION ADDITION START
+/datum/techweb_node/artifact
+	id = "artifact_research"
+	display_name = "Artifact Research"
+	description = "Properly concuct research on the various artifacts found around."
+	prereq_ids = list("base")
+	design_ids = list(
+		"artifact_heater",
+		"artifact_xray",
+		"disk_artifact",
+		"artifact_wand"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+//MONKESTATION ADDITION END
 /datum/techweb_node/high_efficiency
 	id = "high_efficiency"
 	display_name = "High Efficiency Parts"
@@ -754,6 +790,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
@@ -1245,6 +1282,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"s_traffic", // MONKESTATION ADDITION -- NTSL -- The board to actually program in NTSL
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1284,6 +1322,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"dna_disk",
+		"dnainfuser",
 		"dnascanner",
 		"scan_console",
 	)
@@ -1387,6 +1426,7 @@
 		"ci-reviver",
 		"ci-surgery",
 		"ci-toolset",
+		"ci-sprinter", //monkestation edit:
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1426,6 +1466,9 @@
 		"borg_upgrade_damagemod",
 		"borg_upgrade_rangemod",
 		"cargoexpress",
+		"b_smelter",
+		"b_refinery",
+		"brm",
 		"cooldownmod",
 		"damagemod",
 		"drill",
@@ -1438,6 +1481,7 @@
 		"triggermod",
 		"mining_scanner",
 		"mat_analyzer",
+		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1480,7 +1524,7 @@
 	description = "Botanical tools"
 	prereq_ids = list("biotech")
 	design_ids = list(
-		"diskplantgene",
+		/* "diskplantgene", */ // monkestation edit: move to roundstart tech
 		"biogenerator",
 		"flora_gun",
 		"gene_shears",
@@ -1489,6 +1533,10 @@
 		"seed_extractor",
 		"adv_watering_can",
 		"plantgenes",
+		// monkestation edit: our hydroponics stuff
+		"composters",
+		"splicer",
+		// monkestation end
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
@@ -1780,6 +1828,7 @@
 		"mod_sonar",
 		"mod_projectile_dampener",
 		"mod_criminalcapture",
+		"mod_mirage_grenade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -2373,6 +2422,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",
+		"mod_joint_torsion",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

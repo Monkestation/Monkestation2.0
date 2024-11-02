@@ -56,7 +56,7 @@
 		return
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE)
+	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -85,7 +85,7 @@
 		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		affected_human.dna?.species?.handle_body(affected_human) //updates eye icon
+		affected_human.update_body()
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
@@ -95,10 +95,9 @@
 			human_owner.eye_color_left = old_eye_color_left
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
-		human_owner.update_body()
 		if(native_fov)
 			eye_owner.remove_fov_trait(type)
-
+		human_owner.update_body()
 	// Cure blindness from eye damage
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
@@ -115,31 +114,60 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/internal/eyes/get_status_appendix(advanced, add_tooltips)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		return
+	if(owner.is_blind())
+		if(advanced)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return "Subject is blind from eye damage."
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return "Subject is genetically blind."
+			if(owner.is_blind_from(QUIRK_TRAIT))
+				return "Subject is permanently blind."
+		return "Subject is blind."
+	if(owner.is_nearsighted())
+		if(advanced)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return "Subject is nearsighted from eye damage."
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return "Subject is genetically nearsighted."
+			if(owner.is_nearsighted_from(QUIRK_TRAIT))
+				return "Subject is permanently nearsighted."
+		return "Subject is nearsighted."
+
+/obj/item/organ/internal/eyes/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
-	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi'
+	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -FACE_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -FACE_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER)
+
 	var/list/overlays = list(eye_left, eye_right)
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	if(my_head)
+		if(my_head.head_flags & HEAD_EYECOLOR)
+			eye_right.color = eye_color_right
+			eye_left.color = eye_color_left
 
-	if(EYECOLOR in parent.dna?.species.species_traits)
-		eye_right.color = eye_color_right
-		eye_left.color = eye_color_left
+		var/obscured = parent.check_obscured_slots(TRUE)
+		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+			overlays += emissive_appearance_copy(eye_left, src, NONE)
+			overlays += emissive_appearance_copy(eye_right, src, NONE)
 
-	var/obscured = parent.check_obscured_slots(TRUE)
-	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		overlays += emissive_appearance_copy(eye_left, src, NONE)
-		overlays += emissive_appearance_copy(eye_right, src, NONE)
-
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-		for(var/mutable_appearance/overlay in overlays)
-			overlay.pixel_x += offset[OFFSET_X]
-			overlay.pixel_y += offset[OFFSET_Y]
+		if(OFFSET_FACE in parent.dna?.species.offset_features)
+			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+			for(var/mutable_appearance/overlay in overlays)
+				overlay.pixel_x += offset[OFFSET_X]
+				overlay.pixel_y += offset[OFFSET_Y]
 
 	return overlays
 
@@ -659,7 +687,6 @@
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
-
 
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"

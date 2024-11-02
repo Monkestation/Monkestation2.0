@@ -24,6 +24,8 @@
 #define CALIBER_38 ".38"
 /// The caliber used by the chaplain's revolver.
 #define CALIBER_77 ".77"
+/// The caliber used by long revolver and long rifle
+#define CALIBER_45L ".45l"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles and the desert eagle.
@@ -62,6 +64,9 @@
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
+
+/// A spark will be generated for each THIS amount of damage dealt to a robotic limb by a projectile.
+#define PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK 20
 
 //Designed for things that need precision trajectories like projectiles.
 //Don't use this for anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
