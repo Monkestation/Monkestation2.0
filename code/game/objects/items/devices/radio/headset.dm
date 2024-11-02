@@ -328,13 +328,16 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	worn_icon_state = "cent_headset"
 	keyslot = /obj/item/encryptionkey/headset_cent
 	keyslot2 = /obj/item/encryptionkey/headset_com
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/empty
 	keyslot = null
 	keyslot2 = null
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/commander
 	keyslot2 = /obj/item/encryptionkey/heads/captain
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
@@ -342,6 +345,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "cent_headset_alt"
 	worn_icon_state = "cent_headset_alt"
 	keyslot2 = null
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()

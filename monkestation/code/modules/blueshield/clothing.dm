@@ -210,12 +210,14 @@
 	worn_icon_state = "bshield_headset"
 	keyslot = /obj/item/encryptionkey/heads/blueshield
 	keyslot2 = /obj/item/encryptionkey/headset_cent
+	command = TRUE
 
 /obj/item/radio/headset/headset_bs/alt
 	name = "\proper the blueshield's bowman headset"
 	desc = "The headset of the guy who keeps the administration alive. Protects your ears from flashbangs."
 	icon_state = "bshield_headset_alt"
 	worn_icon_state = "bshield_headset_alt"
+	command = TRUE
 
 /obj/item/radio/headset/headset_bs/alt/Initialize(mapload)
 	. = ..()
