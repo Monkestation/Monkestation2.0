@@ -434,8 +434,7 @@
 	M.lying_fix()
 
 /mob/living/proc/lying_fix()
-	animate(src, transform = null, time = 1, loop = 0)
-	lying_prev = 0
+	rebuild_transform()
 
 /obj/machinery/jukebox/proc/dance_over()
 	for(var/mob/living/L in rangers)
