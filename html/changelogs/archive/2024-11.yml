@@ -33,3 +33,27 @@
   ThePooba:
   - bugfix: window sill grills now break instantly instead of becoming glitchy messes
   - bugfix: windowsills can now be built on once again.
+  - bugfix: Eland can now be reloaded and wont drop its spent caseless ammunition
+  dwasint:
+  - bugfix: some species not healing oxyloss when giving the NOBREATH trait
+  - rscadd: right clicking food items will bring up a radial wheel of foods you can
+      craft, this allows bulk crafting.
+  - balance: Hand crafted foods (using the new system) increases the quality of food
+      buffs.
+  lemonycake:
+  - rscadd: add the alt title "Princess" to captain
+2024-11-02:
+  Gw0sty:
+  - rscadd: Added a new 'Late Join' Category and role, the 'Barber'.
+  - rscadd: Added scissors, hairbrush, combs, dye sprays, and fur dyers from the code
+      into service lathe roundstart!
+  - rscadd: Gave service cyborgs new tools of scissors, hairbrush, and dye sprays.
+  - rscadd: Added barber lockers and vendings to all stations.
+  - code_imp: Changed the voidraptor forge area type from a barber area to a forge
+      area.
+  - qol: Health analyzers now alert if the subject has taken the heavy bleeder trait.
+  - rscadd: Added more cybernetics into the cybernetic revolution station trait.
+  - rscadd: Added new leg cybernetic for research "Vacuole ligament system"
+  Shoddd:
+  - rscadd: Tundra moths, a new species of moth
+  - rscadd: 3 New wings, 2 new antennae, and 1 new marking for moths
