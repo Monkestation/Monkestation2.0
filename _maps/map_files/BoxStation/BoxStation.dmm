@@ -4988,9 +4988,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "bDJ" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/machinery/vending/barbervend,
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -39146,7 +39144,6 @@
 "mNd" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "mNq" = (
@@ -53789,9 +53786,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"rGg" = (
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "rGt" = (
 /obj/machinery/light/built/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -55528,7 +55522,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
@@ -55693,9 +55686,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "snx" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -92144,7 +92135,7 @@ pGS
 bnl
 ohG
 fUs
-cdP
+wji
 bnl
 rSP
 cLZ
@@ -92656,9 +92647,9 @@ mOc
 dZF
 xzZ
 bnl
-bOO
+uKO
 kSL
-bOO
+uKO
 bnl
 jEi
 jEi
@@ -92913,7 +92904,7 @@ pnC
 qiT
 kDx
 bnl
-rGg
+cLZ
 kSL
 rmn
 bnl
