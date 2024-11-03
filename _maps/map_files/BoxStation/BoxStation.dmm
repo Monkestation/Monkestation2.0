@@ -449,9 +449,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/engineering/main)
 "ahy" = (
@@ -1564,12 +1564,11 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "azx" = (
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
 	},
-/obj/machinery/shower/directional/east,
-/obj/structure/drain,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/suit_storage_unit/medical,
+/turf/open/floor/iron/white,
 /area/station/medical/storage)
 "azD" = (
 /obj/structure/disposalpipe/segment{
@@ -6521,13 +6520,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
-"ccV" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/medical/storage)
 "ccW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 4
@@ -10859,8 +10851,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
 "dAo" = (
-/obj/structure/sign/warning/radiation/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/radiation/directional/west,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
@@ -20212,13 +20204,6 @@
 	dir = 8
 	},
 /area/station/cargo/storage)
-"gEs" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/medical/storage)
 "gEt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -20668,16 +20653,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/mess)
-"gJO" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/medical/storage)
 "gJU" = (
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/status_display/evac/directional/west,
@@ -39006,7 +38981,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "mJS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mKa" = (
@@ -40978,9 +40955,9 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "nst" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nsw" = (
@@ -41495,9 +41472,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "nAM" = (
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 5
+	},
 /obj/machinery/light_switch/directional/north{
-	pixel_x = 8
+	pixel_x = -5
 	},
 /obj/structure/closet/radiation,
 /turf/open/floor/iron/textured,
@@ -42193,12 +42172,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gravity Generator Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/gravity_generator)
 "nKV" = (
@@ -54109,10 +54088,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"rMt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "rMz" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -54262,8 +54237,10 @@
 	},
 /area/station/engineering/storage_shared)
 "rOW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
+/turf/open/floor/iron/large,
 /area/station/engineering/main)
 "rPh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -54483,7 +54460,7 @@
 /area/station/maintenance/department/science)
 "rSN" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 9
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63222,8 +63199,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/structure/mirror/directional/east,
-/obj/structure/sink/directional/west,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "uMx" = (
@@ -71662,14 +71638,13 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/escape)
 "xvT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/engineering/gravity_generator)
+/area/station/engineering/main)
 "xvY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -72583,6 +72558,9 @@
 "xLD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "xLN" = (
@@ -91926,7 +91904,7 @@ sVP
 dYQ
 mYY
 aXn
-xvT
+qTs
 efp
 mqm
 fMq
@@ -100140,7 +100118,7 @@ uFw
 kZz
 fxk
 pqo
-rMt
+pxw
 mJS
 pxw
 wMs
@@ -100398,7 +100376,7 @@ dCP
 fxk
 bvL
 pxw
-mJS
+rOW
 pxw
 kWy
 ceX
@@ -100654,8 +100632,8 @@ tcI
 mMD
 fxk
 pqo
-rOW
-nst
+pxw
+xvT
 kNJ
 dXL
 ceX
@@ -111165,8 +111143,8 @@ tQl
 urK
 sxS
 gya
-gEs
-gJO
+skz
+ycc
 chy
 rQU
 ocd
@@ -112193,7 +112171,7 @@ tQl
 sMw
 sxS
 bwN
-ccV
+skz
 ycc
 chy
 iib
