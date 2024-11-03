@@ -1,23 +1,28 @@
 /obj/item/gun/ballistic/atlatl
+	desc = "An ancient type of spear thrower used by the chosen hunters"
+	name = "hunter's atlatl"
 	icon = 'icons/obj/weapons/guns/atlatl/atlatl.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/atlatl_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/atlatl_righthand.dmi'
 	icon_state = "atlatl"
-	inhand_icon_state = "default"
+	inhand_icon_state = "atlatl"
+	worn_icon_state = "atlatl"
 	load_sound = null
 	fire_sound = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/atlatl
 	force = 25
 	attack_verb_continuous = list("strikes", "cracks", "beats")
 	attack_verb_simple = list("strike", "crack", "beat")
-	weapon_weight = WEAPON_NORMAL
+	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
 	cartridge_wording = "spear"
 	bolt_type = BOLT_TYPE_NO_BOLT
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/gun/ballistic/atlatl/update_icon_state()
 	. = ..()
-	icon_state = chambered ? "[base_icon_state]_[chambered ? : "notched"]" : "[base_icon_state]"
+	icon_state = chambered ? "atlatl_notched" : "atlatl"
 
 /obj/item/gun/ballistic/atlatl/proc/drop_spear()
 	if(chambered)
@@ -26,9 +31,10 @@
 		chambered = null
 	update_appearance()
 
+
 /obj/item/gun/ballistic/atlatl/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_BACK | ITEM_SLOT_BELT && chambered)
+	if((slot == ITEM_SLOT_BELT && chambered) || (slot == ITEM_SLOT_SUITSTORE && chambered))
 		balloon_alert(user, "the spear falls off!")
 		drop_spear()
 		update_appearance()
@@ -37,7 +43,7 @@
 	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
-	. = ..() //fires, removing the arrow
+	. = ..() //fires, removing the spear
 	update_appearance()
 
 /obj/item/gun/ballistic/atlatl/shoot_with_empty_chamber(mob/living/user)
@@ -50,8 +56,6 @@
 	max_ammo = 1
 	start_empty = TRUE
 	caliber = CALIBER_SPEAR
-
-
 
 /obj/item/ammo_casing/caseless/thrownspear
 	name = "throwing spear"
@@ -72,10 +76,10 @@
 	AddComponent(/datum/element/envenomable_casing)
 
 
-	/obj/projectile/bullet/reusable/thrownspear
+/obj/projectile/bullet/reusable/thrownspear
 	name = "thrown spear"
 	desc = "Beasts be felled!"
-	icon = 'icons/obj/weapons/guns/bows/thrownspear.dmi'
+	icon = 'icons/obj/weapons/guns/atlatl/thrownspear.dmi'
 	icon_state = "spear_projectile"
 	ammo_type = /obj/item/ammo_casing/caseless/thrownspear
 	damage = 75
@@ -91,11 +95,12 @@
 /obj/item/storage/bag/spearquiver
 	name = "large quiver"
 	desc = "A large quiver to hold a few spears for your atlatl"
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/weapons/guns/atlatl/spearquivers.dmi'
-	icon_state = "basicquiver"
+	icon_state = "spearquiver"
 	inhand_icon_state = null
-	worn_icon_state = "harpoon_quiver"
+	worn_icon_state = "spearquiver"
 	/// type of arrow the quiver should hold
 	var/arrow_path = /obj/item/ammo_casing/caseless/thrownspear
 
