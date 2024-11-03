@@ -1,6 +1,7 @@
 //NEEDS TO BE MADE FAST
 /datum/species/zombie/infectious/runner
 	name = "Runner Zombie"
+	id = SPECIES_ZOMBIE_INFECTIOUS_RUNNER
 	maxhealthmod = 0.7
 	armor = 0
 	hand_path = /obj/item/mutant_hand/zombie/low_infection/weak

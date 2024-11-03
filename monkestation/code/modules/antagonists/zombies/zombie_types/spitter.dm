@@ -2,6 +2,7 @@
 //spits weak knockdown projectiles
 /datum/species/zombie/infectious/spitter
 	name = "Spitter Zombie"
+	id = SPECIES_ZOMBIE_INFECTIOUS_SPITTER
 	bodypart_overlay_icon_states = list(BODY_ZONE_CHEST = "spitter-chest", BODY_ZONE_HEAD = "spitter_head", BODY_ZONE_R_ARM = "spitter-right-hand", BODY_ZONE_L_ARM = "spitter-left-hand")
 	granted_action_types = list(
 		/datum/action/cooldown/zombie/spit,

@@ -1,5 +1,6 @@
 /datum/species/zombie/infectious/tank
 	name = "Tank Zombie"
+	id = SPECIES_ZOMBIE_INFECTIOUS_TANK
 	armor = 40
 	maxhealthmod = 1.5
 	heal_rate = 1 // Slightly higher regeneration rate.
