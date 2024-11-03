@@ -198,7 +198,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(SSticker.round_start_time && (world.time - SSticker.round_start_time) >= ROUNDSTART_VALID_TIMEFRAME)
 		can_run_roundstart = FALSE
-	else if(length(current_roundstart_event.preferred_events)) //note that this implementation is made for preferred_events being other roundstart events
+	else if(current_roundstart_event && length(current_roundstart_event.preferred_events)) //note that this implementation is made for preferred_events being other roundstart events
 		var/list/preferred_copy = current_roundstart_event.preferred_events.Copy()
 		var/datum/round_event_control/selected_event = pick_weight(preferred_copy)
 		var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)

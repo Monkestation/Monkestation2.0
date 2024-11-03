@@ -98,11 +98,11 @@
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 // monkestation start: event groups and storyteller stuff
-	if(SSgamemode.current_storyteller.disable_distribution || SSgamemode.halted_storyteller)
+	if(SSgamemode.current_storyteller?.disable_distribution || SSgamemode.halted_storyteller)
 		return FALSE
 	if(event_group && !GLOB.event_groups[event_group].can_run())
 		return FALSE
-	if(roundstart && (!SSgamemode.can_run_roundstart || (SSgamemode.ran_roundstart && !fake_check && !SSgamemode.current_storyteller.ignores_roundstart)))
+	if(roundstart && (!SSgamemode.can_run_roundstart || (SSgamemode.ran_roundstart && !fake_check && !SSgamemode.current_storyteller?.ignores_roundstart)))
 		return FALSE
 // monkestation end
 	if(occurrences >= max_occurrences)
@@ -125,7 +125,7 @@
 		return FALSE
 	if(!check_enemies())
 		return FALSE
-	if(allowed_storytellers && ((islist(allowed_storytellers) && \
+	if(allowed_storytellers && SSgamemode.current_storyteller && ((islist(allowed_storytellers) && \
 		!is_type_in_list(SSgamemode.current_storyteller, allowed_storytellers)) || SSgamemode.current_storyteller.type != allowed_storytellers))
 		return FALSE
 // monkestation end
