@@ -5893,7 +5893,6 @@
 #include "monkestation\code\datums\status_effects\disorient.dm"
 #include "monkestation\code\datums\status_effects\food_buffs.dm"
 #include "monkestation\code\datums\status_effects\debuffs\drunk.dm"
-#include "monkestation\code\datums\status_effects\debuffs\warp_sickness.dm"
 #include "monkestation\code\datums\storage\storage.dm"
 #include "monkestation\code\datums\votes\_vote_datum.dm"
 #include "monkestation\code\datums\votes\transfer_vote.dm"
