@@ -49,6 +49,26 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/libaneri.so "$1/libaneri.so"
 cd ..
 
+#
+# update dreamluau
+if [ ! -d "dreamluau" ]; then
+	echo "Cloning dreamluau..."
+	git clone https://github.com/tgstation/dreamluau
+	cd dreamluau
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+else
+	echo "Fetching dreamlaua..."
+	cd dreamluau
+	git fetch
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+fi
+
+echo "Deploying Dreamlaua..."
+git checkout "$DREAMLUAU_VERSION"
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
+cd ..
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
