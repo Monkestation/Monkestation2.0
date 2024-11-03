@@ -2,13 +2,13 @@
 	name = "bardrone shell"
 	desc = "A modified shell of a maintenance drone, an nonexpendable robot built to serve drinks and chat."
 	icon = 'icons/mob/silicon/drone.dmi'
+	icon_state = "drone_maint_hat"
 	mob_name = "Bardrone"
-	///Type of drone that will be spawned
 	mob_type = /mob/living/basic/drone/snowflake/bardrone
-	role_ban = ROLE_DRONE
+	anchored = TRUE
 	prompt_name = "bardrone"
 	you_are_text = "You are a Bardrone."
-	flavour_text = "Born out of drunk science, your purpose is to keep the drinks flowing on the station and comfort the customers with their issues."
+	flavour_text = "Born out of drunk science, your purpose is to keep the drinks flowing on the station and comfort the patrons with their issues, not solve them."
 	important_text = "You MUST read and follow your laws carefully."
 	spawner_job_path = /datum/job/bar_drone
 
