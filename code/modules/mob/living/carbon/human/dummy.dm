@@ -33,12 +33,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
 	if(only_apply_in_prefs)
 		return ..()
-	MONKESTATION EDIT END
- */
 
 // Not necessary with above
 /mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
 	return
+
+	MONKESTATION EDIT END
+ */
 
 ///Let's extract our dummies organs and limbs for storage, to reduce the cache missed that spamming a dummy cause
 /mob/living/carbon/human/dummy/proc/harvest_organs()
