@@ -869,8 +869,8 @@ generate/load female uniform sprites matching all previously decided variables
 // Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
 // So instead we have to pass them through an offset, which is close enough to look good.
 /mob/living/carbon/human/apply_overlay(cache_index)
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
-		return ..()
+	// if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+	// 	return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
 	var/string_form_index = num2text(cache_index)
@@ -919,12 +919,13 @@ generate/load female uniform sprites matching all previously decided variables
 	var/icon_height = dims["height"]
 
 	var/mask_icon = 'icons/effects/cut.dmi'
-	if(icon_width != 32)
-		throw EXCEPTION("Bad dims [icon_width]x[icon_height] for [appearance.icon]")
-	if(icon_height == 48)
-		mask_icon = 'monkestation/icons/effects/cut_32x48.dmi'
-	else if(icon_height != 32)
-		throw EXCEPTION("Bad dims [icon_width]x[icon_height] for [appearance.icon]")
+	if(icon_width != 0 && icon_height != 0)
+		if(icon_width != 32)
+			throw EXCEPTION("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
+		if(icon_height == 48)
+			mask_icon = 'monkestation/icons/effects/cut_32x48.dmi'
+		else if(icon_height != 32)
+			throw EXCEPTION("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
 
 	var/icon/cut_torso_mask = icon(mask_icon, "Cut1")
 	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
