@@ -39,6 +39,7 @@
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
+	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 
 /obj/item/bodypart/arm/left/tundramoth
 	name = "Tundra left arm"
