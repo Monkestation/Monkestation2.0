@@ -15,7 +15,6 @@
 	name = "Surface"
 	icon = 'icons/area/areas_misc.dmi'
 	icon_state = "space"
-	ambience_index = AMBIENCE_CREEPY
 
 /area/graveyard/surface/randomgen
 	map_generator = /datum/map_generator/jungle_generator

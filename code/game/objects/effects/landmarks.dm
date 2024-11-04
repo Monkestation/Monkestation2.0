@@ -710,4 +710,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/cryo
 	location = "Cryogentic Crew Storage"
+
+/obj/effect/landmark/navigate_destination/virology
+	location = "Virology"
 //End of monke edit
