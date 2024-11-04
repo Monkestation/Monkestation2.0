@@ -115,5 +115,5 @@
 
 /obj/item/storage/bag/spearquiver/PopulateContents()
 	. = ..()
-	for(var/i in 3)
+	for(var/i in 1 to 3)
 		new arrow_path(src)

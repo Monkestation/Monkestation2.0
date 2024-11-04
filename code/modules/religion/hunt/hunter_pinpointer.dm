@@ -1,12 +1,11 @@
 #define HUNTER_MINIMUM_RANGE = 10
 #define HUNTER_MAXIMUM_RANGE = 75
-//Update time to 10 seconds
-#define HUNTER_PING_TIME = 100
+#define HUNTER_PING_TIME = (10 seconds)
 #define HUNTER_FUZZ_FACTOR = 10
 
 /atom/movable/screen/alert/status_effect/hunters_sense
-	name = "Scent of the prey"
-	desc = "Your powerful senses enable you to track your prey by scent"
+	name = "Hunter's Instincts"
+	desc = "Your powerful instincts allow you to easily track your prey"
 
 
 /datum/status_effect/agent_pinpointer/hunters_sense
@@ -24,14 +23,13 @@
 	scan_target = null
 	if(!owner && !owner.mind)
 		return
-	for(var/datum/objective/assassinate/objective_datums as anything in owner.mind.get_all_objectives())
-		if(!objective_datums.target || !objective_datums.target.current || objective_datums.target.current.stat == DEAD)
-			continue
-		var/mob/tracked_target = objective_datums.target.current
-		//JUUUST in case.
-		if(!tracked_target)
-			continue
 
-		//Catch the first one we find, then stop. We want to point to the most recent one we've got.
-		scan_target = tracked_target
-		break
+	var/obj/effect/chosen_prey
+	for(var/mob/living/basic/deer/located as anything in preys)
+		if(get_dist(user, located) < dist)
+			dist = get_dist(user, located)
+			chosen_prey = located
+	if(QDELETED(chosen_prey))
+		return
+	scan_target = chosen_prey
+	break
