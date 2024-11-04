@@ -4,10 +4,16 @@
 	desc = "Shows infomation about the Ark of the Clockwork Justicar"
 	icon = 'monkestation/icons/hud/screen_alert.dmi'
 	icon_state = "clockinfo"
-//	alerttooltipstyle = "clockwork" //clockwork tooltips are currently broken, this is a known issue on TG
+	alerttooltipstyle = "clockwork"
+	///The static info we use so we only have to actually update our data once each tick
+	var/static/static_desc
+
 
 /atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload)
 	. = ..()
+	if(!static_desc)
+		static_desc = get_static_desc()
+	desc = static_desc
 	START_PROCESSING(SSprocessing, src)
 
 /atom/movable/screen/alert/clockwork/clocksense/Destroy()
@@ -17,24 +23,43 @@
 /atom/movable/screen/alert/clockwork/clocksense/process()
 	if(GLOB.ratvar_risen)
 		desc = "<b>RAT'VAR HAS RISEN.<b>"
+		return PROCESS_KILL
+
+	var/static/last_process_tick
+	if(!last_process_tick || world.time - last_process_tick > 1 SECOND)
+		static_desc = get_static_desc()
+		last_process_tick = world.time
+	desc = static_desc
+
+/atom/movable/screen/alert/clockwork/clocksense/proc/get_static_desc()
+	if(GLOB.ratvar_risen)
+		return "<b>RAT'VAR HAS RISEN.<b>"
+
+	var/new_desc = "Stored Power - <b>[display_power(GLOB.clock_power)]</b>.<br>"
+	new_desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"
+	if(!GLOB.main_clock_cult)
 		return
-	desc = "Stored Power - <b>[display_power(GLOB.clock_power)]</b>.<br>"
-	desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"
-	desc += "We current have [GLOB.main_clock_cult?.human_servants.len] human servants out of [GLOB.main_clock_cult?.max_human_servants] maximum human servants, \
-			 as well as [GLOB.main_clock_cult?.members.len] servants all together.<br>"
+
+	new_desc += "We current have [length(GLOB.main_clock_cult.human_servants)] human servants out of [GLOB.main_clock_cult.max_human_servants] maximum human servants, \
+			 as well as [length(GLOB.main_clock_cult.members)] servants all together.<br>"
 
 	if(GLOB.clock_ark?.charging_for)
-		desc += "The Ark will open in [600 - GLOB.clock_ark?.charging_for] seconds!<br>"
+		new_desc += "The Ark will open in [600 - GLOB.clock_ark.charging_for] seconds!<br>"
 		return //we dont care about anchoring crystals at this point
 
-	if(get_charged_anchor_crystals()) //only put this here if we need to use it
-		var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives
-		if(!crystals_objective)
-			return
+	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult.objectives
+	if(!crystals_objective)
+		return
 
-		var/list/area_list = list()
+	var/static/list/cached_valid_areas
+	if(length(cached_valid_areas) != length(crystals_objective.valid_areas)) //using length due to the cache being area names and not areas themselves
+		cached_valid_areas = list()
 		for(var/area/added_area in crystals_objective.valid_areas)
-			area_list += added_area.get_original_area_name()
-		desc += "Additional Anchoring Crystals can be summoned in [english_list(area_list)].<br>"
-	else
-		desc += "We must summon and protect an Anchoring crystal before the ark may open.<br>"
+			cached_valid_areas += added_area.get_original_area_name()
+	new_desc += "Anchoring Crystals can be summoned in [english_list(cached_valid_areas)].<br>"
+
+	var/crystal_diff = ANCHORING_CRYSTALS_TO_SUMMON - length(GLOB.anchoring_crystals)
+	if(crystal_diff > 0)
+		new_desc += "We must summon [crystal_diff] more Anchoring Crystal[crystal_diff > 1 ? "s" : ""] before the ark may open.<br>"
+	return new_desc
+
