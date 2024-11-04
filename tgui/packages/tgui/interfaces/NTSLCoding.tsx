@@ -11,65 +11,92 @@ import {
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 
-// NTSLTextArea component start
-// This is literally just TextArea but without ENTER updating anything, for NTSL
-import { KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
-import { toInputValue } from '../components/Input';
+// NTSL syntax highlighting stuff
+import { HLJSApi, Language } from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
 
-class NTSLTextArea extends TextArea {
-  constructor(props) {
-    super(props);
-    super(this.textareaRef);
-    super(this.state);
-    const { dontUseTabForIndent = false } = props;
-    this.handleKeyDown = (e) => {
-      const { editing } = this.state;
-      const { onInput, onKey } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
-        if (this.props.onEscape) {
-          this.props.onEscape(e);
-        }
-        this.setEditing(false);
-        if (this.props.selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(this.props.value);
-          e.target.blur();
-        }
-        return;
-      }
-      if (!editing) {
-        this.setEditing(true);
-      }
-      // Custom key handler
-      if (onKey) {
-        onKey(e, e.target.value);
-      }
-      if (!dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value =
-            value.substring(0, selectionStart) +
-            '\t' +
-            value.substring(selectionEnd);
-          e.target.selectionEnd = selectionStart + 1;
-          if (onInput) {
-            onInput(e, e.target.value);
-          }
-        }
-      }
-    };
-  }
-}
+hljs.registerLanguage('ntsl', (hljs: HLJSApi): Language => {
+  const KEYWORDS = {
+    keyword: 'if else elseif def return while break continue',
+    built_in:
+      'vector at signal broadcast mem list length find replace lower upper proper implode explode substr pick clearmem',
+    literal: 'true false PI E SQURT2 NORTH SOUTH EAST WEST null',
+  };
+
+  const VARIABLE = {
+    className: 'variable',
+    variants: [
+      { begin: /\$[a-zA-Z_]\w*/ }, // Regular variables starting with $
+      {
+        begin:
+          /\b(?:source|content|freq|job|pass|language|common|science|command|medical|engineering|security|supply|service)\b/,
+        className: 'language',
+      }, // Special message variables
+    ],
+  };
+
+  const NUMBER = {
+    className: 'number',
+    variants: [
+      { begin: /\b\d+\b/ }, // Integers
+      { begin: /\b\d+\.\d+\b/ }, // Decimals
+    ],
+    relevance: 0,
+  };
+
+  const STRING = {
+    className: 'string',
+    variants: [
+      { begin: '"', end: '"', contains: [hljs.BACKSLASH_ESCAPE] },
+      { begin: "'", end: "'", contains: [hljs.BACKSLASH_ESCAPE] },
+    ],
+  };
+
+  const COMMENT = {
+    className: 'comment',
+    variants: [
+      hljs.C_LINE_COMMENT_MODE, // // comments
+      hljs.C_BLOCK_COMMENT_MODE, // /* */ comments
+    ],
+  };
+
+  const FUNCTION = {
+    className: 'function',
+    beginKeywords: 'def',
+    end: /[{;]/,
+    excludeEnd: true,
+    contains: [
+      hljs.inherit(hljs.TITLE_MODE, { begin: /[A-Za-z_][A-Za-z0-9_]*/ }),
+      {
+        className: 'params',
+        begin: /\(/,
+        end: /\)/,
+        contains: [VARIABLE, STRING, NUMBER],
+      },
+    ],
+  };
+
+  const OPERATORS = {
+    className: 'operator',
+    variants: [{ begin: /[+\-*/%=<>!&|~^]+/ }],
+  };
+
+  return {
+    name: 'NTSL',
+    aliases: ['ntsl'],
+    case_insensitive: false,
+    keywords: KEYWORDS,
+    contains: [COMMENT, STRING, NUMBER, VARIABLE, FUNCTION, OPERATORS],
+  };
+});
 
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: BooleanLike;
+  emagged: BooleanLike;
   stored_code: string;
   user_name: string;
   network: string;
@@ -106,26 +133,62 @@ export const NTSLCoding = (props) => {
 };
 
 const ScriptEditor = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { stored_code, user_name } = data;
+  const {
+    act,
+    data: { stored_code, user_name },
+  } = useBackend<Data>();
+  const [scriptInput, setScriptInput] = useLocalState<string>(
+    'scriptInput',
+    stored_code,
+  );
+  const [highlightSyntax] = useLocalState<boolean>('highlight-syntax', true);
   return (
     <Box width="100%" height="100%">
       {user_name ? (
-        <NTSLTextArea
-          noborder
+        <TextArea
+          fluid
           scrollbar
-          value={stored_code}
+          value={scriptInput}
           width="100%"
           height="100%"
-          onChange={(_, value) =>
+          fontFamily="Consolas"
+          onChange={(_, value) => {
+            setScriptInput(value);
             act('save_code', {
               saved_code: value,
-            })
+            });
+          }}
+          onInput={(_, value) => {
+            setScriptInput(value);
+          }}
+          displayedValue={
+            highlightSyntax && (
+              <Box
+                style={{
+                  pointerEvents: 'none',
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: hljs.highlight(scriptInput, {
+                    language: 'ntsl',
+                  }).value,
+                }}
+              />
+            )
           }
         />
       ) : (
         <Section width="100%" height="100%">
-          {stored_code}
+          <Box
+            style={{
+              pointerEvents: 'none',
+            }}
+            fontFamily="Consolas"
+            dangerouslySetInnerHTML={{
+              __html: hljs.highlight(stored_code, {
+                language: 'ntsl',
+              }).value,
+            }}
+          />
         </Section>
       )}
     </Box>
@@ -133,34 +196,53 @@ const ScriptEditor = (props) => {
 };
 
 const MainMenu = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { emagged, user_name, admin_view } = data;
+  const {
+    act,
+    data: { emagged, user_name, admin_view },
+  } = useBackend<Data>();
   const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [highlightSyntax, setHighlightSyntax] = useLocalState<boolean>(
+    'highlight-syntax',
+    true,
+  );
   return (
     <>
-      {admin_view ? (
+      {!!admin_view && (
         <Button
           icon="power-off"
           color="red"
           content="!!!(ADMIN) reset code and compile!!!"
           onClick={() => act('admin_reset')}
         />
-      ) : (
-        ''
       )}
       <Section width="240px">
         {user_name ? (
-          <Stack>
+          <Stack vertical>
             <Stack.Item>
-              <Button
-                icon="power-off"
-                color="purple"
-                content="Log Out"
-                disabled={emagged}
-                onClick={() => act('log_out')}
-              />
+              <Stack>
+                <Stack.Item>
+                  <Button
+                    icon="power-off"
+                    color="purple"
+                    content="Log Out"
+                    disabled={!!emagged}
+                    onClick={() => act('log_out')}
+                  />
+                </Stack.Item>
+                <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
+              </Stack>
             </Stack.Item>
-            <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
+            <Stack.Item>
+              <Button.Checkbox
+                checked={highlightSyntax}
+                onClick={() => setHighlightSyntax(!highlightSyntax)}
+                tooltip={
+                  'Syntax highlighting makes the code much easier to read, but may cause latency when actively typing.'
+                }
+              >
+                Syntax Highlighting
+              </Button.Checkbox>
+            </Stack.Item>
           </Stack>
         ) : (
           <Button
@@ -198,8 +280,10 @@ const MainMenu = (props) => {
 };
 
 const CompilerOutput = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { compiler_output } = data;
+  const {
+    act,
+    data: { compiler_output },
+  } = useBackend<Data>();
   return (
     <>
       <Box>
@@ -223,8 +307,10 @@ const CompilerOutput = (props) => {
 };
 
 const ServerList = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { network, server_data } = data;
+  const {
+    act,
+    data: { network, server_data },
+  } = useBackend<Data>();
   return (
     <>
       <Box>
@@ -268,8 +354,10 @@ const ServerList = (props) => {
 };
 
 const LogViewer = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { access_log } = data;
+  const {
+    act,
+    data: { access_log },
+  } = useBackend<Data>();
   // This is terrible but nothing else will work
   return (
     <>
