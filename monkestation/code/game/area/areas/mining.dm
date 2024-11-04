@@ -77,6 +77,9 @@
 /area/graveyard/tunnels/structures/miningshack2
 	name = "Mining Tool Shed"
 
+/area/graveyard/tunnels/structures/scimaint
+	name = "Central Starboard Maintenance Tunnel"
+
 /area/graveyard/bunker
 	name = "Bunker"
 	always_unpowered = FALSE
