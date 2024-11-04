@@ -914,6 +914,7 @@ generate/load female uniform sprites matching all previously decided variables
  * Applies a filter to an appearance according to mob height
  */
 /mob/living/carbon/human/proc/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
+//MONKESTATION EDIT START : Pick a displacement mask depending on the height of the icon, 32x48 icons are used for features which would otherwise get clipped when tall players use them
 	var/dims = get_icon_dimensions(appearance.icon)
 	var/icon_width = dims["width"]
 	var/icon_height = dims["height"]
@@ -931,6 +932,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
 	var/icon/lenghten_torso_mask = icon(mask_icon, "Cut3")
 	var/icon/lenghten_legs_mask = icon(mask_icon, "Cut4")
+//MONKESTATION EDIT END
 
 	appearance.remove_filter(list(
 		"Cut_Torso",
