@@ -1255,12 +1255,9 @@
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "auc" = (
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	id = "Cell 2";
-	name = "Cell 2";
-	dir = 4
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
+	id = "Cell 2"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5436,7 +5433,7 @@
 "bHk" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Equipment Room"
@@ -7164,12 +7161,9 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "cit" = (
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	id = "Cell 1";
-	name = "Cell 1";
-	dir = 4
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
+	id = "Cell 1"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14653,7 +14647,6 @@
 	},
 /area/station/engineering/hallway)
 "erV" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -14661,6 +14654,8 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/rnd/production/techfab/department/security,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/security/office)
 "esb" = (
@@ -17522,7 +17517,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/open,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "fnq" = (
@@ -18624,7 +18619,8 @@
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "fGn" = (
@@ -23870,12 +23866,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "hkt" = (
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	id = "Cell 3";
-	name = "Cell 3";
-	dir = 4
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
+	id = "Cell 3"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39995,7 +39988,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -41321,6 +41314,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad/secure,
 /obj/structure/cable,
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "mmY" = (
@@ -43499,6 +43493,9 @@
 	},
 /obj/structure/cable,
 /obj/item/radio/intercom/command/directional/north,
+/obj/item/clothing/mask/cigarette/pipe{
+	pixel_x = -5
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "mWY" = (
@@ -48038,6 +48035,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/blueshield)
 "org" = (
@@ -49776,26 +49774,15 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "oSE" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/modular_computer/laptop/preset/civilian{
 	pixel_y = 3;
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/cigarette/pipe{
-	pixel_x = -5
-	},
-/obj/item/clothing/suit/armor/centcom_formal,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/head/hats/centhat,
-/obj/item/clothing/head/hats/centcom_cap,
-/obj/item/clothing/under/rank/centcom/centcom_skirt,
-/obj/item/clothing/under/rank/centcom/commander,
-/obj/item/clothing/under/rank/centcom/intern,
-/obj/item/clothing/under/rank/centcom/officer_skirt,
-/obj/item/clothing/under/rank/centcom/officer,
-/obj/item/clothing/accessory/medal/gold/ordom,
-/obj/item/clothing/accessory/medal/silver/bureaucracy,
 /obj/machinery/light/warm/directional/south,
+/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/item/clothing/accessory/medal/silver/bureaucracy,
+/obj/item/clothing/accessory/medal/gold/ordom,
+/obj/item/clothing/accessory/medal/gold/ordom,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "oSI" = (
@@ -53815,10 +53802,6 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/stamp/centcom{
-	pixel_x = 5;
-	pixel_y = 7
-	},
 /obj/item/pen{
 	pixel_x = 4;
 	pixel_y = -4
@@ -56429,12 +56412,9 @@
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "qQs" = (
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	id = "Cell 4";
-	name = "Cell 4";
-	dir = 4
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
+	id = "Cell 4"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58677,6 +58657,7 @@
 "rxE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "rxK" = (
@@ -62309,8 +62290,9 @@
 /obj/machinery/door/airlock/bathroom{
 	name = "Restroom"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "sCg" = (
@@ -69169,11 +69151,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "uzj" = (
-/obj/machinery/rnd/production/techfab/department/security,
-/obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/grimy,
 /area/station/security/office)
 "uzm" = (
@@ -72562,7 +72543,8 @@
 /obj/machinery/door/airlock/corporate{
 	name = "Representative's Office"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "vxI" = (
@@ -77087,6 +77069,7 @@
 /obj/structure/window/spawner/directional/east,
 /obj/item/storage/secure/safe/directional/north,
 /obj/structure/cable,
+/obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "wRq" = (
@@ -81517,7 +81500,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/machinery/suit_storage_unit/open,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "yhk" = (
