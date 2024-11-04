@@ -869,8 +869,8 @@ generate/load female uniform sprites matching all previously decided variables
 // Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
 // So instead we have to pass them through an offset, which is close enough to look good.
 /mob/living/carbon/human/apply_overlay(cache_index)
-	// if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
-	// 	return ..()
+	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
 	var/string_form_index = num2text(cache_index)
