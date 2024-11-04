@@ -59,7 +59,7 @@
 /datum/vote/shuttle_call/get_vote_result(list/non_voters)
 	for(var/ckey in non_voters)
 		var/client/client = non_voters[ckey]
-		if(client.mob && can_vote(client.mob))
+		if(client?.mob && can_vote(client.mob))
 			choices[CHOICE_CONTINUE]++ // Everyone defaults to continue, since they may be in the middle of something when the vote starts.
 	if(choices[CHOICE_CALL] + choices[CHOICE_CONTINUE] <= 0) // No-one is alive. Call it.
 		return CHOICE_CALL
