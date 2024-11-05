@@ -161,7 +161,7 @@
 /mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend and maintain bars."
-	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/bardrone
+	default_storage = /obj/item/storage/backpack/duffelbag/bardrone
 	hacked = TRUE
 	shy = FALSE
 	laws = "1. Serve drinks.\n\
@@ -173,7 +173,7 @@
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
-	var/flavortext = \
+	flavortext = \
 	"\n<big><span class='warning'>LAW EXPLANATION FOR BAR DRONES</span></big>\n"+\
 	"<span class='notice'>As a bar drone your goal is to provide a fun interactive experience for other players visiting the bar*. </span>\n"+\
 	"<span class='notice'>BARDRONE GUIDELINES</span>\n"+\
