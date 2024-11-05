@@ -435,6 +435,7 @@
 	altar_icon_state = "convertaltar-hunt"
 	alignment = ALIGNMENT_NEUT
 	candle_overlay = FALSE
+	desired_items = list(/obj/item/food/meat/religioustrophy)
 	max_favor = 25
 	rites_list = list(
 		/datum/religion_rites/initiate_hunter,
@@ -442,7 +443,6 @@
 		/datum/religion_rites/craft_hunters_atlatl,
 		/datum/religion_rites/carve_spears,
 	)
-	var/list/preys = list()
 
 /datum/religion_sect/hunt/on_conversion(mob/living/chap)
 	. = ..()

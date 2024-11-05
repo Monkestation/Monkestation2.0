@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(sect_of_the_hunt_preys)
 /datum/religion_rites/initiate_hunter
 	name = "Initiate Hunter"
 	desc = "Awakens the hunter's instincts and lets them hear the Call of the Hunt. Buckle a human to awaken them, otherwise it will awaken you."
@@ -6,7 +7,6 @@
 						"... We call upon you, that beasts may be slain ...")
 	invoke_msg = "... Awaken Hunter. Awaken and heed the call of the Hunt!!"
 	favor_cost = -1
-
 
 /datum/religion_rites/initiate_hunter/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
@@ -54,38 +54,41 @@
 	ritual_invocations = list("We call now upon the most holy ...",
 	"... By the will of our god ...",
 	"... And by divine decree ...")
-	invoke_msg = "... There is prey to be felled"
+	invoke_msg = "... There is prey to be felled!!"
 	favor_cost = 0
 
+
 /datum/religion_rites/call_the_hunt/invoke_effect(mob/living/user, atom/religious_tool)
-		var/turf/prey_location = get_safe_random_station_turf()
-		preys += new /mob/living/basic/deer(prey_location, src)
+	. = ..()
+
+	var/turf/prey_location = get_safe_random_station_turf()
+	GLOB.sect_of_the_hunt_preys += new /mob/living/basic/deer/prey(prey_location)
+
 
 /datum/religion_rites/craft_hunters_atlatl
 	name = "Craft Hunter's Atlatl"
-	desc = "With holy will and divine grace create a hunter's atlatl and a spearquiver with throwing spears"
+	desc = "With holy will and divine grace create a hunter's atlatl and a quiver of throwing spears"
 	ritual_length = 15 SECONDS
 	ritual_invocations = list("By grace and instinct ...",
 	"... We are blessed with holy weapons ...")
-	invoke_msg = "... May we strike true"
+	invoke_msg = "... May we strike true!"
 	favor_cost = 5
 
 /datum/religion_rites/craft_hunters_atlatl/invoke_effect(mob/living/user, atom/movable/religious_tool)
-var/altar_turf = get_turf(religious_tool)
+	. = ..()
+	var/altar_turf = get_turf(religious_tool)
 	new /obj/item/gun/ballistic/atlatl(altar_turf)
 	new /obj/item/storage/bag/spearquiver(altar_turf)
-	return TRUE
 
 /datum/religion_rites/carve_spears
 	name = "Carve throwing spears"
 	desc = "Carve blessed spears of the Hunt so that more prey be slain"
 	ritual_length = 10 SECONDS
-	invoke_msg = ""
+	invoke_msg = "There's always more prey. The Hunt continues!"
 	favor_cost = 3
 
 /datum/religion_rites/carve_spears/invoke_effect(mob/living/user, atom/movable/religious_tool)
-var/altar_turf = get_turf(religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
 	for (var/i in 1 to 3)
 		new /obj/item/ammo_casing/caseless/thrownspear(altar_turf)
-
-	return TRUE
