@@ -1988,9 +1988,6 @@
 /area/station/security/evidence)
 "auJ" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/door/airlock/command{
 	name = "Telecomms Server Room"
 	},
@@ -2001,6 +1998,9 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
 "auP" = (
@@ -21569,7 +21569,6 @@
 /area/station/engineering/storage/tech)
 "fdM" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command{
 	name = "Telecomms Server Room"
 	},
@@ -21579,6 +21578,9 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
 "fdR" = (
@@ -32155,6 +32157,7 @@
 "hEa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "hEr" = (
@@ -44290,7 +44293,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ktv" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command{
 	name = "Telecomms Server Room"
 	},
@@ -44301,7 +44303,10 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/turf/open/floor/iron/dark/telecomms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
+/turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
 "ktK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45162,10 +45167,7 @@
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "kEv" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark/telecomms,
+/turf/closed/wall,
 /area/station/tcommsat/server)
 "kEw" = (
 /obj/structure/cable,
@@ -54388,6 +54390,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
+"mND" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/server)
 "mNF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59985,8 +59992,21 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "oij" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/machinery/door/airlock/command{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "oiC" = (
@@ -63685,6 +63705,11 @@
 /obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
+"peZ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/server)
 "pfh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -80360,13 +80385,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "tcH" = (
-/obj/structure/table/glass,
-/obj/item/folder/yellow,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
 "tcT" = (
 /obj/structure/disposalpipe/segment{
@@ -82833,6 +82855,27 @@
 	dir = 1
 	},
 /area/station/commons/fitness/recreation)
+"tJm" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "tJo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -87600,9 +87643,6 @@
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "uPV" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/door/airlock/command{
 	name = "Telecomms Server Room"
 	},
@@ -87612,6 +87652,9 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "uQa" = (
@@ -97068,8 +97111,21 @@
 "xbW" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/obj/machinery/door/airlock/command{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms_hallway"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -139577,7 +139633,7 @@ ilI
 ilI
 ilI
 hup
-ilI
+xCa
 ilI
 kRU
 kRU
@@ -139834,7 +139890,7 @@ kRU
 vEy
 dfb
 hup
-xCa
+ilI
 ilI
 dRh
 oZt
@@ -140091,7 +140147,7 @@ kRU
 dZD
 bvw
 hup
-ilI
+agZ
 ilI
 wRS
 lPm
@@ -140603,11 +140659,11 @@ xDU
 lkL
 lkL
 lkL
-oij
+lkL
 xbW
-ilI
-ilI
 kEv
+oij
+lkL
 lkL
 lkL
 lkL
@@ -140860,11 +140916,11 @@ jHb
 fdM
 pSh
 uPV
-ilI
+pSh
 tcH
-voi
-agZ
-hup
+mND
+peZ
+rMt
 ktv
 rMt
 auJ
@@ -141117,11 +141173,11 @@ xDU
 lkL
 lkL
 lkL
-oij
-xbW
-ilI
-ilI
+lkL
+tJm
 kEv
+oij
+lkL
 lkL
 lkL
 lkL
@@ -141633,7 +141689,7 @@ kRU
 tCI
 hiH
 hup
-ilI
+voi
 hup
 kfC
 rSJ
@@ -141890,7 +141946,7 @@ kRU
 seP
 fYw
 hup
-jQw
+ilI
 hup
 jPC
 quc
@@ -142147,7 +142203,7 @@ ilI
 ilI
 ilI
 hup
-ilI
+jQw
 hup
 kRU
 kRU
