@@ -309,13 +309,20 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS_INIT_NO_NEED,
 	)
 
-	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
 		return
 
 	current_initializing_subsystem = subsystem
 	rustg_time_reset(SS_INIT_TIMER_KEY)
 
+#ifndef UNIT_TESTS
+	var/old_usr = usr
+	usr = subsystem.tracker
+#endif
 	var/result = subsystem.Initialize()
+#ifndef UNIT_TESTS
+	usr = old_usr
+#endif
 
 	// Capture end time
 	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)

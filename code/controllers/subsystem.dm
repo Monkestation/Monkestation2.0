@@ -106,6 +106,9 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+	/// An abstract mob used to make tracking which subsystem caused a runtime easier.
+	var/mob/abstract/subsystem_tracker/tracker
+
 	var/avg_iter_count = 0
 	var/avg_drift = 0
 	var/list/enqueue_log = list()
@@ -133,7 +136,16 @@
 	tick_allocation_avg = MC_AVERAGE(tick_allocation_avg, tick_allocation_last)
 
 	. = SS_SLEEPING
+
+#ifndef UNIT_TESTS
+	var/old_usr = usr
+	usr = tracker
+#endif
 	fire(resumed)
+#ifndef UNIT_TESTS
+	usr = old_usr
+#endif
+
 	. = state
 	if (state == SS_SLEEPING)
 		slept_count++

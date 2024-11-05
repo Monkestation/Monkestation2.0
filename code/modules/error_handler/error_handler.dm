@@ -96,11 +96,16 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	var/list/usrinfo = null
 	var/locinfo
+	var/mob/abstract/subsystem_tracker/ss_tracker
 	if(istype(usr))
-		usrinfo = list("  usr: [key_name(usr)]")
-		locinfo = loc_name(usr)
-		if(locinfo)
-			usrinfo += "  usr.loc: [locinfo]"
+		if(istype(usr, /mob/abstract/subsystem_tracker))
+			ss_tracker = usr
+			usrinfo = list("  subsystem: [ss_tracker]")
+		else
+			usrinfo = list("  usr: [key_name(usr)]")
+			locinfo = loc_name(usr)
+			if(locinfo)
+				usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
@@ -151,7 +156,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		"file" = "[E.file || "unknown"]",
 		"line" = E.line,
 		"name" = "[E.name]",
-		"desc" = "[E.desc]"
+		"desc" = "[E.desc]",
+		"subsystem" = "[ss_tracker?.subsystem_type || "none"]",
 	))
 	// monkestation end
 #endif

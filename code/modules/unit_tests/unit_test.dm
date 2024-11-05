@@ -255,6 +255,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
 		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		//Technically not a true "mob" anyways, only used to track subsystem runtimes via usr
+		/mob/abstract/subsystem_tracker,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
