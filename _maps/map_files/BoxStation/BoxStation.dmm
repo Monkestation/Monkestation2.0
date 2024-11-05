@@ -772,7 +772,9 @@
 /area/station/hallway/secondary/entry)
 "anm" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/plumbing/ooze_compressor{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "anp" = (
@@ -5652,8 +5654,7 @@
 /area/station/security/prison)
 "bNi" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
+	mapping_id = "1"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -11957,8 +11958,7 @@
 /area/station/security/office)
 "dQL" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
+	mapping_id = "3"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -11988,11 +11988,6 @@
 /obj/effect/spawner/random/techstorage/ai_all,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
-"dRS" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "dRU" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
@@ -25771,6 +25766,7 @@
 	pixel_y = 8
 	},
 /obj/item/wirecutters,
+/obj/item/vacuum_pack,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "isa" = (
@@ -31307,11 +31303,6 @@
 /obj/structure/closet/secure_closet/security/sec/blueshirt,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/escape)
-"kiD" = (
-/mob/living/basic/slime,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kiI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -32426,13 +32417,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/safe)
-"kBJ" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kBK" = (
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -34230,13 +34214,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "lfw" = (
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/light/neon_lining{
 	dir = 4
 	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "lfx" = (
@@ -40282,16 +40266,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/checker,
 /area/station/science/lab)
-"nhv" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light/neon_lining{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "nhL" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/disposalpipe/trunk{
@@ -49107,8 +49081,7 @@
 /area/station/medical/morgue)
 "qbm" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4";
-	dir = 1
+	mapping_id = "4"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -54942,7 +54915,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sbB" = (
-/obj/machinery/light/floor/has_bulb,
 /mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -64809,13 +64781,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
-"vle" = (
-/obj/machinery/duct,
-/obj/machinery/light/neon_lining{
-	dir = 4
-	},
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "vlf" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -66757,8 +66722,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "vPr" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
+	mapping_id = "2"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -72646,11 +72610,14 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "xNu" = (
-/obj/machinery/duct,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/machinery/light/neon_lining{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/obj/machinery/duct,
+/turf/open/floor/engine,
 /area/station/science/xenobiology)
 "xNz" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
@@ -116447,8 +116414,8 @@ uoo
 fJl
 ogZ
 fck
+vcn
 sbB
-fck
 xoG
 ogZ
 fck
@@ -116457,8 +116424,8 @@ fck
 xoG
 ogZ
 fck
+vcn
 sbB
-fck
 xoG
 fJl
 ksa
@@ -116706,16 +116673,16 @@ ogZ
 fck
 pIH
 hNt
-dRS
-kBJ
-hNt
-qbm
-fck
 xoG
 ogZ
-hNt
-bNi
 fck
+qbm
+hNt
+xoG
+ogZ
+fck
+bNi
+hNt
 xoG
 fJl
 fJl
@@ -116962,17 +116929,17 @@ fJl
 pAQ
 cFU
 cFU
-cFU
+lfw
 jiW
 saI
+cFU
+cFU
 lfw
-cFU
-cFU
 uEz
 tqj
+cFU
+cFU
 lfw
-cFU
-cFU
 ojQ
 fJl
 xwH
@@ -117219,9 +117186,6 @@ fJl
 ljv
 ljv
 ljv
-ljv
-ljv
-ljv
 agf
 ljv
 ljv
@@ -117230,6 +117194,9 @@ ljv
 agf
 ljv
 ljv
+ljv
+ljv
+agf
 oGR
 fJl
 tPv
@@ -117476,17 +117443,17 @@ hYH
 ckD
 ckD
 kQj
-ckD
-ckD
-ckD
-xNu
-lHF
-ckD
-ckD
-ckD
 gOA
-bzX
 ckD
+ckD
+ckD
+lHF
+gOA
+ckD
+ckD
+ckD
+bzX
+gOA
 ckD
 lzL
 fRT
@@ -117733,9 +117700,9 @@ puX
 hlP
 hlP
 hlP
-hlP
-hlP
-hlP
+cpO
+cpO
+cpO
 cpO
 cpO
 cpO
@@ -117990,17 +117957,17 @@ hYH
 fZT
 fZT
 mjk
-fZT
-fZT
-fZT
-vle
-aGj
-fZT
-fZT
-fZT
 ybw
-lnm
 fZT
+fZT
+fZT
+aGj
+ybw
+fZT
+fZT
+fZT
+lnm
+ybw
 fZT
 lzL
 ejK
@@ -118247,9 +118214,6 @@ fJl
 uym
 ljv
 ljv
-ljv
-ljv
-ljv
 agf
 ljv
 ljv
@@ -118258,6 +118222,9 @@ ljv
 agf
 ljv
 ljv
+ljv
+ljv
+agf
 ljv
 fJl
 lYt
@@ -118504,17 +118471,17 @@ gQX
 fNA
 sfu
 sfu
-sfu
+xNu
 kzb
 wjU
-nhv
 sfu
 sfu
+xNu
 mvc
 xgz
-nhv
 sfu
 sfu
+xNu
 lFh
 fJl
 oeH
@@ -118762,16 +118729,16 @@ ogZ
 fck
 mQo
 hNt
-dRS
-kBJ
-hNt
-dQL
-fck
 xoG
 ogZ
-hNt
-vPr
 fck
+dQL
+hNt
+xoG
+ogZ
+fck
+vPr
+hNt
 xoG
 fJl
 fJl
@@ -119017,8 +118984,8 @@ jUj
 gQX
 ogZ
 fck
+vcn
 sbB
-fck
 xoG
 ogZ
 fck
@@ -119027,8 +118994,8 @@ fck
 xoG
 ogZ
 fck
-kiD
-fck
+vcn
+sbB
 xoG
 fJl
 lAO
