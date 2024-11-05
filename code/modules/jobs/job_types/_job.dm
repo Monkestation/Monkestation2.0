@@ -464,10 +464,7 @@
 			else
 				spawn_points_not_picked += spawn_point
 
-	var/obj/effect/landmark/start/picked = pick(spawn_points_not_picked)
-
-	if(!picked)
-		picked = pick(spawn_points_picked)
+	var/obj/effect/landmark/start/picked = length(spawn_points_not_picked) ? pick(spawn_points_not_picked) : pick(spawn_points_picked)
 
 	. = picked
 	picked.used = TRUE
@@ -548,7 +545,6 @@
 			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
-	dna.species.after_equip_job(job, src, FALSE, player_client.prefs)
 
 /mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
 	if(GLOB.current_anonymous_theme)

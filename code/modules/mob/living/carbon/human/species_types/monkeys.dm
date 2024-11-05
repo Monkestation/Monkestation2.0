@@ -5,28 +5,27 @@
 	id = SPECIES_MONKEY
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
-		/obj/item/organ/external/tail/simian = "Chimp"
+		/obj/item/organ/external/tail/monkey = "Monkey",
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/monkey
 	mutantbrain = /obj/item/organ/internal/brain/primate
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	species_traits = list(
-		NO_UNDERWEAR,
-		NOBLOODOVERLAY,
-		NOTRANSSTING,
-		NOAUGMENTS,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
 		TRAIT_GUN_NATURAL,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
+		//Non-Modular change: Gives Monkeys fur colors.
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT | BUGS
-	disliked_food = CLOTH
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
@@ -45,26 +44,38 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
+	// NON-MODULAR CHANGES BELOW
 
+	//Makes hats appear 1 pixel above so the eyes are still visible, and brings belt items down 1 pixel so they fit on the chest.
+	offset_features = list(
+		OFFSET_HEAD = list(0,1),
+		OFFSET_BELT = list(0,-1),
+		)
+	//Default eyes have the side portrait icons on the wrong side, this fixes that.
+	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
+	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
+	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
 	var/randname = "monkey ([rand(1,999)])"
-
 	return randname
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	H.pass_flags |= PASSTABLE
-	H.butcher_results = knife_butcher_results
-	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	H.dna.activate_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_on(human_who_gained_species, SPECIES_TRAIT)
+		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
+		human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
 
-
-/datum/species/monkey/on_species_loss(mob/living/carbon/C)
+/datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
-	C.pass_flags = initial(C.pass_flags)
-	C.butcher_results = null
-	C.dna.remove_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_off(C, SPECIES_TRAIT)
+		C.dna.remove_mutation(/datum/mutation/human/race)
+
+/datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them
@@ -75,10 +86,9 @@
 			return TRUE
 		return ..()
 
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
+	// calls parent if it's not attacking a mob, used for places like opening inventory while in crit.
+	if(!isliving(target))
+		return ..()
 	var/mob/living/carbon/victim = target
 	if(user.is_muzzled())
 		return TRUE // cannot bite them if we're muzzled
@@ -126,20 +136,10 @@
 	return TRUE
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// Check ID specifically so all subtypes aren't eligible on Monkey day.
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
-
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
 
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \

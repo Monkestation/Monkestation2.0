@@ -104,7 +104,7 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = 0
+	tick_interval = -1 // monkestation edit
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
 /atom/movable/screen/alert/status_effect/blooddrunk
@@ -335,11 +335,7 @@
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.fully_heal(HEAL_CC_STATUS)
-	owner.bodytemperature = owner.get_body_temp_normal()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/humi = owner
-		humi.set_coretemperature(humi.get_body_temp_normal())
+	owner.fully_heal(HEAL_CC_STATUS|HEAL_TEMP)
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
@@ -368,7 +364,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 2 MINUTES
+	duration = 1 MINUTE // monkestation edit
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -391,9 +387,11 @@
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
 		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		chainsaw.item_flags |= DROPDEL // monkestation addition
+		chainsaw.resistance_flags |= INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // monkestation addition
 		owner.put_in_hands(chainsaw, forced = TRUE)
 		chainsaw.attack_self(owner)
-		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+		//owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25) MONKESTATION REMOVAL
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
@@ -480,7 +478,7 @@
 	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
 	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
 	owner.stamina.adjust(4 * seconds_per_tick)
-	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
+	owner.adjust_bodytemperature(INFINITY, max_temp = owner.standard_body_temperature) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
 /atom/movable/screen/alert/status_effect/nest_sustenance

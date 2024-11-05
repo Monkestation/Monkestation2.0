@@ -8,6 +8,7 @@
 	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
 	VAR_PRIVATE
 		datum/team/brother_team/team
 
@@ -38,6 +39,7 @@
 
 			if (!is_first_brother)
 				to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
+				carbon_owner.balloon_alert(carbon_owner, "extra flash granted!")
 
 	return ..()
 
@@ -79,7 +81,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE) || (flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)) // monkestation edit: TRAIT_UNCONVERTABLE
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE)) // monkestation edit: TRAIT_UNCONVERTABLE and remove hardcoded security check
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
@@ -111,8 +113,9 @@
 /datum/antagonist/brother/get_base_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
+	var/datum/color_palette/generic_colors/located = brother1.dna.color_palettes[/datum/color_palette/generic_colors]
 
-	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	located.ethereal_color = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
 	brother2.dna.features["moth_antennae"] = "Plain"
@@ -121,11 +124,15 @@
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
-	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	var/icon/blood1_icon = icon('icons/effects/blood.dmi', "maskblood")
+	blood1_icon.Blend(COLOR_BLOOD, ICON_MULTIPLY)
+	brother1_icon.Blend(blood1_icon, ICON_OVERLAY)
 	brother1_icon.Shift(WEST, 8)
 
 	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
-	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood2_icon = icon('icons/effects/blood.dmi', "uniformblood")
+	blood2_icon.Blend(COLOR_BLOOD, ICON_MULTIPLY)
+	brother2_icon.Blend(blood2_icon, ICON_OVERLAY)
 	brother2_icon.Shift(EAST, 8)
 
 	var/icon/final_icon = brother1_icon

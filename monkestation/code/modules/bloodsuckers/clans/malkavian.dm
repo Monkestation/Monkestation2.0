@@ -1,3 +1,6 @@
+#define REVELATION_MIN_COOLDOWN	20 SECONDS
+#define REVELATION_MAX_COOLDOWN	1 MINUTES
+
 /datum/bloodsucker_clan/malkavian
 	name = CLAN_MALKAVIAN
 	description = "Little is documented about Malkavians. Complete insanity is the most common theme. \n\
@@ -6,6 +9,7 @@
 	join_description = "Completely insane. You gain constant hallucinations, become a prophet with unintelligable rambling, \
 		and become the enforcer of the Masquerade code."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
+	COOLDOWN_DECLARE(revelation_cooldown)
 
 /datum/bloodsucker_clan/malkavian/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
@@ -32,9 +36,10 @@
 
 /datum/bloodsucker_clan/malkavian/handle_clan_life(datum/antagonist/bloodsucker/source)
 	. = ..()
-	if(prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
+	if(!COOLDOWN_FINISHED(src, revelation_cooldown) || prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
 	var/message = pick(strings("malkavian_revelations.json", "revelations", "monkestation/strings"))
+	COOLDOWN_START(src, revelation_cooldown, rand(REVELATION_MIN_COOLDOWN, REVELATION_MAX_COOLDOWN))
 	INVOKE_ASYNC(bloodsuckerdatum.owner.current, TYPE_PROC_REF(/atom/movable, say), message, , , , , , CLAN_MALKAVIAN)
 
 /datum/bloodsucker_clan/malkavian/on_favorite_vassal(datum/antagonist/bloodsucker/source, datum/antagonist/vassal/vassaldatum)
@@ -55,8 +60,10 @@
 	INVOKE_ASYNC(stone, TYPE_PROC_REF(/obj/item/soulstone/bloodsucker, capture_soul), bloodsuckerdatum.owner.current, forced = TRUE, bloodsuckerdatum = bloodsuckerdatum)
 	return DONT_DUST
 
-/datum/bloodsucker_clan/malkavian/proc/on_bloodsucker_broke_masquerade(datum/antagonist/bloodsucker/masquerade_breaker)
+/datum/bloodsucker_clan/malkavian/proc/on_bloodsucker_broke_masquerade(datum/source, datum/antagonist/bloodsucker/masquerade_breaker)
 	SIGNAL_HANDLER
+	if(masquerade_breaker == bloodsuckerdatum)
+		return
 	to_chat(bloodsuckerdatum.owner.current, span_userdanger("[masquerade_breaker.owner.current] has broken the Masquerade! Ensure [masquerade_breaker.owner.current.p_they()] [masquerade_breaker.owner.current.p_are()] eliminated at all costs!"))
 	var/datum/objective/assassinate/masquerade_objective = new()
 	masquerade_objective.target = masquerade_breaker.owner.current
@@ -64,3 +71,6 @@
 	masquerade_objective.explanation_text = "Ensure [masquerade_breaker.owner.current], who has broken the Masquerade, succumbs to Final Death."
 	bloodsuckerdatum.objectives += masquerade_objective
 	bloodsuckerdatum.owner.announce_objectives()
+
+#undef REVELATION_MAX_COOLDOWN
+#undef REVELATION_MIN_COOLDOWN

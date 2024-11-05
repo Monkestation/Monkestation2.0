@@ -200,11 +200,18 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
+			// monkestation start: prevent lowering alert level from delta
 			var/new_sec_level = SSsecurity_level.text_level_to_number(params["newSecurityLevel"])
+			var/current_sec_level = SSsecurity_level.get_current_level_as_number()
+			if (current_sec_level > SEC_LEVEL_RED)
+				to_chat(usr, span_warning("Alert cannot be manually lowered from the current security level!"))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				return
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
+			if (current_sec_level == new_sec_level)
 				return
+			// monkestation end
 
 			SSsecurity_level.set_level(new_sec_level)
 
@@ -351,7 +358,7 @@
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)

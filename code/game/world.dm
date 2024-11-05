@@ -307,6 +307,7 @@ GLOBAL_VAR(tracy_log)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
+		SSplexora.Shutdown(TRUE, usr ? key_name(usr) : null) // Monkestation edit: plexora
 	else
 		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
@@ -349,7 +350,6 @@ GLOBAL_VAR(tracy_log)
 	..()
 
 /world/proc/auxcleanup()
-	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
 		call_ext(debug_server, "auxtools_shutdown")()
@@ -474,6 +474,7 @@ GLOBAL_VAR(tracy_log)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
 
 /world/proc/init_byond_tracy()
 	var/library

@@ -81,11 +81,31 @@
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/bomb_actualizer
+	name = "Machine Design (Bomb Actualizer Board)"
+	desc = "The circuit board for a bomb actualizing machine"
+	id = "bomb_actualizer"
+	build_path = /obj/item/circuitboard/machine/bomb_actualizer
+	category = list(
+	RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/composters
 	name = "Machine Design (NT-Brand Auto Composter Board)"
 	desc = "The circuit board for a NT-Brand Auto Composter."
 	id = "composters"
 	build_path = /obj/item/circuitboard/machine/composters
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_BOTANY
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/splicer
+	name = "Machine Design (Splicer Board)"
+	desc = "The circuit board for a Splicer."
+	id = "splicer"
+	build_path = /obj/item/circuitboard/machine/splicer
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_BOTANY
 	)
