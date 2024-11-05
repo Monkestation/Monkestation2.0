@@ -447,3 +447,9 @@
 /datum/religion_sect/hunt/on_conversion(mob/living/chap)
 	. = ..()
 	new /obj/item/knife/hunting(get_turf(chap))
+
+/datum/religion_sect/hunt/on_sacrifice(obj/item/I, mob/living/user)
+	to_chat(user, span_notice("A worthy offering for [GLOB.deity]. You have done well Hunter"))
+	adjust_favor(3, user)
+	qdel(I)
+	return TRUE

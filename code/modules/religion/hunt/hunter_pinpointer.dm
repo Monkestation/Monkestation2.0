@@ -35,3 +35,7 @@
 	scan_target = chosen_prey
 
 
+#undef HUNTER_MINIMUM_RANGE
+#undef HUNTER_MAXIMUM_RANGE
+#undef HUNTER_PING_TIME
+#undef HUNTER_FUZZ_FACTOR
