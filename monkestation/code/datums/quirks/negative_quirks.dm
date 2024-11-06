@@ -250,7 +250,8 @@
 	lose_text = span_notice("Your connection to this mortal plane strengthens!")
 	medical_record_text = "The connection between the patient's soul and body is incredibly weak, and attempts to resuscitate after death will fail. Ensure hightened care."
 
-/datum/quirk/dnr/add()
-	quirk_holder.AddComponent(/datum/component/donotrevive)
+/datum/quirk/dnr/add() //we dont talk about how this makes defibs say "blacklisted from revival" and the medical records say some other reason.
+	ADD_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
 
-// no remove for you, RemoveComponent doesnt exist
+/datum/quirk/dnr/remove()
+	REMOVE_TRAIT(quirk_holder, TRAIT_DEFIB_BLACKLISTED, "DNR Quirk")
