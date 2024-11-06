@@ -254,10 +254,6 @@
 	if(user)
 		balloon_alert(user, "target assessment circuits shorted")
 		oldtarget_name = user.name
-
-	if(bot_type == HONK_BOT)
-		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -511,12 +507,6 @@
 					new /obj/item/clothing/head/helmet(Tsec)
 				else
 					new /obj/item/clothing/suit/armor/vest(Tsec)
-		if(HONK_BOT)
-			var/obj/item/bot_assembly/honkbot/honkbot_assembly = new(Tsec)
-			honkbot_assembly.build_step = ASSEMBLY_FIRST_STEP
-			honkbot_assembly.created_name = name
-			new /obj/item/assembly/prox_sensor(Tsec)
-			drop_part(baton_type, Tsec)
 		else
 			var/obj/item/bot_assembly/secbot/secbot_assembly = new(Tsec)
 			secbot_assembly.build_step = ASSEMBLY_FIRST_STEP

@@ -662,12 +662,6 @@
 	if(. && new_model)
 		R.model.transform_to(new_model)
 
-/obj/item/borg/upgrade/transform/clown
-	name = "borg model picker (Clown)"
-	desc = "Allows you to to turn a cyborg into a clown, honk."
-	icon_state = "cyborg_upgrade3"
-	new_model = /obj/item/robot_model/clown
-
 /obj/item/borg/upgrade/circuit_app
 	name = "circuit manipulation apparatus"
 	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."

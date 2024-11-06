@@ -39,12 +39,7 @@
 		/datum/reagent/toxin/staminatoxin,\
 		/datum/reagent/toxin/sulfonal\
 	)
-#define BASE_CLOWN_REAGENTS list(\
-		/datum/reagent/consumable/laughter\
-	)
-#define HACKED_CLOWN_REAGENTS list(\
-		/datum/reagent/consumable/superlaughter\
-	)
+
 #define BASE_SYNDICATE_REAGENTS list(\
 		/datum/reagent/medicine/inacusiate,\
 		/datum/reagent/medicine/painkiller/morphine,\
@@ -274,17 +269,7 @@
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_PEACE_REAGENTS
 
-/// Clownborg hypospray
-/obj/item/reagent_containers/borghypo/clown
-	name = "laughter injector"
-	desc = "Keeps the crew happy and productive!"
-	default_reagent_types = BASE_CLOWN_REAGENTS
 
-/obj/item/reagent_containers/borghypo/clown/hacked
-	desc = "Keeps the crew so happy they don't work!"
-	icon_state = "borghypo_s"
-	tgui_theme = "syndicate"
-	default_reagent_types = HACKED_CLOWN_REAGENTS
 
 /// Syndicate medborg hypospray
 /obj/item/reagent_containers/borghypo/syndicate
@@ -385,8 +370,6 @@
 #undef HACKED_MEDICAL_REAGENTS
 #undef BASE_PEACE_REAGENTS
 #undef HACKED_PEACE_REAGENTS
-#undef BASE_CLOWN_REAGENTS
-#undef HACKED_CLOWN_REAGENTS
 #undef BASE_SYNDICATE_REAGENTS
 #undef BASE_SERVICE_REAGENTS
 #undef HACKED_SERVICE_REAGENTS

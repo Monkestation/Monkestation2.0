@@ -180,8 +180,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
-#define isclown(A) (istype(A, /mob/living/basic/clown))
-
 #define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
 

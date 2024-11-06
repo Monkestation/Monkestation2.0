@@ -252,9 +252,6 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 
 #define ED209_VOICED_DOWN_WEAPONS "Please put down your weapon. You have 20 seconds to comply."
 
-#define HONKBOT_VOICED_HONK_HAPPY "Honk!"
-#define HONKBOT_VOICED_HONK_SAD "Honk..."
-
 #define BEEPSKY_VOICED_CRIMINAL_DETECTED "Criminal detected!"
 #define BEEPSKY_VOICED_FREEZE "Freeze, scumbag!"
 #define BEEPSKY_VOICED_JUSTICE "Prepare for justice!"

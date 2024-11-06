@@ -163,7 +163,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_EXPLOSION "explosion"
 #define SFX_EXPLOSION_CREAKING "explosion_creaking"
 #define SFX_HISS "hiss"
-#define SFX_HONKBOT_E "honkbot_e"
 #define SFX_HULL_CREAKING "hull_creaking"
 #define SFX_HYPERTORUS_CALM "hypertorus_calm"
 #define SFX_HYPERTORUS_MELTING "hypertorus_melting"

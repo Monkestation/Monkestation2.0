@@ -300,40 +300,6 @@
 				qdel(src)
 
 
-//Honkbot Assembly
-/obj/item/bot_assembly/honkbot
-	name = "incomplete honkbot assembly"
-	desc = "The clown's up to no good once more"
-	icon_state = "honkbot_arm"
-	created_name = "Honkbot"
-
-/obj/item/bot_assembly/honkbot/attackby(obj/item/attacking_item, mob/user, params)
-	..()
-	switch(build_step)
-		if(ASSEMBLY_FIRST_STEP)
-			if(isprox(attacking_item))
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-					return
-				to_chat(user, span_notice("You add the [attacking_item] to [src]!"))
-				icon_state = "honkbot_proxy"
-				name = "incomplete Honkbot assembly"
-				qdel(attacking_item)
-				build_step++
-
-		if(ASSEMBLY_SECOND_STEP)
-			if(istype(attacking_item, /obj/item/bikehorn))
-				if(!can_finish_build(attacking_item, user))
-					return
-				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/secbot/honkbot/new_honkbot = new(drop_location())
-				new_honkbot.name = created_name
-				new_honkbot.limiting_spam = TRUE // only long enough to hear the first ping.
-				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
-				new_honkbot.baton_type = attacking_item.type
-				qdel(attacking_item)
-				qdel(src)
-
-
 //Secbot Assembly
 /obj/item/bot_assembly/secbot
 	name = "incomplete securitron assembly"

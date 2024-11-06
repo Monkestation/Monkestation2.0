@@ -361,24 +361,6 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 					'sound/voice/beepsky/radio.ogg',
 					'sound/voice/beepsky/secureday.ogg',
 				))
-			if(SFX_HONKBOT_E)
-				soundin = pick(list(
-					'sound/effects/pray.ogg',
-					'sound/effects/reee.ogg',
-					'sound/items/AirHorn.ogg',
-					'sound/items/AirHorn2.ogg',
-					'sound/items/bikehorn.ogg',
-					'sound/items/WEEOO1.ogg',
-					'sound/machines/buzz-sigh.ogg',
-					'sound/machines/ping.ogg',
-					'sound/magic/Fireball.ogg',
-					'sound/misc/sadtrombone.ogg',
-					'sound/voice/beepsky/creep.ogg',
-					'sound/voice/beepsky/iamthelaw.ogg',
-					'sound/voice/hiss1.ogg',
-					'sound/weapons/bladeslice.ogg',
-					'sound/weapons/flashbang.ogg',
-				))
 			if("goose")
 				soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
 			if(SFX_WARPSPEED)

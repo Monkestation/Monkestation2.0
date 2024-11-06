@@ -30026,7 +30026,6 @@
 "fMV" = (
 /obj/machinery/ai_slipper,
 /obj/effect/landmark/event_spawn,
-/mob/living/basic/clown/lube,
 /turf/open/floor/noslip,
 /area/station/maintenance/gag_room)
 "fMW" = (
@@ -90219,7 +90218,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "ryl" = (
-/mob/living/basic/clown/fleshclown,
 /turf/open/floor/material/meat,
 /area/station/maintenance/department/science/xenobiology)
 "ryt" = (

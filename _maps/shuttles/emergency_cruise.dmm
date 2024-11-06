@@ -133,7 +133,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/mob/living/basic/clown,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "cZ" = (
@@ -655,13 +654,6 @@
 "ld" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/basic/clown{
-	health = 300;
-	name = "Honk-E-Clown";
-	desc = "This clown looks pretty tough, better stay on his good side...";
-	limb_destroyer = 1;
-	maxHealth = "300"
-	},
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "lk" = (

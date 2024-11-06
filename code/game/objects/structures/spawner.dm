@@ -103,31 +103,6 @@
 	mob_gps_id = "SKL" // skeletons
 	spawner_gps_id = "Bone Pit"
 
-/obj/structure/spawner/clown
-	name = "Laughing Larry"
-	desc = "A laughing, jovial figure. Something seems stuck in his throat."
-	icon_state = "clownbeacon"
-	icon = 'icons/obj/device.dmi'
-	max_integrity = 200
-	max_mobs = 15
-	spawn_time = 15 SECONDS
-	mob_types = list(
-		/mob/living/basic/clown,
-		/mob/living/basic/clown/banana,
-		/mob/living/basic/clown/clownhulk,
-		/mob/living/basic/clown/clownhulk/chlown,
-		/mob/living/basic/clown/clownhulk/honkmunculus,
-		/mob/living/basic/clown/fleshclown,
-		/mob/living/basic/clown/mutant/glutton,
-		/mob/living/basic/clown/honkling,
-		/mob/living/basic/clown/longface,
-		/mob/living/basic/clown/lube,
-	)
-	spawn_text = "climbs out of"
-	faction = list(FACTION_CLOWN)
-	mob_gps_id = "???" // clowns
-	spawner_gps_id = "Clown Planet Distortion"
-
 /obj/structure/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."

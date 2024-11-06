@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message(span_warning("Something slips out of [src]!"))
-	var/loot = rand(1, 27)
+	var/loot = rand(1, 26)
 	switch(loot)
 		if(1)
 			new /obj/item/clothing/suit/hooded/cultrobes/hardened(loc)
@@ -194,8 +194,6 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(24)
 			new /obj/structure/elite_tumor(loc)
 		if(25)
-			new /mob/living/basic/clown/clownhulk(loc)
-		if(26)
 			new /obj/item/book/granter/action/spell/sacredflame(loc)
-		if(27)
+		if(26)
 			new /obj/item/organ/internal/cyberimp/arm/item_set/katana(loc)
