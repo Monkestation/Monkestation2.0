@@ -483,7 +483,8 @@
 		alert_control.ui_interact(src)
 #ifdef AI_VOX
 	if(href_list["say_word"])
-		play_vox_word(href_list["say_word"], null, src)
+		play_vox_word(href_list["say_word"], null, src, vox_type) //NOVA EDIT CHANGE - ORIGINAL: play_vox_word(href_list["say_word"], null, src)
+		vox_word_string += "[href_list["say_word"]] " //NOVA EDIT ADDITION
 		return
 #endif
 	if(href_list["show_tablet_note"])
