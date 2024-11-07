@@ -4,3 +4,4 @@ Credits to the people at NovaSector/Skyrat for the original code! ( https://gith
 
 Modifies monkestation/code/__DEFINES/vox_defines.dm
 Modifies code/modules/mob/living/silicon/ai/ai_say.dm
+Modifies code/modules/mob/living/silicon/ai/ai.dm
