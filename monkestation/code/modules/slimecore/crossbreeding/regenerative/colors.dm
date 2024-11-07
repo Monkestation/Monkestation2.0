@@ -33,12 +33,11 @@
 	diminishing_multiplier = 0 // you can't use other extracts at all during this time
 	tick_interval = -1
 
+//no more powergaming
 /datum/status_effect/regenerative_extract/rainbow/on_apply()
 	var/heal_flags = RAINBOW_HEAL_FLAGS
-	if(isoozeling(owner)) // have some mercy on oozelings
-		heal_flags |= HEAL_LIMBS
-	owner.revive(heal_flags)
-	return FALSE // return false so we immediately clear the effect and start the cooldown
+	base_healing_amt = 25
+
 
 
 #undef RAINBOW_HEAL_FLAGS
