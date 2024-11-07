@@ -26,18 +26,11 @@
 	extra_traits = list(TRAIT_FEARLESS, TRAIT_HARDLY_WOUNDED)
 
 // rainbow extracts are similar to old regen extract effects, albeit it won't replace your organs, and won't heal limbs (unless you're an oozeling)
-#define RAINBOW_HEAL_FLAGS ~(HEAL_ADMIN | HEAL_RESTRAINTS | HEAL_LIMBS | HEAL_REFRESH_ORGANS)
+
 
 /datum/status_effect/regenerative_extract/rainbow
-	alert_type = null
-	diminishing_multiplier = 0 // you can't use other extracts at all during this time
-	tick_interval = -1
+	base_healing_amt = 20
+	diminishing_multiplier = 0.25
+	diminish_time = 1.5 MINUTES
+	extra_traits = list(TRAIT_NOCRITOVERLAY, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
 
-//no more powergaming
-/datum/status_effect/regenerative_extract/rainbow/on_apply()
-	var/heal_flags = RAINBOW_HEAL_FLAGS
-	base_healing_amt = 25
-
-
-
-#undef RAINBOW_HEAL_FLAGS
