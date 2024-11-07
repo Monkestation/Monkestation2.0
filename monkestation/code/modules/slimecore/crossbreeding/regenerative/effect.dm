@@ -37,7 +37,7 @@
 /datum/status_effect/regenerative_extract/on_remove()
 	owner.remove_traits(islist(extra_traits) ? (given_traits + extra_traits) : given_traits, id)
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
-	owner.sharp_pain(BODY_ZONE_CHEST, pain_amount, BRUTE, 90 SECONDS)
+	owner.cause_pain(BODY_ZONE_CHEST, pain_amount, BRUTE)
 
 /datum/status_effect/regenerative_extract/tick(seconds_per_tick, times_fired)
 	var/heal_amt = base_healing_amt * seconds_per_tick * multiplier
@@ -61,11 +61,12 @@
 	owner.adjustCloneLoss(-heal_amt, updating_health = FALSE)
 
 /datum/status_effect/regenerative_extract/proc/heal_misc(heal_amt)
-	owner.adjust_disgust(-heal_amt)
+	var/blood_restore = (heal_amt * 0.25)
+	owner.adjust_disgust(-blood_restore)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = min(owner.blood_volume + heal_amt, BLOOD_VOLUME_NORMAL)
+		owner.blood_volume = min(owner.blood_volume + blood_restore, BLOOD_VOLUME_NORMAL)
 	if((owner.nutrition < nutrition_heal_cap) && !HAS_TRAIT(owner, TRAIT_NOHUNGER))
-		owner.nutrition = min(owner.nutrition + heal_amt, nutrition_heal_cap)
+		owner.nutrition = min(owner.nutrition + blood_restore, nutrition_heal_cap)
 
 /datum/status_effect/regenerative_extract/proc/heal_organs(heal_amt)
 	var/static/list/ignored_traumas
