@@ -72,7 +72,7 @@
 	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
 	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
 	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list. DEBUG IF YOU SEE THIS I FUCKED UP [vox_type]</LI></UL><HR>
+	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
 	"}
 
 	var/index = 0
