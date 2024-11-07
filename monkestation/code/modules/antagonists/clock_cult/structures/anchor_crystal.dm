@@ -63,9 +63,10 @@
 	update_icon()
 	START_PROCESSING(SSmachines, src)
 
-	SSthe_ark.valid_crystal_areas -= crystal_area
 	GLOB.clock_warp_areas |= crystal_area
 	SSthe_ark.block_shuttle(src)
+	if(SSthe_ark.valid_crystal_areas)
+		SSthe_ark.valid_crystal_areas -= crystal_area
 
 /obj/structure/destructible/clockwork/anchoring_crystal/Destroy()
 	SSthe_ark.clear_shuttle_interference(src)
