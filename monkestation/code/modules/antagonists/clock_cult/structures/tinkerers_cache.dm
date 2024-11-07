@@ -41,12 +41,12 @@
 		to_chat(user, span_brass("[src] is still warming up, it will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]."))
 		return
 
-	var/datum/tinker_cache_item/chosen_item = tgui_input_list(user, "Select an item to create at the forge.", "Forging", \
-															(on_reebe(src) ? reebe_craftable : reebe_craftable + station_craftable))
+	var/list/valid_list = (on_reebe(src) ? reebe_craftable : reebe_craftable + station_craftable)
+	var/datum/tinker_cache_item/chosen_item = tgui_input_list(user, "Select an item to create at the forge.", "Forging", valid_list)
 	if(!chosen_item)
 		return
 
-	chosen_item = station_craftable[chosen_item]
+	chosen_item = valid_list[chosen_item]
 	if(!can_interact(user) || !anchored || depowered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
@@ -116,6 +116,12 @@
 	name = "Judicial Visor"
 	item_path = /obj/item/clothing/glasses/clockwork/judicial_visor
 	power_use = 400
+	allowed_on_reebe = FALSE
+
+/datum/tinker_cache_item/borg_shell
+	name = "Clockwork Cyborg Shell"
+	item_path = /obj/item/robot_suit/prebuilt/clockwork
+	power_use = 3000
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/replica_fabricator

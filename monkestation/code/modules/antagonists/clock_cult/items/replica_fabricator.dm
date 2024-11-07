@@ -84,7 +84,7 @@
 	var/calculated_creation_delay = 1
 	if(on_reebe(user))
 		calculated_creation_delay = selected_output.reebe_mult
-		if(!get_charged_anchor_crystals())
+		if(!SSthe_ark.charged_anchoring_crystals)
 			calculated_creation_delay += SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
 		else if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
 			calculated_creation_delay += (iscogscarab(user) ? 2.5 : 5)

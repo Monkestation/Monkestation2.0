@@ -24,7 +24,7 @@
 #define MAX_IMPORTANT_CLOCK_DAMAGE 30
 
 ///how many anchoring crystals need to be active before the ark can open
-#define ANCHORING_CRYSTALS_TO_SUMMON 2
+#define ANCHORING_CRYSTALS_TO_SUMMON 3
 
 ///the map path of the reebe map
 #define REEBE_MAP_PATH "_maps/~monkestation/templates/reebe.dmm"
@@ -34,3 +34,6 @@
 
 ///up to how many tiles away will the ark stop certain things from breaking turfs
 #define ARK_TURF_DESTRUCTION_BLOCK_RANGE 9
+
+///how long in seconds do anchoring crystals take to charge after being placed, 6 minutes
+#define ANCHORING_CRYSTAL_CHARGE_DURATION 360

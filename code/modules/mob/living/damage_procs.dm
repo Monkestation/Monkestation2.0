@@ -391,12 +391,12 @@
 
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	var/area/target_area = get_area(src)
-	if(target_area)
+	if(target_area && !forced) //monkestation edit
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return FALSE
-	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
+	if(!forced && amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS)) //monkestation edit
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE

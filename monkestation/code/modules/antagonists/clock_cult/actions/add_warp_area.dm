@@ -1,7 +1,7 @@
-///How much do we subtract from the base cose of adding a new area
-#define AREAS_TO_IGNORE_FOR_COST 10
 ///How many areas are observation consoles able to warp to at the start
 #define STARTING_WARP_AREAS 8
+///how much vitality does each already marked area increase the cost by
+#define COST_PER_AREA 4
 
 /datum/action/innate/clockcult/add_warp_area
 	name = "Add Warp Area"
@@ -32,7 +32,7 @@
 	if(!input_area)
 		return
 
-	var/cost = max((length(GLOB.clock_warp_areas) * 3) - (STARTING_WARP_AREAS * 3), 0)
+	var/cost = max((length(GLOB.clock_warp_areas) * COST_PER_AREA) - (STARTING_WARP_AREAS * COST_PER_AREA), 0)
 	if(is_type_in_typecache(input_area.type, costly_areas))
 		cost *= 2
 
@@ -90,5 +90,4 @@
 	to_chat(owner, examine_block(span_brass("Current areas observation consoles can warp to: [english_list(GLOB.clock_warp_areas)] <br/>\
 				You can add additional areas with the \"Add Warp Area\" action."))) //anyone who has this action should also have add warp area
 
-#undef AREAS_TO_IGNORE_FOR_COST
 #undef STARTING_WARP_AREAS

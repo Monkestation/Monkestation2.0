@@ -33,6 +33,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		GLOB.clock_ark = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
+	if(!SSthe_ark.initialized)
+		SSthe_ark.Initialize()
+
 /obj/structure/destructible/clockwork/the_ark/examine(mob/user)
 	. = ..()
 	if(IS_CLOCK(user) || isobserver(user))
@@ -43,6 +46,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 				. += span_brass("The ark is opening, [charging_for ? "defend it until ratvar arrives in [ARK_ASSAULT_PERIOD - charging_for] seconds." : "prepare to defend it!"]")
 			if(ARK_STATE_SUMMONING)
 				. += span_brass("Ratvar has nearly arrived, it will only be [ARK_ASSAULT_PERIOD - charging_for] more seconds!")
+	if(user.client?.holder)
+		. += span_warning("ADMIN ONLY WARNING: DELETING THIS WILL END THE ROUND.")
 
 /obj/structure/destructible/clockwork/the_ark/Destroy()
 	if(GLOB.clock_ark == src)
@@ -132,7 +137,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	icon_state = "clockwork_gateway_charging"
 	send_clock_message(null, span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
 					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
-	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD)
+	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD) //MOVE THIS TO A LOOP ON THE ARK SS
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
 	if(current_state >= ARK_STATE_GRACE)

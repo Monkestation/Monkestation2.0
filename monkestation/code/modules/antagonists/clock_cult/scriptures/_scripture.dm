@@ -86,9 +86,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		return
 
 	var/steps = length(invocation_text)
-	var/true_invocation_time = invocation_time
-	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
-		true_invocation_time = invocation_time * fast_invoke_mult
+	var/true_invocation_time = get_true_invocation_time()
 	var/time_between_say = true_invocation_time / (steps + 1)
 
 	if(invocation_chant_timer)
@@ -97,6 +95,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	recite(1, time_between_say, steps)
 
+/datum/scripture/proc/get_true_invocation_time()
+	return invocation_time * (HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE) ? fast_invoke_mult : 1)
 
 /// For reciting an individual line of a scripture
 /datum/scripture/proc/recite(text_point, wait_time, stop_at = 0)
