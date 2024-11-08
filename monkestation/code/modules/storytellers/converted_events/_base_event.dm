@@ -6,6 +6,9 @@
 	///required number of enemies in roles to exist
 	var/required_enemies = 0
 
+/client
+	var/picking = FALSE
+
 /datum/round_event_control/proc/return_failure_string(players_amt)
 	var/string
 	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES))
@@ -240,9 +243,7 @@
 	//guh
 	var/list/cliented_list = list()
 	for(var/mob/living/mob as anything in possible_candidates)
-		var/client/client_picked = mob.client
-		if(!client_picked.picking)
-			cliented_list += mob.client
+		cliented_list += mob.client
 
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
@@ -272,6 +273,7 @@
 		else
 			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
+			picked_client.picking = TRUE
 			if(QDELETED(picked_client))
 				continue
 			var/mob/picked_mob = picked_client.mob
