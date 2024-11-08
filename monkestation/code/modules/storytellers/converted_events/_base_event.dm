@@ -240,7 +240,10 @@
 	//guh
 	var/list/cliented_list = list()
 	for(var/mob/living/mob as anything in possible_candidates)
-		cliented_list += mob.client
+		var/client/client_picked = mob.client
+		if(!client_picked.picking)
+			cliented_list += mob.client
+
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
 
