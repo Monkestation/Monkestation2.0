@@ -179,7 +179,7 @@
 	default = "Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated."
 
 /datum/config_entry/string/alert_yellow
-	default = "The security alert level has been changed to yellow. At this time, severe structural, atmospheric, or otherwise engineering damage has occurred to %STATION_NAME%. Crewmembers are advised to seek shelter, and Engineering are given enhanced powers for the duration of this alert; including the immunity to trespass, breaking and entering, and theft charges committed in service to remedying the danger."
+	default = "The security alert level has been changed to yellow. At this time, severe structural, atmospheric, or otherwise engineering damage has occurred to %STATION_NAME%. Crewmembers are advised to seek shelter, and Engineering are given enhanced powers for the duration of this alert; including immunity to trespass, breaking and entering, and theft charges committed in service to remedying the danger."
 
 /datum/config_entry/string/alert_amber
 	default = "The security alert level has been changed to amber. There is an ongoing C-B-R-N threat to the station. Crewmembers are advised to don protective gear, and personal oxygen systems until the alert is lifted. Report any symptoms to medical personnel immediately."
