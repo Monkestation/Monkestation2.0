@@ -96,6 +96,7 @@
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = 0.25
+	can_crew_change_alert = FALSE
 
 // monkestation start
 /**
