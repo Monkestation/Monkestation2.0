@@ -1,4 +1,4 @@
-obj/item/gun/ballistic/automatic/ar/tactical
+/obj/item/gun/ballistic/automatic/ar/tactical
 	name = "\improper NT-ARG MK.II 'Boarder'"
 	desc = "A robust assault rifle used by Nanotrasen fighting forces. This one is fitted with multiple attachment points."
 	icon = 'monkestation/code/modules/CBRN/tactical-ar.dmi'
