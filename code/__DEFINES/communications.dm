@@ -21,7 +21,7 @@
 /// Security level is delta. (station destruction immiment)
 #define SEC_LEVEL_DELTA 5
 /// Security level is lambda. (oh god eldtrich beings won the video game)
-#define SEC_LEVEL_LAMBDA 5
+#define SEC_LEVEL_LAMBDA 6
 // Security level is epsilon. (yall fucked up)
-#define SEC_LEVEL_EPSILON 6
+#define SEC_LEVEL_EPSILON 7
 // monkestation end
