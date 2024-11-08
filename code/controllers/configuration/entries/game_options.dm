@@ -179,13 +179,13 @@
 	default = "Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated."
 
 /datum/config_entry/string/alert_yellow
-	default = "The security alert level has been changed to yellow. At this time, severe structural, atmospheric, or otherwise engineering damage has occurred to %STATION_NAME%. Crewmembers are advised to seek shelter, and Engineering are given enhanced powers for the duration of this alert; including the immunity to Tresspass, Breaking and Entering, and theft charges committed in service to remedying the danger."
+	default = "The security alert level has been changed to yellow. At this time, severe structural, atmospheric, or otherwise engineering damage has occurred to %STATION_NAME%. Crewmembers are advised to seek shelter, and Engineering are given enhanced powers for the duration of this alert; including the immunity to trespass, breaking and entering, and theft charges committed in service to remedying the danger."
 
 /datum/config_entry/string/alert_amber
 	default = "The security alert level has been changed to amber. There is an ongoing C-B-R-N threat to the station. Crewmembers are advised to don protective gear, and personal oxygen systems until the alert is lifted. Report any symptoms to medical personnel immediately."
 
 /datum/config_entry/string/alert_gamma
-	default = "Central Command has issued an elevated security alert. Security forces are to carry, at the very least, one long-arm and sidearm at all times, and have elevated powers; including termination of non-cooperative NanoTrasen personnel. Civilian Personnel are to report to the nearest designated safe-points immediately."
+	default = "Central Command has issued an elevated security alert. Security forces are to carry, at the very least, one long-arm and sidearm at all times, and have elevated powers; including termination of non-cooperative NanoTrasen personnel. Civilian personnel are to report to the nearest designated safe-points immediately."
 
 /datum/config_entry/string/alert_lambda
 	default = "Central Command has detected a large spike of dimensional energy, consistent with the summoning of \[REDACTED\] entities. You are advised to make what little time you have left worthwhile; as no additional assets will be dispatched to %STATION_NAME% at this time."
