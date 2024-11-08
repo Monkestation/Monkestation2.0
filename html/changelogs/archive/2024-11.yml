@@ -1,0 +1,162 @@
+2024-11-01:
+  DexeeXI:
+  - bugfix: 'Kilo: asteroid magnet resized, now working once more without (for now)
+      showing SHIT IS FUCK.'
+  - rscadd: Blueshield and NT Rep specific permissions.
+  - rscdel: Removed Centcom perms from Blueshield and NT Rep (this is admin only,
+      dont give this to players)
+  - bugfix: 'All Maps except Box: NT Rep and Blueshield doors now accessible by BS
+      and Rep.'
+  - bugfix: 'Icebox: Teleporter doors tweaked to allow Blueshield and NT Rep to go
+      through to the weirdly placed office.'
+  - bugfix: 'All Maps except Box: NT Rep closets and lockers replaced with standardized
+      NT Rep Locker, with perms. Some maps will have medals that were included from
+      previous authors.'
+  - rscadd: NT Rep now has a singular spawn point on all maps, except Box. This singular
+      point is in a comfy chair in the office.
+  JohnFulpWillard:
+  - rscadd: Monkeys can now wear any outfit rather than just the waiter outfit.
+  - rscadd: Simians now use the same height filter system as Monkeys to wear outfits
+      instead of having their own icon for each individual piece of clothing.
+  - rscadd: Monkeys now use the same prefs as Simians, having Fur and eye colors.
+      By default monkeys are all brown, and simians can choose to be brown as well.
+  - rscadd: Simians and monkeys are now at the bottom of the tile they are on, rather
+      than the middle.
+  - rscdel: Big legged species and monkey abominations.
+  - bugfix: Gigantism no longer doubles your size twice.
+  KnigTheThrasher:
+  - bugfix: Fixed security maintenance on kilostation
+  Meowosers:
+  - rscadd: Finished Fermentation Kegs can now be wrapped into parcels
+  RafRoq:
+  - balance: Prickly Adhesion damage halved
+  ThePooba:
+  - bugfix: window sill grills now break instantly instead of becoming glitchy messes
+  - bugfix: windowsills can now be built on once again.
+  - bugfix: Eland can now be reloaded and wont drop its spent caseless ammunition
+  dwasint:
+  - bugfix: some species not healing oxyloss when giving the NOBREATH trait
+  - rscadd: right clicking food items will bring up a radial wheel of foods you can
+      craft, this allows bulk crafting.
+  - balance: Hand crafted foods (using the new system) increases the quality of food
+      buffs.
+  lemonycake:
+  - rscadd: add the alt title "Princess" to captain
+2024-11-02:
+  Gw0sty:
+  - rscadd: Added a new 'Late Join' Category and role, the 'Barber'.
+  - rscadd: Added scissors, hairbrush, combs, dye sprays, and fur dyers from the code
+      into service lathe roundstart!
+  - rscadd: Gave service cyborgs new tools of scissors, hairbrush, and dye sprays.
+  - rscadd: Added barber lockers and vendings to all stations.
+  - code_imp: Changed the voidraptor forge area type from a barber area to a forge
+      area.
+  - qol: Health analyzers now alert if the subject has taken the heavy bleeder trait.
+  - rscadd: Added more cybernetics into the cybernetic revolution station trait.
+  - rscadd: Added new leg cybernetic for research "Vacuole ligament system"
+  Shoddd:
+  - rscadd: Tundra moths, a new species of moth
+  - rscadd: 3 New wings, 2 new antennae, and 1 new marking for moths
+2024-11-03:
+  Absolucy:
+  - bugfix: Fixed a door in the Blueshift aux base requiring construction access instead
+      of aux base access.
+  - bugfix: Moon heretic ascension now properly turns 20% of the crew into lunatics,
+      rather than ALL ELIGIBLE CREW.
+  - admin: Changed the Lua scripting backend from auxlua to dreamluau. Lua scripts
+      will need to be adjusted accordingly.
+  - bugfix: Fixed some code related to artifacts.
+  - bugfix: Clown artifact faults should now actually work.
+  Absolucy, LT3:
+  - bugfix: Fixed alignment of RPG titles.
+  Gboster-0:
+  - bugfix: the signal technician's winter hood no longer flickers in the dark
+  Gw0sty:
+  - rscadd: 'Added three programs to cyborg PDAs: SiliConnect, AtmoZphere, and Crew
+      Manifest'
+  Wisemonster:
+  - bugfix: The security airlocks leading to perma from inner security on voidraptor
+      now use perma access
+2024-11-05:
+  Absolucy:
+  - qol: The AI radio speech sound effect now only plays from over "normal" frequencies
+      - AI private and non-departmental frequencies will not play the speech sound.
+  - bugfix: Jaunts now ACTUALLY work at centcom after roundend, for realsies.
+  - balance: Teratomas now have minor regeneration (1 brute/burn, 0.5 tox per second).
+      This is linked to their liver.
+  - balance: Teratomas no longer need to breathe.
+  - refactor: Moved teratoma misfortune to be linked to their brain, rather than species.
+  - refactor: Moved teratoma unconvertability to their mind/antag datum, rather than
+      species.
+  SirNightKnight:
+  - rscadd: Mice/rats have figured out how to eat a larger variety of food.
+  Wisemonster:
+  - balance: Blueshift's security modsuits now require armory access for their room
+  - balance: Blueshift's security locker room now requires brig access to enter
+  - balance: Blueshifts's gulag teleporter room now requires brig access to enter
+  - bugfix: The security escape pod on blueshift uses general security access instead
+      of external access
+  - balance: Moved the security modsuits on voidraptor into the armory, moved the
+      secway and riot suit to the previous modsuit location and onto a nearby rack,
+      respectively
+  - balance: Theseus now has security modsuits in security
+  - balance: The room containing security modsuits on Theseus now requires armory
+      access to enter
+  - balance: Theseus' security techfab has been moved to the security office proper
+  - balance: The security locker room on theseus now requires brig access
+  - balance: The Theseus brig cells now require brig access to use
+  - balance: The gulag is now more secure using more lava tiles
+2024-11-06:
+  BanementI:
+  - rscadd: Adds 326 new vox lines for you to annoy the crew with.
+  Gw0sty:
+  - rscadd: replaced all stations bardrone mob with a new ghostrole spawner "Bardrone".
+  Shoddd:
+  - bugfix: Satyr tail and fur is no longer in their head
+  - bugfix: Satyr tail, fur, and horns have proper descriptions
+  - bugfix: Tundra moth limb descriptions and names fixed
+  - bugfix: Tundra moths use moth wings with flight potion
+  Wisemonster:
+  - balance: The advisory level is now based on the selected storyteller, rather than
+      arbitrary. (green = ghost, sleeper. midnight= jester, warrior. orange = others)
+2024-11-07:
+  RikuTheKiller:
+  - rscadd: Transfer votes now have an announcement and default to continuing the
+      round for any non-voters.
+  Sorenon:
+  - bugfix: fixed dwarfish people not having eyes
+  - bugfix: fixed giant people shrinking when they break-dance
+  - bugfix: fixed floran / pod people hair being drawn bellow clothing
+  Sylphily:
+  - balance: changed how getting paralyzed by the vendors works, it now can take a
+      selection of any 2 limbs, or your entire body, but a lobo from medical can fix
+      it, also raises the weight of the head gib crit
+  The-Black-Screen:
+  - rscadd: added the nanotrasen representative's office area, the shipbreaking area,
+      miscellaneous things.
+  - rscdel: removed the vacant office, miscellaneous things.
+  - balance: changed the numbers of specific roles via boxstation.json.
+  - bugfix: fixed the air alarm in the kitchen coldroom, fixed the tachyon-doppler
+      array direction, fixed tank compressor direction, miscellaneous things.
+  Tractor Mann:
+  - rscadd: You can fax more things now! hack a fax machines input servo to send banana
+      peels, commit remote armed robbery and more!
+  - rscdel: Fax machines can no longer jam.
+  - spellcheck: the paper only message for NT faxes has been changed.
+  - admin: fax machines can now have recieve_notifies_admins set so you dont have
+      to always keep a eye on your fax machine.
+  flleeppyy:
+  - bugfix: you must *assinhale to *superfart. you may *fart to disarm your ass.
+  - rscadd: added emotes vomit, nodnods, and squint
+  - admin: you can now choose to add quirks in the "Select Equipment" menu
+  - admin: new VV dropdown option "Shake"
+2024-11-08:
+  Absolucy:
+  - rscadd: Organs no longer decay when below freezing temperatures, and decay slower
+      in colder (but not below freezing) temperatures.
+  - bugfix: The Wonderland Manifestation status effect actually properly works for
+      most abilities now.
+  - rscadd: The Wonderland Manifestation recoil effect now interacts with the pain
+      system.
+  - bugfix: The Malkavian clan objective to kill masquerade breakers is now properly
+      marked as completed when the target succumbs to the Final Death.

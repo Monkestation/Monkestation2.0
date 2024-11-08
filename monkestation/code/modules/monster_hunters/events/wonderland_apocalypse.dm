@@ -121,10 +121,13 @@
 
 /datum/status_effect/wonderland_district
 	id = "wonderland_district"
-	alert_type = null
+	alert_type = /atom/movable/screen/alert/status_effect/wonderland_district
 	tick_interval = -1
-	var/list/registered_actions
+	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
+	var/list/datum/action/registered_actions
+	/// Typecache of spells to NOT trigger the effect on.
 	var/static/list/spell_whitelist_typecache
+	/// Typecache of non-spell actions to trigger the effect on.
 	var/static/list/register_action_typecache
 
 /datum/status_effect/wonderland_district/New(list/arguments)
@@ -194,24 +197,17 @@
 	)
 
 /datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg)
-	make_visible()
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, emote), "scream")
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
 	owner.take_overall_damage(brute = rand(5, 15))
+	owner.sharp_pain(BODY_ZONES_ALL, rand(5, 15), BRUTE, 10 SECONDS)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
 
-/datum/status_effect/wonderland_district/proc/make_visible()
-	if(alert_type && !QDELETED(linked_alert))
-		return
-	alert_type = /atom/movable/screen/alert/status_effect/wonderland_district
-	linked_alert = owner.throw_alert(id, alert_type)
-	linked_alert.attached_effect = src
-
 /atom/movable/screen/alert/status_effect/wonderland_district
 	name = "Wonderland Manifestation"
-	desc = "An omnipresent pressure surrounds you, causing any use of magic to overload your body!"
+	desc = "The veil between fantasy and reality has been shattered!"
 	icon = 'monkestation/icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"

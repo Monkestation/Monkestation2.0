@@ -6,9 +6,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
 	var/mob/user = owner
-	if(!user?.mind)
-		return
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = user?.mind?.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling)
 		return
 	if(!changeling.chosen_sting)

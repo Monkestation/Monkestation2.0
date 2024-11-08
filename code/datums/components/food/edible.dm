@@ -92,6 +92,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
 	RegisterSignal(parent, COMSIG_TRY_EAT_TRAIT, PROC_REF(try_eat_trait))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(show_radial_recipes)) //Monkestation edit: CHEWIN COOKING
 
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
@@ -558,6 +559,11 @@ Behavior that's still missing from this component that original food items had t
 			consumer.applied_food_buffs ++
 		else if(food_buffs in consumer.status_effects)
 			eater.apply_status_effect(food_buffs)
+		var/datum/status_effect/food/effect = locate(food_buffs) in consumer.status_effects
+		if(effect)
+			var/obj/item/food = parent
+			if(food.food_quality != 1) //if we are not the default value
+				effect.apply_quality(food.food_quality)
 
 	to_chat(feeder, span_warning("There is nothing left of [parent], oh no!"))
 	if(isturf(parent))
@@ -587,7 +593,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(desired_mask != current_mask)
 		current_mask = desired_mask
-		src.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
+		parent.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	L.taste(owner.reagents) // why should carbons get all the fun?
@@ -625,3 +631,32 @@ Behavior that's still missing from this component that original food items had t
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)
 		return COMPONENT_ATOM_EATEN
+//MONKESTATION EDIT START
+/datum/component/edible/proc/UseByMouse(datum/source, mob/user)
+
+	SIGNAL_HANDLER
+
+	var/atom/owner = parent
+	var/mob/living/L = user
+	bitecount++
+	var/desired_mask = (total_bites / bitecount)
+	desired_mask = round(desired_mask)
+	desired_mask = max(1,desired_mask)
+	desired_mask = min(desired_mask, 4)
+
+	if(desired_mask != current_mask)
+		current_mask = desired_mask
+		parent.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
+
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	L.taste(owner.reagents) // why should carbons get all the fun?
+	playsound(user.loc,'sound/items/eatfood.ogg', rand(5,20), TRUE)
+	if(bitecount >= 5)
+		var/satisfaction_text = pick("burps from enjoyment.", "squeaks for more!", "squeaks twice.", "looks at the area where \the [parent] was.")
+		L.manual_emote(satisfaction_text)
+		SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED)
+		qdel(parent)
+	else
+		if(prob(50))
+			L.manual_emote("nibbles away at \the [parent].")
+//MONKESTATION EDIT STOP
