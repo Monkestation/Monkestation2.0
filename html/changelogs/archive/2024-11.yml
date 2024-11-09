@@ -106,3 +106,71 @@
   - balance: The security locker room on theseus now requires brig access
   - balance: The Theseus brig cells now require brig access to use
   - balance: The gulag is now more secure using more lava tiles
+2024-11-06:
+  BanementI:
+  - rscadd: Adds 326 new vox lines for you to annoy the crew with.
+  Gw0sty:
+  - rscadd: replaced all stations bardrone mob with a new ghostrole spawner "Bardrone".
+  Shoddd:
+  - bugfix: Satyr tail and fur is no longer in their head
+  - bugfix: Satyr tail, fur, and horns have proper descriptions
+  - bugfix: Tundra moth limb descriptions and names fixed
+  - bugfix: Tundra moths use moth wings with flight potion
+  Wisemonster:
+  - balance: The advisory level is now based on the selected storyteller, rather than
+      arbitrary. (green = ghost, sleeper. midnight= jester, warrior. orange = others)
+2024-11-07:
+  RikuTheKiller:
+  - rscadd: Transfer votes now have an announcement and default to continuing the
+      round for any non-voters.
+  Sorenon:
+  - bugfix: fixed dwarfish people not having eyes
+  - bugfix: fixed giant people shrinking when they break-dance
+  - bugfix: fixed floran / pod people hair being drawn bellow clothing
+  Sylphily:
+  - balance: changed how getting paralyzed by the vendors works, it now can take a
+      selection of any 2 limbs, or your entire body, but a lobo from medical can fix
+      it, also raises the weight of the head gib crit
+  The-Black-Screen:
+  - rscadd: added the nanotrasen representative's office area, the shipbreaking area,
+      miscellaneous things.
+  - rscdel: removed the vacant office, miscellaneous things.
+  - balance: changed the numbers of specific roles via boxstation.json.
+  - bugfix: fixed the air alarm in the kitchen coldroom, fixed the tachyon-doppler
+      array direction, fixed tank compressor direction, miscellaneous things.
+  Tractor Mann:
+  - rscadd: You can fax more things now! hack a fax machines input servo to send banana
+      peels, commit remote armed robbery and more!
+  - rscdel: Fax machines can no longer jam.
+  - spellcheck: the paper only message for NT faxes has been changed.
+  - admin: fax machines can now have recieve_notifies_admins set so you dont have
+      to always keep a eye on your fax machine.
+  flleeppyy:
+  - bugfix: you must *assinhale to *superfart. you may *fart to disarm your ass.
+  - rscadd: added emotes vomit, nodnods, and squint
+  - admin: you can now choose to add quirks in the "Select Equipment" menu
+  - admin: new VV dropdown option "Shake"
+2024-11-08:
+  Absolucy:
+  - rscadd: Organs no longer decay when below freezing temperatures, and decay slower
+      in colder (but not below freezing) temperatures.
+  - bugfix: The Wonderland Manifestation status effect actually properly works for
+      most abilities now.
+  - rscadd: The Wonderland Manifestation recoil effect now interacts with the pain
+      system.
+  - bugfix: The Malkavian clan objective to kill masquerade breakers is now properly
+      marked as completed when the target succumbs to the Final Death.
+  - bugfix: Fixed some... interesting code in the Gamemode subsystem (unsure how this
+      didn't error, ngl)
+  Gw0sty:
+  - rscadd: Added the robotic versions of brainwashing, lobotomy, pacification, amputation,
+      and brain surgery
+  - rscadd: Added a 'Brig Physician's Toolbox' to the Brig docs locker
+  - rscadd: Added Surgery computer and table to ouroboros sec med.
+  - rscdel: Removed the ability for wound tending on robotic chest's.
+  - rscdel: Removed doorhelper that wasnt doing anything in Centcom
+  - qol: Clarified gas analyzers are needed for xray cameras in the tooltips.
+  RandomDudeFromTheRim:
+  - bugfix: fixed a few things, really.
+  Veth-s:
+  - rscadd: Added AdminVOX to the game, to allow admins to do AI-like Vox announcements.
