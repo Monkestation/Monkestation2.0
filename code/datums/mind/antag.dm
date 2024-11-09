@@ -26,8 +26,7 @@
 	INVOKE_ASYNC(A, TYPE_PROC_REF(/datum/antagonist, on_gain))
 	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
 	var/client/picked_client = get_player_client(src)
-	picked_client.picking = FALSE
-
+	picked_client.mob?.mind.picking = FALSE
 	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)

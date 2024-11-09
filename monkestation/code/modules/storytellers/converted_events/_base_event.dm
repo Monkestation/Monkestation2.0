@@ -6,9 +6,6 @@
 	///required number of enemies in roles to exist
 	var/required_enemies = 0
 
-/client
-	var/picking = FALSE
-
 /datum/round_event_control/proc/return_failure_string(players_amt)
 	var/string
 	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES))
@@ -273,10 +270,10 @@
 		else
 			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
-			picked_client.picking = TRUE
 			if(QDELETED(picked_client))
 				continue
 			var/mob/picked_mob = picked_client.mob
+			picked_mob?.mind.picking = TRUE
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
