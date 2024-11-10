@@ -4,6 +4,8 @@
 	icon = 'monkestation/icons/obj/items/plasmalicense.dmi'
 	icon_state = "plasmalicense"
 	resistance_flags = FIRE_PROOF
+	//For the person who signers the contract
+	var/datum/mind/owner
 
 /obj/item/card/plasma_license/attack_self(mob/user)
 	if(Adjacent(user))
