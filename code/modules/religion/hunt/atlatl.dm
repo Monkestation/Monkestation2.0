@@ -62,11 +62,12 @@
 	desc = "A light spear made for throwing from an atlatl"
 	icon = 'icons/obj/weapons/guns/atlatl/thrownspear.dmi'
 	icon_state = "thrownspear"
+	custom_materials = "wood"
 	inhand_icon_state = null
 	projectile_type = /obj/projectile/bullet/reusable/thrownspear
 	flags_1 = NONE
 	throwforce = 25
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	firing_effect_type = null
 	caliber = CALIBER_SPEAR
 	heavy_metal = FALSE
@@ -90,6 +91,19 @@
 	/// What biotype we look for
 	var/biotype_we_look_for = MOB_BEAST
 
+/obj/projectile/bullet/reusable/thrownspear/on_hit(atom/target, blocked, pierce_hit)
+	if(ismineralturf(target))
+		var/turf/closed/mineral/mineral_turf = target
+		mineral_turf.gets_drilled(firer, FALSE)
+		if(range > 0)
+			return BULLET_ACT_FORCE_PIERCE
+		return ..()
+	if(!isliving(target) || (damage > initial(damage)))
+		return ..()
+	var/mob/living/target_mob = target
+	if(target_mob.mob_biotypes & biotype_we_look_for || istype(target_mob, /mob/living/simple_animal/hostile/megafauna))
+		damage *= biotype_damage_multiplier
+	return ..()
 
 
 /obj/item/storage/bag/spearquiver
@@ -106,7 +120,7 @@
 
 /obj/item/storage/bag/spearquiver/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.max_slots = 5
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
