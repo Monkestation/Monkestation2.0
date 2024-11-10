@@ -262,7 +262,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/candidate_candidates = list() //lol
 
 	for(var/mob/player as anything in GLOB.player_list)
-		if(player.mind.picking)
+		if(player?.mind.picking)
 			continue
 		if(ready_newplayers && isnewplayer(player))
 			var/mob/dead/new_player/new_player = player
