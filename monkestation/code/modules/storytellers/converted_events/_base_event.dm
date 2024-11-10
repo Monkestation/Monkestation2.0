@@ -273,7 +273,7 @@
 			if(QDELETED(picked_client))
 				continue
 			var/mob/picked_mob = picked_client.mob
-			picked_mob?.mind.picking = TRUE
+			picked_mob?.mind?.picking = TRUE
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
