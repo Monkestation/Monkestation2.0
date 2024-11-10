@@ -125,6 +125,10 @@
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
@@ -439,7 +443,7 @@
 #define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN 17 //youngest a character can be
+#define AGE_MIN 18 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
