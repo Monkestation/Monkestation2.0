@@ -87,7 +87,11 @@
 			// List of all valid dynamic_fhair_suffixes
 			var/static/list/fextensions
 			if(isnull(fextensions))
-				fextensions = make_associative(json_decode(rustg_dmi_icon_states("monkestation/icons/mob/facialhair_extensions.dmi")))
+				var/icon/hair_extensions = icon('monkestation/icons/mob/facialhair_extensions.dmi')
+				fextensions = list()
+				for(var/state in hair_extensions.IconStates(1))
+					fextensions[state] = TRUE
+				qdel(hair_extensions)
 			var/hair_file = sprite_accessory.icon
 			var/hair_state = sprite_accessory.icon_state
 			if(fextensions[hair_state + dynamic_hair_suffix])
@@ -112,7 +116,11 @@
 			// List of all valid dynamic_hair_suffixes
 			var/static/list/extensions
 			if(isnull(extensions))
-				extensions = make_associative(json_decode(rustg_dmi_icon_states("monkestation/icons/mob/hair_extensions.dmi")))
+				var/icon/hair_extensions = icon('monkestation/icons/mob/hair_extensions.dmi')
+				extensions = list()
+				for(var/state in hair_extensions.IconStates(1))
+					extensions[state] = TRUE
+				qdel(hair_extensions)
 			var/hair_file = sprite_accessory.icon
 			var/hair_state = sprite_accessory.icon_state
 			if(extensions[hair_state + dynamic_hair_suffix])
