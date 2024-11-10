@@ -7064,6 +7064,7 @@
 #include "monkestation\code\modules\donator\code\item\plush.dm"
 #include "monkestation\code\modules\donator\code\mob\pets.dm"
 #include "monkestation\code\modules\dynamic_hair_suffix\_base.dm"
+#include "monkestation\code\modules\dynamic_hair_suffix\overrides.dm"
 #include "monkestation\code\modules\emotes\code\emote.dm"
 #include "monkestation\code\modules\events\_event_admin_setup.dm"
 #include "monkestation\code\modules\events\artifact_spawn.dm"

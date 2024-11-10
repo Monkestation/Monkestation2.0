@@ -1,3 +1,7 @@
+#define OVERRIDE_DYNAMIC_HAIR_SUFFIX(typepath, suffix, facial_suffix) \
+	##typepath { dynamic_hair_suffix = suffix; dynamic_fhair_suffix = facial_suffix; }
+#define NO_DYNAMIC_HAIR_SUFFIX(typepath) OVERRIDE_DYNAMIC_HAIR_SUFFIX(typepath, "", "")
+
 OVERRIDE_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head, "+generic", "")
 OVERRIDE_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/helmet/space/beret, "+generic", "+generic")
 NO_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/beret)
@@ -24,3 +28,6 @@ NO_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/mod)
 NO_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/nursehat)
 NO_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/peaceflower)
 NO_DYNAMIC_HAIR_SUFFIX(/obj/item/clothing/head/shrine_wig)
+
+#undef NO_DYNAMIC_HAIR_SUFFIX
+#undef OVERRIDE_DYNAMIC_HAIR_SUFFIX
