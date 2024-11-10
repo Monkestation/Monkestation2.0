@@ -11,8 +11,13 @@
 	//HIDDEN CHECKS START
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
+	// monkestation start: readd dynamic hair suffix
+	var/dynamic_hair_suffix = ""
+	var/dynamic_fhair_suffix = ""
+	// monkestation end
 	if(human_head_owner.head)
 		var/obj/item/hat = human_head_owner.head
+		monke_hair_suffix_thing(hat, null, &dynamic_fhair_suffix)
 		if(hat.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 		if(hat.flags_inv & HIDEFACIALHAIR)
@@ -20,6 +25,7 @@
 
 	if(human_head_owner.wear_mask)
 		var/obj/item/mask = human_head_owner.wear_mask
+		monke_hair_suffix_thing(mask, null, &dynamic_fhair_suffix)
 		if(mask.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 		if(mask.flags_inv & HIDEFACIALHAIR)
@@ -27,10 +33,15 @@
 
 	if(human_head_owner.w_uniform)
 		var/obj/item/item_uniform = human_head_owner.w_uniform
+		monke_hair_suffix_thing(item_uniform, &dynamic_hair_suffix, null)
 		if(item_uniform.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 			if(item_uniform.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
+
+	// do hat hair last, so it takes priority
+	monke_hair_suffix_thing(human_head_owner.head, &dynamic_hair_suffix, null)
+
 	//invisibility and husk stuff
 	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 		hair_hidden = TRUE
@@ -65,35 +76,57 @@
 
 	var/atom/location = loc || owner || src
 
-	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))
+	if((!facial_hair_hidden || dynamic_fhair_suffix) && lip_style && (head_flags & HEAD_LIPS))
 		lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 		lip_overlay.color = lip_color
 
-	if(!facial_hair_hidden && facial_hairstyle && (head_flags & HEAD_FACIAL_HAIR))
+	if((!facial_hair_hidden || dynamic_fhair_suffix) && facial_hairstyle && (head_flags & HEAD_FACIAL_HAIR))
 		sprite_accessory = GLOB.facial_hairstyles_list[facial_hairstyle]
 		if(sprite_accessory)
+			// monkestation start
+			// List of all valid dynamic_fhair_suffixes
+			var/static/list/fextensions
+			if(isnull(fextensions))
+				fextensions = make_associative(json_decode(rustg_dmi_icon_states("monkestation/icons/mob/facialhair_extensions.dmi")))
+			var/hair_file = sprite_accessory.icon
+			var/hair_state = sprite_accessory.icon_state
+			if(fextensions[hair_state + dynamic_hair_suffix])
+				hair_file = 'monkestation/icons/mob/facialhair_extensions.dmi'
+				hair_state += dynamic_hair_suffix
+			// monkestation end
 			//Overlay
-			facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+			facial_overlay = mutable_appearance(hair_file, hair_state, -HAIR_LAYER)
 			facial_overlay.alpha = facial_hair_alpha
 			//Gradients
 			facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
 			if(facial_hair_gradient_style)
 				facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
-				facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
+				facial_gradient_overlay = make_gradient_overlay(hair_file, hair_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
 			//Emissive
 			facial_overlay.overlays += emissive_blocker(facial_overlay.icon, facial_overlay.icon_state, location, alpha = facial_hair_alpha)
 
-	if(!show_debrained && !hair_hidden && hair_style && (head_flags & HEAD_HAIR))
+	if(!show_debrained && (!hair_hidden || dynamic_hair_suffix) && hair_style && (head_flags & HEAD_HAIR))
 		sprite_accessory = GLOB.hairstyles_list[hair_style]
 		if(sprite_accessory)
+			// monkestation start
+			// List of all valid dynamic_hair_suffixes
+			var/static/list/extensions
+			if(isnull(extensions))
+				extensions = make_associative(json_decode(rustg_dmi_icon_states("monkestation/icons/mob/hair_extensions.dmi")))
+			var/hair_file = sprite_accessory.icon
+			var/hair_state = sprite_accessory.icon_state
+			if(extensions[hair_state + dynamic_hair_suffix])
+				hair_file = 'monkestation/icons/mob/hair_extensions.dmi'
+				hair_state += dynamic_hair_suffix
+			// monkestation end
 			//Overlay
-			hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+			hair_overlay = mutable_appearance(hair_file, hair_state, -HAIR_LAYER)
 			hair_overlay.alpha = hair_alpha
 			//Gradients
 			hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
 			if(hair_gradient_style)
 				hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)
-				hair_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
+				hair_gradient_overlay = make_gradient_overlay(hair_file, hair_state, HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
 			//Emissive
 			hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 

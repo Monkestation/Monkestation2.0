@@ -360,6 +360,12 @@
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_body_parts()
+	// monkestation start: readd dynamic hair suffixe
+	else
+		var/obj/item/clothing/clothing = I
+		if(istype(clothing) && clothing.dynamic_hair_suffix)
+			update_hair()
+	// monkestation end
 	// Close internal air tank if helmet was the only breathing apparatus.
 	if (invalid_internals())
 		cutoff_internals()
