@@ -150,6 +150,11 @@
 
 // Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
+/obj/item/storage/backpack/duffelbag/bardrone
+	name = "Bardrones Duffelbag"
+	desc = "A funny little bag for funny little drones"
+	icon_state = "duffel"
+	inhand_icon_state = "duffel"
 
 /obj/item/storage/backpack/duffelbag/bardrone/PopulateContents()
 	new /obj/item/reagent_containers/cup/glass/shaker(src)
