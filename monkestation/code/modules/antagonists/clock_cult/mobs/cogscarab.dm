@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
 	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
-		to_chat(user, span_notice("The cult currently has its maximum amount of cogscarabs."))
+		to_chat(user, span_notice("The Ark cannot support any more cogscarabs."))
 		return FALSE
 	return TRUE
 

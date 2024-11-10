@@ -47,6 +47,9 @@
 /obj/machinery/door/airlock/bronze/clock/emp_act(severity)
 	return
 
+/obj/machinery/door/airlock/bronze/clock/emag_act(mob/user, obj/item/card/emag/emag_card) //emags are magical but not THAT magical
+	return FALSE
+
 /obj/machinery/door/airlock/bronze/clock/glass
 	name = "clear bronze airlock"
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru/clock

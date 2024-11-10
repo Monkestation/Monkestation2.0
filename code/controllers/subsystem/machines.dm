@@ -35,13 +35,13 @@ SUBSYSTEM_DEF(machines)
 	all_machines -= machine
 
 /// Gets a list of all machines that are either the passed type or a subtype.
-/datum/controller/subsystem/machines/proc/get_machines_by_type_and_subtypes(obj/machinery/machine_type)
+/datum/controller/subsystem/machines/proc/get_machines_by_type_and_subtypes(obj/machinery/machine_type, list/type_exclusions) //monkestation edit: adds type_exclusions
 	if(!ispath(machine_type))
 		machine_type = machine_type.type
 	if(!ispath(machine_type, /obj/machinery))
 		CRASH("called get_machines_by_type_and_subtypes with a non-machine type [machine_type]")
 	var/list/machines = list()
-	for(var/next_type in typesof(machine_type))
+	for(var/next_type in typesof(machine_type) - type_exclusions) //monkestation edit: adds type_exclusions
 		var/list/found_machines = machines_by_type[next_type]
 		if(found_machines)
 			machines += found_machines
