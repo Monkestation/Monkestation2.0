@@ -1,8 +1,8 @@
 /obj/item/card/plasma_license
 	name = "License to Plasmaflood"
-	desc = "A charred license letting the holder plasmaflood the halls. Not offically recognized by Nanotrasen."
-	icon = 'monkestation/icons/donator/obj/custom.dmi'
-	icon_state = "license"
+	desc = "A charred contract letting the holder plasmaflood the halls. Not offically recognized by Nanotrasen."
+	icon = 'monkestation/icons/obj/items/plasmalicense.dmi'
+	icon_state = "plasmalicense"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/card/plasma_license/attack_self(mob/user)
@@ -13,3 +13,26 @@
 /obj/item/card/plasma_license/Initialize(mapload)
 	. = ..()
 	message_admins("A plasmaflood license has been created.")
+
+/obj/item/card/plasma_license/examine(mob/user)
+	. = ..()
+	if(owner)
+		. += "There is a small signature on the bottom of the contract: \"[owner]\"."
+	else
+		. += "It appears to be unsigned."
+
+/obj/item/card/plasma_license/attack_self(mob/user)
+	if(!owner)
+		if(!user.mind)
+			return
+		to_chat(user, span_notice("You sign your name at the bottom of the [src]."))
+		owner = user.mind
+		message_admins("A License to Plasmaflood has been signed by [owner].")
+		investigate_log("A License to Plasmaflood by [key_name(user)]", INVESTIGATE_ATMOS)
+		return
+
+	if(user.mind != owner)
+		to_chat(user, span_warning("[src] has already been signed!"))
+		return
+
+	return ..()
