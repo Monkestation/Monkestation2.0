@@ -239,6 +239,7 @@ SUBSYSTEM_DEF(the_ark)
 	var/obj/effect/cross_action/spacetime_dist/spawned_effect_type = /obj/effect/cross_action/spacetime_dist
 
 /datum/action/cooldown/spell/spacetime_dist/clock_ark
+	name = "Clockwork Spacetime Dist"
 	cooldown_time = 0
 	scramble_radius = 3
 	duration = 1 MINUTE
