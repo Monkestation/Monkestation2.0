@@ -19714,9 +19714,6 @@
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
 "cuW" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/photocopier/gratis{
 	pixel_y = -3
 	},
@@ -20095,11 +20092,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "dAJ" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/photocopier/gratis,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "dBD" = (
@@ -20130,6 +20125,10 @@
 	dir = 4
 	},
 /area/cruiser_dock)
+"dFB" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/centcom/central_command_areas/admin)
 "dGn" = (
 /obj/machinery/chem_master,
 /turf/open/floor/iron/dark/textured_large,
@@ -20296,7 +20295,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
 "eiY" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
 "eka" = (
@@ -20378,9 +20377,6 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom)
 "ezX" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/structure/table/greyscale,
 /obj/machinery/computer/pod/old/syndicate{
 	dir = 8
@@ -20519,9 +20515,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
 "eXc" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
@@ -20757,6 +20750,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "fOu" = (
@@ -20907,7 +20901,6 @@
 /area/centcom/central_command_areas/evacuation)
 "gnB" = (
 /obj/structure/table/greyscale,
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
 /obj/item/paper_bin{
 	pixel_y = 2
 	},
@@ -20916,6 +20909,7 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "gqw" = (
@@ -21803,9 +21797,6 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/cruiser_dock)
 "iGL" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/computer/cargo/express,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
@@ -22558,9 +22549,6 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/adminroom)
 "lmO" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/structure/table/greyscale,
 /obj/item/paper_bin{
 	pixel_y = 5
@@ -22700,13 +22688,11 @@
 	},
 /area/cruiser_dock)
 "lXp" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/computer/monitor{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "mbG" = (
@@ -22900,9 +22886,6 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
 "mPh" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/computer/records/pathology{
 	dir = 8
 	},
@@ -23437,6 +23420,11 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
+"oUW" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
 "oWK" = (
 /obj/machinery/fishing_portal_generator,
@@ -23990,12 +23978,13 @@
 /area/centcom/central_command_areas/admin)
 "qYc" = (
 /obj/structure/table/greyscale,
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
 /obj/machinery/computer/records/security/laptop/syndie{
 	dir = 1;
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "qYP" = (
@@ -24354,11 +24343,11 @@
 	dir = 8;
 	id = 5
 	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "Interns' Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
 "sco" = (
@@ -24650,6 +24639,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/toy/plush/lizard_plushie/green,
+/obj/item/storage/box/hug/plushes,
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
 "tse" = (
@@ -24894,9 +24884,7 @@
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "uhK" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/north{
-	pixel_y = 5
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
 "uhR" = (
@@ -24953,16 +24941,13 @@
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
 "uzf" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
 /obj/structure/table/greyscale,
 /obj/item/paper_bin{
 	pixel_y = 2
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "uAz" = (
@@ -25223,14 +25208,11 @@
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
 "vuu" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/machinery/computer/warrant{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "vvk" = (
@@ -25389,7 +25371,7 @@
 	dir = 8;
 	id = 5
 	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
 "vZN" = (
@@ -25511,9 +25493,6 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "wqY" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 4
 	},
@@ -25654,9 +25633,6 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "wKc" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/east{
-	pixel_x = 4
-	},
 /obj/structure/table/greyscale,
 /obj/machinery/computer/pod/old/syndicate{
 	dir = 8
@@ -25699,6 +25675,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "wXS" = (
@@ -25983,6 +25960,15 @@
 /obj/item/pen{
 	pixel_y = 8
 	},
+/obj/item/stamp/centcom{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stamp/granted,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "xUt" = (
@@ -52858,7 +52844,7 @@ aOn
 aOn
 aOn
 aOn
-fOv
+dFB
 fOv
 aOn
 aOn
@@ -53115,7 +53101,7 @@ aOn
 wnj
 dQy
 fLg
-uhK
+fOv
 eiY
 mcg
 klo
@@ -53629,7 +53615,7 @@ aOn
 lmO
 wKc
 lXp
-uhK
+fOv
 eiY
 mPh
 ezX
@@ -53886,7 +53872,7 @@ aOn
 nXr
 pvs
 wXc
-uhK
+fOv
 eiY
 vLc
 tNj
@@ -54400,7 +54386,7 @@ aOn
 iGL
 eXc
 dAJ
-uhK
+fOv
 eiY
 cuW
 wqY
@@ -54654,14 +54640,14 @@ aaa
 aaa
 aaa
 aOn
+uhK
+uhK
+uhK
 fOv
 fOv
-fOv
-fOv
-fOv
-hBT
-fOv
-fOv
+oUW
+uhK
+uhK
 fOv
 fOv
 fOv
