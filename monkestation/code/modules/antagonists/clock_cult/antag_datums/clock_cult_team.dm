@@ -143,15 +143,19 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	while(length(SSthe_ark.valid_crystal_areas) < POSSIBLE_CRYSTAL_AREAS && sanity < 100)
 		var/area/summon_area = pick_n_take(areas_copy)
 		if(summon_area && is_station_level(summon_area.z) && (summon_area.area_flags & VALID_TERRITORY))
-			SSthe_ark.valid_crystal_areas += summon_area
+			SSthe_ark.valid_crystal_areas[summon_area] = summon_area.get_original_area_name()
 		sanity++
 	update_explanation_text()
 
 /datum/objective/anchoring_crystals/update_explanation_text()
 	var/plural = ANCHORING_CRYSTALS_TO_SUMMON > 1
-	explanation_text = "Summon [ANCHORING_CRYSTALS_TO_SUMMON] anchoring crystal[plural ? "s" : ""] on the station and protect [plural ? "them" : "it"] for 5 \
-						minutes to allow the ark to open. Crystals after the first one must be summoned in [english_list(SSthe_ark.valid_crystal_areas)]. \
-						Up to 2 additional crystals can be created for extra power."
+	var/list/names = list()
+	for(var/area/valid_area in SSthe_ark.valid_crystal_areas)
+		names += SSthe_ark.valid_crystal_areas[valid_area]
+
+	explanation_text = "Summon [ANCHORING_CRYSTALS_TO_SUMMON] anchoring crystal[plural ? "s" : ""] on the station and protect [plural ? "them" : "it"] for \
+						[DisplayTimeText(ANCHORING_CRYSTAL_CHARGE_DURATION SECONDS)]  to allow the ark to open. \
+						Crystals after the first one must be summoned in [english_list(names)]. Up to 2 additional crystals can be created for extra power."
 
 /datum/objective/anchoring_crystals/check_completion()
 	return SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON || completed

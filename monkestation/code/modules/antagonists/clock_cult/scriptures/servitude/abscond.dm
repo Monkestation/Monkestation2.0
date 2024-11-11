@@ -1,9 +1,9 @@
 /datum/scripture/abscond
 	name = "Abscond"
-	desc = "Recalls you and anyone you are dragging to reebe. Takes longer from a non marked area."
+	desc = "After a long delay recalls you and anyone you are dragging to reebe. Takes longer from a non marked area."
 	tip = "If using this with a prisoner dont forget to cuff them first."
 	button_icon_state = "Abscond"
-	invocation_time = 10 SECONDS
+	invocation_time = 1 MINUTE
 	invocation_text = list("Return to our home, the city of cogs.")
 	category = SPELLTYPE_SERVITUDE
 	power_cost = 5

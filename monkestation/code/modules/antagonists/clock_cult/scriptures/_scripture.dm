@@ -81,12 +81,12 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 
 /// The overall reciting proc for saying every single line for a scripture
-/datum/scripture/proc/recital()
+/datum/scripture/proc/recital(input_invoke_time)
 	if(!length(invocation_text))
 		return
 
 	var/steps = length(invocation_text)
-	var/true_invocation_time = get_true_invocation_time()
+	var/true_invocation_time = input_invoke_time || get_true_invocation_time()
 	var/time_between_say = true_invocation_time / (steps + 1)
 
 	if(invocation_chant_timer)
@@ -96,7 +96,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	recite(1, time_between_say, steps)
 
 /datum/scripture/proc/get_true_invocation_time()
-	return invocation_time * (HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE) ? fast_invoke_mult : 1)
+	. = invocation_time * (HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE) ? fast_invoke_mult : 1)
+	return .
 
 /// For reciting an individual line of a scripture
 /datum/scripture/proc/recite(text_point, wait_time, stop_at = 0)
@@ -194,15 +195,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		end_invoke()
 		return
 
-	recital()
-
-	var/true_invocation_time = invocation_time
-	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
-		true_invocation_time = invocation_time * fast_invoke_mult
-
-	if(istype(src, /datum/scripture/create_structure) && GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-		true_invocation_time *= (iscogscarab(invoking_mob) ? 2.5 : 5)
-
+	var/true_invocation_time = get_true_invocation_time()
+	recital(true_invocation_time)
 	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
 
@@ -219,11 +213,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 		end_invoke()
 
-
 /// End the invoking, nulling things out
 /datum/scripture/proc/end_invoke()
 	invoking_slab.invoking_scripture = null
-
 
 // Call these on the instances in the global lists
 /// Set a scripture's unique_locked to FALSE and reload the UIs of slabs if set
@@ -252,8 +244,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 // Base create structure scripture
 /datum/scripture/create_structure
-	/// Typepath for the structure to create
+	///Typepath for the structure to create
 	var/summoned_structure
+	///How long is our creation time multiplied by if the assault has begun
+	var/assault_invoke_time_mult = 2
 
 
 /datum/scripture/create_structure/check_special_requirements(mob/user)
@@ -269,6 +263,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	return TRUE
 
+/datum/scripture/create_structure/get_true_invocation_time()
+	. = ..()
+	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
+		. *= (iscogscarab(invoker) ? assault_invoke_time_mult : assault_invoke_time_mult * 2)
 
 /datum/scripture/create_structure/invoke_success()
 	var/created_structure = new summoned_structure(get_turf(invoker))
@@ -276,8 +274,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	if(istype(clockwork_structure))
 		clockwork_structure.owner = invoker.mind
-
-
 
 //For scriptures that charge the slab, and the slab will affect something
 //(stunning etc.)

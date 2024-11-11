@@ -55,7 +55,7 @@
 	SSthe_ark.anchoring_crystals[src] = 0
 
 	SEND_SIGNAL(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED, src)
-	start_turf_conversion()
+	SSthe_ark.convert_area_turfs(crystal_area)
 	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 	send_clock_message(null, span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
 	START_PROCESSING(SSprocessing, src)
@@ -124,27 +124,8 @@
 /obj/structure/destructible/clockwork/anchoring_crystal/examine(mob/user) //needs to be here as it has updating information
 	. = ..()
 	if(IS_CLOCK(user) || isobserver(user))
-		. += span_brass("[charge_state == FULLY_CHARGED ? "It is fully charged and is indestructable." : "It will be fully charged in [(ANCHORING_CRYSTAL_CHARGE_DURATION - charging_for)] seconds."]")
-
-//called on init, transforms the turfs and objs in the area of the crystal to clockwork versions
-/obj/structure/destructible/clockwork/anchoring_crystal/proc/start_turf_conversion()
-	var/timer_counter = 1 //used by the addtimer()
-	for(var/turf/turf_to_transform in crystal_area)
-		if(!SSthe_ark.clock_dimension_theme.can_convert(turf_to_transform))
-			continue
-		addtimer(CALLBACK(src, PROC_REF(do_turf_conversion), turf_to_transform), 3 * timer_counter)
-		timer_counter++
-
-/obj/structure/destructible/clockwork/anchoring_crystal/proc/do_turf_conversion(turf/converted_turf)
-	if(QDELETED(src) || !SSthe_ark.clock_dimension_theme.can_convert(converted_turf))
-		return
-
-	SSthe_ark.clock_dimension_theme.apply_theme(converted_turf)
-	new /obj/effect/temp_visual/ratvar/beam(converted_turf)
-	if(istype(converted_turf, /turf/closed/wall))
-		new /obj/effect/temp_visual/ratvar/wall(converted_turf)
-	else if(istype(converted_turf, /turf/open/floor))
-		new /obj/effect/temp_visual/ratvar/floor(converted_turf)
+		. += span_brass(\
+		"[charge_state == FULLY_CHARGED ? "It is fully charged and is indestructable." : "It will be fully charged in [(ANCHORING_CRYSTAL_CHARGE_DURATION - charging_for)] seconds."]")
 
 //do all the stuff for finishing charging
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/finish_charging()

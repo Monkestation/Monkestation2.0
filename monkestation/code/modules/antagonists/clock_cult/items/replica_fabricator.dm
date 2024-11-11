@@ -81,6 +81,9 @@
 	else if(!isopenturf(target))
 		return
 
+	if(!selected_output.extra_checks(target, creation_turf, user))
+		return
+
 	var/calculated_creation_delay = 1
 	if(on_reebe(user))
 		calculated_creation_delay = selected_output.reebe_mult
@@ -140,7 +143,6 @@
 /obj/item/clockwork/replica_fabricator/attack_self(mob/user, modifiers)
 	. = ..()
 	var/choice = show_radial_menu(user, src, crafting_possibilities, radius = 36, custom_check = PROC_REF(check_menu), require_near = TRUE)
-
 	if(!choice)
 		return
 
@@ -149,10 +151,7 @@
 
 /// Standard confirmation for the radial menu proc
 /obj/item/clockwork/replica_fabricator/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-
-	if(user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return FALSE
 
 	return TRUE
@@ -237,6 +236,9 @@
 	playsound(creation_turf, 'sound/machines/clockcult/integration_cog_install.ogg', 50, 1) // better sound?
 	to_chat(creator, span_clockyellow("You create \an [name] for [cost]W of power."))
 
+/datum/replica_fabricator_output/proc/extra_checks(atom/target, turf/created_at, mob/user)
+	return TRUE
+
 /datum/replica_fabricator_output/turf_output/on_create(atom/created_atom, turf/creation_turf, mob/creator)
 	creation_turf.ChangeTurf(to_create_path)
 	return ..()
@@ -292,6 +294,12 @@
 	cost = BRASS_POWER_COST * 5 // Breaking it only gets 2 but this is the exception to the rule of equivalent exchange, due to all the small parts inside
 	to_create_path = /obj/machinery/door/airlock/bronze/clock
 	creation_delay = 10 SECONDS
+
+/datum/replica_fabricator_output/pinion_airlock/extra_checks(atom/target, turf/created_at, mob/user)
+	if(on_reebe(created_at) && SSthe_ark.reebe_clockwork_airlock_count > MAXIMUM_REEBE_AIRLOCKS)
+		to_chat(user, span_warning("Reebe cannot support the power drain of any more clockwork airlocks."))
+		return FALSE
+	return TRUE
 
 /datum/replica_fabricator_output/pinion_airlock/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/door(creation_turf)

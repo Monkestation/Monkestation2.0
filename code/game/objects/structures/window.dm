@@ -85,7 +85,7 @@
 			glass_color = new_color
 		if(fulltile)
 			color = glass_color
-		if(mapload && fulltile)
+		if(mapload && fulltile && has_sill)
 			new /obj/structure/window_sill(get_turf(src))
 	//monkestation edit end
 

@@ -13,7 +13,7 @@
 
 /datum/scripture/transform_to_golem/New()
 	. = ..()
-	RegisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED)
+	RegisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED, PROC_REF(on_crystal_charged))
 
 /datum/scripture/transform_to_golem/Destroy(force)
 	UnregisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED)

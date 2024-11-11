@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(the_ark)
 	var/list/valid_crystal_areas
 	///The pool of hallucinations we can trigger
 	var/list/hallucination_pool
+	///how many clockwork airlocks have been created on reebe, used for limiting airlock spam
+	var/reebe_clockwork_airlock_count = 0
 
 /datum/controller/subsystem/the_ark/Initialize()
 	anchoring_crystals = list()
@@ -37,18 +39,32 @@ SUBSYSTEM_DEF(the_ark)
 //boy this sure is some fun code
 /datum/controller/subsystem/the_ark/proc/handle_charged_crystals()
 	if(prob(charged_anchoring_crystals))
-		var/mob/living/selected_player = pick(GLOB.alive_player_list)
-		if(prob(50))
-			selected_player.cause_hallucination(pick_weight(hallucination_pool), "The Clockwork Ark")
-		else
-			to_chat(selected_player, span_notice(pick(list("You hear a faint ticking in the back of your mind", "You smell something metallic", \
-				"You see a flash of light out of the corner of your eye", "You feel an otherworldly presence", "You feel like your forgetting something"))))
+		crystal_warp_minds()
 
 	if(charged_anchoring_crystals >= 2 && prob(charged_anchoring_crystals))
 		crystal_warp_machines()
 
 	if(charged_anchoring_crystals >= 3 && prob(charged_anchoring_crystals))
 		crystal_warp_space()
+
+/datum/controller/subsystem/the_ark/proc/crystal_warp_minds()
+	var/list/players = GLOB.alive_player_list.Copy()
+	var/mob/living/selected_player = pick_n_take(players)
+	var/sanity = 0
+	if(!selected_player)
+		return
+
+	while(sanity < 100 && (IS_CLOCK(selected_player) || !is_station_level(selected_player.z)))
+		if(!length(players))
+			return
+		sanity++
+		selected_player = pick_n_take(players)
+
+	if(prob(50))
+		selected_player.cause_hallucination(pick_weight(hallucination_pool), "The Clockwork Ark")
+	else
+		to_chat(selected_player, span_warning(pick(list("You hear a faint ticking in the back of your mind", "You smell something metallic", \
+			"You see a flash of light out of the corner of your eye", "You feel an otherworldly presence", "You feel like your forgetting something"))))
 
 //making these their own procs for eaiser to read code
 /datum/controller/subsystem/the_ark/proc/crystal_warp_machines()
@@ -151,8 +167,9 @@ SUBSYSTEM_DEF(the_ark)
 	switch(rand(1, 2))
 		if(1)
 			var/datum/action/cooldown/spell/spacetime_dist/clock_ark/dist_spell = new
-			dist_spell.cast(get_random_station_turf())
-			QDEL_IN(dist_spell, dist_spell.duration + 1)
+			var/turf/turf = get_random_station_turf()
+			dist_spell.cast(turf)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), dist_spell), dist_spell.duration)
 		if(2)
 			var/list/servants = list() //technically we could adjust this everytime someone joins or leaves the cult but these last for 30 seconds so eh
 			if(GLOB.main_clock_cult)
@@ -162,22 +179,46 @@ SUBSYSTEM_DEF(the_ark)
 			return
 
 /datum/controller/subsystem/the_ark/proc/get_emag_target_type_instances(input_path)
-	if(ispath(input_path, /mob/living/simple_animal/bot))
-		return GLOB.bots_list.Copy()
 	if(ispath(input_path, /obj/machinery))
 		return SSmachines.get_machines_by_type(input_path)
+	if(ispath(input_path, /mob/living/simple_animal/bot) || ispath(input_path, /mob/living/basic/bot))
+		return GLOB.bots_list.Copy()
 
 //OH YEAH I LOVE GOOD CODE
 /datum/controller/subsystem/the_ark/proc/bot_v_machine_check(atom/checked_atom)
 	if(ismachinery(checked_atom))
 		var/obj/machinery/checked_machine = checked_atom
 		return checked_machine.obj_flags & EMAGGED
-	if(isbot(checked_atom))
-		var/mob/living/simple_animal/bot/checked_bot = checked_atom
-		return checked_bot.bot_cover_flags & BOT_COVER_EMAGGED
 	if(isbasicbot(checked_atom))
 		var/mob/living/basic/bot/checked_basic_bot = checked_atom
 		return checked_basic_bot.bot_access_flags & BOT_COVER_EMAGGED
+	if(istype(checked_atom, /mob/living/simple_animal/bot))
+		var/mob/living/simple_animal/bot/checked_bot = checked_atom
+		return checked_bot.bot_cover_flags & BOT_COVER_EMAGGED
+
+/datum/controller/subsystem/the_ark/proc/convert_area_turfs(area/converted_area)
+	var/timer_counter = 1 //used by the addtimer()
+	var/list/turfs_to_transform = list()
+	for(var/turf/transformed_turf in converted_area)
+		turfs_to_transform += transformed_turf
+
+	shuffle_inplace(turfs_to_transform)
+	for(var/turf/turf_to_transform in turfs_to_transform)
+		if(!clock_dimension_theme.can_convert(turf_to_transform))
+			continue
+		addtimer(CALLBACK(src, PROC_REF(do_turf_conversion), turf_to_transform), 3 * timer_counter)
+		timer_counter++
+
+/datum/controller/subsystem/the_ark/proc/do_turf_conversion(turf/converted_turf)
+	if(QDELETED(src) || !clock_dimension_theme.can_convert(converted_turf))
+		return
+
+	clock_dimension_theme.apply_theme(converted_turf)
+	new /obj/effect/temp_visual/ratvar/beam(converted_turf)
+	if(istype(converted_turf, /turf/closed/wall))
+		new /obj/effect/temp_visual/ratvar/wall(converted_turf)
+	else if(istype(converted_turf, /turf/open/floor))
+		new /obj/effect/temp_visual/ratvar/floor(converted_turf)
 
 /datum/controller/subsystem/the_ark/proc/on_crystal_charged(obj/structure/destructible/clockwork/anchoring_crystal/charged_crystal)
 	charged_anchoring_crystals++
@@ -212,7 +253,8 @@ SUBSYSTEM_DEF(the_ark)
 
 ///renables the shuttle
 /datum/controller/subsystem/the_ark/proc/clear_shuttle_interference(datum/unblocker)
-	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode != SHUTTLE_DISABLED || (unblocker && istype(unblocker, /obj/structure/destructible/clockwork/anchoring_crystal)))
+	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode != SHUTTLE_DISABLED || \
+		(unblocker && GLOB.clock_ark.current_state >= ARK_STATE_CHARGING && istype(unblocker, /obj/structure/destructible/clockwork/anchoring_crystal)))
 		return
 
 	SSshuttle.emergency_no_recall = FALSE
@@ -241,7 +283,7 @@ SUBSYSTEM_DEF(the_ark)
 /datum/action/cooldown/spell/spacetime_dist/clock_ark
 	name = "Clockwork Spacetime Dist"
 	cooldown_time = 0
-	scramble_radius = 3
+	scramble_radius = 2
 	duration = 1 MINUTE
 	spawned_effect_type = /obj/effect/cross_action/spacetime_dist/clock_ark
 
@@ -255,4 +297,5 @@ SUBSYSTEM_DEF(the_ark)
 	return ..()
 
 /obj/effect/timestop/magic/clock_ark
+	icon_state = ""
 	hidden = TRUE
