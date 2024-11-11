@@ -13,3 +13,19 @@
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit/hop
 	hardsuit_type = "hop"
+
+/obj/item/clothing/suit/space/hardsuit/mining
+	name = "mining hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	icon_state = "hardsuit-mining"
+	max_integrity = 300
+	armor_type = /datum/armor/hardsuit/hop
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining
+	name = "mining hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	icon_state = "hardsuit0-hop"
+	max_integrity = 300
+	armor_type = /datum/armor/hardsuit/hop
+	hardsuit_type = "mining"
