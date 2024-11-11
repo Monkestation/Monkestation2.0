@@ -99,6 +99,24 @@
 	icon_state = "hardsuit-sec"
 	armor_type = /datum/armor/hardsuit/sec
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/sec
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/gun/ballistic,
+		/obj/item/gun/energy,
+		/obj/item/gun/microfusion,
+		/obj/item/knife/combat,
+		/obj/item/melee/baton,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/storage/belt/holster/detective,
+		/obj/item/storage/belt/holster/nukie,
+		/obj/item/storage/belt/holster/energy,
+		/obj/item/clothing/mask/breath/sec_bandana,
+	)
 
 /obj/item/clothing/head/helmet/space/hardsuit/sec
 	name = "security hardsuit helmet"
