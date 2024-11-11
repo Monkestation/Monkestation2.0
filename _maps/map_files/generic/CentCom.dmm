@@ -20103,9 +20103,9 @@
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "dBD" = (
-/obj/machinery/door/window/survival_pod/left/directional/south,
-/obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/machinery/door/window/survival_pod/left/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "dCz" = (
@@ -20238,8 +20238,8 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
 "dUc" = (
-/obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/machinery/door/window/survival_pod/left/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "dUR" = (
@@ -20665,7 +20665,6 @@
 /turf/open/floor/iron/dark/textured_edge,
 /area/centcom/central_command_areas/evacuation)
 "fyA" = (
-/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/structure/table/greyscale,
 /obj/item/melee/baton{
 	name = "intern baton";
@@ -22014,6 +22013,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
+"jui" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/water/arena,
+/area/centcom/central_command_areas/admin)
 "juk" = (
 /obj/item/flashlight/flare/candle/amber,
 /obj/structure/closet/crate/coffin/meatcoffin,
@@ -22359,7 +22362,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "kAJ" = (
-/obj/machinery/door/window/survival_pod/left/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "kBS" = (
@@ -22417,7 +22420,6 @@
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
 "kPU" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/milk,
@@ -22432,6 +22434,9 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1;
 	pixel_y = -21
+	},
+/obj/structure/closet/secure_closet/freezer/fridge{
+	req_access = null
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
@@ -24345,14 +24350,15 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
 "sbW" = (
-/obj/machinery/door/airlock/centcom{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/shutters/indestructible/preopen{
 	dir = 8;
 	id = 5
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Interns' Office"
+	},
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
 "sco" = (
@@ -25374,6 +25380,18 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+"vYm" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Interns' Office"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 8;
+	id = 5
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/textured,
+/area/centcom/central_command_areas/admin)
 "vZN" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -25956,7 +25974,8 @@
 /obj/structure/table/greyscale,
 /obj/item/toy/plush/slimeplushie{
 	name = "L-Ooze";
-	pixel_x = 12
+	pixel_x = 12;
+	desc = "An adorable stuffed toy that resembles a slime. The Intern that placed it here thought it would be enough to claim the chair."
 	},
 /obj/item/paper_bin{
 	pixel_y = 5
@@ -55667,7 +55686,7 @@ aOn
 aOn
 aOn
 aOn
-sbW
+vYm
 sbW
 fyA
 kAJ
@@ -55926,7 +55945,7 @@ myi
 jZA
 dHV
 dHV
-jZA
+jui
 jZA
 jZA
 aOn
