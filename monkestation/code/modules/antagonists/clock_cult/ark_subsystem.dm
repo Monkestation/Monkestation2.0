@@ -254,7 +254,7 @@ SUBSYSTEM_DEF(the_ark)
 ///renables the shuttle
 /datum/controller/subsystem/the_ark/proc/clear_shuttle_interference(datum/unblocker)
 	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode != SHUTTLE_DISABLED || \
-		(unblocker && GLOB.clock_ark.current_state >= ARK_STATE_CHARGING && istype(unblocker, /obj/structure/destructible/clockwork/anchoring_crystal)))
+		(unblocker && GLOB.clock_ark && GLOB.clock_ark.current_state >= ARK_STATE_CHARGING && istype(unblocker, /obj/structure/destructible/clockwork/anchoring_crystal)))
 		return
 
 	SSshuttle.emergency_no_recall = FALSE
