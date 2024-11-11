@@ -27555,12 +27555,6 @@
 "imF" = (
 /turf/closed/wall,
 /area/station/service/kitchen/kitchen_backroom)
-"imQ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "imR" = (
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -134580,7 +134574,7 @@ lXw
 lXw
 ipC
 qRo
-imQ
+qRo
 dQS
 gKo
 kHs
