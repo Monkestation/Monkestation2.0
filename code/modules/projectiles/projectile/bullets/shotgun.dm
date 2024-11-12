@@ -107,7 +107,7 @@
 /obj/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
 	damage = 1
-	stamina = 12
+	stamina = 12 //monkestation edit
 	tile_dropoff_s = 3 //monkestation edit spitting distance
 	embedding = null
 
