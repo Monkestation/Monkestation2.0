@@ -138,7 +138,7 @@
 		if(COVER_COG_REMOVED)
 			if(item_tool.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, span_notice("You start to unscrew the transmission cogs."))
-				if(next_decon_state(item_tool, user, d_state, TRANSMISSION_COGS_REMOVED, "You unscrew the transmission cogs.", 3 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, TRANSMISSION_COGS_REMOVED, "You unscrew the transmission cogs."))
 					return TRUE
 			else if(item_tool.tool_behaviour == TOOL_WIRECUTTER)
 				item_tool.play_tool_sound(src, 100)
@@ -161,7 +161,7 @@
 				if(!item_tool.tool_start_check(user, amount=0))
 					return
 				to_chat(user, span_notice("You start to weld the support beam loose."))
-				if(next_decon_state(item_tool, user, d_state, INNER_PANEL_REMOVED, "You weld the support beam loose.", 6 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, INNER_PANEL_REMOVED, "You weld the support beam loose.", 4 SECONDS))
 					return TRUE
 			if(item_tool.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, span_notice("You start to re-attach the main gears."))
@@ -171,20 +171,20 @@
 		if(INNER_PANEL_REMOVED)
 			if(item_tool.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, span_notice("You start to pry apart the [src]."))
-				if(next_decon_state(item_tool, user, d_state, sent_message = "You pry apart the [src].", use_time = 5 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, sent_message = "You pry apart the [src]."))
 					dismantle_wall()
 				return TRUE
 			if(item_tool.tool_behaviour == TOOL_WELDER)
 				if(!item_tool.tool_start_check(user, amount=0))
 					return
 				to_chat(user, span_notice("You start to weld the support beam back into place."))
-				if(next_decon_state(item_tool, user, d_state, GEARS_UNBOLTED, "You weld the support beam back into place.", 6 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, GEARS_UNBOLTED, "You weld the support beam back into place.", 4 SECONDS))
 					return TRUE
 
 		if(GEARS_UNWOUND)
 			if(item_tool.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, span_notice("You tart to pry apart the [src]."))
-				if(next_decon_state(item_tool, user, d_state, sent_message = "You pry apart the [src].", use_time = 5 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, sent_message = "You pry apart the [src]."))
 					dismantle_wall()
 				return TRUE
 			if(item_tool.tool_behaviour == TOOL_WRENCH)
@@ -194,7 +194,7 @@
 	return FALSE
 
 //do the deconstruction stuff, this really should be a proc on Rwalls as well
-/turf/closed/wall/clockwork/proc/next_decon_state(obj/item/used_tool, mob/user, current_state, set_state, sent_message, use_time = 4 SECONDS)
+/turf/closed/wall/clockwork/proc/next_decon_state(obj/item/used_tool, mob/user, current_state, set_state, sent_message, use_time = 3 SECONDS)
 	if(on_reebe(src))
 		use_time = round(use_time * 0.2, 0.1) //it takes much less time to deconstruct walls on reebe
 
