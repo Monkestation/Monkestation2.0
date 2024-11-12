@@ -347,6 +347,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/stock_parts/cell/microfusion, //monkestation edit
+		/obj/item/citationinator, //monkestation edit
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -422,6 +423,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/cargo_teleporter, //monkestation edit
 	))
 
 

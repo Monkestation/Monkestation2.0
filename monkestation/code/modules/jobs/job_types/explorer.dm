@@ -1,11 +1,11 @@
 /datum/job/explorer
 	title = JOB_LATEJOIN_EXPLORER
-	description = "Travel to strange lands. Mine ores. \
-		Meet strange creatures. Kill them for their gold."
+	description = "Explore space. Salvage supplies. \
+		Visit strange places. Die in space."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "EXPLORER"
@@ -21,7 +21,7 @@
 	display_order = JOB_LATEJOIN_EXPLORER
 	bounty_types = CIV_JOB_MINE
 	departments_list = list(
-		/datum/job_department/cargo,
+		/datum/job_department/late,
 		)
 
 	family_heirlooms = list(
@@ -37,18 +37,16 @@
 /datum/outfit/job/explorer
 	name = "Explorer"
 	jobtype = /datum/job/explorer
-
 	id_trim = /datum/id_trim/job/explorer
-	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	glasses = /obj/item/clothing/glasses/meson
+	uniform = /obj/item/clothing/under/rank/cargo/miner
 	backpack_contents = list(
-		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
-		/obj/item/tank/jetpack/mining = 1,
-		/obj/item/clothing/suit/space/hardsuit/mining = 1,
-		/obj/item/pickaxe/mini = 1,
-		/obj/item/gps/mining = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
+		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
+		/obj/item/cargo_teleporter = 1,
+		/obj/item/storage/box/emergency_eva/explorer = 1,
 	)
 	belt = /obj/item/modular_computer/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
@@ -63,4 +61,15 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+
+/obj/item/storage/box/emergency_eva/explorer
+	name = "boxed explorer's EVA kit"
+	desc = "A bulky, solid metal box used to hold a miner's hardsuit and jetpack."
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/box/emergency_eva/PopulateContents()
+	new /obj/item/tank/jetpack/mining(src)
+	new /obj/item/clothing/suit/space/hardsuit/mining(src)
+	new /obj/item/gps/mining(src)
+
 
