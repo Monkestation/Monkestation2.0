@@ -20166,7 +20166,8 @@
 	pixel_y = -1;
 	dir = 4
 	},
-/turf/open/misc/dirt/jungle/arena,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "dNQ" = (
 /obj/structure/table/greyscale,
@@ -22005,6 +22006,9 @@
 /area/centcom/central_command_areas/adminroom)
 "jui" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "juk" = (
@@ -55956,7 +55960,7 @@ jZA
 jZA
 jZA
 myi
-jZA
+fXH
 dHV
 dHV
 jui
@@ -56213,10 +56217,10 @@ hsX
 jZA
 jZA
 jZA
-jZA
+fXH
 dHV
 dHV
-jZA
+ssC
 jZA
 jZA
 jZA
@@ -56470,10 +56474,10 @@ bwZ
 ssC
 jZA
 jZA
-jZA
+wco
 dHV
 dHV
-jZA
+ssC
 jZA
 jZA
 jZA
@@ -56726,10 +56730,10 @@ eZi
 bwZ
 ssC
 jZA
-jZA
+fXH
 dHV
 dHV
-jZA
+lAc
 jZA
 jZA
 jZA
@@ -56983,9 +56987,9 @@ eZi
 bwZ
 ssC
 jZA
-jZA
+fXH
 dHV
-jZA
+lAc
 jZA
 jZA
 jZA
@@ -57240,9 +57244,9 @@ tHH
 bwZ
 pnO
 fme
-fme
 dKR
-jZA
+dHV
+ssC
 jZA
 jZA
 jZA
