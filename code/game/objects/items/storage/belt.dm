@@ -336,6 +336,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight/seclite,
+		/obj/item/citationinator, //monkestation edit
 		/obj/item/food/donut,
 		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
 		/obj/item/grenade,
@@ -347,7 +348,6 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/stock_parts/cell/microfusion, //monkestation edit
-		/obj/item/citationinator, //monkestation edit
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
