@@ -438,14 +438,41 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
 
-/atom/movable/screen/lobby/button/overflow1
-	screen_loc = "TOP:-54,CENTER:+138"
-	icon = 'icons/hud/lobby/overflow.dmi'
-	icon_state = "overflow1"
-	base_icon_state = "overflow1"
+//NRP MONKE
+/atom/movable/screen/lobby/button/nrp
+	screen_loc = "TOP:-122,CENTER:+164"
+	icon = 'icons/hud/lobby/redirect.dmi'
+	icon_state = "nrp"
+	base_icon_state = "nrp"
 
-/atom/movable/screen/lobby/button/overflow1/Click(location, control, params)
+/atom/movable/screen/lobby/button/nrp/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	hud.mymob.client << link("byond://198.37.111.92:2102")
+
+//MAIN MONKE
+/atom/movable/screen/lobby/button/mrp
+	screen_loc = "TOP:-88,CENTER:+164"
+	icon = 'icons/hud/lobby/redirect.dmi'
+	icon_state = "mrp"
+	base_icon_state = "mrp"
+
+/atom/movable/screen/lobby/button/mrp/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client << link("byond://play.monkestation.com:1337")
+//HRP MONKE
+/atom/movable/screen/lobby/button/hrp
+	screen_loc = "TOP:-54,CENTER:+164"
+	icon = 'icons/hud/lobby/redirect.dmi'
+	icon_state = "hrp"
+	base_icon_state = "hrp"
+
+/atom/movable/screen/lobby/button/hrp/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client << link("byond://198.37.111.92:1342")
+
