@@ -6,7 +6,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/atlatl_righthand.dmi'
 	icon_state = "atlatl"
 	inhand_icon_state = "atlatl"
-	worn_icon_state = "atlatl"
+	//uncomment when ready to merge fully, sprites for belt and belt_mirror is in atlatl.dmi
+//	worn_icon_state = "atlatl"
 	load_sound = null
 	fire_sound = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/atlatl
