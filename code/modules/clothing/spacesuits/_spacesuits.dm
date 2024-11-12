@@ -32,7 +32,7 @@
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
-	desc_controls = "Alt-Click to open the cell cover. CTRL-Click to remove the cell. The temperature knob can be adjusted with a screwdriver." //monkestation edit
+	desc_controls = "Alt-Click to open the cell cover. CTRL-Click to remove the cell. The thermal regulator can be adjusted with a screwdriver." //monkestation edit
 	icon_state = "spaceold"
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
