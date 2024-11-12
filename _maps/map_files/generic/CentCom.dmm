@@ -20125,10 +20125,6 @@
 	dir = 4
 	},
 /area/cruiser_dock)
-"dFB" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/carpet/neon/simple/green/nodots,
-/area/centcom/central_command_areas/admin)
 "dGn" = (
 /obj/machinery/chem_master,
 /turf/open/floor/iron/dark/textured_large,
@@ -20910,6 +20906,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "gqw" = (
@@ -23155,6 +23154,9 @@
 	dir = 1
 	},
 /obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "nYA" = (
@@ -23421,11 +23423,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"oUW" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/carpet/neon/simple/green/nodots,
-/area/centcom/central_command_areas/admin)
 "oWK" = (
 /obj/machinery/fishing_portal_generator,
 /turf/open/floor/sandy_dirt,
@@ -23563,6 +23560,9 @@
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
@@ -24457,6 +24457,13 @@
 	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
+"sIk" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/centcom/central_command_areas/admin)
 "sJe" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/carpet/red,
@@ -24800,6 +24807,9 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "tOn" = (
@@ -24884,7 +24894,9 @@
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "uhK" = (
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
 "uhR" = (
@@ -25302,6 +25314,9 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "vMB" = (
@@ -25676,6 +25691,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
 "wXS" = (
@@ -26084,6 +26102,10 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/adminroom)
+"ylB" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/centcom/central_command_areas/admin)
 
 (1,1,1) = {"
 afX
@@ -52844,7 +52866,7 @@ aOn
 aOn
 aOn
 aOn
-dFB
+ylB
 fOv
 aOn
 aOn
@@ -54645,7 +54667,7 @@ uhK
 uhK
 fOv
 fOv
-oUW
+sIk
 uhK
 uhK
 fOv
