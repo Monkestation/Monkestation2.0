@@ -24475,6 +24475,12 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"sKy" = (
+/obj/machinery/computer/arcade{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/centcom/central_command_areas/admin)
 "sMc" = (
 /obj/machinery/coffeemaker/impressa,
 /obj/structure/table/reinforced,
@@ -51841,7 +51847,7 @@ aOn
 aOn
 aOn
 aOn
-aaa
+aOn
 aaa
 aaa
 aaa
@@ -52097,7 +52103,7 @@ jyl
 gcx
 klF
 gkT
-aOn
+sKy
 aOn
 aaa
 aaa
