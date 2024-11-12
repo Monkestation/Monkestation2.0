@@ -437,3 +437,15 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
+
+/atom/movable/screen/lobby/button/overflow1
+	screen_loc = "TOP:-54,CENTER:+138"
+	icon = 'icons/hud/lobby/overflow.dmi'
+	icon_state = "overflow1"
+	base_icon_state = "overflow1"
+
+/atom/movable/screen/lobby/button/overflow1/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client << link("byond://198.37.111.92:2102")
