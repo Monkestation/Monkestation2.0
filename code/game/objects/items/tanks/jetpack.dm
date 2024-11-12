@@ -192,6 +192,7 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	inhand_icon_state = "jetpack-sec"
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE //monkestation edit
 
 
 

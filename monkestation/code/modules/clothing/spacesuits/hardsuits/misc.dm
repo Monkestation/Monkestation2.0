@@ -43,7 +43,6 @@
 	armor_type = /datum/armor/hardsuit/mining
 	hardsuit_type = "mining"
 	light_outer_range = 7
-	light_power = 2 //two lights so twice as bright?
 
 /obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
 	. = ..()
@@ -101,6 +100,7 @@
 	armor_type = /datum/armor/hardsuit/sec
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/sec
 	allowed = list(
+		/obj/item/tank/jetpack/oxygen/security,
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
 		/obj/item/tank/jetpack/oxygen/captain,
