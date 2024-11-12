@@ -3,7 +3,7 @@
 	desc = "Contains two security hardsuits and two security jetpacks."
 	cost = CARGO_CRATE_VALUE * 15
 	contains = list(
-		/obj/item/clothing/suit/space/hardsuit/mining = 2,
+		/obj/item/clothing/suit/space/hardsuit/sec = 2,
 		/obj/item/tank/jetpack/oxygen/security = 2,
 	)
 	crate_name = "security hardsuit crate"
