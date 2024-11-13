@@ -16,8 +16,12 @@ SUBSYSTEM_DEF(the_ark)
 	var/list/valid_crystal_areas
 	///The pool of hallucinations we can trigger
 	var/list/hallucination_pool
-	///how many clockwork airlocks have been created on reebe, used for limiting airlock spam
+	///How many clockwork airlocks have been created on reebe, used for limiting airlock spam
 	var/reebe_clockwork_airlock_count = 0
+	///How much power does the cult have stored
+	var/clock_power = 2500
+	///What is the maximum amount of power the cult can have stored
+	var/max_clock_power = 2500
 
 /datum/controller/subsystem/the_ark/Initialize()
 	anchoring_crystals = list()
