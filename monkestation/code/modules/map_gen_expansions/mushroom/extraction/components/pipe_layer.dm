@@ -33,6 +33,12 @@
 	if(!pipe_overlay_appearance)
 		pipe_overlay_appearance = mutable_appearance(icon = 'monkestation/code/modules/map_gen_expansions/icons/plasma_extractor.dmi', icon_state = "pipe", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, alpha = 100, offset_spokesman = parent)
 
+/datum/component/pipe_laying/Destroy(force)
+	. = ..()
+	clear_click_catch(destroying = TRUE)
+	part_hub = null
+	current_target_weakref = null
+
 /datum/component/pipe_laying/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
@@ -98,18 +104,22 @@
  * Removes all overlays and clears the list of turfs, essentially resetting the component back to default,
  * ready to use again later (if possible).
  */
-/datum/component/pipe_laying/proc/clear_click_catch()
-	if(!lockon_component)
+/datum/component/pipe_laying/proc/clear_click_catch(destroying = FALSE)
+	if(!lockon_component && !destroying)
 		return
 	for(var/turf/turfs_with_overlay as anything in turfs_hovering)
 		turfs_with_overlay.cut_overlay(pipe_overlay_appearance)
 	turfs_hovering.Cut()
-	UnregisterSignal(pipe_placing, COMSIG_MOVABLE_MOVED)
-	pipe_placing = null
-	pipe_placer.clear_fullscreen("pipe_extractor")
-	pipe_placer = null
-	playsound(parent, 'sound/effects/empulse.ogg', 75, TRUE)
-	QDEL_NULL(lockon_component)
+	if(pipe_placing)
+		UnregisterSignal(pipe_placing, COMSIG_MOVABLE_MOVED)
+		pipe_placing = null
+	if(pipe_placer)
+		pipe_placer.clear_fullscreen("pipe_extractor")
+		pipe_placer = null
+	if(!destroying)
+		playsound(parent, 'sound/effects/empulse.ogg', 75, TRUE)
+	if(!QDELETED(lockon_component))
+		QDEL_NULL(lockon_component)
 
 ///Called when the user clicks on something, which we just redirect to build pipes.
 /datum/component/pipe_laying/proc/on_catcher_click(turf/location, control, params, user)
