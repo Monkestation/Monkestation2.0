@@ -45,19 +45,19 @@ GLOBAL_LIST_INIT(hive_exits, list())
 /obj/structure/beebox/hive/Destroy()
 	. = ..()
 	if(linked_exit?.linked_hive == src)
-		var/turf/turf = get_turf(src)
-		for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
-			if(isnull(turf))
-				continue
-			listed.forceMove(get_turf(src))
-		var/area/area = get_area(linked_exit)
-		if(area)
-			for(var/atom/movable/movable as anything in area)
-				if(isturf(movable))
+		var/drop_loc = drop_location() || get_turf(src)
+		if(!isnull(drop_loc))
+			for(var/atom/movable/listed as anything in linked_exit.atoms_inside)
+				if(QDELETED(listed))
 					continue
-				if(isnull(turf))
-					continue
-				movable.forceMove(turf)
+				listed.forceMove(drop_loc)
+			linked_exit.atoms_inside.Cut()
+			var/area/area = get_area(linked_exit)
+			for(var/turf/hive_turf as anything in area?.get_turfs_from_all_zlevels())
+				for(var/atom/movable/movable as anything in hive_turf)
+					if(QDELETED(movable))
+						continue
+					movable.forceMove(drop_loc)
 		linked_exit.linked_hive = null
 		linked_exit.name = "generic hive exit"
 	linked_exit = null
@@ -88,34 +88,34 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	move_resist = INFINITY
-
 	var/obj/structure/beebox/hive/linked_hive
-
 	var/list/atoms_inside = list()
 
 /obj/structure/hive_exit/Initialize(mapload)
 	. = ..()
 	GLOB.hive_exits += src
-	RegisterSignal(get_area(src), COMSIG_AREA_EXITED, PROC_REF(exit_area))
-	RegisterSignal(get_area(src), COMSIG_AREA_ENTERED, PROC_REF(enter_area))
+	var/area/our_area = get_area(src)
+	RegisterSignal(our_area, COMSIG_AREA_EXITED, PROC_REF(exit_area))
+	RegisterSignal(our_area, COMSIG_AREA_ENTERED, PROC_REF(enter_area))
 
 /obj/structure/hive_exit/Destroy()
 	GLOB.hive_exits -= src
-	UnregisterSignal(get_area(src), list(COMSIG_AREA_EXITED, COMSIG_AREA_ENTERED))
+	var/area/our_area = get_area(src)
+	UnregisterSignal(our_area, list(COMSIG_AREA_EXITED, COMSIG_AREA_ENTERED))
 	if(linked_hive?.linked_exit == src)
-		var/turf/drop_at = linked_hive.drop_location()
-		if(!isnull(drop_at))
+		var/turf/drop_loc = linked_hive.drop_location() || get_turf(linked_hive)
+		if(!isnull(drop_loc))
 			for(var/atom/movable/listed as anything in atoms_inside)
 				if(QDELETED(listed))
 					continue
-				listed.forceMove(drop_at)
-			var/area/area = get_area(src)
-			for(var/turf/hive_turf as anything in area.get_turfs_from_all_zlevels())
-				for(var/atom/movable/movable as anything in hive_turf)
-					if(QDELETED(movable) || isturf(movable))
+				listed.forceMove(drop_loc)
+			for(var/turf/hive_turf as anything in our_area?.get_turfs_from_all_zlevels())
+				for(var/atom/movable/movable as anything in hive_turf.contents)
+					if(QDELETED(movable))
 						continue
-					movable.forceMove(drop_at)
+					movable.forceMove(drop_loc)
 		linked_hive.linked_exit = null
+	atoms_inside.Cut()
 	linked_hive = null
 	return ..()
 
