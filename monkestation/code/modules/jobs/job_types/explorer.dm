@@ -67,7 +67,7 @@
 	desc = "A bulky, solid metal box used to hold a miner's hardsuit and jetpack."
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/box/emergency_eva/PopulateContents()
+/obj/item/storage/box/emergency_eva/explorer/PopulateContents()
 	new /obj/item/tank/jetpack/mining(src)
 	new /obj/item/clothing/suit/space/hardsuit/mining(src)
 	new /obj/item/gps/mining(src)
