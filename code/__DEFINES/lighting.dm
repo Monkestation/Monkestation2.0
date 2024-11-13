@@ -102,7 +102,7 @@ do { \
 			source.lum_g = color_map[2] / 255; \
 			source.lum_b = color_map[3] / 255; \
 		} catch() { \
-			stack_trace("invalid light color: [source.light_color || "null"]"); \
+			stack_trace("[source.source_atom] ([source.source_atom?.type]) had invalid light color [source.light_color || "null"]"); \
 			source.lum_r = 1; \
 			source.lum_g = 1; \
 			source.lum_b = 1; \
