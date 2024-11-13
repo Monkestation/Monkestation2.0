@@ -62,4 +62,5 @@
 			continue
 		for(var/mob/living/living in floor)
 			to_chat(living, span_notice(pick(reactions)))
+			living.add_mood_event("orchestral_artifact", /datum/mood_event/jazzy)
 	COOLDOWN_START(src, jazz_cooldown, 3 SECONDS)

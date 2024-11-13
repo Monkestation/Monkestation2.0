@@ -17,3 +17,4 @@
 /datum/mood_event/jazzy
 	description = "Oooh, jazzy!"
 	mood_change = 2
+	timeout = 1 MINUTE
