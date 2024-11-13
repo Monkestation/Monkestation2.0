@@ -460,11 +460,11 @@
 	var/port = world.port
 	switch(port)
 		if(1337)
-			screen_loc = "TOP:-83,CENTER:+177"
+			screen_loc = "TOP:-87,CENTER:+190"
 		if(2102)
-			screen_loc = "TOP:-122,CENTER:+177"
+			screen_loc = "TOP:-100,CENTER:+190"
 		if(1342)
-			screen_loc = "TOP:-43,CENTER:+177"
+			screen_loc = "TOP:-34,CENTER:+190"
 		else
 			screen_loc = "TOP:0,CENTER:0"
 
