@@ -205,9 +205,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 ///PROCESSING
 /datum/liquid_group/proc/process_group(from_SS = FALSE)
+	list_clear_nulls(members)
 	if(merging)
 		return
-	if(!members || !length(members)) // this ideally shouldn't exist, ideally groups would die before they got to this point but alas here we are
+	if(!length(members)) // this ideally shouldn't exist, ideally groups would die before they got to this point but alas here we are
 		check_dead()
 		return
 
