@@ -922,11 +922,11 @@ generate/load female uniform sprites matching all previously decided variables
 	var/mask_icon = 'icons/effects/cut.dmi'
 	if(icon_width != 0 && icon_height != 0)
 		if(icon_width != 32)
-			throw EXCEPTION("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
+			CRASH("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
 		if(icon_height == 48)
 			mask_icon = 'monkestation/icons/effects/cut_32x48.dmi'
 		else if(icon_height != 32)
-			throw EXCEPTION("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
+			CRASH("Bad dimensions ([icon_width]x[icon_height]) for icon '[appearance.icon]'")
 
 	var/icon/cut_torso_mask = icon(mask_icon, "Cut1")
 	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
