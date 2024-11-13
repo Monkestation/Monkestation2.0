@@ -18,6 +18,9 @@
 	src.end = end
 	src.value = value
 
+/datum/regex_capture_group/proc/operator""()
+	return "[value]"
+
 /// Represents data for a complete regex match, including all capture groups.
 /datum/regex_match
 	/// The full string that matched the entire regex pattern.

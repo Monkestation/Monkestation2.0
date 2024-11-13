@@ -601,6 +601,7 @@
 #include "code\__HELPERS\~monkestation-helpers\antags.dm"
 #include "code\__HELPERS\~monkestation-helpers\atoms.dm"
 #include "code\__HELPERS\~monkestation-helpers\blood_datums.dm"
+#include "code\__HELPERS\~monkestation-helpers\bytes.dm"
 #include "code\__HELPERS\~monkestation-helpers\clients.dm"
 #include "code\__HELPERS\~monkestation-helpers\cmp.dm"
 #include "code\__HELPERS\~monkestation-helpers\colors.dm"
