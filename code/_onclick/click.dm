@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(__disable_the_check, FALSE)
 
 	var/list/modifiers = params2list(params)
 
-	if(!GLOB.__disable_the_check && !client?.holder && A.invisibility > see_invisible)
+	if(!GLOB.__disable_the_check && !client?.holder && (isobserver(A) || iscameramob(A)) && A.invisibility > see_invisible)
 		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(A)] ([A?.type]) [ADMIN_FLW(A)], which they should not be able to see!")
 		log_admin_private("[key_name(src)] clicked on [key_name(A)] ([A?.type]), which they should not be able to see!")
 
