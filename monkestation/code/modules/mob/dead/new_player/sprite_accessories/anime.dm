@@ -13,7 +13,7 @@
 	color_src = SKIN_COLOR
 
 /datum/sprite_accessory/anime_head/elf2
-	name = "Broad Elf Ears"
+	name = "Long Elf Ears"
 	icon_state = "elf2"
 	color_src = SKIN_COLOR
 
