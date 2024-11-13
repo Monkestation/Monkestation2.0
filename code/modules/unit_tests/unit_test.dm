@@ -254,7 +254,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
-		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		// monkestation start
+		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
+		/obj/structure/hive_exit, // should not exist on its own without being crated by a hive
+		// monkestation end
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)

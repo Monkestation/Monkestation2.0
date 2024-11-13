@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 		load_from.load(bottom_left)
 		for(var/obj/structure/hive_exit/exit as anything in GLOB.hive_exits)
-			if(exit.linked_hive)
+			if(!QDELETED(exit.linked_hive))
 				continue
 			exit.linked_hive = src
 			linked_exit = exit
