@@ -21,14 +21,14 @@ GLOBAL_LIST_INIT(hive_exits, list())
 		honey_frames += HF
 
 	for(var/obj/structure/hive_exit/exit as anything in GLOB.hive_exits)
-		if(exit.linked_hive)
+		if(!QDELETED(exit.linked_hive))
 			continue
 		exit.linked_hive = src
 		linked_exit = exit
 		linked_exit.name = "[created_name]'s hive exit"
 		break
 
-	if(!linked_exit)
+	if(QDELETED(linked_exit))
 		var/datum/map_template/hive/hive = new()
 		var/datum/turf_reservation/roomReservation = SSmapping.request_turf_block_reservation(hive.width, hive.height, 1)
 		var/turf/bottom_left = roomReservation.bottom_left_turfs[1]
@@ -44,22 +44,22 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 /obj/structure/beebox/hive/Destroy()
 	. = ..()
-	var/turf/turf = get_turf(src)
-	for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
-		if(isnull(turf))
-			continue
-		listed.forceMove(get_turf(src))
-	var/area/area = get_area(linked_exit)
-	if(area)
-		for(var/atom/movable/movable as anything in area)
-			if(isturf(movable))
-				continue
+	if(linked_exit?.linked_hive == src)
+		var/turf/turf = get_turf(src)
+		for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
 			if(isnull(turf))
 				continue
-			movable.forceMove(turf)
-
-	linked_exit?.linked_hive = null
-	linked_exit.name = "generic hive exit"
+			listed.forceMove(get_turf(src))
+		var/area/area = get_area(linked_exit)
+		if(area)
+			for(var/atom/movable/movable as anything in area)
+				if(isturf(movable))
+					continue
+				if(isnull(turf))
+					continue
+				movable.forceMove(turf)
+		linked_exit.linked_hive = null
+		linked_exit.name = "generic hive exit"
 	linked_exit = null
 
 /obj/structure/beebox/hive/attack_hand(mob/living/user, list/modifiers)
@@ -100,25 +100,23 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	RegisterSignal(get_area(src), COMSIG_AREA_ENTERED, PROC_REF(enter_area))
 
 /obj/structure/hive_exit/Destroy()
-	. = ..()
-	if(!linked_hive || !get_turf(linked_hive))
-		return
-	var/turf/turf = get_turf(linked_hive)
-	for(var/atom/movable/listed in atoms_inside)
-		if(isnull(turf))
-			continue
-		listed.forceMove(turf)
-	var/area/area = get_area(src)
-	for(var/atom/movable/movable as anything in area)
-		if(isturf(movable))
-			continue
-		if(isnull(turf))
-			continue
-		movable.forceMove(turf)
-
 	GLOB.hive_exits -= src
-	linked_hive?.linked_exit = null
+	if(linked_hive?.linked_exit == src)
+		var/turf/drop_at = linked_hive.drop_location()
+		if(!isnull(drop_at))
+			for(var/atom/movable/listed as anything in atoms_inside)
+				if(QDELETED(listed))
+					continue
+				listed.forceMove(drop_at)
+			var/area/area = get_area(src)
+			for(var/turf/hive_turf as anything in area.get_turfs_from_all_zlevels())
+				for(var/atom/movable/movable as anything in hive_turf)
+					if(QDELETED(movable) || isturf(movable))
+						continue
+					movable.forceMove(drop_at)
+		linked_hive.linked_exit = null
 	linked_hive = null
+	return ..()
 
 /obj/structure/hive_exit/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -136,14 +134,12 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	do_teleport(user, get_turf(linked_hive), no_effects = TRUE, forced = TRUE)
 
 /obj/structure/hive_exit/proc/exit_area(datum/source, atom/removed)
-	if(isturf(removed))
-		return
-	atoms_inside -= removed
+	if(!isturf(removed))
+		atoms_inside -= removed
 
 /obj/structure/hive_exit/proc/enter_area(datum/source, atom/added)
-	if(isturf(added))
-		return
-	atoms_inside += added
+	if(!isturf(added))
+		atoms_inside += added
 
 
 /datum/map_template/hive
