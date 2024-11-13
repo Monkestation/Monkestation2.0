@@ -77,10 +77,10 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/quick_carry/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), REF(src))
 
 /obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), REF(src))
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"

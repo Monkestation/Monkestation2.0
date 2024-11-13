@@ -123,7 +123,7 @@
 			balloon_alert(mod.wearer, "nothing to holster!")
 			return
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
-			balloon_alert(mod.wearer, "it doesn't fit!")
+			balloon_alert(mod.wearer, "doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
@@ -362,10 +362,10 @@
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/shove_blocker/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, REF(src))
 
 /obj/item/mod/module/shove_blocker/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, REF(src))
 
 /obj/item/mod/module/shove_blocker/locked
 	name = "superglued MOD bulwark module"
@@ -382,7 +382,7 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/quick_cuff/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, REF(src))
 
 /obj/item/mod/module/quick_cuff/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, REF(src))

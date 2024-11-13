@@ -291,8 +291,8 @@
 /obj/item/mod/module/proc/add_ui_data()
 	return list()
 
-/// Creates a list of configuring options for this module
-/obj/item/mod/module/proc/get_configuration()
+/// Creates a list of configuring options for this module, possible configs include number, bool, color, list, button.
+/obj/item/mod/module/proc/get_configuration(mob/user)
 	return list()
 
 /// Generates an element of the get_configuration list with a display name, type and value
@@ -482,7 +482,7 @@
 		balloon_alert(user, "no core!")
 		return
 	if(!core_removable)
-		balloon_alert(user, "can't remove core!")
+		balloon_alert(user, "already has core!")
 		return
 	balloon_alert(user, "removing core...")
 	if(!do_after(user, 3 SECONDS, target = src))

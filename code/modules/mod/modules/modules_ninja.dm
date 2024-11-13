@@ -165,16 +165,16 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, REF(src))
 
 /obj/item/mod/module/weapon_recall/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, REF(src))
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)
 		var/obj/item/weapon_to_link = mod.wearer.is_holding_item_of_type(accepted_type)
 		if(!weapon_to_link)
-			balloon_alert(mod.wearer, "can't locate weapon!")
+			balloon_alert(mod.wearer, "no linked weapon!")
 			return
 		set_weapon(weapon_to_link)
 		balloon_alert(mod.wearer, "[linked_weapon.name] linked")
@@ -183,7 +183,7 @@
 		balloon_alert(mod.wearer, "already on self!")
 		return
 	var/distance = get_dist(mod.wearer, linked_weapon)
-	var/in_view = (linked_weapon in view(mod.wearer))
+	var/in_view = (linked_weapon in view(mod.wearer)) && !(linked_weapon in get_turf(mod.wearer))
 	if(!in_view && !drain_power(use_energy_cost * distance))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return
