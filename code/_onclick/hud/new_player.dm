@@ -530,7 +530,6 @@
 	hud.mymob.client << link("byond://play.monkestation.com:1337")
 */
 
-/*
 /atom/movable/screen/lobby/button/ook
 	screen_loc = "TOP:-126,CENTER:110"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
