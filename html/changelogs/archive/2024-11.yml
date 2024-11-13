@@ -150,3 +150,122 @@
   - rscadd: added emotes vomit, nodnods, and squint
   - admin: you can now choose to add quirks in the "Select Equipment" menu
   - admin: new VV dropdown option "Shake"
+2024-11-08:
+  Absolucy:
+  - rscadd: Organs no longer decay when below freezing temperatures, and decay slower
+      in colder (but not below freezing) temperatures.
+  - bugfix: The Wonderland Manifestation status effect actually properly works for
+      most abilities now.
+  - rscadd: The Wonderland Manifestation recoil effect now interacts with the pain
+      system.
+  - bugfix: The Malkavian clan objective to kill masquerade breakers is now properly
+      marked as completed when the target succumbs to the Final Death.
+  - bugfix: Fixed some... interesting code in the Gamemode subsystem (unsure how this
+      didn't error, ngl)
+  Gw0sty:
+  - rscadd: Added the robotic versions of brainwashing, lobotomy, pacification, amputation,
+      and brain surgery
+  - rscadd: Added a 'Brig Physician's Toolbox' to the Brig docs locker
+  - rscadd: Added Surgery computer and table to ouroboros sec med.
+  - rscdel: Removed the ability for wound tending on robotic chest's.
+  - rscdel: Removed doorhelper that wasnt doing anything in Centcom
+  - qol: Clarified gas analyzers are needed for xray cameras in the tooltips.
+  RandomDudeFromTheRim:
+  - bugfix: fixed a few things, really.
+  Veth-s:
+  - rscadd: Added AdminVOX to the game, to allow admins to do AI-like Vox announcements.
+2024-11-09:
+  Wisemonster:
+  - spellcheck: Added mention of the supply department in the HoP's description
+2024-11-11:
+  Absolucy:
+  - qol: Signboard text now appears more transparent for players when they are standing
+      behind the text.
+  - qol: Decreased line height for signboard text, so the text takes up less vertical
+      space.
+  - qol: Restored the original alpha for signboard text.
+  - rscadd: Tamed carps now go much faster when ridden without gravity.
+  - qol: Tamed carps now have better pathfinding.
+  Absolucy, Spaghetti-bit:
+  - bugfix: Tweaked how combinable messages work in an attempt to reduce lag from
+      chat spam.
+  Gw0sty:
+  - rscadd: Added new traitor uplink item. "License to Plasmaflood". You can guess
+      the rest.
+  Shoddd:
+  - rscadd: Tumor Shard now works on elites not in their body
+  - bugfix: you can no longer unflip tables as ghost and from a distance
+  - code_imp: modularized long guns
+  SirNightKnight:
+  - qol: The cyborg cargo module now has a tray for collecting mail tokens.
+  - bugfix: Fixed reloading for the bounty cycler shotgun.
+  ThePooba:
+  - rscdel: changed the continue vote to not default to continue without votes
+  - bugfix: Allows loneops to spawn if the antag cap is reached but disk is unsecured
+      and gaining weight.
+  - bugfix: Omnitraitors should no longer occur roundstart (no more Changeling vampyres)
+  - balance: Stardust shells do half the stamina damage now and have more spread
+  - balance: Rainbow slimes no do not Regen limbs anymore, healing is 300 over 30
+      seconds, Causes pain, can only be used every 3 minutes.
+  Wisemonster:
+  - rscadd: The HoP's hardsuit is now available on all maps
+  - balance: Pathologist now have pharmacy access
+  - balance: The HoP's door remote has been given supply access, in addition to it's
+      civilian access.
+  - balance: The HoP now has access to mining, the QM office, and the vault.
+  - balance: Boxstation's security locker room now requires brig access to enter
+  - balance: The security side of Boxstation's labor camp shuttle transfer area now
+      requires brig access.
+  - balance: The interior of Boxstation's justice chamber now requires brig access,
+      and the execution chamber itself requires armory access.
+2024-11-12:
+  t-toasted:
+  - rscadd: adds some more materials throughout maint, alongside other goodies
+  - rscadd: adds some solars crates near solars
+  - rscadd: gives NT Rep a computer and fax machine
+  - rscadd: adds in request consoles to almost every room
+  - rscdel: removed stray button in QM office
+  - rscdel: removed stray shutters outside chapel
+  - balance: removed a few windows at public garden
+  - qol: 'expands maints a little, hopefully gives antags more open spaces (three
+      large spaces added: one above science, one below cargo, one east of botany)'
+  - qol: engineering now has more tools in their lockers, adds two additional lockers
+  - bugfix: captain office shutters now work
+2024-11-13:
+  Absolucy:
+  - qol: Artifacts with the Talkative Fault now have an actual cooldown between forcing
+      people to speak, preventing client-side lag whenever someone decides to be annoying
+      and activate it 500 times in a populated area.
+  Absolucy, OliverOtter:
+  - rscadd: 4 new alert levels! Yellow, Amber, Gamma, and Lambda.
+  - rscadd: Yellow alert is for engineering issues, and Amber is for biological issues
+      (like zombies, blob, super virus, etc)
+  - sound: Added a special sound effect for Both Gamma and Lambda.
+  - admin: Added Gamma, a CC flavored Red alert, and Lambda, which should ONLY be
+      used for when a cult wins, or potentially a very angry ascended heretic.
+  Gw0sty:
+  - bugfix: Fix ssd examine text to show the correct cyro time. (30 minutes)
+  PotatoTomahto:
+  - rscadd: Adds microwave smite to toast people.
+  - bugfix: 'Fixes pierce wounds and admin smites.
+
+      :cl:'
+  Sorenon:
+  - rscadd: Added the pride pin quirk
+  - image: adds special sprites for lungs when you use the smoker quirk
+  - rscadd: Added the ability to adjust neck clothing items to reveal accessories
+  - rscadd: 'New funny internals for the clowns to spawn with. They come with O2 and
+      a secondary gas between 3 options: BZ, Helium and N2O. Talk with a "different
+      tone" with Helium, giggle and laugh "uncontrollably" while under the minor effects
+      of N2O or have "fun" hallucinations while under the minor effects of BZ.'
+  - balance: To not cut on how long the clown's O2 internals last due to the mixed
+      gases, the funny internals have 50% more gas volume, same as engineers' internals.
+  - rscadd: You can now choose the prosthetic you want with the Prosthetic Limb quirk.
+  - refactor: split the three tg quirk files into separate files for each quirk
+  Veth-s:
+  - rscadd: Added a tgui panel/button to access drone laws at any time.
+  steelphoenix4:
+  - code_imp: Split Toys loadout category into Plushies and Toys
+  - code_imp: Split Toys store category into Plushies and Toys
+  - code_imp: Move plushies from toys to Plushies
+  - rscadd: Add Big And Will Be Bad Wolf and Scorched Girl to the store
