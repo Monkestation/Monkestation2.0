@@ -101,6 +101,7 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 /obj/structure/hive_exit/Destroy()
 	GLOB.hive_exits -= src
+	UnregisterSignal(get_area(src), list(COMSIG_AREA_EXITED, COMSIG_AREA_ENTERED))
 	if(linked_hive?.linked_exit == src)
 		var/turf/drop_at = linked_hive.drop_location()
 		if(!isnull(drop_at))
