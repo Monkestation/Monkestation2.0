@@ -11,7 +11,6 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/anime_head
 
 /datum/bodypart_overlay/mutant/anime_head
-	color_source = ORGAN_COLOR_ANIME
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "anime_top"
 
