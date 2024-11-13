@@ -23,6 +23,7 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+	var/here
 
 
 /// Run sleeping actions after initialize
@@ -452,16 +453,21 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
+//Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
+// and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
 /atom/movable/screen/lobby/youarehere/Initialize(mapload)
 	. = ..()
 	var/port = world.port
 	switch(port)
 		if(1337)
 			screen_loc = "TOP:-83,CENTER:+177"
+			here = 1337
 		if(2102)
 			screen_loc = "TOP:-122,CENTER:+177"
+			here = 2102
 		if(1342)
 			screen_loc = "TOP:-43,CENTER:+177"
+			here = 1342
 		else
 			screen_loc = "TOP:0,CENTER:0"
 
@@ -477,8 +483,9 @@
 	. = ..()
 	if(!.)
 		return
-	if(time2text(world.realtime, "DDD") == "Sat")
-		hud.mymob.client << link("byond://198.37.111.92:1342")
+	if(!(here == 1342))
+		if(time2text(world.realtime, "DDD") == "Sat")
+			hud.mymob.client << link("byond://198.37.111.92:1342")
 
 //MAIN MONKE
 /atom/movable/screen/lobby/button/mrp
@@ -491,7 +498,8 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("byond://play.monkestation.com:1337")
+	if(!(here == 1337))
+		hud.mymob.client << link("byond://play.monkestation.com:1337")
 
 //NRP MONKE
 /atom/movable/screen/lobby/button/nrp
@@ -504,7 +512,8 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("byond://198.37.111.92:2102")
+	if(!(here == 2102))
+		hud.mymob.client << link("byond://198.37.111.92:2102")
 
 //The Vanderlin Project
 /atom/movable/screen/lobby/background/vanderlin
