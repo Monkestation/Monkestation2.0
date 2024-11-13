@@ -464,6 +464,7 @@
 		return
 	hud.mymob.client << link("byond://play.monkestation.com:1337")
 //HRP MONKE
+/*
 /atom/movable/screen/lobby/button/hrp
 	screen_loc = "TOP:-54,CENTER:+164"
 	icon = 'icons/hud/lobby/redirect.dmi'
@@ -475,4 +476,4 @@
 	if(!.)
 		return
 	hud.mymob.client << link("byond://198.37.111.92:1342")
-
+*/
