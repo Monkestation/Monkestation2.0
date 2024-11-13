@@ -449,7 +449,7 @@
 /atom/movable/screen/lobby/youarehere
 	var/vanderlin = 0
 	screen_loc = "TOP:-81,CENTER:+177"
-	icon = 'icons/hud/lobby/background_monke.dmi'
+	icon = 'icons/hud/lobby/location_indicator.dmi'
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
@@ -461,13 +461,10 @@
 	switch(port)
 		if(1337)
 			screen_loc = "TOP:-83,CENTER:+177"
-			here = 1337
 		if(2102)
 			screen_loc = "TOP:-122,CENTER:+177"
-			here = 2102
 		if(1342)
 			screen_loc = "TOP:-43,CENTER:+177"
-			here = 1342
 		else
 			screen_loc = "TOP:0,CENTER:0"
 
@@ -483,7 +480,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!(here == 1342))
+	if(!(world.port == 1342))
 		if(time2text(world.realtime, "DDD") == "Sat")
 			hud.mymob.client << link("byond://198.37.111.92:1342")
 
@@ -498,7 +495,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!(here == 1337))
+	if(!(world.port == 0))
 		hud.mymob.client << link("byond://play.monkestation.com:1337")
 
 //NRP MONKE
@@ -512,7 +509,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!(here == 2102))
+	if(!(world.port == 2102))
 		hud.mymob.client << link("byond://198.37.111.92:2102")
 
 //The Vanderlin Project
