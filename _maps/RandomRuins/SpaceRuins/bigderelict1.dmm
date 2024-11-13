@@ -414,6 +414,9 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bJ" = (
@@ -1189,6 +1192,12 @@
 /obj/structure/alien/gelpod,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
+"hM" = (
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "iK" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
@@ -1199,6 +1208,14 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
+"ld" = (
+/obj/structure/alien/weeds/creature,
+/obj/structure/cable,
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "lk" = (
 /obj/item/crowbar{
 	pixel_x = -16;
@@ -1303,6 +1320,12 @@
 /obj/item/ammo_box/magazine/m45,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
+"xO" = (
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "xT" = (
 /obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
@@ -1336,6 +1359,22 @@
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
+"zA" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "trails_1";
+	name = "dried blood trail"
+	},
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"Aq" = (
+/mob/living/basic/creature{
+	name = "Miss Tiggles"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "BI" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/brute,
@@ -1732,7 +1771,7 @@ bx
 dK
 dS
 eh
-eh
+zA
 dd
 ak
 ab
@@ -1821,7 +1860,7 @@ ab
 ab
 aj
 ak
-ak
+hM
 ak
 ak
 ak
@@ -1865,7 +1904,7 @@ ae
 ae
 ae
 ae
-ae
+Aq
 ae
 an
 bx
@@ -1912,7 +1951,7 @@ ds
 dL
 dW
 dW
-dW
+xO
 ex
 dW
 dL
@@ -2190,7 +2229,7 @@ an
 an
 an
 ce
-ce
+ld
 ce
 ce
 df

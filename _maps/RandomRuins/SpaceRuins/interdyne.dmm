@@ -34,8 +34,8 @@
 /area/ruin/space/has_grav/interdyne)
 "bU" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/zombie,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "bV" = (
@@ -75,6 +75,11 @@
 /area/ruin/space/has_grav/interdyne)
 "cK" = (
 /obj/structure/shipping_container/interdyne,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"cX" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "dk" = (
@@ -135,10 +140,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "eJ" = (
-/mob/living/simple_animal/hostile/zombie,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "eL" = (
@@ -347,10 +352,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"mi" = (
-/obj/structure/chair/office/tactical,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "mj" = (
 /obj/machinery/door/airlock/medical,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
@@ -515,6 +516,12 @@
 	},
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav/interdyne)
+"ss" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "sD" = (
 /obj/item/paper/fluff/ruins/interdyne/note_5,
 /turf/open/floor/iron/smooth,
@@ -529,6 +536,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "tm" = (
@@ -715,9 +723,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "By" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/simple_animal/hostile/zombie,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "BR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -748,8 +757,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "DA" = (
-/mob/living/simple_animal/hostile/zombie,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "DH" = (
@@ -809,8 +819,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "FC" = (
-/mob/living/simple_animal/hostile/zombie,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Go" = (
@@ -851,6 +861,7 @@
 "Ie" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/mapping_helpers/burnt_floor,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "IL" = (
@@ -980,6 +991,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/blacklight/directional/east,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "MY" = (
@@ -1023,6 +1035,7 @@
 /obj/effect/mob_spawn/corpse/human/monkey,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Oo" = (
@@ -1268,6 +1281,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Xh" = (
@@ -1594,7 +1608,7 @@ Rn
 Rn
 Zi
 qW
-mi
+eJ
 JR
 aY
 Lb
@@ -1818,7 +1832,7 @@ wE
 wE
 li
 fu
-eJ
+DA
 WU
 KA
 gV
@@ -1889,9 +1903,9 @@ IL
 dU
 Zi
 AV
-Nb
+By
 Zi
-fu
+FC
 QD
 xb
 Zi
@@ -1982,7 +1996,7 @@ QD
 QD
 QD
 nm
-nm
+cX
 Ro
 Yv
 Zi
@@ -2086,7 +2100,7 @@ Zi
 GY
 QD
 pp
-uy
+QD
 Wc
 SE
 Zi
@@ -2169,8 +2183,8 @@ VR
 Zi
 MA
 eg
-By
-Vi
+Nr
+ss
 kA
 VC
 Zi
@@ -2199,7 +2213,7 @@ mp
 Zi
 fu
 Nb
-DA
+SE
 ga
 Zi
 Wa
@@ -2224,7 +2238,7 @@ Rn
 Rn
 Zi
 DL
-FC
+fu
 ot
 Sd
 wF
