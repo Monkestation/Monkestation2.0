@@ -415,7 +415,11 @@
 	spawnwithmagazine = 0
 	},
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -1194,7 +1198,11 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "hM" = (
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1212,7 +1220,11 @@
 /obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1322,7 +1334,11 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "xO" = (
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1365,13 +1381,21 @@
 	name = "dried blood trail"
 	},
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "Aq" = (
 /mob/living/basic/creature{
-	name = "Miss Tiggles"
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
