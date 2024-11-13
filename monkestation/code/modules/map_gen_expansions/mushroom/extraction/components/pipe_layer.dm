@@ -118,8 +118,7 @@
 		pipe_placer = null
 	if(!destroying)
 		playsound(parent, 'sound/effects/empulse.ogg', 75, TRUE)
-	if(!QDELETED(lockon_component))
-		QDEL_NULL(lockon_component)
+	QDEL_NULL(lockon_component)
 
 ///Called when the user clicks on something, which we just redirect to build pipes.
 /datum/component/pipe_laying/proc/on_catcher_click(turf/location, control, params, user)
