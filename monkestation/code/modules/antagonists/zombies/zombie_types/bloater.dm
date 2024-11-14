@@ -104,6 +104,7 @@
 		span_alert("[owner] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!"),
 		span_notice("You vomit globs of acid over [target]. It begins to sizzle and melt."),
 	)
+	StartCooldown()
 	return TRUE
 
 /datum/action/cooldown/zombie/explode
