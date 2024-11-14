@@ -610,9 +610,9 @@
 			chargecount = 0
 
 		// MONKESTATION ADDITION START - CLOCK CULT
-		if(integration_cog && GLOB.clock_power < GLOB.max_clock_power)
+		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
 			var/power_delta = clamp(cell.charge - 10, 0, 10)
-			GLOB.clock_power = min(round(GLOB.clock_power + (power_delta)), GLOB.max_clock_power)
+			SSthe_ark.clock_power = min(round(SSthe_ark.clock_power + (power_delta)), SSthe_ark.max_clock_power)
 			cell.charge -= power_delta
 		// MONKESTATION ADDITION END
 

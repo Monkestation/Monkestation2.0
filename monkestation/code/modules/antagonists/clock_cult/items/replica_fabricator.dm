@@ -37,7 +37,7 @@
 /obj/item/clockwork/replica_fabricator/examine(mob/user)
 	. = ..()
 	if(IS_CLOCK(user))
-		. += span_brass("Current power: [display_power(GLOB.clock_power)]")
+		. += span_brass("Current power: [display_power(SSthe_ark.clock_power)]")
 		. += span_brass("Use on brass to convert it into power.")
 		. += span_brass("Use on other materials to convert them into power, but less efficiently.")
 		. += span_brass("<b>Use</b> in-hand to select what to fabricate.")
@@ -57,7 +57,7 @@
 	if(!selected_output) // Now we handle objects
 		return
 
-	if(GLOB.clock_power < selected_output.cost)
+	if(SSthe_ark.clock_power < selected_output.cost)
 		to_chat(user, span_clockyellow("[src] needs at least [selected_output.cost]W of power to create this."))
 		return
 
@@ -98,10 +98,10 @@
 		qdel(effect)
 		return
 
-	if(GLOB.clock_power < selected_output.cost) // Just in case
+	if(SSthe_ark.clock_power < selected_output.cost) // Just in case
 		return
 
-	GLOB.clock_power -= selected_output.cost
+	SSthe_ark.clock_power -= selected_output.cost
 	var/atom/created
 	if(!istype(selected_output, /datum/replica_fabricator_output/turf_output))
 		if(possible_replaced)
@@ -124,15 +124,15 @@
 	if(!IS_CLOCK(user))
 		return
 
-	if(GLOB.clock_power < BRASS_POWER_COST)
+	if(SSthe_ark.clock_power < BRASS_POWER_COST)
 		to_chat(user, span_clockyellow("You need at least [BRASS_POWER_COST]W of power to fabricate bronze."))
 		return
 
-	var/sheets = tgui_input_number(user, "How many sheets do you want to fabricate?", "Sheet Fabrication", 0, round(GLOB.clock_power / BRASS_POWER_COST), 0)
+	var/sheets = tgui_input_number(user, "How many sheets do you want to fabricate?", "Sheet Fabrication", 0, round(SSthe_ark.clock_power / BRASS_POWER_COST), 0)
 	if(!sheets)
 		return
 
-	GLOB.clock_power -= sheets * BRASS_POWER_COST
+	SSthe_ark.clock_power -= sheets * BRASS_POWER_COST
 
 	var/obj/item/stack/sheet/bronze/sheet_stack = new(null, sheets)
 	user.put_in_hands(sheet_stack)
@@ -158,25 +158,25 @@
 
 /// Attempt to convert the targeted item into power, if it's a sheet item
 /obj/item/clockwork/replica_fabricator/proc/attempt_convert_materials(atom/attacking_item, mob/user)
-	if(GLOB.clock_power >= GLOB.max_clock_power)
+	if(SSthe_ark.clock_power >= SSthe_ark.max_clock_power)
 		to_chat(user, span_clockyellow("We are already at maximum power!"))
 		return
 
 	if(istype(attacking_item, /obj/item/stack/sheet/bronze))
 		var/obj/item/stack/bronze_stack = attacking_item
 
-		if((GLOB.clock_power + bronze_stack.amount * BRASS_POWER_COST) > GLOB.max_clock_power)
-			var/amount_to_take = clamp(round((GLOB.max_clock_power - GLOB.clock_power) / BRASS_POWER_COST), 0, bronze_stack.amount)
+		if((SSthe_ark.clock_power + bronze_stack.amount * BRASS_POWER_COST) > SSthe_ark.max_clock_power)
+			var/amount_to_take = clamp(round((SSthe_ark.max_clock_power - SSthe_ark.clock_power) / BRASS_POWER_COST), 0, bronze_stack.amount)
 
 			if(!amount_to_take)
 				to_chat(user, span_clockyellow("[src] can't be powered further using this!"))
 				return
 
 			bronze_stack.use(amount_to_take)
-			GLOB.clock_power += amount_to_take * BRASS_POWER_COST
+			SSthe_ark.clock_power += amount_to_take * BRASS_POWER_COST
 
 		else
-			GLOB.clock_power += bronze_stack.amount * BRASS_POWER_COST
+			SSthe_ark.clock_power += bronze_stack.amount * BRASS_POWER_COST
 			qdel(bronze_stack)
 
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
@@ -187,18 +187,18 @@
 	else if(istype(attacking_item, /obj/item/stack/sheet))
 		var/obj/item/stack/stack = attacking_item
 
-		if((GLOB.clock_power + stack.amount * REGULAR_POWER_COST) > GLOB.max_clock_power)
-			var/amount_to_take = clamp(round((GLOB.max_clock_power - GLOB.clock_power) / REGULAR_POWER_COST), 0, stack.amount)
+		if((SSthe_ark.clock_power + stack.amount * REGULAR_POWER_COST) > SSthe_ark.max_clock_power)
+			var/amount_to_take = clamp(round((SSthe_ark.max_clock_power - SSthe_ark.clock_power) / REGULAR_POWER_COST), 0, stack.amount)
 
 			if(!amount_to_take)
 				to_chat(user, span_clockyellow("[src] can't be powered further using this!"))
 				return
 
 			stack.use(amount_to_take)
-			GLOB.clock_power += amount_to_take * REGULAR_POWER_COST
+			SSthe_ark.clock_power += amount_to_take * REGULAR_POWER_COST
 
 		else
-			GLOB.clock_power += stack.amount * REGULAR_POWER_COST
+			SSthe_ark.clock_power += stack.amount * REGULAR_POWER_COST
 			qdel(stack)
 
 		playsound(src, 'sound/machines/click.ogg', 50, 1)

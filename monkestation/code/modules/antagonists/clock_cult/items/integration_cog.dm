@@ -43,7 +43,7 @@
 	playsound(get_turf(user), 'sound/machines/clockcult/integration_cog_install.ogg', 20)
 	if(!cogger_apc.clock_cog_rewarded)
 		GLOB.clock_installed_cogs++
-		GLOB.max_clock_power += MAX_POWER_PER_COG
+		SSthe_ark.max_clock_power += MAX_POWER_PER_COG
 		cogger_apc.clock_cog_rewarded = TRUE
 		send_clock_message(null, span_brass(span_bold("[user.real_name] has installed an integration cog into [cogger_apc].")), msg_ghosts = TRUE)
 		//Update the cog counts

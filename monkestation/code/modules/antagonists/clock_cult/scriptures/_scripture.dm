@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 /// Invoke this scripture, checking if there's valid power and vitality
 /datum/scripture/proc/invoke()
-	if(GLOB.clock_power < power_cost || GLOB.clock_vitality < vitality_cost)
+	if(SSthe_ark.clock_power < power_cost || GLOB.clock_vitality < vitality_cost)
 		invoke_fail()
 
 		if(invocation_chant_timer)
@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 		return
 
-	GLOB.clock_power -= power_cost
+	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
 
@@ -324,7 +324,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	invoking_slab.active_scripture = src
 	pointed_spell.set_click_ability(invoker)
 	count_down()
-	GLOB.clock_power -= power_cost
+	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
 

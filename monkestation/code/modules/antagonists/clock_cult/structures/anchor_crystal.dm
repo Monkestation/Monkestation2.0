@@ -95,7 +95,7 @@
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return
-		GLOB.clock_power = min(GLOB.clock_power + (10 * seconds_per_tick), GLOB.max_clock_power)
+		SSthe_ark.clock_power = min(SSthe_ark.clock_power + (10 * seconds_per_tick), SSthe_ark.max_clock_power)
 		return
 
 	charging_for = min(charging_for + seconds_per_tick, ANCHORING_CRYSTAL_CHARGE_DURATION)
@@ -136,7 +136,7 @@
 	set_armor(/datum/armor/immune)
 	priority_announce("Reality in [crystal_area] has been destabilized, all personnel are advised to avoid the area.", \
 					  "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
-	GLOB.max_clock_power += 1000
+	SSthe_ark.max_clock_power += 1000
 	SSthe_ark.on_crystal_charged(src)
 
 //set the shield overlay

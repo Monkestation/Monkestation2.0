@@ -127,7 +127,7 @@
 /obj/structure/destructible/clockwork/gear_base/powered/proc/update_power()
 	if(depowered)
 
-		if((GLOB.clock_power > minimum_power && LAZYLEN(transmission_sigils)) || !minimum_power)
+		if((SSthe_ark.clock_power > minimum_power && LAZYLEN(transmission_sigils)) || !minimum_power)
 			repowered()
 
 			return TRUE
@@ -136,7 +136,7 @@
 
 	else
 
-		if(GLOB.clock_power <= minimum_power || !LAZYLEN(transmission_sigils))
+		if(SSthe_ark.clock_power <= minimum_power || !LAZYLEN(transmission_sigils))
 			depowered()
 
 			return FALSE
@@ -154,7 +154,7 @@
 	if(depowered)
 		return FALSE
 
-	if(GLOB.clock_power < amount)
+	if(SSthe_ark.clock_power < amount)
 		return FALSE
 
 	return TRUE
@@ -166,7 +166,7 @@
 	if(!check_power(amount))
 		return FALSE
 
-	GLOB.clock_power -= amount
+	SSthe_ark.clock_power -= amount
 	update_power()
 	return TRUE
 

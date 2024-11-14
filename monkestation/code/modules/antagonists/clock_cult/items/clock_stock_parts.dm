@@ -1,4 +1,4 @@
-//power cell that gets its power from GLOB.clock_power
+//power cell that gets its power from SSthe_ark.clock_power
 /obj/item/stock_parts/cell/clock
 	name = "Wound Power Cell"
 	desc = "A bronze colored power cell. Is that a winding crank on the side?" //might make a real wind up powercell at some point for a joke item
@@ -15,19 +15,19 @@
 	return ..()
 
 /obj/item/stock_parts/cell/clock/process(seconds_per_tick)
-	charge = GLOB.clock_power
-	maxcharge = GLOB.max_clock_power
+	charge = SSthe_ark.clock_power
+	maxcharge = SSthe_ark.max_clock_power
 
 //technically this means these cant be rigged with plasma
 /obj/item/stock_parts/cell/clock/use(used, force)
-	if(istype(loc, /obj/machinery/power/apc) || GLOB.clock_power < used)
+	if(istype(loc, /obj/machinery/power/apc) || SSthe_ark.clock_power < used)
 		return FALSE
 	SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	GLOB.clock_power = max(GLOB.clock_power - used, 0)
+	SSthe_ark.clock_power = max(SSthe_ark.clock_power - used, 0)
 	return TRUE
 
 /obj/item/stock_parts/cell/clock/percent()
-	return 100 * GLOB.clock_power / GLOB.max_clock_power
+	return 100 * SSthe_ark.clock_power / SSthe_ark.max_clock_power
 
 /obj/item/stock_parts/cell/clock/give(amount) //no
 	return FALSE
