@@ -224,10 +224,10 @@ Doesn't work on other aliens/AI.*/
 	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
 		owner.balloon_alert(owner, "doesn't work on mobs!")
 		return FALSE
-		if(isfloorturf(target)) // MONKESTATION ADDITION Turns floors into landmines which do the same as above
+	if(isfloorturf(target)) // MONKESTATION ADDITION Turns floors into landmines
 		owner.balloon_alert(owner, "doesn't work on floors!")
 		return FALSE
-							// MONKESTATION ADDITION END
+
 	return ..()
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
