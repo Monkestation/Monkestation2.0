@@ -92,6 +92,9 @@
 	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
 		owner.balloon_alert(owner, "doesn't work on mobs!")
 		return FALSE
+	if(isfloorturf(target)) // Turns floors into landmines which do the same as above
+		owner.balloon_alert(owner, "doesn't work on floors!")
+		return FALSE
 
 	return ..()
 
