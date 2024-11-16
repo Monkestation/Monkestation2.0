@@ -479,7 +479,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				if(assess_perp(C) >= 4)
 					targets += C
 			else if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) //non humans who are not simple animals (xenos etc)
-				if(!in_faction(C))
+				if(!in_faction(C) || isashwalker(C)) //Monkestation edit, ashwalkers as unidentified life signs.
 					targets += C
 
 	for(var/A in GLOB.mechas_list)
