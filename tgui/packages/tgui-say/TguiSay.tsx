@@ -332,7 +332,7 @@ export class TguiSay extends Component<{}, State> {
               type="button"
             >
               {this.state.buttonContent}
-          </button>
+            </button>
             <textarea
               autoCorrect="off"
               className={`textarea textarea-${theme}`}
