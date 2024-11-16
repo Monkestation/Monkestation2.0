@@ -35,6 +35,8 @@
 			"ref" = REF(art),
 			"loc" = "[AREACOORD(art)]",
 			"active" = component.active,
+			"trigger" = component.activators,
+			"effect" = component.chosen_fault,
 			"typename" = component.type_name,
 			"lastprint" = "[art.fingerprintslast]",
 		))
