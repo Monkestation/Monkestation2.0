@@ -2,12 +2,9 @@ import { useBackend } from '../backend';
 import { Section, Box, Button } from '../components';
 import { Window } from '../layouts';
 
-type Data = {
-  artifacts;
-};
-
 export const ArtifactPanel = (props) => {
   const { act, data } = useBackend();
+  const { artifacts } = data;
   return (
     <Window title="Artifact Panel" width={420} height={675} theme="admin">
       <Window.Content overflowY="scroll" overflowX="hidden">
