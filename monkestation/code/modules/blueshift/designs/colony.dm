@@ -197,6 +197,10 @@
 /datum/design/beaker/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
+	
+/datum/design/large_beaker/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR
 
 // Stock parts are going here too because there's not many of them
 
