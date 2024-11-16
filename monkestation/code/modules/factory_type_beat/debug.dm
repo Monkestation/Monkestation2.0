@@ -83,6 +83,7 @@ SUBSYSTEM_DEF(memory_stats)
 	else if(!length(parsed_stats))
 		CRASH("parsed_stats had no captures")
 	. = list()
+	var/total = 0
 	for(var/datum/regex_match/stat as anything in parsed_stats)
 		if(length(stat.captures) != 5)
 			CRASH("invalid capture: match=\"[stat.match]\"")
@@ -93,8 +94,10 @@ SUBSYSTEM_DEF(memory_stats)
 		var/size_bytes = text2bytes(size, unit)
 		if(isnull(size_bytes))
 			CRASH("[key] had invalid size ([size]) or unit ([unit])")
+		total += size_bytes
 		.["[key]_memory"] = size_bytes
 		.["[key]_count"] = count
+	.["total_memory"] = total
 
 /datum/controller/subsystem/memory_stats/get_metrics()
 	. = ..()
