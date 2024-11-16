@@ -65,18 +65,18 @@ class HubStorageBackend {
   }
 
   async get(key) {
-    const value = await window.hubStorage.getItem('paradise-' + key);
+    const value = await window.hubStorage.getItem(key);
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
   set(key, value) {
-    window.hubStorage.setItem('paradise-' + key, JSON.stringify(value));
+    window.hubStorage.setItem(key, JSON.stringify(value));
   }
 
   remove(key) {
-    window.hubStorage.removeItem('paradise-' + key);
+    window.hubStorage.removeItem(key);
   }
 
   clear() {
