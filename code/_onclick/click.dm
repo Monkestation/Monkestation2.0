@@ -68,8 +68,6 @@
 	if(flags_1 & INITIALIZED_1)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
-GLOBAL_VAR_INIT(__disable_the_check, FALSE)
-
 /**
  * Standard mob ClickOn()
  * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
@@ -93,7 +91,7 @@ GLOBAL_VAR_INIT(__disable_the_check, FALSE)
 
 	var/list/modifiers = params2list(params)
 
-	if(!GLOB.__disable_the_check && !client?.holder && (isobserver(A) || isaicamera(A)) && A.invisibility > see_invisible)
+	if(!client?.holder && (isobserver(A) || isaicamera(A)) && A.invisibility > see_invisible)
 		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(A)] ([A?.type]) [ADMIN_FLW(A)], which they should not be able to see!")
 		log_admin_private("[key_name(src)] clicked on [key_name(A)] ([A?.type]), which they should not be able to see!")
 
