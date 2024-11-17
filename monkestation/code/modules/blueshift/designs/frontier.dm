@@ -490,7 +490,7 @@
 	construction_time = 30 SECONDS
 
 /datum/design/medstation
-	name = "Flat-Packed Frontier Medical Station"
+	name = "Wall Mounted Frontier Medical Station"
 	desc = "A machine designed with cooperation with Deforest Medical Corporation, this can produce invaluable medical supplies far away on the frontier."
 	id = "flatpack_colony_medstation"
 	build_type = COLONY_FABRICATOR
