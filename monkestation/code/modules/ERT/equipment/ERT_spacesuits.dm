@@ -73,5 +73,18 @@
 	name = "emergency response team commander space helmet"
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
 	icon_state = "ert-commander0"
-	var/style = "commander"
+	style = "commander"
 
+//---------
+// Medical
+// --------
+/obj/item/clothing/suit/space/ert/medical
+	name = "emergency response team medical space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-medical"
+
+/obj/item/clothing/head/helmet/space/ert/commander
+	name = "emergency response team medical space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-medical0"
+	style = "medical"
