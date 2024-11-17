@@ -80,6 +80,8 @@
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
+	/// Beacon we have on the target
+	var/datum/component/tracking_beacon/target_beacon
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -158,6 +160,8 @@
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+	target_beacon = tracked_mob.AddComponent(/datum/component/tracking_beacon, heretic_datum.monitor_key, _colour = COLOR_GREEN, _always_update = TRUE)
+	addtimer(CALLBACK(src, PROC_REF(remove_beacon)), 3 SECONDS)
 
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
@@ -166,6 +170,10 @@
 
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/track_target/proc/remove_beacon()
+	if(target_beacon)
+		QDEL_NULL(target_beacon)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
