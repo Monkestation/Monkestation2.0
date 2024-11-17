@@ -22,7 +22,7 @@
 /// The mob's nanites are sending a monitoring signal visible on diag HUD.
 #define TRAIT_NANITE_MONITORING "nanite_monitoring"
 /// This mob can vault over climable structures.
-#define TRAIT_VAULTING "vaulting" //simian trait
+#define TRAIT_VAULTING "vaulting"
 /// Ethereals with this trait will not suffer negative effects from overcharge.
 #define TRAIT_ETHEREAL_NO_OVERCHARGE "ethereal_no_overcharge"
 /// Oozelings with this trait will not lose limbs from low blood/nutrition.
@@ -55,6 +55,8 @@
 #define TRAIT_GHOST_CRITTER "ghost_critter"
 /// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// For when a mob has been consumed by a zombie
+#define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
@@ -83,10 +85,10 @@
 #define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_JAILBIRD			"jailbird"
-#define TRAIT_KLEPTOMANIAC		"kleptomaniac"
 #define TRAIT_LOUD_ASS			"loud_ass"
 #define TRAIT_MINING_CALLOUTS	"miner_callouts"
 #define TRAIT_PARANOIA			"paranoia"
+#define TRAIT_PRIDE_PIN			"pride_pin"
 #define TRAIT_STABLE_ASS		"stable_ass"
 #define TRAIT_STOWAWAY			"stowaway"
 #define TRAIT_UNSTABLE_ASS		"unstable_ass"
