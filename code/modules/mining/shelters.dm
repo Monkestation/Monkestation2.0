@@ -17,7 +17,7 @@
 /datum/map_template/shelter/New()
 	. = ..()
 	blacklisted_turfs = typecacheof(/turf/closed)
-	banned_areas = typecacheof(/area/shuttle)
+	banned_areas = typecacheof(list(/area/shuttle, /area/station/holodeck))
 
 /// Returns whether the shelter can be deployed at the location, or the reason why it can't
 /datum/map_template/shelter/proc/check_deploy(turf/deploy_location, obj/item/survivalcapsule/capsule, ignore_flags = NONE)
