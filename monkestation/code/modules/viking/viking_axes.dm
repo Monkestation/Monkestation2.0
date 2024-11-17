@@ -111,11 +111,11 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 /// How much damage to do unwielded
-	var/force_unwielded = 20
+	force_unwielded = 20
 	/// How much damage to do wielded
-	var/force_wielded = 35
+	force_wielded = 35
 
 /obj/item/melee/viking/genja/runeaxe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
-	/datum/element/lifesteal/Attach(src, flat_heal = 15)
+	AddElement(/datum/element/lifesteal, 15)
