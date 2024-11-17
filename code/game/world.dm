@@ -71,7 +71,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 	RETURN_TYPE(/datum/controller/master)
 
 	// monkestation edit: some tracy refactoring
-	GLOB.tracy_initialized = FALSE
+	if(!tracy_initialized)
+		GLOB.tracy_initialized = FALSE
 #ifndef OPENDREAM
 	if(!tracy_initialized)
 #ifdef USE_BYOND_TRACY
@@ -531,12 +532,22 @@ GLOBAL_PROTECT(tracy_init_reason)
 		SEND_TEXT(world.log, "byond-tracy initialized (no logfile)")
 	// monkestation end
 
-// monkestation start: shutdown_byond_tracy
+// monkestation start
 /world/proc/shutdown_byond_tracy()
 	if(GLOB.tracy_initialized)
 		SEND_TEXT(world.log, "Shutting down byond-tracy")
 		GLOB.tracy_initialized = FALSE
 		call_ext(TRACY_DLL_PATH, "destroy")()
+
+/world/proc/flush_byond_tracy()
+	// if GLOB.tracy_log is set, that means we're using para-tracy, which should have this.
+	if(GLOB.tracy_initialized && GLOB.tracy_log)
+		SEND_TEXT(world.log, "Flushing byond-tracy log")
+		var/flush_result = call_ext(TRACY_DLL_PATH, "flush")()
+		if(flush_result != "0")
+			SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
+			CRASH("Error flushing byond-tracy log: [flush_result]")
+		SEND_TEXT(world.log, "Flushed byond-tracy log")
 // monkestation end
 
 /world/proc/init_debugger()
