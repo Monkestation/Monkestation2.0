@@ -201,10 +201,11 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
+//MONKESTATION EDIT START// adds chaplain and generic backpack and touches up the sprites
 /obj/item/storage/backpack/ert
-	name = "emergency response team commander backpack"
-	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
-	icon_state = "ert_commander"
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets."
+	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
 
@@ -232,6 +233,11 @@
 	name = "emergency response team clown backpack"
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
+/obj/item/storage/backpack/ert/generic
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets"
+	icon_state = "ert_generic"
+//MONKESTATION EDIT STOP
 
 /obj/item/storage/backpack/saddlepack
 	name = "saddlepack"
