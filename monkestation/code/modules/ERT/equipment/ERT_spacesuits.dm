@@ -59,3 +59,19 @@
 	user.update_worn_head()
 
 	set_light_on(on)
+
+// NOW FOR ALL THE VARIATIONS!
+//-----------
+// Commander
+//-----------
+/obj/item/clothing/suit/space/ert/commander
+	name = "emergency response team commander space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-commander"
+
+/obj/item/clothing/head/helmet/space/ert/commander
+	name = "emergency response team commander space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-commander0"
+	var/style = "commander"
+
