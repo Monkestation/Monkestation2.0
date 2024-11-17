@@ -1,3 +1,14 @@
+/datum/armor/ert
+	melee = 40
+	bullet = 30
+	laser = 40 // FF
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 80
+	acid = 85
+	wound = 10
+
 /obj/item/clothing/suit/space/ert
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
@@ -10,7 +21,7 @@
 	slowdown = 0 //agile
 	max_integrity = 300
 	armor_type = /datum/armor/ert
-
+	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this feels right?
 	cell = /obj/item/stock_parts/cell/bluespace
 	//styling
@@ -30,6 +41,7 @@
 	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/ERT/ERT_helmet_worn-digi.dmi'
 	max_integrity = 300
 	armor_type = /datum/armor/ert
+	resistance_flags = ACID_PROOF | FIRE_PROOF
 	//helmet light
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
