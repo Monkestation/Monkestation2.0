@@ -481,6 +481,9 @@
 	var/updates_new = 0
 	var/updates = 0
 
+/obj/machinery/disease2/incubator/fullupgrade
+	circuit = /obj/machinery/disease2/incubator/fullupgrade
+
 #undef INCUBATOR_DISH_GROWTH
 #undef INCUBATOR_DISH_REAGENT
 #undef INCUBATOR_DISH_MAJOR
