@@ -1404,7 +1404,7 @@
 	},
 /obj/structure/tank_dispenser,
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/centcom/syndicate_mothership/expansion_bulldozer)
+/area/centcom/syndicate_mothership/expansion_bombthreat)
 "adI" = (
 /obj/structure/closet/crate/freezer{
 	name = "pantry crate"
