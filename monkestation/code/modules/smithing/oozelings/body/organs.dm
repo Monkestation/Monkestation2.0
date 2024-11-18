@@ -82,24 +82,31 @@
 	. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
-	if(!(gps_active))
-		return
-	user.visible_message(span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
-	span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm."),
-	span_notice("You hear an obscene squelching sound.")
-	)
+	user.visible_message(
+		span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
+		gps_active ? span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into the core, feeling for any dense objects. Slime covers your arm."),
+		span_notice("You hear an obscene squelching sound.")
+    )
 	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(span_warning("[user]'s hand slips out of the core before they can cause any harm!'"),
-		span_warning("Your hand slips out of the goopy core before you can find it's densest point."),
+		gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
 		span_notice("You hear a resounding plop.")
 		)
 		return
 
-	user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-	span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
-	span_notice("You hear a wet crunching sound."))
+	if((gps_active))
+		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
+		span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+		span_notice("You hear a wet crunching sound."))
+		gps_active =  FALSE
+		qdel(GetComponent(/datum/component/gps))//Actually remove the gps signal
+
+	else
+		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
+		span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
+		span_notice("You hear a wet sqlenching sounds."))
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 
 	drop_items_to_ground(get_turf(user))
