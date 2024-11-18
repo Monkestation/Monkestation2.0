@@ -208,6 +208,7 @@
 	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
 /obj/item/storage/backpack/ert/commander
 	name = "emergency response team commander backpack"

@@ -1,4 +1,4 @@
-/datum/armor/ert
+/datum/armor/ert //might make it weaker later
 	melee = 40
 	bullet = 30
 	laser = 40 // FF
