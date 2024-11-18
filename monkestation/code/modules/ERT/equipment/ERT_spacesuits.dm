@@ -106,3 +106,46 @@
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
 	icon_state = "ert-security0"
 	style = "security"
+
+//----------
+// Engineer
+//----------
+/obj/item/clothing/suit/space/ert/engineer
+	name = "emergency response team engineer space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-engineer"
+
+/obj/item/clothing/head/helmet/space/ert/engineer
+	name = "emergency response team engineer space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-engineer0"
+	style = "engineer"
+
+//----------
+// Janitor
+//----------
+/obj/item/clothing/suit/space/ert/janitor
+	name = "emergency response team janitor space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-janitor"
+
+/obj/item/clothing/head/helmet/space/ert/janitor
+	name = "emergency response team janitor space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-janitor0"
+	style = "janitor"
+
+//----------
+// Chaplain
+//----------
+/obj/item/clothing/suit/space/ert/chaplain
+	name = "emergency response team chaplain space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-chaplain"
+
+/obj/item/clothing/head/helmet/space/ert/chaplain
+	name = "emergency response team chaplain space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-chaplain0"
+	style = "chaplain"
+
