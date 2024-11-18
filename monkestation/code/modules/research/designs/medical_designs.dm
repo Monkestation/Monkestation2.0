@@ -84,7 +84,7 @@
 	name = "Prescription glasses"
 	desc = "Glasses that can fix vision."
 	id = "pglasses"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
 	materials = list(/datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/regular
 	category = list(
