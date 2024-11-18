@@ -25,9 +25,17 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this feels right?
 	cell = /obj/item/stock_parts/cell/bluespace
 
-/obj/item/clothing/suit/space/ert/Initialize(mapload)
+/obj/item/clothing/suit/space/ert/equipped(mob/user, slot)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	if(!ishuman(user))
+		return
+	user.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+
+/obj/item/clothing/suit/space/ert/dropped(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	user.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team space helmet"
@@ -48,10 +56,6 @@
 	light_power = 1
 	light_on = FALSE
 	var/on = FALSE
-
-/obj/item/clothing/head/helmet/space/ert/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/head/helmet/space/ert/attack_self(mob/user)
 	on = !on
@@ -88,3 +92,17 @@
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
 	icon_state = "ert-medical0"
 	style = "medical"
+
+//----------
+// Security
+//----------
+/obj/item/clothing/suit/space/ert/security
+	name = "emergency response team security space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-security"
+
+/obj/item/clothing/head/helmet/space/ert/security
+	name = "emergency response team security space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-security0"
+	style = "security"
