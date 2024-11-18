@@ -24061,6 +24061,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "qYP" = (
