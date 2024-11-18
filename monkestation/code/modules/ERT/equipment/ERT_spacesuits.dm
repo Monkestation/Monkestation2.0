@@ -149,3 +149,17 @@
 	icon_state = "ert-chaplain0"
 	style = "chaplain"
 
+//-------
+// Clown
+//-------
+/obj/item/clothing/suit/space/ert/clown
+	name = "emergency response team clown space suit"
+	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-clown"
+
+/obj/item/clothing/head/helmet/space/ert/clown
+	name = "emergency response team clown space helmet"
+	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
+	icon_state = "ert-clown0"
+	style = "clown"
+
