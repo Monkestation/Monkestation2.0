@@ -87,8 +87,6 @@
 
 /datum/species/oozeling/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	. = ..()
-	if(slime.stat != CONSCIOUS)
-		return
 
 	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects
 	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
@@ -99,8 +97,9 @@
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 
 	if(istype(wetness) && wetness.stacks > (REGEN_WATER_STACKS))
-		if (SPT_PROB(25, seconds_per_tick))
-			to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
+		if (SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+			//to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
+			to_chat(slime, span_warning("You can't pull your body it is completely soaked!"))
 			slime.blood_volume -= 1 * seconds_per_tick
 
 ///////
