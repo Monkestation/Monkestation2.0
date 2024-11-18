@@ -1912,7 +1912,7 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /mob/living/basic/alien/drone{
-	can_plant_weeds = 0 = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -3125,7 +3125,7 @@
 "xH" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/drone{
-	can_plant_weeds = 0 = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -3135,7 +3135,7 @@
 "xP" = (
 /obj/structure/alien/weeds/node,
 /mob/living/basic/alien/drone{
-	can_plant_weeds = 0 = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -5855,7 +5855,7 @@
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	can_plant_weeds = 0 = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
