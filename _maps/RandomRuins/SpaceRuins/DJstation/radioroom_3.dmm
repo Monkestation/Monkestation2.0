@@ -74,6 +74,9 @@
 "O" = (
 /obj/structure/table,
 /obj/item/paper/fluff/ruins/djstation,
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "Q" = (

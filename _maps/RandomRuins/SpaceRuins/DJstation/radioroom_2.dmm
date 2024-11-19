@@ -141,6 +141,10 @@
 	dir = 8
 	},
 /area/ruin/space/djstation)
+"B" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
 "C" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -235,6 +239,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
+"Z" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
 
 (1,1,1) = {"
 s
@@ -292,11 +303,11 @@ V
 s
 v
 R
-W
+B
 W
 e
 L
-u
+Z
 Q
 T
 j

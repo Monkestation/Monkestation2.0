@@ -15,8 +15,9 @@
 /turf/closed/wall,
 /area/ruin/space/djstation)
 "k" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/mob_spawn/ghost_role/human/dj{
+	dir = 8
+	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "p" = (
@@ -38,10 +39,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "A" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/random{
+/obj/effect/mob_spawn/ghost_role/human/dj{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,

@@ -17,6 +17,7 @@
 	pixel_x = -10;
 	pixel_y = -6
 	},
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "i" = (
@@ -54,6 +55,9 @@
 /obj/structure/table,
 /obj/item/paper/fluff/ruins/djstation,
 /obj/structure/window/spawner/directional/south,
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
 "w" = (
