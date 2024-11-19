@@ -234,6 +234,11 @@
 /obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"hV" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "iv" = (
 /obj/machinery/dna_infuser,
 /turf/open/floor/mineral/plastitanium,
@@ -317,6 +322,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"lo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "lQ" = (
 /obj/machinery/light/blacklight/directional/south,
@@ -634,6 +644,7 @@
 /area/ruin/space/has_grav/interdyne)
 "xf" = (
 /obj/item/paper/fluff/ruins/interdyne/pizza_note,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xu" = (
@@ -801,6 +812,7 @@
 /obj/effect/mob_spawn/corpse/human/doctor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "EM" = (
@@ -1040,6 +1052,7 @@
 /area/ruin/space/has_grav/interdyne)
 "Oo" = (
 /obj/structure/sink/directional/south,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/interdyne)
 "OD" = (
@@ -1159,6 +1172,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Sz" = (
@@ -1477,7 +1491,7 @@ Zi
 QD
 hG
 Zi
-QD
+uy
 Zi
 ma
 Am
@@ -1509,7 +1523,7 @@ aY
 Lb
 VN
 Zi
-QD
+uy
 QD
 JC
 fu
@@ -1517,10 +1531,10 @@ Zi
 xf
 XT
 Zi
-QD
+uy
 Ww
 Zi
-QD
+uy
 QD
 Bf
 Zi
@@ -1591,7 +1605,7 @@ JC
 Zi
 Zi
 QD
-dR
+hV
 QD
 Zi
 Rn
@@ -1617,7 +1631,7 @@ Zi
 Oo
 DH
 qt
-fu
+FC
 Js
 KW
 MB
@@ -1625,9 +1639,9 @@ gV
 Ej
 fu
 pE
-fu
+FC
 rC
-QD
+uy
 Zi
 Rn
 Rn
@@ -1747,7 +1761,7 @@ Lx
 Rn
 Rn
 Zi
-QD
+uy
 aF
 QD
 QD
@@ -1852,7 +1866,7 @@ Rn
 Rn
 Rn
 Zi
-nm
+cX
 QD
 vd
 Rg
@@ -2112,7 +2126,7 @@ Zi
 Zi
 Yv
 aY
-Nr
+lo
 Jo
 OD
 GK
@@ -2218,7 +2232,7 @@ ga
 Zi
 Wa
 eh
-Nr
+lo
 eQ
 aY
 HQ

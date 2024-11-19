@@ -87,6 +87,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/gun/ballistic/revolver/nagant,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "au" = (
@@ -157,8 +158,8 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aH" = (
 /obj/structure/rack,
-/obj/item/ammo_box/c9mm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/ammo_box/n762,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aI" = (
@@ -272,12 +273,33 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
+"BO" = (
+/obj/item/food/deadmouse,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
 "Nu" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/turretedoutpost)
+"Qt" = (
+/obj/item/ammo_casing/n762,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"Uc" = (
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"WT" = (
+/obj/item/ammo_casing/n762,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"ZC" = (
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 
 (1,1,1) = {"
@@ -389,10 +411,10 @@ ab
 al
 ad
 as
+BO
 az
 az
-az
-az
+Uc
 aW
 ad
 al
@@ -409,7 +431,7 @@ aa
 al
 ad
 at
-az
+Qt
 aG
 aG
 az
@@ -449,10 +471,10 @@ aa
 al
 ad
 av
+Uc
 az
 az
-az
-az
+Qt
 aZ
 ad
 al
@@ -530,7 +552,7 @@ am
 ap
 ad
 aC
-ag
+WT
 ag
 aS
 ad
@@ -571,7 +593,7 @@ ag
 aw
 ag
 ag
-ag
+ZC
 aU
 ad
 ac
@@ -651,7 +673,7 @@ ad
 ad
 ad
 ag
-ag
+ZC
 ag
 ag
 ad

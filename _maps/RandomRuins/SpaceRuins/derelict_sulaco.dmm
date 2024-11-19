@@ -48,6 +48,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
+"cg" = (
+/obj/structure/alien/weeds,
+/mob/living/carbon/alien/adult/sentinel,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "cl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
@@ -211,6 +216,7 @@
 /obj/machinery/light/broken/directional/south,
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /obj/effect/turf_decal/tile/red/half,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "hi" = (
@@ -249,6 +255,8 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
+/obj/item/implanter/stealth,
+/obj/item/hairbrush/tactical,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "ib" = (
@@ -314,6 +322,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "kd" = (
 /obj/item/trash/flare,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "kB" = (
@@ -344,6 +353,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/restraints/legcuffs/bola/tactical,
+/obj/item/storage/medkit/tactical/premium,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "lf" = (
@@ -467,6 +478,7 @@
 "nJ" = (
 /obj/machinery/light/dim/directional/east,
 /obj/structure/alien/weeds,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "ob" = (
@@ -477,6 +489,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
 /obj/structure/window/reinforced/spawner/directional/north,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "oV" = (
@@ -496,6 +509,11 @@
 	network = list()
 	},
 /obj/effect/decal/remains/xeno/larva,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictsulaco)
+"ql" = (
+/obj/structure/alien/weeds,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "qx" = (
@@ -620,6 +638,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "ur" = (
@@ -747,6 +766,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/clothing/under/syndicate/nova/tactical,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "yy" = (
@@ -866,6 +886,11 @@
 /obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
+"Dr" = (
+/obj/effect/mapping_helpers/broken_floor,
+/mob/living/carbon/alien/adult/sentinel,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "DJ" = (
 /obj/item/storage/medkit,
 /turf/open/floor/iron/smooth,
@@ -941,6 +966,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Gj" = (
@@ -1215,6 +1241,7 @@
 	network = list()
 	},
 /obj/machinery/light/small/broken/directional/south,
+/mob/living/carbon/alien/adult/sentinel,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ni" = (
@@ -1446,6 +1473,7 @@
 "Ub" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/xeno,
+/mob/living/carbon/alien/adult/royal/queen,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ug" = (
@@ -2508,7 +2536,7 @@ JT
 Lv
 wL
 qc
-Bk
+ql
 Bk
 jI
 dJ
@@ -2896,7 +2924,7 @@ Ot
 oV
 CU
 ZA
-dO
+Dr
 QR
 eF
 RH
@@ -2971,7 +2999,7 @@ Oo
 Vz
 dO
 Zc
-CU
+cg
 YA
 Ot
 oV
