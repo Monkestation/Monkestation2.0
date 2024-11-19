@@ -243,7 +243,7 @@
 
 /datum/quirk/dnr
 	name = "Do Not Revive"
-	desc = "You instantly become soulless upon death. Make your only shot count."
+	desc = "You cannot be defibrillated upon death. Make your only shot count."
 	value = -8
 	icon = FA_ICON_HEART
 	gain_text = span_danger("You have one chance left.")
