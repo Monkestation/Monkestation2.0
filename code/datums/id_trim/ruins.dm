@@ -162,3 +162,8 @@
 /datum/id_trim/away/the_outlet/mad_manager
 	assignment = "The Mad Manager"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL, ACCESS_AWAY_SEC)
+
+//Trims for DJ Station space ruins
+/datum/id_trim/away/dj_station/dj
+	assignment = "Space DJ"
+	access = list(ACCESS_AWAY_GENERAL)

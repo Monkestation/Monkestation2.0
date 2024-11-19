@@ -171,3 +171,27 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
+
+/// DJ Station
+
+/obj/effect/mob_spawn/ghost_role/human/dj
+	name = "DJ"
+	you_are_text = "You are a space DJ, rock on spaceman."
+	flavour_text = "The emptiness of space, you hate it. Make it so that EVERYONE is never all alone in this vast universe."
+	important_text = "You can leave your station but DO NOT go to the main station unless invited to."
+	prompt_name = "a space DJ"
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
+	uses = 1
+
+/datum/outfit/job/curator
+	name = "DJ"
+
+	id_trim = /datum/id_trim/away/dj_station/dj
+	uniform = /obj/item/clothing/under/rank/civilian/curator
+	backpack_contents = list(
+		/obj/item/choice_beacon/hero = 1,
+	)
+	belt = /obj/item/modular_computer/pda/curator
+	ears = /obj/item/radio/headset/syndicate/alt
+	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/laser_pointer/green
