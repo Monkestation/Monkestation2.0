@@ -405,6 +405,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Ow" = (
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/has_grav/thelizardsgas)
 "OQ" = (

@@ -102,6 +102,16 @@
 "bW" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"ch" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/waystation/assaultpod)
 "cn" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
@@ -139,6 +149,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
 "dz" = (
@@ -467,6 +478,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
+"iq" = (
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/waystation/kitchen)
 "ix" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/green/end,
@@ -986,6 +1001,7 @@
 /turf/closed/mineral/random/low_chance,
 /area/ruin/space)
 "pX" = (
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "qi" = (
@@ -2245,6 +2261,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "NC" = (
@@ -2423,6 +2440,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
+"QT" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "QU" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
@@ -4301,7 +4323,7 @@ Ls
 gD
 tt
 jV
-jV
+SJ
 jV
 Bu
 jV
@@ -4821,7 +4843,7 @@ LK
 Ze
 VE
 Oh
-Wz
+ch
 dM
 Wz
 hq
@@ -4861,7 +4883,7 @@ or
 or
 yg
 Lu
-Cc
+iq
 Bw
 ko
 kX
@@ -5480,7 +5502,7 @@ Ok
 jN
 er
 nD
-Ar
+QT
 yi
 ZZ
 ZZ
