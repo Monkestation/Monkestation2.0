@@ -50,7 +50,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "cg" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "cl" = (
@@ -216,7 +216,7 @@
 /obj/machinery/light/broken/directional/south,
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /obj/effect/turf_decal/tile/red/half,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "hi" = (
@@ -322,7 +322,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "kd" = (
 /obj/item/trash/flare,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "kB" = (
@@ -478,7 +478,7 @@
 "nJ" = (
 /obj/machinery/light/dim/directional/east,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "ob" = (
@@ -489,7 +489,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "oV" = (
@@ -513,7 +513,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ql" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "qx" = (
@@ -638,7 +638,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "ur" = (
@@ -888,7 +888,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "Dr" = (
 /obj/effect/mapping_helpers/broken_floor,
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "DJ" = (
@@ -966,7 +966,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/mob/living/carbon/alien/adult/sentinel,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Gj" = (
@@ -1473,7 +1473,7 @@
 "Ub" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/xeno,
-/mob/living/carbon/alien/adult/royal/queen,
+/mob/living/simple_animal/hostile/alien/queen/large,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ug" = (
