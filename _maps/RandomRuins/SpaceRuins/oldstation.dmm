@@ -3630,7 +3630,8 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill,
+/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mO" = (
@@ -8187,12 +8188,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
-"TT" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/template_noop,
-/area/ruin/space/solars/ancientstation/charlie/solars)
 "TX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11371,7 +11366,7 @@ my
 Cs
 dH
 my
-TT
+my
 dZ
 aa
 aa
@@ -14363,7 +14358,7 @@ aa
 aa
 ad
 ad
-xF
+ag
 aM
 cC
 bh
@@ -14428,8 +14423,8 @@ aa
 aa
 aa
 ad
+xF
 af
-ag
 aB
 ag
 ag

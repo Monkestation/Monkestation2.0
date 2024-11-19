@@ -7541,6 +7541,7 @@
 #include "monkestation\code\modules\mob_spawn\ghost_roles\space_roles\oldeng.dm"
 #include "monkestation\code\modules\mob_spawn\ghost_roles\space_roles\oldexplorer.dm"
 #include "monkestation\code\modules\mob_spawn\ghost_roles\space_roles\oldsci.dm"
+#include "monkestation\code\modules\mob_spawn\ghost_roles\space_roles\oldsec.dm"
 #include "monkestation\code\modules\mod\mod_control.dm"
 #include "monkestation\code\modules\mod\mod_types.dm"
 #include "monkestation\code\modules\mod\modules\modules_antag.dm"
