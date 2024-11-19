@@ -431,6 +431,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bo" = (
@@ -720,6 +721,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"cb" = (
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/deepstorage/kitchen)
 "cd" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/seed_rare,
@@ -1478,6 +1483,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
@@ -2230,6 +2236,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gC" = (
@@ -2668,6 +2675,11 @@
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"Cq" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Db" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -2736,6 +2748,11 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"Ls" = (
+/obj/structure/cable,
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "LB" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
@@ -3849,7 +3866,7 @@ af
 cl
 cI
 cT
-fT
+Cq
 dF
 dV
 cp
@@ -3911,7 +3928,7 @@ Rs
 hk
 fF
 fS
-fT
+Cq
 fT
 gz
 gH
@@ -4155,7 +4172,7 @@ ar
 aA
 af
 bc
-bu
+cb
 bN
 af
 cr
@@ -4520,7 +4537,7 @@ ag
 aQ
 bi
 bC
-sL
+Ls
 sL
 cx
 aQ
