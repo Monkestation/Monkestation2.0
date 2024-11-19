@@ -190,7 +190,7 @@
 	prompt_name = "a syndicate science technician"
 	you_are_text = "You are a syndicate science technician, employed in a remote research bunker developing biological weapons."
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has a station in this sector. Continue your research as best you can, and try to keep a low profile."
-	important_text = "DO NOT abandon the base  or let it fall into enemy hands!"
+	important_text = "DO NOT abandon the base or let it fall into enemy hands!"
 	outfit = /datum/outfit/deepstorage_syndicate
 
 /datum/outfit/deepstorage_syndicate

@@ -2586,7 +2586,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wK" = (
