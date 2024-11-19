@@ -326,3 +326,35 @@
   - rscadd: jazz artifact effects
   tired-wired:
   - rscadd: adds an intern (trialmin) office to centcom.
+2024-11-18:
+  SirNightKnight:
+  - rscadd: Gave the clown a cool new hardsuit.
+  - balance: Added security hardsuits and jetpacks to the security suit storage unit
+      so they can catch the clown in space easier.
+  - rscadd: Nanotrasen has relaunched their space exploration program utilizing old
+      equipment. Welcome aboard the station explorers!
+  - rscadd: Reintroduced security, clown, and mining hardsuits.
+  - rscadd: Dug so hard in the code changelog I found mining jetpacks.
+  - qol: Cargo teleporters can fit in explorer webbing.
+  - qol: Citationinators can fit in security belts.
+  - qol: Adds a controls description to the space suit parent clarifying how to open
+      the cell cover, remove the cell, and adjust the thermal regulator.
+  - rscadd: Added hardsuit crates to the cargo catalog.
+  ThePooba:
+  - rscadd: adds an admin rune axe
+  tired-wired:
+  - bugfix: Blueshift blueshield's office should work properly now.
+2024-11-19:
+  Gw0sty:
+  - rscadd: Added a dedicated expansion area for the juggernaut suit
+  - qol: Renamed the juggernaut suit purchase to reflect your buying access to the
+      suit, not the suit itself.
+  - balance: Lowered the amount mining transfer cards come with, fixing a infinite
+      mining point exploit. CC hated this one trick.
+  - bugfix: Adjusted bioterrorism area in nukie base so you can actually preform xenobio
+      and virology.
+  Shoddd:
+  - code_imp: Simple mob xenos are now basic mob xenos
+  Uristthedorf:
+  - rscadd: Adds prescription glasses to autolathe, medfab, and colony fab.
+  - rscadd: Adds several new items to the colony fabricator from the autolathe.
