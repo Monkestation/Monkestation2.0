@@ -40,14 +40,6 @@
 		/datum/stock_part/micro_laser/tier4 = 1,
 	)
 
-/obj/item/circuitboard/machine/incubator/fullupgrade
-	build_path = /obj/machinery/disease2/incubator/fullupgrade
-	req_components = list(
-		/datum/stock_part/scanning_module/tier4 = 2,
-		/datum/stock_part/matter_bin/tier4 = 1,
-		/datum/stock_part/micro_laser/tier4 = 2,
-	)
-
 /obj/item/circuitboard/computer/diseasesplicer
 	name = "Disease Splicer"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

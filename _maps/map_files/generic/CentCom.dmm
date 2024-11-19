@@ -19960,7 +19960,7 @@
 	},
 /area/centcom/central_command_areas/evacuation)
 "drn" = (
-/obj/machinery/disease2/incubator/fullupgrade,
+/obj/machinery/disease2/incubator,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
