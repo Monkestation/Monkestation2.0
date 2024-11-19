@@ -230,6 +230,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "AV" = (
+/obj/item/clothing/glasses/hud/health/night/science,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav)
 "AY" = (
@@ -481,6 +482,7 @@
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/yellow/heavy,
 /turf/open/floor/iron/dark/corner/airless{
 	dir = 4
 	},
