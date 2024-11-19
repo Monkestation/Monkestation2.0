@@ -1,7 +1,6 @@
 /datum/quirk/monophobia
 	name = "Monophobia"
 	desc = "You are extremley stressed when left alone, leading to potenitally lethal levels of anxiety."
-	icon = FA_ICON_USERS
 	value = -6
 	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/choice_beacon/pet)
