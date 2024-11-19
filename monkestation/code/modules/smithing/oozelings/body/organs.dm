@@ -153,10 +153,8 @@
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
 
-	for(var/atom/movable/item as anything in victim.get_equipped_items(include_pockets = TRUE))
-		victim.dropItemToGround(item)
-		stored_items |= item
-		item.forceMove(src)
+	//Start moving items
+	process_items(victim)
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
@@ -229,6 +227,34 @@
 		rebuild_body(user)
 		return TRUE
 	return ..()
+
+/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim)
+
+	//List of slots that drop despite the transferItemtoLoc proc
+	var/list/focus_slots = list(
+    	ITEM_SLOT_SUITSTORE,
+    	ITEM_SLOT_BELT,
+    	ITEM_SLOT_ID,
+    	ITEM_SLOT_LPOCKET,
+    	ITEM_SLOT_RPOCKET
+	)
+
+	for(var/islot in focus_slots) // Handle dropping items on unequip
+		var/atom/movable/focus_item = victim.get_item_by_slot(islot)
+		if(focus_item)
+			victim.transferItemToLoc(focus_item, src, FALSE, silent = TRUE)
+			stored_items |= focus_item
+
+	var/atom/movable/item_on_back = victim.back
+	if(item_on_back) //Jank to handle modsuit covering items. Fix this.
+		victim.transferItemToLoc(item_on_back, src, FALSE, silent = TRUE)
+		stored_items |= item_on_back
+
+	var/atom/movable/rest_items = victim.get_equipped_items(include_pockets = TRUE)
+	for(var/atom/movable/item in rest_items)
+		if(item)
+			victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
+			stored_items |= item
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
