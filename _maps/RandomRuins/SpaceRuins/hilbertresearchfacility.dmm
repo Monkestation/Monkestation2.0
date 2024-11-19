@@ -437,6 +437,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kO" = (
 /obj/effect/turf_decal/siding/thinplating_new/light,
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "le" = (
@@ -716,6 +717,7 @@
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
 "sz" = (
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "sO" = (
@@ -2265,6 +2267,10 @@
 /obj/structure/bedsheetbin,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Yk" = (
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ym" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2856,7 +2862,7 @@ Ut
 Ut
 Ut
 Bo
-La
+Yk
 La
 Ok
 Bo

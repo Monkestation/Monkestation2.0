@@ -414,13 +414,6 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bJ" = (
@@ -1182,6 +1175,11 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
+"fy" = (
+/obj/structure/cable,
+/mob/living/basic/hivebot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "fB" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 10;
@@ -1197,13 +1195,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "hM" = (
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
+/mob/living/basic/hivebot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "iK" = (
@@ -1218,14 +1210,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ld" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/cable,
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
+/mob/living/basic/hivebot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "lk" = (
@@ -1333,13 +1318,8 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "xO" = (
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
+/obj/machinery/door/firedoor,
+/mob/living/basic/hivebot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "xT" = (
@@ -1376,29 +1356,17 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "zA" = (
-/obj/effect/decal/cleanable/blood/old{
-	icon_state = "trails_1";
-	name = "dried blood trail"
+/obj/machinery/button/door/directional/north{
+	id = "bigderelictshipdock";
+	name = "tradepost entry doors"
 	},
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
+/mob/living/basic/hivebot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "Aq" = (
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
+/mob/living/basic/hivebot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "BI" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/brute,
@@ -1747,7 +1715,7 @@ aC
 aA
 bc
 bs
-bs
+bJ
 bs
 bJ
 aS
@@ -1783,7 +1751,7 @@ aC
 aA
 bb
 br
-bJ
+Aq
 ca
 cq
 aS
@@ -1795,7 +1763,7 @@ bx
 dK
 dS
 eh
-zA
+eh
 dd
 ak
 ab
@@ -1830,7 +1798,7 @@ ab
 ab
 dL
 dL
-ei
+xO
 ei
 ew
 dL
@@ -1884,9 +1852,9 @@ ab
 ab
 aj
 ak
+ak
+ak
 hM
-ak
-ak
 ak
 ak
 ak
@@ -1928,11 +1896,11 @@ ae
 ae
 ae
 ae
-Aq
+ae
 ae
 an
 bx
-bx
+ld
 ab
 pB
 au
@@ -1975,7 +1943,7 @@ ds
 dL
 dW
 dW
-xO
+dW
 ex
 dW
 dL
@@ -2242,7 +2210,7 @@ tu
 ab
 ab
 ab
-aj
+zA
 an
 an
 an
@@ -2250,10 +2218,10 @@ an
 an
 an
 an
-an
+fy
 an
 ce
-ld
+ce
 ce
 ce
 df

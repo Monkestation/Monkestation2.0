@@ -383,6 +383,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
+"vy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green/fourcorners,
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/abandonedzoo)
 "vU" = (
 /mob/living/basic/mining/goldgrub,
 /turf/open/misc/asteroid,
@@ -724,7 +730,7 @@ Ni
 Ni
 Ni
 Ni
-oS
+vy
 Ni
 Ni
 Ni
