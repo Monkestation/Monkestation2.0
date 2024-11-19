@@ -52,6 +52,7 @@
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_arm"
+	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
@@ -75,6 +76,7 @@
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_arm"
+	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
@@ -98,6 +100,7 @@
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_leg"
+	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
@@ -119,6 +122,7 @@
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_leg"
+	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
