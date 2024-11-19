@@ -41,7 +41,7 @@ const SlotsReel = (props: SlotsReelProps) => {
     <div
       style={{
         display: 'inline-flex',
-        flexDirection: 'column',
+        'flex-direction': 'column',
       }}
     >
       {reel.map((slot, i) => (
@@ -55,7 +55,7 @@ const SlotsTile = (props: SlotsTileProps) => {
   return (
     <div
       style={{
-        textAlign: 'center',
+        'text-align': 'center',
         padding: '1rem',
         margin: '0.5rem',
         display: 'inline-block',
@@ -88,9 +88,9 @@ export const SlotMachine = (props) => {
     <Window>
       <Section
         title="Slots!"
-        style={{ justifyContent: 'center', textAlign: 'center' }}
+        style={{ 'justify-content': 'center', 'text-align': 'center' }}
       >
-        <Section style={{ textAlign: 'left' }}>
+        <Section style={{ 'text-align': 'left' }}>
           <p>
             Only <b>{cost}</b> credit{pluralS(cost)} for a chance to win big!
           </p>
@@ -122,9 +122,9 @@ export const SlotMachine = (props) => {
         <hr />
         <Section
           style={{
-            flexDirection: 'row',
+            'flex-direction': 'row',
             display: 'flex',
-            justifyContent: 'center',
+            'justify-content': 'center',
           }}
         >
           {state.map((reel, i) => {
