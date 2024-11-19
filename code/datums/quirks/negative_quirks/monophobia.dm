@@ -2,6 +2,7 @@
 	name = "Monophobia"
 	desc = "You are extremley stressed when left alone, leading to potenitally lethal levels of anxiety."
 	value = -6
+	icon = FA_ICON_USER_FRIENDS
 	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/choice_beacon/pet)
 
