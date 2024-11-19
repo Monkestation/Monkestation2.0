@@ -25,17 +25,21 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "k" = (
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel";
+	pixel_y = 28
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
 "n" = (
 /obj/structure/table,
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
+/obj/machinery/cassette/dj_station{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
 "q" = (
@@ -53,10 +57,16 @@
 /area/ruin/space/djstation)
 "v" = (
 /obj/structure/table,
-/obj/item/paper/fluff/ruins/djstation,
+/obj/item/paper/fluff/ruins/djstation{
+	pixel_y = 1
+	},
 /obj/structure/window/spawner/directional/south,
-/obj/item/radio/radio_mic{
-	pixel_y = 7
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	listening = 0;
+	name = "Pirate Radio Broadcast Channel"
 	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
@@ -69,13 +79,11 @@
 /area/space/nearstation)
 "z" = (
 /obj/structure/table,
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
 "A" = (
@@ -97,15 +105,11 @@
 /area/ruin/space/djstation)
 "M" = (
 /obj/structure/table,
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	freerange = 1;
-	listening = 0;
-	name = "Pirate Radio Broadcast Channel"
-	},
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/djstation)
 "U" = (

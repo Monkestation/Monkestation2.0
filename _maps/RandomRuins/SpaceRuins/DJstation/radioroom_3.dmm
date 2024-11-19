@@ -22,7 +22,9 @@
 /area/ruin/space/djstation)
 "r" = (
 /obj/structure/table,
-/obj/effect/spawner/random/maintenance,
+/obj/machinery/cassette/dj_station{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "s" = (
@@ -87,6 +89,13 @@
 	freerange = 1;
 	listening = 0;
 	name = "Pirate Radio Broadcast Channel"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/djstation)
+"S" = (
+/obj/structure/table,
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
@@ -160,7 +169,7 @@ W
 s
 h
 r
-V
+S
 A
 T
 "}
