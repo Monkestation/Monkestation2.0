@@ -139,6 +139,14 @@
 		to_chat(phantom_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
 		playsound(phantom_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
 		phantom_owner.blood_volume -= 60 //Makes for 120 when you regenerate it.
+
+		var/list/limborgans = src.contents
+		if(limborgans)
+			for(var/obj/item/organ/lmbimplant in limborgans)
+				if(!(deprecise_zone(src.body_zone) == BODY_ZONE_HEAD || deprecise_zone(src.body_zone) == BODY_ZONE_CHEST))
+					lmbimplant.forceMove(drop_loc)
+					to_chat(phantom_owner, span_notice("Something small falls out of your disintegrating [src]."))
+
 		qdel(src)
 		return
 
