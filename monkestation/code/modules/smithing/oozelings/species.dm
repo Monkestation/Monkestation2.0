@@ -139,6 +139,13 @@
 
 	return ..()
 
+/datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)
+	//Flag blood loss damage from being touched by water
+	. = ..()
+
+	if(isoozeling(exposed_mob))
+		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
+		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
 
 /datum/reagent/toxin/slimeooze
 	name = "Slime Ooze"
