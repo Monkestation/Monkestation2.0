@@ -81,7 +81,9 @@ const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
     const node = e.target;
-    const attempts = parseInt(node.getAttribute('data-reload-n'), 10) || 0;
+    const attempt_attr = node.getAttribute('data-reload-n');
+    const attempts =
+      attempt_attr !== null ? parseInt(attempt_attr, 10) || 0 : 0;
     if (attempts >= IMAGE_RETRY_LIMIT) {
       logger.error(`failed to load an image after ${attempts} attempts`);
       return;
