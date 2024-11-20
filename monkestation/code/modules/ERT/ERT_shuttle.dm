@@ -49,3 +49,8 @@
 	name = "ERT shuttle"
 	shuttle_id = "ertshuttle"
 	rechargeTime = 3 MINUTES
+
+////////////// Shuttle Templates //////////////
+/datum/map_template/shuttle/ert/generic
+	suffix = "generic"
+	name = "ERT Shuttle"
