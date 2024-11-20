@@ -11,7 +11,7 @@
 	/// How many time manipulator need to take and drop item.
 	var/working_speed = 2 SECONDS
 	/// Using high tier manipulators speeds up big manipulator and requires more energy.
-	var/power_use_lvl = 0.2
+	var/power_use_lvl = 0.002
 	/// When manipulator already working with item inside he don't take any new items.
 	var/on_work = FALSE
 	/// Activate mechanism.
@@ -123,22 +123,22 @@
 	switch(locate_servo.tier)
 		if(1)
 			working_speed = 2 SECONDS
-			power_use_lvl = 0.2
+			power_use_lvl = 0.002
 			set_greyscale(COLOR_YELLOW)
 			manipulator_hand?.set_greyscale(COLOR_YELLOW)
 		if(2)
 			working_speed = 1.4 SECONDS
-			power_use_lvl = 0.4
+			power_use_lvl = 0.004
 			set_greyscale(COLOR_ORANGE)
 			manipulator_hand?.set_greyscale(COLOR_ORANGE)
 		if(3)
 			working_speed = 0.8 SECONDS
-			power_use_lvl = 0.6
+			power_use_lvl = 0.006
 			set_greyscale(COLOR_RED)
 			manipulator_hand?.set_greyscale(COLOR_RED)
 		if(4)
 			working_speed = 0.2 SECONDS
-			power_use_lvl = 0.8
+			power_use_lvl = 0.008
 			set_greyscale(COLOR_PURPLE)
 			manipulator_hand?.set_greyscale(COLOR_PURPLE)
 

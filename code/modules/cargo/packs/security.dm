@@ -170,6 +170,40 @@
 					/obj/item/conversion_kit,
 				)
 
+/datum/supply_pack/security/mini_egun
+	name = "Miniature Energy Gun Crate"
+	desc = "Contains three miniature energy guns, a popular choice for security personnel in on-world Nanotransen facilities, \
+		has slightly less charge capacity than a normal lazer gun"
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/gun/energy/e_gun/mini = 3)
+	crate_name = "miniature energy gun crate"
+
+/datum/supply_pack/security/ammobenchsupport
+	name = "Ammunition Workbench Care Package"
+	desc = "Engineers are vaporized?  Cargo Technicians blew the budget on cats and pizza? \
+		This is the crate for you, containing the necessary supplies to create a complete \
+		ammunition production platform!"
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/circuitboard/machine/ammo_workbench,
+					/obj/item/disk/ammo_workbench/advanced,
+					/obj/item/circuitboard/machine/dish_drive/bullet,
+					/obj/item/stack/sheet/iron = 10,
+					/obj/item/stack/cable_coil = 30,
+					/obj/item/stock_parts/manipulator = 3,
+					/obj/item/stock_parts/matter_bin = 4,
+					/obj/item/stock_parts/micro_laser = 2,
+					/obj/item/stack/sheet/glass = 1,
+					/obj/item/wrench,
+					/obj/item/screwdriver,
+					/obj/item/paper/fluff{
+	default_raw_text = "To set up your ammo platform, you'll need to crawl before you can shoot! \
+	After setting up your Ammo Workbench, insert the Advanced Munitions Disk and go to the designs tab in the bench. \
+	Finally, finalize the connection between the disk and computer by pressing 'upload', and there you have it!  Git' some!";
+	name = "Notice from Ammunation"
+	},
+				)
+	crate_name = "Ammunition Workbench Care Package"
+
 /// Armory packs
 
 /datum/supply_pack/security/armory
@@ -317,3 +351,92 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/armory/qarad
+	name = "Elite Import Weapon:  Qarad Light Machinegun"
+	desc = "Heavy duty, heavy kicking, heavy penetration weapon, \
+		normally reserved for all out warfare, comes with a gun case \
+		and spare magazines."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle/machinegun,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+					/obj/item/ammo_box/magazine/c40sol_rifle/standard/starts_empty = 2,
+				)
+	crate_name = "elite import qarad light machine gun crate"
+
+/datum/supply_pack/security/armory/lancabrifle
+	name = "Elite Import Weapon:  Lanca Battle Rifle"
+	desc = "Sleek, scoped, special operatives rifle, \
+		now in your own hands!  Caseless ammunition \
+		will additionally keep your foes guessing!"
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/lanca,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+					/obj/item/ammo_box/magazine/lanca/spawns_empty = 2,
+				)
+	crate_name = "elite import lanca battle rifle"
+
+/datum/supply_pack/security/armory/bogseo
+	name = "Elite Import Weapon: Bogseo Submachinegun"
+	desc = "Among the Honor Guard, training oneself to handle this monster is a test, \
+		though it is more an inside joke regarding its brief high-caliber \
+		chambering run."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/xhihao_smg,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+					/obj/item/ammo_box/magazine/miecz/spawns_empty = 2,
+				)
+	crate_name = "elite import bogseo submachinegun"
+
+/datum/supply_pack/security/armory/cawomarksman
+	name = "Elite Import Weapon: Cawil Marksman"
+	desc = "Though many soldiers trained in long range ballistics prefer to hold their breath, \
+		the Cawil Marksman's excellent recoil pattern makes it practical in the hands of any \
+		SolFed Cadet."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle/marksman,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+					/obj/item/ammo_box/magazine/c40sol_rifle/starts_empty = 2,
+				)
+	crate_name = "elite import cawil marksman"
+
+/datum/supply_pack/security/armory/cawobattlerifle
+	name = "Elite Import Weapon: Carwo-Cawil Battle Rifle"
+	desc = "Standard among SolFed troopers, furious all the same, sometimes rarity \
+		doesn't need to constitute robustness."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+					/obj/item/ammo_box/magazine/c40sol_rifle/standard/starts_empty = 2,
+				)
+	crate_name = "elite import carwo-cawil battle rifle"
+
+/datum/supply_pack/security/armory/mieczsmg
+	name = "Miecz Submachinegun Crate"
+	desc = "Two Miecz subemachineguns now available for purchase, a direct competitor to \
+		the Sindano SolFed SMG, comes in a two pack, considered better value by \
+		P.M.C companies across the Spinward."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/gun/ballistic/automatic/miecz = 2)
+	crate_name = "Miecz Submachinegun Crate"
+
+/datum/supply_pack/security/armory/ion_carbine
+	name = "Ion Carbine Special Crate"
+	desc = "Perhaps some rogue Spinward pirates have stolen your ion rifle, or the \
+		clown has taken it for a joy ride?  This ion carbine is a compact solution to \
+		any robotic foes or electronic issues!  Warranty void if used to cook food."
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/obj/item/gun/energy/ionrifle/carbine)
+	crate_name = "Ion Carbine Special Crate"
+
+/datum/supply_pack/security/armory/wylomantimat
+	name = "Elite Import:  Wylom Anti-Material Rifle"
+	desc = "Do you really want everything in one direction to not be seen? \
+		We have the weapon for you!  No matter the case, a rogue HONK-mech, \
+		an annoying assistant, or even small space pods, Wylom is here for you!"
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(/obj/item/gun/ballistic/automatic/wylom,
+					/obj/item/ammo_box/magazine/wylom = 2,
+					/obj/item/storage/toolbox/guncase/skyrat/empty,
+				)
+	crate_name = "elite import wylom anti-material rifle"
