@@ -3,7 +3,7 @@
 	desc = "Dust to dust."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_sliver_pulse"
-	actions_types = list(/datum/action/item_action/duster_implant)
+	actions_types = list(/datum/action/item_action/dust_implant)
 	var/popup = FALSE // is the window open?
 	var/active = FALSE
 
@@ -27,7 +27,7 @@
 				"}
 	return dat
 
-obj/item/implant/dust/activate(cause)
+/obj/item/implant/dust/activate(cause)
 	. = ..()
 	if(!cause || !imp_in || active)
 		return FALSE
@@ -35,7 +35,7 @@ obj/item/implant/dust/activate(cause)
 		if(popup)
 			return FALSE
 		popup = TRUE
-		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to self immolate!", "[name] Confirmation", list("Yes", "No"))
+		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to disintergrate!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
 		if(response != "Yes")
 			return FALSE
@@ -43,14 +43,22 @@ obj/item/implant/dust/activate(cause)
 		return FALSE
 	to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
-	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(get_turf(imp_in))], with cause of [cause].")
+	to_chat(imp_in, "<span class='notice'>Your dusting implant activates!</span>")
+	imp_in.visible_message("<span class='warning'>[imp_in] burns up in a flash!</span>")
+	var/turf/immolationturf = get_turf(imp_in)
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(immolationturf)], with cause of [cause].")
 
 	if(imp_in)
 		imp_in.investigate_log("has been dusted by a self immolation implant.", INVESTIGATE_DEATHS)
-		imp_in.dust(just_ash)
+		imp_in.dust()
+		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(src)
 		return
 
+/obj/item/implant/dust/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(.)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /obj/item/implant/dust/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
