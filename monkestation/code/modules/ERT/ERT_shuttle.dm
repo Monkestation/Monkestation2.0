@@ -21,14 +21,20 @@
 /area/shuttle/ert/medical
 	name = "ERT Shuttle Medbay"
 
+/area/shuttle/ert/clonerybay
+	name = "ERT Cloner Bay"
+
 /area/shuttle/ert/airlock
 	name = "ERT Shuttle Airlock"
+
+/area/shuttle/ert/airlock/secondary
 
 ////////////// Consoles //////////////
 /obj/machinery/computer/shuttle/ert
 	name = "ERT shuttle console"
 	shuttleId = "ertshuttle"
 	possible_destinations = "ertshuttle_custom;syndicate_nw"
+	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert
 	name = "ERT shuttle navigation computer"
