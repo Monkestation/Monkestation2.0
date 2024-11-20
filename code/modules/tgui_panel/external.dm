@@ -36,7 +36,10 @@
 	winset(src, "output", "is-disabled=1&is-visible=0")
 	winset(src, "browseroutput", "is-disabled=0;is-visible=1")
 	if(byond_version >= 516)
-		winset(src, null, "browser-options=byondstorage,find")
+		var/list/options = list("byondstorage", "find")
+		if(check_rights_for(src, R_DEBUG))
+			options += "devtools"
+		winset(src, null, "browser-options=[options.Join(",")]")
 
 /client/verb/refresh_tgui()
 	set name = "Refresh TGUI"
