@@ -223,13 +223,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
 /obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/airlock)
 "hJ" = (
@@ -895,7 +890,6 @@
 	pixel_x = -7;
 	pixel_y = 27
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/coffeemaker,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
 	pixel_x = 5;
@@ -1174,13 +1168,8 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
 /obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/airlock/secondary)
 "LW" = (
@@ -1420,6 +1409,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /obj/effect/turf_decal/stripes{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/airlock)
