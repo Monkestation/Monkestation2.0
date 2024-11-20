@@ -63,7 +63,7 @@
 	update_icon()
 	START_PROCESSING(SSmachines, src)
 
-	GLOB.clock_warp_areas |= crystal_area
+	SSthe_ark.marked_areas |= crystal_area
 	SSthe_ark.block_shuttle(src)
 	if(SSthe_ark.valid_crystal_areas)
 		SSthe_ark.valid_crystal_areas -= crystal_area

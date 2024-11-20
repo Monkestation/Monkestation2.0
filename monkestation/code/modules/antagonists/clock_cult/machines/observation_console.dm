@@ -1,6 +1,3 @@
-//if its not enough I could also make it so it takes longer to abscond from other areas
-GLOBAL_LIST_EMPTY(clock_warp_areas)
-
 /obj/machinery/computer/camera_advanced/ratvar
 	name = "Ratvarian Observation Console"
 	desc = "Used by the servants of Rat'var to conduct operations on Nanotrasen property."
@@ -19,7 +16,7 @@ GLOBAL_LIST_EMPTY(clock_warp_areas)
 	actions += new /datum/action/innate/clockcult/show_warpable_areas(src)
 	var/datum/action/innate/clockcult/add_warp_area/add_area = new(src)
 	actions += add_area
-	if(!length(GLOB.clock_warp_areas))
+	if(!length(SSthe_ark.marked_areas))
 		add_area.choose_starting_warp_areas() //slightly hacky but handling it on the action is cheaper as it lets us just build our warpable areas once without needing globals
 
 /obj/machinery/computer/camera_advanced/ratvar/Destroy()
@@ -76,7 +73,7 @@ GLOBAL_LIST_EMPTY(clock_warp_areas)
 	var/mob/camera/ai_eye/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
-	if(!(target_area in GLOB.clock_warp_areas))
+	if(!(target_area in SSthe_ark.marked_areas))
 		to_chat(owner, span_brass("This area is not currently warpable."))
 		return
 

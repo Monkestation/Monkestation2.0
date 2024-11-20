@@ -27,6 +27,7 @@
 
 /datum/antagonist/clock_cultist/Destroy()
 	QDEL_NULL(communicate)
+	QDEL_NULL(recall)
 	return ..()
 
 /datum/antagonist/clock_cultist/on_gain()
@@ -96,6 +97,11 @@
 		UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
 		QDEL_NULL(owner_turf_healing)
 		handle_clown_mutation(current, removing = FALSE)
+
+/datum/antagonist/clock_cultist/ui_data(mob/user)
+	var/list/data = list()
+	data["marked_areas"] = english_list(SSthe_ark.marked_areas)
+	return data
 
 /datum/antagonist/clock_cultist/can_be_owned(datum/mind/new_owner)
 	. = ..()

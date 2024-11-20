@@ -1,11 +1,11 @@
-#define EFFECT_TIME (6.5 SECONDS)
+#define EFFECT_TIME (7 SECONDS)
 
 // Clock cult's version of the "bullshit stun hand"
 
 /datum/scripture/slab/kindle
 	name = "Kindle"
 	desc = "Stuns and mutes a target from a short range."
-	tip = "Best paired with hateful manacels for conversion, they are stunned for 6.5 seconds and muted for 13."
+	tip = "Best paired with hateful manacels for conversion, they are stunned for 7 seconds and muted for 14."
 	button_icon_state = "Kindle"
 	power_cost = 125
 	invocation_time = 2 SECONDS

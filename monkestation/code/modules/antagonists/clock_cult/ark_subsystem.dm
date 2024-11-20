@@ -22,9 +22,12 @@ SUBSYSTEM_DEF(the_ark)
 	var/clock_power = 2500
 	///What is the maximum amount of power the cult can have stored
 	var/max_clock_power = 2500
+	///The list of areas that has been marked by the cult
+	var/list/marked_areas
 
 /datum/controller/subsystem/the_ark/Initialize()
 	anchoring_crystals = list()
+	marked_areas = list()
 	clock_dimension_theme = new(is_cult = TRUE)
 	hallucination_pool = list(
 		/datum/hallucination/fake_item/clockwork_slab = 2,

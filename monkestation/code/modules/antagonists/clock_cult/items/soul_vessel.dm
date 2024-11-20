@@ -1,6 +1,6 @@
 /obj/item/mmi/posibrain/soul_vessel
 	name = "Soul Vessel"
-	desc = "A cube made of gear, made to capture and store the vitality of living beings."
+	desc = "A cube of gears, made to capture and store the vitality of living beings."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "soul_vessel"
 	base_icon_state = "soul_vessel"
@@ -16,6 +16,7 @@
 
 /obj/item/mmi/posibrain/soul_vessel/Initialize(mapload, autoping)
 	. = ..()
+	AddElement(/datum/element/clockwork_description, span_brass("A vessel used to hold the souls of the dead, can be converted into a cogscarab shell."))
 	laws = new /datum/ai_laws/ratvar()
 	radio.set_on(FALSE)
 	if(!brainmob) //we might be forcing someone into it right away
