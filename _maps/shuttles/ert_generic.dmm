@@ -524,11 +524,6 @@
 /area/shuttle/ert/medical)
 "qT" = (
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
-/obj/structure/table/reinforced{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/item/paper_bin{
 	pixel_x = -6;
 	pixel_y = 4
@@ -822,7 +817,9 @@
 "AM" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan,
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/ert/medical)
 "Bd" = (
@@ -1188,7 +1185,6 @@
 /area/shuttle/ert/airlock/secondary)
 "LW" = (
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties{
 	pixel_x = 7;
 	pixel_y = 2
@@ -1337,10 +1333,6 @@
 /area/shuttle/ert/bridge)
 "QX" = (
 /obj/structure/table/reinforced,
-/obj/machinery/cell_charger{
-	pixel_x = -2;
-	pixel_y = 12
-	},
 /obj/item/stock_parts/cell/hyper{
 	pixel_x = 10;
 	pixel_y = 11
@@ -1349,11 +1341,9 @@
 	pixel_x = 10;
 	pixel_y = 7
 	},
-/obj/item/cargo_teleporter{
-	pixel_x = -4;
-	pixel_y = 2
-	},
 /obj/machinery/light/dim/directional/west,
+/obj/machinery/cell_charger,
+/obj/item/cargo_teleporter,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/ert/cargo)
 "Rg" = (
