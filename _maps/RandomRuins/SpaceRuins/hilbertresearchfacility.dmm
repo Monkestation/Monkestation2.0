@@ -605,6 +605,12 @@
 /obj/structure/frame/computer,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1157,6 +1163,12 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Bo" = (
 /turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BA" = (
 /obj/machinery/door/airlock/science{
@@ -5061,8 +5073,8 @@ KC
 KC
 PR
 KC
-KC
 PR
+Ok
 Ok
 Ok
 Dk
@@ -5101,8 +5113,8 @@ Ba
 Ba
 Ba
 Ba
-Ba
-Ba
+Bz
+Bz
 Ok
 Bo
 Iy
@@ -5179,8 +5191,8 @@ vr
 vr
 vr
 vr
-vr
-vr
+oW
+oW
 Ok
 Bo
 Iy
@@ -5217,8 +5229,8 @@ KC
 KC
 PR
 KC
-KC
 PR
+Ok
 Ok
 Ok
 Dk

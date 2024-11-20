@@ -149,7 +149,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
 "dz" = (
@@ -1001,7 +1000,6 @@
 /turf/closed/mineral/random/low_chance,
 /area/ruin/space)
 "pX" = (
-/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "qi" = (
@@ -2440,11 +2438,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
-"QT" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "QU" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
@@ -2703,12 +2696,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
-"UC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/trooper/syndicate/ranged/smg/space,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "UG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/waystation/cargooffice)
@@ -4587,7 +4574,7 @@ xw
 xw
 Dx
 Sm
-UC
+CQ
 HN
 Eh
 TT
@@ -5502,7 +5489,7 @@ Ok
 jN
 er
 nD
-QT
+Ar
 yi
 ZZ
 ZZ
