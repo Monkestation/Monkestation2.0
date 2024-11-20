@@ -101,7 +101,6 @@
 "DD" = (/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/ert)
 "DK" = (/turf/template_noop,/area/template_noop)
 "DP" = (/obj/machinery/computer/cloning{dir = 8},/obj/effect/turf_decal/stripes{dir = 4},/obj/effect/turf_decal/stripes{dir = 8},/turf/open/floor/mineral/titanium/tiled/purple,/area/shuttle/ert/clonerybay)
-"El" = (/obj/effect/spawner/structure/window/reinforced/shuttle,/obj/structure/cable,/obj/machinery/door/poddoor/shutters/preopen{dir = 1; id = "ert_shuttle_bridge"},/obj/machinery/door/poddoor/preopen{id = "ert_shuttle_bridge"},/turf/open/space/basic,/area/shuttle/ert/bridge)
 "EB" = (/obj/machinery/computer/aifixer,/obj/effect/turf_decal/stripes/end{dir = 4},/turf/open/floor/mineral/titanium/tiled/blue,/area/shuttle/ert/bridge)
 "EO" = (/obj/structure/chair/office/tactical{dir = 8},/obj/effect/turf_decal/stripes/blue{dir = 4},/turf/open/floor/mineral/titanium/white,/area/shuttle/ert)
 "EU" = (/obj/machinery/atmospherics/components/unary/passive_vent/layer2{dir = 1},/turf/open/floor/plating/airless,/area/shuttle/ert/cargo)
@@ -178,7 +177,7 @@
 "ZB" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/west,/obj/machinery/power/terminal{dir = 8},/obj/effect/landmark/ert_shuttle_spawn,/obj/machinery/light/warm/dim/directional/west,/turf/open/floor/catwalk_floor/flat_white,/area/shuttle/ert)
 
 (1,1,1) = {"
-DKDKDKDKXTElRHRHRHRHXTDKDKDKDK
+DKDKDKDKXTRHRHRHRHRHXTDKDKDKDK
 DKDKDKDKXTOtMuoTmZKuXTDKDKDKDK
 ALzyzyzyasQQvlaBvlLZasmMmMmMWl
 ALtMhdqNasRLHNvTBdEBasnURgyJWl
