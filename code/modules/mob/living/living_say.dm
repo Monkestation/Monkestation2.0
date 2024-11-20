@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	"щ" = RADIO_CHANNEL_AI_PRIVATE,
-	"l" = RADIO_CHANNEL_UNCOMMON
+	"f" = RADIO_CHANNEL_UNCOMMON
 ))
 
 /**

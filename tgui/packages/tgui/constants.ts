@@ -153,7 +153,7 @@ export const RADIO_CHANNELS = [
   {
     name: 'Uncommon',
     freq: 1363,
-    color: '#2A7F62',
+    color: '#78a1b1',
   },
 ] as const;
 

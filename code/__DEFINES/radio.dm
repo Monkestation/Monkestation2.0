@@ -58,8 +58,8 @@
 #define RADIO_CHANNEL_CTF_YELLOW "Yellow Team"
 
 #define RADIO_CHANNEL_UNCOMMON "Uncommon"
-#define RADIO_KEY_UNCOMMON "l"
-#define RADIO_TOKEN_UNCOMMON ":l"
+#define RADIO_KEY_UNCOMMON "f"
+#define RADIO_TOKEN_UNCOMMON ":f"
 
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
