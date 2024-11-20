@@ -52,6 +52,8 @@
 	if(!cached_addable_areas || !length(cached_addable_areas))
 		return
 
+	if(!SSthe_ark.initialized)
+		SSthe_ark.Initialize()
 	//shuffle_inplace(cached_addable_areas) //this is so our picked maint areas are random without needing to do anything weird
 	var/sanity = 0
 	var/added_areas = 0
