@@ -84,3 +84,19 @@
 		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
 		though with its' low amount of separate charges, the user remains mortal."
 	shield_icon = "shield-old" //red syndicate blue nanotrasen :P
+
+/obj/item/storage/belt/security/full/advanced/PopulateContents()
+	new /obj/item/reagent_containers/spray/pepper(src)
+	new /obj/item/holosign_creator/security(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/melee/baton/telescopic(src)
+	update_appearance()
+
+/obj/item/clothing/mask/gas/sechailer/swat/ert
+	name = "\improper emergency response mask"
+	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000. This one is designed for Nanotrasen Emergency Response Teams and has an inbuilt air-freshener. Fancy!"
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	worn_icon_snouted = 'monkestation/icons/mob/clothing/species/mask_muzzled.dmi'
+	icon_state = "ert"

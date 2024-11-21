@@ -24,6 +24,24 @@
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this feels right?
 	cell = /obj/item/stock_parts/cell/bluespace
+	allowed = list(
+		/obj/item/tank/jetpack/oxygen/security,
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/gun/ballistic,
+		/obj/item/gun/energy,
+		/obj/item/gun/microfusion,
+		/obj/item/knife/combat,
+		/obj/item/melee/baton,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/storage/belt/holster/detective,
+		/obj/item/storage/belt/holster/nukie,
+		/obj/item/storage/belt/holster/energy,
+	)
 
 /obj/item/clothing/suit/space/ert/equipped(mob/user, slot)
 	. = ..()
