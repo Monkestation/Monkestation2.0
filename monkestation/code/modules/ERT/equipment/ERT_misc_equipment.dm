@@ -113,10 +113,10 @@
 	. = ..()
 	new /obj/item/crowbar/red(src)
 	new /obj/item/flashlight/flare(src)
-	new /obj/item/reagent_containers/pill/patch/synthflesh(src)
+	new /obj/item/reagent_containers/pill/patch/ert(src)
 
-/obj/item/reagent_containers/pill/patch/synthflesh
+/obj/item/reagent_containers/pill/patch/ert
 	name = "advanced synthflesh patch"
 	desc = "Helps with brute and burn injuries while stabilizing. Contains anti-toxin along with formaldehyde."
-	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/medicine/c2/seiver = 5, datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2, /datum/reagent/medicine/epinephrine = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/medicine/c2/seiver = 5, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2, /datum/reagent/medicine/epinephrine = 10)
 	icon_state = "bandaid_misc"
