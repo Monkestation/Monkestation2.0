@@ -87,7 +87,7 @@
 	. = ..()
 	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
-	for(var/mob/eye/ai_eye/eye as anything in GLOB.aiEyes)
+	for(var/mob/eye/camera/ai/eye as anything in GLOB.camera_eyes)
 		eye.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
