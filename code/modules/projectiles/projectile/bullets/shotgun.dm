@@ -17,16 +17,17 @@
 
 /obj/projectile/bullet/shotgun_slug/apds
 	name = "tungsten sabot-slug"
-	icon_state = "gaussstrong"
+	icon_state = "gauss"
 	damage = 35 //15 less than slugs
-	speed = 1.8 //sub-caliber + lighter = speed
+	speed = 0.2 //sub-caliber + lighter = speed
 	armour_penetration = 80 //Tis a solid-tungsten penetrator, what do you expect?
 	wound_bonus = 15 //35 seemed kinda wimpy, 15 extra is reasonable, right?
-	ricochets_max = 2 //same as the match-grade ammo for the syndicate LMG
+	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 55
 	embedding = null
+	demolition_mod = 20
 
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
