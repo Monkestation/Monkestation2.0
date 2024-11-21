@@ -16,7 +16,7 @@
 	wound_bonus = 80
 
 /obj/projectile/bullet/shotgun_slug/apds
-    name = "tungsten sabot-slug"
+	name = "tungsten sabot-slug"
 	icon_state = "gaussstrong"
 	damage = 35 //15 less than slugs
 	speed = 1.8 //sub-caliber + lighter = speed
