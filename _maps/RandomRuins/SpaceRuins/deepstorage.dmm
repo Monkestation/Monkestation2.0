@@ -148,6 +148,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aH" = (
@@ -170,6 +171,7 @@
 /obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aK" = (
@@ -290,6 +292,7 @@
 /obj/item/clothing/glasses/night,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
@@ -744,7 +747,6 @@
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper/fluff/ruins/deepstorage/water_concern,
 /obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
-/obj/item/paper/fluff/ruins/deepstorage/recycling_notice,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -1044,6 +1046,12 @@
 /obj/item/stack/medical/gauze,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"dc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "de" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1487,6 +1495,7 @@
 /obj/structure/table,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/spawner/random/exotic/tool,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
@@ -1682,6 +1691,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/table,
+/obj/item/paper/monitorkey,
+/obj/machinery/fax{
+	syndicate_network = 1;
+	name = "Syndicate Storage Bunker";
+	fax_name = "Ressuply Hub"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eV" = (
@@ -1768,6 +1783,9 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fi" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fj" = (
@@ -2112,6 +2130,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gj" = (
@@ -2183,7 +2214,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
 "gw" = (
-/obj/machinery/sleeper{
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -2329,9 +2360,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 5
 	},
-/obj/machinery/autolathe,
 /obj/structure/sign/warning/radiation/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/autolathe/hacked,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gU" = (
@@ -2532,6 +2563,9 @@
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"lG" = (
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2542,6 +2576,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"oI" = (
+/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "po" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2553,6 +2592,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
+"qN" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "rz" = (
 /obj/structure/filingcabinet,
 /obj/item/folder/syndicate/mining,
@@ -2561,6 +2606,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"rD" = (
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/structure/table/reinforced,
+/obj/item/disk/surgery/brainwashing,
+/obj/item/disk/surgery/forgottenship,
+/obj/item/disk/surgery/sleeper_protocol,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "sL" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2571,6 +2624,11 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"un" = (
+/obj/structure/table/optable,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "uG" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Pharmacy"
@@ -2585,10 +2643,19 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"vs" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "wu" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"wJ" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "wK" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -2628,10 +2695,10 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "zi" = (
-/obj/machinery/sleeper{
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Az" = (
@@ -2781,6 +2848,17 @@
 /obj/machinery/growing/tray,
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"Qi" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/chair/greyscale{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "Qt" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light/directional/east,
@@ -2873,6 +2951,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"UX" = (
+/obj/machinery/sleeper/syndie{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "Va" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -2917,6 +3001,7 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/away_general_access,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ZL" = (
@@ -3228,7 +3313,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 ab
@@ -3275,11 +3360,11 @@ aa
 aa
 aa
 aa
-aa
-aa
+ab
+ab
 ab
 aa
-aa
+ab
 aa
 aa
 aa
@@ -3324,13 +3409,13 @@ ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -3376,14 +3461,14 @@ ab
 ab
 ab
 ab
+dB
+dB
+dB
+dB
+dB
+dB
 ab
 ab
-ab
-ab
-ab
-aa
-aa
-aa
 aa
 aa
 ab
@@ -3428,14 +3513,14 @@ ab
 ab
 ab
 ab
+dB
+oI
+dc
+lG
+un
+dB
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-aa
 aa
 ab
 ab
@@ -3482,10 +3567,10 @@ dB
 dB
 dB
 dB
-ab
-ab
-ab
-ab
+dc
+rD
+qN
+dB
 ab
 ab
 ab
@@ -3534,8 +3619,8 @@ dB
 ei
 ey
 dB
-ab
-ab
+vs
+Qi
 gF
 gF
 gF
@@ -3586,8 +3671,8 @@ dB
 ej
 ez
 dB
-ab
-ab
+wJ
+UX
 gF
 wu
 RT
@@ -3638,8 +3723,8 @@ dB
 ek
 eA
 dB
-dB
-dB
+wJ
+UX
 gF
 Cp
 Uj
