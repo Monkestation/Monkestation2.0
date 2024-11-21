@@ -355,7 +355,10 @@
 /turf/open/space/basic,
 /area/shuttle/ert/armory)
 "mZ" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert{
+	x_offset = 0;
+	y_offset = 10
+	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
@@ -598,24 +601,16 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/ert/medical)
 "tM" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 4
+/obj/machinery/computer/cloning{
+	dir = 4
 	},
-/obj/item/storage/box/bodybags{
-	pixel_x = -10;
-	pixel_y = 7
+/obj/effect/turf_decal/stripes{
+	dir = 4
 	},
-/obj/item/folder/white{
-	pixel_x = 6;
-	pixel_y = 5
+/obj/effect/turf_decal/stripes{
+	dir = 8
 	},
-/obj/item/pen/fourcolor{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/turf/open/floor/mineral/titanium/tiled,
+/turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/ert/clonerybay)
 "uL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -762,7 +757,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/ert/armory)
 "yU" = (
-/turf/open/floor/mineral/titanium/tiled,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/ert/clonerybay)
 "zy" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -827,10 +826,8 @@
 /area/shuttle/ert/bridge)
 "Bu" = (
 /obj/machinery/light/warm/directional/west,
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/box,
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/ert/clonerybay)
 "BE" = (
@@ -948,16 +945,21 @@
 /turf/template_noop,
 /area/template_noop)
 "DP" = (
-/obj/machinery/computer/cloning{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 4
 	},
-/obj/effect/turf_decal/stripes{
-	dir = 4
+/obj/item/folder/white{
+	pixel_x = 6;
+	pixel_y = 5
 	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
+/obj/item/pen/fourcolor{
+	pixel_x = 7;
+	pixel_y = 6
 	},
-/turf/open/floor/mineral/titanium/tiled/purple,
+/obj/item/storage/box/bodybags,
+/turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/clonerybay)
 "EB" = (
 /obj/effect/turf_decal/stripes/end{
@@ -1048,7 +1050,9 @@
 /turf/open/floor/plating,
 /area/shuttle/ert/engineering)
 "Hl" = (
-/obj/docking_port/mobile/ert,
+/obj/docking_port/mobile/ert{
+	dir = 2
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ert/cargo)
 "Ho" = (
@@ -1526,11 +1530,9 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/ert/medical)
 "XQ" = (
-/obj/machinery/dna_scannernew,
-/obj/effect/turf_decal/stripes/end,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/warm/directional/east,
-/turf/open/floor/mineral/titanium/tiled/purple,
+/turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/clonerybay)
 "XS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1647,8 +1649,8 @@ DK
 DK
 DK
 zy
+qN
 tM
-zX
 Bu
 yU
 AL
@@ -1693,7 +1695,7 @@ DK
 DK
 DK
 yG
-qN
+zX
 DP
 XQ
 ee
