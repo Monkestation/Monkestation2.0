@@ -28,6 +28,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_old
 	mask = /obj/item/clothing/mask/gas/explorer
+	belt = /obj/item/gun/energy/recharge/kinetic_accelerator/glock
 	l_pocket = /obj/item/gps
 /datum/outfit/oldexplorer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
