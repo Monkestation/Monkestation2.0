@@ -83,12 +83,32 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
+"u" = (
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space/has_grav)
+"w" = (
+/obj/item/wrench/ashwalker,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space/has_grav)
+"G" = (
+/obj/item/tank/internals/emergency_oxygen/double,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space/has_grav)
+"L" = (
+/obj/item/wirecutters/ashwalker,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
 "O" = (
 /obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Q" = (
 /turf/closed/mineral/random,
+/area/ruin/space/has_grav)
+"R" = (
+/obj/item/fireaxe/boneaxe,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 
 (1,1,1) = {"
@@ -664,7 +684,7 @@ e
 g
 m
 p
-g
+R
 e
 c
 Q
@@ -698,7 +718,7 @@ Q
 Q
 c
 e
-g
+L
 n
 q
 h
@@ -738,7 +758,7 @@ e
 O
 h
 h
-h
+u
 e
 c
 c
@@ -772,9 +792,9 @@ Q
 c
 c
 e
+G
 h
-h
-h
+w
 h
 e
 c

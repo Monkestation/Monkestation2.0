@@ -290,6 +290,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
+"Dt" = (
+/obj/item/crowbar/red/caravan,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"DV" = (
+/obj/item/wrench/caravan,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
 "DY" = (
 /turf/template_noop,
 /area/template_noop)
@@ -577,7 +585,7 @@ tF
 gi
 eP
 nf
-nf
+DV
 Qy
 Si
 uB
@@ -833,7 +841,7 @@ DY
 CT
 oy
 iB
-Lc
+Dt
 Ke
 CT
 dy
