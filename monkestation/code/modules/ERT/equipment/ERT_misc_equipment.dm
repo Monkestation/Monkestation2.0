@@ -104,20 +104,20 @@
 /obj/item/storage/box/survival/ert
 	name = "emergency response survival box"
 	desc = "A box with the bare essentials of ensuring the survival of your team. This one is labelled to contain a double tank."
-	icon_state = "ntlogo"
+	icon_state = "ntbox"
 	illustration = "ntlogo"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/double
 	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
 /obj/item/storage/box/survival/ert/PopulateContents()
 	. = ..()
+	new /obj/item/reagent_containers/pill/patch/advanced(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/spess_knife(src) // i love this thing and i want it to be out there more
 	new /obj/item/flashlight/flare(src)
-	new /obj/item/reagent_containers/pill/patch/ert(src)
 
-/obj/item/reagent_containers/pill/patch/ert
-	name = "advanced synthflesh patch"
-	desc = "Helps with brute and burn injuries while stabilizing. Contains anti-toxin along with formaldehyde."
-	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/medicine/c2/seiver = 5, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2, /datum/reagent/medicine/epinephrine = 10)
-	icon_state = "bandaid_misc"
+/obj/item/reagent_containers/pill/patch/advanced
+	name = "advanced health patch"
+	desc = "Helps with brute and burn injuries while stabilizing the patient. Contains anti-toxin along with formaldehyde."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 5, /datum/reagent/medicine/sal_acid = 5, /datum/reagent/medicine/granibitaluri = 10, /datum/reagent/medicine/c2/seiver = 5, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2, /datum/reagent/medicine/epinephrine = 10)
+	icon_state = "bandaid_msic" //they misspelt it :P
