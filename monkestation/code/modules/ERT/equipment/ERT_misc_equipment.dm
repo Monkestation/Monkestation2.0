@@ -94,7 +94,7 @@
 	update_appearance()
 
 /obj/item/clothing/mask/gas/sechailer/swat/ert
-	name = "\improper emergency response mask"
+	name = "\improper emergency response team mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000. This one is designed for Nanotrasen Emergency Response Teams and has an inbuilt air-freshener. Fancy!"
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
