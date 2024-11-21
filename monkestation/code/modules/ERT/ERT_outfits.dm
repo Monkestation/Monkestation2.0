@@ -35,4 +35,4 @@
 		/obj/item/storage/medkit/regular = 1,
 		/obj/item/tank/jetpack/oxygen/harness = 1,
 	)
-	glasses = /obj/item/clothing/glasses/sunglasses/big
+	glasses = /obj/item/clothing/glasses/sunglasses
