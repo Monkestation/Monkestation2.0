@@ -112,6 +112,7 @@
 /obj/item/storage/box/survival/ert/PopulateContents()
 	. = ..()
 	new /obj/item/crowbar/red(src)
+	new /obj/item/spess_knife(src) // i love this thing and i want it to be out there more
 	new /obj/item/flashlight/flare(src)
 	new /obj/item/reagent_containers/pill/patch/ert(src)
 
