@@ -543,7 +543,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "eZ" = (
@@ -910,6 +909,7 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/item/kitchen/rollingpin,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "hT" = (
@@ -926,7 +926,6 @@
 /area/ruin/space/has_grav/hotel/dock)
 "hV" = (
 /obj/structure/cable,
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -966,6 +965,7 @@
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "ii" = (
@@ -1039,6 +1039,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/storage/box/beanbag,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "iA" = (
@@ -2377,9 +2378,9 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
 "uu" = (
-/obj/item/beacon,
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/space/has_grav/hotel/guestroom/room_4)
 "uw" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair,
@@ -2835,6 +2836,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/dock)
+"xX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
+/turf/open/floor/carpet/blue,
+/area/ruin/space/has_grav/hotel)
 "xZ" = (
 /obj/structure/table/wood,
 /obj/machinery/firealarm/directional/east,
@@ -3085,6 +3093,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/egg_box,
 /obj/item/knife/kitchen,
+/obj/effect/spawner/random/food_or_drink/soup,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "BK" = (
@@ -3803,6 +3812,10 @@
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/white,
 /obj/structure/rack,
+/obj/item/food/watermelonslice,
+/obj/item/food/watermelonslice,
+/obj/item/food/watermelonslice,
+/obj/item/food/watermelonslice,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "JD" = (
@@ -3956,8 +3969,9 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "LE" = (
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
-/turf/open/floor/iron/freezer,
+/obj/structure/rack,
+/obj/item/knife/combat,
+/turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "LI" = (
 /obj/structure/bed/pod,
@@ -4032,7 +4046,9 @@
 /area/ruin/space/has_grav/hotel)
 "ML" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/head/costume/maidheadband/syndicate,
+/obj/item/weldingtool/experimental,
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/hotel)
 "MN" = (
@@ -4180,6 +4196,8 @@
 /area/ruin/space/has_grav/hotel/pool)
 "OF" = (
 /obj/structure/table/wood,
+/obj/item/clothing/gloves/combat/maid,
+/obj/item/clothing/under/syndicate/skirt/maid,
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/hotel)
 "OI" = (
@@ -4776,7 +4794,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "UV" = (
@@ -5161,6 +5178,7 @@
 /area/ruin/space/has_grav/hotel)
 "Yh" = (
 /obj/structure/table/wood/fancy/green,
+/obj/item/crowbar/power,
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "Yw" = (
@@ -7230,7 +7248,7 @@ PI
 WD
 FV
 mj
-Ac
+uu
 dq
 Hm
 eg
@@ -7266,7 +7284,7 @@ JY
 yD
 bK
 bK
-LE
+Sf
 ia
 JY
 JY
@@ -7342,7 +7360,7 @@ JY
 Rk
 MQ
 JY
-ma
+LE
 JC
 db
 db
@@ -7400,7 +7418,7 @@ jt
 jt
 jt
 rM
-rM
+xX
 rM
 jt
 jt
@@ -7546,7 +7564,7 @@ cl
 Zm
 MJ
 mR
-uu
+mR
 mR
 MJ
 tq
@@ -8913,7 +8931,7 @@ WD
 WD
 WD
 ln
-iC
+cf
 PF
 cf
 tv
