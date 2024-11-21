@@ -126,3 +126,10 @@
 	mission = "Having heard the station's request for aid, assist the crew in defending themselves."
 	polldesc = "an independent station defense militia"
 	random_names = TRUE
+
+//MONKESTATION EDIT START
+/datum/ert/red/shuttle
+	leader_role = /datum/antagonist/ert/commander/red
+	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
+	code = "Red"
+	ert_template = /datum/map_template/shuttle/ert/generic
