@@ -1,6 +1,8 @@
 /datum/outfit/oldsec
 	ears = /obj/item/radio/headset/headset_old/alt
 	implants = list(/obj/item/implant/mindshield)
+	id = /obj/item/card/id/advanced/old
+	id_trim = /datum/id_trim/away/old/sec
 
 /datum/outfit/oldsec/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

@@ -21,7 +21,8 @@
 
 /datum/outfit/oldcmo
 	name = "Ancient Chief Medical Officer"
-	id = /obj/item/card/id/away/old/cmo
+	id = /obj/item/card/id/advanced/old
+	id_trim = /datum/id_trim/away/old/cmo
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/flashlight/pen/paramedic

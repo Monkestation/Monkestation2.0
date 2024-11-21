@@ -21,7 +21,8 @@
 
 /datum/outfit/oldchef
 	name = "Ancient Chef"
-	id = /obj/item/card/id/away/old/chef
+	id = /obj/item/card/id/advanced/old
+	id_trim = /datum/id_trim/away/old/chef
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	ears = /obj/item/radio/headset/headset_old
