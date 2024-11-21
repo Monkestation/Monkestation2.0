@@ -7,17 +7,18 @@
 
 /obj/item/amogus_potion/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!ishuman)
-		to_chat(user, span_userdanger("You know better than to drink it..."))
+	var/mob/living/carbon/human/impostor = user
+	if(!istype(impostor))
+		to_chat(impostor, span_userdanger("You know better than to drink it..."))
 		return
 
-	if(!ismonkey(user) && !isgoblin(user))
-		to_chat(user, span_userdanger("You have a strange feeling as the world seems to grow around you!"))
-		user.apply_displacement_icon(/obj/effect/distortion/large/amogus)
+	if(!ismonkey(impostor) && !isgoblin(impostor))
+		to_chat(impostor, span_userdanger("You have a strange feeling as the world seems to grow around you!"))
+		impostor.apply_displacement_icon(/obj/effect/distortion/large/amogus)
 	else
-		to_chat(user, span_userdanger("You feel strange..."))
+		to_chat(impostor, span_userdanger("You feel strange..."))
 
-	user.AddElement(/datum/element/waddling)
-	user.can_be_held = TRUE
-	to_chat(user, span_notice("You can now be picked up by other people."))
+	impostor.AddElement(/datum/element/waddling)
+	impostor.can_be_held = TRUE
+	to_chat(impostor, span_notice("You can now be picked up by other people."))
 	qdel(src)
