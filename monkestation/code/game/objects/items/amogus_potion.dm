@@ -2,7 +2,7 @@
 	name = "strange flask"
 	desc = "A strange flask with red liquid inside of it, looks like a potion. Drinking this is probably not a good idea."
 	icon = 'monkestation/icons/obj/misc.dmi'
-	icon_state	= "amogus_potion"
+	icon_state = "amogus_potion"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/amogus_potion/attack_self(mob/user, modifiers)
