@@ -44,7 +44,6 @@
 	to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	to_chat(imp_in, "<span class='notice'>Your dusting implant activates!</span>")
-	imp_in.visible_message("<span class='warning'>[imp_in] burns up in a flash!</span>")
 	var/turf/immolationturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(immolationturf)], with cause of [cause].")
 
@@ -77,3 +76,11 @@
 /datum/action/item_action/dust_implant
 	check_flags = NONE
 	name = "Activate Self Immolation Implant"
+
+/obj/item/mod/module/energy_shield/nanotrasen
+	name = "MOD energy shield module"
+	desc = "A personal, protective forcefield typically seen in military applications. \
+		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
+		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
+		though with its' low amount of separate charges, the user remains mortal."
+	shield_icon = "shield-old" //red syndicate blue nanotrasen :P
