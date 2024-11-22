@@ -4,6 +4,7 @@
 /datum/id_trim/bounty_hunter
 	sechud_icon_state = SECHUD_BOUNTY_HUNTER
 	trim_state = "trim_bountyhunter"
+	assigned_icon_state = "assigned_flame"
 
 /datum/id_trim/spacepol
 	assignment = "Space Police"
