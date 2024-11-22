@@ -37,13 +37,14 @@
 	return ..()
 
 /obj/effect/accelerated_particle/Bump(atom/movable/bumped_atom)
-	if(!ismovable(bumped_atom) || QDELING(bumped_atom))
+	if(QDELETED(src) || !ismovable(bumped_atom) || QDELING(bumped_atom))
 		return
 	bumped_atom.accelerated_particle_act(src)
 
 /obj/effect/accelerated_particle/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	arrived.accelerated_particle_act(src)
+	if(!QDELETED(src) && !QDELETED(arrived))
+		arrived.accelerated_particle_act(src)
 
 /obj/effect/accelerated_particle/process()
 	if(!isturf(loc) || movement_range <= 0)
