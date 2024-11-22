@@ -28,6 +28,8 @@
 	ears = /obj/item/radio/headset/headset_old
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
+	l_pocket = /obj/item/sharpener
+	belt = /obj/item/knife/kitchen
 
 /datum/outfit/oldchef/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
