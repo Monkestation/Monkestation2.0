@@ -195,8 +195,10 @@
 
 /datum/outfit/deepstorage_syndicate
 	name = "Deep Storage Syndicate Agent"
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/white
 	back = /obj/item/storage/backpack
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/syndicate/alt
