@@ -21,7 +21,7 @@
 	damage = 35 //15 less than slugs.
 	speed = 0.3 //sub-caliber + lighter = speed. (Smaller number = faster)
 	armour_penetration = 80 //Tis a solid-tungsten penetrator, what do you expect?
-	wound_bonus = 15 //35 seemed kinda wimpy, 15 extra is reasonable, right?
+	wound_bonus = 10 //35 seemed kinda wimpy, 10 extra is reasonable, right?
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
