@@ -66,9 +66,6 @@
 /obj/effect/accelerated_particle/singularity_pull()
 	return
 
-/obj/effect/accelerated_particle/proc/toxmob(mob/living/victim)
-	radiation_pulse(victim, 1, 3, 0.5)
-
 /obj/effect/accelerated_particle/newtonian_move(direction, instant, start_delay)
 	return TRUE
 
