@@ -35,4 +35,4 @@
 			seems to not make goblins or monkeys any smaller though. No money refunds."
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	item = /obj/item/amogus_potion
-	cost = 10
+	cost = 7

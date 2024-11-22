@@ -1,6 +1,6 @@
 /obj/item/amogus_potion
 	name = "strange flask"
-	desc = "A strange flask with red liquid inside of it, looks like a potion. Drinking this is probably not a good idea."
+	desc = "A strange flask with red liquid inside of it, with the label \"do not drink at 3AM\" on its surface. Drinking this is probably not a good idea."
 	icon = 'monkestation/icons/obj/misc.dmi'
 	icon_state = "amogus_potion"
 	w_class = WEIGHT_CLASS_SMALL
