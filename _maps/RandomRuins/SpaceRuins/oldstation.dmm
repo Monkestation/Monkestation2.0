@@ -288,7 +288,6 @@
 "be" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "bg" = (
@@ -352,7 +351,6 @@
 "bp" = (
 /obj/machinery/door/window/brigdoor/left/directional/west,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/structure/alien/weeds/node,
 /obj/machinery/flasher/directional/east{
 	id = "IsolationFlash";
 	base_pixel_y = 50
@@ -725,7 +723,6 @@
 "cF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "cG" = (
@@ -5436,13 +5433,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"xO" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/pet/potty{
-	health = -200
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hydro)
 "xP" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/alien/weeds,
@@ -9240,9 +9230,6 @@
 "YV" = (
 /obj/machinery/door/window/right/directional/east{
 	req_access = list("away_general")
-	},
-/mob/living/basic/xenofauna/possum{
-	health = -200
 	},
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
@@ -13122,7 +13109,7 @@ ob
 dR
 dR
 dQ
-xO
+dR
 Rb
 gI
 LA
@@ -15814,7 +15801,7 @@ ad
 ar
 aE
 Gh
-ag
+aq
 gk
 Ks
 vX
