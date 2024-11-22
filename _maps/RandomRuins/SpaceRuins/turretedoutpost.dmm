@@ -60,6 +60,11 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ao" = (
 /obj/machinery/porta_turret,
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	max_integrity = 60;
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "ap" = (
