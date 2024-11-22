@@ -228,9 +228,9 @@
 		return TRUE
 	return ..()
 
-/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim)
+/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
 
-	//List of slots that drop despite the transferItemtoLoc proc
+	// List of slots that drop to ground despite the transferItemtoLoc proc
 	var/list/focus_slots = list(
     	ITEM_SLOT_SUITSTORE,
     	ITEM_SLOT_BELT,
@@ -255,6 +255,19 @@
 		if(item)
 			victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
 			stored_items |= item
+
+	var/list/intneralorgs = victim.organs //Should be nude remove implants then store
+	for(var/obj/item/organ/organ in intneralorgs)
+		if(istype(organ, /obj/item/organ/internal/cyberimp))
+			organ.Remove(victim)
+			victim.transferItemToLoc(organ, src, FALSE, silent = TRUE)
+			stored_items |= organ
+
+	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/cavitem = target_chest.cavity_item
+	if(cavitem)
+		victim.transferItemToLoc(cavitem, src, FALSE, silent = TRUE)
+		stored_items |= cavitem
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
@@ -305,10 +318,17 @@
 	qdel(new_body_brain)
 	forceMove(new_body)
 	Insert(new_body)
+
+	brainmob?.mind?.transfer_to(new_body)
+	new_body.grab_ghost()
+	transfer_observers_to(new_body)
+
 	if(nugget)
-		for(var/obj/item/bodypart as anything in new_body.bodyparts)
+		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
+			if(istype(bodypart, /obj/item/bodypart/head))
+				new_body.become_blind(NO_EYES) //Spawning without a head no eyes
 			qdel(bodypart)
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
@@ -316,9 +336,9 @@
 		new_body.visible_message(span_warning("[new_body]'s body fully forms from [new_body.p_their()] core!"))
 		to_chat(owner, span_purple("Your body fully forms from your core!"))
 
-	brainmob?.mind?.transfer_to(new_body)
-	new_body.grab_ghost()
-	transfer_observers_to(new_body)
+	//Update both the body and stats fixe visual body and HUD issues
+	new_body.update_stat()
+	new_body.update_body_parts()
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
@@ -420,11 +440,15 @@
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
+	var/obj/item/bodypart/head/head_part = new /obj/item/bodypart/head()
+
 	if(!length(limbs_to_heal))
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
+		if(head_part.can_attach_limb(H))
+			H.cure_blind(NO_EYES)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*length(limbs_to_heal)
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
@@ -432,6 +456,10 @@
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
+			var/obj/item/bodypart/part = healed_limb
+			if(part.can_attach_limb(head_part))
+				H.cure_blind(NO_EYES)
+				continue
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
