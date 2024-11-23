@@ -329,6 +329,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
+	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
 
 	return TRUE
 
@@ -473,9 +474,8 @@ SUBSYSTEM_DEF(ticker)
 					continue
 				item.post_equip_item(new_player_mob.client?.prefs, new_player_living)
 
-		if(new_player_mob.client.readied_store)
-			if(new_player_mob.client.readied_store.bought_item)
-				new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
+		if(new_player_mob.client?.readied_store?.bought_item)
+			new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
 		CHECK_TICK
 
