@@ -953,6 +953,16 @@
 	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
 	return ..()
 
+/mob/living/silicon/robot/post_buckle_mob(mob/living/victim_to_boot)
+	if(HAS_TRAIT(src, TRAIT_GOT_DAMPENED))
+		eject_riders()
+
+/mob/living/silicon/robot/can_resist()
+	if(lockcharge)
+		balloon_alert(src, "locked down!")
+		return FALSE
+	return ..()
+
 /mob/living/silicon/robot/execute_resist()
 	. = ..()
 	if(!has_buckled_mobs())
@@ -1030,6 +1040,16 @@
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)
 	cell?.use(power_to_draw)
 
+
+/mob/living/silicon/robot/set_stat(new_stat)
+	. = ..()
+	update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
+
+/mob/living/silicon/robot/on_knockedout_trait_loss(datum/source)
+	. = ..()
+	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
+	update_stat()
+
 /mob/living/silicon/robot/proc/on_dampen()
 	SIGNAL_HANDLER
 	eject_riders()
@@ -1042,3 +1062,4 @@
 		buckled_mob.Paralyze(1 SECONDS)
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
+
