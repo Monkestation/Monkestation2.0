@@ -71,6 +71,10 @@
 //		/obj/item/clothing/head/mob_holder //Pet hats
 	)
 
+	var/list/allowed_implants = list(
+		/obj/item/implant
+	)
+
 	var/list/allowed_organ_types = list(
 		/obj/item/organ/internal/cyberimp,
 		/obj/item/organ/external/wings,
@@ -265,7 +269,7 @@
     	ITEM_SLOT_LPOCKET,
     	ITEM_SLOT_RPOCKET
 	)
-	for(var/islot in focus_slots)// Focus on storage items and any others that drop when uniform is unequiped
+	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
 		process_and_store_item(victim.get_item_by_slot(islot), victim)
 
 	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
@@ -277,9 +281,19 @@
 	for(var/atom/movable/item in rest_items)
 		process_and_store_item(item, victim)
 
-	var/list/internal_orgs = victim.organs
+	var/list/implants = victim.implants // Process and store implants
+	for(var/obj/item/implant/curimplant in implants)
+		for(var/type in src.allowed_implants)
+			if(istype(curimplant, type) && curimplant.removed(victim))
+				var/obj/item/implantcase/case =  new /obj/item/implantcase
+				case.imp = curimplant
+				curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
+				case.update_appearance()
+				process_and_store_item(case, victim)
+
+	var/list/internal_orgs = victim.organs	// Process and store organ implants and related organs
 	for(var/obj/item/organ/organ in internal_orgs)
-		for(var/type in src.allowed_organ_types) // Process and store organ implants and related organs
+		for(var/type in src.allowed_organ_types)
 			if(istype(organ, type))
 				organ.Remove(victim)
 				process_and_store_item(organ, victim)
@@ -475,7 +489,6 @@
 			var/obj/item/bodypart/part = healed_limb
 			if(part.can_attach_limb(head_part))
 				H.cure_blind(NO_EYES)
-				continue
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
