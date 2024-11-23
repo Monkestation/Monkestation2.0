@@ -1,5 +1,6 @@
 #define DAMAGE_WATER_STACKS 5
 #define REGEN_WATER_STACKS 1
+#define HEALTH_HEALED 2.5
 
 /datum/species/oozeling
 	name = "\improper Oozeling"
@@ -117,9 +118,16 @@
 		ORGAN_SLOT_EARS,
 	)
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
-		for(var/datum/wound/iter_wound as anything in slime.all_wounds)
-			iter_wound.on_xadone(4 * REM * seconds_per_tick)
-			slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
+		var/brute_damage = slime.get_current_damage_of_type(damagetype = BRUTE)
+		var/burn_damage = slime.get_current_damage_of_type(damagetype = BURN)
+		var/remaining_heal = HEALTH_HEALED
+		if(brute_damage + burn_damage > 0)
+			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature > slime.bodytemp_cold_damage_limit)
+				remaining_heal -= abs(slime.heal_damage_type(rand(0, remaining_heal) * REM * seconds_per_tick, BRUTE))
+				slime.heal_damage_type(remaining_heal * REM * seconds_per_tick, BURN)
+				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
+			else
+				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds"))
 		if(slime.blood_volume > BLOOD_VOLUME_SLIME_SPLIT)
 			slime.adjustOrganLoss(
 			pick(organs_we_mend),
