@@ -68,11 +68,18 @@
 
 	var/list/bannedcore = list(
 		/obj/item/disk/nuclear,
-//		/obj/item/clothing/head/mob_holder
+//		/obj/item/clothing/head/mob_holder //Pet hats
 	)
 
-	var/list/allowed_organs = list(
+	var/list/allowed_organ_types = list(
 		/obj/item/organ/internal/cyberimp,
+		/obj/item/organ/external/wings,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/external/frills,
+		/obj/item/organ/external/horns,
+		/obj/item/organ/external/snout,
+		/obj/item/organ/external/antennae,
+		/obj/item/organ/external/spines
 	)
 
 	var/rebuilt = TRUE
@@ -271,10 +278,12 @@
 		process_and_store_item(item, victim)
 
 	var/list/internal_orgs = victim.organs
-	for(var/obj/item/organ/organ in internal_orgs) // Proccess and store organ implants and other related organs
-		if(istype(organ, allowed_organs))
-			organ.Remove(victim) // Remove the organ first
-			process_and_store_item(organ, victim)
+	for(var/obj/item/organ/organ in internal_orgs)
+		for(var/type in src.allowed_organ_types) // Process and store organ implants and related organs
+			if(istype(organ, type))
+				organ.Remove(victim)
+				process_and_store_item(organ, victim)
+				break
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
