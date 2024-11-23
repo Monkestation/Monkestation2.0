@@ -19224,6 +19224,14 @@
 /obj/structure/flora/tree/jungle/small/style_5,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/borbop)
+"bba" = (
+/mob/living/basic/rabbit/daisy{
+	real_name = "Honey";
+	name = "Honey";
+	desc = "One of Frill's many pets."
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom)
 "bdM" = (
 /obj/machinery/modular_computer/preset/id/centcom,
 /turf/open/floor/carpet/orange,
@@ -19488,6 +19496,16 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"bIv" = (
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = -32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "bJu" = (
 /obj/item/storage/toolbox/fishing,
 /turf/open/misc/dirt/jungle/dark/arena,
@@ -19647,6 +19665,11 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"csJ" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "cuW" = (
 /obj/machinery/photocopier/gratis{
 	pixel_y = -3
@@ -19815,6 +19838,24 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
+"cOX" = (
+/obj/structure/bed/dogbed{
+	name = "pet bed";
+	desc = "It looks soft and inviting. Unfortunately for the animals, it seems otherwise occupied by a potato."
+	},
+/obj/item/aicard/aitater{
+	name = "Scarlett's Potato";
+	desc = "She doesn't seem thrilled by this predicament... but it's hard to tell with a potato."
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = -32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "cPr" = (
 /obj/machinery/corral_corner{
 	mapping_id = "12"
@@ -19854,6 +19895,19 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
+"cVY" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/cake/bscc,
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "cWC" = (
 /obj/effect/turf_decal/trimline/red/real_red/filled/line{
 	dir = 8
@@ -20275,6 +20329,34 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"etS" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/obj/item/kirbyplants/organic/plant18,
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8;
+	pixel_x = 32
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/purple,
+/area/centcom/central_command_areas/adminroom)
 "evW" = (
 /obj/structure/chair/sofa/fancy/left{
 	dir = 8
@@ -20668,6 +20750,34 @@
 /obj/machinery/duct,
 /turf/open/floor/circuit/red/off,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"fuC" = (
+/obj/structure/easel,
+/obj/item/canvas/twentyfour_twentyfour,
+/obj/item/paint_palette,
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8;
+	pixel_x = 32
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = 32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "fyA" = (
 /obj/structure/table/greyscale,
 /obj/item/melee/baton{
@@ -20855,6 +20965,10 @@
 	dir = 4
 	},
 /area/cruiser_dock)
+"giL" = (
+/obj/structure/curtain/cloth,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/adminroom)
 "gjz" = (
 /obj/structure/railing/wooden_fencing{
 	pixel_y = 16
@@ -21034,6 +21148,9 @@
 /obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+"gDo" = (
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "gEP" = (
 /obj/structure/railing/wood,
 /obj/structure/railing/wood{
@@ -21773,6 +21890,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
+"irh" = (
+/obj/item/toy/plush/moth{
+	name = "Athena";
+	desc = "Nine out of eleven times, talking to this moth will lead you to an explosive revelation."
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "iuf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/wood{
@@ -21822,6 +21946,14 @@
 /obj/structure/sign/warning/secure_area,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"iBf" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "iCr" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 4
@@ -21944,6 +22076,20 @@
 	},
 /turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/adminroom)
+"iWL" = (
+/obj/structure/dresser,
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "iXa" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1;
@@ -22035,6 +22181,20 @@
 /obj/structure/flora/bush/flowers_yw/style_3,
 /turf/open/misc/grass,
 /area/centcom)
+"jtf" = (
+/obj/structure/alien_tank/filled{
+	name = "Tank";
+	desc = "A sticky note is taped to the front. It just has a bunch of question marks on it, a heart, and a smiley face."
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = -32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "jth" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/donk,
@@ -22228,6 +22388,13 @@
 "jTt" = (
 /turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
+"jTZ" = (
+/obj/item/toy/plush/nova/deer{
+	desc = "Lovingly named after a particularly frustrating and amusing interaction.";
+	name = ""Candy-Ass""
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "jUj" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/dirt/station,
@@ -22256,6 +22423,16 @@
 "kbi" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/floor/sandy_dirt,
+/area/centcom/central_command_areas/adminroom)
+"kbw" = (
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
 "kcc" = (
 /obj/structure/flora/grass/jungle/b/style_4,
@@ -22415,6 +22592,28 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
+"kCK" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/pie/berryclafoutis,
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = 32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
+"kDQ" = (
+/obj/structure/fluff{
+	desc = "The framework for an artificial intelligence core.";
+	name = "\improper AI core";
+	icon = 'icons/mob/silicon/ai.dmi';
+	icon_state = "ai-empty"
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom)
 "kEZ" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/hedge,
@@ -22460,6 +22659,11 @@
 "kNn" = (
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
+"kOL" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom)
 "kPU" = (
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/soymilk,
@@ -22650,6 +22854,12 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"lyb" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom,
+/area/space)
 "lAc" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
@@ -23478,6 +23688,11 @@
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
+"oQd" = (
+/obj/structure/table/wood,
+/obj/item/food/spaghetti/shoyu_tonkotsu_ramen,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "oSV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Checkpoint Office"
@@ -23639,6 +23854,20 @@
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"pyS" = (
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "pCB" = (
 /obj/structure/table/wood,
 /obj/item/trash/tray,
@@ -23698,6 +23927,14 @@
 	},
 /turf/open/floor/carpet/red,
 /area/cruiser_dock)
+"pJt" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "pKn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -23934,6 +24171,33 @@
 	},
 /turf/open/floor/eighties/red,
 /area/centcom/central_command_areas/admin)
+"qDJ" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/taperecorder,
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8;
+	pixel_x = -32
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = -32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "qGw" = (
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
@@ -24573,6 +24837,13 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
+"sJC" = (
+/mob/living/basic/deer{
+	name = "Bambi";
+	desc = "One of Frill's many pets. That seems like a copyright violation of some sort."
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom)
 "sJK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -24860,6 +25131,13 @@
 	},
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
+"tDM" = (
+/mob/living/simple_animal/pet/cat/cak{
+	name = "Truffle";
+	desc = "She is a cat made out of cake. How the hell did this thing end up alive, much less here?!"
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/adminroom)
 "tEv" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
@@ -25034,6 +25312,18 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
+"uke" = (
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/airlock/silver{
+	dir = 4;
+	name = "Frill's Retreat"
+	},
+/obj/structure/fans/tiny/forcefield{
+	opacity = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/centcom/central_command_areas/adminroom)
 "ulw" = (
 /obj/structure/flora/bush/sparsegrass,
 /turf/open/floor/sandy_dirt,
@@ -25563,6 +25853,11 @@
 	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/centcom/central_command_areas/evacuation)
+"wcH" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/pie/berrytart,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "wdp" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L14"
@@ -25574,6 +25869,25 @@
 /obj/structure/flora/bush/pale/style_3,
 /turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/admin)
+"wkH" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/camera{
+	name = "Photography Camera";
+	desc = "A polaroid camera, written on the bottom is Frill's name written in elegant cursive."
+	},
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "wkZ" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -25925,6 +26239,20 @@
 /obj/effect/turf_decal/tile/dark_purple/fourcorners,
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
+"xow" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "xqY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -25958,6 +26286,24 @@
 	dir = 4
 	},
 /area/centcom/central_command_areas/evacuation)
+"xvV" = (
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8;
+	pixel_x = -32
+	},
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "xwy" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/plastic,
@@ -25981,6 +26327,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"xzd" = (
+/obj/structure/sign{
+	name = "illusionary wall";
+	icon = 'icons/turf/walls/snow_wall.dmi';
+	icon_state = "snow_wall-0";
+	layer = 2.8;
+	pixel_x = 32
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "xzi" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -26158,6 +26514,14 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"ycq" = (
+/obj/effect/portal/permanent{
+	layer = 2;
+	name = "Sifting Snow";
+	light_color = "#ffd6cc"
+	},
+/turf/open/floor/carpet/purple,
+/area/centcom/central_command_areas/adminroom)
 "ydt" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
@@ -55653,13 +56017,13 @@ aIW
 aIS
 kpH
 kpH
-aOn
-aOn
-aOn
-aOn
-aOn
-aOn
-aOn
+uke
+kpH
+kpH
+kpH
+kpH
+kpH
+kpH
 aOn
 kJM
 aOn
@@ -55910,13 +56274,13 @@ atW
 aHo
 azt
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+xvV
+bIv
+jtf
+bIv
+cOX
+qDJ
+kpH
 lNd
 lNd
 lNd
@@ -56167,13 +56531,13 @@ aJp
 aZx
 aId
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+pyS
+gDo
+bba
+gDo
+gDo
+xow
+kpH
 lki
 lNd
 lNd
@@ -56424,13 +56788,13 @@ aXn
 aDw
 aGe
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+kbw
+aNa
+kOL
+tDM
+gDo
+iBf
+giL
 lNd
 lNd
 lNd
@@ -56681,13 +57045,13 @@ aCU
 aiD
 aOR
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+iWL
+csJ
+kDQ
+lyb
+aNa
+oQd
+giL
 lNd
 lNd
 lNd
@@ -56938,13 +57302,13 @@ aCs
 aiD
 aHQ
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+kbw
+aNa
+kOL
+aNa
+gDo
+pJt
+giL
 sMc
 lNd
 lNd
@@ -57195,13 +57559,13 @@ hfY
 aBB
 aAC
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+wkH
+gDo
+sJC
+jTZ
+wcH
+cVY
+kpH
 fJf
 lNd
 lNd
@@ -57452,13 +57816,13 @@ eHz
 eHz
 kpH
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+fuC
+xzd
+gDo
+irh
+kCK
+etS
+kpH
 lki
 lNd
 lNd
@@ -57708,14 +58072,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-vxh
+kpH
+kpH
+kpH
+giL
+giL
+kpH
+ycq
+kpH
 rtP
 rtP
 rtP
