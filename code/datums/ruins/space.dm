@@ -178,8 +178,8 @@
 	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/spacerealhotel
-	id = "spacehotel"
-	suffix = "spacehotel.dmm"
+	id = "spacerealhotel"
+	suffix = "spacerealhotel.dmm"
 	name = "The Twin-Nexus Hotel"
 	description = "An actual working interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
