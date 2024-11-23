@@ -1622,6 +1622,16 @@
 	pixel_y = 8;
 	req_access = list("ACCESS_SYNDICATE")
 	},
+/obj/machinery/turretid{
+	ailock = 1;
+	control_area = "/area/ruin/space/has_grav/deepstorage";
+	dir = 1;
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Base turret controls";
+	pixel_y = 30;
+	req_access = list("syndicate")
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eJ" = (
@@ -2028,6 +2038,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fR" = (
@@ -2626,7 +2639,7 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kE" = (
 /obj/machinery/camera/autoname/directional/south{
-	network = list("ss13","xeno","rd")
+	network = list("bunker1")
 	},
 /obj/machinery/corral_corner{
 	mapping_id = "2"
@@ -2848,6 +2861,8 @@
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/disk/vacuum_upgrade,
+/obj/item/disk/vacuum_upgrade,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "wI" = (
@@ -3401,6 +3416,13 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"YY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Zx" = (
 /obj/machinery/duct,
 /turf/open/floor/engine,
@@ -3905,15 +3927,15 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+dB
+dB
+dB
+dB
+dB
+dB
+dB
+dB
+dB
 dB
 oI
 dc
@@ -4643,7 +4665,7 @@ ie
 hX
 hn
 fV
-fT
+YY
 cp
 ab
 ab
