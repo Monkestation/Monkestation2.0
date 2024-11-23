@@ -329,6 +329,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/exotic/languagebook,
 /obj/effect/spawner/random/exotic/languagebook,
+/obj/item/mop/advanced,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aX" = (
@@ -488,6 +489,7 @@
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
+/obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bs" = (
