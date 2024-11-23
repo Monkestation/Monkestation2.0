@@ -31,6 +31,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ak" = (
 /obj/effect/turf_decal/stripes/red/corner,
+/obj/structure/sign/poster/contraband/fun_police/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "al" = (
@@ -117,7 +118,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "aB" = (
 /obj/structure/table,
-/obj/item/gps/spaceruin,
+/obj/item/folder/syndicate/red,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aC" = (
@@ -129,12 +130,12 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aE" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aG" = (
@@ -237,22 +238,22 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "aO" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Self-Destruct"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Self-Destruct"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aQ" = (
@@ -296,6 +297,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
@@ -428,6 +433,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/item/circuitboard/machine/techfab/department/science,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bn" = (
@@ -439,11 +445,12 @@
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bo" = (
@@ -451,6 +458,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bp" = (
@@ -472,6 +480,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bs" = (
@@ -607,9 +618,9 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
@@ -628,6 +639,7 @@
 	name = "Hydroponics"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bR" = (
@@ -710,6 +722,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bY" = (
@@ -747,7 +760,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cj" = (
@@ -906,6 +919,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cE" = (
@@ -986,7 +1000,7 @@
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cS" = (
@@ -1292,11 +1306,11 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dN" = (
@@ -1344,11 +1358,11 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dW" = (
@@ -1379,11 +1393,11 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ef" = (
@@ -1439,7 +1453,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Canister Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "eo" = (
@@ -1466,10 +1480,10 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Airlock Control"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "es" = (
@@ -1590,18 +1604,18 @@
 	id = "bunkerexterior";
 	name = "exterior blast door access";
 	pixel_y = -8;
-	req_access = list("away_general")
+	req_access = list("ACCESS_SYNDICATE")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "bunkerinterior";
 	name = "interior blast door access";
-	req_access = list("away_general")
+	req_access = list("ACCESS_SYNDICATE")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "bunkershutter";
 	name = "hallway shutter toggle";
 	pixel_y = 8;
-	req_access = list("away_general")
+	req_access = list("ACCESS_SYNDICATE")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -1623,6 +1637,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/filingcabinet/security,
+/obj/item/paper/fluff/jobs/security,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eL" = (
@@ -1630,11 +1645,12 @@
 	dir = 10
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/filingcabinet/medical,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/item/paper/fluff/jobs/medical,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eO" = (
@@ -1732,7 +1748,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Atmospherics and Power Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "eZ" = (
@@ -1741,7 +1757,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Atmospherics and Power Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fa" = (
@@ -1805,6 +1821,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fl" = (
@@ -1874,10 +1891,10 @@
 "fx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fy" = (
@@ -1926,7 +1943,7 @@
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fF" = (
@@ -2148,6 +2165,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
+/obj/item/circuitboard/machine/autolathe,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gj" = (
@@ -2267,8 +2285,8 @@
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
 	name = "Inconspicuous Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gA" = (
@@ -2333,8 +2351,8 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "RTG Observation"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gN" = (
@@ -2360,11 +2378,11 @@
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
 	name = "Inconspicuous Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gR" = (
@@ -2414,7 +2432,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Telecomms"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gZ" = (
@@ -2561,18 +2579,18 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/message_monitor{
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/south,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "iA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "iK" = (
@@ -2587,6 +2605,10 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kB" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kE" = (
@@ -2610,6 +2632,11 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Xenobiology"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/storage)
 "mD" = (
@@ -2708,6 +2735,13 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"tA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "un" = (
 /obj/structure/table/optable,
 /obj/machinery/light/small/directional/south,
@@ -2725,6 +2759,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "vc" = (
@@ -2789,6 +2824,11 @@
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"wI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/d_day_promo/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "wJ" = (
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -2843,7 +2883,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/cell_10k,
-/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "AI" = (
@@ -2861,6 +2901,7 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
+/obj/item/gun/syringe/syndicate,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Bb" = (
@@ -2902,10 +2943,10 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "De" = (
@@ -2930,6 +2971,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"EG" = (
+/obj/structure/closet/cabinet,
+/obj/item/flashlight/lantern/syndicate,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "EP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden{
 	dir = 4
@@ -2948,7 +2994,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "Ht" = (
@@ -2995,17 +3041,23 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"KO" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "KZ" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "LB" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "LH" = (
@@ -3038,12 +3090,27 @@
 /obj/machinery/growing/tray,
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"Nc" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Nw" = (
 /obj/machinery/corral_corner{
 	mapping_id = "5"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"NA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/free_key/directional/south,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "NE" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -3088,11 +3155,11 @@
 /obj/machinery/washing_machine,
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Re" = (
@@ -3108,8 +3175,8 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "Rs" = (
@@ -3134,14 +3201,14 @@
 "SJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "SR" = (
 /obj/machinery/airalarm/directional/south,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ta" = (
@@ -3197,6 +3264,18 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"UH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/c20r/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/airlock)
+"UO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "UX" = (
 /obj/machinery/sleeper/syndie{
 	dir = 1
@@ -3270,8 +3349,8 @@
 "Yo" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Zx" = (
@@ -3885,7 +3964,7 @@ Tp
 dw
 dB
 ei
-ey
+EG
 dB
 ei
 ey
@@ -3974,7 +4053,7 @@ CQ
 sy
 sy
 sy
-sy
+KO
 sy
 hU
 aG
@@ -3995,7 +4074,7 @@ ek
 eA
 dB
 ek
-eA
+NA
 dB
 wJ
 UX
@@ -4026,7 +4105,7 @@ Ad
 sy
 VU
 BA
-sy
+tA
 kB
 hU
 aH
@@ -4078,8 +4157,8 @@ NE
 sy
 sy
 sy
-sy
-sy
+UO
+tA
 ml
 aT
 aT
@@ -4308,7 +4387,7 @@ cp
 cp
 fR
 fT
-fT
+wI
 cp
 cp
 cp
@@ -4339,7 +4418,7 @@ Nw
 iK
 iK
 Nw
-Mv
+Nc
 gs
 af
 aX
@@ -4355,7 +4434,7 @@ hh
 eo
 eF
 Rs
-Rs
+UH
 hk
 fF
 fS
