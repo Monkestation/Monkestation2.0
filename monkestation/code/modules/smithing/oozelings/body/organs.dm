@@ -66,6 +66,15 @@
 
 	var/list/stored_items = list()
 
+	var/list/bannedcore = list(
+		/obj/item/disk/nuclear,
+//		/obj/item/clothing/head/mob_holder
+	)
+
+	var/list/allowed_organs = list(
+		/obj/item/organ/internal/cyberimp,
+	)
+
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
 
@@ -228,8 +237,19 @@
 		return TRUE
 	return ..()
 
-/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
+///////
+/// PROCESS ITEMS FOR CORE EJECTION
+/// Processes different types of items and prepares them to be stored when the core is ejected.
+/obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to process and move items
+    if(!item) // Skip NULL items
+        return
+    if(item.type in src.bannedcore)
+        item.forceMove(get_turf(victim)) // Move to turf if banned
+    else
+        victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
+        stored_items |= item
 
+/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
 	// List of slots that drop to ground despite the transferItemtoLoc proc
 	var/list/focus_slots = list(
     	ITEM_SLOT_SUITSTORE,
@@ -238,36 +258,23 @@
     	ITEM_SLOT_LPOCKET,
     	ITEM_SLOT_RPOCKET
 	)
+	for(var/islot in focus_slots)// Focus on storage items and any others that drop when uniform is unequiped
+		process_and_store_item(victim.get_item_by_slot(islot), victim)
 
-	for(var/islot in focus_slots) // Handle dropping items on unequip
-		var/atom/movable/focus_item = victim.get_item_by_slot(islot)
-		if(focus_item)
-			victim.transferItemToLoc(focus_item, src, FALSE, silent = TRUE)
-			stored_items |= focus_item
+	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
 
-	var/atom/movable/item_on_back = victim.back
-	if(item_on_back) //Jank to handle modsuit covering items. Fix this.
-		victim.transferItemToLoc(item_on_back, src, FALSE, silent = TRUE)
-		stored_items |= item_on_back
+	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
+	process_and_store_item(target_chest.cavity_item, victim)
 
-	var/atom/movable/rest_items = victim.get_equipped_items(include_pockets = TRUE)
+	var/atom/movable/rest_items = victim.get_equipped_items(include_pockets = TRUE)// Store rest of equipment
 	for(var/atom/movable/item in rest_items)
-		if(item)
-			victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
-			stored_items |= item
+		process_and_store_item(item, victim)
 
-	var/list/intneralorgs = victim.organs //Should be nude remove implants then store
-	for(var/obj/item/organ/organ in intneralorgs)
-		if(istype(organ, /obj/item/organ/internal/cyberimp))
-			organ.Remove(victim)
-			victim.transferItemToLoc(organ, src, FALSE, silent = TRUE)
-			stored_items |= organ
-
-	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)
-	var/obj/item/cavitem = target_chest.cavity_item
-	if(cavitem)
-		victim.transferItemToLoc(cavitem, src, FALSE, silent = TRUE)
-		stored_items |= cavitem
+	var/list/internal_orgs = victim.organs
+	for(var/obj/item/organ/organ in internal_orgs) // Proccess and store organ implants and other related organs
+		if(istype(organ, allowed_organs))
+			organ.Remove(victim) // Remove the organ first
+			process_and_store_item(organ, victim)
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
