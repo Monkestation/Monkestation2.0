@@ -864,6 +864,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/cup/bucket,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cx" = (
@@ -1609,18 +1610,18 @@
 	id = "bunkerexterior";
 	name = "exterior blast door access";
 	pixel_y = -8;
-	req_access = list("ACCESS_SYNDICATE")
+	req_access = list("syndicate")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "bunkerinterior";
 	name = "interior blast door access";
-	req_access = list("ACCESS_SYNDICATE")
+	req_access = list("syndicate")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "bunkershutter";
 	name = "hallway shutter toggle";
 	pixel_y = 8;
-	req_access = list("ACCESS_SYNDICATE")
+	req_access = list("syndicate")
 	},
 /obj/machinery/turretid{
 	ailock = 1;
@@ -2557,7 +2558,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "hr" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
+	mapping_id = "s2"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -2627,6 +2628,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kB" = (
@@ -2642,7 +2644,7 @@
 	network = list("bunker1")
 	},
 /obj/machinery/corral_corner{
-	mapping_id = "2"
+	mapping_id = "s3"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -2689,10 +2691,10 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "on" = (
 /obj/machinery/corral_corner{
-	mapping_id = "6"
+	mapping_id = "s2"
 	},
 /obj/machinery/slime_pen_controller{
-	mapping_id = "6"
+	mapping_id = "s2"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -2723,10 +2725,10 @@
 	dir = 1
 	},
 /obj/machinery/corral_corner{
-	mapping_id = "2"
+	mapping_id = "s3"
 	},
 /obj/machinery/slime_pen_controller{
-	mapping_id = "2";
+	mapping_id = "s3";
 	dir = 2
 	},
 /turf/open/floor/engine,
@@ -2806,6 +2808,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "vs" = (
@@ -2989,7 +2992,7 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "CZ" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5"
+	mapping_id = "s1"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3038,7 +3041,7 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "Fv" = (
 /obj/machinery/corral_corner{
-	mapping_id = "2"
+	mapping_id = "s3"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3087,7 +3090,7 @@
 	dir = 1
 	},
 /obj/machinery/corral_corner{
-	mapping_id = "2"
+	mapping_id = "s3"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3154,7 +3157,7 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "Nw" = (
 /obj/machinery/corral_corner{
-	mapping_id = "5"
+	mapping_id = "s1"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3174,7 +3177,7 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "NF" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
+	mapping_id = "s3";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -3249,10 +3252,10 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Sp" = (
 /obj/machinery/corral_corner{
-	mapping_id = "5"
+	mapping_id = "s1"
 	},
 /obj/machinery/slime_pen_controller{
-	mapping_id = "5"
+	mapping_id = "s1"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3271,7 +3274,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ta" = (
 /obj/machinery/corral_corner{
-	mapping_id = "6"
+	mapping_id = "s2"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
