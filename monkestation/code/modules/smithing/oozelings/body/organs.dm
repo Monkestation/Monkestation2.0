@@ -352,6 +352,8 @@
 	brainmob?.mind?.transfer_to(new_body)
 	new_body.grab_ghost()
 	transfer_observers_to(new_body)
+	new_body.set_jitter_if_lower(200 SECONDS)
+	new_body.emote("scream")
 
 	if(nugget)
 		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
