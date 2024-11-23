@@ -296,17 +296,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
-/obj/structure/closet/cardboard,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/matches,
-/obj/item/storage/box/bodybags,
-/obj/item/clothing/glasses/meson/engine,
-/obj/item/clothing/glasses/meson/engine,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
@@ -425,17 +414,36 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bm" = (
+/obj/structure/closet/cardboard,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/matches,
+/obj/item/storage/box/bodybags,
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/clothing/glasses/meson/engine,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
+/obj/structure/closet/cardboard,
+/obj/item/stack/sheet/cardboard,
+/obj/item/stack/cable_coil,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/package_wrap,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bo" = (
@@ -700,7 +708,6 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "General Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -894,7 +901,6 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Provisions Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1389,13 +1395,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eh" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
-	pixel_y = 5
-	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/away_general_access,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ei" = (
@@ -1500,7 +1504,8 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/closet/cabinet,
-/obj/item/card/id/away/deep_storage,
+/obj/item/clothing/suit/syndicate/interdyne_jacket,
+/obj/item/clothing/suit/toggle/labcoat/interdyne,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ez" = (
@@ -2199,6 +2204,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+"gs" = (
+/obj/structure/closet/l3closet/scientist,
+/obj/item/clothing/suit/bio_suit/interdyne,
+/obj/item/clothing/suit/bio_suit/interdyne,
+/obj/item/clothing/suit/bio_suit/interdyne,
+/obj/item/clothing/head/bio_hood/interdyne,
+/obj/item/clothing/head/bio_hood/interdyne,
+/obj/item/clothing/head/bio_hood/interdyne,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "gu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 5
@@ -2505,9 +2520,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hr" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/mineral/random/low_chance,
-/area/ruin/space)
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "6"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "hA" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
@@ -2558,6 +2575,29 @@
 /obj/effect/mapping_helpers/airalarm/away_general_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
+"iK" = (
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"jD" = (
+/obj/machinery/plumbing/ooze_compressor,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"kB" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"kE" = (
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","xeno","rd")
+	},
+/obj/machinery/corral_corner{
+	mapping_id = "2"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/chemical,
@@ -2566,6 +2606,19 @@
 "lG" = (
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"ml" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Xenobiology"
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/storage)
+"mD" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2576,6 +2629,21 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"on" = (
+/obj/machinery/corral_corner{
+	mapping_id = "6"
+	},
+/obj/machinery/slime_pen_controller{
+	mapping_id = "6"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"oA" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "oI" = (
 /obj/machinery/vending/medical/syndicate_access/cybersun,
 /obj/machinery/light/small/directional/north,
@@ -2592,6 +2660,19 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
+"qM" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/corral_corner{
+	mapping_id = "2"
+	},
+/obj/machinery/slime_pen_controller{
+	mapping_id = "2";
+	dir = 2
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "qN" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -2614,6 +2695,9 @@
 /obj/item/disk/surgery/sleeper_protocol,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"sy" = (
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "sL" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2643,16 +2727,68 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"vc" = (
+/obj/machinery/plumbing/ooze_compressor,
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "vs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"vL" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "wu" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"wF" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/table/glass,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "wJ" = (
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -2665,19 +2801,13 @@
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
-"wU" = (
-/obj/structure/closet/cardboard,
-/obj/item/stack/sheet/cardboard,
-/obj/item/stack/cable_coil,
-/obj/item/stack/sheet/mineral/wood,
-/obj/item/stack/sheet/mineral/wood,
-/obj/item/stack/package_wrap,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage/storage)
+"xf" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "xg" = (
 /obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -2694,6 +2824,10 @@
 /obj/machinery/chem_master,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"yA" = (
+/mob/living/basic/slime,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "zi" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -2701,6 +2835,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"Ad" = (
+/obj/machinery/slime_market_pad,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Az" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -2731,6 +2869,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"BA" = (
+/obj/structure/closet,
+/obj/item/storage/box/beakers/bluespace,
+/obj/item/storage/box/beakers/bluespace,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Cf" = (
 /obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -2742,6 +2888,16 @@
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"CQ" = (
+/obj/machinery/computer/slime_market,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"CZ" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "5"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Db" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -2780,6 +2936,12 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Fv" = (
+/obj/machinery/corral_corner{
+	mapping_id = "2"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "FI" = (
 /obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -2820,10 +2982,22 @@
 "Iy" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"JC" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/corral_corner{
+	mapping_id = "2"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "JV" = (
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"KZ" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "LB" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
@@ -2834,6 +3008,16 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"LH" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Mp" = (
 /obj/structure/table,
 /obj/item/storage/medkit/brute{
@@ -2844,10 +3028,51 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"Mv" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "MJ" = (
 /obj/machinery/growing/tray,
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"Nw" = (
+/obj/machinery/corral_corner{
+	mapping_id = "5"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"NE" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/smartfridge/extract/preloaded,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"NF" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "2";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"Pb" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"Ps" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"PM" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Qi" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line{
@@ -2897,6 +3122,15 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"Sp" = (
+/obj/machinery/corral_corner{
+	mapping_id = "5"
+	},
+/obj/machinery/slime_pen_controller{
+	mapping_id = "5"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "SJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/east,
@@ -2910,6 +3144,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"Ta" = (
+/obj/machinery/corral_corner{
+	mapping_id = "6"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Tp" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -2945,6 +3185,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/storage)
+"TL" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Uj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -2988,6 +3234,27 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/storage)
+"VU" = (
+/obj/machinery/biomass_recycler,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
+"Wf" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "WR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -2997,6 +3264,9 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"WU" = (
+/turf/closed/mineral/random/low_chance,
+/area/template_noop)
 "Yo" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/east,
@@ -3004,6 +3274,10 @@
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"Zx" = (
+/obj/machinery/duct,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "ZL" = (
 /obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -3332,18 +3606,18 @@ aa
 aa
 ab
 ab
-aa
 ab
 ab
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+WU
 aa
 aa
 Iy
@@ -3384,18 +3658,18 @@ aa
 aa
 aa
 ab
-aa
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
 ab
-ab
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
 Iy
 Iy
 Iy
@@ -3436,18 +3710,18 @@ aa
 aa
 aa
 ab
+KZ
+Ta
+iK
+iK
+Ta
+Mv
+JC
+iK
+iK
+Fv
+KZ
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-Iy
-Iy
-Iy
-Iy
 Iy
 Iy
 Iy
@@ -3488,17 +3762,17 @@ aa
 aa
 aa
 ab
-ab
-ab
-ab
+KZ
+Ps
+yA
 hr
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Zx
+xf
+oA
+iK
+yA
+Pb
+KZ
 ab
 ab
 ab
@@ -3540,16 +3814,16 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+KZ
+iK
+iK
+iK
+iK
+xf
+mD
+NF
+iK
+iK
 hU
 hU
 hU
@@ -3591,17 +3865,17 @@ aa
 aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+KZ
+KZ
+Ta
+iK
+iK
+on
+xf
+qM
+iK
+iK
+kE
 hU
 bT
 bU
@@ -3642,14 +3916,14 @@ aa
 aa
 aa
 aa
-aa
 ab
-Iy
-ab
-ab
-ab
-ab
-ab
+KZ
+LH
+TL
+TL
+TL
+jD
+Wf
 aw
 hU
 hU
@@ -3694,14 +3968,14 @@ aa
 ab
 aa
 aa
-aa
 ab
-Iy
-ab
-ab
-ab
-ab
-ab
+KZ
+CQ
+sy
+sy
+sy
+sy
+sy
 hU
 aG
 aR
@@ -3745,15 +4019,15 @@ aa
 ab
 ab
 ab
-aa
-aa
-aa
-Iy
 ab
 ab
-ab
-ab
-ab
+KZ
+Ad
+sy
+VU
+BA
+sy
+kB
 hU
 aH
 aS
@@ -3797,17 +4071,17 @@ aa
 ab
 Iy
 ab
-aa
-aa
-aa
-Iy
 ab
 ab
-ab
-ab
-ab
-hU
-wU
+KZ
+NE
+sy
+sy
+sy
+sy
+sy
+ml
+aT
 aT
 bo
 bE
@@ -3850,14 +4124,14 @@ ab
 ab
 Iy
 Iy
-aa
-aa
-Iy
-Iy
 ab
-ab
-ab
-ab
+KZ
+wF
+vL
+vL
+vL
+vc
+PM
 hU
 aJ
 aU
@@ -3902,14 +4176,14 @@ ab
 Iy
 Iy
 ab
-aa
-aa
-Iy
-Iy
 ab
-ab
-ab
-ab
+KZ
+KZ
+Nw
+iK
+iK
+Sp
+xf
 hU
 aK
 aV
@@ -3954,14 +4228,14 @@ Iy
 Iy
 Iy
 ab
-aa
-aa
-Iy
-Iy
 ab
 ab
-ab
-ab
+KZ
+iK
+yA
+CZ
+Zx
+xf
 hU
 aL
 aW
@@ -4007,13 +4281,13 @@ ab
 aa
 aa
 aa
-Iy
-Iy
 ab
-ab
-ab
-ab
-ab
+KZ
+Ps
+iK
+iK
+iK
+Mv
 hU
 hA
 af
@@ -4058,15 +4332,15 @@ ab
 ab
 aa
 aa
-aa
-Iy
 Iy
 ab
-ab
-ab
-ab
-ab
-ab
+KZ
+Nw
+iK
+iK
+Nw
+Mv
+gs
 af
 aX
 bs
@@ -4110,11 +4384,11 @@ aa
 aa
 aa
 aa
-aa
-aa
+Iy
 ab
-ab
-ab
+KZ
+KZ
+KZ
 af
 af
 af
@@ -4162,8 +4436,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+Iy
+Iy
 ab
 ab
 ab
@@ -4766,7 +5040,7 @@ gv
 gD
 gP
 fp
-ab
+fp
 ab
 ab
 ab
@@ -4818,7 +5092,7 @@ fD
 gE
 fD
 hY
-ab
+fp
 ab
 ab
 ab
@@ -4870,7 +5144,7 @@ fp
 fp
 fp
 fp
-ab
+fp
 ab
 ab
 aa
@@ -4913,15 +5187,15 @@ ab
 Iy
 Iy
 fd
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+fp
 ab
 ab
 ab
