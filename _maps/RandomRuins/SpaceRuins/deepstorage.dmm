@@ -771,10 +771,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cj" = (
-/obj/structure/noticeboard/directional/north,
-/obj/item/paper/fluff/ruins/deepstorage/water_concern,
-/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ck" = (
@@ -784,18 +782,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/barsign/all_access/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cl" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	pixel_y = 33
+	},
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cn" = (
@@ -960,14 +960,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cI" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
-"cJ" = (
-/obj/structure/table,
-/obj/item/kitchen/fork,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/wood,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cK" = (
@@ -1109,6 +1103,8 @@
 	},
 /obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dj" = (
@@ -3092,13 +3088,13 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "LB" = (
-/obj/structure/table,
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	pixel_y = 31
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "LH" = (
@@ -3297,6 +3293,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/storage)
+"TC" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/fluff/ruins/deepstorage/water_concern,
+/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "TL" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -4207,7 +4211,7 @@ aT
 bo
 bE
 bW
-dH
+TC
 cE
 dh
 dh
@@ -4468,7 +4472,7 @@ bs
 bI
 af
 LB
-cJ
+cI
 cU
 fT
 dF
