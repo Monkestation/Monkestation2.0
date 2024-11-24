@@ -100,7 +100,7 @@
 	if(istype(wetness) && wetness.stacks > (REGEN_WATER_STACKS))
 		if (SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 			//to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
-			to_chat(slime, span_warning("You can't pull your body together it is completely soaked!"))
+			to_chat(slime, span_warning("You can't pull your body together it is dripping wet!"))
 			slime.blood_volume -= 1 * seconds_per_tick
 
 ///////
