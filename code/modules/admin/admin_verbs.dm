@@ -102,6 +102,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/log_viewer_new,
 	/client/proc/request_more_opfor,
 	/client/proc/view_opfors,
+	/client/proc/check_players,
 	/client/proc/AdminVOX,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
@@ -263,6 +264,9 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,
 	/client/proc/server_memory_stats,
+	/client/proc/tracy_next_round,
+	/client/proc/start_tracy,
+	// monkestation end
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
