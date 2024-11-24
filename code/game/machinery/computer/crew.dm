@@ -138,7 +138,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
-		// 200-239: Centcom 
+		JOB_LATEJOIN_BARBER = 72, //monkestation edit: barber
+		JOB_LATEJOIN_EXPLORER = 73, //monkestation edit: explorer
+		// 200-239: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
 		JOB_CENTCOM_OFFICIAL = 210,
@@ -157,6 +159,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_ERT_DEATHSQUAD = 227,
 		JOB_NT_REP = 230,
 		JOB_BLUESHIELD = 231,
+		JOB_NANOTRASEN_REPRESENTATIVE = 230,
 
 		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
 		JOB_PRISONER = 998,

@@ -3,6 +3,7 @@ const BASEICONS = {
   AI: 'eye',
   Assistant: 'toolbox',
   'Atmospheric Technician': 'fan',
+  Barber: 'cut',
   Bartender: 'cocktail',
   'Bit Avatar': 'code',
   Bitrunner: 'gamepad',
@@ -17,6 +18,7 @@ const BASEICONS = {
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
   'CentCom Official': 'medal',
+  'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
   Chemist: 'prescription-bottle',
@@ -31,6 +33,7 @@ const BASEICONS = {
   Detective: 'user-secret',
   'Diet Wizard': 'hat-wizard',
   'Discount Godzilla': 'ticket-alt', // like a movie ticket? IDK theres not many good icons for this.
+  Explorer: 'rocket',
   Geneticist: 'dna',
   Ghost: 'ghost',
   Gorilla: 'exclamation-triangle',

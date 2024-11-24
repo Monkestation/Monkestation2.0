@@ -39,6 +39,7 @@
 		"coffee_cartridge",
 		"coffeemaker",
 		"coffeepot",
+		"comb", //monkestation edit
 		"condenser",
 		"conveyor_belt",
 		"conveyor_switch",
@@ -48,6 +49,7 @@
 		"desttagger",
 		"doppler_array",
 		"drinking_glass",
+		"dyespray", //monkestation edit
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
@@ -59,7 +61,9 @@
 		"fluid_ducts",
 		"foam_dart",
 		"fork",
+		"fur_dyer", //monkestation edit
 		"gas_filter",
+		"hairbrush", //monkestation edit
 		"handcuffs_s",
 		"handlabel",
 		"health_sensor",
@@ -101,6 +105,7 @@
 		"rglass",
 		"roll",
 		"rollerbed",
+		"scissors", //monkestation edit
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
@@ -791,6 +796,7 @@
 		"swapper",
 		"triphasic_scanning",
 		"wormholeprojector",
+		"advanced_gps", // monkestation edit: advanced gps
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
@@ -1421,6 +1427,7 @@
 		"ci-reviver",
 		"ci-surgery",
 		"ci-toolset",
+		"ci-sprinter", //monkestation edit:
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1475,6 +1482,7 @@
 		"triggermod",
 		"mining_scanner",
 		"mat_analyzer",
+		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

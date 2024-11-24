@@ -83,7 +83,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
-#define issimian(A) (is_species(A, /datum/species/simian)) //Monkestation Addition
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
@@ -110,7 +109,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/simple_animal/hostile/alien))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/basic/alien))
 
 #define isalienhunter(A) (istype(A, /mob/living/carbon/alien/adult/hunter))
 
@@ -295,7 +294,7 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_bartender_job(job_type) (istype(job_type, /datum/job/bartender))
 #define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
 #define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
-#define is_clown_job(job_type) (istype(job_type, /datum/job/clown))
+#define is_clown_job(job_type) (istype(job_type, /datum/job/clown) || istype(job_type, /datum/job/yellowclown))
 #define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
 #define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
