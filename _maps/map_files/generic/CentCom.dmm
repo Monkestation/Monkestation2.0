@@ -23795,9 +23795,6 @@
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
-"oSw" = (
-/turf/closed/indestructible/riveted,
-/area/space)
 "oSV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Checkpoint Office"
@@ -26668,7 +26665,7 @@
 	opacity = 1;
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
 "xqY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -58764,8 +58761,8 @@ aaa
 aaa
 aaa
 aaa
-oSw
-oSw
+kpH
+kpH
 vxh
 lNd
 lNd
