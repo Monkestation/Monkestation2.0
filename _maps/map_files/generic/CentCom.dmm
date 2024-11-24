@@ -19266,7 +19266,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/pie/berryclafoutis,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "bpj" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -19449,14 +19449,6 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/centcom/central_command_areas/admin)
-"bOi" = (
-/mob/living/basic/rabbit/daisy{
-	real_name = "Honey";
-	name = "Honey";
-	desc = "One of Frill's many pets."
-	},
-/turf/open/space/basic,
-/area/space)
 "bQE" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
@@ -19742,7 +19734,7 @@
 	name = "Candy-Ass"
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "cHD" = (
 /obj/machinery/door/window{
 	dir = 2
@@ -19782,7 +19774,7 @@
 	desc = "A polaroid camera, written on the bottom is Frill's name written in elegant cursive."
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "cMo" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -19928,7 +19920,7 @@
 	icon_state = "ai-empty"
 	},
 /turf/open/floor/glass/reinforced/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "diV" = (
 /obj/structure/closet/abductor{
 	name = "Sentient Locker of Transport"
@@ -19996,7 +19988,7 @@
 	light_color = "#ffd6cc"
 	},
 /turf/open/floor/carpet/purple,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "drb" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 10
@@ -20901,7 +20893,7 @@
 /obj/structure/flora/bush/flowers_pp,
 /obj/item/kirbyplants/organic/plant18,
 /turf/open/floor/carpet/purple,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "gjz" = (
 /obj/structure/railing/wooden_fencing{
 	pixel_y = 16
@@ -21175,7 +21167,7 @@
 	},
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "gMa" = (
 /obj/machinery/light/directional/east{
 	dir = 1
@@ -21381,7 +21373,7 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "hjV" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/sand/plating,
@@ -21534,7 +21526,7 @@
 /obj/item/canvas/twentyfour_twentyfour,
 /obj/item/paint_palette,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "hAI" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -22061,7 +22053,7 @@
 /obj/structure/table/wood,
 /obj/item/food/spaghetti/shoyu_tonkotsu_ramen,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "iMs" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/dark,
@@ -22283,7 +22275,7 @@
 "jvQ" = (
 /obj/structure/curtain/cloth,
 /turf/closed/indestructible/fakeglass,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "jwN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -22527,7 +22519,7 @@
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/glass/reinforced/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "khW" = (
 /obj/machinery/light/small/maintenance/directional/west,
 /obj/effect/spawner/random/trash/garbage{
@@ -22740,13 +22732,6 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
-"kTh" = (
-/mob/living/simple_animal/pet/cat/cak{
-	name = "Truffle";
-	desc = "She is a cat made out of cake. How the hell did this thing end up alive, much less here?!"
-	},
-/turf/open/space/basic,
-/area/space)
 "kTt" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/orange,
@@ -23268,7 +23253,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/pie/berrytart,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "naL" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -23325,7 +23310,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "npG" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -23765,7 +23750,7 @@
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "oJx" = (
 /obj/effect/turf_decal/siding/white,
 /obj/structure/flora/bush/fullgrass/style_2,
@@ -24369,7 +24354,7 @@
 	desc = "A sticky note is taped to the front. It just has a bunch of question marks on it, a heart, and a smiley face."
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "qzu" = (
 /obj/machinery/door/airlock/vault{
 	name = "Pooba's Office"
@@ -25100,12 +25085,8 @@
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
 "sVm" = (
-/mob/living/basic/deer{
-	name = "Bambi";
-	desc = "One of Frill's many pets. That seems like a copyright violation of some sort."
-	},
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "sVB" = (
 /obj/structure/railing/wooden_fencing{
 	pixel_y = 16
@@ -25310,8 +25291,12 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "twW" = (
+/mob/living/simple_animal/pet/cat/cak{
+	name = "Truffle";
+	desc = "She is a cat made out of cake. How the hell did this thing end up alive, much less here?!"
+	},
 /turf/open/floor/glass/reinforced/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "tyg" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -25521,7 +25506,7 @@
 /obj/item/food/cake/bscc,
 /obj/machinery/light/directional/south,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "tYX" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -25603,7 +25588,7 @@
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "uuc" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -25684,7 +25669,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/taperecorder,
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "uGL" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/bot_white,
@@ -25880,7 +25865,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/floor/glass/reinforced/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "voy" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/turf_decal/siding/wood{
@@ -25930,8 +25915,13 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "vtn" = (
+/mob/living/basic/rabbit/daisy{
+	real_name = "Honey";
+	name = "Honey";
+	desc = "One of Frill's many pets."
+	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "vtr" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 1
@@ -26133,7 +26123,7 @@
 	desc = "She doesn't seem thrilled by this predicament... but it's hard to tell with a potato."
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "vWu" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt{
@@ -26315,7 +26305,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "wqf" = (
 /obj/effect/turf_decal/vg_decals/radiation_custom,
 /obj/effect/decal/cleanable/greenglow,
@@ -26509,8 +26499,12 @@
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
 "wPO" = (
-/turf/open/space/basic,
-/area/space,)
+/mob/living/basic/deer{
+	name = "Bambi";
+	desc = "One of Frill's many pets. That seems like a copyright violation of some sort."
+	},
+/turf/open/floor/glass/plasma,
+/area/centcom/central_command_areas/adminroom)
 "wQo" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
@@ -26555,7 +26549,7 @@
 	desc = "Nine out of eleven times, talking to this moth will lead you to an explosive revelation."
 	},
 /turf/open/floor/glass/plasma,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "xbt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Checkpoint Office"
@@ -26675,7 +26669,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/centcom/central_command_areas/adminroom)
 "xqY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -51342,7 +51336,7 @@ aaa
 aaa
 aaa
 aaa
-bOi
+aaa
 aaa
 aaa
 aaa
@@ -51591,7 +51585,6 @@ aaa
 aaa
 aaa
 aaa
-wPO
 aaa
 aaa
 aaa
@@ -51600,7 +51593,8 @@ aaa
 aaa
 aaa
 aaa
-kTh
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -52370,7 +52364,7 @@ aaa
 aaa
 aaa
 aaa
-sVm
+aaa
 aaa
 aaa
 aaa
@@ -52631,7 +52625,7 @@ aaa
 aaa
 aaa
 aaa
-wPO
+aaa
 aaa
 aaa
 aaa
@@ -53402,7 +53396,7 @@ aaa
 aaa
 aaa
 aaa
-wPO
+aaa
 aaa
 aaa
 aaa
@@ -56452,14 +56446,14 @@ kpH
 aIW
 aIS
 kpH
-oSw
+kpH
 xoZ
-oSw
-oSw
-oSw
-oSw
-oSw
-oSw
+kpH
+kpH
+kpH
+kpH
+kpH
+kpH
 aOn
 kJM
 aOn
@@ -56709,14 +56703,14 @@ aVR
 atW
 aHo
 azt
-oSw
-vtn
-vtn
+kpH
+sVm
+sVm
 qzm
-vtn
+sVm
 vUQ
 uEk
-oSw
+kpH
 lNd
 lNd
 lNd
@@ -56966,14 +56960,14 @@ ajP
 aJp
 aZx
 aId
-oSw
+kpH
 oJi
-vtn
-twW
-vtn
+sVm
+aNa
+sVm
 vtn
 hgO
-oSw
+kpH
 lki
 lNd
 lNd
@@ -57223,12 +57217,12 @@ aig
 aXn
 aDw
 aGe
-oSw
-vtn
-twW
+kpH
+sVm
+aNa
 vkm
-twW
-vtn
+aNa
+wPO
 upP
 jvQ
 lNd
@@ -57480,7 +57474,7 @@ axC
 aCU
 aiD
 aOR
-oSw
+kpH
 wpP
 nnN
 dii
@@ -57737,12 +57731,12 @@ cDd
 aCs
 aiD
 aHQ
-oSw
-vtn
-twW
+kpH
+sVm
+aNa
 kfh
-twW
-vtn
+aNa
+sVm
 gKC
 jvQ
 sMc
@@ -57994,14 +57988,14 @@ aSs
 hfY
 aBB
 aAC
-oSw
+kpH
 cLJ
-vtn
-twW
+sVm
+aNa
 cHC
 nai
 tYo
-oSw
+kpH
 fJf
 lNd
 lNd
@@ -58251,14 +58245,14 @@ eHz
 eHz
 eHz
 kpH
-oSw
+kpH
 hAz
-vtn
-vtn
+sVm
+sVm
 xbs
 bog
 gjf
-oSw
+kpH
 lki
 lNd
 lNd
@@ -58508,14 +58502,14 @@ aaa
 aaa
 aaa
 aaa
-oSw
-oSw
-oSw
+kpH
+kpH
+kpH
 jvQ
 jvQ
-oSw
+kpH
 dra
-oSw
+kpH
 rtP
 rtP
 rtP
