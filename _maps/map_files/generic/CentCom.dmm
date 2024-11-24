@@ -19739,7 +19739,7 @@
 "cHC" = (
 /obj/item/toy/plush/nova/deer{
 	desc = "Lovingly named after a particularly frustrating and amusing interaction.";
-	name = ""Candy-Ass""
+	name = "Candy-Ass"
 	},
 /turf/open/floor/glass/plasma,
 /area/space)
@@ -26510,8 +26510,7 @@
 /area/centcom/central_command_areas/admin)
 "wPO" = (
 /turf/open/space/basic,
-/area/space,
-/area/space)
+/area/space,)
 "wQo" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
