@@ -171,3 +171,39 @@
 	else
 		to_chat(owner, span_notice("You fine-tune the electromagnetic signals from your core to be picked up by GPS receivers upon it's rejection."))
 		core.gps_active = TRUE
+///////
+/// MEMBRANE MURMUR SPELL
+/// Use your core to attempt to call out for help or attention.
+/datum/action/cooldown/spell/membrane_murmur
+	name = "Membrane Murmur"
+	desc = "Force your core to pass gasses to make noticable sounds."
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "gel_cocoon"
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+
+	cooldown_time = 25 SECONDS
+	check_flags = NONE
+	spell_requirements = SPELL_CASTABLE_AS_BRAIN
+
+/datum/action/cooldown/spell/membrane_murmur/cast(obj/item/organ/internal/brain = usr)
+	. = ..()
+	var/bubble = "slime"
+	var/message = list(
+		"Blorp... glub... help...",
+		"Glooop... save me...",
+		"Alone... burbble too quiet...",
+		"What’s left... of me...?",
+		"Can’t feel... can’t... think...",
+		"Plasma... need... plasma...",
+		"It’s so... quiet..."
+	)
+
+	if(istype(brain, /obj/item/organ/internal/brain/slime))
+		var/obj/item/organ/internal/brain/slime/talkingbrain = brain
+		if(istype(usr, /mob/living/brain) && talkingbrain.brainmob == usr)
+			talkingbrain.say(pick(message), bubble,list(), TRUE, null, FALSE, null, FALSE, 2, null)
+		else
+			return FALSE
+	else
+		return FALSE
