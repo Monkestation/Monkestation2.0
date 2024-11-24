@@ -169,6 +169,11 @@
 		render_list += "<span class='alert ml-1'><b>Subject cannot be healed by any known methods.</b></span>\n"
 	// monkestation end
 
+	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
+	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
+	// monkestation end
+
 	if(target.stamina.loss)
 		if(advanced)
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss]%.</span>\n"
