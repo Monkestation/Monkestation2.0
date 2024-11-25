@@ -173,14 +173,21 @@
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
-
+	var/mob/living/basic/mining/legion/legionbody = victim.loc
 	//Start moving items
 	process_items(victim)
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
-	if(death_turf)
-		forceMove(death_turf)
+
+	//Make this check more generalized later. For antags that eat people as they kill. Make sure they drop their
+	//contents after death; that is if that is how that item or antag works.
+	if(legionbody)
+		//victim.transferItemToLoc(src, victim.contents, FALSE, silent = TRUE)
+		src.forceMove(legionbody)
+	else
+		if(death_turf)
+			forceMove(death_turf)
 	src.wash(CLEAN_WASH)
 	new death_melt_type(death_turf, victim.dir)
 
