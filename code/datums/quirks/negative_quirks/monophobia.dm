@@ -1,6 +1,6 @@
 /datum/quirk/monophobia
 	name = "Monophobia"
-	desc = "You are extremley stressed when left alone, leading to potenitally lethal levels of anxiety."
+	desc = "You are extremely stressed when left alone, leading to potentially lethal levels of anxiety."
 	value = -6
 	icon = FA_ICON_USER_FRIENDS
 	medical_record_text = "Patient has an irrational fear of something."
