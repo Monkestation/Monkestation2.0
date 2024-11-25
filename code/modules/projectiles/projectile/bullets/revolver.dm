@@ -45,12 +45,12 @@
 /obj/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
-	stamina = 30
+	stamina = 40 //30 to 40 monkestation edit
 	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
-	ricochet_decay_damage = 0.8
+	ricochet_decay_damage = 1 //0.8 to 1 monkestation edit let them have fun
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
@@ -128,20 +128,3 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
-
-// .45 (Lever Rifle and Long Revolver)
-
-/obj/projectile/bullet/g45l/rubber
-	name = ".45 Long rubber bullet"
-	damage = 5
-	stamina = 35
-	weak_against_armour = TRUE
-	sharpness = NONE
-	embedding = null
-
-/obj/projectile/bullet/g45l
-	name = ".45 Long bullet"
-	damage = 35
-	wound_bonus = -5
-	sharpness = SHARP_EDGED
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)

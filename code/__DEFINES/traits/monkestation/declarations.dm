@@ -55,6 +55,8 @@
 #define TRAIT_GHOST_CRITTER "ghost_critter"
 /// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// For when a mob has been consumed by a zombie
+#define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
@@ -86,6 +88,7 @@
 #define TRAIT_LOUD_ASS			"loud_ass"
 #define TRAIT_MINING_CALLOUTS	"miner_callouts"
 #define TRAIT_PARANOIA			"paranoia"
+#define TRAIT_PRIDE_PIN			"pride_pin"
 #define TRAIT_STABLE_ASS		"stable_ass"
 #define TRAIT_STOWAWAY			"stowaway"
 #define TRAIT_UNSTABLE_ASS		"unstable_ass"

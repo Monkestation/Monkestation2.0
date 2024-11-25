@@ -77,3 +77,323 @@
   Wisemonster:
   - bugfix: The security airlocks leading to perma from inner security on voidraptor
       now use perma access
+2024-11-05:
+  Absolucy:
+  - qol: The AI radio speech sound effect now only plays from over "normal" frequencies
+      - AI private and non-departmental frequencies will not play the speech sound.
+  - bugfix: Jaunts now ACTUALLY work at centcom after roundend, for realsies.
+  - balance: Teratomas now have minor regeneration (1 brute/burn, 0.5 tox per second).
+      This is linked to their liver.
+  - balance: Teratomas no longer need to breathe.
+  - refactor: Moved teratoma misfortune to be linked to their brain, rather than species.
+  - refactor: Moved teratoma unconvertability to their mind/antag datum, rather than
+      species.
+  SirNightKnight:
+  - rscadd: Mice/rats have figured out how to eat a larger variety of food.
+  Wisemonster:
+  - balance: Blueshift's security modsuits now require armory access for their room
+  - balance: Blueshift's security locker room now requires brig access to enter
+  - balance: Blueshifts's gulag teleporter room now requires brig access to enter
+  - bugfix: The security escape pod on blueshift uses general security access instead
+      of external access
+  - balance: Moved the security modsuits on voidraptor into the armory, moved the
+      secway and riot suit to the previous modsuit location and onto a nearby rack,
+      respectively
+  - balance: Theseus now has security modsuits in security
+  - balance: The room containing security modsuits on Theseus now requires armory
+      access to enter
+  - balance: Theseus' security techfab has been moved to the security office proper
+  - balance: The security locker room on theseus now requires brig access
+  - balance: The Theseus brig cells now require brig access to use
+  - balance: The gulag is now more secure using more lava tiles
+2024-11-06:
+  BanementI:
+  - rscadd: Adds 326 new vox lines for you to annoy the crew with.
+  Gw0sty:
+  - rscadd: replaced all stations bardrone mob with a new ghostrole spawner "Bardrone".
+  Shoddd:
+  - bugfix: Satyr tail and fur is no longer in their head
+  - bugfix: Satyr tail, fur, and horns have proper descriptions
+  - bugfix: Tundra moth limb descriptions and names fixed
+  - bugfix: Tundra moths use moth wings with flight potion
+  Wisemonster:
+  - balance: The advisory level is now based on the selected storyteller, rather than
+      arbitrary. (green = ghost, sleeper. midnight= jester, warrior. orange = others)
+2024-11-07:
+  RikuTheKiller:
+  - rscadd: Transfer votes now have an announcement and default to continuing the
+      round for any non-voters.
+  Sorenon:
+  - bugfix: fixed dwarfish people not having eyes
+  - bugfix: fixed giant people shrinking when they break-dance
+  - bugfix: fixed floran / pod people hair being drawn bellow clothing
+  Sylphily:
+  - balance: changed how getting paralyzed by the vendors works, it now can take a
+      selection of any 2 limbs, or your entire body, but a lobo from medical can fix
+      it, also raises the weight of the head gib crit
+  The-Black-Screen:
+  - rscadd: added the nanotrasen representative's office area, the shipbreaking area,
+      miscellaneous things.
+  - rscdel: removed the vacant office, miscellaneous things.
+  - balance: changed the numbers of specific roles via boxstation.json.
+  - bugfix: fixed the air alarm in the kitchen coldroom, fixed the tachyon-doppler
+      array direction, fixed tank compressor direction, miscellaneous things.
+  Tractor Mann:
+  - rscadd: You can fax more things now! hack a fax machines input servo to send banana
+      peels, commit remote armed robbery and more!
+  - rscdel: Fax machines can no longer jam.
+  - spellcheck: the paper only message for NT faxes has been changed.
+  - admin: fax machines can now have recieve_notifies_admins set so you dont have
+      to always keep a eye on your fax machine.
+  flleeppyy:
+  - bugfix: you must *assinhale to *superfart. you may *fart to disarm your ass.
+  - rscadd: added emotes vomit, nodnods, and squint
+  - admin: you can now choose to add quirks in the "Select Equipment" menu
+  - admin: new VV dropdown option "Shake"
+2024-11-08:
+  Absolucy:
+  - rscadd: Organs no longer decay when below freezing temperatures, and decay slower
+      in colder (but not below freezing) temperatures.
+  - bugfix: The Wonderland Manifestation status effect actually properly works for
+      most abilities now.
+  - rscadd: The Wonderland Manifestation recoil effect now interacts with the pain
+      system.
+  - bugfix: The Malkavian clan objective to kill masquerade breakers is now properly
+      marked as completed when the target succumbs to the Final Death.
+  - bugfix: Fixed some... interesting code in the Gamemode subsystem (unsure how this
+      didn't error, ngl)
+  Gw0sty:
+  - rscadd: Added the robotic versions of brainwashing, lobotomy, pacification, amputation,
+      and brain surgery
+  - rscadd: Added a 'Brig Physician's Toolbox' to the Brig docs locker
+  - rscadd: Added Surgery computer and table to ouroboros sec med.
+  - rscdel: Removed the ability for wound tending on robotic chest's.
+  - rscdel: Removed doorhelper that wasnt doing anything in Centcom
+  - qol: Clarified gas analyzers are needed for xray cameras in the tooltips.
+  RandomDudeFromTheRim:
+  - bugfix: fixed a few things, really.
+  Veth-s:
+  - rscadd: Added AdminVOX to the game, to allow admins to do AI-like Vox announcements.
+2024-11-09:
+  Wisemonster:
+  - spellcheck: Added mention of the supply department in the HoP's description
+2024-11-11:
+  Absolucy:
+  - qol: Signboard text now appears more transparent for players when they are standing
+      behind the text.
+  - qol: Decreased line height for signboard text, so the text takes up less vertical
+      space.
+  - qol: Restored the original alpha for signboard text.
+  - rscadd: Tamed carps now go much faster when ridden without gravity.
+  - qol: Tamed carps now have better pathfinding.
+  Absolucy, Spaghetti-bit:
+  - bugfix: Tweaked how combinable messages work in an attempt to reduce lag from
+      chat spam.
+  Gw0sty:
+  - rscadd: Added new traitor uplink item. "License to Plasmaflood". You can guess
+      the rest.
+  Shoddd:
+  - rscadd: Tumor Shard now works on elites not in their body
+  - bugfix: you can no longer unflip tables as ghost and from a distance
+  - code_imp: modularized long guns
+  SirNightKnight:
+  - qol: The cyborg cargo module now has a tray for collecting mail tokens.
+  - bugfix: Fixed reloading for the bounty cycler shotgun.
+  ThePooba:
+  - rscdel: changed the continue vote to not default to continue without votes
+  - bugfix: Allows loneops to spawn if the antag cap is reached but disk is unsecured
+      and gaining weight.
+  - bugfix: Omnitraitors should no longer occur roundstart (no more Changeling vampyres)
+  - balance: Stardust shells do half the stamina damage now and have more spread
+  - balance: Rainbow slimes no do not Regen limbs anymore, healing is 300 over 30
+      seconds, Causes pain, can only be used every 3 minutes.
+  Wisemonster:
+  - rscadd: The HoP's hardsuit is now available on all maps
+  - balance: Pathologist now have pharmacy access
+  - balance: The HoP's door remote has been given supply access, in addition to it's
+      civilian access.
+  - balance: The HoP now has access to mining, the QM office, and the vault.
+  - balance: Boxstation's security locker room now requires brig access to enter
+  - balance: The security side of Boxstation's labor camp shuttle transfer area now
+      requires brig access.
+  - balance: The interior of Boxstation's justice chamber now requires brig access,
+      and the execution chamber itself requires armory access.
+2024-11-12:
+  t-toasted:
+  - rscadd: adds some more materials throughout maint, alongside other goodies
+  - rscadd: adds some solars crates near solars
+  - rscadd: gives NT Rep a computer and fax machine
+  - rscadd: adds in request consoles to almost every room
+  - rscdel: removed stray button in QM office
+  - rscdel: removed stray shutters outside chapel
+  - balance: removed a few windows at public garden
+  - qol: 'expands maints a little, hopefully gives antags more open spaces (three
+      large spaces added: one above science, one below cargo, one east of botany)'
+  - qol: engineering now has more tools in their lockers, adds two additional lockers
+  - bugfix: captain office shutters now work
+2024-11-13:
+  Absolucy:
+  - qol: Artifacts with the Talkative Fault now have an actual cooldown between forcing
+      people to speak, preventing client-side lag whenever someone decides to be annoying
+      and activate it 500 times in a populated area.
+  - bugfix: Bloodsucker lunge can no longer grab the victim from several rooms away
+      after it starts.
+  Absolucy, OliverOtter:
+  - rscadd: 4 new alert levels! Yellow, Amber, Gamma, and Lambda.
+  - rscadd: Yellow alert is for engineering issues, and Amber is for biological issues
+      (like zombies, blob, super virus, etc)
+  - sound: Added a special sound effect for Both Gamma and Lambda.
+  - admin: Added Gamma, a CC flavored Red alert, and Lambda, which should ONLY be
+      used for when a cult wins, or potentially a very angry ascended heretic.
+  Gw0sty:
+  - bugfix: Fix ssd examine text to show the correct cyro time. (30 minutes)
+  PotatoTomahto:
+  - rscadd: Adds microwave smite to toast people.
+  - bugfix: 'Fixes pierce wounds and admin smites.
+
+      :cl:'
+  Sorenon:
+  - rscadd: Added the pride pin quirk
+  - image: adds special sprites for lungs when you use the smoker quirk
+  - rscadd: Added the ability to adjust neck clothing items to reveal accessories
+  - rscadd: 'New funny internals for the clowns to spawn with. They come with O2 and
+      a secondary gas between 3 options: BZ, Helium and N2O. Talk with a "different
+      tone" with Helium, giggle and laugh "uncontrollably" while under the minor effects
+      of N2O or have "fun" hallucinations while under the minor effects of BZ.'
+  - balance: To not cut on how long the clown's O2 internals last due to the mixed
+      gases, the funny internals have 50% more gas volume, same as engineers' internals.
+  - rscadd: You can now choose the prosthetic you want with the Prosthetic Limb quirk.
+  - refactor: split the three tg quirk files into separate files for each quirk
+  Veth-s:
+  - rscadd: Added a tgui panel/button to access drone laws at any time.
+  steelphoenix4:
+  - code_imp: Split Toys loadout category into Plushies and Toys
+  - code_imp: Split Toys store category into Plushies and Toys
+  - code_imp: Move plushies from toys to Plushies
+  - rscadd: Add Big And Will Be Bad Wolf and Scorched Girl to the store
+2024-11-14:
+  Gw0sty:
+  - rscadd: Pathologists are given science goggles and a syringe in their roundstart
+      equipment.
+  - rscadd: Added virology chemical fridges to several maps
+  - qol: Added Gloves to the Virology vendor.
+  - bugfix: Adjusted vox to reflect what is said for two virology related lines.
+  - balance: Removed advanced parts from holomaps so they will stop being harvested
+      by said virologists.
+  ThePooba:
+  - rscadd: Adds buttons to switch between servers. The buttons will also indicate
+      which server you are currently on.
+  Veth-s:
+  - image: added a new icon for the bardrone law panel
+  - admin: Added Check Players verb
+  - admin: Fixed Adjust Event Tokens to work off of ckey instead of Character Name
+  - admin: Fixed Adjust Antag Tokens to work off of ckey instead of Character Name
+  Wisemonster:
+  - bugfix: Fixed the supermatter power surge event only ever being class 1
+  - balance: Chainsaw's structure damage multiplier reduced from 1.5 to 1.4 (36 damage
+      to 33.6)
+  - balance: Secure crate's minimum damage required increased from 25 to 35
+2024-11-16:
+  Absolucy:
+  - image: LOOC runechat now has an icon next to it, making it more obviously LOOC.
+      Whoops, I kinda forgot to add this, then completely forgot about it.
+  - bugfix: You can no longer crush random unsuspecting people with vendors by ventcrawling
+      while cursed. Teratomas rejoice, doors won't stun you while inside the vents
+      anymore.
+  - qol: AFK players don't count as "watchers" for cursed stuff.
+  KnigTheThrasher:
+  - rscadd: Updated some maintenance areas on kilostation.
+  Shoddd:
+  - rscadd: Add two types of elf ears to anime quirk
+  - code_imp: Removed a second color check from anime overlays
+  - bugfix: Cooldowns for spitter and bloater now trigger
+  - bugfix: Bloaters and xenos can no longer instant husk, and gib
+  - bugfix: Fixes lucky skin for .45 Long
+  SirNightKnight:
+  - bugfix: Fixed stamina projectiles dealing DOUBLE STAMINA DAMAGE. Rebalanced the
+      debilitated status effect accordingly.
+  - balance: Rebalanced shotgun ammo.
+  - balance: C38 rubber rounds do not lose kinetic force on ricochet and deal slightly
+      more stamina damage.
+  - bugfix: Dismissed goats from service in death against vines.
+  - bugfix: Covert mod can be used as internals
+  Veth-s:
+  - bugfix: fixed allergens from the Allergies perk sometimes being blank.
+  Wisemonster:
+  - balance: Each blueshield gun (minus the Hellfire) now comes with lethal ammo and
+      non-lethal ammo
+  flleeppyy:
+  - rscadd: jazz artifact effects
+  tired-wired:
+  - rscadd: adds an intern (trialmin) office to centcom.
+2024-11-18:
+  SirNightKnight:
+  - rscadd: Gave the clown a cool new hardsuit.
+  - balance: Added security hardsuits and jetpacks to the security suit storage unit
+      so they can catch the clown in space easier.
+  - rscadd: Nanotrasen has relaunched their space exploration program utilizing old
+      equipment. Welcome aboard the station explorers!
+  - rscadd: Reintroduced security, clown, and mining hardsuits.
+  - rscadd: Dug so hard in the code changelog I found mining jetpacks.
+  - qol: Cargo teleporters can fit in explorer webbing.
+  - qol: Citationinators can fit in security belts.
+  - qol: Adds a controls description to the space suit parent clarifying how to open
+      the cell cover, remove the cell, and adjust the thermal regulator.
+  - rscadd: Added hardsuit crates to the cargo catalog.
+  ThePooba:
+  - rscadd: adds an admin rune axe
+  tired-wired:
+  - bugfix: Blueshift blueshield's office should work properly now.
+2024-11-19:
+  Gw0sty:
+  - rscadd: Added a dedicated expansion area for the juggernaut suit
+  - qol: Renamed the juggernaut suit purchase to reflect your buying access to the
+      suit, not the suit itself.
+  - balance: Lowered the amount mining transfer cards come with, fixing a infinite
+      mining point exploit. CC hated this one trick.
+  - bugfix: Adjusted bioterrorism area in nukie base so you can actually preform xenobio
+      and virology.
+  Shoddd:
+  - code_imp: Simple mob xenos are now basic mob xenos
+  Uristthedorf:
+  - rscadd: Adds prescription glasses to autolathe, medfab, and colony fab.
+  - rscadd: Adds several new items to the colony fabricator from the autolathe.
+2024-11-20:
+  Absolucy:
+  - rscadd: GPSes now show the general direction of "calibrated" Z-levels, altho there's
+      currently no way of manually calibrating them.
+  - rscadd: GPSes will always be pre-calibrated to be capable of pointing back to
+      whichever z-level they were created on.
+  - rscadd: Added the advanced GPS, behind the Miniaturized Bluespace Research node,
+      which does not require calibration at all.
+  - rscadd: The "First Man on the Moon" curator kit now comes with an advanced GPS
+      - it's no longer an objectively worse version of the carp hunter kit!
+  - rscadd: Teratomas now heal wounds when regenerating now.
+  - bugfix: Hopefully made teratoma/carp regeneration more consistent and reliable.
+  Veth-s:
+  - rscdel: Disabled VethDay announcer pack.
+2024-11-21:
+  Absolucy:
+  - bugfix: Signboards no longer "leave behind" their text transparency area whenever
+      they're moved.
+2024-11-24:
+  Gw0sty:
+  - rscadd: Added several fire alarms to Boxstation medical.
+  - rscadd: Added bardrone spawner to Boxstation, rejoice
+  MissClassyPineapple:
+  - rscadd: Added Sect of the Hunt as an available sect for the chaplain.
+  - rscadd: Prey mobs and Prime Cut item as needed by the new sect.
+  - rscadd: Added Atlatl Weapon with accompanying throwing spears and spear quiver.
+  Shoddd:
+  - bugfix: IPCs not applying physiology modifiers
+  - code_imp: moved IPC limbs from under robot, this should have no gameplay changes
+      please report any
+  Sorenon:
+  - bugfix: Fixed usable wings not scaling with player height
+  - bugfix: Altered how Tallest players render to reduce artifacts
+  - rscadd: Enabled the Taller player height
+  - bugfix: Enabled mutation overlays scaling with height
+  ThePooba:
+  - rscadd: Added Valentines office
+  tired-wired:
+  - rscadd: Added a new office to centcom

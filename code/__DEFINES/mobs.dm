@@ -125,6 +125,10 @@
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
@@ -439,7 +443,7 @@
 #define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN 17 //youngest a character can be
+#define AGE_MIN 18 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
@@ -669,7 +673,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
 	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
 	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(2, 2),
+	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
+	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
 ))
 
 // Mob Overlays Indexes
@@ -775,9 +780,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	monkestation end */
+	/* monkestation edit start
+		it's okay for these layers to use shared appearences so long as the filters are reset before adding them as overlays
+		this is because adding an appearence to `overlays` copies it
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	monkestation edit end */
 	// These DO get a filter, I'm leaving them here as reference,
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
