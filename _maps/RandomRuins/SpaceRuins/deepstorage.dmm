@@ -396,11 +396,10 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bh" = (
 /obj/structure/table,
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/storage/bag/plants,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bi" = (
@@ -409,6 +408,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bj" = (
@@ -418,6 +418,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bm" = (
@@ -549,6 +550,8 @@
 /obj/structure/table,
 /obj/item/cultivator,
 /obj/item/hatchet,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants/portaseeder,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bC" = (
@@ -871,6 +874,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cy" = (
@@ -879,6 +883,7 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/cup/beaker/large,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cB" = (
@@ -2673,6 +2678,17 @@
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"lB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	name = "SapMaster XP"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "lG" = (
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -2729,6 +2745,11 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"oV" = (
+/obj/machinery/composters,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "po" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -3462,6 +3483,13 @@
 	},
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"ZN" = (
+/obj/machinery/door/window/survival_pod/left/directional/north{
+	req_access = list("syndicate");
+	name = "Totally legit testing pen"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 
 (1,1,1) = {"
 aa
@@ -4285,7 +4313,7 @@ mW
 Il
 SR
 gF
-ab
+gF
 ab
 aa
 aa
@@ -4336,8 +4364,8 @@ gF
 xI
 Az
 JV
+ZN
 gF
-ab
 ab
 aa
 aa
@@ -4389,7 +4417,7 @@ gF
 gF
 gF
 gF
-ab
+gF
 ab
 aa
 aa
@@ -5352,9 +5380,9 @@ ab
 ab
 aQ
 Em
-bD
+bC
 MJ
-cg
+sL
 MJ
 aQ
 ab
@@ -5402,12 +5430,12 @@ ab
 ab
 ab
 ab
-hB
 aQ
-aQ
-aQ
-aQ
-aQ
+lB
+bD
+bC
+cg
+oV
 aQ
 ab
 ab
@@ -5454,13 +5482,13 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+hB
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
 ab
 Iy
 Iy
