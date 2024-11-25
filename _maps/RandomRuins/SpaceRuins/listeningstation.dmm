@@ -175,12 +175,6 @@
 /mob/living/basic/mining/hivelord,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/support)
-"eu" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/red/directional/east,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/listeningstation/lobby)
 "eM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
@@ -1389,11 +1383,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "MT" = (
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "MV" = (
@@ -2861,7 +2852,7 @@ xY
 NY
 cG
 MT
-eu
+MT
 ch
 Dv
 WD
