@@ -99,7 +99,8 @@
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
 		. += span_red("You could probably snuff that out.")
-	. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+		. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	user.visible_message(
