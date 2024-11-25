@@ -1634,6 +1634,7 @@
 	pixel_y = 30;
 	req_access = list("syndicate")
 	},
+/obj/item/pen,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eJ" = (
@@ -1654,7 +1655,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/filingcabinet/security,
-/obj/item/paper/fluff/jobs/security,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eL" = (
@@ -1667,7 +1676,16 @@
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/filingcabinet/medical,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/item/paper/fluff/jobs/medical,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eO" = (
@@ -1801,7 +1819,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
+/area/ruin/space)
 "fe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/extinguisher_cabinet/directional/east,
