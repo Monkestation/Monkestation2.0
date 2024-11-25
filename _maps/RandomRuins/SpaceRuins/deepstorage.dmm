@@ -3486,7 +3486,7 @@
 "ZN" = (
 /obj/machinery/door/window/survival_pod/left/directional/north{
 	req_access = list("syndicate");
-	name = "Totally legit testing pen"
+	name = "Testing"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
