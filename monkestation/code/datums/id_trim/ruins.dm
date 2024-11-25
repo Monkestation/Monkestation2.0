@@ -34,3 +34,6 @@
 
 /datum/id_trim/away/old/apc
 	sechud_icon_state = SECHUD_APC_AWAY
+	
+/datum/id_trim/pirate/lustrous
+	sechud_icon_state = SECHUD_RADIANT
