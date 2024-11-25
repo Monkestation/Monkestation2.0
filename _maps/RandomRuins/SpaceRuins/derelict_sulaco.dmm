@@ -221,7 +221,6 @@
 /obj/machinery/light/broken/directional/south,
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /obj/effect/turf_decal/tile/red/half,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "hi" = (
@@ -327,7 +326,6 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "kd" = (
 /obj/item/trash/flare,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "kB" = (
@@ -415,9 +413,10 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
 "mg" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/space)
+/obj/structure/alien/weeds,
+/mob/living/basic/alien/sentinel,
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/derelictsulaco)
 "mi" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
@@ -487,19 +486,16 @@
 "nJ" = (
 /obj/machinery/light/dim/directional/east,
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "ob" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "oV" = (
@@ -523,7 +519,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ql" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/basic/alien/drone,
 /turf/open/floor/plating/reinforced,
 /area/ruin/space/has_grav/derelictsulaco)
 "qx" = (
@@ -553,6 +549,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ri" = (
 /obj/item/circuitboard/machine/telecomms/processor,
+/mob/living/basic/alien/drone,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "rA" = (
@@ -647,7 +644,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/basic/alien/drone,
 /turf/open/floor/plating/reinforced,
 /area/ruin/space/has_grav/derelictsulaco)
 "ur" = (
@@ -708,6 +705,7 @@
 "vz" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
+/mob/living/basic/alien/sentinel,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "vJ" = (
@@ -993,7 +991,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/basic/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Gj" = (
@@ -1268,7 +1266,7 @@
 	network = list()
 	},
 /obj/machinery/light/small/broken/directional/south,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/basic/alien/drone,
 /turf/open/floor/plating/reinforced,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ni" = (
@@ -1389,6 +1387,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/mob/living/basic/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "RA" = (
@@ -1506,7 +1505,7 @@
 "Ub" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/xeno,
-/mob/living/simple_animal/hostile/alien/queen/large,
+/mob/living/basic/alien/queen/large,
 /turf/open/floor/plating/reinforced,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ug" = (
@@ -1615,7 +1614,6 @@
 /obj/machinery/light/broken/directional/west,
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Xg" = (
@@ -1698,6 +1696,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/basic/alien/drone,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Zc" = (
@@ -2602,7 +2601,7 @@ FM
 Yw
 lS
 JT
-lS
+mg
 dD
 lS
 FA
@@ -2666,7 +2665,7 @@ KI
 (27,1,1) = {"
 hi
 hi
-mg
+sr
 VT
 Yw
 Yw
@@ -2701,14 +2700,14 @@ hi
 (28,1,1) = {"
 hi
 hi
-mg
+sr
 VT
 eZ
 lS
 zz
 JT
 lS
-lS
+ql
 EQ
 lS
 mS
@@ -2716,7 +2715,7 @@ sR
 Hr
 EK
 zA
-lS
+ql
 lS
 Ew
 VT
