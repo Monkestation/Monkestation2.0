@@ -223,7 +223,7 @@ export const OpposingForceTab = (props) => {
               </a>
             </Stack.Item>
             <Stack.Item>
-              <a href="https://wiki.monkestation.com/en/home">
+              <a href="https://wiki.monkestation.com/info/rules">
                 <Button
                   icon="question"
                   color="yellow"
