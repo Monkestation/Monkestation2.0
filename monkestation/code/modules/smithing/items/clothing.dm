@@ -123,7 +123,14 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/oxygen/captain,
 		/obj/item/storage/belt/holster,
-		/obj/item/smithed_part
+		/obj/item/smithed_part,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
+		/obj/item/gun/energy/disabler/smoothbore,
+		/obj/item/shield/buckler,
+		/obj/item/spear,
+		/obj/item/melee/baton/security/cattleprod,
+		/obj/item/melee/baseball_bat
 		)
 
 	base_name = "suit"
