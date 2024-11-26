@@ -1,5 +1,6 @@
 /datum/crafting_recipe/cleanbot_jr
 	name = "Scrubs Junior"
+	desc = "A little cleaning robot, he graduated from medical school!"
 	result = /mob/living/basic/bot/cleanbot/medbay/jr
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
