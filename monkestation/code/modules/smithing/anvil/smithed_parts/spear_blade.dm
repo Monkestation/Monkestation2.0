@@ -18,8 +18,6 @@
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
-	stamina_cost = round(25 * (100 / smithed_quality))
-
 	force = round(((material_stats.density + material_stats.hardness) / 9) * (smithed_quality * 0.01))
 	throwforce = force * 1.25
 	w_class = WEIGHT_CLASS_BULKY

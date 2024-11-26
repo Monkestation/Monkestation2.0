@@ -8,6 +8,7 @@
 	hilt_icon_state = "dagger-hilt"
 
 /obj/item/smithed_part/weapon_part/dagger_blade/finish_weapon()
+	tool_behaviour = TOOL_KNIFE
 	sharpness = SHARP_POINTY
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	armour_penetration = 35 * (smithed_quality / 100)
