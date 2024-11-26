@@ -10,7 +10,7 @@
 	worn_icon_state = "spear_back"
 
 /obj/item/smithed_part/weapon_part/spear_blade/finish_weapon()
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_POINTY
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	armour_penetration = 30 * (smithed_quality / 100)
 	reach = 2
