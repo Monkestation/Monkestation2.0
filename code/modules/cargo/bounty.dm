@@ -45,7 +45,10 @@
 			if(CIV_JOB_BASIC)
 				chosen_type = pick(subtypesof(/datum/bounty/item/assistant))
 			if(CIV_JOB_ROBO)
-				chosen_type = pick(subtypesof(/datum/bounty/item/mech))
+				if(prob(50)) //monkestation edit: bot bounties
+					chosen_type = pick(subtypesof(/datum/bounty/item/mech))
+				else
+					chosen_type = pick(subtypesof(/datum/bounty/item/bot))
 			if(CIV_JOB_CHEF)
 				chosen_type = pick(subtypesof(/datum/bounty/item/chef) + subtypesof(/datum/bounty/reagent/chef))
 			if(CIV_JOB_SEC)
