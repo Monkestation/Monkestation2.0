@@ -3230,6 +3230,9 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"Ob" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "Pb" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
@@ -4900,7 +4903,7 @@ ab
 ab
 ab
 ab
-ag
+Ob
 ag
 as
 aB
@@ -4952,7 +4955,7 @@ ab
 ab
 ab
 ab
-ag
+Ob
 ak
 at
 aC
@@ -5004,7 +5007,7 @@ aa
 ab
 ab
 ab
-ag
+Ob
 al
 au
 De
@@ -5056,7 +5059,7 @@ Dp
 ab
 ab
 ab
-ag
+Ob
 am
 au
 aE
@@ -5108,7 +5111,7 @@ aa
 ab
 ab
 ab
-ag
+Ob
 rz
 an
 Bb
@@ -5160,10 +5163,10 @@ aa
 aa
 ab
 ab
-ag
-ag
-ag
-ag
+Ob
+Ob
+Ob
+Ob
 aQ
 bi
 bC
