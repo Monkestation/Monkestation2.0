@@ -353,10 +353,6 @@
 /obj/effect/decal/cleanable/robot_debris,
 /obj/machinery/flasher/directional/east{
 	id = "IsolationFlash";
-	base_pixel_y = 50
-	},
-/obj/machinery/flasher/directional/east{
-	id = "IsolationFlash";
 	pixel_y = 40
 	},
 /turf/open/floor/iron/dark,
@@ -1193,6 +1189,14 @@
 /obj/machinery/seed_extractor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
+"er" = (
+/obj/machinery/pipedispenser/disposal/transit_tube,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/beta/atmos)
 "et" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1865,7 +1869,6 @@
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/blood/hitsplatter,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -3097,6 +3100,9 @@
 	name = "N2 Input"
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/camera/autoname/directional/south{
+	status = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "li" = (
@@ -3630,10 +3636,10 @@
 /area/ruin/space/ancientstation/beta/hall)
 "ng" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "nh" = (
@@ -4222,9 +4228,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/machinery/camera/autoname/directional/south{
-	status = 0
-	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "pv" = (
@@ -4530,12 +4533,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "sh" = (
-/obj/structure/ai_core/latejoin_inactive{
-	active = 0
-	},
-/obj/structure/ai_core/latejoin_inactive{
-	active = 0
-	},
 /obj/item/radio/intercom/directional/south{
 	freerange = 1;
 	frequency = 1447;
@@ -4552,6 +4549,7 @@
 	listening = 0;
 	name = "Custom Channel"
 	},
+/obj/structure/ai_core/deactivated,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "si" = (
@@ -6676,7 +6674,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/item/card/id/advanced/old{
 	trim = /datum/id_trim/away/old/robo;
-	name = "Ash Holm"
+	registered_name = Ash Holm
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
@@ -7182,7 +7180,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor/closed,
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Ku" = (
@@ -7310,6 +7307,9 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
+"Lc" = (
+/turf/closed/wall/rust,
+/area/space/nearstation)
 "Le" = (
 /obj/machinery/door/airlock/science,
 /obj/effect/decal/cleanable/dirt,
@@ -7687,18 +7687,15 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "NN" = (
 /obj/structure/rack,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
-/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
 /obj/item/pickaxe/drill,
-/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
 /obj/machinery/camera/autoname/directional/west{
 	status = 0
 	},
+/obj/item/pickaxe/drill,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "NQ" = (
@@ -8640,6 +8637,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"Um" = (
+/turf/closed/mineral/random,
+/area/template_noop)
 "Un" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch/directional/west{
@@ -8660,7 +8660,6 @@
 /obj/machinery/door/firedoor/closed,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Ut" = (
@@ -10884,9 +10883,9 @@ kA
 kL
 le
 pp
-mH
+er
 bJ
-aa
+Um
 UP
 UP
 aa
@@ -10951,7 +10950,7 @@ Dp
 Wp
 lf
 mH
-UP
+Lc
 UP
 wD
 wD
