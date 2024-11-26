@@ -21,10 +21,3 @@
 	description = "An assistant waving around some license broke into atmospherics and its now all on fire. Send us a Firebot before the gas fire leaks further."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/mob/living/simple_animal/bot/firebot = TRUE)
-
-/datum/bounty/item/bot/vim
-	name = "Vim"
-	description = "Our Employment Officer is requesting for a Vim for his dog, 'Princess Buttersworth XIV'."
-	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/vehicle/sealed/car/vim = TRUE)
-
