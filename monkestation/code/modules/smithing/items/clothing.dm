@@ -121,7 +121,8 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/storage/belt/holster
+		/obj/item/storage/belt/holster,
+		/obj/item/smithed_part
 		)
 
 	base_name = "suit"
