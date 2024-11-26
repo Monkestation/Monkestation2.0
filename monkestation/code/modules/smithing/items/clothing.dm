@@ -65,7 +65,8 @@
 		ENERGY = min(round((material_stats.refractiveness / 1.75) * (smithed_quality/100)),60),
 		FIRE = min(round(((100-material_stats.thermal)/1.75) * (smithed_quality/100)),60),
 		LASER = min(round(((material_stats.refractiveness + material_stats.density)/3.5) * (smithed_quality/100)),60),
-		MELEE = min(round(((material_stats.density + material_stats.hardness)/1.75) * (smithed_quality/100)),60)
+		MELEE = min(round(((material_stats.density + material_stats.hardness)/1.75) * (smithed_quality/100)),60),
+		WOUND = min(round(((material_stats.density + material_stats.hardness)/4) * (smithed_quality/100)),60)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 
