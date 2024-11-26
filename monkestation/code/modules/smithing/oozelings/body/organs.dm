@@ -169,7 +169,10 @@
 	if(QDELETED(stored_dna))
 		stored_dna = new
 
-	victim.dna.copy_dna(stored_dna)
+	if(victim.dna)
+		victim.dna.copy_dna(stored_dna)
+	else
+		src.stored_dna = null
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
@@ -183,7 +186,6 @@
 	//Make this check more generalized later. For antags that eat people as they kill. Make sure they drop their
 	//contents after death; that is if that is how that item or antag works.
 	if(legionbody)
-		//victim.transferItemToLoc(src, victim.contents, FALSE, silent = TRUE)
 		src.forceMove(legionbody)
 	else
 		if(death_turf)
@@ -212,7 +214,12 @@
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	rebuilt = FALSE
-	victim.transfer_observers_to(src)
+	if(src.stored_dna)
+		victim.transfer_observers_to(src)
+	else
+		drop_items_to_ground(get_turf(src), TRUE)
+		Destroy()
+		qdel(src)
 	Remove(victim)
 	qdel(victim)
 
@@ -307,9 +314,13 @@
 				process_and_store_item(organ, victim)
 				break
 
-/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
+/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
 	for(var/atom/movable/item as anything in stored_items)
-		item.forceMove(turf)
+		if(explode)
+			var/mob/living/explodedcore = src.brainmob
+			explodedcore.dropItemToGround(item, violent = TRUE)
+		else
+			item.forceMove(turf)
 	stored_items.Cut()
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE) as /mob/living/carbon/human

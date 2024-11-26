@@ -103,6 +103,16 @@
 			to_chat(slime, span_warning("You can't pull your body together it is dripping wet!"))
 			slime.blood_volume -= 1 * seconds_per_tick
 
+//////
+/// DEATH OF BODY SECTION
+///	Handles gibbing
+
+/datum/species/oozeling/spec_death(gibbed, mob/living/carbon/human/H)
+	. = ..()
+
+	if(gibbed)
+		H.dna = null
+
 ///////
 /// CHEMICAL HANDLING
 /// Here's where slimes heal off plasma and where they hate drinking water.
