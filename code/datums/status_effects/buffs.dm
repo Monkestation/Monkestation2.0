@@ -44,21 +44,24 @@
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
-		if(HG.bloodthirst > bloodlust)
-			bloodlust = HG.bloodthirst
-		if(HG.awakened)
+	for(var/obj/item/his_grace/his_grace in owner.held_items)
+		if(his_grace.bloodthirst > bloodlust)
+			bloodlust = his_grace.bloodthirst
+		if(his_grace.awakened)
 			graces++
 	if(!graces)
 		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.05
-	owner.adjustBruteLoss(-grace_heal)
-	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
-	owner.adjustOxyLoss(-(grace_heal * 2))
-	owner.adjustCloneLoss(-grace_heal)
+	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
+	needs_update += owner.adjustBruteLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-grace_heal, updating_health = FALSE, forced = TRUE)
+	needs_update += owner.adjustOxyLoss(-(grace_heal * 2), updating_health = FALSE)
+	needs_update += owner.adjustCloneLoss(-grace_heal, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
