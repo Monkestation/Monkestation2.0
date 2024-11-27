@@ -290,9 +290,11 @@ SUBSYSTEM_DEF(garbage)
 	// monkestation start: disable hard deletes
 	if(!D)
 		return
+#ifndef UNIT_TESTS
 	if(!enable_hard_deletes && !override)
 		failed_hard_deletes |= D
 		return
+#endif
 	// monkestation end
 	++delslasttick
 	++totaldels
