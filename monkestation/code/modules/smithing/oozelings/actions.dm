@@ -208,4 +208,5 @@
 	if(!istype(brainmob))
 		CRASH("[src] cast by non-brainmob [owner?.type || "(null)"]")
 	var/obj/item/organ/internal/brain/slime/brainitem = brainmob.loc
-	brainitem.say(pick(possible_cries), "slime", forced = "[src]", message_range = 2)
+	var/final_cry = brainmob.Ellipsis(pick(possible_cries), chance = 30)
+	brainitem.say(final_cry, "slime", forced = "[src]", message_range = 2)
