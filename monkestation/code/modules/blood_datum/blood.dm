@@ -1,6 +1,7 @@
 /// Global list of all blood type singletons (Assoc [type] - [/datum/blood_type singleton])
 GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys(/datum/blood_type))
 
+/*
 /**
  * Blood Drying SS
  *
@@ -11,6 +12,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	flags = SS_NO_INIT | SS_BACKGROUND
 	priority = 10
 	wait = 10 SECONDS
+*/
 
 /// Takes the name of a blood type and return the typepath
 /proc/blood_name_to_blood_type(name)
@@ -115,8 +117,10 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 			var/obj/effect/decal/cleanable/blood/splatter = locate() in blood_turf
 			if(!QDELETED(splatter))
 				splatter.adjust_bloodiness(new_blood)
+				/*
 				splatter.drying_progress -= (new_blood * BLOOD_PER_UNIT_MODIFIER)
 				splatter.update_blood_drying_effect()
+				*/
 				splatter.transfer_mob_blood_dna(bleeding)
 				return splatter
 
@@ -135,9 +139,9 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 			drop.add_overlay(drop_overlay)
 			// Handle adding blood to the base atom
 			drop.adjust_bloodiness(new_blood)
-			drop.drying_progress -= (new_blood * BLOOD_PER_UNIT_MODIFIER)
+			// drop.drying_progress -= (new_blood * BLOOD_PER_UNIT_MODIFIER)
 			drop.transfer_mob_blood_dna(bleeding)
-			drop.update_blood_drying_effect()
+			// drop.update_blood_drying_effect()
 			return drop
 
 		temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
@@ -151,8 +155,10 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 			return null
 	else
 		splatter.adjust_bloodiness(BLOOD_AMOUNT_PER_DECAL)
+		/*
 		splatter.drying_progress -= (BLOOD_AMOUNT_PER_DECAL * BLOOD_PER_UNIT_MODIFIER)
 		splatter.update_blood_drying_effect()
+		*/
 	splatter.transfer_mob_blood_dna(bleeding) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		splatter.add_blood_DNA(temp_blood_DNA)
@@ -252,7 +258,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	if(!new_splat)
 		return
 	blood.can_dry = FALSE
-	blood.update_blood_drying_effect()
+	// blood.update_blood_drying_effect()
 	RegisterSignals(blood, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACKBY_SECONDARY), PROC_REF(on_cleaned))
 
 /datum/blood_type/crew/ethereal/proc/on_cleaned(obj/effect/decal/cleanable/source, mob/living/user, obj/item/tool, ...)
@@ -285,7 +291,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 		return
 	// Oil blood will never dry and can be ignited with fire
 	blood.can_dry = FALSE
-	blood.update_blood_drying_effect()
+	// blood.update_blood_drying_effect()
 	blood.AddElement(/datum/element/easy_ignite)
 
 /// A universal blood type which accepts everything

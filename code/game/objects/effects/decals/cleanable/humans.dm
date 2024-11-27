@@ -12,10 +12,13 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	color = COLOR_BLOOD
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+
 	/// Can this blood dry out?
 	var/can_dry = TRUE
+/*
 	/// Is this blood dried out?
 	var/dried = FALSE
+*/
 
 	/// The "base name" of the blood, IE the "pool of" in "pool of blood"
 	var/base_name = "pool of"
@@ -26,6 +29,7 @@
 
 	/// How long it takes to dry out
 	var/drying_time = 5 MINUTES
+/*
 	/// The process to drying out, recorded in deciseconds
 	var/drying_progress = 0
 	/// Color matrix applied to dried blood via filter to make it look dried
@@ -36,11 +40,13 @@
 		0, 0, 0, 1,
 		-0.5, -0.75, -0.75, 0,
 	)
+*/
 	var/count = 0
 	var/footprint_sprite = null
 	var/glows = FALSE
 	var/handles_unique = FALSE
 
+/* blood drying is laggy af currently, removing it until it's re-implemented in a less laggy way
 /obj/effect/decal/cleanable/blood/Initialize(mapload, blood_color = COLOR_BLOOD)
 	. = ..()
 	START_PROCESSING(SSblood_drying, src)
@@ -57,12 +63,6 @@
 	return ..()
 
 #define DRY_FILTER_KEY "dry_effect"
-
-/obj/effect/decal/cleanable/blood/update_overlays()
-	. = ..()
-	if(glows && !handles_unique)
-		. += emissive_appearance(icon, icon_state, src)
-
 /obj/effect/decal/cleanable/blood/proc/update_blood_drying_effect()
 	if(!can_dry)
 		remove_filter(DRY_FILTER_KEY) // I GUESS
@@ -83,6 +83,12 @@
 	transition_filter(DRY_FILTER_KEY, color_matrix_filter(blood_dry_filter_matrix), drying_time - drying_progress)
 
 #undef DRY_FILTER_KEY
+*/
+
+/obj/effect/decal/cleanable/blood/update_overlays()
+	. = ..()
+	if(glows && !handles_unique)
+		. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/decal/cleanable/blood/proc/get_blood_string()
 	var/list/all_dna = GET_ATOM_BLOOD_DNA(src)
@@ -95,6 +101,7 @@
 		all_blood_names |= lowertext(initial(blood.reagent_type.name))
 	return english_list(all_blood_names, nothing_text = "blood")
 
+/*
 /obj/effect/decal/cleanable/blood/process(seconds_per_tick)
 	if(dried || !can_dry)
 		return PROCESS_KILL
@@ -103,12 +110,14 @@
 	drying_progress += (seconds_per_tick * 1 SECONDS)
 	if(drying_progress >= drying_time + SSblood_drying.wait) // Do it next tick when we're done
 		dry()
+*/
 
 /obj/effect/decal/cleanable/blood/update_name(updates)
 	. = ..()
 	name = initial(name)
 	if(base_name)
 		name = "[base_name] [get_blood_string()]"
+/*
 	if(dried && dry_prefix)
 		name = "[dry_prefix] [name]"
 
@@ -126,6 +135,7 @@
 	update_blood_drying_effect()
 	STOP_PROCESSING(SSblood_drying, src)
 	return TRUE
+*/
 
 /obj/effect/decal/cleanable/blood/lazy_init_reagents()
 	var/list/all_dna = GET_ATOM_BLOOD_DNA(src)
@@ -138,17 +148,21 @@
 	for(var/reagent_type in reagents_to_add)
 		reagents.add_reagent(reagent_type, round((bloodiness * 0.2 * BLOOD_PER_UNIT_MODIFIER) / num_reagents, CHEMICAL_VOLUME_ROUNDING))
 
+/*
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
 	if(merger.dried) // New blood will lie on dry blood
 		return FALSE
 	return ..()
+*/
 
 /obj/effect/decal/cleanable/blood/handle_merge_decal(obj/effect/decal/cleanable/blood/merger)
 	. = ..()
 	merger.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	merger.adjust_bloodiness(bloodiness)
+/*
 	merger.drying_progress -= (bloodiness * BLOOD_PER_UNIT_MODIFIER) // goes negative = takes longer to dry
 	merger.update_blood_drying_effect()
+*/
 
 /obj/effect/decal/cleanable/blood/old
 	bloodiness = 0
@@ -157,7 +171,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	add_blood_DNA(list("UNKNOWN DNA" = random_human_blood_type()))
 	. = ..()
-	dry()
+	// dry()
 
 /obj/effect/decal/cleanable/blood/splatter
 	icon_state = "gibbl1"
@@ -221,11 +235,13 @@
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
+/*
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
 	if(!.)
 		return
 	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
+*/
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
@@ -307,7 +323,7 @@
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
-	dry()
+	// dry()
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
