@@ -484,9 +484,6 @@
 
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
-	if(!server_port)
-		. = INITIALIZE_HINT_QDEL
-		CRASH("Tried to initialize server button without valid port!")
 	if(is_available())
 		set_button_status(TRUE)
 	update_appearance(UPDATE_ICON_STATE)
