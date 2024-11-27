@@ -174,7 +174,7 @@
 ///////
 /// MEMBRANE MURMUR SPELL
 /// Use your core to attempt to call out for help or attention.
-/datum/action/cooldown/spell/membrane_murmur
+/datum/action/cooldown/membrane_murmur
 	name = "Membrane Murmur"
 	desc = "Force your core to pass gasses to make noticable sounds."
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -184,26 +184,28 @@
 
 	cooldown_time = 25 SECONDS
 	check_flags = NONE
-	spell_requirements = SPELL_CASTABLE_AS_BRAIN
 
-/datum/action/cooldown/spell/membrane_murmur/cast(obj/item/organ/internal/brain = usr)
-	. = ..()
-	var/bubble = "slime"
-	var/message = list(
+	var/static/list/possible_cries = list(
 		"Blorp... glub... help...",
 		"Glooop... save me...",
 		"Alone... burbble too quiet...",
 		"What’s left... of me...?",
 		"Can’t feel... can’t... think...",
 		"Plasma... need... plasma...",
-		"It’s so... quiet..."
-	)
+		"It’s so... quiet...",
+    )
 
-	if(istype(brain, /obj/item/organ/internal/brain/slime))
-		var/obj/item/organ/internal/brain/slime/talkingbrain = brain
-		if(istype(usr, /mob/living/brain) && talkingbrain.brainmob == usr)
-			talkingbrain.say(pick(message), bubble,list(), TRUE, null, FALSE, null, FALSE, 2, null)
-		else
+/datum/action/cooldown/membrane_murmur/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(.)
+		var/mob/living/brain/brainmob = owner
+		if(!istype(brainmob) || !istype(brainmob.loc, /obj/item/organ/internal/brain/slime))
 			return FALSE
-	else
-		return FALSE
+
+/datum/action/cooldown/membrane_murmur/Activate()
+	. = ..()
+	var/mob/living/brain/brainmob = owner
+	if(!istype(brainmob))
+		CRASH("[src] cast by non-brainmob [owner?.type || "(null)"]")
+	var/obj/item/organ/internal/brain/slime/brainitem = brainmob.loc
+	brainitem.say(pick(possible_cries), "slime", forced = "[src]", message_range = 2)

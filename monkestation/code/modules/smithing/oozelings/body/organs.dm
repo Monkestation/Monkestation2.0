@@ -69,16 +69,15 @@
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
 
-	var/datum/action/cooldown/spell/membrane_murmur/membrane_mur
+	var/datum/action/cooldown/membrane_murmur/membrane_mur
 
-/obj/item/organ/internal/brain/slime/Destroy(force)  
-	QDEL_NULL(membrane_mur)  
+/obj/item/organ/internal/brain/slime/Destroy(force)
+	QDEL_NULL(membrane_mur)
 	return ..()
-	  
+
 /obj/item/organ/internal/brain/slime/Initialize(mapload, mob/living/carbon/organ_owner, list/examine_list)
 	. = ..()
-	membrane_mur = new /datum/action/cooldown/spell/membrane_murmur()
-	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	membrane_mur = new /datum/action/cooldown/membrane_murmur()
 	colorize()
 	transform.Scale(2, 2)
 
