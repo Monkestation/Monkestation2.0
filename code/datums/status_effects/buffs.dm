@@ -6,6 +6,13 @@
 	tick_interval = 4
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
+	/// Base traits given to the user of His Grace.
+	var/static/list/base_traits = list(
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+	)
 
 /atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
@@ -27,10 +34,12 @@
 		priority = 3,
 		self_message = span_boldwarning("His Grace protects you from the stun!"),
 	)
+	owner.add_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/his_grace/on_remove()
 	owner.remove_stun_absorption(id)
+	owner.remove_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
