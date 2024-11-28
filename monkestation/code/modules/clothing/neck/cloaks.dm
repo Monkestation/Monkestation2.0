@@ -153,7 +153,10 @@
 	icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	icon_state = "mentor"
-	worn_icon_state = "mentor"
+
+/obj/item/clothing/neck/mentor/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_clothes, "mentor_t")
 
 
 /obj/item/clothing/neck/helldivercape
