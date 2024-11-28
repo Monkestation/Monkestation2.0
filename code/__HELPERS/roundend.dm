@@ -302,6 +302,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
 	distribute_rewards()
+	refund_cassette()
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")

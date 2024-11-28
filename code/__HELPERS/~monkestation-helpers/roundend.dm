@@ -29,3 +29,21 @@
 				total_payout += listed_challenge.challenge_payout
 			if(total_payout)
 				client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards.")
+
+/datum/controller/subsystem/ticker/proc/refund_cassette()
+	if(!GLOB.cassette_reviews || !islist(GLOB.cassette_reviews) || !GLOB.cassette_reviews.len)
+		return
+
+	for(var/id in GLOB.cassette_reviews)
+		var/datum/cassette_review/review = GLOB.cassette_reviews[id]
+		if(!review || review.action_taken) // Skip if review doesn't exist or already handled
+			continue
+
+		var/mob/user = review.submitter
+		if(user && user.client)
+			if(user.client.prefs.adjust_metacoins(user.client.ckey, 5000,
+				reason = "No action taken on cassette:[review.submitted_tape.name] before round end.",
+				announces = TRUE, donator_multipler = FALSE
+			))
+				review.Destroy()
+
