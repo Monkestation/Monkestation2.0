@@ -36,15 +36,15 @@
         for(var/datum/artifact_effect/effects as anything in component.artifact_effects)
             effect += effects.type_name
         .["artifacts"] += list(list(
-            "name" = art.name,
-            "ref" = REF(art),
-            "loc" = "[AREACOORD(art)]",
-            "active" = component.active,
-            "typename" = component.type_name,
-            "lastprint" = "[art.fingerprintslast]",
-            "trigger" = english_list(activators, nothing_text = "None"),
-            "effect" = english_list(effect, nothing_text = "None"),
-            "fault" = component.chosen_fault?.name,
+			"name" = art.name,
+			"ref" = REF(art),
+			"loc" = "[AREACOORD(art)]",
+			"active" = component.active,
+			"typename" = component.type_name,
+			"lastprint" = "[art.fingerprintslast]",
+			"trigger" = english_list(activators, nothing_text = "None"),
+			"effect" = english_list(effect, nothing_text = "None"),
+			"fault" = component.chosen_fault?.name,
         ))
 
 /datum/artifactpanel/ui_act(action, params)
