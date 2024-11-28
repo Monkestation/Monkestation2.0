@@ -17,6 +17,7 @@
 
 	if(!isgloves)
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+		RegisterSignal(parent, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 	else
 		var/obj/item/clothing/gloves = parent
 		RegisterSignal(gloves, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
@@ -71,6 +72,7 @@
 	if(slot != ITEM_SLOT_GLOVES)
 		return
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(equipper, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 
 /// Opens the UI of the integrated fishing rod
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
@@ -81,7 +83,7 @@
 /// Stops the dropper from fishing with their bare hands
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(dropper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_COMPLETE_FISHING))
 	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
 /// Fishes on the target when attacking it unarmed, if it's a fishing spot
@@ -117,21 +119,13 @@
 
 /// Starts fishing on the target with the integrated fishing rod
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
-	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
-	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
-
-/// Gives the profound fisher trait to the fisher once the fishing actually begins
-/datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
-	SIGNAL_HANDLER
-	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
-	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
+	ADD_TRAIT(user, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
 
 /// Removes the profound fisher trait once the fishing is over
-/datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
+/datum/component/profound_fisher/proc/stop_fishing(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
-	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
 
 /// Fakes a whole fishing session for npc mobs, waiting a bit before spawning the reward
 /datum/component/profound_fisher/proc/pretend_fish(mob/living/source, atom/target)
