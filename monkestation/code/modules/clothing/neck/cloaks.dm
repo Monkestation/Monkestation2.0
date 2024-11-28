@@ -147,6 +147,15 @@
 	icon_state = "admin"
 	worn_icon_state = "admin"
 
+/obj/item/clothing/neck/mentor
+	name = "mentor cloak"
+	desc = "Buzz!"
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "mentor"
+	worn_icon_state = "menotr"
+
+
 /obj/item/clothing/neck/helldivercape
 	name = "helldiver cape"
 	desc = "For Super Earth!."
