@@ -188,7 +188,7 @@
 					/obj/item/disk/ammo_workbench/advanced,
 					/obj/item/circuitboard/machine/dish_drive/bullet,
 					/obj/item/stack/sheet/iron = 10,
-					/obj/item/stack/cable_coil = 30,
+					/obj/item/stack/cable_coil = 1,
 					/obj/item/stock_parts/manipulator = 3,
 					/obj/item/stock_parts/matter_bin = 4,
 					/obj/item/stock_parts/micro_laser = 2,
