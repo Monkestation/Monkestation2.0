@@ -1,6 +1,6 @@
-https://github.com/CODEBASE/CODEBASE/pull/
+https://github.com/Monkestation/Monkestation2.0/pull/4419
 
-## \<Title Here>
+## \<Wraiths>
 
 MODULE ID: WRAITH
 
@@ -12,11 +12,10 @@ yet unlike the revenant maintains a stronger connection between the spirit and p
 
 ### TG Proc/File Changes:
 
-- N/A
-<!-- If you edited any core procs, you should list them here. You should specify the files and procs you changed.
-E.g: 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
--->
+- code\__DEFINES\role_preferences.dm
+- code\modules\mob\dead\crew_manifest.dm
+- code\modules\admin\sql_ban_system.dm
+- code\modules\tgui\states\observer.dm
 
 ### Modular Overrides:
 
@@ -24,12 +23,12 @@ E.g:
 
 ### Defines:
 
-- N/A
+- code\__DEFINES\~monkestation\antagonists.dm
 
 ### Included files that are not contained in this module:
 
-- N/A
-<!-- Likewise, be it a non-modular file or a modular one that's not contained within the folder belonging to this specific module, it should be mentioned here. Good examples are icons or sounds that are used between multiple modules, or other such edge-cases. -->
+- tgui\packages\tgui\interfaces\CrayonWraith.tsx
+- tgui\packages\tgui\interfaces\PreferencesMenu\antagonists\antagonists\wraith.ts
 
 ### Credits:
 
