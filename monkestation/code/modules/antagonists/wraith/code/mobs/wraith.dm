@@ -1,0 +1,438 @@
+/// Wraiths: Basically ghosts but they can go corporeal
+/// Admin-spawn only
+/mob/living/basic/wraith
+	name = "wraith"
+	desc = "It's a uh... its... spooky is the only way to describe it"
+	icon = 'icons/mob/simple/mob.dmi'
+	icon_state = "revenant_idle"
+	mob_biotypes = MOB_SPIRIT
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
+
+	health = 100 // With our damage_coeff this is effectivelly 33, jesus christ we are weak
+	maxHealth = 100
+
+	sight = SEE_SELF
+	throwforce = 0
+
+	plane = GHOST_PLANE
+	density = FALSE
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	invisibility = INVISIBILITY_REVENANT
+
+	faction = list(FACTION_HOSTILE, FACTION_SPOOKY)
+
+	/// lighting_cutoff is used in wraiths to check how we should display darkness
+	/// 0 = normal player, 1 = faintly see in darkness, 2 = revenant-like vision, 3 = basically full-bright
+	lighting_cutoff = 1
+
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "swings through"
+	response_disarm_simple = "swing through"
+	response_harm_continuous = "punches through"
+	response_harm_simple = "punch through"
+	unsuitable_atmos_damage = 0
+	// If anyone touches us with brute, we're fuckin dead is what we are
+	damage_coeff = list(BRUTE = 3, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = INFINITY
+	status_flags = NONE
+	move_resist = MOVE_FORCE_OVERPOWERING
+	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	speed = 1
+	unique_name = TRUE
+	hud_possible = list(ANTAG_HUD)
+	hud_type = /datum/hud/revenant
+
+	/// The icon we use while just floating around.
+	var/icon_idle = "revenant_idle"
+	/// The icon we use while in a revealed state.
+	var/icon_reveal = "revenant_revealed"
+	/// The icon we use when stunned (temporarily frozen)
+	var/icon_stun = "revenant_stun"
+	/// The icon we use while draining someone.
+	var/icon_drain = "revenant_draining"
+
+	/// Have we already given this revenant abilities?
+	var/generated_objectives_and_spells = FALSE
+
+	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
+	var/list/drained_mobs = null
+	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
+	var/static/list/datum/action/abilities = list(
+		/datum/action/cooldown/spell/wraith/haunt,
+		/datum/action/cooldown/spell/pointed/wraith/telepathy,
+		/datum/action/cooldown/spell/pointed/wraith/blood_writing,
+		/datum/action/cooldown/spell/pointed/wraith/absorb_corpse,
+		/datum/action/cooldown/spell/wraith/spook,
+		/datum/action/cooldown/spell/pointed/wraith/decay,
+		/datum/action/cooldown/spell/pointed/wraith/command,
+		/datum/action/cooldown/spell/pointed/wraith/animate_object,
+		/datum/action/cooldown/spell/pointed/wraith/possess_object,
+	)
+
+	/// How many points we are currently storing
+	var/essence =  50
+	/// How many points per second do we gain?
+	var/essence_gain = 1
+	/// How many points per second have we actually gained PER SECOND (used for the display)
+	var/last_essence_gained = 0
+	/// Area's that boost our essence per second by 1 corpse
+	var/list/area/essence_boosting_areas = list()
+
+	/// How many corpses have we consumed?
+	var/eaten_corpses = 0
+
+	var/force_materialized = FALSE
+	/// If we perish for the first time we become weakened, resetting our spoopy points, their regeneration and marking us for death.
+	var/weakened = FALSE
+
+	/// Are we currently unable to move or perform any action?
+	var/stunned = FALSE
+	/// For how long are we stunned? (world.time + stun time)
+	var/stun_time
+
+/mob/living/basic/wraith/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+	AddComponent(\
+		/datum/component/regenerator,\
+		regeneration_delay = 5 SECONDS,\
+		brute_per_second = 1,\
+		outline_colour = COLOR_DARK_PURPLE,\
+	)
+
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_HEAR_THROUGH_DARKNESS), INNATE_TRAIT)
+	add_verb(src, list(
+		/mob/living/basic/wraith/proc/dead_tele,
+		/mob/living/basic/wraith/proc/tray_view,
+	))
+
+	for(var/ability in abilities)
+		var/datum/action/spell = new ability(src)
+		spell.Grant(src)
+
+	toggle_darkness()
+	grant_all_languages()
+	show_data_huds()
+	data_huds_on = 1
+
+	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move)) // haha yeah this works, totally
+	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	set_random_name()
+
+	GLOB.revenant_relay_mobs |= src
+
+/mob/living/basic/wraith/Destroy()
+	GLOB.revenant_relay_mobs -= src
+	essence_boosting_areas = null
+	if(data_huds_on)
+		remove_data_huds()
+
+	return ..()
+
+/mob/living/basic/wraith/Login()
+	. = ..()
+	if(!. || isnull(client))
+		return FALSE
+
+	var/static/cached_string = null
+	if(isnull(cached_string))
+		cached_string = examine_block(jointext(create_login_string(), "\n"))
+
+	to_chat(src, cached_string, type = MESSAGE_TYPE_INFO)
+
+	if(generated_objectives_and_spells)
+		return TRUE
+
+	generated_objectives_and_spells = TRUE
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/wraith))
+	mind.special_role = ROLE_WRAITH
+	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
+	mind.add_antag_datum(/datum/antagonist/wraith)
+	updateghostimages()
+	return TRUE
+
+/mob/living/basic/wraith/Logout()
+	if(client)
+		client.images -= (GLOB.ghost_images_default + GLOB.ghost_images_simple)
+
+	if(observetarget && istype(observetarget))
+		cleanup_observe()
+	return ..()
+
+/// Signal Handler Injection to handle Life() stuff for wraiths
+/mob/living/basic/wraith/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+	SIGNAL_HANDLER
+
+	if(stunned)
+		if(stun_time > world.time)
+			return
+		stunned = FALSE
+
+	var/essence_to_give = essence_gain
+	if(density && !force_materialized)
+		for(var/mob/living/living_thingy in oviewers(6, src))
+			// as long as you are in soft-crit or just living, you can see us, you can be scared of us
+			if(living_thingy.client && living_thingy.stat < UNCONSCIOUS)
+				essence_to_give += 5
+				// +1 too if you are trickster
+	// +2 if you have a portal
+	if(get_area(src) in essence_boosting_areas)
+		essence_to_give += 2
+
+	last_essence_gained = essence_to_give
+	essence += essence_to_give * DELTA_WORLD_TIME(SSmobs)
+
+	update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
+	update_health_hud()
+
+/mob/living/basic/wraith/get_status_tab_items()
+	. = ..()
+	. += "Current Essence: [essence]"
+	. += "Essence Regeneration: [essence_gain]/s"
+
+/mob/living/basic/wraith/update_health_hud()
+	if(isnull(hud_used))
+		return
+
+	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#8F48C6'>[essence]E</font></div>")
+
+/mob/living/basic/wraith/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+	if(!message)
+		return
+
+	if(client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
+			return
+		if(!(ignore_spam || forced) && client.handle_spam_prevention(message, MUTE_IC))
+			return
+
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	log_talk(message, LOG_SAY)
+	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
+	relay_to_list_and_observers(rendered, GLOB.revenant_relay_mobs, src)
+
+/// Wraith's cannot directly interact with things, so we yoink most ClickOn things
+/mob/living/basic/wraith/ClickOn(atom/A, params)
+	var/list/modifiers = params2list(params)
+	if(check_click_intercept(params, A))
+		return
+
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		ShiftClickOn(A)
+		return
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		AltClickNoInteract(src, A)
+		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		ranged_secondary_attack(A, modifiers)
+		return
+
+/mob/living/basic/wraith/ranged_secondary_attack(atom/target, modifiers)
+	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
+		return
+
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+	orbit(target, orbitsize)
+
+/mob/living/basic/wraith/adjust_health(amount, updating_health = TRUE, forced = FALSE)
+	if(amount < 0 && !density && !forced) // No <3
+		return FALSE
+
+	return ..()
+
+/mob/living/basic/wraith/orbit(atom/target)
+	setDir(SOUTH) // reset dir so the right directional sprites show up
+	return ..()
+
+/mob/living/basic/wraith/update_icon_state()
+	. = ..()
+	if(stunned)
+		icon_state = icon_stun
+		return
+
+	if(density)
+		icon_state = icon_reveal
+		return
+
+	icon_state = icon_idle
+
+/mob/living/basic/wraith/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/basic/wraith/med_hud_set_status()
+	return //we use no hud
+
+/mob/living/basic/wraith/can_perform_action(atom/movable/target, action_bitflags)
+	return FALSE
+
+/mob/living/basic/wraith/ex_act(severity, target)
+	return FALSE //Immune to the effects of explosions.
+
+/mob/living/basic/wraith/blob_act(obj/structure/blob/attacking_blob)
+	return //blah blah blobs aren't in tune with the spirit world, or something.
+
+/mob/living/basic/wraith/singularity_act()
+	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/basic/wraith/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
+
+/mob/living/basic/wraith/bullet_act()
+	if(!density)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
+/mob/living/basic/wraith/dust(just_ash, drop_items, force)
+	death()
+
+/mob/living/basic/wraith/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
+	death()
+
+/mob/living/basic/wraith/death(gibbed)
+	density = FALSE // well technically we are still materializing, but lets not take anymore damage
+	stun(3 SECONDS)
+	invisibility = 0
+	icon_state = "revenant_draining"
+	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
+	visible_message(
+		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
+		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
+	)
+	animate(src, alpha = 0, time = 3 SECONDS)
+	if(weakened)
+		QDEL_IN(src, 3 SECONDS)
+		return ..()
+
+	INVOKE_ASYNC(src, PROC_REF(second_chance))
+	return FALSE
+
+/mob/living/basic/wraith/proc/second_chance()
+	sleep(3 SECONDS)
+	revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+	set_stat(CONSCIOUS) // update it for our flying animation
+	weakened = TRUE
+	to_chat(src, span_userdanger("You barelly hold onto your essence using your ability points, suffering major permanent damage... you need to be carefull to not be caught off-guard again or it'll be the end of you."))
+	alpha = 255
+	essence = 0
+	essence_gain = 1
+	unmaterialize()
+
+/mob/living/basic/wraith/proc/materialize()
+	density = TRUE
+
+	incorporeal_move = FALSE
+	invisibility = FALSE
+
+	alpha = 0
+	animate(src, alpha = 255, time = 1 SECOND)
+	sleep(1 SECOND)
+
+	update_icon_state()
+
+/mob/living/basic/wraith/proc/unmaterialize()
+	density = FALSE
+
+	animate(src, alpha = 0, time = 1 SECOND)
+	sleep(1 SECOND)
+	alpha = initial(alpha)
+
+	force_materialized = FALSE
+	incorporeal_move = initial(incorporeal_move)
+	invisibility = initial(invisibility)
+
+	update_icon_state()
+
+/mob/living/basic/wraith/proc/on_move(datum/source, atom/entering_loc)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // just in case it occurs, need to provide some feedback
+		balloon_alert(src, "can't move!")
+		return
+
+	if(isnull(orbiting) || incorporeal_move_check(entering_loc))
+		return
+
+	// we're about to go somewhere we aren't meant to, end the orbit and block the move. feedback will be given in `incorporeal_move_check()`
+	orbiting.end_orbit(src)
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/// Generates the information the player needs to know how to play their role, and returns it as a list.
+/mob/living/basic/wraith/proc/create_login_string()
+	RETURN_TYPE(/list)
+	var/list/returnable_list = list()
+	returnable_list += span_deadsay(span_boldbig("You are a revenant."))
+	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.")
+	returnable_list += span_bold("You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.")
+	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
+	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
+	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
+	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
+	return returnable_list
+
+/mob/living/basic/wraith/proc/set_random_name()
+	var/list/built_name_strings = list()
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
+	built_name_strings += " of "
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "adverb"))
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "theme"))
+	name = built_name_strings.Join("")
+
+/mob/living/basic/wraith/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
+	visible_message(
+		span_warning("[src] violently flinches!"),
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"),
+	)
+	apply_status_effect(/datum/status_effect/revenant/inhibited, 3 SECONDS)
+
+/// DOES NOT STOP NORMAL MOVEMENT FUNNILY ENOUGH, USED FOR OTHER CHECKS, THANK REVENANTS AND INCORPOREAL MOVE CODE
+/// (help me step turf, im stuck!)
+/mob/living/basic/wraith/proc/incorporeal_move_check(atom/destination)
+	var/turf/open/floor/step_turf = get_turf(destination)
+	if(isnull(step_turf))
+		return TRUE // what? whatever let it happen
+
+	if(stunned)
+		to_chat(src, span_warning("Struggle as you might, you cannot move!"))
+		return FALSE
+
+	if((SSticker.current_state < GAME_STATE_FINISHED) && (step_turf.turf_flags & NOJAUNT)) // monkestation edit: allow jaunts to work after roundend
+		to_chat(src, span_warning("Some strange aura is blocking the way."))
+		return FALSE
+
+	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
+		balloon_alert(src, "blocked by salt!")
+		return FALSE
+
+	if(locate(/obj/effect/blessing) in step_turf)
+		to_chat(src, span_warning("Holy energies block your path!"))
+		return FALSE
+
+	return TRUE
+
+/// Not to be confused with the Stun() ((uppercase)) proc
+/// Force-reveals the host, and stop them from using abilities for a while
+/mob/living/basic/wraith/proc/stun(time)
+	if(!density)
+		force_materialized = TRUE
+		materialize()
+	stunned = TRUE
+	stun_time = world.time + time
+	update_icon_state()
+	update_mob_action_buttons() // when stunned we return early from the on_life proc, so we need to do our last update
+	update_health_hud()
+
+/mob/living/basic/wraith/proc/change_booster_areas()
+	return
+//	for(var/mob/living/player as anything in GLOB.alive_player_list)
