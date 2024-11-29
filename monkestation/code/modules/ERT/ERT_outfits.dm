@@ -20,6 +20,7 @@
 /datum/outfit/centcom/ert/generic
 	name = "Nanotrasen Officer"
 
+	id = /obj/item/card/id/advanced/centcom/ert
 	box = /obj/item/storage/box/survival/ert
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	ears = /obj/item/radio/headset/headset_cent/alt
@@ -38,3 +39,4 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/baton/telescopic
 	r_pocket = /obj/item/restraints/handcuffs
+
