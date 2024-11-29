@@ -21,4 +21,4 @@
 /datum/action/cooldown/spell/pointed/wraith/possess_object/cast(obj/item/cast_on)
 	. = ..()
 	new /obj/effect/temp_visual/revenant(get_turf(cast_on))
-	new /mob/living/basic/wraith_spawn/animated_item/possessed(get_turf(cast_on), cast_on, owner)
+	new /mob/living/basic/wraith_spawn/animated_item(get_turf(cast_on), cast_on, owner)

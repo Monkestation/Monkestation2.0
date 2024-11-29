@@ -10,19 +10,18 @@
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	/// The item that resides within us
+	/// The item that resides within us, if nothing then we are a toolbox
 	var/obj/item/stored_item
+	/// The wraith thats possessing us, if we have one we'll die in 1 minute
+	var/mob/living/basic/wraith/our_wraith
 
-/mob/living/basic/wraith_spawn/animated_item/New(loc, obj/item/item)
+/mob/living/basic/wraith_spawn/animated_item/Initialize(mapload, obj/item/item, mob/living/basic/wraith/wraith)
 	if(item)
 		item.forceMove(src)
 		stored_item = item
 	else
 		stored_item = new /obj/item/storage/toolbox/mechanical(src) // backup
 
-	return ..()
-
-/mob/living/basic/wraith_spawn/animated_item/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_GUN_NATURAL, INNATE_TRAIT) // yes, we can shoot with GUNS
 	name = "glowing [stored_item.name]"
 	desc = "[stored_item.desc] This one seems to be very angry!"
@@ -36,14 +35,26 @@
 
 	add_filter("haunt_glow", 2, list("type" = "outline", "color" = COLOR_DARK_PURPLE, "size" = 1))
 	RegisterSignal(stored_item, COMSIG_QDELETING, PROC_REF(item_deleted))
+
+	if(wraith)
+		wraith.forceMove(src)
+		ckey = wraith.ckey
+		our_wraith = wraith
+		addtimer(CALLBACK(src, PROC_REF(death)), 1 MINUTE)
+
 	return ..()
 
 /mob/living/basic/wraith_spawn/animated_item/Destroy(force)
-	UnregisterSignal(stored_item, COMSIG_QDELETING)
 	if(stored_item) // grenades and such can delete it before we delete ourselfes
 		UnregisterSignal(stored_item, COMSIG_QDELETING)
 		stored_item.forceMove(get_turf(src))
 		stored_item.take_damage(maxHealth - health)
+
+	if(our_wraith)
+		our_wraith.forceMove(get_turf(src))
+		our_wraith.ckey = ckey // btw, ckey gets set to null if you admin-delete a mob before we do this. Thats one fun thing
+
+	our_wraith = null
 	stored_item = null
 	return ..()
 
@@ -75,29 +86,3 @@
 /mob/living/basic/wraith_spawn/animated_item/proc/item_deleted()
 	SIGNAL_HANDLER
 	qdel(src) // No point in living anymore
-
-/// An animated item that a wraith is controlling, we dont need anything complicated
-/mob/living/basic/wraith_spawn/animated_item/possessed
-	var/mob/living/basic/wraith/our_wraith
-
-/mob/living/basic/wraith_spawn/animated_item/possessed/New(loc, obj/item/item, mob/living/basic/wraith/wraith)
-	our_wraith = wraith
-	return ..()
-
-/mob/living/basic/wraith_spawn/animated_item/possessed/Initialize(mapload)
-	if(!our_wraith)
-		new /mob/living/basic/wraith_spawn/animated_item(get_turf(src))
-		message_admins("\"/mob/living/basic/wraith_spawn/animated_item/possessed\" was spawned in without a set wraith, this is most likelly an admin spawning in the wrong subtype, please spawn \"/mob/living/basic/wraith_spawn/animated_item\" instead!")
-		qdel(src)
-		return ..()
-	our_wraith.forceMove(src)
-	ckey = our_wraith.ckey
-	addtimer(CALLBACK(src, PROC_REF(death)), 1 MINUTE)
-	return ..()
-
-/mob/living/basic/wraith_spawn/animated_item/possessed/Destroy(force)
-	if(our_wraith)
-		our_wraith.forceMove(get_turf(src))
-		our_wraith.ckey = ckey
-		our_wraith = null
-	return ..()
