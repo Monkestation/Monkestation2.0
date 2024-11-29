@@ -142,11 +142,11 @@
 /obj/item/clothing/neck/admincloak
 	name = "admin cloak"
 	desc = "Weh!"
-	icon_state = "admin"
-	worn_icon_state = "admin"
+	icon_state = "admincloak"
+	worn_icon_state = "wadmincloak"
 	greyscale_config = /datum/greyscale_config/admincloak
 	greyscale_config_worn = /datum/greyscale_config/admincloak_worn
-	greyscale_colors = "#FFFFFF#AAAAAA"
+	greyscale_colors = "#FFFFFF"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/mentorcloak
