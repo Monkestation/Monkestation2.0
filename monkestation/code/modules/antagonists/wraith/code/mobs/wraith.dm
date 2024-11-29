@@ -124,7 +124,9 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move)) // haha yeah this works, totally
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+
 	set_random_name()
+	change_booster_areas()
 
 	GLOB.revenant_relay_mobs |= src
 
@@ -434,5 +436,20 @@
 	update_health_hud()
 
 /mob/living/basic/wraith/proc/change_booster_areas()
-	return
-//	for(var/mob/living/player as anything in GLOB.alive_player_list)
+	var/list/area/liked_areas = list()
+	var/area/area_blacklist = essence_boosting_areas
+	area_blacklist += get_area(src)
+	for(var/mob/living/player in GLOB.alive_player_list) // alive_player_list has mobs with clients that arent dead. Convinient!
+		var/area/area = get_area(player)
+		if(istype(area, /area/space))
+			continue
+
+		if((area in area_blacklist) || (area in liked_areas))
+			continue
+
+		liked_areas += area
+		if(length(liked_areas) == 3)
+			break
+
+	essence_boosting_areas = liked_areas
+	addtimer(CALLBACK(src, PROC_REF(change_booster_areas)), 1 MINUTE)
