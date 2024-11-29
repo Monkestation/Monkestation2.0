@@ -139,15 +139,17 @@
 	worn_icon_state = "ace"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/admin
+/obj/item/clothing/neck/admincloak
 	name = "admin cloak"
 	desc = "Weh!"
-	icon = 'monkestation/icons/obj/clothing/necks.dmi'
-	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	icon_state = "admin"
 	worn_icon_state = "admin"
+	greyscale_config = /datum/greyscale_config/admincloak
+	greyscale_config_worn = /datum/greyscale_config/admincloak_worn
+	greyscale_colors = "#FFFFFF#AAAAAA"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/neck/mentor
+/obj/item/clothing/neck/mentorcloak
 	name = "mentor cloak"
 	desc = "Buzz!"
 	icon = 'monkestation/icons/obj/clothing/necks.dmi'
