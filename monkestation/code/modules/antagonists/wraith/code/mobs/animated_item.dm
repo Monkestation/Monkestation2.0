@@ -14,16 +14,15 @@
 	var/obj/item/stored_item
 
 /mob/living/basic/wraith_spawn/animated_item/New(loc, obj/item/item)
-	stored_item = item
-	item.forceMove(src)
-	return ..()
-
-/mob/living/basic/wraith_spawn/animated_item/Initialize(mapload)
-	if(stored_item)
-		stored_item.forceMove(src)
+	if(item)
+		item.forceMove(src)
+		stored_item = item
 	else
 		stored_item = new /obj/item/storage/toolbox/mechanical(src) // backup
 
+	return ..()
+
+/mob/living/basic/wraith_spawn/animated_item/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_GUN_NATURAL, INNATE_TRAIT) // yes, we can shoot with GUNS
 	name = "glowing [stored_item.name]"
 	desc = "[stored_item.desc] This one seems to be very angry!"
