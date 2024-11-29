@@ -39,7 +39,7 @@
 		if(!review || review.action_taken) // Skip if review doesn't exist or already handled (denied / approved)
 			continue
 
-		var/ownerckey = review.submitted_ckey
+		var/ownerckey = review.submitted_ckey // ckey of who made the cassette.
 		if(!ownerckey)
 			continue
 
