@@ -64,10 +64,9 @@
 
 /datum/quirk/stowaway/proc/datacore_deletion()
 	var/mob/living/carbon/human/stowaway = quirk_holder
-	var/perpname = stowaway.name
-	var/datum/record/crew/record_deletion = find_record(perpname, GLOB.manifest.general)
+	var/datum/record/crew/crewfile = quirk_holder.mind?.crewfile
 	SSjob.FreeRole(quirk_holder.mind.assigned_role)  //open their job slot back up
-	qdel(record_deletion)
+	GLOB.manifest.general -= crewfile
 
 /obj/item/card/id/fake_card //not a proper ID but still shares a lot of functions
 	name = "\"ID Card\""
