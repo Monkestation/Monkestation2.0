@@ -47,7 +47,7 @@
 		if(client && !QDELETED(client?.prefs))
 			var/adjusted = client?.prefs?.adjust_metacoins(
 				client?.ckey, 5000,
-				reason = "No action taken on cassette:[review.submitted_tape.name] before round end.",
+				reason = "No action taken on cassette:\[[review.submitted_tape.name]\] before round end.",
 				announces = TRUE, donator_multipler = FALSE
 			)
 			if(adjusted)
