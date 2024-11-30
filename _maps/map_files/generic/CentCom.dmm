@@ -2049,14 +2049,8 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/borbop)
 "afE" = (
-/obj/machinery/chem_master,
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
-/turf/open/floor/iron/dark/textured,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/medical)
 "afF" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -6112,20 +6106,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
 "aqB" = (
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
 /obj/machinery/door/window/right/directional/south,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
@@ -10695,11 +10677,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "aCQ" = (
-/obj/effect/turf_decal/siding/blue{
-	dir = 5
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/light/floor/has_bulb,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
@@ -12563,9 +12542,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "aIa" = (
-/obj/effect/turf_decal/siding/blue{
-	dir = 9
-	},
 /obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
@@ -16696,10 +16672,17 @@
 /area/centcom/central_command_areas/supply)
 "aTl" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/chem_heater/debug,
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
 /turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
@@ -22890,6 +22873,14 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/closed/indestructible/wood,
 /area/centcom/central_command_areas/admin)
+"jZy" = (
+/obj/machinery/chem_master,
+/turf/open/floor/wood/large,
+/turf/open/floor/iron/white/textured,
+/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/medical)
 "jZA" = (
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
@@ -27289,6 +27280,9 @@
 "wRZ" = (
 /obj/structure/sign/warning/no_smoking{
 	pixel_y = 28
+	},
+/obj/structure/closet/secure_closet/chemical{
+	locked = 0
 	},
 /turf/open/floor/wood/large,
 /turf/open/floor/iron/white/textured,
@@ -73648,7 +73642,7 @@ aNb
 ayj
 cTd
 qPG
-afE
+cTd
 aTl
 liN
 hou
@@ -74156,12 +74150,12 @@ aaa
 aaa
 adl
 ekG
-aNb
-aNb
+afE
+afE
 ekG
 aNq
 ave
-aUK
+jZy
 aRq
 awe
 awe
