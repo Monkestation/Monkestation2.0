@@ -607,12 +607,6 @@
 /obj/effect/spawner/liquids_spawner,
 /turf/open/floor/lowered/iron/pool/cobble/side,
 /area/station/common/pool)
-"agJ" = (
-/obj/effect/turf_decal/stripes{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/upper)
 "agL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7423,9 +7417,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/upper)
 "bwW" = (
-/obj/structure/flora/bush/jungle/b/style_2,
-/obj/structure/flora/bush/flowers_pp,
 /obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "bwY" = (
@@ -14708,13 +14701,6 @@
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
-"cMo" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/rock/pile/jungle/style_4,
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/upper)
 "cMq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -15088,10 +15074,8 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms/room5)
 "cQg" = (
-/obj/effect/turf_decal/stripes{
-	dir = 6
-	},
-/turf/open/floor/plating,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/blue,
 /area/station/maintenance/port/upper)
 "cQn" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -19586,12 +19570,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/station/medical/power_station)
-"dKI" = (
-/obj/structure/flora/bush/jungle/b/style_2,
-/obj/structure/flora/bush/flowers_pp/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "dKK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -23497,10 +23475,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/science/robotics/lab)
 "ezM" = (
-/obj/effect/turf_decal/stripes{
-	dir = 10
-	},
-/turf/open/floor/plating,
+/turf/open/floor/carpet/blue,
 /area/station/maintenance/port/upper)
 "ezN" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -25819,13 +25794,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
-"eUH" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/ocean/glowweed,
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/upper)
 "eUL" = (
 /obj/structure/chair/pew/left{
 	dir = 4
@@ -34085,8 +34053,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "gBx" = (
-/obj/structure/flora/bush/jungle,
-/obj/structure/flora/bush/flowers_yw/style_3,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
@@ -36390,6 +36356,7 @@
 	},
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "hbb" = (
@@ -38486,12 +38453,6 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/greater)
-"hwe" = (
-/obj/structure/flora/bush/jungle/a/style_2,
-/obj/structure/flora/bush/flowers_yw/style_2,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "hwi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -44999,10 +44960,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
-"iKG" = (
-/obj/item/circuitboard/mecha/ripley/main,
-/turf/open/floor/plating,
-/area/station/maintenance/port/upper)
 "iKI" = (
 /obj/structure/railing{
 	dir = 6
@@ -45173,12 +45130,6 @@
 "iMc" = (
 /turf/closed/wall/r_wall,
 /area/station/common/pool)
-"iMf" = (
-/obj/structure/flora/bush/jungle/c/style_3,
-/obj/structure/flora/bush/flowers_br,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "iMj" = (
 /obj/structure/closet,
 /obj/effect/turf_decal/delivery,
@@ -46067,12 +46018,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/blue,
 /area/station/command/captain_dining)
-"iWF" = (
-/obj/structure/flora/bush/jungle/c/style_3,
-/obj/structure/flora/bush/flowers_yw/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "iWJ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -50007,12 +49952,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark,
 /area/station/common/gaskiosk)
-"jJh" = (
-/obj/structure/flora/bush/jungle/c/style_3,
-/obj/structure/flora/bush/flowers_pp/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "jJi" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/stripes,
@@ -53301,12 +53240,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/workout)
-"knr" = (
-/obj/structure/flora/bush/jungle/a,
-/obj/structure/flora/bush/flowers_br/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "knt" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -55169,12 +55102,6 @@
 	dir = 8
 	},
 /area/station/science)
-"kER" = (
-/obj/structure/flora/bush/jungle/a/style_3,
-/obj/structure/flora/bush/flowers_br/style_2,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "kFd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -65814,11 +65741,11 @@
 	},
 /area/station/common/wrestling/arena)
 "mMJ" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
+/obj/structure/flora/bush/jungle/a/style_2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
-/obj/structure/flora/rock/pile/jungle/style_5,
-/turf/open/misc/asteroid,
+/turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "mMK" = (
 /obj/machinery/shieldgen,
@@ -66107,13 +66034,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"mPK" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/item/toy/seashell,
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/upper)
 "mPL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/stairs{
@@ -66664,12 +66584,6 @@
 	},
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
-"mVh" = (
-/obj/structure/flora/bush/jungle/b,
-/obj/structure/flora/bush/flowers_yw,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "mVi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -73918,12 +73832,8 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "oqO" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/ocean/seaweed,
-/mob/living/basic/carp/passive,
-/turf/open/misc/asteroid,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "oqT" = (
 /obj/machinery/door/airlock/security/glass{
@@ -78076,11 +77986,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "pgY" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/machinery/light/directional/north,
-/turf/open/misc/asteroid,
+/turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "phg" = (
 /obj/structure/closet/emcloset,
@@ -78218,9 +78124,8 @@
 /turf/open/floor/iron,
 /area/station/common/wrestling/arena)
 "pit" = (
-/obj/structure/flora/bush/jungle/c,
-/obj/structure/flora/bush/flowers_pp/style_2,
 /obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "piw" = (
@@ -80255,12 +80160,6 @@
 /mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"pCO" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/upper)
 "pCQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/tank_dispenser,
@@ -80504,8 +80403,8 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pFO" = (
-/obj/effect/turf_decal/stripes,
-/turf/open/floor/plating,
+/mob/living/basic/carp/passive,
+/turf/open/floor/carpet/blue,
 /area/station/maintenance/port/upper)
 "pFS" = (
 /obj/item/radio/intercom/directional/north,
@@ -81324,12 +81223,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"pNa" = (
-/obj/effect/turf_decal/stripes{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/upper)
 "pNb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -83267,12 +83160,6 @@
 	},
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
-"qiS" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/upper)
 "qjb" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -85438,12 +85325,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"qDe" = (
-/obj/structure/flora/bush/jungle/a/style_2,
-/obj/structure/flora/bush/flowers_yw/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "qDf" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -88793,12 +88674,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "rko" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/rock/pile/jungle,
-/obj/item/toy/seashell,
-/turf/open/misc/asteroid,
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "rkp" = (
 /obj/structure/cable,
@@ -93517,9 +93394,10 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/customs/auxiliary)
 "sgt" = (
-/obj/structure/flora/bush/jungle/b,
-/obj/structure/flora/bush/flowers_br,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "sgv" = (
@@ -99115,14 +98993,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/command/captain_dining)
-"tiA" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/ocean/glowweed,
-/mob/living/basic/carp/passive,
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/upper)
 "tiD" = (
 /obj/machinery/computer/prisoner/management{
 	dir = 8
@@ -104097,6 +103967,7 @@
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "ugJ" = (
@@ -114430,12 +114301,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
-"wdN" = (
-/obj/structure/flora/bush/jungle/b/style_2,
-/obj/structure/flora/bush/flowers_br/style_3,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/grass,
-/area/station/hallway/primary/upper)
 "wdS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -114659,11 +114524,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
 "wfr" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/ocean/longseaweed,
-/turf/open/misc/asteroid,
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "wfs" = (
 /obj/structure/rack/shelf,
@@ -121306,10 +121168,8 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/storage)
 "xtV" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/turf/open/misc/asteroid,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
 /area/station/hallway/primary/upper)
 "xtX" = (
 /obj/machinery/door/airlock/external,
@@ -122974,15 +122834,6 @@
 	dir = 1
 	},
 /area/station/science/research)
-"xLg" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/rock/pile/jungle/style_3,
-/obj/structure/flora/ocean/coral,
-/obj/machinery/light/directional/south,
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/upper)
 "xLh" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/flashlight/lamp/green{
@@ -123868,11 +123719,8 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "xVz" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/water=600)
-	},
-/obj/structure/flora/rock/style_3,
-/turf/open/misc/asteroid,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/closed/wall/r_wall,
 /area/station/hallway/primary/upper)
 "xVF" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -217266,11 +217114,11 @@ ulI
 ulI
 ulI
 wMx
-agJ
-bgP
-bgP
+pFO
 ezM
-wMx
+ezM
+ezM
+xsa
 ulI
 pyO
 pyO
@@ -217523,11 +217371,11 @@ ybT
 fEG
 bVe
 wMx
-pCO
-ybT
-ybT
+ezM
+ezM
+ezM
 pFO
-wMx
+xsa
 oIL
 pyO
 vzG
@@ -217780,11 +217628,11 @@ wmI
 wMx
 aNm
 aNm
-pCO
-ybT
-iKG
-pFO
-aNm
+ezM
+ezM
+ezM
+ezM
+xsa
 nUr
 vQK
 qNG
@@ -218037,11 +217885,11 @@ ybT
 sZG
 cmY
 aNm
-pNa
-qiS
-qiS
+ezM
+pFO
+ezM
 cQg
-aNm
+xsa
 ulI
 kNf
 pcs
@@ -218294,10 +218142,10 @@ aNm
 flY
 wMx
 aNm
-aNm
-aNm
-wMx
-aNm
+xsa
+xsa
+xsa
+xsa
 aNm
 ulI
 fDI
@@ -221977,9 +221825,9 @@ pQF
 tYT
 tYT
 tYT
-mzu
-mVh
-iMf
+xVz
+gBx
+gBx
 gBx
 ukH
 qJk
@@ -222235,9 +222083,9 @@ cfl
 cfl
 cfl
 bwW
-wfr
-cMo
-tiA
+sgt
+pgY
+oqO
 mzu
 coT
 gST
@@ -222491,11 +222339,11 @@ eRh
 cfl
 eLB
 cfl
-kER
+gBx
 rko
 wfr
-xtV
-jJh
+pgY
+gBx
 cfl
 cfl
 gyk
@@ -222748,11 +222596,11 @@ eRh
 mkE
 wMo
 wMo
-hwe
+gBx
 pgY
-xVz
-xLg
-sgt
+pgY
+oqO
+gBx
 cfl
 cfl
 lcX
@@ -223005,11 +222853,11 @@ eRh
 cfl
 uGh
 cfl
-wdN
+gBx
 oqO
-mPK
-xtV
-qDe
+wfr
+pgY
+gBx
 cfl
 cfl
 gyk
@@ -223264,8 +223112,8 @@ cfl
 cfl
 pit
 mMJ
-xtV
-eUH
+pgY
+rko
 mzu
 ugc
 uol
@@ -223519,10 +223367,10 @@ pQF
 akt
 akt
 akt
-mzu
-iWF
-knr
-dKI
+xtV
+gBx
+gBx
+gBx
 ukH
 wiK
 wiK
