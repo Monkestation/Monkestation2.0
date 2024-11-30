@@ -20126,7 +20126,7 @@
 /obj/machinery/light/floor/has_bulb,
 /obj/machinery/button/door/directional/west{
 	name = "IPC Repair Shutters";
-	id = IPCShutters
+	id = "IPCShutters"
 	},
 /obj/structure/sign/warning/no_smoking{
 	pixel_y = 28
@@ -20169,14 +20169,6 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
-"cSY" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = IPCShutters;
-	name = "IPC Repair Shutters"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/central_command_areas/medical)
 "cTd" = (
 /obj/effect/turf_decal/tile/orange/fourcorners,
 /obj/effect/turf_decal/tile/orange/fourcorners,
@@ -23681,7 +23673,7 @@
 "msH" = (
 /obj/machinery/button/door/directional/east{
 	name = "IPC Repair Shutters";
-	id = IPCShutters
+	id = "IPCShutters"
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -25437,7 +25429,8 @@
 "rIk" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
-	id = IPCShutters
+	id = "IPCShutters";
+	name = "IPC Repair Shutters"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/medical)
@@ -73282,7 +73275,7 @@ aaa
 awe
 awe
 rIk
-cSY
+rIk
 awe
 aeK
 ahM
