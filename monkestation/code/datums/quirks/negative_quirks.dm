@@ -60,10 +60,7 @@
 /datum/quirk/stowaway/post_add()
 	. = ..()
 	to_chat(quirk_holder, span_boldnotice("You've awoken to find yourself inside [GLOB.station_name] without real identification!"))
-	addtimer(CALLBACK(src, PROC_REF(datacore_deletion)), 5 SECONDS)
-
-/datum/quirk/stowaway/proc/datacore_deletion()
-	quirk_holder.mind.remove_from_manifest()
+	addtimer(CALLBACK(quirk_holder.mind, TYPE_PROC_REF(/datum/mind, remove_from_manifest)), 5 SECONDS)
 
 /obj/item/card/id/fake_card //not a proper ID but still shares a lot of functions
 	name = "\"ID Card\""
