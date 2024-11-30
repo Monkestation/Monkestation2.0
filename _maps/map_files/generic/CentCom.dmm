@@ -7552,14 +7552,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/structure/chair/sofa/middle,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/medical)
-"aux" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/structure/chair/sofa/left,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "auy" = (
@@ -9004,10 +8997,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/vending/medical{
-	pixel_x = -2;
-	pixel_y = -6
-	},
+/obj/item/kirbyplants/fern,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "ayp" = (
@@ -12105,6 +12095,11 @@
 	},
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/trimline/blue,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/material{
+	pixel_x = 0;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "aGL" = (
@@ -12697,13 +12692,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/retirement_home)
-"aIy" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/structure/chair/sofa/right,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/medical)
 "aIz" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
@@ -14689,10 +14677,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "aNR" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/vending/medical,
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "aNS" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -15976,15 +15963,6 @@
 	icon_state = "boxing"
 	},
 /area/centcom/central_command_areas/hall)
-"aRy" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
-/obj/structure/closet/generic/wall/directional/east{
-	name = "Medkits"
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/medical)
 "aRz" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -18743,7 +18721,6 @@
 /area/centcom/central_command_areas/hall)
 "aYL" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/bed{
 	dir = 4
 	},
@@ -21191,17 +21168,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
-"gkU" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/closet/generic/wall/directional/south{
-	name = "Materials"
-	},
-/obj/item/storage/box/material{
-	pixel_x = 0;
-	pixel_y = 6
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/medical)
 "glv" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -21766,7 +21732,9 @@
 	pixel_x = -6;
 	pixel_y = 0
 	},
-/obj/structure/closet/generic/wall/directional/east,
+/obj/structure/closet/generic/wall/directional/east{
+	name = "Medkits"
+	},
 /obj/item/storage/medkit/brute{
 	pixel_x = 6;
 	pixel_y = 0
@@ -23839,7 +23807,6 @@
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/evacuation)
 "nyk" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/bed,
 /obj/item/bedsheet/medical{
 	layer = 3.1
@@ -25413,7 +25380,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Emergency Surgery"
 	},
-/turf/open/floor/wood/large,
+/turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
 "rVD" = (
 /obj/effect/turf_decal/siding/white{
@@ -70814,7 +70781,7 @@ awK
 avR
 aCW
 acu
-gkU
+nOH
 awe
 aCx
 aKq
@@ -71583,7 +71550,7 @@ ggp
 agl
 agl
 aYL
-aIy
+auw
 cjS
 gsz
 axq
@@ -71839,10 +71806,10 @@ nyz
 avW
 awG
 awG
-aNR
+avW
 auw
 acu
-gsz
+aNR
 awe
 asR
 aNS
@@ -72097,7 +72064,7 @@ smx
 awG
 awG
 nyk
-aux
+auw
 acu
 afF
 awe
@@ -72865,7 +72832,7 @@ aaa
 aaa
 adl
 msH
-aRy
+rpI
 rpI
 ney
 awe
