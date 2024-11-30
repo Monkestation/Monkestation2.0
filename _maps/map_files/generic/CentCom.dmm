@@ -22562,6 +22562,17 @@
 "jmZ" = (
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
+"jnc" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/closet/generic/wall/directional/south{
+	name = "Advanced Health Analyzers"
+	},
+/obj/item/healthanalyzer/advanced,
+/obj/item/healthanalyzer/advanced,
+/obj/item/healthanalyzer/advanced,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "jpy" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/indestructible/syndicate,
@@ -70781,7 +70792,7 @@ awK
 avR
 aCW
 acu
-nOH
+jnc
 awe
 aCx
 aKq
