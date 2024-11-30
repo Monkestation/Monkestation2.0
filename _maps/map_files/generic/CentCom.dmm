@@ -12508,7 +12508,7 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "aHW" = (
-/obj/item/wallframe/status_display/vitals/advanced,
+/obj/machinery/computer/vitals_reader/advanced,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/medical)
 "aHX" = (
