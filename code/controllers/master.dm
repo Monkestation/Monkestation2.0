@@ -82,7 +82,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		#ifdef UNIT_TESTS
 		random_seed = 29051994 // How about 22475?
 		#else
-		random_seed = rand(1, 1e9)
+		random_seed = aneri_rand_uint(secure = TRUE) // monkestation edit: use aneri to initialize rng seed
 		#endif
 		rand_seed(random_seed)
 
