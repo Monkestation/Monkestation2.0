@@ -71,15 +71,15 @@
 
 	var/datum/action/cooldown/membrane_murmur/membrane_mur
 
-/obj/item/organ/internal/brain/slime/Destroy(force)
-	QDEL_NULL(membrane_mur)
-	return ..()
-
 /obj/item/organ/internal/brain/slime/Initialize(mapload, mob/living/carbon/organ_owner, list/examine_list)
 	. = ..()
 	membrane_mur = new /datum/action/cooldown/membrane_murmur()
 	colorize()
 	transform.Scale(2, 2)
+
+/obj/item/organ/internal/brain/slime/Destroy(force)
+	QDEL_NULL(membrane_mur)
+	return ..()
 
 /obj/item/organ/internal/brain/slime/examine()
 	. = ..()
