@@ -12560,6 +12560,14 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
+"aJb" = (
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/centcom/central_command_areas/prison)
 "aJc" = (
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
@@ -18903,6 +18911,14 @@
 "bpz" = (
 /turf/open/floor/material/meat,
 /area/centcom/central_command_areas/admin)
+"bqR" = (
+/obj/structure/table/greyscale,
+/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/banhammer,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "brG" = (
 /obj/structure/table/reinforced/plasmarglass,
 /obj/machinery/fax{
@@ -19220,11 +19236,19 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
 "cfq" = (
 /obj/machinery/light/cold/directional/north,
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured,
+=======
+"chc" = (
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/corner,
+>>>>>>> Stashed changes
 /area/centcom/central_command_areas/prison)
 "cjY" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -19256,6 +19280,12 @@
 /obj/structure/sign/poster/quirk/engineering_slogan,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/central_command_areas/evacuation/ship)
+"cqA" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "crx" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -19513,6 +19543,20 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
+"cPL" = (
+/obj/structure/table/greyscale,
+/obj/machinery/button/flasher{
+	id = "IsolationFlash2";
+	pixel_x = 10;
+	pixel_y = -24
+	},
+/obj/item/storage/box/prisoner,
+/obj/item/storage/box/prisoner{
+	pixel_y = 8
+	},
+/obj/item/restraints/handcuffs/cable/white,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "cQu" = (
 /obj/structure/flora/bush/sparsegrass/style_2,
 /turf/open/floor/sandy_dirt,
@@ -19554,6 +19598,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
+"cVy" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/prison)
 "cWC" = (
 /obj/effect/turf_decal/trimline/red/real_red/filled/line{
 	dir = 8
@@ -19898,6 +19948,14 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
+"dPw" = (
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/centcom/central_command_areas/prison)
 "dPS" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
@@ -19962,6 +20020,10 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
+"dUb" = (
+/obj/machinery/photobooth/security,
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
 "dUc" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
@@ -20043,6 +20105,21 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"eka" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod/dark,
+/area/centcom/central_command_areas/prison/cells)
+"ekn" = (
+/obj/machinery/modular_computer/preset/id/centcom{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "ekW" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -20054,6 +20131,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
+"eqY" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "erK" = (
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
@@ -20177,6 +20258,15 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"eGt" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/machinery/shower/directional/south,
+/obj/structure/drain,
+/turf/open/floor/iron/freezer,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "eHz" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/adminroom)
@@ -20201,6 +20291,12 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/adminroom)
+"eMc" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/scissors,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "eNq" = (
 /obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
@@ -20426,6 +20522,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"fqy" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table/greyscale,
+/obj/machinery/computer/records/security/laptop,
+/turf/open/floor/carpet/neon/simple/cyan/nodots,
+/area/centcom/central_command_areas/prison)
 "fqB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -20531,6 +20633,18 @@
 /obj/structure/flora/rock/pile/style_2,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"fJf" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/razor,
+/obj/item/razor{
+	pixel_x = -8
+	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "fJG" = (
 /obj/machinery/light/directional/east{
 	dir = 1
@@ -20882,6 +20996,12 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+<<<<<<< Updated upstream
+=======
+"gzt" = (
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "gzU" = (
 /obj/effect/decal/cleanable/blood/innards,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -21099,6 +21219,12 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"gRB" = (
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "gSn" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -21225,6 +21351,7 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
+<<<<<<< Updated upstream
 "hiW" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/wood/wings{
@@ -21232,6 +21359,14 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+=======
+"hjL" = (
+/obj/structure/fans/tiny/forcefield{
+	color = "#276c87"
+	},
+/turf/closed/indestructible/grille,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "hjV" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/sand/plating,
@@ -21538,6 +21673,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"hIW" = (
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/centcom/central_command_areas/prison)
 "hJy" = (
 /obj/structure/table/glass/plasmaglass,
 /obj/item/paper_bin{
@@ -21703,6 +21849,13 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"idh" = (
+/obj/structure/chair/comfy/barber_chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "idm" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -21984,6 +22137,15 @@
 /obj/item/food/spaghetti/shoyu_tonkotsu_ramen,
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
+"iMp" = (
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear/blue{
+	pixel_y = -6
+	},
+/turf/open/floor/iron/dark/side,
+/area/centcom/central_command_areas/prison)
 "iMs" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/dark,
@@ -22079,11 +22241,24 @@
 /obj/machinery/light/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
 "iXi" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/scissors,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/iron/dark,
+=======
+"iXj" = (
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+>>>>>>> Stashed changes
 /area/centcom/central_command_areas/prison)
 "iYt" = (
 /obj/structure/chair/sofa/left,
@@ -22347,6 +22522,22 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"jKH" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
+"jME" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/bed/pod{
+	pixel_y = 7
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/central_command_areas/prison/cells)
+>>>>>>> Stashed changes
 "jNQ" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/door_assembly/door_assembly_centcom,
@@ -22408,10 +22599,17 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"jRb" = (
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
 "jRn" = (
 /obj/structure/railing/wooden_fence,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
+"jRN" = (
+/obj/machinery/door/window/brigdoor/left/directional/south,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "jSt" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white/textured,
@@ -22428,6 +22626,22 @@
 /mob/living/basic/xenofauna/meatbeast,
 /turf/open/floor/material/meat,
 /area/centcom/central_command_areas/admin)
+"jUO" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table/greyscale,
+/obj/machinery/recharger{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/neon/simple/cyan/nodots,
+/area/centcom/central_command_areas/prison)
 "jVm" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -22531,6 +22745,12 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/adminroom)
+"khS" = (
+/obj/structure/toilet/greyscale{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/central_command_areas/prison/cells)
 "khW" = (
 /obj/machinery/light/small/maintenance/directional/west,
 /obj/effect/spawner/random/trash/garbage{
@@ -22703,8 +22923,14 @@
 	},
 /obj/machinery/prisongate,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+<<<<<<< Updated upstream
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/prison)
+=======
+/obj/machinery/prisongate,
+/turf/open/floor/carpet,
+/area/centcom/central_command_areas/admin)
+>>>>>>> Stashed changes
 "kKc" = (
 /turf/open/floor/iron/dark/small,
 /area/centcom)
@@ -22840,6 +23066,9 @@
 /mob/living/basic/cow,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"lgU" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/supplypod/supplypod_temp_holding)
 "lgW" = (
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
@@ -22860,6 +23089,7 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
+<<<<<<< Updated upstream
 "lhB" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -22875,6 +23105,17 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/kitchen)
+=======
+"lki" = (
+/obj/effect/turf_decal/trimline/dark_blue/line,
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "lkv" = (
 /obj/structure/flora/bush/fullgrass/style_2,
 /obj/structure/flora/bush/fullgrass/style_2,
@@ -22886,10 +23127,19 @@
 /obj/item/storage/cans/sixbeer,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/adminroom)
+<<<<<<< Updated upstream
 "lmc" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
+=======
+"lmG" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "lmO" = (
 /obj/structure/table/greyscale,
 /obj/item/paper_bin{
@@ -22967,6 +23217,14 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"lyX" = (
+/obj/structure/fans/tiny/forcefield{
+	color = "#276c87"
+	},
+/turf/closed/indestructible/fakedoor{
+	name = "Prison Cell"
+	},
+/area/centcom/central_command_areas/prison)
 "lAc" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
@@ -23067,6 +23325,15 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
+<<<<<<< Updated upstream
+=======
+"lNd" = (
+/obj/machinery/flasher/directional/south{
+	id = "IsolationFlash2"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "lNv" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/iron/dark/textured_large,
@@ -23226,6 +23493,16 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"mzk" = (
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/line,
+/turf/open/floor/iron/dark/side,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "mAo" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/sandy_dirt,
@@ -23426,6 +23703,7 @@
 "nbv" = (
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
+<<<<<<< Updated upstream
 "ncD" = (
 /obj/effect/turf_decal/tile/hot_pink/opposingcorners{
 	dir = 1
@@ -23434,6 +23712,25 @@
 /obj/item/clothing/head/peaceflower,
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/kitchen)
+=======
+"ncp" = (
+/obj/structure/table/greyscale,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/pen/fourcolor{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/obj/item/stamp/centcom{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "ncQ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/iron/smooth,
@@ -23721,6 +24018,10 @@
 /obj/structure/fence,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"nVQ" = (
+/obj/structure/closet/secure_closet/corrections_officer,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
 "nWh" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 4
@@ -23812,6 +24113,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"ogc" = (
+/obj/machinery/light/small/directional/south,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/prison)
 "oig" = (
 /obj/machinery/computer/terminal,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -24062,6 +24367,13 @@
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/centcom/central_command_areas/evacuation)
+"oSy" = (
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access = list("armory")
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
 "oSV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Checkpoint Office"
@@ -24246,11 +24558,22 @@
 /obj/structure/mop_bucket,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+<<<<<<< Updated upstream
 "puf" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/hot_pink/full,
 /turf/open/floor/mineral/titanium/tiled/white/airless,
 /area/centcom/central_command_areas/kitchen)
+=======
+"puT" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/closet/crate/bin{
+	pixel_y = 9
+	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "pvq" = (
 /obj/machinery/biomass_recycler,
 /obj/item/stack/biomass,
@@ -24283,6 +24606,21 @@
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"pyz" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/prison)
+"pAr" = (
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access = list("armory")
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
 "pCB" = (
 /obj/structure/table/wood,
 /obj/item/trash/tray,
@@ -24397,6 +24735,12 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"pMd" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "pMg" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/sandy_dirt,
@@ -24671,6 +25015,13 @@
 	name = "crystal mass"
 	},
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"qyY" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "qze" = (
 /obj/structure/railing/wood,
 /turf/open/floor/glass/plasma,
@@ -24727,6 +25078,12 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"qCV" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "qDb" = (
 /obj/machinery/light/directional/east{
 	dir = 2
@@ -24957,6 +25314,15 @@
 	paint_color = "#5f6361"
 	},
 /area/centcom/central_command_areas/admin)
+"rjI" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 8;
+	name = "SuperJail"
+	},
+/obj/machinery/prisongate,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark/small,
+/area/centcom/central_command_areas/prison)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/dirt/jungle/dark/arena,
@@ -25030,6 +25396,19 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron/dark/textured_edge,
 /area/centcom/central_command_areas/evacuation)
+<<<<<<< Updated upstream
+=======
+"rtP" = (
+/obj/machinery/light/cold/directional/north,
+/obj/effect/turf_decal/trimline/dark_blue/line,
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "ruO" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -25067,6 +25446,12 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
+"rDT" = (
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/prison)
 "rEM" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet/blue,
@@ -25322,6 +25707,13 @@
 "sgZ" = (
 /turf/open/ballpit,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"sho" = (
+/obj/effect/landmark/prisonwarp,
+/turf/open/floor/pod/dark,
+/area/centcom/central_command_areas/prison/cells)
+>>>>>>> Stashed changes
 "shW" = (
 /mob/living/simple_animal/pet/gondola/funky,
 /turf/open/floor/eighties/red,
@@ -25466,12 +25858,29 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"sJU" = (
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/centcom/central_command_areas/prison)
 "sKy" = (
 /obj/machinery/computer/arcade{
 	dir = 1
 	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
+=======
+"sMc" = (
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "sNI" = (
 /obj/item/food/grown/banana/bunch,
 /turf/open/floor/mineral/bananium,
@@ -26044,6 +26453,9 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
+"uoE" = (
+/turf/open/floor/iron/freezer,
+/area/centcom/central_command_areas/prison)
 "uoG" = (
 /obj/machinery/button/curtain{
 	pixel_x = 3;
@@ -26223,12 +26635,24 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+<<<<<<< Updated upstream
 "uHz" = (
 /obj/effect/turf_decal/tile/hot_pink/full,
 /obj/structure/table/wood/fancy/purple,
 /obj/effect/turf_decal/tile/hot_pink/full,
 /turf/open/floor/mineral/titanium/tiled/white/airless,
 /area/centcom/central_command_areas/kitchen)
+=======
+"uIo" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
+/obj/machinery/shower/directional/north{
+	pixel_y = -10
+	},
+/obj/structure/drain,
+/turf/open/floor/iron/freezer,
+/area/centcom/central_command_areas/prison)
+>>>>>>> Stashed changes
 "uIG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "NT Helpdesk"
@@ -26239,6 +26663,13 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
+"uJO" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/rack,
+/obj/item/pushbroom,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "uLi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign{
@@ -26285,6 +26716,10 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
+"uQL" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "uQR" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/wood/tile,
@@ -26593,10 +27028,21 @@
 /obj/structure/chair/plastic,
 /turf/open/floor/carpet/blue,
 /area/centcom/central_command_areas/admin)
+<<<<<<< Updated upstream
 "vCz" = (
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured,
+=======
+"vDH" = (
+/obj/structure/fans/tiny/forcefield{
+	color = "#276c87"
+	},
+/turf/closed/indestructible/fakedoor{
+	name = "Prison Cell";
+	opacity = 0
+	},
+>>>>>>> Stashed changes
 /area/centcom/central_command_areas/prison)
 "vEF" = (
 /obj/structure/fence,
@@ -27363,6 +27809,12 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
+"xkF" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "xno" = (
 /obj/structure/window/reinforced/tinted/frosted,
 /turf/open/floor/iron/dark/small,
@@ -27480,6 +27932,11 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"xyx" = (
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/prison)
 "xzi" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -57485,11 +57942,19 @@ aUv
 vUQ
 uEk
 kpH
+<<<<<<< Updated upstream
 jwh
 sWe
 jvc
 qDp
 nGK
+=======
+oSy
+jRb
+fqy
+cqA
+nVQ
+>>>>>>> Stashed changes
 amD
 aBm
 apR
@@ -57742,11 +58207,19 @@ sVm
 vtn
 hgO
 kpH
+<<<<<<< Updated upstream
 hcf
 sWe
 pYF
 paX
 urc
+=======
+pAr
+jRb
+jUO
+gRB
+cPL
+>>>>>>> Stashed changes
 amD
 aau
 apR
@@ -57999,10 +58472,17 @@ aNa
 wPO
 upP
 jvQ
+<<<<<<< Updated upstream
 fRH
 evZ
 vxh
 mji
+=======
+dUb
+lNd
+vxh
+eqY
+>>>>>>> Stashed changes
 amD
 amD
 amD
@@ -58257,9 +58737,15 @@ twW
 iLo
 jvQ
 vxh
+<<<<<<< Updated upstream
 kJN
 vxh
 paX
+=======
+rjI
+vxh
+gRB
+>>>>>>> Stashed changes
 amD
 aTd
 aTd
@@ -58513,10 +58999,17 @@ aNa
 sVm
 gKC
 jvQ
+<<<<<<< Updated upstream
 wuA
 paX
 vOq
 paX
+=======
+sMc
+gRB
+jRN
+gRB
+>>>>>>> Stashed changes
 amD
 aTd
 aTd
@@ -58770,6 +59263,7 @@ cHC
 nai
 tYo
 kpH
+<<<<<<< Updated upstream
 knf
 vBD
 xVv
@@ -58778,6 +59272,16 @@ amD
 fOX
 fOX
 fOX
+=======
+fJf
+xkF
+uJO
+eqY
+amD
+lgU
+lgU
+lgU
+>>>>>>> Stashed changes
 aTd
 aTd
 aTd
@@ -59027,6 +59531,7 @@ xbs
 bog
 gjf
 kpH
+<<<<<<< Updated upstream
 gFK
 qAE
 fhy
@@ -59034,6 +59539,15 @@ paX
 nfi
 qTE
 lmc
+=======
+qCV
+idh
+uQL
+gRB
+lyX
+sho
+eka
+>>>>>>> Stashed changes
 amD
 aTd
 aTd
@@ -59284,6 +59798,7 @@ jvQ
 kpH
 dra
 kpH
+<<<<<<< Updated upstream
 iXi
 jVS
 iyO
@@ -59291,6 +59806,15 @@ paX
 uiQ
 dzX
 dNa
+=======
+eMc
+pMd
+puT
+gRB
+hjL
+jME
+khS
+>>>>>>> Stashed changes
 amD
 aTd
 aTd
@@ -59541,10 +60065,17 @@ aaa
 kpH
 kpH
 vxh
+<<<<<<< Updated upstream
 vCz
 paX
 mPD
 mji
+=======
+xyx
+gRB
+cVy
+eqY
+>>>>>>> Stashed changes
 vxh
 vxh
 vxh
@@ -59798,6 +60329,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 cfq
 paX
 mPD
@@ -59805,6 +60337,15 @@ paX
 bRs
 qTE
 lmc
+=======
+lmG
+gRB
+cVy
+gRB
+vDH
+sho
+eka
+>>>>>>> Stashed changes
 amD
 aTd
 aTd
@@ -60055,6 +60596,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 vgH
 paX
 uvj
@@ -60062,6 +60604,15 @@ paX
 uiQ
 dzX
 dNa
+=======
+rDT
+gRB
+pyz
+gRB
+hjL
+jME
+khS
+>>>>>>> Stashed changes
 amD
 amD
 amD
@@ -60312,10 +60863,17 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 dqp
 xeq
 mOC
 mji
+=======
+eGt
+uoE
+uIo
+eqY
+>>>>>>> Stashed changes
 vxh
 vxh
 vxh
@@ -60569,6 +61127,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 dqp
 xeq
 mOC
@@ -60576,6 +61135,15 @@ paX
 bRs
 qTE
 lmc
+=======
+eGt
+uoE
+uIo
+gRB
+vDH
+sho
+eka
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -60826,6 +61394,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 sXT
 goF
 gNd
@@ -60833,6 +61402,15 @@ paX
 uiQ
 dzX
 dNa
+=======
+chc
+iXj
+dPw
+gRB
+hjL
+jME
+khS
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -61083,10 +61661,17 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 eQu
 uTy
 mqd
 mji
+=======
+lki
+gzt
+mzk
+eqY
+>>>>>>> Stashed changes
 vxh
 vxh
 vxh
@@ -61340,6 +61925,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 ggY
 uTy
 cIf
@@ -61347,6 +61933,15 @@ paX
 bRs
 qTE
 lmc
+=======
+rtP
+gzt
+iMp
+gRB
+vDH
+sho
+eka
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -61597,6 +62192,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 eQu
 uTy
 mqd
@@ -61604,6 +62200,15 @@ paX
 uiQ
 dzX
 dNa
+=======
+lki
+gzt
+mzk
+gRB
+hjL
+jME
+khS
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -61854,6 +62459,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 hsj
 jbq
 sjj
@@ -61861,6 +62467,15 @@ mji
 vxh
 vxh
 dBk
+=======
+aJb
+hIW
+sJU
+eqY
+vxh
+vxh
+ogc
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -62111,6 +62726,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 wRZ
 qkP
 paX
@@ -62118,6 +62734,15 @@ paX
 bRs
 qTE
 lmc
+=======
+ekn
+bqR
+gRB
+gRB
+vDH
+sho
+eka
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -62368,6 +62993,7 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 cax
 lvM
 paX
@@ -62375,6 +63001,15 @@ paX
 uiQ
 dzX
 dNa
+=======
+jKH
+ncp
+gRB
+gRB
+hjL
+jME
+khS
+>>>>>>> Stashed changes
 amD
 aNE
 aNE
@@ -62625,9 +63260,15 @@ aaa
 aaa
 aaa
 vxh
+<<<<<<< Updated upstream
 paX
 hOb
 paX
+=======
+gRB
+qyY
+gRB
+>>>>>>> Stashed changes
 amD
 amD
 amD
