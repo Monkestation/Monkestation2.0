@@ -59924,7 +59924,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tBq" = (
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
