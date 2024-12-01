@@ -1,7 +1,11 @@
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	// there's literally a big unique announcement saying "HEY THIS PERSON'S AN ASCENDED HERETIC", no reason to not have them in the orbit menu
+	heretic_datum.show_to_ghosts = TRUE
+	heretic_datum.antagpanel_category = "Ascended Heretics"
 	var/static/have_set_lambda = FALSE
-	if(. && !have_set_lambda)
+	if(!have_set_lambda)
 		var/ascended_heretics = 1
 		for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
 			var/mob/living/heretic_body = heretic.owner?.current
