@@ -6096,7 +6096,6 @@
 #include "monkestation\code\game\objects\items\storage\toolbox.dm"
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\game\objects\items\storage\boxes\security_boxes.dm"
-#include "monkestation\code\game\objects\structures\ai_core.dm"
 #include "monkestation\code\game\objects\structures\elevation.dm"
 #include "monkestation\code\game\objects\structures\gravestones.dm"
 #include "monkestation\code\game\objects\structures\tables_racks.dm"
