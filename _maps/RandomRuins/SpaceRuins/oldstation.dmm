@@ -6054,11 +6054,6 @@
 "Cq" = (
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
-"Cw" = (
-/obj/structure/lattice,
-/obj/machinery/power/solar,
-/turf/template_noop,
-/area/space/nearstation)
 "Cz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants{
@@ -7274,6 +7269,7 @@
 	name = "Supermatter Chamber"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "KU" = (
@@ -11942,7 +11938,7 @@ Ap
 dH
 my
 my
-UN
+Ua
 aa
 aa
 aa
@@ -12008,7 +12004,7 @@ Jg
 aa
 Jg
 dH
-Cw
+Jg
 aa
 aa
 aa
