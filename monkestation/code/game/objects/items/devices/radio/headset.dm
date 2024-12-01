@@ -13,6 +13,8 @@
 	name =  "old security bowman headset"
 	desc =  "A headset years past its prime. Protects ears from flashbangs."
 	keyslot = /obj/item/encryptionkey/headset_uncommon
+	icon_state = "med_headset_alt"
+	worn_icon_state = "med_headset_alt"
 
 /obj/item/radio/headset/headset_old/alt/Initialize(mapload)
 	. = ..()

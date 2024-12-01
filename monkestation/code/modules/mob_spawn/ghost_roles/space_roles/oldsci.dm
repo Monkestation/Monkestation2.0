@@ -11,4 +11,9 @@
 	R.set_frequency(FREQ_UNCOMMON)
 	R.freqlock = RADIO_FREQENCY_LOCKED
 	R.independent = TRUE
+	var/obj/item/card/id/W = H.wear_id
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label()
+		W.update_icon()
 	..()
