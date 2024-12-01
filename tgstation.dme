@@ -7168,6 +7168,7 @@
 #include "monkestation\code\modules\emotes\code\emote.dm"
 #include "monkestation\code\modules\ERT\ERT_outfits.dm"
 #include "monkestation\code\modules\ERT\ERT_shuttle.dm"
+#include "monkestation\code\modules\ERT\equipment\ERT_id.dm"
 #include "monkestation\code\modules\ERT\equipment\ERT_misc_equipment.dm"
 #include "monkestation\code\modules\ERT\equipment\ERT_spacesuits.dm"
 #include "monkestation\code\modules\events\_event_admin_setup.dm"
