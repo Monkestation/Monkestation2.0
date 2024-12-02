@@ -185,6 +185,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "aM" = (
 /obj/structure/alien/weeds,
+/obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/xenoblood/xgibs/up,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -7180,9 +7181,6 @@
 "Kv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/oven/range,
-/obj/machinery/camera/autoname/directional/north{
-	status = 0
-	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Kw" = (
@@ -7381,6 +7379,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	status = 0
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "LD" = (
@@ -8608,7 +8609,8 @@
 /obj/structure/closet/crate/engineering{
 	name = "supermatter shard crate";
 	secure = 1;
-	locked = 1
+	locked = 1;
+	icon_state = "engi_secure_crate"
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
@@ -8772,7 +8774,9 @@
 	dir = 4
 	},
 /obj/machinery/duct,
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil{
+	amount = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "Vk" = (
@@ -8831,6 +8835,11 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
+"VG" = (
+/obj/structure/alien/weeds,
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "VP" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -14929,7 +14938,7 @@ aa
 aa
 ad
 ad
-ag
+VG
 aM
 cC
 bh
