@@ -85,7 +85,7 @@
 			plank_count += round(seed.potency / 25)
 
 		user.balloon_alert(user, "made [plank_count] [plank_name]")
-		new plank_type(user.loc, plank_count)
+		new plank_type(user.drop_location(), plank_count)
 		qdel(src)
 		return
 
@@ -93,7 +93,7 @@
 		var/obj/item/food/grown/leaf = attacking_item
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
 			user.balloon_alert(user, "torch crafted")
-			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
+			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.drop_location())
 			user.dropItemToGround(attacking_item)
 			user.put_in_active_hand(new_torch)
 			qdel(leaf)
