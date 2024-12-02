@@ -84,9 +84,12 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/djstation)
 "q" = (
-/obj/item/paper/fluff/ruins/djstation,
-/obj/item/pen/fountain,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
 "r" = (
@@ -101,12 +104,10 @@
 /turf/template_noop,
 /area/space/nearstation)
 "u" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/cassette/dj_station{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
 "v" = (
@@ -141,6 +142,10 @@
 	dir = 8
 	},
 /area/ruin/space/djstation)
+"B" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
 "C" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -151,6 +156,8 @@
 "F" = (
 /obj/item/clipboard,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/paper/fluff/ruins/djstation,
+/obj/item/pen/fountain,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
 "I" = (
@@ -194,6 +201,9 @@
 	pixel_y = -2
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
 "R" = (
@@ -234,6 +244,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"Z" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
 
 (1,1,1) = {"
@@ -292,11 +309,11 @@ V
 s
 v
 R
-W
+B
 W
 e
 L
-u
+Z
 Q
 T
 j

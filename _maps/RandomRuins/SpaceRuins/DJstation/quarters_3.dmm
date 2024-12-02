@@ -76,8 +76,9 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "z" = (
-/obj/structure/bed,
-/obj/item/bedsheet/rainbow,
+/obj/effect/mob_spawn/ghost_role/human/dj{
+	dir = 8
+	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/djstation)
 "A" = (
@@ -108,10 +109,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "L" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/purple{
+/obj/effect/mob_spawn/ghost_role/human/dj{
 	dir = 4
 	},
 /turf/open/floor/carpet/purple,

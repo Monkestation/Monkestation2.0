@@ -26,7 +26,9 @@
 /turf/template_noop,
 /area/template_noop)
 "v" = (
-/obj/structure/bed/maint,
+/obj/effect/mob_spawn/ghost_role/human/dj{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/djstation)
 "B" = (
