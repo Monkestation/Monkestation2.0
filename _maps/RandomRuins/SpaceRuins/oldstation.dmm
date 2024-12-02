@@ -5581,10 +5581,6 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
-"zi" = (
-/obj/item/wallframe/status_display/vitals,
-/turf/closed/wall,
-/area/ruin/space/ancientstation/beta/medbay)
 "zj" = (
 /obj/machinery/door/airlock/science{
 	name = "Biolab"
@@ -6811,6 +6807,10 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
+"Im" = (
+/obj/structure/curtain,
+/turf/open/floor/iron/white/textured_large,
+/area/ruin/space/ancientstation/delta/biolab)
 "Ip" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kitchen/fork{
@@ -10659,7 +10659,7 @@ yz
 Qr
 VP
 xF
-zi
+AK
 aa
 UP
 UP
@@ -16137,7 +16137,7 @@ MC
 MC
 MC
 Qj
-Qj
+Im
 Qj
 MC
 MC
