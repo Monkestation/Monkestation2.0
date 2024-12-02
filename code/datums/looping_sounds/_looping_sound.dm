@@ -108,7 +108,7 @@
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
 	sound_loop()
-	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP, SSsound_loops)
 
 /**
  * A simple proc handling the looping of the sound itself.
@@ -225,7 +225,7 @@
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_STOPPABLE, SSsound_loops)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
