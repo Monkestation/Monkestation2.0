@@ -24,7 +24,7 @@
 	var/obj/item/clothing/glasses/H_glasses = H.get_item_by_slot(slot_glasses)
 	if(!istype(H_glasses, /obj/item/clothing/glasses/sunglasses/virus))
 		var/obj/item/clothing/glasses/sunglasses/virus/virussunglasses = new
-		mob.u_equip(H_glasses,1)
+		mob.doUnEquip(H_glasses,1)
 		mob.equip_to_slot(virussunglasses, slot_glasses)
 	*/
 
@@ -57,6 +57,6 @@
 		var/mob/living/carbon/human/dude = mob
 		if(istype(dude.glasses, /obj/item/clothing/glasses/sunglasses/virus))
 			dude.glasses.canremove = 1
-			dude.u_equip(dude.glasses,1)
+			dude.doUnEquip(dude.glasses,1)
 	*/
 	mob.dna.remove_mutation(/datum/mutation/human/elvis)

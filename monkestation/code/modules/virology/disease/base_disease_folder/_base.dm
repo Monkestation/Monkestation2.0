@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	logger.Log(LOG_CATEGORY_VIRUS, "[affected_mob.name] was cured of virus [real_name()] at [loc_name(affected_mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(affected_mob.loc)))
 	//--Plague Stuff--
 	/*
-	var/datum/faction/plague_mice/plague = find_active_faction_by_type(/datum/faction/plague_mice)
+	var/datum/faction/plague_mice/plague = locate_team(/datum/faction/plague_mice)
 	if (plague && ("[uniqueID]-[subID]" == plague.diseaseID))
 		plague.update_hud_icons()
 	*/

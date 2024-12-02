@@ -139,8 +139,6 @@
 		/datum/action/cooldown/spell/florida_doorbuster,
 	))
 	register_action_typecache ||= zebra_typecacheof(list(
-		/datum/action/innate/cult = TRUE,
-		/datum/action/innate/cult/comm = FALSE,
 		/datum/action/innate/clockcult/quick_bind = TRUE,
 		/datum/action/cooldown/bloodsucker = TRUE,
 		/datum/action/changeling = TRUE,

@@ -47,8 +47,15 @@
 	if(color && can_dry && !dried)
 		update_blood_drying_effect()
 
+	var/datum/team/cult/cult_team = locate_team(/datum/team/cult)
+	if(cult_team)
+		cult_team.add_bloody_floor(get_turf(src))
+
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSblood_drying, src)
+	var/datum/team/cult/cult_team = locate_team(/datum/team/cult)
+	if(cult_team)
+		cult_team.remove_bloody_floor(get_turf(src))
 	return ..()
 
 /obj/effect/decal/cleanable/blood/on_entered(datum/source, atom/movable/AM)

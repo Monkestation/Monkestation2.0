@@ -17,6 +17,7 @@
 	species_language_holder = /datum/language_holder/moth
 	death_sound = 'sound/voice/moth/moth_death.ogg'
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
+	exotic_bloodtype = /datum/blood_type/crew/moth
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/moth,

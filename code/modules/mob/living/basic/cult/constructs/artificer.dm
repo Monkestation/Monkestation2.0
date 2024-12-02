@@ -30,6 +30,7 @@
 	can_repair = TRUE
 	can_repair_self = TRUE
 	smashes_walls = TRUE
+	construct_type = "Artificer"
 	///The health HUD applied to this mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 

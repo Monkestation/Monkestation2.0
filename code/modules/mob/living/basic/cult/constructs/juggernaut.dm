@@ -26,6 +26,7 @@
 	playstyle_string = span_bold("You are a Juggernaut. Though slow, your shell can withstand heavy punishment, create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.")
 
 	smashes_walls = TRUE
+	construct_type = "Juggernaut"
 
 /// Hostile NPC version. Pretty dumb, just attacks whoever is near.
 /mob/living/basic/construct/juggernaut/hostile

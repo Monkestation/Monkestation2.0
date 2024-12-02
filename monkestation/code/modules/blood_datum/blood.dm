@@ -240,6 +240,10 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	color = "#009696" // Did you know octopi have blood blood, thanks to hemocyanin rather than hemoglobin? It binds to copper instead of Iron
 	restoration_chem = /datum/reagent/copper
 
+/datum/blood_type/crew/moth
+	name = "M"
+	color = "#d4ba44"
+
 /datum/blood_type/crew/ethereal
 	name = "LE"
 	color = "#97ee63"

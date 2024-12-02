@@ -409,8 +409,6 @@
 					to_chat(affected_mob, "<span class=[span_type]>[pick(phrase_list["seizure"])].</span>")
 
 	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(affected_mob))
-			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
 		if(IS_CLOCK(affected_mob))
 			affected_mob.mind.remove_antag_datum(/datum/antagonist/clock_cultist)
 		affected_mob.Unconscious(10 SECONDS)
@@ -2702,7 +2700,7 @@
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
+	if(!significant && volume >= 3)
 		significant = TRUE
 		affected_mob.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 

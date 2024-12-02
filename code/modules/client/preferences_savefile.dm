@@ -193,8 +193,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
-	load_metacoins(parent.ckey)
-	load_inventory(parent.ckey)
+	load_metacoins(ckey(parent_key))
+	load_inventory(ckey(parent_key))
 
 	load_preferences_monkestation()
 
@@ -237,7 +237,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
-
 	return TRUE
 
 /datum/preferences/proc/save_preferences()

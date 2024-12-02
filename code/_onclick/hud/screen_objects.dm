@@ -192,6 +192,8 @@
 		return
 
 	var/image/item_overlay = image(holding)
+	item_overlay.pixel_x = holding.base_pixel_x
+	item_overlay.pixel_y = holding.base_pixel_y
 	item_overlay.alpha = 92
 
 	if(!holding.mob_can_equip(user, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))

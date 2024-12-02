@@ -333,6 +333,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/datum/particle_weather)
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
+	// monkestation start: blood cult stuff
+	ignore += typesof(/obj/effect/afterimage)
+	ignore += typesof(/obj/effect/bloodcult_jaunt)
+	ignore += typesof(/obj/effect/cult_ritual)
+	ignore += typesof(/obj/effect/cult_shortcut)
+	ignore += typesof(/obj/effect/rooting_trap)
+	ignore += typesof(/obj/effect/stun_indicator)
+	// monkestation end
 
 	return ignore
 

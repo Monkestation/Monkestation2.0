@@ -37,7 +37,7 @@
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "entertainment_blank"
-	network = list()
+	network = list("SpessTV")
 	density = FALSE
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT

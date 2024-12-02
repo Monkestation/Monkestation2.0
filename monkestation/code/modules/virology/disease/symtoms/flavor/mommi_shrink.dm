@@ -8,7 +8,7 @@
 /datum/symptom/mommi_shrink/activate(mob/living/mob)
 	if(activated)
 		return
-	to_chat(mob, "<span class = 'warning'>You feel small...</span>")
+	to_chat(mob, span_warning("You feel small...") )
 	mob.transform.Scale(0.5, 0.5)
 	mob.update_transform()
 	mob.pass_flags |= PASSTABLE
@@ -16,7 +16,7 @@
 	activated = 1
 
 /datum/symptom/mommi_shrink/deactivate(mob/living/mob)
-	to_chat(mob, "<span class = 'warning'>You feel like an adult again.</span>")
+	to_chat(mob, span_warning("You feel like an adult again.") )
 	mob.transform.Scale(2, 2)
 	mob.update_transform()
 	mob.pass_flags &= ~PASSTABLE

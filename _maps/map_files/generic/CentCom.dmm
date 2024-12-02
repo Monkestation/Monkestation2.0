@@ -5702,7 +5702,6 @@
 /turf/open/ai_visible,
 /area/centcom/ai_multicam_room)
 "apv" = (
-/obj/effect/rune/narsie,
 /obj/structure/chair/comfy/carp{
 	dir = 1
 	},
@@ -22642,7 +22641,6 @@
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
 "jCt" = (
-/obj/effect/rune/apocalypse,
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},

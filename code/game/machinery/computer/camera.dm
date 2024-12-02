@@ -8,11 +8,13 @@
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
 
-	var/list/network = list("ss13")
+	var/clears_camera = FALSE
+	var/list/network = list("ss13", "SpessTV")
 	var/obj/machinery/camera/active_camera
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
+	var/ui_path = "CameraConsole"
 
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/cam_screen
@@ -41,6 +43,11 @@
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
 	QDEL_NULL(cam_background)
+	if(active_camera)
+		active_camera.on_deactive_camera(src)
+		active_camera = null
+		last_camera_turf = null
+
 	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -71,7 +78,7 @@
 		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, "CameraConsole", name)
+		ui = new(user, src, ui_path, name)
 		ui.open()
 
 /obj/machinery/computer/security/ui_status(mob/user)
@@ -114,6 +121,7 @@
 	if(action == "switch_camera")
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
+		active_camera.on_active_camera(src)
 		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
 		if(isnull(active_camera))
@@ -122,6 +130,24 @@
 		update_active_camera_screen()
 
 		return TRUE
+
+	switch(action)
+		if("follow")
+			var/obj/machinery/camera/spesstv/camera = active_camera
+			if(!istype(camera))
+				return
+			var/datum/antagonist/streamer/streamer_role = camera.streamer
+			if(!istype(streamer_role))
+				return
+			streamer_role.try_add_follower(usr.mind)
+		if("subscribe")
+			var/obj/machinery/camera/spesstv/camera = active_camera
+			if(!istype(camera))
+				return
+			var/datum/antagonist/streamer/streamer_role = camera.streamer
+			if(!istype(streamer_role))
+				return
+			streamer_role.try_add_subscription(usr.mind, src)
 
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
@@ -167,7 +193,8 @@
 	// Unregister map objects
 	cam_screen.hide_from(user)
 	// Turn off the console
-	if(length(concurrent_users) == 0 && is_living)
+	if(length(concurrent_users) == 0 && is_living && clears_camera)
+		active_camera.on_deactive_camera(src)
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)

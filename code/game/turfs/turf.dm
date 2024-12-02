@@ -289,6 +289,29 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			return TRUE
 	return FALSE
 
+/turf/proc/check_blocking_content(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
+	if(density)
+		return src
+
+	for(var/atom/movable/movable_content as anything in contents)
+		// We don't want to block ourselves
+		if((movable_content == source_atom))
+			continue
+		// dont consider ignored atoms or their types
+		if(length(ignore_atoms))
+			if(!type_list && (movable_content in ignore_atoms))
+				continue
+			else if(type_list && is_type_in_list(movable_content, ignore_atoms))
+				continue
+
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf,  we consider the turf blocked.
+		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
+			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
+				continue
+			return movable_content
+	return null
+
 /**
  * Checks whether the specified turf is blocked by something dense inside it, but ignores anything with the climbable trait
  *

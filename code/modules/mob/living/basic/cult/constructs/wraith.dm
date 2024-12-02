@@ -14,9 +14,9 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift,
-		/datum/action/innate/cult/create_rune/tele,
 	)
 	playstyle_string = span_bold("You are a Wraith. Though relatively fragile, you are fast, deadly, and can phase through walls. Your attacks will lower the cooldown on phasing, moreso for fatal blows.")
+	construct_type = "Wraith"
 
 /mob/living/basic/construct/wraith/Initialize(mapload)
 	. = ..()

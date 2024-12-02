@@ -16,6 +16,16 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, screenmob)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/stars(null, screenmob) //monkestation edit
+		if(GLOB.eclipse.eclipse_start_time)
+			var/view = C.view || world.view
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/rifts(null, screenmob)
+			for(var/atom/movable/screen/parallax_layer/layer as anything in C.parallax_layers_cached)
+				if(!istype(layer, /atom/movable/screen/parallax_layer/layer_1))
+					continue
+				layer.remove_atom_colour(ADMIN_COLOUR_PRIORITY, GLOB.starlight_color)
+				layer.icon_state = "narsie"
+				layer.update_o(view)
+
 		/* monkestation removal
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, screenmob)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, screenmob)
