@@ -25768,6 +25768,7 @@
 	},
 /obj/item/wirecutters,
 /obj/item/vacuum_pack,
+/obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "isa" = (
@@ -61255,6 +61256,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
