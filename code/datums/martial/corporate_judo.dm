@@ -18,10 +18,33 @@
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/martial_art/corpjudo/style
+/obj/item/storage/belt/security/blueshield/corpjudo/PopulateContents()
+    // Can fill with new /obj/item to fill with items
+    return
 
 /obj/item/storage/belt/security/blueshield/corpjudo/Initialize(mapload)
 	. = ..()
 	style = new /datum/martial_art/corpjudo
+	atom_storage.max_slots = 3
+	atom_storage.remove_all()
+	atom_storage.set_holdable(list(
+		/obj/item/grenade/flashbang,
+		/obj/item/grenade/chem_grenade/teargas,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/food/donut,
+		/obj/item/flashlight/seclite,
+		/obj/item/holosign_creator/security,
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/detective_scanner,
+		/obj/item/clothing/glasses,
+		/obj/item/clothing/gloves,
+		/obj/item/citationinator, //monkestation edit
+		/obj/item/food/spaghetti/security, //monkestation change: tactical belt
+		/obj/item/radio
+	))
+	PopulateContents()
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
 	. = ..()
