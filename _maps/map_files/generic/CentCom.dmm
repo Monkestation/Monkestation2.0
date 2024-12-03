@@ -21193,7 +21193,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/misc/asteroid,
 /area/cruiser_dock)
 "gkT" = (
 /obj/machinery/light/directional/west,
@@ -24046,7 +24046,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/misc/asteroid,
 /area/cruiser_dock)
 "nWh" = (
 /turf/open/floor/iron/stairs/right{
@@ -25665,6 +25665,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/cruiser_dock)
 "sBp" = (
+/obj/machinery/computer/vitals_reader/advanced/directional/south,
 /obj/machinery/computer/operating{
 	dir = 1
 	},
@@ -26170,13 +26171,10 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "tWy" = (
+/obj/item/reagent_containers/cup/beaker/meta/rezadone,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/structure/closet/crate/cardboard,
-/obj/item/reagent_containers/cup/beaker/synthflesh,
-/obj/item/reagent_containers/cup/beaker/synthflesh,
-/obj/item/reagent_containers/cup/beaker/synthflesh,
-/obj/item/reagent_containers/cup/beaker/synthflesh,
 /turf/open/floor/iron/smooth,
 /area/cruiser_dock)
 "tWL" = (
@@ -27571,7 +27569,6 @@
 /area/centcom/central_command_areas/evacuation)
 "xwc" = (
 /obj/machinery/stasis,
-/obj/machinery/computer/vitals_reader/advanced/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
