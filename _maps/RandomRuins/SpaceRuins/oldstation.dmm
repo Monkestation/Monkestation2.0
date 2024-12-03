@@ -847,7 +847,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
-/obj/item/storage/toolbox/mechanical/old,
 /obj/structure/table,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -945,6 +944,10 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"dy" = (
+/obj/item/surgery_tray,
+/turf/template_noop,
+/area/template_noop)
 "dB" = (
 /obj/structure/alien/weeds,
 /obj/effect/gibspawner/human,
@@ -1262,6 +1265,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eD" = (
@@ -1269,15 +1273,13 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/camera/autoname/directional/north{
 	status = 0
 	},
+/obj/structure/rack,
+/obj/item/assembly/prox_sensor,
+/obj/item/stack/cable_coil,
+/obj/item/assembly/prox_sensor,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "eE" = (
@@ -1816,6 +1818,11 @@
 "gG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "gH" = (
@@ -2461,8 +2468,10 @@
 	dir = 8
 	},
 /obj/structure/table_frame,
-/obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/shard{
+	icon_state = "medium"
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "iY" = (
@@ -2834,6 +2843,9 @@
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/micro_laser,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "kr" = (
@@ -3294,6 +3306,12 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
+"lV" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/template_noop,
+/area/template_noop)
 "lZ" = (
 /obj/structure/alien/weeds,
 /obj/structure/cable,
@@ -3920,10 +3938,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/manipulator,
+/obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "om" = (
@@ -4395,7 +4410,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "rf" = (
-/obj/item/surgery_tray,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "rg" = (
@@ -5336,14 +5350,12 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 2;
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stock_parts/matter_bin,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "xb" = (
@@ -7207,6 +7219,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
+"KF" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
 "KG" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
@@ -8235,12 +8251,14 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rs" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron/fifty,
+/obj/structure/table,
 /obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/iron/fifty,
-/obj/structure/table,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "Rt" = (
@@ -8840,13 +8858,13 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
-"VP" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
+"VL" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ancientstation/beta/medbay)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/bot_assembly/hygienebot,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "VT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard/plasma{
@@ -9042,9 +9060,6 @@
 	},
 /obj/machinery/light/small/broken/directional/west,
 /obj/structure/table_frame,
-/obj/item/shard{
-	icon_state = "medium"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
@@ -10272,7 +10287,7 @@ aa
 aa
 aa
 aa
-DX
+aa
 aa
 aa
 aa
@@ -10339,8 +10354,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+lV
+dy
 aa
 aa
 aa
@@ -10403,10 +10418,10 @@ aa
 aa
 aa
 aa
+DX
 aa
 aa
 aa
-Zq
 aa
 aa
 aa
@@ -10470,8 +10485,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+KF
+Zq
 aa
 aa
 aa
@@ -10666,7 +10681,7 @@ Qr
 VZ
 yz
 Qr
-VP
+Qr
 xF
 AK
 aa
@@ -15419,7 +15434,7 @@ kw
 OJ
 gP
 kw
-ca
+VL
 bD
 QO
 lM
