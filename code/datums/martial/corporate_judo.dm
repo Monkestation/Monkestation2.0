@@ -1,13 +1,21 @@
+///
+// PORTED FROM PARADISE STATION
+///
 #define DISCOMBOBULATE "DG"
 #define EYE_POKE "HD"
 #define JUDO_THROW "GD"
 #define ARMBAR "DDG"
 #define WHEEL_THROW NONE
-#define GOLDEN_BLAST "PDPGDDGPDDGP"
+#define GOLDEN_BLAST "EDEGDDGEDDGE"
 
 /obj/item/storage/belt/security/blueshield/corpjudo
 	name = "\improper Corporate Judo Belt"
 	desc = "You could learn Judo the hard way, but at NT money can buy you everything."
+	icon_state = "judobelt"
+	worn_icon_state = "judo"
+	inhand_icon_state = "judo"
+
+	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/martial_art/corpjudo/style
 
@@ -32,7 +40,7 @@
 	id = MARTIALART_JUDO
 	display_combos = TRUE
 	max_streak_length = 13
-	combo_timer = 15
+	combo_timer = 15 SECONDS
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
@@ -92,7 +100,7 @@
 	defender.SpinAnimation(10, 1)
 	do_sparks(5, FALSE, defender)
 	attacker.say("GOLDEN BLAST!")
-	//playsound(get_turf(defender), 'sound/weapons/goldenblast.ogg', 60, TRUE, -1)
+	playsound(get_turf(defender), 'sound/weapons/goldenblast.ogg', 60, TRUE, -1)
 	defender.apply_damage(120, STAMINA)
 	defender.Knockdown(30 SECONDS)
 	defender.set_confusion(30 SECONDS)
@@ -102,7 +110,7 @@
 /datum/martial_art/corpjudo/help_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
 		return FALSE
-	add_to_streak("P", defender)
+	add_to_streak("E", defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 
