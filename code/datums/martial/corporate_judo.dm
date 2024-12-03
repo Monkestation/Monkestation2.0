@@ -5,7 +5,7 @@
 #define EYE_POKE "HD"
 #define JUDO_THROW "GD"
 #define ARMBAR "DDG"
-#define WHEEL_THROW NONE
+#define WHEEL_THROW "GDH"
 #define GOLDEN_BLAST "EDEGDDGEDDGE"
 
 /obj/item/storage/belt/security/blueshield/corpjudo
@@ -62,7 +62,7 @@
 	name = "Corporate Judo"
 	id = MARTIALART_JUDO
 	display_combos = TRUE
-	max_streak_length = 13
+	max_streak_length = 12
 	combo_timer = 15 SECONDS
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
@@ -110,9 +110,28 @@
 	if(attacker.body_position == STANDING_UP)
 		defender.drop_all_held_items()
 	defender.apply_damage(45, STAMINA)
-	//target.apply_status_effect(STATUS_EFFECT_ARMBAR)
+	defender.apply_status_effect(/datum/status_effect/judo_armbar)
 	defender.Knockdown(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Armbar")
+	return TRUE
+
+/datum/martial_art/corpjud/proc/wheel_throw/(mob/living/carbon/human/attacker, mob/living/defender)
+	if((defender.body_position == STANDING_UP) || !defender.has_status_effect(/datum/status_effect/judo_armbar))
+		return FALSE
+	reset_streak() // Don't reset combo unless it met the first requirements.
+	if(attacker.body_position == STANDING_UP)
+		defender.visible_message("<span class='warning'>[attacker] raises [defender] over [attacker.p_their()] shoulder, and slams [defender.p_them()] into the ground!</span>", \
+							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
+		playsound(get_turf(attacker), 'sound/magic/tail_swing.ogg', 40, TRUE, -1)
+		defender.SpinAnimation(10, 1)
+	else
+		defender.visible_message("<span class='warning'>[attacker] manages to get a hold onto [defender], and pinning [defender.p_them()] to the ground!</span>", \
+							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
+		playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
+	defender.apply_damage(120, STAMINA)
+	defender.Knockdown(15 SECONDS)
+	defender.set_confusion(10 SECONDS)
+	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Wheel Throw / Floor Pin")
 	return TRUE
 
 /datum/martial_art/corpjudo/proc/goldenblast(mob/living/carbon/human/attacker, mob/living/defender)
@@ -179,8 +198,11 @@
 	if(streak == ARMBAR)
 		reset_streak()
 		return armbar(attacker, defender)
-	if(streak == GOLDEN_BLAST)
+	if(streak == WHEEL_THROW)
 		reset_streak()
+		return armbar(attacker, defender)
+	if(streak == GOLDEN_BLAST)
+		//reset_streak() //special handling in the ability itself
 		return goldenblast(attacker, defender)
 	return FALSE
 
