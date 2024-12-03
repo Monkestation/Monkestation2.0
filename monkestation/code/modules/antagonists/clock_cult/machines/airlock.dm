@@ -9,12 +9,19 @@
 	hackProof = TRUE
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_CLOCKCULT)
-	damage_deflection = 10
+	damage_deflection = 7
 
 /obj/machinery/door/airlock/bronze/clock/Initialize(mapload)
 	. = ..()
 	if(on_reebe(src))
 		damage_deflection = 0
+		if(!mapload)
+			SSthe_ark.reebe_clockwork_airlock_count++
+
+/obj/machinery/door/airlock/bronze/clock/Destroy()
+	if(on_reebe(src))
+		SSthe_ark.reebe_clockwork_airlock_count--
+	return ..()
 
 /obj/machinery/door/airlock/bronze/clock/canAIControl(mob/user)
 	return (IS_CLOCK(user) && !isAllPowerCut())
@@ -39,13 +46,16 @@
 		return TRUE
 
 	else if(!on_reebe(src))
-		user.Paralyze(2 SECONDS)
-		user.electrocute_act(20, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+		user.Paralyze(1 SECONDS)
+		user.electrocute_act(10, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
 		to_chat(user, span_warning("You feel a sudden jolt as you touch [src]!"))
 	return FALSE
 
 /obj/machinery/door/airlock/bronze/clock/emp_act(severity)
 	return
+
+/obj/machinery/door/airlock/bronze/clock/emag_act(mob/user, obj/item/card/emag/emag_card) //emags are magical but not THAT magical
+	return FALSE
 
 /obj/machinery/door/airlock/bronze/clock/glass
 	name = "clear bronze airlock"

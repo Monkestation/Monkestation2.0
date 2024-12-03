@@ -2,6 +2,9 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 
 /// spawn the reebe z level and map template, lazy templates dont work because we need to give this ztraits
 /proc/spawn_reebe(forced = FALSE)
+	if(!SSthe_ark.initialized)
+		SSthe_ark.Initialize()
+
 	var/static/reebe_loaded
 	if(forced)
 		message_admins("Admin forcing reebe spawn, if it has already spawned this will break things unless you know what your doing.")

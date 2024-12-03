@@ -25,10 +25,7 @@
 	target_carbon.visible_message(span_danger("[invoker] forms a well of energy around [target_carbon], brass appearing at their wrists!"),\
 						span_userdanger("[invoker] is trying to restrain you!"))
 
-	if(!do_after(invoker, 3 SECONDS, target = target_carbon))
-		return FALSE
-
-	if(target_carbon.handcuffed)
+	if(!do_after(invoker, 3 SECONDS, target = target_carbon) || target_carbon.handcuffed)
 		return FALSE
 
 	target_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/clockwork(target_carbon))

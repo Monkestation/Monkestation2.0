@@ -37,7 +37,7 @@
 /obj/item/clockwork/replica_fabricator/examine(mob/user)
 	. = ..()
 	if(IS_CLOCK(user))
-		. += span_brass("Current power: [display_power(GLOB.clock_power)]")
+		. += span_brass("Current power: [display_power(SSthe_ark.clock_power)]")
 		. += span_brass("Use on brass to convert it into power.")
 		. += span_brass("Use on other materials to convert them into power, but less efficiently.")
 		. += span_brass("<b>Use</b> in-hand to select what to fabricate.")
@@ -57,7 +57,7 @@
 	if(!selected_output) // Now we handle objects
 		return
 
-	if(GLOB.clock_power < selected_output.cost)
+	if(SSthe_ark.clock_power < selected_output.cost)
 		to_chat(user, span_clockyellow("[src] needs at least [selected_output.cost]W of power to create this."))
 		return
 
@@ -81,10 +81,13 @@
 	else if(!isopenturf(target))
 		return
 
+	if(!selected_output.extra_checks(target, creation_turf, user))
+		return
+
 	var/calculated_creation_delay = 1
 	if(on_reebe(user))
 		calculated_creation_delay = selected_output.reebe_mult
-		if(!get_charged_anchor_crystals())
+		if(!SSthe_ark.charged_anchoring_crystals)
 			calculated_creation_delay += SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
 		else if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
 			calculated_creation_delay += (iscogscarab(user) ? 2.5 : 5)
@@ -95,10 +98,10 @@
 		qdel(effect)
 		return
 
-	if(GLOB.clock_power < selected_output.cost) // Just in case
+	if(SSthe_ark.clock_power < selected_output.cost) // Just in case
 		return
 
-	GLOB.clock_power -= selected_output.cost
+	SSthe_ark.clock_power -= selected_output.cost
 	var/atom/created
 	if(!istype(selected_output, /datum/replica_fabricator_output/turf_output))
 		if(possible_replaced)
@@ -121,15 +124,15 @@
 	if(!IS_CLOCK(user))
 		return
 
-	if(GLOB.clock_power < BRASS_POWER_COST)
+	if(SSthe_ark.clock_power < BRASS_POWER_COST)
 		to_chat(user, span_clockyellow("You need at least [BRASS_POWER_COST]W of power to fabricate bronze."))
 		return
 
-	var/sheets = tgui_input_number(user, "How many sheets do you want to fabricate?", "Sheet Fabrication", 0, round(GLOB.clock_power / BRASS_POWER_COST), 0)
+	var/sheets = tgui_input_number(user, "How many sheets do you want to fabricate?", "Sheet Fabrication", 0, round(SSthe_ark.clock_power / BRASS_POWER_COST), 0)
 	if(!sheets)
 		return
 
-	GLOB.clock_power -= sheets * BRASS_POWER_COST
+	SSthe_ark.clock_power -= sheets * BRASS_POWER_COST
 
 	var/obj/item/stack/sheet/bronze/sheet_stack = new(null, sheets)
 	user.put_in_hands(sheet_stack)
@@ -140,7 +143,6 @@
 /obj/item/clockwork/replica_fabricator/attack_self(mob/user, modifiers)
 	. = ..()
 	var/choice = show_radial_menu(user, src, crafting_possibilities, radius = 36, custom_check = PROC_REF(check_menu), require_near = TRUE)
-
 	if(!choice)
 		return
 
@@ -149,35 +151,32 @@
 
 /// Standard confirmation for the radial menu proc
 /obj/item/clockwork/replica_fabricator/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-
-	if(user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return FALSE
 
 	return TRUE
 
 /// Attempt to convert the targeted item into power, if it's a sheet item
 /obj/item/clockwork/replica_fabricator/proc/attempt_convert_materials(atom/attacking_item, mob/user)
-	if(GLOB.clock_power >= GLOB.max_clock_power)
+	if(SSthe_ark.clock_power >= SSthe_ark.max_clock_power)
 		to_chat(user, span_clockyellow("We are already at maximum power!"))
 		return
 
 	if(istype(attacking_item, /obj/item/stack/sheet/bronze))
 		var/obj/item/stack/bronze_stack = attacking_item
 
-		if((GLOB.clock_power + bronze_stack.amount * BRASS_POWER_COST) > GLOB.max_clock_power)
-			var/amount_to_take = clamp(round((GLOB.max_clock_power - GLOB.clock_power) / BRASS_POWER_COST), 0, bronze_stack.amount)
+		if((SSthe_ark.clock_power + bronze_stack.amount * BRASS_POWER_COST) > SSthe_ark.max_clock_power)
+			var/amount_to_take = clamp(round((SSthe_ark.max_clock_power - SSthe_ark.clock_power) / BRASS_POWER_COST), 0, bronze_stack.amount)
 
 			if(!amount_to_take)
 				to_chat(user, span_clockyellow("[src] can't be powered further using this!"))
 				return
 
 			bronze_stack.use(amount_to_take)
-			GLOB.clock_power += amount_to_take * BRASS_POWER_COST
+			SSthe_ark.clock_power += amount_to_take * BRASS_POWER_COST
 
 		else
-			GLOB.clock_power += bronze_stack.amount * BRASS_POWER_COST
+			SSthe_ark.clock_power += bronze_stack.amount * BRASS_POWER_COST
 			qdel(bronze_stack)
 
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
@@ -188,18 +187,18 @@
 	else if(istype(attacking_item, /obj/item/stack/sheet))
 		var/obj/item/stack/stack = attacking_item
 
-		if((GLOB.clock_power + stack.amount * REGULAR_POWER_COST) > GLOB.max_clock_power)
-			var/amount_to_take = clamp(round((GLOB.max_clock_power - GLOB.clock_power) / REGULAR_POWER_COST), 0, stack.amount)
+		if((SSthe_ark.clock_power + stack.amount * REGULAR_POWER_COST) > SSthe_ark.max_clock_power)
+			var/amount_to_take = clamp(round((SSthe_ark.max_clock_power - SSthe_ark.clock_power) / REGULAR_POWER_COST), 0, stack.amount)
 
 			if(!amount_to_take)
 				to_chat(user, span_clockyellow("[src] can't be powered further using this!"))
 				return
 
 			stack.use(amount_to_take)
-			GLOB.clock_power += amount_to_take * REGULAR_POWER_COST
+			SSthe_ark.clock_power += amount_to_take * REGULAR_POWER_COST
 
 		else
-			GLOB.clock_power += stack.amount * REGULAR_POWER_COST
+			SSthe_ark.clock_power += stack.amount * REGULAR_POWER_COST
 			qdel(stack)
 
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
@@ -236,6 +235,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	playsound(creation_turf, 'sound/machines/clockcult/integration_cog_install.ogg', 50, 1) // better sound?
 	to_chat(creator, span_clockyellow("You create \an [name] for [cost]W of power."))
+
+/datum/replica_fabricator_output/proc/extra_checks(atom/target, turf/created_at, mob/user)
+	return TRUE
 
 /datum/replica_fabricator_output/turf_output/on_create(atom/created_atom, turf/creation_turf, mob/creator)
 	creation_turf.ChangeTurf(to_create_path)
@@ -292,6 +294,12 @@
 	cost = BRASS_POWER_COST * 5 // Breaking it only gets 2 but this is the exception to the rule of equivalent exchange, due to all the small parts inside
 	to_create_path = /obj/machinery/door/airlock/bronze/clock
 	creation_delay = 10 SECONDS
+
+/datum/replica_fabricator_output/pinion_airlock/extra_checks(atom/target, turf/created_at, mob/user)
+	if(on_reebe(created_at) && SSthe_ark.reebe_clockwork_airlock_count > MAXIMUM_REEBE_AIRLOCKS)
+		to_chat(user, span_warning("Reebe cannot support the power drain of any more clockwork airlocks."))
+		return FALSE
+	return TRUE
 
 /datum/replica_fabricator_output/pinion_airlock/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/door(creation_turf)

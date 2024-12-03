@@ -8,3 +8,4 @@
 	invocation_text = list("Oh great holy one...", "your energy...", "the power of the holy light!")
 	summoned_structure = /obj/structure/destructible/clockwork/sigil/transmission
 	category = SPELLTYPE_STRUCTURES
+	assault_invoke_time_mult = 1

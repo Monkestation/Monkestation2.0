@@ -1,6 +1,8 @@
+///how much do we heal per do_after() loop
+#define HEALED_PER_LOOP 10
 /datum/scripture/slab/sentinels_compromise
 	name = "Sentinel's Compromise"
-	desc = "Heals a large amount of non-toxin damage on a target then converts 50% of it back as toxin damage to you."
+	desc = "Continuously heals non-toxin damage on a target then converts 80% of it back as toxin damage to you."
 	tip = "Works well with Properity Prisms. Cannot be used by cogscarabs."
 	power_cost = 80
 	cogs_required = 1
@@ -36,22 +38,19 @@
 	if(healed_mob.stat == DEAD) //technically the husk healing is free but it should be fine
 		return FALSE
 
-	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
-
 	//MMMMMM, CHUNKY
-	var/total_damage = (healed_mob.getBruteLoss() + healed_mob.getFireLoss() + healed_mob.getOxyLoss() + healed_mob.getCloneLoss()) * 0.6
-	healed_mob.stamina.adjust(healed_mob.staminaloss * 0.6)
-	healed_mob.adjustBruteLoss(-healed_mob.getBruteLoss() * 0.6)
-	healed_mob.adjustFireLoss(-healed_mob.getFireLoss() * 0.6)
-	healed_mob.adjustOxyLoss(-healed_mob.getOxyLoss() * 0.6)
-	healed_mob.adjustCloneLoss(-healed_mob.getCloneLoss() * 0.6)
 	healed_mob.blood_volume = BLOOD_VOLUME_NORMAL
 	healed_mob.set_nutrition(NUTRITION_LEVEL_FULL)
 	healed_mob.bodytemperature = BODYTEMP_NORMAL
-	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 100) //if you have over 100 units of holy water then it should take multiple to purge
-	healed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -50)
+	while(do_after(invoker, invocation_time * 0.5, healed_mob))
+		var/healed_amount = healed_mob.heal_ordered_damage(HEALED_PER_LOOP, list(BRUTE, BURN, OXY, CLONE, BRAIN))
+		healed_mob.stamina.adjust(HEALED_PER_LOOP)
+		healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, HEALED_PER_LOOP)
+		if(!invoker.adjustToxLoss(healed_amount * 0.8, TRUE, TRUE) || invoker.getToxLoss() > 80 || healed_amount < HEALED_PER_LOOP)
+			break
 
+	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
 	new /obj/effect/temp_visual/heal(get_turf(healed_mob), "#1E8CE1")
-
-	invoker.adjustToxLoss(min(total_damage * 0.5, 80), forced = TRUE)
 	return TRUE
+
+#undef HEALED_PER_LOOP

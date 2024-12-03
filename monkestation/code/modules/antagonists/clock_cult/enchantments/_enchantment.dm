@@ -1,22 +1,22 @@
 /datum/component/enchantment
-	//Examine text
+	///Examine text
 	var/examine_description
-	//Maximum enchantment level
+	///Maximum enchantment level
 	var/max_level = 1
-	//Current enchantment level
+	///Current enchantment level
 	var/level
+	///The span we warp our examine text in
+	var/used_span = "<span class='purple'>"
 
-/datum/component/enchantment/Initialize()
+/datum/component/enchantment/Initialize(level_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(on_reebe(parent)) //currently this is only added by stargazers so this should work fine
 		max_level = 1
-	//Get random level
-	level = rand(1, max_level)
-	//Apply effect
+
+	level = level_override || rand(1, max_level)
 	apply_effect(parent)
-	//Add in examine effect
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/enchantment/Destroy()
@@ -31,9 +31,14 @@
 
 	if(!examine_description)
 		return
-	if(IS_CLOCK(user) || isobserver(user))
-		examine_list += span_brass("[examine_description]")
-		examine_list += span_brass("It's blessing has a power of [level]!")
+
+	if(isobserver(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
+		if(used_span)
+			examine_list += "[used_span][examine_description]</span>"
+			examine_list += "[used_span]It's blessing has a power of [level]!</span>"
+			return
+		examine_list += "[examine_description]"
+		examine_list += "It's blessing has a power of [level]!"
 	else
 		examine_list += "It is glowing slightly!"
 		var/mob/living/living_user = user
