@@ -86,7 +86,7 @@
 	//Pick a random effect
 	var/static/list/possible_components
 	if(!possible_components)
-		possible_components = subtypesof(/datum/component/enchantment)
+		possible_components = subtypesof(/datum/component/enchanted)
 	upgraded_item.AddComponent(pick(possible_components), )
 	to_chat(user, span_notice("\The [upgraded_item] glows with a brilliant light!"))
 

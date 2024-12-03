@@ -203,11 +203,17 @@ SUBSYSTEM_DEF(the_ark)
 		var/mob/living/simple_animal/bot/checked_bot = checked_atom
 		return checked_bot.bot_cover_flags & BOT_COVER_EMAGGED
 
-/datum/controller/subsystem/the_ark/proc/convert_area_turfs(area/converted_area)
-	var/timer_counter = 1 //used by the addtimer()
+/datum/controller/subsystem/the_ark/proc/convert_area_turfs(area/converted_area, conversion_percent = 100, counter_override)
+	var/timer_counter = counter_override || 1 //used by the addtimer()
 	var/list/turfs_to_transform = list()
-	for(var/turf/transformed_turf in converted_area)
-		turfs_to_transform += transformed_turf
+	for(var/i in 1 to length(converted_area.turfs_by_zlevel))
+		turfs_to_transform += converted_area.turfs_by_zlevel[i]
+
+	var/transformed_length = length(turfs_to_transform)
+	var/converted_amount = round(transformed_length * (conversion_percent * 0.01))
+	while(transformed_length && transformed_length > converted_amount)
+		pick_n_take(turfs_to_transform)
+		transformed_length = length(turfs_to_transform)
 
 	shuffle_inplace(turfs_to_transform)
 	for(var/turf/turf_to_transform in turfs_to_transform)
@@ -215,6 +221,7 @@ SUBSYSTEM_DEF(the_ark)
 			continue
 		addtimer(CALLBACK(src, PROC_REF(do_turf_conversion), turf_to_transform), 3 * timer_counter)
 		timer_counter++
+	return timer_counter //so you can do stuff once the conversion ends
 
 /datum/controller/subsystem/the_ark/proc/do_turf_conversion(turf/converted_turf)
 	if(QDELETED(src) || !clock_dimension_theme.can_convert(converted_turf))
@@ -249,7 +256,7 @@ SUBSYSTEM_DEF(the_ark)
 
 ///fully disables the shuttle similar to the admin verb
 /datum/controller/subsystem/the_ark/proc/block_shuttle(datum/blocker)
-	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode == SHUTTLE_DISABLED)
+	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode == SHUTTLE_DISABLED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 		return
 
 	SSshuttle.last_mode = SSshuttle.emergency.mode

@@ -40,6 +40,7 @@
 	if(issilicon(current))
 		handle_silicon_conversion(current)
 	. = ..() //have to call down here so objectives display correctly
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 
 /datum/antagonist/clock_cultist/greet()
 	. = ..()
@@ -114,6 +115,7 @@
 									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
 	owner.current.log_message("has renounced the cult of Rat'var!", LOG_ATTACK, color="#960000")
 	handle_equipment_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/clock_cultist/get_preview_icon()

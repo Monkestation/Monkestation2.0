@@ -6,6 +6,7 @@
 #define SHIELD_DEFLECT "deflect" //the shield is currently in its deflecting animation
 #define SHIELD_BREAK "break" //the shield is currently in its breaking animation
 #define SHIELD_BROKEN "broken" //the shield is currently broken
+#define EXTRA_MARKED_AREAS 4 //how many extra adjacent areas do we mark
 /obj/structure/destructible/clockwork/anchoring_crystal
 	name = "Anchoring Crystal"
 	desc = "A strange crystal that you cant quite seem to focus on."
@@ -55,7 +56,19 @@
 	SSthe_ark.anchoring_crystals[src] = 0
 
 	SEND_SIGNAL(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED, src)
-	SSthe_ark.convert_area_turfs(crystal_area)
+	var/conversion_timer = SSthe_ark.convert_area_turfs(crystal_area)
+	var/list/adjacent_areas = get_area_edge_turfs(crystal_area, TRUE)[src.z]
+	message_admins("AREAS [english_list(adjacent_areas)]")
+	var/extra_marks = 0
+	while(length(adjacent_areas) && extra_marks < EXTRA_MARKED_AREAS)
+		var/area/marked_area = pick_n_take(adjacent_areas)
+		if(marked_area.outdoors)
+			continue
+
+		extra_marks++
+		SSthe_ark.marked_areas |= marked_area
+		SSthe_ark.convert_area_turfs(marked_area, 50, conversion_timer)
+
 	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 	send_clock_message(null, span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
 	START_PROCESSING(SSprocessing, src)
@@ -178,3 +191,4 @@
 #undef SHIELD_DEFLECT
 #undef SHIELD_BREAK
 #undef SHIELD_BROKEN
+#undef EXTRA_MARKED_AREAS
