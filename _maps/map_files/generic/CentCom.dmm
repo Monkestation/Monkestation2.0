@@ -20954,11 +20954,6 @@
 /obj/item/mop,
 /turf/open/floor/iron/dark/small,
 /area/centcom)
-"fCc" = (
-/turf/open/floor/iron/smooth_corner{
-	dir = 1
-	},
-/area/cruiser_dock)
 "fDz" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
@@ -21063,13 +21058,6 @@
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
-"fWV" = (
-/obj/structure/closet/crate/cardboard,
-/obj/item/storage/backpack/duffelbag/syndie/med,
-/turf/open/floor/iron/smooth_edge{
-	dir = 8
-	},
-/area/cruiser_dock)
 "fXa" = (
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
@@ -21129,10 +21117,6 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/evacuation)
-"ghg" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/turf/open/floor/iron/smooth,
-/area/cruiser_dock)
 "ghD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 8
@@ -21188,13 +21172,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
-"gkq" = (
-/obj/machinery/light/cold/directional/south,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 9
-	},
-/turf/open/misc/asteroid,
-/area/cruiser_dock)
 "gkT" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/neon/simple/green/nodots,
@@ -21823,10 +21800,6 @@
 	paint_color = "#5f6361"
 	},
 /area/centcom/central_command_areas/admin)
-"htV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
 "huN" = (
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/prison)
@@ -22039,11 +22012,6 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/centcom/central_command_areas/admin)
-"hNO" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
-/turf/open/floor/iron/smooth_edge,
-/area/cruiser_dock)
 "hNX" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
@@ -22493,14 +22461,6 @@
 	dir = 4
 	},
 /area/centcom/central_command_areas/adminroom)
-"iWc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 5
-	},
-/turf/open/floor/iron/smooth_edge{
-	dir = 8
-	},
-/area/cruiser_dock)
 "iWt" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/item/storage/toolbox/mechanical{
@@ -23721,13 +23681,6 @@
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
-"mPy" = (
-/obj/structure/closet/cardboard,
-/mob/living/basic/bot/medbot/nukie/assop{
-	name = "Kahn"
-	},
-/turf/open/floor/iron/smooth,
-/area/cruiser_dock)
 "mQI" = (
 /obj/structure/table/greyscale,
 /obj/machinery/light/directional/north,
@@ -24041,13 +23994,6 @@
 /obj/structure/fence,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
-"nVX" = (
-/obj/machinery/light/cold/directional/north,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/turf/open/misc/asteroid,
-/area/cruiser_dock)
 "nWh" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 4
@@ -24426,10 +24372,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
-"oYY" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/iron/smooth_edge,
-/area/cruiser_dock)
 "oZc" = (
 /obj/machinery/disease2/incubator,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -24451,10 +24393,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/retirement_yard)
-"pec" = (
-/obj/structure/closet/crate/freezer/blood,
-/turf/open/floor/iron/smooth,
-/area/cruiser_dock)
 "peK" = (
 /obj/structure/railing/wood{
 	dir = 4
@@ -25656,20 +25594,8 @@
 /obj/structure/aquarium,
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
-"sAz" = (
-/turf/open/floor/iron/smooth_corner{
-	dir = 8
-	},
-/area/cruiser_dock)
 "sAG" = (
 /turf/open/floor/iron/smooth_edge,
-/area/cruiser_dock)
-"sBp" = (
-/obj/machinery/computer/vitals_reader/advanced/directional/south,
-/obj/machinery/computer/operating{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
 /area/cruiser_dock)
 "sCN" = (
 /obj/effect/spawner/random/vending/colavend,
@@ -25810,6 +25736,9 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/retirement_yard)
+"tcJ" = (
+/turf/open/floor/iron/dark,
+/area/cruiser_dock)
 "tez" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Raziel's Theatre"
@@ -26170,13 +26099,6 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
-"tWy" = (
-/obj/item/reagent_containers/cup/beaker/meta/rezadone,
-/obj/item/stack/sheet/mineral/plasma/twenty,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/structure/closet/crate/cardboard,
-/turf/open/floor/iron/smooth,
-/area/cruiser_dock)
 "tWL" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/railing/wood{
@@ -26906,12 +26828,6 @@
 /obj/effect/landmark/ctf,
 /turf/open/space/basic,
 /area/space)
-"vTk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 9
-	},
-/turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
 "vUQ" = (
 /obj/structure/bed/dogbed{
 	name = "pet bed";
@@ -27266,22 +27182,6 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"wFY" = (
-/obj/structure/table,
-/obj/item/wrench/medical{
-	pixel_x = 8;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/machinery/reagentgrinder{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/smooth_edge,
-/area/cruiser_dock)
 "wGr" = (
 /obj/structure/table/wood,
 /obj/item/modular_computer/laptop,
@@ -27567,12 +27467,6 @@
 	dir = 4
 	},
 /area/centcom/central_command_areas/evacuation)
-"xwc" = (
-/obj/machinery/stasis,
-/turf/open/floor/iron/smooth_edge{
-	dir = 1
-	},
-/area/cruiser_dock)
 "xwy" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/plastic,
@@ -27647,6 +27541,13 @@
 /obj/effect/decal/cleanable/piss_stain,
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"xJC" = (
+/obj/structure/closet/cardboard,
+/mob/living/basic/bot/medbot/nukie/assop{
+	name = "Kahn"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
 "xKq" = (
 /obj/structure/railing/wooden_fencing{
 	pixel_y = 16
@@ -74218,7 +74119,7 @@ anV
 anV
 anV
 anV
-anV
+tcJ
 anV
 anV
 anV
@@ -80626,9 +80527,9 @@ iSx
 iSx
 qwj
 iSx
-uAz
-rXO
-lBd
+iSx
+iSx
+iSx
 iSx
 hVj
 rXO
@@ -80880,13 +80781,13 @@ iDX
 lWT
 xWM
 hrx
-nIX
+xJC
 axV
-nVX
-sAG
-iDX
-lWT
-gkq
+nvZ
+fEL
+fEL
+fEL
+bTZ
 axV
 eiE
 vAz
@@ -81139,11 +81040,11 @@ vJI
 axV
 axV
 axV
-axV
-sAG
-iDX
-lWT
-axV
+anV
+aBs
+aBs
+anV
+anV
 axV
 iKz
 iKz
@@ -81395,13 +81296,13 @@ uYh
 axV
 anV
 anV
-axV
-tWy
-fCc
-rXO
-sAz
-mPy
-axV
+anV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 fEL
 fEL
@@ -81652,13 +81553,13 @@ lWT
 tYX
 anV
 anV
-axV
-wFY
-rXO
-iDX
-rXO
-lWT
-axV
+anV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 anV
 axV
@@ -81909,13 +81810,13 @@ lWT
 nYE
 aBs
 anV
-axV
-oYY
-htV
-iDX
-rXO
-xwc
-axV
+anV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 anV
 anV
@@ -82166,13 +82067,13 @@ lWT
 nYE
 aBs
 anV
-axV
-hNO
-vTk
-iDX
-lBd
-sBp
-axV
+anV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 anV
 anV
@@ -82423,13 +82324,13 @@ lWT
 nYE
 aBs
 anV
-axV
-ghg
-iWc
-fWV
-pec
-axV
-axV
+anV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 anV
 anV
@@ -82680,12 +82581,12 @@ lWT
 tGB
 anV
 anV
-axV
-axV
-axV
-axV
-axV
-axV
+anV
+anV
+anV
+anV
+anV
+anV
 anV
 anV
 anV
