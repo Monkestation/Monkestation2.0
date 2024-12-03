@@ -59,6 +59,11 @@
 		ACCESS_GATEWAY,
 		ACCESS_KEYCARD_AUTH,
 		ACCESS_TELEPORTER,
+		ACCESS_BRIG,
+		ACCESS_MECH_SECURITY,
+		ACCESS_PERMABRIG,
+		ACCESS_DETECTIVE,
+		ACCESS_ARMORY,
 	)
 
 /obj/item/card/id/advanced/centcom/ert/generic/commander
@@ -99,7 +104,6 @@
 		ACCESS_MECH_SECURITY,
 		ACCESS_PERMABRIG,
 		ACCESS_DETECTIVE,
-		ACCESS_ARMORY,
 	)
 
 /obj/item/card/id/advanced/centcom/ert/generic/security

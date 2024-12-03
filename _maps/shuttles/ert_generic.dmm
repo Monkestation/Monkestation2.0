@@ -6,7 +6,7 @@
 	dir = 4;
 	id = "ert_shuttle_breakroom"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/engineering)
 "ao" = (
 /obj/machinery/airalarm/directional/north,
@@ -185,12 +185,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/airlock)
 "gf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden,
 /obj/structure/closet/emcloset/anchored,
 /obj/item/bodybag/environmental/nanotrasen,
 /obj/item/bodybag/environmental/nanotrasen,
 /obj/item/bodybag/environmental/nanotrasen,
 /obj/item/storage/box/oxygen_candles,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/ert/engineering)
 "gl" = (
@@ -352,7 +352,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "ert_shuttle_security"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/armory)
 "mZ" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert{
@@ -439,7 +439,7 @@
 "oW" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/bridge)
 "pl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -746,7 +746,7 @@
 	id = "ert_shuttle_clonebay"
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/clonerybay)
 "yJ" = (
 /obj/machinery/flasher/directional/east{
@@ -769,7 +769,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "ert_shuttle_clonebay"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/clonerybay)
 "zC" = (
 /obj/structure/cable,
@@ -1086,9 +1086,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/ert/bridge)
 "HZ" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/ert/engineering)
 "Ie" = (
@@ -1364,7 +1362,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "ert_shuttle_bridge"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/bridge)
 "RL" = (
 /obj/effect/turf_decal/stripes/end{
@@ -1472,8 +1470,9 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/cargo)
 "Xd" = (
-/obj/machinery/atmospherics/components/tank/air,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/north,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
 /turf/open/floor/plating,
 /area/shuttle/ert/engineering)
 "Xf" = (
@@ -1495,6 +1494,8 @@
 	dir = 4
 	},
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/defibrillator_mount/directional/west,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/ert/medical)
 "XG" = (
@@ -1504,7 +1505,7 @@
 	dir = 4;
 	id = "ert_shuttle_medbay"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/medical)
 "XH" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -1547,7 +1548,7 @@
 	dir = 4;
 	id = "ert_shuttle_bridge"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/ert/bridge)
 "Ys" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

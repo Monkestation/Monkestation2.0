@@ -1,0 +1,407 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"b" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"c" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"d" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"e" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert{
+	x_offset = 0;
+	y_offset = 10
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/ert/bridge)
+"f" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button{
+	id = "ert_dropship_bridge"
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert/bridge)
+"g" = (
+/obj/machinery/light/blacklight/directional/west,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"h" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/ert)
+"i" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"j" = (
+/obj/effect/turf_decal/stripes/blue{
+	dir = 8
+	},
+/obj/effect/landmark/ert_shuttle_spawn,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"l" = (
+/obj/machinery/computer/shuttle/ert,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/ert/bridge)
+"m" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"n" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/ert/bridge)
+"q" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"r" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"s" = (
+/obj/effect/turf_decal/stripes/blue{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"t" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"u" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/ert_shuttle_brief_spawn,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"v" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"w" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/ert/bridge)
+"x" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"y" = (
+/turf/open/space/basic,
+/area/template_noop)
+"z" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert/bridge)
+"A" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen{
+	dir = 4;
+	id = "ert_dropship_bridge"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/ert/bridge)
+"C" = (
+/obj/machinery/light/blacklight/directional/east,
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"D" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"E" = (
+/obj/effect/turf_decal/caution/stand_clear/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/blue{
+	dir = 8
+	},
+/obj/effect/landmark/ert_shuttle_spawn,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"F" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/preopen{
+	id = "ert_dropship_bridge"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/ert/bridge)
+"G" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"H" = (
+/obj/effect/turf_decal/stripes/blue{
+	dir = 4
+	},
+/obj/effect/landmark/ert_shuttle_spawn,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"K" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = -7;
+	pixel_y = 0
+	},
+/obj/machinery/recharger{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"L" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert)
+"M" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert/bridge)
+"N" = (
+/obj/machinery/computer/security,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/ert/bridge)
+"O" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/machinery/button/door/directional/south{
+	id = "ert_dropship_doors";
+	req_access = list("cent_general")
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"Q" = (
+/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/rack,
+/obj/item/storage/medkit/advanced{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/obj/item/storage/medkit{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"R" = (
+/obj/effect/turf_decal/caution/stand_clear/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/blue{
+	dir = 4
+	},
+/obj/effect/landmark/ert_shuttle_spawn,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"S" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/ert)
+"T" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/blue/box,
+/obj/machinery/door/poddoor{
+	dir = 8;
+	id = "ert_dropship_doors"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"U" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/ert)
+"V" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/ert/bridge)
+"W" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/ert)
+"X" = (
+/obj/effect/turf_decal/stripes/blue{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/ert)
+"Y" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/docking_port/mobile/ert{
+	dir = 2
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/ert)
+
+(1,1,1) = {"
+y
+y
+S
+S
+T
+T
+T
+T
+T
+T
+S
+S
+S
+S
+y
+"}
+(2,1,1) = {"
+A
+A
+w
+n
+X
+E
+j
+j
+E
+X
+r
+g
+b
+h
+U
+"}
+(3,1,1) = {"
+F
+N
+V
+w
+x
+t
+t
+t
+t
+x
+L
+v
+D
+h
+U
+"}
+(4,1,1) = {"
+F
+l
+z
+M
+O
+S
+m
+m
+S
+Q
+u
+G
+c
+h
+Y
+"}
+(5,1,1) = {"
+F
+e
+f
+w
+x
+a
+a
+a
+a
+x
+i
+q
+d
+h
+U
+"}
+(6,1,1) = {"
+A
+A
+w
+n
+s
+R
+H
+H
+R
+s
+W
+C
+K
+h
+U
+"}
+(7,1,1) = {"
+y
+y
+S
+S
+T
+T
+T
+T
+T
+T
+S
+S
+S
+S
+y
+"}

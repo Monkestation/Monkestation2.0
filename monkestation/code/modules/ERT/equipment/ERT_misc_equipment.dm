@@ -85,12 +85,12 @@
 		though with its' low amount of separate charges, the user remains mortal."
 	shield_icon = "shield-old" //red syndicate blue nanotrasen :P
 
-/obj/item/storage/belt/security/full/advanced/PopulateContents()
+/obj/item/storage/belt/security/full/bola/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
-	new /obj/item/holosign_creator/security(src)
+	new /obj/item/restraints/legcuffs/bola/energy(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/melee/baton/telescopic(src)
+	new /obj/item/melee/baton/security/loaded(src)
 	update_appearance()
 
 /obj/item/clothing/mask/gas/sechailer/swat/ert
@@ -120,4 +120,23 @@
 	name = "advanced health patch"
 	desc = "Helps with brute and burn injuries while stabilizing the patient. Contains anti-toxin along with formaldehyde."
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 5, /datum/reagent/medicine/sal_acid = 5, /datum/reagent/medicine/granibitaluri = 10, /datum/reagent/medicine/c2/seiver = 5, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2, /datum/reagent/medicine/epinephrine = 10)
-	icon_state = "bandaid_msic" //they misspelt it :P
+	icon_state = "bandaid_msic" //they misspelt it
+
+/obj/item/storage/box/rcd_upgrades
+	name = "RCD upgrade diskette box"
+	desc = "A box of essential RCD upgrade disks."
+	illustration = "disk_kit"
+
+/obj/item/storage/box/rcd_upgrades/PopulateContents()
+	. = ..()
+	new /obj/item/rcd_upgrade/simple_circuits(src)
+	new /obj/item/rcd_upgrade/anti_interrupt(src)
+	new /obj/item/rcd_upgrade/cooling(src)
+	new /obj/item/rcd_upgrade/silo_link(src)
+	new /obj/item/rcd_upgrade/frames(src)
+	new /obj/item/rcd_upgrade/furnishing(src)
+
+/obj/item/reagent_containers/spray/drying
+	name = "drying agent spray"
+	list_reagents = list(/datum/reagent/drying_agent = 250)
+

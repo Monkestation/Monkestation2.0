@@ -22,7 +22,7 @@
 	name = "ERT Shuttle Medbay"
 
 /area/shuttle/ert/clonerybay
-	name = "ERT Cloner Bay"
+	name = "ERT Shuttle Cloner Bay"
 
 /area/shuttle/ert/airlock
 	name = "ERT Shuttle Airlock"
@@ -54,3 +54,7 @@
 /datum/map_template/shuttle/ert/generic
 	suffix = "generic"
 	name = "ERT Shuttle"
+
+/datum/map_template/shuttle/ert/dropship
+	suffix = "dropship"
+	name = "ERT Dropship"
