@@ -140,3 +140,15 @@
 	name = "drying agent spray"
 	list_reagents = list(/datum/reagent/drying_agent = 250)
 
+/obj/vehicle/sealed/mecha/honker/dark/loaded/not_evil
+	operation_req_access = list()
+	internals_req_access = list()
+
+/obj/vehicle/sealed/mecha/honker/dark/loaded/not_evil
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/honker,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar,
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/thrusters/ion),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)

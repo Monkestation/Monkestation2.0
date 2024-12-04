@@ -29,6 +29,9 @@
 
 /area/shuttle/ert/airlock/secondary
 
+/area/shuttle/ert/powered
+	requires_power = FALSE
+
 ////////////// Consoles //////////////
 /obj/machinery/computer/shuttle/ert
 	name = "ERT shuttle console"

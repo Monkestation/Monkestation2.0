@@ -7,15 +7,34 @@
 /area/shuttle/ert/powered)
 "b" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/powered)
 "c" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/powered)
 "d" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/structure/rack,
+/obj/item/watertank/janitor{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/watertank/janitor{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/watertank/janitor{
+	pixel_x = -5;
+	pixel_y = -4
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/powered)
@@ -32,7 +51,7 @@
 "f" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
-	id = "ert_dropship_bridge";
+	id = "ert_dropship_bridge-janitor";
 	req_access = list("cent_general")
 	},
 /turf/open/floor/mineral/titanium/tiled,
@@ -40,6 +59,11 @@
 "g" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/west,
+/obj/structure/closet/crate,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/powered)
 "h" = (
@@ -93,6 +117,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate/engineering,
+/obj/structure/liquid_pump,
+/obj/structure/liquid_pump,
+/obj/structure/liquid_pump,
+/obj/item/wrench/caravan,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/powered)
 "s" = (
@@ -140,7 +169,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/preopen{
 	dir = 4;
-	id = "ert_dropship_bridge"
+	id = "ert_dropship_bridge-janitor"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ert/powered)
@@ -169,7 +198,7 @@
 "F" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/preopen{
-	id = "ert_dropship_bridge"
+	id = "ert_dropship_bridge-janitor"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ert/powered)
@@ -231,7 +260,7 @@
 /area/shuttle/ert/powered)
 "O" = (
 /obj/machinery/button/door/directional/south{
-	id = "ert_dropship_doors";
+	id = "ert_dropship_doors-janitor";
 	req_access = list("cent_general")
 	},
 /obj/machinery/light/directional/south,
@@ -274,7 +303,7 @@
 /obj/effect/turf_decal/stripes/blue/box,
 /obj/machinery/door/poddoor{
 	dir = 8;
-	id = "ert_dropship_doors"
+	id = "ert_dropship_doors-janitor"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/ert/powered)
