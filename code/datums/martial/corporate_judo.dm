@@ -6,7 +6,9 @@
 #define JUDO_THROW "GD"
 #define ARMBAR "DDG"
 #define WHEEL_THROW "GDH"
-#define GOLDEN_BLAST "EDEGDDGEDDGE"
+#define GOLDEN_BLAST1 "EDEGDD"
+#define GOLDEN_BLAST2 "GEDDGE"
+
 //Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
 #define BANNEDTYPES list(/obj/item/melee/baton, /obj/item/borg/stun)
 
@@ -51,11 +53,16 @@
 	))
 	PopulateContents()
 
+/obj/item/storage/belt/security/blueshield/corpjudo/Destroy()
+	QDEL(style)
+	. = ..()
+
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user))
 		if(slot & ITEM_SLOT_BELT)
 			style.teach(user, TRUE)
+			style.blaststage = 0
 			ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/user)
@@ -63,7 +70,9 @@
 	if(ishuman(user))
 		if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 			style.remove(user)
+			style.blaststage = 0
 			REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
+
 
 /mob/living/proc/is_weapon_restricted(mob/living/defender, obj/item/weapon, mob/living/attacker)
 	if(HAS_TRAIT(attacker, TRAIT_NO_WEAPONTYPE))
@@ -95,8 +104,10 @@
 	name = "Corporate Judo"
 	id = MARTIALART_JUDO
 	display_combos = TRUE
-	max_streak_length = 12
-	combo_timer = 15 SECONDS
+	max_streak_length = 6
+	combo_timer = 7 SECONDS
+
+	var/blaststage = 0
 
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
@@ -170,6 +181,7 @@
 	if((defender.body_position == STANDING_UP) || !defender.has_status_effect(/datum/status_effect/judo_armbar))
 		return FALSE
 	reset_streak() // Don't reset combo unless it met the first requirements.
+	blaststage = 0
 	if(attacker.body_position == STANDING_UP)
 		defender.visible_message("<span class='warning'>[attacker] raises [defender] over [attacker.p_their()] shoulder, and slams [defender.p_them()] into the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
@@ -186,6 +198,9 @@
 	return TRUE
 
 /datum/martial_art/corpjudo/proc/goldenblast(mob/living/carbon/human/attacker, mob/living/defender)
+	if(!blaststage)
+		return
+	blaststage = 0
 	defender.visible_message("<span class='warning'>[attacker] blasts [defender] with energy, sending [defender.p_them()] to the ground!</span>", \
 						"<span class='userdanger'>[attacker] makes strange hand gestures, screams wildly and prods you directly in the chest! You feel the wrath of the GOLDEN BOLT surge through your body! You've been utterly robusted!</span>")
 	playsound(get_turf(defender), 'sound/weapons/taser.ogg', 55, TRUE, -1)
@@ -246,17 +261,25 @@
 		return wheel_throw(attacker, defender)
 	if(streak == DISCOMBOBULATE)
 		reset_streak()
+		blaststage = 0
 		return discombobulate(attacker, defender)
 	if(streak == EYE_POKE)
 		reset_streak()
+		blaststage = 0
 		return eye_poke(attacker, defender)
 	if(streak == JUDO_THROW && !defender.has_status_effect(/datum/status_effect/judo_armbar))
 		reset_streak()
+		blaststage = 0
 		return judothrow(attacker, defender)
 	if(streak == ARMBAR)
 		reset_streak()
+		blaststage = 0
 		return armbar(attacker, defender)
-	if(streak == GOLDEN_BLAST)
+	if(streak == GOLDEN_BLAST1)
+		reset_streak()
+		blaststage = 1
+		return TRUE
+	if(streak == GOLDEN_BLAST2)
 		reset_streak()
 		return goldenblast(attacker, defender)
 	return FALSE
@@ -266,5 +289,6 @@
 #undef JUDO_THROW
 #undef ARMBAR
 #undef WHEEL_THROW
-#undef GOLDEN_BLAST
+#undef GOLDEN_BLAST1
+#undef GOLDEN_BLAST2
 #undef BANNEDTYPES
