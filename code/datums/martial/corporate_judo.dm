@@ -54,7 +54,7 @@
 	PopulateContents()
 
 /obj/item/storage/belt/security/blueshield/corpjudo/Destroy()
-	QDEL(style)
+	QDEL_NULL(style)
 	. = ..()
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
