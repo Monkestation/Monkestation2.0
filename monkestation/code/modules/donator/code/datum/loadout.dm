@@ -704,3 +704,18 @@
 	item_path = /obj/item/clothing/head/costume/samuraihelmetmask
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+
+
+//flleeppyy
+/datum/loadout_item/suit/flleeppyy_dreamers
+	name = "Dreamers Trenchcoat"
+	item_path = /obj/item/clothing/suit/flleeppyy_dreamers
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/flleeppyy_lesbian
+	name = "Lesbian Trenchcoat"
+	item_path = /obj/item/clothing/suit/flleeppyy_lesbian
+	donator_only = TRUE
+	requires_purchase = FALSE

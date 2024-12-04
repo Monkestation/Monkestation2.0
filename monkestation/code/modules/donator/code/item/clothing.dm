@@ -596,3 +596,23 @@
 	icon_state = "syndicatepajamas"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/obj/item/clothing/suit/flleeppyy_dreamers
+	name = "dreamers trenchcoat"
+	desc = "A vibrant garment woven from the threads of (REDACTED). They say when you put it on, you can see 15 milliseconds into the future, but that's just a rumor."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dreamers"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/flleeppyy_lesbian
+	name = "lesbian trenchcoat"
+	desc = "Found in a long bacon store, this coat strangely makes you thinks of girls. It smells of flowers."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lesbian"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
