@@ -639,3 +639,11 @@
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
 	expected_colors = 2
+
+/obj/item/clothing/neck/donatorwhitefurshawl
+	name = "white fur shawl"
+	desc = "A wonderful fur shaw that is colored white. You typically wear it with a dress on the shoulders."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "whitefurshawl"
+	worn_icon_state = "whitefurshawl"

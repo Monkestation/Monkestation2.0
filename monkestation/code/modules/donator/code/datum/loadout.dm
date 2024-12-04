@@ -743,3 +743,10 @@
 	name = "Robot Toy Transformation"
 	item_path = /obj/item/effect_granter/donator/robottoything
 	requires_purchase = FALSE
+
+//piecake
+/datum/loadout_item/neck/donatorwhitefurshawl
+	name = "White Fur Shawl"
+	item_path = /obj/item/clothing/neck/donatorwhitefurshawl
+	donator_only = TRUE
+	requires_purchase = FALSE
