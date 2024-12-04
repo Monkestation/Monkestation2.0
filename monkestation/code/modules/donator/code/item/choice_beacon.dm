@@ -115,3 +115,8 @@
 	name = "fluffy"
 	default_name = "fluffy"
 	donator_pet = /mob/living/basic/pet/fluffydonator
+
+/obj/item/choice_beacon/pet/donator/robottoything
+	name = "robot toy"
+	default_name = "robot toy"
+	donator_pet = /mob/living/basic/pet/robottoything

@@ -290,3 +290,15 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Jason Farqiour")
+
+/mob/living/basic/pet/robottoything
+	name = "robot toy"
+	desc = "It's a small robot toy. It's made of metal"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robottoything"
+	icon_living = "robottoything"
+	icon_dead = "robottoything-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("TheSpecialSnowflake")

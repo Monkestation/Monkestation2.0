@@ -156,3 +156,9 @@
 	desc = "A plushie of Bubbles Mothy. They're wearing a revolutionary coat. They also wield a sword and a sign that you can't read that well."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "bubblesmothy"
+
+/obj/item/toy/plush/donator_xsi
+	name = "xsi plush"
+	desc = "A plushie of XSI. It's a robot!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "xsi"

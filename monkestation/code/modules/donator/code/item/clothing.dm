@@ -616,3 +616,26 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	inhand_icon_state = null
+
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	desc = "A turtleneck with a pair of pants, this one is easily dyeable."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "donatorgrayscaleturtleneck"
+	can_adjust = FALSE
+	inhand_icon_state = null
+	greyscale_colors = "#8cd4a2#404577"
+	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
+	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneckworn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
+/datum/greyscale_config/donatorgrayscaleturtleneckworn
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
