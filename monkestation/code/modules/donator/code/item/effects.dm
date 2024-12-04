@@ -131,5 +131,5 @@
 /obj/item/effect_granter/donator/robottoything
 	name = "robot toy"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
-	icon_state = "robot toy"
+	icon_state = "robottoything"
 	animal_transformation = /mob/living/basic/pet/robottoything
