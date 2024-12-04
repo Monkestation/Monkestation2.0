@@ -137,7 +137,7 @@
 	defender.visible_message("<span class='warning'>[attacker] strikes [defender] in the head with [attacker.p_their()] palm!</span>", \
 						"<span class='userdanger'>[attacker] strikes you with [attacker.p_their()] palm!</span>")
 	playsound(get_turf(attacker), 'sound/weapons/slap.ogg', 40, TRUE, -1)
-	defender.apply_damage(10, STAMINA)
+	defender.apply_damage(25, STAMINA)
 	defender.adjust_confusion(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Discombobulate")
 	return TRUE
@@ -158,7 +158,7 @@
 	defender.visible_message("<span class='warning'>[attacker] judo throws [defender] to ground!</span>", \
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
 	playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
-	defender.apply_damage(25, STAMINA)
+	defender.apply_damage(62, STAMINA)
 	defender.Knockdown(7 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Judo Throw")
 	return TRUE
@@ -171,7 +171,7 @@
 	playsound(get_turf(attacker), 'sound/weapons/slashmiss.ogg', 40, TRUE, -1)
 	if(attacker.body_position == STANDING_UP)
 		defender.drop_all_held_items()
-	defender.apply_damage(45, STAMINA)
+	defender.apply_damage(112, STAMINA)
 	defender.apply_status_effect(/datum/status_effect/judo_armbar)
 	defender.Knockdown(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Armbar")
@@ -191,7 +191,7 @@
 		defender.visible_message("<span class='warning'>[attacker] manages to get a hold onto [defender], and pinning [defender.p_them()] to the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
 		playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
-	defender.apply_damage(120, STAMINA)
+	defender.apply_damage(250, STAMINA)
 	defender.Knockdown(15 SECONDS)
 	defender.set_confusion(10 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Wheel Throw / Floor Pin")
@@ -209,9 +209,10 @@
 	do_sparks(5, FALSE, defender)
 	attacker.say("GOLDEN BLAST!")
 	playsound(get_turf(defender), 'sound/weapons/goldenblast.ogg', 60, TRUE, -1)
-	defender.apply_damage(120, STAMINA)
+	defender.apply_damage(250, STAMINA)
 	defender.Knockdown(30 SECONDS)
 	defender.set_confusion(30 SECONDS)
+	//says this causes a full stun not sure if that is something wanted.
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Golden Blast")
 	return TRUE
 
