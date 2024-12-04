@@ -7,7 +7,12 @@
 #define ARMBAR "DDG"
 #define WHEEL_THROW "GDH"
 #define GOLDEN_BLAST "EDEGDDGEDDGE"
+//Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
+#define BANNEDTYPES list(/obj/item/melee/baton, /obj/item/borg/stun)
 
+///
+// ITEM INFORMATION
+///
 /obj/item/storage/belt/security/blueshield/corpjudo
 	name = "\improper Corporate Judo Belt"
 	desc = "You could learn Judo the hard way, but at NT money can buy you everything."
@@ -48,22 +53,51 @@
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
 	. = ..()
-	if(slot & ITEM_SLOT_BELT)
-		style.teach(user, TRUE)
-	return
+	if(ishuman(user))
+		if(slot & ITEM_SLOT_BELT)
+			style.teach(user, TRUE)
+			ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		style.remove(user)
-	return
+	if(ishuman(user))
+		if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
+			style.remove(user)
+			REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
+/mob/living/proc/is_weapon_restricted(mob/living/defender, obj/item/weapon, mob/living/attacker)
+	if(HAS_TRAIT(attacker, TRAIT_NO_WEAPONTYPE))
+		for(var/type in BANNEDTYPES)
+			if(istype(weapon, type))
+				if(attacker == defender)
+					to_chat(attacker, "<span class='warning'>Remember, the path of Corporate Judo is strength through balance and increased market share—not the folly of striking yourself with crude implements.</span>")
+				else
+					defender.visible_message("<span class='warning'>[attacker] remembers their Sensei's words: &quot;There is a time and place for everything...&quot; WAIT, YOU DON'T HAVE A SENSEI!</span>", \
+							"<span class='userdanger'>[attacker] freezes before striking, [attacker.p_their()] face giving off a pained expression!</span>")
+				return TRUE
+	return FALSE
+
+/mob/living/attackby(obj/item/weapon, mob/living/user)
+	if(ishuman(user))
+		if(is_weapon_restricted(src, weapon, user))
+			return
+	..()
+
+/mob/living/attackby_secondary(obj/item/weapon, mob/living/user)
+	if(ishuman(user))
+		if(is_weapon_restricted(src, weapon, user))
+			return
+	..()
+///
+// MARTIAL ART STYLE
+///
 /datum/martial_art/corpjudo
 	name = "Corporate Judo"
 	id = MARTIALART_JUDO
 	display_combos = TRUE
 	max_streak_length = 12
 	combo_timer = 15 SECONDS
+
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
@@ -71,6 +105,23 @@
 /datum/martial_art/corpjudo/on_remove(mob/living/owner)
 	to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
 
+///
+// MARTIAL ART STYLE: EFFECTS
+///
+/datum/status_effect/judo_armbar // Used to proc Judo: WHEEL THROW
+	id = "armbar"
+	alert_type = /atom/movable/screen/alert/status_effect/judo_armbar
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/judo_armbar
+	name = "Armbar Pin"
+	desc = "Your arm is pinned in an unyielding lock, leaving you unsteady and vulnerable!"
+	icon_state = "debilitated"
+
+///
+// MARTIAL ART STYLE: ABILITIES
+///
 /datum/martial_art/corpjudo/proc/discombobulate(mob/living/carbon/human/attacker, mob/living/defender)
 	defender.visible_message("<span class='warning'>[attacker] strikes [defender] in the head with [attacker.p_their()] palm!</span>", \
 						"<span class='userdanger'>[attacker] strikes you with [attacker.p_their()] palm!</span>")
@@ -115,7 +166,7 @@
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Armbar")
 	return TRUE
 
-/datum/martial_art/corpjud/proc/wheel_throw/(mob/living/carbon/human/attacker, mob/living/defender)
+/datum/martial_art/corpjudo/proc/wheel_throw/(mob/living/carbon/human/attacker, mob/living/defender)
 	if((defender.body_position == STANDING_UP) || !defender.has_status_effect(/datum/status_effect/judo_armbar))
 		return FALSE
 	reset_streak() // Don't reset combo unless it met the first requirements.
@@ -149,6 +200,9 @@
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Golden Blast")
 	return TRUE
 
+///
+// Combo Adders
+///
 /datum/martial_art/corpjudo/help_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
 		return FALSE
@@ -184,25 +238,26 @@
 		return TRUE
 
 /datum/martial_art/corpjudo/proc/check_streak(mob/living/attacker, mob/living/defender)
+	to_chat(world, "Do they have armbarpin:[defender.has_status_effect(/datum/status_effect/judo_armbar)], their current combot: [streak]")
 	if(!can_use(attacker))
 		return FALSE
+	if(streak == WHEEL_THROW)
+		//reset_streak()
+		return wheel_throw(attacker, defender)
 	if(streak == DISCOMBOBULATE)
 		reset_streak()
 		return discombobulate(attacker, defender)
 	if(streak == EYE_POKE)
 		reset_streak()
 		return eye_poke(attacker, defender)
-	if(streak == JUDO_THROW)
+	if(streak == JUDO_THROW && !defender.has_status_effect(/datum/status_effect/judo_armbar))
 		reset_streak()
 		return judothrow(attacker, defender)
 	if(streak == ARMBAR)
 		reset_streak()
 		return armbar(attacker, defender)
-	if(streak == WHEEL_THROW)
-		reset_streak()
-		return armbar(attacker, defender)
 	if(streak == GOLDEN_BLAST)
-		//reset_streak() //special handling in the ability itself
+		reset_streak()
 		return goldenblast(attacker, defender)
 	return FALSE
 
@@ -212,3 +267,4 @@
 #undef ARMBAR
 #undef WHEEL_THROW
 #undef GOLDEN_BLAST
+#undef BANNEDTYPES

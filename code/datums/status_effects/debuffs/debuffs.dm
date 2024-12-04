@@ -964,14 +964,3 @@
 /datum/movespeed_modifier/careful_driving
 	multiplicative_slowdown = 3
 
-//Used to proc Judo: WHEEL THROW
-/datum/status_effect/judo_armbar
-	id = "armbar"
-	alert_type = /atom/movable/screen/alert/status_effect/judo_armbar
-	duration = 5 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
-
-/atom/movable/screen/alert/status_effect/judo_armbar
-	name = "Armbar Pin"
-	desc = "Your arm is pinned in an unyielding lock, leaving you unsteady and vulnerable!"
-	icon_state = "debilitated" // Change this to something fun
