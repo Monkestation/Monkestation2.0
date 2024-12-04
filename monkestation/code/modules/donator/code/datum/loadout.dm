@@ -620,6 +620,31 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/syndicatepajamas
+	name = "Syndicate Pajamas"
+	item_path = /obj/item/clothing/under/costume/syndicatepajamas
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/bubblesmothy
+	name = "Bubbles Mothy"
+	item_path = /obj/item/toy/plush/bubblesmothy
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/hypnotoad
+	name = "Pet Delivery Beacon - Fluffy"
+	item_path = /obj/item/choice_beacon/pet/donator/fluffydonator
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Jason Farqiour")
+
+/datum/loadout_item/effects/hypnotoad
+	name = "Fluffy Transformation"
+	item_path = /obj/item/effect_granter/donator/fluffydonator
+	requires_purchase = FALSE
+	ckeywhitelist = list("Jason Farqiour")
+
 //wisemonster
 /datum/loadout_item/head/purple_gold_tophat_kid
 	name = "Purple And Gold Tophat"
@@ -670,5 +695,12 @@
 /datum/loadout_item/neck/linen_tombstone_shroud
 	name = "linen tombstone shroud"
 	item_path = /obj/item/clothing/neck/linen_tombstone_shroud
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//DevinXoptoh
+/datum/loadout_item/head/samuraihelmetmask
+	name = "Samurai Helmet"
+	item_path = /obj/item/clothing/head/costume/samuraihelmetmask
 	donator_only = TRUE
 	requires_purchase = FALSE

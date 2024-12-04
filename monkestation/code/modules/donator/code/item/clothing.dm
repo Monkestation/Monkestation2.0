@@ -578,3 +578,21 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "linen_tombstone_shroud"
 	worn_icon_state = "linen_tombstone_shroud"
+
+/obj/item/clothing/head/costume/samuraihelmetmask
+	name = "samurai helmet"
+	desc = "It's an old samuri helmet with a red face mask connected to it."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "samuraihelmetmask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/under/costume/syndicatepajamas
+	name = "syndicatepajamas"
+	desc = "Black and red Syndicate branded pajamas. They smell of gunpowder."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "syndicatepajamas"
+	inhand_icon_state = null
+	can_adjust = FALSE

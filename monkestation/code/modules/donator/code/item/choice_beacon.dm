@@ -110,3 +110,8 @@
 	name = "ghost ian"
 	default_name = "ghost ian"
 	donator_pet = /mob/living/basic/pet/albino_ghost_ian
+
+/obj/item/choice_beacon/pet/donator/fluffydonator
+	name = "fluffy"
+	default_name = "fluffy"
+	donator_pet = /mob/living/basic/pet/fluffydonator
