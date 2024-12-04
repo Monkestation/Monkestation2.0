@@ -705,8 +705,6 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
-
 //flleeppyy
 /datum/loadout_item/suit/flleeppyy_dreamers
 	name = "Dreamers Trenchcoat"
