@@ -963,4 +963,3 @@
 
 /datum/movespeed_modifier/careful_driving
 	multiplicative_slowdown = 3
-
