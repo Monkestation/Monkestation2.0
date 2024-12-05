@@ -25255,7 +25255,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/medical)
 "qGw" = (
