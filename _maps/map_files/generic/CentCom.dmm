@@ -3612,10 +3612,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"ajM" = (
-/turf/open/space/basic,
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/medical)
 "ajN" = (
 /obj/structure/flora/tree/dead/style_random,
 /obj/structure/flora/grass/both/style_random,
@@ -23213,10 +23209,6 @@
 "kti" = (
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/adminroom)
-"kts" = (
-/turf/open/space/basic,
-/turf/closed/indestructible/fakeglass,
-/area/centcom/central_command_areas/medical)
 "kuO" = (
 /obj/machinery/hypnochair{
 	icon_state = "hypnochair_open"
@@ -73780,7 +73772,7 @@ cjJ
 awe
 aCW
 avS
-ajM
+aAO
 nwD
 arP
 aUY
@@ -74806,9 +74798,9 @@ afE
 afE
 aMZ
 awe
-kts
-kts
-kts
+adl
+adl
+adl
 awe
 aaa
 aaa
