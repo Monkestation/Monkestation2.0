@@ -2851,9 +2851,6 @@
 "ahM" = (
 /obj/machinery/rnd/production/techfab/department/medical,
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "ahN" = (
@@ -3617,9 +3614,6 @@
 /area/centcom/central_command_areas/supply)
 "ajM" = (
 /turf/open/space/basic,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "ajN" = (
@@ -7832,15 +7826,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "ave" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
 /obj/machinery/vending/drugs,
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "avf" = (
@@ -8102,10 +8089,6 @@
 "avP" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "avQ" = (
@@ -8134,10 +8117,6 @@
 /obj/effect/turf_decal/tile/orange/fourcorners,
 /obj/effect/turf_decal/tile/orange/fourcorners,
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/textured,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "avT" = (
@@ -10018,10 +9997,6 @@
 /turf/open/floor/mineral/titanium/white,
 /area/centcom/central_command_areas/adminroom)
 "aAO" = (
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "aAP" = (
@@ -10803,10 +10778,6 @@
 /obj/structure/closet/secure_closet/chemical{
 	locked = 0
 	},
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "aCX" = (
@@ -15683,10 +15654,6 @@
 "aQm" = (
 /obj/effect/turf_decal/tile/orange/fourcorners,
 /obj/effect/turf_decal/tile/orange/fourcorners,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "aQn" = (
@@ -16814,7 +16781,6 @@
 /obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/item/reagent_containers/cup/beaker/bluespace,
-/turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "aTm" = (
@@ -24121,7 +24087,6 @@
 "nwD" = (
 /obj/machinery/door/window/right/directional/south,
 /obj/structure/table/reinforced,
-/turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "nwM" = (
@@ -25463,10 +25428,6 @@
 /area/centcom/central_command_areas/admin)
 "rcc" = (
 /obj/machinery/chem_master,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/small,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "rcY" = (
@@ -27130,7 +27091,6 @@
 "vFK" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/chem_heater/debug,
-/turf/open/floor/iron/dark/diagonal,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/medical)
 "vFS" = (
@@ -27279,15 +27239,6 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"vWZ" = (
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/turf/open/floor/wood/large,
-/turf/open/floor/iron/white/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/textured,
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/medical)
 "vXv" = (
 /obj/structure/organ_creator,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -74085,7 +74036,7 @@ aBu
 aBu
 pEL
 aQm
-vWZ
+aQm
 aQm
 aTl
 awK
