@@ -17,13 +17,13 @@
 //------------
 
 /datum/antagonist/ert/generic
-	name = "Code Green Emergency Response Officer"
+	name = "Emergency Response Officer"
 	role = "Officer"
 	outfit = /datum/outfit/centcom/ert/generic
 	ert_job_path = /datum/job/ert/generic
 
 /datum/outfit/centcom/ert/generic
-	name = "Code Green Emergency Response Officer"
+	name = "Emergency Response Officer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/generic
 	box = /obj/item/storage/box/survival/ert
@@ -44,6 +44,15 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/baton/telescopic
 	r_pocket = /obj/item/restraints/handcuffs
+
+/datum/outfit/centcom/ert/generic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/cyberlink/nt_high/cyberlink = new()
+	cyberlink.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
+	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/arm/item_set/flash/flash_implant = new()
+	flash_implant.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/commander
 	name = "Code Green Emergency Response Team Commander"
@@ -66,6 +75,23 @@
 	)
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	additional_radio = /obj/item/encryptionkey/heads/captain
+	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/job/research_director)
+
+/datum/antagonist/ert/generic/commander/blue
+	name = "Code Blue Emergency Response Team Commander"
+	outfit = /datum/outfit/centcom/ert/generic/commander/blue
+
+/datum/outfit/centcom/ert/generic/commander/blue
+	name = "Code Blue Emergency Response Team Commander"
+
+	backpack_contents = list(
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/knife/combat = 1,
+		/obj/item/pinpointer/nuke = 1,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
+		/obj/item/ammo_box/magazine/m45 = 2,
+	)
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/job/research_director)
 
 /datum/antagonist/ert/generic/medical

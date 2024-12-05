@@ -107,7 +107,6 @@
 	icon_state = "ntbox"
 	illustration = "ntlogo"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/double
-	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
 /obj/item/storage/box/survival/ert/PopulateContents()
 	. = ..()

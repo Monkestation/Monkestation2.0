@@ -64,6 +64,7 @@
 		ACCESS_PERMABRIG,
 		ACCESS_DETECTIVE,
 		ACCESS_ARMORY,
+		ACCESS_ENGINE_EQUIP,
 	)
 
 /obj/item/card/id/advanced/centcom/ert/generic/commander

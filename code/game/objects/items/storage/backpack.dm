@@ -210,6 +210,10 @@
 	resistance_flags = FIRE_PROOF
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
+/obj/item/storage/backpack/ert/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 25 //lots of pockets
+
 /obj/item/storage/backpack/ert/commander
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."

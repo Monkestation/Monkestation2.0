@@ -7,7 +7,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	icon = 'icons/obj/remote.dmi' //monkestation edit
+	icon = 'icons/obj/devices/remote.dmi' //monkestation edit
 	name = "control wand"
 	desc = "Remotely controls airlocks."
 	w_class = WEIGHT_CLASS_TINY

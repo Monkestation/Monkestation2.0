@@ -61,3 +61,11 @@
 /datum/map_template/shuttle/ert/dropship
 	suffix = "dropship"
 	name = "ERT Dropship"
+
+/datum/map_template/shuttle/ert/dropship/clown
+	suffix = "dropship-clown"
+	name = "ERT Dropship"
+
+/datum/map_template/shuttle/ert/dropship/janitor
+	suffix = "dropship-janitor"
+	name = "ERT Dropship"

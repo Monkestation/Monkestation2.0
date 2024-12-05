@@ -1,9 +1,9 @@
 /datum/armor/ert //might make it weaker later
-	melee = 40
+	melee = 35
 	bullet = 30
-	laser = 40 // FF
+	laser = 30
 	energy = 40
-	bomb = 30
+	bomb = 25
 	bio = 30
 	fire = 80
 	acid = 85

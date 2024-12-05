@@ -18,18 +18,6 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
-"c" = (
-/obj/effect/turf_decal/stripes{
-	dir = 2
-	},
-/turf/open/ballpit,
-/area/shuttle/ert/powered)
-"d" = (
-/obj/effect/turf_decal/stripes{
-	dir = 6
-	},
-/turf/open/ballpit,
-/area/shuttle/ert/powered)
 "e" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert{
 	x_offset = 0;
@@ -55,12 +43,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/ert/powered)
-"i" = (
-/obj/effect/turf_decal/stripes{
-	dir = 5
-	},
-/turf/open/ballpit,
-/area/shuttle/ert/powered)
 "l" = (
 /obj/machinery/computer/shuttle/ert,
 /turf/open/floor/mineral/bananium,
@@ -72,12 +54,6 @@
 "p" = (
 /obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/mineral/bananium,
-/area/shuttle/ert/powered)
-"q" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/turf/open/ballpit,
 /area/shuttle/ert/powered)
 "r" = (
 /obj/structure/railing{
@@ -103,16 +79,7 @@
 /area/shuttle/ert/powered)
 "u" = (
 /obj/effect/landmark/ert_shuttle_brief_spawn,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/ballpit,
-/area/shuttle/ert/powered)
-"v" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/turf/open/ballpit,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "w" = (
 /turf/closed/wall/mineral/bananium,
@@ -127,7 +94,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "z" = (
-/obj/structure/chair/musical{
+/obj/structure/toilet{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
@@ -155,11 +122,8 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "D" = (
-/obj/effect/turf_decal/stripes{
-	dir = 10
-	},
 /mob/living/simple_animal/bot/secbot/honkbot,
-/turf/open/ballpit,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "E" = (
 /obj/structure/chair/comfy/beige{
@@ -176,7 +140,7 @@
 /area/shuttle/ert/powered)
 "G" = (
 /obj/machinery/holopad,
-/turf/open/ballpit,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "H" = (
 /obj/structure/chair/comfy/teal{
@@ -208,17 +172,7 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
-"L" = (
-/obj/effect/turf_decal/stripes{
-	dir = 9
-	},
-/turf/open/ballpit,
-/area/shuttle/ert/powered)
 "M" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /obj/machinery/door/airlock/bananium/glass,
 /turf/open/floor/mineral/bananium,
@@ -241,9 +195,17 @@
 "Q" = (
 /obj/machinery/vending/wallmed/directional/north,
 /obj/structure/rack,
-/obj/item/storage/medkit{
-	pixel_x = 0;
+/obj/item/reagent_containers/spray/waterflower/lube{
+	pixel_x = 6;
 	pixel_y = 3
+	},
+/obj/item/reagent_containers/spray/waterflower/lube{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/spray/waterflower/lube{
+	pixel_x = -7;
+	pixel_y = 0
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
@@ -342,8 +304,8 @@ E
 H
 s
 P
-L
-v
+P
+P
 D
 h
 U
@@ -361,7 +323,7 @@ w
 Q
 u
 G
-c
+P
 h
 Y
 "}
@@ -376,9 +338,9 @@ a
 x
 X
 P
-i
-q
-d
+P
+P
+P
 h
 U
 "}

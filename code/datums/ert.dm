@@ -128,7 +128,17 @@
 	random_names = TRUE
 
 //MONKESTATION EDIT START
-/datum/ert/code_green
+/datum/ert/code
+	leader_role = /datum/antagonist/ert/generic/commander
+	roles = list(
+		/datum/antagonist/ert/generic,
+	)
+	teamsize = 6
+	opendoors = FALSE
+	polldesc = "an Uncoded Emergency Response Team"
+	ert_template = /datum/map_template/shuttle/ert/dropship
+
+/datum/ert/code/green
 	leader_role = /datum/antagonist/ert/generic/commander
 	roles = list(
 		/datum/antagonist/ert/generic/medical,
@@ -137,12 +147,12 @@
 		/datum/antagonist/ert/generic/janitor,
 		/datum/antagonist/ert/generic/chaplain,
 	)
-	teamsize = 6
 	code = "Green"
+	polldesc = NONE
 	opendoors = FALSE
 	ert_template = /datum/map_template/shuttle/ert/generic
 
-/datum/ert/code_green/with_clown
+/datum/ert/code/green/with_clown
 	teamsize = 7
 	roles = list(
 		/datum/antagonist/ert/generic/medical,
@@ -153,22 +163,22 @@
 		/datum/antagonist/ert/generic/clown, // Honk
 	)
 
-/datum/ert/code_honk
+/datum/ert/code/honk
 	leader_role = /datum/antagonist/ert/generic/clown
 	roles = list(
 		/datum/antagonist/ert/generic/clown,
 	)
-	teamsize = 6
 	code = "Honk"
+	polldesc = NONE
 	opendoors = FALSE
-	ert_template = /datum/map_template/shuttle/ert/generic
+	ert_template = /datum/map_template/shuttle/ert/dropship/clown
 
-/datum/ert/generic_swarm
+/datum/ert/code/purple
 	leader_role = /datum/antagonist/ert/generic/commander
 	roles = list(
-		/datum/antagonist/ert/generic,
+		/datum/antagonist/ert/generic/janitor,
 	)
-	teamsize = 6
+	code = "Purple"
+	polldesc = NONE
 	opendoors = FALSE
-	polldesc = "an Uncoded Emergency Response Team"
-	ert_template = /datum/map_template/shuttle/ert/dropship
+	ert_template = /datum/map_template/shuttle/ert/generic
