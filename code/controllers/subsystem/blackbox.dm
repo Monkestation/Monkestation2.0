@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	for(var/player_key in GLOB.player_details)
 		var/datum/player_details/PD = GLOB.player_details[player_key]
-		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
+		record_feedback("tally", "client_byond_version", 1, PD.full_byond_version())
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(blackbox)
 	if (!length(sqlrowlist))
 		return
 
-	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE, special_columns = special_columns)
+	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, special_columns = special_columns)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)

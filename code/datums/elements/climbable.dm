@@ -18,10 +18,11 @@
 	if(climb_stun)
 		src.climb_stun = climb_stun
 
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
+	// remove the `override = TRUE` whenever we actually fix this shit
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine), override = TRUE)
+	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun), override = TRUE)
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -54,7 +55,7 @@
 
 
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
-	if(!can_climb(climbed_thing, user))
+	if(!can_climb(climbed_thing, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING))
 		return
 	climbed_thing.add_fingerprint(user)
 	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
@@ -67,12 +68,14 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
-	//monkestation edit - CYBERNETICS
+	//MONKESTATION EDIT START
+	if(HAS_TRAIT(user, TRAIT_FEEBLE)) //do you have any idea how slow I am???
+		adjusted_climb_time *= 1.25
 	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
 		adjusted_climb_time *= 0.3
-	//monkestation edit - CYBERNETICS
+	//MONKESTATION EDIT END
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
-	if(do_after(user, adjusted_climb_time, climbed_thing))
+	if(do_after(user, adjusted_climb_time, climbed_thing, interaction_key = DOAFTER_SOURCE_CLIMBING)) // monkestation edit: add an interaction key
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
@@ -154,9 +157,11 @@
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
+	if(DOING_INTERACTION(bumpee, DOAFTER_SOURCE_CLIMBING))
+		return
 	if(HAS_TRAIT(bumpee, TRAIT_FREERUNNING))
-		if(do_after(bumpee, climb_time, source))
+		if(do_after(bumpee, climb_time, source, interaction_key = DOAFTER_SOURCE_CLIMBING))
 			do_climb(source, bumpee)
 	else
-		if(do_after(bumpee, climb_time * 1.2, source))
+		if(do_after(bumpee, climb_time * 1.2, source, interaction_key = DOAFTER_SOURCE_CLIMBING))
 			do_climb(source, bumpee)

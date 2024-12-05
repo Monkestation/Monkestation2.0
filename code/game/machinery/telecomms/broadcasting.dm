@@ -106,7 +106,8 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
+	lvls = null, // MONKESTATION ADDITION -- NTSL -- what z-levels is this message broadcast to?
 )
 	src.source = source
 	src.frequency = frequency
@@ -122,7 +123,8 @@
 		"spans" = spans,
 		"mods" = message_mods
 	)
-	levels = SSmapping.get_connected_levels(get_turf(source))
+	// levels = SSmapping.get_connected_levels(get_turf(source)) -- MONKESTATION EDIT OLD
+	levels = lvls != null ? lvls : SSmapping.get_connected_levels(get_turf(source)) // MONKESTATION EDIT NEW
 
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
@@ -180,9 +182,8 @@
 					radios += independent_radio
 
 	for(var/obj/item/radio/called_radio as anything in radios)
-		if(QDELETED(called_radio))
-			return
-		called_radio.on_recieve_message()
+		if(!QDELETED(called_radio))
+			called_radio.on_recieve_message()
 
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_hearers_in_radio_ranges(radios)
@@ -203,8 +204,10 @@
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
 	for(var/atom/movable/hearer as anything in receive)
-		if(QDELETED(hearer))
+		if(isnull(hearer))
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
+			continue
+		else if(QDELING(hearer))
 			continue
 		spans -= blacklisted_spans
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods, message_range = INFINITY)

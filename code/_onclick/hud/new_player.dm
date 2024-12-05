@@ -10,8 +10,10 @@
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button_type in buttons)
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
+	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
+		if(button_type::abstract_type == button_type)
+			continue
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type
 		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
@@ -23,6 +25,10 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+	/// Do not instantiate if type matches this.
+	var/abstract_type = /atom/movable/screen/lobby
+	var/here
+
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -35,12 +41,18 @@
 	screen_loc = "TOP,CENTER:-61"
 
 /atom/movable/screen/lobby/button
+	abstract_type = /atom/movable/screen/lobby/button
 	///Is the button currently enabled?
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
 	/// The ref of the mob that owns this button. Only the owner can click on it.
 	var/owner
+	var/area/misc/start/lobbyarea
+
+/atom/movable/screen/lobby/button/Initialize(mapload)
+	. = ..()
+	lobbyarea = GLOB.areas_by_type[/area/misc/start]
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
 	if(owner != REF(usr))
@@ -54,7 +66,7 @@
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
-	update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
@@ -66,7 +78,7 @@
 
 	. = ..()
 	highlighted = TRUE
-	update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/MouseExited()
 	if(owner != REF(usr))
@@ -77,23 +89,22 @@
 
 	. = ..()
 	highlighted = FALSE
-	update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON_STATE)
 
-/atom/movable/screen/lobby/button/update_icon(updates)
-	. = ..()
+/atom/movable/screen/lobby/button/update_icon_state(updates)
 	if(!enabled)
 		icon_state = "[base_icon_state]_disabled"
-		return
 	else if(highlighted)
 		icon_state = "[base_icon_state]_highlighted"
-		return
-	icon_state = base_icon_state
+	else
+		icon_state = base_icon_state
+	return ..()
 
 /atom/movable/screen/lobby/button/proc/set_button_status(status)
 	if(status == enabled)
 		return FALSE
 	enabled = status
-	update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 
 ///Prefs menu
@@ -153,10 +164,11 @@
 	if(ready)
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
-		if(!new_player.client.readied_store)
-			new_player.client.readied_store = new(new_player)
-		else
-			new_player.client.readied_store.ui_interact(new_player)
+		var/client/new_client = new_player.client
+		if(new_client)
+			if(!new_client.readied_store)
+				new_client.readied_store = new(new_player)
+			new_client.readied_store.ui_interact(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
@@ -437,3 +449,106 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
+
+//This is the changing You are here Button
+/atom/movable/screen/lobby/youarehere
+	var/vanderlin = 0
+	screen_loc = "TOP:-81,CENTER:+177"
+	icon = 'icons/hud/lobby/location_indicator.dmi'
+	icon_state = "you_are_here"
+	screen_loc = "TOP,CENTER:-61"
+
+//Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
+// and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
+/atom/movable/screen/lobby/youarehere/Initialize(mapload)
+	. = ..()
+	var/port = world.port
+	switch(port)
+		if(1342) //HRP
+			screen_loc = "TOP:-32,CENTER:+215"
+		if(1337) //MRP
+			screen_loc = "TOP:-65,CENTER:+215"
+		if(2102) //NRP
+			screen_loc = "TOP:-98,CENTER:+215"
+		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
+			screen_loc = "TOP:0,CENTER:+128"
+
+/atom/movable/screen/lobby/button/server
+	icon = 'icons/hud/lobby/sister_server_buttons.dmi'
+	abstract_type = /atom/movable/screen/lobby/button/server
+	enabled = FALSE
+	/// The IP of this server.
+	var/server_ip = "play.monkestation.com"
+	/// The port of this server.
+	var/server_port
+
+/atom/movable/screen/lobby/button/server/Initialize(mapload)
+	. = ..()
+	if(is_available())
+		set_button_status(TRUE)
+	update_appearance(UPDATE_ICON_STATE)
+
+/atom/movable/screen/lobby/button/server/proc/is_available()
+	var/time_info = time2text(world.realtime, "DDD hh")
+	var/day = copytext(time_info, 1, 4)
+	var/hour = text2num(copytext(time_info, 5))
+	if(!should_be_up(day, hour))
+		return FALSE
+	return TRUE
+
+/atom/movable/screen/lobby/button/server/proc/should_be_up(day, hour)
+	return TRUE
+
+/atom/movable/screen/lobby/button/server/Click(location, control, params)
+	. = ..()
+	if(. && world.port != server_port && is_available())
+		hud.mymob.client << link("byond://[server_ip]:[server_port]")
+
+//HRP MONKE
+/atom/movable/screen/lobby/button/server/hrp
+	base_icon_state = "hrp"
+	screen_loc = "TOP:-44,CENTER:+173"
+	server_port = 1342
+
+/atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
+	return day == SATURDAY && ISINRANGE(hour, 12, 18)
+
+//MAIN MONKE
+/atom/movable/screen/lobby/button/server/mrp
+	base_icon_state = "mrp"
+	screen_loc = "TOP:-77,CENTER:+173"
+	enabled = TRUE
+	server_port = 1337
+
+//NRP MONKE
+/atom/movable/screen/lobby/button/server/nrp
+	screen_loc = "TOP:-110,CENTER:+173"
+	base_icon_state = "nrp"
+	server_port = 2102
+
+//The Vanderlin Project
+/atom/movable/screen/lobby/button/server/vanderlin
+	icon = 'icons/hud/lobby/vanderlin_button.dmi'
+	base_icon_state = "vanderlin"
+	screen_loc = "TOP:-140,CENTER:+177"
+	server_port = 1541
+
+/atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
+	switch(day)
+		if(FRIDAY)
+			return (hour >= 15)
+		if(SATURDAY, SUNDAY)
+			return TRUE
+	return FALSE
+
+//Monke button
+/atom/movable/screen/lobby/button/ook
+	screen_loc = "TOP:-126,CENTER:110"
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "monke"
+	base_icon_state = "monke"
+
+/atom/movable/screen/lobby/button/ook/Click(location, control, params)
+	. = ..()
+	if(.)
+		SEND_SOUND(usr, 'monkestation/sound/misc/menumonkey.ogg')

@@ -344,7 +344,7 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = INFINITY
+	tick_interval = -1 // monkestation edit
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
@@ -489,7 +489,7 @@
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/external/tail/simian/monkey_tail = new ()
+				var/obj/item/organ/external/tail/monkey/monkey_tail = new()
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)

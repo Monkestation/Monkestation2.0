@@ -39,6 +39,7 @@
 		"coffee_cartridge",
 		"coffeemaker",
 		"coffeepot",
+		"comb", //monkestation edit
 		"condenser",
 		"conveyor_belt",
 		"conveyor_switch",
@@ -48,6 +49,7 @@
 		"desttagger",
 		"doppler_array",
 		"drinking_glass",
+		"dyespray", //monkestation edit
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
@@ -59,7 +61,9 @@
 		"fluid_ducts",
 		"foam_dart",
 		"fork",
+		"fur_dyer", //monkestation edit
 		"gas_filter",
+		"hairbrush", //monkestation edit
 		"handcuffs_s",
 		"handlabel",
 		"health_sensor",
@@ -101,6 +105,7 @@
 		"rglass",
 		"roll",
 		"rollerbed",
+		"scissors", //monkestation edit
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
@@ -528,6 +533,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
+		"surgery_heal_robot_upgrade", // monkestation edit: robot surgeries
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
@@ -541,6 +547,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade_femto",
 		"surgery_heal_burn_upgrade_femto",
+		"surgery_heal_robot_upgrade_femto", // monkestation edit: robot surgeries
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
@@ -789,6 +796,7 @@
 		"swapper",
 		"triphasic_scanning",
 		"wormholeprojector",
+		"advanced_gps", // monkestation edit: advanced gps
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
@@ -1275,6 +1283,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"s_traffic", // MONKESTATION ADDITION -- NTSL -- The board to actually program in NTSL
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1418,6 +1427,7 @@
 		"ci-reviver",
 		"ci-surgery",
 		"ci-toolset",
+		"ci-sprinter", //monkestation edit:
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1472,6 +1482,7 @@
 		"triggermod",
 		"mining_scanner",
 		"mat_analyzer",
+		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

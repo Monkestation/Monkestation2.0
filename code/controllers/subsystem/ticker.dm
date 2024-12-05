@@ -194,7 +194,10 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
-
+			// MONKESTATION EDIT START - lobby notices
+			if (length(config.lobby_notices))
+				config.ShowLobbyNotices(world)
+			// MONKESTATION END
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -248,7 +251,11 @@ SUBSYSTEM_DEF(ticker)
 				declare_completion(force_ending)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-
+//MONKESTATION ADDITION START
+				if(SSmapping.map_voted || SSmapping.map_force_chosen == TRUE)
+					return
+				SSmapping.mapvote()
+//MONKESTATION ADDITION END
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
@@ -329,13 +336,14 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
+	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
 
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	SSgamemode.storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
-	SSgamemode.storyteller.round_started = TRUE
+	SSgamemode.current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+	SSgamemode.current_storyteller.round_started = TRUE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
@@ -473,9 +481,8 @@ SUBSYSTEM_DEF(ticker)
 					continue
 				item.post_equip_item(new_player_mob.client?.prefs, new_player_living)
 
-		if(new_player_mob.client.readied_store)
-			if(new_player_mob.client.readied_store.bought_item)
-				new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
+		if(new_player_mob.client?.readied_store?.bought_item)
+			new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
 		CHECK_TICK
 

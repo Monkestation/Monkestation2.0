@@ -4,6 +4,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 
 	var/last_move = null
+	/// A list containing arguments for Moved().
+	VAR_PRIVATE/tmp/list/active_movement
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -108,6 +110,23 @@
 
 	///can we grab this object?
 	var/cant_grab = FALSE
+
+	/// The world.time we started our last glide
+	var/last_glide_start = 0
+	/// The ammount of unaccounted accumulated error between our glide visuals and the world tickrate
+	var/accumulated_glide_error = 0
+	/// The amount of banked (accounted for) error between our visual and world glide rates
+	var/banked_glide_error = 0
+	/// The amount of error accounted for in the initial delay of our glide (based off GLOB.glide_size_multiplier)
+	var/built_in_glide_error = 0
+	/// The world.time at which we assume our next glide will end
+	var/glide_stopping_time = 0
+	/// We are currently tracking our glide animation
+	var/glide_tracking = FALSE
+	/// If we should use glide correction
+	var/use_correction = FALSE
+	var/mutable_appearance/glide_text
+	var/debug_glide = FALSE
 
 /mutable_appearance/emissive_blocker
 
@@ -214,6 +233,10 @@
 		SSspatial_grid.force_remove_from_cell(src)
 
 	LAZYNULL(client_mobs_in_contents)
+
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
 
 	. = ..()
 
@@ -578,15 +601,59 @@
 	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-/atom/movable/proc/set_glide_size(target = 8, recursed = FALSE)
+GLOBAL_LIST_EMPTY(gliding_atoms)
+
+/atom/movable/proc/set_glide_size(target = 8, mid_move = FALSE)
 	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
+	// If we're mid move don't reset ourselves yeah?
+	if(!mid_move || !glide_tracking)
+		last_glide_start = world.time
+		glide_stopping_time = world.time + (world.icon_size / target) * world.tick_lag
+		accumulated_glide_error = 0
+		banked_glide_error = 0
+		built_in_glide_error = GLOB.glide_size_multi_error
+		update_glide_text()
+	if(!glide_tracking && use_correction)
+		GLOB.gliding_atoms += src
+		glide_tracking = TRUE
 
-	if(!recursed)
-		for(var/mob/buckled_mob as anything in buckled_mobs)
-			buckled_mob.set_glide_size(target, TRUE)
+	for(var/mob/buckled_mob as anything in buckled_mobs)
+		buckled_mob.set_glide_size(target, mid_move = mid_move)
+
+/atom/movable/proc/update_glide_text()
+	if(!debug_glide)
+		return
+	cut_overlay(glide_text)
+	glide_text = mutable_appearance(offset_spokesman = src, plane = ABOVE_LIGHTING_PLANE)
+	glide_text.maptext = "GS: [glide_size]ppt\nMulti: [GLOB.glide_size_multiplier * 100]% \nBIE: [built_in_glide_error]ds \nErr: [accumulated_glide_error]ds"
+	glide_text.maptext_width = 500
+	glide_text.maptext_height = 500
+	glide_text.maptext_y = 32
+	add_overlay(glide_text)
+
+/atom/movable/proc/account_for_glide_error(error)
+	// Intentionally can go negative to handle being overoptimistic about glide rates
+	accumulated_glide_error += error - built_in_glide_error
+	if(abs(accumulated_glide_error) < world.tick_lag * 0.5)
+		update_glide_text()
+		return
+	// we're trying to account for random spikes in error while gliding
+	// So we're gonna use the known GAME tick we want to stop at,
+	// alongside how much time has visually past to work out
+	// exactly how fast we need to move to make up that distance
+	var/game_time_spent = (world.time - last_glide_start)
+	var/visual_time_spent = game_time_spent + accumulated_glide_error + built_in_glide_error * game_time_spent
+	var/distance_covered = glide_size * visual_time_spent
+	var/distance_remaining = world.icon_size - distance_covered
+	var/game_time_remaining = (glide_stopping_time - world.time)
+	built_in_glide_error += accumulated_glide_error / game_time_remaining
+	accumulated_glide_error = 0
+	set_glide_size(clamp((((distance_remaining) / max((game_time_remaining) / world.tick_lag, 1))), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE), mid_move = TRUE)
+
+	update_glide_text()
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
@@ -594,6 +661,7 @@
  * most of the time you want forceMove()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
+	RESOLVE_ACTIVE_MOVEMENT // This should NEVER happen, but, just in case...
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
@@ -607,6 +675,9 @@
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
+
+	// A mid-movement... movement... occured, resolve that first.
+	RESOLVE_ACTIVE_MOVEMENT
 
 	if(!direction)
 		direction = get_dir(src, newloc)
@@ -657,6 +728,7 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
+	SET_ACTIVE_MOVEMENT(oldloc, direction, FALSE, old_locs)
 	loc = newloc
 
 	. = TRUE
@@ -677,7 +749,7 @@
 	if(oldarea != newarea)
 		newarea.Entered(src, oldarea)
 
-	Moved(oldloc, direction, FALSE, old_locs)
+	RESOLVE_ACTIVE_MOVEMENT
 
 ////////////////////////////////////////
 
@@ -1096,8 +1168,13 @@
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
+	RESOLVE_ACTIVE_MOVEMENT
+
 	var/atom/oldloc = loc
 	var/is_multi_tile = bound_width > world.icon_size || bound_height > world.icon_size
+
+	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
+
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
 		if(pulledby && !currently_z_moving)
@@ -1159,7 +1236,7 @@
 			if(old_area)
 				old_area.Exited(src, NONE)
 
-	Moved(oldloc, NONE, TRUE)
+	RESOLVE_ACTIVE_MOVEMENT
 
 /**
  * Called when a movable changes z-levels.

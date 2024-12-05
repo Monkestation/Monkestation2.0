@@ -233,6 +233,8 @@ See the examinemore module for information.
 #define CARGO_COMPANY_SOL_DEFENSE (1<<7)
 #define CARGO_COMPANY_MICROSTAR (1<<8)
 #define CARGO_COMPANY_VITEZSTVI_AMMO (1<<9)
+#define CARGO_COMPANY_RAYNE (1<<10)
+//#define CARGO_COMPANY_KEMETEK (1<<11)
 
 // Company names, because the armament category and company name need to be the exact same, so use defines like this
 #define NAKAMURA_ENGINEERING_MODSUITS_NAME "Nakamura Engineering MOD Divison"
@@ -245,6 +247,8 @@ See the examinemore module for information.
 #define SOL_DEFENSE_DEFENSE_NAME "Sol Defense Imports"
 #define MICROSTAR_ENERGY_NAME "MicroStar Energy Weapon Coalition"
 #define VITEZSTVI_AMMO_NAME "Vitezstvi Ammo & Weapon Accessories"
+#define RAYNE_CORP_NAME "Rayne Corporation"
+//#define KEMETEK_NAME "Kemetek Aerospace"
 
 #define COMPANY_INTEREST_GAIN_BIG 10
 #define COMPANY_INTEREST_GAIN_AVERAGE 5
@@ -272,10 +276,6 @@ See the examinemore module for information.
 
 /// Trait that changes the ending effects of twitch leaving your system
 #define TRAIT_TWITCH_ADAPTED "twitch_adapted"
-
-// Have to put it here so I can use it in the global list of wound series
-/// See muscle.dm and robotic_blunt.dm
-#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
 
 //defines for antag opt in objective checking
 //objectives check for all players with a value equal or greater than the 'threat' level of an objective then pick from that list

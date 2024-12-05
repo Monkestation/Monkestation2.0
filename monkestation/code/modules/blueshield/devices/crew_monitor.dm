@@ -15,7 +15,6 @@ GLOBAL_DATUM_INIT(blueshield_crewmonitor, /datum/crewmonitor/blueshield, new)
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_RESEARCH_DIRECTOR = 30,
 		JOB_CHIEF_ENGINEER = 40,
-		JOB_QUARTERMASTER = 50,
 		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
@@ -33,7 +32,7 @@ GLOBAL_DATUM_INIT(blueshield_crewmonitor, /datum/crewmonitor/blueshield, new)
 		JOB_ERT_CHAPLAIN = 225,
 		JOB_ERT_JANITOR = 226,
 		JOB_ERT_DEATHSQUAD = 227,
-		JOB_NT_REP = 230,
+		JOB_NANOTRASEN_REPRESENTATIVE = 230,
 		JOB_BLUESHIELD = 231,
 	)
 

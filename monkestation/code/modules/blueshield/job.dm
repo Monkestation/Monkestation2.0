@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Heads of Staff"
+	supervisors = "the Nanotrasen Representative and Central Command"
 	minimal_player_age = 30
 	exp_requirements = 7200
 	exp_required_type = EXP_TYPE_CREW
@@ -59,6 +59,7 @@
 	implants = list(/obj/item/implant/mindshield)
 	backpack_contents = list(
 		/obj/item/choice_beacon/blueshield = 1,
+		/obj/item/melee/baton/telescopic = 1,
 	)
 	backpack = /obj/item/storage/backpack/blueshield
 	satchel = /obj/item/storage/backpack/satchel/blueshield
@@ -66,9 +67,9 @@
 
 	head = /obj/item/clothing/head/beret/blueshield
 	box = /obj/item/storage/box/survival/security
-	belt = /obj/item/modular_computer/pda/blueshield
+	belt = /obj/item/storage/belt/security/blueshield
 	l_pocket = /obj/item/sensor_device/blueshield
-
+	r_pocket = /obj/item/modular_computer/pda/blueshield
 	id_trim = /datum/id_trim/job/blueshield
 
 /datum/outfit/plasmaman/blueshield

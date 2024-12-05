@@ -309,24 +309,6 @@
 			return copytext(text, 1, i + 1)
 	return ""
 
-//Returns a string with reserved characters and spaces after the first and last letters removed
-//Like trim(), but very slightly faster. worth it for niche usecases
-/proc/trim_reduced(text)
-	var/starting_coord = 1
-	var/text_len = length(text)
-	for (var/i in 1 to text_len)
-		if (text2ascii(text, i) > 32)
-			starting_coord = i
-			break
-
-	for (var/i = text_len, i >= starting_coord, i--)
-		if (text2ascii(text, i) > 32)
-			return copytext(text, starting_coord, i + 1)
-
-	if(starting_coord > 1)
-		return copytext(text, starting_coord)
-	return ""
-
 /**
  * Truncate a string to the given length
  *
@@ -347,7 +329,7 @@
 /proc/trim(text, max_length)
 	if(max_length)
 		text = copytext_char(text, 1, max_length)
-	return trim_reduced(text)
+	return trimtext(text)
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
@@ -1211,3 +1193,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		text2num(semver_regex.group[2]),
 		text2num(semver_regex.group[3]),
 	)
+
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE

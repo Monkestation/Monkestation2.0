@@ -136,6 +136,11 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
+	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
+	//There's already a cowboy sprite in there!
+	icon_state = "lucky"
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
@@ -156,18 +161,6 @@
 	can_suppress = TRUE
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
-
-/obj/item/gun/ballistic/revolver/r45l
-	name = "\improper .45 Long Revolver"
-	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
-	icon_state = "45revolver"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
-	obj_flags = UNIQUE_RENAME
-
-	unique_reskin = list("Default" = "45revolver",
-						"Cowboy" = "357colt",
-						"Lucky" = "lucky" //Well do ya?
-						)
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
