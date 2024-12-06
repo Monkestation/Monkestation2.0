@@ -34,6 +34,10 @@
 	item_type = /obj/item/gun/energy/e_gun
 	cost = PAYCHECK_COMMAND * 4
 
+/datum/armament_entry/company_import/microstar/basic_energy_long_weapons/mcr
+	item_type = /obj/item/gun/microfusion/mcr01/advanced
+	cost = PAYCHECK_COMMAND * 5
+
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons/mod_laser_small
 	item_type = /obj/item/gun/energy/modular_laser_rifle/carbine
 	cost = PAYCHECK_COMMAND * 5
@@ -50,12 +54,3 @@
 
 /datum/armament_entry/company_import/microstar/experimental_energy/hellfire
 	item_type = /obj/item/gun/energy/laser/hellgun
-
-/datum/armament_entry/company_import/microstar/experimental_energy/ion_carbine
-	item_type = /obj/item/gun/energy/ionrifle/carbine
-
-/datum/armament_entry/company_import/microstar/experimental_energy/xray_gun
-	item_type = /obj/item/gun/energy/xray
-
-/datum/armament_entry/company_import/microstar/experimental_energy/tesla_cannon
-	item_type = /obj/item/gun/energy/tesla_cannon
