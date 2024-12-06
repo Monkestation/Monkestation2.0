@@ -95,11 +95,12 @@
 
 /obj/item/clothing/mask/gas/sechailer/swat/ert
 	name = "\improper emergency response team mask"
-	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000. This one is designed for Nanotrasen Emergency Response Teams and has an inbuilt air-freshener. Fancy!"
+	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen Emergency Response Teams and has an inbuilt air-freshener. Fancy!"
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	worn_icon_snouted = 'monkestation/icons/mob/clothing/species/mask_muzzled.dmi'
 	icon_state = "ert"
+	aggressiveness = 1
 
 /obj/item/storage/box/survival/ert
 	name = "emergency response survival box"
@@ -151,3 +152,16 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+
+/obj/item/storage/belt/janitor/full/ert/PopulateContents()
+	new /obj/item/lightreplacer/blue(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/soap/omega(src)
+	new /obj/item/holosign_creator(src)
+	new /obj/item/melee/flyswatter(src)
+	new /obj/item/wirebrush(src)
+
+/obj/item/scythe/compact
+	name = "compact scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow. This one has been compacted with bluespace fields, don't question it."
+	w_class = WEIGHT_CLASS_NORMAL

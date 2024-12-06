@@ -51,8 +51,6 @@
 	cyberlink.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
 	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
-	var/obj/item/organ/internal/cyberimp/arm/item_set/flash/flash_implant = new()
-	flash_implant.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/commander
 	name = "Code Green Emergency Response Team Commander"
@@ -73,7 +71,7 @@
 		/obj/item/knife/combat = 1,
 		/obj/item/pinpointer/nuke = 1,
 	)
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
+	glasses = /obj/item/clothing/glasses/sunglasses/big //bigger sunglasses means they are cooler and have more authority
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/job/research_director)
 
@@ -87,12 +85,17 @@
 	backpack_contents = list(
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/knife/combat = 1,
+		/obj/item/door_remote/omni = 1,
 		/obj/item/pinpointer/nuke = 1,
 		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
-		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/ammo_box/magazine/m45 = 1,
 	)
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/job/research_director)
+	l_hand = /obj/item/storage/lockbox/loyalty
+
+/datum/outfit/centcom/ert/generic/commander/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
+	sec_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/medical
 	name = "Code Green Medical Response Officer"
@@ -119,6 +122,26 @@
 	additional_radio = /obj/item/encryptionkey/headset_med
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
+/datum/antagonist/ert/generic/medical/blue
+	name = "Code Blue Medical Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/medical
+
+/datum/outfit/centcom/ert/generic/medical/blue
+	name = "Code Blue Medical Response Officer"
+
+	gloves = /obj/item/clothing/gloves/latex/surgical
+	suit_store = /obj/item/gun/energy/e_gun
+	backpack_contents = list(
+		/obj/item/storage/medkit/o2 = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/storage/box/medipens = 1,
+		/obj/item/storage/belt/medical/ert = 1,
+		/obj/item/defibrillator/compact/loaded = 1,
+		/obj/item/reagent_containers/hypospray/cmo = 1, //this shouldn't cause any problems?
+		/obj/item/emergency_bed = 1,
+	)
+	l_hand = /obj/item/healthanalyzer/advanced
+
 /datum/antagonist/ert/generic/security
 	name = "Code Green Security Response Officer"
 	role = "Security Officer"
@@ -141,6 +164,25 @@
 	r_pocket = /obj/item/holosign_creator/security
 	additional_radio = /obj/item/encryptionkey/headset_sec
 
+/datum/antagonist/ert/generic/security/blue
+	name = "Code Blue Security Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/security/blue
+
+/datum/outfit/centcom/ert/generic/security/blue
+	name = "Code Blue Security Response Officer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/generic/security
+	suit = /obj/item/clothing/suit/space/ert/security
+	suit_store = /obj/item/gun/energy/laser
+	back = /obj/item/storage/backpack/ert/security
+	backpack_contents = list(
+		/obj/item/knife/combat = 1,
+		/obj/item/storage/box/teargas = 1,
+		/obj/item/grenade/flashbang = 2,
+		/obj/item/gun/energy/disabler = 1,
+		/obj/item/storage/belt/security/full/bola = 1,
+	)
+
 /datum/antagonist/ert/generic/engineer
 	name = "Code Green Engineering Response Officer"
 	role = "Engineering Officer"
@@ -157,17 +199,41 @@
 	head = /obj/item/clothing/head/helmet/space/ert/engineer
 	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
-		/obj/item/storage/belt/utility/full/powertools = 1,
-		/obj/item/storage/box/rcd_upgrades = 1,
+		/obj/item/storage/belt/utility/full/engi = 1,
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/rcd_ammo/large = 1,
 		/obj/item/analyzer = 1,
-		/obj/item/extinguisher/advanced = 1,
+		/obj/item/extinguisher = 1,
 		/obj/item/pipe_dispenser = 1,
 	)
 	glasses = /obj/item/clothing/glasses/meson/engine
 	additional_radio = /obj/item/encryptionkey/headset_eng
 	skillchips = list(/obj/item/skillchip/job/engineer, /obj/item/skillchip/job/roboticist)
+
+/datum/antagonist/ert/generic/engineer/blue
+	name = "Code Blue Engineering Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/engineer/blue
+
+/datum/outfit/centcom/ert/generic/engineer/blue
+	name = "Code Blue Engineering Response Officer"
+
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	suit_store = /obj/item/gun/energy/e_gun
+	back = /obj/item/storage/backpack/ert/engineer
+	backpack_contents = list(
+		/obj/item/storage/belt/utility/full/powertools = 1,
+		/obj/item/storage/box/rcd_upgrades = 1,
+		/obj/item/construction/rcd/loaded = 1,
+		/obj/item/rcd_ammo/large = 1,
+		/obj/item/analyzer/ranged = 1,
+		/obj/item/extinguisher/advanced = 1,
+		/obj/item/pipe_dispenser = 1,
+	)
+
+/datum/outfit/centcom/ert/generic/engineer/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic/diagnostic_hud = new()
+	diagnostic_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/janitor
 	name = "Code Green Janitorial Response Officer"
@@ -187,11 +253,32 @@
 		/obj/item/storage/belt/janitor/full = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/mop/advanced = 1,
+		/obj/item/pushbroom = 1,
 		/obj/item/reagent_containers/spray/drying = 1,
 		/obj/item/grenade/chem_grenade/cleaner = 2,
-		/obj/item/pushbroom = 1,
 	)
 	l_hand = /obj/item/storage/bag/trash
+	additional_radio = /obj/item/encryptionkey/headset_service
+	skillchips = list(/obj/item/skillchip/job/janitor)
+
+/datum/antagonist/ert/generic/janitor/blue
+	name = "Code Blue Janitorial Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/janitor/blue
+
+/datum/outfit/centcom/ert/generic/janitor/blue
+	name = "Code Blue Janitorial Response Officer"
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	suit_store = /obj/item/gun/energy/e_gun
+	backpack_contents = list(
+		/obj/item/storage/belt/janitor/full/ert = 1,
+		/obj/item/mop/advanced = 1,
+		/obj/item/pushbroom = 1,
+		/obj/item/reagent_containers/spray/drying = 1,
+		/obj/item/grenade/chem_grenade/cleaner = 2,
+		/obj/item/scythe/compact = 1,
+		/obj/item/grenade/chem_grenade/antiweed = 1,
+	)
+	l_hand = /obj/item/storage/bag/trash/bluespace
 	additional_radio = /obj/item/encryptionkey/headset_service
 	skillchips = list(/obj/item/skillchip/job/janitor)
 
@@ -218,6 +305,27 @@
 		/obj/item/nullrod = 1,
 		/obj/item/book/bible = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater = 1,
+	)
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	r_pocket = /obj/item/holosign_creator/security
+	additional_radio = /obj/item/encryptionkey/headset_sec
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+/datum/antagonist/ert/generic/chaplain/blue
+	name = "Code Blue Religious Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/chaplain/blue
+
+/datum/outfit/centcom/ert/generic/chaplain/blue
+	name = "Code Blue Religious Response Officer"
+
+	suit_store = /obj/item/gun/energy/e_gun
+	backpack_contents = list(
+		/obj/item/nullrod = 1,
+		/obj/item/book/bible = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/holywater = 1,
+		/obj/item/storage/box/flashbangs = 1,
+		/obj/item/gun/energy/disabler = 1,
+		/obj/item/storage/belt/security/full/bola = 1,
 	)
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/holosign_creator/security
