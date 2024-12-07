@@ -12,10 +12,6 @@
 // *Clown
 // OTHER
 
-//------------
-// Code Green
-//------------
-
 /datum/antagonist/ert/generic
 	name = "Emergency Response Officer"
 	role = "Officer"
@@ -82,8 +78,9 @@
 /datum/outfit/centcom/ert/generic/commander/blue
 	name = "Code Blue Emergency Response Team Commander"
 
+	shoes = /obj/item/clothing/shoes/magboots
 	backpack_contents = list(
-		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/storage/medkit/regular = 1,
 		/obj/item/knife/combat = 1,
 		/obj/item/door_remote/omni = 1,
 		/obj/item/pinpointer/nuke = 1,
@@ -93,6 +90,37 @@
 	l_hand = /obj/item/storage/lockbox/loyalty
 
 /datum/outfit/centcom/ert/generic/commander/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
+	sec_hud.Insert(H, drop_if_replaced = FALSE)
+
+/datum/antagonist/ert/generic/commander/red
+	name = "Code Red Emergency Response Team Commander"
+	outfit = /datum/outfit/centcom/ert/generic/commander/red
+
+/datum/outfit/centcom/ert/generic/commander/red
+	name = "Code Red Emergency Response Team Commander"
+
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = null
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/storage/belt/security/full/bola
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/commander
+	backpack_contents = list(
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/knife/combat = 1,
+		/obj/item/door_remote/omni = 1,
+		/obj/item/pinpointer/nuke = 1,
+		/obj/item/storage/box/syndie_kit/imp_deathrattle/nanotrasen = 1,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
+		/obj/item/ammo_box/magazine/m45 = 2,
+	)
+	glasses = /obj/item/clothing/glasses/night
+	r_pocket = /obj/item/holosign_creator/security
+	l_hand = /obj/item/storage/lockbox/loyalty
+
+/datum/outfit/centcom/ert/generic/commander/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
 	sec_hud.Insert(H, drop_if_replaced = FALSE)
@@ -129,18 +157,53 @@
 /datum/outfit/centcom/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
 
+	shoes = /obj/item/clothing/shoes/magboots
 	gloves = /obj/item/clothing/gloves/latex/surgical
 	suit_store = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
-		/obj/item/storage/medkit/o2 = 1,
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/storage/box/medipens = 1,
 		/obj/item/storage/belt/medical/ert = 1,
 		/obj/item/defibrillator/compact/loaded = 1,
 		/obj/item/reagent_containers/hypospray/cmo = 1, //this shouldn't cause any problems?
 		/obj/item/emergency_bed = 1,
+		/obj/item/healthanalyzer/advanced = 1,
 	)
-	l_hand = /obj/item/healthanalyzer/advanced
+
+/datum/antagonist/ert/generic/medical/red
+	name = "Code Red Medical Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/medical/red
+
+/datum/outfit/centcom/ert/generic/medical/red
+	name = "Code Red Medical Response Officer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = null
+	gloves = /obj/item/clothing/gloves/latex/surgical
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/medic
+	backpack_contents = list(
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/storage/box/medipens = 1,
+		/obj/item/storage/belt/medical/paramedic = 1,
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/pinpointer/crew = 1,
+		/obj/item/emergency_bed = 1,
+	)
+	glasses = /obj/item/clothing/glasses/night
+	r_pocket = /obj/item/holosign_creator/security
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+
+/datum/outfit/centcom/ert/generic/medical/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/arm/item_set/surgery/surgery_toolset = new()
+	surgery_toolset.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/eyes/hud/medical/med_hud = new()
+	med_hud.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/serverlink = new()
+	serverlink.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/security
 	name = "Code Green Security Response Officer"
@@ -172,6 +235,8 @@
 	name = "Code Blue Security Response Officer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/generic/security
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	shoes = /obj/item/clothing/shoes/magboots
 	suit = /obj/item/clothing/suit/space/ert/security
 	suit_store = /obj/item/gun/energy/laser
 	back = /obj/item/storage/backpack/ert/security
@@ -182,6 +247,35 @@
 		/obj/item/gun/energy/disabler = 1,
 		/obj/item/storage/belt/security/full/bola = 1,
 	)
+
+/datum/antagonist/ert/generic/security/red
+	name = "Code Red Security Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/security/red
+
+/datum/outfit/centcom/ert/generic/security/red
+	name = "Code Red Security Response Officer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/security
+	suit = null
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/storage/belt/security/full/bola
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/security
+	backpack_contents = list(
+		/obj/item/knife/combat = 1,
+		/obj/item/storage/box/teargas = 1,
+		/obj/item/storage/box/flashbangs = 1,
+		/obj/item/storage/box/stingbangs = 1,
+		/obj/item/shield/riot/tele = 1,
+	)
+	glasses = /obj/item/clothing/glasses/night
+	additional_radio = /obj/item/encryptionkey/heads/hos
+
+/datum/outfit/centcom/ert/generic/security/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
+	sec_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/engineer
 	name = "Code Green Engineering Response Officer"
@@ -235,6 +329,40 @@
 	var/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic/diagnostic_hud = new()
 	diagnostic_hud.Insert(H, drop_if_replaced = FALSE)
 
+/datum/antagonist/ert/generic/engineer/red
+	name = "Code Red Engineering Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/engineer/red
+
+/datum/outfit/centcom/ert/generic/engineer/red
+	name = "Code Red Engineering Response Officer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/engineer
+	shoes = /obj/item/clothing/shoes/combat
+	suit = null
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/storage/bag/sheetsnatcher
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/engineer
+	backpack_contents = list(
+		/obj/item/construction/rcd/loaded/upgraded = 1,
+		/obj/item/rcd_ammo/large = 1,
+		/obj/item/analyzer/ranged = 1,
+		/obj/item/pipe_dispenser = 1,
+		/obj/item/holosign_creator/atmos = 1,
+		/obj/item/t_scanner = 1,
+		/obj/item/stack/cable_coil = 1,
+	)
+	glasses = /obj/item/clothing/glasses/meson/night
+	additional_radio = /obj/item/encryptionkey/heads/ce
+	r_pocket = /obj/item/holosign_creator/security
+
+/datum/outfit/centcom/ert/generic/engineer/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic/diagnostic_hud = new()
+	diagnostic_hud.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/arm/item_set/toolset/toolset_implant = new()
+	toolset_implant.Insert(H, drop_if_replaced = FALSE)
+
 /datum/antagonist/ert/generic/janitor
 	name = "Code Green Janitorial Response Officer"
 	role = "Janitorial Officer"
@@ -282,6 +410,31 @@
 	additional_radio = /obj/item/encryptionkey/headset_service
 	skillchips = list(/obj/item/skillchip/job/janitor)
 
+/datum/antagonist/ert/generic/janitor/red
+	name = "Code Red Janitorial Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/janitor/red
+
+/datum/outfit/centcom/ert/generic/janitor/red
+	name = "Code Red Janitorial Response Officer"
+	id = /obj/item/card/id/advanced/centcom/ert/janitor
+	shoes = /obj/item/clothing/shoes/combat
+	suit = null
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/storage/belt/janitor/full/ert
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/janitor
+	backpack_contents = list(
+		/obj/item/mop/advanced = 1,
+		/obj/item/pushbroom = 1,
+		/obj/item/reagent_containers/spray/drying = 1,
+		/obj/item/grenade/clusterbuster/cleaner = 2,
+		/obj/item/scythe/compact = 1,
+		/obj/item/grenade/clusterbuster/antiweed = 1,
+	)
+	l_hand = /obj/item/storage/bag/trash/bluespace
+	glasses = /obj/item/clothing/glasses/night
+	additional_radio = /obj/item/encryptionkey/heads/hop
+
 /datum/antagonist/ert/generic/chaplain
 	name = "Code Green Religious Response Officer"
 	role = "Religious Officer"
@@ -319,18 +472,47 @@
 	name = "Code Blue Religious Response Officer"
 
 	suit_store = /obj/item/gun/energy/e_gun
+	shoes = /obj/item/clothing/shoes/magboots
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	backpack_contents = list(
 		/obj/item/nullrod = 1,
 		/obj/item/book/bible = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater = 1,
-		/obj/item/storage/box/flashbangs = 1,
+		/obj/item/grenade/flashbang = 2,
 		/obj/item/gun/energy/disabler = 1,
 		/obj/item/storage/belt/security/full/bola = 1,
 	)
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/holosign_creator/security
 	additional_radio = /obj/item/encryptionkey/headset_sec
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+/datum/antagonist/ert/generic/chaplain/red
+	name = "Code Red Religious Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/chaplain/red
+
+/datum/outfit/centcom/ert/generic/chaplain/red
+	name = "Code Red Religious Response Officer"
+	id = /obj/item/card/id/advanced/centcom/ert/chaplain
+	suit = null
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	suit_store = /obj/item/gun/energy/e_gun/stun
+	head = null
+	belt = /obj/item/nullrod/scythe/talking/chainsword
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/chaplain
+	backpack_contents = list(
+		/obj/item/book/bible = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
+		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
+		/obj/item/storage/box/flashbangs = 1,
+		/obj/item/storage/belt/security/full/bola = 1,
+	)
+	glasses = /obj/item/clothing/glasses/night
+	additional_radio = /obj/item/encryptionkey/heads/hos
+
+/datum/outfit/centcom/ert/generic/chaplain/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
+	sec_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/clown
 	name = "Code Honk Entertainment Response Officer"
@@ -404,3 +586,120 @@
 		QDEL_NULL(bladder)
 		bladder = new/obj/item/organ/internal/bladder/clown
 		bladder.Insert(H)
+
+/datum/antagonist/ert/generic/clown/funny
+	name = "Code Honk! Entertainment Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/clown/funny
+
+/datum/outfit/centcom/ert/generic/clown/funny
+	name = "Code Honk! Entertainment Response Officer"
+
+	backpack_contents = list(
+		/obj/item/stamp/clown = 1,
+		/obj/item/reagent_containers/spray/waterflower/lube = 1,
+		/obj/item/food/grown/banana = 1,
+		/obj/item/instrument/bikehorn = 1,
+		/obj/item/food/pie/cream = 3,
+		/obj/item/stack/sheet/mineral/bananium/five = 1,
+	)
+	l_pocket = /obj/item/bikehorn/golden
+
+/datum/outfit/centcom/ert/generic/clown/funny/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/chest/knockout/punch_implant = new()
+	punch_implant.Insert(H, drop_if_replaced = FALSE)
+
+/datum/antagonist/ert/generic/clown/funnier
+	name = "Code HONK!! Entertainment Response Officer"
+	outfit = /datum/outfit/centcom/ert/generic/clown/funnier
+
+/datum/outfit/centcom/ert/generic/clown/funnier
+	name = "Code HONK!! Entertainment Response Officer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes/combat
+	suit = null
+	suit_store = /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
+	head = null
+	belt = /obj/item/storage/belt/military/snack/pie
+	back = /obj/item/mod/control/pre_equipped/responsory/generic/clown
+	backpack_contents = list(
+		/obj/item/stamp/clown = 1,
+		/obj/item/reagent_containers/spray/waterflower/superlube = 1,
+		/obj/item/food/grown/banana = 1,
+		/obj/item/instrument/bikehorn = 1,
+		/obj/item/megaphone/clown = 1,
+		/obj/item/stack/sheet/mineral/bananium/five = 1,
+		/obj/item/suppressor = 1,
+		/obj/item/ammo_box/magazine/toy/smgm45/riot = 3,
+
+	)
+	glasses = /obj/item/clothing/glasses/night
+	additional_radio = /obj/item/encryptionkey/heads/hop
+	l_pocket = /obj/item/bikehorn/golden
+
+/datum/outfit/centcom/ert/generic/clown/funnier/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	return
+
+/datum/outfit/centcom/ert/generic/clown/funnier/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/chest/knockout/punch_implant = new()
+	punch_implant.Insert(H, drop_if_replaced = FALSE)
+
+//------
+// Other
+//------
+
+/datum/antagonist/ert/generic/deathsquad
+	name = "Elite Deathsquad Commando"
+	role = "Commando"
+	outfit = /datum/outfit/centcom/ert/generic/deathsquad
+	ert_job_path = /datum/job/ert/generic
+
+/datum/antagonist/ert/generic/deathsquad/New()
+	. = ..()
+	name_source = GLOB.commando_names
+
+/datum/outfit/centcom/ert/generic/deathsquad
+	name = "Elite Deathsquad Commando"
+
+	id = /obj/item/card/id/advanced/black/deathsquad
+	box = /obj/item/storage/box/survival/ert
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	shoes = /obj/item/clothing/shoes/combat/swat
+	suit = null
+	suit_store = /obj/item/gun/energy/pulse/loyalpin
+	head = null
+	belt = /obj/item/storage/belt/military/assault
+	back = /obj/item/mod/control/pre_equipped/apocryphal/elite
+	backpack_contents = list(
+		/obj/item/storage/box/medipens_advanced = 1,
+		/obj/item/storage/box/flashbangs = 1,
+		/obj/item/storage/box/teargas = 1,
+		/obj/item/grenade/c4/x4 = 3,
+		/obj/item/gun/ballistic/revolver/mateba = 1,
+		/obj/item/ammo_box/a357 = 2,
+	)
+	glasses = /obj/item/clothing/glasses/thermal
+	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
+	r_pocket = /obj/item/holosign_creator/security
+	implants = list(/obj/item/implant/krav_maga)
+
+/datum/outfit/centcom/ert/generic/deathsquad/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/brain/anti_drop/nodrop = new()
+	nodrop.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/brain/anti_stun/rebooter = new()
+	rebooter.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/chest/reviver/reviver_implant = new()
+	reviver_implant.Insert(H, drop_if_replaced = FALSE)
+
+/datum/antagonist/ert/generic/deathsquad/dust
+	name = "Elite Deathsquad Commando (Do or Die)"
+	outfit = /datum/outfit/centcom/ert/generic/deathsquad/dust
+
+/datum/outfit/centcom/ert/generic/deathsquad/dust
+	implants = list(/obj/item/implant/dust, /obj/item/implant/krav_maga)
+

@@ -163,8 +163,33 @@
 		/datum/antagonist/ert/generic/clown, // Honk
 	)
 
+/datum/ert/code/blue
+	leader_role = /datum/antagonist/ert/generic/commander/blue
+	roles = list(
+		/datum/antagonist/ert/generic/medical/blue,
+		/datum/antagonist/ert/generic/security/blue,
+		/datum/antagonist/ert/generic/engineer/blue,
+		/datum/antagonist/ert/generic/janitor/blue,
+		/datum/antagonist/ert/generic/chaplain/blue,
+	)
+	code = "Blue"
+	polldesc = NONE
+	opendoors = FALSE
+	ert_template = /datum/map_template/shuttle/ert/generic
+
+/datum/ert/code/blue/with_clown
+	teamsize = 7
+	roles = list(
+		/datum/antagonist/ert/generic/medical/blue,
+		/datum/antagonist/ert/generic/security/blue,
+		/datum/antagonist/ert/generic/engineer/blue,
+		/datum/antagonist/ert/generic/janitor/blue,
+		/datum/antagonist/ert/generic/chaplain/blue,
+		/datum/antagonist/ert/generic/clown/funny, // Honk
+	)
+
 /datum/ert/code/honk
-	leader_role = /datum/antagonist/ert/generic/clown
+	leader_role = /datum/antagonist/ert/generic/clown/funny
 	roles = list(
 		/datum/antagonist/ert/generic/clown,
 	)
@@ -174,11 +199,12 @@
 	ert_template = /datum/map_template/shuttle/ert/dropship/clown
 
 /datum/ert/code/purple
-	leader_role = /datum/antagonist/ert/generic/commander
+	leader_role = /datum/antagonist/ert/generic/janitor/blue
 	roles = list(
 		/datum/antagonist/ert/generic/janitor,
 	)
-	code = "Purple"
 	polldesc = NONE
 	opendoors = FALSE
-	ert_template = /datum/map_template/shuttle/ert/generic
+	ert_template = /datum/map_template/shuttle/ert/dropship/janitor
+	mission = "Clean up EVERYTHING."
+	polldesc = "a Nanotrasen Janitorial Response Team"

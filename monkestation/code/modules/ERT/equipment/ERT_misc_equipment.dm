@@ -95,7 +95,7 @@
 
 /obj/item/clothing/mask/gas/sechailer/swat/ert
 	name = "\improper emergency response team mask"
-	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen Emergency Response Teams and has an inbuilt air-freshener. Fancy!"
+	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen emergency response teams and has an inbuilt air-freshener. Fancy!"
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	worn_icon_snouted = 'monkestation/icons/mob/clothing/species/mask_muzzled.dmi'
@@ -165,3 +165,114 @@
 	name = "compact scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow. This one has been compacted with bluespace fields, don't question it."
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/mod/control/pre_equipped/responsory/generic
+	applied_cell = /obj/item/stock_parts/cell/bluespace
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/rad_protection,
+	)
+	default_pins = list(
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/magboot/advanced,
+	)
+
+/obj/item/mod/control/pre_equipped/responsory/generic/commander
+	insignia_type = /obj/item/mod/module/insignia/commander
+	additional_module = /obj/item/mod/module/power_kick
+
+/obj/item/mod/control/pre_equipped/responsory/generic/security
+	insignia_type = /obj/item/mod/module/insignia/security
+	additional_module = /obj/item/mod/module/criminalcapture
+
+/obj/item/mod/control/pre_equipped/responsory/generic/engineer
+	insignia_type = /obj/item/mod/module/insignia/engineer
+	additional_module = /obj/item/mod/module/mister/atmos
+
+/obj/item/mod/control/pre_equipped/responsory/generic/medic
+	insignia_type = /obj/item/mod/module/insignia/medic
+	additional_module = /obj/item/mod/module/quick_carry/advanced
+
+/obj/item/mod/control/pre_equipped/responsory/generic/janitor
+	insignia_type = /obj/item/mod/module/insignia/janitor
+	additional_module = /obj/item/mod/module/mister/cleaner
+
+/obj/item/mod/control/pre_equipped/responsory/generic/clown
+	insignia_type = /obj/item/mod/module/insignia/clown
+	additional_module = list(/obj/item/mod/module/bikehorn, /obj/item/mod/module/waddle)
+
+/obj/item/mod/control/pre_equipped/responsory/generic/chaplain
+	applied_skin = "inquisitory"
+	insignia_type = /obj/item/mod/module/insignia/chaplain
+	additional_module =  list(/obj/item/mod/module/injector, /obj/item/mod/module/anti_magic)
+
+/obj/item/mod/control/pre_equipped/apocryphal/elite
+	applied_modules = list(
+		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/energy_shield/nanotrasen,
+		/obj/item/mod/module/noslip,
+		/obj/item/mod/module/power_kick,
+		/obj/item/mod/module/rad_protection,
+		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/thermal_regulator,
+		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/visor/night,
+		/obj/item/mod/module/status_readout,
+	)
+	default_pins = list(
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/power_kick,
+		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/thermal_regulator,
+		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/visor/night,
+	)
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle/nanotrasen
+	icon_state = "ntbox"
+	illustration = "implant"
+
+/obj/item/storage/belt/military/snack/pie
+	name = "tactical pie rig"
+	desc = "A set of snack-tical webbing worn by athletes of the Honk Co. VR sports division."
+
+/obj/item/storage/belt/military/snack/pie/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 7
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 21 // 7 * 3 = 21?
+	atom_storage.set_holdable(list(
+		/obj/item/food/pie/cream,
+	))
+
+/obj/item/storage/belt/military/snack/pie/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/pie/cream(src)
+
+/obj/item/storage/box/medipens_advanced
+	name = "box of advanced medipens"
+	desc = "A box full of advanced MediPens."
+	icon_state = "ntbox"
+	illustration = "epipen"
+
+/obj/item/storage/box/medipens/medipens_advanced/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
+	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
+	new /obj/item/reagent_containers/hypospray/medipen/penacid(src)
+	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
+
+

@@ -55,6 +55,11 @@
 		return
 	user.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
+
+/obj/item/clothing/suit/space/ert/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
+
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team space helmet"
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
@@ -81,6 +86,10 @@
 	user.update_worn_head()
 
 	set_light_on(on)
+
+/obj/item/clothing/head/helmet/space/ert/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
 
 // NOW FOR ALL THE VARIATIONS!
 //-----------

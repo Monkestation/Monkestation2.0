@@ -88,7 +88,7 @@
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
-	desc = "This control wand can access any door on the station."
+	desc = "Remotely controls airlocks. This remote can access any door on the station." //monkestation edit
 	region_access = REGION_ALL_STATION
 
 /obj/item/door_remote/captain

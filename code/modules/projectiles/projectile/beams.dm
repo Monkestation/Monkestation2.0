@@ -130,7 +130,7 @@
 	name = "pulse"
 	generic_name = "pulse beam"
 	icon_state = "u_laser"
-	damage = 50
+	damage = 40 //monkestation edit: 50 to 40
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/pulse
