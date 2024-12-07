@@ -238,13 +238,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			init_subsystem(subsystem)
 			#ifndef OPENDREAM
-			if(world.system_type == MS_WINDOWS)
+			if(aneri_file_exists(MEMORYSTATS_DLL_PATH))
 				var/ss_name = "[subsystem.name]"
-				var/memory_summary = call_ext("memorystats", "get_memory_stats")()
-				var/file = file("data/mem_stat/[GLOB.round_id]-memstat.txt")
-
-				var/string = "[ss_name] [memory_summary]"
-				WRITE_FILE(file, string)
+				var/memory_summary = call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")()
+				aneri_file_append("[ss_name] [memory_summary]", "data/mem_stat/[GLOB.round_id]-memstat.txt")
 			#endif
 
 			CHECK_TICK

@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(memory_stats)
 	var/list/stats
 
 /datum/controller/subsystem/memory_stats/Initialize()
-	if(world.system_type != MS_WINDOWS || !aneri_file_exists("memorystats.dll"))
+	if(!aneri_file_exists(MEMORYSTATS_DLL_PATH))
 		flags |= SS_NO_FIRE
 		return SS_INIT_NO_NEED
 	parse_regex = new(@"(?m)^\s*(?P<key>[^:]+):\s*(?P<size>[\d.]+)\s*(?P<unit>(?:B|KB|MB|GB))\s*\((?P<count>[,\d]+)\)$")
@@ -68,9 +68,9 @@ SUBSYSTEM_DEF(memory_stats)
 		aneri_file_write(memory_summary, "data/mem_stat/[GLOB.round_id]-memstat.txt")
 
 /datum/controller/subsystem/memory_stats/proc/get_memory_stats()
-	if(world.system_type != MS_WINDOWS || !aneri_file_exists("memorystats.dll"))
+	if(!aneri_file_exists(MEMORYSTATS_DLL_PATH))
 		return
-	. = trimtext(call_ext("memorystats", "get_memory_stats")())
+	. = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
 	if(.)
 		stats = parse_memory_stats(.)
 
