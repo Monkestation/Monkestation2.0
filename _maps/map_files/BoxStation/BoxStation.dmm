@@ -1540,6 +1540,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/textured,
 /area/station/science/xenobiology)
+"ayU" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/security/detectives_office)
 "azm" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -9383,11 +9388,6 @@
 	dir = 1
 	},
 /area/station/cargo/storage)
-"cYi" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/security/detectives_office)
 "cYs" = (
 /obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
@@ -12350,10 +12350,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
-"dYN" = (
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "dYQ" = (
 /obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
@@ -16295,7 +16291,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "Detective Office Maintenance"
+	name = "Detective's Office Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/plating,
@@ -24100,11 +24096,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark/textured/airless,
 /area/station/maintenance/space_hut)
-"hLo" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/security/detectives_office)
 "hLs" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/landmark/start/gary/rare,
@@ -28333,10 +28324,6 @@
 	},
 /turf/open/floor/plating/reinforced,
 /area/station/science/xenobiology)
-"jiI" = (
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "jiL" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark/side{
@@ -31306,10 +31293,6 @@
 /obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"kgt" = (
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/wood,
-/area/station/security/detectives_office)
 "kgu" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -42350,10 +42333,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
-"nKw" = (
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "nKz" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/button/door/directional/north{
@@ -50058,6 +50037,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
+"qoA" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "qoB" = (
 /obj/structure/sign/poster/random/directional/south,
 /obj/effect/spawner/random/structure/crate,
@@ -51292,6 +51275,11 @@
 /obj/effect/landmark/start/quartermaster,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
+"qJG" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/detectives_office)
 "qKk" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -59656,6 +59644,10 @@
 "txI" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
+"txJ" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood,
+/area/station/security/detectives_office)
 "txT" = (
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
@@ -71818,6 +71810,10 @@
 /obj/machinery/vending/access/command,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
+"xrT" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xrX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -73174,6 +73170,10 @@
 /obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
+"xOB" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xOH" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/engineering/central)
@@ -100483,7 +100483,7 @@ mUw
 mUw
 xhv
 mUw
-jiI
+xOB
 dIW
 mUw
 iua
@@ -100999,9 +100999,9 @@ mUw
 bpe
 dor
 dIW
-dYN
+qoA
 pVB
-nKw
+xrT
 fPN
 wfE
 dwJ
@@ -102027,9 +102027,9 @@ mHH
 tbg
 tFs
 hjG
-hLo
+qJG
 rKe
-cYi
+ayU
 fPN
 fhe
 dwJ
@@ -102539,7 +102539,7 @@ tbg
 tbg
 qid
 tbg
-kgt
+txJ
 hjG
 hPT
 jUt
