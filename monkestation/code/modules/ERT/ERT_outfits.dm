@@ -191,6 +191,7 @@
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/pinpointer/crew = 1,
 		/obj/item/emergency_bed = 1,
+		/obj/item/healthanalyzer/advanced = 1,
 	)
 	glasses = /obj/item/clothing/glasses/night
 	r_pocket = /obj/item/holosign_creator/security
@@ -675,16 +676,18 @@
 	belt = /obj/item/storage/belt/military/assault
 	back = /obj/item/mod/control/pre_equipped/apocryphal/elite
 	backpack_contents = list(
-		/obj/item/storage/box/medipens_advanced = 1,
+		/obj/item/storage/box/medipens/advanced = 1,
+		/obj/item/storage/box/c4 = 1,
+		/obj/item/storage/box/x4 = 1,
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/teargas = 1,
-		/obj/item/grenade/c4/x4 = 3,
 		/obj/item/gun/ballistic/revolver/mateba = 1,
-		/obj/item/ammo_box/a357 = 2,
+		/obj/item/ammo_box/a357 = 3,
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
-	r_pocket = /obj/item/holosign_creator/security
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+
 	implants = list(/obj/item/implant/krav_maga)
 
 /datum/outfit/centcom/ert/generic/deathsquad/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -701,5 +704,7 @@
 	outfit = /datum/outfit/centcom/ert/generic/deathsquad/dust
 
 /datum/outfit/centcom/ert/generic/deathsquad/dust
+	name = "Elite Deathsquad Commando (Do or Die!)"
 	implants = list(/obj/item/implant/dust, /obj/item/implant/krav_maga)
+
 

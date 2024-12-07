@@ -260,14 +260,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/pie/cream(src)
 
-/obj/item/storage/box/medipens_advanced
+/obj/item/storage/box/medipens/advanced
 	name = "box of advanced medipens"
 	desc = "A box full of advanced MediPens."
 	icon_state = "ntbox"
 	illustration = "epipen"
 
-/obj/item/storage/box/medipens/medipens_advanced/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+/obj/item/storage/box/medipens/advanced/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/stimpack(src)
 	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
 	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
 	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
@@ -275,4 +275,23 @@
 	new /obj/item/reagent_containers/hypospray/medipen/penacid(src)
 	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
 
+/obj/item/storage/box/x4
+	name = "box of x-4 charges"
+	desc = "A box full of x-4 charges."
+	icon_state = "syndiebox"
+	illustration = "firecracker"
+
+/obj/item/storage/box/x4/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/c4/x4(src)
+
+/obj/item/storage/box/c4
+	name = "box of c-4 charges"
+	desc = "A box full of c-4 charges."
+	icon_state = "ntbox"
+	illustration = "firecracker"
+
+/obj/item/storage/box/c4/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/c4(src)
 

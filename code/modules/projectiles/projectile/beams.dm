@@ -130,7 +130,7 @@
 	name = "pulse"
 	generic_name = "pulse beam"
 	icon_state = "u_laser"
-	damage = 40 //monkestation edit: 50 to 40
+	damage = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/pulse
@@ -142,9 +142,9 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
-			SSexplosions.med_mov_atom += target
+			SSexplosions.low_mov_atom += target //monkestation edit
 		else
-			SSexplosions.medturf += target
+			SSexplosions.lowturf += target //monkestation edit
 
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
@@ -152,6 +152,7 @@
 /obj/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
+	damage = 100 //monkestation addition
 	projectile_piercing = ALL
 	var/pierce_hits = 2
 
@@ -159,7 +160,7 @@
 	if(pierce_hits <= 0)
 		projectile_piercing = NONE
 	pierce_hits -= 1
-	..()
+	return ..()
 
 /obj/projectile/beam/emitter
 	name = "emitter beam"
