@@ -6047,6 +6047,7 @@
 #include "monkestation\code\game\objects\items\admin_plushies.dm"
 #include "monkestation\code\game\objects\items\amogus_potion.dm"
 #include "monkestation\code\game\objects\items\caneswords.dm"
+#include "monkestation\code\game\objects\items\cards_ids.dm"
 #include "monkestation\code\game\objects\items\chainsaw.dm"
 #include "monkestation\code\game\objects\items\choice_beacon.dm"
 #include "monkestation\code\game\objects\items\cigs_lighters.dm"
