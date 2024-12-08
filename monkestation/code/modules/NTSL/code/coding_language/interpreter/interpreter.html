@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define">Define Details</a></header>
+<main>
+<h1>monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/RETURNING">RETURNING</a></th><td>Indicates that the current function is returning a value.</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/BREAKING">BREAKING</a></th><td>Indicates that the current loop is being terminated.</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/CONTINUING">CONTINUING</a></th><td>Indicates that the rest of the current iteration of a loop is being skipped.</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/RESET_STATUS">RESET_STATUS</a></th><td>Indicates that we are entering a new function and the allowed_status var should be cleared</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/MAX_STATEMENTS">MAX_STATEMENTS</a></th><td>Maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/MAX_ITERATIONS">MAX_ITERATIONS</a></th><td>Max number of uninterrupted loops possible</td></tr>
+        <tr><th><a href="monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.html#define/MAX_RECURSION">MAX_RECURSION</a></th><td>&lt;ax recursions without returning anything (or completing the code block)</td></tr>
+        <tr><th><a href="datum&#x2F;n_Interpreter.html">&#x2F;datum&#x2F;n_Interpreter</a></th><td>n_Interpreter
+Procedures allowing for interaction with the script that is being run by the interpreter object.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BREAKING"><aside class="declaration">#define </aside>BREAKING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 7"/></a>
+    </h3>
+    <p>Indicates that the current loop is being terminated.</p><h3 id="define/CONTINUING"><aside class="declaration">#define </aside>CONTINUING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 9"/></a>
+    </h3>
+    <p>Indicates that the rest of the current iteration of a loop is being skipped.</p><h3 id="define/MAX_ITERATIONS"><aside class="declaration">#define </aside>MAX_ITERATIONS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L24">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 24"/></a>
+    </h3>
+    <p>Max number of uninterrupted loops possible</p><h3 id="define/MAX_RECURSION"><aside class="declaration">#define </aside>MAX_RECURSION
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L26">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 26"/></a>
+    </h3>
+    <p>&lt;ax recursions without returning anything (or completing the code block)</p><h3 id="define/MAX_STATEMENTS"><aside class="declaration">#define </aside>MAX_STATEMENTS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L22">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 22"/></a>
+    </h3>
+    <p>Maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation</p><h3 id="define/RESET_STATUS"><aside class="declaration">#define </aside>RESET_STATUS
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 11"/></a>
+    </h3>
+    <p>Indicates that we are entering a new function and the allowed_status var should be cleared</p><h3 id="define/RETURNING"><aside class="declaration">#define </aside>RETURNING
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/128492a391bd403d375a31152e8c99115405ef58/monkestation/code/modules/NTSL/code/coding_language/interpreter/interpreter.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;coding_language&#x2F;interpreter&#x2F;interpreter.dm 5"/></a>
+    </h3>
+    <p>Indicates that the current function is returning a value.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/128492a391bd403d375a31152e8c99115405ef58">128492a</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
