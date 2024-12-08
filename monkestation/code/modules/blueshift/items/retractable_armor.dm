@@ -5,6 +5,7 @@
 	complexity = 3
 	speed_added = 0.25
 	armor_mod = /datum/armor/retractive_plates
+	removable = TRUE
 
 /datum/armor/retractive_plates
 	melee = 20

@@ -80,6 +80,7 @@
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/pepper
 	item_type = /obj/item/mod/module/pepper_shoulders
 	cost = PAYCHECK_COMMAND
+	restricted = TRUE
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/retract_plates
 	item_type = /obj/item/mod/module/plate_compression
