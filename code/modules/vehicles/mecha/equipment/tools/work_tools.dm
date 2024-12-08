@@ -89,7 +89,7 @@
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		//MONKESTATION EDIT START
-		if(source.istate && ISTATE_HARM)
+		if(source.istate && ISTATE_HARM && killer_clamp)
 			playsound(src, clampsound, 40, TRUE) //monkestation addition
 			M.take_damage(300, BRUTE)
 			target.visible_message(span_danger("[chassis] squeezes [target]!"), \

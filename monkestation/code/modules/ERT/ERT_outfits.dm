@@ -707,10 +707,11 @@
 	sec_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/deathsquad/dust
-	name = "Elite Deathsquad Commando (Do or Die!)"
+	name = "Elite Deathsquad Commando"
 	outfit = /datum/outfit/centcom/ert/generic/deathsquad/dust
 
 /datum/outfit/centcom/ert/generic/deathsquad/dust
+	name = "Elite Deathsquad Commando (Do or Die!)"
 	implants = list(/obj/item/implant/dust, /obj/item/implant/krav_maga)
 
 
