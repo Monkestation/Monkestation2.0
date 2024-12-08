@@ -1,14 +1,9 @@
 import { useBackend } from '../backend';
-import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
+import { BlockQuote, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 import { ObjectivePrintout, Objective } from './common/Objectives';
-
-const allystyle = {
-  fontWeight: 'bold',
-  color: 'yellow',
-};
+// import { AntagInfoHeader } from './common/AntagInfoHeader';
 
 const badstyle = {
   color: 'red',
@@ -21,76 +16,42 @@ const goalstyle = {
 };
 
 type Info = {
+  antag_name: string;
   has_codewords: BooleanLike;
   phrases: string;
   responses: string;
-  theme: string;
-  allies: string;
-  goal: string;
-  intro: string;
   code: string;
   failsafe_code: string;
-  replacement_code: string;
-  replacement_frequency: string;
   has_uplink: BooleanLike;
-  uplink_intro: string;
   uplink_unlock_info: string;
   objectives: Objective[];
 };
 
-const IntroductionSection = (props) => {
-  const { act, data } = useBackend<Info>();
-  const { intro, objectives } = data;
-  return (
-    <Section fill title="Intro" scrollable>
-      <Stack vertical fill>
-        <Stack.Item fontSize="25px">{intro}</Stack.Item>
-        <Stack.Item grow>
-          <ObjectivePrintout objectives={objectives} />
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const EmployerSection = (props) => {
+const UplinkSection = (_props) => {
   const { data } = useBackend<Info>();
-  const { allies, goal } = data;
+  const { has_uplink, uplink_unlock_info, code, failsafe_code } = data;
   return (
-    <Section
-      fill
-      title="Employer"
-      scrollable
-      buttons={
-        <Button
-          icon="hammer"
-          tooltip={multiline`
-            This is a gameplay suggestion for bored traitors.
-            You don't have to follow it, unless you want some
-            ideas for how to spend the round.`}
-          tooltipPosition="bottom-start"
-        >
-          Policy
-        </Button>
-      }
-    >
-      <Stack vertical fill>
-        <Stack.Item grow>
-          <Stack vertical>
-            <Stack.Item>
-              <span style={allystyle}>
-                Your allegiances:
-                <br />
-              </span>
-              <BlockQuote>{allies}</BlockQuote>
-            </Stack.Item>
+    <Section title="Uplink" mb={!has_uplink && -1}>
+      <Stack vertical>
+        <Stack.Item>
+          <BlockQuote>
+            Keep this uplink safe, and don&apos;t feel like you need to buy everything immediately — you can save your
+            telecrystals to use whenever you&apos;re in a tough situation and need help.
+          </BlockQuote>
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <Stack fill>
+            <Stack.Item bold>{code && <span style={goalstyle}>Code: {code}</span>}</Stack.Item>
             <Stack.Divider />
+            {failsafe_code && (
+              <>
+                <Stack.Item bold>{code && <span style={goalstyle}>Code: {code}</span>}</Stack.Item>
+                <Stack.Divider />
+              </>
+            )}
             <Stack.Item>
-              <span style={goalstyle}>
-                Employer thoughts:
-                <br />
-              </span>
-              <BlockQuote>{goal}</BlockQuote>
+              <BlockQuote>{uplink_unlock_info}</BlockQuote>
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -99,82 +60,7 @@ const EmployerSection = (props) => {
   );
 };
 
-const UplinkSection = (props) => {
-  const { data } = useBackend<Info>();
-  const {
-    has_uplink,
-    uplink_intro,
-    uplink_unlock_info,
-    code,
-    failsafe_code,
-    replacement_code,
-    replacement_frequency,
-  } = data;
-  return (
-    <Section title="Uplink" mb={!has_uplink && -1}>
-      <Stack fill>
-        {(!has_uplink && (
-          <Dimmer>
-            <Stack.Item fontSize="16px">
-              <Section textAlign="Center">
-                Your uplink is missing or destroyed. <br />
-                Craft a Syndicate Uplink Beacon and then speak
-                <br />
-                <span style={goalstyle}>
-                  <b>{replacement_code}</b>
-                </span>{' '}
-                on frequency{' '}
-                <span style={goalstyle}>
-                  <b>{replacement_frequency}</b>
-                </span>{' '}
-                after synchronizing with the beacon.
-              </Section>
-            </Stack.Item>
-          </Dimmer>
-        )) || (
-          <>
-            <Stack.Item bold>
-              {uplink_intro}
-              <br />
-              {code && <span style={goalstyle}>Code: {code}</span>}
-              <br />
-              {failsafe_code && (
-                <span style={badstyle}>Failsafe: {failsafe_code}</span>
-              )}
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item mt="1%">
-              <BlockQuote>{uplink_unlock_info}</BlockQuote>
-            </Stack.Item>
-          </>
-        )}
-      </Stack>
-      <br />
-      {(has_uplink && (
-        <Section textAlign="Center">
-          If you lose your uplink, you can craft a Syndicate Uplink Beacon and
-          then speak{' '}
-          <span style={goalstyle}>
-            <b>{replacement_code}</b>
-          </span>{' '}
-          on radio frequency{' '}
-          <span style={goalstyle}>
-            <b>{replacement_frequency}</b>
-          </span>{' '}
-          after synchronizing with the beacon.
-        </Section>
-      )) || (
-        <Section>
-          {' '}
-          <br />
-          <br />
-        </Section>
-      )}
-    </Section>
-  );
-};
-
-const CodewordsSection = (props) => {
+const CodewordsSection = (_props) => {
   const { data } = useBackend<Info>();
   const { has_codewords, phrases, responses } = data;
   return (
@@ -182,22 +68,16 @@ const CodewordsSection = (props) => {
       <Stack fill>
         {(!has_codewords && (
           <BlockQuote>
-            You have not been supplied with codewords. You will have to use
-            alternative methods to find potential allies. Proceed with caution,
-            however, as everyone is a potential foe.
+            You have not been supplied with codewords. You will have to use alternative methods to find potential allies.
+            Proceed with caution, however, as everyone is a potential foe.
           </BlockQuote>
         )) || (
           <>
             <Stack.Item grow basis={0}>
               <BlockQuote>
-                Your employer provided you with the following codewords to
-                identify fellow agents. Use the codewords during regular
-                conversation to identify other agents. Proceed with caution,
-                however, as everyone is a potential foe.
-                <span style={badstyle}>
-                  &ensp;You have memorized the codewords, allowing you to
-                  recognise them when heard.
-                </span>
+                Your employer provided you with the following codewords to identify fellow agents. Use the codewords during
+                regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.
+                <span style={badstyle}>&ensp;You have memorized the codewords, allowing you to recognise them when heard.</span>
               </BlockQuote>
             </Stack.Item>
             <Stack.Divider mr={1} />
@@ -220,30 +100,32 @@ const CodewordsSection = (props) => {
   );
 };
 
-export const AntagInfoTraitor = (props) => {
+export const AntagInfoTraitorContent = (_props) => {
   const { data } = useBackend<Info>();
-  const { theme } = data;
+  const { antag_name, objectives } = data;
   return (
-    <Window width={620} height={580} theme={theme}>
+    <Stack vertical fill>
+      <Stack.Item>
+        {/* <AntagInfoHeader name={antag_name || 'Traitor'} asset="traitor.png" /> */}
+      </Stack.Item>
+      <Stack.Item grow>
+        <ObjectivePrintout objectives={objectives} />
+      </Stack.Item>
+      <Stack.Item>
+        <UplinkSection />
+      </Stack.Item>
+      <Stack.Item>
+        <CodewordsSection />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+export const AntagInfoTraitor = (_props) => {
+  return (
+    <Window width={620} height={620} theme="syndicate">
       <Window.Content>
-        <Stack vertical fill>
-          <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item width="70%">
-                <IntroductionSection />
-              </Stack.Item>
-              <Stack.Item width="30%">
-                <EmployerSection />
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-          <Stack.Item>
-            <UplinkSection />
-          </Stack.Item>
-          <Stack.Item>
-            <CodewordsSection />
-          </Stack.Item>
-        </Stack>
+        <AntagInfoTraitorContent />
       </Window.Content>
     </Window>
   );

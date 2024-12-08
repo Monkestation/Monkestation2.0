@@ -67,6 +67,14 @@
 #define LIGHT_THEME_NAME "NtOS Light Mode"
 #define ELDRITCH_THEME_NAME "Eldritch"
 
+//themes for factions (You can use this for computers if you want)
+#define PDA_THEME_DONK "donk_co"
+#define PDA_THEME_WAFFLE "waffle_co"
+#define PDA_THEME_CYBER "cyber_sun"
+#define PDA_THEME_VAHLEN "vahlen"
+#define PDA_THEME_GORLEX "gorlex"
+#define PDA_THEME_BOSYN "bosyn"
+
 ///List of PDA themes that are accessible to everyone by default.
 GLOBAL_LIST_INIT(default_pda_themes, list(
 	PDA_THEME_NTOS_NAME = PDA_THEME_NTOS,

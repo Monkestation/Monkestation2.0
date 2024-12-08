@@ -218,6 +218,8 @@
 	for(var/i in objective_count to objective_limit - 1)
 		objectives += forge_single_generic_objective()
 
+	setup_backstories()
+
 /**
  * ## forge_ending_objective
  *
@@ -405,6 +407,20 @@
 		sword.worn_icon_state = "e_sword_on_red"
 
 		H.update_held_items()
+
+
+/datum/antagonist/traitor/antag_panel_data()
+	// Traitor Backstory
+	var/backstory_text = "<b>Traitor Backstory:</b><br>"
+	if(istype(faction))
+		backstory_text += "<b>Faction:</b> <span class='tooltip' style=\"font-size: 12px\">\[ [faction.name]<span class='tooltiptext' style=\"width: 320px; padding: 5px;\">[faction.description]</span> \]</span><br>"
+	else
+		backstory_text += "<font color='red'>No faction selected!</font><br>"
+	if(istype(backstory))
+		backstory_text += "<b>Backstory:</b> <span class='tooltip' style=\"font-size: 12px\">\[ [backstory.name]<span class='tooltiptext' style=\"width: 320px; padding: 5px;\">[backstory.description]</span> \]</span><br>"
+	else
+		backstory_text += "<font color='red'>No backstory selected!</font><br>"
+	return backstory_text
 
 #undef FLAVOR_FACTION_SYNDICATE
 #undef FLAVOR_FACTION_NANOTRASEN

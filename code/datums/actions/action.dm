@@ -50,6 +50,8 @@
 	/// full key we are bound to
 	var/full_key
 
+	var/atom/movable/screen/movable/action_button/button = null
+
 /datum/action/New(Target)
 	link_to(Target)
 

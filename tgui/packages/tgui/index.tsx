@@ -25,6 +25,12 @@ import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
+import './styles/themes/donk_co.scss';
+import './styles/themes/waffle_co.scss';
+import './styles/themes/cyber_sun.scss';
+import './styles/themes/vahlen.scss';
+import './styles/themes/gorlex.scss';
+import './styles/themes/bosyn.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
 // MONKESTATION ADDITION END
