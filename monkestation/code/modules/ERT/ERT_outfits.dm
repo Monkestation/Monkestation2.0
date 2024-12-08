@@ -681,13 +681,14 @@
 		/obj/item/storage/box/x4 = 1,
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/teargas = 1,
+		/obj/item/pinpointer/nuke = 1,
 		/obj/item/gun/ballistic/revolver/mateba = 1,
 		/obj/item/ammo_box/a357 = 3,
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
-
+	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
 
 /datum/outfit/centcom/ert/generic/deathsquad/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -698,9 +699,11 @@
 	rebooter.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/reviver/reviver_implant = new()
 	reviver_implant.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/eyes/hud/security/sec_hud = new()
+	sec_hud.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/deathsquad/dust
-	name = "Elite Deathsquad Commando (Do or Die)"
+	name = "Elite Deathsquad Commando (Do or Die!)"
 	outfit = /datum/outfit/centcom/ert/generic/deathsquad/dust
 
 /datum/outfit/centcom/ert/generic/deathsquad/dust

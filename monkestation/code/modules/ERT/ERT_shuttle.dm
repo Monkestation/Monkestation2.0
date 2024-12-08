@@ -32,12 +32,21 @@
 /area/shuttle/ert/powered
 	requires_power = FALSE
 
+
+/area/shuttle/ert/powered/deathsquad
+	name = "Deathsquad Shuttle"
+	requires_power = FALSE
+
 ////////////// Consoles //////////////
 /obj/machinery/computer/shuttle/ert
 	name = "ERT shuttle console"
 	shuttleId = "ertshuttle"
 	possible_destinations = "ertshuttle_custom;syndicate_nw"
 	req_access = list(ACCESS_CENT_GENERAL)
+
+/obj/machinery/computer/shuttle/ert/deathsquad
+	name = "deathsquad shuttle console"
+	req_access = list(ACCESS_CENT_SPECOPS)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert
 	name = "ERT shuttle navigation computer"
@@ -47,6 +56,9 @@
 	shuttlePortId = "ertshuttle_custom"
 	see_hidden = FALSE
 	view_range = 4.5
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert/deathsquad
+	name = "deathsquad shuttle navigation computer"
 
 /obj/docking_port/mobile/ert
 	name = "ERT shuttle"
@@ -69,3 +81,7 @@
 /datum/map_template/shuttle/ert/dropship/janitor
 	suffix = "dropship-janitor"
 	name = "ERT Dropship"
+
+/datum/map_template/shuttle/ert/deathsquad
+	suffix = "deathsquad"
+	name = "Deathsquad Shuttle"

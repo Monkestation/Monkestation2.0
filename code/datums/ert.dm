@@ -203,8 +203,20 @@
 	roles = list(
 		/datum/antagonist/ert/generic/janitor,
 	)
-	polldesc = NONE
 	opendoors = FALSE
 	ert_template = /datum/map_template/shuttle/ert/dropship/janitor
 	mission = "Clean up EVERYTHING."
 	polldesc = "a Nanotrasen Janitorial Response Team"
+
+/datum/ert/code/epsilon
+	leader_role = /datum/antagonist/ert/generic/deathsquad
+	roles = list(
+		/datum/antagonist/ert/generic/deathsquad,
+	)
+	opendoors = FALSE
+	ert_template = /datum/map_template/shuttle/ert/dropship/janitor
+	rename_team = "Deathsquad Commandos"
+	code = "Epsilon"
+	mission = "Leave no witnesses."
+	polldesc = "an elite Nanotrasen Strike Team"
+	ert_template = /datum/map_template/shuttle/ert/deathsquad

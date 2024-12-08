@@ -81,12 +81,12 @@
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
 		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
 
-	else if(isliving(target))
+	if(isliving(target)) //monkestation edit
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
 
-		if(!(source.istate & ISTATE_HARM))
+		if(!(source.istate && ISTATE_HARM)) //monkestation edit
 			step_away(M,chassis)
 			if(killer_clamp)
 				target.visible_message(span_danger("[chassis] tosses [target] like a piece of paper!"), \
@@ -96,10 +96,11 @@
 				chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
 				span_notice("[chassis] pushes you aside."))
 			return ..()
-		else if((source.istate & ISTATE_SECONDARY) && iscarbon(M))//meme clamp here
+		if((source.istate && ISTATE_HARM) && ishuman(M))//meme clamp here  monkestation edit
 			if(!killer_clamp)
 				to_chat(source, span_notice("You longingly wish to tear [M]'s arms off."))
 				return
+			playsound(src, clampsound, 40, TRUE) //monkestation edition
 			var/mob/living/carbon/C = target
 			var/torn_off = FALSE
 			var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)

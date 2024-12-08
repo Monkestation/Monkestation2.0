@@ -48,6 +48,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(immolationturf)], with cause of [cause].")
 
 	if(imp_in)
+		imp_in.visible_message(span_warning("[imp_in]'s body flashes and burns up from inside in blazing light!"))
 		imp_in.investigate_log("has been dusted by a self immolation implant.", INVESTIGATE_DEATHS)
 		imp_in.dust()
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -228,6 +229,7 @@
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/visor/night,
 		/obj/item/mod/module/status_readout,
+		/obj/item/mod/module/joint_torsion = 1,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack/advanced,
@@ -278,7 +280,7 @@
 /obj/item/storage/box/x4
 	name = "box of x-4 charges"
 	desc = "A box full of x-4 charges."
-	icon_state = "syndiebox"
+	icon_state = "secbox"
 	illustration = "firecracker"
 
 /obj/item/storage/box/x4/PopulateContents()
@@ -288,10 +290,53 @@
 /obj/item/storage/box/c4
 	name = "box of c-4 charges"
 	desc = "A box full of c-4 charges."
-	icon_state = "ntbox"
+	icon_state = "secbox"
 	illustration = "firecracker"
 
 /obj/item/storage/box/c4/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/c4(src)
 
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/elite
+	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
+	operation_req_access = list(ACCESS_CENT_SPECOPS)
+	internals_req_access = list(ACCESS_CENT_SPECOPS)
+	fast_pressure_step_in = 0.5 //step_in while in low pressure conditions
+	slow_pressure_step_in = 1.5 //step_in while in normal pressure conditions
+	movedelay = 1.5
+	max_integrity = 500
+	encumbrance_gap = 5
+	max_equip_by_category = list(
+		MECHA_UTILITY = 3,
+		MECHA_POWER = 2,
+		MECHA_ARMOR = 3,
+	)
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/elite,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/admantium,
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster, /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster),
+	)
+
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/elite/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/elite
+	name = "\improper KILL CLAMP"
+	desc = "They won't know what clamped them! This time for real!"
+	clamp_damage = 150
+	killer_clamp = TRUE
+	movedelay = 0
+
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/admantium
+	name = "adamantine-tipped exosuit drill"
+	desc = "Equipment for combat exosuits. This is an upgraded version of the drill that'll pierce the universe itself!"
+	icon_state = "mecha_diamond_drill"
+	drill_delay = 2
+	force = 60
