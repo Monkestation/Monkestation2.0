@@ -182,6 +182,7 @@
 
 /obj/item/organ/internal/cyberimp/cyberlink/syndicate
 	name = "Cybersun Cybernetics Access System"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL_LINK
 
 /obj/item/organ/internal/cyberimp/cyberlink/admin
