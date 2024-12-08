@@ -1099,7 +1099,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/structure/tank_dispenser,
+/obj/machinery/recharge_station,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert)
 "Iq" = (

@@ -81,8 +81,10 @@
 	return
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
+	playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edition
 	if(drill.do_after_mecha(src, user, 60 / drill.drill_level))
 		drill.log_message("Drilled through [src]", LOG_MECHA)
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edition
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
@@ -97,7 +99,9 @@
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edition
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edition
 			M.gets_drilled()
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()

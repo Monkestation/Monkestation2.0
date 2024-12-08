@@ -45,7 +45,7 @@
 	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/machinery/computer/shuttle/ert/deathsquad
-	name = "deathsquad shuttle console"
+	name = "shuttle console"
 	req_access = list(ACCESS_CENT_SPECOPS)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert
@@ -58,7 +58,7 @@
 	view_range = 4.5
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert/deathsquad
-	name = "deathsquad shuttle navigation computer"
+	name = "shuttle navigation computer"
 
 /obj/docking_port/mobile/ert
 	name = "ERT shuttle"

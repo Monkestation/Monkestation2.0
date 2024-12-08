@@ -10,7 +10,7 @@
 /area/shuttle/ert/powered/deathsquad)
 "b" = (
 /obj/machinery/button/door/directional/east{
-	req_access = list(ACCESS_CENT_SPECOPS);
+	req_access = list(188);
 	id = "rightdoor"
 	},
 /obj/machinery/light/red/dim/directional/east,
@@ -158,7 +158,7 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "leftdoor";
-	req_access = list(ACCESS_CENT_SPECOPS)
+	req_access = list(188)
 	},
 /obj/machinery/light/red/dim/directional/west,
 /turf/open/floor/mineral/plastitanium,
@@ -191,7 +191,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	id = "cockpit";
-	req_access = list(ACCESS_CENT_SPECOPS)
+	req_access = list(188)
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/ert/powered/deathsquad)
@@ -267,7 +267,10 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert/deathsquad,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/ert/deathsquad{
+	x_offset = -1;
+	y_offset = 7
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/ert/powered/deathsquad)
 

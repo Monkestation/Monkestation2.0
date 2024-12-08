@@ -219,7 +219,6 @@
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/energy_shield/nanotrasen,
 		/obj/item/mod/module/noslip,
 		/obj/item/mod/module/power_kick,
 		/obj/item/mod/module/rad_protection,
@@ -278,7 +277,7 @@
 	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
 
 /obj/item/storage/box/x4
-	name = "box of x-4 charges"
+	name = "box of x-4 charges (WARNING)"
 	desc = "A box full of x-4 charges."
 	icon_state = "secbox"
 	illustration = "firecracker"
@@ -288,7 +287,7 @@
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/box/c4
-	name = "box of c-4 charges"
+	name = "box of c-4 charges (WARNING)"
 	desc = "A box full of c-4 charges."
 	icon_state = "secbox"
 	illustration = "firecracker"
@@ -301,7 +300,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
-	fast_pressure_step_in = 0.5 //step_in while in low pressure conditions
+	fast_pressure_step_in = 1 //step_in while in low pressure conditions
 	slow_pressure_step_in = 1.5 //step_in while in normal pressure conditions
 	movedelay = 1.5
 	max_integrity = 500

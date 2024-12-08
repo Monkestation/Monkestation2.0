@@ -18,6 +18,10 @@
 	outfit = /datum/outfit/centcom/ert/generic
 	ert_job_path = /datum/job/ert/generic
 
+/datum/antagonist/ert/generic/greet()
+	..()
+	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/ert.ogg', 100, 0, use_reverb = FALSE) //monkestation addition
+
 /datum/outfit/centcom/ert/generic
 	name = "Emergency Response Officer"
 
@@ -687,7 +691,7 @@
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
-	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+	r_pocket = /obj/item/shield/energy
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
 
@@ -707,7 +711,6 @@
 	outfit = /datum/outfit/centcom/ert/generic/deathsquad/dust
 
 /datum/outfit/centcom/ert/generic/deathsquad/dust
-	name = "Elite Deathsquad Commando (Do or Die!)"
 	implants = list(/obj/item/implant/dust, /obj/item/implant/krav_maga)
 
 
