@@ -195,17 +195,26 @@
 "Q" = (
 /obj/machinery/vending/wallmed/directional/north,
 /obj/structure/rack,
-/obj/item/reagent_containers/spray/waterflower/lube{
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/obj/item/pneumatic_cannon/pie/selfcharge{
 	pixel_x = 6;
-	pixel_y = 3
+	pixel_y = -6
 	},
-/obj/item/reagent_containers/spray/waterflower/lube{
-	pixel_x = 1;
-	pixel_y = -7
+/obj/item/pneumatic_cannon/pie/selfcharge{
+	pixel_x = -2;
+	pixel_y = 1
 	},
-/obj/item/reagent_containers/spray/waterflower/lube{
-	pixel_x = -7;
-	pixel_y = 0
+/obj/item/pneumatic_cannon/pie/selfcharge{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/pneumatic_cannon/pie/selfcharge{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/pneumatic_cannon/pie/selfcharge{
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)

@@ -245,6 +245,10 @@
 	name = "Infiltrator Bridge"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/specops,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/ert/powered/deathsquad)
 "T" = (
