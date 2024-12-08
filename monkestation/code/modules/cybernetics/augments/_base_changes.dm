@@ -3,7 +3,6 @@
 
 /obj/item/organ/internal/cyberimp
 	var/hacked = FALSE
-	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
 	var/list/encode_info = AUGMENT_NO_REQ
 
