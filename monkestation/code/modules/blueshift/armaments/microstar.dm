@@ -15,10 +15,10 @@
 	item_type = /obj/item/gun/energy/e_gun/mini
 	cost = PAYCHECK_CREW * 5
 
-/datum/armament_entry/company_import/microstar/lethal_sidearm/energy_holster
+/*datum/armament_entry/company_import/microstar/lethal_sidearm/energy_holster
 	item_type = /obj/item/storage/belt/holster/energy/thermal
-	cost = PAYCHECK_COMMAND * 6
-
+	cost = PAYCHECK_COMMAND * 6 */
+// this was just broken when it was disabled, so yeah? that or REALLY pointless
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons
 	subcategory = "Basic Energy Longarms"
 
@@ -36,16 +36,16 @@
 
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons/mod_laser_small
 	item_type = /obj/item/gun/energy/modular_laser_rifle/carbine
-	cost = PAYCHECK_COMMAND * 5
+	cost = PAYCHECK_COMMAND * 6
 
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons/mod_laser_large
 	item_type = /obj/item/gun/energy/modular_laser_rifle
-	cost = PAYCHECK_COMMAND * 8
+	cost = PAYCHECK_COMMAND * 9
 
 // More expensive, unique energy weapons
 /datum/armament_entry/company_import/microstar/experimental_energy
 	subcategory = "Experimental Energy Weapons"
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 8
 	restricted = TRUE
 
 /datum/armament_entry/company_import/microstar/experimental_energy/hellfire
