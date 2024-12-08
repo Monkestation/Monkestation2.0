@@ -92,3 +92,7 @@
 
 /turf/closed/mineral/random/jungle/space_safe
 	baseturfs = /turf/open/misc/dirt/dark/station/airless
+
+//Monkestation Addition
+/turf/open/misc/grass/jungle/station // Same as the dirt please stop :(
+	baseturfs = /turf/open/misc/dirt/station
