@@ -11,3 +11,12 @@
 					/obj/item/vacuum_pack)
 	crate_name = "xenobiology starter crate"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/secureboard
+	name = "Secure Science Board Crate"
+	desc = "Control the Silicons with upload and robotics control console boards."
+	cost = CARGO_CRATE_VALUE * 20
+	access = ACCESS_RD
+	contains = list(/obj/item/circuitboard/computer/aiupload, /obj/item/circuitboard/computer/robotics, /obj/item/circuitboard/computer/borgupload)
+	crate_name = "secure science board crate"
+	crate_type = /obj/structure/closet/crate/secure/science
