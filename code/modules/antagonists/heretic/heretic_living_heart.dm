@@ -220,5 +220,10 @@ monkestation end */
 	if(tracked_mob.stat == DEAD)
 		balloon_message = "they're dead, " + balloon_message
 
+//Monke Edit begin
+	if(IS_HERETIC(tracked_mob))
+		balloon_message = "A fellow Mansus follower... " + balloon_message
+//Monke Edit End
+
 	return balloon_message
 monkestation end */
