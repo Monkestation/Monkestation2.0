@@ -51,13 +51,13 @@
 
 			packaging_types += list(category_item)
 
-	packaging_type = GLOB.reagent_containers[CAT_PILLS][1]
+	packaging_type = GLOB.chem_master_containers[CAT_PILLS][1] //monkestation edit: reaplces GLOB.reagent_containers with GLOB.chem_master_containers
 	max_volume = initial(packaging_type.volume)
 	current_volume = clamp(current_volume, MIN_VOLUME, max_volume)
 
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
-obj/machinery/plumbing/pill_press/Destroy(force)
+/obj/machinery/plumbing/pill_press/Destroy(force)
 	QDEL_LAZYLIST(stored_products)
 	return ..()
 
