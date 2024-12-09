@@ -38,7 +38,7 @@
 /area/station/commons/lounge)
 "dB" = (
 /obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50,7 +50,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "es" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -83,7 +83,7 @@
 /area/station/commons/lounge)
 "ga" = (
 /obj/item/grown/bananapeel,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "gd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -97,14 +97,12 @@
 /area/station/service/bar)
 "gG" = (
 /obj/structure/chair/stool/bar/directional/east,
-/turf/open/misc/dirt/jungle/wasteland{
-	slowdown = 0
-	},
+/turf/open/misc/dirt/station/jungle/wasteland,
 /area/station/commons/lounge)
 "hi" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/chair/sofa/left/brown,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "ho" = (
 /obj/effect/decal/cleanable/dirt,
@@ -118,15 +116,15 @@
 /area/station/commons/lounge)
 "iJ" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "mK" = (
 /obj/structure/chair/sofa/left/brown,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "mL" = (
 /obj/structure/flora/tree/jungle/small/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "nq" = (
 /obj/structure/cable,
@@ -182,7 +180,7 @@
 /area/station/service/bar)
 "qB" = (
 /obj/structure/flora/tree/jungle/style_3,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "qQ" = (
 /obj/machinery/newscaster/directional/north,
@@ -191,13 +189,11 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "qR" = (
-/turf/open/misc/dirt/jungle/wasteland{
-	slowdown = 0
-	},
+/turf/open/misc/dirt/station/jungle/wasteland,
 /area/station/commons/lounge)
 "ri" = (
 /obj/item/food/grown/banana/bunch,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "sE" = (
 /obj/structure/closet/secure_closet/bar,
@@ -208,7 +204,7 @@
 /area/station/service/bar/backroom)
 "tx" = (
 /obj/item/sticker/monkestation/banana,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "tV" = (
 /obj/machinery/firealarm/directional/west,
@@ -219,13 +215,11 @@
 /area/station/commons/lounge)
 "uC" = (
 /obj/structure/chair/sofa/right/brown,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "wf" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/dirt/jungle/wasteland{
-	slowdown = 0
-	},
+/turf/open/misc/dirt/station/jungle/wasteland,
 /area/station/commons/lounge)
 "ws" = (
 /obj/effect/landmark/start/bartender,
@@ -233,7 +227,7 @@
 /area/station/service/bar)
 "ww" = (
 /mob/living/carbon/human/species/monkey/punpun,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "xv" = (
 /obj/machinery/door/airlock{
@@ -253,12 +247,12 @@
 /area/station/commons/lounge)
 "yT" = (
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "yV" = (
 /obj/structure/flora/grass/jungle/a/style_random,
 /obj/item/grown/bananapeel,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "zS" = (
 /obj/item/radio/intercom/directional/west{
@@ -283,15 +277,15 @@
 /area/station/service/bar)
 "BL" = (
 /obj/effect/landmark/start/mime,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Df" = (
 /obj/structure/flora/bush/jungle/b/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "DZ" = (
 /mob/living/carbon/human/species/monkey/monkey_freak,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Ec" = (
 /obj/machinery/firealarm/directional/north,
@@ -341,7 +335,7 @@
 /area/station/service/bar/backroom)
 "GX" = (
 /obj/effect/landmark/start/clown,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Hr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -351,7 +345,7 @@
 /area/station/service/bar)
 "HE" = (
 /obj/structure/fermenting_barrel,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "HP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -373,20 +367,20 @@
 "KS" = (
 /obj/structure/fermenting_barrel,
 /obj/machinery/light/dim/directional/south,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "LG" = (
 /obj/structure/table/wood,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "LH" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Mt" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Mx" = (
 /turf/closed/wall,
@@ -433,7 +427,7 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Sb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -445,9 +439,7 @@
 /area/station/commons/lounge)
 "Tg" = (
 /obj/machinery/holopad,
-/turf/open/misc/dirt/jungle/wasteland{
-	slowdown = 0
-	},
+/turf/open/misc/dirt/station/jungle/wasteland,
 /area/station/commons/lounge)
 "TK" = (
 /obj/machinery/status_display/evac/directional/west,
@@ -482,10 +474,10 @@
 "Ws" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/gas/monkeymask,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "Xr" = (
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/commons/lounge)
 "XS" = (
 /obj/structure/cable,
