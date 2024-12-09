@@ -248,13 +248,15 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/external/wings,
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
-		///this instant starts a timer, and if its being instantly deleted it can cause issues
-		/obj/machinery/atm,
 		/datum/hotspot,
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
-		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		// monkestation start
+		/obj/machinery/atm, // this instantly starts a timer, and if its being instantly deleted it can cause issues
+		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
+		/obj/structure/hive_exit, // should not exist on its own without being crated by a hive
+		// monkestation end
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
