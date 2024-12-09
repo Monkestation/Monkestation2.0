@@ -11,7 +11,6 @@
 	cost = PAYCHECK_COMMAND * 3
 
 //Rayne Corp Medkit: A portable medkit that contains a cynical artificial intelligence that can diagnose and treat your injuries, but also insults you and makes sarcastic comments about your condition.
-//automender but it sucks and hates you
 
 //Rayne Corp Sticky Tiles: A synthetic tile that has a special adhesive property that can cushion any fall and prevent serious damage,
 //but also traps you in place until you can free yourself or get help. The Sticky Tile is ideal for people who are clumsy and prone to accidents.
