@@ -659,7 +659,7 @@
 	name = "Elite Deathsquad Commando"
 	role = "Commando"
 	outfit = /datum/outfit/centcom/ert/generic/deathsquad
-	ert_job_path = /datum/job/ert/generic
+	ert_job_path = /datum/job/ert/deathsquad
 
 /datum/antagonist/ert/generic/deathsquad/New()
 	. = ..()
