@@ -21,8 +21,9 @@
 /datum/player_details/proc/find_current_mob() as /mob
 	RETURN_TYPE(/mob)
 	var/client/client = GLOB.directory[ckey]
-	if(client?.mob)
-		return client.mob
+	. = client?.mob
+	if(.)
+		return
 	for(var/mob/mob as anything in GLOB.mob_list)
 		if(!QDELETED(mob) && mob.ckey == ckey)
 			return mob
