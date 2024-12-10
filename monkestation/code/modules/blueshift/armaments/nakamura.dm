@@ -19,43 +19,6 @@
 	item_type = /obj/item/mod/core/ethereal
 	cost = PAYCHECK_CREW
 
-// MOD plating
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating
-	subcategory = "MOD External Plating"
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/standard
-	name = "MOD Standard Plating"
-	item_type = /obj/item/mod/construction/plating
-	cost = PAYCHECK_CREW
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/medical
-	name = "MOD Medical Plating"
-	item_type = /obj/item/mod/construction/plating/medical
-	cost = PAYCHECK_COMMAND
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/engineering
-	name = "MOD Engineering Plating"
-	item_type = /obj/item/mod/construction/plating/engineering
-	cost = PAYCHECK_COMMAND
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/atmospherics
-	name = "MOD Atmospherics Plating"
-	item_type = /obj/item/mod/construction/plating/atmospheric
-	cost = PAYCHECK_COMMAND
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/security
-	name = "MOD Security Plating"
-	item_type = /obj/item/mod/construction/plating/security
-	cost = PAYCHECK_COMMAND * 2
-	restricted = TRUE
-
-/datum/armament_entry/company_import/nakamura_modsuits/plating/clown
-	name = "MOD CosmoHonk (TM) Plating"
-	item_type = /obj/item/mod/construction/plating/cosmohonk
-	cost = PAYCHECK_COMMAND * 2
-	contraband = TRUE
-
 // MOD modules
 
 // Protection, so shielding and whatnot
@@ -114,9 +77,10 @@
 	item_type = /obj/item/mod/module/storage
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/nakamura_modsuits/utility_modules/expanded_storage
-	item_type = /obj/item/mod/module/storage/large_capacity
+/datum/armament_entry/company_import/nakamura_modsuits/utility_modules/pepper
+	item_type = /obj/item/mod/module/pepper_shoulders
 	cost = PAYCHECK_COMMAND
+	restricted = TRUE
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/retract_plates
 	item_type = /obj/item/mod/module/plate_compression
@@ -190,15 +154,3 @@
 /datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/hat_stabilizer
 	item_type = /obj/item/mod/module/hat_stabilizer
 	cost = PAYCHECK_CREW
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/kinesis
-	item_type = /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/antigrav
-	item_type = /obj/item/mod/module/anomaly_locked/antigrav/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/teleporter
-	item_type = /obj/item/mod/module/anomaly_locked/teleporter/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 20
