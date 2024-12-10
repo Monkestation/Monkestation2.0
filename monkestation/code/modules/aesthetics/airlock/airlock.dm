@@ -333,13 +333,13 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/captain
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/cap.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/hop
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/hop.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/hos
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/hos.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/hos/glass
 	opacity = FALSE
@@ -347,7 +347,7 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/ce
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/ce.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/ce/glass
 	opacity = FALSE
@@ -355,7 +355,7 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/rd
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/rd.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/rd/glass
 	opacity = FALSE
@@ -363,7 +363,7 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/qm
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/qm.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/qm/glass
 	opacity = FALSE
@@ -371,7 +371,7 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/cmo
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/cmo.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
 
 /obj/machinery/door/airlock/cmo/glass
 	opacity = FALSE
@@ -379,13 +379,13 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/psych
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/psych.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 
 /obj/machinery/door/airlock/asylum
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/asylum.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 
 /obj/machinery/door/airlock/bathroom
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/bathroom.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 
 //STATION MINERAL AIRLOCKS
 /obj/machinery/door/airlock/gold
@@ -563,57 +563,57 @@
 
 /obj/structure/door_assembly/door_assembly_captain
 	name = "captain airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/cap.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/command/glass
 	airlock_type = /obj/machinery/door/airlock/captain
 
 /obj/structure/door_assembly/door_assembly_hop
 	name = "head of personnel airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/hop.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/command/glass
 	airlock_type = /obj/machinery/door/airlock/hop
 
 /obj/structure/door_assembly/hos
 	name = "head of security airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/hos.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/hos/glass
 	airlock_type = /obj/machinery/door/airlock/hos
 
 /obj/structure/door_assembly/door_assembly_cmo
 	name = "chief medical officer airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/cmo.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/cmo/glass
 	airlock_type = /obj/machinery/door/airlock/cmo
 
 /obj/structure/door_assembly/door_assembly_ce
 	name = "chief engineer airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/ce.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/ce/glass
 	airlock_type = /obj/machinery/door/airlock/ce
 
 /obj/structure/door_assembly/door_assembly_rd
 	name = "research director airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/rd.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/rd/glass
 	airlock_type = /obj/machinery/door/airlock/rd
 
 /obj/structure/door_assembly/door_assembly_qm
 	name = "quartermaster airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/qm.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/qm/glass
 	airlock_type = /obj/machinery/door/airlock/qm
 
 /obj/structure/door_assembly/door_assembly_psych
 	name = "psychologist airlock assembly"
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/psych.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 	glass_type = /obj/machinery/door/airlock/medical/glass
 	airlock_type = /obj/machinery/door/airlock/psych
 
 /obj/structure/door_assembly/door_assembly_asylum
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/asylum.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 
 /obj/structure/door_assembly/door_assembly_bathroom
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/bathroom.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/neutral.dmi'
 
 /obj/machinery/door/airlock/hydroponics
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/botany.dmi'
