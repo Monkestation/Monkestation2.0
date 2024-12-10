@@ -66,6 +66,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
+	allowed = GLOB.security_vest_allowed
 
 /datum/armor/costume_justice
 	melee = 35
@@ -552,6 +553,7 @@
 	icon_state = "soviet_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/costume/yuri
 	name = "yuri initiate coat"
@@ -559,6 +561,7 @@
 	icon_state = "yuri_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/costume/tmc
 	name = "\improper Lost M.C. cut"
@@ -583,3 +586,4 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	allowed = GLOB.security_vest_allowed
