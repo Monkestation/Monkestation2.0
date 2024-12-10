@@ -1,0 +1,10 @@
+.moods32x32{display:inline-block;width:32px;height:32px;background:url('asset.d41d8cd98f00b204e9800998ecf8427e.png') no-repeat;}
+.moods32x32.mood1{background-position:-0px -0px;}
+.moods32x32.mood2{background-position:-32px -0px;}
+.moods32x32.mood3{background-position:-64px -0px;}
+.moods32x32.mood4{background-position:-0px -32px;}
+.moods32x32.mood5{background-position:-32px -32px;}
+.moods32x32.mood6{background-position:-64px -32px;}
+.moods32x32.mood7{background-position:-0px -64px;}
+.moods32x32.mood8{background-position:-32px -64px;}
+.moods32x32.mood9{background-position:-64px -64px;}
