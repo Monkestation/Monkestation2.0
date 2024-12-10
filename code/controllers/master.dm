@@ -86,7 +86,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		#ifdef UNIT_TESTS
 		random_seed = 29051994 // How about 22475?
 		#else
-		random_seed = rand(1, 1e9)
+		random_seed = aneri_rand_uint(secure = TRUE) // monkestation edit: use aneri to initialize rng seed
 		#endif
 		rand_seed(random_seed)
 
@@ -242,13 +242,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			init_subsystem(subsystem)
 			#ifndef OPENDREAM
-			if(world.system_type == MS_WINDOWS)
+			if(aneri_file_exists(MEMORYSTATS_DLL_PATH))
 				var/ss_name = "[subsystem.name]"
-				var/memory_summary = call_ext("memorystats", "get_memory_stats")()
-				var/file = file("data/mem_stat/[GLOB.round_id]-memstat.txt")
-
-				var/string = "[ss_name] [memory_summary]"
-				WRITE_FILE(file, string)
+				var/memory_summary = call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")()
+				aneri_file_append("[ss_name] [memory_summary]", "data/mem_stat/[GLOB.round_id]-memstat.txt")
 			#endif
 
 			CHECK_TICK
@@ -317,13 +314,15 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		return
 
 	current_initializing_subsystem = subsystem
-	rustg_time_reset(SS_INIT_TIMER_KEY)
+	// monkestation start: replace rust_g timer with aneri
+	var/datum/instant/init_timer = new
 
 	var/result = subsystem.Initialize()
 
 	// Capture end time
-	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
+	var/time = init_timer.milliseconds()
 	var/seconds = round(time / 1000, 0.01)
+	// monkestation end
 
 	// Always update the blackbox tally regardless.
 	SSblackbox.record_feedback("tally", "subsystem_initialize", time, subsystem.name)

@@ -121,7 +121,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = unix_timestamp_string()
+	logging_start_timestamp = ANERI_CALL("unix_timestamp") // monkestation edit: aneri
 	log_categories = list()
 	disabled_categories = list()
 
@@ -226,18 +226,18 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/init_category_file(datum/log_category/category)
 	var/file_path = category.get_output_file(null)
 	if(fexists(file_path)) // already exists? implant a reset marker
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
+		aneri_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path) // monkestation edit: aneri
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("[json_encode(category.category_header)]\n", file_path)
+	aneri_file_write("[json_encode(category.category_header)]\n", file_path) // monkestation edit: aneri
 
 	if(!human_readable_enabled)
 		return
 
 	file_path = category.get_output_file(null, "log")
 	if(fexists(file_path))
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
+		aneri_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path) // monkestation edit: aneri
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+	aneri_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path) // monkestation edit: aneri
 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
@@ -278,23 +278,8 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	category_instance.category_header = category_header
 	init_category_file(category_instance, category_header)
 
-/datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
-
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
-	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = unix_timestamp_string()
-	var/list/timestamp = splittext(rustg_stamp, ".")
-#ifdef UNIT_TESTS
-	if(length(timestamp) != 2)
-		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
-		return start
-#endif
-	var/millis = timestamp[2]
-	if(length(millis) > precision)
-		millis = copytext(millis, 1, precision + 1)
-	return "[start].[millis]"
+	return ANERI_CALL("human_readable_timestamp", precision)
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
