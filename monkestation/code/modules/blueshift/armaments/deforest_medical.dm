@@ -181,10 +181,6 @@
 	item_type = /obj/item/surgery_tray
 	cost = PAYCHECK_COMMAND
 
-/datum/armament_entry/company_import/deforest/equipment/advanced_health_analyer
-	item_type = /obj/item/healthanalyzer/advanced
-	cost = PAYCHECK_COMMAND * 3
-
 /datum/armament_entry/company_import/deforest/equipment/penlite_defib_mount
 	item_type = /obj/item/wallframe/defib_mount/charging
 	cost = PAYCHECK_CREW * 3
@@ -242,7 +238,3 @@
 /datum/armament_entry/company_import/deforest/medical_modules/thread_ripper
 	name = "MOD thread ripper module"
 	item_type = /obj/item/mod/module/thread_ripper
-
-/datum/armament_entry/company_import/deforest/medical_modules/surgical_processor
-	name = "MOD surgical processor module"
-	item_type = /obj/item/mod/module/surgical_processor
