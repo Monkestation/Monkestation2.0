@@ -1279,4 +1279,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+///Used to prevent Corpo Judo users from using Baton weapons.
+#define TRAIT_NO_WEAPONTYPE "no_weapontype"
+
 // END TRAIT DEFINES
