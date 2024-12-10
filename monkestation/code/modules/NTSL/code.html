@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;readme.md - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>monkestation/code/modules/NTSL/code/readme.md 
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/798b1f2028c4921139688e43731527ca45e90444/monkestation/code/modules/NTSL/code/readme.md">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;NTSL&#x2F;code&#x2F;readme.md"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><p>https://github.com/Monkestation/Monkestation2.0/pull/2199</p>
+<hh2 id="ntsl-coding">&lt;NTSL Coding&gt;</hh2>
+<p>MODULE ID: NTSL</p>
+<hh3 id="description">Description:</hh3>
+<p>Allows people to change how comms work via NTSL
+for example, adding in their job after their name</p>
+<hh3 id="tg-proc-file-changes">TG Proc/File Changes:</hh3>
+<ul>
+<li>
+<p>code\datums\chatmessage.dm -- Added a if(!speaker); return; due to NTSL code not passing a speaker when you use broadcast()</p>
+</li>
+<li>
+<p>code\datums\id_trim\jobs.dm -- Added the ACCESS_TCOMMS_ADMIN to the CE's trim</p>
+</li>
+<li>
+<p>code\game\say.dm -- Adds a </a> to the end of endspanpart, also a lot of stuff for AI tracking</p>
+</li>
+<li>
+<p>code\game\machinery\telecomms\telecomunications.dm -- Added some logging if there's a wrong filter path</p>
+</li>
+<li>
+<p>code\game\machinery\telecomms\broadcasting.dm -- Added a lvls var to the signal, needed for broadcast() on comms to work</p>
+</li>
+<li>
+<p>code\game\machinery\telecomms\machines\server.dm -- Added stuff to make the servers actually compile NTSL</p>
+</li>
+<li>
+<p>code\modules\research\techweb\all_nodes.dm -- Added the programming console thingy to the telecomms techweb</p>
+</li>
+<li>
+<p>icons\ui_icons\achievements.dmi -- Added the achievement icon for loud and silent birb</p>
+</li>
+<li>
+<p>icons\obj\card.dmi -- Added the icon for signal techs</p>
+</li>
+<li>
+<p>tgui\packages\tgui\interfaces\common\JobToIcon.ts -- Added an icon state to the signal techs so they show up in TGUI</p>
+</li>
+</ul>
+<hh3 id="included-files-that-are-not-contained-in-this-module">Included files that are not contained in this module:</hh3>
+<ul>
+<li>
+<p>monkestation\code\modules\jobs\job_types\signal_technician.dm</p>
+</li>
+<li>
+<p>monkestation\code\modules\clothing\under\jobs\engineering.dm</p>
+</li>
+<li>
+<p>monkestation\code\modules\clothing\suits\coats.dm</p>
+</li>
+<li>
+<p>monkestation\code\modules\clothing\spacesuits\plasmamen.dm</p>
+</li>
+<li>
+<p>monkestation\icons\obj\clothing\uniforms.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\mob\clothing\uniform.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\obj\clothing\suits.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\mob\clothing\suit.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\obj\clothing\hats.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\mob\clothing\head.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\obj\clothing\plasmaman.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\mob\clothing\plasmaman.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\obj\clothing\plasmaman_head.dmi</p>
+</li>
+<li>
+<p>monkestation\icons\mob\clothing\plasmaman_head.dmi</p>
+</li>
+<li>
+<p>tgui\packages\tgui\interfaces\NTSLCoding.js -- Interface for the traffic console</p>
+</li>
+</ul>
+<hh3 id="defines">Defines:</hh3>
+<ul>
+<li>
+<p>code__DEFINES\access.dm</p>
+</li>
+<li>
+<p>code__DEFINES\jobs.dm</p>
+</li>
+<li>
+<p>code__DEFINES\achievements.dm -- Added poly achievement defines, since apparently we dont modularize dat</p>
+</li>
+<li>
+<p>code__DEFINES\logging.dm -- Added NTSL log stuff</p>
+</li>
+<li>
+<p>code__DEFINES~monkestation\access.dm</p>
+</li>
+<li>
+<p>code__DEFINES~monkestation\jobs.dm</p>
+</li>
+<li>
+<p>code__DEFINES~monkestation\NTSL.dm</p>
+</li>
+</ul>
+<hh3 id="credits">Credits:</hh3>
+<ul>
+<li>Altoids1 -- Original author in 2019</li>
+<li>JohnFulpWillard -- Doing a lot of stuff apparently</li>
+<li>Gboster-0 -- Porting to Monkestation, fixes</li>
+</ul></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/798b1f2028c4921139688e43731527ca45e90444">798b1f2</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
