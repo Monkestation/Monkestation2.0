@@ -32,7 +32,9 @@
  */
 /proc/get_player_details(target) as /datum/player_details
 	RETURN_TYPE(/datum/player_details)
-	if(istext(target))
+	if(istype(target, /datum/player_details))
+		return target // well, that was easy
+	else if(istext(target))
 		return GLOB.player_details[ckey(target)]
 	else if(ismob(target))
 		var/mob/mob_target = target
@@ -45,6 +47,4 @@
 	else if(IS_CLIENT_OR_MOCK(target))
 		var/datum/client_interface/client_target = target
 		return client_target.player_details
-	else if(istype(target, /datum/player_details))
-		return target // well, that was easy
 
