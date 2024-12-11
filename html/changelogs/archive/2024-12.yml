@@ -1,0 +1,143 @@
+2024-12-01:
+  Marabout2:
+  - rscadd: Added a new stylish admin jail
+2024-12-02:
+  Absolucy:
+  - bugfix: Fixed some seemingly common runtime errors related to lighting.
+  - balance: His Grace now provides immunity to pain effects while in use.
+  - qol: Web sounds (admin/curator music + walkmans) should now show the english title
+      if youtube provides one.
+  - rscadd: Drones now have built-in diagnostic HUDs.
+  - bugfix: Proto-kinetic crushers with zero or negative recharge times will just
+      not de-charge at all.
+  Absolucy, GoldenAlpharex:
+  - qol: Grown logs no longer spam your chat when cut into planks, instead displaying
+      balloon alerts informing you of how many planks were made!
+  - qol: Cotton and Durathread bundles no longer spam your chat either, and display
+      a balloon alert instead.
+  - bugfix: Cotton and Durathread bundles no longer runtime when creating raw cotton/durathread
+      from the created stack having been merged with an existing one.
+  Absolucy, Melbert:
+  - qol: Cockroaches, butterflies, chickens, and similarly small mobs can't bump open
+      (public access) airlocks unless they are controlled by a player.
+  - qol: Tweaked the sizes of a few mobs.
+  - bugfix: Hopefully fixed FPS lag relating to large amounts of blood on-screen.
+  Absolucy, Y0SH1M4S73R:
+  - qol: The asteroid on Tramstation can now have areas expanded into or created within.
+  Eagletanker:
+  - rscadd: Added the CommDrobe (Command Outfitting Station) to the maps which lacked
+      it. These can be found in the bridge.
+  Gw0sty:
+  - rscadd: Added biomass links to Box's xenobio.
+  - bugfix: Replaced caravan space ruin arm-mounted implant with a toolset implant.
+  Marabout2:
+  - rscadd: 'Added a version of the space hotel ruin, that actually work as a hotel.
+      With ghost roles.
+
+      :cl:'
+  - rscadd: Added three new Syndicate ghost roles in the Deep_storage ruin inculding
+      a comms agent
+  Shoddd:
+  - rscadd: Map votes now auto start when the round ends
+  Wisemonster:
+  - rscadd: Added a request console boards to the telecomms of Blueshift, Delta, Meta,
+      and Theseus.
+  - balance: Signal Technicians can now use the request consoles' announcement system
+  - rscadd: The HoP will now spawn with his HoP backpacks, rather than the standard
+      grey ones.
+  flleeppyy:
+  - server: Adds the ability to add lobby notices. These will show in the pre-round
+      shop, latejoin menu, and in chat when you first join.
+2024-12-05:
+  Gboster-0:
+  - rscadd: Added the amogus potion to nuclear operative uplinks for 10 TC, do not
+      drink it at 3 AM!!!!!
+  Sorenon:
+  - rscadd: Implemented the Feeble quirk
+  The-Black-Screen:
+  - rscadd: added papers to the engineering notice boards in the engine smes room
+      and the large airlock next to it, miscellaneous things
+  - rscdel: removed miscellaneous things
+  - bugfix: fixed the cloning lab, the xenobiology lab, lighting in a few areas, miscellaneous
+      things
+  - code_imp: added boxstation specific papers to monkestation/code/modules/_paperwork/paper_premade.dm
+  ThePooba:
+  - rscadd: Added Rayne Lamp to company imports tab. It provides some light and a
+      bit of warmth, worn in the neck slot.
+  - rscadd: Added Rayne Corporation to company imports.
+  Uristthedorf:
+  - rscadd: Adds wound armor to smithed armor.
+  - rscadd: Smithed armor can hold makeshift and smithed weapons in suit storage.
+  - rscadd: Smithed daggers can be used as knives.
+  - balance: Remove stamina cost from smithed weapons.
+  - bugfix: SMITHED SPEARS DO POINTY DAMAGE
+  - bugfix: Weak weapon trait also reduces throwing damage.
+  - balance: Reduce Muur/Archangel bullet and melee armor.
+  lemonycake:
+  - rscadd: Added yellow cake.
+2024-12-06:
+  Absolucy:
+  - refactor: Refactored how some internal stuff regarding Patreon and Twitch ranks
+      are handled.
+  - rscadd: Added a chat message when using the lobby buttons to connect to another
+      server to make things more clear.
+  - bugfix: Updated the connection port for the MRP lobby button.
+  Jason Farqiour:
+  - rscadd: Added more items to the medical room in centcom.
+  - rscadd: Added rooms and a IPC/Borg repair room.
+  - rscdel: Removed the old bubble room up top for extra space to expand Centcom.
+  - qol: Pretty up medical centcom while trimming the wasted space as well as add
+      extra stuff.
+2024-12-08:
+  Absolucy:
+  - bugfix: The recursive symptom varient should now work as intended rather than
+      cascading horribly.
+  - bugfix: The "Quantumly Entangled" (bluespace) symptom varient should work properly
+      now.
+  - bugfix: Symptoms being deleted properly cleanup their attached varients now.
+  - bugfix: Clown operative leaders now properly spawn with their gear.
+  - bugfix: Anime quirk appearance prefs now properly transfer when becoming a roundstart
+      nuke/clown operative.
+  - bugfix: Clean up the inventory/items of players becoming roundstart nuke/clown
+      operatives more thoroughly and quietly.
+  - refactor: Cleaned up code related to roundstart nuke/clown operatives.
+  - bugfix: Heretics healing on rust via Leeching Walk or rust ascension now properly
+      updates health.
+  - qol: Heretics healing on rust via Leeching Walk or rust ascension scales with
+      the world's delta time, making its rate independent of subsystem lag.
+  - admin: Added a warning+confirmation if an admin try to run a specifically laggy
+      proc.
+  Absolucy, SmArtKar, Kapu:
+  - code_imp: Implemented caching for icon sizes which should significantly improve
+      mob health performance due to HUDs constantly fetching icons.
+  Gw0sty:
+  - rscadd: Gave Chameleon gloves the property to transmit radio for sign language.
+  - rscadd: Research directors now get a mixture of scientist and roboticist bounties.
+  - rscadd: Added craft able cleanbot variation, Scrubs Junior, a cleanbot that medical
+      doctors can access.
+  - rscadd: New bounty types for roboticists, bots, requiring various station bots
+      that do not spawn roundstart.
+  - bugfix: Renamed Late Join to Late Arrival
+  - qol: Cleanbots will now burn cigarbutts, loose ammo casings, and food wrappers
+  SirNightKnight:
+  - bugfix: Fixed Nanotrasen Representative's alt title options excluding the original
+      title once picked.
+  Uristthedorf:
+  - balance: Durathread vests now cover your arms.
+  - image: Worn durathread vest sprites show your arms being covered.
+  Wisemonster:
+  - spellcheck: Clarified NT representative's description as being more an "Observe
+      and report" role, and that they cannot give orders to command (They can still
+      make suggestions).
+2024-12-10:
+  Absolucy:
+  - bugfix: Fixed not being able to select container/pill/patch type in ChemMasters.
+  Gw0sty:
+  - rscadd: R&D consoles are now locked by default when built.
+  Loiosh42:
+  - bugfix: You can now print AP shells at the ammo workbench
+  Shoddd:
+  - bugfix: Wonderland grass no longer has chasms underneath
+  - rscadd: Satyr headbutt now checks for hands and mobility
+  SirNightKnight:
+  - balance: Rebalance debilitated to be more tame.

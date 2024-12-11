@@ -194,7 +194,10 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
-
+			// MONKESTATION EDIT START - lobby notices
+			if (length(config.lobby_notices))
+				config.ShowLobbyNotices(world)
+			// MONKESTATION END
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -248,7 +251,11 @@ SUBSYSTEM_DEF(ticker)
 				declare_completion(force_ending)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-
+//MONKESTATION ADDITION START
+				if(SSmapping.map_voted || SSmapping.map_force_chosen == TRUE)
+					return
+				SSmapping.mapvote()
+//MONKESTATION ADDITION END
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
@@ -392,6 +399,10 @@ SUBSYSTEM_DEF(ticker)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
+			if(interview_safety(player, "readied up"))
+				player.ready = PLAYER_NOT_READY
+				QDEL_IN(player.client, 0)
+				continue
 			GLOB.joined_player_list += player.ckey
 			var/chosen_title = player.client?.prefs.alt_job_titles[player.mind.assigned_role.title] || player.mind.assigned_role.title
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point(chosen_title)
