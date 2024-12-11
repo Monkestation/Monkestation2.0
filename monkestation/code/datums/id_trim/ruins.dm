@@ -22,6 +22,7 @@
 
 /datum/id_trim/away/old/sci
 	sechud_icon_state = SECHUD_SCIENTIST_AWAY
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SCIENCE, ACCESS_RESEARCH)
 
 /datum/id_trim/away/old/sec
 	sechud_icon_state = SECHUD_SECURITY_OFFICER_AWAY
@@ -31,9 +32,10 @@
 
 /datum/id_trim/away/old/robo
 	sechud_icon_state = SECHUD_ROBOTICIST_AWAY
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS, ACCESS_ORDNANCE, ACCESS_RESEARCH)
 
 /datum/id_trim/away/old/apc
 	sechud_icon_state = SECHUD_APC_AWAY
-	
+
 /datum/id_trim/pirate/lustrous
 	sechud_icon_state = SECHUD_RADIANT
