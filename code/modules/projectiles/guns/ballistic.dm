@@ -718,6 +718,9 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	chamber_round()
 	update_appearance()
 
+//modularization
+/obj/item/gun/ballistic/proc/replace_secondary_magazine(obj/item/weapon, mob/user)
+
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."
