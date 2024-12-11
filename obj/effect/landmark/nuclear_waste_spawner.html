@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;effect&#x2F;landmark&#x2F;nuclear_waste_spawner - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/effect/landmark/nuclear_waste_spawner.html#proc">Proc Details</a></header>
+<main>
+<h1>nuclear_waste_spawner <aside>/<a href="obj.html">obj</a>/<a href="obj/effect/landmark/nuclear_waste_spawner.html">effect/landmark/nuclear_waste_spawner</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/fb3e7c51bec69b728fef6cd4ac301f334c9861a0/monkestation/code/game/objects/effects/decal/nuclear_waste.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;decal&#x2F;nuclear_waste.dm 23"/></a></h1>
+
+<p>Clean way of spawning nuclear gunk after a reactor wastecore meltdown.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/effect/landmark/nuclear_waste_spawner.html#proc/fire">fire</a></th><td></td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/fire"><aside class="declaration">proc </aside>fire<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/fb3e7c51bec69b728fef6cd4ac301f334c9861a0/monkestation/code/game/objects/effects/decal/nuclear_waste.dm#L48">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;decal&#x2F;nuclear_waste.dm 48"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>for rbmk
+//Spawns nuclear_waste_spawners on map
+/obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/sludge_spawner_preload()
+/// Smaller scale spawn for spawning range to power output
+var/short_range = CLAMP01(power/10, 5, 25)
+for(var/turf/open/floor in orange(short_range, get_turf(src)))
+if(prob(1)) //Prob of Spawn for sludge spawner
+new /obj/effect/landmark/nuclear_waste_spawner(floor)
+continue</p>
+<p>/// Larger scale spawn for spawning range to power output
+var/longe_range = CLAMP01(power, 5, 200)
+for(var/turf/open/floor in orange(longe_range, get_turf(src)))
+if(prob(5)) //Prob of Spawn for sludge spawner
+new /obj/effect/landmark/nuclear_waste_spawner(floor)
+continue</p>
+</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/fb3e7c51bec69b728fef6cd4ac301f334c9861a0">fb3e7c5</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
