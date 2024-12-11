@@ -76,11 +76,12 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 
 /datum/cassette_review/Destroy(force)
 	. = ..()
-	QDEL_LIST(cassette_data)
+	if(cassette_data)
+		QDEL_LIST(cassette_data)
 	submitter = null
-
-	GLOB.cassette_reviews["[id]"] -= src
-	GLOB.cassette_reviews -= id
+	if(id && (id in GLOB.cassette_reviews))
+		GLOB.cassette_reviews[id] = null // Nullify the entry
+		GLOB.cassette_reviews -= id // Remove the key
 
 /datum/cassette_review/ui_state(mob/user)
 	return GLOB.always_state
