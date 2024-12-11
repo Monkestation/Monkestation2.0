@@ -32,7 +32,7 @@
 
 /datum/id_trim/away/old/robo
 	sechud_icon_state = SECHUD_ROBOTICIST_AWAY
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS, ACCESS_ORDNANCE, ACCESS_RESEARCH)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS, ACCESS_ORDNANCE, ACCESS_RESEARCH, ACCESS_AWAY_SCIENCE)
 
 /datum/id_trim/away/old/apc
 	sechud_icon_state = SECHUD_APC_AWAY
