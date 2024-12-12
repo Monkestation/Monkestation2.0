@@ -123,11 +123,11 @@
 /datum/pain/proc/add_bodypart(mob/living/carbon/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
 
-	if(!istype(new_limb)) // pseudo-bodyparts are not tracked for simplicity (chainsaw arms)
+	if(!istype(new_limb) || QDELING(new_limb)) // pseudo-bodyparts are not tracked for simplicity (chainsaw arms)
 		return
 
 	var/obj/item/bodypart/existing = body_zones[new_limb.body_zone]
-	if(!isnull(existing)) // if we already have a val assigned to this key, remove it
+	if(!QDELETED(existing)) // if we already have a val assigned to this key, remove it
 		remove_bodypart(source, existing, FALSE, special)
 
 	body_zones[new_limb.body_zone] = new_limb
@@ -252,7 +252,7 @@
 	for(var/zone in shuffle(def_zones))
 		var/adjusted_amount = round(amount, 0.01)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[check_zone(zone)]
-		if(isnull(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
+		if(QDELETED(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
 			continue
 
 		var/current_amount = adjusted_bodypart.pain
@@ -315,9 +315,8 @@
 
 	for(var/zone in def_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
-		if(isnull(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
+		if(QDELETED(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
 			continue
-
 		adjusted_bodypart.min_pain = max(adjusted_bodypart.min_pain + amount, 0) // Negative min pain is a neat idea ("banking pain") but not today
 		adjusted_bodypart.pain = max(adjusted_bodypart.pain, adjusted_bodypart.min_pain)
 
@@ -532,6 +531,8 @@
 		var/no_recent_pain = COOLDOWN_FINISHED(src, time_since_last_pain_loss)
 		for(var/part in shuffle(body_zones))
 			var/obj/item/bodypart/checked_bodypart = body_zones[part]
+			if(QDELETED(checked_bodypart))
+				continue
 			if(checked_bodypart.pain <= 0)
 				continue
 			has_pain = TRUE
@@ -860,6 +861,8 @@
 	var/total_pain = 0
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
+		if(QDELETED(adjusted_bodypart))
+			continue
 		total_pain += adjusted_bodypart.pain
 		max_total_pain += adjusted_bodypart.soft_max_pain
 
@@ -870,6 +873,8 @@
 	var/total_pain = 0
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
+		if(QDELETED(adjusted_bodypart))
+			continue
 		total_pain += adjusted_bodypart.pain
 
 	return total_pain
@@ -920,6 +925,8 @@
 
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
+		if(QDELETED(healed_bodypart))
+			continue
 		adjust_bodypart_min_pain(zone, -INFINITY)
 		adjust_bodypart_pain(zone, -INFINITY)
 		// Shouldn't be necessary but you never know!
@@ -1060,7 +1067,8 @@
 	final_print += "[parent] bodypart printout: (min / current / soft max)"
 	for(var/part in body_zones)
 		var/obj/item/bodypart/checked_bodypart = body_zones[part]
-		final_print += "[checked_bodypart.name]: [checked_bodypart.min_pain] / [checked_bodypart.pain] / [checked_bodypart.soft_max_pain]"
+		if(!QDELETED(checked_bodypart))
+			final_print += "[checked_bodypart.name]: [checked_bodypart.min_pain] / [checked_bodypart.pain] / [checked_bodypart.soft_max_pain]"
 
 	final_print += " - - - - "
 	final_print += "[parent] pain modifier printout:"
