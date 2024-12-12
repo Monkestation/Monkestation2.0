@@ -332,7 +332,7 @@
 			// Checking to see if the user is spamming the button, async and all.
 			if((status == OPFOR_STATUS_DENIED) || !denied_reason)
 				return
-			SSopposing_force.deny(user, denied_reason, user)
+			SSopposing_force.deny(src, denied_reason, user)
 		if("mute_request_updates")
 			if(!check_rights(R_ADMIN))
 				return
