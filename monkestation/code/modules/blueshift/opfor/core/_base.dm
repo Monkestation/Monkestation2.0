@@ -889,20 +889,24 @@
 		report += "<b>Had an approved OPFOR application with the following backstory:</b><br>"
 		report += "[set_backstory]<br>"
 
-	if(objectives.len)
+	var/list/datum/opposing_force_objective/approved_objectives = list()
+	for(var/datum/opposing_force_objective/opfor_objective in objectives)
+		if(opfor_objective.status == OPFOR_OBJECTIVE_STATUS_APPROVED)
+			approved_objectives += opfor_objective
+	if(length(approved_objectives))
 		report += "<b>And with the following objectives:</b><br>"
-		for(var/datum/opposing_force_objective/opfor_objective in objectives)
-			if(opfor_objective.status != OPFOR_OBJECTIVE_STATUS_APPROVED)
-				continue
+		for(var/datum/opposing_force_objective/opfor_objective as anything in approved_objectives)
 			report += "<b>Title:</b> [opfor_objective.title]<br>"
 			report += "<b>Description:</b> [opfor_objective.description]<br>"
 			report += "<br>"
 
-	if(selected_equipment.len)
+	var/list/datum/opposing_force_selected_equipment/approved_equipment = list()
+	for(var/datum/opposing_force_selected_equipment/opfor_equipment in selected_equipment)
+		if(opfor_equipment.status == OPFOR_EQUIPMENT_STATUS_APPROVED)
+			approved_equipment += opfor_equipment
+	if(length(approved_equipment))
 		report += "<b>And had the following approved equipment:</b><br>"
-		for(var/datum/opposing_force_selected_equipment/opfor_equipment in selected_equipment)
-			if(opfor_equipment.status != OPFOR_EQUIPMENT_STATUS_APPROVED)
-				continue
+		for(var/datum/opposing_force_selected_equipment/opfor_equipment as anything in approved_equipment)
 			report += "</b>[opfor_equipment.opposing_force_equipment.name]<b><br>"
 			report += "<br>"
 
