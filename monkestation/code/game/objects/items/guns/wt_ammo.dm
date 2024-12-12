@@ -20,6 +20,8 @@
 	stamina = 35
 	embedding = null
 	sharpness = NONE
+	debilitating = TRUE
+	debilitate_mult = 1
 
 /obj/item/ammo_box/magazine/wt550m9/wtsalt
 	name = "wt550 magazine (Saltshot 4.6x30mm)"
