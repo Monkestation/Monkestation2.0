@@ -5953,6 +5953,7 @@
 #include "monkestation\code\datums\components\lock_on_cursor.dm"
 #include "monkestation\code\datums\components\multi_hit.dm"
 #include "monkestation\code\datums\components\pixel_shift.dm"
+#include "monkestation\code\datums\components\singularity.dm"
 #include "monkestation\code\datums\components\throw_bounce.dm"
 #include "monkestation\code\datums\components\turf_checker_complex.dm"
 #include "monkestation\code\datums\components\turf_healing.dm"
