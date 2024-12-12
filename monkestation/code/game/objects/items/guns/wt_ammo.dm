@@ -43,6 +43,8 @@
 	stamina = 30
 	embedding = null
 	sharpness = NONE
+	debilitating = TRUE /// Give salt-shot some love. Same debilitating as base atm, same as disabler post re-work.
+	debilitate_mult = 2
 
 /obj/item/gun/ballistic/automatic/wt550/no_mag
 	spawnwithmagazine = FALSE
