@@ -24,7 +24,6 @@
 
 	// Traitor steal objective
 	new /obj/item/areaeditor/blueprints(src)
-	new /obj/item/gun/ballistic/srn_rocketlauncher(src)
 	new /obj/item/pipe_dispenser(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
