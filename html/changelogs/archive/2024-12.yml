@@ -141,3 +141,21 @@
   - rscadd: Satyr headbutt now checks for hands and mobility
   SirNightKnight:
   - balance: Rebalance debilitated to be more tame.
+2024-12-12:
+  Absolucy:
+  - rscdel: Removed the Tower of Babel wizard event.
+  - rscdel: Staff of Babel is now admin-only.
+  - rscadd: 3+ living ascended heretics will automatically raise the alert level to
+      Lambda.
+  - bugfix: Nar'sie and Ratvar now properly raise the alert level to Lambda.
+  - qol: Ascended heretics are now in their own category in the ghost orbit menu.
+  - refactor: Cleaned up code relating to heretic ascension announcements and traits.
+  - bugfix: Syndicate implants are now properly hidden from HUDs/scanners.
+  - qol: Rearranged the curator's radio booth / private study on MetaStation, hopefully
+      making it less of a cramped eyesore.
+  Absolucy, JohnFulpWillard:
+  - bugfix: Shaft Miners and Explorers are now alerted of icemoon storms, Clowns are
+      naive, and Curators are immune to the Tower of Babel again.
+2024-12-13:
+  Absolucy:
+  - refactor: Challenge and monkecoin reward code is now more resilient.
