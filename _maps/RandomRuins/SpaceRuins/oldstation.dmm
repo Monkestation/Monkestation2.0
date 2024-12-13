@@ -8316,9 +8316,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "RQ" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medical Bay"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/door/firedoor/closed,
@@ -8329,6 +8326,10 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Bay";
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/medbay)
 "RV" = (
