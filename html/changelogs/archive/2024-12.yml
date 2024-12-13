@@ -75,3 +75,87 @@
   - balance: Reduce Muur/Archangel bullet and melee armor.
   lemonycake:
   - rscadd: Added yellow cake.
+2024-12-06:
+  Absolucy:
+  - refactor: Refactored how some internal stuff regarding Patreon and Twitch ranks
+      are handled.
+  - rscadd: Added a chat message when using the lobby buttons to connect to another
+      server to make things more clear.
+  - bugfix: Updated the connection port for the MRP lobby button.
+  Jason Farqiour:
+  - rscadd: Added more items to the medical room in centcom.
+  - rscadd: Added rooms and a IPC/Borg repair room.
+  - rscdel: Removed the old bubble room up top for extra space to expand Centcom.
+  - qol: Pretty up medical centcom while trimming the wasted space as well as add
+      extra stuff.
+2024-12-08:
+  Absolucy:
+  - bugfix: The recursive symptom varient should now work as intended rather than
+      cascading horribly.
+  - bugfix: The "Quantumly Entangled" (bluespace) symptom varient should work properly
+      now.
+  - bugfix: Symptoms being deleted properly cleanup their attached varients now.
+  - bugfix: Clown operative leaders now properly spawn with their gear.
+  - bugfix: Anime quirk appearance prefs now properly transfer when becoming a roundstart
+      nuke/clown operative.
+  - bugfix: Clean up the inventory/items of players becoming roundstart nuke/clown
+      operatives more thoroughly and quietly.
+  - refactor: Cleaned up code related to roundstart nuke/clown operatives.
+  - bugfix: Heretics healing on rust via Leeching Walk or rust ascension now properly
+      updates health.
+  - qol: Heretics healing on rust via Leeching Walk or rust ascension scales with
+      the world's delta time, making its rate independent of subsystem lag.
+  - admin: Added a warning+confirmation if an admin try to run a specifically laggy
+      proc.
+  Absolucy, SmArtKar, Kapu:
+  - code_imp: Implemented caching for icon sizes which should significantly improve
+      mob health performance due to HUDs constantly fetching icons.
+  Gw0sty:
+  - rscadd: Gave Chameleon gloves the property to transmit radio for sign language.
+  - rscadd: Research directors now get a mixture of scientist and roboticist bounties.
+  - rscadd: Added craft able cleanbot variation, Scrubs Junior, a cleanbot that medical
+      doctors can access.
+  - rscadd: New bounty types for roboticists, bots, requiring various station bots
+      that do not spawn roundstart.
+  - bugfix: Renamed Late Join to Late Arrival
+  - qol: Cleanbots will now burn cigarbutts, loose ammo casings, and food wrappers
+  SirNightKnight:
+  - bugfix: Fixed Nanotrasen Representative's alt title options excluding the original
+      title once picked.
+  Uristthedorf:
+  - balance: Durathread vests now cover your arms.
+  - image: Worn durathread vest sprites show your arms being covered.
+  Wisemonster:
+  - spellcheck: Clarified NT representative's description as being more an "Observe
+      and report" role, and that they cannot give orders to command (They can still
+      make suggestions).
+2024-12-10:
+  Absolucy:
+  - bugfix: Fixed not being able to select container/pill/patch type in ChemMasters.
+  Gw0sty:
+  - rscadd: R&D consoles are now locked by default when built.
+  Loiosh42:
+  - bugfix: You can now print AP shells at the ammo workbench
+  Shoddd:
+  - bugfix: Wonderland grass no longer has chasms underneath
+  - rscadd: Satyr headbutt now checks for hands and mobility
+  SirNightKnight:
+  - balance: Rebalance debilitated to be more tame.
+2024-12-12:
+  Absolucy:
+  - rscdel: Removed the Tower of Babel wizard event.
+  - rscdel: Staff of Babel is now admin-only.
+  - rscadd: 3+ living ascended heretics will automatically raise the alert level to
+      Lambda.
+  - bugfix: Nar'sie and Ratvar now properly raise the alert level to Lambda.
+  - qol: Ascended heretics are now in their own category in the ghost orbit menu.
+  - refactor: Cleaned up code relating to heretic ascension announcements and traits.
+  - bugfix: Syndicate implants are now properly hidden from HUDs/scanners.
+  - qol: Rearranged the curator's radio booth / private study on MetaStation, hopefully
+      making it less of a cramped eyesore.
+  Absolucy, JohnFulpWillard:
+  - bugfix: Shaft Miners and Explorers are now alerted of icemoon storms, Clowns are
+      naive, and Curators are immune to the Tower of Babel again.
+2024-12-13:
+  Absolucy:
+  - refactor: Challenge and monkecoin reward code is now more resilient.
