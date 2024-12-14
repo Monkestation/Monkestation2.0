@@ -92,6 +92,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_signalers,
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	/client/proc/respawn_character,
+	/client/proc/review_cassettes, /*Opens the Cassette Review menu*/
 	/client/proc/show_manifest,
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
@@ -159,7 +160,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/toggle_random_events,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape)) //Monkestation Addition: mixtape spawner
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape, /client/proc/review_cassettes,)) //Monkestation Addition: mixtape spawner and mixtape review menu
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
@@ -401,6 +402,12 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
 			to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+
+/client/proc/review_cassettes()
+	set name = "Review Cassettes"
+	set category = "Admin.Game"
+	set desc = "Review this rounds cassettes."
+	/*Opening menu code*/
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
