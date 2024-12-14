@@ -131,7 +131,7 @@
 	desc = "An artefact suit of armor that allows you to cast spells \
 		while providing more protection against attacks and the void of space. \
 		Also grants a battlemage shield."
-	item_path = /obj/item/mod/control/pre_equipped/enchanted
+	item_path = /obj/item/mod/control/pre_equipped/enchanted/no_antimagic
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/armor/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
