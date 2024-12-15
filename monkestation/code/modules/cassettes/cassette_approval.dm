@@ -73,6 +73,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	var/obj/item/device/cassette_tape/submitted_tape
 
 	var/action_taken = FALSE
+	var/verdict = "NONE"
 
 /datum/cassette_review/Destroy(force)
 	. = ..()
@@ -122,6 +123,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			to_chat(submitter, span_warning("You feel a wave of disapointment wash over you, you can tell that your cassette was denied by the Space Board of Music"))
 			logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been rejected by [usr]", list("approver" = usr.name, "submitter" = submitter.name))
 			action_taken = TRUE
+			verdict = "DENIED"
 
 /datum/cassette_review/proc/approve_review(mob/user)
 	if(!check_rights_for(user.client, R_FUN))
@@ -132,6 +134,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	message_admins("[submitter]'s tape has been approved by [user]")
 	logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been approved by [user]", list("approver" = user.name, "submitter" = submitter.name))
 	action_taken = TRUE
+	verdict = "APPROVED"
 
 /proc/fetch_review(id)
 	return GLOB.cassette_reviews[id]
@@ -185,12 +188,14 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		var/submitters_name = cassette.submitter
 		var/obj/item/tape_obj = cassette.submitted_tape
 		var/reviewed = cassette.action_taken
+		var/verdict = cassette.verdict
 
-// Add this cassette's data under its cassette_id
+		// Add this cassette's data under its cassette_id
 		data["cassettes"][cassette_id] = list(
 			"submitter_name" = submitters_name,
 			"tape_name" = tape_obj.name,
-			"reviewed" = reviewed
+			"reviewed" = reviewed,
+			"verdict" = verdict,
 		)
 	return data
 

@@ -7,13 +7,13 @@ export const CassetteManager = (props) => {
   const { cassettes } = data;
 
   return (
-    <Window width={600} height={313}>
+    <Window title="Cassette Manager" width={600} height={313}>
       <Window.Content>
-        <Section title="Cassette Manager">
+        <Section title="List of This Shift's Submissions">
           {cassettes && Object.keys(cassettes).length > 0 ? (
             <Table>
               <Table.Row header>
-                <Table.Cell>Cassette ID</Table.Cell>
+                <Table.Cell>Cassette ID_CKey</Table.Cell>
                 <Table.Cell>Submitter</Table.Cell>
                 <Table.Cell>Title</Table.Cell>
                 <Table.Cell>Reviewed</Table.Cell>
@@ -33,7 +33,20 @@ export const CassetteManager = (props) => {
                       {cassetteData.reviewed ? 'Yes' : 'No'}
                     </Table.Cell>
                     <Table.Cell>
-                      <Button onClick={() => act(cassetteId)}>Review</Button>
+                      {cassetteData.reviewed ? (
+                        // If reviewed is true, check the verdict
+                        cassetteData.verdict === 'APPROVED' ? (
+                          <Button color="green">Approved</Button>
+                        ) : cassetteData.verdict === 'DENIED' ? (
+                          <Button color="red">Denied</Button>
+                        ) : (
+                          <Button onClick={() => act(cassetteId)}>
+                            Review
+                          </Button>
+                        )
+                      ) : (
+                        <Button onClick={() => act(cassetteId)}>Review</Button>
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 ),
