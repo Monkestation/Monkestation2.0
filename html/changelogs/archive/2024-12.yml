@@ -156,3 +156,68 @@
   Absolucy, JohnFulpWillard:
   - bugfix: Shaft Miners and Explorers are now alerted of icemoon storms, Clowns are
       naive, and Curators are immune to the Tower of Babel again.
+2024-12-13:
+  Absolucy:
+  - refactor: Challenge and monkecoin reward code is now more resilient.
+2024-12-14:
+  SentientVoid:
+  - rscadd: The Blueshift aquarium has been altered and moved to maintenance. It has
+      been replaced with the monke box.
+  Syndicat-Meow:
+  - rscadd: Added Disabler SMG available to be ordered from cargo
+  - image: added sprite for Disabler SMG
+  - rscadd: Added Laser Carbine available to be ordered from cargo
+  - image: added sprite for the Laser Carbine
+  - rscadd: Added Syndicate Lipstick! Finish off your opponents with a deadly kiss
+      of death!
+  - rscadd: Added a new trait that comes from using the lipstick
+  - image: added sprite for syndicate lipstick
+  - rscadd: Added two new crossbows one being craftable by crew using and engineering
+      inducer!
+  - rscadd: Added special ammo for the crossbows and a book for stronger normal ammo
+      and their crafting recipes
+  - image: Added sprites of crossbows and ammo
+  - code_imp: changed some code about autofire and minor changes to relavant code
+  - sound: Added a new sound for the crossbow
+  - admin: Added an admin only crossbow bolt =)
+  - rscadd: Added angry cats in a can for 5 TC
+  - rscadd: Added angry cat in a red suit
+  - rscadd: Tossed 3 red suit angry cats in a can for 20 TC
+  - image: Added sprites for the Syndicate Cat
+  ThePooba:
+  - rscadd: adds a Rayne co. medkit that you buy from the company import, you can
+      healthscan people with it and it hates your guts
+  - rscadd: adds bloody drips unusual effect
+  - balance: christmas earlier
+  - qol: smoothbore disabler now needs red queen instead of the reagent that deletes
+      itself
+  - qol: laser musket doesnt need glasses anymore and instead needs another drinking
+      glass
+  - balance: prime laser muskets no longer require twohanded and also shoot better
+      lasers
+  - balance: smoothbore disablers can crank on the run
+  - qol: more suits can hold muskets and pipeguns
+  - bugfix: Fixes a few bugs
+  Wisemonster:
+  - bugfix: Fixed some loadout clothing not updating after alt-clicking while worn
+2024-12-15:
+  Absolucy:
+  - bugfix: Fixed railing stacking.
+  - bugfix: Fixed some double-encodes related to relaying admin/mentor messages to
+      discord.
+  - rscadd: Added christmas tree spawners to Blueshift - one north of science on the
+      upper floor, one west of botany on the lower floor.
+  SirNightKnight:
+  - rscadd: Nanotrasen has found the budget to improve on it's Emergency Response
+      Corps.
+  - balance: Nanotrasen has re-evaluated it's pulse weaponry and has lowered the explosive
+      impact of pulse beams after finding the resulting damage too costly to repair.
+  - balance: FEAR THE DEATH-RIPLEY!!
+  - bugfix: Shuttle decals properly rotate on shuttle move.
+  - bugfix: ' Made the tactical combat uniforms unadjustable so their sprite doesn''t
+      break.'
+  - sound: The newers ERTs now have a greet sound.
+  - code_imp: Changed the logic ordering of the  mech hydraulic clamp.
+  TheColorCyan:
+  - bugfix: Random lipstick now has proper icon upon spawn.
+  - rscdel: Syndie lipstick can no longer spawn as a random lipstick color.
