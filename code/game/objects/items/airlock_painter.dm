@@ -190,11 +190,16 @@
 	var/decal_list = list(
 		list("Warning Line", "warningline"),
 		list("Warning Line Corner", "warninglinecorner"),
+		list("Warning Line End", "warn_end"),
+        list("Warning Line Box", "warn_box"),
 		list("Caution Label", "caution"),
 		list("Directional Arrows", "arrows"),
 		list("Stand Clear Label", "stand_clear"),
+		list("Loading Area", "loadingarea"),
 		list("Bot", "bot"),
 		list("Box", "box"),
+		list("Bot Left", "bot_left"),
+        list("Bot Left", "bot_right"),
 		list("Box Corner", "box_corners"),
 		list("Delivery Marker", "delivery"),
 		list("Warning Box", "warn_full"),
@@ -205,6 +210,9 @@
 		"box",
 		"delivery",
 		"warn_full",
+		"warn_box",
+        "bot_left",
+        "bot_right",
 	)
 
 /obj/item/airlock_painter/decal/Initialize(mapload)
