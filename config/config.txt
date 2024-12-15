@@ -566,3 +566,5 @@ CONFIG_ERRORS_RUNTIME
 ## The age in days if minimum account age is on
 #MINIMUM_AGE
 
+## If enabled, cassette tapes will be stored in the database, rather than JSON files on-disk.
+#CASSETTES_IN_DB
