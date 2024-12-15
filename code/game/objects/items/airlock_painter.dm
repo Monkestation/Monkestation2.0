@@ -188,31 +188,31 @@
 	)
 	/// List of decal options as list(user-friendly label, icon state base value to return)
 	var/decal_list = list(
-		list("Warning Line", "warningline"),
+		list("Warning Line", "warn_end"), //test
 		list("Warning Line Corner", "warninglinecorner"),
 		list("Warning Line End", "warn_end"),
-        list("Warning Line Box", "warn_box"),
 		list("Caution Label", "caution"),
 		list("Directional Arrows", "arrows"),
 		list("Stand Clear Label", "stand_clear"),
 		list("Loading Area", "loadingarea"),
+		list("Box Corner", "box_corners"),
+		list("Warning Line Box", "warn_box"),
 		list("Bot", "bot"),
 		list("Box", "box"),
+		list("Bot Right", "bot_right"),
 		list("Bot Left", "bot_left"),
-        list("Bot Left", "bot_right"),
-		list("Box Corner", "box_corners"),
 		list("Delivery Marker", "delivery"),
 		list("Warning Box", "warn_full"),
 	)
 	// These decals only have a south sprite.
 	var/nondirectional_decals = list(
+		"warn_box",
 		"bot",
 		"box",
+		"bot_right",
+		"bot_left",
 		"delivery",
 		"warn_full",
-		"warn_box",
-        "bot_left",
-        "bot_right",
 	)
 
 /obj/item/airlock_painter/decal/Initialize(mapload)
