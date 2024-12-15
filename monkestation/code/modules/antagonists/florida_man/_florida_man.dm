@@ -56,7 +56,7 @@
 
 	if(QDELETED(wrassling))
 		wrassling = new
-	wrassling.teach(floridan, TRUE)
+	wrassling.teach(floridan)
 
 /datum/antagonist/florida_man/remove_innate_effects(mob/living/mob_override)
 	. = ..()
