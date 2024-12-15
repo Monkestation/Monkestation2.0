@@ -137,3 +137,45 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	return GLOB.cassette_reviews[id]
 
 #undef ADMIN_OPEN_REVIEW
+
+// Handles UI to manage cassettes.
+/client/proc/review_cassettes() //Creates a verb for admins to open up the ui
+	set name = "Review Cassettes"
+	set desc = "Review this rounds cassettes."
+	set category = "Admin.Game"
+	var/datum/review_cassettes/tgui = new(usr)//create the datum
+	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+
+/datum/review_cassettes
+	var/client/holder //client of whoever is using this datum
+	var/is_funmin = FALSE
+/datum/review_cassettes/New(user)//user can either be a client or a mob due to byondcode(tm)
+	if (istype(user, /client))
+		var/client/user_client = user
+		holder = user_client //if its a client, assign it to holder
+	else
+		var/mob/user_mob = user
+		holder = user_mob.client //if its a mob, assign the mob's client to holder
+
+	is_funmin = check_rights(R_FUN)
+
+/datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
+	qdel(src)
+
+/datum/review_cassettes/ui_interact(mob/user, datum/tgui/ui) // Open UI and update as it remains open.
+	if(is_funmin)
+		ui = SStgui.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "CassetteManager")
+			ui.open()
+
+/datum/review_cassettes/ui_data(mob/user)
+	var/list/data = list()
+
+	if(!GLOB.cassette_reviews || !GLOB.cassette_reviews.len)
+		return data
+
+/datum/secrets_menu/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
