@@ -16,7 +16,7 @@
 
 /obj/structure/blood_fountain/attackby(obj/item/bottle, mob/living/user, params)
 	if(!istype(bottle, /obj/item/blood_vial))
-		balloon_alert(user, "Needs a blood vial!")
+		balloon_alert(user, "need a blood vial!")
 		return ..()
 	var/obj/item/blood_vial/vial = bottle
 	vial.fill_vial(user)
@@ -25,6 +25,7 @@
 	name = "blood vial"
 	desc = "Used to collect samples of blood from the dead-still blood fountain."
 	icon = 'monkestation/icons/bloodsuckers/weapons.dmi'
+	base_icon_state = "blood_vial"
 	icon_state = "blood_vial_empty"
 	inhand_icon_state = "beaker"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -35,21 +36,23 @@
 
 /obj/item/blood_vial/proc/fill_vial(mob/living/user)
 	if(filled)
-		balloon_alert(user, "Vial already full!")
+		balloon_alert(user, "vial already full!")
 		return
 	filled = TRUE
-	icon_state = "blood_vial"
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/blood_vial/attack_self(mob/living/user)
 	if(!filled)
-		balloon_alert(user, "Empty!")
+		balloon_alert(user, "empty!")
 		return
 	filled = FALSE
 	user.apply_status_effect(/datum/status_effect/cursed_blood)
-	icon_state = "blood_vial_empty"
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'monkestation/sound/bloodsuckers/blood_vial_slurp.ogg', vol = 50)
+
+/obj/item/blood_vial/update_icon_state()
+	icon_state = filled ? base_icon_state : "[base_icon_state]_empty"
+	return ..()
 
 /datum/status_effect/cursed_blood
 	id = "cursed_blood"
