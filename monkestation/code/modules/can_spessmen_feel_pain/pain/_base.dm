@@ -85,7 +85,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_WOUND, PROC_REF(remove_wound_pain))
 	RegisterSignal(parent, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(remove_bodypart))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_analyzed))
-	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_all_pain))
+	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_healed))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_parent_statchance))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_NO_PAIN_EFFECTS), SIGNAL_REMOVETRAIT(TRAIT_NO_PAIN_EFFECTS)), PROC_REF(refresh_pain_attributes))
@@ -913,15 +913,17 @@
 
 	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
 
+/datum/pain/proc/on_fully_healed(datum/source, heal_flags)
+	SIGNAL_HANDLER
+	// Ideally pain would have its own heal flag but we live in a society
+	if(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS))
+		remove_all_pain()
+
 /**
  * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
  */
-/datum/pain/proc/remove_all_pain(datum/source, heal_flags)
+/datum/pain/proc/remove_all_pain()
 	SIGNAL_HANDLER
-
-	// Ideally pain would have its own heal flag but we live in a society
-	if(!(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS)))
-		return
 
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
