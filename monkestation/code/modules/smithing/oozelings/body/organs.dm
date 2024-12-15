@@ -66,6 +66,26 @@
 
 	var/list/stored_items = list()
 
+	var/list/bannedcore = list(
+		/obj/item/disk/nuclear,
+//		/obj/item/clothing/head/mob_holder //Pet hats
+	)
+
+	var/list/allowed_implants = list(
+		/obj/item/implant
+	)
+
+	var/list/allowed_organ_types = list(
+		/obj/item/organ/internal/cyberimp,
+		/obj/item/organ/external/wings,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/external/frills,
+		/obj/item/organ/external/horns,
+		/obj/item/organ/external/snout,
+		/obj/item/organ/external/antennae,
+		/obj/item/organ/external/spines
+	)
+
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
 
@@ -79,27 +99,35 @@
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
 		. += span_red("You could probably snuff that out.")
-	. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+		. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
-	if(!(gps_active))
-		return
-	user.visible_message(span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
-	span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm."),
-	span_notice("You hear an obscene squelching sound.")
-	)
+	user.visible_message(
+		span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
+		gps_active ? span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into the core, feeling for any dense objects. Slime covers your arm."),
+		span_notice("You hear an obscene squelching sound.")
+    )
 	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(span_warning("[user]'s hand slips out of the core before they can cause any harm!'"),
-		span_warning("Your hand slips out of the goopy core before you can find it's densest point."),
+		gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
 		span_notice("You hear a resounding plop.")
 		)
 		return
 
-	user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-	span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
-	span_notice("You hear a wet crunching sound."))
+	if((gps_active))
+		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
+		span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+		span_notice("You hear a wet crunching sound."))
+		gps_active =  FALSE
+		qdel(GetComponent(/datum/component/gps))//Actually remove the gps signal
+
+	else
+		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
+		span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
+		span_notice("You hear a wet sqlenching sounds."))
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 
 	drop_items_to_ground(get_turf(user))
@@ -141,20 +169,27 @@
 	if(QDELETED(stored_dna))
 		stored_dna = new
 
-	victim.dna.copy_dna(stored_dna)
+	if(victim.dna)
+		victim.dna.copy_dna(stored_dna)
+	else
+		src.stored_dna = null
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
-
-	for(var/atom/movable/item as anything in victim.get_equipped_items(include_pockets = TRUE))
-		victim.dropItemToGround(item)
-		stored_items |= item
-		item.forceMove(src)
+	var/mob/living/basic/mining/legion/legionbody = victim.loc
+	//Start moving items
+	process_items(victim)
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
-	if(death_turf)
-		forceMove(death_turf)
+
+	//Make this check more generalized later. For antags that eat people as they kill. Make sure they drop their
+	//contents after death; that is if that is how that item or antag works.
+	if(legionbody)
+		src.forceMove(legionbody)
+	else
+		if(death_turf)
+			forceMove(death_turf)
 	src.wash(CLEAN_WASH)
 	new death_melt_type(death_turf, victim.dir)
 
@@ -179,7 +214,12 @@
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	rebuilt = FALSE
-	victim.transfer_observers_to(src)
+	if(src.stored_dna)
+		victim.transfer_observers_to(src)
+	else
+		drop_items_to_ground(get_turf(src), TRUE)
+		Destroy()
+		qdel(src)
 	Remove(victim)
 	qdel(victim)
 
@@ -223,9 +263,64 @@
 		return TRUE
 	return ..()
 
-/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
+///////
+/// PROCESS ITEMS FOR CORE EJECTION
+/// Processes different types of items and prepares them to be stored when the core is ejected.
+/obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to process and move items
+    if(!item) // Skip NULL items
+        return
+    if(item.type in src.bannedcore)
+        item.forceMove(get_turf(victim)) // Move to turf if banned
+    else
+        victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
+        stored_items |= item
+
+/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
+	// List of slots that drop to ground despite the transferItemtoLoc proc
+	var/list/focus_slots = list(
+    	ITEM_SLOT_SUITSTORE,
+    	ITEM_SLOT_BELT,
+    	ITEM_SLOT_ID,
+    	ITEM_SLOT_LPOCKET,
+    	ITEM_SLOT_RPOCKET
+	)
+	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
+		process_and_store_item(victim.get_item_by_slot(islot), victim)
+
+	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
+
+	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
+	process_and_store_item(target_chest.cavity_item, victim)
+
+	var/atom/movable/rest_items = victim.get_equipped_items(include_pockets = TRUE)// Store rest of equipment
+	for(var/atom/movable/item in rest_items)
+		process_and_store_item(item, victim)
+
+	var/list/implants = victim.implants // Process and store implants
+	for(var/obj/item/implant/curimplant in implants)
+		for(var/type in src.allowed_implants)
+			if(istype(curimplant, type) && curimplant.removed(victim))
+				var/obj/item/implantcase/case =  new /obj/item/implantcase
+				case.imp = curimplant
+				curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
+				case.update_appearance()
+				process_and_store_item(case, victim)
+
+	var/list/internal_orgs = victim.organs	// Process and store organ implants and related organs
+	for(var/obj/item/organ/organ in internal_orgs)
+		for(var/type in src.allowed_organ_types)
+			if(istype(organ, type))
+				organ.Remove(victim)
+				process_and_store_item(organ, victim)
+				break
+
+/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
 	for(var/atom/movable/item as anything in stored_items)
-		item.forceMove(turf)
+		if(explode)
+			var/mob/living/explodedcore = src.brainmob
+			explodedcore.dropItemToGround(item, violent = TRUE)
+		else
+			item.forceMove(turf)
 	stored_items.Cut()
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE) as /mob/living/carbon/human
@@ -272,10 +367,19 @@
 	qdel(new_body_brain)
 	forceMove(new_body)
 	Insert(new_body)
+
+	brainmob?.mind?.transfer_to(new_body)
+	new_body.grab_ghost()
+	transfer_observers_to(new_body)
+	new_body.set_jitter_if_lower(200 SECONDS)
+	new_body.emote("scream")
+
 	if(nugget)
-		for(var/obj/item/bodypart as anything in new_body.bodyparts)
+		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
+			if(istype(bodypart, /obj/item/bodypart/head))
+				new_body.become_blind(NO_EYES) //Spawning without a head no eyes
 			qdel(bodypart)
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
@@ -283,9 +387,9 @@
 		new_body.visible_message(span_warning("[new_body]'s body fully forms from [new_body.p_their()] core!"))
 		to_chat(owner, span_purple("Your body fully forms from your core!"))
 
-	brainmob?.mind?.transfer_to(new_body)
-	new_body.grab_ghost()
-	transfer_observers_to(new_body)
+	//Update both the body and stats fixe visual body and HUD issues
+	new_body.update_stat()
+	new_body.update_body_parts()
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
@@ -387,11 +491,15 @@
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
+	var/obj/item/bodypart/head/head_part = new /obj/item/bodypart/head()
+
 	if(!length(limbs_to_heal))
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
+		if(head_part.can_attach_limb(H))
+			H.cure_blind(NO_EYES)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*length(limbs_to_heal)
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
@@ -399,6 +507,9 @@
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
+			var/obj/item/bodypart/part = healed_limb
+			if(part.can_attach_limb(head_part))
+				H.cure_blind(NO_EYES)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
