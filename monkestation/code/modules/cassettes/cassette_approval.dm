@@ -149,6 +149,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 /datum/review_cassettes
 	var/client/holder //client of whoever is using this datum
 	var/is_funmin = FALSE
+
 /datum/review_cassettes/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
 		var/client/user_client = user
@@ -158,11 +159,14 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		holder = user_mob.client //if its a mob, assign the mob's client to holder
 
 	is_funmin = check_rights(R_FUN)
+/datum/review_cassettes/ui_state(mob/user)
+	return GLOB.admin_state
 
 /datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
 	qdel(src)
 
 /datum/review_cassettes/ui_interact(mob/user, datum/tgui/ui) // Open UI and update as it remains open.
+	. = ..()
 	if(is_funmin)
 		ui = SStgui.try_update_ui(user, src, ui)
 		if(!ui)
@@ -170,12 +174,33 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			ui.open()
 
 /datum/review_cassettes/ui_data(mob/user)
-	var/list/data = list()
+	. = ..()
+	var/list/data = list("cassettes" = list()) // Initialize main data structure with an empty "cassettes" list
 
-	if(!GLOB.cassette_reviews || !GLOB.cassette_reviews.len)
+	if(isnull(GLOB.cassette_reviews) || !GLOB.cassette_reviews.len)
 		return data
 
-/datum/secrets_menu/ui_act(action, params)
+	for(var/cassette_id in GLOB.cassette_reviews)
+		var/datum/cassette_review/cassette = GLOB.cassette_reviews[cassette_id]
+		var/submitters_name = cassette.submitter
+		var/obj/item/tape_obj = cassette.submitted_tape
+		var/reviewed = cassette.action_taken
+
+// Add this cassette's data under its cassette_id
+		data["cassettes"][cassette_id] = list(
+			"submitter_name" = submitters_name,
+			"tape_name" = tape_obj.name,
+			"reviewed" = reviewed
+		)
+	return data
+
+/datum/review_cassettes/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
+	if(isnull(GLOB.cassette_reviews) || !GLOB.cassette_reviews[action])
+		return
+
+	var/datum/cassette_review/cassette = GLOB.cassette_reviews[action]
+	cassette.ui_interact(usr)
+
