@@ -336,6 +336,11 @@ Security HUDs! Basic mode shows only the job.
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
 
+	if(perp_name && !GLOB.manifest)
+		holder.icon_state = "hudnotcrew"
+		set_hud_image_active(WANTED_HUD)
+		return
+
 	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
