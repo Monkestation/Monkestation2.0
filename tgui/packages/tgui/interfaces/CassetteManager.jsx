@@ -36,9 +36,13 @@ export const CassetteManager = (props) => {
                       {cassetteData.reviewed ? (
                         // If reviewed is true, check the verdict
                         cassetteData.verdict === 'APPROVED' ? (
-                          <Button color="green">Approved</Button>
+                          <Button color="green" onClick={() => act(cassetteId)}>
+                            Approved
+                          </Button>
                         ) : cassetteData.verdict === 'DENIED' ? (
-                          <Button color="red">Denied</Button>
+                          <Button color="red" onClick={() => act(cassetteId)}>
+                            Denied
+                          </Button>
                         ) : (
                           <Button onClick={() => act(cassetteId)}>
                             Review

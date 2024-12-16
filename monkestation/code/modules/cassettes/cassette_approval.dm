@@ -89,12 +89,6 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 
 /datum/cassette_review/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(action_taken)
-		var/choice = tgui_alert(user, "This tape has already been actioned by another admin do you wish to look it over?", "Cassette Review", list("Yes", "No"))
-		if(!choice)
-			return
-		if(choice == "No")
-			return
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -109,6 +103,8 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	data["submitters_name"] = submitter.real_name
 	data["side1"] = cassette_data["side1"]
 	data["side2"] = cassette_data["side2"]
+	data["reviewed"] = action_taken
+	data["verdict"] = verdict
 
 	return data
 
@@ -124,6 +120,9 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been rejected by [usr]", list("approver" = usr.name, "submitter" = submitter.name))
 			action_taken = TRUE
 			verdict = "DENIED"
+
+/datum/cassette_review/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
+	. = ..()
 
 /datum/cassette_review/proc/approve_review(mob/user)
 	if(!check_rights_for(user.client, R_FUN))
