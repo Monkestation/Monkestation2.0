@@ -350,3 +350,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 	hidden = TRUE
 
+/datum/techweb_node/shield_belts
+	id = "shield_belts"
+	display_name = "Mobile energy shield research"
+	description = "Recent advances towards anomaly research made us wonder, what if we strapped portable energy shields onto people."
+	prereq_ids = list("anomaly_research", "adv_weaponry")
+	design_ids = list(
+		"shield_belt",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
