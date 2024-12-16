@@ -234,7 +234,7 @@ const ALTTITLES = {
   'Supply Foreman': BASEICONS['Quartermaster'],
   'Head of Supply': BASEICONS['Quartermaster'],
   'Logistics Coordinator': BASEICONS['Quartermaster'],
-  'Cargyptian Overseer': BASEICONS['Quartermaster']
+  'Cargyptian Overseer': BASEICONS['Quartermaster'],
   // Research Director - user-graduate
   'Silicon Administrator': BASEICONS['Research Director'],
   'Lead Researcher': BASEICONS['Research Director'],
