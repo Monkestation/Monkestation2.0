@@ -31,14 +31,15 @@
 		if(ispath(job, /datum/job))
 			job = locate(job) in SSjob.all_occupations
 		else if(istext(job))
-			for(var/datum/job/job_instance as anything in SSjob.all_occupations)
-				if(cmptext(job_instance.title, job) || cmptext(job_instance.config_tag, job))
-					job = job_instance
-					break
-				for(var/alt_title in job_instance.alt_titles)
-					if(cmptext(alt_title, job))
+			job_loop:
+				for(var/datum/job/job_instance as anything in SSjob.all_occupations)
+					if(cmptext(job_instance.title, job) || cmptext(job_instance.config_tag, job))
 						job = job_instance
 						break
+					for(var/alt_title in job_instance.alt_titles)
+						if(cmptext(alt_title, job))
+							job = job_instance
+							break job_loop
 		if(!job)
 			return null
 
