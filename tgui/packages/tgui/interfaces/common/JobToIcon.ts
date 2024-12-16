@@ -99,7 +99,7 @@ const ALTTITLES = {
   // Blueshield - shield-dog
   'Command Bodyguard': BASEICONS['Blueshield'],
   'Executive Protection Agent': BASEICONS['Blueshield'],
-  'Bodyguard': BASEICONS['Blueshield'],
+  Bodyguard: BASEICONS['Blueshield'],
   'Revolutionary Repellent': BASEICONS['Blueshield'],
   'Heavily Armed Butler': BASEICONS['Blueshield'],
   'Honor Guard': BASEICONS['Blueshield'],
@@ -116,7 +116,7 @@ const ALTTITLES = {
   'Commanding Officer': BASEICONS['Captain'],
   'Site Manager': BASEICONS['Captain'],
   'Criminally Underpaid Babysitter': BASEICONS['Captain'],
-  'Princess': BASEICONS['Captain'],
+  Princess: BASEICONS['Captain'],
   // Cargo Technician - box
   'Warehouse Technician': BASEICONS['Cargo Technician'],
   'Deck Worker': BASEICONS['Cargo Technician'],
@@ -154,7 +154,7 @@ const ALTTITLES = {
   Butcher: BASEICONS['Cook'],
   'Culinary Artist': BASEICONS['Cook'],
   'Sous-Chef': BASEICONS['Cook'],
-  'Pizzaiolo': BASEICONS['Cook'],
+  Pizzaiolo: BASEICONS['Cook'],
   // Coroner - skull
   Mortician: BASEICONS['Coroner'],
   'Funeral Director': BASEICONS['Coroner'],
@@ -246,7 +246,7 @@ const ALTTITLES = {
   'Biomechanical Engineer': BASEICONS['Roboticist'],
   'Mechatronic Engineer': BASEICONS['Roboticist'],
   'Apprentice Roboticist': BASEICONS['Roboticist'],
-  'Ripperdoc': BASEICONS['Roboticist'],
+  Ripperdoc: BASEICONS['Roboticist'],
   // Scientist - flask
   'Circuitry Designer': BASEICONS['Scientist'],
   Xenobiologist: BASEICONS['Scientist'],
@@ -267,7 +267,7 @@ const ALTTITLES = {
   'Security Cadet': BASEICONS['Security Officer'],
   // Security Assistant - file-invoice-dollar
   'Correctional Officer': BASEICONS['Security Assistant'],
-  'Deputy': BASEICONS['Security Assistant'],
+  Deputy: BASEICONS['Security Assistant'],
   'Hall Monitor': BASEICONS['Security Assistant'],
   'Assistant Officer': BASEICONS['Security Assistant'],
   'Professional Snitch': BASEICONS['Security Assistant'],
