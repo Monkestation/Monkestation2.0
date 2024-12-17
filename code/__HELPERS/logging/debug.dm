@@ -64,3 +64,6 @@
 /proc/log_enqueue(text, list/data)
 	logger.Log(LOG_CATEGORY_ENQUEUE, text, data)
 */
+
+/proc/log_client_qdel(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_CLIENT_QDEL, text, data)
