@@ -1,6 +1,9 @@
+/client
+	var/datum/patreon_data/patreon
+
 /datum/patreon_data
-	/// The details of the linked player.
-	var/datum/player_details/owner
+	///the client that owns this data
+	var/client/owner
 	///the stored patreon client key for the information
 	var/client_key
 	///the stored patreon rank collected from the server
@@ -9,27 +12,42 @@
 	var/access_rank = 0
 
 
-/datum/patreon_data/New(datum/player_details/owner)
+/datum/patreon_data/New(client/created_client)
 	. = ..()
-	if(!owner)
+	if(!created_client)
 		return
-	src.owner = owner
+
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return
 
-	fetch_key_and_rank()
+	owner = created_client
+
+	fetch_key(owner.ckey)
+	fetch_rank(owner.ckey)
+
 	assign_access_rank()
 
-/datum/patreon_data/proc/fetch_key_and_rank()
-	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = owner.ckey))
+
+/datum/patreon_data/proc/fetch_key(ckey)
+	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	if(query_get_key.warn_execute())
 		if(query_get_key.NextRow())
 			client_key = query_get_key.item[1]
-			owned_rank = query_get_key.item[2]
-			if(owned_rank == "UNSUBBED2")
-				owned_rank = NO_RANK
 	qdel(query_get_key)
+
+/datum/patreon_data/proc/fetch_rank(ckey)
+	var/datum/db_query/query_get_rank = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	if(query_get_rank.warn_execute())
+		if(query_get_rank.NextRow())
+			if(query_get_rank.item[1])
+				owned_rank = query_get_rank.item[1]
+				if(owned_rank == "UNSUBBED2")
+					owned_rank = NO_RANK
+			else
+				owned_rank = NO_RANK
+	qdel(query_get_rank)
+
 
 /datum/patreon_data/proc/assign_access_rank()
 	switch(owned_rank)
@@ -52,4 +70,6 @@
 	return FALSE
 
 /datum/patreon_data/proc/is_donator()
-	return owned_rank && owned_rank != NO_RANK && owned_rank != UNSUBBED
+	if((owned_rank == NO_RANK) || !owned_rank || (owned_rank == UNSUBBED))
+		return FALSE
+	return TRUE

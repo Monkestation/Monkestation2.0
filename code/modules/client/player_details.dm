@@ -3,8 +3,6 @@
 GLOBAL_LIST_EMPTY_TYPED(player_details, /datum/player_details)
 
 /datum/player_details
-	/// The ckey of the player this is tied to.
-	var/ckey
 	/// Action datums assigned to this player
 	var/list/datum/action/player_actions = list()
 	/// Tracks client action logging
@@ -23,9 +21,8 @@ GLOBAL_LIST_EMPTY_TYPED(player_details, /datum/player_details)
 	/// Tracks achievements they have earned
 	var/datum/achievement_data/achievements
 
-/datum/player_details/New(player_key)
-	src.ckey = ckey(player_key)
-	achievements = new(src.ckey)
+/datum/player_details/New(key)
+	achievements = new(key)
 
 /// Returns the full version string (i.e 515.1642) of the BYOND version and build.
 /datum/player_details/proc/full_byond_version()
@@ -34,10 +31,13 @@ GLOBAL_LIST_EMPTY_TYPED(player_details, /datum/player_details)
 	return "[byond_version].[byond_build || "xxx"]"
 
 /proc/log_played_names(ckey, ...)
-	if(!ckey || length(args) < 2)
+	if(!ckey)
+		return
+	if(args.len < 2)
 		return
 	var/list/names = args.Copy(2)
-	var/datum/player_details/details = GLOB.player_details[ckey]
-	for(var/name in names)
-		if(name)
-			details.played_names |= name
+	var/datum/player_details/P = GLOB.player_details[ckey]
+	if(P)
+		for(var/name in names)
+			if(name)
+				P.played_names |= name
