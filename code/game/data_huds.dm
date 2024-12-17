@@ -335,18 +335,19 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
-
-	if(perp_name && !GLOB.manifest)
-		holder.icon_state = "hudnotcrew"
-		set_hud_image_active(WANTED_HUD)
-		return
-
+	
 	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	var/datum/record/crew/target = find_record(perp_name)
+
+	if(!target && !(perp_name == "Unknown"))
+		holder.icon_state = "hudnotcrew"
+		set_hud_image_active(WANTED_HUD)
+		return
+	
 	if(!target || target.wanted_status == WANTED_NONE)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
