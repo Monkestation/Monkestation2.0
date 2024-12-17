@@ -355,6 +355,14 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+/proc/_log_client_qdel(ckey, exception/trace)
+	var/desc = "[trace.desc]"
+	var/start_pos = findtext(desc, "call stack:")
+	if(start_pos)
+		var/stack_trace = trimtext(copytext(desc, start_pos + 11))
+		if(stack_trace)
+			log_client_qdel("ckey [ckey] qdel stack:\n\t[replacetext(stack_trace, "\n", "\n\t")])")
+
 /// Should be treated as a replacement for the 'del' keyword.
 ///
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -363,6 +371,16 @@ SUBSYSTEM_DEF(garbage)
 		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
 		del(to_delete)
 		return
+
+	if(istype(to_delete, /client))
+		var/client/client_to_delete = to_delete
+		var/client_ckey = client_to_delete?.ckey
+		if(isliving(client_to_delete?.mob))
+			// shitty hack to get stack trace
+			try
+				CRASH("client qdel debug")
+			catch(var/exception/trace)
+				_log_client_qdel(client_ckey, trace)
 
 	var/datum/qdel_item/trash = SSgarbage.items[to_delete.type]
 	if (isnull(trash))
