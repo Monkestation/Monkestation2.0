@@ -356,7 +356,7 @@
 	description = "As it turns out, you don't actually need to cut out entire support rods if it's just scratched!"
 	prereq_ids = list("engineering")
 	design_ids = list(
-		"robotic_heal_surgery_upgrade"
+		"surgery_heal_robot_upgrade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 900)
 
@@ -366,6 +366,6 @@
 	description = "Did you know Hephaestus actually has a free online tutorial for synthetic trauma repairs? It's true!"
 	prereq_ids = list("improved_robotic_surgery")
 	design_ids = list(
-		"robotic_heal_surgery_upgrade_2"
+		"surgery_heal_robot_upgrade_femto",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1300) // less expensive than the organic surgery research equivalent since its JUST tend wounds
