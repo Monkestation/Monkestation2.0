@@ -2,9 +2,8 @@
 	name = "Blob Infection"
 	weight = 4
 	antag_flag = ROLE_BLOB_INFECTION
-	tags = list(TAG_COMBAT)
 	antag_datum = /datum/antagonist/blob/infection
-		min_players = 35
+	min_players = 35
 	maximum_antags = 1
 	max_occurrences = 1
 	earliest_start = 80 MINUTES
@@ -28,4 +27,4 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	description = "Infects a crew with the blob overmind."
+	description = "Infects a crewmember with the blob overmind."

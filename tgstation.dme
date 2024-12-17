@@ -6192,6 +6192,7 @@
 #include "monkestation\code\modules\and_roll_credits\_credits.dm"
 #include "monkestation\code\modules\and_roll_credits\credits_subsystem.dm"
 #include "monkestation\code\modules\and_roll_credits\episode_names.dm"
+#include "monkestation\code\modules\antagonist\blob\blob_antag.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_datum.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_hud.dm"
 #include "monkestation\code\modules\antagonists\abductor\abductor.dm"
