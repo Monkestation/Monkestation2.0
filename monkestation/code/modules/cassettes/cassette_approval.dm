@@ -81,7 +81,6 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		QDEL_LIST(cassette_data)
 	submitter = null
 	if(id && (id in GLOB.cassette_reviews))
-		GLOB.cassette_reviews[id] = null // Nullify the entry
 		GLOB.cassette_reviews -= id // Remove the key
 
 /datum/cassette_review/ui_state(mob/user)
@@ -123,6 +122,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 
 /datum/cassette_review/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
 	. = ..()
+	qdel(src)
 
 /datum/cassette_review/proc/approve_review(mob/user)
 	if(!check_rights_for(user.client, R_FUN))
@@ -145,42 +145,37 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	set name = "Review Cassettes"
 	set desc = "Review this rounds cassettes."
 	set category = "Admin.Game"
-	var/datum/review_cassettes/tgui = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+	if(!check_rights(R_FUN))
+		return
+	new /datum/review_cassettes(usr)
 
 /datum/review_cassettes
 	var/client/holder //client of whoever is using this datum
 	var/is_funmin = FALSE
 
 /datum/review_cassettes/New(user)//user can either be a client or a mob due to byondcode(tm)
-	if (istype(user, /client))
-		var/client/user_client = user
-		holder = user_client //if its a client, assign it to holder
-	else
-		var/mob/user_mob = user
-		holder = user_mob.client //if its a mob, assign the mob's client to holder
-
+	holder = get_player_client(user)
 	is_funmin = check_rights(R_FUN)
-/datum/review_cassettes/ui_state(mob/user)
-	return GLOB.admin_state
+	ui_interact(holder.mob)//datum has a tgui component, here we open the window
+
+/datum/review_cassettes/ui_status(mob/user, datum/ui_state/state)
+	return (user.client == holder && is_funmin) ? UI_INTERACTIVE : UI_CLOSE
+
 
 /datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
 	qdel(src)
 
 /datum/review_cassettes/ui_interact(mob/user, datum/tgui/ui) // Open UI and update as it remains open.
 	. = ..()
-	if(is_funmin)
-		ui = SStgui.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "CassetteManager")
-			ui.open()
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CassetteManager")
+		ui.open()
 
 /datum/review_cassettes/ui_data(mob/user)
 	. = ..()
 	var/list/data = list("cassettes" = list()) // Initialize main data structure with an empty "cassettes" list
-
-	if(isnull(GLOB.cassette_reviews) || !GLOB.cassette_reviews.len)
-		return data
 
 	for(var/cassette_id in GLOB.cassette_reviews)
 		var/datum/cassette_review/cassette = GLOB.cassette_reviews[cassette_id]
@@ -198,13 +193,13 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		)
 	return data
 
-/datum/review_cassettes/ui_act(action, params)
+/datum/review_cassettes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(isnull(GLOB.cassette_reviews) || !GLOB.cassette_reviews[action])
+	if(!length(GLOB.cassette_reviews) || !GLOB.cassette_reviews[action])
 		return
 
 	var/datum/cassette_review/cassette = GLOB.cassette_reviews[action]
-	cassette.ui_interact(usr)
+	cassette.ui_interact(ui.user)
 

@@ -38,7 +38,7 @@
 			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards.")
 
 /datum/controller/subsystem/ticker/proc/refund_cassette()
-	if(!GLOB.cassette_reviews || !islist(GLOB.cassette_reviews) || !GLOB.cassette_reviews.len)
+	if(!length(GLOB.cassette_reviews))
 		return
 
 	for(var/id in GLOB.cassette_reviews)
@@ -58,4 +58,4 @@
 				announces = TRUE, donator_multipler = FALSE
 			)
 			if(adjusted)
-				review.Destroy()
+				qdel(review)
