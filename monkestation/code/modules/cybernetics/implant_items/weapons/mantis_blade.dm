@@ -97,7 +97,7 @@
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
-	name = "A.E.G.I.S. shield blade"
+	name = "S.A.Y.A. arm defense system"
 	desc = "Mantis blades with bigger and wider blades, allowing user to block incoming projectiles and attacks. Because of that, the edge of blades is rather dull and large which makes it worse at wounding and requires much more time between each slash."
 	icon_state = "shield_mantis"
 	inhand_icon_state = "shield_mantis"
@@ -107,6 +107,10 @@
 	wound_bonus = 10
 	attack_speed = 12
 	var/in_stance = FALSE  //Toggle for the defensive stance.
+
+/obj/item/mantis_blade/shield/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_MURASA)
 
 /obj/item/mantis_blade/shield/attack_self(mob/living/user)
 	if (!in_stance)
