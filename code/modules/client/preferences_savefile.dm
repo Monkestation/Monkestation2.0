@@ -196,18 +196,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	load_metacoins(parent.ckey)
 	load_inventory(parent.ckey)
 
+	var/needs_update_monkestation = save_data_needs_update_monkestation(savefile.get_entry())
 	load_preferences_monkestation()
 
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
+	if(needs_update >= 0 || needs_update_monkestation >= 0) //MONKESTATION EDIT: Modular updates
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
+		update_preferences_monkestation(needs_update_monkestation, savefile) //MONKESTATION ADDITION: Modular updates
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
@@ -220,7 +222,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
-	if(needs_update >= 0) //save the updated version
+	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT: Modular updates
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
@@ -304,12 +306,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
 
+	var/needs_update_monkestation = save_data_needs_update_monkestation(save_data)
 	load_character_monkestation(save_data)
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
-	if(needs_update >= 0)
+	if(needs_update >= 0 || needs_update_monkestation >= 0) //MONKESTATION EDIT: Modular updates
 		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
+		update_character_monkestation(needs_update_monkestation, save_data) //MONKESTATION ADDITION: Modular updates
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
