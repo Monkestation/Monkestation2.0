@@ -41,5 +41,7 @@
 	while(!completed_asset_jobs["[job]"] && t < timeout_time) // Reception is handled in Topic()
 		stoplag(1) // Lock up the caller until this is received.
 		t++
+	if(byond_version == 516) // shitty workaround but avoids the spam limiter being hit
+		src << browse(null, "window=asset_cache_browser&file=asset_cache_send_verify.htm")
 	if (t < timeout_time)
 		return TRUE
