@@ -693,7 +693,7 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 8 // monkestation edit
 	begin_month = DECEMBER
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
@@ -816,7 +816,8 @@
 		list(
 			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/a_gift/anything = 1
+			/obj/item/a_gift/anything = 1,
+			/obj/item/a_gift = 4
 		) = maint_holiday_weight,
 	)
 
