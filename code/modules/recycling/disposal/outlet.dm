@@ -42,11 +42,15 @@
 		trunk = found_trunk
 
 /obj/structure/disposaloutlet/Destroy()
-	if(trunk)
-		trunk.linked = null
-		trunk = null
-	QDEL_NULL(stored)
-	return ..()
+    var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+    if(trunk)
+        trunk.linked = null
+        trunk = null
+    else if(found_trunk)
+        if(found_trunk.linked == src)
+            found_trunk.linked = null
+    QDEL_NULL(stored)
+    return ..()
 
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
