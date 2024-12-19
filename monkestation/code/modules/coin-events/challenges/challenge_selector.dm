@@ -1,73 +1,76 @@
+/client
+	var/datum/challenge_selector/challenge_menu
+
 /datum/challenge_selector
 	/// The client of the person using the UI
-	var/datum/player_details/owner
+	var/client/owner
 
 /datum/challenge_selector/New(user)
-	owner = get_player_details(user)
+	owner = CLIENT_FROM_VAR(user)
 	owner.challenge_menu = src
 
 /datum/challenge_selector/Destroy(force)
-	if(owner?.challenge_menu == src)
-		owner.challenge_menu = null
 	owner = null
 	return ..()
 
 /datum/challenge_selector/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/challenge_selector/ui_status(mob/user, datum/ui_state/state)
-	if(isliving(user) || isobserver(user))
-		return UI_CLOSE
-	return ..()
-
 /datum/challenge_selector/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChallengeSelector", "Select Challenges")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/challenge_selector/ui_static_data(mob/user)
+/datum/challenge_selector/ui_data(mob/user)
+	var/list/data = list()
 	var/list/buyables = list()
-	for(var/datum/challenge/challenge as anything in subtypesof(/datum/challenge))
+	for(var/datum/challenge/listed as anything in subtypesof(/datum/challenge))
+		var/datum/challenge/created = new listed
 		buyables += list(
 			list(
-				"name" = challenge::challenge_name,
-				"payout" = challenge::challenge_payout,
-				"difficulty" = challenge::difficulty,
-				"path" = challenge::type
+				"name" = created.challenge_name,
+				"payout" = created.challenge_payout,
+				"difficulty" = created.difficulty,
+				"path" = created.type
 			)
 		)
-	return list("challenges" = buyables)
+	var/list/paths = list()
+	for(var/listed as anything in owner.active_challenges)
+		if(isnull(listed))
+			owner.active_challenges -= listed
+			continue
+		paths += listed
 
-/datum/challenge_selector/ui_data(mob/user)
-	var/list/selected = list()
-	for(var/datum/challenge/challenge_path as anything in owner.active_challenges)
-		selected += "[challenge_path]"
-	return list("selected_challenges" = selected)
+	data["challenges"] = buyables
+	data["selected_challenges"] = paths
+	return data
 
 /datum/challenge_selector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	. = ..()
 	if(.)
 		return
-	var/mob/user = ui.user
 	switch(action)
 		if("select_challenge")
-			add_selection(user, params)
+			add_selection(params)
 			return TRUE
 
-/datum/challenge_selector/proc/add_selection(mob/user, list/params)
-	if(user.ckey != owner.ckey)
-		CRASH("User [user.ckey] tried to use challenge selector of [owner.ckey]")
-	if(isliving(user) || isobserver(user))
+/datum/challenge_selector/proc/add_selection(list/params)
+	if(isliving(usr) || isobserver(usr))
 		return
 
-	var/challenge_path = text2path(params["path"])
-	if(!ispath(challenge_path, /datum/challenge))
+	var/id = params["path"]
+	var/path = text2path(id)
+	if(!ispath(path, /datum/challenge))
 		return
 
-	if(challenge_path in owner.active_challenges)
-		LAZYREMOVE(owner.active_challenges, challenge_path)
-	else
-		LAZYADD(owner.active_challenges, challenge_path)
+	if(length(usr.client.active_challenges))
+		for(var/listed as anything in usr.client.active_challenges)
+			if(listed == path)
+				usr.client.active_challenges -= listed
+				return
+
+	var/datum/challenge/challenge = text2path(id)
+	usr.client.active_challenges += challenge
