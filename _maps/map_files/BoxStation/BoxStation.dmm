@@ -21346,7 +21346,7 @@
 	pixel_y = -32
 	},
 /obj/structure/table/wood,
-/obj/item/device/cassette_tape/friday{
+/obj/item/cassette_tape/friday{
 	pixel_y = 2;
 	pixel_x = 9
 	},

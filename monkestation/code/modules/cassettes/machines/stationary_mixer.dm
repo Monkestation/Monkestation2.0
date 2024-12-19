@@ -6,7 +6,7 @@
 	density = TRUE
 	pass_flags = PASSTABLE
 	///cassette tape used in adding songs or customizing
-	var/obj/item/device/cassette_tape/tape
+	var/obj/item/cassette_tape/tape
 	///Selection used to remove songs
 	var/selection
 
@@ -20,7 +20,7 @@
 	return TRUE
 
 /obj/machinery/cassette/adv_cassette_deck/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return ..()
 	if(!tape)
 		insert_tape(cassette)
@@ -29,7 +29,7 @@
 	else
 		to_chat(user,"Remove a tape first!")
 
-/obj/machinery/cassette/adv_cassette_deck/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/machinery/cassette/adv_cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 	tape = CTape
