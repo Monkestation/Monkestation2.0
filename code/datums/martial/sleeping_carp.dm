@@ -9,14 +9,13 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	COOLDOWN_DECLARE(block_cooldown)
-	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_THROW_GUNS)
 	var/deflect_cooldown = 3 SECONDS //monke edit start
 	var/deflect_stamcost = 15 //how much stamina it costs per bullet deflected
 	var/deflect_miss_probability = 50 //how likely the deflect is to fail
 	var/log_name = "Sleeping Carp"
 	var/damage = 0
 	var/kick_speed = 0 //how fast you get punted into the stratosphere on launchkick
-	var/is_gentle = TRUE //whether or not you get knocked down by the launchkick
 	var/wounding = 0 //whether or not you get wounded by the attack
 	var/zone_message = "" //string for where the attack is targetting
 	var/zone = null //where the attack is targetting
@@ -72,7 +71,6 @@
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/attacker, mob/living/defender)
 	damage = 15 //monke edit start
 	kick_speed = 4
-	is_gentle = TRUE
 	wounding = CANT_WOUND
 	zone_message = "chest"
 	zone = BODY_ZONE_CHEST
@@ -81,7 +79,7 @@
 					span_userdanger("You are kicked square in the [zone_message] by [attacker], sending you flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', vol = 50, vary = TRUE, extrarange = -1)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
-	defender.throw_at(throw_target, 7, kick_speed, attacker, gentle = is_gentle)
+	defender.throw_at(throw_target, 7, kick_speed, attacker)
 	defender.apply_damage(damage, attacker.get_attack_type(), zone, wound_bonus = wounding)
 	log_combat(attacker, defender, "launchkicked ([log_name])") //monke edit end
 	return
