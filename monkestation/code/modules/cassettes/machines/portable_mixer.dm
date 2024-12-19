@@ -5,13 +5,13 @@
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
 	///The cassette that is being copied from
-	var/obj/item/device/cassette_tape/send
+	var/obj/item/cassette_tape/send
 	///List of songs the sender has
 	var/list/sender_list
 	///List of names the Sender has
 	var/list/sender_names
 	///The cassette you are copying to
-	var/obj/item/device/cassette_tape/recieve
+	var/obj/item/cassette_tape/recieve
 	///List of songs the Reciever has
 	var/list/reciever_list
 	///List of song names the Reciever has
@@ -32,7 +32,7 @@
 	removal = !removal
 
 /obj/item/device/cassette_deck/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return
 	if(!send || !recieve)
 		insert_tape(cassette)
@@ -76,7 +76,7 @@
 		reciever_list.Remove(reciever_list[num])
 		reciever_names.Remove(reciever_names[num])
 
-/obj/item/device/cassette_deck/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/item/device/cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(send && recieve || !istype(CTape))
 		return
 

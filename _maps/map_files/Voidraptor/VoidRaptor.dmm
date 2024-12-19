@@ -10015,7 +10015,7 @@
 /obj/item/radio/radio_mic{
 	pixel_y = 7
 	},
-/obj/item/device/cassette_tape/friday{
+/obj/item/cassette_tape/friday{
 	pixel_y = -6;
 	pixel_x = -8
 	},
