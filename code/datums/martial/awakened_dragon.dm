@@ -3,7 +3,7 @@
 	id = MARTIALART_AWAKENEDDRAGON
 	help_verb = /mob/living/proc/awakened_dragon_help
 	deflect_cooldown = 0
-	deflect_stamcost = 10
+	deflect_stamcost = 5
 	deflect_miss_probability = 0
 	log_name = "Awakened Dragon"
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
@@ -29,14 +29,14 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender)
 	. = ..()
-	damage = 25
+	damage = 30
 	wounding = 5
 	attacker.say("Crushing Maw!!", spans = list("yell"), ignore_spam = TRUE)
 
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender)
 	. = ..()
-	damage = 20
+	damage = 25
 	kick_speed = 5
 	is_gentle = FALSE
 	wounding = 5
@@ -47,7 +47,7 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender)
 	. = ..()
 	stamina_damage = 25
-	defender.apply_damage(20, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 5)
+	defender.apply_damage(25, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
 	attacker.say("Heavenly Dragon Kick!!", spans = list("yell"), ignore_spam = TRUE)
 
 
