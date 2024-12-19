@@ -60,8 +60,6 @@
 	sharpness = NONE
 	embedding = null
 	wound_bonus = -50
-	debilitating = TRUE
-	debilitate_mult = 1
 
 /obj/item/ammo_casing/c46x30mm/rubber
 	name = "8mm Usurpator rubber bullet casing"

@@ -20,8 +20,6 @@
 	stamina = 35
 	embedding = null
 	sharpness = NONE
-	debilitating = TRUE
-	debilitate_mult = 1
 
 /obj/item/ammo_box/magazine/wt550m9/wtsalt
 	name = "wt550 magazine (Saltshot 4.6x30mm)"
@@ -45,8 +43,6 @@
 	stamina = 30
 	embedding = null
 	sharpness = NONE
-	debilitating = TRUE /// Give salt-shot some love. Same debilitating as base atm, same as disabler post re-work.
-	debilitate_mult = 2
 
 /obj/item/gun/ballistic/automatic/wt550/no_mag
 	spawnwithmagazine = FALSE
