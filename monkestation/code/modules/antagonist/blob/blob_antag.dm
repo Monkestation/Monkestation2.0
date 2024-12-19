@@ -1,7 +1,4 @@
-/datum/antagonist/blob/infection/on_gain()
-	ADD_TRAIT(owner.current, TRAIT_BLOB_ALLY, DISEASE_TRAIT)
-	return ..()
-
-/datum/antagonist/blob/infection/on_removal()
-	REMOVE_TRAIT(owner.current, TRAIT_BLOB_ALLY, DISEASE_TRAIT)
-	return ..()
+/datum/antagonist/blob/infection/apply_innate_effects(mob/mob_override)
+	. = ..()
+	var/mob/target = mob_override || owner.current
+	ADD_TRAIT(target, TRAIT_BLOB_ALLY, type)
