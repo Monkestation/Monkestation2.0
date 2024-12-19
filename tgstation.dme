@@ -1562,6 +1562,7 @@
 #include "code\datums\mapgen\Cavegens\IcemoonCaves.dm"
 #include "code\datums\mapgen\Cavegens\LavalandGenerator.dm"
 #include "code\datums\martial\_martial.dm"
+#include "code\datums\martial\awakened_dragon.dm"
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
 #include "code\datums\martial\hugs_of_the_gondola.dm"

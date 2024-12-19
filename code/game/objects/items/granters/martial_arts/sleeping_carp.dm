@@ -33,3 +33,19 @@
 		name = initial(name)
 		desc = initial(desc)
 		icon_state = initial(icon_state)
+
+/obj/item/book/granter/martial/carp/true
+	name = "Blood-stained Scroll"
+	martial = /datum/martial_art/the_sleeping_carp/awakened_dragon
+	martial_name = "awakened dragon"
+	desc = "This scroll appears to be penned with the blood of an entire \
+			branch of the Sleeping Carp sect. It pulses with the power of the Awakened Dragon."
+	remarks = list(
+		"Wait, rice pills and scripture are really all it takes to become stabproof...?",
+		"I must rise to the top of the murim...",
+		"Focus... And you'll be able to incapacitate any foe in an instant...",
+		"Armor is but paper before my claws...",
+		"All other martial arts are but imitations...",
+		"Awaken the Dragon...",
+		"Impudent young masters will not stop me...",
+	)

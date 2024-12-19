@@ -83,9 +83,16 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
-	cost = 17
+	cost = 12 //monke edit
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_weapons/martialarts/advanced
+	name = "Blood-stained Martial Arts Scroll"
+	desc = "A scroll penned by the infamous Awakened Dragon, penned with the blood of their \
+			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp."
+	cost = 30
+	item = /obj/item/book/granter/martial/carp/true
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
