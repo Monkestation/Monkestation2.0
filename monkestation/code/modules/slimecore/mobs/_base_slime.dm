@@ -1,3 +1,14 @@
+///This lowest charge a slime can have
+#define SLIME_MIN_POWER 0
+///Dangerous levels of charge
+#define SLIME_MEDIUM_POWER 5
+///The highest level of charge a slime can have
+#define SLIME_MAX_POWER 10
+#define SLIME_EXTRA_SHOCK_COST 3
+#define SLIME_EXTRA_SHOCK_THRESHOLD 8
+#define SLIME_BASE_SHOCK_PERCENTAGE 10
+#define SLIME_SHOCK_PERCENTAGE_PER_LEVEL 7
+
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
 	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
@@ -18,7 +29,11 @@
 	faction = list(FACTION_SLIME)
 
 	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_upper = 25
+	
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	
+	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	//emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -47,6 +62,9 @@
 
 	///we track flags for slimes here like ADULT_SLIME, and PASSIVE_SLIME
 	var/slime_flags = NONE
+	
+	///1-10 controls how much electricity they are generating
+	var/powerlevel = SLIME_MIN_POWER
 
 	///our current datum for slime color
 	var/datum/slime_color/current_color = /datum/slime_color/grey
@@ -130,6 +148,8 @@
 	RegisterSignal(src, COMSIG_HUNGER_UPDATED, PROC_REF(hunger_updated))
 	RegisterSignal(src, COMSIG_MOB_OVERATE, PROC_REF(attempt_change))
 	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET), COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET)), PROC_REF(on_blackboard_key_changed))
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 	for(var/datum/slime_mutation_data/listed as anything in current_color.possible_mutations)
 		var/datum/slime_mutation_data/data = new listed
@@ -185,12 +205,26 @@
 			if(40 to INFINITY)
 				. += span_boldnotice("It's overflowing with ooze!")
 
+	switch(powerlevel)
+		if(SLIME_MIN_POWER to SLIME_EXTRA_SHOCK_COST)
+			. += "It is flickering gently with harmless levels of electrical activity."
+
+		if(SLIME_EXTRA_SHOCK_COST to SLIME_MEDIUM_POWER)
+			. += "It is glowing brightly with medium levels electrical activity."
+
+
+		if(SLIME_MEDIUM_POWER to SLIME_MAX_POWER)
+			. += "It is glowing alarmingly with high levels of electrical activity."
+
+		if(SLIME_MAX_POWER)
+			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
+
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
 	else if(CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
-		AddComponent(/datum/component/latch_feeding, target, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
+		AddComponent(/datum/component/latch_feeding, target, CLONE, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
 		return
 	. = ..()
 
@@ -295,8 +329,16 @@
 	hunger_precent = current_hunger / max_hunger
 	if(hunger_precent > production_precent)
 		slime_flags |= ADULT_SLIME
+		maxHealth = 200
+		obj_damage = 15
+		melee_damage_lower = initial(melee_damage_lower) + 10
+		melee_damage_upper = initial(melee_damage_upper) + 10
 	else
 		slime_flags &= ~ADULT_SLIME
+		maxHealth = initial(maxHealth)
+		obj_damage = initial(obj_damage)
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
 	update_slime_varience()
 	update_appearance()
 
@@ -370,6 +412,14 @@
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		new_slime.add_trait(trait.type)
 	new_slime.recompile_ai_tree()
+	if(mind.has_antag_datum(/datum/antagonist/pyro_slime)) //Pyroclastic slime gives birth to sentient slimes!!!
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, checked_target = new_slime, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = new_slime, role_name_text = "pyroclastic anomaly slime")
+		if(isnull(chosen_one))
+			return
+		new_slime.key = chosen_one.key
+		new_slime.mind.special_role = ROLE_PYROCLASTIC_SLIME
+		new_slime.mind.add_antag_datum(/datum/antagonist/pyro_slime)
+		new_slime.log_message("was made into a slime by pyroclastic slime split", LOG_GAME)
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))
@@ -448,6 +498,62 @@
 		mutation_chance += 10
 		start_split()
 
+///Handles slime attacking restrictions, and any extra effects that would trigger
+/mob/living/basic/slime/proc/on_slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(isAI(target)) //The aI is not tasty!
+		target.balloon_alert(our_slime, "not tasty!")
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
+		buckled?.unbuckle_mob(src, force = TRUE)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/borg_target = target
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE
+		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			borg_target.flash_act() //Shouldn't be able to infinitely flash borgs.
+			do_sparks(5, TRUE, borg_target)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
+			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+		else
+			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
+
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(iscarbon(target) && our_slime.powerlevel > SLIME_MIN_POWER)
+		var/mob/living/carbon/carbon_target = target
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE  // 17 at level 1, 80 at level 10
+		if(!prob(stunprob))
+			return NONE // normal attack
+
+		carbon_target.visible_message(span_danger("The [our_slime.name] shocks [carbon_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+
+		do_sparks(5, TRUE, carbon_target)
+		var/power = our_slime.powerlevel + rand(0,3)
+		carbon_target.Paralyze(2 SECONDS)
+		carbon_target.Knockdown(power * 2 SECONDS)
+		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
+		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
+			carbon_target.apply_damage(our_slime.powerlevel * rand(6, 10), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+
+	if(isslime(target))
+		if(target == our_slime)
+			return COMPONENT_HOSTILE_NO_ATTACK
+		var/mob/living/basic/slime/target_slime = target
+		if(target_slime.buckled)
+			target_slime.buckled?.unbuckle_mob(src, force = TRUE)
+			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
+				span_danger("You pull [target_slime] off!"))
+			return NONE // normal attack
+
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/slime_accessory))
@@ -455,6 +561,22 @@
 	worn_accessory = attacking_item
 	attacking_item.forceMove(src)
 	update_appearance()
+	
+	if(check_item_passthrough(attacking_item, user))
+		return
+
+///Checks if an item harmlessly passes through the slime
+/mob/living/basic/slime/proc/check_item_passthrough(obj/item/attacking_item, mob/living/user)
+	if(attacking_item.force <= 0)
+		return FALSE
+
+	if(!prob(25))
+		return FALSE
+
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	to_chat(user, span_danger("[attacking_item] passes right through [src]!"))
+	return TRUE
 
 /mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -469,7 +591,36 @@
 	if(isopenturf(loc))
 		var/turf/open/my_our_turf = loc
 		my_our_turf.pollution?.touch_act(src)
+	
+	if (production_precent <= hunger_precent)
+
+		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))
+			powerlevel++
+
+	else if (powerlevel < SLIME_MEDIUM_POWER && 0.2 <= hunger_precent && SPT_PROB(25-powerlevel*5, seconds_per_tick))
+		powerlevel++
+	
 	. = ..()
+
+/mob/living/basic/slime/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	powerlevel = 0 // oh no, the power!
+
+///If a slime is attack with an empty hand, shoves included, try to wrestle them off the mob they are on
+/mob/living/basic/slime/proc/on_attack_hand(mob/living/basic/slime/defender_slime, mob/living/attacker)
+	SIGNAL_HANDLER
+
+	if(isnull(buckled))
+		return
+
+	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
+		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
+		span_danger("[buckled == attacker ? "You attempt" : "[attacker] attempts" ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
+		return
+
+	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
 
 /mob/living/basic/slime/proc/apply_water()
 	adjustBruteLoss(rand(15, 20))
@@ -508,5 +659,13 @@
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
 		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom))
-			AddComponent(/datum/component/latch_feeding, hit_atom, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
+			AddComponent(/datum/component/latch_feeding, hit_atom, CLONE, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))
+
+#undef SLIME_MIN_POWER
+#undef SLIME_MEDIUM_POWER
+#undef SLIME_MAX_POWER
+#undef SLIME_EXTRA_SHOCK_COST
+#undef SLIME_EXTRA_SHOCK_THRESHOLD
+#undef SLIME_BASE_SHOCK_PERCENTAGE
+#undef SLIME_SHOCK_PERCENTAGE_PER_LEVEL
