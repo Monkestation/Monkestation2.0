@@ -50,3 +50,10 @@
 	name = "tundra moth eyes"
 	eye_icon_state = "tundramotheyes"
 	icon_state = "eyeballs-tundramoth"
+
+/obj/item/organ/internal/eyes/night_vision/ganymede
+	name = "ganymedian eyes"
+	desc = "The eyes of a Ganymedian, a legendary alien race."
+	low_light_cutoff = list(0, 15, 20)
+	medium_light_cutoff = list(0, 20, 35)
+	high_light_cutoff = list(0, 40, 50)
