@@ -45,7 +45,7 @@
 	weak_against_armour = TRUE
 
 /*
-*	8mm Usurpator (renamed tg c46x30mm, used in the WT550) (((This isn't actually used in the WT as far as I can tell, gonna do it to both just in case)))
+*	8mm Usurpator (renamed tg c46x30mm, used in the WT550)
 */
 
 /obj/projectile/bullet/c46x30mm_rubber
