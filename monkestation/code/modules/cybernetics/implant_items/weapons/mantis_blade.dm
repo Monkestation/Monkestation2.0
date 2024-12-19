@@ -110,7 +110,7 @@
 
 /obj/item/mantis_blade/shield/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_MURASA)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_MURAMASA)
 
 /obj/item/mantis_blade/shield/attack_self(mob/living/user)
 	if (!in_stance)
