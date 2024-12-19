@@ -93,6 +93,7 @@
 			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp."
 	cost = 30
 	item = /obj/item/book/granter/martial/carp/true
+	lock_other_purchases = TRUE
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
