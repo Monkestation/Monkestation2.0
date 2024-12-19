@@ -45,7 +45,7 @@
 	weak_against_armour = TRUE
 
 /*
-*	8mm Usurpator (renamed tg c46x30mm, used in the WT550)
+*	8mm Usurpator (renamed tg c46x30mm, used in the WT550) (((This isn't actually used in the WT as far as I can tell, gonna do it to both just in case)))
 */
 
 /obj/projectile/bullet/c46x30mm_rubber
@@ -60,6 +60,8 @@
 	sharpness = NONE
 	embedding = null
 	wound_bonus = -50
+	debilitating = TRUE
+	debilitate_mult = 1
 
 /obj/item/ammo_casing/c46x30mm/rubber
 	name = "8mm Usurpator rubber bullet casing"
