@@ -47,6 +47,7 @@
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_FLORIDA_MAN "Florida Man"
 #define ROLE_SLASHER "Slasher"
+#define ROLE_WRAITH "Wraith"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -159,7 +160,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_WIZARD_MIDROUND = 14,
 //monkestation edit start
 	ROLE_PLAGUERAT = 0,
-	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
+	ROLE_CORTICAL_BORER = 0,
+	ROLE_WRAITH = 0,
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_MONSTERHUNTER = 0,

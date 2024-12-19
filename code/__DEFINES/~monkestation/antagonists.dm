@@ -26,6 +26,9 @@
 /// is something a worm
 #define iscorticalborer(A) (istype(A, /mob/living/basic/cortical_borer))
 
+/// is something a spookier than normal ghost
+#define iswraith(A) (istype(A, /mob/living/basic/wraith))
+
 /// Is the mob a blood brother
 #define IS_BROTHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brother))
 
