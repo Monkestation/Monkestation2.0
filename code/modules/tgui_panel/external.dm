@@ -32,11 +32,6 @@
 	tgui_panel.initialize(force = TRUE)
 	// Force show the panel to see if there are any errors
 	winset(src, "legacy_output_selector", "left=output_browser")
-	if(byond_version >= 516)
-		var/list/options = list("byondstorage", "find")
-		if(check_rights_for(src, R_DEBUG))
-			options += "devtools"
-		winset(src, null, "browser-options=[options.Join(",")]")
 
 /client/verb/refresh_tgui()
 	set name = "Refresh TGUI"

@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/New(TopicData)
 	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, "", "browser-options=byondstorage,find")
+		winset(src, null, "browser-options=byondstorage,find,refresh")
 
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
