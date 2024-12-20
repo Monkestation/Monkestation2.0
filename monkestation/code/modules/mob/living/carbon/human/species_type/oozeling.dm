@@ -133,6 +133,7 @@
 		var/remaining_heal = HEALTH_HEALED
 		if(brute_damage + burn_damage > 0)
 			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
+				// Make sure to double check this later.
 				remaining_heal -= abs(slime.heal_damage_type(rand(0, remaining_heal) * REM * seconds_per_tick, BRUTE))
 				slime.heal_damage_type(remaining_heal * REM * seconds_per_tick, BURN)
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))

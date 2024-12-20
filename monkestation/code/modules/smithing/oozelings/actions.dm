@@ -28,6 +28,11 @@
 	user.remove_status_effect(/datum/status_effect/slime_washing)
 	user.visible_message(span_notice("[user]'s outer membrane returns to normal, no longer cleaning [user.p_their()] surroundings."), span_notice("Your outer membrane returns to normal, filth no longer being cleansed."))
 
+/datum/action/cooldown/spell/slime_washing/Remove(mob/living/remove_from) // If we lose the spell make sure to remove its effects
+	. = ..()
+	if(remove_from.has_status_effect(/datum/status_effect/slime_washing))
+		remove_from.remove_status_effect(/datum/status_effect/slime_washing)
+
 /datum/status_effect/slime_washing
 	id = "slime_washing"
 	alert_type = null
@@ -103,6 +108,11 @@
 /datum/status_effect/slime_hydrophobia/get_examine_text()
 	return span_notice("[owner.p_They()] is oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
 
+/datum/action/cooldown/spell/slime_hydrophobia/Remove(mob/living/remove_from) // If we lose the spell make sure to remove its effects
+	. = ..()
+	if(remove_from.has_status_effect(/datum/status_effect/slime_hydrophobia))
+		REMOVE_TRAIT(remove_from, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
+		remove_from.remove_status_effect(/datum/status_effect/slime_hydrophobia)
 
 /// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs
