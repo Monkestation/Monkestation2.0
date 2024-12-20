@@ -119,7 +119,7 @@
 		if(!istype(l_hand, r_hand))//Checks for if your hands are the same type (which they would be if you were dual wielding the shields.)
 			to_chat(user, span_warning("You must dual wield blades to enter the stance."))
 			return
-		if(do_after(user, 10, timed_action_flags = IGNORE_USER_LOC_CHANGE))
+		if(do_after(user, 15, user, IGNORE_USER_LOC_CHANGE))
 			user.apply_status_effect(/datum/status_effect/shield_mantis_defense)
 			in_stance = TRUE
 			to_chat(user, span_notice("You enter defensive stance with your mantis blades."))
