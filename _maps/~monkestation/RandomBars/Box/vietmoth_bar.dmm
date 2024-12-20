@@ -44,7 +44,7 @@
 "fm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/station/commons/lounge)
 "gy" = (
 /obj/machinery/door/firedoor/border_only{
@@ -91,7 +91,7 @@
 /area/station/service/theater)
 "lY" = (
 /obj/structure/bonfire/prelit,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/commons/lounge)
 "mB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -105,7 +105,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "mL" = (
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/station/commons/lounge)
 "mP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -189,7 +189,7 @@
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/firedoor,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/commons/lounge)
 "tU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -215,7 +215,7 @@
 /obj/machinery/door/airlock/wood{
 	name = "Bar"
 	},
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/commons/lounge)
 "vy" = (
 /obj/structure/chair/wood{
@@ -334,7 +334,7 @@
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/firedoor,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/station,
 /area/station/commons/lounge)
 "HA" = (
 /obj/structure/chair/wood{
@@ -375,7 +375,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/water/jungle,
+/turf/open/water/jungle/station,
 /area/station/commons/lounge)
 "NP" = (
 /obj/machinery/camera/directional/south{
