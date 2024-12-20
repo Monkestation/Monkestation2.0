@@ -188,31 +188,31 @@
 	)
 	/// List of decal options as list(user-friendly label, icon state base value to return)
 	var/decal_list = list(
-		list("Warning Line", "warn_end"), //test
+		list("Warning Line", "warningline"),
 		list("Warning Line Corner", "warninglinecorner"),
 		list("Warning Line End", "warn_end"),
+		list("Warning Line Box", "warn_box"),
+		list("Warning Box", "warn_full"),
 		list("Caution Label", "caution"),
 		list("Directional Arrows", "arrows"),
 		list("Stand Clear Label", "stand_clear"),
 		list("Loading Area", "loadingarea"),
 		list("Box Corner", "box_corners"),
-		list("Warning Line Box", "warn_box"),
 		list("Bot", "bot"),
-		list("Box", "box"),
 		list("Bot Right", "bot_right"),
 		list("Bot Left", "bot_left"),
+		list("Box", "box"),
 		list("Delivery Marker", "delivery"),
-		list("Warning Box", "warn_full"),
 	)
 	// These decals only have a south sprite.
 	var/nondirectional_decals = list(
 		"warn_box",
+		"warn_full",
 		"bot",
-		"box",
 		"bot_right",
 		"bot_left",
+		"box",
 		"delivery",
-		"warn_full",
 	)
 
 /obj/item/airlock_painter/decal/Initialize(mapload)
@@ -405,6 +405,7 @@
 		list("Dark", "#0e0f0f"),
 		list("Bar Burgundy", "#79150082"),
 		list("Sec Red", "#DE3A3A"),
+		list("Command Blue", "#486091"),
 		list("Cargo Brown", "#A46106"),
 		list("Engi Yellow", "#EFB341"),
 		list("Service Green", "#9FED58"),
@@ -417,15 +418,34 @@
 		list("Opposing Corners", "tile_opposing_corners"),
 		list("3 Corners", "tile_anticorner_contrasted"),
 		list("4 Corners", "tile_fourcorners"),
-		list("Trimline Corner", "trimline_corner_fill"),
+		list("Trimeline", "trimline"),
+		list("Trimeline Middle", "trimline_mid"),
+		list("Trimeline Corner", "trimline_corner"),
+		list("Trimeline End", "trimline_end"),
+		list("Trimeline Box", "trimline_box"),
+		list("Trimline Middle Fill", "trimline_mid_fill"),
+		list("Trimline Corner Fill", "trimline_corner_fill"),
 		list("Trimline Fill", "trimline_fill"),
 		list("Trimline Fill L", "trimline_fill__8"), // This is a hack that lives in the spritesheet builder and paint_floor
-		list("Trimline End", "trimline_end_fill"),
-		list("Trimline Box", "trimline_box_fill"),
+		list("Trimline End Fill", "trimline_end_fill"),
+		list("Trimline Box Fill", "trimline_box_fill"),
+		list("Trimeline Arrow 1", "trimline_arrow_cw"),
+		list("Trimeline Arrow 2", "trimline_arrow_ccw"),
+		list("Trimeline Arrow 1 Fill", "trimline_arrow_cw_fill"),
+		list("Trimeline Arrow 2 Fill", "trimline_arrow_ccw_fill"),
+		list("Trimeline Warn", "trimline_warn"),
+		list("Trimline Warn Fill", "trimline_warn_fill"),
+		list("Trimline Corner Warn Fill", "trimline_corner_warn_fill"),
+		list("Trimeline Shrink 1", "trimline_shrink_cw"),
+		list("Trimline Shrink 2", "trimline_shrink_ccw"),
+		list("Trimline Tram", "trimline_warn"),
+		list("Tile Tram", "tile_tram"),
 	)
 	nondirectional_decals = list(
 		"tile_fourcorners",
 		"trimline_box_fill",
+		"trimline_box",
+		"tile_tram",
 	)
 
 	/// Regex to split alpha out.
