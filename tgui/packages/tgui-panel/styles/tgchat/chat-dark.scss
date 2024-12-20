@@ -1201,6 +1201,10 @@ $border-width-px: $border-width * 1px;
 }
 // MONKESTATION ADDITION END PR#45 - Clock cult
 
+.uncommonradio {
+  color: #78a1b1;
+}
+
 // MONKESTATION
 .honk {
   color: #ff70c1;
@@ -1221,4 +1225,30 @@ $border-width-px: $border-width * 1px;
   border-radius: 10px;
   padding: 10px;
   margin: 10px 20px;
+}
+
+// blueshift ports
+.pink {
+  color: #ff00ff;
+  font-weight: bold;
+}
+
+.brown {
+  color: #3d2009;
+  font-weight: bold;
+}
+
+.orange {
+  color: #b8761a;
+  font-weight: bold;
+}
+
+.yellow {
+  color: #c7b72c;
+  font-weight: bold;
+}
+
+.cyan {
+  color: #0ea1e6;
+  font-weight: bold;
 }

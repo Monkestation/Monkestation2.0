@@ -336,7 +336,8 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)  /* monkestation edit: add permabrig-only access */
+	ACCESS_BRIG_PHYSICIAN, \
+)  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
@@ -366,7 +367,10 @@
 	ACCESS_HOP, \
 	ACCESS_QM, \
 	ACCESS_RD, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep above
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
 #define CAPTAIN_ACCESS list( \
@@ -462,11 +466,15 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
+	ACCESS_BRIG_PHYSICIAN, \
 )
+//MONKESTATION ADDITION: Added brig physcian access to above
+
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
+	ACCESS_AI_UPLOAD, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -529,7 +537,11 @@
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep to command region above
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.

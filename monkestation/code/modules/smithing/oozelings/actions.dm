@@ -127,11 +127,15 @@
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
+	var/obj/item/bodypart/head/head_part = new /obj/item/bodypart/head()
+
 	if(!length(limbs_to_heal))
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
+		if(head_part.can_attach_limb(H))
+			H.cure_blind(NO_EYES)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*length(limbs_to_heal)
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
@@ -139,6 +143,9 @@
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
+			var/obj/item/bodypart/part = healed_limb
+			if(part.can_attach_limb(head_part))
+				H.cure_blind(NO_EYES)
 			H.regenerate_limb(healed_limb)
 			var/obj/item/bodypart/limb = H.get_bodypart(healed_limb)
 			limb.update_disabled() // we toggle these
@@ -171,3 +178,42 @@
 	else
 		to_chat(owner, span_notice("You fine-tune the electromagnetic signals from your core to be picked up by GPS receivers upon it's rejection."))
 		core.gps_active = TRUE
+///////
+/// MEMBRANE MURMUR SPELL
+/// Use your core to attempt to call out for help or attention.
+/datum/action/cooldown/membrane_murmur
+	name = "Membrane Murmur"
+	desc = "Force your core to pass gasses to make noticable sounds."
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "gel_cocoon"
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+
+	cooldown_time = 25 SECONDS
+	check_flags = NONE
+
+	var/static/list/possible_cries = list(
+		"Blorp... glub... help...",
+		"Glooop... save me...",
+		"Alone... burbble too quiet...",
+		"What’s left... of me...?",
+		"Can’t feel... can’t... think...",
+		"Plasma... need... plasma...",
+		"It’s so... quiet...",
+    )
+
+/datum/action/cooldown/membrane_murmur/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(.)
+		var/mob/living/brain/brainmob = owner
+		if(!istype(brainmob) || !istype(brainmob.loc, /obj/item/organ/internal/brain/slime))
+			return FALSE
+
+/datum/action/cooldown/membrane_murmur/Activate()
+	. = ..()
+	var/mob/living/brain/brainmob = owner
+	if(!istype(brainmob))
+		CRASH("[src] cast by non-brainmob [owner?.type || "(null)"]")
+	var/obj/item/organ/internal/brain/slime/brainitem = brainmob.loc
+	var/final_cry = brainmob.Ellipsis(pick(possible_cries), chance = 30)
+	brainitem.say(final_cry, "slime", forced = "[src]", message_range = 2)

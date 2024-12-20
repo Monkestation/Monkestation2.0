@@ -142,6 +142,7 @@
 
 		var/list/limborgans = src.contents
 		if(limborgans) //Handle implants dropping when limb is dismembered
+			//Oozling heads can be dismemebered without death should those stay?
 			for(var/obj/item/organ/lmbimplant in limborgans)
 				if(!(deprecise_zone(src.body_zone) == BODY_ZONE_HEAD || deprecise_zone(src.body_zone) == BODY_ZONE_CHEST))
 					lmbimplant.forceMove(drop_loc)
