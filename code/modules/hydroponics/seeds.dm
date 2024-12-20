@@ -71,7 +71,16 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
-
+	///Blacklist for strange seeds, because botany is already as strong as it is.
+	var/static/list/reagent_blacklist = typechacheof(list(
+		/datum/reagent/drug/twitch,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/changelingadrenaline,
+		/datum/reagent/medicine/changelinghaste,
+		/datum/reagent/medicine/adminordrazine/quantum_heal,
+		/datum/reagent/drug/demoneye,
+		/datum/reagnet/drug/methamphetamine/borer_version
+	))
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-8, 8)
@@ -610,6 +619,9 @@
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
+		var/datum/reagent/chosen_reagent = get_random_reagent_id()
+		if (is_type_in_typecache(chosen_reagent, reagent_blacklist)) //MONKESTATION EDIT : To remove chems that have no reasons to exist in plants. Im looking at you Changeling chems, and twitch.
+			continue
 		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
 		if(R.can_add(src))
 			if(!R.try_upgrade_gene(src))
