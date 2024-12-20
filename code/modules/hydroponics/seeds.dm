@@ -72,7 +72,7 @@
 	///infusion damage
 	var/infusion_damage = 0
 	///Blacklist for strange seeds, because botany is already as strong as it is.
-	var/static/list/reagent_blacklist = typechacheof(list(
+	var/static/list/reagent_blacklist = typecacheof(list(
 		/datum/reagent/drug/twitch,
 		/datum/reagent/medicine/adminordrazine,
 		/datum/reagent/medicine/changelingadrenaline,
