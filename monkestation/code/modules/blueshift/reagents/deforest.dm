@@ -213,11 +213,11 @@
 // Reaction to make twitch, makes 10u from 17u input reagents
 /datum/chemical_reaction/twitch
 	results = list(
-		/datum/reagent/drug/twitch = 1,
+		/datum/reagent/drug/twitch = 5,
 	)
 	required_reagents = list(
 		/datum/reagent/medicine/adminordrazine = 30,
-		/datum/reagent/bluespace = 30 //why? because fuck you thats why. , im gonna leave it at this. Good luck making it.
+		/datum/reagent/bluespace = 30 //why? because fuck you thats why. Im gonna leave it at this. Good luck making it.
 	)
 	mob_react = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING

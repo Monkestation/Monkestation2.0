@@ -79,7 +79,10 @@
 		/datum/reagent/medicine/changelinghaste,
 		/datum/reagent/medicine/adminordrazine/quantum_heal,
 		/datum/reagent/drug/demoneye,
-		/datum/reagnet/drug/methamphetamine/borer_version
+		/datum/reagent/medicine/syndicate_nanites,
+		/datum/reagent/drug/methamphetamine/borer_version,
+		/datum/reagent/medicine/stimulants,
+		/datum/reagent/medicine/muscle_stimulant
 	))
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
