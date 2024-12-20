@@ -656,3 +656,73 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+// Abandoned SCP Site Ruins
+/area/ruin/space/has_grav/abandonedscpsite
+	name = "Abandoned Site Maintenance"
+
+/area/ruin/space/has_grav/abandonedscpsite/enterance
+	name = "Enterance"
+
+/area/ruin/space/has_grav/abandonedscpsite/ezhall
+	name = "Enterance Zone Hallway"
+
+/area/ruin/space/has_grav/abandonedscpsite/engineering
+	name = "Engineering"
+
+/area/ruin/space/has_grav/abandonedscpsite/office1
+	name = "General Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/cafeteria
+	name = "Cafeteria"
+
+/area/ruin/space/has_grav/abandonedscpsite/moffice
+	name = "Managers Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/hcz1
+	name = "HCZ Checkpoint 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/hcz2
+	name = "HCZ Checkpoint 2"
+
+/area/ruin/space/has_grav/abandonedscpsite/lcz1
+	name = "LCZ Checkpoint 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/hczhall
+	name = "HCZ Hall"
+
+/area/ruin/space/has_grav/abandonedscpsite/brig
+	name = "Brig"
+
+/area/ruin/space/has_grav/abandonedscpsite/containment1
+	name = "Containment 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/containment2
+	name = "Containment 2"
+
+/area/ruin/space/has_grav/abandonedscpsite/medbay
+	name = "Medbay"
+
+/area/ruin/space/has_grav/abandonedscpsite/lounge
+	name = "Break Room"
+
+/area/ruin/space/has_grav/abandonedscpsite/lczhall
+	name = "LCZ Hall"
+
+/area/ruin/space/has_grav/abandonedscpsite/office2
+	name = "Specialized Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/prison
+	name = "Prison"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisoncafe
+	name = "Prison Cafeteria"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisonlibrary
+	name = "Prison Library"
+
+/area/ruin/space/has_grav/abandonedscpsite/maintenance
+	name = "Maintenance"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisonguard
+	name = "Prison Watchpoint"
