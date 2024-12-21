@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;station_trait&#x2F;overflow_job_bureaucracy - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/station_trait/overflow_job_bureaucracy.html#var">Var Details</a> - <a href="datum/station_trait/overflow_job_bureaucracy.html#proc">Proc Details</a></header>
+<main>
+<h1>overflow_job_bureaucracy <aside>/<a href="datum.html">datum</a>/<a href="datum/station_trait.html">station_trait</a>/<a href="datum/station_trait/overflow_job_bureaucracy.html">overflow_job_bureaucracy</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/code/datums/station_traits/negative_traits.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 100"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#var/icon_tag">icon_tag</a></th><td>The icon tag for the job, used to display the job icon in the pregame/login notification,</td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#var/notified">notified</a></th><td>Has the initial notification been sent to all players yet?</td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#var/picked_job">picked_job</a></th><td>Current type of the picked job.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#proc/notify_all_players">notify_all_players</a></th><td>Signal handler to notify all connected clients of the overflow role, ran after all initializations are complete.</td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#proc/notify_client">notify_client</a></th><td>Notifies a single client of the current overflow role.</td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#proc/notify_on_login">notify_on_login</a></th><td>Signal handler to notify newly connecting clients of the overflow role.</td></tr>
+            <tr><th><a href="datum/station_trait/overflow_job_bureaucracy.html#proc/set_overflow_job_override">set_overflow_job_override</a></th><td>Picks and sets the overflow role.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/icon_tag"><aside class="declaration">var </aside>icon_tag
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L17">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 17"/></a></h3>
+        <p>The icon tag for the job, used to display the job icon in the pregame/login notification,</p><h3 id="var/notified"><aside class="declaration">var </aside>notified
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 11"/></a></h3>
+        <p>Has the initial notification been sent to all players yet?</p><h3 id="var/picked_job"><aside class="declaration">var </aside>picked_job
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/job.html">job</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 13"/></a></h3>
+        <p>Current type of the picked job.</p><h2 id="proc">Proc Details</h2><h3 id="proc/notify_all_players"><aside class="declaration">proc </aside>notify_all_players<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L39">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 39"/></a></aside>
+        </h3>
+        <p>Signal handler to notify all connected clients of the overflow role, ran after all initializations are complete.</p><h3 id="proc/notify_client"><aside class="declaration">proc </aside>notify_client<aside>(target) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L51">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 51"/></a></aside>
+        </h3>
+        <p>Notifies a single client of the current overflow role.</p><h3 id="proc/notify_on_login"><aside class="declaration">proc </aside>notify_on_login<aside>(/<a href="datum.html">datum</a>/source, /<a href="client.html">client</a>/client) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L46">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 46"/></a></aside>
+        </h3>
+        <p>Signal handler to notify newly connecting clients of the overflow role.</p><h3 id="proc/set_overflow_job_override"><aside class="declaration">proc </aside>set_overflow_job_override<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2a64625062b7857c880b6ba87ecfc6668cad7e30/monkestation/code/datums/station_traits/negative_traits.dm#L23">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;datums&#x2F;station_traits&#x2F;negative_traits.dm 23"/></a></aside>
+        </h3>
+        <p>Picks and sets the overflow role.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2a64625062b7857c880b6ba87ecfc6668cad7e30">2a64625</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
