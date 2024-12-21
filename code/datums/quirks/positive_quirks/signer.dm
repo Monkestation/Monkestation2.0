@@ -3,7 +3,7 @@
 	desc = "You possess excellent communication skills in sign language."
 	icon = FA_ICON_HANDS
 	value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
 /datum/quirk/item_quirk/signer/add_unique(client/client_source)

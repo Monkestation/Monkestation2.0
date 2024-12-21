@@ -6,8 +6,12 @@
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
+	process_update_signals = list(
+		SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM),
+		SIGNAL_REMOVETRAIT(TRAIT_LIVERLESS_METABOLISM),
+	)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/painkiller/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -71,8 +75,6 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
-		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)
 		next_process = world.time + process_interval
@@ -87,6 +89,9 @@
 			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
 			for(var/addiction in reagent_instance.addiction_types)
 				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+
+/datum/quirk/item_quirk/junkie/should_process()
+	return ..() && HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM)
 
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
