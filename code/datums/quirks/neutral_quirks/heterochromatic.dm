@@ -11,11 +11,9 @@
 // to allow all inserted replacement eyes to become heterochromatic or for it to transfer between mobs"
 // Then just change this to [proc/add] I really don't care
 /datum/quirk/heterochromatic/add_unique(client/client_source)
-	var/color = client_source?.prefs.read_preference(/datum/preference/color/heterochromatic)
-	if(!color)
-		return
-
-	apply_heterochromatic_eyes(color)
+	var/color = client_source?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(color)
+		apply_heterochromatic_eyes(color)
 
 /// Applies the passed color to this mob's eyes
 /datum/quirk/heterochromatic/proc/apply_heterochromatic_eyes(color)
