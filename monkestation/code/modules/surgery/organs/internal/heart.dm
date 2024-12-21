@@ -80,6 +80,7 @@
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
+/// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -102,11 +103,14 @@
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
+	var/obj/item/bodypart/head/head_part = new ()
 	if(!length(limbs_to_heal))
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
+		if(head_part.can_attach_limb(H))
+			H.cure_blind(NO_EYES)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*length(limbs_to_heal)
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
@@ -114,7 +118,8 @@
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
-			H.regenerate_limb(healed_limb)
+			if(H.regenerate_limb(healed_limb) && istype(healed_limb, /obj/item/bodypart/head))
+				H.cure_blind(NO_EYES)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
 		to_chat(H, span_warning("...but there is not enough of you to fix everything! You must attain more mass to heal completely!"))

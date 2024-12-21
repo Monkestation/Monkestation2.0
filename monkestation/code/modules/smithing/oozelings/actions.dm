@@ -114,57 +114,6 @@
 		REMOVE_TRAIT(remove_from, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
 		remove_from.remove_status_effect(/datum/status_effect/slime_hydrophobia)
 
-/// REGENERATE LIMBS
-/datum/action/innate/regenerate_limbs
-	name = "Regenerate Limbs"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimeheal"
-	button_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-
-/datum/action/innate/regenerate_limbs/IsAvailable(feedback = FALSE)
-	. = ..()
-	if(!.)
-		return
-	var/mob/living/carbon/human/H = owner
-	var/list/limbs_to_heal = H.get_missing_limbs()
-	if(!length(limbs_to_heal))
-		return FALSE
-	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-		return TRUE
-
-/datum/action/innate/regenerate_limbs/Activate()
-	var/mob/living/carbon/human/H = owner
-	var/list/limbs_to_heal = H.get_missing_limbs()
-	var/obj/item/bodypart/head/head_part = new /obj/item/bodypart/head()
-
-	if(!length(limbs_to_heal))
-		to_chat(H, span_notice("You feel intact enough as it is."))
-		return
-	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
-	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
-		if(head_part.can_attach_limb(H))
-			H.cure_blind(NO_EYES)
-		H.regenerate_limbs()
-		H.blood_volume -= 40*length(limbs_to_heal)
-		to_chat(H, span_notice("...and after a moment you finish reforming!"))
-		return
-	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			var/healed_limb = pick(limbs_to_heal)
-			var/obj/item/bodypart/part = healed_limb
-			if(part.can_attach_limb(head_part))
-				H.cure_blind(NO_EYES)
-			H.regenerate_limb(healed_limb)
-			var/obj/item/bodypart/limb = H.get_bodypart(healed_limb)
-			limb.update_disabled() // we toggle these
-			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
-		to_chat(H, span_warning("...but there is not enough of you to fix everything! You must attain more mass to heal completely!"))
-		return
-	to_chat(H, span_warning("...but there is not enough of you to go around! You must attain more mass to heal!"))
-
 /**
  * Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.
  */
