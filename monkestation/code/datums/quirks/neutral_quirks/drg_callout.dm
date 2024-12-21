@@ -3,10 +3,10 @@
 /datum/quirk/drg_callout
 	name = "Miner Training"
 	desc = "You arrive with a strange skillchip that teaches you how to reflexively call out mining-related entities you point at."
-	mob_trait = TRAIT_MINING_CALLOUTS
 	value = 0
-	icon = FA_ICON_BULLHORN
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN | QUIRK_DONT_CLONE
+	mob_trait = TRAIT_MINING_CALLOUTS
+	icon = FA_ICON_BULLHORN
 
 /datum/quirk/drg_callout/add(client/client_source)
 	if(!ishuman(quirk_holder))

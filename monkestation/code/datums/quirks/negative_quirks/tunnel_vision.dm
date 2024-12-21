@@ -2,10 +2,10 @@
 	name = "Tunnel Vision"
 	desc = "You spent too long scoped in. You cant see behind you!"
 	value = -2
-	icon = FA_ICON_QUESTION
 	gain_text = span_notice("You have trouble focusing on what you left behind.")
 	lose_text = span_notice("You feel paranoid, constantly checking your back...")
 	medical_record_text = "Patient had trouble noticing people walking up from behind during the examination."
+	icon = FA_ICON_QUESTION
 
 /datum/quirk/tunnel_vision/add(client/client_source)
 	var/range_name = client_source?.prefs.read_preference(/datum/preference/choiced/tunnel_vision_fov) || "Minor (90 Degrees)"

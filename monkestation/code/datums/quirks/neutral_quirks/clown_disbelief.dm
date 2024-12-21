@@ -1,8 +1,11 @@
 /datum/quirk/clown_disbelief
 	name = "Clown Disbelief"
 	desc = "You never really believed in clowns."
-	mob_trait = TRAIT_HIDDEN_CLOWN
 	value = 0
+	gain_text = span_danger("You realize clowns aren't real after all.")
+	lose_text = span_notice("You let go of your stubborn disbelief in clowns.")
+	medical_record_text = "Patient has an unshakable disbelief in clowns, to the point of being seemingly incapable of perceiving them."
+	mob_trait = TRAIT_HIDDEN_CLOWN
 	icon = FA_ICON_HIPPO
 
 /datum/quirk/clown_disbelief/add(client/client_source)

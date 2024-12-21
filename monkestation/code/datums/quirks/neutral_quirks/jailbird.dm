@@ -2,6 +2,7 @@
 	name = "Jailbird"
 	desc = "You're a ex-criminal! You start the round set to parole for a random crime."
 	value = 0
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN
 	icon = FA_ICON_CROW
 
 /datum/quirk/jailbird/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)

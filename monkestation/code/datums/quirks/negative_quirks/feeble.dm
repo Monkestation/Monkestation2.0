@@ -1,12 +1,12 @@
 /datum/quirk/item_quirk/feeble
 	name = "Feeble"
 	desc = "All it takes is a strong gust of wind to knock you over, doing anything physical takes much longer and good luck using anything with recoil."
-	mob_trait = TRAIT_FEEBLE
 	value = -14
-	icon = FA_ICON_PERSON_CANE
 	gain_text = span_danger("You feel really weak.")
 	lose_text = span_notice("You feel much less weak.")
 	medical_record_text = "Patient is suffering from poor dexterity and general physical strength."
+	mob_trait = TRAIT_FEEBLE
+	icon = FA_ICON_PERSON_CANE
 	mail_goodies = list(/obj/item/cane, /obj/item/cane/white, /obj/item/cane/crutch, /obj/item/cane/crutch/wood)
 
 /datum/quirk/item_quirk/feeble/add_unique(client/client_source)

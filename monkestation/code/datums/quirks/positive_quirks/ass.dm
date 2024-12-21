@@ -2,6 +2,7 @@
 	name = "Stable Rear"
 	desc = "Your rear is far more robust than average, falling off less often than usual."
 	value = 2
+	medical_record_text = "Patient's buttocks have above-average resilience."
 	icon = FA_ICON_FACE_SAD_CRY
 	//All effects are handled directly in butts.dm
 
@@ -9,6 +10,7 @@
 	name = "Loud Ass"
 	desc = "For some ungodly reason, your ass is twice as loud as normal."
 	value = 2
+	medical_record_text = "Patient's buttocks have a tendency to loudly clap as they walk."
 	icon = FA_ICON_VOLUME_HIGH
 	//All effects are handled directly in butts.dm
 
@@ -16,6 +18,7 @@
 	name = "Dummy Thicc"
 	desc = "Hm...Colonel, I'm trying to sneak around, but I'm dummy thicc and the clap of my ass cheeks keep alerting the guards..."
 	value = 3	//Why are we still here? Just to suffer?
+	medical_record_text = "Patient is dummy thicc."
 	icon = FA_ICON_VOLUME_UP
 
 /datum/quirk/dummy_thick/add()

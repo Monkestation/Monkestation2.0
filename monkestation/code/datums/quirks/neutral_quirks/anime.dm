@@ -1,12 +1,12 @@
 /datum/quirk/anime
 	name = "Anime"
 	desc = "You are an anime enjoyer! Show your enthusiasm with some fashionable attire."
-	mob_trait = TRAIT_ANIME
 	value = 0
+	quirk_flags = QUIRK_CHANGES_APPEARANCE | QUIRK_HIDE_FROM_SCAN
+	mob_trait = TRAIT_ANIME
 	icon = FA_ICON_PAW
-	quirk_flags = QUIRK_CHANGES_APPEARANCE
 
-	var/list/anime_list = list(
+	var/static/list/anime_list = list(
 		/obj/item/organ/external/anime_head,
 		/obj/item/organ/external/anime_middle,
 		/obj/item/organ/external/anime_bottom,

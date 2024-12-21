@@ -2,6 +2,7 @@
 	name = "Kleptomaniac"
 	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
 	value = -2
+	medical_record_text = "Patient has an unconscious tendency to pickpocket nearby people or pick up items off the ground."
 	icon = FA_ICON_BAG_SHOPPING
 
 /datum/quirk/kleptomaniac/add()
