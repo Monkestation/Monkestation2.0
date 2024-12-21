@@ -96,7 +96,7 @@
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
 	name = "S.A.Y.A. arm defense system"
-	desc = "Durable retractable blade made from hard materials, featuring a wide and flat shield design. Purposefully sacrificing offensive capabilities and user mobility in favor of enhanced protection. Primarily issued to personnel safeguarding valuable targets. One of the many combat augmentations created by Muramasa Munitions."
+	desc = "Durable retractable blade made from hard materials, featuring a wide shield design. Purposefully sacrificing offensive capabilities and user mobility in favor of enhanced protection. Primarily issued to personnel safeguarding valuable targets. One of the many combat augmentations created by Muramasa Munitions."
 	icon_state = "shield_mantis"
 	inhand_icon_state = "shield_mantis"
 	lefthand_file = 'monkestation/code/modules/cybernetics/icons/swords_lefthand.dmi'
