@@ -115,7 +115,7 @@
 
 /obj/item/storage/box/shield_blades
 	name = "S.A.Y.A. Arm Defense System Cyberset"
-	name = "A box with essentials for S.A.Y.A. Arm Defense System. Blades that serve protection purposes, while being harder to swing and dealing less wounds to the target."
+	desc = "A box with essentials for S.A.Y.A. Arm Defense System. Blades that serve protection purposes, while being harder to swing and dealing less wounds to the target."
 	icon_state = "cyber_implants"
 
 /obj/item/storage/box/shield_blades/PopulateContents()
