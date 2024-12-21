@@ -121,11 +121,9 @@
 			to_chat(user, span_warning("You were interrupted!"))
 			return
 		user.apply_status_effect(/datum/status_effect/shield_mantis_defense)
-		in_stance = TRUE
 		to_chat(user, span_notice("You enter defensive stance with your mantis blades."))
 		return
 	user.remove_status_effect(/datum/status_effect/shield_mantis_defense)
-	in_stance = FALSE
 	to_chat(user, span_notice("You stop blocking with your blades."))
 
 /obj/item/mantis_blade/shield/dropped(mob/living/user)
@@ -150,6 +148,8 @@
 	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, id)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")
+	r_hand.in_stance = TRUE
+	l_hand.in_stance = TRUE
 
 /datum/status_effect/shield_mantis_defense/on_remove()
 	. = ..()
@@ -164,7 +164,7 @@
 
 /datum/status_effect/shield_mantis_defense/tick() //could be a better way to do it?
 	. = ..()
-	if (owner.stat >= HARD_CRIT || owner.stat == UNCONSCIOUS)
+	if (owner.stat >= HARD_CRIT || owner.stat == UNCONSCIOUS || HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA))
 		owner.remove_status_effect(/datum/status_effect/shield_mantis_defense)
 
 /atom/movable/screen/alert/status_effect/shield_mantis_defense
@@ -174,6 +174,6 @@
 
 //blocking with blades slow you down
 /datum/movespeed_modifier/shield_blades
-	multiplicative_slowdown = 2
+	multiplicative_slowdown = 1.5
 
 
