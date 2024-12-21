@@ -38,6 +38,7 @@
 		msg += "No commit information"
 
 	msg += "Running rust-g version [rustg_get_version()]"
+	msg += "Running aneri version [aneri_version()]" // monkestation edit: aneri
 
 	return msg.Join("\n")
 
