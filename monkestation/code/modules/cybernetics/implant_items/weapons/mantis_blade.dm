@@ -103,9 +103,9 @@
 	inhand_icon_state = "shield_mantis"
 	lefthand_file = 'monkestation/code/modules/cybernetics/icons/swords_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
-	force = 10
-	wound_bonus = 10
-	attack_speed = 12
+	force = 11
+	wound_bonus = 5
+	attack_speed = 10
 	var/in_stance = FALSE  //Toggle for the defensive stance.
 
 /obj/item/mantis_blade/shield/Initialize(mapload)
