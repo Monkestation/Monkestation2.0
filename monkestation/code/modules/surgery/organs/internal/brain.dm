@@ -33,19 +33,24 @@
 
 ///////
 /// Core item storage
-	//
+//
 	var/list/stored_items = list()
-	//item types that should never be stored in core and will drop on death
-	var/list/bannedcore = list(
-		/obj/item/disk/nuclear,
+	///item types that should never be stored in core and will drop on death
+	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
+//	var/list/bannedcore = list(
+//		/obj/item/disk/nuclear,
 //		/obj/item/clothing/head/mob_holder //Pet hats
-	)
+//	)
+
 	//Allowed implants usually given by cases and injectors
-	var/list/allowed_implants = list(
+	var/static/list/allowed_implants = typecacheof(list(
 		//obj/item/implant
-	)
+	))
+//	var/list/allowed_implants = list(
+		//obj/item/implant
+//	)
 	//Extraneous organs not of oozling origin. Usually cyber implants.
-	var/list/allowed_organ_types = list(
+	var/static/list/allowed_organ_types = typecacheof(list(
 		/obj/item/organ/internal/cyberimp,
 		/obj/item/organ/external/wings,
 		/obj/item/organ/external/tail,
@@ -54,7 +59,17 @@
 		/obj/item/organ/external/snout,
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines
-	)
+	))
+//	var/list/allowed_organ_types = list(
+//		/obj/item/organ/internal/cyberimp,
+//		/obj/item/organ/external/wings,
+//		/obj/item/organ/external/tail,
+//		/obj/item/organ/external/frills,
+//		/obj/item/organ/external/horns,
+//		/obj/item/organ/external/snout,
+//		/obj/item/organ/external/antennae,
+//		/obj/item/organ/external/spines
+//	)
 
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
@@ -246,52 +261,12 @@
 /// PROCESS ITEMS FOR CORE EJECTION
 /// Processes different types of items and prepares them to be stored when the core is ejected.
 /obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to process and move items
-    if(!item) // Skip NULL items
-        return
-    if(item.type in src.bannedcore)
-        item.forceMove(get_turf(victim)) // Move to turf if banned
-    else
-        victim.transferItemToLoc(item, src, FALSE, silent = TRUE)
-        stored_items |= item
+
 
 /obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
-	// List of slots that drop to ground despite the transferItemtoLoc proc
-	var/list/focus_slots = list(
-    	ITEM_SLOT_SUITSTORE,
-    	ITEM_SLOT_BELT,
-    	ITEM_SLOT_ID,
-    	ITEM_SLOT_LPOCKET,
-    	ITEM_SLOT_RPOCKET
-	)
-	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
-		process_and_store_item(victim.get_item_by_slot(islot), victim)
-
-	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
-
-	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
-	process_and_store_item(target_chest.cavity_item, victim)
-
-	var/atom/movable/rest_items = victim.get_equipped_items(include_pockets = TRUE)// Store rest of equipment
-	for(var/atom/movable/item in rest_items)
-		process_and_store_item(item, victim)
-
-	var/list/implants = victim.implants // Process and store implants
-	for(var/obj/item/implant/curimplant in implants)
-		for(var/type in src.allowed_implants)
-			if(istype(curimplant, type) && curimplant.removed(victim))
-				var/obj/item/implantcase/case =  new /obj/item/implantcase
-				case.imp = curimplant
-				curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
-				case.update_appearance()
-				process_and_store_item(case, victim)
-
-	var/list/internal_orgs = victim.organs	// Process and store organ implants and related organs
-	for(var/obj/item/organ/organ in internal_orgs)
-		for(var/type in src.allowed_organ_types)
-			if(istype(organ, type))
-				organ.Remove(victim)
-				process_and_store_item(organ, victim)
-				break
+	if(victim.get_all_contents())
+		return
+	victim.back
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
 	for(var/atom/movable/item as anything in stored_items)
