@@ -116,7 +116,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/structure/sign/poster/official/safety_internals/directional/east,
-/turf/closed/wall/r_wall,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "cj" = (
 /turf/closed/wall/rust,
@@ -598,25 +598,27 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/support)
 "qD" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "lpost_entrance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/lobby)
+"qV" = (
 /obj/machinery/door/window/brigdoor{
-	dir = 8;
 	req_access = list("syndicate");
 	name = "Emergency Self Destruct Access"
 	},
-/obj/structure/sign/warning/explosives/alt/directional/east,
+/obj/structure/sign/warning/explosives/alt/directional/north,
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
 /turf/open/floor/circuit/red/anim,
-/area/ruin/space/has_grav/listeningstation/lounge)
-"qV" = (
-/obj/machinery/firealarm/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash,
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/listeningstation/lounge)
+/area/ruin/space/has_grav/listeningstation/support)
 "rx" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -702,6 +704,13 @@
 /obj/item/assembly/prox_sensor,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"vc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "vm" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue,
@@ -1056,6 +1065,10 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "lpost_entrance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "DB" = (
@@ -1107,6 +1120,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/firecloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "EC" = (
@@ -1224,6 +1238,14 @@
 /obj/structure/table,
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/south{
+	normaldoorcontrol = 1;
+	pixel_x = -7;
+	pixel_y = 8;
+	id = "lpost_entrance";
+	name = "Door Lock";
+	req_access = list("syndicate")
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "IK" = (
@@ -1306,6 +1328,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
+"KI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
@@ -1385,7 +1416,8 @@
 "MT" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
+/obj/machinery/light/small/red/directional/west,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "MV" = (
 /obj/structure/cable,
@@ -1677,14 +1709,13 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/reinforced,
+/obj/item/paper/fluff/ruins/listeningstation/briefing,
+/obj/item/paper/fluff/ruins/listeningstation/engineer,
 /obj/machinery/fax{
 	syndicate_network = 1;
-	visible_to_network = 0;
 	name = "listening post fax machine";
 	fax_name = "Syndicate Listening Post"
 	},
-/obj/item/paper/fluff/ruins/listeningstation/briefing,
-/obj/item/paper/fluff/ruins/listeningstation/engineer,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "Tq" = (
@@ -2553,8 +2584,8 @@ Po
 Po
 LU
 Po
-Pz
-Pz
+LP
+qV
 xR
 Kt
 SI
@@ -2591,8 +2622,8 @@ BX
 ME
 PC
 Va
-qV
-Pz
+OT
+LP
 MV
 Gr
 ME
@@ -2629,7 +2660,7 @@ Po
 ME
 XC
 hs
-hs
+KI
 Yf
 mm
 ED
@@ -2666,7 +2697,7 @@ Cc
 Uw
 Lq
 zV
-gJ
+vc
 AP
 TK
 Cd
@@ -2703,7 +2734,7 @@ ac
 JB
 JB
 OT
-qD
+gJ
 OT
 OT
 IK
@@ -2851,7 +2882,7 @@ NY
 xY
 NY
 cG
-MT
+qD
 MT
 ch
 Dv
