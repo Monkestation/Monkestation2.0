@@ -320,18 +320,15 @@
 				return TRUE
 
 
-/obj/item/gun/on_thrown(mob/living/carbon/user, atom/target)
-	. = ..()
-
 
 /obj/item/gun/throw_impact(mob/living/carbon/target, datum/thrownthing/throwing_datum)
 	. = ..()
 	if(super_throw == TRUE)
-		src.throwforce = 20
+		target.apply_damage(15, BRUTE, attacking_item = src)
 		target.Knockdown(5 SECONDS)
+		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
 		do_sparks(5, FALSE, src)
 		Destroy(src)
-
 
 /obj/item/gun/can_trigger_gun(mob/living/user, akimbo_usage)
 	. = ..()

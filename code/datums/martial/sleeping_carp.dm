@@ -19,7 +19,8 @@
 	var/wounding = 0 //whether or not you get wounded by the attack
 	var/zone_message = "" //string for where the attack is targetting
 	var/zone = null //where the attack is targetting
-	var/stamina_damage = 0 //monke edit end
+	var/stamina_damage = 0
+	var/counter = FALSE //monke edit end
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/target, make_temporary = FALSE)
 	. = ..()
@@ -91,12 +92,18 @@
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', vol = 50, vary = TRUE, extrarange = -1)
 	if(defender.body_position == STANDING_UP)
 		defender.Knockdown(2 SECONDS)
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \
-					span_userdanger("You are kicked in the head by [attacker], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		defender.visible_message(
+			span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"),
+			span_userdanger("You are kicked in the head by [attacker], sending you crashing to the floor!"),
+			span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker
+			)
 	else
 		defender.drop_all_held_items()
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head!"), \
-					span_userdanger("You are kicked in the head by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		defender.visible_message(
+			span_warning("[attacker] kicks [defender] in the head!"),
+			span_userdanger("You are kicked in the head by [attacker]!"),
+			span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker
+			)
 	defender.stamina.adjust(stamina_damage)
 	defender.adjust_dizzy_up_to(10 SECONDS, 10 SECONDS)
 	defender.adjust_temp_blindness_up_to(2 SECONDS, 10 SECONDS)
@@ -154,8 +161,10 @@
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
-	defender.visible_message(span_danger("[attacker] [atk_verb]s [defender]!"), \
-					span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker)
+	defender.visible_message(
+		span_danger("[attacker] [atk_verb]s [defender]!"),
+		span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker
+		)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 
 	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
@@ -217,19 +226,31 @@
 ///Signal from getting attacked with an item, for a special interaction with touch spells
 /datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
 	SIGNAL_HANDLER
-
 	if(!istype(attack_weapon, /obj/item/melee/touch_attack) || !can_deflect(carp_user))
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
+	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
 	// monkestation edit: flavor tweaks
-	carp_user.visible_message(
-		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
-		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+	if(counter == FALSE)
+		carp_user.visible_message(
+			span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
+			span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+			ignored_mobs = list(attacker),
+		)
+		to_chat(attacker, span_userdanger("[carp_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
+		carp_user.balloon_alert(attacker, "miss!")
+		playsound(carp_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	else
+		carp_user.visible_message(
+		span_danger("[carp_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
+		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
 		ignored_mobs = list(attacker),
 	)
-	to_chat(attacker, span_userdanger("[carp_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
-	carp_user.balloon_alert(attacker, "miss!")
-	playsound(carp_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	to_chat(attacker, span_userdanger("[carp_user] swiftly grabs and twists your arm, hitting you with your own [attack_weapon]!"), type = MESSAGE_TYPE_COMBAT)
+	carp_user.say("PATHETIC!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+	if(!touch_spell)
+		return
+	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	// monkestation end
 	return COMPONENT_NO_AFTERATTACK
 

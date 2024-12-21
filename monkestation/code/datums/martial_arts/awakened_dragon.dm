@@ -7,24 +7,31 @@
 	deflect_miss_probability = 0
 	log_name = "Awakened Dragon"
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
-	var/list/character_prefixes
-	scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
-
-/datum/martial_art/the_sleeping_carp/awakened_dragon/prefixes/New()
-	character_prefixes = list(
+	var/static/list/character_prefixes = list(
 		"Heavenly Demon",
 		"Cheonma",
 		"Heavenly Dragon",
 		"Greatest Before the Heavens",
 		"Dragon Fist",
 		"Awakened Dragon's Disciple",
+		"Sunaikinti's Blessed", //rogue lineage reference, don't ask
 	)
+	var/datum/weakref/original_body = null
+	var/datum/weakref/list/all_bodies = list()
+	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 
+/datum/martial_art/the_sleeping_carp/awakened_dragon/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
+	. = ..()
+	counter = TRUE
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
 	var/titled_name //name you get after you're titled
 	var/real_name = target.real_name
-	title = pick(character_prefixes)
+	if(original_body == null)
+		original_body = target
+	if(title == null)
+		title = pick(character_prefixes)
+	all_bodies += target
 	titled_name = "[title] [target.get_face_name(real_name)]"
 	target.fully_replace_character_name(real_name, titled_name)
 
@@ -32,7 +39,7 @@
 	. = ..()
 	damage = 30
 	wounding = 15
-	attacker.say("Crushing Maw!!", spans = list("yell"), ignore_spam = TRUE)
+	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender)
@@ -42,13 +49,13 @@
 	wounding = 5
 	zone = BODY_ZONE_HEAD
 	zone_message = "head"
-	attacker.say("Tsunami Kick of the Heavenly Serpent!!", spans = list("yell"), ignore_spam = TRUE)
+	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender)
 	. = ..()
 	stamina_damage = 50
 	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
-	attacker.say("Heavenly Dragon Kick!!", spans = list("yell"), ignore_spam = TRUE)
+	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 
 /mob/living/proc/awakened_dragon_help()
