@@ -93,8 +93,6 @@
 	attack(target, user)
 
 
-
-
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
 	name = "S.A.Y.A. arm defense system"
@@ -105,7 +103,7 @@
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
 	force = 11
 	wound_bonus = 5
-	attack_speed = 10
+	attack_speed = 12
 	var/in_stance = FALSE  //Toggle for the defensive stance.
 
 /obj/item/mantis_blade/shield/Initialize(mapload)
@@ -119,12 +117,13 @@
 		if(!istype(l_hand, r_hand))//Checks for if your hands are the same type (which they would be if you were dual wielding the shields.)
 			to_chat(user, span_warning("You must dual wield blades to enter the stance."))
 			return
-		if(do_after(user, 15, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
-			user.apply_status_effect(/datum/status_effect/shield_mantis_defense)
-			in_stance = TRUE
-			to_chat(user, span_notice("You enter defensive stance with your mantis blades."))
+		if(!do_after(user, 15, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
+			to_chat(user, span_warning("You were interrupted!"))
 			return
-	//too many things kick you out of stance to actually bother adding do_after here
+		user.apply_status_effect(/datum/status_effect/shield_mantis_defense)
+		in_stance = TRUE
+		to_chat(user, span_notice("You enter defensive stance with your mantis blades."))
+		return
 	user.remove_status_effect(/datum/status_effect/shield_mantis_defense)
 	in_stance = FALSE
 	to_chat(user, span_notice("You stop blocking with your blades."))
@@ -137,7 +136,7 @@
 
 /datum/status_effect/shield_mantis_defense
 	id = "mantis_defensive"
-	alert_type = /atom/movable/screen/alert/status_effect/realignment
+	alert_type =  /atom/movable/screen/alert/status_effect/shield_mantis_defense
 	//storing held items for when it was applied
 	var/obj/item/mantis_blade/shield/r_hand = null
 	var/obj/item/mantis_blade/shield/l_hand = null
@@ -167,6 +166,11 @@
 	. = ..()
 	if (owner.stat >= HARD_CRIT || owner.stat == UNCONSCIOUS)
 		owner.remove_status_effect(/datum/status_effect/shield_mantis_defense)
+
+/atom/movable/screen/alert/status_effect/shield_mantis_defense
+	name = "Defensive stance"
+	desc = "You are blocking attacks and projectiles with your armblades. During that, you can't attack and will be slowed down."
+	icon_state = "shield_blade"
 
 //blocking with blades slow you down
 /datum/movespeed_modifier/shield_blades
