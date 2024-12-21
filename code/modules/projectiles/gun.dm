@@ -328,7 +328,7 @@
 		target.Knockdown(5 SECONDS)
 		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
 		do_sparks(5, FALSE, src)
-		Destroy(src)
+		qdel(src)
 
 /obj/item/gun/can_trigger_gun(mob/living/user, akimbo_usage)
 	. = ..()
