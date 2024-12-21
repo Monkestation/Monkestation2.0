@@ -17,7 +17,7 @@
 		"Sunaikinti's Blessed", //rogue lineage reference, don't ask
 	)
 	var/datum/weakref/original_body = null
-	var/datum/weakref/list/all_bodies = list()
+	var/list/datum/weakref/all_bodies = list()
 	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
@@ -56,6 +56,8 @@
 	stamina_damage = 50
 	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+
+/datum/action/cooldown
 
 
 /mob/living/proc/awakened_dragon_help()
