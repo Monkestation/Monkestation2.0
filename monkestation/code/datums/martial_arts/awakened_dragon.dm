@@ -19,10 +19,8 @@
 	var/datum/weakref/original_body = null
 	var/list/datum/weakref/all_bodies = list()
 	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
-
-/datum/martial_art/the_sleeping_carp/awakened_dragon/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
-	. = ..()
 	counter = TRUE
+
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
 	var/titled_name //name you get after you're titled
@@ -57,7 +55,9 @@
 	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
-/datum/action/cooldown
+/datum/action/cooldown/awaken_carp
+	name = "AWAKEN THE CARP!"
+	desc = "Force carp sleeping in a nearby crater to warp to your location"
 
 
 /mob/living/proc/awakened_dragon_help()

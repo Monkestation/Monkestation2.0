@@ -22,7 +22,7 @@
 	var/stamina_damage = 0
 	var/counter = FALSE //monke edit end
 
-/datum/martial_art/the_sleeping_carp/teach(mob/living/target, make_temporary = FALSE)
+/datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -224,8 +224,7 @@
 	return COMPONENT_BULLET_PIERCED
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
-/datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
-	SIGNAL_HANDLER
+/datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carbon/human/carp_user, obj/item/attack_weapon, mob/attacker, params)
 	if(!istype(attack_weapon, /obj/item/melee/touch_attack) || !can_deflect(carp_user))
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
@@ -247,7 +246,7 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_userdanger("[carp_user] swiftly grabs and twists your arm, hitting you with your own [attack_weapon]!"), type = MESSAGE_TYPE_COMBAT)
-	carp_user.say("PATHETIC!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+	carp_user.say(message = "PATHETIC!", language = /datum/language/common, ignore_spam = TRUE, forced = src)
 	if(!touch_spell)
 		return
 	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
