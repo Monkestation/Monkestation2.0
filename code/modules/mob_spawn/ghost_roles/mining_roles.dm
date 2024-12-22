@@ -153,6 +153,9 @@
 	and eventually bring life to this desolate planet while waiting for contact from your creators. \
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	spawner_job_path = /datum/job/lifebringer
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/seed_vault/Initialize(mapload)
 	. = ..()
@@ -220,6 +223,9 @@
 	spawner_job_path = /datum/job/ash_walker
 	var/datum/team/ashwalkers/team
 	var/obj/structure/ash_walker_eggshell/eggshell
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/Destroy()
 	eggshell = null

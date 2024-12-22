@@ -139,6 +139,11 @@
 	/// Typepath indicating the kind of job datum this ghost role will have. PLEASE inherit this with a new job datum, it's not hard. jobs come with policy configs.
 	var/spawner_job_path = /datum/job/ghost_role
 
+	///MONKESTATION EDIT - stupid fucking variable to check if we are spawning a ghost using their character preferences and variable to check if this ghost role supports preferences
+	var/use_prefs = FALSE
+	var/support_prefs = TRUE
+	///END OF EDIT
+
 /obj/effect/mob_spawn/ghost_role/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -192,6 +197,20 @@
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
+	//MONKESTATION EDIT - Ghost roles can now use character preferences.
+	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey])) //Have we never played this character before during this round?
+		var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
+		if(prompt == "Cancel")
+			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
+			return
+		if(prompt == "Yes")
+			use_prefs = TRUE
+		else
+			use_prefs = FALSE
+	else
+		use_prefs = FALSE
+	//END OF EDIT
+
 	if(uses <= 0 && !infinite_use) // Just in case something took longer than it should've and we got here after the uses went below zero.
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
@@ -233,7 +252,6 @@
 
 	return ..()
 
-
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	if(mob_possessor)
@@ -253,6 +271,12 @@
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
+
+	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
+	//TODO - Make an actual variable to check if this ghost role supports preferences.
+	if(use_prefs && support_prefs)
+		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
+	//END OF EDIT
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()

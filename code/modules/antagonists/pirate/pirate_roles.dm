@@ -58,6 +58,9 @@
 	outfit = /datum/outfit/pirate
 	rank = "Mate"
 	fluff_spawn = null
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
@@ -75,6 +78,9 @@
 	mob_species = /datum/species/lizard/silverscale
 	outfit = /datum/outfit/pirate/silverscale
 	rank = "High-born"
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
 	var/first_name
@@ -184,6 +190,9 @@
 	mob_species = /datum/species/ethereal/lustrous
 	outfit = /datum/outfit/pirate/lustrous
 	rank = "Scintillant"
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
 	rank = "Radiant"

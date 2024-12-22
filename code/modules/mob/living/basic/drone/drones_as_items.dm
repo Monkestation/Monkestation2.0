@@ -21,6 +21,9 @@
 	flavour_text = "Born out of science, your purpose is to maintain Space Station 13. Maintenance Drones can become the backbone of a healthy station."
 	important_text = "You MUST read and follow your laws carefully."
 	spawner_job_path = /datum/job/maintenance_drone
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/drone/Initialize(mapload)
 	. = ..()

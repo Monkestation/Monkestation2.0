@@ -86,6 +86,9 @@
 	)
 	/// Do we flash the byond window when this particular egg type is available?
 	var/flash_window = FALSE
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
 	. = ..()

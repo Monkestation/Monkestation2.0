@@ -13,6 +13,9 @@
 	you_are_text = "By unknown powers, your skeletal remains have been reanimated!"
 	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
 	spawner_job_path = /datum/job/skeleton
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/skeleton/special(mob/living/new_spawn)
 	. = ..()
@@ -29,6 +32,9 @@
 	spawner_job_path = /datum/job/zombie
 	you_are_text = "By unknown powers, your rotting remains have been resurrected!"
 	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/zombie/special(mob/living/new_spawn)
 	. = ..()
