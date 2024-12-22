@@ -71,5 +71,5 @@
 /datum/quirk/item_quirk/family_heirloom/clone_data()
 	return heirloom
 
-/datum/quirk/item_quirk/family_heirloom/on_clone(data)
+/datum/quirk/item_quirk/family_heirloom/on_clone(mob/living/carbon/human/cloned_mob, client/client_source, data)
 	heirloom = data

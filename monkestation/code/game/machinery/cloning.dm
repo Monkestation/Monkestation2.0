@@ -212,7 +212,7 @@
 				stack_trace("quirk with QUIRK_DONT_CLONE ([quirk_type]) somehow in cloning data!")
 				continue
 			var/datum/quirk/quirk = new quirk_type
-			quirk.on_clone(quirks[quirk_type], clone_ckey ? GLOB.directory[clone_ckey] : null)
+			quirk.on_clone(H, clone_ckey ? GLOB.directory[clone_ckey] : null, quirks[quirk_type])
 
 		for(var/t in traumas)
 			var/datum/brain_trauma/BT = t
