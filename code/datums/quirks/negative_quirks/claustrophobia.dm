@@ -9,8 +9,8 @@
 	minimum_process_stat = CONSCIOUS
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
 	process_update_signals = list(
-		SIGNAL_ADDTRAIT(TRAIT_FEARLESS),
-		SIGNAL_REMOVETRAIT(TRAIT_FEARLESS),
+		SIGNAL_ADDTRAIT_2(TRAIT_FEARLESS),
+		SIGNAL_REMOVETRAIT_2(TRAIT_FEARLESS),
 	)
 
 /datum/quirk/claustrophobia/remove()

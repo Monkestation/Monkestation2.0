@@ -15,8 +15,8 @@
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE // monkestation edit: QUIRK_DONT_CLONE (the cloner isn't gonna clone ur tumor lol)
 	mail_goodies = list(/obj/item/storage/pill_bottle/mannitol/braintumor)
 	process_update_signals = list(
-		SIGNAL_ADDTRAIT(TRAIT_TUMOR_SUPPRESSED),
-		SIGNAL_REMOVETRAIT(TRAIT_TUMOR_SUPPRESSED),
+		SIGNAL_ADDTRAIT_2(TRAIT_TUMOR_SUPPRESSED),
+		SIGNAL_REMOVETRAIT_2(TRAIT_TUMOR_SUPPRESSED),
 	)
 
 /datum/quirk/item_quirk/brainproblems/add_unique(client/client_source)
