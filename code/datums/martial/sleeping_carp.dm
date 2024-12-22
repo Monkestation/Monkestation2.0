@@ -224,7 +224,7 @@
 	return COMPONENT_BULLET_PIERCED
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
-/datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carbon/human/carp_user, obj/item/attack_weapon, mob/attacker, params)
+/datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carbon/human/carp_user, obj/item/attack_weapon, mob/attacker, params) //no signal handler or this proc will explode
 	if(!istype(attack_weapon, /obj/item/melee/touch_attack) || !can_deflect(carp_user))
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
