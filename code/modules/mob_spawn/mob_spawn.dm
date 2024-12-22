@@ -198,17 +198,17 @@
 		return
 
 	//MONKESTATION EDIT - Ghost roles can now use character preferences.
-	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs && user.client.prefs.read_preference(/datum/preference/choiced/species) != /datum/species/plasmaman) //Have we never played this character before during this round, and do we support character preferences on this ghost role? Also, I am NOT making a million outfits for plasmamen.
-		var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
-		if(prompt == "Cancel")
-			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
-			return
-		if(prompt == "Yes")
-			use_prefs = TRUE
+	use_prefs = FALSE
+	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs) //Have we never played this character before during this round, and do we support character preferences on this ghost role?
+		if(user.client.prefs.read_preference(/datum/preference/choiced/species) == /datum/species/plasmaman) //I am NOT making a million outfits for plasmamen.
+			to_chat(user, span_warning("Hey, we cant offer you preferences since you're a plasmaman and we cannot afford to expend the effort to make a million outfits, Sorry!"))
 		else
-			use_prefs = FALSE
-	else
-		use_prefs = FALSE
+			var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
+			if(prompt == "Cancel")
+				LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
+				return
+			if(prompt == "Yes")
+				use_prefs = TRUE
 	//END OF EDIT
 
 	if(uses <= 0 && !infinite_use) // Just in case something took longer than it should've and we got here after the uses went below zero.
