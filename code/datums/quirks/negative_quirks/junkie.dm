@@ -9,8 +9,8 @@
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	process_update_signals = list(
-		SIGNAL_ADDTRAIT_2(TRAIT_LIVERLESS_METABOLISM),
-		SIGNAL_REMOVETRAIT_2(TRAIT_LIVERLESS_METABOLISM),
+		SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM),
+		SIGNAL_REMOVETRAIT(TRAIT_LIVERLESS_METABOLISM),
 	)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/painkiller/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.

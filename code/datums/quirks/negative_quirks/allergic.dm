@@ -10,8 +10,8 @@
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
 	process_update_signals = list(
-		SIGNAL_ADDTRAIT_2(TRAIT_STASIS),
-		SIGNAL_REMOVETRAIT_2(TRAIT_STASIS),
+		SIGNAL_ADDTRAIT(TRAIT_STASIS),
+		SIGNAL_REMOVETRAIT(TRAIT_STASIS),
 	)
 	var/list/allergies = list()
 	var/list/blacklist = list(
