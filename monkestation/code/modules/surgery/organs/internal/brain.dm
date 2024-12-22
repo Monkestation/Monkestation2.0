@@ -32,10 +32,11 @@
 	var/datum/dna/stored_dna
 
 ///////
-/// Core item storage
+/// Core storage
 //
+	var/list/stored_quirks = list()
 	var/list/stored_items = list()
-	///item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
+	///Item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
@@ -52,7 +53,25 @@
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines
 	))
-
+	//Quirks that roll unique effects or gives items each body should be saved between bodies.
+	var/static/list/saved_quirks = typecacheof(list(
+		/datum/quirk/item_quirk/family_heirloom,
+		/datum/quirk/item_quirk/nearsighted,
+		/datum/quirk/item_quirk/photographer,
+		/datum/quirk/item_quirk/pride_pin,
+		/datum/quirk/item_quirk/bald,
+		/datum/quirk/item_quirk/clown_enjoyer,
+		/datum/quirk/item_quirk/mime_fan,
+		/datum/quirk/item_quirk/musician,
+		/datum/quirk/item_quirk/poster_boy,
+		/datum/quirk/item_quirk/tagger,
+		/datum/quirk/item_quirk/signer,
+		/datum/quirk/phobia,
+		/datum/quirk/indebted,
+		/datum/quirk/item_quirk/allergic,
+		/datum/quirk/item_quirk/brainproblems,
+		/datum/quirk/item_quirk/junkie,
+	))
 
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
@@ -153,8 +172,12 @@
 	var/turf/death_turf = get_turf(victim)
 	var/mob/living/basic/mining/legion/legionbody = victim.loc
 
-	//Start moving items before anything else can touch them.
-	process_items(victim)
+	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
+		if(is_type_in_typecache(quirk, saved_quirks))
+			quirk.remove_from_current_holder(quirk_transfer = TRUE)
+			stored_quirks |= quirk
+
+	process_items(victim) // Start moving items before anything else can touch them.
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
@@ -338,7 +361,11 @@
 	new_body.blood_volume = nugget ? (BLOOD_VOLUME_SAFE + 60) : BLOOD_VOLUME_NORMAL
 	REMOVE_TRAIT(new_body, TRAIT_NO_TRANSFORM, REF(src))
 	if(!QDELETED(brainmob))
-		SSquirks.AssignQuirks(new_body, brainmob.client)
+		if(!isnull(stored_quirks))
+			for(var/datum/quirk/quirk in stored_quirks)
+				quirk.add_to_holder(new_body, quirk_transfer = TRUE) // Return their old quirk to them.
+			stored_quirks.Cut()
+		SSquirks.AssignQuirks(new_body, brainmob.client) // Still need to copy over the rest of their quirks.
 	var/obj/item/organ/internal/brain/new_body_brain = new_body.get_organ_slot(ORGAN_SLOT_BRAIN)
 	qdel(new_body_brain)
 	forceMove(new_body)
