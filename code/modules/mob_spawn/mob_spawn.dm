@@ -198,7 +198,7 @@
 		return
 
 	//MONKESTATION EDIT - Ghost roles can now use character preferences.
-	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs) //Have we never played this character before during this round, and do we support character preferences on this ghost role?
+	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs && user.client.prefs.read_preference(/datum/preference/choiced/species) != /datum/species/plasmaman) //Have we never played this character before during this round, and do we support character preferences on this ghost role? Also, I am NOT making a million outfits for plasmamen.
 		var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
 		if(prompt == "Cancel")
 			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
