@@ -8,16 +8,11 @@
 	desc = "Add an additional area observation consoles can warp to."
 	button_icon_state = "Spatial Warp"
 	///a cache of areas we can are to the warpable list
-	var/static/list/cached_addable_areas
+	var/static/list/cached_addable_areas //rename this to markable areas
 	///what area types are we blocked from warping to
 	var/static/list/blocked_areas = typecacheof(list(/area/station/service/chapel, /area/station/ai_monitored))
 	///what area types cost double
 	var/static/list/costly_areas = typecacheof(list(/area/station/command, /area/station/security))
-
-/datum/action/innate/clockcult/add_warp_area/New(Target)
-	. = ..()
-	if(!cached_addable_areas)
-		build_addable_areas()
 
 /datum/action/innate/clockcult/add_warp_area/IsAvailable(feedback)
 	if(!IS_CLOCK(owner))
@@ -41,15 +36,15 @@
 			to_chat(span_brass("Not enough vitality."))
 			return
 
-		if(input_area in SSthe_ark.marked_areas)
+		if(SSthe_ark.marked_areas[input_area])
 			return
 
-		SSthe_ark.marked_areas += input_area
+		SSthe_ark.marked_areas[input_area] = TRUE
 		cached_addable_areas -= input_area
 		send_clock_message(null, "[input_area] added to warpable areas.")
 
 /datum/action/innate/clockcult/add_warp_area/proc/choose_starting_warp_areas()
-	if(!cached_addable_areas || !length(cached_addable_areas))
+	if(!length(cached_addable_areas))
 		return
 
 	if(!SSthe_ark.initialized)
@@ -72,14 +67,14 @@
 			continue
 
 		added_areas++
-		SSthe_ark.marked_areas += picked_area
+		SSthe_ark.marked_areas[picked_area] = TRUE
 		cached_addable_areas -= picked_area
 
 /datum/action/innate/clockcult/add_warp_area/proc/build_addable_areas()
 	cached_addable_areas = list()
 	for(var/area/station_area as anything in GLOB.the_station_areas)
 		station_area = GLOB.areas_by_type[station_area]
-		if(station_area.outdoors || (station_area.area_flags & ABDUCTOR_PROOF) || is_type_in_typecache(station_area, blocked_areas) || (station_area in SSthe_ark.marked_areas))
+		if(station_area.outdoors || (station_area.area_flags & ABDUCTOR_PROOF) || is_type_in_typecache(station_area, blocked_areas) || (SSthe_ark.marked_areas[station_area]))
 			continue
 		cached_addable_areas += station_area
 

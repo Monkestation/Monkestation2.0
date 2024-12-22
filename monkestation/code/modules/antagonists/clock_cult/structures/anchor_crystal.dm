@@ -58,15 +58,14 @@
 	SEND_SIGNAL(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED, src)
 	var/conversion_timer = SSthe_ark.convert_area_turfs(crystal_area)
 	var/list/adjacent_areas = get_area_edge_turfs(crystal_area, TRUE)[src.z]
-	message_admins("AREAS [english_list(adjacent_areas)]")
 	var/extra_marks = 0
 	while(length(adjacent_areas) && extra_marks < EXTRA_MARKED_AREAS)
 		var/area/marked_area = pick_n_take(adjacent_areas)
-		if(marked_area.outdoors)
+		if(marked_area.outdoors || SSthe_ark.marked_areas[marked_area])
 			continue
 
 		extra_marks++
-		SSthe_ark.marked_areas |= marked_area
+		SSthe_ark.marked_areas[marked_area] = TRUE
 		SSthe_ark.convert_area_turfs(marked_area, 50, conversion_timer)
 
 	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
@@ -76,7 +75,7 @@
 	update_icon()
 	START_PROCESSING(SSmachines, src)
 
-	SSthe_ark.marked_areas |= crystal_area
+	SSthe_ark.marked_areas[crystal_area] = TRUE
 	SSthe_ark.block_shuttle(src)
 	if(SSthe_ark.valid_crystal_areas)
 		SSthe_ark.valid_crystal_areas -= crystal_area

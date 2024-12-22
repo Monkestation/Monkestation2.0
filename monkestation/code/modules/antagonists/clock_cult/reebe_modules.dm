@@ -35,6 +35,11 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	if(!reebe_template.load(reservation.bottom_left_turfs[1]))
 		reebe_loaded = FALSE
 		CRASH("Failed to load the Reebe template.")
+
+	for(var/area/reebe_area as anything in typesof(/area/ruin/powered/reebe))
+		reebe_area = GLOB.areas_by_type[reebe_area]
+		if(reebe_area)
+			SSthe_ark.marked_areas += reebe_area
 	return TRUE
 
 ///Send a pod full of helpful items to the station's bridge

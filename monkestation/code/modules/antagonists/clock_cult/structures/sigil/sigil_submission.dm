@@ -31,7 +31,7 @@
 		animate(converted_mob.client, color = previous_colour, time = 1 SECONDS)
 
 	GLOB.main_clock_cult?.check_member_distribution()
-	if(isdrone(converted_mob) && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS))
+	if(isdrone(converted_mob) && (length(SSthe_ark.cogscarabs) < MAXIMUM_COGSCARABS))
 		var/mob/living/basic/drone/cogscarab/cogger = new /mob/living/basic/drone/cogscarab(get_turf(src))
 		cogger.key = converted_mob.key
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)

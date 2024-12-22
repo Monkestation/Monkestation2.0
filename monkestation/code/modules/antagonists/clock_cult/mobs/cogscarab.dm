@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(cogscarabs)
-
 #define CLOCK_DRONE_MAX_ITEM_FORCE 15
 
 //====Cogscarab====
@@ -27,34 +25,27 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	chat_color = LIGHT_COLOR_CLOCKWORK
 	initial_language_holder = /datum/language_holder/clockmob
 	shy = FALSE
-	///var for in case admins want a cogsarab to stay off reebe for some reason
-	var/stay_on_reebe = TRUE
 
 //No you can't go wielding guns like that.
 /mob/living/basic/drone/cogscarab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOGUNS, "cogscarab")
-	GLOB.cogscarabs += src
+	SSthe_ark.cogscarabs += src
 	add_actionspeed_modifier(/datum/actionspeed_modifier/cogscarab)
 
 /datum/actionspeed_modifier/cogscarab
 	multiplicative_slowdown = 0.6
 
 /mob/living/basic/drone/cogscarab/death(gibbed)
-	GLOB.cogscarabs -= src
+	SSthe_ark.cogscarabs -= src
 	return ..()
 
-/mob/living/basic/drone/cogscarab/Life(seconds, times_fired)
-	if(!on_reebe(src) && !GLOB.ratvar_risen && length(GLOB.abscond_markers) && stay_on_reebe)
-		try_servant_warp(src, get_turf(pick(GLOB.abscond_markers)))
-	. = ..()
-
 /mob/living/basic/drone/cogscarab/Destroy()
-	GLOB.cogscarabs -= src
+	SSthe_ark.cogscarabs -= src
 	return ..()
 
 /mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent) //ideally I would handle this on attacking instead
-	return (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE) && ..()
+	return (force || (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE)) && ..()
 
 //====Shell====
 
@@ -72,13 +63,22 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	you have a set of quick tools, as well as a replica fabricator that can create brass for construction. Work with the servants of Rat'var \
 	to construct and maintain defenses at the City of Cogs."
 
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab/Initialize(mapload)
+	. = ..()
+	SSthe_ark.cogscarabs += src
+
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab/Destroy()
+	SSthe_ark.cogscarabs -= src
+	return ..()
+
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
+	AddComponent(/datum/component/multi_area_bound, spawned_mob, SSthe_ark.marked_areas, TRUE)
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
-	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
+	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(user, span_notice("The Ark cannot support any more cogscarabs."))
 		return FALSE
 	return TRUE

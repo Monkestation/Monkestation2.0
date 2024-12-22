@@ -41,7 +41,7 @@
 		return
 
 	if(brainmob.key && brainmob.mind)
-		if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
+		if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
 			balloon_alert(user, "The Ark cannot support any more cogscarabs.")
 			return
 

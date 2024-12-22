@@ -13,7 +13,7 @@
 	if(!.)
 		return
 
-	if(!(get_area(invoker) in SSthe_ark.marked_areas))
+	if(!SSthe_ark.marked_areas[get_area(invoker)])
 		to_chat(user, span_warning("We can only abscond from marked areas!"))
 		return FALSE
 

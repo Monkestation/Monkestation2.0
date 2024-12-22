@@ -13,7 +13,7 @@
 	fast_invoke_mult = 1
 
 /datum/scripture/cogscarab/begin_invoke(mob/living/invoking_mob, obj/item/clockwork/clockwork_slab/slab, bypass_unlock_checks)
-	invocation_time = 12 SECONDS + (6 SECONDS * GLOB.cogscarabs.len)
+	invocation_time = 12 SECONDS + (6 SECONDS * SSthe_ark.cogscarabs.len)
 	. = ..()
 
 /datum/scripture/cogscarab/check_special_requirements(mob/user)
@@ -25,7 +25,7 @@
 		to_chat(invoker, span_warning("You must do this on Reebe!"))
 		return FALSE
 
-	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
+	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(invoker, span_warning("You can't summon anymore cogscarabs."))
 		return FALSE
 

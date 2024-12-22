@@ -14,7 +14,7 @@
 	START_PROCESSING(SSobj, src)
 	actions += new /datum/action/innate/clockcult/warp(src)
 	actions += new /datum/action/innate/clockcult/show_warpable_areas(src)
-	var/datum/action/innate/clockcult/add_warp_area/add_area = new(src)
+	actions += new /datum/action/innate/clockcult/add_warp_area/add_area(src)
 	actions += add_area
 	if(!length(SSthe_ark.marked_areas))
 		add_area.choose_starting_warp_areas() //slightly hacky but handling it on the action is cheaper as it lets us just build our warpable areas once without needing globals
@@ -73,8 +73,8 @@
 	var/mob/camera/ai_eye/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
-	if(!(target_area in SSthe_ark.marked_areas))
-		to_chat(owner, span_brass("This area is not currently warpable."))
+	if(!(SSthe_ark.marked_areas[target_area]))
+		to_chat(owner, span_brass("This area is not marked."))
 		return
 
 	if(isclosedturf(target_loc))

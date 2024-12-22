@@ -1,21 +1,17 @@
 #define MARAUDER_SHIELD_MAX 5
-#define WELDER_REPAIR_AMOUNT 15
-
-GLOBAL_LIST_EMPTY(clockwork_marauders)
-
+#define WELDER_REPAIR_AMOUNT 25
 /mob/living/basic/clockwork_marauder
 	name = "clockwork marauder"
 	desc = "A brass machine of destruction."
 	icon = 'monkestation/icons/mob/clock_cult/clockwork_mobs.dmi'
 	icon_state = "clockwork_marauder"
 	icon_living = "clockwork_marauder"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_HUMANOID|MOB_ROBOTIC|MOB_SPIRIT
 	sentience_type = SENTIENCE_HUMANOID
-	maxHealth = 140
-	health = 140
+	maxHealth = 180
+	health = 180
 	basic_mob_flags = DEL_ON_DEATH
-	speed = 1.25
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	speed = 1.20
 	melee_damage_lower = 24
 	melee_damage_upper = 24
 	attack_verb_continuous = "slices"
@@ -46,10 +42,10 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 	. = ..()
 	if(length(loot))
 		AddElement(/datum/element/death_drops, loot)
-	GLOB.clockwork_marauders += src
+	SSthe_ark.clockwork_marauders += src
 
 /mob/living/basic/clockwork_marauder/Destroy()
-	GLOB.clockwork_marauders -= src
+	SSthe_ark.clockwork_marauders -= src
 	return ..()
 
 /mob/living/basic/clockwork_marauder/examine(mob/user)
@@ -61,22 +57,22 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 			. += span_brass("It can be repaired with a <b>welding tool</b>.")
 
 /mob/living/basic/clockwork_marauder/UnarmedAttack(atom/attack_target, proximity_flag)
-	var/obj/structure/destructible/clockwork/structure = attack_target
-	if(istype(structure) && structure.immune_to_servant_attacks)
+	var/obj/structure/destructible/clockwork/gear_base/powered/structure = attack_target
+	if(istype(structure) && istate != ISTATE_HARM)
+		structure.try_toggle_power(src)
 		return ATTACK_DO_NOTHING
-	. = ..()
+	return ..()
 
 
 /mob/living/basic/clockwork_marauder/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(shield_health)
+	if(shield_health && attacking_item.force > 0)
 		damage_shield()
-
 		playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, 1)
+		return
 
 	if(attacking_item == TOOL_WELDER)
 		welder_act(user, attacking_item)
 		return
-
 	return ..()
 
 /mob/living/basic/clockwork_marauder/bullet_act(obj/projectile/proj)
