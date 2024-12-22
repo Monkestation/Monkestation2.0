@@ -35,20 +35,12 @@
 /// Core item storage
 //
 	var/list/stored_items = list()
-	///item types that should never be stored in core and will drop on death
+	///item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
-//	var/list/bannedcore = list(
-//		/obj/item/disk/nuclear,
-//		/obj/item/clothing/head/mob_holder //Pet hats
-//	)
-
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
-		//obj/item/implant
+		/obj/item/implant
 	))
-//	var/list/allowed_implants = list(
-		//obj/item/implant
-//	)
 	//Extraneous organs not of oozling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
 		/obj/item/organ/internal/cyberimp,
@@ -60,16 +52,7 @@
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines
 	))
-//	var/list/allowed_organ_types = list(
-//		/obj/item/organ/internal/cyberimp,
-//		/obj/item/organ/external/wings,
-//		/obj/item/organ/external/tail,
-//		/obj/item/organ/external/frills,
-//		/obj/item/organ/external/horns,
-//		/obj/item/organ/external/snout,
-//		/obj/item/organ/external/antennae,
-//		/obj/item/organ/external/spines
-//	)
+
 
 	var/rebuilt = TRUE
 	var/coredeath = TRUE
@@ -260,13 +243,52 @@
 ///////
 /// PROCESS ITEMS FOR CORE EJECTION
 /// Processes different types of items and prepares them to be stored when the core is ejected.
-/obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to process and move items
 
+/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core.
+	var/list/focus_slots = list(
+    	ITEM_SLOT_SUITSTORE,
+    	ITEM_SLOT_BELT,
+    	ITEM_SLOT_ID,
+    	ITEM_SLOT_LPOCKET,
+    	ITEM_SLOT_RPOCKET
+	)
+	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
+		process_and_store_item(victim.get_item_by_slot(islot), victim)
 
-/obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core
-	if(victim.get_all_contents())
+	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
+
+	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
+	process_and_store_item(target_chest.cavity_item, victim)
+
+	for(var/atom/movable/item in victim.get_equipped_items(include_pockets = TRUE)) // Store rest of equipment
+		process_and_store_item(item, victim)
+
+	for(var/obj/item/implant/curimplant in victim.implants) // Process and store implants
+		if(is_type_in_typecache(curimplant, allowed_implants))
+			if(curimplant.removed(victim))
+				var/obj/item/implantcase/case =  new /obj/item/implantcase
+				case.imp = curimplant
+				curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
+				case.update_appearance()
+				process_and_store_item(case, victim)
+
+	for(var/obj/item/organ/organ in victim.organs) // Process and store organ implants and related organs
+		if(is_type_in_typecache(organ, allowed_organ_types))
+			organ.Remove(victim)
+			process_and_store_item(organ, victim)
+
+/obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to finally move items
+	if(!item)
 		return
-	victim.back
+	if(!isnull(item.contents))
+		for(var/atom/movable/content_item in item.get_all_contents())
+			if(is_type_in_typecache(content_item, bannedcore))
+				content_item.forceMove(get_turf(victim)) // Move item from container to victims turf if banned
+	if(is_type_in_typecache(item, bannedcore))
+		item.forceMove(get_turf(victim)) // Move banned item from victim to the victim's turf if banned.
+	else
+		item.forceMove(src)
+		stored_items |= item
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
 	for(var/atom/movable/item as anything in stored_items)
