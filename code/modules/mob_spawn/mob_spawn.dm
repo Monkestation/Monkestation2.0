@@ -273,7 +273,6 @@
 		to_chat(spawned_mob, output_message)
 
 	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
-	//TODO - Make an actual variable to check if this ghost role supports preferences.
 	if(use_prefs && support_prefs)
 		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
 	//END OF EDIT
