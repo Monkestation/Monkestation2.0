@@ -3,6 +3,11 @@
 	--scrollbar-thumb: #a7a7a7;
 }
 
+html,
+body {
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-base);
+}
+
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 12px !important;
@@ -12,13 +17,16 @@ body {
 	overflow-y: scroll;
 }
 
+/**
+ * MARK: Dark theme colors
+ */
 .dark:root {
-	--scrollbar-base: #181818;
+	--scrollbar-base: #151515;
 	--scrollbar-thumb: #363636;
 }
 
 body.dark {
-	background-color: #131313;
+	background-color: #151515;
 	color: #b2c4dd;
 	scrollbar-base-color: #1c1c1c;
 	scrollbar-face-color: #3b3b3b;
@@ -37,7 +45,7 @@ body.dark {
 }
 
 .dark #menu {
-	background-color: #202020;
+	background-color: #151515;
 }
 
 #statcontent {
