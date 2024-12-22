@@ -198,7 +198,7 @@
 		return
 
 	//MONKESTATION EDIT - Ghost roles can now use character preferences.
-	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey])) //Have we never played this character before during this round?
+	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs) //Have we never played this character before during this round, and do we support character preferences on this ghost role?
 		var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
 		if(prompt == "Cancel")
 			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
@@ -273,7 +273,7 @@
 		to_chat(spawned_mob, output_message)
 
 	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
-	if(use_prefs && support_prefs)
+	if(use_prefs)
 		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
 	//END OF EDIT
 
