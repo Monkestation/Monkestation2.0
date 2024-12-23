@@ -267,7 +267,6 @@
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
-
 /obj/item/staff/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."

@@ -17,21 +17,29 @@
 		"Shura", //Sekiro reference
 	)
 	var/datum/weakref/original_body = null
+	var/original_name
+	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
 	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 	counter = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
-	var/titled_name //name you get after you're titled
-	var/real_name = target.real_name
+	original_name = target.real_name
 	if(original_body == null)
 		original_body = target
 	if(title == null)
 		title = pick(character_prefixes)
 	all_bodies += target
-	titled_name = "[title] [target.get_face_name(real_name)]"
-	target.fully_replace_character_name(real_name, titled_name)
+	titled_name = "[title] [target.get_face_name(original_name)]"
+	target.fully_replace_character_name(original_name, titled_name)
+	target.physiology.stamina_mod = 0.5 //Halves stamina damage taken, may be removed once a better
+
+/datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
+	. = ..()
+	target.physiology.stamina_mod = 1
+	target.fully_replace_character_name(titled_name, original_name)
+
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender)
 	. = ..()
