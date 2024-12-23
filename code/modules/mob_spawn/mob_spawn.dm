@@ -254,6 +254,10 @@
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
+	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
+	if(use_prefs)
+		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
+	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
@@ -271,11 +275,6 @@
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
-
-	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
-	if(use_prefs)
-		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
-	//END OF EDIT
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()
