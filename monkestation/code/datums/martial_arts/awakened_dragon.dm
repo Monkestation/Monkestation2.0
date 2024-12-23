@@ -4,17 +4,17 @@
 	help_verb = /mob/living/proc/awakened_dragon_help
 	deflect_cooldown = 0
 	deflect_stamcost = 5
-	deflect_miss_probability = 0
 	log_name = "Awakened Dragon"
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
 	var/static/list/character_prefixes = list(
 		"Heavenly Demon",
-		"Cheonma",
+		"Cheonma", //Roughly means Heavenly Demon
 		"Heavenly Dragon",
 		"Greatest Before the Heavens",
 		"Dragon Fist",
 		"Awakened Dragon's Disciple",
 		"Sunaikinti's Blessed", //rogue lineage reference, don't ask
+		"Shura", //Sekiro reference
 	)
 	var/datum/weakref/original_body = null
 	var/list/datum/weakref/all_bodies = list()
@@ -54,11 +54,6 @@
 	stamina_damage = 50
 	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
-
-/datum/action/cooldown/awaken_carp
-	name = "AWAKEN THE CARP!"
-	desc = "Force carp sleeping in a nearby crater to warp to your location"
-
 
 /mob/living/proc/awakened_dragon_help()
 	set name = "Recall Teachings"

@@ -12,7 +12,6 @@
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_THROW_GUNS)
 	var/deflect_cooldown = 3 SECONDS //monke edit start
 	var/deflect_stamcost = 15 //how much stamina it costs per bullet deflected
-	var/deflect_miss_probability = 50 //how likely the deflect is to fail
 	var/log_name = "Sleeping Carp"
 	var/damage = 0
 	var/kick_speed = 0 //how fast you get punted into the stratosphere on launchkick
@@ -188,9 +187,8 @@
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
-	if(!COOLDOWN_FINISHED(src, block_cooldown))
-		if(prob(deflect_miss_probability)) //monke edit
-			return FALSE
+	if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
+		return FALSE
 	if(!can_use(carp_user))
 		return FALSE
 	if(!(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
