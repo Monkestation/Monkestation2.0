@@ -254,7 +254,7 @@
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	//MONKESTATION EDIT - Check if we are using preferences and if this mob works with preferences.
+	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs)
 		spawned_mob.client.prefs.apply_prefs_to(spawned_mob)
 	//END OF EDIT
