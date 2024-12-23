@@ -33,7 +33,7 @@
 	all_bodies += target
 	titled_name = "[title] [target.get_face_name(original_name)]"
 	target.fully_replace_character_name(original_name, titled_name)
-	target.physiology.stamina_mod = 0.5 //Halves stamina damage taken, may be removed once a better
+	target.physiology.stamina_mod = 0.5 //Halves stamina damage taken, may be removed once a better solution to stun batons is found
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
