@@ -35,14 +35,14 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender)
 	. = ..()
-	damage = 30
+	damage = 40
 	wounding = 15
 	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender)
 	. = ..()
-	damage = 25
+	damage = 30
 	kick_speed = 5
 	wounding = 5
 	zone = BODY_ZONE_HEAD
