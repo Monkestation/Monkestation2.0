@@ -163,6 +163,9 @@
 	. = ..()
 
 	if(isoozeling(exposed_mob))
+		if(HAS_TRAIT(exposed_mob, TRAIT_SLIME_HYDROPHOBIA))
+			to_chat(exposed_mob, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+			return
 		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
 		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
 

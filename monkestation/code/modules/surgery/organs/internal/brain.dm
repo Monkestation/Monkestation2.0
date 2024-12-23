@@ -40,7 +40,7 @@
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
-		/obj/item/implant
+		//obj/item/implant
 	))
 	//Extraneous organs not of oozling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
@@ -53,7 +53,7 @@
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines
 	))
-	//Quirks that roll unique effects or gives items each body should be saved between bodies.
+	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
 		/datum/quirk/item_quirk/family_heirloom,
 		/datum/quirk/item_quirk/nearsighted,
@@ -65,7 +65,7 @@
 		/datum/quirk/item_quirk/musician,
 		/datum/quirk/item_quirk/poster_boy,
 		/datum/quirk/item_quirk/tagger,
-		/datum/quirk/item_quirk/signer,
+		//datum/quirk/item_quirk/signer, // Needs to "add component" on proc add not on_unique
 		/datum/quirk/phobia,
 		/datum/quirk/indebted,
 		/datum/quirk/item_quirk/allergic,
