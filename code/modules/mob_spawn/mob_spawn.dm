@@ -201,7 +201,7 @@
 	use_prefs = FALSE
 	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs) //Have we never played this character before during this round, and do we support character preferences on this ghost role?
 		if(user.client.prefs.read_preference(/datum/preference/choiced/species) == /datum/species/plasmaman) //I am NOT making a million outfits for plasmamen.
-			to_chat(user, span_warning("Hey, we cant offer you preferences since you're a plasmaman and we cannot afford to expend the effort to make a million outfits, Sorry!"))
+			to_chat(user, span_warning("Hey. We can't offer you preferences since you're a plasmaman and we cannot afford to expend the effort to make a million outfits. Sorry!"))
 		else
 			var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
 			if(prompt == "Cancel")
