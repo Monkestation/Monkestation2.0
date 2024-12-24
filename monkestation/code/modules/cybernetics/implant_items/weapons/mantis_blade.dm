@@ -143,8 +143,8 @@
 	. = ..()
 	r_hand = owner.get_held_items_for_side(RIGHT_HANDS, FALSE)
 	l_hand = owner.get_held_items_for_side(LEFT_HANDS, FALSE)
-	r_hand.block_chance += 40
-	l_hand.block_chance += 40
+	r_hand.block_chance += 60
+	l_hand.block_chance += 60
 	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, id)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")
@@ -174,6 +174,6 @@
 
 //blocking with blades slow you down
 /datum/movespeed_modifier/shield_blades
-	multiplicative_slowdown = 1.5
+	multiplicative_slowdown = 1.25
 
 
