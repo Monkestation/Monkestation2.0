@@ -22,7 +22,6 @@
 	cost = 20
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
-	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
 
 /datum/uplink_item/dangerous/laser_musket
