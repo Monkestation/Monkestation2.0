@@ -150,4 +150,7 @@
 /// Mob can't strip other mobs, overrides TRAIT_CAN_STRIP. Importantly, they cannot *open* strip menus, so this is used for mayhem in a bottle.
 #define TRAIT_CANT_STRIP "cant_strip"
 
+/// Makes you able to bloodcrawl with your items
+#define TRAIT_BLOODCRAWL_WITH_ITEMS "bloodcrawl_with_items"
+
 // END TRAIT DEFINES
