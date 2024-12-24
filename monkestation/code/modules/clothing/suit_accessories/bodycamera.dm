@@ -30,15 +30,17 @@
 		QDEL_NULL(builtin_bodycamera)
 	return ..()
 
-/obj/item/bodycam_upgrade/attack_atom(atom/attacked_atom, mob/living/user, params)
+/obj/item/bodycam_upgrade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!isitem(attacked_atom))
-		return ..()
-	var/obj/item/interacting_item = attacked_atom
+	if(.)
+		return
+	if(!proximity_flag || !isitem(target))
+		return
+	var/obj/item/interacting_item = target
 	if(!(interacting_item.slot_flags & ITEM_SLOT_OCLOTHING))
-		return ..()
+		return
 	if(interacting_item.item_flags & (ABSTRACT|DROPDEL)) //things like changeling suits don't get body cameras.
-		return ..()
+		return
 	install_camera(interacting_item, user)
 
 ///Installs the bodycamera into a piece of clothing, updating the overlays on the mob if they're actively wearing it.

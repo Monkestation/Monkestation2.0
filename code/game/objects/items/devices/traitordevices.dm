@@ -327,16 +327,18 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/jammer/attack_atom(atom/attacked_atom, mob/living/user, params)
+/obj/item/jammer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(.)
+		return
 
-	if (!(attacked_atom in view(7, user)))
+	if (!(target in view(7, user)))
 		user.balloon_alert(user, "out of reach!")
 		return
 
-	attacked_atom.balloon_alert(user, "radio distrupted!")
-	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [attacked_atom]."))
-	disable_radios_on(attacked_atom)
+	target.balloon_alert(user, "radio distrupted!")
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [target]."))
+	disable_radios_on(target)
 
 /obj/item/jammer/proc/disable_radios_on(atom/target)
 	for (var/obj/item/radio/radio in target.get_all_contents() + target)
