@@ -224,6 +224,33 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/rebarxbow
+	name = "Heated Rebar Crossbow"
+	result = /obj/item/gun/ballistic/rifle/rebarxbow
+	reqs = list(
+		/obj/item/stack/rods = 6,
+		/obj/item/stack/cable_coil = 12,
+		/obj/item/inducer =  1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/rebarxbowforced
+	name = "Forced Rebar Crossbow"
+	desc = "A much quicker reload... for a chance of shooting yourself when you fire it."
+	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
+	reqs = list(
+		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
+	)
+	blacklist = list(
+	/obj/item/gun/ballistic/rifle/rebarxbow/forced,
+	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+	)
+	tool_behaviors = list(TOOL_CROWBAR)
+	time = 1 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
 	always_available = FALSE
@@ -306,8 +333,7 @@
 		/obj/item/stack/rods = 4,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/clothing/glasses/regular = 1,
-		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 10 SECONDS
@@ -351,7 +377,7 @@
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
 		/obj/item/stock_parts/cell/hyper = 1,
-		/datum/reagent/reaction_agent/speed_agent = 10,
+		/datum/reagent/consumable/red_queen = 10, //monke edit
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS
