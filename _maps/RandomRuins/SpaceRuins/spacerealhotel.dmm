@@ -1335,7 +1335,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "oW" = (
-/obj/structure/frame,
+/obj/structure/frame/machine,
 /obj/item/stack/cable_coil/five,
 /obj/item/stock_parts/micro_laser/quadultra,
 /turf/open/floor/circuit/green,
@@ -2062,7 +2062,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "vL" = (
-/obj/structure/frame,
+/obj/structure/frame/machine,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/circuitboard/machine/announcement_system,
 /obj/item/stock_parts/micro_laser/quadultra,
@@ -3559,7 +3559,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hotel)
 "Ko" = (
-/obj/structure/frame,
+/obj/structure/frame/machine,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/circuitboard/machine/pacman,
 /obj/item/stack/cable_coil/five,
@@ -5022,7 +5022,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "WA" = (
-/obj/structure/frame,
+/obj/structure/frame/machine,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/circuitboard/machine/emitter,
 /obj/item/stack/cable_coil/five,
