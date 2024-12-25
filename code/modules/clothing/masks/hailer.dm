@@ -235,6 +235,30 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /datum/action/item_action/halt
 	name = "HALT!"
 
+//MONKESTATION EDIT START
+/obj/item/clothing/mask/whistle/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+
+/obj/item/clothing/mask/whistle/proc/point_handler(mob/pointing_mob, mob/pointed_at)
+	SIGNAL_HANDLER
+
+	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
+		return
+
+	if(!isliving(pointed_at))
+		return
+
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
+	pointed_at.do_alert_animation()
+	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
+
+/obj/item/clothing/mask/whistle/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_POINTED)
+
+//MONKESTATION EDIT STOP
+
 /obj/item/clothing/mask/party_horn
 	name = "party horn"
 	desc = "A paper tube used at parties that makes a noise when blown into."

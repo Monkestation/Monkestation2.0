@@ -52,7 +52,8 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/grey
 	backpack_contents = list(
 		/obj/item/restraints/handcuffs/cable/zipties = 1,
-		/obj/item/reagent_containers/spray/pepper = 1
+		/obj/item/reagent_containers/spray/pepper = 1,
+		/obj/item/clothing/mask/whistle = 1,
 	)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec

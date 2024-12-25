@@ -65,6 +65,13 @@
 
 	return ..()
 
+//MONKESTATION EDIT START
+/obj/item/clothing/head/helmet/surplus
+	name = "surplus helmet"
+	desc = "Standard Security gear. Protects the head from impacts."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/head.dmi'
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."

@@ -163,7 +163,7 @@
 		)
 
 /datum/voucher_set/security/utility/donut_box
-	name = "Donut Box"
+	name = "Box of Donuts"
 	description = "Tantalizing..."
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox"
@@ -196,8 +196,8 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "justice"
 	set_items = list(
-		/obj/item/clothing/head/helmet/toggleable/justice,
 		/obj/item/clothing/mask/gas/sechailer/swat,
+		/obj/item/clothing/head/helmet/toggleable/justice,
 		)
 
 /datum/voucher_set/security/utility/pinpointer_pairs
@@ -224,24 +224,80 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "swat"
 	set_items = list(
-		/obj/item/clothing/head/helmet/swat/nanotrasen,
 		/obj/item/clothing/mask/gas/sechailer/swat,
+		/obj/item/clothing/head/helmet/swat/nanotrasen,
 		)
 
-/datum/voucher_set/security/assistant/medical
-	name = "Medical Kit"
-	description = "A basic set of emergency triage tools to help injured officers."
-	icon = 'icons/obj/storage/medkit.dmi'
-	icon_state = "medbriefcase"
+/datum/voucher_set/security/utility/laptop
+	name = "Security Laptop"
+	description = "A laptop pre-loaded with security software."
+	icon = 'icons/obj/modular_laptop.dmi'
+	icon_state = "laptop-closed"
 	set_items = list(
-		/obj/item/emergency_bed,
-		/obj/item/storage/medkit/emergency,
-		)
+		/obj/item/modular_computer/laptop/preset/security,
+	)
+
+/obj/item/modular_computer/laptop/preset/security
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/secureye,
+	)
 
 /datum/voucher_set/security/assistant/nightwatch
+	name = "Nightwatch Kit"
+	description = "All the clothing you will need to stay warm patrolling the darker out of sight areas of the station."
+	icon = 'icons/obj/clothing/suits/wintercoat.dmi'
+	icon_state = "coatsecurity"
+	set_items = list(
+		/obj/item/clothing/head/soft/sec,
+		/obj/item/clothing/suit/hooded/wintercoat/security,
+		/obj/item/flashlight/seclite,
+		/obj/item/storage/fancy/donut_box,
+		/obj/item/reagent_containers/cup/glass/coffee,
+		/obj/item/radio/off,
+		/obj/item/crowbar/red,
+		)
 
-/datum/voucher_set/security/assistant/brig_aid
+/datum/voucher_set/security/assistant/brig
+	name = "Brig Assistant Kit"
+	description = "A collection of tools to assist in the operation of the perma wing and watch over prisoners."
+	icon = 'icons/obj/toys/plushes.dmi'
+	icon_state = "pkplush"
+	set_items = list(
+		/obj/item/cargo_teleporter,
+		/obj/item/clipboard,
+		/obj/item/storage/crayons,
+		/obj/item/storage/box/hug/plushes,
+		/obj/item/modular_computer/laptop/preset/security,
+		)
 
 /datum/voucher_set/security/assistant/detective
+	name = "Forensics Assistant Kit"
+	description = "Serial litterer on the loose? This will help you track them down."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "tape_red"
+	set_items = list(
+		/obj/item/camera,
+		/obj/item/taperecorder,
+		/obj/item/tape/random,
+		/obj/item/folder/red,
+		/obj/item/storage/box/evidence,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/binoculars,
+		/obj/item/storage/fancy/cigarettes/cigpack_candy,
+
+		)
 
 /datum/voucher_set/security/assistant/buddy_cop
+	name = "Buddy Cop Kit"
+	description = "Pair up with a security officer and learn the basics of security."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	icon_state = "helmet"
+	set_items = list(
+		/obj/item/storage/box/pinpointer_pairs,
+		/obj/item/clothing/head/helmet/surplus,
+		/obj/item/clothing/suit/armor/surplus,
+		/obj/item/book/manual/wiki/security_space_law,
+		)
