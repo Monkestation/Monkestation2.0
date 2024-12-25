@@ -256,8 +256,14 @@
 	. = ..()
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
-		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
-		SSquirks.AssignQuirks(spawned_mob, mob_possessor.client)
+		var/mob/living/carbon/human/spawned_mob1 = spawned_mob
+		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob1)
+		spawned_mob1.equip_outfit_and_loadout(outfit, mob_possessor.client.prefs)
+		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client?.prefs?.loadout_list))
+			if(length(item.restricted_roles))
+				continue
+			item.post_equip_item(mob_possessor.client.prefs, mob_possessor)
+		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
