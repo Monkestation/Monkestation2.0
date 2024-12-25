@@ -257,9 +257,6 @@
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
 		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
-		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client.prefs.loadout_list))
-		if(length(item.restricted_roles))
-			continue
 		item.post_equip_item(mob_possessor.client.prefs, spawned_mob)
 	SSquirks.AssignQuirks(spawned_mob, mob_possessor.client)
 	//END OF EDIT
