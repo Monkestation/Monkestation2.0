@@ -375,7 +375,10 @@
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
 			if(istype(bodypart, /obj/item/bodypart/head))
-				new_body.become_blind(NO_EYES) //Spawning without a head no eyes
+				// Living mobs eyes are stored in the body so remove the organs properly for their effect to work.
+				var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
+				eyes.Remove(new_body)
+				qdel(eyes)
 			qdel(bodypart)
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
