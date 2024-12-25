@@ -257,8 +257,7 @@
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
 		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
-		item.post_equip_item(mob_possessor.client.prefs, spawned_mob)
-	SSquirks.AssignQuirks(spawned_mob, mob_possessor.client)
+	    SSquirks.AssignQuirks(spawned_mob, mob_possessor.client)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
