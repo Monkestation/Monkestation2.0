@@ -263,7 +263,7 @@
 			if(length(item.restricted_roles))
 				continue
 			item.post_equip_item(mob_possessor.client.prefs, mob_possessor)
-		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client)
+		//SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
