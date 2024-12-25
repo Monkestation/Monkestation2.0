@@ -6,12 +6,29 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
+//MONKESTATION EDIT START
+/obj/item/gun/energy/taser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
+	if(do_after(user, 0.5 SECONDS))
+		return ..()
+//MONKESTATION EDIT STOP
+
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+
+//MONKESTATION EDIT START
+/obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(select == 1)
+		playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
+		if(do_after(user, 0.5 SECONDS))
+			return ..()
+	else
+		return ..()
+//MONKESTATION EDIT STOP
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"

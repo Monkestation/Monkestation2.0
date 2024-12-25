@@ -190,6 +190,30 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
 	overuse_cooldown = FALSE
 
+//MONKESTATION EDIT START
+/obj/item/clothing/mask/gas/sechailer/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+
+/obj/item/clothing/mask/gas/sechailer/proc/point_handler(mob/pointing_mob, mob/pointed_at)
+	SIGNAL_HANDLER
+
+	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
+		return
+
+	if(!isliving(pointed_at))
+		return
+
+	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
+	pointed_at.do_alert_animation()
+	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
+
+/obj/item/clothing/mask/gas/sechailer/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_POINTED)
+
+//MONKESTATION EDIT STOP
+
 /obj/item/clothing/mask/whistle
 	name = "police whistle"
 	desc = "A police whistle for when you need to make sure the criminals hear you."
