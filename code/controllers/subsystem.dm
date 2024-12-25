@@ -207,7 +207,7 @@
 			var/msg = "[src] subsystem has likely entered an infinite enqueue loop, restarting MC immediately!"
 			to_chat_immediate(
 				GLOB.admins,
-				examine_block(span_userdanger("ERROR: [msg]")),
+				boxed_message(span_userdanger("ERROR: [msg]")),
 				type = MESSAGE_TYPE_DEBUG
 			)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
