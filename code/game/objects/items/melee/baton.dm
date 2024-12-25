@@ -426,7 +426,7 @@
 	stamina_damage = 85 //monke edit
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 2.5 SECONDS //monke edit
+	cooldown = 1.5 SECONDS //monke edit
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
