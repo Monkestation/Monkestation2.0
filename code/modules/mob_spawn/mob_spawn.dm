@@ -256,7 +256,7 @@
 	. = ..()
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
-		mob_possessor.client.prefs.apply_prefs_to(spawned_mob)
+		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
