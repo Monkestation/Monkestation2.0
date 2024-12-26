@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(ping_logging)
 	runlevels = ALL
 	var/last_overall_avg = 0
 	var/active_spike = FALSE
+	var/next_spike_threshold = 0
 
 /datum/controller/subsystem/ping_logging/Initialize()
 	fire()
@@ -16,6 +17,7 @@ SUBSYSTEM_DEF(ping_logging)
 	flags |= SS_NO_INIT
 	last_overall_avg = SSping_logging.last_overall_avg
 	active_spike = SSping_logging.active_spike
+	next_spike_threshold = SSping_logging.next_spike_threshold
 
 /datum/controller/subsystem/ping_logging/fire(resumed = FALSE)
 	var/overall_avg = 0
@@ -33,10 +35,15 @@ SUBSYSTEM_DEF(ping_logging)
 		if(overall_avg >= 1000)
 			WRITE_LOG("[GLOB.log_directory]/ping.log", "ping spike detected (avg >=1000ms): [overall_avg]ms")
 			active_spike = TRUE
+			next_spike_threshold = FLOOR(overall_avg + 750, 500)
 	else
 		if(overall_avg < 500)
 			WRITE_LOG("[GLOB.log_directory]/ping.log", "spike possibly ended ([overall_avg]ms)")
 			active_spike = FALSE
+			next_spike_threshold = 0
+		else if(overall_avg > next_spike_threshold)
+			WRITE_LOG("[GLOB.log_directory]/ping.log", "spike worsening ([overall_avg]ms)")
+			next_spike_threshold = FLOOR(overall_avg + 750, 500)
 	last_overall_avg = overall_avg
 
 /datum/controller/subsystem/ping_logging/stat_entry(msg)
