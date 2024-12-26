@@ -2492,11 +2492,11 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "zx" = (
 /obj/structure/chair/office/tactical,
-/obj/machinery/button{
-	id = "hotelsecshutter";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = -1
+/obj/machinery/button/door{
+	pixel_x = -24;
+	pixel_y = 1;
+	name = "shutter control";
+	id = "hotelsecshutter"
 	},
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
