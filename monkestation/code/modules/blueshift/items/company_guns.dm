@@ -325,7 +325,7 @@
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
 
-	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
