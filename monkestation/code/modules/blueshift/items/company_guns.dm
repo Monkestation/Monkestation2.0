@@ -257,6 +257,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
