@@ -5918,7 +5918,6 @@
 #include "monkestation\code\__HELPERS\turfs.dm"
 #include "monkestation\code\__HELPERS\aneri\_aneri.dm"
 #include "monkestation\code\__HELPERS\aneri\misc.dm"
-#include "monkestation\code\__HELPERS\aneri\sort.dm"
 #include "monkestation\code\__HELPERS\aneri\time.dm"
 #include "monkestation\code\__HELPERS\aneri\rand\global.dm"
 #include "monkestation\code\__HELPERS\aneri\rand\instanced.dm"
