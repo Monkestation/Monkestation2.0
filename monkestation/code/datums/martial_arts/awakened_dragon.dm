@@ -3,7 +3,7 @@
 	id = MARTIALART_AWAKENEDDRAGON
 	help_verb = /mob/living/proc/awakened_dragon_help
 	deflect_cooldown = 0
-	deflect_stamcost = 5
+	deflect_stamcost = 10
 	log_name = "Awakened Dragon"
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
 	var/static/list/character_prefixes = list(
@@ -33,7 +33,7 @@
 	all_bodies += target
 	titled_name = "[title] [target.get_face_name(original_name)]"
 	target.fully_replace_character_name(original_name, titled_name)
-	target.physiology.stamina_mod = 0.5 //Halves stamina damage taken, may be removed once a better solution to stun batons is found
+	target.physiology.stamina_mod = 0.9 //slightly reduces stamina damage taken.
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
