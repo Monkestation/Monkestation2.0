@@ -488,7 +488,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a2";
+	id_tag = "Cabina2";
 	name = "Guest Room A2"
 	},
 /obj/machinery/door/firedoor,
@@ -957,7 +957,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a5";
+	id_tag = "Cabina5";
 	name = "Guest Room A5"
 	},
 /obj/machinery/door/firedoor,
@@ -1186,7 +1186,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a4";
+	id_tag = "Cabina4";
 	name = "Guest Room A4"
 	},
 /obj/machinery/door/firedoor,
@@ -1279,9 +1279,11 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/south{
-	id = "a3";
+	id = "Cabina3";
 	name = "privacy button";
-	pixel_y = 24
+	pixel_y = 24;
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -1590,7 +1592,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/window{
-	id = "htsec"
+	id = "hotelsecshutter"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
@@ -1686,7 +1688,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/window{
-	id = "htsec"
+	id = "hotelsecshutter"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
@@ -2491,7 +2493,7 @@
 "zx" = (
 /obj/structure/chair/office/tactical,
 /obj/machinery/button{
-	id = "htsec";
+	id = "hotelsecshutter";
 	name = "shutters control";
 	pixel_x = -25;
 	pixel_y = -1
@@ -2712,7 +2714,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/window{
-	id = "htsec"
+	id = "hotelsecshutter"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
@@ -3155,9 +3157,10 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/south{
-	id = "a4";
+	id = "Cabina4";
 	name = "privacy button";
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -4109,9 +4112,11 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/south{
-	id = "a5";
+	id = "Cabina5";
 	name = "privacy button";
-	pixel_y = 24
+	pixel_y = 24;
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -4294,9 +4299,11 @@
 /obj/structure/table/wood/fancy/red,
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /obj/machinery/button/door/directional/north{
-	id = "a2";
+	id = "Cabina2";
 	name = "privacy button";
-	pixel_y = -24
+	pixel_y = -24;
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
@@ -4340,7 +4347,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a3";
+	id_tag = "Cabina3";
 	name = "Guest Room A3"
 	},
 /obj/machinery/door/firedoor,
@@ -4666,8 +4673,10 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/north{
-	id = "a1";
-	name = "privacy button"
+	id = "Cabina1";
+	name = "privacy button";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -5200,7 +5209,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a1";
+	id_tag = "Cabina1";
 	name = "Guest Room A1"
 	},
 /obj/machinery/door/firedoor,
