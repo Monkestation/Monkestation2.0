@@ -20,7 +20,7 @@
 	var/original_name
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
-	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
+	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS, TRAIT_BATON_RESISTANCE)
 	counter = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
@@ -33,11 +33,9 @@
 	all_bodies += target
 	titled_name = "[title] [target.get_face_name(original_name)]"
 	target.fully_replace_character_name(original_name, titled_name)
-	target.physiology.stamina_mod = 0.9 //slightly reduces stamina damage taken.
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
-	target.physiology.stamina_mod = 1
 	target.fully_replace_character_name(titled_name, original_name)
 
 
