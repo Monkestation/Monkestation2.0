@@ -818,7 +818,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_HEAVY_DRINKER "heavy_drinker" */
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
-#define TRAIT_LIGHT_SLEEPER "light_sleeper" //monke edit
 #define TRAIT_NIGHT_VISION "night_vision"
 #define TRAIT_LIGHT_STEP "light_step"
 #define TRAIT_SPIRITUAL "spiritual"
@@ -847,7 +846,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
-#define TRAIT_THROW_GUNS "throw_guns" //monke edit
 #define TRAIT_SETTLER "settler"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
 
