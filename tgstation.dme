@@ -5933,6 +5933,7 @@
 #include "monkestation\code\controllers\subsystem\glowshroom.dm"
 #include "monkestation\code\controllers\subsystem\init_profiler.dm"
 #include "monkestation\code\controllers\subsystem\job.dm"
+#include "monkestation\code\controllers\subsystem\memory_stats.dm"
 #include "monkestation\code\controllers\subsystem\plexora.dm"
 #include "monkestation\code\controllers\subsystem\profiler.dm"
 #include "monkestation\code\controllers\subsystem\z_priority_effects.dm"
