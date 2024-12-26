@@ -1,5 +1,3 @@
-#define rustg_unix_timestamp(...)	aneri_unix_timestamp()
-
 /datum/instant
 	parent_type = /datum/aneri
 

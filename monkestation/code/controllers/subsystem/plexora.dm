@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/Shutdown(hard = FALSE, requestedby)
 	http_basicasync("serverupdates", list(
 		"type" = "servershutdown",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.config?.map_name,
@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/proc/serverstarted()
 	http_basicasync("serverupdates", list(
 		"type" = "serverstart",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.config?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -161,7 +161,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/proc/serverinitdone(time)
 	http_basicasync("serverupdates", list(
 		"type" = "serverinitdone",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.config?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/proc/roundstarted()
 	http_basicasync("serverupdates", list(
 		"type" = "roundstart",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.config?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -180,7 +180,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/proc/roundended()
 	http_basicasync("serverupdates", list(
 		"type" = "roundend",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.config?.map_name,
@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(plexora)
 /datum/controller/subsystem/plexora/proc/mc_alert(alert, level = 5)
 	http_basicasync("serverupdates", list(
 		"type" = "mcalert",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.config?.map_name,
@@ -260,7 +260,7 @@ SUBSYSTEM_DEF(plexora)
 		"is_bwoink" = is_bwoink,
 		"urgent" = urgent,
 		"msg_raw" = msg_raw,
-		"opened_at" = rustg_unix_timestamp(),
+		"opened_at" = aneri_unix_timestamp(),
 		"replay_pass" = CONFIG_GET(string/replay_password),
 		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(plexora)
 		// Make sure the defines in __DEFINES/admin.dm match up with Plexora's code
 		"close_reason" = close_reason,
 		"close_type" = close_type,
-		"time_closed" = rustg_unix_timestamp(),
+		"time_closed" = aneri_unix_timestamp(),
 	))
 
 /datum/controller/subsystem/plexora/proc/aticket_reopened(datum/admin_help/ticket, reopened_by)
@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(plexora)
 	http_basicasync("atickets/reopen", list(
 		"id" = ticket.id,
 		"roundid" = GLOB.round_id,
-		"time_reopened" = rustg_unix_timestamp(),
+		"time_reopened" = aneri_unix_timestamp(),
 		"reopened_by" = reopened_by, // ckey
 	))
 
@@ -313,7 +313,7 @@ SUBSYSTEM_DEF(plexora)
 		"id" = ticket.id,
 		"roundid" = GLOB.round_id,
 		"is_disconnect" = is_disconnect,
-		"time_of_connection" = rustg_unix_timestamp(),
+		"time_of_connection" = aneri_unix_timestamp(),
 	))
 
 // Begin Mentor tickets
@@ -327,7 +327,7 @@ SUBSYSTEM_DEF(plexora)
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
-		"opened_at" = rustg_unix_timestamp(),
+		"opened_at" = aneri_unix_timestamp(),
 		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
 		"replay_pass" = CONFIG_GET(string/replay_password),
 		"message" = ticket.message,
@@ -342,7 +342,7 @@ SUBSYSTEM_DEF(plexora)
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
 		"message" = msg,
 	))
