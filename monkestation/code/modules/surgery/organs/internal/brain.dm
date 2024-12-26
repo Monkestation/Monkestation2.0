@@ -51,7 +51,8 @@
 		/obj/item/organ/external/horns,
 		/obj/item/organ/external/snout,
 		/obj/item/organ/external/antennae,
-		/obj/item/organ/external/spines
+		/obj/item/organ/external/spines,
+		/obj/item/organ/internal/eyes/robotic/glow
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
@@ -376,16 +377,21 @@
 				continue
 			if(istype(bodypart, /obj/item/bodypart/head))
 				// Living mobs eyes are stored in the body so remove the organs properly for their effect to work.
-				var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
-				eyes.Remove(new_body)
-				qdel(eyes)
-			qdel(bodypart)
+				if(new_body.has_quirk(/datum/quirk/bright_eyes)) // Either they have their eyes in their core or they are destroyed dont spawn another.
+					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
+					eyes.Remove(new_body)
+					qdel(eyes)
+			bodypart.drop_limb() // Drop limb should delete the limb for oozlings unless someone changes it.
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
 		//Make oozlings revive similar to other species.
 		new_body.set_jitter_if_lower(200 SECONDS)
 		new_body.emote("scream")
 	else
+		if(new_body.has_quirk(/datum/quirk/bright_eyes)) // Either they have their eyes in core or they are destroyed don't spawn another.
+			var/obj/item/organ/new_organ = new_body.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
+			new_organ = SSwardrobe.provide_type(new_organ)
+			new_organ.Insert(new_body, special = TRUE, drop_if_replaced = FALSE)
 		new_body.visible_message(span_warning("[new_body]'s body fully forms from [new_body.p_their()] core!"))
 		to_chat(owner, span_purple("Your body fully forms from your core!"))
 
@@ -393,10 +399,6 @@
 	brainmob?.mind?.transfer_to(new_body)
 	new_body.grab_ghost()
 	transfer_observers_to(new_body)
-
-	//Update both the body and stats fixs visual body and HUD issues
-	new_body.update_stat()
-	new_body.update_body_parts()
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
