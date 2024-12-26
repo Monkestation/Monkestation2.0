@@ -5,7 +5,7 @@
 	gain_text = span_danger("You realize clowns aren't real after all.")
 	lose_text = span_notice("You let go of your stubborn disbelief in clowns.")
 	medical_record_text = "Patient has an unshakable disbelief in clowns, to the point of being seemingly incapable of perceiving them."
-	mob_trait = TRAIT_HIDDEN_CLOWN
+	mob_trait = TRAIT_CLOWN_DISBELIEVER
 	icon = FA_ICON_HIPPO
 
 /datum/quirk/clown_disbelief/add(client/client_source)
@@ -22,4 +22,4 @@
 /datum/atom_hud/alternate_appearance/basic/clown_disbelief
 
 /datum/atom_hud/alternate_appearance/basic/clown_disbelief/mobShouldSee(mob/target)
-	return HAS_TRAIT(target, TRAIT_HIDDEN_CLOWN)
+	return HAS_TRAIT(target, TRAIT_CLOWN_DISBELIEVER)

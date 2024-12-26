@@ -4,4 +4,4 @@
 	var/image/invisible = image('icons/effects/effects.dmi', icon_state = null, loc = outfit_wearer)
 	invisible.name = "\u200b" // I HATE BYOND I HATE BYOND
 	invisible.override = TRUE
-	outfit_wearer.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/clown_disbelief, "clown", invisible)
+	outfit_wearer.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/clown_disbelief, "clown", invisible, NONE)
