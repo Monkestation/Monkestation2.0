@@ -28,6 +28,5 @@
 	. = ..()
 	.["custom"] = list(
 		"fetch_cost" = fetch_cost,
-		"sort_cost" = 0,
 		"write_cost" = write_cost,
 	)
