@@ -242,7 +242,8 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "a6";
-	name = "privacy button"
+	name = "privacy button";
+	specialfunctions = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/orange,
