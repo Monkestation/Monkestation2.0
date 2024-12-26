@@ -228,7 +228,7 @@
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
 	// monkestation edit: flavor tweaks
-	if(counter == FALSE)
+	if(!counter)
 		carp_user.visible_message(
 			span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
 			span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
