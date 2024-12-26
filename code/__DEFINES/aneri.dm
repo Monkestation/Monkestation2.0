@@ -60,6 +60,7 @@
 
 // aneri-time
 #define aneri_unix_timestamp(...)	(ANERI_CALL("unix_timestamp"))
+#define human_readable_timestamp(...) (ANERI_CALL("human_readable_timestamp"))
 
 // aneri-util
 #define aneri_json_is_valid(json)					(ANERI_CALL("json_is_valid", json))
