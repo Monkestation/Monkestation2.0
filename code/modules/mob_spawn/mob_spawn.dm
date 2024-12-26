@@ -262,8 +262,8 @@
 		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client?.prefs?.loadout_list))
 			if(length(item.restricted_roles))
 				continue
-			item.post_equip_item(mob_possessor.client.prefs, mob_possessor)
-		//SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client)
+			item.post_equip_item(mob_possessor.client.prefs, spawned_mob1)
+		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client, FALSE, FALSE, FALSE, list(/datum/quirk/stowaway)) //fok of, stowaway
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)

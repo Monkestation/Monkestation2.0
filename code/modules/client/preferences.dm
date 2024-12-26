@@ -484,12 +484,12 @@ GLOBAL_LIST_EMPTY(played_character_list)
 		all_quirks = list()
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
-/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
+/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = FALSE, is_antag = FALSE) //MONKESTATION EDIT - "icon_updates = TRUE" to "icon_updates = FALSE" Why did we even have that?
 	apply_character_randomization_prefs(is_antag)
 	apply_prefs_to(character, icon_updates)
 
 /// Applies the given preferences to a human mob.
-/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = FALSE) //MONKESTATION EDIT - "icon_updates = TRUE" to "icon_updates = FALSE" Why did we even have that?
+/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	character.dna.features = list()
 	character.dna.apply_color_palettes(src)
 
