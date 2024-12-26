@@ -1,7 +1,7 @@
 #ifndef OPENDREAM
 // These procs don't work on OD.
 SUBSYSTEM_DEF(memory_stats)
-	name = "Mem Stats"
+	name = "Memory Statistics"
 	init_order = INIT_ORDER_AIR
 	priority = FIRE_PRIORITY_AIR
 	wait = 5 MINUTES
