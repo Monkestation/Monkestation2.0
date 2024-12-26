@@ -241,7 +241,7 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/south{
-	id = "a6";
+	id = "Cabina6";
 	name = "privacy button";
 	specialfunctions = 4;
 	normaldoorcontrol = 1
@@ -320,7 +320,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock{
-	id_tag = "a6";
+	id_tag = "Cabina6";
 	name = "Guest Room A6"
 	},
 /obj/machinery/door/firedoor,
@@ -3156,7 +3156,8 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "a4";
-	name = "privacy button"
+	name = "privacy button";
+	normaldoorcontrol = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
