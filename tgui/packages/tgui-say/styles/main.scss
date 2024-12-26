@@ -26,14 +26,14 @@
 }
 
 @each $channel, $color in colors.$channel-map {
-  $darkened: color.adjust($color, $lightness: -20%, $space: hsl);
+  $darkened: darken($color, 20%);
 
   .button-#{$channel} {
-    border-color: color.adjust($color, $lightness: -10%, $space: hsl);
+    border-color: darken($color, 10%);
     color: $color;
     &:hover {
-      border-color: color.adjust($color, $lightness: 10%, $space: hsl);
-      color: color.adjust($color, $lightness: 5%, $space: hsl);
+      border-color: lighten($color, 10%);
+      color: lighten($color, 5%);
     }
   }
 
@@ -50,11 +50,11 @@
       animation: gradient 10s linear infinite;
       background: linear-gradient(
         to right,
-        color.adjust($color, $lightness: -35%, $space: hsl),
+        darken($color, 35%),
         $color,
-        color.adjust($color, $lightness: 10%, $space: hsl),
+        lighten($color, 10%),
         $color,
-        color.adjust($color, $lightness: -35%, $space: hsl)
+        darken($color, 35%)
       );
       background-position: 0% 0%;
       background-size: 500% auto;
