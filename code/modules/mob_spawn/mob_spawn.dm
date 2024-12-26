@@ -264,8 +264,6 @@
 				continue
 			item.post_equip_item(mob_possessor.client.prefs, spawned_mob1)
 		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
-		spawned_mob1.icon_render_keys = list()
-		spawned_mob1.update_body(is_creating = TRUE)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
