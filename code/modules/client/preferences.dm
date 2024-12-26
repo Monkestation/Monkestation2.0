@@ -484,7 +484,13 @@ GLOBAL_LIST_EMPTY(played_character_list)
 		all_quirks = list()
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
-/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = FALSE, is_antag = FALSE) //MONKESTATION EDIT - "icon_updates = TRUE" to "icon_updates = FALSE" Why did we even have that?
+/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE, addToCharacterList = FALSE) //MONKESTATION EDIT - Added "addToCharacterList = FALSE"
+	//MONKESTATION EDIT - Tells us what characters this user has played as, please god tell me theres something like this already and I don't have to do this.
+	if(addToCharacterList)
+		if(GLOB.played_character_list[parent.ckey] == null)
+			GLOB.played_character_list[parent.ckey] = list() //Initialize the slot list.
+		GLOB.played_character_list[parent.ckey] += default_slot
+	//END OF EDIT
 	apply_character_randomization_prefs(is_antag)
 	apply_prefs_to(character, icon_updates)
 
@@ -507,13 +513,6 @@ GLOBAL_LIST_EMPTY(played_character_list)
 	if(icon_updates)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
-
-	//MONKESTATION EDIT - Tells us what characters this user has played as, please god tell me theres something like this already and I don't have to do this.
-	if(!icon_updates) //Only do this if we aren't applying preferences for an icon update, like in character setup.
-		if(GLOB.played_character_list[parent.ckey] == null)
-			GLOB.played_character_list[parent.ckey] = list() //Initialize the slot list.
-		GLOB.played_character_list[parent.ckey] += default_slot
-	//END OF EDIT
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)

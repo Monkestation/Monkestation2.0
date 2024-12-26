@@ -533,7 +533,7 @@
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
 		if(require_human)
 			player_client.prefs.randomise["species"] = FALSE
-		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
+		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag, TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(src, TRUE, is_antag) >> safe_transfer_prefs_to(src, TRUE, is_antag, TRUE)
 		if(require_human && !ishumanbasic(src))
 			set_species(/datum/species/human)
 			dna.species.roundstart_changed = TRUE

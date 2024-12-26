@@ -257,13 +257,15 @@
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
 		var/mob/living/carbon/human/spawned_mob1 = spawned_mob
-		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob1)
+		mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob1, addToCharacterList = TRUE)
 		spawned_mob1.equip_outfit_and_loadout(outfit, mob_possessor.client.prefs)
 		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client?.prefs?.loadout_list))
 			if(length(item.restricted_roles))
 				continue
 			item.post_equip_item(mob_possessor.client.prefs, spawned_mob1)
-		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client, FALSE, FALSE, FALSE, list(/datum/quirk/stowaway)) //fok of, stowaway
+		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
+		spawned_mob1.icon_render_keys = list()
+		spawned_mob1.update_body(is_creating = TRUE)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
@@ -274,7 +276,6 @@
 	if(spawned_mind)
 		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
-
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")

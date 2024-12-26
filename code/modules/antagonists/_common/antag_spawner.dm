@@ -68,7 +68,7 @@
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
+	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(M, is_antag = TRUE) >> safe_transfer_prefs_to(M, is_antag = TRUE, addToCharacterList = TRUE)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
 
@@ -147,7 +147,7 @@
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(nukie, is_antag = TRUE) >> safe_transfer_prefs_to(nukie, is_antag = TRUE, addToCharacterList = TRUE)
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
