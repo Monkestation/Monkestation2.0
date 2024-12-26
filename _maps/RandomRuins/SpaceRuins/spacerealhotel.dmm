@@ -1628,11 +1628,10 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "rN" = (
-/obj/machinery/button{
-	id = "hcb1";
-	name = "shutters control";
-	pixel_x = 26;
-	pixel_y = 8
+/obj/machinery/button/door{
+	pixel_x = 24;
+	name = "shutter button";
+	id = "hotelcb1"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2631,7 +2630,7 @@
 "AX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
-	id = "hcb2";
+	id = "hotelcb2";
 	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -2889,7 +2888,7 @@
 "Dk" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
-	id = "hcd1";
+	id = "hotelcd1";
 	name = "Cargo Dock"
 	},
 /turf/open/floor/plating,
@@ -3406,11 +3405,11 @@
 /area/ruin/space/has_grav/hotel/pool)
 "IJ" = (
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/button{
-	id = "hcb2";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = 8
+/obj/machinery/button/door{
+	pixel_y = 8;
+	pixel_x = -24;
+	id = "hotelcb2";
+	name = "shutter button"
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
@@ -4102,7 +4101,7 @@
 "OQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
-	id = "hcb2";
+	id = "hotelcb2";
 	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/plating,
@@ -4636,11 +4635,11 @@
 /turf/template_noop,
 /area/template_noop)
 "Te" = (
-/obj/machinery/button{
-	id = "hcd1";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = -25
+/obj/machinery/button/door{
+	pixel_x = -24;
+	pixel_y = -24;
+	id = "hotelcd1";
+	name = "shutter button"
 	},
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
@@ -4652,17 +4651,17 @@
 "Th" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
-	id = "hcb1";
+	id = "hotelcb1";
 	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "Tk" = (
-/obj/machinery/button{
-	id = "hcb2";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = -25
+/obj/machinery/button/door{
+	pixel_y = -24;
+	pixel_x = -24;
+	id = "hotelcb2";
+	name = "shutter button"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -5258,11 +5257,10 @@
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/hotel)
 "YT" = (
-/obj/machinery/button{
-	id = "hcb1";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = 8
+/obj/machinery/button/door{
+	pixel_x = -24;
+	name = "shutter button";
+	id = "hotelcb1"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
