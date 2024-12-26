@@ -323,7 +323,7 @@
 
 /obj/item/gun/throw_impact(mob/living/carbon/target, datum/thrownthing/throwing_datum)
 	. = ..()
-	if(super_throw == TRUE)
+	if(super_throw)
 		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
 		target.Knockdown((w_class) SECONDS)
 		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
