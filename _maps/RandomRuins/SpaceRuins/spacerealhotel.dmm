@@ -1631,7 +1631,8 @@
 /obj/machinery/button/door{
 	pixel_x = 24;
 	name = "shutter button";
-	id = "hotelcb1"
+	id = "hotelcb1";
+	normaldoorcontrol = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3409,7 +3410,8 @@
 	pixel_y = 8;
 	pixel_x = -24;
 	id = "hotelcb2";
-	name = "shutter button"
+	name = "shutter button";
+	normaldoorcontrol = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
@@ -4661,7 +4663,8 @@
 	pixel_y = -24;
 	pixel_x = -24;
 	id = "hotelcb2";
-	name = "shutter button"
+	name = "shutter button";
+	normaldoorcontrol = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -5260,7 +5263,8 @@
 /obj/machinery/button/door{
 	pixel_x = -24;
 	name = "shutter button";
-	id = "hotelcb1"
+	id = "hotelcb1";
+	normaldoorcontrol = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
