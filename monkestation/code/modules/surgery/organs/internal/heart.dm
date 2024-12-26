@@ -110,7 +110,7 @@
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		if((BODY_ZONE_HEAD in limbs_to_heal) && H.get_bodypart(BODY_ZONE_HEAD))
+		if((BODY_ZONE_HEAD in limbs_to_heal) && H.get_bodypart(BODY_ZONE_HEAD)) // We have a head now so we should make eyes.
 			new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 			new_organ = SSwardrobe.provide_type(new_organ)
 			new_organ.Insert(H)
@@ -121,7 +121,7 @@
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
-			if(H.regenerate_limb(healed_limb) && istype(healed_limb, /obj/item/bodypart/head))
+			if(H.regenerate_limb(healed_limb) && istype(healed_limb, /obj/item/bodypart/head)) // We have a head now so we should make eyes.
 				new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 				new_organ = SSwardrobe.provide_type(new_organ)
 				new_organ.Insert(H)

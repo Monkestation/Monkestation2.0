@@ -200,7 +200,7 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "incombustible",
+			SPECIES_PERK_NAME = "Incombustible",
 			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
 		),
 		list(
@@ -218,8 +218,8 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "Liquid Being",
-			SPECIES_PERK_DESC = "[plural_form] will melt away when in contact with water.",
+			SPECIES_PERK_NAME = "Water Soluble",
+			SPECIES_PERK_DESC = "[plural_form] will dissolve away when in contact with water.",
 		),
 		list(
             SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

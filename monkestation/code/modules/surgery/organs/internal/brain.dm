@@ -279,7 +279,7 @@
 	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
 		process_and_store_item(victim.get_item_by_slot(islot), victim)
 
-	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items. Fix this.
+	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items, so it's removed first. Fix this.
 
 	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
 	process_and_store_item(target_chest.cavity_item, victim)
