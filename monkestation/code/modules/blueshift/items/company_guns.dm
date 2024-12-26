@@ -257,7 +257,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
-	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
@@ -324,6 +324,8 @@
 	icon_state = "kiboko_evil"
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
+
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
