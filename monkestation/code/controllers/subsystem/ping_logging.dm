@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(ping_logging)
 	name = "Ping Logging"
 	wait = 0.5 SECONDS
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
-	priority = FIRE_PRIORITY_TICKER
 	runlevels = ALL
 	var/last_overall_avg = 0
 	var/active_spike = FALSE
