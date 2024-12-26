@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
-	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
+	//user.audible_message("<font color='red' size='5'><b>HALT!</b></font>") monkestation removal
 	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
 
 /datum/action/item_action/halt
