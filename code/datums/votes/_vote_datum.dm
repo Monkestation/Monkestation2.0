@@ -193,6 +193,7 @@
 	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
 		total_votes += choices[option]
+		returned_text += "\n[span_bold(option)]: [choices[option]]"
 
 	if(total_votes <= 0)
 		return span_bold("Vote Result: Inconclusive - No Votes!")
