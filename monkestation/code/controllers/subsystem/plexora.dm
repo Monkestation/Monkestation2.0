@@ -49,14 +49,14 @@ SUBSYSTEM_DEF(plexora)
 	var/hrp_available = FALSE
 
 /datum/controller/subsystem/plexora/Initialize()
-	if (!rustg_file_exists(configuration_path))
+	if (!aneri_file_read(configuration_path))
 		stack_trace("SSplexora has no configuration file! (missing: [configuration_path])")
 		enabled = FALSE
 		flags |= SS_NO_FIRE
 		return SS_INIT_FAILURE
 
 	// Get config
-	var/list/config = json_decode(rustg_file_read(configuration_path))
+	var/list/config = json_decode(aneri_file_read(configuration_path))
 
 	if (!config["enabled"])
 		enabled = FALSE
