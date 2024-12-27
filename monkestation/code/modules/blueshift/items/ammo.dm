@@ -696,8 +696,8 @@
 
 	weak_against_armour = TRUE
 
-	wound_bonus = 15
-	bare_wound_bonus = 5
+	wound_bonus = 10
+	bare_wound_bonus = 20
 
 /obj/item/ammo_box/c585trappiste/hollowpoint
 	name = "ammo box (.585 Trappiste hollowhead)"
