@@ -153,6 +153,8 @@
 	if(!attacker.body_position == STANDING_UP || !defender.body_position == STANDING_UP)
 		return FALSE
 	if(!defender.pulledby || !(defender.pulledby == attacker))
+		defender.visible_message("<span class='warning'>[defender] managed to struggle out of [attacker]'s throw.</span>", \
+						"<span class='userdanger'>You wrestle out of [attacker]'s grip!</span>")
 		return FALSE
 	defender.visible_message("<span class='warning'>[attacker] judo throws [defender] to ground!</span>", \
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
