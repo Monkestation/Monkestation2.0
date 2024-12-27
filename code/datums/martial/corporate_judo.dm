@@ -103,10 +103,8 @@
 	name = "Corporate Judo"
 	id = MARTIALART_JUDO
 	display_combos = TRUE
-	max_streak_length = 6
-	combo_timer = 7 SECONDS
-
-	var/blaststage = 0
+	max_streak_length = 12
+	combo_timer = 2 SECONDS
 
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
@@ -154,6 +152,8 @@
 /datum/martial_art/corpjudo/proc/judothrow(mob/living/carbon/human/attacker, mob/living/defender)
 	if(!attacker.body_position == STANDING_UP || !defender.body_position == STANDING_UP)
 		return FALSE
+	if(!defender.pulledby || !(defender.pulledby == attacker))
+		return FALSE
 	defender.visible_message("<span class='warning'>[attacker] judo throws [defender] to ground!</span>", \
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
 	playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
@@ -180,7 +180,6 @@
 	if((defender.body_position == STANDING_UP) || !defender.has_status_effect(/datum/status_effect/judo_armbar))
 		return FALSE
 	reset_streak() // Don't reset combo unless it met the first requirements.
-	blaststage = 0
 	if(attacker.body_position == STANDING_UP)
 		defender.visible_message("<span class='warning'>[attacker] raises [defender] over [attacker.p_their()] shoulder, and slams [defender.p_them()] into the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
@@ -197,9 +196,6 @@
 	return TRUE
 
 /datum/martial_art/corpjudo/proc/goldenblast(mob/living/carbon/human/attacker, mob/living/defender)
-	if(!blaststage)
-		return
-	blaststage = 0
 	defender.visible_message("<span class='warning'>[attacker] blasts [defender] with energy, sending [defender.p_them()] to the ground!</span>", \
 						"<span class='userdanger'>[attacker] makes strange hand gestures, screams wildly and prods you directly in the chest! You feel the wrath of the GOLDEN BOLT surge through your body! You've been utterly robusted!</span>")
 	playsound(get_turf(defender), 'sound/weapons/taser.ogg', 55, TRUE, -1)
@@ -247,8 +243,9 @@
 		//return TRUE
 
 /datum/martial_art/corpjudo/grab_act(mob/living/attacker, mob/living/defender)
-	if(attacker != defender && can_use(attacker)) // attacker != defender prevents grabbing yourself
-		add_to_streak("G", defender)
+	if(attacker == defender || !can_use(attacker)) // attacker != defender prevents grabbing yourself
+		return FALSE
+	add_to_streak("G", defender)
 	//if(check_streak(attacker, defender))
 		//return TRUE
 
