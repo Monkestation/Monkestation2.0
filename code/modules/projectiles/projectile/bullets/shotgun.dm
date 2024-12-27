@@ -20,7 +20,7 @@
 	icon_state = "gauss"
 	damage = 30 //20 less than slugs.
 	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
-	armour_penetration = 70 //Tis a solid-tungsten penetrator, what do you expect?
+	armour_penetration = 60 //Tis a solid-tungsten penetrator, what do you expect?
 	wound_bonus = -3 //Had issues with massive wounding behind armor, thus...
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 90
