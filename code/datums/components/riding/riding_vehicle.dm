@@ -98,7 +98,7 @@
 
 	step(movable_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal ? 2 : 1) * move_delay()) // monkestation edit: use move_delay() proc instead of raw vehicle_move_delay var
 
 	if(QDELETED(src))
 		return
@@ -214,7 +214,7 @@
 			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	return ..()
-	
+
 /datum/component/riding/vehicle/speedbike
 	vehicle_move_delay = 0
 	override_allow_spacemove = TRUE
@@ -259,6 +259,10 @@
 // special messaging for those without arms
 /datum/component/riding/vehicle/wheelchair/hand/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	var/delay_multiplier = 4 // magic number from wheelchair code //MONKESTATION EDIT
+	//MONKESTATION EDIT START
+	if(HAS_TRAIT(user, TRAIT_FEEBLE))
+		delay_multiplier *= 2
+	//MONKESTATION EDIT END
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
 	return ..()
 

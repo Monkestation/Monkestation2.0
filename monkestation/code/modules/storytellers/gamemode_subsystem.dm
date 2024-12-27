@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(gamemode)
 				selected_event = null
 
 		if(selected_event)
-			current_storyteller.try_buy_event(GLOB.event_groups)
+			current_storyteller.try_buy_event(selected_event)
 
 	///Handle scheduled events
 	for(var/datum/scheduled_event/sch_event in scheduled_events)
@@ -274,6 +274,8 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/candidate_candidates = list() //lol
 
 	for(var/mob/player as anything in GLOB.player_list)
+		if(QDELETED(player) || player.mind?.picking)
+			continue
 		if(ready_newplayers && isnewplayer(player))
 			var/mob/dead/new_player/new_player = player
 			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())

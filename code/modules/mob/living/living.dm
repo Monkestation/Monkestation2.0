@@ -712,9 +712,7 @@
 
 /// Returns what the body_position_pixel_y_offset should be if the current size were `value`
 /mob/living/proc/get_pixel_y_offset_standing(value)
-	var/icon/living_icon = icon(icon)
-	var/height = living_icon.Height()
-	return (value-1) * height * 0.5
+	return (value - 1) * get_cached_height() * 0.5
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
@@ -804,7 +802,7 @@
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
-			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+			if(get_cached_height() > world.icon_size || get_cached_width() > world.icon_size)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
 				mob_mask = icon('icons/hud/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
 			livingdoll.add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
@@ -1086,6 +1084,12 @@
 	if(buckled || mob_negates_gravity())
 		return
 
+	//MONKESTATION EDIT START
+	if (pressure_difference > pressure_resistance && body_position != LYING_DOWN && HAS_TRAIT(src, TRAIT_FEEBLE))
+		Paralyze(1 SECONDS)
+		Knockdown(4 SECONDS)
+		emote("scream", intentional=FALSE)
+	//MONKESTATION EDIT END
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
@@ -1459,7 +1463,7 @@
 			else
 				picked_xeno_type = pick(
 					/mob/living/carbon/alien/adult/hunter,
-					/mob/living/simple_animal/hostile/alien/sentinel,
+					/mob/living/basic/alien/sentinel,
 				)
 			new_mob = new picked_xeno_type(loc)
 
@@ -1800,7 +1804,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(M.can_be_held && U.pulling == M)
 			M.mob_try_pickup(U)//blame kevinz
 			return//dont open the mobs inventory if you are picking them up
-	. = ..()
+	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)

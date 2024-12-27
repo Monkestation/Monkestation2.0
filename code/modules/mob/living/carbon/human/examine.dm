@@ -120,7 +120,7 @@
 		var/obj/item/clothing/glasses/G = get_item_by_slot(ITEM_SLOT_EYES)
 		var/are_we_in_weekend_at_bernies = G?.tint && buckled && istype(buckled, /obj/vehicle/ridden/wheelchair)
 
-		if(isliving(user) && (HAS_TRAIT(user, TRAIT_NAIVE) || are_we_in_weekend_at_bernies))
+		if(isliving(user) && (HAS_MIND_TRAIT(user, TRAIT_NAIVE) || are_we_in_weekend_at_bernies))
 			just_sleeping = TRUE
 
 		if(!just_sleeping)
@@ -367,7 +367,7 @@
 			else if(brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] temporarly disconnected from their mind. Recovery is likely.")]\n"
 			else if(!client)
-				if(round(((world.time - lastclienttime) / (1 MINUTES)),1) >= 15)
+				if(round(((world.time - lastclienttime) / (1 MINUTES)),1) >= 30) // monkestation edit: Our cyropod time is 30 minutes
 					msg += "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon. They are able to be put into a cryopod by you.\n"
 				else
 					msg += "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon.\n"

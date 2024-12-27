@@ -234,7 +234,7 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
@@ -328,3 +328,11 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+//MONKESTATION EDIT START
+/mob/living/basic/proc/get_scream_sound()
+	return
+/mob/living/basic/proc/get_laugh_sound()
+	return
+//MONKESTATION EDIT STOP
+

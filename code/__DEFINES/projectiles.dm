@@ -9,7 +9,7 @@
 // Delete self without hitting
 #define PROJECTILE_DELETE_WITHOUT_HITTING 3
 
-// Caliber defines: (current count stands at 24)
+// Caliber defines: (current count stands at 27)
 /// The caliber used by the [L6 SAW][/obj/item/gun/ballistic/automatic/l6_saw].
 #define CALIBER_712X82MM "mm71282"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
@@ -24,8 +24,6 @@
 #define CALIBER_38 ".38"
 /// The caliber used by the chaplain's revolver.
 #define CALIBER_77 ".77"
-/// The caliber used by long revolver and long rifle
-#define CALIBER_45L ".45l"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles and the desert eagle.
@@ -54,6 +52,12 @@
 #define CALIBER_ARROW "arrow"
 /// The caliber used by the harpoon gun.
 #define CALIBER_HARPOON "harpoon"
+/// The caliber used by the rebar crossbow.
+#define CALIBER_REBAR "sharpened rod"
+/// The caliber used by the rebar crossbow when forced to hold 2 rods.
+#define CALIBER_REBAR_FORCED "sharpened rod"
+/// The caliber used by the syndicate rebar crossbow.
+#define CALIBER_REBAR_SYNDIE "sharpened rod"
 /// The caliber used by the meat hook.
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
@@ -61,6 +65,8 @@
 #define CALIBER_A223 "a223"
 /// The caliber used by bolt action rifles.
 #define CALIBER_STRILKA310 ".310_strilka"
+/// The caliber used by the atlatl spear thrower
+#define CALIBER_SPEAR "throwing spear"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

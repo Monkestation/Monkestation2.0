@@ -270,6 +270,10 @@
 	))
 
 /obj/item/storage/belt/medical/paramedic
+	name = "EMT belt"
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
@@ -294,6 +298,9 @@
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/ert/PopulateContents()
@@ -336,6 +343,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight/seclite,
+		/obj/item/citationinator, //monkestation edit
 		/obj/item/food/donut,
 		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
 		/obj/item/grenade,
@@ -422,6 +430,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/cargo_teleporter, //monkestation edit
 	))
 
 
@@ -570,9 +579,9 @@
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
-	icon_state = "grenadebeltold"
+	icon_state = "military"
 	inhand_icon_state = "security"
-	worn_icon_state = "grenadebeltold"
+	worn_icon_state = "military"
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -834,9 +843,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 

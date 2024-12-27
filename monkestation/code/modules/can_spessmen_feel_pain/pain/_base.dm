@@ -123,11 +123,11 @@
 /datum/pain/proc/add_bodypart(mob/living/carbon/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
 
-	if(!istype(new_limb)) // pseudo-bodyparts are not tracked for simplicity (chainsaw arms)
+	if(!istype(new_limb) || QDELING(new_limb)) // pseudo-bodyparts are not tracked for simplicity (chainsaw arms)
 		return
 
 	var/obj/item/bodypart/existing = body_zones[new_limb.body_zone]
-	if(!isnull(existing)) // if we already have a val assigned to this key, remove it
+	if(!QDELETED(existing)) // if we already have a val assigned to this key, remove it
 		remove_bodypart(source, existing, FALSE, special)
 
 	body_zones[new_limb.body_zone] = new_limb
@@ -265,7 +265,7 @@
 	for(var/zone in shuffle(def_zones))
 		var/adjusted_amount = round(amount, 0.01)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[check_zone(zone)]
-		if(isnull(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
+		if(QDELETED(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
 			continue
 
 		var/current_amount = adjusted_bodypart.pain
@@ -328,9 +328,8 @@
 
 	for(var/zone in def_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
-		if(isnull(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
+		if(QDELETED(adjusted_bodypart)) // it's valid - for if we're passed a zone we don't have
 			continue
-
 		adjusted_bodypart.min_pain = max(adjusted_bodypart.min_pain + amount, 0) // Negative min pain is a neat idea ("banking pain") but not today
 		adjusted_bodypart.pain = max(adjusted_bodypart.pain, adjusted_bodypart.min_pain)
 
@@ -545,6 +544,8 @@
 		var/no_recent_pain = COOLDOWN_FINISHED(src, time_since_last_pain_loss)
 		for(var/part in shuffle(body_zones))
 			var/obj/item/bodypart/checked_bodypart = body_zones[part]
+			if(QDELETED(checked_bodypart))
+				continue
 			if(checked_bodypart.pain <= 0)
 				continue
 			has_pain = TRUE
@@ -873,6 +874,8 @@
 	var/total_pain = 0
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
+		if(QDELETED(adjusted_bodypart))
+			continue
 		total_pain += adjusted_bodypart.pain
 		max_total_pain += adjusted_bodypart.soft_max_pain
 
@@ -883,6 +886,8 @@
 	var/total_pain = 0
 	for(var/zone in body_zones)
 		var/obj/item/bodypart/adjusted_bodypart = body_zones[zone]
+		if(QDELETED(adjusted_bodypart))
+			continue
 		total_pain += adjusted_bodypart.pain
 
 	return total_pain
@@ -921,10 +926,16 @@
 
 	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
 
+/datum/pain/proc/on_fully_healed(datum/source, heal_flags)
+	SIGNAL_HANDLER
+	// Ideally pain would have its own heal flag but we live in a society
+	if(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS))
+		remove_all_pain()
+
 /**
  * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
  */
-/datum/pain/proc/on_full_heal(datum/source, heal_flags)
+/datum/pain/proc/on_full_heal()
 	SIGNAL_HANDLER
 
 	// Ideally pain would have its own heal flag but we live in a society
@@ -1057,14 +1068,15 @@
 /datum/pain/proc/debug_print_pain()
 
 	var/list/final_print = list()
-	final_print += "<div class='examine_block'><span class='info'>DEBUG PRINTOUT PAIN: [REF(src)]"
+	final_print += "<div class='boxed_message'><span class='info'>DEBUG PRINTOUT PAIN: [REF(src)]"
 	final_print += "[parent] has an average pain of [get_average_pain()]."
 	final_print += "[parent] has a pain modifier of [pain_modifier]."
 	final_print += " - - - - "
 	final_print += "[parent] bodypart printout: (min / current / soft max)"
 	for(var/part in body_zones)
 		var/obj/item/bodypart/checked_bodypart = body_zones[part]
-		final_print += "[checked_bodypart.name]: [checked_bodypart.min_pain] / [checked_bodypart.pain] / [checked_bodypart.soft_max_pain]"
+		if(!QDELETED(checked_bodypart))
+			final_print += "[checked_bodypart.name]: [checked_bodypart.min_pain] / [checked_bodypart.pain] / [checked_bodypart.soft_max_pain]"
 
 	final_print += " - - - - "
 	final_print += "[parent] pain modifier printout:"

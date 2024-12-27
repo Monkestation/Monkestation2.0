@@ -5524,6 +5524,7 @@
 /obj/item/storage/box/monkeycubes/mousecubes,
 /obj/item/storage/box/monkeycubes/mousecubes,
 /obj/item/storage/box/monkeycubes/mousecubes,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "bmU" = (
@@ -9635,7 +9636,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ciO" = (
-/mob/living/basic/drone/snowflake/bardrone,
+/obj/effect/mob_spawn/ghost_role/drone/bar,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "cjh" = (
@@ -17020,6 +17021,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
+"eab" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "eae" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -27025,15 +27035,16 @@
 /area/station/smithing)
 "grE" = (
 /obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Virology - Work Room";
 	name = "virology camera";
 	network = list("ss13","medbay","virology")
 	},
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/open/floor/iron,
 /area/station/medical/pathology)
 "grM" = (
 /obj/structure/disposalpipe/segment{
@@ -39527,7 +39538,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/green/filled/corner{
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron/white/smooth_large,
@@ -48931,9 +48942,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "lzH" = (
@@ -68808,8 +68816,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "qoo" = (
-/obj/structure/table/wood,
-/obj/item/pai_card,
+/obj/machinery/vending/access/command,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "qoA" = (
@@ -81858,7 +81865,11 @@
 	},
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/requests_console/directional/west{
+	name = "Telecomms Requests Console";
+	department = "Telecomms Admin"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "txd" = (
@@ -86177,10 +86188,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "uxI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
 /obj/machinery/disease2/centrifuge,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "uxY" = (
@@ -95039,7 +95050,7 @@
 	icon_state = "L9"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall15";
+	codes_txt = "patrol;next_patrol=hall1";
 	location = "hall14"
 	},
 /turf/open/floor/iron,
@@ -136314,7 +136325,7 @@ tgT
 qYo
 tgT
 hZE
-wjV
+eab
 jpN
 mIg
 rJG

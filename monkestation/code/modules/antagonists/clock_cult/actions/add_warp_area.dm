@@ -86,7 +86,7 @@
 /datum/action/innate/clockcult/show_warpable_areas/Activate()
 	if(!SSthe_ark.initialized)
 		SSthe_ark.Initialize()
-	to_chat(owner, examine_block(span_brass("Current areas observation consoles can warp to: [english_list(SSthe_ark.marked_areas)] <br/>\
+	to_chat(owner, boxed_message(span_brass("Current areas observation consoles can warp to: [english_list(SSthe_ark.marked_areas)] <br/>\
 				You can add additional areas with the \"Add Warp Area\" action."))) //anyone who has this action should also have add warp area
 
 #undef STARTING_WARP_AREAS

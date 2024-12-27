@@ -43,6 +43,7 @@
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/medibeam
@@ -88,10 +89,14 @@
 	items_to_create = list(/obj/item/mantis_blade/chromata)
 	encode_info = AUGMENT_TG_LEVEL
 
+/obj/item/organ/internal/cyberimp/arm/item_set/mantis/l
+	zone = BODY_ZONE_L_ARM
+
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis
 	name = "A.R.A.S.A.K.A. mantis blade implants"
 	desc = "Modernized mantis blade designed coined by Tiger operatives, much sharper blade with energy actuators makes it a much deadlier weapon."
 	items_to_create = list(/obj/item/mantis_blade/syndicate)
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
@@ -101,10 +106,11 @@
 	name = "razorwire spool implant"
 	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
 		Built into the back of your hand, try your best to not get it tangled."
-	items_to_create = list(/obj/item/melee/razorwire)
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "razorwire"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	items_to_create = list(/obj/item/melee/razorwire)
 	visual_implant = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/simple/razorwire
 
@@ -210,3 +216,4 @@
 	demolition_mod = 1.25
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
+

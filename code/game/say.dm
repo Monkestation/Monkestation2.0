@@ -19,7 +19,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
-	"[FREQ_RADIO]" = "radioradio"
+	"[FREQ_RADIO]" = "radioradio",
+	"[FREQ_UNCOMMON]" = "uncommonradio"
 	))
 
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
@@ -37,14 +38,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-//MONKESTATION EDIT
-/mob/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	. = ..()
-	if(client && radio_freq)
-		var/atom/movable/virtualspeaker/V = speaker
-		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-//MONKESTATION EDIT END
 /**
  * Checks if our movable can speak the provided message, passing it through filters
  * and spam detection. Does not call can_speak. CAN include feedback messages about

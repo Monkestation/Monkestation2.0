@@ -8895,9 +8895,6 @@
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
 	pixel_y = 0
 	},
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "cIH" = (
@@ -28566,6 +28563,7 @@
 	name = "Telecomms Requests Console";
 	can_send_announcements = 1
 	},
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "jer" = (
@@ -39810,7 +39808,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Bridge Conference Room"
 	},
-/obj/machinery/computer/slot_machine,
+/obj/machinery/vending/access/command,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "mLV" = (

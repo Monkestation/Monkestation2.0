@@ -865,6 +865,18 @@
 	// We do 80 total damage to anything robotic, namely borgs, and robotic simplemobs
 	AddElement(/datum/element/bane, target_type = /mob/living, mob_biotypes = MOB_ROBOTIC, damage_multiplier = 0, added_damage = anti_materiel_damage_addition)
 
+/obj/projectile/bullet/p60strela/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+	if(isliving(target))
+		// If the bullet has already gone through 3 people, stop it on this hit
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+			if(damage > 10) // Lets just be safe with this one
+				damage -= 10
+			armour_penetration -= 10
+
+	return ..()
+
 /obj/item/ammo_box/magazine/m10mm/rifle
 	name = "rifle magazine (10mm)"
 	desc = "A well-worn magazine fitted for the surplus rifle."
@@ -1030,6 +1042,14 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/hunter
 	max_ammo = 15
 
+/obj/item/ammo_box/advanced/s12gauge/apds
+	name = "AP sabot-slug ammo box"
+	desc = "A box of 15 tungsten sabot-slugs. A vastly higher velocity combined with greater sectional density renders most armor irrelevant."
+	icon_state = "apshell"
+	ammo_type = /obj/item/ammo_casing/shotgun/apds
+	max_ammo = 15
+
+
 /obj/item/ammo_box/advanced/s12gauge/flechette
 	name = "Flechette ammo box"
 	desc = "A box of 15 flechette shells. Each shell contains a small group of tumbling blades that excel at causing terrible wounds."
@@ -1085,6 +1105,12 @@
 	icon = 'monkestation/code/modules/blueshift/icons/shotshells.dmi'
 	desc = "A 12 gauge iron slug."
 	custom_materials = AMMO_MATS_SHOTGUN
+
+/obj/item/ammo_casing/shotgun/apds  //This SHOULD let you print the shells in the ammo lathe
+	can_be_printed = TRUE
+	advanced_print_req = TRUE
+	custom_materials = AMMO_MATS_SHOTGUN_PLASMA //plastanium -> tungsten approximation
+
 
 // THE BELOW TWO SLUGS ARE NOTED AS ADMINONLY AND HAVE ***EIGHTY*** WOUND BONUS. NOT BARE WOUND BONUS. FLAT WOUND BONUS.
 /obj/item/ammo_casing/shotgun/executioner
@@ -1152,30 +1178,6 @@
 	<br><br>\
 	<i>HORNET'S NEST: Fire an overwhelming amount of projectiles in a single shot.</i>"
 	can_be_printed = FALSE
-
-/obj/item/ammo_casing/shotgun/buckshot
-	name = "buckshot shell"
-	desc = "A 12 gauge buckshot shell."
-	icon_state = "gshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
-	pellets = 8 // 8 * 6 for 48 damage if every pellet hits, we want to keep lethal shells ~50 damage
-	variance = 25
-
-/obj/projectile/bullet/pellet/shotgun_buckshot
-	name = "buckshot pellet"
-	damage = 6
-
-/obj/item/ammo_casing/shotgun/rubbershot
-	name = "rubber shot"
-	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
-	icon_state = "rshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
-	pellets = 6 // 6 * 10 for 60 stamina damage, + some small amount of brute, we want to keep less lethal shells ~60
-	variance = 20
-	harmful = FALSE
-
-/obj/projectile/bullet/pellet/shotgun_rubbershot
-	stamina = 10
 
 /obj/item/ammo_casing/shotgun/magnum
 	name = "magnum blockshot shell"
@@ -1274,7 +1276,7 @@
 	icon_state = "lasershell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/antitide
 	pellets = 8 // 8 * 7 for 56 stamina damage, plus whatever the embedded shells do
-	variance = 30
+	variance = 50
 	harmful = FALSE
 	fire_sound = 'sound/weapons/taser.ogg'
 	custom_materials = AMMO_MATS_SHOTGUN_TIDE
@@ -1285,15 +1287,15 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "stardust"
 	damage = 2
-	stamina = 16
+	stamina = 7
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	stutter = 3 SECONDS
 	jitter = 5 SECONDS
 	eyeblur = 1 SECONDS
 	sharpness = NONE
-	range = 8
-	embedding = list(embed_chance=70, pain_chance=25, fall_chance=15, jostle_chance=80, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.9, pain_mult=2, rip_time=10)
+	range = 7
+	embedding = list(embed_chance=75, pain_chance=50, fall_chance=15, jostle_chance=80, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.9, pain_mult=2, rip_time=10)
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/antitide/on_range()
 	do_sparks(1, TRUE, src)
@@ -1331,9 +1333,6 @@
 /obj/projectile/bullet/shotgun_slug/hunter/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, mob_biotypes = MOB_BEAST, damage_multiplier = 5)
-
-/obj/projectile/bullet/pellet/shotgun_improvised
-	weak_against_armour = TRUE // We will not have Improvised are Better 2.0
 
 /obj/item/ammo_casing/shotgun/honkshot
 	name = "confetti shell"

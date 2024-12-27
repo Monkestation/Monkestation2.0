@@ -39,6 +39,7 @@
 			"name" = "Accessories",
 			"icon" = "glasses",
 			"products" = list(
+				/obj/item/clothing/accessory/pride = 15,
 				/obj/item/clothing/accessory/waistcoat = 4,
 				/obj/item/clothing/suit/toggle/suspenders = 4,
 				/obj/item/clothing/neck/tie/horrible = 3,
@@ -67,6 +68,7 @@
 				/obj/item/clothing/under/dress/sundress = 2,
 				/obj/item/clothing/under/dress/tango = 2,
 				/obj/item/clothing/under/dress/ballgown = 2, //MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/dress/wlpinafore = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
 				/obj/item/clothing/under/dress/skirt/turtleskirt = 4,
 				/obj/item/clothing/under/misc/overalls = 2,

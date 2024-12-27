@@ -194,7 +194,10 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
-
+			// MONKESTATION EDIT START - lobby notices
+			if (length(config.lobby_notices))
+				config.ShowLobbyNotices(world)
+			// MONKESTATION END
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -248,7 +251,11 @@ SUBSYSTEM_DEF(ticker)
 				declare_completion(force_ending)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-
+//MONKESTATION ADDITION START
+				if(SSmapping.map_voted || SSmapping.map_force_chosen == TRUE)
+					return
+				SSmapping.mapvote()
+//MONKESTATION ADDITION END
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
@@ -329,6 +336,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
+	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
 
 	return TRUE
 
@@ -391,6 +399,10 @@ SUBSYSTEM_DEF(ticker)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
+			if(interview_safety(player, "readied up"))
+				player.ready = PLAYER_NOT_READY
+				QDEL_IN(player.client, 0)
+				continue
 			GLOB.joined_player_list += player.ckey
 			var/chosen_title = player.client?.prefs.alt_job_titles[player.mind.assigned_role.title] || player.mind.assigned_role.title
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point(chosen_title)
@@ -473,9 +485,8 @@ SUBSYSTEM_DEF(ticker)
 					continue
 				item.post_equip_item(new_player_mob.client?.prefs, new_player_living)
 
-		if(new_player_mob.client.readied_store)
-			if(new_player_mob.client.readied_store.bought_item)
-				new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
+		if(new_player_mob.client?.readied_store?.bought_item)
+			new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
 		CHECK_TICK
 
@@ -512,27 +523,33 @@ SUBSYSTEM_DEF(ticker)
 
 	return output
 
+/datum/controller/subsystem/ticker/proc/transfer_single_character(mob/dead/new_player/player)
+	var/mob/living = player.transfer_character()
+	if(!living)
+		return
+	qdel(player)
+	ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
+	if(living.client)
+		var/atom/movable/screen/splash/splash = new(null, living.client, TRUE)
+		splash.Fade(TRUE)
+		living.client?.init_verbs()
+	. = living
+	var/datum/player_details/details = get_player_details(living)
+	if(details)
+		SSchallenges.apply_challenges(details)
+		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
+			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
+				details.roundend_monkecoin_bonus += 150
+		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
+			if(living.job == processing_reward_jobs)
+				details.roundend_monkecoin_bonus += 150
+
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-		var/mob/living = player.transfer_character()
-		if(living)
-			qdel(player)
-			ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
-			if(living.client)
-				var/atom/movable/screen/splash/S = new(null, living.client, TRUE)
-				S.Fade(TRUE)
-				living.client.init_verbs()
-			livings += living
-			if(living.client && length(living.client?.active_challenges))
-				SSchallenges.apply_challenges(living.client)
-			for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
-				if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-					living.client.reward_this_person += 150
-			for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
-				if(living.job == processing_reward_jobs)
-					living.client.reward_this_person += 150
-	if(livings.len)
+		livings += transfer_single_character(player)
+	list_clear_nulls(livings)
+	if(length(livings))
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 3 SECONDS, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)

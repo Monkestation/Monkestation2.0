@@ -281,7 +281,7 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
-	worn_icon_state = "satchel"
+	worn_icon_state = "construction_bag" //monkestation edit
 
 	var/capacity = 300; //the number of sheets it can carry.
 
@@ -572,5 +572,29 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
+
+/obj/item/storage/bag/rebar_quiver
+	name = "Rebar Storage Quiver"
+	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
+	icon_state = "rebar_quiver"
+	worn_icon_state = "rebar_quiver"
+	inhand_icon_state = "rebar_quiver"
+	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	atom_storage.max_slots = 10
+	atom_storage.max_total_storage = 15
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/rebar,
+		/obj/item/ammo_casing/rebar/syndie,
+		/obj/item/ammo_casing/rebar/healium,
+		/obj/item/ammo_casing/rebar/hydrogen,
+		/obj/item/ammo_casing/rebar/zaukerite,
+		/obj/item/ammo_casing/rebar/paperball,
+		))
 
 #undef ORE_BAG_BALOON_COOLDOWN

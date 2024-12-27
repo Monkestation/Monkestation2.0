@@ -143,6 +143,7 @@
 #define JOB_DISPLAY_ORDER_QUARTERMASTER 19
 #define JOB_DISPLAY_ORDER_CARGO_TECHNICIAN 20
 #define JOB_DISPLAY_ORDER_SHAFT_MINER 21
+#define JOB_DISPLAY_ORDER_EXPLORER 21.5 //monkestation edit: explorer
 #define JOB_DISPLAY_ORDER_BITRUNNER 22
 #define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 23
 #define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 24
@@ -191,7 +192,7 @@
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
 #define DEPARTMENT_BITFLAG_LATE (1<<12)
-#define DEPARTMENT_LATE "Late Join"
+#define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.
