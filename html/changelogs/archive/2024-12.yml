@@ -363,5 +363,44 @@
   - bugfix: Heretic sacrifice targets will have their blood restored and cleared of
       chems if they are sent to the mansus.
 2024-12-22:
+  Absolucy:
+  - bugfix: Properly marked the message type and confidentiality of a few admin/mentor-related
+      notifications.
+  - bugfix: The map selected for the next round should actually always be the map
+      that loads next round.
+  - rscadd: Added tinyfans to the arrivals shuttle and public mining shuttle doors
+      on Blueshift.
+  - qol: All ghosts now see PDA messages, not just observers.
+  Absolucy, Melbert:
+  - bugfix: You should be afflicted by the "Curse of Mundanity" far, far less.
   Shoddd:
   - bugfix: you can no longer akimbo and fire a wand forever
+  Tractor Mann:
+  - admin: Admins will no longer be told you dusted someone with power gloves when
+      you didnt, and that you shocked someone with power gloves when you dust them.
+2024-12-23:
+  Absolucy:
+  - admin: Admins can now much more easily see which of a player's items came from
+      a gift.
+  - rscadd: Ghosts, santa, and anyone after roundend can an examine an item to see
+      if its a gift, who opened it, and how long ago they did so.
+  - rscadd: Closely examining (double-examining) an item will now tell you if it was
+      from a gift.
+  - qol: Fire alarms no longer burn out lights.
+2024-12-25:
+  Shoddd:
+  - bugfix: fixes a typo in regen extract
+  Wisemonster:
+  - bugfix: Fixed the syndicate lavaland base delamming if they spawned with an SM
+2024-12-26:
+  Absolucy, Aylong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+2024-12-27:
+  DexeeXI:
+  - bugfix: 'Blueshift: fixed the transit tube station in AI sat.'
+  Shoddd:
+  - qol: Traitor Kiboko starts with lethals
+  Uristthedorf:
+  - bugfix: You can now print prescription glasses.
