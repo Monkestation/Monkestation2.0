@@ -62,7 +62,7 @@
 		if(!enchanting_checks(attacking_item, user))
 			return
 
-		if(istype(attacking_item, /obj/item) && !istype(attacking_item, /obj/item/clothing) && attacking_item.force && upgrade_weapon(attacking_item, user))
+		if(istype(attacking_item, /obj/item) && (istype(attacking_item, /obj/item/clothing) || attacking_item.force) && upgrade_weapon(attacking_item, user))
 			COOLDOWN_START(src, use_cooldown, stargazer_cooldown)
 			return
 		to_chat(user, span_brass("You cannot upgrade \the [attacking_item]."))
