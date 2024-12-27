@@ -53,4 +53,4 @@
 		moving = TRUE
 		source.forceMove(reset_turf)
 		moving = FALSE
-	reset_turf = get_turf(oldloc)
+	reset_turf = get_turf(source)

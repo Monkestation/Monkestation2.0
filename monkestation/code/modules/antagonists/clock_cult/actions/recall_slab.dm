@@ -6,12 +6,10 @@
 	///The slab marked for recall
 	var/obj/item/clockwork/clockwork_slab/marked_slab
 
-
 /// Set the passed object as our marked item
 /datum/action/innate/clockcult/recall_slab/proc/mark_item(obj/to_mark)
 	marked_slab = to_mark
 	RegisterSignal(marked_slab, COMSIG_QDELETING, PROC_REF(on_marked_item_deleted))
-
 
 /// Unset our current marked item
 /datum/action/innate/clockcult/recall_slab/proc/unmark_item()
@@ -20,7 +18,6 @@
 
 	UnregisterSignal(marked_slab, COMSIG_QDELETING)
 	marked_slab = null
-
 
 /// Signal proc for COMSIG_QDELETING on our marked item, unmarks our item if it's deleted
 /datum/action/innate/clockcult/recall_slab/proc/on_marked_item_deleted(datum/source)
@@ -31,10 +28,8 @@
 
 	unmark_item()
 
-
 /datum/action/innate/clockcult/recall_slab/Activate()
 	try_recall_item()
-
 
 /// Recalls our marked item to the caster. May bring some unexpected things along.
 /datum/action/innate/clockcult/recall_slab/proc/try_recall_item()
@@ -97,8 +92,9 @@
 	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
 
 	if(isitem(item_to_retrieve) && usr.put_in_hands(item_to_retrieve))
+		var/obj/item/typed_item = item_to_retrieve
+		typed_item.pickup(usr) //might be good to standardize this being on put_in_hands()
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears in [usr]'s hand!"))
-
 	else
 		item_to_retrieve.forceMove(usr.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))

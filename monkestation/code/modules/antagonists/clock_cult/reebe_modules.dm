@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	for(var/area/reebe_area as anything in typesof(/area/ruin/powered/reebe))
 		reebe_area = GLOB.areas_by_type[reebe_area]
 		if(reebe_area)
-			SSthe_ark.marked_areas += reebe_area
+			SSthe_ark.reebe_areas[reebe_area] = 1
 	return TRUE
 
 ///Send a pod full of helpful items to the station's bridge

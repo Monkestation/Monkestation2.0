@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(the_ark)
 	var/list/cogscarabs = list()
 	///A list of all clockwork marauders
 	var/list/clockwork_marauders = list()
+	///A list of all the areas on reebe
+	var/list/reebe_areas = list()
 
 /datum/controller/subsystem/the_ark/Initialize()
 	initialized = TRUE
@@ -52,6 +54,18 @@ SUBSYSTEM_DEF(the_ark)
 
 	if(charged_anchoring_crystals)
 		handle_charged_crystals()
+
+///try and adjust our clock_power, returns FALSE if it would put us above our max_clock_power or below 0, set always_adjust to TRUE to make us instead just adjust to be within bounds
+/datum/controller/subsystem/the_ark/proc/adjust_clock_power(amount, always_adjust = FALSE)
+	var/new_total = clock_power + amount
+	if(always_adjust)
+		clock_power = clamp(new_total, 0, max_clock_power)
+		return TRUE
+
+	if(new_total > max_clock_power || new_total < 0)
+		return FALSE
+	clock_power = new_total
+	return TRUE
 
 ///set up timed do_turf_conversion calls for the turfs in an area
 /datum/controller/subsystem/the_ark/proc/convert_area_turfs(area/converted_area, conversion_percent = 100, counter_override)

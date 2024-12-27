@@ -33,9 +33,6 @@
 	SSthe_ark.cogscarabs += src
 	add_actionspeed_modifier(/datum/actionspeed_modifier/cogscarab)
 
-/datum/actionspeed_modifier/cogscarab
-	multiplicative_slowdown = 0.6
-
 /mob/living/basic/drone/cogscarab/death(gibbed)
 	SSthe_ark.cogscarabs -= src
 	return ..()
@@ -46,6 +43,9 @@
 
 /mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent) //ideally I would handle this on attacking instead
 	return (force || (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE)) && ..()
+
+/datum/actionspeed_modifier/cogscarab
+	multiplicative_slowdown = 0.6
 
 //====Shell====
 
@@ -74,8 +74,7 @@
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
-	AddComponent(/datum/component/multi_area_bound, spawned_mob, SSthe_ark.marked_areas, TRUE)
+	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/clockmob)
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
 	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)

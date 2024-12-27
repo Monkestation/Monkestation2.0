@@ -1,7 +1,7 @@
 //I would like to do what beestation does and make both this and narsie be children of /eldritch but that would make this very non-modular
 GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
-#define RATVAR_CONSUME_RANGE 12
+#define RATVAR_CONSUME_RANGE 20
 #define RATVAR_GRAV_PULL 10
 #define RATVAR_SINGULARITY_SIZE 11
 

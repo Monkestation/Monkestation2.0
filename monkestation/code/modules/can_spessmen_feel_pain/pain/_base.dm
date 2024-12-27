@@ -85,7 +85,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_WOUND, PROC_REF(remove_wound_pain))
 	RegisterSignal(parent, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(remove_bodypart))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_analyzed))
-	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_all_pain))
+	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_full_heal))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_parent_statchance))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_NO_PAIN_EFFECTS), SIGNAL_REMOVETRAIT(TRAIT_NO_PAIN_EFFECTS)), PROC_REF(refresh_pain_attributes))
@@ -209,6 +209,19 @@
 
 	LAZYREMOVE(pain_mods, key)
 	return update_pain_modifier()
+
+///Clear all pain attributes and bodypart pain
+/datum/pain/proc/remove_all_pain()
+	for(var/zone in body_zones)
+		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
+		adjust_bodypart_min_pain(zone, -INFINITY)
+		adjust_bodypart_pain(zone, -INFINITY)
+		// Shouldn't be necessary but you never know!
+		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
+
+	clear_pain_attributes()
+	shock_buildup = 0
+	natural_pain_decay = base_pain_decay
 
 /**
  * Update our overall pain modifier.
@@ -911,23 +924,14 @@
 /**
  * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
  */
-/datum/pain/proc/remove_all_pain(datum/source, heal_flags)
+/datum/pain/proc/on_full_heal(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
 	// Ideally pain would have its own heal flag but we live in a society
 	if(!(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS)))
 		return
 
-	for(var/zone in body_zones)
-		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
-		adjust_bodypart_min_pain(zone, -INFINITY)
-		adjust_bodypart_pain(zone, -INFINITY)
-		// Shouldn't be necessary but you never know!
-		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
-
-	clear_pain_attributes()
-	shock_buildup = 0
-	natural_pain_decay = base_pain_decay
+	remove_all_pain()
 
 /**
  * Determines if we should be processing or not.

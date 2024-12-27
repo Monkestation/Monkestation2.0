@@ -69,16 +69,13 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
 
-
 /// On success of invoking the scripture
 /datum/scripture/proc/invoke_success()
 	return TRUE
 
-
 /// On failure of invoking the scripture
 /datum/scripture/proc/invoke_fail()
 	return TRUE
-
 
 /// The overall reciting proc for saying every single line for a scripture
 /datum/scripture/proc/recital(input_invoke_time)
@@ -197,7 +194,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	var/true_invocation_time = get_true_invocation_time()
 	recital(true_invocation_time)
-	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
+	if(do_after(invoking_mob, true_invocation_time, invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))
@@ -308,15 +305,12 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 /datum/scripture/slab/Destroy()
 	progress?.end_progress()
-
-	if(!QDELETED(pointed_spell))
-		QDEL_NULL(pointed_spell)
+	QDEL_NULL(pointed_spell)
 
 	return ..()
 
-
 /datum/scripture/slab/invoke()
-	progress = new(invoker, use_time)
+	progress = new(invoker, use_time, invoking_slab)
 	uses_left = uses
 	time_left = use_time
 	invoking_slab.charge_overlay = slab_overlay
@@ -327,7 +321,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
-
 
 /// Count down the progress bar
 /datum/scripture/slab/proc/count_down()
@@ -342,7 +335,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		loop_timer_id = addtimer(CALLBACK(src, PROC_REF(count_down)), 0.1 SECONDS, TIMER_STOPPABLE)
 	else
 		end_invocation()
-
 
 /// What occurs when an atom is clicked on.
 /datum/scripture/slab/proc/click_on(atom/clicked_atom)
@@ -362,7 +354,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		clockwork_say(invoker, text2ratvar(after_use_text), TRUE)
 
 	end_invocation(TRUE)
-
 
 /// What occurs when the invocation ends
 /datum/scripture/slab/proc/end_invocation(silent = FALSE)
@@ -384,12 +375,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	end_invoke()
 
-
 /// Apply the effects of a scripture to an atom
 /datum/scripture/slab/proc/apply_effects(atom/applied_atom)
 	return TRUE
-
-
 
 /datum/action/cooldown/spell/pointed/slab
 	/// The scripture datum that this spell is referring to
@@ -398,7 +386,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 /datum/action/cooldown/spell/pointed/slab/Destroy()
 	parent_scripture = null
 	return ..()
-
 
 /datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/user, params, atom/target)
 	parent_scripture?.click_on(target)

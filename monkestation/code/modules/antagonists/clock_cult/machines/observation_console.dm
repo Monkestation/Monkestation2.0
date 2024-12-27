@@ -14,10 +14,7 @@
 	START_PROCESSING(SSobj, src)
 	actions += new /datum/action/innate/clockcult/warp(src)
 	actions += new /datum/action/innate/clockcult/show_warpable_areas(src)
-	actions += new /datum/action/innate/clockcult/add_warp_area/add_area(src)
-	actions += add_area
-	if(!length(SSthe_ark.marked_areas))
-		add_area.choose_starting_warp_areas() //slightly hacky but handling it on the action is cheaper as it lets us just build our warpable areas once without needing globals
+	actions += new /datum/action/innate/clockcult/add_warp_area(src)
 
 /obj/machinery/computer/camera_advanced/ratvar/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -1,22 +1,35 @@
+GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
+
 /datum/component/enchanted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///Current enchantment level
 	var/level
 	///The span we warp our examine text in
-	var/used_span = "<span class='purple'>"
+	var/used_span
 	///A ref to the enchantment datum we are using
 	var/datum/enchantment/used_enchantment
 	///A list of all enchantments
-	var/static/list/all_enchantments
+	var/static/list/all_enchantments = list()
 
-/datum/component/enchanted/Initialize(level_override)
+/datum/component/enchanted/Initialize(list/select_enchants_from = subtypesof(/datum/enchantment), used_span = "<span class='purple'>", level_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	//if(on_reebe(parent)) currently this is only added by stargazers so this should work fine
-	//	max_level = 1
+	if(!length(select_enchants_from))
+		stack_trace("[src.type] calling Initialize with unset select_enchants_from.")
+		return COMPONENT_INCOMPATIBLE
 
-	//level = level_override || rand(1, max_level)
+	if(!length(all_enchantments))
+		generate_enchantment_datums()
+
+	for(var/entry in select_enchants_from)
+		if(ispath(entry))
+			select_enchants_from -= entry
+			select_enchants_from += GLOB.enchantment_datums_by_type[entry]
+
+	used_enchantment = pick(select_enchants_from)
+	src.used_span = used_span
+	level = level_override || rand(1, used_enchantment.max_level)
 
 /datum/component/enchanted/RegisterWithParent()
 	var/list/component_list = used_enchantment.components_by_parent[parent]
@@ -62,17 +75,33 @@
 	var/examine_description
 	///Maximum enchantment level
 	var/max_level = 1
-	///What type of items are we allowed on
-	var/list/allowed_on = list(/obj/item)
-	///What type of items are we NOT allowed on
-	var/list/denied_from = list(/obj/item/clothing)
+	///Typecache of items we are allowed on, generation handled in get_allowed_on
+	var/list/allowed_on
 	///A recursive assoc list keyed as: [parent] = list(enchant_component.used_enchantment = enchant_component)
 	var/static/list/list/datum/component/enchanted/components_by_parent = list()
 
 /datum/enchantment/New()
 	. = ..()
-	if(!islist(allowed_on))
-		allowed_on = list(allowed_on)
+	allowed_on = get_allowed_on()
+
+/**
+ * Because of dumb BYOND reasons in order to get fine manual control we need to handle generation of allowed_on this way(via setting the default passed values)
+ *
+ * allowed_on_base - Typecache of items we are allowed on
+ *
+ * denied_from - Anything in this list will be set to FALSE in allowed_on
+ *
+ * overriden_types - Any values in this list will override allowed_on, this is handled last
+ */
+/datum/enchantment/proc/get_allowed_on(list/allowed_on_base = typecacheof(/obj/item), list/denied_from = typesof(/obj/item/clothing), list/overriden_types = list()) //AHHHHH
+	for(var/denied_entry in denied_from)
+		allowed_on_base[denied_entry] = 0
+	for(var/entry in overriden_types)
+		allowed_on_base[entry] = overriden_types[entry]
+	return allowed_on_base
+
+/datum/enchantment/proc/can_apply_to(obj/item/checked)
+	return allowed_on[checked.type]
 
 /datum/enchantment/proc/apply_effect(obj/item/target, level)
 	register_item(target)

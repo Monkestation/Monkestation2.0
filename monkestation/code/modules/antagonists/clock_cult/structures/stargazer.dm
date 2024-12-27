@@ -62,8 +62,7 @@
 		if(!enchanting_checks(attacking_item, user))
 			return
 
-		if(istype(attacking_item, /obj/item) && !istype(attacking_item, /obj/item/clothing) && attacking_item.force)
-			upgrade_weapon(attacking_item, user)
+		if(istype(attacking_item, /obj/item) && !istype(attacking_item, /obj/item/clothing) && attacking_item.force && upgrade_weapon(attacking_item, user))
 			COOLDOWN_START(src, use_cooldown, stargazer_cooldown)
 			return
 		to_chat(user, span_brass("You cannot upgrade \the [attacking_item]."))
@@ -79,16 +78,14 @@
 	return TRUE
 
 /obj/structure/destructible/clockwork/gear_base/stargazer/proc/upgrade_weapon(obj/item/upgraded_item, mob/living/user)
+	if(!attempt_enchantment(upgraded_item, description_span = "<span class='brass'>"))
+		return FALSE
 	//Prevent re-enchanting
 	ADD_TRAIT(upgraded_item, TRAIT_STARGAZED, STARGAZER_TRAIT)
 	//Add a glowy colour
 	upgraded_item.add_atom_colour(rgb(243, 227, 183), ADMIN_COLOUR_PRIORITY)
-	//Pick a random effect
-	var/static/list/possible_components
-	if(!possible_components)
-		possible_components = subtypesof(/datum/component/enchanted)
-	upgraded_item.AddComponent(pick(possible_components), )
 	to_chat(user, span_notice("\The [upgraded_item] glows with a brilliant light!"))
+	return TRUE
 
 //The visual effect of the stargazer
 /obj/effect/stargazer_light

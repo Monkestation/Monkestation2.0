@@ -1,7 +1,5 @@
 #define BRASS_POWER_COST 10
 #define REGULAR_POWER_COST (BRASS_POWER_COST / 2)
-//how much to add to the creation_delay while the cult lacks a charged anchoring crystal
-#define SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL 0.2
 
 /obj/item/clockwork/replica_fabricator
 	name = "replica fabricator"
@@ -62,7 +60,7 @@
 		return
 
 	var/turf/creation_turf = get_turf(target)
-	var/atom/movable/possible_replaced
+	var/atom/movable/replaced
 	if(locate(selected_output.to_create_path) in creation_turf)
 		to_chat(user, span_clockyellow("There is already one of these on this tile!"))
 		return
@@ -74,9 +72,9 @@
 		for(var/checked_type in selected_output.replace_types_of)
 			var/atom/movable/found_replaced = locate(checked_type) in creation_turf
 			if(found_replaced)
-				possible_replaced = found_replaced
+				replaced = found_replaced
 				break
-		if(!possible_replaced && !isopenturf(target))
+		if(!replaced && !isopenturf(target))
 			return
 	else if(!isopenturf(target))
 		return
@@ -84,28 +82,27 @@
 	if(!selected_output.extra_checks(target, creation_turf, user))
 		return
 
-	var/calculated_creation_delay = 1
+	var/creation_delay_mult = 1
 	if(on_reebe(user))
-		calculated_creation_delay = selected_output.reebe_mult
-		if(!SSthe_ark.charged_anchoring_crystals)
-			calculated_creation_delay += SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
-		else if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-			calculated_creation_delay += (iscogscarab(user) ? 2.5 : 5)
-	calculated_creation_delay = selected_output.creation_delay * calculated_creation_delay
+		creation_delay_mult += selected_output.reebe_mult
+		if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
+			creation_delay_mult += (iscogscarab(user) ? 2.5 : 5)
+	if(replaced)
+		creation_delay_mult += selected_output.replacement_mult
 
-	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, calculated_creation_delay)
-	if(!do_after(user, calculated_creation_delay, target))
+	var/selected_creation_delay = selected_output.creation_delay * max(creation_delay_mult, 0.1)
+	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, selected_creation_delay)
+	if(!do_after(user, selected_creation_delay, target))
 		qdel(effect)
 		return
 
-	if(SSthe_ark.clock_power < selected_output.cost) // Just in case
+	if(!SSthe_ark.adjust_clock_power(-selected_output.cost))
 		return
 
-	SSthe_ark.clock_power -= selected_output.cost
 	var/atom/created
-	if(!istype(selected_output, /datum/replica_fabricator_output/turf_output))
-		if(possible_replaced)
-			qdel(possible_replaced)
+	if(!ispath(selected_output.to_create_path, /turf))
+		if(replaced)
+			qdel(replaced)
 		created = new selected_output.to_create_path(creation_turf)
 
 	selected_output.on_create(created, creation_turf, user)
@@ -227,8 +224,10 @@
 	var/creation_delay = 1 SECONDS
 	/// List of objs this output can replace, normal walls for clock walls, windows for clock windows, ETC
 	var/list/replace_types_of
-	/// Multiplier for creation_delay when used on reebe
-	var/reebe_mult = 1
+	/// Multiplier to add to creation_delay when used on reebe
+	var/reebe_mult = 0
+	/// Multiplier to add to creation_delay when replacing an object in replace_types_of
+	var/replacement_mult = 0
 
 /// Any extra actions that need to be taken when an object is created
 /datum/replica_fabricator_output/proc/on_create(atom/created_atom, turf/creation_turf, mob/creator)
@@ -239,6 +238,9 @@
 /datum/replica_fabricator_output/proc/extra_checks(atom/target, turf/created_at, mob/user)
 	return TRUE
 
+/datum/replica_fabricator_output/turf_output/extra_checks(atom/target, turf/creation_turf, mob/user)
+	return !(creation_turf.resistance_flags & INDESTRUCTIBLE)
+
 /datum/replica_fabricator_output/turf_output/on_create(atom/created_atom, turf/creation_turf, mob/creator)
 	creation_turf.ChangeTurf(to_create_path)
 	return ..()
@@ -248,22 +250,35 @@
 	cost = BRASS_POWER_COST * 0.25 // 1/4th the cost, since one sheet = 4 floor tiles
 	to_create_path = /turf/open/floor/bronze
 
-/datum/replica_fabricator_output/turf_output/brass_floor/on_create(obj/created_object, turf/creation_turf, mob/creator)
-	. = ..()
+/datum/replica_fabricator_output/turf_output/brass_floor/extra_checks(atom/target, turf/creation_turf, mob/user)
+	return !isindestructiblefloor(creation_turf) && !istype(creation_turf, /turf/open/floor/cult) && !istype(creation_turf, /turf/open/floor/bronze) && ..()
 
+/datum/replica_fabricator_output/turf_output/brass_floor/on_create(atom/created_atom, turf/creation_turf, mob/creator, looping = FALSE)
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/floor(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
+	if(looping)
+		return
+
+	for(var/turf/open/floor/floor_turf in RANGE_TURFS(1, creation_turf)) //NOT WORKING?
+		if(extra_checks(created_atom, creation_turf, creator))
+			if(!SSthe_ark.adjust_clock_power(-cost))
+				break
+			on_create(created_atom, floor_turf, creator, TRUE)
+
 /datum/replica_fabricator_output/turf_output/brass_wall
 	name = "wall"
 	cost = BRASS_POWER_COST * 4
 	to_create_path = /turf/closed/wall/clockwork
 	creation_delay = 14 SECONDS
-	replace_types_of = list(/turf/closed/wall)
+	replace_types_of = list(/turf/closed/wall, /turf/closed/wall/r_wall)
+	replacement_mult = -0.2
 
 /datum/replica_fabricator_output/turf_output/brass_wall/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
+
 /datum/replica_fabricator_output/wall_gear
 	name = "wall gear"
 	cost = BRASS_POWER_COST * 2
@@ -282,7 +297,7 @@
 	to_create_path = /obj/structure/window/reinforced/clockwork/fulltile
 	creation_delay = 10 SECONDS
 	replace_types_of = list(/obj/structure/window)
-	reebe_mult = 1.2
+	reebe_mult = 0.2
 
 /datum/replica_fabricator_output/brass_window/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/window(creation_turf)
@@ -294,6 +309,8 @@
 	cost = BRASS_POWER_COST * 5 // Breaking it only gets 2 but this is the exception to the rule of equivalent exchange, due to all the small parts inside
 	to_create_path = /obj/machinery/door/airlock/bronze/clock
 	creation_delay = 10 SECONDS
+	replace_types_of = list(/obj/machinery/door)
+	replacement_mult = 1
 
 /datum/replica_fabricator_output/pinion_airlock/extra_checks(atom/target, turf/created_at, mob/user)
 	if(on_reebe(created_at) && SSthe_ark.reebe_clockwork_airlock_count > MAXIMUM_REEBE_AIRLOCKS)
@@ -312,4 +329,3 @@
 
 #undef BRASS_POWER_COST
 #undef REGULAR_POWER_COST
-#undef SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
