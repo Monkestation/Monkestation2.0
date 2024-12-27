@@ -31,12 +31,12 @@ SUBSYSTEM_DEF(ping_logging)
 		return
 	overall_avg = round(overall_avg / clients, 1)
 	if(!active_spike)
-		if(overall_avg >= 1000)
-			WRITE_LOG("[GLOB.log_directory]/ping.log", "ping spike detected (avg >=1000ms): [overall_avg]ms")
+		if(overall_avg > 500)
+			WRITE_LOG("[GLOB.log_directory]/ping.log", "ping spike detected (avg >500ms): [overall_avg]ms")
 			active_spike = TRUE
 			next_spike_threshold = FLOOR(overall_avg + 750, 500)
 	else
-		if(overall_avg < 500)
+		if(overall_avg < 250)
 			WRITE_LOG("[GLOB.log_directory]/ping.log", "spike possibly ended ([overall_avg]ms)")
 			active_spike = FALSE
 			next_spike_threshold = 0
