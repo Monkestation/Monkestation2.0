@@ -1,9 +1,7 @@
 #ifndef OPENDREAM
-// These procs don't work on OD.
+// byond-memorystats does not work on OpenDream, as it relies on functions exported from byondcore.dll / libbyond.so
 SUBSYSTEM_DEF(memory_stats)
 	name = "Memory Statistics"
-	init_order = INIT_ORDER_AIR
-	priority = FIRE_PRIORITY_AIR
 	wait = 5 MINUTES
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
@@ -73,12 +71,14 @@ SUBSYSTEM_DEF(memory_stats)
 
 	if(!check_rights(R_DEBUG))
 		return
+	var/box_color = "red"
 #ifndef OPENDREAM
-	var/result = span_danger("Error fetching memory statistics!")
-	var/memory_stats = SSmemory_stats.get_memory_stats()
-	if(memory_stats)
-		result = trimtext(replacetext(memory_stats, "Server mem usage:", ""))
+	var/result = SSmemory_stats?.initialized ? span_danger("Error fetching memory statistics!") : span_warning("SSmemory_stats hasn't been initialized yet!")
+	var/memory_stats = trimtext(replacetext(SSmemory_stats.get_memory_stats(), "Server mem usage:", ""))
+	if(length(memory_stats))
+		result = memory_stats
+		box_color = "purple"
 #else
 	var/result = span_danger("Memory statistics not supported on OpenDream, sorry!")
 #endif
-	to_chat(src, fieldset_block("Memory Statistics", result, "boxed_message purple_box"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+	to_chat(src, fieldset_block("Memory Statistics", result, "boxed_message [box_color]_box"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)

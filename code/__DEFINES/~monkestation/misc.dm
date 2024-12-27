@@ -5,6 +5,7 @@
 
 #define OLD_MAN_HENDERSON_DRUNKENNESS 41
 
+/// Path for the byond-memorystats dll
 #define MEMORYSTATS_DLL_PATH (world.system_type == MS_WINDOWS ? "memorystats.dll" : "./libmemorystats.so")
 
 /// File path used for the "enable tracy next round" functionality
