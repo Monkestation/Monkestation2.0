@@ -80,6 +80,11 @@
 /turf/open/indestructible/reebe_flooring/filled
 	icon_state = "clockwork_floor_filled"
 
+/turf/open/floor/engine/clockwork
+	name = "clockwork floor"
+	desc = "You feel a faint warmth from below it."
+	icon_state = "clockwork_floor"
+
 /turf/closed/wall/clockwork //version created by clock cultists
 	name = "clockwork wall"
 	desc = "A forboding clump of gears that turn on their own. A faint glow emanates from within."

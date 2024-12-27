@@ -79,7 +79,7 @@
 		if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
 			recall.Grant(current)
 
-		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 4), healing_turfs = GLOB.clock_turf_types)
+		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
 		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		add_forbearance(current)

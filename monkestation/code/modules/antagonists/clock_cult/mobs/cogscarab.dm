@@ -25,13 +25,15 @@
 	chat_color = LIGHT_COLOR_CLOCKWORK
 	initial_language_holder = /datum/language_holder/clockmob
 	shy = FALSE
+	var/is_on_reebe = TRUE
 
 //No you can't go wielding guns like that.
 /mob/living/basic/drone/cogscarab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOGUNS, "cogscarab")
 	SSthe_ark.cogscarabs += src
-	add_actionspeed_modifier(/datum/actionspeed_modifier/cogscarab)
+	add_actionspeed_modifier(/datum/actionspeed_modifier/cogscarab, TRUE)
+	check_on_reebe()
 
 /mob/living/basic/drone/cogscarab/death(gibbed)
 	SSthe_ark.cogscarabs -= src
@@ -44,8 +46,24 @@
 /mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent) //ideally I would handle this on attacking instead
 	return (force || (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE)) && ..()
 
+/mob/living/basic/drone/cogscarab/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	check_on_reebe()
+
+/mob/living/basic/drone/cogscarab/proc/check_on_reebe()
+	var/old_value = is_on_reebe
+	is_on_reebe = on_reebe(src)
+	if(old_value != is_on_reebe)
+		if(is_on_reebe)
+			remove_movespeed_modifier(/datum/movespeed_modifier/cogscarab_off_reebe, TRUE)
+		else
+			add_movespeed_modifier(/datum/movespeed_modifier/cogscarab_off_reebe, TRUE)
+
 /datum/actionspeed_modifier/cogscarab
 	multiplicative_slowdown = 0.6
+
+/datum/movespeed_modifier/cogscarab_off_reebe
+	multiplicative_slowdown = 0.8
 
 //====Shell====
 

@@ -24,9 +24,14 @@
 	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
+
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently siphoning [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/apply_effects(mob/living/affected_mob)
 	. = ..()

@@ -242,16 +242,17 @@
 	return !(creation_turf.resistance_flags & INDESTRUCTIBLE)
 
 /datum/replica_fabricator_output/turf_output/on_create(atom/created_atom, turf/creation_turf, mob/creator)
-	creation_turf.ChangeTurf(to_create_path)
+	creation_turf.ChangeTurf(to_create_path, flags = CHANGETURF_INHERIT_AIR)
 	return ..()
 
 /datum/replica_fabricator_output/turf_output/brass_floor
 	name = "floor"
 	cost = BRASS_POWER_COST * 0.25 // 1/4th the cost, since one sheet = 4 floor tiles
-	to_create_path = /turf/open/floor/bronze
+	creation_delay = 3 SECONDS
+	to_create_path = /turf/open/floor/engine/clockwork
 
 /datum/replica_fabricator_output/turf_output/brass_floor/extra_checks(atom/target, turf/creation_turf, mob/user)
-	return !isindestructiblefloor(creation_turf) && !istype(creation_turf, /turf/open/floor/cult) && !istype(creation_turf, /turf/open/floor/bronze) && ..()
+	return !isindestructiblefloor(creation_turf) && !istype(creation_turf, /turf/open/floor/cult) && !istype(creation_turf, /turf/open/floor/engine/clockwork) && ..()
 
 /datum/replica_fabricator_output/turf_output/brass_floor/on_create(atom/created_atom, turf/creation_turf, mob/creator, looping = FALSE)
 	. = ..()
@@ -261,7 +262,7 @@
 		return
 
 	for(var/turf/open/floor/floor_turf in RANGE_TURFS(1, creation_turf)) //NOT WORKING?
-		if(extra_checks(created_atom, creation_turf, creator))
+		if(extra_checks(created_atom, floor_turf, creator))
 			if(!SSthe_ark.adjust_clock_power(-cost))
 				break
 			on_create(created_atom, floor_turf, creator, TRUE)

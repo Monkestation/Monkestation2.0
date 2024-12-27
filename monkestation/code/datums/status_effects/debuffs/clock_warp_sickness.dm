@@ -1,4 +1,5 @@
 /datum/status_effect/clock_warp_sickness
+	id = "clock_warp_sickness"
 	alert_type = /atom/movable/screen/alert/status_effect/clock_warp_sickness
 
 /datum/status_effect/clock_warp_sickness/on_creation(mob/living/new_owner, _duration = 1 SECOND)

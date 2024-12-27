@@ -8,10 +8,10 @@
 	icon_living = "clockwork_marauder"
 	mob_biotypes = MOB_HUMANOID|MOB_ROBOTIC|MOB_SPIRIT
 	sentience_type = SENTIENCE_HUMANOID
-	maxHealth = 180
-	health = 180
+	maxHealth = 150
+	health = 150
 	basic_mob_flags = DEL_ON_DEATH
-	speed = 1.20
+	speed = 1.2
 	melee_damage_lower = 24
 	melee_damage_upper = 24
 	attack_verb_continuous = "slices"

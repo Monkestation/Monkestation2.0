@@ -68,6 +68,10 @@
 	return FALSE
 
 /obj/structure/destructible/clockwork/sigil/submission/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently converting [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE
