@@ -1,7 +1,7 @@
 /obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 35 //monkestation edit: 10 to 35
+	damage = 25 //monkestation edit: 10 to 25
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
@@ -41,12 +41,21 @@
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)
+		for(var/mob/living/carbon/living_carbon in get_turf(src))
+			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
+				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(living_carbon))
+				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
 			do_teleport(living_mob, get_turf(teletarget), 1, channel = TELEPORT_CHANNEL_BLUESPACE) //Teleport what's in the tile to the beacon
 	else
+		for(var/mob/living/carbon/living_carbon in get_turf(src))
+			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
+				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(living_carbon))
+				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
 			do_teleport(living_mob, get_turf(living_mob), 15, channel = TELEPORT_CHANNEL_BLUESPACE) //Otherwise it just warps you off somewhere.
-
 	qdel(src)
 
 /obj/effect/nettingportal/singularity_act()
@@ -105,7 +114,7 @@
 		return
 
 	set_anchored(!anchored)
-	if(anchored == FALSE && linked_dragnet)
+	if(anchored == FALSE && linked_dragnet && !(obj_flags & EMAGGED))
 		linked_dragnet.handle_beacon_disable()
 		linked_dragnet = null
 	update_appearance()
@@ -114,15 +123,18 @@
 
 /obj/item/dragnet_beacon/update_overlays()
 	. = ..()
-	if(linked_dragnet)
-		. += "sp_green"
-		return
-	if(!anchored)
-		. += "sp_yellow"
-		return
-	if(anchored)
+	if(obj_flags & EMAGGED)
 		. += "sp_orange"
 		return
+	if(linked_dragnet != null)
+		. += "sp_green"
+		return
+	if(anchored)
+		. += "sp_yellow"
+		return
+	else
+		. += "dragnet_beacon"
+
 
 /obj/item/dragnet_beacon/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

@@ -99,8 +99,8 @@
 			return
 		else
 			UnregisterSignal(linked_beacon, COMSIG_QDELETING) //You're getting overridden dude.
-	linked_beacon.linked_dragnet = null
-	linked_beacon.update_appearance()
+
+	handle_beacon_disable()
 	linked_beacon = our_beacon
 	balloon_alert(user, "beacon synced")
 	RegisterSignal(our_beacon, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
@@ -109,6 +109,8 @@
 /obj/item/gun/energy/e_gun/dragnet/proc/handle_beacon_disable(datum/source)
 	SIGNAL_HANDLER
 	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+	linked_beacon.linked_dragnet = null
+	linked_beacon.update_appearance()
 	linked_beacon = null
 
 
