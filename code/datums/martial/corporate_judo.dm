@@ -1,13 +1,13 @@
 ///
 // PORTED FROM PARADISE STATION
 ///
-#define DISCOMBOBULATE "DG"
-#define EYE_POKE "HD"
-#define JUDO_THROW "GD"
-#define ARMBAR "DDG"
-#define WHEEL_THROW "GDH"
-#define GOLDEN_BLAST1 "EDEGDD"
-#define GOLDEN_BLAST2 "GEDDGE"
+//#define DISCOMBOBULATE "DG"
+//#define EYE_POKE "HD"
+//#define JUDO_THROW "GD"
+//#define ARMBAR "DDG"
+//#define WHEEL_THROW "GDH"
+//#define GOLDEN_BLAST1 "EDEGDD"
+//#define GOLDEN_BLAST2 "GEDDGE"
 
 //Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
 #define BANNEDTYPES list(/obj/item/melee/baton, /obj/item/borg/stun)
@@ -25,6 +25,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/martial_art/corpjudo/style
+
 /obj/item/storage/belt/security/blueshield/corpjudo/PopulateContents()
     // Can fill with new /obj/item to fill with items
     return
@@ -62,7 +63,6 @@
 	if(ishuman(user))
 		if(slot & ITEM_SLOT_BELT)
 			style.teach(user, TRUE)
-			style.blaststage = 0
 			ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/user)
@@ -70,7 +70,6 @@
 	if(ishuman(user))
 		if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 			style.remove(user)
-			style.blaststage = 0
 			REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 
@@ -223,8 +222,8 @@
 	if(!can_use(attacker))
 		return FALSE
 	add_to_streak("E", defender)
-	if(check_streak(attacker, defender))
-		return TRUE
+	//if(check_streak(attacker, defender))
+		//return TRUE
 
 /datum/martial_art/corpjudo/harm_act(mob/living/attacker, mob/living/defender)
 	var/picked_hit_type = pick("chops", "slices", "strikes")
@@ -235,61 +234,32 @@
 					"<span class='userdanger'>[attacker] [picked_hit_type] you!</span>")
 	log_combat(attacker, defender, "Melee attacked with [src]")
 	add_to_streak("H", defender)
-	if(check_streak(attacker, defender))
-		return TRUE
+	//if(check_streak(attacker, defender))
+		//return TRUE
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/corpjudo/disarm_act(mob/living/attacker, mob/living/defender)
-	if(!can_use(attacker))
-		return FALSE
+	//if(!can_use(attacker))
+		//return FALSE
 	add_to_streak("D", defender)
 
-	if(check_streak(attacker, defender))
-		return TRUE
+	//if(check_streak(attacker, defender))
+		//return TRUE
 
 /datum/martial_art/corpjudo/grab_act(mob/living/attacker, mob/living/defender)
 	if(attacker != defender && can_use(attacker)) // attacker != defender prevents grabbing yourself
 		add_to_streak("G", defender)
-	if(check_streak(attacker, defender))
-		return TRUE
+	//if(check_streak(attacker, defender))
+		//return TRUE
 
 /datum/martial_art/corpjudo/proc/check_streak(mob/living/attacker, mob/living/defender)
-	to_chat(world, "Do they have armbarpin:[defender.has_status_effect(/datum/status_effect/judo_armbar)], their current combot: [streak]")
-	if(!can_use(attacker))
-		return FALSE
-	if(streak == WHEEL_THROW)
-		//reset_streak()
-		return wheel_throw(attacker, defender)
-	if(streak == DISCOMBOBULATE)
-		reset_streak()
-		blaststage = 0
-		return discombobulate(attacker, defender)
-	if(streak == EYE_POKE)
-		reset_streak()
-		blaststage = 0
-		return eye_poke(attacker, defender)
-	if(streak == JUDO_THROW && !defender.has_status_effect(/datum/status_effect/judo_armbar))
-		reset_streak()
-		blaststage = 0
-		return judothrow(attacker, defender)
-	if(streak == ARMBAR)
-		reset_streak()
-		blaststage = 0
-		return armbar(attacker, defender)
-	if(streak == GOLDEN_BLAST1)
-		reset_streak()
-		blaststage = 1
-		return TRUE
-	if(streak == GOLDEN_BLAST2)
-		reset_streak()
-		return goldenblast(attacker, defender)
 	return FALSE
 
-#undef DISCOMBOBULATE
-#undef EYE_POKE
-#undef JUDO_THROW
-#undef ARMBAR
-#undef WHEEL_THROW
-#undef GOLDEN_BLAST1
-#undef GOLDEN_BLAST2
-#undef BANNEDTYPES
+//#undef DISCOMBOBULATE
+//#undef EYE_POKE
+//#undef JUDO_THROW
+//#undef ARMBAR
+//#undef WHEEL_THROW
+//#undef GOLDEN_BLAST1
+//#undef GOLDEN_BLAST2
+//#undef BANNEDTYPES
