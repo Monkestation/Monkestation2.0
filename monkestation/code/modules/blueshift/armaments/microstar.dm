@@ -41,3 +41,6 @@
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons/mod_laser_large
 	item_type = /obj/item/gun/energy/modular_laser_rifle
 	cost = PAYCHECK_COMMAND * 8
+
+/datum/armament_entry/company_import/microstar/basic_energy_long_weapons/ion_carbine
+	item_type = /obj/item/gun/energy/ionrifle/carbine
