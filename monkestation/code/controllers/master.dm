@@ -1,7 +1,9 @@
 #ifndef OPENDREAM
 /datum/controller/master/init_subsystem(datum/controller/subsystem/subsystem)
 	. = ..()
-	var/static/no_memstat = FALSE
+	var/static/no_memstat
+	if(isnull(no_memstat))
+		no_memstat = aneri_file_exists(MEMORYSTATS_DLL_PATH)
 	if(no_memstat)
 		return
 	try
