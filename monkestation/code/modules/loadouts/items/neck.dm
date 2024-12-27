@@ -325,3 +325,7 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/imperial_police_cloak //BUYABLE
 	name = "Imperial Police Cloak"
 	item_path = /obj/item/clothing/neck/cloak/colonial/nri_police
+
+/datum/loadout_item/neck/straw_coat
+	name = "Straw Coat"
+	item_path = /obj/item/clothing/neck/straw_coat

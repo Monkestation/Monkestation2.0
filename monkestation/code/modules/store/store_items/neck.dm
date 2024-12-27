@@ -241,3 +241,8 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Imperial Police Cloak"
 	item_path = /obj/item/clothing/neck/cloak/colonial/nri_police
 	item_cost = 7500
+
+/datum/store_item/neck/straw_coat
+	name = "Straw Coat"
+	item_path = /obj/item/clothing/neck/straw_coat
+	item_cost = 2500
