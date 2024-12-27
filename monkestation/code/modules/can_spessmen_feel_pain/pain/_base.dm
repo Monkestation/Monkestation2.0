@@ -85,7 +85,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_WOUND, PROC_REF(remove_wound_pain))
 	RegisterSignal(parent, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(remove_bodypart))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_analyzed))
-	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_full_heal))
+	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_healed))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_parent_statchance))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_NO_PAIN_EFFECTS), SIGNAL_REMOVETRAIT(TRAIT_NO_PAIN_EFFECTS)), PROC_REF(refresh_pain_attributes))
@@ -931,18 +931,6 @@
 	// Ideally pain would have its own heal flag but we live in a society
 	if(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS))
 		remove_all_pain()
-
-/**
- * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
- */
-/datum/pain/proc/on_full_heal()
-	SIGNAL_HANDLER
-
-	// Ideally pain would have its own heal flag but we live in a society
-	if(!(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS)))
-		return
-
-	remove_all_pain()
 
 /**
  * Determines if we should be processing or not.
