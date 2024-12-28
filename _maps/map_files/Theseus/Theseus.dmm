@@ -14320,13 +14320,12 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "elp" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/disposaloutlet,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "elt" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/window/left/directional/south{
@@ -19233,6 +19232,16 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
+"fNo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_purple/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "fNw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -38290,13 +38299,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"lpH" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "lpK" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/start/assistant,
@@ -46466,13 +46468,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
-"nMI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "nMJ" = (
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
@@ -48363,16 +48358,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"oqD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_purple/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "oqE" = (
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32;
@@ -51954,17 +51939,6 @@
 /obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/carpet/orange,
 /area/station/command/bridge)
-"pwT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/button/door/directional/north{
-	pixel_y = -25;
-	pixel_x = -6;
-	name = "Secure Environment";
-	id = "SecureEnvironment"
-	},
-/turf/open/floor/eighties/red,
-/area/station/command/heads_quarters/captain/private)
 "pwU" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -55465,6 +55439,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"qvL" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qvM" = (
 /obj/structure/railing,
 /obj/machinery/firealarm/directional/north,
@@ -58913,6 +58895,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"rut" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "ruF" = (
 /obj/effect/turf_decal/stripes,
 /obj/item/kirbyplants/random,
@@ -74749,14 +74738,6 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/box/gloves{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/storage/box/gloves{
-	pixel_x = 1;
-	pixel_y = 3
-	},
 /obj/item/radio/headset/headset_medsci{
 	pixel_x = -7;
 	pixel_y = 4
@@ -74765,6 +74746,14 @@
 	pixel_x = 10
 	},
 /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
+/obj/item/storage/box/disks{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/storage/box/disks{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "vWE" = (
@@ -80481,6 +80470,17 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/space/basic,
 /area/space)
+"xHJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/north{
+	pixel_y = -25;
+	pixel_x = -6;
+	name = "Secure Environment";
+	id = "SecureEnvironment"
+	},
+/turf/open/floor/eighties/red,
+/area/station/command/heads_quarters/captain/private)
 "xHK" = (
 /obj/effect/turf_decal/trimline/darkest_green/filled,
 /obj/effect/turf_decal/trimline/darkest_green/filled,
@@ -102465,7 +102465,7 @@ ami
 gsW
 oqi
 aKu
-pwT
+xHJ
 xdC
 gye
 dUC
@@ -104083,10 +104083,10 @@ azH
 azH
 azH
 clx
-oqD
-oqD
-oqD
-oqD
+fNo
+fNo
+fNo
+fNo
 isk
 jpT
 pUY
@@ -107946,7 +107946,7 @@ nhC
 nhC
 nhC
 kQv
-elp
+qvL
 nhC
 nhC
 nhC
@@ -108202,7 +108202,7 @@ nhC
 nhC
 nhC
 lXw
-lpH
+rut
 lXw
 lXw
 nhC
@@ -108459,7 +108459,7 @@ lXw
 lXw
 lXw
 lXw
-lpH
+rut
 lXw
 lXw
 lXw
@@ -108716,7 +108716,7 @@ rwL
 rwL
 rwL
 rwL
-nMI
+elp
 edF
 rwL
 lXw
