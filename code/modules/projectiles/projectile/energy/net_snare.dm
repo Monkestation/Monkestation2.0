@@ -1,7 +1,7 @@
 /obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 25 //monkestation edit: 10 to 25
+	damage = 15 //monkestation edit: 10 to 15
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
@@ -37,7 +37,7 @@
 /obj/effect/nettingportal/Initialize(mapload, destination_beacon)
 	. = ..()
 	var/obj/item/dragnet_beacon/teletarget = destination_beacon
-	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 30)
+	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 4 SECONDS)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)
@@ -72,6 +72,7 @@
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	///Has a security ID been used to lock this in place?
 	var/locked = FALSE
 	var/obj/item/gun/energy/e_gun/dragnet/linked_dragnet

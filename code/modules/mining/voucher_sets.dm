@@ -285,9 +285,9 @@
 		/obj/item/folder/red,
 		/obj/item/storage/box/evidence,
 		/obj/item/clothing/gloves/latex,
-		/obj/item/clothing/head/fedora/det_hat,
 		/obj/item/binoculars,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy,
+		/obj/item/lighter/greyscale,
 		)
 
 /datum/voucher_set/security/assistant/buddy_cop

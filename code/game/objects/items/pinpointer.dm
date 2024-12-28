@@ -196,6 +196,7 @@
 
 /obj/item/storage/box/pinpointer_pairs
 	name = "pinpointer pair box"
+	custom_premium_price = PAYCHECK_COMMAND * 3.5 //monkestation edit
 
 /obj/item/storage/box/pinpointer_pairs/PopulateContents()
 	var/obj/item/pinpointer/pair/A = new(src)

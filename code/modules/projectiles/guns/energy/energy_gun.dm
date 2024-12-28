@@ -108,11 +108,15 @@
 ///Handles clearing the linked_beacon reference in the event that it is deleted.
 /obj/item/gun/energy/e_gun/dragnet/proc/handle_beacon_disable(datum/source)
 	SIGNAL_HANDLER
-	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
-	linked_beacon.linked_dragnet = null
-	linked_beacon.update_appearance()
+	if(linked_beacon)
+		visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+		linked_beacon.linked_dragnet = null
+		linked_beacon.update_appearance()
 	linked_beacon = null
 
+/obj/item/gun/energy/e_gun/dragnet/Destroy() //just so the beacon updates it's apperance
+	. = ..()
+	handle_beacon_disable()
 
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return

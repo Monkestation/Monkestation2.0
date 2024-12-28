@@ -22,23 +22,23 @@
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
-		/obj/item/storage/fancy/donut_box = 2,
+		/obj/item/storage/fancy/donut_box = 4, //monkestation edit 2 to 4
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
 		/obj/item/coin/antagtoken = 1,
-		/obj/item/clothing/head/helmet/blueshirt = 1,
-		/obj/item/clothing/suit/armor/vest/blueshirt = 1,
+		//monkestation removal
+		// /obj/item/clothing/head/helmet/blueshirt = 1,
+		// /obj/item/clothing/suit/armor/vest/blueshirt = 1,
+		//moved to secdrobe
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
-		/obj/item/clothing/head/helmet/civilprotection_helmet = 1, //monkestation edit
-		/obj/item/clothing/suit/armor/civilprotection_vest = 1, //monkestation edit
-		/obj/item/clothing/head/helmet/guardmanhelmet = 1, //monkestation edit: Guardman
-		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
-		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
-		/obj/item/citationinator = 3 // monkestation edit: security assistants
+		/obj/item/citationinator = 3, // monkestation edit: security assistants
+		/obj/item/modular_computer/laptop/preset/security = 3, //monkestation edit
+		/obj/item/storage/box/pinpointer_pairs = 2, //monkestation edit
+		/obj/item/dragnet_beacon = 3, //monkestation edit
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW
@@ -111,9 +111,10 @@
 		return
 
 	var/datum/voucher_set/chosen_set = set_types[selection]
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	for(var/item in chosen_set.set_items)
 		new item(drop_location())
 
-	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
+	SSblackbox.record_feedback("tally", "security_voucher_redeemed", 1, selection)
 	qdel(voucher)
-
+//MONKESTATION EDIT STOP

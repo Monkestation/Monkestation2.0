@@ -8,8 +8,8 @@
 
 //MONKESTATION EDIT START
 /obj/item/gun/energy/taser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
-	if(do_after(user, 0.5 SECONDS))
+	playsound(src, 'sound/machines/defib_charge.ogg', 50, FALSE)
+	if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
 		return ..()
 //MONKESTATION EDIT STOP
 
@@ -23,8 +23,8 @@
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(select == 1)
-		playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
-		if(do_after(user, 0.5 SECONDS))
+		playsound(src, 'sound/machines/defib_charge.ogg', 50, FALSE)
+		if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
 			return ..()
 	else
 		return ..()

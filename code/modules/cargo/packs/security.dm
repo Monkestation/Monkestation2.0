@@ -110,6 +110,7 @@
 					/obj/item/storage/box/teargas,
 					/obj/item/storage/box/flashes,
 					/obj/item/storage/box/handcuffs,
+					/obj/item/security_voucher/utility = 2, //monkestation edit
 				)
 	crate_name = "security supply crate"
 
@@ -209,12 +210,15 @@
 					/obj/item/storage/belt/bandolier = 3)
 	crate_name = "combat shotguns crate"
 
-/datum/supply_pack/security/armory/dragnet
+/datum/supply_pack/security/armory/dragnet //monkestation edit: dropped the amount to two from three
 	name = "DRAGnet Crate"
-	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
-		a recent breakthrough in law enforcement prisoner management technology."
+	desc = "Contains two \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
+		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/energy/e_gun/dragnet = 3)
+	contains = list(
+		/obj/item/gun/energy/e_gun/dragnet = 2,
+		/obj/item/dragnet_beacon = 1,
+		)
 	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/energy
