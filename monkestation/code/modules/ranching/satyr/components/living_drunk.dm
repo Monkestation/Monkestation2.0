@@ -39,14 +39,14 @@
 	var/metabolized_amount = living.metabolism_efficiency * reagent.metabolization_rate * seconds_per_tick
 
 	var/drunk_increase = metabolized_amount / booze_per_drunkness
-	current_drunkness = min(max_drunkness, current_drunkness + drunk_increase)
+	current_drunkness = min(max_drunkness, (current_drunkness + drunk_increase) * 100)
 	COOLDOWN_START(src, drank_grace, grace_period)
 	drunkness_change_effects()
 
 /datum/component/living_drunk/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, drank_grace))
 		return
-	current_drunkness -= 0.1
+	current_drunkness -= 0.2
 	drunkness_change_effects()
 
 /datum/component/living_drunk/proc/drunkness_change_effects()
@@ -55,11 +55,10 @@
 		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 80)
 		drunk_state = 2
 		return
-	if((current_drunkness <= 30) && (drunk_state != 1 || drunk_state != 2))
+	if((current_drunkness <= 30) && drunk_state != 1 && drunk_state != 2)
 		living.apply_status_effect(/datum/status_effect/inebriated/tipsy, 5)
 		drunk_state = 1
 		return
-
 	if(current_drunkness > 30)
 		drunk_state = 0
 		living.remove_status_effect(/datum/status_effect/inebriated/tipsy)
