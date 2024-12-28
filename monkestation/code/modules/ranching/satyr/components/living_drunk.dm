@@ -5,7 +5,7 @@
 
 	COOLDOWN_DECLARE(drank_grace)
 	var/grace_period = 5 MINUTES
-	var/booze_per_drunkness = 100
+	var/booze_per_drunkness = 2
 
 	var/drunk_state = 0
 
