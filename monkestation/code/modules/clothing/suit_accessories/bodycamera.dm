@@ -76,7 +76,7 @@
 		builtin_bodycamera.forceMove(src)
 		builtin_bodycamera.network = list()
 	taking_from.cut_overlay(equipped_overlay)
-	forceMove(user.loc)
+	forceMove(user.drop_location())
 	turn_off()
 	user.put_in_hands(src)
 	if(user.get_item_by_slot(ITEM_SLOT_OCLOTHING) == taking_from)
