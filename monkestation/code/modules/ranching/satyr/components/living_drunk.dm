@@ -6,11 +6,11 @@
 
 	COOLDOWN_DECLARE(drank_grace)
 	var/grace_period = 5 MINUTES
-	var/booze_per_drunkness = 2
+	var/booze_per_drunkness = 1
 
 	var/drunk_state = 0
 
-/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 2)
+/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 1)
 	. = ..()
 	src.grace_period = grace_period
 	src.booze_per_drunkness = booze_per_drunkness
