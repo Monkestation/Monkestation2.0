@@ -9,7 +9,7 @@
 
 	var/drunk_state = 0
 
-/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 100)
+/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 10)
 	. = ..()
 	src.grace_period = grace_period
 	src.booze_per_drunkness = booze_per_drunkness
@@ -39,7 +39,7 @@
 	var/metabolized_amount = living.metabolism_efficiency * reagent.metabolization_rate * seconds_per_tick
 
 	var/drunk_increase = metabolized_amount / booze_per_drunkness
-	current_drunkness = min(max_drunkness, (current_drunkness + drunk_increase) * 100)
+	current_drunkness = min(max_drunkness, current_drunkness + drunk_increase)
 	COOLDOWN_START(src, drank_grace, grace_period)
 	drunkness_change_effects()
 
