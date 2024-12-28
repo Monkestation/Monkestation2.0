@@ -9,7 +9,7 @@
 
 	var/drunk_state = 0
 
-/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 10)
+/datum/component/living_drunk/Initialize(grace_period = 5 MINUTES, booze_per_drunkness = 2)
 	. = ..()
 	src.grace_period = grace_period
 	src.booze_per_drunkness = booze_per_drunkness
