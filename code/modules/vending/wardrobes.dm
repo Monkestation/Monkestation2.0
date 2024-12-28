@@ -50,10 +50,10 @@
 	)
 	//MONKESTATION EDIT START
 	contraband = list(
+		/obj/item/clothing/under/color/red = 3,
+		/obj/item/clothing/shoes/sneakers/brown = 3,
 		/obj/item/clothing/head/helmet/surplus = 3,
 		/obj/item/clothing/suit/armor/surplus = 3,
-		/obj/item/clothing/shoes/sneakers/brown = 3,
-		/obj/item/clothing/under/color/red = 3,
 	)
 	//MONKESTATION EDIT STOP
 	premium = list(
