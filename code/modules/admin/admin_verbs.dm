@@ -98,6 +98,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
+	// monkestation verbs start
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
@@ -105,6 +106,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/view_opfors,
 	/client/proc/check_players,
 	/client/proc/AdminVOX,
+	/client/proc/delete_all_glowshrooms,
+	/client/proc/toggle_glowshroom_spread,
+	// monkestation verbs end
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -551,6 +555,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		var/image/invisible = image(icon = 'icons/mob/simple/mob.dmi', icon_state = null, loc = mob)
+		invisible.override = TRUE
+		mob.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/actually_everyone, "stealthmin", invisible)
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
@@ -561,6 +568,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/disable_stealth_mode()
 	holder.fakekey = null
 	if(isobserver(mob))
+		mob.remove_alt_appearance("stealthmin")
 		mob.invisibility = initial(mob.invisibility)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
