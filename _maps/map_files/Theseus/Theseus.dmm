@@ -57647,15 +57647,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"rda" = (
-/obj/structure/curtain/cloth/fancy/mechanical{
-	icon_state = "bounty-open";
-	icon_type = "bounty";
-	id = "capcurtain";
-	name = "curtain"
-	},
-/turf/open/space/basic,
-/area/space)
 "rdd" = (
 /obj/item/flashlight/lantern{
 	pixel_y = -10;
@@ -100407,7 +100398,7 @@ spf
 nhC
 nhC
 nhC
-rda
+nhC
 nhC
 nhC
 nhC
