@@ -14320,12 +14320,12 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "elp" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/turf/open/space/basic,
+/area/space/nearstation)
 "elt" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/window/left/directional/south{
@@ -19232,16 +19232,6 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
-"fNo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_purple/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "fNw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -19387,15 +19377,14 @@
 	name = "Secure Environment";
 	id = "SecureEnvironment"
 	},
-/obj/machinery/button/door/directional/south{
-	pixel_y = -25;
-	pixel_x = 6;
-	id = "blueshieldcurtain";
-	name = "Blueshield's Curtain Control"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/button/curtain{
+	pixel_x = 5;
+	id = "blueshieldcurtain";
+	pixel_y = -25
+	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/blueshield)
 "fQi" = (
@@ -29405,6 +29394,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"iNS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_purple/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "iOf" = (
 /obj/item/shovel/spade,
 /obj/machinery/growing/tray,
@@ -34029,7 +34028,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/light/directional/south,
 /obj/machinery/plumbing/ooze_compressor,
-/obj/machinery/duct,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -43116,6 +43114,13 @@
 "mNb" = (
 /turf/closed/wall,
 /area/station/cargo/quartermaster)
+"mNe" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "mNg" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L8"
@@ -55439,14 +55444,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"qvL" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/disposaloutlet,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "qvM" = (
 /obj/structure/railing,
 /obj/machinery/firealarm/directional/north,
@@ -57650,6 +57647,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"rda" = (
+/obj/structure/curtain/cloth/fancy/mechanical{
+	icon_state = "bounty-open";
+	icon_type = "bounty";
+	id = "capcurtain";
+	name = "curtain"
+	},
+/turf/open/space/basic,
+/area/space)
 "rdd" = (
 /obj/item/flashlight/lantern{
 	pixel_y = -10;
@@ -58895,13 +58901,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
-"rut" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "ruF" = (
 /obj/effect/turf_decal/stripes,
 /obj/item/kirbyplants/random,
@@ -63360,6 +63359,10 @@
 	},
 /obj/machinery/light/warm/directional/west,
 /obj/effect/landmark/start/captain,
+/obj/machinery/button/curtain{
+	pixel_x = -25;
+	id = "capcurtain"
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
 "sLj" = (
@@ -68771,6 +68774,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"umv" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "umx" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/north,
@@ -68841,8 +68852,8 @@
 /obj/machinery/button/door/directional/east{
 	pixel_x = 26;
 	pixel_y = 8;
-	name = "Captain Office Curtains";
-	id = "capcurtain"
+	name = "Captain Office Blast Doors";
+	id = "cap"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -80470,17 +80481,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/space/basic,
 /area/space)
-"xHJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/button/door/directional/north{
-	pixel_y = -25;
-	pixel_x = -6;
-	name = "Secure Environment";
-	id = "SecureEnvironment"
-	},
-/turf/open/floor/eighties/red,
-/area/station/command/heads_quarters/captain/private)
 "xHK" = (
 /obj/effect/turf_decal/trimline/darkest_green/filled,
 /obj/effect/turf_decal/trimline/darkest_green/filled,
@@ -100407,7 +100407,7 @@ spf
 nhC
 nhC
 nhC
-nhC
+rda
 nhC
 nhC
 nhC
@@ -102465,7 +102465,7 @@ ami
 gsW
 oqi
 aKu
-xHJ
+xdC
 xdC
 gye
 dUC
@@ -104083,10 +104083,10 @@ azH
 azH
 azH
 clx
-fNo
-fNo
-fNo
-fNo
+iNS
+iNS
+iNS
+iNS
 isk
 jpT
 pUY
@@ -107946,7 +107946,7 @@ nhC
 nhC
 nhC
 kQv
-qvL
+umv
 nhC
 nhC
 nhC
@@ -108202,7 +108202,7 @@ nhC
 nhC
 nhC
 lXw
-rut
+elp
 lXw
 lXw
 nhC
@@ -108459,7 +108459,7 @@ lXw
 lXw
 lXw
 lXw
-rut
+elp
 lXw
 lXw
 lXw
@@ -108716,7 +108716,7 @@ rwL
 rwL
 rwL
 rwL
-elp
+mNe
 edF
 rwL
 lXw
