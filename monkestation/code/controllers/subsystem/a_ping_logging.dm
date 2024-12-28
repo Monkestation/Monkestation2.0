@@ -9,7 +9,10 @@ SUBSYSTEM_DEF(ping_logging)
 
 /datum/controller/subsystem/ping_logging/Initialize()
 	fire()
-	WRITE_LOG("[GLOB.log_directory]/ping.log", "average ping at init: [last_overall_avg]ms")
+	log_ping("average ping at init: [last_overall_avg]ms", list(
+		"state" = "init",
+		"average_ping" = last_overall_avg,
+	))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ping_logging/Recover()
@@ -32,19 +35,38 @@ SUBSYSTEM_DEF(ping_logging)
 	overall_avg = round(overall_avg / clients, 1)
 	if(!active_spike)
 		if(overall_avg > 500)
-			WRITE_LOG("[GLOB.log_directory]/ping.log", "ping spike detected (avg >500ms): [overall_avg]ms")
+			log_ping("ping spike detected (avg >500ms): [overall_avg]ms", list(
+				"state" = "starting",
+				"average_ping" = overall_avg,
+				"last_average_ping" = last_overall_avg,
+			))
 			active_spike = TRUE
 			next_spike_threshold = CEILING(overall_avg, 200) + 200
 	else
 		if(overall_avg < 250)
-			WRITE_LOG("[GLOB.log_directory]/ping.log", "spike possibly ended ([overall_avg]ms)")
+			log_ping("spike possibly ended ([overall_avg]ms)", list(
+				"state" = "ending",
+				"average_ping" = overall_avg,
+				"last_average_ping" = last_overall_avg,
+			))
 			active_spike = FALSE
 			next_spike_threshold = 0
 		else if(overall_avg > next_spike_threshold)
-			WRITE_LOG("[GLOB.log_directory]/ping.log", "spike worsening ([overall_avg]ms)")
+			log_ping("spike worsening [overall_avg]ms", list(
+				"state" = "worsening",
+				"average_ping" = overall_avg,
+				"last_average_ping" = last_overall_avg,
+			))
 			next_spike_threshold = CEILING(overall_avg, 200) + 200
 	last_overall_avg = overall_avg
 
 /datum/controller/subsystem/ping_logging/stat_entry(msg)
-	msg = "LAST:[last_overall_avg]ms"
+	if(active_spike)
+		msg = "ACTIVE SPIKE | LAST:[last_overall_avg]ms | NEXT THRESHOLD:[next_spike_threshold]ms"
+	else
+		msg = "LAST:[last_overall_avg]ms"
 	return ..()
+
+/datum/controller/subsystem/ping_logging/get_metrics()
+	. = ..()
+	.["custom"] = list("average_ping" = last_overall_avg)
