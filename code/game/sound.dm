@@ -117,6 +117,9 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
 
+	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		return
+
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
@@ -130,8 +133,9 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 	var/turf/below_turf = GET_TURF_BELOW(turf_source)
 
-	if(ignore_walls)
+	var/audible_distance = CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(vol, maxdistance, falloff_distance, falloff_exponent)
 
+	if(ignore_walls)
 		if(above_turf && istransparentturf(above_turf))
 			listeners += SSmobs.clients_by_zlevel[above_turf.z]
 
@@ -139,16 +143,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			listeners += SSmobs.clients_by_zlevel[below_turf.z]
 
 	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(maxdistance, turf_source)
+		listeners = get_hearers_in_view(audible_distance, turf_source)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(maxdistance, above_turf)
+			listeners += get_hearers_in_view(audible_distance, above_turf)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(maxdistance, below_turf)
+			listeners += get_hearers_in_view(audible_distance, below_turf)
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= maxdistance)
+		if(get_dist(listening_mob, turf_source) <= audible_distance)
 			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
 			. += listening_mob
 
@@ -174,15 +178,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		else
 			sound_to_use.frequency = get_rand_frequency()
 
+	var/distance = 0
+
 	if(isturf(turf_source))
 		var/turf/turf_loc = get_turf(src)
 
 		//sound volume falloff with distance
-		var/distance = get_dist(turf_loc, turf_source) * distance_multiplier
+		distance = get_dist(turf_loc, turf_source) * distance_multiplier
 
-		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff. MONKESTATION EDIT
-			sound_to_use.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * sound_to_use.volume
-			//https://www.desmos.com/calculator/sqdfl8ipgf
+		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff.
+			sound_to_use.volume -= CALCULATE_SOUND_VOLUME(vol, distance, max_distance, falloff_distance, falloff_exponent)
 
 		if(pressure_affected)
 			//Atmosphere affects sound
@@ -203,6 +208,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
+		var/list/volume_mixer = client?.prefs?.channel_volume
 		if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
 			var/used_channel = 0
 			if(channel in GLOB.used_sound_channels)
@@ -210,15 +216,15 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 				mixer_channel = channel
 			else
 				used_channel = mixer_channel
-			if("[used_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
+			if("[used_channel]" in volume_mixer)
+				sound_to_use.volume *= (volume_mixer["[used_channel]"] * 0.01)
 
 		else if(!mixer_channel)
 			mixer_channel = guess_mixer_channel(soundin)
-			if("[mixer_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+			if("[mixer_channel]" in volume_mixer)
+				sound_to_use.volume *= (volume_mixer["[mixer_channel]"] * 0.01)
 
-		if(sound_to_use.volume <= 0)
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
 			return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
@@ -247,6 +253,9 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		if(!use_reverb)
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
+
+	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
+		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
 	SEND_SOUND(src, sound_to_use)
 
