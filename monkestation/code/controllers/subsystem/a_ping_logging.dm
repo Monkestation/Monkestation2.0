@@ -1,7 +1,11 @@
 SUBSYSTEM_DEF(ping_logging)
 	name = "Ping Logging"
 	wait = 10 // ticks, not seconds
+#ifndef UNIT_TESTS
 	flags = SS_TICKER | SS_KEEP_TIMING
+#else
+	flags = SS_NO_INIT | SS_NO_FIRE // literally no reason for this to run during unit tests
+#endif
 	runlevels = ALL
 	var/last_overall_avg = 0
 	var/active_spike = FALSE
