@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.head)
-			if(istype(outfit.back, /obj/item/storage))
+			if(ispath(outfit.back, /obj/item/storage))
 				LAZYADD(outfit.backpack_contents, outfit.head)
 			else
 				var/obj/item/new_item = new outfit.head()
