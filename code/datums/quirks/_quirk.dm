@@ -175,13 +175,13 @@
  * * default_location - If the item isn't possible to equip in a valid slot, this is a description of where the item was spawned.
  * * notify_player - If TRUE, adds strings to where_items_spawned list to be output to the player in [/datum/quirk/item_quirk/post_add()]
  */
-/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = TRUE) //MONKESTATION EDIT - 'quirk_item' >>> 'obj/item/quirk_item'
+/datum/quirk/item_quirk/proc/give_item_to_holder(quirk_item, list/valid_slots, flavour_text = null, defaultlocation = "at your feet", notify_player = TRUE)
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, move_equipped = TRUE) || default_location //MONKESTATION EDIT - var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE) || default_location >>> var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, move_equipped = TRUE) || default_location - Don't fucking nuke our items, please.
+	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, move_equipped = TRUE) || default_location //MONKESTATION EDIT - Added 'move_equipped = TRUE'
 
 	if(where == LOCATION_BACKPACK)
 		open_backpack = TRUE
