@@ -11,7 +11,7 @@
 
 //Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
 #define BANNEDTYPES list(/obj/item/melee/baton, /obj/item/borg/stun)
-
+#define MIN_COMBO 2
 ///
 // ITEM INFORMATION
 ///
@@ -217,13 +217,17 @@
 // Combo Adders
 ///
 /datum/martial_art/corpjudo/help_act(mob/living/attacker, mob/living/defender)
-	if(!can_use(attacker))
-		return FALSE
+	if(attacker == defender || !can_use(attacker))
+		return MARTIAL_ATTACK_INVALID
+
 	add_to_streak("E", defender)
-	//if(check_streak(attacker, defender))
-		//return TRUE
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/corpjudo/harm_act(mob/living/attacker, mob/living/defender)
+	if(attacker == defender || !can_use(attacker))
+		return MARTIAL_ATTACK_INVALID
+
 	var/picked_hit_type = pick("chops", "slices", "strikes")
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.apply_damage(10, BRUTE)
@@ -232,27 +236,41 @@
 					"<span class='userdanger'>[attacker] [picked_hit_type] you!</span>")
 	log_combat(attacker, defender, "Melee attacked with [src]")
 	add_to_streak("H", defender)
-	//if(check_streak(attacker, defender))
-		//return TRUE
+
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
+
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/corpjudo/disarm_act(mob/living/attacker, mob/living/defender)
-	//if(!can_use(attacker))
-		//return FALSE
-	add_to_streak("D", defender)
+	if(attacker == defender || !can_use(attacker))
+		return MARTIAL_ATTACK_INVALID
 
-	//if(check_streak(attacker, defender))
-		//return TRUE
+	add_to_streak("D", defender)
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/corpjudo/grab_act(mob/living/attacker, mob/living/defender)
-	if(attacker == defender || !can_use(attacker)) // attacker != defender prevents grabbing yourself
-		return FALSE
+	if(attacker == defender || !can_use(attacker))
+		return MARTIAL_ATTACK_INVALID
+
 	add_to_streak("G", defender)
-	//if(check_streak(attacker, defender))
-		//return TRUE
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
+
+/datum/martial_art/corpjudo/proc/combo_refresh()
+	//if(timerid)
+    //    deltimer(timerid)  // Remove old timer
+    //timerid = addtimer(
+    //    CALLBACK(src, PROC_REF(reset_streak), null, FALSE),
+    //    combo_timer,
+    //    TIMER_UNIQUE | TIMER_STOPPABLE
+    //)
 
 /datum/martial_art/corpjudo/proc/check_streak(mob/living/attacker, mob/living/defender)
-	return FALSE
+	if(!(streak < MIN_COMBO))
+		combo_refresh()
+		return FALSE
 
 //#undef DISCOMBOBULATE
 //#undef EYE_POKE
@@ -261,4 +279,5 @@
 //#undef WHEEL_THROW
 //#undef GOLDEN_BLAST1
 //#undef GOLDEN_BLAST2
-//#undef BANNEDTYPES
+#undef MIN_COMBO
+#undef BANNEDTYPES
