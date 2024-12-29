@@ -88,6 +88,7 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/Destroy()
 	SSthe_ark.cogscarabs -= src
+	AddElement(/datum/element/clockwork_description, "Cogscarabs can only gain a soul in marked areas.")
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)
@@ -98,6 +99,10 @@
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
 	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(user, span_notice("The Ark cannot support any more cogscarabs."))
+		return FALSE
+
+	if(!SSthe_ark.marked_areas[get_area(src)])
+		to_chat(user, span_notice("Cogscarabs can only spawn in marked areas."))
 		return FALSE
 	return TRUE
 
