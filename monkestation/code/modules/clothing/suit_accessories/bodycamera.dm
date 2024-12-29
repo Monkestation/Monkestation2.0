@@ -92,7 +92,7 @@
 		builtin_bodycamera = new(loc) //made in the vest it's located in.
 	if(id_card)
 		builtin_bodycamera.c_tag = "-Body Camera: [(id_card.registered_name)] ([id_card.assignment])"
-	else
+	else if(user)
 		builtin_bodycamera.c_tag = "-Body Camera: [(user.name)]"
 	if(user)
 		user.balloon_alert(user, "bodycamera activated")
