@@ -102,6 +102,8 @@
 
 	handle_beacon_disable()
 	linked_beacon = our_beacon
+	LAZYOR(linked_beacon.linked_dragnets, src)
+	linked_beacon.update_appearance()
 	balloon_alert(user, "beacon synced")
 	RegisterSignal(our_beacon, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
 
@@ -110,8 +112,8 @@
 	SIGNAL_HANDLER
 	if(linked_beacon)
 		visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
-		linked_beacon.linked_dragnet = null
-		linked_beacon.update_appearance()
+	LAZYREMOVE(linked_beacon.linked_dragnets, src)
+	linked_beacon.update_appearance()
 	linked_beacon = null
 
 /obj/item/gun/energy/e_gun/dragnet/Destroy() //just so the beacon updates it's apperance

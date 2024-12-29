@@ -103,7 +103,7 @@
 
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
-	desc = "Contains seven flashbangs, seven teargas grenades, six flashes, and seven handcuffs."
+	desc = "Contains seven flashbangs, seven teargas grenades, six flashes, seven handcuffs, and two security utility vouchers." //monkestation edit
 	cost = CARGO_CRATE_VALUE * 3.5
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/flashbangs,
@@ -238,10 +238,11 @@
 	crate_name = "laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/disabler_smg
+/datum/supply_pack/security/disabler_smg //monkestation edit
 	name = "Disabler SMG Crate"
 	desc = "Contains three disabler SMGs, capable of rapidly firing weak disabler beams."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_SECURITY //monkestation edit
 	contains = list(/obj/item/gun/energy/disabler/smg = 3)
 	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma

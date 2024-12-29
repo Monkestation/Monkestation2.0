@@ -1,7 +1,7 @@
 /obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 15 //monkestation edit: 10 to 15
+	damage = 10
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
@@ -76,6 +76,8 @@
 	///Has a security ID been used to lock this in place?
 	var/locked = FALSE
 	var/obj/item/gun/energy/e_gun/dragnet/linked_dragnet
+	//lazylist for keeping track of links
+	var/list/linked_dragnets
 
 /obj/item/dragnet_beacon/attackby(obj/item/tool, mob/living/user, params)
 	if(isidcard(tool))
@@ -127,7 +129,7 @@
 	if(obj_flags & EMAGGED)
 		. += "sp_orange"
 		return
-	if(linked_dragnet != null)
+	if(LAZYLEN(linked_dragnets) != 0)
 		. += "sp_green"
 		return
 	if(anchored)
