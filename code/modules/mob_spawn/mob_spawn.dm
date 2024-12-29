@@ -252,21 +252,25 @@
 
 	return ..()
 
+//MONKESTATION EDIT - PREFERENCES
+/obj/effect/mob_spawn/ghost_role/proc/apply_preferences(mob/living/carbon/human/spawned_mob, mob/mob_possessor)
+	mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob, TRUE, FALSE, TRUE)
+	var/datum/outfit/outfit1 = new outfit()
+	outfit1.back = null
+	spawned_mob.equip_outfit_and_loadout(outfit1, mob_possessor.client.prefs)
+	qdel(outfit1)
+	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client.prefs.loadout_list))
+		if(length(item.restricted_roles))
+			continue
+		item.post_equip_item(mob_possessor.client.prefs, spawned_mob)
+	SSquirks.AssignQuirks(spawned_mob, mob_possessor.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
+//END OF EDIT
+
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	//MONKESTATION EDIT - Check if we are using preferences.
 	if(use_prefs && mob_possessor)
-		var/mob/living/carbon/human/spawned_mob1 = spawned_mob
-		mob_possessor?.client.prefs.safe_transfer_prefs_to(spawned_mob1, TRUE, FALSE, TRUE)
-		var/old_back = outfit.back
-		outfit.back = null
-		spawned_mob1.equip_outfit_and_loadout(outfit, mob_possessor.client.prefs)
-		outfit.back = old_back
-		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor?.client?.prefs?.loadout_list))
-			if(length(item.restricted_roles))
-				continue
-			item.post_equip_item(mob_possessor.client.prefs, spawned_mob1)
-		SSquirks.AssignQuirks(spawned_mob1, mob_possessor.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
+		apply_preferences(spawned_mob, mob_possessor)
 	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
