@@ -15,7 +15,11 @@ GLOBAL_LIST_INIT(loadout_belts, generate_loadout_items(/datum/loadout_item/belts
 /datum/loadout_item/belts/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.belt)
-			LAZYADD(outfit.backpack_contents, outfit.belt)
+			if(istype(outfit.back, /obj/item/storage))
+				LAZYADD(outfit.backpack_contents, outfit.belt)
+			else
+				var/obj/item/new_item = new outfit.belt()
+				new_item.loc = get_turf(equipper)
 		outfit.belt = item_path
 	else
 		outfit.belt = item_path

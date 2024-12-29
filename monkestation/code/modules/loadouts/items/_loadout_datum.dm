@@ -72,7 +72,11 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		if(istype(outfit.back, /obj/item/storage)) //dont fucking nuke our items if theres no backpack please
+			LAZYADD(outfit.backpack_contents, item_path)
+		else
+			var/obj/item/new_item = new item_path()
+			new_item.loc = get_turf(equipper)
 
 /*
  * To be called before insert_path_into_outfit()
@@ -88,7 +92,11 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/pre_equip_item(datum/outfit/outfit, datum/outfit/outfit_important_for_life, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		if(istype(outfit.back, /obj/item/storage))
+			LAZYADD(outfit.backpack_contents, item_path)
+		else
+			var/obj/item/new_item = new item_path()
+			new_item.loc = get_turf(equipper)
 
 /*
  * Called When the item is equipped on [equipper].

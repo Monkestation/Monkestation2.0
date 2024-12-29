@@ -16,7 +16,11 @@ GLOBAL_LIST_INIT(loadout_ears, generate_loadout_items(/datum/loadout_item/ears))
 /datum/loadout_item/ears/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.ears)
-			LAZYADD(outfit.backpack_contents, outfit.ears)
+			if(istype(outfit.back, /obj/item/storage))
+				LAZYADD(outfit.backpack_contents, outfit.ears)
+			else
+				var/obj/item/new_item = new outfit.ears()
+				new_item.loc = get_turf(equipper)
 		outfit.ears = item_path
 	else
 		outfit.ears = item_path

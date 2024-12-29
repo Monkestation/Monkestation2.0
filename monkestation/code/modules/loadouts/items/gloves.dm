@@ -16,7 +16,11 @@ GLOBAL_LIST_INIT(loadout_gloves, generate_loadout_items(/datum/loadout_item/glov
 /datum/loadout_item/gloves/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.gloves)
-			LAZYADD(outfit.backpack_contents, outfit.gloves)
+			if(istype(outfit.back, /obj/item/storage))
+				LAZYADD(outfit.backpack_contents, outfit.gloves)
+			else
+				var/obj/item/new_item = new outfit.gloves()
+				new_item.loc = get_turf(equipper)
 		outfit.gloves = item_path
 	else
 		outfit.gloves = item_path
