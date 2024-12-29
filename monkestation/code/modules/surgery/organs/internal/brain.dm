@@ -169,10 +169,7 @@
 	if(QDELETED(stored_dna))
 		stored_dna = new
 
-	if(victim.dna)
-		victim.dna.copy_dna(stored_dna)
-	else
-		src.stored_dna = null
+	victim.dna.copy_dna(stored_dna)
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
@@ -219,12 +216,6 @@
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	rebuilt = FALSE
-	if(src.stored_dna)
-		victim.transfer_observers_to(src)
-	else //Gibbing is usually what causes this. No dna to get from a destroyed body.
-		drop_items_to_ground(get_turf(src), TRUE)
-		Destroy()
-		qdel()
 	victim.transfer_observers_to(src)
 	Remove(victim)
 	qdel(victim)
