@@ -112,6 +112,7 @@
 	SIGNAL_HANDLER
 	if(linked_beacon)
 		visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+		playsound(src, 'sound/machines/sonar-ping.ogg', 10)
 	LAZYREMOVE(linked_beacon.linked_dragnets, src)
 	linked_beacon.update_appearance()
 	linked_beacon = null

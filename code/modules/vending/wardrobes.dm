@@ -25,6 +25,7 @@
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
+		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit

@@ -7,6 +7,7 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
+	alternate_worn_layer = UNDER_SUIT_LAYER //monkestation edit
 
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)

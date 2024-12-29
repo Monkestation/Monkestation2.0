@@ -118,8 +118,9 @@
 
 	set_anchored(!anchored)
 	if(anchored == FALSE && linked_dragnet && !(obj_flags & EMAGGED))
-		linked_dragnet.handle_beacon_disable()
 		linked_dragnet = null
+		for(var/obj/item/gun/energy/e_gun/dragnet/link in linked_dragnets)
+			link.handle_beacon_disable()
 	update_appearance()
 	tool.play_tool_sound(src, 75)
 	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
@@ -149,6 +150,14 @@
 	balloon_alert(user, "beacon unlocked")
 	update_appearance()
 	return TRUE
+
+/obj/item/dragnet_beacon/emp_act(severity)
+	. = ..()
+	linked_dragnet = null
+	for(var/obj/item/gun/energy/e_gun/dragnet/link in linked_dragnets)
+		link.handle_beacon_disable()
+	locked = FALSE
+	update_appearance()
 
 /obj/projectile/energy/trap
 	name = "energy snare"
