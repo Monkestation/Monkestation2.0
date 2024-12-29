@@ -44,6 +44,8 @@
 	icon_state = "floran_eyeballs"
 
 /obj/item/organ/internal/eyes/ethereal
+	name = "crystal eyes"
+	icon_state = "crystalline_eyeballs"
 	eye_icon_state = "etherealeyes"
 
 /obj/item/organ/internal/eyes/moth/tundra
