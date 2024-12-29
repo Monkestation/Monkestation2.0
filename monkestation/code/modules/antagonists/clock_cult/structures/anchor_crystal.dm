@@ -146,6 +146,7 @@
 	resistance_flags |= INDESTRUCTIBLE
 	atom_integrity = INFINITY
 	set_armor(/datum/armor/immune)
+	desc += "Reality around it shimmers, making it effectively impervious to damage."
 	priority_announce("Reality in [crystal_area] has been destabilized, all personnel are advised to avoid the area.", \
 					  "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 	SSthe_ark.max_clock_power += 1000
