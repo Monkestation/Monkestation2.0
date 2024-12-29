@@ -45,6 +45,7 @@
 
 /obj/item/organ/internal/eyes/ethereal
 	name = "crystal eyes"
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "crystalline_eyeballs"
 	eye_icon_state = "etherealeyes"
 
