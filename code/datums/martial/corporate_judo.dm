@@ -259,16 +259,19 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/corpjudo/proc/combo_refresh()
-	//if(timerid)
-    //    deltimer(timerid)  // Remove old timer
-    //timerid = addtimer(
-    //    CALLBACK(src, PROC_REF(reset_streak), null, FALSE),
-    //    combo_timer,
-    //    TIMER_UNIQUE | TIMER_STOPPABLE
-    //)
+	// Since combo is continuing, refresh our timer sorta like DMC.
+	if(timerid)
+		deltimer(timerid)
+	if (display_combos)
+		var/mob/living/holder_living = holder.resolve()
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+		holder_living?.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /datum/martial_art/corpjudo/proc/check_streak(mob/living/attacker, mob/living/defender)
-	if(!(streak < MIN_COMBO))
+	if(!(length(streak) < MIN_COMBO))
+		combo_refresh()
+		return FALSE
+	else
 		combo_refresh()
 		return FALSE
 
