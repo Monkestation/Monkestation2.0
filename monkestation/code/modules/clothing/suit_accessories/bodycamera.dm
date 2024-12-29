@@ -84,7 +84,7 @@
 
 ///Turns the camera on. Will be silent if 'user' is null.
 /obj/item/bodycam_upgrade/proc/turn_on(mob/living/user, obj/item/card/id/id_card)
-	if(!id_card)
+	if(!id_card && user)
 		var/obj/item/card/id/card = user.get_idcard()
 		if(card)
 			id_card = card
