@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 	// if no hands are available then put in backpack
 	if(initial(outfit_important_for_life.r_hand) && initial(outfit_important_for_life.l_hand))
 		if(!visuals_only)
-			if(ispath(outfit.back, /obj/item/storage))
+			if(ispath(outfit.back, /obj/item/storage) || (!outfit.back && ispath(equipper.back, /obj/item/storage)))
 				LAZYADD(outfit.backpack_contents, item_path)
 			else
 				var/obj/item/new_item = new item_path()
@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 		outfit.r_hand = item_path
 	else
 		if(outfit.l_hand)
-			if(ispath(outfit.back, /obj/item/storage))
+			if(ispath(outfit.back, /obj/item/storage) || (!outfit.back && ispath(equipper.back, /obj/item/storage)))
 				LAZYADD(outfit.backpack_contents, outfit.l_hand)
 			else
 				var/obj/item/new_item = new outfit.l_hand()

@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.mask)
-			if(ispath(outfit.back, /obj/item/storage))
+			if(ispath(outfit.back, /obj/item/storage) || (!outfit.back && ispath(equipper.back, /obj/item/storage)))
 				LAZYADD(outfit.backpack_contents, outfit.mask)
 			else
 				var/obj/item/new_item = new outfit.mask()

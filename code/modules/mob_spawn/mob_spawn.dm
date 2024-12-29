@@ -258,7 +258,10 @@
 	if(use_prefs && mob_possessor)
 		var/mob/living/carbon/human/spawned_mob1 = spawned_mob
 		mob_possessor?.client.prefs.safe_transfer_prefs_to(spawned_mob1, TRUE, FALSE, TRUE)
-		spawned_mob1.equip_outfit_and_loadout(outfit, mob_possessor.client.prefs) //sorry i had to bring back the duplicated survival box issue but atleast now loadout wont fucking nuke your items if you have no backpack
+		var/old_back = outfit.back
+		outfit.back = null
+		spawned_mob1.equip_outfit_and_loadout(outfit, mob_possessor.client.prefs)
+		outfit.back = old_back
 		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor?.client?.prefs?.loadout_list))
 			if(length(item.restricted_roles))
 				continue
