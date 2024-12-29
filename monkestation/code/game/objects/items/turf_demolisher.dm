@@ -19,8 +19,10 @@
 	var/devastate = TRUE
 	///How long is our recharge time between uses
 	var/recharge_time = 0
-	///How long after our first turf broken do our resonances detonate, set to 0 to disabled
-	var/resonance_delay = 0
+	///How long after our first turf broken do our resonances detonate
+	var/resonance_delay = 5 SECONDS
+	///How many tiles out from out demolished turf do we spawn resonances, set to 0 for no resonances
+	var/resonance_range = 0
 	COOLDOWN_DECLARE(recharge)
 
 /obj/item/turf_demolisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -59,11 +61,23 @@
 
 	if(recharge_time)
 		COOLDOWN_START(src, recharge, recharge_time)
-	if(resonance_delay)
-		var/list/step_turfs = list(get_step(attacked_turf, NORTH), get_step(attacked_turf, SOUTH), get_step(attacked_turf, EAST), get_step(attacked_turf, WEST))
-		for(var/turf/checked_turf in step_turfs)
-			if(check_breakble(checked_turf, silent = TRUE, ignore_cooldown = TRUE))
-				new /obj/effect/temp_visual/turf_demolisher_resonance(checked_turf, resonance_delay, checked_turf)
+	if(!resonance_range)
+		return TRUE
+
+	var/tiles_out = 0
+	var/list/checked_turfs = list(attacked_turf)
+	var/list/resonate_from = list(attacked_turf)
+	while(tiles_out < resonance_range)
+		tiles_out++
+		for(var/turf/resonated_from in resonate_from)
+			resonate_from -= resonated_from
+			var/list/step_turfs = list(get_step(resonated_from, NORTH), get_step(resonated_from, SOUTH), get_step(resonated_from, EAST), get_step(resonated_from, WEST))
+			for(var/turf/checked_turf in step_turfs)
+				if(!(checked_turf in checked_turfs) && check_breakble(checked_turf, silent = TRUE, ignore_cooldown = TRUE))
+					if(tiles_out < resonance_range)
+						resonate_from += checked_turf
+					new /obj/effect/temp_visual/turf_demolisher_resonance(checked_turf, resonance_delay, checked_turf)
+				checked_turfs += checked_turf
 	return TRUE
 
 /obj/effect/temp_visual/turf_demolisher_resonance
@@ -114,6 +128,7 @@
 	break_time = 5 SECONDS
 	recharge_time = 5 SECONDS
 	resonance_delay = 5 SECONDS
+	resonance_range = 2
 
 /obj/item/turf_demolisher/reebe/check_breakble(turf/attacked_turf, mob/living/user, silent, ignore_cooldown)
 	. = ..()

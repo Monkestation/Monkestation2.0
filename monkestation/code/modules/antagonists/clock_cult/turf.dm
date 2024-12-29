@@ -166,7 +166,7 @@
 				if(!item_tool.tool_start_check(user, amount=0))
 					return
 				to_chat(user, span_notice("You start to weld the support beam loose."))
-				if(next_decon_state(item_tool, user, d_state, INNER_PANEL_REMOVED, "You weld the support beam loose.", 4 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, INNER_PANEL_REMOVED, "You weld the support beam loose.", 3 SECONDS))
 					return TRUE
 			if(item_tool.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, span_notice("You start to re-attach the main gears."))
@@ -183,7 +183,7 @@
 				if(!item_tool.tool_start_check(user, amount=0))
 					return
 				to_chat(user, span_notice("You start to weld the support beam back into place."))
-				if(next_decon_state(item_tool, user, d_state, GEARS_UNBOLTED, "You weld the support beam back into place.", 4 SECONDS))
+				if(next_decon_state(item_tool, user, d_state, GEARS_UNBOLTED, "You weld the support beam back into place.", 3 SECONDS))
 					return TRUE
 
 		if(GEARS_UNWOUND)
@@ -199,7 +199,7 @@
 	return FALSE
 
 //do the deconstruction stuff, this really should be a proc on Rwalls as well
-/turf/closed/wall/clockwork/proc/next_decon_state(obj/item/used_tool, mob/user, current_state, set_state, sent_message, use_time = 3 SECONDS)
+/turf/closed/wall/clockwork/proc/next_decon_state(obj/item/used_tool, mob/user, current_state, set_state, sent_message, use_time = 2 SECONDS)
 	if(on_reebe(src))
 		use_time = round(use_time * 0.2, 0.1) //it takes much less time to deconstruct walls on reebe
 

@@ -10,6 +10,7 @@
 	icon_dead = "drone_clock_dead"
 	health = 35
 	maxHealth = 35
+	speed = 1
 	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET, FACTION_CLOCK)
 	default_storage = /obj/item/storage/belt/utility/clock/drone
 	visualAppearance = CLOCKDRONE
@@ -63,7 +64,7 @@
 	multiplicative_slowdown = 0.6
 
 /datum/movespeed_modifier/cogscarab_off_reebe
-	multiplicative_slowdown = 0.8
+	multiplicative_slowdown = 0.7
 
 //====Shell====
 
