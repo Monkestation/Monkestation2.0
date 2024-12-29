@@ -19,7 +19,7 @@
 	can_rotate = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/anchoring_crystal
-	max_integrity = 300 //pretty hard to break
+	max_integrity = 250 //pretty hard to break
 	///how many hits this can take before taking structure damage, not using the component as its only for items/mobs
 	var/shields = 3
 	///what charge state is this crystal
