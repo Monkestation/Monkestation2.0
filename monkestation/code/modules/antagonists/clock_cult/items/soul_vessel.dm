@@ -45,6 +45,10 @@
 			balloon_alert(user, "The Ark cannot support any more cogscarabs.")
 			return
 
+		if(!SSthe_ark.marked_areas[get_area(src)] && !on_reebe(src))
+			to_chat(user, span_notice("Soul vessels can only be converted in marked areas or on reebe."))
+			return
+
 		balloon_alert(user, "You start converting the vessel into a cogscarab shell.")
 		if(do_after(user, 30 SECONDS, src))
 			var/mob/living/basic/drone/cogscarab/new_scarab = new(get_turf(src))

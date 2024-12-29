@@ -101,8 +101,8 @@
 		to_chat(user, span_notice("The Ark cannot support any more cogscarabs."))
 		return FALSE
 
-	if(!SSthe_ark.marked_areas[get_area(src)])
-		to_chat(user, span_notice("Cogscarabs can only spawn in marked areas."))
+	if(!SSthe_ark.marked_areas[get_area(src)] && !on_reebe(src))
+		to_chat(user, span_notice("Cogscarabs can only spawn in marked areas or on reebe."))
 		return FALSE
 	return TRUE
 
