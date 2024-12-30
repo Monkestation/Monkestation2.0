@@ -42,27 +42,37 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 			SSthe_ark.reebe_areas[reebe_area] = 1
 	return TRUE
 
-///Send a pod full of helpful items to the station's bridge
+///Send a pod full of helpful items to the station's bridge, you can give items number values to make that many of them be spawned
 /proc/send_station_support_package(list/additional_items, sent_message = "We are sending a support package to the bridge to help deal with the threats to the station.")
 	var/turf/bridge_turf = pick(GLOB.areas_by_type[/area/station/command/bridge].get_turfs_from_all_zlevels())
 	if(!bridge_turf)
 		return
 
 	var/list/spawned_list = list(
-		/obj/item/storage/medkit/advanced,
-		/obj/item/storage/medkit/brute,
-		/obj/item/storage/medkit/fire,
-		/obj/item/storage/medkit/regular,
-		/obj/item/gun/medbeam,
-		/obj/item/storage/part_replacer/cargo,
-		/obj/item/storage/box/recharger_parts,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/storage/medkit/brute = 1,
+		/obj/item/storage/medkit/fire = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/gun/medbeam = 1,
+		/obj/item/storage/part_replacer/cargo = 1,
+		/obj/item/storage/box/recharger_parts = 1,
+		/obj/item/storage/toolbox/mechanical = 3,
 	)
 
 	if(additional_items)
 		spawned_list += additional_items
+	fill_with_ones(spawned_list)
+	for(var/spawned_object in spawned_list)
+		var/value = spawned_list[spawned_object]
+		if(value < 0)
+			stack_trace("a spawned_object([spawned_object]) in send_station_support_package() has a value < 0.")
+		while(value > 0)
+			value--
+			spawned_list += new spawned_object()
+		spawned_list -= spawned_object
 
 	priority_announce(sent_message, has_important_message = TRUE)
-	podspawn(list("target" = bridge_turf, "spawn" = spawned_list))
+	podspawn(list("target" = bridge_turf, "style" = STYLE_CENTCOM, "spawn" = spawned_list, "bluespace" = FALSE, "stay_after_drop" = TRUE))
 
 /obj/item/storage/box/recharger_parts
 	name = "Recharger Parts"
