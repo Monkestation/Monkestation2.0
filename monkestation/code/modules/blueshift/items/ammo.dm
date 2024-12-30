@@ -614,6 +614,7 @@
 	name = ".310 armor-piercing bullet"
 	damage = 50
 	armour_penetration = 50
+	wound_bonus = -20
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
