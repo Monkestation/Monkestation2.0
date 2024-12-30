@@ -15,13 +15,14 @@
 	worn_icon_state = "judo"
 	inhand_icon_state = "judo"
 
+	custom_premium_price = PAYCHECK_COMMAND * 3
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/martial_art/corpjudo/style
 
 /obj/item/storage/belt/security/blueshield/corpjudo/PopulateContents()
-    // Can fill with new /obj/item to fill with items
-    return
+	// Can fill with new /obj/item to fill with items
+	return
 
 /obj/item/storage/belt/security/blueshield/corpjudo/Initialize(mapload)
 	. = ..()

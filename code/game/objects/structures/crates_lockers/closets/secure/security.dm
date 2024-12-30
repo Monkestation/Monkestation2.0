@@ -68,6 +68,7 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: paradise port
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
