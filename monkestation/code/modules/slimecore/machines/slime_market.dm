@@ -46,7 +46,7 @@
 	if(HAS_TRAIT(user, TRAIT_CANT_ATTACK) || !can_interact(user))
 		return ..() // Little wasteful to call HAS_TRAIT twice here and parent but the parent will apply damage if we call it
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
-		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
+		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."))
 		update_appearance()
 		return TRUE
 	if(default_unfasten_wrench(user, item) || default_deconstruction_crowbar(item))
