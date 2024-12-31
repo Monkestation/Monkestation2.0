@@ -78,9 +78,11 @@
 	. = ..()
 	if(.)
 		return
-	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
-	var/scatter_turf = get_turf(hit_atom)
+	var/turf/scatter_turf = get_turf(hit_atom)
+	if(!hit_atom.CanPass(source, get_dir(source, hit_atom))) //Object is too dense to fall apart on
+		scatter_turf = get_turf(source)
 
+	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	for(var/obj/item/scattered_item as anything in contents)
 		ItemRemovedFromPlate(scattered_item)
 		scattered_item.forceMove(scatter_turf)
