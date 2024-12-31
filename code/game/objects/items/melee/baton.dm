@@ -423,7 +423,7 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 85 //monke edit
+	stamina_damage = 100 //monke edit
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 1.5 SECONDS //monke edit
