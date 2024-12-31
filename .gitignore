@@ -246,4 +246,5 @@ config/dbconfig.txt
 tgstation.json
 rust_g64.dll
 
+!/libmemorystats.so
 !/libaneri.so

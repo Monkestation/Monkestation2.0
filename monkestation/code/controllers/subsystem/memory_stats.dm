@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(memory_stats)
 	name = "Memory Statistics"
 	wait = 5 MINUTES
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_OK_TO_FAIL_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/datum/regex/parse_regex
 	var/list/stats
