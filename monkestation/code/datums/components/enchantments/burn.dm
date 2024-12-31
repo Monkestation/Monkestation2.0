@@ -16,6 +16,10 @@
 /datum/enchantment/burn/proc/burn_target(obj/item/source, atom/movable/target, mob/living/user)
 	if(!isliving(target))
 		return
+	var/datum/component/enchanted/comp = get_component_from_parent(source)
+	if(!comp)
+		return
+
 	var/mob/living/living_target = target
-	living_target.adjust_fire_stacks(components_by_parent[source][src].level)
+	living_target.adjust_fire_stacks(comp.level)
 	living_target.ignite_mob()

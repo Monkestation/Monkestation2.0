@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 /datum/component/enchanted/RegisterWithParent()
 	var/list/component_list = used_enchantment.components_by_parent[parent]
 	if(!component_list)
-		used_enchantment.components_by_parent[parent] = list(used_enchantment = src)
+		used_enchantment.components_by_parent[parent] = list(text_ref(used_enchantment) = src) //used_enchantment is not being taken as a ref?
 	else
 		component_list[used_enchantment] = src
 	used_enchantment.apply_effect(parent, level)
@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	var/max_level = 1
 	///Typecache of items we are allowed on, generation handled in get_allowed_on
 	var/list/allowed_on
-	///A recursive assoc list keyed as: [parent] = list(enchant_component.used_enchantment = enchant_component)
+	///A recursive assoc list keyed as: [parent] = list(text_ref(enchant_component.used_enchantment) = enchant_component)
 	var/static/list/list/datum/component/enchanted/components_by_parent = list()
 
 /datum/enchantment/New()
@@ -99,6 +99,13 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	for(var/entry in overriden_types)
 		allowed_on_base[entry] = overriden_types[entry]
 	return allowed_on_base
+
+/datum/enchantment/proc/get_component_from_parent(obj/item/parent) as /datum/component/enchanted
+	RETURN_TYPE(/datum/component/enchanted)
+	var/list/parent_list = components_by_parent[parent]
+	if(!parent_list)
+		return FALSE
+	return parent_list[text_ref(src)]
 
 /datum/enchantment/proc/can_apply_to(obj/item/checked)
 	return allowed_on[checked.type]

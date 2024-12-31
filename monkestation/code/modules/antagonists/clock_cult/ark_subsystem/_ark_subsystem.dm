@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(the_ark)
 	SEND_SIGNAL(src, COMSIG_ANCHORING_CRYSTAL_CHARGED, charged_crystal)
 	var/datum/scripture/create_structure/anchoring_crystal/crystal_script
 	addtimer(CALLBACK(src, PROC_REF(clear_shuttle_interference), charged_crystal), \
-			(ANCHORING_CRYSTAL_COOLDOWN - (ANCHORING_CRYSTAL_CHARGE_DURATION SECONDS)) + initial(crystal_script.invocation_time))
+			(ANCHORING_CRYSTAL_COOLDOWN - ANCHORING_CRYSTAL_CHARGE_DURATION) + initial(crystal_script.invocation_time))
 
 	/*if(1) //add 2 more max servants and increase replica fabricator build speed
 		GLOB.main_clock_cult.max_human_servants += SERVANT_CAPACITY_TO_GIVE*/

@@ -85,10 +85,10 @@
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/Initialize(mapload)
 	. = ..()
 	SSthe_ark.cogscarabs += src
+	AddElement(/datum/element/clockwork_description, "Cogscarabs can only gain a soul in marked areas.")
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/Destroy()
 	SSthe_ark.cogscarabs -= src
-	AddElement(/datum/element/clockwork_description, "Cogscarabs can only gain a soul in marked areas.")
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)

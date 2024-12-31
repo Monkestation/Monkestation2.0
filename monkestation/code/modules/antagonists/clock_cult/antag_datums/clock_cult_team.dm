@@ -154,7 +154,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 		names += SSthe_ark.valid_crystal_areas[valid_area]
 
 	explanation_text = "Summon [ANCHORING_CRYSTALS_TO_SUMMON] anchoring crystal[plural ? "s" : ""] on the station and protect [plural ? "them" : "it"] for \
-						[DisplayTimeText(ANCHORING_CRYSTAL_CHARGE_DURATION SECONDS)]  to allow the ark to open. \
+						[DisplayTimeText(ANCHORING_CRYSTAL_CHARGE_DURATION)]  to allow the ark to open. \
 						Crystals after the first one must be summoned in [english_list(names)]. Up to 2 additional crystals can be created for extra power."
 
 /datum/objective/anchoring_crystals/check_completion()

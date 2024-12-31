@@ -12,7 +12,10 @@
 	user.Beam(target, icon_state = "lightning[rand(1,12)]", time = 2, maxdistance = 32)
 	if(!iscarbon(target))
 		return
+	var/datum/component/enchanted/comp = get_component_from_parent(source)
+	if(!comp)
+		return
 
 	var/mob/living/carbon/carbon_target = target
-	if(carbon_target.electrocute_act(components_by_parent[source][src].level * 3, user, 1, SHOCK_NOSTUN)) //need to make this ark, also this seems to work on any living mob
+	if(carbon_target.electrocute_act(comp.level * 3, user, 1, SHOCK_NOSTUN)) //need to make this ark, also this seems to work on any living mob
 		carbon_target.visible_message(span_danger("[user] electrocutes [target]!"), span_userdanger("[user] electrocutes you!"))

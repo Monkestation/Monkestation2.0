@@ -5,6 +5,9 @@
 	if(!length(GLOB.enchantment_datums_by_type))
 		generate_enchantment_datums()
 
+	if(!islist(valid_enchant_types))
+		valid_enchant_types = list(valid_enchant_types)
+
 	for(var/datum/enchantment/enchant as anything in valid_enchant_types)
 		valid_enchant_types -= enchant
 		enchant = GLOB.enchantment_datums_by_type[enchant]

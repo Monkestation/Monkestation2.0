@@ -30,10 +30,10 @@
 #define REEBE_MAP_PATH "_maps/~monkestation/templates/reebe.dmm"
 
 ///how long in seconds do anchoring crystals take to charge after being placed, 6 minutes
-#define ANCHORING_CRYSTAL_CHARGE_DURATION 360
+#define ANCHORING_CRYSTAL_CHARGE_DURATION 360 SECONDS
 
 ///how long between uses of the anchoring crystal scripture, also how long the hostile environment lasts if the crystal is not destroyed
-#define ANCHORING_CRYSTAL_COOLDOWN (ANCHORING_CRYSTAL_CHARGE_DURATION SECONDS) + 1 MINUTE
+#define ANCHORING_CRYSTAL_COOLDOWN ANCHORING_CRYSTAL_CHARGE_DURATION + 1 MINUTE
 
 ///up to how many tiles away will the ark stop certain things from breaking turfs
 #define ARK_TURF_DESTRUCTION_BLOCK_RANGE 10

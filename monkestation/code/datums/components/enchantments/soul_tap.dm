@@ -11,6 +11,9 @@
 /datum/enchantment/soul_tap/proc/tap_soul(obj/item/source, mob/living/target, mob/living/user)
 	if(!istype(target) || target.stat != CONSCIOUS)
 		return
-	var/health_back = CEILING(components_by_parent[source][src].level * source.force * 0.1, 1)
+	var/datum/component/enchanted/comp = get_component_from_parent(source)
+	if(!comp)
+		return
+	var/health_back = CEILING(comp.level * source.force * 0.1, 1)
 	user.heal_overall_damage(health_back, health_back)
 	new /obj/effect/temp_visual/heal(get_turf(user), "#eeba6b")

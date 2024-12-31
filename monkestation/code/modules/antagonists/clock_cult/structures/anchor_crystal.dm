@@ -110,7 +110,7 @@
 		SSthe_ark.clock_power = min(SSthe_ark.clock_power + (10 * seconds_per_tick), SSthe_ark.max_clock_power)
 		return
 
-	charging_for = min(charging_for + seconds_per_tick, ANCHORING_CRYSTAL_CHARGE_DURATION)
+	charging_for = min(charging_for + (seconds_per_tick SECONDS), ANCHORING_CRYSTAL_CHARGE_DURATION)
 
 	if(shields < initial(shields) && COOLDOWN_FINISHED(src, recently_hit_cd))
 		playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
@@ -122,7 +122,7 @@
 		finish_charging()
 		return
 
-	if(charge_state < CRYSTAL_LOCATION_ANNOUNCED && charging_for >= 60) //announce after one minute
+	if(charge_state < CRYSTAL_LOCATION_ANNOUNCED && charging_for >= 30 SECONDS) //announce after thirty seconds
 		charge_state = CRYSTAL_LOCATION_ANNOUNCED
 		priority_announce("Reality warping object located in [crystal_area].", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
