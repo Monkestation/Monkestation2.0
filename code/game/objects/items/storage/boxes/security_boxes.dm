@@ -12,7 +12,7 @@
 
 //MONKESTATION EDIT START
 /obj/item/storage/box/sec_smokebomb
-	name = "box of smoke bomb grenades (WARNING)"
+	name = "box of smoke grenades (WARNING)"
 	desc = "The rest of the warning label is torn off..."
 	icon_state = "secbox"
 	illustration = "grenade"

@@ -98,7 +98,7 @@
 		)
 
 /datum/voucher_set/security/primary/advanced_taser
-	name = "Advanced Taser"
+	name = "Hybrid Taser"
 	description = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "advtaser"
@@ -181,7 +181,27 @@
 		/obj/item/storage/box/flashbangs,
 		)
 
-/datum/voucher_set/security/utility/webbing
+/datum/voucher_set/security/utility/smokebombs
+	name = "Box of Smoke Grenades"
+	description = "<B>WARNING: %$#SYTEM_ERROR#$#.</B>"
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "smokered"
+	set_items = list(
+		/obj/item/storage/box/sec_smokebomb,
+		)
+
+/datum/voucher_set/security/utility/barrier
+	name = "Barrier Grenades"
+	description = "Two barrier grenades."
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "wallbang"
+	set_items = list(
+		/obj/item/grenade/barrier,
+		/obj/item/grenade/barrier,
+		)
+
+/datum/voucher_set/security/utility/barrier_grenades
+
 	name = "Security Webbing"
 	description = "Unique and versatile chest rig, can hold security gear."
 	icon = 'icons/obj/clothing/belts.dmi'

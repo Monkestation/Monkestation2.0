@@ -201,7 +201,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 
+
 	if(!isliving(pointed_at))
+		return
+
+	if(pointing_mob == pointed_at)
 		return
 
 	halt()
@@ -246,6 +250,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 
 	if(!isliving(pointed_at))
+		return
+
+	if(pointing_mob == pointed_at)
 		return
 
 	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)

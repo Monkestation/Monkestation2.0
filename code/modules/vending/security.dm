@@ -25,6 +25,7 @@
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/storage/fancy/donut_box = 4, //monkestation edit 2 to 4
+		/obj/item/melee/flyswatter = 1, //monkestation edit: everytime they play a round, there are two ahelp tickets about them
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
@@ -42,6 +43,7 @@
 		/obj/item/modular_computer/laptop/preset/security = 3, //monkestation edit
 		/obj/item/storage/box/pinpointer_pairs = 2, //monkestation edit
 		/obj/item/dragnet_beacon = 3, //monkestation edit
+		/obj/item/implanter/mindshield = 2, //monkestation edit
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW
