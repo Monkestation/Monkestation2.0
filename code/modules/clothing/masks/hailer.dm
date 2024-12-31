@@ -204,9 +204,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!isliving(pointed_at))
 		return
 
-	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
+	halt()
 	pointed_at.do_alert_animation()
-	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
 
 /obj/item/clothing/mask/gas/sechailer/dropped(mob/user)
 	. = ..()
@@ -215,8 +214,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 //MONKESTATION EDIT STOP
 
 /obj/item/clothing/mask/whistle
-	name = "police whistle"
-	desc = "A police whistle for when you need to make sure the criminals hear you."
+	name = "whistle" //monkestation edit
+	desc = "A whistle for when you need to make sure the criminals hear you." //monkestation edit
 	icon_state = "whistle"
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK

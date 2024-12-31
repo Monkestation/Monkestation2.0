@@ -34,6 +34,19 @@
 	light_outer_range = 3
 	anchored = TRUE
 
+/obj/item/restraints/handcuffs/holographic/dragnet
+	breakouttime = 15 SECONDS
+	trashtype = /obj/item/restraints/handcuffs/holographic/dragnet/used
+
+/obj/item/restraints/handcuffs/holographic/dragnet/used
+	desc = "A holographic projection of handcuffs, the projection seem rather weak."
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/holographic/dragnet/used/dropped(mob/user)
+	user.visible_message(span_danger("[user]'s [name] dissapears!"), \
+							span_userdanger("[user]'s [name] dissapears!"))
+	. = ..()
+
 /obj/effect/nettingportal/Initialize(mapload, destination_beacon)
 	. = ..()
 	var/obj/item/dragnet_beacon/teletarget = destination_beacon
@@ -44,7 +57,7 @@
 		for(var/mob/living/carbon/living_carbon in get_turf(src))
 			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
 				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(living_carbon))
+				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/dragnet/used(living_carbon))
 				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
 			do_teleport(living_mob, get_turf(teletarget), 1, channel = TELEPORT_CHANNEL_BLUESPACE) //Teleport what's in the tile to the beacon
@@ -52,7 +65,7 @@
 		for(var/mob/living/carbon/living_carbon in get_turf(src))
 			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
 				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(living_carbon))
+				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/dragnet/used(living_carbon))
 				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
 			do_teleport(living_mob, get_turf(living_mob), 15, channel = TELEPORT_CHANNEL_BLUESPACE) //Otherwise it just warps you off somewhere.

@@ -9,15 +9,17 @@
 	req_access = list(ACCESS_SECURITY)
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
-		/obj/item/restraints/handcuffs/cable/zipties = 10,
-		/obj/item/grenade/flashbang = 4,
-		/obj/item/assembly/flash/handheld = 5,
+		/obj/item/restraints/handcuffs/cable/zipties = 16, //monkestation edit 10 to 16
+		/obj/item/grenade/flashbang = 7, //monkestation edit: 4 to 7
+		/obj/item/grenade/smokebomb/security = 7, //monkestation edit
+		/obj/item/assembly/flash/handheld = 6, //monkestation edit: 5 to 6
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
-		/obj/item/ammo_box/magazine/m35/rubber = 15, //monkestation edit: Paco sec
+		/obj/item/ammo_box/magazine/m35/rubber = 14, //monkestation edit: Paco sec
 		/obj/item/clothing/mask/gas/sechailer = 6, ////monkestation edit
+		/obj/item/clothing/mask/whistle = 3, //monkestation edit
 		/obj/item/bodycam_upgrade = 10, //monkestation edit: Security Liability Act
 	)
 	contraband = list(
@@ -36,6 +38,7 @@
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/citationinator = 3, // monkestation edit: security assistants
+		/obj/item/holosign_creator/security = 2, //monkestation edit
 		/obj/item/modular_computer/laptop/preset/security = 3, //monkestation edit
 		/obj/item/storage/box/pinpointer_pairs = 2, //monkestation edit
 		/obj/item/dragnet_beacon = 3, //monkestation edit

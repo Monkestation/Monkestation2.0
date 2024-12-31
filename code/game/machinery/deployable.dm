@@ -190,7 +190,19 @@
 			balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
 		else
 			balloon_alert(user, "no access!")
-	return ..()
+	else
+		return ..()
+
+/obj/structure/barricade/security/wrench_act(mob/living/user, obj/item/tool, params)
+	if(locked)
+		balloon_alert(user, "must be unlocked first!")
+		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
+		return
+	set_anchored(!anchored)
+	tool.play_tool_sound(src)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/barricade/security/emp_act(severity)
 	toggle_lock()

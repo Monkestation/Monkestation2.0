@@ -103,10 +103,11 @@
 
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
-	desc = "Contains seven flashbangs, seven teargas grenades, six flashes, seven handcuffs, and two security utility vouchers." //monkestation edit
+	desc = "Contains seven flashbangs, seven smoke bombs, seven teargas grenades, six flashes, seven handcuffs, and two security utility vouchers." //monkestation edit
 	cost = CARGO_CRATE_VALUE * 3.5
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/flashbangs,
+					/obj/item/storage/box/sec_smokebomb, //monkestation edit
 					/obj/item/storage/box/teargas,
 					/obj/item/storage/box/flashes,
 					/obj/item/storage/box/handcuffs,
