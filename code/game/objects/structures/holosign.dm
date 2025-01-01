@@ -21,7 +21,11 @@
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
-	create_vis_overlay()
+	//create_vis_overlay()
+	if(use_vis_overlay)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		var/turf/our_turf = get_turf(src)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 	if(source_projector)
 		projector = source_projector
 		LAZYADD(projector.signs, src)
@@ -55,13 +59,12 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/holosign/proc/create_vis_overlay()
-	var/turf/our_turf = get_turf(src)
-	if(use_vis_overlay)
-		alpha = 0
-		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
-
+// /obj/structure/holosign/proc/create_vis_overlay() no idea why this doesn't work
+//	var/turf/our_turf = get_turf(src)
+// 	if(use_vis_overlay)
+//		alpha = 0
+// 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+// 		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
@@ -119,7 +122,10 @@
 			icon_state = base_icon_state
 		else
 			icon_state = pass_icon_state
-	create_vis_overlay()
+	if(use_vis_overlay)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		var/turf/our_turf = get_turf(src)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 	. = ..()
 
 /obj/structure/holosign/barrier/proc/open(user)
