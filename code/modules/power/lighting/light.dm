@@ -395,11 +395,12 @@
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
+
 /obj/machinery/light/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	var/mob/living/livingslammed = throwingdatum.thrownthing
-	if(livingslammed && (HAS_TRAIT_FROM(livingslammed, VACPACK_THROW, "vacpack"))) // For now. If gentle doesnt cause issue with lights just remove these checks and switch.
+	if(isliving(throwingdatum.thrownthing) && (HAS_TRAIT_FROM(throwingdatum.thrownthing, VACPACK_THROW, "vacpack"))) // For now. If gentle doesnt cause issue with lights just remove these checks and switch.
 		return
 	..()
+
 /obj/machinery/light/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		qdel(src)
