@@ -200,8 +200,7 @@
 		/obj/item/grenade/barrier,
 		)
 
-/datum/voucher_set/security/utility/barrier_grenades
-
+/datum/voucher_set/security/utility/webbing
 	name = "Security Webbing"
 	description = "Unique and versatile chest rig, can hold security gear."
 	icon = 'icons/obj/clothing/belts.dmi'
