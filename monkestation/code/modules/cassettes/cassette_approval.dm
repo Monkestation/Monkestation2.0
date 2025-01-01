@@ -85,13 +85,14 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		cassette_data.Cut()
 		cassette_data = null
 	if(submitted_tape.loc == null)
-		QDEL_NULL(submitted_tape)
+		QDEL_NULL(submitted_tape) // Remove any tapes in null_space. Denied or Pending condition.
 	submitted_ckey = null
 	submitter = null
 	action_taken = null
 	verdict = null
 	if(id && (id in GLOB.cassette_reviews))
 		GLOB.cassette_reviews -= id // Remove the key
+	id = null
 
 /datum/cassette_review/ui_state(mob/user)
 	return GLOB.always_state
