@@ -143,7 +143,7 @@
 	proj_pass_rate = 20
 	armor_type = /datum/armor/barricade_security
 
-	var/deploy_time = 40
+	var/deploy_time = 5 SECONDS //monkestation edit
 	var/deploy_message = TRUE
 	//monkestation edit: var for setting density
 	var/locked = FALSE
