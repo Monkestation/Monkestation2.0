@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(memory_stats)
 	var/list/stats
 
 /datum/controller/subsystem/memory_stats/Initialize()
+	if(world.system_type != MS_WINDOWS) // whatever
+		flags |= SS_NO_FIRE
+		return SS_INIT_NO_NEED
 	parse_regex = new(@"(?m)^\s*(?P<key>[^:]+):\s*(?P<size>[\d.]+)\s*(?P<unit>(?:B|KB|MB|GB))\s*\((?P<count>[,\d]+)\)$")
 	if(!get_memory_stats()) // populate stats
 		return SS_INIT_FAILURE
@@ -24,6 +27,8 @@ SUBSYSTEM_DEF(memory_stats)
 		aneri_file_write(json_encode(stats), "[GLOB.log_directory]/profiler/memstat-[timestamp].json")
 
 /datum/controller/subsystem/memory_stats/proc/get_memory_stats()
+	if(world.system_type != MS_WINDOWS) // whatever
+		return null
 	. = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
 	if(.)
 		stats = parse_memory_stats(.)
