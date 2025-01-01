@@ -351,6 +351,12 @@
 			SPECIES_PERK_NAME = "Surplus Parts",
 			SPECIES_PERK_DESC = "IPCs take 20% more brute and burn due to brittle parts."
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
+			SPECIES_PERK_DESC = "IPCs limbs are not secured well, and as such they are easily dismembered.",
+		),
 		)
 
 	return to_add
