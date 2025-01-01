@@ -28,7 +28,7 @@
 	priority_announce(
 		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
 		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
-		sound = 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg',
+		sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg',
 		encode_title = FALSE, // Gibberish() already sanitizes
 		color_override = "purple"
 	)
@@ -123,7 +123,7 @@
 /datum/status_effect/wonderland_district
 	id = "wonderland_district"
 	alert_type = /atom/movable/screen/alert/status_effect/wonderland_district
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
 	var/list/datum/action/registered_actions
 	/// Typecache of spells to NOT trigger the effect on.
