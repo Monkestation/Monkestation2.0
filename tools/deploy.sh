@@ -50,5 +50,5 @@ if [ "$(uname -o)" = "Msys" ]; then
 	cp ./*.dll $1/
 fi
 
-# TODO: REMOVE BEFORE FULL MERGE!!! (this is so CI works)
 cp ./libaneri.so $1/
+cp ./libmemorystats.so $1/
