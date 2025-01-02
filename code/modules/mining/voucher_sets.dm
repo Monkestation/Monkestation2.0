@@ -264,20 +264,32 @@
 		/datum/computer_file/program/secureye,
 	)
 
+/// Security Assistant Kits
+/obj/item/storage/box/security_kit
+	name = "boxed security kit"
+	desc = "A specially marked box."
+	icon_state = "secbox"
+	illustration = "ntlogo"
+
 /datum/voucher_set/security/assistant/nightwatch
 	name = "Nightwatch Kit"
 	description = "All the clothing you will need to stay warm patrolling the darker out of sight areas of the station."
 	icon = 'icons/obj/clothing/suits/wintercoat.dmi'
 	icon_state = "coatsecurity"
 	set_items = list(
-		/obj/item/clothing/head/soft/sec,
-		/obj/item/clothing/suit/hooded/wintercoat/security,
-		/obj/item/flashlight/seclite,
-		/obj/item/storage/fancy/donut_box,
-		/obj/item/reagent_containers/cup/glass/coffee,
-		/obj/item/radio/off,
-		/obj/item/crowbar/red,
-		)
+		/obj/item/storage/box/security_kit/nightwatch,
+	)
+
+/obj/item/storage/box/security_kit/nightwatch/PopulateContents()
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/mask/russian_balaclava(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/radio/off(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/storage/fancy/donut_box(src)
+	new /obj/item/reagent_containers/cup/glass/coffee(src)
 
 /datum/voucher_set/security/assistant/brig
 	name = "Brig Assistant Kit"
@@ -285,12 +297,15 @@
 	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "pkplush"
 	set_items = list(
-		/obj/item/cargo_teleporter,
-		/obj/item/clipboard,
-		/obj/item/storage/crayons,
-		/obj/item/storage/box/hug/plushes,
-		/obj/item/modular_computer/laptop/preset/security,
+		/obj/item/storage/box/security_kit/brig_assistant,
 		)
+
+/obj/item/storage/box/security_kit/brig_assistant/PopulateContents()
+	new /obj/item/cargo_teleporter(src)
+	new /obj/item/clipboard(src)
+	new /obj/item/storage/crayons(src)
+	new /obj/item/storage/box/hug/plushes(src)
+	new /obj/item/modular_computer/laptop/preset/security(src)
 
 /datum/voucher_set/security/assistant/detective
 	name = "Forensics Assistant Kit"
@@ -298,16 +313,19 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tape_red"
 	set_items = list(
-		/obj/item/camera,
-		/obj/item/taperecorder,
-		/obj/item/tape/random,
-		/obj/item/folder/red,
-		/obj/item/storage/box/evidence,
-		/obj/item/clothing/gloves/latex,
-		/obj/item/binoculars,
-		/obj/item/storage/fancy/cigarettes/cigpack_candy,
-		/obj/item/lighter/greyscale,
+		/obj/item/storage/box/security_kit/detective,
 		)
+
+/obj/item/storage/box/security_kit/detective/PopulateContents()
+	new /obj/item/camera(src)
+	new /obj/item/taperecorder(src)
+	new /obj/item/tape/random(src)
+	new /obj/item/folder/red(src)
+	new /obj/item/storage/box/evidence(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/binoculars(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_candy(src)
+	new /obj/item/lighter/greyscale(src)
 
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
@@ -315,8 +333,12 @@
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	icon_state = "helmet"
 	set_items = list(
-		/obj/item/storage/box/pinpointer_pairs,
-		/obj/item/clothing/head/helmet/surplus,
-		/obj/item/clothing/suit/armor/surplus,
-		/obj/item/book/manual/wiki/security_space_law,
+		/obj/item/storage/box/security_kit/buddycop,
 		)
+
+/obj/item/storage/box/security_kit/buddycop/PopulateContents()
+	new /obj/item/clothing/head/helmet/surplus(src)
+	new /obj/item/clothing/suit/armor/surplus(src)
+	new /obj/item/gun/energy/taser/old(src)
+	new /obj/item/storage/box/pinpointer_pairs(src)
+	new /obj/item/book/manual/wiki/security_space_law(src)

@@ -152,9 +152,9 @@
 
 /datum/armor/barricade_security
 	melee = 10
-	bullet = 50
-	laser = 50
-	energy = 50
+	bullet = 60 //monkestation edit: 50 to 60
+	laser = 60 //monkestation edit: 50 to 60
+	energy = 60 //monkestation edit: 50 to 60
 	bomb = 10
 	fire = 10
 

@@ -233,6 +233,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	//user.audible_message("<font color='red' size='5'><b>HALT!</b></font>") monkestation removal
+	user.audible_message("[user] signals on their whistle!") //monkestation edit
 	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
 
 /datum/action/item_action/halt
@@ -254,7 +255,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 	if(pointing_mob == pointed_at)
 		return
-
+	pointing_mob.audible_message("[pointing_mob] signals on their whistle!") //monkestation edit
 	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
 	pointed_at.do_alert_animation()
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
