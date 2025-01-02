@@ -15,7 +15,7 @@
 	worn_icon_state = "judo"
 	inhand_icon_state = "judo"
 
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_premium_price = PAYCHECK_COMMAND * 2
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/martial_art/corpjudo/style
@@ -98,7 +98,7 @@
 	id = MARTIALART_JUDO
 	display_combos = TRUE
 	max_streak_length = 12
-	combo_timer = 3 SECONDS
+	combo_timer = 2.5  SECONDS
 
 	var/list/combo_moves = list(
 		"DG" = /datum/martial_art/corpjudo/proc/discombobulate,
@@ -224,6 +224,10 @@
 /datum/martial_art/corpjudo/harm_act(mob/living/attacker, mob/living/defender)
 	if(attacker == defender || !can_use(attacker))
 		return MARTIAL_ATTACK_INVALID
+	add_to_streak("H", defender)
+
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
 
 	var/picked_hit_type = pick("chops", "slices", "strikes")
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
@@ -232,10 +236,7 @@
 	defender.visible_message("<span class='danger'>[attacker] [picked_hit_type] [defender]!</span>", \
 					"<span class='userdanger'>[attacker] [picked_hit_type] you!</span>")
 	log_combat(attacker, defender, "Melee attacked with [src]")
-	add_to_streak("H", defender)
-
-	if(check_streak(attacker, defender) == (MARTIAL_ATTACK_INVALID || MARTIAL_ATTACK_SUCCESS))
-		return MARTIAL_ATTACK_SUCCESS
+	return MARTIAL_ATTACK_SUCCESS // If we applied our buffed damage don't allow normal punches.
 
 /datum/martial_art/corpjudo/disarm_act(mob/living/attacker, mob/living/defender)
 	if(attacker == defender || !can_use(attacker))
@@ -274,7 +275,7 @@
 				combo_refresh()
 				return MARTIAL_ATTACK_INVALID
 
-		var/last_move = copytext(streak, -1, 0) // Not building to a valid combo reset.
+		var/last_move = copytext(streak, -1, 0) // Not building to a valid combo reset and carry over combo breaking move.
 		reset_streak(defender)
 		add_to_streak(last_move, defender)
 		return MARTIAL_ATTACK_INVALID

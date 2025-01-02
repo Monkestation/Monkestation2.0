@@ -33,7 +33,7 @@
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
-		/obj/item/storage/belt/security/blueshield/corpjudo = 3, //monkestation edit: paradise port
+		/obj/item/storage/belt/security/blueshield/corpjudo = 2, //monkestation edit: paradise port
 		/obj/item/clothing/head/helmet/civilprotection_helmet = 1, //monkestation edit
 		/obj/item/clothing/suit/armor/civilprotection_vest = 1, //monkestation edit
 		/obj/item/clothing/head/helmet/guardmanhelmet = 1, //monkestation edit: Guardman

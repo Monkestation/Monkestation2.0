@@ -68,7 +68,7 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
-	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: paradise port
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: Paradise port
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -106,7 +106,6 @@
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
 
-
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
 	req_access = list(ACCESS_BRIG)
@@ -123,6 +122,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/ammo_box/magazine/m35/rubber(src) //monkestation edit: Paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: Paradise port
 
 /obj/structure/closet/secure_closet/security/sec
 
