@@ -49,8 +49,8 @@
 	PopulateContents()
 
 /obj/item/storage/belt/security/blueshield/corpjudo/Destroy()
-	QDEL_NULL(style)
 	. = ..()
+	QDEL_NULL(style)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
 	. = ..()
@@ -100,25 +100,50 @@
 	max_streak_length = 12
 	combo_timer = 2.5  SECONDS
 
+	help_verb = /mob/living/carbon/human/proc/judo_help
+
 	var/list/combo_moves = list(
 		"DG" = /datum/martial_art/corpjudo/proc/discombobulate,
 		"HD" = /datum/martial_art/corpjudo/proc/eye_poke,
-		"GD" = /datum/martial_art/corpjudo/proc/judothrow,
+		"GD" = /datum/martial_art/corpjudo/proc/judo_throw,
 		"DDG" = /datum/martial_art/corpjudo/proc/armbar,
 		"DDGGDH" = /datum/martial_art/corpjudo/proc/wheel_throw,
-		"EDEGDDGEDDGE" = /datum/martial_art/corpjudo/proc/goldenblast,
+		"EDEGDDGEDDGE" = /datum/martial_art/corpjudo/proc/golden_blast,
 	)
 
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
-	if(..())
+	. = ..()
+	if(.)
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
 
-/datum/martial_art/corpjudo/on_remove(mob/living/owner)
-	to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
+/datum/martial_art/corpjudo/remove(mob/living/owner)
+	. = ..()
+	if(.)
+		to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
+
+/mob/living/carbon/human/proc/judo_help()
+	set name = "Recall Teachings"
+	set desc = "Focus on your Sensi's words and remember your training."
+	set category = "Corporate Judo"
+
+	to_chat(usr, "<b><i>An old wise voice echos your mind, it's voice distance and calm. You focus on voice; the world falls silent. With a satisfied treble, it begins to teach.</i></b>")
+
+	to_chat(usr, span_notice("Upgraded Punch") + ": " + span_memo("Your punches strike harder than normal."))
+	to_chat(usr, span_notice("Discomboulate") + ": " + span_memo("Disarm Grab.") + " Gentle key strikes to the temple; drains some of the opponents stamina, and confuses them for a moment.")
+	to_chat(usr, span_notice("Eye Poke") + ": " + span_memo("Harm Disarm.") + " Masterfully jab your fingers into your opponents eyes. Causes harm and makes it increasingly hard to see.")
+	to_chat(usr, span_notice("Judo Throw") + ": " + span_memo("Grab Disarm.") + " You and your opponent must not be on the floor. With a gentle maintained grasp, throw them to the floor draining their stamina and ability to stand up.")
+	to_chat(usr, span_notice("Armbar") + ": " + span_memo("Disarm Disarm Grab.") + " Twist the arm of a laying opponent causing them heavy exhaustion and knocking them into the floor. Standing leverage causes the opponent to drop their held possesions.")
+	to_chat(usr, span_notice("Wheel Throw") + ": " + span_memo("Armbar->Grab Disarm Harm.") + " Continuing from Armbar this dance will throw a laying opponent over your body and back into the ground. Heavy exhaustion, confusion, and loss of balance will follow.")
+	to_chat(usr, span_notice("Golden Blast") + ": " + span_memo("Help Disarm Help-Grab Disarm Disarm-Grab Help Disarm-Disarm Grab Help.") + " An absurdly intricate fighting move to demonstrate your mastery of the Judo arts. Hits opponent with golden energy. Knocks them down heavily causing confusion, exhaustion, balance loss.")
 
 /datum/martial_art/corpjudo/Destroy()
+	if(holder)
+		var/mob/living/owner = holder.resolve()
+		if(owner)
+			remove(owner) // Clean up the martial art effects from the owner
+	//some how need to call remove here
 	QDEL_NULL(combo_moves)
-	. = ..()
+	return ..()
 
 ///
 // MARTIAL ART STYLE: ABILITIES
@@ -144,7 +169,7 @@
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Eye Poke")
 	return MARTIAL_ATTACK_SUCCESS
 
-/datum/martial_art/corpjudo/proc/judothrow(mob/living/carbon/human/attacker, mob/living/defender)
+/datum/martial_art/corpjudo/proc/judo_throw(mob/living/carbon/human/attacker, mob/living/defender)
 	reset_streak(defender)
 	if(!attacker.body_position == STANDING_UP || !defender.body_position == STANDING_UP)
 		return MARTIAL_ATTACK_INVALID
@@ -191,10 +216,10 @@
 	defender.apply_damage(250, STAMINA)
 	defender.Knockdown(15 SECONDS)
 	defender.set_confusion(10 SECONDS)
-	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Wheel Throw / Floor Pin")
+	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Wheel Throw")
 	return MARTIAL_ATTACK_SUCCESS
 
-/datum/martial_art/corpjudo/proc/goldenblast(mob/living/carbon/human/attacker, mob/living/defender)
+/datum/martial_art/corpjudo/proc/golden_blast(mob/living/carbon/human/attacker, mob/living/defender)
 	reset_streak(defender)
 	defender.visible_message("<span class='warning'>[attacker] blasts [defender] with energy, sending [defender.p_them()] to the ground!</span>", \
 						"<span class='userdanger'>[attacker] makes strange hand gestures, screams wildly and prods you directly in the chest! You feel the wrath of the GOLDEN BOLT surge through your body! You've been utterly robusted!</span>")
