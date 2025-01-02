@@ -23,7 +23,7 @@
 	demolition_mod = 0.5 // you gotta wield it to have some oomph
 
 	/// The block_chance the spoon has when wielded.
-	var/block_chance_wielded = 25
+	var/block_chance_wielded = 15
 	/// The demolition_mod the spoon has when wielded.
 	var/demolition_mod_wielded = 2 // IT'S A BIG METAL SPOON.
 	/// Is this spoon currently empowered?
