@@ -193,6 +193,7 @@
 		defender.drop_all_held_items()
 	defender.apply_damage(112, STAMINA)
 	defender.Knockdown(5 SECONDS)
+	combo_refresh() // Flow combos need to refresh the chain.
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Armbar")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -247,7 +248,7 @@
 		return MARTIAL_ATTACK_INVALID
 	add_to_streak("H", defender)
 
-	if(check_streak(attacker, defender))
+	if(check_streak(attacker, defender) == MARTIAL_ATTACK_SUCCESS)
 		return MARTIAL_ATTACK_SUCCESS
 
 	var/picked_hit_type = pick("chops", "slices", "strikes")
