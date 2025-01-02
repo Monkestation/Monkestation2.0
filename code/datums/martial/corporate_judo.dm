@@ -54,17 +54,15 @@
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user))
-		if(slot & ITEM_SLOT_BELT)
-			style.teach(user, TRUE)
-			ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
+	if(ishuman(user) && slot & ITEM_SLOT_BELT)
+		style.teach(user, TRUE)
+		ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/user)
 	. = ..()
-	if(ishuman(user))
-		if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-			style.remove(user)
-			REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
+	if(ishuman(user) && user.get_item_by_slot(ITEM_SLOT_BELT) == src)
+		style.remove(user)
+		REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
 
 
 /mob/living/proc/is_weapon_restricted(mob/living/defender, obj/item/weapon, mob/living/attacker)
@@ -80,15 +78,13 @@
 	return FALSE
 
 /mob/living/attackby(obj/item/weapon, mob/living/user)
-	if(ishuman(user))
-		if(is_weapon_restricted(src, weapon, user))
-			return
+	if(ishuman(user) && is_weapon_restricted(src, weapon, user))
+		return
 	..()
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user)
-	if(ishuman(user))
-		if(is_weapon_restricted(src, weapon, user))
-			return
+	if(ishuman(user) && is_weapon_restricted(src, weapon, user))
+		return
 	..()
 ///
 // MARTIAL ART STYLE
