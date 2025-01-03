@@ -86,7 +86,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		#ifdef UNIT_TESTS
 		random_seed = 29051994 // How about 22475?
 		#else
-		random_seed = rand(1, 1e9)
+		random_seed = aneri_rand_uint(secure = TRUE) // monkestation edit: use aneri to initialize rng seed
 		#endif
 		rand_seed(random_seed)
 
@@ -307,13 +307,15 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		return
 
 	current_initializing_subsystem = subsystem
-	rustg_time_reset(SS_INIT_TIMER_KEY)
+	// monkestation start: replace rust_g timer with aneri
+	var/datum/instant/init_timer = new
 
 	var/result = subsystem.Initialize()
 
 	// Capture end time
-	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
+	var/time = init_timer.milliseconds()
 	var/seconds = round(time / 1000, 0.01)
+	// monkestation end
 
 	// Always update the blackbox tally regardless.
 	SSblackbox.record_feedback("tally", "subsystem_initialize", time, subsystem.name)
