@@ -38,7 +38,8 @@
 		choice = pick(trap_effects - "Random")
 
 	switch(choice)
-		if("Madness") // TODO
+//		if("Madness")
+
 
 		if("Burning")
 			new /obj/structure/wraith_trap/burning(get_turf(owner))
@@ -55,7 +56,8 @@
 		if("Blinding")
 			new /obj/structure/wraith_trap/blinding(get_turf(owner))
 
-		if("Sleepyness") // TODO
+//		if("Sleepyness")
+
 
 		else
 			reset_spell_cooldown()

@@ -39,9 +39,11 @@
 	cast_on.base_icon_state = choice
 	var/list/datum/action/abilities_to_give = null
 	switch(choice)
-		if("harbinger")
+//		if("harbinger")
 
-		if("plaguebringer")
+
+//		if("plaguebringer")
+
 
 		if("trickster")
 			abilities_to_give = list(
