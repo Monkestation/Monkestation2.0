@@ -89,6 +89,7 @@
 		user.visible_message(span_notice("[user] slots [attacking_item] into [src], powering it on!"))
 		cored = TRUE
 		shield_regeneration = TRUE
+		icon_state = "[icon_state]_active"
 		name = initial(name)
 		START_PROCESSING(SSobj, src)
 		if(wearer)
@@ -167,6 +168,7 @@
 	name = "archotech shield belt"
 	desc = "A belt that engulfs the user in a shield that blocks both incoming and outgoing high-energy projectiles.\
 			This one is from a long lost rimworld and whilst being precious it uses an unknown power source that cannot recharge."
+	icon_state = "shield_belt_archotech"
 	maximum_shield_integrity = 540 // 450% more than a normal shield belt... bit much aint it?
 	shield_color = COLOR_EMERALD
 	cored = TRUE
