@@ -1,4 +1,4 @@
-//these are not actually the amount given and taken but are instead the amount GLOB.clock_power is adjusted by
+//these are not actually the amount given and taken but are instead the amount SSthe_ark.clock_power is adjusted by
 #define POWER_GIVE 5
 #define POWER_SIPHON 5
 
@@ -66,14 +66,14 @@
 			return
 
 		if(is_clockie)
-			if((power_cell.charge < power_cell.maxcharge) && GLOB.clock_power >= POWER_GIVE)
+			if((power_cell.charge < power_cell.maxcharge) && SSthe_ark.clock_power >= POWER_GIVE)
 				target_mech.give_power(power_cell.chargerate)
-				GLOB.clock_power -= POWER_GIVE
+				SSthe_ark.clock_power -= POWER_GIVE
 
 		else
 			if(power_cell.charge)
 				target_mech.use_power(power_cell.chargerate)
-				GLOB.clock_power += POWER_SIPHON
+				SSthe_ark.clock_power += POWER_SIPHON
 
 	else if(iscyborg(apply_to))
 		var/mob/living/silicon/robot/borg = apply_to
@@ -83,13 +83,13 @@
 			return
 
 		if(IS_CLOCK(borg))
-			if((power_cell.charge < power_cell.maxcharge) && GLOB.clock_power >= POWER_GIVE)
+			if((power_cell.charge < power_cell.maxcharge) && SSthe_ark.clock_power >= POWER_GIVE)
 				power_cell.give(power_cell.chargerate)
-				GLOB.clock_power -= POWER_GIVE
+				SSthe_ark.clock_power -= POWER_GIVE
 
 		else if(power_cell.charge > power_cell.chargerate)
 			power_cell.give(-power_cell.chargerate)
-			GLOB.clock_power += POWER_SIPHON
+			SSthe_ark.clock_power += POWER_SIPHON
 
 	else if(ishuman(apply_to))
 		var/mob/living/carbon/human/human = apply_to
@@ -102,14 +102,14 @@
 				continue
 
 			if(IS_CLOCK(human))
-				if((power_cell.charge < power_cell.maxcharge) && GLOB.clock_power >= POWER_GIVE)
+				if((power_cell.charge < power_cell.maxcharge) && SSthe_ark.clock_power >= POWER_GIVE)
 					power_cell.give(power_cell.chargerate)
-					GLOB.clock_power -= POWER_GIVE
+					SSthe_ark.clock_power -= POWER_GIVE
 
 			else
 				if(power_cell.charge > power_cell.chargerate)
 					power_cell.give(-power_cell.chargerate)
-					GLOB.clock_power += POWER_SIPHON
+					SSthe_ark.clock_power += POWER_SIPHON
 
 #undef POWER_GIVE
 #undef POWER_SIPHON

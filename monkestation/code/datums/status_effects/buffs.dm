@@ -10,8 +10,8 @@
 	multiplicative_slowdown = -0.6
 
 /atom/movable/screen/alert/status_effect/mayhem
-	name = "<span class='cult'>Mayhem</span>"
-	desc = "<span class='bolddanger'>RIP AND TEAR!!</span>"
+	name = span_cult("Mayhem")
+	desc = span_bolddanger("RIP AND TEAR!!")
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw_on"
 	alerttooltipstyle = "cult"

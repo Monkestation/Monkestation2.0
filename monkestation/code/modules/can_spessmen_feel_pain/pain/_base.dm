@@ -210,6 +210,19 @@
 	LAZYREMOVE(pain_mods, key)
 	return update_pain_modifier()
 
+///Clear all pain attributes and bodypart pain
+/datum/pain/proc/remove_all_pain()
+	for(var/zone in body_zones)
+		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
+		adjust_bodypart_min_pain(zone, -INFINITY)
+		adjust_bodypart_pain(zone, -INFINITY)
+		// Shouldn't be necessary but you never know!
+		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
+
+	clear_pain_attributes()
+	shock_buildup = 0
+	natural_pain_decay = base_pain_decay
+
 /**
  * Update our overall pain modifier.
  * The pain modifier is multiplicative based on all the pain modifiers we have.
@@ -918,25 +931,6 @@
 	// Ideally pain would have its own heal flag but we live in a society
 	if(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS))
 		remove_all_pain()
-
-/**
- * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
- */
-/datum/pain/proc/remove_all_pain()
-	SIGNAL_HANDLER
-
-	for(var/zone in body_zones)
-		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
-		if(QDELETED(healed_bodypart))
-			continue
-		adjust_bodypart_min_pain(zone, -INFINITY)
-		adjust_bodypart_pain(zone, -INFINITY)
-		// Shouldn't be necessary but you never know!
-		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
-
-	clear_pain_attributes()
-	shock_buildup = 0
-	natural_pain_decay = base_pain_decay
 
 /**
  * Determines if we should be processing or not.
