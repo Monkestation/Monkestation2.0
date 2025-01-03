@@ -56,3 +56,13 @@
 #define BORER_HIDING (1<<3)
 /// If the borer can produce eggs without a host
 #define BORER_ALONE_PRODUCTION (1<<4)
+
+// Wraith evolutions
+/// Not evolved at all
+#define EVOLUTION_WRAITH_NONE (1<<0)
+/// Focuses on summoning creatures
+#define EVOLUTION_WRAITH_HARBINGER (1<<1)
+/// Focuses on making everyone very annoyed
+#define EVOLUTION_WRAITH_PLAGUEBRINGER (1<<2)
+/// Basically the clown path, you annoy everyone very minorly very often
+#define EVOLUTION_WRAITH_TRICKSTER (1<<3)

@@ -3,6 +3,8 @@
 	name = "Rogue item"
 	desc = "You shouldn't see this!"
 
+	color = COLOR_DARK_PURPLE
+
 	friendly_verb_continuous = "looks at"
 	friendly_verb_simple = "look at"
 	death_message = "wails as infernal energy escapes from it!"
@@ -33,19 +35,21 @@
 	icon = stored_item.icon_state
 	add_overlay(stored_item)
 
-	add_filter("haunt_glow", 2, list("type" = "outline", "color" = COLOR_DARK_PURPLE, "size" = 1))
+	med_hud_set_health()
+	med_hud_set_status()
+
 	RegisterSignal(stored_item, COMSIG_QDELETING, PROC_REF(item_deleted))
 
 	if(wraith)
 		wraith.forceMove(src)
 		ckey = wraith.ckey
 		our_wraith = wraith
-		addtimer(CALLBACK(src, PROC_REF(death)), 1 MINUTE)
+		addtimer(CALLBACK(src, PROC_REF(death)), 1 MINUTE, TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 	return ..()
 
 /mob/living/basic/wraith_spawn/animated_item/Destroy(force)
-	if(stored_item) // grenades and such can delete it before we delete ourselfes
+	if(!QDELETED(stored_item)) // grenades and such can delete it before we delete ourselfes
 		UnregisterSignal(stored_item, COMSIG_QDELETING)
 		stored_item.forceMove(get_turf(src))
 		stored_item.take_damage(maxHealth - health)

@@ -1,4 +1,4 @@
-#define spooky_icons 'monkestation/code/modules/antagonists/wraith/icons/spook_icons.dmi'
+#define spooky_icons 'monkestation/code/modules/antagonists/wraith/icons/radial_menu_icons.dmi'
 /datum/action/cooldown/spell/wraith/spook
 	name = "Spook"
 	desc = "Allows you to make some spooky things happen, free of charge!."
@@ -37,11 +37,22 @@
 
 /datum/action/cooldown/spell/wraith/spook/cast(mob/living/cast_on)
 	. = ..()
-	var/choice = show_radial_menu(owner, owner, spooky_stuffs, radius = 70, tooltips = TRUE)
+	var/area/current_area = get_area(owner)
+	if(current_area.outdoors)
+		to_chat(owner, span_revenwarning("Cannot use this ability in space!")) // Yeah no, lets not do this
+		reset_spell_cooldown()
+		return
+
+	var/choice = show_radial_menu(owner, owner, spooky_stuffs, radius = 60, tooltips = TRUE)
 	if(choice == "Random")
 		choice = pick(spooky_stuffs - "Random")
 
-	var/area/current_area = get_area(owner)
+	current_area = get_area(owner) // I love radial menu's
+	if(current_area.outdoors)
+		to_chat(owner, span_revenwarning("Cannot use this ability in space!"))
+		reset_spell_cooldown()
+		return
+
 	switch(choice)
 		if("Flip light switches")
 			for(var/obj/machinery/light_switch/light_switch as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light_switch))
@@ -53,13 +64,14 @@
 			reset_spell_cooldown()
 
 		if("Break lightbulbs")
-			for(var/obj/machinery/light/breaked_light in current_area.contents)
-				if(breaked_light.on == FALSE)
-					continue
+			for(var/turf/area_turf as anything in current_area.turfs_by_zlevel[owner.z])
+				for(var/obj/machinery/light/breaked_light in area_turf)
+					if(!breaked_light.on)
+						continue
 
-				breaked_light.break_light_tube()
-				if(prob(50))
-					return
+					breaked_light.break_light_tube()
+					if(prob(50))
+						return
 
 		if("Create smoke")
 			var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
@@ -69,12 +81,13 @@
 
 		if("Create ectoplasm")
 			for(var/i in 1 to rand(5, 9))
-				new /obj/item/ectoplasm/mystic(pick(current_area.turfs_by_zlevel[owner.z]))
+				new /obj/effect/decal/cleanable/greenglow/ecto(pick(current_area.turfs_by_zlevel[owner.z]))
 
 		if("Sap APC")
-			if(!current_area.apc || !current_area.apc.cell)
+			if(isnull(current_area.apc?.cell))
 				to_chat(owner, span_revenwarning("There is no power to sap!")) // Great work engineers!
 				reset_spell_cooldown()
+				return
 
 			var/obj/item/stock_parts/cell/cell = current_area.apc.cell
 			var/power_to_sap = 500 // Big sippy
@@ -112,23 +125,27 @@
 			signal.broadcast()
 
 		if("Open locks")
-			for(var/obj/machinery/door/airlock/airlock in current_area.contents)
-				airlock.unbolt()
-				if(airlock.density)
-					airlock.open()
-				else
-					airlock.close()
+			for(var/list/zlevel_turfs as anything in current_area.get_zlevel_turf_lists()) // ???
+				for(var/turf/area_turf as anything in zlevel_turfs) // ??????????
+					for(var/obj/machinery/door/airlock/airlock in area_turf)
+						airlock.unbolt()
+						if(airlock.density)
+							airlock.open()
+						else
+							airlock.close()
 
-				if(prob(60))
-					break
+						if(prob(60))
+							break
 
-			for(var/obj/structure/closet/locker in current_area.contents)
-				if(locker.density)
-					locker.open(owner, TRUE)
-				else
-					locker.close(owner, TRUE)
+					for(var/obj/structure/closet/locker in area_turf)
+						if(locker.density)
+							locker.open(owner, TRUE)
+						else
+							locker.close(owner, TRUE)
 
-				if(prob(60))
-					break
+						if(prob(60))
+							break
 		else
 			reset_spell_cooldown()
+
+#undef spooky_icons

@@ -10,15 +10,12 @@
 
 /datum/action/cooldown/spell/pointed/wraith/possess_object/before_cast(obj/item/cast_on)
 	. = ..()
-	if(!istype(cast_on))
-		reset_spell_cooldown()
-		return . | SPELL_CANCEL_CAST
-
-	if(cast_on.anchored || cast_on.density) // Don't throw around anchored things or dense things
-		reset_spell_cooldown()
-		return . | SPELL_CANCEL_CAST
+	if(!istype(cast_on) || cast_on.anchored || cast_on.density)
+		. |= SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/pointed/wraith/possess_object/cast(obj/item/cast_on)
 	. = ..()
 	new /obj/effect/temp_visual/revenant(get_turf(cast_on))
-	new /mob/living/basic/wraith_spawn/animated_item(get_turf(cast_on), cast_on, owner)
+	var/mob/living/basic/wraith_spawn/animated_item/mob = new(get_turf(cast_on), cast_on, owner)
+	if(istype(cast_on, /obj/item/weldingtool) || isgrenade(cast_on))
+		cast_on.attack_self(mob)

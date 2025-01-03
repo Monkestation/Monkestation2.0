@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/pointed/wraith/telepathy
+/datum/action/cooldown/spell/pointed/wraith/whisper
 	name = "Whisper"
 	desc = "Send a message to whomever you click on."
 	button_icon_state = "whisper"
@@ -10,21 +10,24 @@
 
 	var/message
 
-/datum/action/cooldown/spell/pointed/wraith/telepathy/on_activation(atom/cast_on)
+/datum/action/cooldown/spell/pointed/wraith/whisper/on_activation(atom/cast_on)
 	. = ..()
 	message = tgui_input_text(owner, "What do you wish to whisper?", "Prepare whisper")
 
-/datum/action/cooldown/spell/pointed/wraith/telepathy/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/pointed/wraith/whisper/before_cast(mob/living/cast_on)
 	. = ..()
-	if(!isliving(cast_on) || !message)
-		reset_spell_cooldown()
+	if(!istype(cast_on) || !message)
 		return . | SPELL_CANCEL_CAST
 
-/datum/action/cooldown/spell/pointed/wraith/telepathy/cast(mob/living/cast_on)
+	if(!cast_on.mind)
+		to_chat(owner, span_revennotice("The target is mindless!"))
+		. |= SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/pointed/wraith/whisper/cast(mob/living/cast_on)
 	. = ..()
 	log_directed_talk(owner, cast_on, message, LOG_SAY, name)
 
-	var/formatted_message = "<span class='revennotice'>[message]</span>"
+	var/formatted_message = span_revennotice("[message]")
 
 	var/failure_message_for_ghosts = ""
 
@@ -35,16 +38,16 @@
 	else
 		owner.balloon_alert(owner, "transmission blocked!")
 		to_chat(owner, span_warning("Something has blocked your transmission!"))
-		failure_message_for_ghosts = "<span class='revenboldnotice'> (blocked by antimagic)</span>"
+		failure_message_for_ghosts = span_revenboldnotice(" (blocked by antimagic)")
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		if(!isobserver(ghost))
 			continue
 
 		var/from_link = FOLLOW_LINK(ghost, owner)
-		var/from_mob_name = "<span class='revenboldnotice'>[owner] [src]</span>"
+		var/from_mob_name = span_revenboldnotice("[owner] [src]")
 		from_mob_name += failure_message_for_ghosts
-		from_mob_name += "<span class='revenboldnotice'>:</span>"
+		from_mob_name += span_revenboldnotice(":")
 		var/to_link = FOLLOW_LINK(ghost, cast_on)
 		var/to_mob_name = span_name("[cast_on]")
 

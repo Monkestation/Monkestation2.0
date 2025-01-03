@@ -5,12 +5,11 @@
 
 	cooldown_time = 30 SECONDS
 
+	wraith_only = TRUE
+
 /datum/action/cooldown/spell/wraith/haunt/cast(mob/living/cast_on)
 	. = ..()
 	var/mob/living/basic/wraith/true_owner = owner
-	if(!istype(true_owner)) // this is basically the only ability that cannot be used by non-wraiths, admemes take note.
-		return
-
 	if(!true_owner.density)
 		true_owner.materialize()
 	else

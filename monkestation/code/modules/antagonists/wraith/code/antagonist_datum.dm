@@ -7,3 +7,6 @@
 
 /datum/antagonist/wraith/get_preview_icon()
 	return finish_preview_icon(icon('icons/mob/simple/mob.dmi', "revenant_idle"))
+
+/datum/antagonist/wraith/poltergeist
+	name = "\improper Poltergeist"

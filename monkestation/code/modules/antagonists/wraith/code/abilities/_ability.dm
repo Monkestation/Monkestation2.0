@@ -8,16 +8,22 @@
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 
+	/// Will we break if a non-wraith tries to use us?
+	var/wraith_only = FALSE
 	/// How much essence this spell costs to fire
 	var/essence_cost = 0
+	/// Toggles if cooldown applies to us, used for debugging
+	var/ignore_cooldown = FALSE
 
 /datum/action/cooldown/spell/wraith/New()
 	. = ..()
-	name = "[name] ([essence_cost]e) ([cooldown_time]s)"
+	name = "[name] ([essence_cost]e) [cooldown_time ? "([cooldown_time / 10]s)" : ""]"
 
 /datum/action/cooldown/spell/wraith/can_cast_spell(feedback = TRUE)
 	var/mob/living/basic/wraith/true_owner = owner
 	if(!istype(true_owner))
+		if(wraith_only)
+			return FALSE
 		return TRUE // If an admin wants to give this to humans, we let them
 
 	if(true_owner.stunned)
@@ -38,6 +44,7 @@
 		return
 
 	if(!can_cast_spell())
+		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/wraith/cast(atom/cast_on)
@@ -45,6 +52,11 @@
 	var/mob/living/basic/wraith/true_owner = owner
 	if(istype(true_owner))
 		true_owner.essence -= essence_cost
+
+/datum/action/cooldown/spell/wraith/after_cast(atom/cast_on)
+	. = ..()
+	if(ignore_cooldown)
+		reset_spell_cooldown()
 
 /datum/action/cooldown/spell/pointed/wraith
 	panel = "Wraith Abilities"
@@ -56,8 +68,12 @@
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 
+	/// Will we break if a non-wraith tries to use us?
+	var/wraith_only = FALSE
 	/// How much essence this spell costs to fire
 	var/essence_cost = 0
+	/// Toggles if cooldown applies to us, used for debugging
+	var/ignore_cooldown = FALSE
 
 /datum/action/cooldown/spell/pointed/wraith/New()
 	. = ..()
@@ -66,6 +82,8 @@
 /datum/action/cooldown/spell/pointed/wraith/can_cast_spell(feedback = TRUE)
 	var/mob/living/basic/wraith/true_owner = owner
 	if(!istype(true_owner))
+		if(wraith_only)
+			return FALSE
 		return TRUE // If an admin wants to give this to humans, we let them
 
 	if(true_owner.stunned)
@@ -93,3 +111,8 @@
 	var/mob/living/basic/wraith/true_owner = owner
 	if(istype(true_owner))
 		true_owner.essence -= essence_cost
+
+/datum/action/cooldown/spell/pointed/wraith/after_cast(atom/cast_on)
+	. = ..()
+	if(ignore_cooldown)
+		reset_spell_cooldown()

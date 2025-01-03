@@ -3,8 +3,12 @@
 /mob/living/basic/wraith
 	name = "wraith"
 	desc = "It's a uh... its... spooky is the only way to describe it"
+
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "revenant_idle"
+	/// The basic icon we add things onto
+	base_icon_state = "revenant"
+
 	mob_biotypes = MOB_SPIRIT
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 
@@ -48,24 +52,13 @@
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/revenant
 
-	/// The icon we use while just floating around.
-	var/icon_idle = "revenant_idle"
-	/// The icon we use while in a revealed state.
-	var/icon_reveal = "revenant_revealed"
-	/// The icon we use when stunned (temporarily frozen)
-	var/icon_stun = "revenant_stun"
-	/// The icon we use while draining someone.
-	var/icon_drain = "revenant_draining"
-
 	/// Have we already given this revenant abilities?
 	var/generated_objectives_and_spells = FALSE
 
-	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
-	var/list/drained_mobs = null
 	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
-	var/static/list/datum/action/abilities = list(
+	var/list/datum/action/abilities = list(
 		/datum/action/cooldown/spell/wraith/haunt,
-		/datum/action/cooldown/spell/pointed/wraith/telepathy,
+		/datum/action/cooldown/spell/pointed/wraith/whisper,
 		/datum/action/cooldown/spell/pointed/wraith/blood_writing,
 		/datum/action/cooldown/spell/pointed/wraith/absorb_corpse,
 		/datum/action/cooldown/spell/wraith/spook,
@@ -73,10 +66,11 @@
 		/datum/action/cooldown/spell/pointed/wraith/command,
 		/datum/action/cooldown/spell/pointed/wraith/animate_object,
 		/datum/action/cooldown/spell/pointed/wraith/possess_object,
+		/datum/action/cooldown/spell/wraith/evolve,
 	)
 
 	/// How many points we are currently storing
-	var/essence =  50
+	var/essence = 50
 	/// How many points per second do we gain?
 	var/essence_gain = 1
 	/// How many points per second have we actually gained PER SECOND (used for the display)
@@ -84,9 +78,12 @@
 	/// Area's that boost our essence per second by 1 corpse
 	var/list/area/essence_boosting_areas = list()
 
+	/// What evolution have we underwent, if any
+	var/evolution = EVOLUTION_WRAITH_NONE
 	/// How many corpses have we consumed?
 	var/eaten_corpses = 0
 
+	/// Was our materialization forced, or voluntary?
 	var/force_materialized = FALSE
 	/// If we perish for the first time we become weakened, resetting our spoopy points, their regeneration and marking us for death.
 	var/weakened = FALSE
@@ -95,6 +92,13 @@
 	var/stunned = FALSE
 	/// For how long are we stunned? (world.time + stun time)
 	var/stun_time
+
+	/// Removes ability cooldowns, gives all abilities
+	var/debugging = FALSE
+
+/mob/living/basic/wraith/debug
+	essence = 50000
+	debugging = TRUE
 
 /mob/living/basic/wraith/Initialize(mapload)
 	. = ..()
@@ -112,9 +116,15 @@
 		/mob/living/basic/wraith/proc/tray_view,
 	))
 
-	for(var/ability in abilities)
-		var/datum/action/spell = new ability(src)
-		spell.Grant(src)
+	if(debugging)
+		for(var/ability as anything in subtypesof(/datum/action/cooldown/spell/wraith) + subtypesof(/datum/action/cooldown/spell/pointed/wraith))
+			var/datum/action/cooldown/spell/wraith/spell = new ability(src)
+			spell.Grant(src)
+			spell.ignore_cooldown = TRUE
+	else
+		for(var/ability as anything in abilities)
+			var/datum/action/spell = new ability(src)
+			spell.Grant(src)
 
 	toggle_darkness()
 	grant_all_languages()
@@ -179,11 +189,11 @@
 
 	var/essence_to_give = essence_gain
 	if(density && !force_materialized)
-		for(var/mob/living/living_thingy in oviewers(6, src))
+		for(var/mob/living/carbon/living_thingy in oviewers(6, src))
 			// as long as you are in soft-crit or just living, you can see us, you can be scared of us
 			if(living_thingy.client && living_thingy.stat < UNCONSCIOUS)
-				essence_to_give += 5
-				// +1 too if you are trickster
+				essence_to_give += (evolution == EVOLUTION_WRAITH_TRICKSTER ? 6 : 5)
+
 	// +2 if you have a portal
 	if(get_area(src) in essence_boosting_areas)
 		essence_to_give += 2
@@ -261,14 +271,14 @@
 /mob/living/basic/wraith/update_icon_state()
 	. = ..()
 	if(stunned)
-		icon_state = icon_stun
+		icon_state = "[base_icon_state]_stun"
 		return
 
 	if(density)
-		icon_state = icon_reveal
+		icon_state = "[base_icon_state]_revealed"
 		return
 
-	icon_state = icon_idle
+	icon_state = "[base_icon_state]_idle"
 
 /mob/living/basic/wraith/med_hud_set_health()
 	return //we use no hud
@@ -306,7 +316,6 @@
 	density = FALSE // well technically we are still materializing, but lets not take anymore damage
 	stun(3 SECONDS)
 	invisibility = 0
-	icon_state = "revenant_draining"
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 	visible_message(
 		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
@@ -330,9 +339,19 @@
 	essence = 0
 	essence_gain = 1
 	unmaterialize()
+	var/datum/action/cooldown/spell/pointed/wraith/absorb_corpse/corpse_ability = locate(/datum/action/cooldown/spell/pointed/wraith/absorb_corpse) in actions
+	if(corpse_ability)
+		corpse_ability.cooldown_time = initial(corpse_ability.cooldown_time)
+		corpse_ability.reset_spell_cooldown()
 
 /mob/living/basic/wraith/proc/materialize()
 	density = TRUE
+
+	var/datum/action/cooldown/spell/pointed/wraith/choose_disquise/disquise_ability = locate(/datum/action/cooldown/spell/pointed/wraith/choose_disquise) in actions
+	if(disquise_ability)
+		disquise_ability.change_disquise()
+	else
+		update_icon_state()
 
 	incorporeal_move = FALSE
 	invisibility = FALSE
@@ -340,8 +359,6 @@
 	alpha = 0
 	animate(src, alpha = 255, time = 1 SECOND)
 	sleep(1 SECOND)
-
-	update_icon_state()
 
 /mob/living/basic/wraith/proc/unmaterialize()
 	density = FALSE
@@ -354,7 +371,11 @@
 	incorporeal_move = initial(incorporeal_move)
 	invisibility = initial(invisibility)
 
-	update_icon_state()
+	var/datum/action/cooldown/spell/pointed/wraith/choose_disquise/disquise_ability = locate(/datum/action/cooldown/spell/pointed/wraith/choose_disquise) in actions
+	if(disquise_ability)
+		disquise_ability.change_disquise()
+	else
+		update_icon_state()
 
 /mob/living/basic/wraith/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
