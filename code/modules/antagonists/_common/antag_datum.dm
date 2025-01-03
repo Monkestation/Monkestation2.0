@@ -97,6 +97,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 	call_async.Invoke(usr)
 	persistent_owner.traitor_panel()
 
+
+//in the future, this should entirely replace greet.
+/datum/antagonist/proc/make_info_button()
+	if(!ui_name)
+		return
+	var/datum/action/antag_info/info_button = new(src)
+	info_button.Grant(owner.current)
+	info_button_ref = WEAKREF(info_button)
+	return info_button
+
+
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"

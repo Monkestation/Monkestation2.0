@@ -62,6 +62,7 @@
 	contract_objective.owner = owner
 	objectives += contract_objective
 	objectives += forge_single_generic_objective()
+	setup_backstories()
 
 /// Used by drifting contractors
 /datum/objective/contractor_total
