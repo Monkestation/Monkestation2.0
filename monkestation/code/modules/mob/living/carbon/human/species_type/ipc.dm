@@ -29,8 +29,7 @@
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
 		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
-
-		)
+	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
 	)
@@ -78,6 +77,8 @@
 	var/will_it_blend_timer
 	COOLDOWN_DECLARE(blend_cd)
 	var/blending
+	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
+	var/forced_speech = 0
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
@@ -104,6 +105,7 @@
 		change_screen = new
 		change_screen.Grant(C)
 
+	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
@@ -155,6 +157,7 @@
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/C)
 	. = ..()
+	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	if(change_screen)
 		change_screen.Remove(C)
 		UnregisterSignal(C, COMSIG_LIVING_DEATH)
@@ -218,6 +221,22 @@
 		BP.update_limb()
 		if(chassis_of_choice.color_src == MUTANT_COLOR)
 			BP.should_draw_greyscale = TRUE
+
+/datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
+	SIGNAL_HANDLER
+	// Im sorry but we dont get the emag as one of the arguments so we gotta live with the hard-coded emag name
+	owner.visible_message(span_danger("[user] slides the cryptographic sequencer across [owner]'s head[forced_speech == 0 ? "!" : " yet nothing happens..?"]"), span_userdanger("[user] slides the cryptographic sequencer across your head!"))
+	if(!forced_speech)
+		forced_speech = rand(3, 5)
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
+
+	return TRUE
+
+/datum/species/ipc/proc/state_laws(mob/living/owner)
+	owner.say(generate_ion_law())
+	forced_speech--
+	if(forced_speech) // We keep going until its all over
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
 
 /**
  * Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
