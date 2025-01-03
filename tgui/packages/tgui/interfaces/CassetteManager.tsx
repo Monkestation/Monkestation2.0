@@ -66,11 +66,9 @@ const CassetteTable = ({
           <Table.Cell>
             <Button
               color="bad"
+              icon="trash"
               onClick={() => onReview('delete_cassette', id)}
-              style={{ marginLeft: '0.6em' }}
-            >
-              <i className="fa fa-trash" />
-            </Button>
+            />
             <ReviewButton
               reviewed={cassette.reviewed}
               verdict={cassette.verdict}

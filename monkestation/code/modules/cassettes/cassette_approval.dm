@@ -76,7 +76,6 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	var/verdict = "NONE"
 
 /datum/cassette_review/Destroy(force)
-	. = ..()
 	if(cassette_data)
 		cassette_data["side1"]["song_name"] = null
 		cassette_data["side1"]["song_url"] = null
@@ -84,15 +83,11 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		cassette_data["side2"]["song_url"] = null
 		cassette_data.Cut()
 		cassette_data = null
-	if(submitted_tape.loc == null)
+	if(isnull(submitted_tape.loc))
 		QDEL_NULL(submitted_tape) // Remove any tapes in null_space. Denied or Pending condition.
-	submitted_ckey = null
-	submitter = null
-	action_taken = null
-	verdict = null
 	if(id && (id in GLOB.cassette_reviews))
 		GLOB.cassette_reviews -= id // Remove the key
-	id = null
+	return 	..()
 
 /datum/cassette_review/ui_state(mob/user)
 	return GLOB.always_state
