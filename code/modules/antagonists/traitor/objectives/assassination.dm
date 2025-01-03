@@ -28,7 +28,7 @@
 
 	abstract_type = /datum/traitor_objective/target_player/assassinate
 
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES //MONKESTATION EDIT ORG: 30
 
 	/**
 	 * Makes the objective only set heads as targets when true, and block them from being targets when false.
@@ -48,13 +48,13 @@
 	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
 	progression_reward = 2 MINUTES
-	telecrystal_reward = list(2, 4)
+	telecrystal_reward = list(5, 6) //MONKESTATION EDIT ORG: 2, 4
 
 	var/obj/item/paper/calling_card/card
 
 /datum/traitor_objective/target_player/assassinate/calling_card/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(6, 7) //MONKESTATION EDIT ORG: 2, 3
 
 	heads_of_staff = TRUE
 
@@ -62,7 +62,7 @@
 	name = "Behead %TARGET%, the %JOB TITLE%"
 	description = "Behead and hold %TARGET%'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
 	progression_reward = 2 MINUTES
-	telecrystal_reward = list(2, 4)
+	telecrystal_reward = 7 //MONKESTATION EDIT ORG: 2, 4
 
 	///the body who needs to hold the head
 	var/mob/living/needs_to_hold_head
@@ -71,7 +71,7 @@
 
 /datum/traitor_objective/target_player/assassinate/behead/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(3, 5)
+	telecrystal_reward = list(7, 8) //MONKESTATION EDIT ORG: 3, 5
 
 	heads_of_staff = TRUE
 

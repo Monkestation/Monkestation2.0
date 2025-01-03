@@ -13,7 +13,7 @@
 	progression_minimum = 10 MINUTES
 
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(5, 6) //MONKESTATION EDIT ORG: 1, 2
 
 	/// If we're targeting heads of staff or not
 	var/heads_of_staff = FALSE
@@ -37,7 +37,7 @@
 
 /datum/traitor_objective/target_player/eyesnatching/heads
 	progression_reward = list(6 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(6, 7) //MONKESTATION EDIT ORG: 2, 3
 
 	heads_of_staff = TRUE
 

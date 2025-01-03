@@ -65,7 +65,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(3, 4)
 
-	progression_minimum = 15 MINUTES
+	progression_minimum = 20 MINUTES //MONKESTATION EDIT ORG: 15
 	progression_maximum = 30 MINUTES
 
 	applicable_jobs = list(
@@ -82,7 +82,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	telecrystal_reward = 0 // Only from completing the bonus objective
 
 	progression_minimum = 0 MINUTES
-	progression_maximum = 10 MINUTES
+	progression_maximum = 20 MINUTES //MONKESTATION EDIT ORG: 10 MINUTES
 
 	maximum_allowed = 2
 	applicable_jobs = list(

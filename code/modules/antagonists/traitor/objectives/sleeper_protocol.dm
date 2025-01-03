@@ -12,7 +12,7 @@
 	progression_minimum = 0 MINUTES
 
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = 2 //MONKESTATION EDIT ORG: 1
 
 	var/list/limited_to = list(
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -133,6 +133,6 @@
 /datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
 	progression_minimum = 30 MINUTES
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 3
+	telecrystal_reward = 4 //MONKESTATION EDIT ORG: 3
 
 	inverted_limitation = TRUE
