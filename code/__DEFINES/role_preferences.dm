@@ -16,9 +16,11 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+// monkestation roles
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
+#define ROLE_VAMPIRE "Vampire"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -41,13 +43,14 @@
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
-// monke midrounds
+// monkestation midrounds
 #define ROLE_PLAGUERAT "Plague Rat"
 #define ROLE_CORTICAL_BORER "Cortical Borer"
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_FLORIDA_MAN "Florida Man"
 #define ROLE_SLASHER "Slasher"
 #define ROLE_MONSTERHUNTER "Monster Hunter"
+#define ROLE_VAMPIRIC_ACCIDENT "Vampiric Accident"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -133,9 +136,11 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+// monkestation start
 	ROLE_CLOCK_CULTIST = 14,
-	ROLE_BLOODSUCKER = 0,
+	ROLE_VAMPIRE = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
+// monkestation end
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -158,22 +163,21 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
-//monkestation edit start
+// monkestation start
 	ROLE_PLAGUERAT = 0,
-	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
+	ROLE_CORTICAL_BORER = 0,
 	ROLE_DRIFTING_CONTRACTOR = 0,
-	ROLE_VAMPIRICACCIDENT = 0,
+	ROLE_VAMPIRIC_ACCIDENT = 0,
 	ROLE_MONSTERHUNTER = 0,
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,
 	ROLE_OPFOR_CANDIDATE = 0,
-//monkestation edit end
+// monkestation end
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
-	ROLE_BLOODSUCKERBREAKOUT = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

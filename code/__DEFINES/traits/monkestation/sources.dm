@@ -16,21 +16,11 @@
 #define STARGAZER_TRAIT "stargazer"
 /// Trait source for the vanguard scripture
 #define VANGUARD_TRAIT "vanguard"
-/// Source trait for Bloodsuckers-related traits
-#define BLOODSUCKER_TRAIT "bloodsucker_trait"
-/// Source trait for bloodsuckers in torpor.
-#define TORPOR_TRAIT "torpor_trait"
-/// Source trait for bloodsuckers using fortitude.
-#define FORTITUDE_TRAIT "fortitude_trait"
-/// Source trait for bloodsucker mesmerization.
-#define MESMERIZED_TRAIT "mesmerized_trait"
-/// Source trait for Monster Hunter-related traits
+/// Trait source for monster hunters.
 #define HUNTER_TRAIT "monsterhunter_trait"
-/// Source trait while Feeding
-#define FEED_TRAIT "feed_trait"
-/// Source trait during a Frenzy
-#define FRENZY_TRAIT "frenzy_trait"
 /// Source trait for slashers.
 #define TRAIT_SLASHER "slasher_trait"
 /// Source trait for zombies
 #define ZOMBIE_TRAIT "zombie_trait"
+/// Trait source for the vampire antag datum, these are cleared when the datum is removed so be careful.
+#define VAMPIRE_TRAIT "vampire_trait"

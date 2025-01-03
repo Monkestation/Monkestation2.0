@@ -23060,7 +23060,6 @@
 /area/station/maintenance/central/greater)
 "gmH" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
-/obj/item/book/kindred,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "gmN" = (

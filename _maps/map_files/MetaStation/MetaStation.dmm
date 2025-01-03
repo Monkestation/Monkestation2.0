@@ -34682,7 +34682,6 @@
 "maB" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/clothing/under/suit/red,
-/obj/item/book/kindred,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/private)
 "maF" = (

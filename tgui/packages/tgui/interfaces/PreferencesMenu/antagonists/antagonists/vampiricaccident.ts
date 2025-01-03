@@ -3,12 +3,13 @@ import { multiline } from 'common/string';
 
 const VampiricAccident: Antagonist = {
   key: 'vampiricaccident',
-  name: 'Bloodsucker (Midround)',
+  name: 'Vampiric Accident',
   description: [
     multiline`
-      After your death, you awaken to see yourself as an undead monster.
-      Use your Vampiric abilities as best you can.
-      Scrape by Space Station 13, or take over it, vassalizing your way.
+      Your master sent you here as both a test and a chance for you to mature.
+      You can feed off of the lifeforce of other sapients through their blood.
+      Feeding from a sapient until they run dry will turn them into one of you.
+      Just remember to keep the inquisitors off your tail.
     `,
   ],
   category: Category.Midround,
