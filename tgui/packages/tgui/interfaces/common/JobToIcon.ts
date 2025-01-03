@@ -280,6 +280,7 @@ const ALTTITLES = {
   Spelunker: BASEICONS['Shaft Miner'],
   'Drill Technician': BASEICONS['Shaft Miner'],
   Prospector: BASEICONS['Shaft Miner'],
+  Hellminer: BASEICONS['Shaft Miner'],
   // Station Engineer - gears
   'Emergency Damage Control Technician': BASEICONS['Station Engineer'],
   Electrician: BASEICONS['Station Engineer'],

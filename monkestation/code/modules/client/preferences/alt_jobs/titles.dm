@@ -343,6 +343,7 @@
 		"Spelunker",
 		"Drill Technician",
 		"Prospector",
+		"Hellminer",
 	)
 
 /datum/job/station_engineer
