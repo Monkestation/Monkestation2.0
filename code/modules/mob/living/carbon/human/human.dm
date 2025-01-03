@@ -437,6 +437,8 @@
 	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
+			if(istype(hand, /obj/item/gun/ballistic/srn_rocketlauncher) && HAS_TRAIT(hand, TRAIT_WIELDED)) // monkestation edit: remember to wield your SRN so it won't get yanked out of your hand
+				continue
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
