@@ -9205,7 +9205,6 @@
 "dso" = (
 /obj/structure/chair/office/light,
 /obj/structure/cable,
-/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "dsq" = (
@@ -11254,6 +11253,17 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/cmo,
 /obj/structure/cable,
+/obj/item/stamp/head/cmo{
+	pixel_y = 12
+	},
+/obj/item/stamp/denied{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/stamp/granted{
+	pixel_y = 12;
+	pixel_x = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "edu" = (
@@ -19699,6 +19709,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stamp/centcom{
+	pixel_y = 10;
+	pixel_x = -1
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "hdx" = (
@@ -33162,6 +33176,14 @@
 /obj/item/radio/intercom/directional/east,
 /obj/item/folder/blue,
 /obj/item/hand_tele,
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/item/stamp/head/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -56231,6 +56253,10 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/item/stamp/granted{
+	pixel_y = 9;
+	pixel_x = -4
+	},
 /obj/item/stamp/head/hop{
 	pixel_x = -4;
 	pixel_y = 4
@@ -56251,6 +56277,10 @@
 	pixel_x = -6;
 	pixel_y = -34;
 	req_access = list("hop")
+	},
+/obj/item/stamp/denied{
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -58717,10 +58747,18 @@
 "uoO" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/stamp/head/rd,
 /obj/item/toy/figure/rd{
 	pixel_y = 10
 	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/rd,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "upe" = (
@@ -60232,9 +60270,22 @@
 "uOy" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/ce,
+/obj/item/stamp/head/ce{
+	pixel_y = 11
+	},
 /obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/stamp/head/ce{
+	pixel_y = 11
+	},
+/obj/item/stamp/denied{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/item/stamp/granted{
+	pixel_x = 9;
+	pixel_y = 11
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "uOH" = (
@@ -66485,6 +66536,14 @@
 /obj/item/folder/red{
 	pixel_x = -7;
 	pixel_y = 6
+	},
+/obj/item/stamp/denied{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
 	},
 /obj/item/stamp/head/hos,
 /turf/open/floor/wood,
