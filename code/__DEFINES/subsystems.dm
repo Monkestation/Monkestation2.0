@@ -164,6 +164,7 @@
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
+#define INIT_ORDER_CASSETTES 31 // monkestation addition: cassettes initialize before atoms, so that cassette stuff can be used in Initialize()
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25

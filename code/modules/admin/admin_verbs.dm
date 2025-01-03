@@ -19,7 +19,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/reload_admins,
 	/client/proc/requests,
 	/client/proc/secrets,
-	/client/proc/review_cassettes, /*monkestation addition Opens the Cassette Review menu*/
+#warn TODO: cassette reviews
+	// /client/proc/review_cassettes, /*monkestation addition Opens the Cassette Review menu*/
 	/client/proc/stop_sounds,
 	/client/proc/tag_datum_mapview,
 	)

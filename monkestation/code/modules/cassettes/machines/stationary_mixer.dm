@@ -1,3 +1,4 @@
+#warn TODO: advanced cassette deck
 /obj/machinery/cassette/adv_cassette_deck
 	name = "Advanced Cassette Deck"
 	desc = "A more advanced less portable Cassette Deck. Useful for recording songs from our generation, or customizing the style of your cassettes."
@@ -6,7 +7,7 @@
 	density = TRUE
 	pass_flags = PASSTABLE
 	///cassette tape used in adding songs or customizing
-	var/obj/item/device/cassette_tape/tape
+	var/obj/item/cassette_tape/tape
 	///Selection used to remove songs
 	var/selection
 
@@ -20,7 +21,7 @@
 	return TRUE
 
 /obj/machinery/cassette/adv_cassette_deck/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return ..()
 	if(!tape)
 		insert_tape(cassette)
@@ -29,7 +30,7 @@
 	else
 		to_chat(user,"Remove a tape first!")
 
-/obj/machinery/cassette/adv_cassette_deck/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/machinery/cassette/adv_cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 	tape = CTape
@@ -57,6 +58,7 @@
 		ui = new(user, src, "CassetteDeck", name)
 		ui.open()
 
+/*
 /obj/machinery/cassette/adv_cassette_deck/ui_data(mob/user)
 	///all data for the tgui
 	var/list/data = list()
@@ -193,3 +195,4 @@
 			else
 				tape.icon_state = design_path[design_names.Find(selection)]
 				tape.side2_icon = design_path[design_names.Find(selection)]
+*/

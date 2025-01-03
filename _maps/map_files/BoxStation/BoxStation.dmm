@@ -21341,53 +21341,6 @@
 /obj/machinery/quantum_server,
 /turf/open/floor/iron/dark,
 /area/station/security/bitden)
-"gSC" = (
-/obj/structure/sign/painting/library_private{
-	pixel_y = -32
-	},
-/obj/structure/table/wood,
-/obj/item/device/cassette_tape/friday{
-	pixel_y = 2;
-	pixel_x = 9
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "gSE" = (
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -26093,20 +26046,6 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
-"iuI" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "iuJ" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
 /obj/effect/turf_decal/bot_white,
@@ -42564,6 +42503,53 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"nOJ" = (
+/obj/structure/sign/painting/library_private{
+	pixel_y = -32
+	},
+/obj/structure/table/wood,
+/obj/item/cassette_tape/friday{
+	pixel_y = 2;
+	pixel_x = 9
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "nOK" = (
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/side{
@@ -50234,6 +50220,20 @@
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
+"qrg" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/rack,
+/obj/item/gun/energy/disabler{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "qrn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -103790,7 +103790,7 @@ oRs
 csZ
 gGx
 dAx
-iuI
+qrg
 lZV
 jZp
 jRr
@@ -122881,7 +122881,7 @@ qaG
 gji
 dOL
 nVc
-gSC
+nOJ
 nBE
 nep
 mhc

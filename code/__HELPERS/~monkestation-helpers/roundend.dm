@@ -37,6 +37,8 @@
 		if(total_payout)
 			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards.")
 
+#warn TODO: cassette refunds
+/*
 /datum/controller/subsystem/ticker/proc/refund_cassette()
 	if(!length(GLOB.cassette_reviews))
 		return
@@ -59,3 +61,4 @@
 			)
 			if(adjusted)
 				qdel(review)
+*/

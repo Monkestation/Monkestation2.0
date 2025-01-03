@@ -62,3 +62,5 @@
 	. = ..()
 	if(.)
 		config_entry_value *= 600 // documented as minutes
+
+/datum/config_entry/flag/cassettes_in_db
