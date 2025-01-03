@@ -1,4 +1,7 @@
 GLOBAL_LIST_EMPTY(preferences_datums)
+//MONKESTATION EDIT - Tells us what characters this user has played as, please god tell me theres something like this already and I don't have to do this.
+GLOBAL_LIST_EMPTY(played_character_list)
+//END OF EDIT
 
 /datum/preferences
 	var/client/parent
@@ -481,7 +484,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		all_quirks = list()
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
-/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
+/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE, addToCharacterList = FALSE) //MONKESTATION EDIT - Added "addToCharacterList = FALSE"
+	//MONKESTATION EDIT - Tells us what characters this user has played as, please god tell me theres something like this already and I don't have to do this.
+	if(addToCharacterList)
+		if(GLOB.played_character_list[parent.ckey] == null)
+			GLOB.played_character_list[parent.ckey] = list() //Initialize the slot list.
+		GLOB.played_character_list[parent.ckey] += default_slot
+	//END OF EDIT
 	apply_character_randomization_prefs(is_antag)
 	apply_prefs_to(character, icon_updates)
 
@@ -504,7 +513,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(icon_updates)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
-
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)

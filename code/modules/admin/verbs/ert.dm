@@ -188,7 +188,7 @@
 			if(isobserver(usr))
 				var/mob/living/carbon/human/admin_officer = new (brief_spawn || spawnpoints[1])
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
-				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
+				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(admin_officer, is_antag = TRUE) >> safe_transfer_prefs_to(admin_officer, is_antag = TRUE, addToCharacterList = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
 				admin_officer.key = usr.key
 
@@ -243,7 +243,7 @@
 			// MONKESTATION EDIT - Non-Carbon compatibility.
 			if(iscarbon(ert_operative))
 				var/mob/living/carbon/ert_operative_carbon = ert_operative
-				chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative_carbon, is_antag = TRUE)
+				chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative_carbon, is_antag = TRUE, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(ert_operative_carbon, is_antag = TRUE) >> safe_transfer_prefs_to(ert_operative_carbon, is_antag = TRUE, addToCharacterList = TRUE)
 
 				if(ertemplate.enforce_human || !(ert_operative_carbon.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
 					ert_operative_carbon.set_species(/datum/species/human)

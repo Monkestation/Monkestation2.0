@@ -19,6 +19,9 @@
 	var/can_transfer = TRUE
 	/// Weakref to the creator of this golem shell.
 	var/datum/weakref/owner_ref
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/human/golem/Initialize(mapload, datum/species/golem/species, mob/creator)
 	if(creator)

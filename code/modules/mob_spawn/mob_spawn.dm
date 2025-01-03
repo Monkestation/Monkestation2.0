@@ -139,6 +139,11 @@
 	/// Typepath indicating the kind of job datum this ghost role will have. PLEASE inherit this with a new job datum, it's not hard. jobs come with policy configs.
 	var/spawner_job_path = /datum/job/ghost_role
 
+	///MONKESTATION EDIT - stupid fucking variable to check if we are spawning a ghost using their character preferences and variable to check if this ghost role supports preferences
+	var/use_prefs = FALSE
+	var/support_prefs = TRUE
+	///END OF EDIT
+
 /obj/effect/mob_spawn/ghost_role/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -192,6 +197,20 @@
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
+	//MONKESTATION EDIT - Ghost roles can now use character preferences.
+	use_prefs = FALSE
+	if(!(user.client.prefs.default_slot in GLOB.played_character_list[user.ckey]) && support_prefs) //Have we never played this character before during this round, and do we support character preferences on this ghost role?
+		if(user.client.prefs.read_preference(/datum/preference/choiced/species) == /datum/species/plasmaman) //I am NOT making a million outfits for plasmamen.
+			to_chat(user, span_warning("Hey. We can't offer you preferences since you're a plasmaman and we cannot afford to expend the effort to make a million outfits. Sorry!"))
+		else
+			var/prompt = tgui_alert(usr, "Use character preferences?", buttons = list("Yes", "No", "Cancel"), timeout = 10 SECONDS)
+			if(prompt == "Cancel")
+				LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
+				return
+			if(prompt == "Yes")
+				use_prefs = TRUE
+	//END OF EDIT
+
 	if(uses <= 0 && !infinite_use) // Just in case something took longer than it should've and we got here after the uses went below zero.
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
@@ -233,9 +252,26 @@
 
 	return ..()
 
+//MONKESTATION EDIT - PREFERENCES
+/obj/effect/mob_spawn/ghost_role/proc/apply_preferences(mob/living/carbon/human/spawned_mob, mob/mob_possessor)
+	mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob, TRUE, FALSE, TRUE)
+	var/datum/outfit/outfit1 = new outfit()
+	outfit1.back = null
+	spawned_mob.equip_outfit_and_loadout(outfit1, mob_possessor.client.prefs)
+	qdel(outfit1)
+	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(mob_possessor.client.prefs.loadout_list))
+		if(length(item.restricted_roles))
+			continue
+		item.post_equip_item(mob_possessor.client.prefs, spawned_mob)
+	SSquirks.AssignQuirks(spawned_mob, mob_possessor.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
+//END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
+	//MONKESTATION EDIT - Check if we are using preferences.
+	if(use_prefs && mob_possessor)
+		apply_preferences(spawned_mob, mob_possessor)
+	//END OF EDIT
 	if(mob_possessor)
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
@@ -245,7 +281,6 @@
 	if(spawned_mind)
 		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
-
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")

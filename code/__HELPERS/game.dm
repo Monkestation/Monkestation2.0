@@ -196,7 +196,7 @@
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+	ghost_player.client.prefs.safe_transfer_prefs_to(new_character, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(new_character) >> safe_transfer_prefs_to(new_character, addToCharacterList = TRUE)
 	new_character.dna.update_dna_identity()
 	new_character.key = ghost_player.key
 

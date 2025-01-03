@@ -15,6 +15,9 @@
 	var/obj/structure/alien/resin/flower_bud/flower_bud
 	/// Used to determine when to notify ghosts
 	var/ready = FALSE
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/Destroy()
 	if(flower_bud) // anti harddel checks

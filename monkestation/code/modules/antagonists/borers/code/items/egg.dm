@@ -32,6 +32,9 @@
 	var/generation = 0
 	///the egg that is attached to this mob spawn
 	var/obj/item/borer_egg/host_egg = /obj/item/borer_egg
+	///MONKESTATION EDIT - stupid fucking variable to check if this ghost role supports preferences
+	support_prefs = FALSE
+	///END OF EDIT
 
 /obj/effect/mob_spawn/ghost_role/borer_egg/Destroy()
 	host_egg = null

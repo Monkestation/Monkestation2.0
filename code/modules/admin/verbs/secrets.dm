@@ -626,7 +626,7 @@ monkestation end */
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
+				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE, addToCharacterList = TRUE) //MONKESTATION EDIT - safe_transfer_prefs_to(spawnedMob, is_antag = TRUE) >> safe_transfer_prefs_to(spawnedMob, is_antag = TRUE, addToCharacterList = TRUE) - Does this count as playing a character?
 				spawnedMob.key = chosen.key
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
