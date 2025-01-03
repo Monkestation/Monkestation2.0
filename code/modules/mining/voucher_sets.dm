@@ -301,11 +301,15 @@
 		)
 
 /obj/item/storage/box/security_kit/brig_assistant/PopulateContents()
+	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/cargo_teleporter(src)
 	new /obj/item/clipboard(src)
 	new /obj/item/storage/crayons(src)
 	new /obj/item/storage/box/hug/plushes(src)
 	new /obj/item/modular_computer/laptop/preset/security(src)
+	new /obj/item/storage/medkit/regular(src)
+	new /obj/item/storage/pill_bottle/mannitol(src)
+	new /obj/item/storage/pill_bottle/neurine(src)
 
 /datum/voucher_set/security/assistant/detective
 	name = "Forensics Assistant Kit"
@@ -322,10 +326,16 @@
 	new /obj/item/tape/random(src)
 	new /obj/item/folder/red(src)
 	new /obj/item/storage/box/evidence(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/toy/crayon/white(src)
 	new /obj/item/binoculars(src)
+	new /obj/item/clothing/under/rank/security/detective/kim(src)
+	new /obj/item/clothing/suit/jacket/det_suit/kim(src)
+	new /obj/item/clothing/shoes/kim(src)
+	new /obj/item/clothing/gloves/kim(src)
+	new /obj/item/clothing/glasses/regular/kim(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_candy(src)
 	new /obj/item/lighter/greyscale(src)
+	new /obj/item/clothing/gloves/latex(src)
 
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
@@ -339,6 +349,7 @@
 /obj/item/storage/box/security_kit/buddycop/PopulateContents()
 	new /obj/item/clothing/head/helmet/surplus(src)
 	new /obj/item/clothing/suit/armor/surplus(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/gun/energy/taser/old(src)
 	new /obj/item/storage/box/pinpointer_pairs(src)
 	new /obj/item/book/manual/wiki/security_space_law(src)
