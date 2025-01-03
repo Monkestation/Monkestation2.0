@@ -124,13 +124,16 @@
 
 	to_chat(usr, "<b><i>An old wise voice echos your mind, it's voice distance and calm. You focus on voice; the world falls silent. With a satisfied treble, it begins to teach.</i></b>")
 
-	to_chat(usr, span_notice("Upgraded Punch") + ": " + span_memo("Your punches strike harder than normal."))
-	to_chat(usr, span_notice("Discomboulate") + ": " + span_memo("Disarm Grab.") + " Gentle key strikes to the temple; drains some of the opponents stamina, and confuses them for a moment.")
-	to_chat(usr, span_notice("Eye Poke") + ": " + span_memo("Harm Disarm.") + " Masterfully jab your fingers into your opponents eyes. Causes harm and makes it increasingly hard to see.")
-	to_chat(usr, span_notice("Judo Throw") + ": " + span_memo("Grab Disarm.") + " You and your opponent must not be on the floor. With a gentle maintained grasp, throw them to the floor draining their stamina and ability to stand up.")
-	to_chat(usr, span_notice("Armbar") + ": " + span_memo("Disarm Disarm Grab.") + " Twist the arm of a laying opponent causing them heavy exhaustion and knocking them into the floor. Standing leverage causes the opponent to drop their held possesions.")
-	to_chat(usr, span_notice("Wheel Throw") + ": " + span_memo("Armbar->Grab Disarm Harm.") + " Continuing from Armbar this dance will throw a laying opponent over your body and back into the ground. Heavy exhaustion, confusion, and loss of balance will follow.")
-	to_chat(usr, span_notice("Golden Blast") + ": " + span_memo("Help Disarm Help-Grab Disarm Disarm-Grab Help Disarm-Disarm Grab Help.") + " An absurdly intricate fighting move to demonstrate your mastery of the Judo arts. Hits opponent with golden energy. Knocks them down heavily causing confusion, exhaustion, balance loss.")
+	var/list/teach_msg = list()
+
+	teach_msg += span_notice("Upgraded Punch") + ": " + span_memo("Your punches strike harder than normal.")
+	teach_msg += span_notice("Discomboulate") + ": " + span_memo("Disarm Grab.") + " Gentle key strikes to the temple; drains some of the opponents stamina, and confuses them for a moment."
+	teach_msg += span_notice("Eye Poke") + ": " + span_memo("Harm Disarm.") + " Masterfully jab your fingers into your opponents eyes. Causes harm and makes it increasingly hard to see."
+	teach_msg += span_notice("Judo Throw") + ": " + span_memo("Grab Disarm.") + " You and your opponent must not be on the floor. With a gentle maintained grasp, throw them to the floor draining their stamina and ability to stand up."
+	teach_msg += span_notice("Armbar") + ": " + span_memo("Disarm Disarm Grab.") + " Twist the arm of a laying opponent causing them heavy exhaustion and knocking them into the floor. Standing leverage causes the opponent to drop their held possesions."
+	teach_msg += span_notice("Wheel Throw") + ": " + span_memo("Armbar->Grab Disarm Harm.") + " Continuing from Armbar this dance will throw a laying opponent over your body and back into the ground. Heavy exhaustion, confusion, and loss of balance will follow."
+	teach_msg += span_notice("Golden Blast") + ": " + span_memo("Help Disarm Help-Grab Disarm Disarm-Grab Help Disarm-Disarm Grab Help.") + " An absurdly intricate fighting move to demonstrate your mastery of the Judo arts. Hits opponent with golden energy. Knocks them down heavily causing confusion, exhaustion, balance loss."
+	to_chat(usr, teach_msg.Join("\n"))
 
 /datum/martial_art/corpjudo/Destroy()
 	if(holder)
