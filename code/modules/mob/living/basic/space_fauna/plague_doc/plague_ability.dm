@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/conjure/plague_summon_minions
 	name = "Summon Cured Ones"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "art_summon"
+	button_icon_state = "summon_dead"
 	invocation = "Come forth cured ones; let no disease be!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
