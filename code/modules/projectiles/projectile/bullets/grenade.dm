@@ -10,7 +10,7 @@
 
 //MONKESTATION EDIT START
 /obj/projectile/bullet/a40mm/proc/explosive_power(atom/target)
-	explosion(target, devastation_range = -1, light_impact_range = 3, flame_range = 3, flash_range = 2, adminlog = FALSE, explosion_cause = src)
+	explosion(target, devastation_range = -1, light_impact_range = 3, flame_range = 0, flash_range = 2, adminlog = FALSE, explosion_cause = src)
 
 /obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
