@@ -18,10 +18,10 @@
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
 /datum/armor/scales
-	melee = 20
-	bullet = 20
-	laser = 20
-	wound = 20
+	melee = 40
+	bullet = 40
+	laser = 40
+	wound = 50
 
 /datum/martial_art/tribal_claw/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
@@ -95,8 +95,8 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 
 	//balance feature, prevents damage bonus
 	if(LAZYLEN(head?.wounds) > 0)
-		for(var/i in head.wounds)
-			if (i == critical_wound_type)
+		for(var/wound in head.wounds)
+			if (istype(wound, critical_wound_type))
 				is_jugcut = TRUE
 				break
 

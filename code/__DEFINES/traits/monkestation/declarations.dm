@@ -81,8 +81,9 @@
 // Traits given by quirks
 #define TRAIT_ANIME				"anime"
 #define TRAIT_CAT				"cat"
+#define TRAIT_FEEBLE			"feeble"
 #define TRAIT_GOURMAND			"gourmand"
-#define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
+#define TRAIT_CLOWN_DISBELIEVER	"clown_disbeliever"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_JAILBIRD			"jailbird"
 #define TRAIT_LOUD_ASS			"loud_ass"
@@ -120,6 +121,8 @@
 #define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)
 #define TRAIT_TRASH_ITEM			"trash_item"
+/// This item came from a gift.
+#define TRAIT_GIFT_ITEM				"gift_item"
 
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.

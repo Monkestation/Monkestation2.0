@@ -48942,9 +48942,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "lzH" = (
@@ -68819,8 +68816,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "qoo" = (
-/obj/structure/table/wood,
-/obj/item/pai_card,
+/obj/machinery/vending/access/command,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "qoA" = (
@@ -81869,7 +81865,11 @@
 	},
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/requests_console/directional/west{
+	name = "Telecomms Requests Console";
+	department = "Telecomms Admin"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "txd" = (
@@ -95050,7 +95050,7 @@
 	icon_state = "L9"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall15";
+	codes_txt = "patrol;next_patrol=hall1";
 	location = "hall14"
 	},
 /turf/open/floor/iron,
@@ -97970,10 +97970,6 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
-"xop" = (
-/obj/machinery/atmospherics/components/tank,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/storage)
 "xoI" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -133206,8 +133202,8 @@ qMB
 wtS
 dQq
 hIB
-xop
-xop
+pGi
+pGi
 eam
 rHp
 rSR
@@ -133463,8 +133459,8 @@ vUe
 sav
 pNH
 hIB
-xop
-xop
+pGi
+pGi
 ehk
 kLi
 kLi
@@ -133721,7 +133717,7 @@ eNE
 xXR
 hIB
 pGi
-xop
+pGi
 ehk
 agq
 hbA

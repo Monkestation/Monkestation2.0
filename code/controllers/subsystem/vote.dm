@@ -87,7 +87,8 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.get_result_text(winners, final_winner, non_voters)
 
 	log_vote(to_display)
-	to_chat(world, "\n" + examine_block(span_infoplain(vote_font("[to_display]"))) + "\n", type = MESSAGE_TYPE_OOC) // monkestation edit: wrap in examine block, use MESSAGE_TYPE_OOC
+	if(to_display)
+		to_chat(world, span_infoplain(vote_font("[to_display]")), type = MESSAGE_TYPE_OOC)
 
 	// Finally, doing any effects on vote completion
 	if (final_winner) // if no one voted final_winner will be null
@@ -106,13 +107,14 @@ SUBSYSTEM_DEF(vote)
 	// monkestation start
 	if(!current_vote.can_vote(voter))
 		return
+	var/patreon_rank = get_player_details(voter)?.patreon?.access_rank
 	// monkestation end
 
 	// If user has already voted, remove their specific vote
 	if(voter.ckey in current_vote.choices_by_ckey)
 		var/their_old_vote = current_vote.choices_by_ckey[voter.ckey]
 		//monkestation edit start
-		if(current_vote.donator_multiplier && voter?.client?.patreon?.access_rank >= 3)
+		if(current_vote.donator_multiplier && patreon_rank >= 3)
 			current_vote.choices[their_old_vote] -= current_vote.donator_multiplier
 		else
 			current_vote.choices[their_old_vote]--
@@ -122,7 +124,7 @@ SUBSYSTEM_DEF(vote)
 
 	current_vote.choices_by_ckey[voter.ckey] = their_vote
 	//monkestation edit start
-	if(current_vote.donator_multiplier && voter?.client?.patreon?.access_rank >= 3)
+	if(current_vote.donator_multiplier && patreon_rank >= 3)
 		current_vote.choices[their_vote] += current_vote.donator_multiplier
 	else
 		current_vote.choices[their_vote]++
@@ -140,6 +142,7 @@ SUBSYSTEM_DEF(vote)
 	// monkestation start
 	if(!current_vote.can_vote(voter))
 		return
+	var/patreon_rank = get_player_details(voter)?.patreon?.access_rank
 	// monkestation end
 	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
@@ -149,7 +152,7 @@ SUBSYSTEM_DEF(vote)
 	if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
 		current_vote.choices_by_ckey[voter.ckey + their_vote] = 0
 		//monkestation edit start
-		if(current_vote.donator_multiplier && voter?.client?.patreon?.access_rank >= 3)
+		if(current_vote.donator_multiplier && patreon_rank >= 3)
 			current_vote.choices[their_vote] -= current_vote.donator_multiplier
 		else
 			current_vote.choices[their_vote]--
@@ -158,7 +161,7 @@ SUBSYSTEM_DEF(vote)
 	else
 		current_vote.choices_by_ckey[voter.ckey + their_vote] = 1
 		//monkestation edit start
-		if(current_vote.donator_multiplier && voter?.client?.patreon?.access_rank >= 3)
+		if(current_vote.donator_multiplier && patreon_rank >= 3)
 			current_vote.choices[their_vote] += current_vote.donator_multiplier
 		else
 			current_vote.choices[their_vote]++
@@ -233,9 +236,9 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
-	to_chat(world, "\n" + examine_block(span_infoplain(vote_font("[span_bold(to_display)]\n\
+	to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
-		You have [DisplayTimeText(duration)] to vote."))) + "\n", type = MESSAGE_TYPE_OOC) // monkestation edit: wrap in examine block, use MESSAGE_TYPE_OOC
+		You have [DisplayTimeText(duration)] to vote."))), type = MESSAGE_TYPE_OOC)
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
