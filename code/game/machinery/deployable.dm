@@ -174,12 +174,12 @@
 		set_density(TRUE)
 		icon_state = "barrier1"
 		locked = TRUE
-		playsound(src, 'sound/machines/boltsup.ogg', 30)
+		playsound(src, 'sound/machines/boltsup.ogg', 45)
 	else
 		set_density(FALSE)
 		icon_state = "barrier0"
 		locked = FALSE
-		playsound(src, 'sound/machines/boltsdown.ogg', 30)
+		playsound(src, 'sound/machines/boltsdown.ogg', 45)
 	update_appearance()
 
 /obj/structure/barricade/security/attackby(obj/item/tool, mob/living/user, params)
