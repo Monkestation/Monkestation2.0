@@ -221,6 +221,30 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
+	replace_secondary_magazine(weapon, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+	if(secondary_magazine)
+		unload_secondary_magazine(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
+	var/primary_magazine = magazine
+	var/alternative_magazine = secondary_magazine
+	magazine = alternative_magazine
+	secondary_magazine = primary_magazine
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	update_appearance()
+
+/obj/item/gun/ballistic/shotgun/bulldog/proc/unload_secondary_magazine(mob/user)
+	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
+	secondary_magazine = null
+	user.put_in_hands(old_mag)
+	update_appearance()
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+
+/obj/item/gun/ballistic/shotgun/bulldog/replace_secondary_magazine(obj/item/weapon, mob/user)
 	if(!istype(weapon, secondary_magazine_type))
 		balloon_alert(user, "[weapon.name] doesn't fit!")
 		return SECONDARY_ATTACK_CALL_NORMAL
@@ -232,24 +256,6 @@
 	if(old_mag)
 		user.put_in_hands(old_mag)
 	balloon_alert(user, "secondary [magazine_wording] loaded")
-	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
-	update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
-	if(secondary_magazine)
-		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
-		secondary_magazine = null
-		user.put_in_hands(old_mag)
-		update_appearance()
-		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
-	var/primary_magazine = magazine
-	var/alternative_magazine = secondary_magazine
-	magazine = alternative_magazine
-	secondary_magazine = primary_magazine
 	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	update_appearance()
 
