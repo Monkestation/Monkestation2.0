@@ -19372,6 +19372,10 @@
 	pixel_y = 2
 	},
 /obj/item/folder/blue,
+/obj/item/stamp/centcom{
+	pixel_y = 8;
+	pixel_x = -6
+	},
 /obj/item/stamp/denied{
 	pixel_x = -6;
 	pixel_y = 4
@@ -32167,8 +32171,14 @@
 	pixel_y = 6
 	},
 /obj/item/folder/white,
+/obj/item/stamp/granted{
+	pixel_y = 11
+	},
+/obj/item/stamp/denied{
+	pixel_y = 6
+	},
 /obj/item/stamp/head/cmo{
-	pixel_y = 5
+	pixel_y = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
@@ -75759,8 +75769,14 @@
 	},
 /obj/item/folder/yellow,
 /obj/item/lighter,
-/obj/item/stamp/head/ce,
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/item/stamp/granted{
+	pixel_y = 11
+	},
+/obj/item/stamp/denied{
+	pixel_y = 6
+	},
+/obj/item/stamp/head/ce,
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/ce)
 "oKi" = (
@@ -77255,7 +77271,6 @@
 	dir = 4
 	},
 /obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 16
@@ -77269,6 +77284,13 @@
 	pixel_y = -8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/stamp/granted{
+	pixel_y = 11
+	},
+/obj/item/stamp/denied{
+	pixel_y = 6
+	},
+/obj/item/stamp/head/qm,
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "oYT" = (
@@ -77432,7 +77454,6 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/item/stamp/head/hos,
 /obj/machinery/keycard_auth{
 	pixel_x = 15
 	},
@@ -77440,6 +77461,15 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/hos,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "paq" = (
@@ -108442,6 +108472,14 @@
 "uYq" = (
 /obj/structure/table/glass,
 /obj/item/folder/white,
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/item/stamp/head/rd,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
