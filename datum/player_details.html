@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;player_details - MonkeStation 2.0</title>
+</head>
+<body>
+<header>
+    <a href="index.html">MonkeStation 2.0</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/player_details.html#var">Var Details</a> - <a href="datum/player_details.html#proc">Proc Details</a></header>
+<main>
+<h1>player_details <aside>/<a href="datum.html">datum</a>/<a href="datum/player_details.html">player_details</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/player_details.html#var/achievements">achievements</a></th><td>Tracks achievements they have earned</td></tr>
+            <tr><th><a href="datum/player_details.html#var/active_challenges">active_challenges</a></th><td>Currently active challenges.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/applied_challenges">applied_challenges</a></th><td>Currently applied challenges.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/byond_build">byond_build</a></th><td>Build number of BYOND this client is using.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/byond_version">byond_version</a></th><td>Major version of BYOND this client is using.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/challenge_menu">challenge_menu</a></th><td>The challenge menu for this mob.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/ckey">ckey</a></th><td>The ckey of the player this is tied to.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/logging">logging</a></th><td>Tracks client action logging</td></tr>
+            <tr><th><a href="datum/player_details.html#var/patreon">patreon</a></th><td>Patreon data for this player.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/played_names">played_names</a></th><td>List of names this key played under this round
+assoc list of name -&gt; mob tag</td></tr>
+            <tr><th><a href="datum/player_details.html#var/player_actions">player_actions</a></th><td>Action datums assigned to this player</td></tr>
+            <tr><th><a href="datum/player_details.html#var/post_login_callbacks">post_login_callbacks</a></th><td>Callbacks invoked when this client logs in again</td></tr>
+            <tr><th><a href="datum/player_details.html#var/post_logout_callbacks">post_logout_callbacks</a></th><td>Callbacks invoked when this client logs out</td></tr>
+            <tr><th><a href="datum/player_details.html#var/roundend_monkecoin_bonus">roundend_monkecoin_bonus</a></th><td>Bonus monkecoins to reward this player at roundend.</td></tr>
+            <tr><th><a href="datum/player_details.html#var/twitch">twitch</a></th><td>Twitch subscription data for this player.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/player_details.html#proc/find_current_mob">find_current_mob</a></th><td>Finds the current mob this player is in control of.</td></tr>
+            <tr><th><a href="datum/player_details.html#proc/full_byond_version">full_byond_version</a></th><td>Returns the full version string (i.e 515.1642) of the BYOND version and build.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/achievements"><aside class="declaration">var </aside>achievements
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/achievement_data.html">achievement_data</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 26"/></a></h3>
+        <p>Tracks achievements they have earned</p><h3 id="var/active_challenges"><aside class="declaration">var </aside>active_challenges
+            <aside>&ndash; /list/datum/challenge</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L7">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 7"/></a></h3>
+        <p>Currently active challenges.</p><h3 id="var/applied_challenges"><aside class="declaration">var </aside>applied_challenges
+            <aside>&ndash; /list/datum/challenge</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L9">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 9"/></a></h3>
+        <p>Currently applied challenges.</p><h3 id="var/byond_build"><aside class="declaration">var </aside>byond_build
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 22"/></a></h3>
+        <p>Build number of BYOND this client is using.</p><h3 id="var/byond_version"><aside class="declaration">var </aside>byond_version
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 20"/></a></h3>
+        <p>Major version of BYOND this client is using.</p><h3 id="var/challenge_menu"><aside class="declaration">var </aside>challenge_menu
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/challenge_selector.html">challenge_selector</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L11">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 11"/></a></h3>
+        <p>The challenge menu for this mob.</p><h3 id="var/ckey"><aside class="declaration">var </aside>ckey
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 7"/></a></h3>
+        <p>The ckey of the player this is tied to.</p><h3 id="var/logging"><aside class="declaration">var </aside>logging
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 11"/></a></h3>
+        <p>Tracks client action logging</p><h3 id="var/patreon"><aside class="declaration">var </aside>patreon
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/patreon_data.html">patreon_data</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L3">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 3"/></a></h3>
+        <p>Patreon data for this player.</p><h3 id="var/played_names"><aside class="declaration">var </aside>played_names
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 18"/></a></h3>
+        <p>List of names this key played under this round
+assoc list of name -&gt; mob tag</p><h3 id="var/player_actions"><aside class="declaration">var </aside>player_actions
+            <aside>&ndash; /list/datum/action</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 9"/></a></h3>
+        <p>Action datums assigned to this player</p><h3 id="var/post_login_callbacks"><aside class="declaration">var </aside>post_login_callbacks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 13"/></a></h3>
+        <p>Callbacks invoked when this client logs in again</p><h3 id="var/post_logout_callbacks"><aside class="declaration">var </aside>post_logout_callbacks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 15"/></a></h3>
+        <p>Callbacks invoked when this client logs out</p><h3 id="var/roundend_monkecoin_bonus"><aside class="declaration">var </aside>roundend_monkecoin_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L13">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 13"/></a></h3>
+        <p>Bonus monkecoins to reward this player at roundend.</p><h3 id="var/twitch"><aside class="declaration">var </aside>twitch
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/twitch_data.html">twitch_data</a></aside>
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L5">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 5"/></a></h3>
+        <p>Twitch subscription data for this player.</p><h2 id="proc">Proc Details</h2><h3 id="proc/find_current_mob"><aside class="declaration">proc </aside>find_current_mob<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/monkestation/code/modules/client/player_details.dm#L21">
+        <img src="git.png" width="16" height="16" title="monkestation&#x2F;code&#x2F;modules&#x2F;client&#x2F;player_details.dm 21"/></a></aside>
+        </h3>
+        <p>Finds the current mob this player is in control of.</p><h3 id="proc/full_byond_version"><aside class="declaration">proc </aside>full_byond_version<aside>() 
+        
+    
+            <a href="https://github.com/Monkestation/Monkestation2.0/blob/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee/code/modules/client/player_details.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;player_details.dm 37"/></a></aside>
+        </h3>
+        <p>Returns the full version string (i.e 515.1642) of the BYOND version and build.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Monkestation/Monkestation2.0/tree/2dc9b69dfb531aea0cc5d2c81c1ee2be851630ee">2dc9b69</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
