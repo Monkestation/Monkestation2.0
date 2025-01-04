@@ -242,6 +242,10 @@
 	return TRUE
 
 /datum/species/ipc/proc/state_laws(mob/living/owner)
+	if(owner.stat > SOFT_CRIT)
+		forced_speech = 0
+		return
+
 	owner.say(generate_ion_law())
 	forced_speech--
 	if(forced_speech) // We keep going until its all over
