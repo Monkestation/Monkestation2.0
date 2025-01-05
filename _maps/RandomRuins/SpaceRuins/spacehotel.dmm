@@ -352,7 +352,7 @@
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "db" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)

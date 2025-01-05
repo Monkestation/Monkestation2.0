@@ -674,7 +674,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 9
 	},
 /area/ruin/powered/beach)
@@ -707,11 +707,11 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "yT" = (
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "yY" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/ruin/powered/beach)
@@ -878,7 +878,7 @@
 /area/ruin/powered/beach)
 "EL" = (
 /obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 1
 	},
 /area/ruin/powered/beach)
@@ -1041,7 +1041,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 10
 	},
 /area/ruin/powered/beach)
@@ -1059,7 +1059,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 4
 	},
 /area/ruin/powered/beach)
@@ -1084,7 +1084,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "Ld" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 5
 	},
 /area/ruin/powered/beach)
@@ -1223,12 +1223,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ro" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 1
 	},
 /area/ruin/powered/beach)
 "Rx" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/ruin/powered/beach)
@@ -1416,7 +1416,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "WV" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 6
 	},
 /area/ruin/powered/beach)

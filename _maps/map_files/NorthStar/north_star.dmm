@@ -6618,7 +6618,7 @@
 "bCM" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	desc = "refreshing!";
 	name = "treated water"
 	},
@@ -10721,7 +10721,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	desc = "refreshing!";
 	name = "treated water"
 	},
@@ -32243,7 +32243,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "iNe" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	desc = "refreshing!";
 	name = "treated water"
 	},
@@ -57434,7 +57434,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	desc = "refreshing!";
 	name = "treated water"
 	},
@@ -85870,7 +85870,7 @@
 /area/station/maintenance/floor4/starboard)
 "xbz" = (
 /obj/machinery/light/dim/directional/north,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	desc = "refreshing!";
 	name = "treated water"
 	},

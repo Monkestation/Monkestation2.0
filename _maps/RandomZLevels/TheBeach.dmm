@@ -15,12 +15,12 @@
 /turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "ad" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 1
 	},
 /area/awaymission/beach)
 "ae" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/awaymission/beach)
@@ -40,7 +40,7 @@
 	},
 /area/awaymission/beach)
 "ai" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 4
 	},
 /area/awaymission/beach)
@@ -86,7 +86,7 @@
 	},
 /area/awaymission/beach)
 "ar" = (
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach,
 /area/awaymission/beach)
 "as" = (
 /obj/structure/flora/rock/style_random{
@@ -147,12 +147,12 @@
 	},
 /area/awaymission/beach)
 "aw" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 6
 	},
 /area/awaymission/beach)
 "ax" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 10
 	},
 /area/awaymission/beach)
@@ -239,7 +239,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/beach)
 "aY" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 5
 	},
 /area/awaymission/beach)
@@ -395,7 +395,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "bw" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 9
 	},
 /area/awaymission/beach)

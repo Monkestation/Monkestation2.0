@@ -26,7 +26,7 @@
 /turf/open/floor/plating/beach/sand : /turf/open/misc/beach/sand{@OLD}
 /turf/open/floor/plating/beach/coastline_t : /turf/open/misc/beach/coastline_t{@OLD}
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner : /turf/open/misc/beach/coastline_t/sandwater_inner{@OLD}
-/turf/open/floor/plating/beach/coastline_b : /turf/open/misc/beach/coastline_b{@OLD}
+/turf/open/floor/plating/beach/coastline_b : /turf/open/water/beach{@OLD}
 /turf/open/floor/plating/beach/water : /turf/open/water/beach{@OLD}
 
 /turf/open/floor/grass/snow : /turf/open/misc/snow{@OLD}

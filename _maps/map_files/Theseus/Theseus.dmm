@@ -22589,7 +22589,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "gNY" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/station/maintenance/department/medical)
@@ -24693,7 +24693,7 @@
 	name = "Robbie";
 	real_name = "Robbie"
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/station/maintenance/department/medical)

@@ -158,7 +158,7 @@
 /area/station/service/bar)
 "fw" = (
 /obj/structure/railing,
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 6
 	},
 /area/station/commons/lounge)
@@ -172,7 +172,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "hh" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 1
 	},
 /area/station/commons/lounge)
@@ -317,7 +317,7 @@
 	},
 /area/station/commons/lounge)
 "kB" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 10
 	},
 /area/station/commons/lounge)
@@ -464,7 +464,7 @@
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "oL" = (
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach,
 /area/station/commons/lounge)
 "oN" = (
 /obj/effect/landmark/start/hangover,
@@ -495,7 +495,7 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "pi" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 5
 	},
 /area/station/commons/lounge)
@@ -580,7 +580,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 5
 	},
 /area/station/commons/lounge)
@@ -644,7 +644,7 @@
 /area/station/commons/lounge)
 "sM" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach,
 /area/station/commons/lounge)
 "tk" = (
 /obj/structure/disposalpipe/junction{
@@ -749,13 +749,13 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "wI" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 4
 	},
 /area/station/commons/lounge)
 "wR" = (
 /obj/structure/flora/bush/reed/style_random,
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach,
 /area/station/commons/lounge)
 "xw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -813,7 +813,7 @@
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "zh" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 6
 	},
 /area/station/commons/lounge)
@@ -1245,7 +1245,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "LD" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/water/beach{
 	dir = 8
 	},
 /area/station/commons/lounge)
