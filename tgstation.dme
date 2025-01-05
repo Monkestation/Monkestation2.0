@@ -3021,7 +3021,6 @@
 #include "code\modules\antagonists\heretic\magic\space_crawl.dm"
 #include "code\modules\antagonists\heretic\magic\star_blast.dm"
 #include "code\modules\antagonists\heretic\magic\star_touch.dm"
-#include "code\modules\antagonists\heretic\magic\void_cold_cone.dm"
 #include "code\modules\antagonists\heretic\magic\void_conduit.dm"
 #include "code\modules\antagonists\heretic\magic\void_phase.dm"
 #include "code\modules\antagonists\heretic\magic\void_prison.dm"
