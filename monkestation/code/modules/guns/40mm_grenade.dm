@@ -23,7 +23,6 @@
 
 /obj/projectile/bullet/a40mm
 	name ="40mm grenade"
-	desc = "USE A WEEL GUN"
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 60
@@ -49,7 +48,7 @@
 	return ..()
 
 //--------------------------
-// Rubber Slug 40mm Grenade
+// 40mm Rubber Slug Grenade
 // -------------------------
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
@@ -59,7 +58,7 @@
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
-	name = "rubber slug"
+	name = "40mm rubber slug"
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
@@ -79,15 +78,14 @@
 
 /obj/projectile/bullet/a40mm/weak
 	name ="light 40mm grenade"
-	desc = "use a weel gun"
 	damage = 30
 
 /obj/projectile/bullet/a40mm/weak/payload(atom/target)
 	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 3, flame_range = 0, flash_range = 1, adminlog = FALSE, explosion_cause = src)
 
-//------------------------
-// Incendiary 40mm Grenade
-// -----------------------
+//-------------------------
+// 40mm Incendiary Grenade
+// ------------------------
 /obj/item/ammo_casing/a40mm/incendiary
 	name = "40mm incendiary shell"
 	desc = "A cased incendiary grenade that can only be activated once fired out of a grenade launcher."
@@ -95,8 +93,7 @@
 	projectile_type = /obj/projectile/bullet/a40mm/incendiary
 
 /obj/projectile/bullet/a40mm/incendiary
-	name ="40mm inendiary grenade"
-	desc = "use a weel gun"
+	name ="40mm incendiary grenade"
 	damage = 15
 
 /obj/projectile/bullet/a40mm/incendiary/payload(atom/target)
@@ -110,14 +107,20 @@
 
 	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
 		if(valid_turf(our_turf, nearby_turf))
-			new /obj/effect/hotspot(nearby_turf)
-			nearby_turf.hotspot_expose(750, 125, 1)
-			for(var/mob/living/crispy_living in nearby_turf.contents)
-				crispy_living.apply_damage(30, BURN)
-				if(iscarbon(crispy_living))
-					var/mob/living/carbon/crispy_carbon = crispy_living
-					crispy_carbon.adjust_fire_stacks(10)
-					crispy_carbon.ignite_mob()
+		var/obj/effect/hotspot/fire_tile = locate(nearby_turf) || new(nearby_turf)
+		if(prob(75)) //vary it a lil
+			fire_tile.light_color = pick(list(
+				LIGHT_COLOR_INTENSE_RED,
+				LIGHT_COLOR_LAVA,
+				LIGHT_COLOR_FLARE,
+			))
+		nearby_turf.hotspot_expose(750, 125, 1)
+		for(var/mob/living/crispy_living in nearby_turf.contents)
+			crispy_living.apply_damage(30, BURN)
+			if(iscarbon(crispy_living))
+				var/mob/living/carbon/crispy_carbon = crispy_living
+				crispy_carbon.adjust_fire_stacks(10)
+				crispy_carbon.ignite_mob()
 
 	explosion(target, flame_range = 1, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 
@@ -126,6 +129,46 @@
 		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 			return FALSE
 	return TRUE
+
+//--------------------
+// 40mm Smoke Grenade
+// -------------------
+/obj/item/ammo_casing/a40mm/smoke
+	name = "40mm smoke shell"
+	desc = "A cased smoke grenade that can only be activated once fired out of a grenade launcher."
+	icon_state = "40mmSMOKE"
+	projectile_type = /obj/projectile/bullet/a40mm/smoke
+
+/obj/projectile/bullet/a40mm/smoke
+	name ="40mm smoke grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	damage = 15
+
+/obj/projectile/bullet/a40mm/smoke/payload(atom/target)
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+	smoke.set_up(4, holder = src, location = src)
+	smoke.start()
+
+//--------------------
+// 40mm Stun Grenade
+// -------------------
+/obj/item/ammo_casing/a40mm/stun
+	name = "40mm smoke shell"
+	desc = "A cased stun grenade that can only be activated once fired out of a grenade launcher."
+	icon_state = "40mmSTUN"
+	projectile_type = /obj/projectile/bullet/a40mm/smoke
+
+/obj/projectile/bullet/a40mm/stun
+	name ="40mm stun grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	damage = 15
+
+/obj/projectile/bullet/a40mm/stun/payload(atom/target)
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+	smoke.set_up(4, holder = src, location = src)
+	smoke.start()
 
 // GRENADE BOX!
 //--------------------
@@ -151,6 +194,11 @@
 /obj/item/storage/fancy/a40mm_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/ammo_casing/a40mm))
+
+/obj/item/storage/fancy/a40mm_box/attack_self(mob/user)
+	..()
+	if(open_status == FANCY_CONTAINER_OPEN)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 
 /obj/item/storage/fancy/a40mm_box/PopulateContents()
 	. = ..()
