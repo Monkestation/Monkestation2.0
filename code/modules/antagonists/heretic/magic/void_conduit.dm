@@ -33,7 +33,7 @@
 	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
 	var/list/overlayed_turfs = list()
 	///How many tiles far our effect is
-	var/effect_range = 12
+	var/effect_range = 8
 	///id of the deletion timer
 	var/timerid
 	///Audio loop for the rift being alive
@@ -42,7 +42,7 @@
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, start_immediately = TRUE)
-	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)
+	timerid = QDEL_IN_STOPPABLE(src, 30 SECONDS)
 	START_PROCESSING(SSobj, src)
 	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, src))
 		if(!isopenturf(affected_turf))
@@ -95,11 +95,11 @@
 
 			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
 				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(15, 30))
+				affected_door.take_damage(rand(5, 20))
 
 			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
 				var/obj/structure/affected_structure = thing_to_affect
-				affected_structure.take_damage(rand(10, 20))
+				affected_structure.take_damage(rand(5, 15))
 
 /datum/looping_sound/void_conduit
 	mid_sounds = 'sound/ambience/ambiatm1.ogg'
