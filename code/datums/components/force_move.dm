@@ -30,17 +30,25 @@
 	var/mob/mob_parent = parent
 	mob_parent.spin(1, 1)
 
-/datum/component/force_move/proc/slip_crash(datum/source, var/result, var/delay, turf/target_turf, /datum/move_loop/blocked)
+/datum/component/force_move/proc/slip_crash(datum/source, var/result, var/delay, turf/target_turf, datum/blocked)
 	SIGNAL_HANDLER
-	if(!result) // Something prevented us from moving into the space.
+	if(!result && istype(blocked, /datum/move_loop/has_target/move_towards)) // Something prevented us from moving into the space.
 		var/obj/machinery/vending/heavy_weight = (locate(/obj/machinery/vending) in target_turf)
-		var/obj/structure/table/tabled = (locate(/obj/structure/table) in target_turf)
-		if(istype(heavy_weight))
-			heavy_weight.tilt(parent)
+		var/obj/structure/slammed_struct = (locate(/obj/structure) in target_turf)
+		var/datum/move_loop/has_target/move_towards/blocked_move = blocked
+		if(istype(heavy_weight)) // When a stoppable force hits immovable capitalism.
+			heavy_weight.tilt(parent) // We hit the machine so let them hit back.
+			blocked_move.pause_loop() // Pause these loops unless you want the mob to keep going.
 
-		if(istype(tabled))
+			 // We hit a structure and we need to keep going.
+		if(istype(slammed_struct, /obj/structure/table) || istype(slammed_struct, /obj/structure/window/spawner/directional))
 			var/mob/mob_parent = parent
+			// We don't exactly know what stopped us. So throw us at the turf and let physics handle it.
 			mob_parent.throw_at(target_turf, 1, 1)
+			blocked_move.pause_loop() // Pause these loops unless you want the mob to keep going.
+
+		if(blocked_move.paused) // If we got paused should just end the slip chain
+			qdel(blocked)
 
 /datum/component/force_move/proc/loop_ended(datum/source)
 	SIGNAL_HANDLER
