@@ -108,10 +108,7 @@
 
 	var/turf/our_turf = get_turf(src)
 
-	explosion(target, flame_range = 4, flash_range = 3, adminlog = FALSE, explosion_cause = src)
-
-	for(var/turf/nearby_turf as anything in RANGE_TURFS(3, src))
-		//if(is_in_sight(our_turf, nearby_turf))
+	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
 		if(valid_turf(our_turf, nearby_turf))
 			new /obj/effect/hotspot(nearby_turf)
 			nearby_turf.hotspot_expose(750, 125, 1)
@@ -122,9 +119,11 @@
 					crispy_carbon.adjust_fire_stacks(10)
 					crispy_carbon.ignite_mob()
 
+	explosion(target, flame_range = 1, flash_range = 3, adminlog = FALSE, explosion_cause = src)
+
 /obj/projectile/bullet/a40mm/incendiary/proc/valid_turf(turf1, turf2)
 	for(var/turf/line_turf in get_line(turf1, turf2))
-		if(line_turf.is_blocked_turf(TRUE))
+		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 			return FALSE
 	return TRUE
 
