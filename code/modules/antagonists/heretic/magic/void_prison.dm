@@ -80,7 +80,7 @@
 	SIGNAL_HANDLER
 	stasis_overlay = null
 
-//----Voidball effect
+//Voidball effect
 /obj/effect/abstract/voidball
 	icon = 'icons/mob/actions/actions_ecult.dmi'
 	icon_state = "voidball_effect"

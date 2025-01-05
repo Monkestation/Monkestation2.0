@@ -46,8 +46,25 @@
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
-//for void heretic
+//void heretic
 /obj/effect/temp_visual/circle_wave/void_conduit
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/voidin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_in"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/voidout
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_out"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+

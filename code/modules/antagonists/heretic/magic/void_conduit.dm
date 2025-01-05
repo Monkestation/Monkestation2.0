@@ -8,7 +8,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "void_rift"
 
-	cooldown_time = 90 SECONDS
+	cooldown_time = 80 SECONDS
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
@@ -42,7 +42,7 @@
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, start_immediately = TRUE)
-	timerid = QDEL_IN_STOPPABLE(src, 30 SECONDS)
+	timerid = QDEL_IN_STOPPABLE(src, 45 SECONDS)
 	START_PROCESSING(SSobj, src)
 	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, src))
 		if(!isopenturf(affected_turf))
@@ -95,7 +95,7 @@
 
 			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
 				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(5, 20))
+				affected_door.take_damage(rand(5, 25))
 
 			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
 				var/obj/structure/affected_structure = thing_to_affect
@@ -109,6 +109,7 @@
 	falloff_distance = 5
 	falloff_exponent = 20
 
+//Effect applied to heretics in conduit radius
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
