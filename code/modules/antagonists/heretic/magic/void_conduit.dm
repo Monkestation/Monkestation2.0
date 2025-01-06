@@ -95,7 +95,7 @@
 
 			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
 				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(5, 25))
+				affected_door.take_damage(rand(10, 25))
 
 			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
 				var/obj/structure/affected_structure = thing_to_affect
@@ -109,6 +109,22 @@
 	falloff_distance = 5
 	falloff_exponent = 20
 
+/obj/effect/temp_visual/voidin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_in"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/voidout
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_out"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
 //Effect applied to heretics in conduit radius
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
@@ -121,3 +137,4 @@
 
 /datum/status_effect/void_conduit/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+
