@@ -114,6 +114,7 @@
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	id = "void_conduit"
 
 /datum/status_effect/void_conduit/on_apply()
 	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
