@@ -109,22 +109,6 @@
 	falloff_distance = 5
 	falloff_exponent = 20
 
-/obj/effect/temp_visual/voidin
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "void_blink_in"
-	alpha = 150
-	duration = 6
-	pixel_x = -32
-	pixel_y = -32
-
-/obj/effect/temp_visual/voidout
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "void_blink_out"
-	alpha = 150
-	duration = 6
-	pixel_x = -32
-	pixel_y = -32
-
 //Effect applied to heretics in conduit radius
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS

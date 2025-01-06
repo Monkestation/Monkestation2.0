@@ -58,3 +58,19 @@
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 		living_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+
+/obj/effect/temp_visual/voidin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_in"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/voidout
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_out"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
