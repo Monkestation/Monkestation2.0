@@ -51,6 +51,17 @@
 	inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED) ? "_wielded" : ""]"
 	return ..()
 
+/obj/item/comically_large_spoon/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is taking two spoonfuls with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	ADD_TRAIT(src, TRAIT_NODROP, SPOON_SUICIDE_TRAIT)
+	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, SPOON_SUICIDE_TRAIT)
+	user.anchored = TRUE
+	user.move_resist = INFINITY
+	lightningbolt(user)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE), 1 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NODROP, SPOON_SUICIDE_TRAIT), 1 SECONDS)
+	return MANUAL_SUICIDE
+
 /obj/item/comically_large_spoon/proc/on_wield(atom/source, mob/living/user)
 	hitsound = 'monkestation/sound/weapons/bat_hit.ogg'
 	block_chance = block_chance_wielded
