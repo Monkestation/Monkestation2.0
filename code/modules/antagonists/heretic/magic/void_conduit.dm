@@ -8,7 +8,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "void_rift"
 
-	cooldown_time = 80 SECONDS
+	cooldown_time = 90 SECONDS
 
 	sound = null
 	school = SCHOOL_FORBIDDEN

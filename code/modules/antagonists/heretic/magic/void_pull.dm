@@ -9,7 +9,7 @@
 	sound = 'sound/magic/voidblink.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 40 SECONDS
+	cooldown_time = 30 SECONDS
 
 	invocation = "BR'NG F'RTH TH'M T' M'."
 	invocation_type = INVOCATION_WHISPER
