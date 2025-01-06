@@ -268,8 +268,7 @@
 //MONKESTATION REMOVAL
 // /datum/uplink_item/ammo/a40mm
 // 	name = "40mm Grenade Box"
-// 	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. \
-// 			Your teammates will ask you to not shoot these down small hallways."
+// 	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. Your teammates will ask you to not shoot these down small hallways."
 // 	item = /obj/item/ammo_box/a40mm
 // 	cost = 6
 // 	purchasable_from = UPLINK_NUKE_OPS
