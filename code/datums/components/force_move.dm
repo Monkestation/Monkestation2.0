@@ -32,23 +32,20 @@
 
 /datum/component/force_move/proc/slip_crash(datum/source, var/result, var/delay, turf/target_turf, datum/blocked)
 	SIGNAL_HANDLER
-	if(!result && istype(blocked, /datum/move_loop/has_target/move_towards)) // Something prevented us from moving into the space.
-		var/obj/machinery/vending/heavy_weight = (locate(/obj/machinery/vending) in target_turf)
-		var/obj/structure/slammed_struct = (locate(/obj/structure) in target_turf)
+	if(!result && ishuman(parent) && istype(blocked, /datum/move_loop/has_target/move_towards)) // Something prevented us from moving into the space.
+		var/obj/machinery/heavy_weight = (locate(/obj/machinery/vending) in target_turf)
 		var/datum/move_loop/has_target/move_towards/blocked_move = blocked
-		if(istype(heavy_weight)) // When a stoppable force hits immovable capitalism.
-			heavy_weight.tilt(parent) // We hit the machine so let them hit back.
-			blocked_move.pause_loop() // Pause these loops unless you want the mob to keep going.
+		if(istype(heavy_weight, /obj/machinery/vending)) // When a stoppable force hits immovable capitalism.
+			blocked_move.lifetime = -1
+			INVOKE_ASYNC(heavy_weight, /obj/machinery/vending/proc/tilt, parent) // We hit the machine so let them hit back.
 
-			 // We hit a structure and we need to keep going.
-		if(istype(slammed_struct, /obj/structure/table) || istype(slammed_struct, /obj/structure/window/spawner/directional))
-			var/mob/mob_parent = parent
+		else
+			// We hit a structure and we need to keep going.
+			var/mob/living/mob_parent = parent
+			mob_parent.Immobilize(800) // Prevent them from throw bending around objects.
 			// We don't exactly know what stopped us. So throw us at the turf and let physics handle it.
-			mob_parent.throw_at(target_turf, 1, 1)
-			blocked_move.pause_loop() // Pause these loops unless you want the mob to keep going.
-
-		if(blocked_move.paused) // If we got paused should just end the slip chain
-			qdel(blocked)
+			blocked_move.lifetime = -1
+			INVOKE_ASYNC(mob_parent, /atom/movable/proc/throw_at, target_turf, 1, 1)
 
 /datum/component/force_move/proc/loop_ended(datum/source)
 	SIGNAL_HANDLER
