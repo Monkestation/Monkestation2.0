@@ -30,7 +30,7 @@
 	var/mob/mob_parent = parent
 	mob_parent.spin(1, 1)
 
-/datum/component/force_move/proc/slip_crash(datum/source, var/result, var/delay, turf/target_turf, datum/blocked)
+/datum/component/force_move/proc/slip_crash(datum/source, result, delay, turf/target_turf, datum/blocked)
 	SIGNAL_HANDLER
 	if(!result && ishuman(parent) && istype(blocked, /datum/move_loop/has_target/move_towards)) // Something prevented us from moving into the space.
 		var/obj/machinery/heavy_weight = (locate(/obj/machinery/vending) in target_turf)
@@ -42,7 +42,7 @@
 		else
 			// We hit a structure and we need to keep going.
 			var/mob/living/mob_parent = parent
-			mob_parent.Immobilize(800) // Prevent them from throw bending around objects.
+			mob_parent.Immobilize(0.8 SECONDS) // Prevent them from throw bending around objects.
 			// We don't exactly know what stopped us. So throw us at the turf and let physics handle it.
 			blocked_move.lifetime = -1
 			INVOKE_ASYNC(mob_parent, /atom/movable/proc/throw_at, target_turf, 1, 1)
