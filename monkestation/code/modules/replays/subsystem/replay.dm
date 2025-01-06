@@ -69,9 +69,14 @@ SUBSYSTEM_DEF(demo)
 	if(!CONFIG_GET(flag/demos_enabled))
 		flags |= SS_NO_FIRE
 		can_fire = FALSE // we also set this, as the mark procs check this var specifically
+		pre_init_lines.Cut()
+		icon_cache.Cut()
+		icon_state_caches.Cut()
+		name_cache.Cut()
 		marked_dirty.Cut()
 		marked_new.Cut()
 		marked_turfs.Cut()
+		del_list.Cut()
 		return SS_INIT_NO_NEED
 
 	var/rounder = file("[GLOB.demo_directory]/round_number.txt")
