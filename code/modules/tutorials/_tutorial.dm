@@ -39,7 +39,7 @@
 /// If FALSE, does not mean it won't come back later.
 /datum/tutorial/proc/should_perform()
 	SHOULD_CALL_PARENT(FALSE)
-	return TRUE
+	return FALSE
 
 /// Called by the tutorial when the user has successfully completed it.
 /// Will mark it as completed in the datbaase and kick off destruction of the tutorial.
@@ -183,30 +183,7 @@
 
 /// Checks if the user should be given this tutorial
 /datum/tutorial_manager/proc/should_run(mob/user)
-	var/ckey = user.ckey
-
-	if (isnull(ckey))
-		return FALSE
-
-	if (ckey in finished_ckeys)
-		return FALSE
-
-	if (ckey in performing_ckeys)
-		return FALSE
-
-	if (!SSdbcore.IsConnected())
-		return CONFIG_GET(flag/give_tutorials_without_db)
-
-	var/player_join_date = user.client?.player_join_date
-	if (isnull(player_join_date))
-		return FALSE
-
-	// This works because ISO-8601 is cool
-	var/grandfather_date = initial(tutorial_type.grandfather_date)
-	if (!isnull(grandfather_date) && player_join_date < grandfather_date)
-		return FALSE
-
-	return TRUE
+	return FALSE
 
 /// Marks the tutorial as completed.
 /// Call `/datum/tutorial/proc/complete()` instead.
