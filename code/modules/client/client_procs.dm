@@ -554,10 +554,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-
+/*
 	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
 		interviewee = TRUE
 		register_for_interview()
+*/
 
 	if (!interviewee)
 		initialize_menus()
@@ -966,9 +967,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				string += ", "
 			string += "Mobile Hostspot IP"
 
+/*
 	if(failed && !(ckey in GLOB.interviews.approved_ckeys))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
+*/
 
 	if(ckey in GLOB.interviews.approved_ckeys)
 		return FALSE

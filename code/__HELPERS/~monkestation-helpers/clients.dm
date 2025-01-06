@@ -22,19 +22,7 @@
 	return client?.holder
 
 /proc/should_be_interviewing(mob/target)
-	. = FALSE
-	if(QDELETED(target))
-		return
-	. = target.client?.interviewee
-	var/ckey = target.ckey
-	if(ckey)
-		if(ckey in GLOB.interviews.approved_ckeys)
-			return FALSE
-		var/datum/interview/interview = GLOB.interviews.open_interviews[ckey]
-		if(interview && interview.status != INTERVIEW_APPROVED)
-			return TRUE
-		if(ckey in GLOB.interviews.cooldown_ckeys)
-			return TRUE
+	return FALSE
 
 /proc/interview_safety(mob/target, context)
 	. = should_be_interviewing(target)
