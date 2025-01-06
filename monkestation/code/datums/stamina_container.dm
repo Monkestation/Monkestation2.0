@@ -28,16 +28,30 @@
 	src.maximum = maximum
 	src.regen_rate = regen_rate
 	src.current = maximum
-	START_PROCESSING(SSstamina, src)
+	if(istype(parent, /mob/living/carbon))
+		START_PROCESSING(SSstamina, src)
+		RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 
 /datum/stamina_container/Destroy()
-	parent?.stamina = null
+	if(parent)
+		UnregisterSignal(parent, COMSIG_MOB_STATCHANGE)
+		parent.stamina = null
 	parent = null
 	STOP_PROCESSING(SSstamina, src)
 	return ..()
 
+/// Updates processing status whenever the mob's stat changes.
+/datum/stamina_container/proc/on_stat_changed(mob/living/source, new_stat)
+	SIGNAL_HANDLER
+	if(QDELETED(parent))
+		return
+	if(parent.stat == DEAD)
+		STOP_PROCESSING(SSstamina, src)
+	else
+		START_PROCESSING(SSstamina, src)
+
 /datum/stamina_container/proc/update(seconds_per_tick)
-	if(process_stamina == TRUE)
+	if(process_stamina)
 		if(!is_regenerating)
 			if(!COOLDOWN_FINISHED(src, paused_stamina))
 				return
