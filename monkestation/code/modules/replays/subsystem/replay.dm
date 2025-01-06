@@ -68,6 +68,7 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/Initialize()
 	if(!CONFIG_GET(flag/demos_enabled))
 		flags |= SS_NO_FIRE
+		can_fire = FALSE // we also set this, as the mark procs check this var specifically
 		marked_dirty.Cut()
 		marked_new.Cut()
 		marked_turfs.Cut()
