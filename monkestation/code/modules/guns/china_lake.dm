@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/shotgun/china_lake
 	name = "\improper China Lake 40mm"
 	desc = "Oh, they're goin' ta have to glue you back together...IN HELL!"
-	desc_controls = "ALT-Click to set range."
+	desc_controls = "ALT-Click to set range. Can be reloaded by CLICK-DRAGGING grenades onto the launcher."
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/china_lake
 
@@ -45,10 +45,17 @@
 	target_range = new_range
 	to_chat(user, "Leaf sight set for [target_range] tiles.")
 
+/obj/item/gun/ballistic/shotgun/china_lake/MouseDrop_T(obj/item/target, mob/living/user, params)
+	. = ..()
+	if(!istype(target, /obj/item/ammo_casing/a40mm))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
+		return
+	src.attackby(target, user)
+
 /obj/item/ammo_box/magazine/internal/china_lake
 	name = "china lake internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
 	caliber = CALIBER_40MM
 	max_ammo = 3
 	multiload = FALSE
-
