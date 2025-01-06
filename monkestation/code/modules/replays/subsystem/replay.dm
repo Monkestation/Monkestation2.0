@@ -77,6 +77,9 @@ SUBSYSTEM_DEF(demo)
 	last_chat_message = json_encoded
 
 /datum/controller/subsystem/demo/Initialize()
+#if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
+	CONFIG_SET(flag/demos_enabled, FALSE)
+#endif
 	if(!CONFIG_GET(flag/demos_enabled))
 		flags |= SS_NO_FIRE
 		can_fire = FALSE // we also set this, as the mark procs check this var specifically
