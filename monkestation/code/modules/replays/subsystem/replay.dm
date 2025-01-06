@@ -23,74 +23,18 @@ SUBSYSTEM_DEF(demo)
 	var/last_written_time = null
 	var/last_chat_message = null
 
+	var/disabled = FALSE
+
 	// stats stuff
 	//var/last_queued = 0
 	//var/last_completed = 0
-
-/datum/controller/subsystem/demo/proc/write_time()
-	var/new_time = world.time
-	if(last_written_time != new_time)
-		if(initialized)
-			WRITE_LOG_NO_FORMAT(GLOB.demo_log, "time [new_time]\n")
-		else
-			pre_init_lines += "time [new_time]"
-	last_written_time = new_time
-
-/datum/controller/subsystem/demo/proc/write_event_line(line)
-	write_time()
-	if(initialized)
-		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")
-	else
-		pre_init_lines += line
-
-/datum/controller/subsystem/demo/proc/write_chat(target, text)
-	if(!can_fire)
-		return
-	var/target_text = ""
-	if(target == GLOB.clients)
-		target_text = "world"
-	else if(islist(target))
-		var/list/target_keys = list()
-		for(var/T in target)
-			var/client/C = CLIENT_FROM_VAR(T)
-			if(C)
-				target_keys += C.ckey
-		if(!length(target_keys))
-			return
-		target_text = jointext(target_keys, ",")
-	else
-		var/client/C = CLIENT_FROM_VAR(target)
-		if(C)
-			target_text = C.ckey
-		else
-			return
-	var/json_encoded = json_encode(text)
-	write_event_line("chat [target_text] [last_chat_message == json_encoded ? "=" : json_encoded]")
-	last_chat_message = json_encoded
-
-// use for stuff that should appear in the main/targetless chat panel
-/datum/controller/subsystem/demo/proc/write_chat_global(text)
-	if(!can_fire)
-		return
-	var/json_encoded = json_encode(text)
-	write_event_line("chat global [last_chat_message == json_encoded ? "=" : json_encoded]")
-	last_chat_message = json_encoded
 
 /datum/controller/subsystem/demo/Initialize()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	CONFIG_SET(flag/demos_enabled, FALSE)
 #endif
 	if(!CONFIG_GET(flag/demos_enabled))
-		flags |= SS_NO_FIRE
-		can_fire = FALSE // we also set this, as the mark procs check this var specifically
-		pre_init_lines.len = 0
-		icon_cache.len = 0
-		icon_state_caches.len = 0
-		name_cache.len = 0
-		marked_dirty.len = 0
-		marked_new.len = 0
-		marked_turfs.len = 0
-		del_list.len = 0
+		disable()
 		return SS_INIT_NO_NEED
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
@@ -173,6 +117,25 @@ SUBSYSTEM_DEF(demo)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/demo/Recover()
+	flags |= SS_NO_INIT
+	if(SSdemo.disabled)
+		disable()
+		return
+	can_fire = SSdemo.can_fire
+	pre_init_lines = SSdemo.pre_init_lines
+	icon_cache = SSdemo.icon_cache
+	icon_state_caches = SSdemo.icon_state_caches
+	name_cache = SSdemo.name_cache
+	marked_dirty = SSdemo.marked_dirty
+	marked_new = SSdemo.marked_new
+	marked_turfs = SSdemo.marked_turfs
+	del_list = SSdemo.del_list
+	last_written_time = SSdemo.last_written_time
+	last_chat_message = SSdemo.last_chat_message
+	// last_queued = SSdemo.last_queued
+	// last_completed = SSdemo.last_completed
 
 /datum/controller/subsystem/demo/fire()
 	var/list/marked_new = src.marked_new
@@ -275,6 +238,28 @@ SUBSYSTEM_DEF(demo)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "turf [jointext(turf_updates, ",")]\n")
 	if(canceled)
 		return
+
+/datum/controller/subsystem/demo/stat_entry(msg)
+	msg += "Remaining: {"
+	msg += "Trf:[length(marked_turfs)]|"
+	msg += "New:[length(marked_new)]|"
+	msg += "Upd:[length(marked_dirty)]|"
+	msg += "Del:[length(del_list)]"
+	msg += "}"
+	return ..()
+
+/datum/controller/subsystem/demo/proc/disable()
+	flags |= SS_NO_FIRE
+	can_fire = FALSE
+	disabled = TRUE
+	pre_init_lines.len = 0
+	icon_cache.len = 0
+	icon_state_caches.len = 0
+	name_cache.len = 0
+	marked_dirty.len = 0
+	marked_new.len = 0
+	marked_turfs.len = 0
+	del_list.len = 0
 
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
@@ -431,24 +416,64 @@ SUBSYSTEM_DEF(demo)
 			return diffed_string
 	return undiffed_string
 
-/datum/controller/subsystem/demo/stat_entry(msg)
-	msg += "Remaining: {"
-	msg += "Trf:[length(marked_turfs)]|"
-	msg += "New:[length(marked_new)]|"
-	msg += "Upd:[length(marked_dirty)]|"
-	msg += "Del:[length(del_list)]"
-	msg += "}"
-	return ..()
+/datum/controller/subsystem/demo/proc/write_time()
+	var/new_time = world.time
+	if(last_written_time != new_time)
+		if(initialized)
+			WRITE_LOG_NO_FORMAT(GLOB.demo_log, "time [new_time]\n")
+		else
+			pre_init_lines += "time [new_time]"
+	last_written_time = new_time
+
+/datum/controller/subsystem/demo/proc/write_event_line(line)
+	write_time()
+	if(initialized)
+		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")
+	else
+		pre_init_lines += line
+
+/datum/controller/subsystem/demo/proc/write_chat(target, text)
+	if(disabled)
+		return
+	var/target_text = ""
+	if(target == GLOB.clients)
+		target_text = "world"
+	else if(islist(target))
+		var/list/target_keys = list()
+		for(var/T in target)
+			var/client/C = CLIENT_FROM_VAR(T)
+			if(C)
+				target_keys += C.ckey
+		if(!length(target_keys))
+			return
+		target_text = jointext(target_keys, ",")
+	else
+		var/client/C = CLIENT_FROM_VAR(target)
+		if(C)
+			target_text = C.ckey
+		else
+			return
+	var/json_encoded = json_encode(text)
+	write_event_line("chat [target_text] [last_chat_message == json_encoded ? "=" : json_encoded]")
+	last_chat_message = json_encoded
+
+// use for stuff that should appear in the main/targetless chat panel
+/datum/controller/subsystem/demo/proc/write_chat_global(text)
+	if(disabled)
+		return
+	var/json_encoded = json_encode(text)
+	write_event_line("chat global [last_chat_message == json_encoded ? "=" : json_encoded]")
+	last_chat_message = json_encoded
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/turf)
-	if(!can_fire)
+	if(disabled)
 		return
 	if(isturf(turf))
 		return
 	marked_turfs[turf] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_multiple_turfs(list/turf/turf_list)
-	if(!can_fire)
+	if(disabled)
 		return
 	if(!islist(turf_list))
 		return
@@ -458,7 +483,7 @@ SUBSYSTEM_DEF(demo)
 		marked_turfs[turf] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
-	if(!can_fire)
+	if(disabled)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
@@ -469,7 +494,7 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= M
 
 /datum/controller/subsystem/demo/proc/mark_multiple_new(list/atom/atom_list)
-	if(!can_fire)
+	if(disabled)
 		return
 	for(var/atom/atom as anything in atom_list)
 		if(!isobj(atom) && !ismob(atom))
@@ -482,7 +507,7 @@ SUBSYSTEM_DEF(demo)
 
 // I can't wait for when TG ports this and they make this a #define macro.
 /datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
-	if(!can_fire)
+	if(disabled)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
@@ -492,7 +517,7 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty[M] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_multiple_dirty(list/atom/movable/dirty_list)
-	if(!can_fire)
+	if(disabled)
 		return
 	for(var/atom/movable/dirty as anything in dirty_list)
 		if(!isobj(dirty) && !ismob(dirty))
@@ -503,7 +528,7 @@ SUBSYSTEM_DEF(demo)
 			marked_dirty[dirty] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
-	if(!can_fire)
+	if(disabled)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
