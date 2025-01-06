@@ -90,6 +90,7 @@
 	)
 	cost = 1
 	route = PATH_VOID
+	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
@@ -108,9 +109,9 @@
 		var/affected_temperature = environment.return_temperature()
 		var/affected_pressure = environment.return_pressure()
 		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
-			user.add_traits(list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), type)
+			user.add_traits(gain_traits, type)
 		else
-			user.remove_traits(list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), type)
+			user.remove_traits(gain_traits, type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
