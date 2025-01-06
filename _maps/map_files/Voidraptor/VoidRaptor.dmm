@@ -30092,10 +30092,6 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp/centcom{
-	pixel_y = 6;
-	pixel_x = -7
-	},
 /obj/item/stamp{
 	pixel_x = -7;
 	pixel_y = 2

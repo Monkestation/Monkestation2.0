@@ -43855,10 +43855,6 @@
 	pixel_y = 10;
 	pixel_x = 7
 	},
-/obj/item/stamp/centcom{
-	pixel_x = -6;
-	pixel_y = 3
-	},
 /obj/item/stamp/granted{
 	pixel_y = 4
 	},

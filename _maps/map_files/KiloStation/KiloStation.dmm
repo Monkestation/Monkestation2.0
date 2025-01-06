@@ -62296,9 +62296,6 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/stamp/centcom{
-	pixel_x = 6
-	},
 /obj/item/stamp/denied{
 	pixel_x = 6;
 	pixel_y = -3

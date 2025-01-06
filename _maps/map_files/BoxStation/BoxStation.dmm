@@ -37042,10 +37042,6 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/item/stamp/centcom{
-	pixel_x = 8;
-	pixel_y = 12
-	},
 /obj/item/stamp/granted{
 	pixel_y = 6;
 	pixel_x = 8

@@ -42905,13 +42905,9 @@
 	pixel_y = 2
 	},
 /obj/item/folder/blue,
-/obj/item/stamp/centcom{
-	pixel_x = -6;
-	pixel_y = 8
-	},
 /obj/item/stamp/denied{
 	pixel_x = -6;
-	pixel_y = 4
+	pixel_y = 10
 	},
 /obj/item/stamp{
 	pixel_x = -6

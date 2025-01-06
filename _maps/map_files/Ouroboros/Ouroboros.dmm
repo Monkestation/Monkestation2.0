@@ -13123,10 +13123,6 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp/centcom{
-	pixel_x = -7;
-	pixel_y = 4
-	},
 /obj/item/stamp{
 	pixel_x = -7;
 	pixel_y = -1
