@@ -14,25 +14,31 @@
 	///Maximum of stacks that we could possibly get
 	var/stack_limit = 5
 	///icon for the overlay
-	var/image/stacks_overlay
+	var/mutable_appearance/stacks_overlay
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
 	set_stacks(new_stacks)
+	stacks_overlay = mutable_appearance('icons/effects/effects.dmi', "void_chill_oh_fuck", ABOVE_MOB_LAYER)
 	owner.update_icon(UPDATE_OVERLAYS)
+
+/datum/status_effect/void_chill/Destroy()
+	QDEL_NULL(stacks_overlay)
+	return ..()
 
 /datum/status_effect/void_chill/on_apply()
 	if(issilicon(owner))
 		return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
+	owner.update_icon(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()
-	owner.update_icon(UPDATE_OVERLAYS)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
-	owner.remove_alt_appearance("heretic_status")
 	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_per_ticks)
 	owner.adjust_bodytemperature(-12 * stacks * seconds_per_ticks)
@@ -49,12 +55,13 @@
 /datum/status_effect/void_chill/proc/update_stacks_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
+	overlays -= stacks_overlay
+
 	linked_alert?.update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
-	owner.remove_alt_appearance("heretic_status")
 	stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_partial")
 	if(stacks >= 5)
 		stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_oh_fuck")
-	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretic, "heretic_status", stacks_overlay, NONE)
+	overlays += stacks_overlay
 
 /**
  * Setter and adjuster procs for stacks
