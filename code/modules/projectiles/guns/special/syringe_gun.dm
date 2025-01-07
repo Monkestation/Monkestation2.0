@@ -58,7 +58,8 @@
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
-	. += "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
+	if(has_syringe_overlay)
+		. += "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
@@ -211,7 +212,8 @@
 	inhand_icon_state = "shotgun_db"
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	has_syringe_overlay = FALSE
-	max_syringes = 2
+	max_syringes = 2 // Technically makes it a better syringe gun, but at least you have to work for this one.
+	has_manufacturer = FALSE
 
 /obj/item/gun/syringe/shot_gun/attackby(obj/item/A, mob/user, params, show_msg = TRUE) // Needs to be overridden so it can be loaded w/ shotglasses instead.
 	if(istype(A, /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass))
@@ -231,6 +233,15 @@
 	if(chambered && !chambered.loaded_projectile)
 		recharge_newshot()
 
-/obj/item/gun/syringe/shot_gun/examine(mob/user)
-	. = ..()
-	. = "Can hold [max_syringes] shot glasses. Has [syringes.len] shot glasses remaining."
+/datum/crafting_recipe/shot_gun // Crafting recipe to make the dumb gun. Could be modified to require more annoying materials or a recipe book if people complain.
+	name = "'Shot' gun"
+	result = /obj/item/gun/syringe/shot_gun
+	reqs = list(
+		/obj/item/gun/ballistic/shotgun/doublebarrel = 1,
+		/obj/item/stack/sticky_tape = 1,
+		/obj/item/pipe = 3,
+		/obj/item/stack/sheet/iron = 5,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_DRILL, TOOL_CROWBAR, TOOL_WELDER, TOOL_SAW)
+	time = 15 SECONDS
+	category = CAT_WEAPON_RANGED
