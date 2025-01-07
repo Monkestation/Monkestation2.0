@@ -12,6 +12,7 @@
 	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
 	holds_minerals = TRUE
+	process_string = "Refined Dust"
 	processable_materials = list(
 		/datum/material/glass,
 		/datum/material/plasma,
@@ -42,13 +43,24 @@
 
 /obj/machinery/bouldertech/refinery/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(istype(held_item, /obj/item/boulder))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder"
+	if(istype(held_item, /obj/item/boulder) || check_extras(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder or refined dust"
 	if(istype(held_item, /obj/item/card/id) && points_held > 0)
 		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
-	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder"
+	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder or refined dust"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/bouldertech/refinery/attackby(obj/item/attacking_item, mob/user, params)
+	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
+		var/obj/item/processing/refined_dust/my_dust = attacking_item
+		update_boulder_count()
+		if(!accept_boulder(my_dust))
+			balloon_alert_to_viewers("full!")
+			return
+		balloon_alert_to_viewers("accepted")
+		START_PROCESSING(SSmachines, src)
+		return TRUE
+	return ..()
 
 /**
  * Your other new favorite industrial waste magnet!
@@ -89,7 +101,6 @@
 	if(.)
 		set_light_on(TRUE)
 		return TRUE
-
 
 /obj/machinery/bouldertech/refinery/smelter/process()
 	. = ..()
