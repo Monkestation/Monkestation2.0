@@ -14,6 +14,7 @@
 	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldsec
 	spawner_job_path = /datum/job/ancient_crew
+	loadout_enabled = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/oldsec/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -41,6 +42,7 @@
 	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldeng
 	spawner_job_path = /datum/job/ancient_crew
+	loadout_enabled = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/oldeng/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -75,6 +77,7 @@
 	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldsci
 	spawner_job_path = /datum/job/ancient_crew
+	loadout_enabled = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
