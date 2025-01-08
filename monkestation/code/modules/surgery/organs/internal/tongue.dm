@@ -107,6 +107,9 @@
 	var/phomeme_type = "sans"
 	var/static/list/phomeme_types = list("sans", "papyrus")
 
+/obj/item/organ/internal/tongue/polyglot_voicebox
+	select_tongue = new(src)
+
 /obj/item/organ/internal/tongue/robot/polyglot_voicebox/Destroy(force)
 	QDEL_NULL(select_tongue)
 	return ..()
@@ -208,12 +211,13 @@
 
 /obj/item/organ/internal/tongue/polyglot_voicebox/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	select_tongue = new
-	select_tongue.Grant(organ_owner)
+	if(!QDELETED(select_tongue))
+		select_tongue.Grant(organ_owner)
 
 /obj/item/organ/internal/tongue/polyglot_voicebox/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	select_tongue.Remove(organ_owner)
+	if(!QDELETED(select_tongue))
+		select_tongue.Remove(organ_owner)
 
 /obj/item/organ/internal/tongue/polyglot_voicebox/proc/add_word_to_translations(english_word, zombie_word)
 	GLOB.english_to_zombie[english_word] = zombie_word
