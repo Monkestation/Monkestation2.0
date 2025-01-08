@@ -20026,16 +20026,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"cGJ" = (
-/obj/structure/mineral_door/wood{
-	name = "Bedroom"
-	},
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/adminroom)
 "cGO" = (
 /obj/effect/turf_decal/siding/wood{
 	pixel_x = -5
@@ -20072,6 +20062,13 @@
 	},
 /turf/open/floor/plating,
 /area/cruiser_dock)
+"cIl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/adminroom)
 "cKo" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
@@ -20270,32 +20267,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/misc/dirt/dark/jungle,
 /area/centcom/central_command_areas/admin)
-"dcH" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-3";
-	desc = "Effectively impervious to conventional methods of destruction.";
-	pixel_x = -32
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-5";
-	pixel_y = -32;
-	layer = 2.8;
-	pixel_x = -32
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/adminroom)
 "dcR" = (
 /obj/structure/weightmachine/stacklifter,
 /obj/effect/turf_decal/siding/wood{
@@ -21631,6 +21602,16 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"gwm" = (
+/obj/structure/mineral_door/wood{
+	name = "Bedroom"
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/adminroom)
 "gxv" = (
 /obj/effect/turf_decal/siding/wood{
 	pixel_x = -5
@@ -23287,12 +23268,6 @@
 /obj/structure/railing/wooden_fence,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
-"jRA" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/carpet/green,
-/area/centcom/central_command_areas/adminroom)
 "jSt" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white/textured,
@@ -23732,6 +23707,13 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/prison)
+"ldv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/adminroom)
 "ldR" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /mob/living/basic/cow,
@@ -24159,20 +24141,6 @@
 /obj/machinery/computer/records/security/laptop,
 /turf/open/floor/carpet/neon/simple/cyan/nodots,
 /area/centcom/central_command_areas/prison)
-"mJG" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
-	},
-/obj/machinery/bomb_actualizer{
-	desc = "An advanced machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly... or so the sticker says. You can see burn marks and ash around its exhaust ports."
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/adminroom)
 "mJK" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 6
@@ -24261,6 +24229,32 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
+"mTh" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = -32
+	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-5";
+	pixel_y = -32;
+	layer = 2.8;
+	pixel_x = -32
+	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/adminroom)
 "mUj" = (
 /obj/structure/flora/bush/stalky,
 /turf/open/floor/sandy_dirt,
@@ -24669,12 +24663,6 @@
 /area/centcom/central_command_areas/evacuation)
 "odD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/champagne{
-	name = "Gibbfloat";
-	pixel_x = 11;
-	pixel_y = 10;
-	list_reagents = list(/datum/reagent/consumable/gibbfloat = 50)
-	},
 /obj/item/paper_bin{
 	pixel_x = -4;
 	pixel_y = 7
@@ -24905,10 +24893,9 @@
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "oMX" = (
 /obj/effect/turf_decal/siding/wood{
-	dir = 6
+	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/red,
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/adminroom)
 "oNH" = (
 /obj/machinery/light/neon_lining{
@@ -25004,13 +24991,6 @@
 /obj/item/weapon/virusdish/random,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
-"oZf" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/adminroom)
 "oZg" = (
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/circuit/red/off,
@@ -25118,21 +25098,6 @@
 /obj/structure/mop_bucket,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"pte" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = 32;
-	layer = 2.8
-	},
-/obj/machinery/button/door/directional/north{
-	name = "Emergency Assistants Fuck Off Button";
-	id = "donutstealthisid";
-	req_access = "cent_captain"
-	},
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/adminroom)
 "ptP" = (
 /obj/machinery/computer/communications/syndicate{
 	dir = 8
@@ -25602,6 +25567,20 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/adminroom)
+"qAI" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/machinery/bomb_actualizer{
+	desc = "An advanced machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly... or so the sticker says. You can see burn marks and ash around its exhaust ports."
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "qBw" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -26334,10 +26313,19 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "sxY" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = 32;
+	layer = 2.8
 	},
-/turf/open/floor/carpet/green,
+/obj/machinery/button/door/directional/north{
+	name = "Emergency Assistants Fuck Off Button";
+	id = "donutstealthisid";
+	req_access = "cent_captain"
+	},
+/turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "syU" = (
 /obj/effect/turf_decal/sand/plating,
@@ -28427,6 +28415,16 @@
 /obj/effect/decal/cleanable/piss_stain,
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"xHG" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/adminroom)
 "xJC" = (
 /obj/structure/closet/cardboard,
 /mob/living/basic/bot/medbot/nukie/assop{
@@ -28441,15 +28439,11 @@
 /obj/machinery/grill,
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/adminroom)
-"xKI" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
+"xKs" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/adminroom)
 "xMe" = (
 /obj/machinery/light/neon_lining{
@@ -56037,8 +56031,8 @@ iOc
 kpH
 aKc
 jth
-jRA
-mJG
+oMX
+qAI
 kpH
 aaa
 aiF
@@ -56292,10 +56286,10 @@ mUv
 yhF
 yhF
 kpH
-pte
 sxY
+xKs
 tYn
-xKI
+xHG
 kpH
 aaa
 aiF
@@ -56808,7 +56802,7 @@ yhF
 kpH
 kpH
 kpH
-cGJ
+gwm
 kpH
 kpH
 aaa
@@ -57066,7 +57060,7 @@ kpH
 rYm
 hAP
 oYA
-dcH
+mTh
 kpH
 aaa
 aiF
@@ -57321,9 +57315,9 @@ yhF
 dtE
 kpH
 hlg
-oZf
-oMX
-xKI
+cIl
+ldv
+xHG
 kpH
 aaa
 aiF
