@@ -109,9 +109,9 @@
 
 /obj/item/organ/internal/tongue/polyglot_voicebox/Initialize(mapload)
 	. = ..()
-	select_tongue = new
+	select_tongue = new(src)
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/Destroy(force)
+/obj/item/organ/internal/tongue/polyglot_voicebox/Destroy(force)
 	QDEL_NULL(select_tongue)
 	return ..()
 
