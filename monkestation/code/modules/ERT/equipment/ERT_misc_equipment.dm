@@ -341,8 +341,8 @@
 	force = 60
 
 /obj/item/clothing/mask/gas/private_sec
-	name = "\improper SWAT mask"
-	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
+	name = "\improper combat gas mask"
+	desc = "A close-fitting tactical mask that can be connected to an air supply. Has additional air filters to filter out toxins."
 	icon_state = "swat1"
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
@@ -360,7 +360,7 @@
 	icon_state = "swat1"
 
 /obj/item/clothing/under/rank/centcom/private_sec
-	name = "private security uniform"
+	name = "security uniform"
 	desc = "A tactical uniform for officers complete with Nanotrasen belt buckle."
 	icon = 'monkestation/icons/obj/clothing/jobs/private_sec.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/private_sec.dmi'
@@ -371,3 +371,12 @@
 
 /obj/item/clothing/under/rank/centcom/private_sec/sergeant
 	icon_state = "sergeant"
+
+/obj/item/clothing/under/rank/centcom/private_sec/lieutenant
+	icon_state = "lieutenant"
+
+/obj/item/clothing/under/rank/centcom/private_sec/private
+	name = "security turtleneck"
+	desc = "A tactical turtleneck for officers."
+	icon_state = "private"
+	can_adjust = FALSE
