@@ -13,7 +13,7 @@
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEHAIR
+	flags_inv = HAIRHIDE
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
 
@@ -189,7 +189,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	armor_type = /datum/armor/toggleable_riot
-	flags_inv = HIDEEARS|HIDEFACE
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR //monkestation edit
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE
