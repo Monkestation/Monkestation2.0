@@ -2,9 +2,15 @@
 	var/mobtype = /mob/living/carbon/human
 	var/team = /datum/team/ert
 	var/opendoors = TRUE
-	var/leader_role = /datum/antagonist/ert/commander
+	var/leader_role = /datum/antagonist/ert/generic/commander/blue //monkestation edit
 	var/enforce_human = TRUE
-	var/roles = list(/datum/antagonist/ert/security, /datum/antagonist/ert/medic, /datum/antagonist/ert/engineer) //List of possible roles to be assigned to ERT members.
+	var/roles = list(
+		/datum/antagonist/ert/generic/medical/blue,
+		/datum/antagonist/ert/generic/security/blue,
+		/datum/antagonist/ert/generic/engineer/blue,
+		/datum/antagonist/ert/generic/janitor/blue,
+		/datum/antagonist/ert/generic/chaplain/blue,
+	) //List of possible roles to be assigned to ERT members. //monkestation edit
 	var/rename_team
 	var/code
 	var/mission = "Assist the station."
@@ -31,25 +37,26 @@
 	if (!polldesc)
 		polldesc = "a Code [code] Nanotrasen Emergency Response Team"
 
-/datum/ert/blue
-	opendoors = FALSE
-	code = "Blue"
+//MONKESTATION REMOVAL: Phasing out old ERTs
+// /datum/ert/blue
+// 	opendoors = FALSE
+// 	code = "Blue"
 
-/datum/ert/amber
-	code = "Amber"
+// /datum/ert/amber
+// 	code = "Amber"
 
-/datum/ert/red
-	leader_role = /datum/antagonist/ert/commander/red
-	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
-	code = "Red"
+// /datum/ert/red
+// 	leader_role = /datum/antagonist/ert/commander/red
+// 	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
+// 	code = "Red"
 
-/datum/ert/deathsquad
-	roles = list(/datum/antagonist/ert/deathsquad)
-	leader_role = /datum/antagonist/ert/deathsquad/leader
-	rename_team = "Deathsquad"
-	code = "Delta"
-	mission = "Leave no witnesses."
-	polldesc = "an elite Nanotrasen Strike Team"
+// /datum/ert/deathsquad
+// 	roles = list(/datum/antagonist/ert/deathsquad)
+// 	leader_role = /datum/antagonist/ert/deathsquad/leader
+// 	rename_team = "Deathsquad"
+// 	code = "Delta"
+// 	mission = "Leave no witnesses."
+// 	polldesc = "an elite Nanotrasen Strike Team"
 
 /datum/ert/marine
 	leader_role = /datum/antagonist/ert/marine
@@ -72,21 +79,22 @@
 /datum/ert/centcom_official/New()
 	mission = "Conduct a routine performance review of [station_name()] and its Captain."
 
-/datum/ert/inquisition
-	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)
-	leader_role = /datum/antagonist/ert/commander/inquisitor
-	rename_team = "Inquisition"
-	mission = "Destroy any traces of paranormal activity aboard the station."
-	polldesc = "a Nanotrasen paranormal response team"
+//MONKESTATION REMOVAL: Phasing out old ERTs
+// /datum/ert/inquisition
+// 	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)
+// 	leader_role = /datum/antagonist/ert/commander/inquisitor
+// 	rename_team = "Inquisition"
+// 	mission = "Destroy any traces of paranormal activity aboard the station."
+// 	polldesc = "a Nanotrasen paranormal response team"
 
-/datum/ert/janitor
-	roles = list(/datum/antagonist/ert/janitor, /datum/antagonist/ert/janitor/heavy)
-	leader_role = /datum/antagonist/ert/janitor/heavy
-	teamsize = 4
-	opendoors = FALSE
-	rename_team = "Janitor"
-	mission = "Clean up EVERYTHING."
-	polldesc = "a Nanotrasen Janitorial Response Team"
+// /datum/ert/janitor
+// 	roles = list(/datum/antagonist/ert/janitor, /datum/antagonist/ert/janitor/heavy)
+// 	leader_role = /datum/antagonist/ert/janitor/heavy
+// 	teamsize = 4
+// 	opendoors = FALSE
+// 	rename_team = "Janitor"
+// 	mission = "Clean up EVERYTHING."
+// 	polldesc = "a Nanotrasen Janitorial Response Team"
 
 /datum/ert/intern
 	roles = list(/datum/antagonist/ert/intern)

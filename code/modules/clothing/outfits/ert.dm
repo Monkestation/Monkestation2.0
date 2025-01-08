@@ -22,8 +22,8 @@
 		return
 
 	var/obj/item/radio/headset/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = RADIO_FREQENCY_LOCKED
+	//R.set_frequency(FREQ_CENTCOM)
+	//R.freqlock = RADIO_FREQENCY_LOCKED //monkestation edit
 	if(additional_radio)
 		R.keyslot2 = new additional_radio()
 		R.recalculateChannels()
@@ -35,113 +35,114 @@
 		W.update_icon()
 	return ..()
 
-/datum/outfit/centcom/ert/commander
-	name = "ERT Commander"
+//MONKESTATION REMOVAL: Phasing out old ERTs
+// /datum/outfit/centcom/ert/commander
+// 	name = "ERT Commander"
 
-	id = /obj/item/card/id/advanced/centcom/ert
-	back = /obj/item/mod/control/pre_equipped/responsory/commander
-	l_hand = /obj/item/gun/energy/e_gun
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
-	)
-	belt = /obj/item/storage/belt/security/full
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	l_pocket = /obj/item/switchblade
-	additional_radio = /obj/item/encryptionkey/heads/captain
+// 	id = /obj/item/card/id/advanced/centcom/ert
+// 	back = /obj/item/mod/control/pre_equipped/responsory/commander
+// 	l_hand = /obj/item/gun/energy/e_gun
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/security/full
+// 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+// 	l_pocket = /obj/item/switchblade
+// 	additional_radio = /obj/item/encryptionkey/heads/captain
 
-/datum/outfit/centcom/ert/commander/red
-	name = "ERT Commander - High Alert"
+// /datum/outfit/centcom/ert/commander/red
+// 	name = "ERT Commander - High Alert"
 
-	backpack_contents = list(
-		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-	)
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	l_pocket = /obj/item/melee/energy/sword/saber
+// 	backpack_contents = list(
+// 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 	)
+// 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+// 	l_pocket = /obj/item/melee/energy/sword/saber
 
-/datum/outfit/centcom/ert/security
-	name = "ERT Security"
+// /datum/outfit/centcom/ert/security
+// 	name = "ERT Security"
 
-	id = /obj/item/card/id/advanced/centcom/ert/security
-	back = /obj/item/mod/control/pre_equipped/responsory/security
-	l_hand = /obj/item/gun/energy/e_gun/stun
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/box/handcuffs = 1,
-	)
-	belt = /obj/item/storage/belt/security/full
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	additional_radio = /obj/item/encryptionkey/heads/hos
+// 	id = /obj/item/card/id/advanced/centcom/ert/security
+// 	back = /obj/item/mod/control/pre_equipped/responsory/security
+// 	l_hand = /obj/item/gun/energy/e_gun/stun
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/storage/box/handcuffs = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/security/full
+// 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+// 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+// 	additional_radio = /obj/item/encryptionkey/heads/hos
 
-/datum/outfit/centcom/ert/security/red
-	name = "ERT Security - High Alert"
+// /datum/outfit/centcom/ert/security/red
+// 	name = "ERT Security - High Alert"
 
-	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
-	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/box/handcuffs = 1,
-	)
+// 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
+// 	backpack_contents = list(
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/storage/box/handcuffs = 1,
+// 	)
 
-/datum/outfit/centcom/ert/medic
-	name = "ERT Medic"
+// /datum/outfit/centcom/ert/medic
+// 	name = "ERT Medic"
 
-	id = /obj/item/card/id/advanced/centcom/ert/medical
-	back = /obj/item/mod/control/pre_equipped/responsory/medic
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat = 1,
-		/obj/item/storage/box/hug/plushes = 1,
-	)
-	belt = /obj/item/storage/belt/medical/ert
-	glasses = /obj/item/clothing/glasses/hud/health
-	l_hand = /obj/item/storage/medkit/regular
-	r_hand = /obj/item/gun/energy/e_gun
-	l_pocket = /obj/item/healthanalyzer/advanced
-	additional_radio = /obj/item/encryptionkey/heads/cmo
+// 	id = /obj/item/card/id/advanced/centcom/ert/medical
+// 	back = /obj/item/mod/control/pre_equipped/responsory/medic
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/gun/medbeam = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/reagent_containers/hypospray/combat = 1,
+// 		/obj/item/storage/box/hug/plushes = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/medical/ert
+// 	glasses = /obj/item/clothing/glasses/hud/health
+// 	l_hand = /obj/item/storage/medkit/regular
+// 	r_hand = /obj/item/gun/energy/e_gun
+// 	l_pocket = /obj/item/healthanalyzer/advanced
+// 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
-/datum/outfit/centcom/ert/medic/red
-	name = "ERT Medic - High Alert"
+// /datum/outfit/centcom/ert/medic/red
+// 	name = "ERT Medic - High Alert"
 
-	backpack_contents = list(
-		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat/nanites = 1,
-		/obj/item/storage/box/hug/plushes = 1,
-	)
-	mask = /obj/item/clothing/mask/gas/sechailer/swat
+// 	backpack_contents = list(
+// 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+// 		/obj/item/gun/medbeam = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/reagent_containers/hypospray/combat/nanites = 1,
+// 		/obj/item/storage/box/hug/plushes = 1,
+// 	)
+// 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 
-/datum/outfit/centcom/ert/engineer
-	name = "ERT Engineer"
+// /datum/outfit/centcom/ert/engineer
+// 	name = "ERT Engineer"
 
-	id = /obj/item/card/id/advanced/centcom/ert/engineer
-	back = /obj/item/mod/control/pre_equipped/responsory/engineer
-	l_hand = /obj/item/gun/energy/e_gun
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/construction/rcd/loaded/upgraded = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/pipe_dispenser = 1,
-	)
-	belt = /obj/item/storage/belt/utility/full/powertools
-	glasses = /obj/item/clothing/glasses/meson/engine
-	l_pocket = /obj/item/rcd_ammo/large
-	additional_radio = /obj/item/encryptionkey/heads/ce
+// 	id = /obj/item/card/id/advanced/centcom/ert/engineer
+// 	back = /obj/item/mod/control/pre_equipped/responsory/engineer
+// 	l_hand = /obj/item/gun/energy/e_gun
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/construction/rcd/loaded/upgraded = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/pipe_dispenser = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/utility/full/powertools
+// 	glasses = /obj/item/clothing/glasses/meson/engine
+// 	l_pocket = /obj/item/rcd_ammo/large
+// 	additional_radio = /obj/item/encryptionkey/heads/ce
 
-/datum/outfit/centcom/ert/engineer/red
-	name = "ERT Engineer - High Alert"
+// /datum/outfit/centcom/ert/engineer/red
+// 	name = "ERT Engineer - High Alert"
 
-	backpack_contents = list(
-		/obj/item/construction/rcd/combat = 1,
-		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/pipe_dispenser = 1,
-	)
+// 	backpack_contents = list(
+// 		/obj/item/construction/rcd/combat = 1,
+// 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/pipe_dispenser = 1,
+// 	)
 
 /datum/outfit/centcom/centcom_official
 	name = "CentCom Official"
@@ -176,108 +177,109 @@
 	W.update_icon()
 	return ..()
 
-/datum/outfit/centcom/ert/commander/inquisitor
-	name = "Inquisition Commander"
+//MONKESTATION REMOVAL: Phasing out old ERTs
+// /datum/outfit/centcom/ert/commander/inquisitor
+// 	name = "Inquisition Commander"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+// 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
+// 	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+// 	backpack_contents = list(
+// 		/obj/item/storage/box/survival = 1,
+// 	)
 
-/datum/outfit/centcom/ert/security/inquisitor
-	name = "Inquisition Security"
+// /datum/outfit/centcom/ert/security/inquisitor
+// 	name = "Inquisition Security"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
-	backpack_contents = list(
-		/obj/item/construction/rcd/loaded = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/box/handcuffs = 1,
-	)
+// 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
+// 	backpack_contents = list(
+// 		/obj/item/construction/rcd/loaded = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/storage/box/handcuffs = 1,
+// 	)
 
-/datum/outfit/centcom/ert/medic/inquisitor
-	name = "Inquisition Medic"
+// /datum/outfit/centcom/ert/medic/inquisitor
+// 	name = "Inquisition Medic"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
-	backpack_contents = list(
-		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat = 1,
-		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
-	)
+// 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
+// 	backpack_contents = list(
+// 		/obj/item/gun/medbeam = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/reagent_containers/hypospray/combat = 1,
+// 		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
+// 	)
 
-/datum/outfit/centcom/ert/chaplain
-	name = "ERT Chaplain"
+// /datum/outfit/centcom/ert/chaplain
+// 	name = "ERT Chaplain"
 
-	id = /obj/item/card/id/advanced/centcom/ert/chaplain
-	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
-	l_hand = /obj/item/gun/energy/e_gun
-	belt = /obj/item/storage/belt/soulstone
-	glasses = /obj/item/clothing/glasses/hud/health
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/nullrod = 1,
-	)
-	additional_radio = /obj/item/encryptionkey/heads/hop
+// 	id = /obj/item/card/id/advanced/centcom/ert/chaplain
+// 	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+// 	l_hand = /obj/item/gun/energy/e_gun
+// 	belt = /obj/item/storage/belt/soulstone
+// 	glasses = /obj/item/clothing/glasses/hud/health
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/nullrod = 1,
+// 	)
+// 	additional_radio = /obj/item/encryptionkey/heads/hop
 
-/datum/outfit/centcom/ert/chaplain/inquisitor
-	name = "Inquisition Chaplain"
+// /datum/outfit/centcom/ert/chaplain/inquisitor
+// 	name = "Inquisition Chaplain"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
-	backpack_contents = list(
-		/obj/item/grenade/chem_grenade/holy = 1,
-		/obj/item/nullrod = 1,
-	)
-	belt = /obj/item/storage/belt/soulstone/full/chappy
+// 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
+// 	backpack_contents = list(
+// 		/obj/item/grenade/chem_grenade/holy = 1,
+// 		/obj/item/nullrod = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/soulstone/full/chappy
 
-/datum/outfit/centcom/ert/janitor
-	name = "ERT Janitor"
+// /datum/outfit/centcom/ert/janitor
+// 	name = "ERT Janitor"
 
-	id = /obj/item/card/id/advanced/centcom/ert/janitor
-	back = /obj/item/mod/control/pre_equipped/responsory/janitor
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/grenade/clusterbuster/cleaner = 1,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/mop/advanced = 1,
-		/obj/item/reagent_containers/cup/bucket = 1,
-		/obj/item/storage/box/lights/mixed = 1,
-	)
-	belt = /obj/item/storage/belt/janitor/full
-	glasses = /obj/item/clothing/glasses/night
-	l_pocket = /obj/item/grenade/chem_grenade/cleaner
-	r_pocket = /obj/item/grenade/chem_grenade/cleaner
-	l_hand = /obj/item/storage/bag/trash/bluespace
-	additional_radio = /obj/item/encryptionkey/heads/hop
+// 	id = /obj/item/card/id/advanced/centcom/ert/janitor
+// 	back = /obj/item/mod/control/pre_equipped/responsory/janitor
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/grenade/clusterbuster/cleaner = 1,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/mop/advanced = 1,
+// 		/obj/item/reagent_containers/cup/bucket = 1,
+// 		/obj/item/storage/box/lights/mixed = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/janitor/full
+// 	glasses = /obj/item/clothing/glasses/night
+// 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
+// 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
+// 	l_hand = /obj/item/storage/bag/trash/bluespace
+// 	additional_radio = /obj/item/encryptionkey/heads/hop
 
-/datum/outfit/centcom/ert/janitor/heavy
-	name = "ERT Janitor - Heavy Duty"
+// /datum/outfit/centcom/ert/janitor/heavy
+// 	name = "ERT Janitor - Heavy Duty"
 
-	backpack_contents = list(
-		/obj/item/grenade/clusterbuster/cleaner = 3,
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/box/lights/mixed = 1,
-	)
-	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
+// 	backpack_contents = list(
+// 		/obj/item/grenade/clusterbuster/cleaner = 3,
+// 		/obj/item/melee/baton/security/loaded = 1,
+// 		/obj/item/storage/box/lights/mixed = 1,
+// 	)
+// 	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
 
-/datum/outfit/centcom/ert/clown
-	name = "ERT Clown"
+// /datum/outfit/centcom/ert/clown
+// 	name = "ERT Clown"
 
-	id = /obj/item/card/id/advanced/centcom/ert/clown
-	back = /obj/item/mod/control/pre_equipped/responsory/clown
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/gun/ballistic/revolver/reverse = 1,
-		/obj/item/melee/energy/sword/bananium = 1,
-		/obj/item/shield/energy/bananium = 1,
-	)
-	belt = /obj/item/storage/belt/champion
-	glasses = /obj/item/clothing/glasses/trickblindfold
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	shoes = /obj/item/clothing/shoes/clown_shoes/combat
-	l_pocket = /obj/item/food/grown/banana
-	r_pocket = /obj/item/bikehorn/golden
-	additional_radio = /obj/item/encryptionkey/heads/hop
+// 	id = /obj/item/card/id/advanced/centcom/ert/clown
+// 	back = /obj/item/mod/control/pre_equipped/responsory/clown
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/gun/ballistic/revolver/reverse = 1,
+// 		/obj/item/melee/energy/sword/bananium = 1,
+// 		/obj/item/shield/energy/bananium = 1,
+// 	)
+// 	belt = /obj/item/storage/belt/champion
+// 	glasses = /obj/item/clothing/glasses/trickblindfold
+// 	mask = /obj/item/clothing/mask/gas/clown_hat
+// 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
+// 	l_pocket = /obj/item/food/grown/banana
+// 	r_pocket = /obj/item/bikehorn/golden
+// 	additional_radio = /obj/item/encryptionkey/heads/hop
 
 /datum/outfit/centcom/ert/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -344,6 +346,7 @@
 /datum/outfit/centcom/ert/janitor/party
 	name = "ERP Cleaning Service"
 
+	id = /obj/item/card/id/advanced/centcom/ert/janitor
 	uniform = /obj/item/clothing/under/misc/overalls
 	suit = /obj/item/clothing/suit/apron
 	suit_store = null
@@ -363,6 +366,7 @@
 /datum/outfit/centcom/ert/security/party
 	name = "ERP Bouncer"
 
+	id = /obj/item/card/id/advanced/centcom/ert/security
 	uniform = /obj/item/clothing/under/misc/bouncer
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = null
@@ -378,6 +382,7 @@
 /datum/outfit/centcom/ert/engineer/party
 	name = "ERP Constructor"
 
+	id = /obj/item/card/id/advanced/centcom/ert/engineer
 	uniform = /obj/item/clothing/under/rank/engineering/engineer/hazard
 	suit = /obj/item/clothing/suit/hazardvest
 	suit_store = null
@@ -397,6 +402,7 @@
 /datum/outfit/centcom/ert/clown/party
 	name = "ERP Comedian"
 
+	id = /obj/item/card/id/advanced/centcom/ert/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/chameleon
 	suit_store = null
@@ -411,6 +417,7 @@
 /datum/outfit/centcom/ert/commander/party
 	name = "ERP Coordinator"
 
+	id = /obj/item/card/id/advanced/centcom/ert
 	uniform = /obj/item/clothing/under/misc/coordinator
 	suit = /obj/item/clothing/suit/coordinator
 	suit_store = null
@@ -424,62 +431,63 @@
 	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon
 
-/datum/outfit/centcom/death_commando
-	name = "Death Commando"
+//MONKESTATION REMOVAL: Phasing out old ERTS
+// /datum/outfit/centcom/death_commando
+// 	name = "Death Commando"
 
-	id = /obj/item/card/id/advanced/black/deathsquad
-	id_trim = /datum/id_trim/centcom/deathsquad
-	uniform = /obj/item/clothing/under/rank/centcom/commander
-	back = /obj/item/mod/control/pre_equipped/apocryphal
-	box = /obj/item/storage/box/survival/centcom
-	backpack_contents = list(
-		/obj/item/ammo_box/a357 = 1,
-		/obj/item/flashlight = 1,
-		/obj/item/grenade/c4/x4 = 1,
-		/obj/item/storage/box/flashbangs = 1,
-		/obj/item/storage/medkit/regular = 1,
-	)
-	belt = /obj/item/gun/ballistic/revolver/mateba
-	ears = /obj/item/radio/headset/headset_cent/alt
-	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
-	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	shoes = /obj/item/clothing/shoes/combat/swat
-	l_pocket = /obj/item/melee/energy/sword/saber
-	r_pocket = /obj/item/shield/energy
-	l_hand = /obj/item/gun/energy/pulse/loyalpin
+// 	id = /obj/item/card/id/advanced/black/deathsquad
+// 	id_trim = /datum/id_trim/centcom/deathsquad
+// 	uniform = /obj/item/clothing/under/rank/centcom/commander
+// 	back = /obj/item/mod/control/pre_equipped/apocryphal
+// 	box = /obj/item/storage/box/survival/centcom
+// 	backpack_contents = list(
+// 		/obj/item/ammo_box/a357 = 1,
+// 		/obj/item/flashlight = 1,
+// 		/obj/item/grenade/c4/x4 = 1,
+// 		/obj/item/storage/box/flashbangs = 1,
+// 		/obj/item/storage/medkit/regular = 1,
+// 	)
+// 	belt = /obj/item/gun/ballistic/revolver/mateba
+// 	ears = /obj/item/radio/headset/headset_cent/alt
+// 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
+// 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+// 	mask = /obj/item/clothing/mask/gas/sechailer/swat
+// 	shoes = /obj/item/clothing/shoes/combat/swat
+// 	l_pocket = /obj/item/melee/energy/sword/saber
+// 	r_pocket = /obj/item/shield/energy
+// 	l_hand = /obj/item/gun/energy/pulse/loyalpin
 
-	skillchips = list(
-		/obj/item/skillchip/disk_verifier,
-	)
+// 	skillchips = list(
+// 		/obj/item/skillchip/disk_verifier,
+// 	)
 
-/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
+// /datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
+// 	if(visualsOnly)
+// 		return
 
-	var/obj/item/radio/radio = squaddie.ears
-	radio.set_frequency(FREQ_CENTCOM)
-	radio.freqlock = RADIO_FREQENCY_LOCKED
-	var/obj/item/card/id/id = squaddie.wear_id
-	id.registered_name = squaddie.real_name
-	id.update_label()
-	id.update_icon()
-	return ..()
+// 	var/obj/item/radio/radio = squaddie.ears
+// 	radio.set_frequency(FREQ_CENTCOM)
+// 	radio.freqlock = RADIO_FREQENCY_LOCKED
+// 	var/obj/item/card/id/id = squaddie.wear_id
+// 	id.registered_name = squaddie.real_name
+// 	id.update_label()
+// 	id.update_icon()
+// 	return ..()
 
-/datum/outfit/centcom/death_commando/officer
-	name = "Death Commando Officer"
+// /datum/outfit/centcom/death_commando/officer
+// 	name = "Death Commando Officer"
 
-	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
+// 	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
 
-/datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
-	. = ..()
-	var/obj/item/mod/control/mod = squaddie.back
-	if(!istype(mod))
-		return
-	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
-	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
-	hat_holder.attached_hat = beret
-	squaddie.update_clothing(mod.slot_flags)
+// /datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
+// 	. = ..()
+// 	var/obj/item/mod/control/mod = squaddie.back
+// 	if(!istype(mod))
+// 		return
+// 	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
+// 	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
+// 	hat_holder.attached_hat = beret
+// 	squaddie.update_clothing(mod.slot_flags)
 
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"

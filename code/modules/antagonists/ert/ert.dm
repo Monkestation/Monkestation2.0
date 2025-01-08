@@ -16,7 +16,7 @@
 	antag_flags = FLAG_FAKE_ANTAG
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
-	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
+	var/datum/outfit/outfit = /datum/outfit/centcom/ert/generic
 	var/datum/outfit/plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 	var/role = "Security Officer"
 	var/list/name_source
@@ -74,88 +74,89 @@
 	mission = missionobj
 	objectives |= mission
 
-/datum/antagonist/ert/security // kinda handled by the base template but here for completion
+//MONKESTATION REMOVAL: Phasing out old ERTs
+// /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
-/datum/antagonist/ert/security/red
-	outfit = /datum/outfit/centcom/ert/security/red
+// /datum/antagonist/ert/security/red
+// 	outfit = /datum/outfit/centcom/ert/security/red
 
-/datum/antagonist/ert/engineer
-	role = "Engineer"
-	outfit = /datum/outfit/centcom/ert/engineer
+// /datum/antagonist/ert/engineer
+// 	role = "Engineer"
+// 	outfit = /datum/outfit/centcom/ert/engineer
 
-/datum/antagonist/ert/engineer/red
-	outfit = /datum/outfit/centcom/ert/engineer/red
+// /datum/antagonist/ert/engineer/red
+// 	outfit = /datum/outfit/centcom/ert/engineer/red
 
-/datum/antagonist/ert/medic
-	role = "Medical Officer"
-	outfit = /datum/outfit/centcom/ert/medic
+// /datum/antagonist/ert/medic
+// 	role = "Medical Officer"
+// 	outfit = /datum/outfit/centcom/ert/medic
 
-/datum/antagonist/ert/medic/red
-	outfit = /datum/outfit/centcom/ert/medic/red
+// /datum/antagonist/ert/medic/red
+// 	outfit = /datum/outfit/centcom/ert/medic/red
 
-/datum/antagonist/ert/commander
-	role = "Commander"
-	outfit = /datum/outfit/centcom/ert/commander
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
+// /datum/antagonist/ert/commander
+// 	role = "Commander"
+// 	outfit = /datum/outfit/centcom/ert/commander
+// 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 
-/datum/antagonist/ert/commander/red
-	outfit = /datum/outfit/centcom/ert/commander/red
+// /datum/antagonist/ert/commander/red
+// 	outfit = /datum/outfit/centcom/ert/commander/red
 
-/datum/antagonist/ert/janitor
-	role = "Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor
+// /datum/antagonist/ert/janitor
+// 	role = "Janitor"
+// 	outfit = /datum/outfit/centcom/ert/janitor
 
-/datum/antagonist/ert/janitor/heavy
-	role = "Heavy Duty Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor/heavy
+// /datum/antagonist/ert/janitor/heavy
+// 	role = "Heavy Duty Janitor"
+// 	outfit = /datum/outfit/centcom/ert/janitor/heavy
 
-/datum/antagonist/ert/deathsquad
-	name = "Deathsquad Trooper"
-	outfit = /datum/outfit/centcom/death_commando
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
-	role = "Trooper"
-	rip_and_tear = TRUE
+// /datum/antagonist/ert/deathsquad
+// 	name = "Deathsquad Trooper"
+// 	outfit = /datum/outfit/centcom/death_commando
+// 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
+// 	role = "Trooper"
+// 	rip_and_tear = TRUE
 
-/datum/antagonist/ert/deathsquad/New()
-	. = ..()
-	name_source = GLOB.commando_names
+// /datum/antagonist/ert/deathsquad/New()
+// 	. = ..()
+// 	name_source = GLOB.commando_names
 
-/datum/antagonist/ert/deathsquad/leader
-	name = "Deathsquad Officer"
-	outfit = /datum/outfit/centcom/death_commando
-	role = "Officer"
+// /datum/antagonist/ert/deathsquad/leader
+// 	name = "Deathsquad Officer"
+// 	outfit = /datum/outfit/centcom/death_commando
+// 	role = "Officer"
 
-/datum/antagonist/ert/medic/inquisitor
-	outfit = /datum/outfit/centcom/ert/medic/inquisitor
+// /datum/antagonist/ert/medic/inquisitor
+// 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
 
-/datum/antagonist/ert/medic/inquisitor/on_gain()
-	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+// /datum/antagonist/ert/medic/inquisitor/on_gain()
+// 	. = ..()
+// 	owner.holy_role = HOLY_ROLE_PRIEST
 
-/datum/antagonist/ert/security/inquisitor
-	outfit = /datum/outfit/centcom/ert/security/inquisitor
+// /datum/antagonist/ert/security/inquisitor
+// 	outfit = /datum/outfit/centcom/ert/security/inquisitor
 
-/datum/antagonist/ert/security/inquisitor/on_gain()
-	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+// /datum/antagonist/ert/security/inquisitor/on_gain()
+// 	. = ..()
+// 	owner.holy_role = HOLY_ROLE_PRIEST
 
-/datum/antagonist/ert/chaplain
-	role = "Chaplain"
-	outfit = /datum/outfit/centcom/ert/chaplain
+// /datum/antagonist/ert/chaplain
+// 	role = "Chaplain"
+// 	outfit = /datum/outfit/centcom/ert/chaplain
 
-/datum/antagonist/ert/chaplain/inquisitor
-	outfit = /datum/outfit/centcom/ert/chaplain/inquisitor
+// /datum/antagonist/ert/chaplain/inquisitor
+// 	outfit = /datum/outfit/centcom/ert/chaplain/inquisitor
 
-/datum/antagonist/ert/chaplain/on_gain()
-	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+// /datum/antagonist/ert/chaplain/on_gain()
+// 	. = ..()
+// 	owner.holy_role = HOLY_ROLE_PRIEST
 
-/datum/antagonist/ert/commander/inquisitor
-	outfit = /datum/outfit/centcom/ert/commander/inquisitor
+// /datum/antagonist/ert/commander/inquisitor
+// 	outfit = /datum/outfit/centcom/ert/commander/inquisitor
 
-/datum/antagonist/ert/commander/inquisitor/on_gain()
-	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+// /datum/antagonist/ert/commander/inquisitor/on_gain()
+// 	. = ..()
+// 	owner.holy_role = HOLY_ROLE_PRIEST
 
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"

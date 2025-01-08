@@ -302,7 +302,7 @@
 	name = "Deathsquad Officer"
 	applied_name = "deathsquad officer"
 	applied_desc = "A cardboard cutout of a death commando."
-	outfit = /datum/outfit/centcom/death_commando
+	outfit = /datum/outfit/centcom/ert/generic/deathsquad //monkestation edit
 
 /datum/cardboard_cutout/death_squad/get_name()
 	return pick(GLOB.commando_names)
