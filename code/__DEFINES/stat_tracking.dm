@@ -50,6 +50,8 @@
 		usage = TICK_USAGE; \
 	} while(FALSE)
 
+#define RESET_USAGE _usage = TICK_USAGE;
+
 /// A quick helper for running the code as a statement and profiling its cost.
 /// For example, `SET_COST_STMT(var/x = do_work())`
 #define SET_COST_STMT(code...) ##code; SET_COST("[__LINE__] - [#code]")

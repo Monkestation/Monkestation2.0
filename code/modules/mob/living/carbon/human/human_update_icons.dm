@@ -927,16 +927,22 @@ generate/load female uniform sprites matching all previously decided variables
 	appearance.pixel_y += final_offset
 	return appearance
 
+GLOBAL_LIST_EMPTY(_apply_height_filters_costs)
+GLOBAL_LIST_EMPTY(_apply_height_filters_count)
+
 /**
  * Applies a filter to an appearance according to mob height
  */
 /mob/living/carbon/human/proc/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE, parent_adjust_y=0)
 //MONKESTATION EDIT START
+	INIT_COST(GLOB._apply_height_filters_costs, GLOB._apply_height_filters_count)
 	// Pick a displacement mask depending on the height of the icon, ?x48 icons are used for features which would otherwise get clipped when tall players use them
 	// Note: Due to how this system works it's okay to use a mask which is wider than the appearence but NOT okay if the mask is thinner, taller or shorter
 	var/dims = get_icon_dimensions(appearance.icon)
+	SET_COST("get_icon_dimensions")
 	var/icon_width = dims["width"]
 	var/icon_height = dims["height"]
+	SET_COST("width/height from dims list")
 
 	var/mask_icon = 'icons/effects/cut.dmi'
 	if(icon_width != 0 && icon_height != 0)
@@ -950,11 +956,13 @@ generate/load female uniform sprites matching all previously decided variables
 	// Move the filter up if the image has been moved down, and vice versa
 	var/adjust_y = -appearance.pixel_y - parent_adjust_y
 
+	RESET_USAGE
 	var/icon/cut_torso_mask = icon(mask_icon, "Cut1")
 	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
 	var/icon/lenghten_torso_mask = icon(mask_icon, "Cut3")
 	var/icon/lenghten_legs_mask = icon(mask_icon, "Cut4")
 	var/icon/lenghten_ankles_mask = icon(mask_icon, "Cut5")
+	SET_COST("initializing mask icons")
 //MONKESTATION EDIT END
 
 	appearance.remove_filter(list(
@@ -970,8 +978,11 @@ generate/load female uniform sprites matching all previously decided variables
 		"Monkey_Gnome_Cut_Torso",
 		"Monkey_Gnome_Cut_Legs",
 	))
+	SET_COST("removing filters")
 
-	switch(get_mob_height())
+	var/mob_height = get_mob_height()
+	SET_COST("get_mob_height")
+	switch(mob_height)
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
 			appearance.add_filters(list(
@@ -986,6 +997,7 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
 				),
 			))
+			SET_COST("adding filters: MONKEY_HEIGHT_DWARF")
 		if(MONKEY_HEIGHT_MEDIUM)
 			appearance.add_filters(list(
 				list(
@@ -999,6 +1011,7 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
 				),
 			))
+			SET_COST("adding filters: MONKEY_HEIGHT_MEDIUM")
 		// Don't set this one directly, use TRAIT_DWARF
 		if(HUMAN_HEIGHT_DWARF)
 			appearance.add_filters(list(
@@ -1013,6 +1026,7 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 3),
 				),
 			))
+			SET_COST("adding filters: HUMAN_HEIGHT_DWARF")
 		if(HUMAN_HEIGHT_SHORTEST)
 			appearance.add_filters(list(
 				list(
@@ -1026,10 +1040,13 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1),
 				),
 			))
+			SET_COST("adding filters: HUMAN_HEIGHT_SHORTEST")
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1))
+			SET_COST("adding filters: HUMAN_HEIGHT_SHORT")
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = adjust_y, size = 1))
+			SET_COST("adding filters: HUMAN_HEIGHT_TALL")
 		if(HUMAN_HEIGHT_TALLER)
 			appearance.add_filters(list(
 				list(
@@ -1043,6 +1060,7 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = adjust_y, size = 1),
 				),
 			))
+			SET_COST("adding filters: HUMAN_HEIGHT_TALLER")
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filters(list(
 				list(
@@ -1063,12 +1081,14 @@ generate/load female uniform sprites matching all previously decided variables
 				),
 				// MONKESTATION EDIT END
 			))
+			SET_COST("adding filters: HUMAN_HEIGHT_TALLEST")
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
 	if(!(appearance.appearance_flags & KEEP_TOGETHER))
 		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
 			apply_height_filters(overlay, parent_adjust_y=adjust_y)
+		SET_COST("propagating height filters")
 
 	return appearance
 

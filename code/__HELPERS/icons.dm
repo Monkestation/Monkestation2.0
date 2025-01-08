@@ -1491,30 +1491,18 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /// Cache of the width and height of icon files, to avoid repeating the same expensive operation
 GLOBAL_LIST_EMPTY(icon_dimensions)
 
-GLOBAL_LIST_EMPTY(_gid_profile_costs)
-GLOBAL_LIST_EMPTY(_gid_profile_count)
-
 /// Returns a list containing the width and height of an icon file
 /proc/get_icon_dimensions(icon_path)
-	INIT_COST(GLOB._gid_profile_costs, GLOB._gid_profile_count)
 	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
 	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
 	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
-	SET_COST_STMT(var/is_not_file_or_path = !isfile(icon_path) || !length("[icon_path]"))
-	if (is_not_file_or_path)
-		SET_COST_STMT(var/icon/my_icon = icon(icon_path))
-		SET_COST_STMT(var/width = my_icon.Width())
-		SET_COST_STMT(var/height = my_icon.Height())
-		SET_COST_STMT(. = list("width" = width, "height" = height))
-		return
-	var/list/icon_dimensions = GLOB.icon_dimensions
-	if (isnull(icon_dimensions[icon_path]))
-		SET_COST_STMT(var/icon/my_icon = icon(icon_path))
-		SET_COST_STMT(var/width = my_icon.Width())
-		SET_COST_STMT(var/height = my_icon.Height())
-		SET_COST_STMT(icon_dimensions[icon_path] = . = list("width" = width, "height" = height))
-		return
-	return icon_dimensions[icon_path]
+	if (!isfile(icon_path) || !length("[icon_path]"))
+		var/icon/my_icon = icon(icon_path)
+		return list("width" = my_icon.Width(), "height" = my_icon.Height())
+	if (isnull(GLOB.icon_dimensions[icon_path]))
+		var/icon/my_icon = icon(icon_path)
+		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+	return GLOB.icon_dimensions[icon_path]
 
 /proc/strip_appearance_underlays(mutable_appearance/appearance)
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
