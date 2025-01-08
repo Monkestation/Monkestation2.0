@@ -253,7 +253,7 @@
 		"Mush" = image(icon = 'icons/obj/hydroponics/seeds.dmi', icon_state = "mycelium-angel"),
 		"Fly" = image(icon = 'icons/obj/medical/organs/fly_organs.dmi', icon_state = "tongue")
 	)
-	var/obj/item/organ/internal/tongue/robot/polyglot_voicebox/polyglot_voicebox = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/polyglot_voicebox/polyglot_voicebox = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	var/picked_tongue = show_radial_menu(owner, owner, possible_tongues, radius = 50, require_near = TRUE, tooltips = TRUE)
 	if(!picked_tongue)
 		return
