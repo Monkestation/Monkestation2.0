@@ -339,3 +339,22 @@
 	icon_state = "mecha_diamond_drill"
 	drill_delay = 2
 	force = 60
+
+/obj/item/clothing/mask/gas/swat
+	name = "\improper SWAT mask"
+	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
+	icon_state = "swat1"
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	inhand_icon_state = "swat"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	resistance_flags = FIRE_PROOF
+	max_filters = 3
+
+/obj/item/clothing/mask/gas/swat/alt
+	icon_state = "swat2"
+
+/obj/item/clothing/head/helmet/swat/private_sec
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "swat1"
