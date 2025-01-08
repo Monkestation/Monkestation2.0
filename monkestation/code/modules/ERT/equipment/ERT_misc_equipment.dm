@@ -365,6 +365,9 @@
 	icon = 'monkestation/icons/obj/clothing/jobs/private_sec.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/private_sec.dmi'
 	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/private_sec_digi.dmi'
-	icon_state = 'corporal'
+	icon_state = "corporal"
+	inhand_icon_state = "b_suit"
 	armor_type = /datum/armor/rank_security
 
+/obj/item/clothing/under/rank/centcom/private_sec/sergeant
+	icon_state = "sergeant"
