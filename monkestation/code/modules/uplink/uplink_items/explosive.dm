@@ -27,9 +27,6 @@
 	item = /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
-	pin = /obj/item/firing_pin
-
 /datum/uplink_item/explosives/a40mm
 	name = "Box of 40mm HE Grenades"
 	desc = "A box of four 40mm HE grenades. For use with a grenade launcher."
