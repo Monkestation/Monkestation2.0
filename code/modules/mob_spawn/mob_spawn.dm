@@ -45,6 +45,7 @@
 	special(spawned_mob, mob_possessor)
 	if(!is_pref_loaded)
 		equip(spawned_mob)
+	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -271,7 +272,7 @@
 	spawned_human.dna.species.give_important_for_life(spawned_human) // make sure they get plasmaman/vox internals etc before anything else
 
 	if(quirks_enabled)
-		SSquirks.AssignQuirks(spawned_human, spawned_human.client)
+		SSquirks.AssignQuirks(spawned_human, spawned_human.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
 
 	if(loadout_enabled)
 		spawned_human.equip_outfit_and_loadout(outfit, spawned_human.client.prefs)
