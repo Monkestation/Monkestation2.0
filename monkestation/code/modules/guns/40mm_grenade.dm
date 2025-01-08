@@ -70,7 +70,7 @@
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
 	stamina = 250 //BONK
-	paralyze = 5 SECONDS
+	paralyze = 3 SECONDS
 	wound_bonus = 30
 	weak_against_armour = TRUE
 
@@ -165,12 +165,13 @@
 	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 
 	explosion(target, flash_range = 3, adminlog = FALSE, explosion_cause = src)
+	do_sparks(rand(5, 9), FALSE, src)
 
 	var/turf/our_turf = get_turf(src)
 
 	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
 		if(valid_turf(our_turf, nearby_turf))
-			if(prob(75))
+			if(prob(50))
 				do_sparks(rand(1, 9), FALSE, nearby_turf)
 			for(var/mob/living/stunned_living in nearby_turf.contents)
 				stunned_living.Paralyze(5 SECONDS)
@@ -274,7 +275,14 @@
 	contents_tag = "grenade"
 	foldable_result = null
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	flags_1 = CONDUCT_1
+	force = 8
+	throwforce = 12
+	throw_speed = 2
+	throw_range = 7
+	resistance_flags = null
 
+	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
 
