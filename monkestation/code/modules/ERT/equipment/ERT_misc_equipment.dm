@@ -278,7 +278,7 @@
 
 /obj/item/storage/box/x4
 	name = "box of x-4 charges (WARNING)"
-	desc = "A box full of x-4 charges."
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death. Handle with care.</B>"
 	icon_state = "secbox"
 	illustration = "firecracker"
 
@@ -288,7 +288,7 @@
 
 /obj/item/storage/box/c4
 	name = "box of c-4 charges (WARNING)"
-	desc = "A box full of c-4 charges."
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death. Handle with care.</B>"
 	icon_state = "secbox"
 	illustration = "firecracker"
 
@@ -340,7 +340,7 @@
 	drill_delay = 2
 	force = 60
 
-/obj/item/clothing/mask/gas/swat
+/obj/item/clothing/mask/gas/private_sec
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	icon_state = "swat1"
@@ -351,10 +351,20 @@
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
 
-/obj/item/clothing/mask/gas/swat/alt
+/obj/item/clothing/mask/gas/private_sec/alt
 	icon_state = "swat2"
 
 /obj/item/clothing/head/helmet/swat/private_sec
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "swat1"
+
+/obj/item/clothing/under/rank/centcom/private_sec
+	name = "private security uniform"
+	desc = "A tactical uniform for officers complete with Nanotrasen belt buckle."
+	icon = 'monkestation/icons/obj/clothing/jobs/private_sec.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/private_sec.dmi'
+	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/private_sec_digi.dmi'
+	icon_state = 'corporal'
+	armor_type = /datum/armor/rank_security
+
