@@ -107,6 +107,10 @@
 	var/phomeme_type = "sans"
 	var/static/list/phomeme_types = list("sans", "papyrus")
 
+/obj/item/organ/internal/tongue/robot/polyglot_voicebox/Destroy(force)
+	QDEL_NULL(select_tongue)
+	return ..()
+
 /obj/item/organ/internal/tongue/polyglot_voicebox/modify_speech(datum/source, list/speech_args)
 	switch(current_tongue)
 		if("Synth")
