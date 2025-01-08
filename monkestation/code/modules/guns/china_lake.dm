@@ -9,11 +9,11 @@
 	var/minimum_target_range = 5
 	var/maximum_target_range = 30
 
-	icon = 'monkestation/icons/misc/china_lake/china_lake_obj.dmi'
+	icon = 'monkestation/icons/obj/guns/china_lake_obj.dmi'
 	icon_state = "china_lake"
 
-	lefthand_file = 'monkestation/icons/misc/china_lake/china_lake_lefthand.dmi'
-	righthand_file = 'monkestation/icons/misc/china_lake/china_lake_righthand.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/china_lake_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/china_lake_righthand.dmi'
 	inhand_icon_state = "china_lake"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
