@@ -93,22 +93,21 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox
+/obj/item/organ/internal/tongue/polyglot_voicebox
 	name = "polyglot voicebox"
 	desc = "A voice synthesizer that allows you to emulate the tongues of other species."
 	say_mod = "beeps"
+	icon_state = "tonguerobot"
+	status = ORGAN_ROBOTIC
 	//The current tongue being emulated.
 	var/current_tongue = "Synth"
 	var/datum/action/innate/select_tongue/select_tongue
 	var/draw_length = 3
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
-	var/list/phomeme_types = list("sans", "papyrus")
+	var/static/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/can_speak_language(language)
-	return ..()
-
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/modify_speech(datum/source, list/speech_args)
+/obj/item/organ/internal/tongue/polyglot_voicebox/modify_speech(datum/source, list/speech_args)
 	switch(current_tongue)
 		if("Synth")
 			speech_args[SPEECH_SPANS] |= SPAN_ROBOT
@@ -203,22 +202,22 @@
 		else
 			return speech_args[SPEECH_MESSAGE]
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/tongue/polyglot_voicebox/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	select_tongue = new
 	select_tongue.Grant(organ_owner)
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/tongue/polyglot_voicebox/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	select_tongue.Remove(organ_owner)
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/proc/add_word_to_translations(english_word, zombie_word)
+/obj/item/organ/internal/tongue/polyglot_voicebox/proc/add_word_to_translations(english_word, zombie_word)
 	GLOB.english_to_zombie[english_word] = zombie_word
 	GLOB.english_to_zombie[english_word + plural_s(english_word)] = zombie_word
 	GLOB.english_to_zombie[english_word + "ing"] = zombie_word
 	GLOB.english_to_zombie[english_word + "ed"] = zombie_word
 
-/obj/item/organ/internal/tongue/robot/polyglot_voicebox/proc/load_zombie_translations()
+/obj/item/organ/internal/tongue/polyglot_voicebox/proc/load_zombie_translations()
 	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
 	for(var/zombie_word in zombie_translation)
 		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
@@ -236,7 +235,7 @@
 
 /datum/action/innate/select_tongue/Activate()
 	//All possible tongues that can be emulated.
-	var/list/possible_tongues = list(
+	var/static/list/possible_tongues = list(
 		"Synth" = image(icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi', icon_state = "cybertongue"),
 		"Arachnid" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tongue"),
 		"Jelly" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tongue"),
