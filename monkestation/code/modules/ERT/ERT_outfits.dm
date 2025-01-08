@@ -110,7 +110,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/storage/belt/security/full/bola
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/commander
+	back = /obj/item/mod/control/pre_equipped/responsory/commander
 	backpack_contents = list(
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/knife/combat = 1,
@@ -187,7 +187,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/medic
+	back = /obj/item/mod/control/pre_equipped/responsory/medic
 	backpack_contents = list(
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/storage/box/medipens = 1,
@@ -266,7 +266,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/storage/belt/security/full/bola
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/security
+	back = /obj/item/mod/control/pre_equipped/responsory/security
 	backpack_contents = list(
 		/obj/item/knife/combat = 1,
 		/obj/item/storage/box/teargas = 1,
@@ -347,7 +347,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/storage/bag/sheetsnatcher
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/engineer
+	back = /obj/item/mod/control/pre_equipped/responsory/engineer
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded/upgraded = 1,
 		/obj/item/rcd_ammo/large = 1,
@@ -427,7 +427,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/storage/belt/janitor/full/ert
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/janitor
+	back = /obj/item/mod/control/pre_equipped/responsory/janitor
 	backpack_contents = list(
 		/obj/item/mop/advanced = 1,
 		/obj/item/pushbroom = 1,
@@ -503,7 +503,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	head = null
 	belt = /obj/item/nullrod/scythe/talking/chainsword
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/chaplain
+	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
 	backpack_contents = list(
 		/obj/item/book/bible = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
@@ -627,7 +627,7 @@
 	suit_store = /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
 	head = null
 	belt = /obj/item/storage/belt/military/snack/pie
-	back = /obj/item/mod/control/pre_equipped/responsory/generic/clown
+	back = /obj/item/mod/control/pre_equipped/responsory/clown
 	backpack_contents = list(
 		/obj/item/stamp/clown = 1,
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1,
@@ -645,11 +645,6 @@
 
 /datum/outfit/centcom/ert/generic/clown/funnier/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	return
-
-/datum/outfit/centcom/ert/generic/clown/funnier/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	var/obj/item/organ/internal/cyberimp/chest/knockout/punch_implant = new()
-	punch_implant.Insert(H, drop_if_replaced = FALSE)
 
 //------
 // Other
@@ -678,7 +673,7 @@
 	suit_store = /obj/item/gun/energy/pulse/loyalpin
 	head = null
 	belt = /obj/item/storage/belt/military/assault
-	back = /obj/item/mod/control/pre_equipped/apocryphal/elite
+	back = /obj/item/mod/control/pre_equipped/apocryphal
 	backpack_contents = list(
 		/obj/item/storage/box/medipens/advanced = 1,
 		/obj/item/storage/box/c4 = 1,
@@ -694,6 +689,7 @@
 	r_pocket = /obj/item/shield/energy
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
+	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/job/research_director)
 
 /datum/outfit/centcom/ert/generic/deathsquad/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
