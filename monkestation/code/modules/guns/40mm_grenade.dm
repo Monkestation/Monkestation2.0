@@ -70,7 +70,7 @@
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
 	stamina = 250 //BONK
-	paralyze = 3 SECONDS
+	paralyze = 5 SECONDS
 	wound_bonus = 30
 	weak_against_armour = TRUE
 
