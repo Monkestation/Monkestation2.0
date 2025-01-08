@@ -1,6 +1,6 @@
 /obj/machinery/bouldertech/crystalizer
 	name = "crystalizer"
-	desc = "Crushes clumps of ore into dirty dust which needs to be enriched."
+	desc = "Uses electro-chemical processes to grow relatively pure ore crystals from clean slurry. Sometimes useless amalgams are made."
 	icon_state = "crystalizer"
 	allows_boulders = FALSE
 	holds_minerals = TRUE
@@ -74,7 +74,8 @@
 			dust.set_colors()
 			dust.forceMove(get_step(src, export_side))
 	if(prob(15))
-		new /obj/item/processing/amalgam(get_step(src, export_side))
+		var/obj/item/processing/amalgam/trash = new(get_turf(src))
+		trash.forceMove(get_step(src, export_side))
 
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()

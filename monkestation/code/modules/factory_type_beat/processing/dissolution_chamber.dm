@@ -1,6 +1,6 @@
 /obj/machinery/bouldertech/dissolution_chamber
 	name = "dissolution chamber"
-	desc = "Crushes shards when infused with brine."
+	desc = "Breaks down boulders into a dirty slurry using sulfuric acid."
 	icon_state = "dissolution"
 	holds_minerals = TRUE
 	process_string = "Sulfuric Acid"

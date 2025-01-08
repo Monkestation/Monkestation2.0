@@ -119,12 +119,13 @@
 		if(boulders_concurrent <= 0)
 			break //Try again next time
 
-		if(istype(potential_boulder, /obj/item/processing/refined_dust))
-			refine_dust(potential_boulder)
-
 		if(!istype(potential_boulder, /obj/item/boulder) && !istype(potential_boulder, /obj/item/processing/refined_dust))
 			potential_boulder.forceMove(drop_location())
-			CRASH("\The [src] had a non-boulder in it's boulders contained!")
+			CRASH("\The [src] had a non-boulder in it's boulder container!")
+
+		if(istype(potential_boulder, /obj/item/processing/refined_dust))
+			boulders_concurrent-- //We count dust.
+			refine_dust(potential_boulder)
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(boulder.durability < 0)
@@ -161,7 +162,15 @@
 	var/obj/item/boulder/disposable_boulder = new (src)
 	disposable_boulder.custom_materials = processable_ores
 	silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency)
-	qdel(dust)
+	if(length(dust.custom_materials)) // If our dust still has materials we cant process eject it.
+		dust.restart_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
+		if(isturf(get_step(src, export_side)))
+			dust.forceMove(get_step(src, export_side))
+		else
+			dust.forceMove(drop_location())
+	else
+		qdel(dust)
+
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
@@ -170,8 +179,9 @@
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max)
 		return FALSE
-	if(istype(mover, /obj/item/processing/refined_dust))
-		return TRUE
+	if(check_extras(mover))
+		var/obj/item/processing/refined_dust/dust = mover
+		return dust.can_get_processed()
 	return ..()
 
 /obj/machinery/bouldertech/refinery/return_extras()

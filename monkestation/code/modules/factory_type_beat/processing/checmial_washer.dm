@@ -1,6 +1,6 @@
 /obj/machinery/bouldertech/chemical_washer
 	name = "chemical washer"
-	desc = "Crushes clumps of ore into dirty dust which needs to be enriched."
+	desc = "Uses water to flush out non-dissolvable materials leaving a clean slurry solution."
 	icon_state = "washer"
 	allows_boulders = FALSE
 	holds_minerals = TRUE

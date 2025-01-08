@@ -1,10 +1,10 @@
 #define REQUIRED_OXYGEN_MOLES 25
 /obj/machinery/bouldertech/purification_chamber
 	name = "purification chamber"
-	desc = "Uses a large amount of oxygen to purify ores into clumps."
+	desc = "Uses a large amount of oxygen to purify ore boulders and shards into ore clumps."
 	icon_state = "purification_chamber"
 	holds_minerals = TRUE
-	process_string = "Shards"
+	process_string = "Ore Shards, Oxygen"
 	processable_materials = list(
 		/datum/material/iron,
 		/datum/material/titanium,
@@ -124,12 +124,24 @@
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
+/obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, params)
+	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
+		var/obj/item/processing/shards/my_dust = attacking_item
+		update_boulder_count()
+		if(!accept_boulder(my_dust))
+			balloon_alert_to_viewers("full!")
+			return
+		balloon_alert_to_viewers("accepted")
+		START_PROCESSING(SSmachines, src)
+		return TRUE
+	return ..()
+
 /obj/machinery/bouldertech/purification_chamber/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max)
 		return FALSE
-	if(istype(mover, /obj/item/processing/shards))
+	if(check_extras(mover))
 		return TRUE
 	return ..()
 
