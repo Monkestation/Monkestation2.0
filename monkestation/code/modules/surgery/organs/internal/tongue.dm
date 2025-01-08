@@ -107,7 +107,8 @@
 	var/phomeme_type = "sans"
 	var/static/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/internal/tongue/polyglot_voicebox
+/obj/item/organ/internal/tongue/polyglot_voicebox/Initialize(mapload)
+	. = ..()
 	select_tongue = new(src)
 
 /obj/item/organ/internal/tongue/robot/polyglot_voicebox/Destroy(force)
