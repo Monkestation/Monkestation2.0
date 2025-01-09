@@ -77,6 +77,12 @@
 		material_data["materials"] = data
 		reagents.add_reagent(/datum/reagent/processing/dirty_slurry, 250, material_data)
 
+	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder drop the artifact before deletion.
+		var/obj/item/boulder/artifact/artboulder = boulder
+		if(artboulder.artifact_inside)
+			artboulder.artifact_inside.forceMove(drop_location())
+			artboulder.artifact_inside = null
+
 	qdel(boulder)
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
@@ -93,7 +99,7 @@
 			if(istype(pipes, /datum/component/plumbing/dissolution_chamber))
 				. += span_nicegreen("Sulfuric Acid supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with YELLOW pipes on the [layer_name]")
 			if(istype(pipes, /datum/component/plumbing/dissolution_chamber_output))
-				. += span_nicegreen("Dirty Slurry explort connects to the [dir2text(turn(output_pipe, cur_ang_offset))] with BLUE pipes on the [layer_name]")
+				. += span_nicegreen("Dirty Slurry export connects to the [dir2text(turn(output_pipe, cur_ang_offset))] with BLUE pipes on the [layer_name]")
 
 /datum/component/plumbing/dissolution_chamber
 	demand_connects = SOUTH
