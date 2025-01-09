@@ -141,6 +141,36 @@
 	polldesc = "an independent station defense militia"
 	random_names = TRUE
 
+/datum/ert/memetic
+	leader_role = /datum/antagonist/ert/memetic/commander
+	roles = list(/datum/antagonist/ert/memetic)
+	teamsize = 3
+	code = "Blue"
+	rename_team = "Memetic Response Team"
+	mission = "Censor all information and knowledge related to a highly classified incident aboard the station."
+	polldesc = "a Nanotrasen Memory Replacement team"
+	opendoors = FALSE
+
+/datum/ert/memetic/red
+	leader_role = /datum/antagonist/ert/memetic/commander/red
+	roles = list(/datum/antagonist/ert/memetic/red)
+	code = "Red"
+	rename_team = "Armed Memetic Response Team"
+	polldesc = "an armed Nanotrasen Memory Replacement team"
+	opendoors = TRUE
+
+
+/datum/ert/medical
+	opendoors = FALSE
+	teamsize = 4
+	leader_role = /datum/antagonist/ert/medical_commander
+	enforce_human = FALSE //All the best doctors I know are moths and cats
+	roles = list(/datum/antagonist/ert/medical_technician)
+	rename_team = "EMT Squad"
+	code = "Violet"
+	mission = "Provide emergency medical services to the crew."
+	polldesc = "an emergency medical response team"
+
 //MONKESTATION EDIT START
 /datum/ert/code
 	leader_role = /datum/antagonist/ert/generic/commander

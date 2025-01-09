@@ -286,3 +286,28 @@
 	name = "Frontier Militia General"
 	outfit = /datum/outfit/centcom/militia/general
 	role = "Minuteman Leader"
+
+/datum/antagonist/ert/memetic
+	name = "Memetic Agent"
+	outfit = /datum/outfit/centcom/ert/memetic
+	role = "Agent"
+
+/datum/antagonist/ert/memetic/red
+	outfit = /datum/outfit/centcom/ert/memetic/alert
+
+/datum/antagonist/ert/memetic/commander
+	name = "Memetic Supervisor Agent"
+	outfit = /datum/outfit/centcom/ert/memetic/commander
+
+/datum/antagonist/ert/memetic/commander/red
+	outfit = /datum/outfit/centcom/ert/memetic/commander/alert
+
+/datum/antagonist/ert/medical_commander
+	role = "Chief EMT"
+	outfit = /datum/outfit/centcom/ert/medical_commander
+	plasmaman_outfit = /datum/outfit/plasmaman/medical_commander
+
+/datum/antagonist/ert/medical_technician
+	role = "Emergency Medical Technician"
+	outfit = /datum/outfit/centcom/ert/medical_technician
+	plasmaman_outfit = /datum/outfit/plasmaman/medical_technician

@@ -36,3 +36,5 @@
 	title = JOB_ERT_DEATHSQUAD
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM) //from humble beginnings sipping quadsec and harm batoning clowns
 
+/datum/job/ert/memetic
+	title = JOB_ERT_MEMETIC

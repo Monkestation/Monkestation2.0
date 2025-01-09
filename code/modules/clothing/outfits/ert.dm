@@ -575,3 +575,124 @@
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
 	suit_store = /obj/item/gun/energy/laser/musket/prime
+
+/datum/outfit/centcom/ert/memetic
+	name = "ERT Memetic"
+
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/ert/memetic
+	uniform = /obj/item/clothing/under/suit/black_really
+	mask = null
+	neck = /obj/item/clothing/neck/tie/black/tied
+	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+	)
+	belt = /obj/item/gun/energy/decloner
+	ears = /obj/item/radio/headset/headset_cent/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/assembly/flash/hypnotic/memorizer
+	r_pocket = /obj/item/melee/baton/telescopic
+
+/datum/outfit/centcom/ert/memetic/commander
+	name = "ERT Memetic Commander"
+
+	neck = /obj/item/clothing/neck/tie/red/tied
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/grenade/hypnotic = 1,
+	)
+	glasses = /obj/item/clothing/glasses/sunglasses/big
+
+/datum/outfit/centcom/ert/memetic/alert
+	name = "ERT Memetic - High Alert"
+
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	suit = /obj/item/clothing/suit/armor/reactive/stealth
+	suit_store = /obj/item/gun/energy/temperature/freeze
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+
+/datum/outfit/centcom/ert/memetic/commander/alert
+	name = "ERT Memetic Commander - High Alert"
+
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	suit = /obj/item/clothing/suit/armor/reactive/stealth
+	suit_store = /obj/item/gun/energy/shrink_ray/anyone
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+
+/datum/outfit/centcom/ert/medical_commander
+	name = "EMT Chief Paramedic"
+	id = /obj/item/card/id/advanced/centcom/ert/generic/medical //monkestation edit
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	l_pocket = /obj/item/healthanalyzer/advanced
+	r_pocket = /obj/item/melee/baton/telescopic
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	box = /obj/item/storage/box/survival/ert //monkestation edit
+	backpack_contents = list(
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/stack/medical/poultice = 1, //These stacks contain 15 by default. Great for getting corpses to defib range without surgery.
+		/obj/item/bodybag/bluespace = 1, //monkestation addition
+		/obj/item/emergency_bed = 1, //monkestation addition
+		/obj/item/gun/energy/e_gun/mini = 1, //monkestation edit: pulse pistol is a bit much
+	)
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	mask = /obj/item/clothing/mask/surgical
+	back = /obj/item/mod/control/pre_equipped/emergency_medical/corpsman
+	gloves = /obj/item/clothing/gloves/latex/surgical //monkestation edit
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+
+/datum/outfit/centcom/ert/medical_technician
+	name = "EMT Paramedic"
+	id = /obj/item/card/id/advanced/centcom/ert/generic/medical //monkestation edit
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	l_pocket = /obj/item/healthanalyzer
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen //monkestation addition
+	box = /obj/item/storage/box/survival/ert //monkestation edit
+	backpack_contents = list(
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/bodybag/bluespace = 1, //monkestation edit: bluespace bodybag > two bodybags
+		/obj/item/emergency_bed = 1, //monkestation addition
+	)
+	mask = /obj/item/clothing/mask/surgical
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	back = /obj/item/mod/control/pre_equipped/emergency_medical
+	gloves = /obj/item/clothing/gloves/latex/nitrile //monkestation edit
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+
+/obj/item/mod/control/pre_equipped/emergency_medical
+	theme = /datum/mod_theme/medical
+	applied_cell = /obj/item/stock_parts/cell/bluespace
+	applied_modules = list(
+		/obj/item/mod/module/defibrillator,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor/emergency,
+		/obj/item/mod/module/storage/large_capacity,
+	)
+
+/obj/item/mod/control/pre_equipped/emergency_medical/corpsman
+	theme = /datum/mod_theme/medical/corpsman
+
+///Identical to medical MODsuit, but uses the alternate skin by default.
+/datum/mod_theme/medical/corpsman
+	default_skin = "corpsman"

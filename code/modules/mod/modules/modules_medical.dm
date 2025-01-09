@@ -35,7 +35,7 @@
 		.["userburn"] = mod.wearer?.getFireLoss() || 0
 		.["usertoxin"] = mod.wearer?.getToxLoss() || 0
 		.["useroxy"] = mod.wearer?.getOxyLoss() || 0
-		
+
 	return .
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
@@ -57,7 +57,7 @@
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
 	.["show_vitals"] = add_ui_configuration("Self Vitals Display", "bool", show_vitals)
-	
+
 	return .
 
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
@@ -411,4 +411,23 @@
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
 		/datum/surgery/advanced/bioware/cortex_imprint,
 		/datum/surgery/advanced/bioware/cortex_folding,
+	)
+
+/obj/item/mod/module/surgical_processor/emergency
+	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
+		perform advanced surgeries on the go. This one came pre-loaded with some emergency surgeries."
+	device = /obj/item/surgical_processor/mod/emergency
+
+/obj/item/surgical_processor/mod/emergency
+	loaded_surgeries = list(
+		/datum/surgery/healing/combo/upgraded/femto,
+		/datum/surgery/blood_filter,
+		/datum/surgery/brain_surgery,
+		/datum/surgery/coronary_bypass,
+		/datum/surgery/ear_surgery,
+		/datum/surgery/eye_surgery,
+		/datum/surgery/hepatectomy,
+		/datum/surgery/revival,
+		/datum/surgery/stomach_pump,
+		/datum/surgery/advanced/wing_reconstruction,
 	)
