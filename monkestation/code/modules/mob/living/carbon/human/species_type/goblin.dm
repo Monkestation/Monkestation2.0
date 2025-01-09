@@ -61,7 +61,7 @@
 	to_add += list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "trash-can",
 			SPECIES_PERK_NAME = "Maintenance Native",
 			SPECIES_PERK_DESC = "As a creature of filth, you feel right at home in maintenance and can see better!", //Mood boost when in maint? How to do?
 		),
@@ -79,9 +79,9 @@
 		)
 		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "ruler-vertical",
 			SPECIES_PERK_NAME = "Short",
-			SPECIES_PERK_DESC = "Short, haha.", //Dwarf trauma
+			SPECIES_PERK_DESC = "Goblins are short so they're harder to hit, you look funny though. haha.", //Dwarf trauma
 		),
 		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
