@@ -5,9 +5,9 @@
 	damage_type = BURN
 	armor_flag = ENERGY
 	/// What temp to trend the target towards
-	var/temperature = HYPOTHERMIA - 2 CELCIUS
+	var/temperature = -(10 CELCIUS) //monkestation edit
 	/// How much temp per shot to apply
-	var/temperature_mod_per_shot = 0.25
+	var/temperature_mod_per_shot = 1 //monkestation edit 0.25 to 1
 
 /obj/projectile/temp/is_hostile_projectile()
 	return BODYTEMP_NORMAL - temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
@@ -16,16 +16,17 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
-		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * (temperature - M.bodytemperature), use_insulation = TRUE)
+		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * temperature, use_insulation = TRUE) //monkestation edit
 
 /obj/projectile/temp/hot
 	name = "heat beam"
-	temperature = CELCIUS_TO_KELVIN(50 CELCIUS) // Raise the body temp by 100 points
+	temperature = 10 CELCIUS //monkestation edit
 
 /obj/projectile/temp/cryo
 	name = "cryo beam"
-	range = 3
-	temperature_mod_per_shot = 1.5 // get this guy really chilly really fast
+	//range = 3 //monkestation removal
+	temperature_mod_per_shot = 2 // get this guy really chilly really fast //monkestation edit
+	can_hit_turfs = TRUE //monkestation edit
 
 /obj/projectile/temp/cryo/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

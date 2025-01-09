@@ -11,7 +11,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 /obj/projectile/energy/inferno/on_hit(atom/target, blocked, pierce_hit)
-	..()
+	. = ..()
 	if(!isliving(target))
 		return
 
@@ -36,7 +36,7 @@
 	bare_wound_bonus = 10
 
 /obj/projectile/energy/cryo/on_hit(atom/target, blocked, pierce_hit)
-	..()
+	. = ..()
 	if(!isliving(target))
 		return
 

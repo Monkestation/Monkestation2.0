@@ -10,6 +10,7 @@
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/projectile/energy/declone
 	select_name = "declone"
+	e_cost = 50 //monkestation edit
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/declone/weak
@@ -41,6 +42,10 @@
 /obj/item/ammo_casing/energy/temp/hot
 	projectile_type = /obj/projectile/temp/hot
 	select_name = "bake"
+
+/obj/item/ammo_casing/energy/temp/cryo
+	projectile_type = /obj/projectile/temp/cryo
+	select_name = "freeze"
 
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
