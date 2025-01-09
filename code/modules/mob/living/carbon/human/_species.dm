@@ -1776,7 +1776,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "[initial(exotic_bloodtype.name)] blood",
+			SPECIES_PERK_NAME = "[initial(exotic_bloodtype.name)] Blood",
 			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_bloodtype.name)], which can make recieving medical treatment more difficult.",
 		))
 

@@ -151,13 +151,13 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 			SPECIES_PERK_ICON = "music",
 			SPECIES_PERK_NAME = "Musical",
 			SPECIES_PERK_DESC = "Thanks to their avian tongues, Ornithids can mimic a \
-				variety of instruments, Conventional or not.",
+				variety of instruments, conventional or not.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "feather",
 			SPECIES_PERK_NAME = "Winged",
-			SPECIES_PERK_DESC = "Ornithids have wings that are not concealed by Hardsuits \
+			SPECIES_PERK_DESC = "Ornithids have wings that are not concealed by hardsuits \
 				or MODsuits, making it easier to identify them.",
 		),
 		list(
