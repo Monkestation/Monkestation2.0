@@ -81,6 +81,20 @@
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
+/obj/machinery/bouldertech/dissolution_chamber/examine(mob/user)
+	. = ..()
+	var/list/possible_pipes = src.GetComponents(/datum/component/plumbing)
+	if(length(possible_pipes))
+		var/cur_ang_offset = 180 - dir2angle(src.dir) // Parent machine rotation offsets everything else. 180 is default pointed south offset.
+		for(var/datum/component/plumbing/pipes in possible_pipes)
+			var/input_pipe = initial(pipes.demand_connects) // Call for the initial position then use turn to get its current direction.
+			var/output_pipe = initial(pipes.supply_connects)
+			var/layer_name = (pipes.ducting_layer == THIRD_DUCT_LAYER) ? "Third Layer" : GLOB.plumbing_layer_names["[pipes.ducting_layer]"]
+			if(istype(pipes, /datum/component/plumbing/dissolution_chamber))
+				. += span_nicegreen("Sulfuric Acid supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with YELLOW pipes on the [layer_name]")
+			if(istype(pipes, /datum/component/plumbing/dissolution_chamber_output))
+				. += span_nicegreen("Dirty Slurry explort connects to the [dir2text(turn(output_pipe, cur_ang_offset))] with BLUE pipes on the [layer_name]")
+
 /datum/component/plumbing/dissolution_chamber
 	demand_connects = SOUTH
 	demand_color = COLOR_YELLOW
