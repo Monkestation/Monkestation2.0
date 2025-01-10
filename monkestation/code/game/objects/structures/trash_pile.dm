@@ -106,7 +106,7 @@
 		return
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
 	var/obj/item/spawned_item = new item_to_spawn(drop_location())
-	if(spawned_item)
+	if(!QDELETED(spawned_item))
 		balloon_alert(user, "found [lowertext(spawned_item.name)]!")
 	else
 		balloon_alert(user, "found nothing...")
@@ -124,7 +124,7 @@
 	balloon_alert(user, "hiding item...")
 	if(!do_after(user, hide_item_time, user, interaction_key = DOAFTER_SOURCE_TRASH_PILE))
 		return
-	if(QDELETED(src))
+	if(QDELETED(src) || QDELETED(attacking_item))
 		return
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
