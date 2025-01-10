@@ -257,6 +257,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
@@ -324,7 +325,7 @@
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
 
-	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -422,15 +423,12 @@
 	suppressor_x_offset = 9
 
 	burst_size = 2
-	fire_delay = 0.15 SECONDS
+	fire_delay = 0.5 SECONDS
 	actions_types = list()
-
-	// Because we're firing a lot of these really fast, we want a lot less wound chance
-	projectile_wound_bonus = -20
-	spread = 12.5
+	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
-	wield_recoil = 0.5
+	wield_recoil = 1
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
@@ -757,7 +755,6 @@
 	recoil = 1.5
 	wield_recoil = 0.5
 	spread = 2.5
-	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
 	. = ..()
