@@ -53,7 +53,7 @@
 /datum/sprite_accessory/arm_wings/tri_colored
 	name = "Tri-Colored Wings"
 	icon_state = "triple"
-	layers = list("first" = "feather_main", "second" = "feather_secondary", "third" = "feather_tri")
+	//layers = list("first" = "feather_main", "second" = "feather_secondary", "third" = "feather_tri")
 
 /datum/sprite_accessory/arm_wings/pursuant
 	name = "Pursuant"
