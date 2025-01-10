@@ -107,7 +107,7 @@
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
 	var/obj/item/spawned_item = new item_to_spawn(drop_location())
 	if(!QDELETED(spawned_item))
-		balloon_alert(user, "found [lowertext(spawned_item.name)]!")
+		balloon_alert(user, "found [spawned_item]!")
 	else
 		balloon_alert(user, "found nothing...")
 	LAZYSET(searched_by_ckeys, user.ckey, TRUE)
