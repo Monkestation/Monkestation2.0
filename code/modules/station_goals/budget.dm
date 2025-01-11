@@ -1,7 +1,4 @@
 /// Crew must have more than 50K of credits available in the budget when they reach C.C
-
-var/datum/station_goal/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
 /datum/station_goal/budget
 	name = "Budget Necessity"
 
@@ -17,6 +14,6 @@ var/datum/station_goal/bank_account/cargo_account = SSeconomy.get_dep_account(AC
 /datum/station_goal/station_shield/check_completion()
 	if(..())
 		return TRUE
-	if(cargo_account.account_balance >= 50000)
+	if(SSeconomy.get_dep_account(ACCOUNT_CAR) >= 50000)
 		return TRUE
 	return FALSE
