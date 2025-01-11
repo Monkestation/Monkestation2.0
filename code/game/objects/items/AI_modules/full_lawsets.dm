@@ -245,5 +245,5 @@
 
 /obj/item/ai_module/core/full/admin
 	name = "'Administrator' Core AI Module"
-	desc = "A CentComm branded lawboard made so that they can outsource their work. Perfect for the lazy commanders."
+	desc = "A CentCom branded lawboard made so that they can outsource their work. Perfect for the lazy commanders."
 	law_id = "administrator"
