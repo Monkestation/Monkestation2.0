@@ -29,6 +29,13 @@
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag/no_stripe
+	has_stripe = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag/no_stripe/Initialize()
+	. = ..()
+	update_icon_state()
+
 /obj/item/gun/ballistic/automatic/pistol/paco/update_icon_state()
 	. = ..()
 	if(!has_stripe) //Definitely turn this into a switch case statement if someone (or I) decide to add more variants, but this works for now
@@ -117,8 +124,8 @@
 	name = ".35 Auto rubber bullet"
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
-	damage = 4
-	stamina = 45 // Turns out 35 stamina damage is not good enough.
+	damage = 5
+	stamina = 50 // Turns out 35 stamina damage is not good enough.
 	sharpness = NONE
 	embedding = null
 

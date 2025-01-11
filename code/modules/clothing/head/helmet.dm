@@ -245,8 +245,8 @@
 	icon_state = "justice2"
 
 /obj/item/clothing/head/helmet/swat
-	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
+	name = "\improper suspicious helmet" //monkestation edit
+	desc = "An extremely robust helmet in a nefarious red and black stripe pattern." //monkestation edit
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
 	armor_type = /datum/armor/helmet_swat
@@ -254,9 +254,11 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = THICKMATERIAL //monkestation edit
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
 	flags_inv = HIDEHAIR //monkestation edit
 	dog_fashion = null
 
@@ -272,16 +274,15 @@
 	wound = 15
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
-	name = "\improper SWAT helmet"
-	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
+	name = "\improper MK.I SWAT helmet" //monkestation edit
+	desc = "A tactical helmet with the Nanotrasen logo emblazoned on the top. It was first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations." //monkestation edit
 	icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
 
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
+
 
 /obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
 	. = ..()

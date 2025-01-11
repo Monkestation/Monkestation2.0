@@ -16,8 +16,8 @@
 
 /obj/projectile/bullet/c46x30mm/rub
 	name = "4.6x30mm rubber bullet"
-	damage = 4
-	stamina = 35
+	damage = 5 //monkestation edit: 4 to 5
+	stamina = 50 //monkestation edit: 35 to 50
 	embedding = null
 	sharpness = NONE
 
@@ -40,7 +40,7 @@
 /obj/projectile/bullet/c46x30mm/salt
 	name = "4.6x30mm saltshot bullet"
 	damage = 0
-	stamina = 30
+	stamina = 35 //monkestation edit: 30 to 35
 	embedding = null
 	sharpness = NONE
 

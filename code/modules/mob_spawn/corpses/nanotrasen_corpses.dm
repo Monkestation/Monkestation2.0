@@ -19,8 +19,9 @@
 	name = "Commander"
 	outfit = /datum/outfit/nanotrasencommander
 
+//MONKESTATION EDIT START
 /datum/outfit/nanotrasencommander
-	name = "\improper Nanotrasen Private Security Commander"
+	name = "Nanotrasen Private Security Commander Corpse" //monkestation edit
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	ears = /obj/item/radio/headset/heads/captain
@@ -32,22 +33,29 @@
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/commander
+//MONKESTATION EDIT STOP
 
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
 	outfit = /datum/outfit/nanotrasensoldier
 
+//MONKESTATION EDIT START
 /datum/outfit/nanotrasensoldier
-	name = "NT Private Security Officer"
-	uniform = /obj/item/clothing/under/rank/security/officer
+	name = "Nanotrasen Private Security Officer Corpse" //monkestation edit
+	uniform = /obj/item/clothing/under/rank/centcom/private_sec
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat
-	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	head = /obj/item/clothing/head/helmet/swat/nanotrasen
-	back = /obj/item/storage/backpack/security
+	mask = null
+	head = /obj/item/clothing/head/helmet/swat/private_sec
+	back = /obj/item/storage/backpack/private_sec
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/centcom/corpse/private_security
+
+/datum/outfit/nanotrasensoldier/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	mask = pick(/obj/item/clothing/mask/gas/sechailer/swat/private_sec, /obj/item/clothing/mask/gas/sechailer/swat/private_sec/alt)
+//MONKESTATION EDIT STOP
 
 /obj/effect/mob_spawn/corpse/human/intern //this is specifically the comms intern from the event
 	name = "CentCom Intern"

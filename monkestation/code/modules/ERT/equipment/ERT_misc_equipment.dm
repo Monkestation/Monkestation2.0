@@ -355,24 +355,43 @@
 	drill_delay = 2
 	force = 60
 
-/obj/item/clothing/mask/gas/private_sec
-	name = "\improper combat gas mask"
-	desc = "A close-fitting tactical mask that can be connected to an air supply. Has additional air filters to filter out toxins."
+/obj/item/clothing/mask/gas/sechailer/swat/private_sec
+	name = "\improper SWAT gas mask"
+	desc = "A close-fitting tactical mask that can be connected to an air supply. Has additional air filters along with a Compli-o-nator 3000."
 	icon_state = "swat1"
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
-	inhand_icon_state = "swat"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
-	resistance_flags = FIRE_PROOF
+	icon = 'monkestation/icons/obj/clothing/ERT/other/private_sec_mask.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/ERT/other/private_sec_mask.dmi'
 	max_filters = 3
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDESNOUT
+	visor_flags_inv = 0
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
-/obj/item/clothing/mask/gas/private_sec/alt
+/obj/item/clothing/mask/gas/sechailer/swat/private_sec/alt
 	icon_state = "swat2"
 
 /obj/item/clothing/head/helmet/swat/private_sec
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
-	icon_state = "swat1"
+	name = "\improper SWAT helmet" //monkestation edit
+	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
+	icon = 'monkestation/icons/obj/clothing/ERT/other/private_sec_armor.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/ERT/other/private_sec_armor.dmi'
+	icon_state = "swat_helmet"
+	lefthand_file = 'monkestation/icons/mob/inhands/equipment/swat_armor_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/equipment/swat_armor_righthand.dmi'
+	inhand_icon_state = "swat_helmet"
+	flags_cover = null
+
+/obj/item/clothing/suit/armor/swat/private_sec
+	name = "\improper SWAT Suit"
+	desc = "An extremely robust set of full-body armor."
+	icon = 'monkestation/icons/obj/clothing/ERT/other/private_sec_armor.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/ERT/other/private_sec_armor.dmi'
+	icon_state = "swat_armor"
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	slowdown = 0
 
 /obj/item/clothing/under/rank/centcom/private_sec/private
 	name = "security turtleneck"
@@ -383,9 +402,9 @@
 /obj/item/clothing/under/rank/centcom/private_sec
 	name = "security uniform"
 	desc = "A tactical uniform for officers complete with Nanotrasen belt buckle."
-	icon = 'monkestation/icons/obj/clothing/jobs/private_sec.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/private_sec.dmi'
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/private_sec_digi.dmi'
+	icon = 'monkestation/icons/obj/clothing/ERT/other/private_sec.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/ERT/other/private_sec.dmi'
+	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/ERT/other/private_sec_digi.dmi'
 	icon_state = "corporal"
 	inhand_icon_state = "b_suit"
 	armor_type = /datum/armor/rank_security
@@ -396,4 +415,42 @@
 /obj/item/clothing/under/rank/centcom/private_sec/lieutenant
 	icon_state = "lieutenant"
 
+/obj/item/melee/baton/heavy
+	name = "metal baton"
+	desc = "A heavy metal truncheon for beating anti-corporate scum."
+	icon = 'monkestation/icons/obj/weapons/baton.dmi'
+	icon_state = "heavy_baton"
+	inhand_icon_state = "heavy_baton"
+	worn_icon_state = "tele_baton"
+	lefthand_file = 'monkestation/icons/mob/inhands/baton_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/baton_righthand.dmi'
+	force = 25
+	throw_speed = 1
+	throw_range = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 15
+	bare_wound_bonus = 10
+	pain_damage = 25
+	cooldown = 3 SECONDS
+	attack_speed = 3 SECONDS
+	knockdown_time = 2 SECONDS
+	force_say_chance = 75
+	on_stun_volume = 100
+	stamina_damage = 175
+	//how much stamina it takes to use this
+	var/stamina_hit_cost = 40 //would love to use stamina_cost but it's buggy... i just don't trust it
 
+/obj/item/melee/baton/heavy/afterattack(mob/living/target, mob/living/user, params)
+	. = ..()
+	if(isliving(target)) //no stamina cost for wacking a blood puddle
+		user.apply_damage(stamina_hit_cost, STAMINA)
+
+/obj/item/storage/backpack/private_sec
+	name = "security backpack"
+	desc = "A robust backpack issued to Nanotrasen's finest."
+	icon = 'monkestation/icons/obj/clothing/ERT/other/private_sec_backpack.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/ERT/other/private_sec_backpack.dmi'
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "backpack-swat"
+	inhand_icon_state = "backpack_blueshield" //i'm lazy and this fits

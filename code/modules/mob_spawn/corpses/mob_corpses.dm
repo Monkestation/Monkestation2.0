@@ -288,18 +288,24 @@
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
+//MONKESTATION EDIT START
 /datum/outfit/nanotrasensoldiercorpse
-	name = "\improper NT Private Security Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security/officer
+	name = "\improper Nanotrasen Private Security Officer Corpse Tradepost" //monkestation edit
+	uniform = /obj/item/clothing/under/rank/centcom/private_sec
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
-	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	head = /obj/item/clothing/head/helmet/swat/nanotrasen
-	back = /obj/item/storage/backpack/security
+	mask = null
+	head = /obj/item/clothing/head/helmet/swat/private_sec
+	back = /obj/item/storage/backpack/private_sec
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
+
+/datum/outfit/nanotrasensoldiercorpse/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	mask = pick(/obj/item/clothing/mask/gas/sechailer/swat/private_sec, /obj/item/clothing/mask/gas/sechailer/swat/private_sec/alt)
+//MONKESTATION EDIT STOP
 
 /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
 	name = "\improper Nanotrasen Assault Officer Corpse"

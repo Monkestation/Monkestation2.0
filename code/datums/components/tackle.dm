@@ -43,7 +43,7 @@
 	src.min_distance = min_distance
 
 	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and clicking on your target with an empty hand."))
+	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -71,7 +71,7 @@
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
 	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
@@ -330,9 +330,9 @@
 		var/mob/living/carbon/human/S = sacker
 
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
+		if(suit_slot && (istype(suit_slot, /obj/item/clothing/suit/armor/riot)) || suit_slot && (istype(suit_slot, /obj/item/clothing/suit/armor/swat))) // tackling in riot armor is more effective, but tiring //monkestation edit: includes SWAT armor
 			attack_mod += 2
-			sacker.stamina.adjust(-20)
+			sacker.stamina.adjust(-30) //monkestation edit: -20 stamina to -30
 
 	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return r
