@@ -6164,6 +6164,7 @@
 #include "monkestation\code\game\objects\items\granters\summon_pie.dm"
 #include "monkestation\code\game\objects\items\grenades\monkey_barrel.dm"
 #include "monkestation\code\game\objects\items\guns\crank_guns.dm"
+#include "monkestation\code\game\objects\items\guns\fss.dm"
 #include "monkestation\code\game\objects\items\guns\long_guns.dm"
 #include "monkestation\code\game\objects\items\guns\shotguns.dm"
 #include "monkestation\code\game\objects\items\guns\SRN.dm"
