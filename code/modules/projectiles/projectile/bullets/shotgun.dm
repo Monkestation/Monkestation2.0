@@ -111,7 +111,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
-	damage = 1 //monkestation edit 3 to 1
+	damage = 2 //monkestation edit 3 to 2
 	stamina = 15 //monkestation edit
 	sharpness = NONE
 	embedding = null
