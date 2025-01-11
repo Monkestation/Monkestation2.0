@@ -11,7 +11,7 @@
 		"-Nanotrasen Board of Shareholders</blockquote>",
 	).Join("\n")
 
-/datum/station_goal/station_shield/check_completion()
+/datum/station_goal/budget/check_completion()
 	if(..())
 		return TRUE
 	if(SSeconomy.get_dep_account(ACCOUNT_CAR) >= 50000)
