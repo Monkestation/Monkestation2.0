@@ -3,9 +3,9 @@
 /obj/item/clothing/mask/cursed_rabbit
 	name = "Damned Rabbit Mask"
 	desc = "Slip into the wonderland."
-	icon =  'monkestation/icons/bloodsuckers/weapons.dmi'
+	icon =  'monkestation/icons/obj/items/monster_hunter.dmi'
 	icon_state = "rabbit_mask"
-	worn_icon = 'monkestation/icons/bloodsuckers/worn_mask.dmi'
+	worn_icon = 'monkestation/icons/mob/mask.dmi'
 	worn_icon_state = "rabbit_mask"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING | SNUG_FIT
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
@@ -55,7 +55,7 @@
 /datum/status_effect/bnuuy_mask
 	id = "bnuuy_mask"
 	alert_type = null
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	var/datum/component/glitching_state/wondershift
 
 /datum/status_effect/bnuuy_mask/on_apply()

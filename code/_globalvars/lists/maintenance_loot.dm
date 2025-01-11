@@ -71,6 +71,13 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 	))
 
 
+// monkestation addition: just trash_loot with a chance of banana peels
+GLOBAL_LIST_INIT(trash_pile_loot, list(
+	GLOB.trash_loot = 150,
+	/obj/item/grown/bananapeel = 20,
+	/obj/item/grown/bananapeel/bluespace = 1, // I am SO going to regret this later ~Lucy
+))
+// monkestation end
 
 GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 	list(//tools
@@ -291,6 +298,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 	list(//MONKESTATION ADDITION: misc
 		/obj/item/vending_refill/plushvendor = 1,
+		/obj/item/comically_large_spoon = 1,
 		) = 2,
 
 	list(//fakeout items, keep this list at low relative weight
@@ -368,7 +376,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
-		/obj/effect/rune/teleport = 1,
+		/* /obj/effect/rune/teleport = 1, */ // monkestation removal: this should really only have /obj/items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,

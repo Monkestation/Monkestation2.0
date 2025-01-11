@@ -11451,7 +11451,7 @@
 /area/station/security/prison/safe)
 "evF" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /obj/item/toy/cattoy,
 /obj/machinery/requests_console/auto_name/directional/west,
 /obj/effect/mapping_helpers/requests_console/announcement,
@@ -32366,9 +32366,6 @@
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
 	pixel_y = 6
 	},
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
 	},

@@ -58,7 +58,7 @@
 
 	data["selected_loadout"] = all_selected_paths
 	data["selected_unusuals"] = all_selected_unusuals
-	data["user_is_donator"] = !!(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator() || is_admin(preferences.parent))
+	data["user_is_donator"] = !!(preferences.parent.player_details.patreon?.is_donator() || preferences.parent.player_details.twitch?.is_donator() || is_admin(preferences.parent))
 	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
 	data["total_coins"] = preferences.metacoins
@@ -74,7 +74,7 @@
 			return null
 
 	//Here we will perform basic checks to ensure there are no exploits happening
-	if(interacted_item.donator_only && !preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator() && !is_admin(preferences.parent))
+	if(interacted_item.donator_only && !preferences.parent.player_details.patreon?.is_donator() && !preferences.parent.player_details.twitch?.is_donator() && !is_admin(preferences.parent))
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent.ckey] tried loading [interacted_item.item_path], but this is donator only.")
 		return null
 
@@ -156,7 +156,7 @@
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
+			if((!preferences.parent.player_details.patreon?.is_donator() && !preferences.parent.player_details.twitch?.is_donator()) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
@@ -251,7 +251,7 @@
 	for(var/job_type in item.restricted_roles)
 		composed_message += span_green("[job_type] <br>")
 
-	to_chat(preferences.parent, examine_block(composed_message))
+	to_chat(preferences.parent, boxed_message(composed_message))
 
 /// Select [path] item to [category_slot] slot, and open up the greyscale UI to customize [path] in [category] slot.
 /datum/preference_middleware/loadout/proc/select_color(list/params, mob/user)
@@ -317,10 +317,10 @@
 	preferences.character_preview_view.update_body()
 
 /datum/preference_middleware/loadout/proc/ckey_explain(list/params, mob/user)
-	to_chat(preferences.parent, examine_block(span_green("This item is restricted to your ckey only. Thank you!")))
+	to_chat(preferences.parent, boxed_message(span_green("This item is restricted to your ckey only. Thank you!")))
 
 /datum/preference_middleware/loadout/proc/donator_explain(list/params, mob/user)
-	if(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator())
-		to_chat(preferences.parent, examine_block("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
+	if(preferences.parent.player_details.patreon?.is_donator() || preferences.parent.player_details.twitch?.is_donator())
+		to_chat(preferences.parent, boxed_message("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
 	else
-		to_chat(preferences.parent, examine_block(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))
+		to_chat(preferences.parent, boxed_message(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))

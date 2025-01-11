@@ -59,6 +59,13 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder/proc/convert_list_to_tokens(list/saved_tokens)
 	if(!length(saved_tokens))
 		return
+	for(var/token in saved_tokens)
+		if(isnull(saved_tokens[token]))
+			saved_tokens[token] = 0
+		if(!("donator" in saved_tokens))
+			saved_tokens |= "donator"
+			saved_tokens["donator"] = 0
+
 	total_low_threat_tokens = saved_tokens["low_threat"]
 	total_medium_threat_tokens = saved_tokens["medium_threat"]
 	total_high_threat_tokens = saved_tokens["high_threat"]
@@ -88,22 +95,23 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()
-	if(!owner.patreon)
+	var/datum/patreon_data/patreon = owner?.player_details?.patreon
+	if(!patreon?.has_access(ACCESS_COMMAND_RANK))
 		return FALSE
-	if(!owner.patreon.has_access(ACCESS_COMMAND_RANK))
-		return
 	var/month_number = text2num(time2text(world.time, "MM"))
-	owner.prefs.token_month = month_number
 	if(owner.prefs.token_month != month_number)
 		owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
-	if(!owner.patreon.has_access(ACCESS_TRAITOR_RANK))
-		owner.prefs.save_preferences()
+	if(!patreon.has_access(ACCESS_TRAITOR_RANK))
+		owner.prefs.token_month = month_number
+		convert_tokens_to_list()
 		return FALSE
 	if(owner.prefs.token_month == month_number)
+		owner.prefs.token_month = month_number
 		return FALSE
 	donator_token++
 	owner.prefs.token_month = month_number
 	convert_tokens_to_list()
+	return TRUE //this is so when its proccalled we can tell its working
 
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
@@ -193,7 +201,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 	if(event_token_month != month_number)
 		event_token_month = month_number
-		event_tokens = GLOB.patreon_etoken_values[checked_client.patreon.owned_rank]
+		event_tokens = GLOB.patreon_etoken_values[checked_client.player_details.patreon.owned_rank]
 		convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/approve_token_event()

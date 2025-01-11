@@ -97,12 +97,12 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
-#define isipc(A) (is_species(A, /datum/species/ipc))
+#define isipc(A) (is_species(A, /datum/species/ipc)) // Monkestation Addition
 #define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
 #define isfloran(A) (is_species(A, /datum/species/floran)) //Monkestation Addition
 #define isarachnid(A) (is_species(A, /datum/species/arachnid)) //Monkestation Addition
 #define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
-
+#define isapid(A) (is_species(A, /datum/species/apid)) //Monkestation Addition
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
 
-//Simple animals
+//Simple + Basic animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
 #define isrevenant(A) (istype(A, /mob/living/basic/revenant))
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
-#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+#define iscat(A) (istype(A, /mob/living/basic/pet/cat))
 
 #define isdog(A) (istype(A, /mob/living/basic/pet/dog))
 
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_bartender_job(job_type) (istype(job_type, /datum/job/bartender))
 #define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
 #define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
-#define is_clown_job(job_type) (istype(job_type, /datum/job/clown) || istype(job_type, /datum/job/yellowclown))
+#define is_clown_job(job_type) (istype(job_type, /datum/job/clown) || istype(job_type, /datum/job/yellowclown) || istype(job_type, /datum/job/ert/clown)) //monkestation edit: adds ERT clowns cus why not
 #define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
 #define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
