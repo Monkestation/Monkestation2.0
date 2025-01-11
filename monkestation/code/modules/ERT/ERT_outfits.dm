@@ -710,4 +710,25 @@
 	name = "Elite Deathsquad Commando (Do or Die!)"
 	implants = list(/obj/item/implant/dust, /obj/item/implant/krav_maga)
 
+/datum/outfit/centcom/ert/private_sec
+	name = "Emergency Response Officer"
 
+	id = /obj/item/card/id/advanced/private_sec
+	box = /obj/item/storage/box/survival/security
+	uniform = /obj/item/clothing/under/rank/centcom/officer
+	ears = /obj/item/radio/headset/headset_cent/alt
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat/ert
+	shoes = /obj/item/clothing/shoes/combat
+	suit = /obj/item/clothing/suit/space/ert
+	suit_store = /obj/item/gun/energy/e_gun
+	head = /obj/item/clothing/head/helmet/space/ert
+	belt = /obj/item/tank/jetpack/oxygen/harness
+	back = /obj/item/storage/backpack/ert/generic
+	backpack_contents = list(
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/knife/combat = 1,
+	)
+	glasses = /obj/item/clothing/glasses/sunglasses
+	l_pocket = /obj/item/melee/baton/telescopic
+	r_pocket = /obj/item/restraints/handcuffs

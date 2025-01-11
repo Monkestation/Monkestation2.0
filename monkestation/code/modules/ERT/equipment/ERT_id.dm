@@ -188,3 +188,23 @@
 /obj/item/card/id/advanced/centcom/ert/generic/clown
 	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/generic/clown
+
+//-------
+// Other
+//------
+/datum/id_trim/centcom/ert/generic/private_sec
+	assignment = JOB_CENTCOM_PRIVATE_SECURITY
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_CENTCOM_BLUE
+	sechud_icon_state = SECHUD_SECURITY_RESPONSE_OFFICER
+
+/datum/id_trim/centcom/ert/generic/private_sec/New()
+	..()
+	access |= list(
+		ACCESS_MECH_SECURITY,
+		ACCESS_PERMABRIG,
+	)
+
+/obj/item/card/id/advanced/private_sec
+	registered_name = JOB_CENTCOM_PRIVATE_SECURITY
+	trim = /datum/id_trim/centcom/ert/generic/private_sec
