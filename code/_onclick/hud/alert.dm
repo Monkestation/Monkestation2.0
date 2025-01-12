@@ -1207,7 +1207,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return FALSE
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, examine_block(jointext(examine(usr), "\n")))
+		to_chat(usr, boxed_message(jointext(examine(usr), "\n")))
 		return FALSE
 	if(master && click_master)
 		return usr.client.Click(master, location, control, params)
