@@ -37,8 +37,8 @@ export const RanchingEncyclopedia = () => {
     <Window
       title="Ranching Encyclopedia"
       theme="chicken_book"
-      width={700}
-      height={650}
+      width={600}
+      height={450}
     >
       <Window.Content>
         <Stack class="content">
