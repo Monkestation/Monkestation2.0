@@ -2,4 +2,4 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "prude_mode"
 	savefile_identifier = PREFERENCE_PLAYER
-	default_value = TRUE
+	default_value = FALSE
