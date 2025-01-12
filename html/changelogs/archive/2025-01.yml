@@ -17,3 +17,187 @@
       blast door buttons.
   - bugfix: Theseus's xenobiology ooze suckers now all function
   - bugfix: Theseus's genetics now has data disk boxes instead of Nitrile gloves
+  PotatoTomahto:
+  - rscadd: adds ATP engineer mask to loadouts for 5000 monkecoin.
+  Shoddd:
+  - bugfix: Shock Touch no longer forces people with no shock buildup to drop items
+  - spellcheck: Fixed a typo in the subdermal splint applicator.
+  Siro:
+  - qol: Xenobiology Slime Vacuum no longer breaks lights.
+  - bugfix: Successful tool use on the Market pad will not damage it.
+  - bugfix: 'Allows maintenance on market pad while unpowered or broken. Fixes #3176'
+  - bugfix: Prevents slimes launched (usually by xenobio vacuum) from damaging the
+      slime grinder when hitting it.
+  - rscdel: Removes double text when opening the Market Pad Maintenance hatch.
+  SmArtKar & JohnFulpWillard:
+  - balance: Body cameras no longer shut off when you take the suit off, and can be
+      equipped to any vest, though they now visibly show up on any vest they are equipped
+      to. They can also now be EMP'ed to remove it from the camera net entirely.
+  - balance: Radio jammers can remotely turn off radios/body cameras on anyone in
+      a 7 tile radius by clicking on them. Default behavior is now on Right-click.
+  - balance: Headsets now don't talk over the radio by default with the microphone
+      on, the microphone now instead decides whether the headset can be used to speak
+      over the radio at all (this is what radio jammers turn off to prevent you from
+      speaking over comms).
+  Syndie Kate:
+  - rscadd: Adds explosive flashes, available in the syndicate uplink for 2 TC.
+  - rscadd: 'Adds door charges, available in the syndicate uplink for 5 TC.
+
+      :cl:'
+  TheColorCyan:
+  - rscadd: added straw hat and straw coat to loadout store
+  Uristthedorf:
+  - rscadd: Experimental cloner corruption event is now more common.
+  - rscdel: Disables "peaceful" evil clone objective.
+  - bugfix: Evil clone event gives all cloners the same event.
+2025-01-03:
+  Absolucy:
+  - bugfix: The In-TERROR-gator properly checks whether mobs can interact with it
+      or not.
+  - bugfix: (uaioy) Cyborgs do not deathgasp twice when dying anymore
+  - bugfix: (Melbert) Lizards and Moths don't deathgasp twice when they die
+2025-01-04:
+  SirNightKnight:
+  - bugfix: Kudzu can't be grown in CentCom.
+  - bugfix: Let go of fully of Pete's servitude in death contract.
+2025-01-05:
+  Absolucy:
+  - bugfix: The server and "you are here" lobby buttons now properly setup during
+      init.
+2025-01-06:
+  Shoddd:
+  - balance: Gun case can now only hold guns, ammo items, and gun attachments
+2025-01-07:
+  Absolucy:
+  - bugfix: Hopefully fixed weird runtime causing people to spawn naked.
+  - bugfix: Gave the plant growing subsystem a proper name.
+  - bugfix: Cleaned up some possible sources of hard deletes.
+  - bugfix: Regal rat minions are now immune to viruses, to prevent Lag'sie from being
+      summoned with large rat swarms.
+  - rscadd: Added a new AI lawset, "Jermov".
+  Absolucy, Flleeppyy:
+  - sound: Tweaked the sound for midround prompts.
+  Absolucy, cuackles, Moltijoe:
+  - rscadd: Added some new uncommon maints loot - a comically large spoon!
+  - rscadd: You can also obtain the spoon sometimes via a Black Market Uplink.
+  - rscadd: Something special may happen if you scoop up oil or blood puddles with
+      the spoon...
+  CannibalHunter:
+  - rscadd: Added new floor sign decals for mappers.
+  Coll6:
+  - rscadd: Lube and other similar sliding materials throwing human mobs into turfs
+      if their slide was blocked.
+  - rscadd: Disposal Bin flushes living mobs tossed into it.
+  - code_imp: Ends move_loop early if human movement was blocked. Sends signal to
+      mob that it was blocked.
+  - rscdel: Hard gibbed flag check
+  - code_imp: Removes cores from bodies that do not save DNA.
+  - rscadd: Core deletions will properly drop items in most cases. If core is in nullspace
+      they will be qdel instead.
+  Eagletanker:
+  - qol: Stamps in head offices are more consitent across the stations.
+  OliverOtter:
+  - balance: Blacklisted spesific antag and admin reagents from strange seeds.
+  - balance: Changed the recipe for TWitch, making it effectivly impossible to get.
+      If you somehow make it, you earned it.
+  - rscdel: Removed the TWitch injector from a hacked ordering computer.
+  - admin: Added a warning to the TWitch autoinjector OPFOR item.
+  Shoddd:
+  - bugfix: IPC, Goblins, and florans negative traits are properly listed
+  - balance: Florans now heal .1 burn per tick instead of .25
+  - balance: Apids can be flashed from any direction and harmed by pest spray
+  - rscadd: List apid traits
+  SirNightKnight:
+  - bugfix: Fixed emitter beams causing the SM to play the dusting sound.
+  - balance: Fire (status effect) is deadlier. Husked bodies go out faster.
+  - bugfix: Fixed husked bodies not losing fire stacks.
+  - balance: Halved the burning damage for flammable items.
+  Siro:
+  - rscadd: Admin logs
+  - qol: X on the old UI closes the window and the delete feature moved to a dedicated
+      button per cassette.
+  - code_imp: Removed "last" runtime
+  Sorenon:
+  - qol: redesigned the lifeline program
+  - bugfix: improved consistency between the basic crew monitor and blueshield crew
+      monitor
+  - rscadd: added NT Net backed tracking to the crew monitor and lifeline
+  - qol: minor crew monitor tweaks such as a prisoner colour and filtering by tracking
+  Syndicat-Meow:
+  - rscadd: Added actual cats
+  - rscadd: Added a cat house
+  - rscadd: Added a mechanic that lets cats and dogs treat bleeding and gorillas your
+      dislocations
+  - rscadd: Added more traits
+  - rscdel: Removed old code paths of simple cats and such
+  - qol: some food related tags
+  - qol: certain cats can help with cooking now
+  - balance: rebalanced the Syndicat nukie uplink price and increased health by 10
+      due to low number of cats
+  - balance: Minebots got BUFFED
+  - bugfix: fixed ferals and syndicat cats not being actual cats
+  - bugfix: fixed simple_hostile AI causing actual pursuits on sight now
+  - image: modified some DMI as nessesary (mine bot shield)
+  - refactor: multiple mob codes and AI
+  Syndie Kate:
+  - balance: 'Nerfs stun batons a bit
+
+      :cl:'
+  Syndie al gaib:
+  - rscdel: Removes most science-locked things from the imports menu
+  - balance: Rebalances the Bogseo
+  - balance: Plays around with some of the imports' numbers
+  - rscdel: Removes some of the more risque modular laser lines
+  - rscadd: 'Adds a few references that I thought were funny to the modular lasers
+
+      :cl:'
+  Uristthedorf:
+  - rscadd: Silicons and ghosts get a hud icon to show who isn't crew.
+  Wisemonster:
+  - balance: The interrogator will now return heads to a random spot on the station
+      once the process is finished, along with giving them a deep-rooted trauma.
+  - balance: When a goldeneye keycard is launched at the station, 3 minutes will be
+      added onto the escape shuttle timer (if one is in transit)
+  - rscadd: Added the eland revolver to assault ops sidearms
+  - rscdel: Removed the waspe pistols from assault ops
+  - rscdel: Removed the CQC book from assault ops
+  - balance: Replaced the assault ops telescopic baton with a contractor baton
+  - balance: Replaced the assault ops combat gloves+ with a krav maga implanter
+  - rscadd: Gave assault ops access to AP ammo for their smgs and shotguns
+  - rscadd: Added c35sol AP ammo
+  ancient-engineer:
+  - balance: Satyrs get sober faster now
+  - balance: Satyrs don't take a few centuries to get drunk again
+  - bugfix: Satyrs don't flicker between being drunk and not anymore
+  - bugfix: Satyrs drunkness can no longer go negative
+2025-01-08:
+  ThePooba:
+  - bugfix: 8 atmos roundstart runtimes
+2025-01-09:
+  Siro:
+  - code_imp: Walter dogs now speak again and their chance to speak increased 1->5
+2025-01-10:
+  Addust:
+  - rscadd: Johnson and Co Architecture's elite reconstruction team has broken into
+      CentCom and replaced Pooba's office with Wolf's office, per Wolf's request.
+2025-01-11:
+  Absolucy:
+  - rscadd: Searching through trash piles now throws trash around you and makes sound
+      as you dig through it!
+  - rscadd: Mapped maints trash piles into all maps that didn't already have them.
+  MomoBerri:
+  - rscadd: Theseus Shipbreaking
+  SirNightKnight:
+  - balance: Reloading from shotgun ammo boxes has a 1 second do after. Except for
+      honkshot ammo boxes.
+  - balance: Shotgun ammo boxes have 16 shells instead of 15, except honkshot ammo
+      boxes. Honkshot ammo boxes have 40 shells, used to be 35.
+2025-01-12:
+  Siro:
+  - qol: Tooltips now properly state the ore machines description and what it will
+      accept. Will also show pipe connections if applicable.
+  - qol: Machines can now be hand fed the items it processes. Artifact boulders drop
+      artifacts on all production machines.
+  - bugfix: Ore dust no longer deleted in the final refinery(Refinery/Smelter) machines.
+  - bugfix: Amalgams will now properly jam machines.
+  - bugfix: Maintenance hatch now properly displays its open status.

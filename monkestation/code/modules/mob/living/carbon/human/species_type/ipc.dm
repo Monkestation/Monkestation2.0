@@ -16,7 +16,6 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_RADIMMUNE,
 		TRAIT_NOBREATH,
-		TRAIT_TOXIMMUNE,
 		TRAIT_GENELESS,
 		TRAIT_STABLEHEART,
 		TRAIT_LITERATE,
@@ -52,6 +51,7 @@
 	mutantlungs = /obj/item/organ/internal/lungs/synth
 	mutantheart = /obj/item/organ/internal/heart/synth
 	mutantliver = /obj/item/organ/internal/liver/synth
+	mutantbutt = /obj/item/organ/internal/butt/iron
 	mutantappendix = null
 	exotic_bloodtype = /datum/blood_type/oil
 
@@ -340,3 +340,23 @@
 		return
 
 	QDEL_NULL(trauma)
+
+/datum/species/ipc/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-bone",
+			SPECIES_PERK_NAME = "Surplus Parts",
+			SPECIES_PERK_DESC = "IPCs take 20% more brute and burn due to brittle parts."
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
+			SPECIES_PERK_DESC = "IPCs limbs are not secured well, and as such they are easily dismembered.",
+		),
+		)
+
+	return to_add
