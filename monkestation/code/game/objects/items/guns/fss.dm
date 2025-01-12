@@ -9,6 +9,9 @@
 	spread = 1
 	projectile_damage_multiplier = 0.9
 
+/obj/item/gun/ballistic/automatic/wt550/fss/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/disk/design_disk/fss
 	name = "FSS-550 Design Disk"
 	desc = "A disk that allows an autolathe to print the FSS-550 and associated ammo."
@@ -29,7 +32,7 @@
 	id = "fss"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/glass = 1000)
-	build_path = /obj/item/gun/ballistic/automatic/wt550/fss
+	build_path = /obj/item/gun/ballistic/automatic/wt550/fss/no_mag
 	category = list(RND_CATEGORY_IMPORTED)
 
 /datum/design/mag_autorifle_fss //WT-550 ammo but printable in autolathe and you get it from a design disk.
