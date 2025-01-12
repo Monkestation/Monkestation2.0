@@ -19,6 +19,7 @@
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
+	multiple_sprite_use_base = FALSE
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
@@ -41,6 +42,11 @@
 	playsound(owner, 'sound/effects/bang.ogg', 50)
 	AddComponent(/datum/component/pellet_cloud, projectile_type = /obj/projectile/bullet/shrapnel, magnitude = 2)
 	new tutel_break_leftover(get_turf(src))
+
+/obj/item/ammo_box/advanced/s12gauge/tutel/update_icon_state()
+	icon_state = "tutel"
+	inhand_icon_state = "tutel"
+	return ..()
 
 /obj/item/ammo_box/advanced/s12gauge/tutel/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
