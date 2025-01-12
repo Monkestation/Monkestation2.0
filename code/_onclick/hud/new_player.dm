@@ -501,8 +501,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
-	if(is_available())
-		set_button_status(TRUE)
+	set_button_status(is_available())
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
