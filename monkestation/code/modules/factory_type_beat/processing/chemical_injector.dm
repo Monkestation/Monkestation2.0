@@ -178,8 +178,8 @@
 /obj/machinery/bouldertech/chemical_injector/check_extras(obj/item/item)
 	if(istype(item, /obj/item/processing/crystals))
 		return TRUE
-//	if(istype(item, /obj/item/processing/amalgam))
-//		return TRUE
+	if(istype(item, /obj/item/processing/amalgam))
+		return TRUE
 	return FALSE
 
 /obj/machinery/bouldertech/chemical_injector/proc/export_shard(obj/item/boulder/boulder)
