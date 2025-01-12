@@ -29,7 +29,7 @@ type Chicken = {
 };
 
 type Data = {
-  chicken_list: Chicken[];
+  chickens: Chicken[];
 };
 
 export const RanchingEncyclopedia = () => {
@@ -87,9 +87,9 @@ const ChickenIcons = (props: ChickenIconProps) => {
 
 const ChickenInfo = () => {
   const {
-    data: { chicken_list = [] },
+    data: { chickens = [] },
   } = useBackend<Data>();
-  const [selectedChicken] = useLocalState('selectedChicken', chicken_list[0]);
+  const [selectedChicken] = useLocalState('selectedChicken', chickens[0]);
   return (
     <Flex class="chicken-info-container">
       <Flex.Item class="chicken-title">
@@ -194,15 +194,15 @@ const ChickenInfo = () => {
 
 const ChickenTabs = () => {
   const {
-    data: { chicken_list = [] },
+    data: { chickens = [] },
   } = useBackend<Data>();
   const [selectedChicken, setSelectedChicken] = useLocalState(
     'selectedChicken',
-    chicken_list[0],
+    chickens[0],
   );
   return (
     <Tabs vertical overflowY="auto">
-      {chicken_list.map((chicken) => (
+      {chickens.map((chicken) => (
         <Tabs.Tab
           key={chicken.name}
           selected={chicken === selectedChicken}

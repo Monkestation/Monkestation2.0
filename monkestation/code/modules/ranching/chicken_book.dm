@@ -70,4 +70,4 @@
 
 		chickens += list(details)
 
-	return list("chicken_list" = chickens)
+	return list("chickens" = chickens)
