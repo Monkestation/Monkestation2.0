@@ -24103,7 +24103,6 @@
 "jqQ" = (
 /obj/structure/urinal/directional/north,
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/piss_stain,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -38316,7 +38315,6 @@
 /area/station/engineering/storage/tech)
 "oNo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/piss_stain,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "oNx" = (

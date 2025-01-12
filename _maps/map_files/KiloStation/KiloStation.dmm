@@ -23918,7 +23918,6 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/piss_stain,
 /turf/open/ballpit,
 /area/station/security/bitden)
 "hzd" = (
@@ -39349,7 +39348,6 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mlh" = (
 /obj/structure/kitchenspike,
-/obj/effect/decal/cleanable/piss_stain,
 /obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -65556,7 +65554,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "uIb" = (
-/obj/effect/decal/cleanable/piss_stain,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
