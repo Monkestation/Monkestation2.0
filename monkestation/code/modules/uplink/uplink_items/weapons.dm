@@ -91,5 +91,5 @@
 	The FSS-550 is a modified version of the WT-550 autorifle, it's good for arming a large group, but is weaker compared to 'proper' guns."
 	item = /obj/item/disk/design_disk/fss
 	progression_minimum = 15 MINUTES
-	cost = 6
+	cost = 5
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Because I don't think they get an autolathe or the resources to use the disk.

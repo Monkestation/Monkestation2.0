@@ -1,13 +1,13 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
-	desc = "A modified version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Used by Syndicate agents and rebels in more than 50 galaxies."
+	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Used by Syndicate agents and rebels in more than 50 systems."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
-	spread = 1
-	projectile_damage_multiplier = 0.9
+	spread = 2
+	projectile_damage_multiplier = 0.8
 
 /obj/item/gun/ballistic/automatic/wt550/fss/no_mag
 	spawnwithmagazine = FALSE
