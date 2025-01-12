@@ -1,4 +1,3 @@
-
 /// Global list of all chicken mutation singletons (Assoc [type] - [/datum/mutation/ranching/chicken singleton])
 GLOBAL_LIST_INIT_TYPED(chicken_mutations, /datum/mutation/ranching/chicken, init_subtypes_w_path_keys(/datum/mutation/ranching/chicken))
 
