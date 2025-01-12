@@ -944,6 +944,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "template"
 	timeout = 30 SECONDS
 	ghost_screentips = TRUE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// If true you need to call START_PROCESSING manually
 	var/show_time_left = FALSE
 	/// MA for maptext showing time left for poll
