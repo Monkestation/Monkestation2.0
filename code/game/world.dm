@@ -161,6 +161,142 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	RunUnattendedFunctions()
 
+#define CPU_SIZE 16
+#define WINDOW_SIZE 16
+#define FORMAT_CPU(cpu) round(cpu, 0.01)
+
+// Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
+GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
+// Debug tool, lets us set the floor of cpu consumption
+GLOBAL_VAR_INIT(floor_cpu, 0)
+// Debug tool, lets us set a sometimes used floor for cpu consumption
+GLOBAL_VAR_INIT(sustain_cpu, 0)
+// Debug tool, sets the chance to use GLOB.sustain_cpu as a floor
+GLOBAL_VAR_INIT(sustain_cpu_chance, 0)
+// Debug tool, floors cpu to its value, then resets itself
+GLOBAL_VAR_INIT(spike_cpu, 0)
+
+/world/Tick()
+	unroll_cpu_value()
+	if(GLOB.floor_cpu)
+		// avoids byond sleeping the loop and causing the MC to infinistall
+		// Run first to set a floor for sustain to spike up to
+		CONSUME_UNTIL(min(GLOB.floor_cpu, 500))
+
+	if(GLOB.sustain_cpu && prob(GLOB.sustain_cpu_chance))
+		CONSUME_UNTIL(min(GLOB.sustain_cpu, 500))
+
+	if(GLOB.spike_cpu)
+		CONSUME_UNTIL(min(GLOB.spike_cpu, 10000))
+		GLOB.spike_cpu = 0
+
+	// attempt to correct cpu overrun
+	if(GLOB.attempt_corrective_cpu)
+		CONSUME_UNTIL(TICK_EXPECTED_SAFE_MAX)
+	// this is for next tick so don't display it yet yeah?
+	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
+
+GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(tick_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(map_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(verb_cost, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(cpu_error, new /list(CPU_SIZE))
+GLOBAL_VAR_INIT(cpu_index, 1)
+GLOBAL_VAR_INIT(last_cpu_update, -1)
+
+GLOBAL_VAR_INIT(negative_printed, FALSE)
+/// Inserts our current world.cpu value into our rolling lists
+/// Its job is to pull the actual usage last tick instead of the moving average
+/world/proc/unroll_cpu_value()
+	if(GLOB.last_cpu_update == world.time)
+		return
+	GLOB.last_cpu_update = world.time
+	// cache for sonic speed
+	var/list/cpu_values = GLOB.cpu_values
+	var/list/avg_cpu_values = GLOB.avg_cpu_values
+	var/cpu_index = GLOB.cpu_index
+	var/avg_cpu = world.cpu
+	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
+	// Defaults to null or 0 so the wrap here is safe for the first 16 entries
+	var/lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
+
+	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
+	// because fuck you
+	// I want the ACTUAL unrolle value, so I need to deaverage it. this is possible because we have access to ALL values and also math
+	// yes byond does average against a constant window size, it doesn't account for a lack of values initially it just sorta assumes they exist.
+	// ♪ it ain't me, it ain't me ♪
+
+	// Second tick example
+	// avg = (A + B) / 4
+	// old_avg = (A) / 4
+	// (avg * 4 - old_avg * 4) roughly sans floating point BS = B
+	// Fifth tick example
+	// avg = (B + C + D + E) / 4
+	// old_avg = (A + B + C + D) / 4
+	// (avg * 4 - old_avg * 4) roughly = E - A
+	// so after we start losing numbers we need to add the one we're losing
+	// We're trying to do this with as few ops as possible to avoid noise
+	// soooo
+	// E = (avg * 4 - old_avg * 4) + A
+
+	var/last_avg_cpu = avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/real_cpu = avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE + lost_value
+
+	var/calculated_avg = real_cpu
+	for(var/i in 1 to WINDOW_SIZE - 1)
+		calculated_avg += cpu_values[WRAP(cpu_index - i, 1, CPU_SIZE + 1)]
+	var/inbuilt_error = world.cpu * WINDOW_SIZE - calculated_avg
+
+	var/accounted_cpu = real_cpu + inbuilt_error
+	var/tick_and_map = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
+
+	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
+	// I can't correct in place because I need the full history of averages to add back lost values
+	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
+	// my hope is this will keep error within a reasonable bound as storing a lower then expected number would cause a higher then expected number as a side effect
+
+	if((real_cpu < 0 || accounted_cpu < 0) && !GLOB.negative_printed)
+		GLOB.negative_printed = TRUE
+		log_runtime("Negative real cpu value extracted\n\
+			AVG [avg_cpu]; LAST AVG [last_avg_cpu]; LOST VAL [lost_value]; NEW VAL [real_cpu] CALC AVG [calculated_avg]; ERROR [inbuilt_error]; ACCOUNTED [accounted_cpu];\n\
+			INDEX [cpu_index]; OLD CPU LIST [json_encode(cpu_values)]")
+
+	cpu_values[cpu_index] = accounted_cpu
+	avg_cpu_values[cpu_index] = avg_cpu
+	GLOB.map_cpu_usage[cpu_index] = world.map_cpu
+	GLOB.verb_cost[cpu_index] = max(accounted_cpu - tick_and_map, 0)
+	GLOB.cpu_error[cpu_index] = inbuilt_error
+	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+
+/proc/update_glide_size()
+	world.unroll_cpu_value()
+	var/list/cpu_values = GLOB.cpu_values
+	var/sum = 0
+	var/non_zero = 0
+	for(var/value in cpu_values)
+		sum += max(value, 100)
+		if(value != 0)
+			non_zero += 1
+
+	var/first_average = non_zero ? sum / non_zero : 1
+	var/trimmed_sum = 0
+	var/used = 0
+	for(var/value in cpu_values)
+		if(!value)
+			continue
+		// If we deviate more then 30% above the average (since we care about filtering spikes), skip us over
+		if(1 - (max(value, 100) / first_average) <= 0.3)
+			trimmed_sum += max(value, 100)
+			used += 1
+
+	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
+	GLOB.glide_size_multiplier = min(100 / final_average, 1)
+
+#undef FORMAT_CPU
+#undef WINDOW_SIZE
+#undef CPU_SIZE
+
 /// Initializes TGS and loads the returned revising info into GLOB.revdata
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
