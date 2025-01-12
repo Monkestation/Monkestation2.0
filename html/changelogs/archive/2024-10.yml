@@ -202,3 +202,397 @@
 2024-10-13:
   Absolucy:
   - bugfix: Fixed the radio mic being delayed by 2 seconds.
+2024-10-14:
+  Absolucy:
+  - bugfix: Fixed speech artifacts EXCLUSIVELY making dead/mute mobs speak.
+  - bugfix: Plant splicers and DNA manipulators can now be (un)wrenched and deconstructed.
+  - rscadd: Plant splicers can now be constructed.
+  - bugfix: Fixed magic mirrors requiring you to select hair first, before being able
+      to change anything else.
+  Absolucy, Aylong, jlsnow301:
+  - refactor: Added a better system of displaying object icons in tgui.
+  - refactor: Botany seed extractors now use aforementioned system to display seed
+      icons.
+  Absolucy, LT3:
+  - bugfix: Ctrl+click on equipped uniforms enables suit sensors as expected.
+  Absolucy, mc-oofert:
+  - bugfix: Fixed the xeno resin floor layer.
+  CannibalHunter:
+  - rscadd: Added new wield keybind to hold firearms in both hands!
+  DexeeXI:
+  - rscdel: removes a series of plushies that should have not been added to the codebase.
+  Gw0sty:
+  - rscadd: Adds new greyscale kitsune mask to vendors and the monkeshop.
+  - bugfix: Fixed the visuals of radio frequency showing on its old frequency spot.
+  t-toasted:
+  - image: Resprited the Centcom Officer Turtleneck.
+  - rscadd: Added the NT Rep Office to Meta, Delta, and Icebox.
+  - qol: Moved Gateway on Meta above arrivals.
+  - bugfix: Various minor fixes.
+2024-10-15:
+  Absolucy:
+  - rscdel: Removed mood change indicator huds for ghosts due to potential major lag.
+  Gw0sty:
+  - rscadd: Gives yellow clown bridge access during Clown Bridge Access station trait.
+  - rscadd: Adds Blueshields and brig physicians to the kidnapping objectives target
+      lists.
+  - rscadd: Added Nanite room to Void Raptor.
+  - rscadd: Added nanite chamber & console to Ouroboros.
+  - qol: Added a box of nanite remotes.
+  - bugfix: Redefined circuit lab to circuit lab from aux lab,
+  - rscadd: Added a new PDA for the Psychlogist with mass messaging.
+  - rscadd: Gave Blueshield's PDA's Lifeline predownloaded
+  - rscadd: Gave Robotistic's PDA's Silliconnect Predownloaded
+  - rscadd: Gave Engineers's PDA Canary predownloaded
+  - qol: moved all the Psychlogist round start pills into a pill box in their inventory.
+  KnigTheThrasher:
+  - rscadd: Updated kilostation atmospherics
+  - rscadd: Added Nanotrasen Consultant's office to kilo
+  - rscdel: Tweaked the amount of decals in kilostation
+  Meowosers:
+  - bugfix: Blueshields no longer have a missing security HUD icon.
+  MomoBerri:
+  - bugfix: meta's engi security post can now use the cam viewer with a singularity.
+  MrBagHead:
+  - bugfix: The Bioterror foam grenade now uses a large grenade casing to fit its
+      bluespace beakers.
+  RafRoq:
+  - bugfix: Plant reagent genes no longer take all the plant volume if there are other
+      reagents
+  Shoddd:
+  - balance: beanbags now properly two shot stam crit
+  - bugfix: Beanbags no longer stam crit in one shot
+  Sylphily:
+  - rscadd: more contraband to the cig vendors
+  Wisemonster:
+  - rscadd: Gives the Blueshield 5 new alt titles
+  YehnBeep:
+  - rscadd: Secasses can now select the "Correctional Officer" alt title
+  ven1883:
+  - bugfix: character and inherent armor have been fixed. unknown how many things
+      this will affect, but includes nanite armor
+  - code_imp: modified carbon/human/proc/check_armor() to check src.armor during calculations
+  - code_imp: you can now use "set_armor" on human subtypes
+  - refactor: for people using debuggers, you can watch "inherent_armor_rating" to
+      see the inherent armor stats of a character being damaged.
+  - refactor: uses / 100 instead of * 0.01. No change in function as far as I know
+2024-10-16:
+  Absolucy:
+  - qol: Jaunts/teleports now work at centcom after roundend.
+  - rscadd: Add a preference to disable roundend credits. (Game Preferences -> UI
+      -> Show Roundend Credits)
+  - bugfix: Fixed a runtime error related to stopping the roundend credits before
+      they end.
+  Gw0sty:
+  - rscadd: Added icons for Blueshield and Secass
+  - rscadd: Added icons for all Spooktober roles
+  Shoddd:
+  - rscadd: Adds ball gown and mini crown to loadout menu
+  - rscadd: Mini crown, in loadout and autodrobe
+  - bugfix: Minicrown sprite centered
+2024-10-17:
+  Absolucy:
+  - refactor: Refactored how loadout shop items are displayed. (again)
+  - image: Properly centered the Sunset Sarsaparilla sprite.
+  - refactor: (Melbert) Refactored how vending machine icons are displayed, please
+      report if you see any broken icons. Also if all the icons look like missing
+      file icons for you, you gotta update byond man, you're like a year out of date.
+  - image: (MTandi) Made chem master container icons not blurry.
+  - bugfix: Stamina regeneration and stuns/incapacitation wearing off should hopefully
+      be more consistent regardless of server lag.
+  - bugfix: Fixed a variety of random minor errors.
+  - rscdel: HoPs can no longer open more Blueshield job slots.
+  Absolucy, LemonInTheDark:
+  - bugfix: Fixed a major source of lag related to hallucinations.
+  Meowosers:
+  - rscadd: Placed a Biogenerator on the front desk of Icebox Station's Hydroponics
+  - qol: Rearranged Icebox Station's Kitchen
+  RikuTheKiller:
+  - bugfix: Toxin damage is no longer doubled. (LMAO)
+  Wisemonster:
+  - bugfix: Fixed Theseus having brig access doors in place of perma ones.
+  - bugfix: Fixed Delta having general security access airlocks instead of perma ones.
+  - bugfix: Fixed Box almost only using general security access doors.
+2024-10-18:
+  Absolucy:
+  - qol: The heretic living heart now displays up-to-date appearances of its targets
+      when used.
+2024-10-19:
+  DexeeXI:
+  - bugfix: wikibooks now point to the new page homes on the wiki.
+  Shoddd:
+  - bugfix: fixes lavaland max temperature
+2024-10-20:
+  Absolucy:
+  - bugfix: Large amounts of smoke should no longer live for many times its intended
+      lifetime.
+  - bugfix: Fixed tamed goliaths not properly following commands - they'll now actually
+      follow you if you command "follow".
+  Addust:
+  - rscadd: The ERP achievement has been updated to reflect current rules naming schemes
+      in-game. This DOES NOT affect back-end code because I'm too lazy to change that.
+  Gw0sty:
+  - bugfix: Fixed incorrect door access on Theseus's BlueShield's Office.
+  RafRoq:
+  - qol: You can now search for reagents in the seed extractor
+2024-10-21:
+  Absolucy:
+  - bugfix: Spades and such no longer damage Craig (or planter trays) if you or them
+      move.
+  - bugfix: Name tags now take the mob's base offset into account.
+  - bugfix: Signboards no longer have a delay or update inconsistently when their
+      text is changed.
+  - rscadd: PDA ringtones now show a balloon alert to the PDA holder.
+  - refactor: Refactored how some screen alerts, such as aura healing, show atom overlays.
+  DexeeXI:
+  - rscadd: Metastation now has a justice/education injection locker.
+  - bugfix: Cell timers for all cells in jail not work on Blueshift.
+  Gw0sty:
+  - rscdel: Removed sentient disease from showing in antag preferences
+  - rscadd: Made upgraded robotic wound tending a researchable surgery
+  - rscadd: Gave Exp. Robotic wound tending part to the clockwork operating terminal
+  - qol: Adjusted IPC brain surgery steps to clarify tools more
+  - rscadd: Gave prisoners and NT rep's postions in crew tracking on crew monitors.
+  - qol: Removes quartermasters from blueshield's handheld devices tracking.
+  - balance: Removes IPC organ smuggling from the Medbays bounty pool.
+  - rscadd: Adds powercable cybernetics as a researchable and printable technology
+  dwasint:
+  - balance: TWitch now requires you have a heart to function
+  - balance: Toxic Compensation now requires that you are not immune to toxin damage
+  ven1883:
+  - refactor: fixes character armor to be inline with style requirements
+2024-10-22:
+  Absolucy, mc-oofert:
+  - qol: Slaughter/laughter demons have a cooler round end report.
+  - qol: You may not bodyslam yourself as a demon
+  - code_imp: Slaughter and laughter demons are given their antag datum when their
+      mind initializes.
+  DexeeXI:
+  - rscadd: Voidraptor's BP office is now upgraded and working as intended.
+  - rscadd: shower drains to BP offices on all maps but ouroboros (thanks Moberry)
+  - bugfix: QM's office on Theseus is now cargo brown without command stuff.
+  - rscdel: removed a redundant (very well hidden on SDMM) fire extinguisher cabinet
+      from the BP office on Theseus.
+  Gw0sty:
+  - rscadd: Added a new final objective for obsessed, 'Protect 'Target' from any harm'
+  - rscadd: Obsessed trauma now disguises itself as another trauma until time is spent
+      with the target.
+  - rscadd: Added more greet text when becoming obsessed.
+  KnigTheThrasher:
+  - rscadd: Added portable rtg's to cargo warehouse that's in space
+  - balance: Updated kilo solars
+  - bugfix: Fixed John Gamers health being 1200 instead of 200
+  - bugfix: Fixed medbay security outpost wall items being on the floor
+  RikuTheKiller:
+  - balance: Nightmares now automatically break dim lighting. Fire alarm emergency
+      lighting is unaffected.
+  - balance: Nightmares are now immune to pain and slowly heal wounds while in the
+      dark as well.
+  - balance: Light eaters can now forcibly open unpowered doors (and powered firelocks)
+      like a crowbar.
+  - balance: Shadow walk can now be cast even while in soft crit.
+  - bugfix: Light eaten objects can't blind nightmares anymore.
+  - balance: Mayhem in a bottle now makes you deal 5x damage to fauna.
+  - balance: Mayhem now has a much stabler, better defined set of effects.
+  - balance: Mayhem now breaks restraints and clears stuns on application.
+  - balance: Mayhem makes you heal brute, burn, tox, oxy and stamina damage rapidly.
+  - balance: Mayhem gives you lifesteal, which is much stronger against fauna.
+  - balance: Mayhem now only lasts 1 minute, down from 2.
+  - balance: Mayhem gives you a speed boost, but disables sprinting.
+  - balance: Mayhem no longer makes you immune to projectiles.
+  - qol: Mayhem in a bottle stops you from hitting yourself or opening the strip menu.
+  - bugfix: You can no longer turn off the mayhem chainsaw.
+  - bugfix: The mayhem chainsaw is now indestructible and actually undroppable.
+  - rscadd: Added "Storage Cavity", a new changeling ability that can store a few
+      small items, especially IDs.
+  Shoddd:
+  - bugfix: Making a mob sentient no longer gives you all of their factions.
+  - qol: Miner Iceboots are now fireproof
+  - qol: Holoparasites, guardian spirits, and power miners are now ash storm proof.
+  Sylphily:
+  - bugfix: prop hat, and sec cap, now fit monkeys better
+  flleeppyy:
+  - rscadd: added Plexora subsystem for Plexora bot integration
+  - admin: Admin and Mentor tickets will be relayed to the Discord server via Plexora.
+  - admin: 'External PM''s from the Discord will show usernames as `usernamehere(Plexora/External)`.
+
+      server:'
+  ven1883:
+  - balance: tribal claw rebalance
+  - balance: Tribal Claw now costs 10 TC, an increase of 3.
+  - balance: Tribal Claw now gives you 20% armor against melee, bullets, and lasers,
+      as well as giving you wound resistance.
+  - balance: Tribal Claw now gives Hard Soles (run on glass my pretties)
+  - balance: Tribal Claw now has a 60% block chance against melee when in throw mode.
+  - balance: Face Scratch now deals 30 damage instead of 10 as well as its original
+      effects
+  - balance: Jugular Cut now deals 10 oxygen damage and causes breath loss for 10
+      seconds per combo hit, capping out at 50 seconds.
+  - balance: Jugular Cut has a strong attack on sleeping or neck grabbed targets,
+      which deals 60 damage and a Weeping Avulsion.
+  - balance: Jugular Cut has a weak attack on standing targets for 15 damage, but
+      only does a Open Laceration
+  - code_imp: minor code fixes in Tribal Claw
+2024-10-23:
+  Absolucy:
+  - bugfix: You can no longer spam climbing attempts, which could cause quite a bit
+      of lag.
+  - bugfix: Fixed some various minor runtime errors.
+  - bugfix: Fixed blood deficiency's interaction with oozelings.
+  - bugfix: Fixed RCDs having trouble constructing windows, and their general jankiness
+      when window sills are involved.
+  - bugfix: (SyncIt21) Microwaves (after it has finished cooking) & other machines
+      that spit out contents don't spit out assemblies / signalers attached to it's
+      wires.
+  - bugfix: (SyncIt21) Signalers can be picked up if you attached them to a machine's
+      wire & later deconstructed that machine without detaching it first.
+  - qol: Insulation now properly protects you from snowstorms on Icebox.
+  - refactor: Cleaned up particle weather code quite a bit.
+  - bugfix: Fixed a potential rare source of strange behavior (such as players often
+      dropping inputs) resulting from an admin manually restarting the MC.
+  - bugfix: Fix overlay lighting (such as lanterns) messing up alert overlays, i.e
+      the rod of asclepius alert, and the living heart selection.
+  Absolucy, xPokee, Pirill:
+  - rscadd: Added flower crowns, craftable via the clothing menu, and also can be
+      bought from the loadout shop.
+  DexeeXI:
+  - bugfix: Fixed one (of unfortunately many) CC map exploits.
+  Gw0sty:
+  - bugfix: Makes it so nanite slurry/mechanical patches are not a death sentence
+      for IPC's upon application.
+  RikuTheKiller:
+  - bugfix: Changeling's "Adrenaline Sacs" ability no longer keeps you borderline
+      stamcrit.
+  - balance: Changeling adrenaline is much better at combatting stuns and it's cost
+      is now 20 chemicals. (down from 30)
+  - refactor: Changeling adrenaline is now a status effect, changeling haste still
+      exists (and works) because it was used somewhere.
+  - balance: Strained muscles now costs 10 chemicals to activate and the downside
+      works properly now.
+  - balance: Strained muscles accumulates via delta time now, so lag won't save you
+      from it.
+  - refactor: Strained muscles is now a status effect.
+  - balance: Biodegrade now costs 20 chemicals down from 30.
+  - balance: Lesser form now costs 15 chemicals down from 20.
+  - bugfix: Lesser form (and other species changes) carry over limb damage.
+  - balance: Changeling Sting (the drink) is viable to use for chemicals now.
+  - balance: Anatomic panacea is more consistent now via becoming a status effect
+      as well.
+  - rscadd: Adds a new changeling ability, "Darkness Adaptation". Making you more
+      translucent, especially in darkness and allowing you to see slightly better
+      in the dark. (Ghommie)
+  - balance: The changeling power "Chameleon Skin" has been buffed, Reduces the cost
+      to 1 and sped up the time it takes to turn invisible. (Ghommie)
+  - bugfix: Unlike upstream, "Chameleon Skin" and "Darkness Adaptation", while still
+      overriding each other, don't break if you turn off chameleon skin while in darkness
+      adaptation. (i.e. it'll turn you translucent again)
+  - bugfix: Paralysis, stun, etc. diminishment no longer applies to decreasing their
+      duration.
+  - spellcheck: A lot of changeling ability descriptions are better now. I didn't
+      go through all of them, but some of the durations are directly mentioned rather
+      than just "short" or "long" with no reference point as to what that means.
+  Shoddd:
+  - rscadd: You can now have numbers in your characters name
+  - rscadd: Plasma men, Arachnids, and fly people can have hair
+  SirNightKnight:
+  - rscadd: Added the [REDACTED] Security Level
+  manray0:
+  - rscdel: borg ability to use keycard auth
+  - sound: added borg footstep
+2024-10-24:
+  Absolucy:
+  - bugfix: Spessmen are no longer hyper-empaths (you no longer scream in pain while
+      helping relocate *someone else's* limb)
+  Shoddd:
+  - rscadd: Nukies can now buy the outlaw kit for 18 TC
+  - rscadd: Syndicate horses, obtainable from outlaw kit
+  - rscadd: Syndicate body armor, obtainable for 4 TC from any uplink
+  - qol: mentions you can lock chameleon clothes with multitool
+  - bugfix: All mountable mobs can no longer ride through space
+  Volpiin:
+  - rscadd: Added new and improved Artifact Experimentation Lab on Metastation
+  - rscadd: MetaStation - Redone the maintenance glass corridor under Ordnance.
+  - rscadd: Slightly redesigned Aft Solars on Metastation to make space for a new
+      ArtSci Lab.
+  manray0:
+  - bugfix: borgo footstep sound
+2024-10-26:
+  Absolucy:
+  - refactor: Refactored some text helper procs to use BYOND's native text trimming
+      proc.
+  - admin: Added a _trimtext proc, for use with SDQL2 or Lua scripting.
+  - sound: Optimized all sound files, resulting in a total of around 12.3 MB saved.
+  - rscdel: Get rid of the armament vendor machine at the assault ops base, replacing
+      it with a signboard telling them to use their card in-hand instead.
+  - qol: The ICARUS sunbeam is now a point of interest in the ghost orbit menu.
+  - qol: The In-TERROR-gator now works on suicided targets, instantly extracting their
+      keycard.
+  - qol: Added screentips to the In-TERROR-gator.
+  - bugfix: Nukie and assault operative medibots now have remote control disabled
+      by default, preventing them from being outed by the AI bot control or the BotKeeper
+      app.
+  - qol: Pre-loaded the defib into the wall mount on the GoldenEye cruiser.
+  - bugfix: Roundstart assault operatives are now removed from the crew manifest.
+  - rscadd: Replaced the assault operative keycard pinpointer HUD with arrows on their
+      screen.
+  - balance: GoldenEye keycards are now stationloving, similar to the nuke disk.
+  - rscadd: Added an arcade machine to the GoldenEye Cruiser's prison.
+  - balance: Pro-tagonista Syndrome no longer spawns katanas for non-sentient mobs.
+      If you want the weapon of an anime protagonist, you must accept the burden of
+      looking like one, too.
+  - balance: Whenever Pro-tagonista Syndrome is cured, the spawned katana will crumble
+      to nothing more than a pile of ashes on the floor.
+  - bugfix: Washing colors off yourself with a shower or something now actually works.
+  - bugfix: Shuttle events meteors now don't sometimes kill everyone.
+  Absolucy, afonamos2:
+  - bugfix: Firelocks will once again respect fire alarm's thermal sensors being disabled.
+  Gboster-0:
+  - rscadd: Adds NTSL, a new programming language designed for telecommunications
+  KnigTheThrasher:
+  - rscadd: Tweaked decals in Kilostation
+  Sylphily:
+  - bugfix: fixes long skirt and fancy fur coat
+  flleeppyy:
+  - sound: slugcats now make noises!
+  - rscadd: slugcats now have their own language!
+  - sound: forgot licensing for slugcat sounds
+2024-10-27:
+  Absolucy, SmArtKar:
+  - bugfix: Fixed luminiscent major extract activation button not disappearing/updating
+      when it should've
+2024-10-28:
+  RikuTheKiller:
+  - rscadd: Electronic pocket heaters now exist, mainly for lizardperson miners. You
+      can print them in auto- and cargolathes and lizardperson miners get them at
+      roundstart in their backpacks.
+  t-toasted:
+  - qol: ports TG Meta Kitchen design.
+2024-10-29:
+  Absolucy:
+  - bugfix: Fixed the endless kitchen fire alarms on Box and Delta.
+  Shoddd:
+  - bugfix: IPCs take 20% more damage not 20% less
+  - image: Ports Brute, Burn, and Brute/burn patch resprite by Nebby#1467
+  Sylphily:
+  - rscadd: Gas miners to atmospherics on IceBox
+  Yawet330:
+  - bugfix: Heart Worms now respects penthrite and vein muscle threading. Like it
+      was supposed to (indicated by its own code)
+  - bugfix: Heart Worms now no longer instantly kills you if you have CE_STABLEHEART
+      or for some reason are immune to heart attacks WITH stableheart.
+2024-10-30:
+  Absolucy:
+  - bugfix: Fixed a hard delete related to wumpas.
+  - sound: The sound from picking up / dropping a wumpa now respects the "squeak"
+      mixer channel, as stepping on it and such already does.
+  - bugfix: You can no longer lower the alert from delta/epsilon from a comms console
+      (it wouldn't actually do anything to whatever was CAUSING said alert anyways)
+  Gboster-0:
+  - rscadd: Signal technicians now have wintercoats
+  - qol: The signal technician's traffic console no longer saves your code on ENTER,
+      letting you comfortably make new-lines with enter instead
+  Gw0sty:
+  - bugfix: Makes Nuclear reinforcements call upon Midround nukie preferences rather
+      than round start.
+  MomoBerri:
+  - bugfix: fixed quartermasters doors.

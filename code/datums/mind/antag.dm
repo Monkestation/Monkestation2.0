@@ -25,6 +25,8 @@
 		antag_team.add_member(src)
 	INVOKE_ASYNC(A, TYPE_PROC_REF(/datum/antagonist, on_gain))
 	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
+	var/client/picked_client = get_player_client(src)
+	picked_client?.mob?.mind.picking = FALSE
 	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)
@@ -215,7 +217,7 @@
 	enslaved_to = WEAKREF(creator)
 
 	current.faction |= creator.faction
-	creator.faction |= current.faction
+	creator.faction |= "[REF(current)]"
 
 	if(creator.mind?.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")

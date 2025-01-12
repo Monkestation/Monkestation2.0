@@ -73,27 +73,27 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	var/obj/item/device/cassette_tape/submitted_tape
 
 	var/action_taken = FALSE
+	var/verdict = "NONE"
 
 /datum/cassette_review/Destroy(force)
-	. = ..()
-	QDEL_LIST(cassette_data)
-	submitter = null
-
-	GLOB.cassette_reviews["[id]"] -= src
-	GLOB.cassette_reviews -= id
+	if(cassette_data)
+		cassette_data["side1"]["song_name"] = null
+		cassette_data["side1"]["song_url"] = null
+		cassette_data["side2"]["song_name"] = null
+		cassette_data["side2"]["song_url"] = null
+		cassette_data.Cut()
+		cassette_data = null
+	if(isnull(submitted_tape.loc))
+		QDEL_NULL(submitted_tape) // Remove any tapes in null_space. Denied or Pending condition.
+	if(id && (id in GLOB.cassette_reviews))
+		GLOB.cassette_reviews -= id // Remove the key
+	return 	..()
 
 /datum/cassette_review/ui_state(mob/user)
 	return GLOB.always_state
 
 /datum/cassette_review/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(action_taken)
-		var/choice = tgui_alert(user, "This tape has already been actioned by another admin do you wish to look it over?", "Cassette Review", list("Yes", "No"))
-		if(!choice)
-			return
-		if(choice == "No")
-			return
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CassetteReview", "[submitted_ckey]'s Cassette")
@@ -107,6 +107,8 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	data["submitters_name"] = submitter.real_name
 	data["side1"] = cassette_data["side1"]
 	data["side2"] = cassette_data["side2"]
+	data["reviewed"] = action_taken
+	data["verdict"] = verdict
 
 	return data
 
@@ -121,6 +123,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			to_chat(submitter, span_warning("You feel a wave of disapointment wash over you, you can tell that your cassette was denied by the Space Board of Music"))
 			logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been rejected by [usr]", list("approver" = usr.name, "submitter" = submitter.name))
 			action_taken = TRUE
+			verdict = "DENIED"
 
 /datum/cassette_review/proc/approve_review(mob/user)
 	if(!check_rights_for(user.client, R_FUN))
@@ -131,8 +134,89 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	message_admins("[submitter]'s tape has been approved by [user]")
 	logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been approved by [user]", list("approver" = user.name, "submitter" = submitter.name))
 	action_taken = TRUE
+	verdict = "APPROVED"
 
 /proc/fetch_review(id)
 	return GLOB.cassette_reviews[id]
 
 #undef ADMIN_OPEN_REVIEW
+
+// Handles UI to manage cassettes.
+/client/proc/review_cassettes() //Creates a verb for admins to open up the ui
+	set name = "Review Cassettes"
+	set desc = "Review this rounds cassettes."
+	set category = "Admin.Game"
+	if(!check_rights(R_FUN))
+		return
+	new /datum/review_cassettes(usr)
+
+/datum/review_cassettes
+	var/client/holder //client of whoever is using this datum
+	var/is_funmin = FALSE
+
+/datum/review_cassettes/New(user)//user can either be a client or a mob due to byondcode(tm)
+	holder = get_player_client(user)
+	is_funmin = check_rights(R_FUN)
+	ui_interact(holder.mob)//datum has a tgui component, here we open the window
+
+/datum/review_cassettes/ui_status(mob/user, datum/ui_state/state)
+	return (user.client == holder && is_funmin) ? UI_INTERACTIVE : UI_CLOSE
+
+
+/datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
+	qdel(src)
+
+/datum/review_cassettes/ui_interact(mob/user, datum/tgui/ui) // Open UI and update as it remains open.
+	. = ..()
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CassetteManager")
+		ui.open()
+
+/datum/review_cassettes/ui_data(mob/user)
+	. = ..()
+	var/list/data = list("cassettes" = list()) // Initialize main data structure with an empty "cassettes" list
+
+	for(var/cassette_id in GLOB.cassette_reviews)
+		var/datum/cassette_review/cassette = GLOB.cassette_reviews[cassette_id]
+		var/submitters_name = cassette.submitter
+		var/obj/item/tape_obj = cassette.submitted_tape
+		var/reviewed = cassette.action_taken
+		var/verdict = cassette.verdict
+
+		// Add this cassette's data under its cassette_id
+		data["cassettes"][cassette_id] = list(
+			"submitter_name" = submitters_name,
+			"tape_name" = tape_obj.name,
+			"reviewed" = reviewed,
+			"verdict" = verdict,
+		)
+	return data
+
+/datum/review_cassettes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	if(!length(GLOB.cassette_reviews))
+		return
+
+	var/tape_id = params["tape_id"]
+	if(!tape_id || !GLOB.cassette_reviews[tape_id])
+		return
+
+	if(action == "delete_cassette")
+		var/datum/cassette_review/cassette = GLOB.cassette_reviews[tape_id]
+		var/final_info = (cassette.action_taken ? "Action taken: True, verdict was [cassette.verdict]" : "Action taken: False")
+		message_admins("[key_name_admin(usr)] has deleted Cassette:[cassette.submitted_tape.name] with ID:[tape_id]. [final_info]")
+		log_admin("[key_name(usr)] sent \"[action]\" on [cassette.submitted_tape.name] with ID:[tape_id]. [final_info]")
+		qdel(cassette)
+		return
+
+	if(action == "review_cassette")
+		var/datum/cassette_review/cassette = GLOB.cassette_reviews[tape_id]
+		cassette.ui_interact(ui.user)
+		return
+
+

@@ -1,7 +1,7 @@
 /datum/job/head_of_personnel
 	title = JOB_HEAD_OF_PERSONNEL
-	description = "Alter access on ID cards, manage the service department, \
-		protect Ian, run the station when the captain dies."
+	description = "Alter access on ID cards, manage the service and supply departments, \
+		protect Ian, run the station when the captain dies." //monkestation addition: clarifies the HoP is the supply head
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list(JOB_CAPTAIN)
 	head_announce = list(RADIO_CHANNEL_SERVICE, RADIO_CHANNEL_SUPPLY)
@@ -65,6 +65,12 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/hop
 	implants = list(/obj/item/implant/mindshield)
+
+	//monkestation addition start:
+	backpack = /obj/item/storage/backpack/head_of_personnel
+	satchel = /obj/item/storage/backpack/satchel/head_of_personnel
+	duffelbag = /obj/item/storage/backpack/duffelbag/head_of_personnel
+	//monkestation addition end
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,

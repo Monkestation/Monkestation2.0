@@ -99,3 +99,9 @@
 	cost = 13
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/rebarxbowsyndie
+	name = "Syndicate Rebar Crossbow"
+	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
+	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	cost = 12

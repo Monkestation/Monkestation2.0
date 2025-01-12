@@ -18,6 +18,16 @@
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
+/// Replaces a single limb and returns the old one if there was one
+/mob/living/carbon/proc/return_and_replace_bodypart(obj/item/bodypart/new_limb, special)
+	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
+	if(!isnull(old_limb))
+		old_limb.drop_limb(special = special)
+		old_limb.moveToNullspace()
+
+	new_limb.try_attach_limb(src, special = special)
+	return old_limb // can be null
+
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i || length(hand_bodyparts) < i)
 		return FALSE
@@ -72,7 +82,7 @@
 
 /mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -89,7 +99,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -188,19 +198,3 @@
 			. = "#fff4e6"
 		if("orange")
 			. = "#ffc905"
-
-		///simian tones
-		if("ffffff")
-			. = "#ffffff"
-		if("ffb089")
-			. = "#ffb089"
-		if("aeafb3")
-			. = "#aeafb3"
-		if("bfd0ca")
-			. = "#bfd0ca"
-		if("ce7d54")
-			. = "#ce7d54"
-		if("c47373")
-			. = "#c47373"
-		if("f4e2d5")
-			. = "#f4e2d5"

@@ -24,7 +24,12 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		// monkestation addition: pain system
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
 		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// monkestation end
 		// HIGH FUNCTIONING UNIQUE
 		TRAIT_NOBLOOD,
 		TRAIT_SUCCUMB_OVERRIDE,
@@ -103,7 +108,12 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		// monkestation addition: pain system
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
 		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// monkestation end
 		// INFECTIOUS UNIQUE
 		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
@@ -120,11 +130,23 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = hand_path) //monkestation edit: replaces the original mutant_hand_path with hand_path
+//monkestation edit start
+	for(var/datum/action/granted_action as anything in granted_action_types)
+		granted_action = new granted_action
+		granted_action.Grant(C)
+		granted_actions += granted_action
+//monkestation edit end
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(C.GetComponent(/datum/component/mutant_hands))
+//monkestation edit start
+	for(var/datum/action/removed_action in granted_actions)
+		granted_actions -= removed_action
+		removed_action.Remove(C)
+		qdel(removed_action)
+//monkestation edit end
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

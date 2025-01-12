@@ -91,12 +91,22 @@
 	///This damage is taken when atmos doesn't fit all the requirements above. Set to 0 to avoid adding the atmos_requirements element.
 	var/unsuitable_atmos_damage = 1
 
+	///Minimal body temperature without receiving damage
+	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
+	///Maximal body temperature without receiving damage
+	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
+	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
+	var/unsuitable_cold_damage = 1
+	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
+	var/unsuitable_heat_damage = 1
+
 	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
 	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
-	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
-	var/unsuitable_heat_damage = 1
+
+//MONKESTATION EDIT START
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+//MONKESTATION EDIT END
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
@@ -106,6 +116,11 @@
 
 	if(!real_name)
 		real_name = name
+
+	// MONKESTATION ADDITION START
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
+	//MONKESTATION ADDITION END
 
 	/* MONKESTATION REMOVAL - This is totally valid to create a mob in nullspace, its not valid to move a client onto it, this seems weird.
 	if(!loc)
@@ -118,6 +133,7 @@
 		speak_emote = string_list(speak_emote)
 
 	apply_atmos_requirements()
+	apply_target_randomisation()
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements()
@@ -157,6 +173,11 @@
 
 	if(!.)
 		clear_alert(ALERT_TEMPERATURE)
+
+/mob/living/basic/proc/apply_target_randomisation()
+	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
+		return
+	AddElement(/datum/element/attack_zone_randomiser)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -224,17 +245,23 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	face_atom(target)
-	if (!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown)
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
-		return FALSE //but more importantly return before attack_animal called
+	if(!early_melee_attack(target, modifiers, ignore_cooldown))
+		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
+
+/mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	face_atom(target)
+	if(!ignore_cooldown)
+		changeNext_move(melee_attack_cooldown)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
+		return FALSE //but more importantly return before attack_animal called
+	return TRUE
+
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	//monkestation edit
@@ -318,3 +345,11 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+//MONKESTATION EDIT START
+/mob/living/basic/proc/get_scream_sound()
+	return
+/mob/living/basic/proc/get_laugh_sound()
+	return
+//MONKESTATION EDIT STOP
+

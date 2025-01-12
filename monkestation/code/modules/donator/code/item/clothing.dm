@@ -535,3 +535,115 @@
 	desc = "A varsity jacket in design of centcom! It seems well made."
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/costume/purple_gold_tophat_kid
+	name = "purple and gold tophat"
+	desc = "It's a purple and gold tophat. Feels like it's from another world almost..."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "purple_gold_tophat_kid"
+	inhand_icon_state = null
+	worn_y_offset = 6
+
+/obj/item/clothing/mask/dark_skeletal_visage
+	name = "dark skeletal visage"
+	desc = "It's.. a skull that has been turned into a mask. It's coated in a strong smelling oil."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dark_skeletal_visage"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/suit/toggle/traxs_jacket
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traxs_jacket"
+	name = "trax's jacket"
+	desc = "A comfortable jacket with a yellow scorpion on the back! It seems well made."
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/neck/mist_cloak
+	name = "mist cloak"
+	desc = "It's a mist cloak. When someone grabs it, it somewhat rips it self appart so that thier enemy can't use the cloak to thier advantage."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mist_cloak"
+	worn_icon_state = "mist_cloak"
+
+/obj/item/clothing/neck/linen_tombstone_shroud
+	name = "linen tombstone shroud"
+	desc = "It's a dark linen cloak with a tombstone symbol on it. It seems covered in strands of blue hair and filth. It also has a pungent stench of cigarette smoke."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "linen_tombstone_shroud"
+	worn_icon_state = "linen_tombstone_shroud"
+
+/obj/item/clothing/head/costume/samuraihelmetmask
+	name = "samurai helmet"
+	desc = "It's an old samuri helmet with a red face mask connected to it."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "samuraihelmetmask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/under/costume/syndicatepajamas
+	name = "syndicatepajamas"
+	desc = "Black and red Syndicate branded pajamas. They smell of gunpowder."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "syndicatepajamas"
+	inhand_icon_state = null
+	can_adjust = FALSE
+
+/obj/item/clothing/suit/flleeppyy_dreamers
+	name = "dreamers trenchcoat"
+	desc = "A vibrant garment woven from the threads of (REDACTED). They say when you put it on, you can see 15 milliseconds into the future, but that's just a rumor."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dreamers"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/flleeppyy_lesbian
+	name = "lesbian trenchcoat"
+	desc = "Found in a long bacon store, this coat strangely makes you thinks of girls. It smells of flowers."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lesbian"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
+
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	desc = "A turtleneck with a pair of pants, this one is easily dyeable."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "donatorgrayscaleturtleneck"
+	can_adjust = FALSE
+	inhand_icon_state = null
+	greyscale_colors = "#8cd4a2#404577"
+	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
+	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneckworn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
+/datum/greyscale_config/donatorgrayscaleturtleneckworn
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
+
+/obj/item/clothing/neck/donatorwhitefurshawl
+	name = "white fur shawl"
+	desc = "A wonderful fur shaw that is colored white. You typically wear it with a dress on the shoulders."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "whitefurshawl"
+	worn_icon_state = "whitefurshawl"

@@ -222,6 +222,13 @@
 
 	return FALSE
 
+/mob/living/carbon/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if (!user.combat_mode)
+		for (var/datum/wound/wounds as anything in all_wounds)
+			if (wounds.try_handling(user))
+				return TRUE
+
+	return ..()
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 
@@ -336,7 +343,10 @@
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
 			return
-		if(directional_blocked || shove_blocked)
+		//MONKESTATION EDIT START
+		// if(directional_blocked || shove_blocked) - MONKESTATION EDIT ORIGINAL
+		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
+		//MONKESTATION EDIT END
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -500,16 +510,30 @@
 		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
 
 	else
-		if (helper.grab_state >= GRAB_AGGRESSIVE)
+		//MONKESTATION EDIT START
+		var/feeble = HAS_TRAIT(src, TRAIT_FEEBLE)
+		var/gently = feeble && HAS_TRAIT(helper, TRAIT_PACIFISM) ? "gently " : null
+		// if (helper.grab_state >= GRAB_AGGRESSIVE) - MONKESTATION EDIT ORIGINAL
+		if (helper.grab_state >= GRAB_AGGRESSIVE && !gently)
+		//MONKESTATION EDIT END
 			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
 			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
 		else
-			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+		//MONKESTATION EDIT START
+			// helper.visible_message(span_notice("[helper] [gently]hugs [src] to make [p_them()] feel better!"), \ - MONKESTATION EDIT ORIGINAL
+			// null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src)) - MONKESTATION EDIT ORIGINAL
+			// to_chat(helper, span_notice("You [gently]hug [src] to make [p_them()] feel better!")) - MONKESTATION EDIT ORIGINAL
+			// to_chat(src, span_notice("[helper] [gently]hugs you to make you feel better!")) - MONKESTATION EDIT ORIGINAL
+			helper.visible_message(span_notice("[helper] [gently]hugs [src] to make [p_them()] feel better!"), \
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+			to_chat(helper, span_notice("You [gently]hug [src] to make [p_them()] feel better!"))
+			to_chat(src, span_notice("[helper] [gently]hugs you to make you feel better!"))
+
+		if (feeble && !gently)
+			feeble_quirk_wound_chest(src, hugger=helper, force=helper.grab_state >= GRAB_AGGRESSIVE)
+		//MONKESTATION EDIT END
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)

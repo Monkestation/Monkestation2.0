@@ -183,6 +183,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Bowler Hat"
 	item_path = /obj/item/clothing/head/hats/bowler
 
+/datum/loadout_item/head/mini_crown
+	name = "Mini Crown"
+	item_path = /obj/item/clothing/head/costume/minicrown
+
 /datum/loadout_item/head/tragic
 	name = "Tragic Mime Headpiece"
 	item_path = /obj/item/clothing/head/tragic
@@ -195,6 +199,9 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Headdress of Nemes"
 	item_path = /obj/item/clothing/head/costume/nemes
 
+/datum/loadout_item/head/straw_hat
+	name = "Straw Hat"
+	item_path = /obj/item/clothing/head/costume/straw_hat
 /*
 *	CHRISTMAS
 */
@@ -494,6 +501,22 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/floral_garland //BUYABLE
 	name = "Floral Garland"
 	item_path = /obj/item/clothing/head/costume/garland
+
+/datum/loadout_item/head/rainbowbunch //BUYABLE
+	name = "Rainbow Flower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/rainbowbunch
+
+/datum/loadout_item/head/sunflower_crown //BUYABLE
+	name = "Sunflower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/sunflower
+
+/datum/loadout_item/head/poppy_crown //BUYABLE
+	name = "Poppy Crown"
+	item_path = /obj/item/clothing/head/costume/garland/poppy
+
+/datum/loadout_item/head/lily_crown //BUYABLE
+	name = "Lily Crown"
+	item_path = /obj/item/clothing/head/costume/garland/lily
 
 /datum/loadout_item/head/sombrero //BUYABLE
 	name = "Sombrero"

@@ -8,6 +8,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_BLUESHIELD,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
@@ -39,6 +40,7 @@
 	weight = 4
 	max_occurrences = 1
 	event_icon_state = "cult"
+	preferred_events = list(/datum/round_event_control/antagonist/solo/clockcult = 1)
 
 /datum/round_event/antagonist/solo/bloodcult
 	excute_round_end_reports = TRUE

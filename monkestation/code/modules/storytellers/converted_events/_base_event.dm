@@ -145,6 +145,8 @@
 	/// A list of extra events to force whenever this one is chosen by the storyteller.
 	/// Can either be normal list or a weighted list.
 	var/list/extra_spawned_events
+	/// Similar to extra_spawned_events however these are only used by roundstart events and will only try and run if we have the points to do so
+	var/list/preferred_events
 
 /datum/round_event_control/antagonist/solo/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
@@ -210,13 +212,18 @@
 	var/prompted_picking = FALSE //TODO: Implement this
 	/// DO NOT SET THIS MANUALLY, THIS IS INHERITED FROM THE EVENT CONTROLLER ON NEW
 	var/list/extra_spawned_events
+	// Same as above
+	var/list/preferred_events
 
 /datum/round_event/antagonist/solo/New(my_processing, datum/round_event_control/event_controller)
 	. = ..()
 	if(istype(event_controller, /datum/round_event_control/antagonist/solo))
 		var/datum/round_event_control/antagonist/solo/antag_event_controller = event_controller
-		if(antag_event_controller?.extra_spawned_events)
-			extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
+		if(antag_event_controller)
+			if(antag_event_controller.extra_spawned_events)
+				extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
+			if(antag_event_controller.preferred_events)
+				preferred_events = fill_with_ones(antag_event_controller.preferred_events)
 
 /datum/round_event/antagonist/solo/setup()
 	var/datum/round_event_control/antagonist/solo/cast_control = control
@@ -241,6 +248,7 @@
 	var/list/cliented_list = list()
 	for(var/mob/living/mob as anything in possible_candidates)
 		cliented_list += mob.client
+
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
 
@@ -272,6 +280,7 @@
 			if(QDELETED(picked_client))
 				continue
 			var/mob/picked_mob = picked_client.mob
+			picked_mob?.mind?.picking = TRUE
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
@@ -328,6 +337,8 @@
 	old_mob.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
 	old_mob.mind.transfer_to(new_character)
+	if(old_mob.has_quirk(/datum/quirk/anime)) // stupid special case bc this quirk is basically janky wrapper shitcode around some optional appearance prefs
+		new_character.add_quirk(/datum/quirk/anime)
 	if(qdel_old_mob)
 		qdel(old_mob)
 	return new_character

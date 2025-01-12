@@ -608,7 +608,7 @@
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[sender] [rigged ? "(as [fake_name]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
-	for(var/mob/player_mob as anything in GLOB.current_observers_list)
+	for(var/mob/player_mob as anything in GLOB.dead_mob_list)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
 			continue
@@ -686,7 +686,7 @@
 		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && should_ring)
-		computer.ring(ringtone)
+		computer.ring(ringtone, list(receiver_mob))
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()

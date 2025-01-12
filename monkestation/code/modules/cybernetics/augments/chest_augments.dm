@@ -16,10 +16,11 @@
 /obj/item/organ/internal/cyberimp/chest/sandevistan
 	name = "Militech Apogee Sandevistan"
 	desc = "This model of Sandevistan doesn't exist, at least officially. Off the record, there's gossip of secret Militech Lunar labs producing covert cyberware. It was never meant to be mass produced, but an army would only really need a few pieces like this one to dominate their enemy."
-	encode_info = AUGMENT_SYNDICATE_LEVEL
-	icon_state = "sandy"
-	actions_types = list(/datum/action/item_action/organ_action/sandy)
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
+	icon_state = "sandy"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	actions_types = list(/datum/action/item_action/organ_action/sandy)
 
 	COOLDOWN_DECLARE(in_the_zone)
 	/// The bodypart overlay datum we should apply to whatever mob we are put into
@@ -60,7 +61,7 @@
 /obj/item/organ/internal/cyberimp/chest/sandevistan/refurbished
 	name = "refurbished sandevistan"
 	desc = "The branding has been scratched off of these and it looks hastily put together."
-
+	organ_flags = parent_type::organ_flags & ~ORGAN_HIDDEN
 	cooldown_time = 65 SECONDS
 
 /obj/item/organ/internal/cyberimp/chest/sandevistan/refurbished/ui_action_click(mob/user, actiontype)
@@ -94,9 +95,10 @@
 /obj/item/organ/internal/cyberimp/chest/chemvat
 	name = "R.A.G.E. chemical system"
 	desc = "Extremely dangerous system that fills the user with a mix of potent drugs."
-	encode_info = AUGMENT_SYNDICATE_LEVEL
-	icon_state = "chemvat_back_held"
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
+	icon_state = "chemvat_back_held"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	var/obj/item/clothing/mask/chemvat/forced
 	var/obj/item/chemvat_tank/forced_tank
@@ -217,9 +219,9 @@
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/organ/internal/cyberimp/chest/nutriment
-	name = "Nutriment pump implant"
+	name = "nutriment pump implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
-	icon_state = "chest_implant"
+	icon_state = "nutriment_implant"
 	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
@@ -252,17 +254,17 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus
-	name = "Nutriment pump implant PLUS"
+	name = "nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
-	icon_state = "chest_implant"
+	icon_state = "adv_nutriment_implant"
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
 /obj/item/organ/internal/cyberimp/chest/reviver
-	name = "Reviver implant"
+	name = "reviver implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
-	icon_state = "chest_implant"
+	icon_state = "reviver_implant"
 	implant_color = "#AD0000"
 	slot = ORGAN_SLOT_HEART_AID
 	encode_info = AUGMENT_NT_HIGHLEVEL
@@ -566,6 +568,7 @@
 	desc = "Short for Complementary Combat Maneuvering System, it processes spinal nerve signals and enacts forced complementary maneuvers on the opposite side of the user's body when they attack. In layman's terms, it lets you dual wield."
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "ccms"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	visual_implant = TRUE

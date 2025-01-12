@@ -194,7 +194,7 @@
 				/obj/item/clothing/mask/animal/cowmask = 1,
 				/obj/item/clothing/mask/animal/horsehead = 1,
 				/obj/item/clothing/head/lizard = 1,
-				/obj/item/clothing/head/costume/bunnyhead/regular = 1,	
+				/obj/item/clothing/head/costume/bunnyhead/regular = 1,
 				/obj/item/clothing/suit/costume/bunnysuit/regular = 1,
 			),
 		),
@@ -279,10 +279,12 @@
 		/obj/item/clothing/under/suit/tuxedo = 1,
 		/obj/item/clothing/head/costume/weddingveil = 1,
 		/obj/item/clothing/under/dress/ballgown = 1, //MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/dress/wlpinafore = 1, //MONKESTATION EDIT ADDITION
 		/obj/item/storage/belt/fannypack/cummerbund = 1,
 		/obj/item/clothing/suit/costume/drfreeze_coat = 1,
 		/obj/item/clothing/under/costume/drfreeze = 1,
 		/obj/item/clothing/head/costume/drfreezehat = 1,
+		/obj/item/clothing/head/costume/minicrown = 1, //MONKESTATION EDIT ADDITION
 	)
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = PAYCHECK_CREW * 0.8 //Default of 40.

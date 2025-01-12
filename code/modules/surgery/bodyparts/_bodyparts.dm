@@ -178,8 +178,6 @@
 	var/unarmed_damage_high = 1
 	///Damage at which attacks from this bodypart will stun
 	var/unarmed_stun_threshold = 2
-	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
-	var/top_offset = 0
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -656,7 +654,7 @@
 	if(burn)
 		set_burn_dam(round(max(burn_dam - burn, 0), DAMAGE_PRECISION))
 
-	if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
+	if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING) && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED)) //monkestation edit
 		if(owner.health > 0)
 			owner.revive(0)
 			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
@@ -669,13 +667,17 @@
 
 		//monkestation edit start
 		if(owner.stat == DEAD && HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
-			if(owner.health > 50)
+			if(!HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
 				owner.revive(FALSE)
 		//monkestation edit end
 
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
+///Sets the damage of a bodypart when it is created.
+/obj/item/bodypart/proc/set_initial_damage(brute_damage, burn_damage)
+	set_brute_dam(brute_damage)
+	set_burn_dam(burn_damage)
 
 ///Proc to hook behavior associated to the change of the brute_dam variable's value.
 /obj/item/bodypart/proc/set_brute_dam(new_value)

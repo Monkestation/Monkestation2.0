@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
-	data["user_is_donator"] = !!(owner.patreon?.is_donator() || owner.twitch?.is_donator() || is_admin(owner))
+	data["user_is_donator"] = !!(owner.player_details.patreon.is_donator() || owner.player_details.twitch.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
 	data["total_coins"] = user.client.prefs.metacoins
 
@@ -159,6 +159,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.store_accessory)))
 	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.store_inhand_items)))
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!", "contents" = list_to_data(GLOB.store_toys)))
+	loadout_tabs += list(list("name" = "Plushies", "title" = "Adorable little plushies!", "contents" = list_to_data(GLOB.store_plushies)))
 	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items", "contents" = list_to_data(GLOB.store_pockets)))
 
 	data["loadout_tabs"] = loadout_tabs
@@ -182,16 +183,21 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		if(item.hidden)
 			formatted_list.len--
 			continue
+		var/obj/item/item_type = item.item_path
 		var/list/formatted_item = list(
 			"name" = item.name,
 			"path" = item.item_path,
 			"cost" = item.item_cost,
-			"desc" = item.item_path::desc,
-			"icon" = sanitize_css_class_name("[item.item_path]"),
+			"desc" = item_type::desc,
 			"job_restricted" = null,
 		)
+		if((item_type::icon_preview && item_type::icon_state_preview) || !(item_type::greyscale_config && item_type::greyscale_colors))
+			formatted_item["icon"] = item_type::icon_preview || item_type::icon
+			formatted_item["icon_state"] = item_type::icon_state_preview || item_type::icon_state
+		else
+			formatted_item["icon"] = sanitize_css_class_name("[item_type]")
 
-		var/datum/loadout_item/selected = GLOB.all_loadout_datums[item.item_path]
+		var/datum/loadout_item/selected = GLOB.all_loadout_datums[item_type]
 		if(length(selected?.restricted_roles))
 			formatted_item["job_restricted"] = selected.restricted_roles.Join(", ")
 

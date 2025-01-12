@@ -20,6 +20,13 @@
 		act = copytext(act, 1, custom_param)
 
 	act = lowertext(act)
+
+	//MONKESTATION EDIT START
+	// not a fan of this but I don't think there's a less hacky way to do it without changing how emotes work
+	if (HAS_TRAIT(src, TRAIT_FEEBLE) && !intentional && (act in list("scream", "screech", "screams", "screeches")))
+		act = pick("whimper", "cry")
+	//MONKESTATION EDIT END
+
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
@@ -67,7 +74,7 @@
 	message += keys.Join(", ")
 	message += "."
 	message = message.Join("")
-	to_chat(user, examine_block(message))
+	to_chat(user, boxed_message(message))
 
 /datum/emote/flip
 	key = "flip"
@@ -156,3 +163,24 @@
 #undef BEYBLADE_DIZZINESS_DURATION
 #undef BEYBLADE_CONFUSION_INCREMENT
 #undef BEYBLADE_CONFUSION_LIMIT
+
+/datum/emote/jump
+	key = "jump"
+	key_third_person = "jumps"
+	message = "jumps!"
+	// Allows ghosts to jump
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+
+/datum/emote/jump/proc/jump_animation(mob/user)
+	var/original_transform = user.transform
+	animate(user, transform = user.transform.Translate(0, 4), time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(transform = original_transform, time = 0.1 SECONDS)
+
+/datum/emote/jump/get_sound(mob/user)
+	return 'sound/items/thudswoosh.ogg'
+
+// Avoids playing sounds if we're a ghost
+/datum/emote/jump/should_play_sound(mob/user, intentional)
+	if(isliving(user))
+		return ..()
+	return FALSE

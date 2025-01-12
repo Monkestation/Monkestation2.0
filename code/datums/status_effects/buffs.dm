@@ -2,10 +2,17 @@
 
 /datum/status_effect/his_grace
 	id = "his_grace"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 4
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
+	/// Base traits given to the user of His Grace.
+	var/static/list/base_traits = list(
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+	)
 
 /atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
@@ -27,29 +34,34 @@
 		priority = 3,
 		self_message = span_boldwarning("His Grace protects you from the stun!"),
 	)
+	owner.add_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/his_grace/on_remove()
 	owner.remove_stun_absorption(id)
+	owner.remove_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
-		if(HG.bloodthirst > bloodlust)
-			bloodlust = HG.bloodthirst
-		if(HG.awakened)
+	for(var/obj/item/his_grace/his_grace in owner.held_items)
+		if(his_grace.bloodthirst > bloodlust)
+			bloodlust = his_grace.bloodthirst
+		if(his_grace.awakened)
 			graces++
 	if(!graces)
 		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.05
-	owner.adjustBruteLoss(-grace_heal)
-	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
-	owner.adjustOxyLoss(-(grace_heal * 2))
-	owner.adjustCloneLoss(-grace_heal)
+	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
+	needs_update += owner.adjustBruteLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-grace_heal, updating_health = FALSE, forced = TRUE)
+	needs_update += owner.adjustOxyLoss(-(grace_heal * 2), updating_health = FALSE)
+	needs_update += owner.adjustCloneLoss(-grace_heal, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
@@ -74,7 +86,7 @@
 
 /datum/status_effect/cult_master
 	id = "The Cult Master"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
@@ -104,7 +116,7 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = 0
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
 /atom/movable/screen/alert/status_effect/blooddrunk
@@ -199,7 +211,7 @@
 /datum/status_effect/hippocratic_oath
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 25
 	alert_type = null
 
@@ -364,7 +376,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 2 MINUTES
+	duration = 1 MINUTE // monkestation edit
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -387,9 +399,11 @@
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
 		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		chainsaw.item_flags |= DROPDEL // monkestation addition
+		chainsaw.resistance_flags |= INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // monkestation addition
 		owner.put_in_hands(chainsaw, forced = TRUE)
 		chainsaw.attack_self(owner)
-		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+		//owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25) MONKESTATION REMOVAL
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
@@ -409,6 +423,7 @@
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -461,7 +476,7 @@
 
 /datum/status_effect/nest_sustenance
 	id = "nest_sustenance"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
@@ -490,8 +505,8 @@
  */
 /datum/status_effect/blessing_of_insanity
 	id = "blessing_of_insanity"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blessing_of_insanity
 
 /atom/movable/screen/alert/status_effect/blessing_of_insanity

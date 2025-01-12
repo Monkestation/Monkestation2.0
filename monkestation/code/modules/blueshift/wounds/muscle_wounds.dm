@@ -18,7 +18,7 @@
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	required_limb_biostate = BIO_FLESH
 
-	required_wounding_types = list(WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE)
+	required_wounding_types = list(WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, WOUND_MUSCLE)
 	match_all_wounding_types = FALSE
 
 	wound_series = WOUND_SERIES_MUSCLE_DAMAGE
@@ -54,8 +54,9 @@
 	return ..()
 
 /datum/wound/muscle/handle_process()
+	if(QDELETED(victim) || QDELETED(limb))
+		return
 	. = ..()
-
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
 		if(prob(50))

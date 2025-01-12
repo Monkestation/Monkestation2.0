@@ -169,6 +169,15 @@
 		render_list += "<span class='alert ml-1'><b>Subject cannot be healed by any known methods.</b></span>\n"
 	// monkestation end
 
+	// monkestation edit: heavy bleeder challenge
+	if(HAS_TRAIT(target, TRAIT_HEAVY_BLEEDER))
+		render_list += "<span class='alert ml-1'><b>Subject will suffer highly abnormal hemorrhaging from laceration or surgical incension.</b></span>\n"
+
+	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
+	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
+	// monkestation end
+
 	if(target.stamina.loss)
 		if(advanced)
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss]%.</span>\n"
@@ -419,7 +428,7 @@
 	// we handled the last <br> so we don't need handholding
 
 	if(tochat)
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	else
 		return(jointext(render_list, ""))
 
@@ -486,7 +495,7 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
@@ -539,7 +548,7 @@
 			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
 		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)

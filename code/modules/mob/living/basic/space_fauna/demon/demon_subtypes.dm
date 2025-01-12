@@ -67,7 +67,7 @@
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
-	if(!isliving(attack_target))
+	if(!isliving(attack_target) || attack_target == src)
 		return
 
 	if(!Adjacent(attack_target))
@@ -147,7 +147,7 @@
 /// We do our own special thing on death, which is to spawn a kitten.
 /mob/living/basic/demon/slaughter/laughter/proc/on_death()
 	SIGNAL_HANDLER
-	var/mob/living/simple_animal/pet/cat/kitten/kitty = new(drop_location())
+	var/mob/living/basic/pet/cat/kitten/kitty = new(drop_location())
 	kitty.name = "Laughter"
 
 /mob/living/basic/demon/slaughter/laughter/ex_act(severity)

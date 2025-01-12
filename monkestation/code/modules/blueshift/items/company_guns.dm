@@ -257,6 +257,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
@@ -324,7 +325,7 @@
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
 
-	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -422,15 +423,12 @@
 	suppressor_x_offset = 9
 
 	burst_size = 2
-	fire_delay = 0.15 SECONDS
+	fire_delay = 0.5 SECONDS
 	actions_types = list()
-
-	// Because we're firing a lot of these really fast, we want a lot less wound chance
-	projectile_wound_bonus = -20
-	spread = 12.5
+	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
-	wield_recoil = 0.5
+	wield_recoil = 1
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
@@ -462,16 +460,11 @@
 /obj/item/gun/ballistic/revolver/sol
 	name = "\improper Eland Revolver"
 	desc = "A small revolver with a comically short barrel and cylinder space for eight .35 Sol Short rounds."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "eland"
-
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c35sol
-
 	suppressor_x_offset = 3
-
 	w_class = WEIGHT_CLASS_SMALL
-
 	can_suppress = TRUE
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
@@ -504,19 +497,13 @@
 /obj/item/gun/ballistic/revolver/takbok
 	name = "\improper Takbok Revolver"
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
-
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
-
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
-
 	suppressor_x_offset = 5
-
 	can_suppress = TRUE
-
 	fire_delay = 1 SECONDS
 	recoil = 3
 	wield_recoil = 1
@@ -768,7 +755,6 @@
 	recoil = 1.5
 	wield_recoil = 0.5
 	spread = 2.5
-	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
 	. = ..()
@@ -974,6 +960,8 @@
 	icon_state = "bobr"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
 	spread = SAWN_OFF_ACC_PENALTY
+	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
+	projectile_wound_bonus = -5  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
 
 /obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)

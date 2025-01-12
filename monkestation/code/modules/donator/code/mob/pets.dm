@@ -266,3 +266,39 @@
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("ThePooba")
 	movement_type = FLYING
+
+/mob/living/basic/pet/albino_ghost_ian
+	name = "ghost ian"
+	desc = "It's an albino corgi!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "albino_ghost_ian"
+	icon_living = "albino_ghost_ian"
+	icon_dead = "albino_ghost_ian-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Eacles13")
+
+/mob/living/basic/pet/fluffydonator
+	name = "fluffy"
+	desc = "A big black spider wearing pajama's from Central Command!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "fluffy"
+	icon_living = "fluffy"
+	icon_dead = "fluffy-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Jason Farqiour")
+
+/mob/living/basic/pet/robottoything
+	name = "robot toy"
+	desc = "It's a small robot toy. It's made of metal"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robottoything"
+	icon_living = "robottoything"
+	icon_dead = "robottoything-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("TheSpecialSnowflake")

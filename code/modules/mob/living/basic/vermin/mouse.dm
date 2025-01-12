@@ -27,6 +27,10 @@
 	response_harm_simple = "splat"
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
+	//MONKESTATION EDIT START
+	death_sound = 'sound/effects/mousesqueek.ogg'
+	death_message = "falls limp and lifeless..."
+	//MONKESTATION EDIT STOP
 
 	/// Whether this rat is friendly to players
 	var/tame = FALSE
@@ -36,8 +40,21 @@
 	var/contributes_to_ratcap = TRUE
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+	)
 
 	var/chooses_bodycolor = TRUE
+
+//MONKESTATION EDIT START
+/mob/living/basic/mouse/get_scream_sound()
+	return 'sound/effects/mousesqueek.ogg'
+/mob/living/basic/mouse/get_laugh_sound()
+	return 'sound/effects/mousesqueek.ogg'
+//MONKESTATION EDIT STOP
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
@@ -57,6 +74,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
 	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
@@ -147,6 +165,24 @@
 	if(istype(attack_target, /obj/item/food/cheese))
 		try_consume_cheese(attack_target)
 		return TRUE
+	//MONKESTATION EDIT START
+	if(istype(attack_target, /obj/item))
+		if(!attack_target.GetComponent(/datum/component/edible))
+			return
+		if(istype(attack_target, /obj/item/food/cheese))
+			return //mice savour cheese differently
+		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
+		edible.UseByMouse(edible, src)
+
+		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
+			if(istype(target_reagent, /datum/reagent/toxin))
+				visible_message(
+					span_warning("[src] devours [attack_target]! They pause for a moment..."),
+					span_warning("You devour [attack_target], something tastes off..."),
+				)
+				if(health != 0)
+					adjust_health(4)
+	//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)
@@ -386,9 +422,10 @@
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
 	blackboard = list( // Always cowardly
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
 	)
 
@@ -396,6 +433,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
 		// Next priority is see if anyone is looking at us
