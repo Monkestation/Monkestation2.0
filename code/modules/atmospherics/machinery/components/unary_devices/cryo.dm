@@ -567,8 +567,6 @@
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			var/chem_name = R.name
-			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-				chem_name = "Ammonia?"
 			beakerContents += list(list("name" = chem_name, "volume" = R.volume))
 	data["beakerContents"] = beakerContents
 	return data

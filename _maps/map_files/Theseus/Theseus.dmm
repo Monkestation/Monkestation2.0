@@ -2280,12 +2280,6 @@
 /area/station/command/heads_quarters/captain/private)
 "aKv" = (
 /obj/structure/flora/bush/flowers_br,
-/obj/item/reagent_containers/cup/glass/bottle/holywater{
-	volume = 400;
-	list_reagents = list(/datum/reagent/ammonia/urine  = 400);
-	name = "strange flask";
-	desc = "A flask of some strange liquid?"
-	},
 /turf/open/floor/grass,
 /area/station/maintenance/department/medical)
 "aKB" = (
@@ -4396,7 +4390,7 @@
 "bqu" = (
 /obj/item/borg/upgrade/transform/clown,
 /obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 1000)
+	reagent_list = list(/datum/reagent/lube = 1000)
 	},
 /turf/open/floor/mineral/bananium,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -20571,7 +20565,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/grille,
 /obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
+	reagent_list = list(/datum/reagent/lube = 400)
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
@@ -78985,7 +78979,7 @@
 "xkH" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
+	reagent_list = list(/datum/reagent/lube = 400)
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
@@ -81099,7 +81093,7 @@
 /obj/effect/decal/cleanable/confetti,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
+	reagent_list = list(/datum/reagent/lube = 400)
 	},
 /turf/open/floor/plating,
 /area/station/service/theater)

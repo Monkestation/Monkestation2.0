@@ -245,11 +245,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	data["reagentAnalysisMode"] = reagent_analysis_mode
 	if(reagent_analysis_mode && analyzed_reagent)
-		//Monkestation Addition: prude mode
-		var/chem_name = analyzed_reagent.name
-		if(istype(analyzed_reagent, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-			chem_name = "Ammonia?"
-		//End Monkestation Addition
 		var/state
 		switch(analyzed_reagent.reagent_state)
 			if(SOLID)
@@ -261,7 +256,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			else
 				state = "Unknown"
 		data["analysisData"] = list(
-			"name" = chem_name, //Monkestation Edit: prude mode
 			"state" = state,
 			"pH" = analyzed_reagent.ph,
 			"color" = analyzed_reagent.color,

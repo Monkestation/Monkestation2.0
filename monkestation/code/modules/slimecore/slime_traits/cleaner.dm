@@ -23,7 +23,6 @@
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/wrapping,
-		/obj/effect/decal/cleanable/piss_stain,
 		/obj/effect/decal/remains,
 	))
 	///blood we can clean

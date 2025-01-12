@@ -28108,7 +28108,6 @@
 /area/centcom/central_command_areas/retirement_yard)
 "xGe" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/decal/cleanable/piss_stain,
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
 "xJC" = (

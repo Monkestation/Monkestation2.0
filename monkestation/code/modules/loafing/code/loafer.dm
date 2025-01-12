@@ -44,7 +44,6 @@
 					loaf.reagents.add_reagent(/datum/reagent/iron, 10)
 				else
 					loaf.reagents.add_reagent(/datum/reagent/bone_dust, 3)
-					loaf.reagents.add_reagent(/datum/reagent/ammonia/urine, 2)
 					loaf.reagents.add_reagent(/datum/reagent/consumable/liquidgibs, 2)
 					loaf.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 2)
 				//then we give the loaf more power

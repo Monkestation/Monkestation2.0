@@ -585,13 +585,6 @@
 		butt = new/obj/item/organ/internal/butt/clown
 		butt.Insert(H)
 
-	var/obj/item/organ/internal/bladder/bladder = H.get_organ_slot(ORGAN_SLOT_BLADDER)
-	if(bladder)
-		bladder.Remove(H, 1)
-		QDEL_NULL(bladder)
-		bladder = new/obj/item/organ/internal/bladder/clown
-		bladder.Insert(H)
-
 /datum/antagonist/ert/generic/clown/funny
 	name = "Code Honk! Entertainment Response Officer"
 	outfit = /datum/outfit/centcom/ert/generic/clown/funny

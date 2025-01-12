@@ -130,8 +130,6 @@
 	var/TankCurrentVolume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		var/chem_name = R.name
-		if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-			chem_name = "Ammonia?"
 		TankContents.Add(list(list("name" = chem_name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 		TankCurrentVolume += R.volume
 	data["TankContents"] = TankContents

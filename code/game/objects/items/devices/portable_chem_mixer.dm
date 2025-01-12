@@ -243,8 +243,6 @@ MONKESTATION REMOVAL END */
 	if(!QDELETED(beaker))
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			var/chem_name = R.name
-			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-				chem_name = "Ammonia?"
 			beakerContents.Add(list(list("name" = chem_name, "id" = ckey(R.name), "volume" = R.volume, "pH" = R.ph))) // list in a list because Byond merges the first list...
 		data["beakerCurrentpH"] = round(beaker.reagents.ph, 0.01)
 	data["beakerContents"] = beakerContents
