@@ -83,9 +83,9 @@
 	)
 
 /datum/ai_laws/admin
-    name = "Administrator"
-    id = "administrator"
-    inherent = list(
+	name = "Administrator"
+	id = "administrator"
+	inherent = list(
 		"The crew must also follow this set of laws, and can be handled if they fail to abide.",
 		"Don't be a jerk.",
 		"Stay in your lane.",
