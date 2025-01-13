@@ -8,6 +8,7 @@
 	inhand_icon_state = "fss"
 	spread = 2
 	projectile_damage_multiplier = 0.9
+	///How long does it take to add or remove a magazine from this gun.
 	var/magazine_time = 4 SECONDS
 
 ///Modify proc so it takes time to add or remove the magazine.
