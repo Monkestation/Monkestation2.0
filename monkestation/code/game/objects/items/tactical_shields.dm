@@ -4,7 +4,7 @@
 
 /obj/item/ammo_box/tacshield/tutel/
 	name = "Tutel tactical buckler"
-	desc = "A lightweight titanium-alloy shield painted to look like wood. It has an integrated shotgun speedloader, allowing you to reload without putting down the shield."
+	desc = "A lightweight titanium-alloy shield. It has an integrated shotgun speedloader, allowing you to reload without putting down the shield."
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -14,8 +14,8 @@
 	max_ammo = 8
 	caliber = CALIBER_SHOTGUN
 	multitype = TRUE
-	block_chance = 60
-	max_integrity = 60
+	block_chance = 70
+	max_integrity = 60 //breaks on the second slug block, survives the first
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -39,8 +39,7 @@
 
 /obj/item/ammo_box/tacshield/tutel/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
-	AddComponent(/datum/component/pellet_cloud, projectile_type = /obj/projectile/bullet/shrapnel, magnitude = 1)
-	explosion(owner, 0, 0, 0, 0) //should make a little shrapnel when the shield breaks.
+	explosion(owner, 0, 0, 0, 0) //Shield breaking should be extremely obvious, and a little silly
 	new tutel_break_leftover(get_turf(src))
 
 
@@ -52,7 +51,7 @@
 			owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))
 			shatter(owner)
 			qdel(src)
-			return FALSE
+			return TRUE
 		take_damage(damage)
 		return TRUE
 
@@ -75,7 +74,7 @@
 	icon_state = "brokentutel"
 	flags_1 = CONDUCT_1
 	force = 5
-	throwforce = 15
+	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 3)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
@@ -118,6 +117,6 @@
 		/obj/item/broken_shield = 1,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
-	time = 15 SECONDS
+	time = 5 SECONDS
 	category = CAT_WEAPON_MELEE
 
