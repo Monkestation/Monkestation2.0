@@ -19,7 +19,6 @@
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
-	multiple_sprite_use_base = FALSE
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
@@ -40,13 +39,10 @@
 
 /obj/item/ammo_box/advanced/s12gauge/tutel/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
-	AddComponent(/datum/component/pellet_cloud, projectile_type = /obj/projectile/bullet/shrapnel, magnitude = 2)
+	AddComponent(/datum/component/pellet_cloud, projectile_type = /obj/projectile/bullet/shrapnel, magnitude = 1)
+	explosion(owner, 0, 0, 0, 0) //should make a little shrapnel when the shield breaks.
 	new tutel_break_leftover(get_turf(src))
 
-/obj/item/ammo_box/advanced/s12gauge/tutel/update_icon_state()
-	icon_state = "tutel"
-	inhand_icon_state = "tutel"
-	return ..()
 
 /obj/item/ammo_box/advanced/s12gauge/tutel/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
@@ -75,11 +71,10 @@
 /obj/item/broken_shield
 	name = "broken Tutel"
 	desc = "A broken tactical shield, it looks as though you could repair it with some titanium.."
-	icon_state = "buckler"
-	inhand_icon_state = "buckler"
+	icon_state = "brokentutel"
 	flags_1 = CONDUCT_1
-	force = 9
-	throwforce = 10
+	force = 5
+	throwforce = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 3)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
