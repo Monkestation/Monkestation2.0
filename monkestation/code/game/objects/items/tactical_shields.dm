@@ -2,7 +2,7 @@
 /// Comes with a built-in 8 round ammobox to allow for easy reloading
 /// I based it off of ammo_box instead of shield because I believe ammo_box is more complicated
 
-/obj/item/ammo_box/advanced/s12gauge/tutel
+/obj/item/ammo_box/tacshield/tutel/
 	name = "Tutel tactical buckler"
 	desc = "A lightweight titanium-alloy shield painted to look like wood. It has an integrated shotgun speedloader, allowing you to reload without putting down the shield."
 	icon = 'icons/obj/weapons/shields.dmi'
@@ -26,7 +26,7 @@
 	start_empty = TRUE
 	var/tutel_break_leftover = /obj/item/broken_shield
 
-/obj/item/ammo_box/advanced/s12gauge/tutel/examine(mob/user)
+/obj/item/ammo_box/tacshield/tutel/examine(mob/user)
 	. = ..()
 	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
@@ -37,14 +37,14 @@
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
 
-/obj/item/ammo_box/advanced/s12gauge/tutel/proc/shatter(mob/living/carbon/human/owner)
+/obj/item/ammo_box/tacshield/tutel/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
 	AddComponent(/datum/component/pellet_cloud, projectile_type = /obj/projectile/bullet/shrapnel, magnitude = 1)
 	explosion(owner, 0, 0, 0, 0) //should make a little shrapnel when the shield breaks.
 	new tutel_break_leftover(get_turf(src))
 
 
-/obj/item/ammo_box/advanced/s12gauge/tutel/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/ammo_box/tacshield/tutel/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
 	if(.)
 		if (atom_integrity <= damage)
@@ -56,7 +56,7 @@
 		take_damage(damage)
 		return TRUE
 
-/obj/item/ammo_box/advanced/s12gauge/tutel/attackby(obj/item/attackby_item, mob/user, params)
+/obj/item/ammo_box/tacshield/tutel/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
@@ -71,6 +71,7 @@
 /obj/item/broken_shield
 	name = "broken Tutel"
 	desc = "A broken tactical shield, it looks as though you could repair it with some titanium.."
+	icon = 'icons/obj/weapons/shields.dmi'
 	icon_state = "brokentutel"
 	flags_1 = CONDUCT_1
 	force = 5
@@ -97,7 +98,7 @@
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/tutel
 		user.balloon_alert(user, "repairing shield...")
 		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
-			var/obj/item/ammo_box/advanced/s12gauge/tutel/crafted_tutel = new /obj/item/ammo_box/advanced/s12gauge/tutel()
+			var/obj/item/ammo_box/tacshield/tutel/crafted_tutel = new /obj/item/ammo_box/tacshield/tutel/()
 
 			remove_item_from_storage(user)
 			if (!user.transferItemToLoc(attacking_item, crafted_tutel))
@@ -112,7 +113,7 @@
 
 /datum/crafting_recipe/tutel
 	name = "Tutel Repair"
-	result = /obj/item/ammo_box/advanced/s12gauge/tutel
+	result = /obj/item/ammo_box/tacshield/tutel/
 	reqs = list(
 		/obj/item/broken_shield = 1,
 		/obj/item/stack/sheet/mineral/titanium = 1,
