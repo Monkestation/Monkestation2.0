@@ -28,7 +28,7 @@
 	var/tutel_break_leftover = /obj/item/broken_shield
 
 /obj/item/ammo_box/tacshield/tutel/update_icon_state()
-	return
+	return ..()
 
 /obj/item/ammo_box/tacshield/tutel/examine(mob/user)
 	. = ..()
