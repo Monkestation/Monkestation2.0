@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	icon_state = "tutel"
 	inhand_icon_state = "tutel"
-	worn_icon_state = "teleriot"
+	worn_icon_state = "ammobox"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 4
 	caliber = CALIBER_SHOTGUN
