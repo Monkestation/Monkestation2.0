@@ -60,7 +60,7 @@
 	cost = CARGO_CRATE_VALUE * 16
 	contains = list(
 		/obj/item/gun/ballistic/revolver/shotgun_revolver = 2,
-		/obj/item/ammo_box/advanced/s12gauge/tutel = 2,
+		/obj/item/ammo_box/tacshield/tutel/ = 2,
 		/obj/item/ammo_box/advanced/s12gauge = 4,
 	)
 	crate_name = "Tactical Bóbr Crate"

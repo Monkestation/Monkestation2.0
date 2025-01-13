@@ -79,7 +79,7 @@
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/nri_surplus/misc/tutel
-	item_type = /obj/item/ammo_box/advanced/s12gauge/tutel
+	item_type = /obj/item/ammo_box/tacshield/tutel/
 	cost = PAYCHECK_CREW * 3
 
 /datum/armament_entry/company_import/nri_surplus/firearm
