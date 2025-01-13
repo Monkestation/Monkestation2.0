@@ -27,9 +27,6 @@
 	start_empty = TRUE
 	var/tutel_break_leftover = /obj/item/broken_shield
 
-/obj/item/ammo_box/tacshield/tutel/Initialize(mapload)
-	return
-
 /obj/item/ammo_box/tacshield/tutel/update_icon_state()
 	return
 
