@@ -11,7 +11,7 @@
 	icon_state = "tutel"
 	inhand_icon_state = "tutel"
 	ammo_type = /obj/item/ammo_casing/shotgun
-	max_ammo = 8
+	max_ammo = 4
 	caliber = CALIBER_SHOTGUN
 	multitype = TRUE
 	block_chance = 70
