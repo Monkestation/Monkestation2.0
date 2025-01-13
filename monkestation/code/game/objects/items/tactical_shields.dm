@@ -1,5 +1,5 @@
 /// Tutel shield, designed to work with the Bobr
-/// Comes with a built-in 8 round ammobox to allow for easy reloading
+/// Comes with a built-in 4 round ammobox to allow for easy reloading
 /// I based it off of ammo_box instead of shield because I believe ammo_box is more complicated
 
 /obj/item/ammo_box/tacshield/tutel/
