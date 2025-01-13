@@ -137,7 +137,11 @@
 		return
 
 	//cache for sanic speed (lists are references anyways)
-	var/static/list/footstep_sounds = GLOB.footstep
+	var/static/list/footstep_sounds
+	if(length(prepared_steps[STEP_SOUND_SHOE_OVERRIDE]))
+		footstep_sounds = prepared_steps[STEP_SOUND_SHOE_OVERRIDE] // List was edited and wants to override our sounds.
+	else
+		footstep_sounds = GLOB.footstep // Use default footsetp sounds.
 	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 
