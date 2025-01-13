@@ -25,10 +25,8 @@
 	armor_type = /datum/armor/item_shield
 	block_sound = 'sound/weapons/block_shield.ogg'
 	start_empty = TRUE
+	spriteshift = FALSE
 	var/tutel_break_leftover = /obj/item/broken_shield
-
-/obj/item/ammo_box/tacshield/tutel/update_icon_state()
-	return ..()
 
 /obj/item/ammo_box/tacshield/tutel/examine(mob/user)
 	. = ..()
