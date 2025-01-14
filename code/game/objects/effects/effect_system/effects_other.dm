@@ -111,4 +111,4 @@
 	if(explosion_message)
 		location.visible_message(span_danger("The solution violently explodes!"), span_hear("You hear an explosion!"))
 
-	dyn_explosion(location, amount, flash_range = flashing_factor, explosion_cause = explosion_source)
+	dyn_explosion(location, amount, flash_range = flashing_factor, ignorecap = FALSE, explosion_cause = explosion_source)  //monke edit: ignorecap set to FALSE, can't belive it took till 2025
