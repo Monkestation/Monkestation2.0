@@ -11999,8 +11999,15 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"cGP" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/robot_suit,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "cHn" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -24231,7 +24238,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "gFu" = (
-/obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -35238,15 +35244,13 @@
 "kcF" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/stripes/corner,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/mask/surgical,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -10;
-	pixel_y = -1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/bodypart/arm/left/robot{
+	pixel_x = -3
+	},
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "kcQ" = (
@@ -35343,10 +35347,18 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west{
+	pixel_y = 5
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/west{
+	pixel_y = -9;
+	id = "mechbay";
+	name = "Mech Bay Shutters Control";
+	req_access = list("robotics")
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "ken" = (
@@ -37562,6 +37574,10 @@
 	pixel_x = 7
 	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "genetics";
+	name = "Robotics Lab Shutters"
+	},
 /turf/open/floor/iron/white/side,
 /area/station/science/genetics)
 "kNn" = (
@@ -44383,6 +44399,10 @@
 	req_access = list("robotics")
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics2";
+	name = "Robotics Lab Shutters"
+	},
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -45454,6 +45474,11 @@
 /area/station/command/heads_quarters/blueshield)
 "nns" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nny" = (
@@ -45883,17 +45908,13 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "nto" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/stripes/line,
-/obj/item/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "genetics";
+	name = "Robotics Lab Shutters"
 	},
-/obj/item/storage/box/bodybags,
-/obj/item/healthanalyzer,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "ntp" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -50969,7 +50990,14 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -10;
+	pixel_y = -1
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/mask/surgical,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "pfh" = (
@@ -61720,11 +61748,12 @@
 	name = "Research and Development Shutter"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/east{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/paper_bin,
+/obj/machinery/door/window/left/directional/west{
+	name = "Research Lab Desk";
+	req_access = list("robotics")
+	},
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -61963,6 +61992,12 @@
 	req_access = list("robotics")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/door/directional/north{
+	id = "mechbay";
+	name = "Mech Bay Shutters Control";
+	req_access = list("robotics");
+	pixel_x = -8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "syH" = (
@@ -66904,7 +66939,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "uaJ" = (
-/obj/machinery/computer/mechpad,
+/obj/machinery/computer/mechpad{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "uaM" = (
@@ -67460,6 +67497,11 @@
 	c_tag = "Science - Robotics Surgery";
 	network = list("ss13","rd")
 	},
+/obj/item/healthanalyzer{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "ukT" = (
@@ -71273,7 +71315,14 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	department = "Genetics";
-	name = "Genetics Requests Console"
+	name = "Genetics Requests Console";
+	pixel_y = 6
+	},
+/obj/machinery/button/door/directional/west{
+	pixel_y = -8;
+	id = "genetics";
+	name = "Genetics Privacy Shutters";
+	req_access = list("genetics")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
@@ -187792,15 +187841,15 @@ bXG
 lVi
 kCF
 soq
-uzG
-wSi
+bvM
+icx
 moz
 gyP
 cdB
 tnU
 mAf
 dzu
-nto
+tFV
 uKv
 aLH
 hsR
@@ -188049,15 +188098,15 @@ aHn
 lVi
 kCF
 soq
-bvM
-icx
+uzG
+wSi
 wEQ
 gyP
 dZu
 xgO
 muZ
 dzu
-tFV
+doK
 uJH
 uJH
 peU
@@ -188569,7 +188618,7 @@ idO
 gyP
 fAA
 okn
-muZ
+cGP
 uSP
 jXr
 uKv
@@ -193963,7 +194012,7 @@ tXz
 iJW
 bHb
 sed
-dpB
+nto
 vpp
 gel
 knq
@@ -194477,7 +194526,7 @@ gAQ
 eoX
 fyc
 vwD
-dpB
+nto
 iqM
 nzk
 rle
