@@ -282,11 +282,14 @@ GLOBAL_VAR(dj_booth)
 			///scrubbing the input before putting it in the shell
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			///putting it in the shell
-			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[shell_scrubbed_input]\"")
+			var/command = "[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[shell_scrubbed_input]\""
+			var/list/output = world.shelleo(command)
 			///any errors
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			///the standard output
 			var/stdout = output[SHELLEO_STDOUT]
+			var/stderr = output[SHELLEO_STDERR]
+			WRITE_LOG_NO_FORMAT("[GLOB.log_directory]/yt-dlp.log", "yt-dlp run\nurl: [web_sound_input]\ncommand: [command]\nerrorlevel = [errorlevel]\n\n--- stdout ---\n[stdout]\n--- stderr ---\n[stderr]\n\n")
 			if(!errorlevel)
 				///list for all the output data to go to
 				var/list/data

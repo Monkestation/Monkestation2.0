@@ -77,10 +77,12 @@
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
 	if(istext(input))
-		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[input]\"")
+		var/command = "[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[input]\""
+		var/list/output = world.shelleo(command)
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
 		var/stdout = output[SHELLEO_STDOUT]
 		var/stderr = output[SHELLEO_STDERR]
+		WRITE_LOG_NO_FORMAT("[GLOB.log_directory]/yt-dlp.log", "yt-dlp run\nurl: [input]\ncommand: [command]\nerrorlevel = [errorlevel]\n\n--- stdout ---\n[stdout]\n--- stderr ---\n[stderr]\n\n")
 		if(errorlevel)
 			to_chat(user, span_boldwarning("Youtube-dl URL retrieval FAILED:"), confidential = TRUE)
 			to_chat(user, span_warning("[stderr]"), confidential = TRUE)
