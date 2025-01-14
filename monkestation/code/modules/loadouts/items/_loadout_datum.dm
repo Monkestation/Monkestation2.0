@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/spawn_in_backpack(datum/outfit/outfit_contents, item_path_to_spawn, mob/living/carbon/human/equipper)
 	if(ispath(outfit_contents.back, /obj/item/storage) || (!outfit_contents.back && ispath(equipper.back, /obj/item/storage)))
-		LAZYADD(outfit_contents.backpack_contents, item_path)
+		LAZYADD(outfit_contents.backpack_contents, item_path_to_spawn)
 	else
 		var/obj/item/new_item = new item_path_to_spawn()
 		new_item.loc = get_turf(equipper)
