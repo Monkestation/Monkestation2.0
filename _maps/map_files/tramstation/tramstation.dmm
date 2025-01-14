@@ -10023,6 +10023,8 @@
 	c_tag = "Science - Front Lobby";
 	network = list("ss13","rd")
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "caK" = (
@@ -12002,12 +12004,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
-"cGP" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/robot_suit,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "cHn" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -14048,6 +14044,11 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
+"dqE" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/science/lobby)
 "dqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -35347,14 +35348,10 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_y = 5
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/door/directional/west{
-	pixel_y = -9;
 	id = "mechbay";
 	name = "Mech Bay Shutters Control";
 	req_access = list("robotics")
@@ -68378,6 +68375,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"uxg" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/robot_suit,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "uxh" = (
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/light/directional/west,
@@ -70066,7 +70069,6 @@
 "uXu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/navbeacon{
 	location = "easttram5";
 	codes_txt = "patrol;next_patrol=midtram2"
@@ -71985,7 +71987,6 @@
 "vyy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "vyD" = (
@@ -77679,7 +77680,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -80334,6 +80334,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "yjZ" = (
@@ -188618,7 +188619,7 @@ idO
 gyP
 fAA
 okn
-cGP
+uxg
 uSP
 jXr
 uKv
@@ -191441,7 +191442,7 @@ aHQ
 tSr
 xrp
 slI
-nUy
+dqE
 rHj
 rcA
 doC
