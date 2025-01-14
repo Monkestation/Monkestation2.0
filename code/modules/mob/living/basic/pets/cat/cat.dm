@@ -31,6 +31,8 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	///icon of the collar we can wear
 	var/collar_icon_state = "cat"
+	///saved list of kids
+	var/list/children = null
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -236,5 +238,197 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
+	held_state = "cat"
+	desc = "Hopefully no one will confuse this for the real runtime. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/white
+	icon_state = "white"
+	icon_living = "white"
+	icon_dead = "white_dead"
+	held_state = "white"
+	desc = "One will never know if this white fur is authentic or if someone decided to bleach a cat. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/void
+	icon_state = "void"
+	icon_living = "void"
+	icon_dead = "void_dead"
+	held_state = "void"
+	desc = "The Void always stares back. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/siamese
+	icon_state = "siamese"
+	icon_living = "siamese"
+	icon_dead = "siamese_dead"
+	held_state = "siamese"
+	desc = "No they are not twins... then again... they do come from the same litter? This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/rusblue
+	icon_state = "rusblue"
+	icon_living = "rusblue"
+	icon_dead = "rusblue_dead"
+	held_state = "rusblue"
+	desc = "This cat might possess magic beyond your imagination, thank god it is not the grey kitten. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/tabbym
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"
+	desc = "Hopefully no one will confuse this for the real runtime. This one is male."
+	gender = MALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/tabbym/add_breeding_component()
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
+		baby_path = /mob/living/basic/pet/cat/kitten/tabby,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
+
+/mob/living/basic/pet/cat/tabbym/proc/after_birth(mob/living/baby)
+	if(isnull(baby))
+		return
+	LAZYADD(children, baby)
+
+/mob/living/basic/pet/cat/whitem
+	icon_state = "white"
+	icon_living = "white"
+	icon_dead = "white_dead"
+	held_state = "white"
+	desc = "One will never know if this white fur is authentic or if someone decided to bleach a cat. This one is male."
+	gender = MALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/whitem/add_breeding_component()
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
+		baby_path = /mob/living/basic/pet/cat/kitten/white,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
+
+/mob/living/basic/pet/cat/whitem/proc/after_birth(mob/living/baby)
+	if(isnull(baby))
+		return
+	LAZYADD(children, baby)
+
+/mob/living/basic/pet/cat/voidm
+	icon_state = "void"
+	icon_living = "void"
+	icon_dead = "void_dead"
+	held_state = "void"
+	desc = "The Void always stares back. This one is male."
+	gender = MALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/voidm/add_breeding_component()
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
+		baby_path = /mob/living/basic/pet/cat/kitten/void,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
+
+/mob/living/basic/pet/cat/voidm/proc/after_birth(mob/living/baby)
+	if(isnull(baby))
+		return
+	LAZYADD(children, baby)
+
+/mob/living/basic/pet/cat/siamesem
+	icon_state = "siamese"
+	icon_living = "siamese"
+	icon_dead = "siamese_dead"
+	held_state = "siamese"
+	desc = "No they are not twins... then again... they do come from the same litter? This one is male."
+	gender = MALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/siamesem/add_breeding_component()
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
+		baby_path = /mob/living/basic/pet/cat/kitten/shitten,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
+
+/mob/living/basic/pet/cat/siamesem/proc/after_birth(mob/living/baby)
+	if(isnull(baby))
+		return
+	LAZYADD(children, baby)
+
+/mob/living/basic/pet/cat/rusbluem
+	icon_state = "rusblue"
+	icon_living = "rusblue"
+	icon_dead = "rusblue_dead"
+	held_state = "rusblue"
+	desc = "This cat might possess magic beyond your imagination, thank god it is not the grey kitten. This one is male."
+	gender = MALE
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/rusbluem/add_breeding_component()
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
+		baby_path = /mob/living/basic/pet/cat/kitten/rusblue,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
+
+/mob/living/basic/pet/cat/rusbluem/proc/after_birth(mob/living/baby)
+	if(isnull(baby))
+		return
+	LAZYADD(children, baby)
+
+/mob/living/basic/pet/cat/syndicat_docile
+	icon_state = "syndicat"
+	icon_living = "syndicat"
+	icon_dead = "syndicat_dead"
+	held_state = "syndicat"
+	desc = "Catnapped during disk sniffing training, they know the scent, but not to hunt...\
+	You can't seem to get the suit off and it appears to be missing it's combat module and the explosive implant."
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/kitten/void
+	icon_state = "void_kitten"
+	icon_living = "void_kitten"
+	icon_dead = "void_kitten_dead"
+	held_state = "void"
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/kitten/rusblue
+	icon_state = "rusblue_kitten"
+	icon_living = "rusblue_kitten"
+	icon_dead = "rusblue_kitten_dead"
+	held_state = "rusblue"
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/kitten/white
+	icon_state = "white_kitten"
+	icon_living = "white_kitten"
+	icon_dead = "white_kitten_dead"
+	held_state = "white"
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/kitten/shitten
+	icon_state = "shitten"
+	icon_living = "shitten"
+	icon_dead = "shitten_dead"
+	held_state = "siamese"
+	faction = list(FACTION_CAT)
+
+/mob/living/basic/pet/cat/kitten/tabby
+	icon_state = "tabby_kitten"
+	icon_living = "tabby_kitten"
+	icon_dead = "tabby_kitten_dead"
 	held_state = "cat"
 	faction = list(FACTION_CAT)

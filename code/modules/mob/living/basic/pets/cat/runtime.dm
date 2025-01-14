@@ -13,8 +13,6 @@
 	unique_pet = TRUE
 	///the family we will bring in when a round starts
 	var/list/family = null
-	///saved list of kids
-	var/list/children = null
 	/// have we deployed the cats?
 	var/cats_deployed = FALSE
 	/// have we saved memory?
@@ -43,7 +41,7 @@
 	AddComponent(\
 		/datum/component/breed,\
 		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
-		baby_path = /mob/living/basic/pet/cat/kitten,\
+		baby_path = /mob/living/basic/pet/cat/kitten/tabby,\
 		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
 	)
 
