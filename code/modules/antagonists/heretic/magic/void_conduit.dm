@@ -28,12 +28,14 @@
 	icon_state = "void_conduit"
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 150
+
 	///Overlay to apply to the tiles in range of the conduit
 	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")
 	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
 	var/list/overlayed_turfs = list()
 	///How many tiles far our effect is
-	var/effect_range = 8
+	var/effect_range = 10
 	///id of the deletion timer
 	var/timerid
 	///Audio loop for the rift being alive
@@ -95,7 +97,7 @@
 
 			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
 				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(10, 25))
+				affected_door.take_damage(rand(15, 30))
 
 			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
 				var/obj/structure/affected_structure = thing_to_affect
