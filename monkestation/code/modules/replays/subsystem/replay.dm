@@ -305,12 +305,12 @@ SUBSYSTEM_DEF(demo)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
-	var/true_appearance_plane = PLANE_TO_TRUE(appearance.plane)
+	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	var/list/appearance_overlays = appearance.overlays
 	if(length(appearance_overlays))
 		var/list/overlays_list = list()
 		for(var/image/overlay as anything in appearance_overlays)
-			if(isnull(overlay) || PLANE_TO_TRUE(overlay.plane) != true_appearance_plane)
+			if(isnull(overlay) || PLANE_TO_TRUE(overlay.plane) != base_plane)
 				continue
 			overlays_list += encode_appearance(overlay, appearance, TRUE, target = target)
 		overlays_string = "\[[jointext(overlays_list, ",")]]"
@@ -320,7 +320,7 @@ SUBSYSTEM_DEF(demo)
 	if(length(appearance_underlays))
 		var/list/underlays_list = list()
 		for(var/image/underlay as anything in appearance_underlays)
-			if(isnull(underlay) || PLANE_TO_TRUE(underlay.plane) != true_appearance_plane)
+			if(isnull(underlay) || PLANE_TO_TRUE(underlay.plane) != base_plane)
 				continue
 			underlays_list += encode_appearance(underlay, appearance, TRUE, target = target)
 		underlays_string = "\[[jointext(underlays_list, ",")]]"
@@ -337,6 +337,7 @@ SUBSYSTEM_DEF(demo)
 	if(target)
 		tmp_dir = target.dir
 
+	var/true_appearance_plane = PLANE_TO_TRUE(appearance.plane)
 	var/list/appearance_list = list(
 		json_encode(cached_icon),
 		json_encode(cached_icon_state),
