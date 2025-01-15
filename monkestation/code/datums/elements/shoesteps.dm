@@ -123,7 +123,7 @@ extra range addition
 
 /datum/element/shoesteps/orchestra_hit
 	custom_sounds = list(
-		FOOTSTEP_WOOD = list(list( // I would like to apologize for this.
+		FOOTSTEP_WOOD = list(list( // I would like to apologize for this. It was intended as a ohoho joke during development to show off it works
 			'monkestation/sound/effects/artifacts/orchestral/hit01.ogg',
 			'monkestation/sound/effects/artifacts/orchestral/hit02.ogg',
 			'monkestation/sound/effects/artifacts/orchestral/hit03.ogg',
