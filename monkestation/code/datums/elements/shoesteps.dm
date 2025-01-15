@@ -20,18 +20,18 @@
 /datum/element/shoesteps/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("There seems to be some slots for Really Heavy Soles in the bottoms of these shoes. You could remove or add them by using Ctrl-Click.")
-	examine_text += span_notice("The heavy soles are [(sounds) ? "on!" : "off!"]")
+	examine_text += span_notice("There seems to be a noisemaker inside, which will change your walking sounds. You can enable or disable it using Ctrl Click.")
+	examine_text += span_notice("The noisemaker is currently [(sounds) ? "on" : "off"].")
 
 /datum/element/shoesteps/proc/on_ctrl_click(datum/source, mob/living/carbon/clicker)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(toggle_soles), clicker)
+	INVOKE_ASYNC(src, PROC_REF(toggle_sounds), clicker)
 
-/datum/element/shoesteps/proc/toggle_soles(mob/living/carbon/clicker)
+/datum/element/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
 	if(do_after(clicker, 1.5 SECONDS))
 		sounds ^= 1
-		to_chat(clicker, span_warning("[(sounds) ? "You put the heavy soles on." : "You take the heavy soles off."]"))
+		to_chat(clicker, span_warning("[(sounds) ? "You turn on the noisemaker." : "You turn the noisemaker off."]"))
 
 /datum/element/shoesteps/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
