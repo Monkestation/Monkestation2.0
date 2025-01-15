@@ -14044,11 +14044,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
-"dqE" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/science/lobby)
 "dqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -19977,6 +19972,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
+"fkB" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/science/lobby)
 "fkD" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
@@ -28556,11 +28556,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/north{
-	id = "mechbay";
-	name = "Mech Bay Shutters Control";
-	req_access = list("robotics")
-	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "ibt" = (
@@ -28630,9 +28625,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "icx" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron,
-/area/station/science/robotics/mechbay)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "genetics";
+	name = "Robotics Lab Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "icH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -35351,11 +35350,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/button/door/directional/west{
-	id = "mechbay";
-	name = "Mech Bay Shutters Control";
-	req_access = list("robotics")
-	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "ken" = (
@@ -42521,6 +42515,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "moz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "moH" = (
@@ -45905,13 +45902,12 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "nto" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "genetics";
-	name = "Robotics Lab Shutters"
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
-/turf/open/floor/plating,
-/area/station/science/genetics)
+/turf/open/floor/iron,
+/area/station/science/robotics/mechbay)
 "ntp" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -53690,6 +53686,12 @@
 /obj/item/clothing/under/rank/civilian/janitor/maid,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
+"pRo" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/robot_suit,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "pRu" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoupperbelt"
@@ -66939,6 +66941,7 @@
 /obj/machinery/computer/mechpad{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "uaM" = (
@@ -67559,6 +67562,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/station/engineering/atmospherics_engine)
+"ulp" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "mechbay";
+	name = "Mech Bay"
+	},
+/obj/machinery/button/door/directional/north{
+	id = "mechbay";
+	name = "Mech Bay Shutters Control";
+	req_access = list("robotics")
+	},
+/turf/open/floor/plating,
+/area/station/science/robotics/mechbay)
 "ulz" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -68375,12 +68392,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"uxg" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/robot_suit,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "uxh" = (
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/light/directional/west,
@@ -187843,7 +187854,7 @@ lVi
 kCF
 soq
 bvM
-icx
+nto
 moz
 gyP
 cdB
@@ -188619,7 +188630,7 @@ idO
 gyP
 fAA
 okn
-uxg
+pRo
 uSP
 jXr
 uKv
@@ -189641,7 +189652,7 @@ rmH
 lVi
 uZX
 soq
-iws
+ulp
 urY
 iws
 dKM
@@ -191442,7 +191453,7 @@ aHQ
 tSr
 xrp
 slI
-dqE
+fkB
 rHj
 rcA
 doC
@@ -194013,7 +194024,7 @@ tXz
 iJW
 bHb
 sed
-nto
+icx
 vpp
 gel
 knq
@@ -194527,7 +194538,7 @@ gAQ
 eoX
 fyc
 vwD
-nto
+icx
 iqM
 nzk
 rle
