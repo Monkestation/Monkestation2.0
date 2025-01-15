@@ -14,7 +14,7 @@
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
 

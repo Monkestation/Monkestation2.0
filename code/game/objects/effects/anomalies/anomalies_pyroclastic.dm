@@ -7,7 +7,7 @@
 	var/releasedelay = 10
 	anomaly_core = /obj/item/assembly/signaler/anomaly/pyro
 
-/obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 
@@ -51,7 +51,7 @@
 	releasedelay = 2
 	move_force = MOVE_FORCE_OVERPOWERING
 
-/obj/effect/anomaly/pyro/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/pyro/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3

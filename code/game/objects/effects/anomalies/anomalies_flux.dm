@@ -7,7 +7,7 @@
 	var/shockdamage = 20
 	var/emp_zap = FLUX_EMP
 
-/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, emp_zap = FLUX_EMP)
+/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, emp_zap = FLUX_EMP)
 	. = ..()
 	src.emp_zap = emp_zap
 	var/static/list/loc_connections = list(
@@ -57,7 +57,7 @@
 	anomaly_core = null
 
 // We need to override the default arguments here to achieve the desired effect
-/obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, drops_core = FALSE, emp_zap = FLUX_NO_EMP)
+/obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, emp_zap = FLUX_NO_EMP)
 	return ..()
 
 ///Bigger, meaner, immortal flux anomaly
@@ -73,7 +73,7 @@
 	///the zappy flags
 	var/zap_flags = ZAP_GENERATES_POWER | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
-/obj/effect/anomaly/flux/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/flux/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3

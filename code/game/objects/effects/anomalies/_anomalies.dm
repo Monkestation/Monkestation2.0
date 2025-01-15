@@ -16,9 +16,6 @@
 
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
-
-	/// Do we drop a core when we're neutralized?
-	var/drops_core = TRUE
 	///Do we keep on living forever?
 	var/immortal = FALSE
 	///Do we stay in one place?
@@ -28,7 +25,7 @@
 	/// If TRUE, the anomaly is contained to its impact_area.
 	var/contained = FALSE
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
+/obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -39,7 +36,6 @@
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
 
-	src.drops_core = drops_core
 	if(anomaly_core)
 		anomaly_core = new anomaly_core(src)
 		anomaly_core.code = rand(1,100)
@@ -95,18 +91,15 @@
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
-	if(drops_core)
-		if(isnull(anomaly_core))
-			stack_trace("An anomaly ([src]) exists that drops a core, yet has no core!")
-		else
-			var/anomaly_type = anomaly_core.type
-			if (SSresearch.is_core_available(anomaly_type))
-				SSresearch.increment_existing_anomaly_cores(anomaly_type)
-				anomaly_core.forceMove(drop_location())
-				anomaly_core = null
-			else // You exceeded the cap sorry
-				visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))
-				new /obj/item/inert_anomaly(drop_location())
+	if(!isnull(anomaly_core))
+		var/anomaly_type = anomaly_core.type
+		if (SSresearch.is_core_available(anomaly_type))
+			SSresearch.increment_existing_anomaly_cores(anomaly_type)
+			anomaly_core.forceMove(drop_location())
+			anomaly_core = null
+		else // You exceeded the cap sorry
+			visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))
+			new /obj/item/inert_anomaly(drop_location())
 
 	// else, anomaly core gets deleted by qdel(src).
 
@@ -131,7 +124,6 @@
 	immortal = TRUE
 	name = (has_core ? "stable " : "hollow ") + name
 	if(!has_core)
-		drops_core = FALSE
 		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = 0
