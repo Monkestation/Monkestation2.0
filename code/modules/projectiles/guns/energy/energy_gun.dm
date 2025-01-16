@@ -124,10 +124,12 @@
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return
 
-/obj/item/gun/energy/e_gun/dragnet/snare
-	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down."
-	ammo_type = list(/obj/item/ammo_casing/energy/trap)
+//MONKESTATION EDIT START: unused and causes a runtime
+// /obj/item/gun/energy/e_gun/dragnet/snare
+// 	name = "Energy Snare Launcher"
+// 	desc = "Fires an energy snare that slows the target down."
+// 	ammo_type = list(/obj/item/ammo_casing/energy/trap)
+//MONKESTATION EDIT STOP
 
 /obj/item/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
