@@ -387,3 +387,135 @@
   - rscadd: Closely examining (double-examining) an item will now tell you if it was
       from a gift.
   - qol: Fire alarms no longer burn out lights.
+2024-12-25:
+  Shoddd:
+  - bugfix: fixes a typo in regen extract
+  Wisemonster:
+  - bugfix: Fixed the syndicate lavaland base delamming if they spawned with an SM
+2024-12-26:
+  Absolucy, Aylong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+2024-12-27:
+  Absolucy:
+  - admin: Added the "Delete All Glowshrooms" and "Toggle Glowshroom Spreading" admin
+      verbs.
+  DexeeXI:
+  - bugfix: 'Blueshift: fixed the transit tube station in AI sat.'
+  - bugfix: Metastation armory now has atmos working in it again.
+  - balance: all maps excluding Blueshift and Tramstation have their ordnance oxygen
+      tanks contain even more oxygen. Not for assistant use.
+  Marabout2:
+  - balance: Modified the size of the paco's magazine from small to normal
+  Shoddd:
+  - qol: Traitor Kiboko starts with lethals
+  ThePooba:
+  - image: changes atmos and engi hardsuit sprites to be more colourful
+  Uristthedorf:
+  - bugfix: You can now print prescription glasses.
+2024-12-28:
+  Absolucy:
+  - balance: Mark of Rust now arms grenades instead of instantly detonating them.
+      A balloon alert indicates this to the victim and witnesses, altho the heretic
+      will see which grenades were activated.
+  - refactor: Cleaned up and reorganized some monster hunter code.
+  - bugfix: The monster hunter Beast Claw now properly sets its wound bonus when (de)activated.
+  Gw0sty:
+  - qol: Predefined heartworms as a dangerous disease.
+  KittyNoodle:
+  - qol: The assops interrogator can no longer cause brain damage.
+  Shoddd:
+  - bugfix: Adds carbon check to flipping tables, no more imaginary friends and roaches
+      flipping tables
+  ThePooba:
+  - bugfix: atmos and engi hardsuit sprites updated again courtesy of waffles
+  Tractor Mann:
+  - bugfix: Circuit Nerds, rejoice, for it has finally happened, the Access Checker
+      Components ID menu now works again.
+2024-12-29:
+  Absolucy:
+  - bugfix: Fix the radio frequency not being heard by some types of radios/intercoms.
+  Addust:
+  - rscadd: A Syndicate logistics depot has recently been detected in the sector.
+      Avoid approach if at all possible.
+  - rscadd: other syndicate fax machines may contact the Listening Post now
+  - bugfix: the deep storage outpost the syndies have now only has 1 big-ass bomb
+      and also now has actual writing implements.
+  - bugfix: blueshift's netmin computer room is no longer a hazardous unventilated
+      space
+  - bugfix: a metastation surgery room is now airtight
+  - bugfix: disposal chutes shouldnt obliterate you as frequently now
+  DexeeXI:
+  - bugfix: changed frames for machine frames on the ghost variant of the Space Hotel.
+  - bugfix: fixed all the doors and shutters. the buttons should actually do what
+      they say they do.
+  Gw0sty:
+  - bugfix: Removed unneeded security access on Blueshift departures.
+  Loiosh42:
+  - balance: Most costume armors now have the same storage as security armor
+  Siro:
+  - bugfix: 'Some Quirks that give unique items or random rolled effects will be transferred
+      between bodies. Fixes #2247 and Fixes #2354'
+  - bugfix: Oozling ability status effects like Slime Cleaning and Hydrophobia slow
+      down will be removed upon ability loss.
+  - bugfix: Oozling core no longer broadcasts GPS after being crushed.
+  - bugfix: 'Dnr Oozling sacrifice runtime due to brainmob not having a last_mind
+      field Fixes #4219'
+  - bugfix: Resolved issue where Oozling cores could prevent core item ejection during
+      core destruction.
+  - bugfix: 'Head regeneration fixes no eyes blindness. Fixes #2777'
+  - bugfix: 'Gibbing deaths (which is a bigger list for oozlings) will now correctly
+      delete the Oozling core rather than dropping one with no soul attached. Fixes
+      #2540 and similar instances. Few rare cases exist like emagged Recyclers.'
+  - rscadd: Oozlings now scream and have the jitter status applied to them when nugget
+      revived. Similar to human revival.
+  - rscadd: 'Foreign objects, such as organ implants and features, are now pulled
+      into the core instead of being deleted outright. Fixes #3665'
+  - rscadd: Ooozlings now like toxic foods. Slime Jelly rolls anyone?
+  - balance: 'Restored the wetness system: 1 blood randomly above 1 stack. Above 5
+      lose 2 blood constantly'
+  - code_imp: 'Ensured items are handled and moved into the core first before other
+      object-move mechanics can take place. Fixes unintended duplication and deletion
+      bugs (e.g., chasms). Fixes #4107'
+  - bugfix: 'Addressed revival visual/HUD/gameplay bugs, by properly removing the
+      limbs on nugget revival. Fixes #2485'
+  - balance: Re-added healing, reduced from 2 burn 2 brute to 2.5 shared to both.
+      Must stay warm and Hydrophobia off.
+  - rscadd: Added filters to Oozling core storage to prevent certain items (e.g.,
+      Nuclear Authentication Disk) from being stored. Fixes issues with protected
+      items.
+  Sorenon:
+  - bugfix: fixed runtimes caused by 64x64 clothing icons
+  - bugfix: fixed clipping experienced by some masks, eyewear and earwear worn by
+      tall players
+  - bugfix: fixed a few minor related bugs
+  TheColorCyan:
+  - rscadd: blueshield's mantis blades are now replaced with shield blades. They have
+      less offensive utility, but allow you to go into defensive stance to be able
+      to block most of attacks, for the cost of slowdown and inability to attack things
+      yourself.
+  - rscdel: mantis blades can no longer pry airlocks open.
+  - rscadd: syndicate mantis blades will now be able to pry airlocks open instead.
+  ven1883:
+  - rscadd: Adds The Tunnel Arts, a traitor assistant exclusive martial arts with
+      some anime-esque style.
+  - rscadd: Also adds a cool new jacket available in the bundle.
+  - code_imp: Martial Arts module now has a misc folder for Stuff.
+  - code_imp: There is a new status effect, No Gravity, which temporarily disables
+      gravity for the victim. It's only used in TTA.
+2024-12-30:
+  Absolucy:
+  - bugfix: Reactions such as Life, Corgium, etc are now banned from occuring in grown
+      plants, to prevent massive lag.
+  KittyNoodle:
+  - bugfix: 'Fixes ethereal eyes not having their own sprite.
+
+      :cl:'
+  Shoddd:
+  - rscdel: Removed blindfold from maid costume
+2024-12-31:
+  DexeeXI:
+  - bugfix: made the bows in ashieland actually longbows like they should be.
+  Shoddd:
+  - bugfix: hypo and hyper algesia quirk now incompat
