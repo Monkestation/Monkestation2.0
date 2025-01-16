@@ -19768,13 +19768,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
-"bWv" = (
-/mob/living/simple_animal/pet/cat/cak{
-	name = "Truffle";
-	desc = "She is a cat made out of cake. How the hell did this thing end up alive, much less here?!"
-	},
-/turf/open/floor/glass/reinforced/plasma,
-/area/centcom/central_command_areas/adminroom)
 "bYc" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 5
@@ -20128,13 +20121,6 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
-"cLR" = (
-/mob/living/simple_animal/pet/cat/kitten{
-	name = "Kbity :3";
-	desc = "D'aaawwww. Fortune's best friend"
-	},
-/turf/open/floor/iron/dark/small,
-/area/centcom)
 "cMi" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -59359,7 +59345,7 @@ aMc
 aMc
 lSF
 fAH
-cLR
+kKc
 eBX
 lSF
 jsr
@@ -59375,7 +59361,7 @@ wpP
 nnN
 dii
 vkm
-bWv
+aNa
 iLo
 jvQ
 vxh
