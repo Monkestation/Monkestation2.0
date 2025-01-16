@@ -556,5 +556,4 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			if(SFX_LIGHTSWITCH)
 				soundin = 'monkestation/sound/effects/hl2/lightswitch.ogg'
 			// monkestation end
-
 	return soundin
