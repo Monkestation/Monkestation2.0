@@ -28,7 +28,7 @@
 #define BLOOD_DEFICIENCY_MODIFIER 0.025
 
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
-#define BLOOD_STOP_TEMP 225
+#define BLOOD_STOP_TEMP CELCIUS_TO_KELVIN(-48.15 CELCIUS)
 
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
@@ -113,9 +113,8 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_MONKEY_FREAK "monkey_freak"
-#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
+#define SPECIES_TUNDRA "tundra_moth" //Monkestation Addition
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -126,6 +125,10 @@
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
@@ -133,6 +136,7 @@
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
 #define SPECIES_SATYR "satyr" //Monkestation Addition
+#define SPECIES_TERATOMA "teratoma" //Monkestation Addition
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -165,22 +169,13 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
-#define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+/// Damage recieved when past heat damage threshold.
+/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
+#define HEAT_DAMAGE 1
 
-#define COLD_DAMAGE_LEVEL_1 0.25 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 0.75 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 1.5 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
+/// Damage recieved when past cold damage threshold.
+/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
+#define COLD_DAMAGE 0.25
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
@@ -448,7 +443,7 @@
 #define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN 17 //youngest a character can be
+#define AGE_MIN 18 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
@@ -458,8 +453,19 @@
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
-#define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+/// Factor at which mob nutrition decreases
+#define HUNGER_FACTOR 0.1
+
+// These add up to 1 to roughly (VERY roughly) represent the proportion of hunger used by each system
+/// What % of hunger is used by homeostasis
+#define HOMEOSTASIS_HUNGER_MULTIPLIER 0.1
+/// What % of hunger is used by passive hunger
+#define PASSIVE_HUNGER_MULTIPLIER 0.4
+/// What % of hunger is used by movement
+#define MOVEMENT_HUNGER_MULTIPLIER 0.1
+
+/// Factor at which ethereal's charge decreases per second
+#define ETHEREAL_CHARGE_FACTOR 0.2
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -590,14 +596,15 @@
 
 ///Squash flags. For squashable element
 
-///Whether or not the squashing requires the squashed mob to be lying down
+/// Squashing will not occur if the mob is not lying down (bodyposition is LYING_DOWN)
 #define SQUASHED_SHOULD_BE_DOWN (1<<0)
-///Whether or not to gib when the squashed mob is moved over
+/// If present, outright gibs the squashed mob instead of just dealing damage
 #define SQUASHED_SHOULD_BE_GIBBED (1<<1)
-
-
+/// If squashing always passes if the mob is dead
+#define SQUASHED_ALWAYS_IF_DEAD (1<<2)
 /// Don't squash our mob if its not located in a turf
 #define SQUASHED_DONT_SQUASH_IN_CONTENTS (1<<3)
+
 /*
  * Defines for "AI emotions", allowing the AI to expression emotions
  * with status displays via emotes.
@@ -645,44 +652,48 @@
 // - They do not start at 0 for futureproofing
 // - They skip numbers for futureproofing as well
 // Otherwise they are completely arbitrary
-#define HUMAN_HEIGHT_DWARF 2
-#define HUMAN_HEIGHT_SHORTEST 4
-#define HUMAN_HEIGHT_SHORT 6
-#define HUMAN_HEIGHT_MEDIUM 8
-#define HUMAN_HEIGHT_TALL 10
-#define HUMAN_HEIGHT_TALLEST 12
+#define MONKEY_HEIGHT_DWARF 2
+#define MONKEY_HEIGHT_MEDIUM 4
+#define HUMAN_HEIGHT_DWARF 6
+#define HUMAN_HEIGHT_SHORTEST 8
+#define HUMAN_HEIGHT_SHORT 10
+#define HUMAN_HEIGHT_MEDIUM 12
+#define HUMAN_HEIGHT_TALL 14
+#define HUMAN_HEIGHT_TALLER 16
+#define HUMAN_HEIGHT_TALLEST 18
 
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
 GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
+	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
 	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
 	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
 	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
 	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(2, 2),
+	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
+	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
 ))
 
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 35
+#define TOTAL_LAYERS 34
 /// Mutant race multiparts - Lbelly
-#define ACCESSORIES_LAYER 35
+#define ACCESSORIES_LAYER 34
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 34
+#define MUTATIONS_LAYER 33
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 33
+#define BODY_BEHIND_LAYER 32
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 32
+#define BODYPARTS_LOW_LAYER 31
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 31
+#define BODYPARTS_LAYER 30
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 30
-// Eyes, lips(makeup)
-#define FACE_LAYER 29
+#define BODY_ADJ_LAYER 29
 /// Underwear, undershirts, socks
 #define BODY_LAYER 28
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
@@ -769,10 +780,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	monkestation end */
-	"[FACE_LAYER]" = UPPER_BODY,
+	/* monkestation edit start
+		it's okay for these layers to use shared appearences so long as the filters are reset before adding them as overlays
+		this is because adding an appearence to `overlays` copies it
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	monkestation edit end */
 	// These DO get a filter, I'm leaving them here as reference,
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
@@ -926,11 +940,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEALING_TOUCH_ANYONE "healing_touch_anyone"
 #define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
 #define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
-
-/// Default minimum body temperature mobs can exist in before taking damage
-#define NPC_DEFAULT_MIN_TEMP 250
-/// Default maximum body temperature mobs can exist in before taking damage
-#define NPC_DEFAULT_MAX_TEMP 350
 
 // Flags for mobs which can't do certain things while someone is looking at them
 /// Flag which stops you from moving while observed

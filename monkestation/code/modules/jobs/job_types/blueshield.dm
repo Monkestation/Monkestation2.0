@@ -4,73 +4,76 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
-	total_positions = 0
-	spawn_positions = 0
-	supervisors = "the Heads of Staff"
-	minimal_player_age = 7
-	exp_requirements = 600
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the Nanotrasen Representative and Central Command"
+	minimal_player_age = 30
+	exp_requirements = 7200
 	exp_required_type = EXP_TYPE_CREW
-	exp_required_type_department = EXP_TYPE_SECURITY
+	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "BLUESHIELD"
 
+	allow_bureaucratic_error = FALSE
+	allow_overflow = FALSE
+
 	outfit = /datum/outfit/job/blueshield
-	plasmaman_outfit = /datum/outfit/plasmaman/security
+	plasmaman_outfit = /datum/outfit/plasmaman/blueshield
 
-	paycheck = PAYCHECK_CREW
-	paycheck_department = ACCOUNT_SEC
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_CMD
 
-	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
+	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BLUESHIELD
 	bounty_types = CIV_JOB_SEC
 	departments_list = list(
-		/datum/job_department/security,
+		/datum/job_department/central_command,
 		/datum/job_department/command,
 		)
 
-	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
+	family_heirlooms = list(/obj/item/bedsheet/captain, /obj/item/clothing/head/beret/blueshield)
 
 	mail_goodies = list(
-		/obj/item/food/donut/caramel = 10,
-		/obj/item/food/donut/matcha = 10,
-		/obj/item/food/donut/blumpkin = 5
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 10,
+		/obj/item/stack/spacecash/c500 = 3,
+		/obj/item/disk/nuclear/fake/obvious = 2,
+		/obj/item/clothing/head/collectable/captain = 4,
 	)
-	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
-	alt_titles = list(
-	)
+	rpg_title = "Guard"
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+
+	alt_titles = list()
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
 	jobtype = /datum/job/blueshield
-
-	id_trim = /datum/id_trim/job/blueshield
-	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt
-	suit_store = /obj/item/gun/ballistic/automatic/pistol/paco/no_mag
-	backpack_contents = list(
-		/obj/item/ammo_box/magazine/m35/rubber = 2,
-		/obj/item/restraints/handcuffs/cable/zipties = 1,
-		/obj/item/reagent_containers/spray/pepper = 1,
-		/obj/item/shield/riot/tele = 1
-	)
-	head = /obj/item/clothing/head/beret/blueshield
+	uniform = /obj/item/clothing/under/rank/blueshield
 	suit = /obj/item/clothing/suit/armor/vest/blueshield/jacket
-
-	belt = /obj/item/modular_computer/pda/security
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	l_pocket = /obj/item/citationinator
-	r_pocket = /obj/item/assembly/flash/handheld
-	glasses = /obj/item/clothing/glasses/hud/security
-	ears = /obj/item/radio/headset/headset_com
-	gloves = /obj/item/clothing/gloves/color/black
-	shoes = /obj/item/clothing/shoes/jackboots/sec
-
+	gloves = /obj/item/clothing/gloves/tackler/combat
+	id = /obj/item/card/id/advanced/centcom
+	shoes = /obj/item/clothing/shoes/jackboots
+	ears = /obj/item/radio/headset/headset_bs/alt
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	implants = list(/obj/item/implant/mindshield)
+	backpack_contents = list(
+		/obj/item/choice_beacon/blueshield = 1,
+		/obj/item/melee/baton/telescopic = 1,
+	)
 	backpack = /obj/item/storage/backpack/blueshield
 	satchel = /obj/item/storage/backpack/satchel/blueshield
 	duffelbag = /obj/item/storage/backpack/duffelbag/blueshield
 
+	head = /obj/item/clothing/head/beret/blueshield
 	box = /obj/item/storage/box/survival/security
+	belt = /obj/item/storage/belt/security/blueshield
+	l_pocket = /obj/item/sensor_device/blueshield
+	r_pocket = /obj/item/modular_computer/pda/blueshield
+	id_trim = /datum/id_trim/job/blueshield
 
-	implants = list(/obj/item/implant/mindshield)
+/datum/outfit/plasmaman/blueshield
+	name = "Blueshield Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/blueshield
+	uniform = /obj/item/clothing/under/plasmaman/blueshield

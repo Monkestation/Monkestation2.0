@@ -12,14 +12,19 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
+	. = ..()
+	greyscale_colors = "#" + random_color() + "#" + random_color()
+	update_greyscale()
+
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	custom_price = PAYCHECK_CREW
 
-	cold_protection = FEET
+
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
+
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/shoes/sneakers/brown

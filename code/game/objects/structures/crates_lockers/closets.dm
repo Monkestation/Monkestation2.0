@@ -1,7 +1,10 @@
 #define LOCKER_FULL -1
 
-///A comprehensive list of all closets (NOT CRATES) in the game world
-GLOBAL_LIST_EMPTY(roundstart_station_closets)
+/// A comprehensive list of all roundstart closets (NOT CRATES)
+GLOBAL_LIST_EMPTY_TYPED(roundstart_station_closets, /obj/structure/closet)
+
+/// A comprehensive list of all roundstart closets in the game world
+GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 /obj/structure/closet
 	name = "closet"
@@ -85,6 +88,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
+	GLOB.closets += src
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
 
@@ -118,6 +122,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/Destroy()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
+	GLOB.closets -= src
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -813,7 +818,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
-/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)
 	SIGNAL_HANDLER
 
 	locked = FALSE

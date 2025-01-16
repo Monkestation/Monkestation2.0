@@ -33,7 +33,7 @@
 /// Simple status effect for adding a ring of fire around a mob.
 /datum/status_effect/fire_ring
 	id = "fire_ring"
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	/// The radius of the ring around us.
@@ -53,7 +53,8 @@
 		return
 
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
-		new /obj/effect/hotspot(nearby_turf)
+		var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+		flame_tile.alpha = 125
 		nearby_turf.hotspot_expose(750, 25 * seconds_per_tick, 1)
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
 			fried_living.apply_damage(2.5 * seconds_per_tick, BURN)
@@ -86,7 +87,8 @@
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
 	for(var/i in 0 to flame_radius)
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
-			new /obj/effect/hotspot(nearby_turf)
+			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+			flame_tile.alpha = 125
 			nearby_turf.hotspot_expose(750, 50, 1)
 			for(var/mob/living/fried_living in nearby_turf.contents - owner)
 				fried_living.apply_damage(5, BURN)
@@ -148,7 +150,7 @@
 			if(L.can_block_magic())
 				L.visible_message(span_danger("The spell bounces off of [L]!"), span_danger("The spell bounces off of you!"))
 				continue
-			if(L in hit_list || L == source)
+			if((L in hit_list) || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)

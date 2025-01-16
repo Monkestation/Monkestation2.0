@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
+	RADIO_KEY_UNCOMMON = RADIO_CHANNEL_UNCOMMON,
 
 
 	//kinda localization -- rastaf0
@@ -56,7 +58,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"щ" = RADIO_CHANNEL_AI_PRIVATE
+	"щ" = RADIO_CHANNEL_AI_PRIVATE,
+	"з" = RADIO_CHANNEL_ENTERTAINMENT,
+	"f" = RADIO_CHANNEL_UNCOMMON,
 ))
 
 /**
@@ -231,18 +235,20 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(radio_return & NOPASS)
 		return TRUE
 
-	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // MONKESTATION EDIT: Moved TRAIT_SOFTSPOKEN check to be after radios.
-		message_mods[WHISPER_MODE] = MODE_WHISPER
+	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN)) // MONKESTATION EDIT: Moved TRAIT_SOFTSPOKEN check to be after radios.
+			message_range = 1
+			spans |= SPAN_ITALICS
+			message_mods[WHISPER_MODE] = MODE_WHISPER
 
-	//No screams in space, unless you're next to someone.
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/environment = T.return_air()
-	var/pressure = (environment)? environment.return_pressure() : 0
-	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		message_range = 1
+		//No screams in space, unless you're next to someone.
+		var/turf/our_turf = get_turf(src)
+		var/pressure = our_turf.return_air()?.return_pressure() || 0
+		if(pressure < SOUND_MINIMUM_PRESSURE)
+			message_range = 1
 
-	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
-		spans |= SPAN_ITALICS
+		if(pressure < (ONE_ATMOSPHERE * 0.4)) //Thin air, let's italicise the message
+			spans |= SPAN_ITALICS
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost
 
@@ -265,7 +271,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(succumbed)
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
-
+	talkcount++
 	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)

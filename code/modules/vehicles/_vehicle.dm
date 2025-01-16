@@ -31,7 +31,7 @@
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
+	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
@@ -51,6 +51,7 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/vehicle/Destroy(force)
 	QDEL_NULL(trailer)

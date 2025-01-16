@@ -203,7 +203,7 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-	SSdemo.mark_new(src) //Monkestation edit: Replays
+		SSdemo.mark_new(src) //Monkestation edit: Replays
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -333,6 +333,12 @@
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
+
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(contents)
+	DREAMLUAU_CLEAR_REF_USERDATA(filters)
+	DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+	DREAMLUAU_CLEAR_REF_USERDATA(underlays)
 
 	if(material_stats)
 		QDEL_NULL(material_stats)
@@ -492,7 +498,7 @@
 		if(mobile_docking_port.launch_status != check_for_launch_status)
 			continue
 		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-			if(current_turf in shuttle_area.get_contained_turfs())
+			if(shuttle_area == current_turf.loc)
 				return TRUE
 
 	return FALSE
@@ -561,7 +567,8 @@
 	return null
 
 ///Return the current air environment in this atom
-/atom/proc/return_air()
+/atom/proc/return_air() as /datum/gas_mixture
+	RETURN_TYPE(/datum/gas_mixture)
 	if(loc)
 		return loc.return_air()
 	else
@@ -1041,20 +1048,19 @@
 
 ///returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
-		return
-	return list("ANIMAL DNA" = "Y-")
+	var/datum/blood_type/blood = get_blood_type()
+	if(!isnull(blood))
+		return list("UNKNOWN DNA" = blood.type)
+	return null
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
-		return
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = "X*"
-	return blood_dna
+	if(isnull(dna)) // Xenos
+		return ..()
+	var/datum/blood_type/blood = get_blood_type()
+	if(isnull(blood)) // Skeletons?
+		return null
+	return list("[dna.unique_enzymes]" = blood.type)
 
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
@@ -1374,6 +1380,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
 	VV_DROPDOWN_OPTION(VV_HK_SPIN_ANIMATION, "SpinAnimation")
 	VV_DROPDOWN_OPTION(VV_HK_STOP_ALL_ANIMATIONS, "Stop All Animations")
+	VV_DROPDOWN_OPTION(VV_HK_SHAKE, "Shake")
 	VV_DROPDOWN_OPTION(VV_HK_SHOW_HIDDENPRINTS, "Show Hiddenprint log")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
@@ -1516,6 +1523,20 @@
 			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
 		return
 
+	// monkestation edit start: forced shake
+	if(href_list[VV_HK_SHAKE] && check_rights(R_FUN))
+		var/pixelshiftx = input(usr, "Choose amount of pixels to shift on X axis","Shake Atom") as null|num
+		var/pixelshifty = input(usr, "Choose amount of pixels to shift on Y axis","Shake Atom") as null|num
+		if(isnull(pixelshiftx) || isnull(pixelshifty))
+			return
+
+		var/duration = input(usr, "Duration? (In seconds)","Shake Atom") as null|num
+		var/shake_interval = input(usr, "Shake interval (In seconds) - Default: 0.02", "Shake Atom", 0.02) as null|num
+		if(isnull(shake_interval) || isnull(duration))
+			return
+
+		src.Shake(pixelshiftx, pixelshifty, duration * 10, shake_interval * 10)
+	// monkestation edit end
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
@@ -2114,6 +2135,7 @@
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
+	var/misc_context = ""
 
 	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
@@ -2175,8 +2197,17 @@
 				if (shift_lmb_ctrl_shift_lmb_line != "")
 					extra_lines++
 
+				if(SCREENTIP_CONTEXT_MISC in context)
+					misc_context += context[SCREENTIP_CONTEXT_MISC]
+
+				if (misc_context != "")
+					extra_lines++
+
 				if(extra_lines)
-					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					if(misc_context != "")
+						extra_context = "<br><span class='subcontext'>[misc_context]\n[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					else
+						extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 					//first extra line pushes atom name line up 11px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
 					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
 

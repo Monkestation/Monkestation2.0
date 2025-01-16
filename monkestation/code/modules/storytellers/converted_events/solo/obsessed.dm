@@ -5,6 +5,8 @@
 	typepath = /datum/round_event/antagonist/solo/obsessed
 	restricted_roles = list(
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -17,7 +19,7 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	weight = 6
+	weight = 4
 	max_occurrences = 3
 
 /datum/round_event_control/antagonist/solo/obsessed/midround

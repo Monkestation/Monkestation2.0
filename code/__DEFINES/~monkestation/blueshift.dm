@@ -83,9 +83,6 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 	/obj/item/analyzer,
 ))
 
-/// Trait given to objects with the wallmounted component
-#define TRAIT_WALLMOUNTED "wallmounted"
-
 /// BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
 /// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
 #define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
@@ -236,6 +233,8 @@ See the examinemore module for information.
 #define CARGO_COMPANY_SOL_DEFENSE (1<<7)
 #define CARGO_COMPANY_MICROSTAR (1<<8)
 #define CARGO_COMPANY_VITEZSTVI_AMMO (1<<9)
+#define CARGO_COMPANY_RAYNE (1<<10)
+#define CARGO_COMPANY_KEMETEK (1<<11)
 
 // Company names, because the armament category and company name need to be the exact same, so use defines like this
 #define NAKAMURA_ENGINEERING_MODSUITS_NAME "Nakamura Engineering MOD Divison"
@@ -248,6 +247,8 @@ See the examinemore module for information.
 #define SOL_DEFENSE_DEFENSE_NAME "Sol Defense Imports"
 #define MICROSTAR_ENERGY_NAME "MicroStar Energy Weapon Coalition"
 #define VITEZSTVI_AMMO_NAME "Vitezstvi Ammo & Weapon Accessories"
+#define RAYNE_CORP_NAME "Rayne Corporation"
+#define KEMETEK_NAME "Kemetek Aerospace"
 
 #define COMPANY_INTEREST_GAIN_BIG 10
 #define COMPANY_INTEREST_GAIN_AVERAGE 5
@@ -273,20 +274,8 @@ See the examinemore module for information.
 #define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
 #define BOOT_SEAL_MESSAGE "seal around your feet"
 
-/// Colors for pride week
-#define COLOR_PRIDE_RED "#FF6666"
-#define COLOR_PRIDE_ORANGE "#FC9F3C"
-#define COLOR_PRIDE_YELLOW "#EAFF51"
-#define COLOR_PRIDE_GREEN "#41FC66"
-#define COLOR_PRIDE_BLUE "#42FFF2"
-#define COLOR_PRIDE_PURPLE "#5D5DFC"
-
 /// Trait that changes the ending effects of twitch leaving your system
 #define TRAIT_TWITCH_ADAPTED "twitch_adapted"
-
-// Have to put it here so I can use it in the global list of wound series
-/// See muscle.dm and robotic_blunt.dm
-#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
 
 //defines for antag opt in objective checking
 //objectives check for all players with a value equal or greater than the 'threat' level of an objective then pick from that list
@@ -332,4 +321,4 @@ GLOBAL_LIST_INIT(antag_opt_in_colors, list(
 #define OPT_IN_DEFAULT_LEVEL OPT_IN_YES_KILL
 
 /// If the player has any non-ghost role antags enabled, they are forced to use a minimum of this.
-#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_TEMP
+#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_KILL

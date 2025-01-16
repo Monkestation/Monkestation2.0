@@ -113,6 +113,27 @@
 	for(var/X in paralysis_traits)
 		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
+/datum/brain_trauma/severe/paralysis/crushed
+	random_gain = FALSE
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
+
+/datum/brain_trauma/severe/paralysis/crushed/New(specific_type)
+	if(specific_type)
+		paralysis_type = specific_type
+	if(!paralysis_type)
+		paralysis_type = pick("full","left","right","arms","legs")
+	switch(paralysis_type)
+		if("full")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		if("left")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_L_LEG)
+		if("right")
+			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG)
+		if("arms")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM)
+		if("legs")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		// this is not the best way to do this, but uh
 
 /datum/brain_trauma/severe/paralysis/paraplegic
 	random_gain = FALSE
@@ -151,7 +172,7 @@
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
-	gain_text = ""
+	gain_text = "You no longer feel safe being alone." //monkestation edit
 	lose_text = span_notice("You feel like you could be safe on your own.")
 	var/stress = 0
 

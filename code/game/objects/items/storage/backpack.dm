@@ -201,12 +201,23 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
+//MONKESTATION EDIT START// adds generic backpack and touches up the sprites
 /obj/item/storage/backpack/ert
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets."
+	icon_state = "ert_plain"
+	inhand_icon_state = "securitypack"
+	resistance_flags = FIRE_PROOF
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+
+/obj/item/storage/backpack/ert/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 25 //lots of pockets
+
+/obj/item/storage/backpack/ert/commander
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
 	icon_state = "ert_commander"
-	inhand_icon_state = "securitypack"
-	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/ert/security
 	name = "emergency response team security backpack"
@@ -233,6 +244,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
 
+/obj/item/storage/backpack/ert/generic
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets"
+	icon_state = "ert_generic"
+//MONKESTATION EDIT STOP
+
 /obj/item/storage/backpack/saddlepack
 	name = "saddlepack"
 	desc = "A backpack designed to be saddled on a mount or carried on your back, and switch between the two on the fly. It's quite spacious, at the cost of making you feel like a literal pack mule."
@@ -255,6 +272,7 @@
 	throwforce = 15
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
 	///Sounds used in the squeak component
 	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
 	///Reagents added to the edible component, ingested when you EAT the MEAT
@@ -271,13 +289,26 @@
 
 /obj/item/storage/backpack/meat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/edible,\
+	AddComponent(
+		/datum/component/edible,\
 		initial_reagents = meat_reagents,\
 		foodtypes = foodtypes,\
 		tastes = tastes,\
 		eatverbs = eatverbs,\
 	)
 	AddComponent(/datum/component/squeak, meat_sounds)
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 15,\
+		max_blood = 300,\
+	)
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("MEAT DNA" = "MT+"),\
+		diseases = null,\
+	)
 
 /*
  * Satchel Types
@@ -411,11 +442,14 @@
 
 	..()
 
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash
+	desc = "God, the stench from this thing is potent."
+
 /obj/item/storage/backpack/satchel/flat/listening_post_secret_stash/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/eva(src)
-	new /obj/item/clothing/suit/space/eva(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
+	new /obj/item/seeds/cannabis(src)
+	new /obj/item/food/grown/cannabis(src)
+	new /obj/item/storage/box/donkpockets/donkpockethonk(src)
+	new /obj/item/choice_beacon/pet(src)
 
 	..()
 
@@ -680,6 +714,7 @@
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
+	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/gun/ballistic/automatic/c20r(src)
 	new /obj/item/suppressor(src)
 
@@ -711,7 +746,10 @@
 	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
+	// MONKESTATION EDIT START
+	// MONKESTATION EDIT ORIGINAL new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
+	new /obj/item/grenade/chem_grenade/large/bioterrorfoam(src)
+	// MONKESTATION EDIT END
 	if(prob(5))
 		new /obj/item/food/pizza/pineapple(src)
 

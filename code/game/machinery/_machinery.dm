@@ -267,7 +267,7 @@
 		return
 	update_current_power_usage()
 	power_change()
-	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change))
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change), override = TRUE) // we can re-enter the same area due to shuttles and shit
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
@@ -410,6 +410,9 @@
 /obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
 	set_density(density_to_set)
+	if (!density)
+		update_appearance()
+		return
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))
@@ -821,12 +824,23 @@
 	spawn_frame(disassembled)
 
 	for(var/part in component_parts)
+		var/area/shipbreak/A = get_area(src)
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
-			new datum_part.physical_object_type(loc)
+			var/obj/item/item = new datum_part.physical_object_type(loc)
+			if(istype(A) && item.get_shipbreaking_reward()) //shipbreaking
+				var/obj/item/reward = item.get_shipbreaking_reward()
+				if(reward)
+					new reward(loc)
+					qdel(item)
 		else
 			var/obj/item/obj_part = part
 			obj_part.forceMove(loc)
+			if(istype(A) && obj_part.get_shipbreaking_reward()) //shipbreaking
+				var/obj/item/reward = obj_part.get_shipbreaking_reward()
+				if(reward)
+					new reward(loc)
+					qdel(obj_part)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/board = obj_part
 				for(var/component in board.req_components) //loop through all stack components and spawn them

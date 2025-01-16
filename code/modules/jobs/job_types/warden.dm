@@ -10,9 +10,9 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 600 //monkestation edit changed warden to require 10 hours as sec instead of 5 hours as crew
 	exp_required_type = EXP_TYPE_CREW
-	exp_granted_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SECURITY
 	config_tag = "WARDEN"
 
 	outfit = /datum/outfit/job/warden
@@ -40,8 +40,7 @@
 		/obj/item/storage/box/lethalshot = 5
 	)
 	rpg_title = "Jailor"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
-
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
 
 /datum/outfit/job/warden
 	name = "Warden"
@@ -50,7 +49,7 @@
 	id_trim = /datum/id_trim/job/warden
 	uniform = /obj/item/clothing/under/rank/security/warden
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
-	suit_store = /obj/item/gun/energy/disabler
+	suit_store = /obj/item/gun/energy/taser
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
 		)

@@ -69,6 +69,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
 	if(!length(GLOB.horns_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
+	if(!length(GLOB.tails_list_monkey))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 	if(!length(GLOB.ears_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
 	if(!length(GLOB.frills_list))
@@ -89,6 +91,10 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	if(!length(GLOB.pod_hair_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
+	if(!length(GLOB.pod_hair_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
+	if(!length(GLOB.pod_hair_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
 //Monkestation Addition Start
 	if(!length(GLOB.ethereal_horns_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ethereal_horns, GLOB.ethereal_horns_list)
@@ -104,8 +110,6 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_antennas, GLOB.ipc_antennas_list)
 	if(!length(GLOB.ipc_chassis_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_chassis, GLOB.ipc_chassis_list)
-	if(!length(GLOB.tails_list_monkey))
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 	if(!length(GLOB.anime_top_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list)
 	if(!length(GLOB.anime_middle_list))
@@ -126,13 +130,18 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list)
 	if(!GLOB.satyr_horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list)
+	if(!length(GLOB.arm_wings_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wings, GLOB.arm_wings_list)
+	if(!length(GLOB.arm_wingsopen_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wingsopen, GLOB.arm_wingsopen_list)
+	if(!length(GLOB.tails_list_avian))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian)
+	if(!length(GLOB.avian_ears_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
-		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
-		"mcolor_secondary" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
-		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
 		"tail_cat" = "None",
 		"tail_lizard" = "Smooth",
 		"wings" = "None",
@@ -154,7 +163,7 @@
 		"ipc_screen" = pick(GLOB.ipc_screens_list), //Monkestation Addition
 		"ipc_antenna" = pick(GLOB.ipc_antennas_list), //Monkestation Addition
 		"ipc_chassis" = pick(GLOB.ipc_chassis_list), //Monkestation Addition
-		"tail_monkey" = "Chimp", //Monkestation Addition
+		"tail_monkey" = "Monkey", //Monkestation change: Default to monkey tail.
 		"pod_hair" = pick(GLOB.pod_hair_list),
 		"anime_top" = pick(GLOB.anime_top_list), //Monkestation Addition
 		"anime_middle" = pick(GLOB.anime_middle_list), //Monkestation Addition
@@ -167,6 +176,9 @@
 		"satyr_fluff" = pick(GLOB.satyr_fluff_list), //Monkestation Addition
 		"satyr_tail" = pick(GLOB.satyr_tail_list), //Monkestation Addition
 		"satyr_horns" = pick(GLOB.satyr_horns_list), //Monkestation Addition
+		"arm_wings" = pick(GLOB.arm_wings_list),
+		"ears_avian" = pick(GLOB.avian_ears_list),
+		"tail_avian" = pick(GLOB.tails_list_avian),
 	))
 
 /proc/random_hairstyle(gender)
@@ -535,7 +547,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/passtable_on(target, source)
 	var/mob/living/L = target
-	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && (L.pass_flags & PASSTABLE))
 		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
 	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
 	L.pass_flags |= PASSTABLE
@@ -616,20 +628,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			. = pick(ais)
 	return .
-
-/**
- * Used to get the amount of change between two body temperatures
- *
- * When passed the difference between two temperatures returns the amount of change to temperature to apply.
- * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
- * vars:
- * * temp_diff (required) The differance between two temperatures
- * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
- */
-/proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
-	if(temp_diff < 0)
-		return -(BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 - (temp_diff * change_rate))
-	return (BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 + (temp_diff * change_rate))
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 

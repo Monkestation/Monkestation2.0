@@ -125,6 +125,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
+	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -172,7 +173,7 @@
 				goodies[quirk_goodie] = 5
 
 	for(var/iterator in 1 to goodie_count)
-		var/target_good = pick_weight(goodies)
+		var/target_good = pick_weight(fill_with_ones(goodies)) // monkestation edit: fix pick_weight runtime
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
@@ -294,7 +295,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/cargo/mail_token, // monkestation edit
 	))
 
 /obj/item/paper/fluff/junkmail_redpill

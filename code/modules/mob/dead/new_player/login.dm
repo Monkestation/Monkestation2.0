@@ -36,6 +36,10 @@
 	if(motd)
 		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
 
+	// MONKESTATION EDIT START - lobby notices
+	if (SSticker.current_state != GAME_STATE_STARTUP && length(config.lobby_notices))
+		config.ShowLobbyNotices(src)
+	// MONKESTATION END
 	if(GLOB.admin_notice)
 		to_chat(src, span_notice("<b>Admin Notice:</b>\n \t [GLOB.admin_notice]"))
 
@@ -52,7 +56,7 @@
 
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
-	if(!client) // client disconnected during asset transit
+	if(QDELETED(client)) // client disconnected during asset transit
 		return FALSE
 
 	// The parent call for Login() may do a bunch of stuff, like add verbs.
@@ -61,10 +65,15 @@
 
 	///guh
 	client.check_overwatch()
+	if(QDELETED(client)) // client disconnected during overwatch check
+		return FALSE
 
 	if(client.interviewee)
 		register_for_interview()
 		return
+
+	if(QDELETED(client)) // client disconnected during- yeah you get the point
+		return FALSE
 
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		var/tl = SSticker.GetTimeLeft()

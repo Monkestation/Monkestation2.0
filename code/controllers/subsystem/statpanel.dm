@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(statpanels)
 		global_data = list(
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
-			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.storyteller ? SSgamemode.storyteller.name : "Secret"]", //monkestation addition
+			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]", //monkestation addition
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round Time: [ROUND_TIME()]",
@@ -99,11 +99,12 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
+	var/static/list/beta_notice = list("", "You are on the BYOND 516 beta, various UIs and such may be broken!", "Please report issues, and switch back to BYOND 515 if things are causing too many issues for you.")
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
 
 	target.stat_panel.send_message("update_stat", list(
-		"global_data" = global_data,
+		"global_data" = (target.byond_version < 516) ? global_data : (global_data + beta_notice),
 		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
 		"other_str" = target.mob?.get_status_tab_items(),
 	))
@@ -172,17 +173,18 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/image/target_image as anything in target.images)
 		if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 			continue
-		overrides += target_image.loc
+		overrides[target_image.loc] = TRUE
 
 	var/list/atoms_to_display = list(target_mob.listed_turf)
+	var/should_check_obscured = (length(target_mob.listed_turf?.contents) < 25)
 	for(var/atom/movable/turf_content as anything in target_mob.listed_turf)
 		if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
 		if(turf_content.invisibility > target_mob.see_invisible)
 			continue
-		if(turf_content in overrides)
+		if(overrides[turf_content])
 			continue
-		if(turf_content.IsObscured())
+		if(should_check_obscured && turf_content.IsObscured())
 			continue
 		atoms_to_display += turf_content
 
@@ -250,6 +252,24 @@ SUBSYSTEM_DEF(statpanels)
 		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
 		list("","")
 	)
+	// monkestation edit: tracy
+	var/static/tracy_dll
+	var/static/tracy_present
+	if(isnull(tracy_dll))
+		tracy_dll = TRACY_DLL_PATH
+		tracy_present = fexists(tracy_dll)
+	if(tracy_present)
+		if(GLOB.tracy_initialized)
+			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [GLOB.tracy_init_reason || "N/A"])")))
+		else if(GLOB.tracy_init_error)
+			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([GLOB.tracy_init_error])")))
+		else if(fexists(TRACY_ENABLE_PATH))
+			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
+		else
+			mc_data.Insert(2, list(list("byond-tracy:", "Inactive")))
+	else
+		mc_data.Insert(2, list(list("byond-tracy:", "[tracy_dll] not present")))
+	// monkestation end
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", text_ref(GLOB.cameranet))
@@ -328,7 +348,7 @@ SUBSYSTEM_DEF(statpanels)
 	. = ..()
 	src.parent = parent
 
-/datum/object_window_info/Destroy(force, ...)
+/datum/object_window_info/Destroy(force)
 	atoms_to_show = null
 	atoms_to_images = null
 	atoms_to_imagify = null

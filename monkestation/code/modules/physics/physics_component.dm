@@ -64,6 +64,8 @@
 	var/datum/callback/bounce_callback
 	/// If we have this callback, it gets invoked when stopping movement
 	var/datum/callback/stop_callback
+	/// If we have this callback, it gets invoked when bumping on another atom
+	var/datum/callback/bump_callback
 
 	/**
 	 * The cached animate_movement of the parent
@@ -94,6 +96,7 @@
 	bounce_spin_clockwise = 0,
 	bounce_sound,
 	bounce_callback,
+	bump_callback,
 	stop_callback,
 )
 	if(!ismovable(parent))
@@ -118,16 +121,19 @@
 	src.bounce_spin_clockwise = bounce_spin_clockwise
 	src.bounce_sound = bounce_sound
 	src.bounce_callback = bounce_callback
+	src.bump_callback = bump_callback
 	src.stop_callback = stop_callback
 	set_angle(angle)
 
-/datum/component/movable_physics/Destroy(force, silent)
+/datum/component/movable_physics/Destroy(force)
+	STOP_PROCESSING(SSmovable_physics, src)
 	bounce_callback = null
 	stop_callback = null
 	cached_transform = null
 	return ..()
 
 /datum/component/movable_physics/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(on_newtonian_move))
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(on_item_pickup))
@@ -145,7 +151,7 @@
 // NOTE: This component will work very poorly at anything less than ticking 10 times per second
 /datum/component/movable_physics/process(seconds_per_tick)
 	var/atom/movable/moving_atom = parent
-	if(!isturf(moving_atom.loc) || !has_movement())
+	if(!isturf(moving_atom.loc) || QDELING(moving_atom.loc) || !has_movement())
 		stop_movement()
 		return PROCESS_KILL
 
@@ -158,22 +164,28 @@
 	//this code basically only makes sense if we only move at most a single tile per tick, it is absolutely fucked otherwise
 	while(tick_amount > 0)
 		tick_amount--
+		//we need to know if we have gravity right now to apply friction and such, yeah
+		var/has_gravity = moving_atom.has_gravity()
+
 		moving_atom.pixel_x = round(moving_atom.pixel_x + (horizontal_velocity * sin(angle)), MOVABLE_PHYSICS_PRECISION)
 		moving_atom.pixel_y = round(moving_atom.pixel_y + (horizontal_velocity * cos(angle)), MOVABLE_PHYSICS_PRECISION)
 
-		moving_atom.pixel_z = round(max(z_floor, moving_atom.pixel_z + vertical_velocity), MOVABLE_PHYSICS_PRECISION)
+		moving_atom.pixel_z = round(clamp(moving_atom.pixel_z + vertical_velocity, z_floor, world.icon_size), MOVABLE_PHYSICS_PRECISION)
 
 		moving_atom.adjust_visual_angle(round(visual_angle_velocity, 1))
 
-		horizontal_velocity = max(0, horizontal_velocity - horizontal_friction)
-		// we are not on the floor, apply friction
-		if(moving_atom.pixel_z > z_floor)
-			vertical_velocity -= vertical_friction
-		// we are on the floor, try to bounce if we have any vertical velocity
-		else if(moving_atom.pixel_z <= z_floor && vertical_velocity)
-			z_floor_bounce(moving_atom)
-
-		visual_angle_velocity = max(0, visual_angle_velocity - visual_angle_friction)
+		if(has_gravity)
+			visual_angle_velocity = max(0, visual_angle_velocity - visual_angle_friction)
+			horizontal_velocity = max(0, horizontal_velocity - horizontal_friction)
+			// we are not on the floor, apply friction
+			if(moving_atom.pixel_z > z_floor)
+				vertical_velocity -= vertical_friction
+			// we are on the floor, try to bounce if we have any vertical velocity
+			else if(moving_atom.pixel_z <= z_floor && vertical_velocity)
+				z_floor_bounce(moving_atom)
+				// z_floor_bounce could have deleted us
+				if(QDELETED(src))
+					return
 
 		var/move_direction = NONE
 		var/effective_pixel_x = moving_atom.pixel_x - moving_atom.base_pixel_x
@@ -248,14 +260,20 @@
 	moving_atom.pixel_z = z_floor
 	if(cached_transform)
 		animate(moving_atom, transform = cached_transform, time = 0, loop = 0)
-	if(stop_callback)
-		stop_callback.Invoke()
+	stop_callback?.Invoke()
 	if((physics_flags & MPHYSICS_QDEL_WHEN_NO_MOVEMENT) && !QDELING(src))
 		qdel(src)
 
 /// Helper to set angle, futureproofing in case new behavior like altering the transform of the movable based on angle is needed
 /datum/component/movable_physics/proc/set_angle(new_angle)
-	angle = SIMPLIFY_DEGREES(new_angle)
+	if(!isnull(new_angle))
+		angle = SIMPLIFY_DEGREES(new_angle)
+
+/// We do not EVER want newtonian movement while handling movement ourselves, so block it!
+/datum/component/movable_physics/proc/on_newtonian_move(atom/movable/source, direction, start_delay)
+	SIGNAL_HANDLER
+
+	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
 /// Proc for bouncing, aka object reached z_floor on pixel_z and needs a dose of Newton's third law
 /datum/component/movable_physics/proc/z_floor_bounce(atom/movable/moving_atom)
@@ -263,8 +281,7 @@
 	if(bounce_spin_speed && !visual_angle_velocity && !visual_angle_friction)
 		moving_atom.SpinAnimation(speed = bounce_spin_speed, loops = max(0, bounce_spin_loops))
 	vertical_velocity = abs(vertical_velocity * vertical_conservation_of_momentum)
-	if(bounce_callback)
-		bounce_callback.Invoke()
+	bounce_callback?.Invoke()
 
 /// Basically handles bumping on a solid object and ricocheting away according to a dose of Newton's third law
 /datum/component/movable_physics/proc/on_bump(atom/movable/source, atom/bumped_atom)
@@ -276,6 +293,7 @@
 	var/incidence = GET_ANGLE_OF_INCIDENCE(face_angle, angle + 180)
 	var/new_angle = SIMPLIFY_DEGREES(face_angle + incidence)
 	set_angle(new_angle)
+	bump_callback?.Invoke(bumped_atom)
 	if(!visual_angle_velocity)
 		return
 	incidence = GET_ANGLE_OF_INCIDENCE(face_angle, source.visual_angle + 180)

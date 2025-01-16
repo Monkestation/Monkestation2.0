@@ -168,22 +168,13 @@
 
 	if(!soon_to_be_ghoul.mind || !soon_to_be_ghoul.client)
 		message_admins("[ADMIN_LOOKUPFLW(user)] is creating a voiceless dead of a body with no player.")
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-			"Do you want to play as a [soon_to_be_ghoul.real_name], a voiceless dead?",
-			check_jobban = ROLE_HERETIC,
-			role = ROLE_HERETIC,
-			poll_time = 5 SECONDS,
-			target_mob = soon_to_be_ghoul,
-			role_name_text = "voiceless dead"
-		)
-		if(!LAZYLEN(candidates))
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger(soon_to_be_ghoul.real_name)], a [span_notice("voiceless dead")]?", check_jobban = ROLE_HERETIC, role = ROLE_HERETIC, poll_time = 5 SECONDS, checked_target = soon_to_be_ghoul, alert_pic = mutable_appearance('icons/mob/species/human/human.dmi', "husk"), jump_target = soon_to_be_ghoul, role_name_text = "voiceless dead")
+		if(isnull(chosen_one))
 			loc.balloon_alert(user, "ritual failed, no ghosts!")
 			return FALSE
-
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
 		soon_to_be_ghoul.ghostize(FALSE)
-		soon_to_be_ghoul.key = chosen_candidate.key
+		soon_to_be_ghoul.key = chosen_one.key
 
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
@@ -317,20 +308,14 @@
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
 	route = PATH_FLESH
+	ascension_achievement = /datum/award/achievement/misc/flesh_ascension
+	announcement_text = "%SPOOKY% Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %NAME% has ascended! Fear the ever twisting hand! %SPOOKY%"
+	announcement_sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg'
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
-		color_override = "pink",
-	)
-
 	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
-
-	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)

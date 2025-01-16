@@ -12,8 +12,8 @@
 	speak_emote = list("blorbles")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_type = /datum/hud/ooze
-	minbodytemp = 250
-	maxbodytemp = INFINITY
+	bodytemp_cold_damage_limit = 250
+	bodytemp_heat_damage_limit = INFINITY
 	faction = list(FACTION_SLIME)
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -175,7 +175,7 @@
 ///Heat up the mob a little
 /datum/action/cooldown/metabolicboost/proc/HeatUp()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	ooze.adjust_bodytemperature(50)
+	ooze.adjust_bodytemperature(3.33 KELVIN)
 
 ///Remove the speed modifier and delete the timer for heating up
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
@@ -335,7 +335,7 @@
 
 	return TRUE
 
-/datum/action/cooldown/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/globules/InterceptClickOn(mob/living/user, params, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -344,19 +344,19 @@
 	// Well, we need to use the params of the click intercept
 	// for passing into preparePixelProjectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
-	caller.visible_message(
-		span_nicegreen("[caller] launches a mending globule!"),
+	user.visible_message(
+		span_nicegreen("[user] launches a mending globule!"),
 		span_notice("You launch a mending globule."),
 	)
 
-	var/mob/living/simple_animal/hostile/ooze/oozy = caller
+	var/mob/living/simple_animal/hostile/ooze/oozy = user
 	if(istype(oozy))
 		oozy.adjust_ooze_nutrition(-5)
 
 	var/modifiers = params2list(params)
-	var/obj/projectile/globule/globule = new(caller.loc)
-	globule.preparePixelProjectile(target, caller, modifiers)
-	globule.def_zone = caller.zone_selected
+	var/obj/projectile/globule/globule = new(user.loc)
+	globule.preparePixelProjectile(target, user, modifiers)
+	globule.def_zone = user.zone_selected
 	globule.fire()
 
 	StartCooldown()

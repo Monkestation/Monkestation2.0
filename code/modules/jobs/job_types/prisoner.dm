@@ -7,6 +7,10 @@
 	spawn_positions = 5
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
+	exp_requirements = 300
+	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SECURITY
+	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
 	config_tag = "PRISONER"
 
@@ -23,7 +27,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS
 
 /datum/job/prisoner/New()
 	. = ..()
@@ -41,11 +45,13 @@
 	else if(crime_name == "Random")
 		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
 
+	/* monkestation removal: doesn't work bc manifest gets injected AFTER [COMSIG_GLOB_CREWMEMBER_JOINED]
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	var/datum/record/crew/target_record = crewmember.mind?.crewfile || find_record(crewmember.real_name)
 	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
 	target_record?.crimes += past_crime
 	target_record.recreate_manifest_photos(add_height_chart = TRUE)
+	monkestation end */
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
 

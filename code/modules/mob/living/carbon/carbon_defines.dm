@@ -11,6 +11,7 @@
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
+	living_flags = ALWAYS_DEATHGASP
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
@@ -87,11 +88,6 @@
 	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
 	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
-
-	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
-	var/heat_protection = 0 // No heat protection
-	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
-	var/cold_protection = 0 // No cold protection
 
 	/// Timer id of any transformation
 	var/transformation_timer

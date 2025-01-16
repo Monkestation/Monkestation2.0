@@ -27,18 +27,6 @@
 	name = "\improper Apid"
 	plural_form = "Apids"
 	id = SPECIES_APID
-	species_traits = list(
-		LIPS,
-		HAS_MARKINGS,
-		HAIR
-	)
-
-	/*
-	mutant_bodyparts = list(
-		"apid_stripes" = "None",
-		"apid_headstripes" = "None",
-	)
-	*/
 
 	mutanteyes = /obj/item/organ/internal/eyes/apid
 
@@ -50,17 +38,17 @@
 	inherent_traits = list(
 		TRAIT_TACKLING_WINGED_ATTACKER,
 		TRAIT_ANTENNAE,
+		TRAIT_HAS_MARKINGS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
+	inherent_factions = list(FACTION_HIVE)
 
 	meat = /obj/item/food/meat/slab/human/mutant/apid
-	liked_food = VEGETABLES | MEAT | FRUIT
-	disliked_food =  GROSS | BUGS | GORE
-	toxic_food = RAW | SEAFOOD
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/apid
 
+	mutanttongue =  /obj/item/organ/internal/tongue/apid
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/apid,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/apid,
@@ -144,11 +132,67 @@
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
 
-/datum/species/apid/get_scream_sound(mob/living/carbon/human/human)
-	return 'sound/voice/moth/scream_moth.ogg'
+/datum/species/apid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	if(chem.type == /datum/reagent/toxin/pestkiller)
+		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/apid/get_species_description()
 	return "Apids are a race of bipedal bees from the jungle planet of Saltu. Due to their large bodies, they have lost the ability to fly."
 
 #undef ui_honeydisplay
 #undef FORMAT_HONEY_CHARGES_TEXT
+
+/obj/item/organ/internal/tongue/apid
+	name = "apid tongue"
+
+	liked_foodtypes = VEGETABLES | MEAT | FRUIT
+	disliked_foodtypes =  GROSS | BUGS | GORE
+	toxic_foodtypes = RAW | SEAFOOD
+
+/obj/item/organ/internal/tongue/apid/get_scream_sound()
+	return 'sound/voice/moth/scream_moth.ogg'
+
+/obj/item/organ/internal/tongue/apid/get_laugh_sound()
+	return pick(
+		'monkestation/sound/voice/laugh/moth/mothchitter.ogg',
+		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
+		'monkestation/sound/voice/laugh/moth/mothsqueak.ogg',
+	)
+
+/datum/species/apid/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-bug",
+			SPECIES_PERK_NAME = "Bee",
+			SPECIES_PERK_DESC = "Other bees will not attack apids due to their similar biology.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-hive",
+			SPECIES_PERK_NAME = "Hiver",
+			SPECIES_PERK_DESC = "Apids can pollinate plants to raise their stats. \
+				As well as being able to create hives using their collected pollen.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fa-eye",
+			SPECIES_PERK_NAME = "Big Eyes",
+			SPECIES_PERK_DESC = "Apids can see better in the dark due to their eyes \
+				absorbing more light, but are kept down longer by flashes.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Insectoid Biology",
+			SPECIES_PERK_DESC = "Fly swatters will deal higher amounts of damage to a Apid.\
+				As well as being hurt by pest spray.",
+		),
+	)
+
+	return to_add

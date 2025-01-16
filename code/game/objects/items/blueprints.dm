@@ -18,7 +18,7 @@
 			. += "<p>According to the [src.name], you are now in an unclaimed territory.</p>"
 		if(AREA_SPECIAL)
 			. += "<p>This place is not noted on the [src.name].</p>"
-	. += "<p><a href='?src=[REF(src)];create_area=1'>Create or modify an existing area</a></p>"
+	. += "<p><a href='byond://?src=[REF(src)];create_area=1'>Create or modify an existing area</a></p>"
 
 
 /obj/item/areaeditor/Topic(href, href_list)
@@ -63,20 +63,20 @@
 		var/area/A = get_area(user)
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
-		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
+			. += "<p><a href='byond://?src=[REF(src)];edit_area=1'>Change area name</a></p>"
+		. += "<p><a href='byond://?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)
-			. += "<p><a href='?src=[REF(src)];view_blueprints=1'>View structural data</a></p>"
+			. += "<p><a href='byond://?src=[REF(src)];view_blueprints=1'>View structural data</a></p>"
 		else
-			. += "<p><a href='?src=[REF(src)];refresh=1'>Refresh structural data</a></p>"
-			. += "<p><a href='?src=[REF(src)];hide_blueprints=1'>Hide structural data</a></p>"
+			. += "<p><a href='byond://?src=[REF(src)];refresh=1'>Refresh structural data</a></p>"
+			. += "<p><a href='byond://?src=[REF(src)];hide_blueprints=1'>Hide structural data</a></p>"
 	else
 		if(legend == TRUE)
-			. += "<a href='?src=[REF(src)];exit_legend=1'><< Back</a>"
+			. += "<a href='byond://?src=[REF(src)];exit_legend=1'><< Back</a>"
 			. += view_wire_devices(user);
 		else
 			//legend is a wireset
-			. += "<a href='?src=[REF(src)];view_legend=1'><< Back</a>"
+			. += "<a href='byond://?src=[REF(src)];view_legend=1'><< Back</a>"
 			. += view_wire_set(user, legend)
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
@@ -166,7 +166,7 @@
 /obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
 	for(var/wireset in GLOB.wire_color_directory)
-		message += "<br><a href='?src=[REF(src)];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
+		message += "<br><a href='byond://?src=[REF(src)];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 
@@ -230,7 +230,7 @@
 		return
 
 	//stuff tied to the area to rename
-	var/list/to_rename = list(
+	var/static/list/to_rename = typecacheof(list(
 		/obj/machinery/airalarm,
 		/obj/machinery/atmospherics/components/unary/vent_scrubber,
 		/obj/machinery/atmospherics/components/unary/vent_pump,
@@ -238,9 +238,9 @@
 		/obj/machinery/firealarm,
 		/obj/machinery/light_switch,
 		/obj/machinery/power/apc,
-	)
-
-	for(var/obj/machine as anything in area)
-		if(is_type_in_list(machine, to_rename))
-			machine.name = replacetext(machine.name, oldtitle, title)
+	))
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

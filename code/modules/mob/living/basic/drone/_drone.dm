@@ -100,7 +100,8 @@
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
-	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
+	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"+\
+	"<span class='notice'>Drone Rules and info can be found at our wiki <a href='https://wiki.monkestation.com/en/jobs/non-human/drone'>HERE</a></span>\n"
 	/// blacklisted drone areas, direct
 	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
@@ -187,7 +188,8 @@
 		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
 
 	for(var/holiday_name in GLOB.holidays)
-		var/obj/item/potential_hat
+		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
+		var/obj/item/potential_hat = holiday_today.holiday_hat
 		if(!isnull(potential_hat) && isnull(default_headwear)) //If our drone type doesn't start with a hat, we take the holiday one.
 			default_headwear = potential_hat
 
@@ -212,14 +214,12 @@
 
 /mob/living/basic/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated())
@@ -261,7 +261,7 @@
 	alert_drones(DRONE_NET_DISCONNECT)
 
 
-/mob/living/basic/drone/gib()
+/mob/living/basic/drone/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	dust()
 
 /mob/living/basic/drone/examine(mob/user)

@@ -228,9 +228,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	//move the turf
-	old_area.turfs_to_uncontain += src
+	LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, z, list())
+	LISTASSERTLEN(new_area.turfs_by_zlevel, z, list())
+	old_area.turfs_to_uncontain_by_zlevel[z] += src
+	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
-	new_area.contained_turfs += src
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
@@ -650,6 +652,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
+// monkestation start: fix runtime from turf.drop_location()
+/turf/drop_location()
+	return src
+// monkestation end
+
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
@@ -741,16 +748,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
  *
  * Arguments:
- * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
+ * * source: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * access: A list that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
  * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(atom/movable/caller, list/access, simulated_only, no_id = FALSE)
+/turf/proc/reachableAdjacentTurfs(atom/movable/source, list/access, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
-	var/datum/can_pass_info/pass_info = new(caller, access, no_id)
+	var/datum/can_pass_info/pass_info = new(source, access, no_id)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))

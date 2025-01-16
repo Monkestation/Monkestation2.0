@@ -1,11 +1,12 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation
 	name = "Alien Infestation"
 	typepath = /datum/round_event/antagonist/solo/ghost/alien_infestation
-	weight = 5
+	weight = 3
+	max_occurrences = 1
 
 	min_players = 35 //monkie edit: 10 to 35 (tg what the fuck)
 
-	earliest_start = 45 MINUTES //monkie edit: 20 to 90
+	earliest_start = 60 MINUTES //monkie edit: 20 to 90
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
@@ -22,7 +23,6 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 5
-	max_occurrences = 1
 	prompted_picking = TRUE
 
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
@@ -67,8 +67,9 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			pic_source = antag_datum,
+			alert_pic = /mob/living/carbon/alien/larva,
 			role_name_text = lowertext(cast_control.name),
+			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
@@ -86,25 +87,26 @@
 			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 
-	if(!vents.len)
+	if(!length(vents))
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	for(var/i in 1 to antag_count)
-		if(!length(candidates))
-			break
-
-		var/client/mob_client = pick_n_take_weighted(weighted_candidates)
-		var/mob/candidate = mob_client.mob
-		if(candidate.client) //I hate this
-			candidate.client.prefs.reset_antag_rep()
+	var/selected_count = 0
+	while(length(weighted_candidates) && selected_count < antag_count)
+		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
+		var/client/candidate_client = GLOB.directory[candidate_ckey]
+		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
+			continue
+		var/mob/candidate = candidate_client.mob
+		candidate_client.prefs?.reset_antag_rep()
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = candidate.key
+		new_xeno.ckey = candidate_ckey
 		new_xeno.move_into_vent(vent)
+		selected_count++
 
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
 		new_xeno.log_message("was spawned as an alien by an event.", LOG_GAME)

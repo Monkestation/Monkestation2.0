@@ -90,17 +90,18 @@
 		role_text = "defective clone"
 		poll_text = "Do you want to play as [clonename]'s defective clone?"
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+	var/preview = get_clone_preview(clonee.dna) || clonee
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		poll_text,
 		poll_time = 10 SECONDS,
-		target_mob = clonee,
+		checked_target = clonee,
 		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
-		pic_source = get_clone_preview(clonee.dna) || clonee,
-		role_name_text = role_text
+		alert_pic = preview,
+		role_name_text = role_text,
+		chat_text_border_icon = preview,
 	)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/candidate = pick(candidates)
-		clonee.key = candidate.key
+	if(chosen_one)
+		clonee.key = chosen_one.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonee.grab_ghost()
@@ -129,7 +130,7 @@
 		mob_occupant.mind.add_antag_datum(antag_object)
 		mob_occupant.grant_language(/datum/language/codespeak) // So you don't have to remember to grant each and every identical clone codespeak with the manual.
 		mob_occupant.remove_blocked_language(/datum/language/codespeak, source=LANGUAGE_ALL) // All the effects the codespeak manual would have.
-		ADD_TRAIT(mob_occupant, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+		ADD_TRAIT(mob_occupant.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 		var/obj/item/implant/radio/syndicate/imp = new(src)
 		imp.implant(mob_occupant)
 		mob_occupant.faction |= ROLE_SYNDICATE
@@ -403,6 +404,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else
-		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.human_blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

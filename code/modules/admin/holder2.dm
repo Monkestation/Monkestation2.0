@@ -167,6 +167,7 @@ GLOBAL_PROTECT(href_token)
 		owner.mentor_datum_set()
 
 	try_give_profiling()
+	try_give_devtools()
 
 /datum/admins/proc/disassociate()
 	if(IsAdminAdvancedProcCall())
@@ -179,7 +180,7 @@ GLOBAL_PROTECT(href_token)
 		owner.remove_admin_verbs()
 		owner.holder = null
 		GLOB.mentors -= owner
-		owner.mentor_datum.owner = null
+		owner.mentor_datum?.owner = null
 		owner.mentor_datum = null
 		owner = null
 
@@ -402,6 +403,11 @@ GLOBAL_PROTECT(href_token)
 		combined_flags |= rank.can_edit_rights
 
 	return combined_flags
+
+/datum/admins/proc/try_give_devtools()
+	if(!(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+		return
+	winset(owner, null, "browser-options=byondstorage,find,refresh,devtools")
 
 /datum/admins/proc/try_give_profiling()
 	if (CONFIG_GET(flag/forbid_admin_profiling))

@@ -32,9 +32,11 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	name = "monkey"
+	regenerate_icons()
+	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
-	regenerate_icons()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -183,11 +185,10 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [src]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, target_mob = src, pic_source = src, role_name_text = "cyborg")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
-		key = chosen_candidate.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg", chat_text_border_icon = src)
+	if(chosen_one)
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
+		key = chosen_one.key
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()

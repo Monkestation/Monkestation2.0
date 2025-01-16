@@ -67,6 +67,7 @@
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
 	..()
 
+/* monkestation removal: reimplemented in [monkestation\code\datums\brain_damage\magic.dm]
 /datum/brain_trauma/magic/stalker
 	name = "Stalking Phantom"
 	desc = "Patient is stalked by a phantom only they can see."
@@ -118,6 +119,8 @@
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			close_stalker = FALSE
 	..()
+
+monkestation end*/
 
 /obj/effect/client_image_holder/stalker_phantom
 	name = "???"

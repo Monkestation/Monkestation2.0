@@ -66,8 +66,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		return
 	area.lightswitch = status
 	area.update_appearance()
+	playsound(src, SFX_LIGHTSWITCH, vol = 25, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, frequency = status ? 1 : -1, mixer_channel = CHANNEL_MACHINERY) // monkestation edit: button sounds
 
-	for(var/obj/machinery/light_switch/light_switch in area)
+	for(var/obj/machinery/light_switch/light_switch as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light_switch))
+		if(light_switch.area != area)
+			continue
 		light_switch.update_appearance()
 		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
 

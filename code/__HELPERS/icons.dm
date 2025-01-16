@@ -730,6 +730,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \
@@ -741,9 +745,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -771,15 +776,20 @@ world
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
+	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
@@ -787,7 +797,6 @@ world
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -1155,7 +1164,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!istext(icon_path) || !length(icon_path))
 		return FALSE
 
-	var/is_in_icon_folder = findtextEx(icon_path, "icons/")
+	var/is_in_icon_folder = findtextEx(icon_path, "icons/") || findtextEx(icon_path, "monkestation/") // STOP PUTTING ICONS IN THE `monkestation/code` FOLDER FFS
 	var/is_dmi_file = findtextEx(icon_path, ".dmi")
 
 	if(is_in_icon_folder && is_dmi_file)
@@ -1494,3 +1503,12 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
+
+/proc/strip_appearance_underlays(mutable_appearance/appearance)
+	var/base_plane = PLANE_TO_TRUE(appearance.plane)
+	for(var/mutable_appearance/underlay as anything in appearance.underlays)
+		if(isnull(underlay))
+			continue
+		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
+			appearance.underlays -= underlay
+	return appearance

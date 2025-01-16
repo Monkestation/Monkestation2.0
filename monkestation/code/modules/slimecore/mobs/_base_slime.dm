@@ -11,7 +11,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/slime
 	density = FALSE
 
-	maximum_survivable_temperature = 2000
+	bodytemp_heat_damage_limit = 2000
 
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
@@ -38,8 +38,8 @@
 
 	can_be_held = TRUE
 
-	minimum_survivable_temperature = 100
-	maximum_survivable_temperature = 600
+	bodytemp_cold_damage_limit = 100
+	bodytemp_heat_damage_limit = 600
 
 	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
@@ -142,12 +142,10 @@
 		recompile_ai_tree()
 
 /mob/living/basic/slime/death(gibbed)
-	. = ..()
-	if(buckled)
-		buckled?.unbuckle_all_mobs()
+	buckled?.unbuckle_mob(src, force = TRUE)
+	return ..()
 
 /mob/living/basic/slime/Destroy()
-	. = ..()
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		remove_trait(trait)
 	UnregisterSignal(src, list(
@@ -162,6 +160,7 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
+	return ..()
 
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
 	if(!SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_FRIEND))
@@ -188,7 +187,7 @@
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
-		unbuckle_all_mobs()
+		buckled?.unbuckle_mob(src, force = TRUE)
 		return
 	else if(CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
 		AddComponent(/datum/component/latch_feeding, target, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
@@ -361,7 +360,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, -200)
 
 	slime_flags &= ~SPLITTING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
@@ -413,7 +412,7 @@
 	change_color(mutating_into)
 
 	slime_flags &= ~MUTATING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
@@ -469,15 +468,13 @@
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))
 		var/turf/open/my_our_turf = loc
-		if(my_our_turf.pollution)
-			my_our_turf.pollution.touch_act(src)
+		my_our_turf.pollution?.touch_act(src)
 	. = ..()
 
 /mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	if(!client)
-		if(buckled)
-			unbuckle_mob(buckled, TRUE)
+	adjustBruteLoss(rand(15, 20))
+	if(QDELETED(client))
+		buckled?.unbuckle_mob(src, force = TRUE)
 	return
 
 /mob/living/basic/slime/proc/latch_callback(mob/living/target)

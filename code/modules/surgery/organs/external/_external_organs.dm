@@ -116,10 +116,11 @@
 	return ..()
 
 /obj/item/organ/external/remove_from_limb()
-	ownerlimb.external_organs -= src
-	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+	if(!QDELETED(ownerlimb))
+		ownerlimb.external_organs -= src
+		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
+		if(ownerlimb.owner && external_bodytypes)
+			ownerlimb.synchronize_bodytypes(ownerlimb.owner)
 	ownerlimb = null
 	return ..()
 
@@ -283,7 +284,7 @@
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
-	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+	if(!burnt && human.get_skin_temperature() >= CELCIUS_TO_KELVIN(175 CELCIUS) && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
 
 		burn_antennae()
@@ -345,7 +346,8 @@
 
 ///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
-	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
+	// layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT monkestation edit - original
+	layers = EXTERNAL_FRONT
 	feature_key = "pod_hair"
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something

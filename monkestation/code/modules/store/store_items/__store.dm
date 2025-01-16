@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	/// Our preview sprite.
 	var/icon/dummysprite
 
-/datum/store_manager/Destroy(force, ...)
+/datum/store_manager/Destroy(force)
 	owner = null
 	QDEL_NULL(menu)
 	QDEL_NULL(custom_loadout)
@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	custom_loadout = new()
 
 /datum/store_manager/ui_close(mob/user)
-	owner?.prefs.save_character()
+	owner?.prefs?.save_character()
 	if(menu)
 		SStgui.close_uis(menu)
 		menu = null
@@ -96,6 +96,11 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 	return TRUE
 
+/datum/store_manager/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/loadout_store),
+	)
+
 /// Select [path] item to [category_slot] slot.
 /datum/store_manager/proc/select_item(datum/store_item/selected_item)
 	if(selected_item.item_path in owner.prefs.inventory)
@@ -122,9 +127,8 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
-	data["user_is_donator"] = !!(owner.patreon?.is_donator() || owner.twitch?.is_donator() || is_admin(owner))
+	data["user_is_donator"] = !!(owner.player_details.patreon.is_donator() || owner.player_details.twitch.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
-
 	data["total_coins"] = user.client.prefs.metacoins
 
 	return data
@@ -155,6 +159,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.store_accessory)))
 	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.store_inhand_items)))
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!", "contents" = list_to_data(GLOB.store_toys)))
+	loadout_tabs += list(list("name" = "Plushies", "title" = "Adorable little plushies!", "contents" = list_to_data(GLOB.store_plushies)))
 	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items", "contents" = list_to_data(GLOB.store_pockets)))
 
 	data["loadout_tabs"] = loadout_tabs
@@ -178,30 +183,25 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		if(item.hidden)
 			formatted_list.len--
 			continue
-		var/atom/new_item = new item.item_path
-		var/list/formatted_item = list()
-		formatted_item["name"] = item.name
-		formatted_item["path"] = item.item_path
-		formatted_item["cost"] = item.item_cost
-		formatted_item["desc"] = new_item.desc
-		formatted_item["item_path"] = new_item.type
-		formatted_item["job_restricted"] = null
+		var/obj/item/item_type = item.item_path
+		var/list/formatted_item = list(
+			"name" = item.name,
+			"path" = item.item_path,
+			"cost" = item.item_cost,
+			"desc" = item_type::desc,
+			"job_restricted" = null,
+		)
+		if((item_type::icon_preview && item_type::icon_state_preview) || !(item_type::greyscale_config && item_type::greyscale_colors))
+			formatted_item["icon"] = item_type::icon_preview || item_type::icon
+			formatted_item["icon_state"] = item_type::icon_state_preview || item_type::icon_state
+		else
+			formatted_item["icon"] = sanitize_css_class_name("[item_type]")
 
-		var/datum/loadout_item/selected = GLOB.all_loadout_datums[new_item.type]
-		if(selected)
-			if(length(selected.restricted_roles))
-				formatted_item["job_restricted"] = selected.restricted_roles.Join(", ")
+		var/datum/loadout_item/selected = GLOB.all_loadout_datums[item_type]
+		if(length(selected?.restricted_roles))
+			formatted_item["job_restricted"] = selected.restricted_roles.Join(", ")
 
-
-		var/icon/icon = getFlatIcon(new_item)
-		var/md5 = md5(fcopy_rsc(icon))
-		if(!SSassets.cache["photo_[md5]_[item.name]_icon.png"])
-			SSassets.transport.register_asset("photo_[md5]_[item.name]_icon.png", icon)
-		SSassets.transport.send_assets(usr, list("photo_[md5]_[item.name]_icon.png" = icon))
-
-		formatted_item["icon"] = SSassets.transport.get_asset_url("photo_[md5]_[item.name]_icon.png")
 		formatted_list[array_index++] = formatted_item
-		qdel(new_item)
 
 	return formatted_list
 

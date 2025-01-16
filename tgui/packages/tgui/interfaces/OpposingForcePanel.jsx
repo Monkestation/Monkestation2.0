@@ -203,7 +203,7 @@ export const OpposingForceTab = (props) => {
           </Stack>
           <Stack>
             <Stack.Item>
-              <a href="https://wiki.monkestation.com/en/opfor">
+              <a href="https://wiki.monkestation.com/en/info/opfor">
                 <Button
                   icon="info"
                   color="orange"
@@ -213,7 +213,7 @@ export const OpposingForceTab = (props) => {
               </a>
             </Stack.Item>
             <Stack.Item>
-              <a href="https://wiki.monkestation.com/en/opfor">
+              <a href="https://wiki.monkestation.com/en/info/opfor">
                 <Button
                   icon="wrench"
                   color="red"
@@ -223,7 +223,7 @@ export const OpposingForceTab = (props) => {
               </a>
             </Stack.Item>
             <Stack.Item>
-              <a href="https://wiki.monkestation.com/en/home">
+              <a href="https://wiki.monkestation.com/info/rules">
                 <Button
                   icon="question"
                   color="yellow"
@@ -248,6 +248,7 @@ export const OpposingForceTab = (props) => {
             height="100px"
             value={backstory}
             placeholder="Provide a description of why you want to do bad things. Include specifics such as what lead upto the events that made you want to do bad things, think of it as though you were your character, react appropriately. If you don't have any ideas, check the #player-shared-opfors channel for some. (2000 char limit)"
+            maxLength={2000}
             onChange={(_e, value) =>
               act('set_backstory', {
                 backstory: value,
@@ -351,6 +352,7 @@ export const OpposingForceObjectives = (props) => {
                       width="100%"
                       placeholder="blank objective"
                       value={selectedObjective.title}
+                      maxLength={64}
                       onChange={(e, value) =>
                         act('set_objective_title', {
                           objective_ref: selectedObjective.ref,
@@ -466,6 +468,7 @@ export const OpposingForceObjectives = (props) => {
                       fluid
                       disabled={!can_edit}
                       height="85px"
+                      maxLength={1000}
                       value={selectedObjective.description}
                       onChange={(e, value) =>
                         act('set_objective_description', {
@@ -492,6 +495,7 @@ export const OpposingForceObjectives = (props) => {
                       disabled={!can_edit}
                       height="85px"
                       value={selectedObjective.justification}
+                      maxLength={1000}
                       onChange={(e, value) =>
                         act('set_objective_justification', {
                           objective_ref: selectedObjective.ref,
@@ -581,6 +585,7 @@ export const EquipmentTab = (props) => {
                   width="100%"
                   placeholder="Reason for item"
                   value={equipment.reason}
+                  maxLength={1000}
                   onChange={(e, value) =>
                     act('set_equipment_reason', {
                       selected_equipment_ref: equipment.ref,
@@ -656,6 +661,7 @@ export const AdminChatTab = (props) => {
           selfClear
           placeholder="Send a message or command using '/'"
           mt={1}
+          maxLength={1024}
           onEnter={(e, value) =>
             act('send_message', {
               message: value,

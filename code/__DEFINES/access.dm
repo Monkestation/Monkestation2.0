@@ -34,6 +34,10 @@
 #define ACCESS_CAPTAIN "captain"
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
+/// Access for Blueshield to their office and locker, as well as access to the NT Representitive Office
+#define ACCESS_BLUESHIELD "blueshield" ///monkestation edit
+/// Access for NT Rep to their office and locker, as well as access to the Blueshield Office
+#define ACCESS_NT_REPRESENTATVE "nt_rep" ///monkestation edit
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
 #define ACCESS_SECURITY "security"
@@ -51,6 +55,8 @@
 #define ACCESS_HOS "hos"
 /// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
 #define ACCESS_DETECTIVE "detective"
+/// Access for the brig physician to get basic access to medical tools, but not all encompassing access to medical under normal manning.
+#define ACCESS_BRIG_PHYSICIAN "brig_physician" /// MONKESTATION EDIT
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
@@ -330,7 +336,8 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)  /* monkestation edit: add permabrig-only access */
+	ACCESS_BRIG_PHYSICIAN, \
+)  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
@@ -345,10 +352,12 @@
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TCOMMS, \
+	ACCESS_TCOMMS_ADMIN, \
 	ACCESS_TECH_STORAGE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
+// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
 
 /// Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)
 #define PRIVATE_COMMAND_ACCESS list( \
@@ -358,7 +367,10 @@
 	ACCESS_HOP, \
 	ACCESS_QM, \
 	ACCESS_RD, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep above
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
 #define CAPTAIN_ACCESS list( \
@@ -454,11 +466,15 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
+	ACCESS_BRIG_PHYSICIAN, \
 )
+//MONKESTATION ADDITION: Added brig physcian access to above
+
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
+	ACCESS_AI_UPLOAD, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -486,8 +502,11 @@
 	ACCESS_MECH_ENGINE, \
 	ACCESS_MINISAT, \
 	ACCESS_TCOMMS, \
+	ACCESS_TCOMMS_ADMIN, \
 	ACCESS_TECH_STORAGE, \
 )
+// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
+
 /// Name for the Supply region.
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
@@ -518,7 +537,11 @@
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep to command region above
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.

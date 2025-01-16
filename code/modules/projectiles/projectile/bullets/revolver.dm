@@ -45,12 +45,12 @@
 /obj/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
-	stamina = 30
+	stamina = 40 //30 to 40 monkestation edit
 	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
-	ricochet_decay_damage = 0.8
+	ricochet_decay_damage = 1 //0.8 to 1 monkestation edit let them have fun
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
@@ -101,14 +101,16 @@
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
 	name = ".38 Iceblox bullet"
 	damage = 20
-	var/temperature = 100
 	ricochets_max = 0
+
+	/// How cold to chill the target down to
+	var/temperature = HYPOTHERMIA - 2 CELCIUS
 
 /obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
-		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
+		M.adjust_bodytemperature(0.34 * ((100-blocked) / 100) * (temperature - M.bodytemperature), use_insulation = TRUE)
 
 // .357 (Syndie Revolver)
 

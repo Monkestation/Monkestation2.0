@@ -1,11 +1,22 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
-
+/// Load byond-tracy. If USE_BYOND_TRACY is defined, then this is ignored and byond-tracy is always loaded.
+#define USE_TRACY_PARAMETER "tracy"
 /// Force the log directory to be something specific in the data/logs folder
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 /// Prevent the master controller from starting automatically
 #define NO_INIT_PARAMETER "no-init"
 
 GLOBAL_VAR(restart_counter)
+// monkestation edit: some tracy refactoring
+GLOBAL_VAR(tracy_log)
+GLOBAL_PROTECT(tracy_log)
+GLOBAL_VAR(tracy_initialized)
+GLOBAL_PROTECT(tracy_initialized)
+GLOBAL_VAR(tracy_init_error)
+GLOBAL_PROTECT(tracy_init_error)
+GLOBAL_VAR(tracy_init_reason)
+GLOBAL_PROTECT(tracy_init_reason)
+// monkestation end
 
 /**
  * WORLD INITIALIZATION
@@ -59,13 +70,32 @@ GLOBAL_VAR(restart_counter)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
+	// monkestation edit: some tracy refactoring
+	if(!tracy_initialized)
+		GLOB.tracy_initialized = FALSE
+#ifndef OPENDREAM
+	if(!tracy_initialized)
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
-	if(!tracy_initialized)
-		init_byond_tracy()
-		Genesis(tracy_initialized = TRUE)
-		return
+		var/should_init_tracy = TRUE
+		GLOB.tracy_init_reason = "USE_BYOND_TRACY defined"
+#else
+		var/should_init_tracy = FALSE
+		if(USE_TRACY_PARAMETER in params)
+			should_init_tracy = TRUE
+			GLOB.tracy_init_reason = "world.params"
+		if(fexists(TRACY_ENABLE_PATH))
+			GLOB.tracy_init_reason ||= "enabled for round"
+			SEND_TEXT(world.log, "[TRACY_ENABLE_PATH] exists, initializing byond-tracy!")
+			should_init_tracy = TRUE
+			fdel(TRACY_ENABLE_PATH)
 #endif
+		if(should_init_tracy)
+			init_byond_tracy()
+			Genesis(tracy_initialized = TRUE)
+			return
+#endif
+	// monkestation end
 
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
@@ -216,6 +246,13 @@ GLOBAL_VAR(restart_counter)
 	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.txt" //Guh //Monkestation Edit: REPLAYS
 	logger.init_logging()
 
+	if(GLOB.tracy_log)
+		rustg_file_write("[GLOB.tracy_log]", "[GLOB.log_directory]/tracy.loc")
+	// monkestation edit: tracy error logging
+	else if(!isnull(GLOB.tracy_init_error))
+		stack_trace("byond-tracy failed to initialize: [GLOB.tracy_init_error]")
+	// monkestation end
+
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 
@@ -300,6 +337,7 @@ GLOBAL_VAR(restart_counter)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
+		SSplexora.Shutdown(TRUE, usr ? key_name(usr) : null) // Monkestation edit: plexora
 	else
 		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
@@ -328,6 +366,7 @@ GLOBAL_VAR(restart_counter)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
+			shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 			auxcleanup()
 			TgsEndProcess()
 			return ..()
@@ -335,6 +374,7 @@ GLOBAL_VAR(restart_counter)
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 	auxcleanup()
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
@@ -342,12 +382,12 @@ GLOBAL_VAR(restart_counter)
 	..()
 
 /world/proc/auxcleanup()
-	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
 		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
+	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 	auxcleanup()
 	. = ..()
 
@@ -417,10 +457,13 @@ GLOBAL_VAR(restart_counter)
 	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(
-		locate(old_max + 1, 1, 1),
-		locate(maxx, maxy, map_load_z_cutoff))
-	global_area.contained_turfs += to_add
+	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
+	for (var/zlevel in 1 to map_load_z_cutoff)
+		var/list/to_add = block(
+			locate(old_max + 1, 1, zlevel),
+			locate(maxx, maxy, zlevel))
+
+		global_area.turfs_by_zlevel[zlevel] += to_add
 
 /world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
 	if(new_maxy <= maxy)
@@ -430,10 +473,12 @@ GLOBAL_VAR(restart_counter)
 	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(
-		locate(1, old_maxy + 1, 1),
-		locate(maxx, maxy, map_load_z_cutoff))
-	global_area.contained_turfs += to_add
+	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
+	for (var/zlevel in 1 to map_load_z_cutoff)
+		var/list/to_add = block(
+			locate(1, old_maxy + 1, 1),
+			locate(maxx, maxy, map_load_z_cutoff))
+		global_area.turfs_by_zlevel[zlevel] += to_add
 
 /world/proc/incrementMaxZ()
 	maxz++
@@ -462,21 +507,48 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
 
 /world/proc/init_byond_tracy()
-	var/library
+	// monkestation start: some tracy refactoring
+	if(!fexists(TRACY_DLL_PATH))
+		SEND_TEXT(world.log, "Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
+		CRASH("Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
 
-	switch (system_type)
-		if (MS_WINDOWS)
-			library = "prof.dll"
-		if (UNIX)
-			library = "libprof.so"
-		else
-			CRASH("Unsupported platform: [system_type]")
-
-	var/init_result = call_ext(library, "init")("block")
-	if (init_result != "0")
+	var/init_result = call_ext(TRACY_DLL_PATH, "init")("block")
+	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
+		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
+		GLOB.tracy_initialized = TRUE
+		return GLOB.tracy_log = init_result
+	else if(init_result == "already initialized")
+		GLOB.tracy_initialized = TRUE
+		SEND_TEXT(world.log, "byond-tracy already initialized ([GLOB.tracy_log ? "logfile: [GLOB.tracy_log]" : "no logfile"])")
+	else if(init_result != "0")
+		GLOB.tracy_init_error = init_result // monkestation edit: log tracy errors
+		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
 		CRASH("Error initializing byond-tracy: [init_result]")
+	else
+		GLOB.tracy_initialized = TRUE
+		SEND_TEXT(world.log, "byond-tracy initialized (no logfile)")
+	// monkestation end
+
+// monkestation start
+/world/proc/shutdown_byond_tracy()
+	if(GLOB.tracy_initialized)
+		SEND_TEXT(world.log, "Shutting down byond-tracy")
+		GLOB.tracy_initialized = FALSE
+		call_ext(TRACY_DLL_PATH, "destroy")()
+
+/world/proc/flush_byond_tracy()
+	// if GLOB.tracy_log is set, that means we're using para-tracy, which should have this.
+	if(GLOB.tracy_initialized && GLOB.tracy_log)
+		SEND_TEXT(world.log, "Flushing byond-tracy log")
+		var/flush_result = call_ext(TRACY_DLL_PATH, "flush")()
+		if(flush_result != "0")
+			SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
+			CRASH("Error flushing byond-tracy log: [flush_result]")
+		SEND_TEXT(world.log, "Flushed byond-tracy log")
+// monkestation end
 
 /world/proc/init_debugger()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
@@ -490,4 +562,5 @@ GLOBAL_VAR(restart_counter)
 
 #undef NO_INIT_PARAMETER
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER
+#undef USE_TRACY_PARAMETER
 #undef RESTART_COUNTER_PATH

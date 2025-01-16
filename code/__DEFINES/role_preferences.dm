@@ -47,6 +47,7 @@
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_FLORIDA_MAN "Florida Man"
 #define ROLE_SLASHER "Slasher"
+#define ROLE_MONSTERHUNTER "Monster Hunter"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -89,6 +90,7 @@
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
+#define ROLE_BAR_DRONE "Bardrone" // monkestation addition
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_BEACH_BUM "Beach Bum"

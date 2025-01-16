@@ -254,6 +254,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
+		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		/obj/effect/transmission_beam, // monkestation addition: relies on the existence of a PTL
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -347,7 +349,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 

@@ -1,4 +1,4 @@
-
+/* monkestation edit: replaced in [monkestation\code\game\objects\effects\glowshroom.dm]
 GLOBAL_VAR_INIT(glowshrooms, 0)
 
 /obj/structure/glowshroom
@@ -57,14 +57,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	. = ..()
 	. += "This is a [generation]\th generation [name]!"
 
-/**
- * Creates a new glowshroom structure.
- *
- * Arguments:
- * * newseed - Seed of the shroom
- */
-
-
 
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
@@ -120,10 +112,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	GLOB.glowshrooms--
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/**
- * Causes glowshroom spreading across the floor/walls.
- */
 
 /obj/structure/glowshroom/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, spread_cooldown))
@@ -223,12 +211,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	floor = 1
 	return 1
 
-/**
- * Causes the glowshroom to decay by decreasing its endurance, destroying it when it gets too low.
- *
- * Arguments:
- * * amount - Amount of endurance to be reduced due to spread decay.
- */
 /obj/structure/glowshroom/proc/Decay(amount)
 	myseed.adjust_endurance(-amount * endurance_decay_rate)
 	take_damage(amount)
@@ -267,3 +249,4 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		myseed.potency = 50
 		myseed.endurance = 50
 		myseed.yield = 5
+monkestation end */

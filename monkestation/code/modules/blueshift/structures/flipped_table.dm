@@ -48,8 +48,12 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/flippedtable/CtrlShiftClick(mob/user)
-	if(!istype(user) || iscorticalborer(user))
-		return FALSE
+	if(!iscarbon(user) && !is_admin(user.client))
+		return
+	if(isobserver(user) && !is_admin(user.client))  //prevent ghosts from unflipping tables but still allows admins to fuck around
+		return
+	if(!user.CanReach(src))
+		return
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25))
 		var/obj/structure/table/unflipped_table = new table_type(src.loc)
@@ -68,9 +72,11 @@
 
 
 /obj/structure/table/CtrlShiftClick(mob/user)
-	if(!istype(user) || iscorticalborer(user))
+	if(!iscarbon(user) && !is_admin(user.client))
 		return
-	if(!can_flip)
+	if(isobserver(user) && !is_admin(user.client))  //prevent ghosts from flipping tables but still allows admins to fuck around
+		return
+	if(!can_flip || !user.CanReach(src))
 		return
 	user.balloon_alert_to_viewers("flipping table...")
 	if(!do_after(user, max_integrity * 0.25))

@@ -414,6 +414,15 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
 //Generic
 /obj/item/circuitboard/machine/component_printer
 	name = "\improper Component Printer (Machine Board)"
@@ -639,7 +648,8 @@
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
 		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
-		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",)
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -1039,7 +1049,7 @@
 	req_components = list()
 
 /obj/item/circuitboard/machine/botpad
-	name = "Bot launchpad"
+	name = "Bot Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/botpad
 	req_components = list()
@@ -1239,6 +1249,14 @@
 	name = "Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/recycler
+	req_components = list(
+		/datum/stock_part/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/shipbreaker
+	name = "Shipbreaking Recycler"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/shipbreaker
 	req_components = list(
 		/datum/stock_part/manipulator = 1)
 	needs_anchored = FALSE

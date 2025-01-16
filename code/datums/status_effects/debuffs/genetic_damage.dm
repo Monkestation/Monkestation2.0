@@ -5,7 +5,7 @@
 	id = "genetic_damage"
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total_damage
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 2 SECONDS
 	on_remove_on_mob_delete = TRUE // Need to unregister from owner, be_replaced() would cause runtimes
 	remove_on_fullheal = TRUE
@@ -33,9 +33,9 @@
 
 /datum/status_effect/genetic_damage/tick(seconds_per_tick, times_fired)
 	if(ismonkey(owner) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && SPT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, seconds_per_tick))
-		qdel(src)
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.gorillize()
+		qdel(src)
 		return
 
 	if(total_damage >= minimum_before_tox_damage)

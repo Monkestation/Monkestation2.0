@@ -302,9 +302,15 @@
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			if (!QDELETED(M))
-				M.add_fingerprint(user)
+			var/area/shipbreak/A = get_area(src)
+			if(istype(A)) //shipbreaking
+				var/obj/item/stack/scrap/framing/M = new(loc, 1)
+				if (!QDELETED(M))
+					M.add_fingerprint(user)
+			else
+				var/obj/item/stack/sheet/iron/M = new (loc, 2)
+				if (!QDELETED(M))
+					M.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 
@@ -371,6 +377,9 @@
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
+		var/area/shipbreak/A = get_area(src)
+		if(istype(A)) //shipbreaking
+			remains = /obj/item/stack/scrap/framing
 		new remains(loc)
 	qdel(src)
 

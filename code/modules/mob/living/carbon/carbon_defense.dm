@@ -6,7 +6,8 @@
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
-		. += eyes.flash_protect
+		if(!HAS_TRAIT(src, TRAIT_CONVERSION_FLASHED) || !(eyes.organ_flags & ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION)) // MONKESTATION EDIT: Make IPCs not immune to rev and bb conversions.
+			. += eyes.flash_protect
 	else
 		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
@@ -103,8 +104,7 @@
 		if(I.damtype == BRUTE && affecting.can_bleed())
 			if(prob(33))
 				I.add_mob_blood(src)
-				var/turf/location = get_turf(src)
-				add_splatter_floor(location)
+				blood_particles(amount = rand(1, 1 + round(I.force/15, 1)), angle = (user == src ? rand(0, 360): get_angle(user, src)))
 				if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
@@ -140,15 +140,13 @@
 		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
 
-		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_by_total_damage())
+		var/dismemberable = hit_bodypart.dismemberable_by_wound() || hit_bodypart.dismemberable_by_total_damage()
 		if (dismemberable)
-			extra_wound_details = ", threatening to sever it entirely"
-		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && I.get_sharpness()))
-			var/bone_text = hit_bodypart.get_internal_description()
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
-		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && I.get_sharpness()))
-			var/tissue_text = hit_bodypart.get_external_description()
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
+			extra_wound_details = hit_bodypart.get_soon_dismember_message()
+		else if(has_interior && (has_exterior && exterior_ready_to_dismember) && I.get_sharpness())
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [hit_bodypart.get_internal_description()]"
+		else if(has_exterior && (has_interior && interior_ready_to_dismember) && I.get_sharpness())
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [hit_bodypart.get_external_description()]"
 
 	var/message_hit_area = ""
 	if(hit_area)
@@ -167,6 +165,18 @@
 		to_chat(user, span_danger("[attack_message_attacker]"))
 	return TRUE
 
+/mob/living/carbon/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	. = ..()
+	if(. <= 0)
+		return
+	if(user.wound_bonus != CANT_WOUND)
+		return
+	// Snowflake mcsnowflake but mobs which can't wound should still capable of causing IB
+	var/obj/item/bodypart/affecting = get_bodypart(user.zone_selected) || get_bodypart(BODY_ZONE_CHEST)
+	var/ib_prob = . + rand(-10, 40) - getarmor(affecting, WOUND)
+	if(ib_prob < 45)
+		return
+	affecting.force_wound_upwards(/datum/wound/bleed_internal, wound_source = user)
 
 /mob/living/carbon/attack_drone(mob/living/basic/drone/user)
 	return //so we don't call the carbon's attack_hand().
@@ -326,7 +336,10 @@
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
 			return
-		if(directional_blocked || shove_blocked)
+		//MONKESTATION EDIT START
+		// if(directional_blocked || shove_blocked) - MONKESTATION EDIT ORIGINAL
+		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
+		//MONKESTATION EDIT END
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -490,16 +503,30 @@
 		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
 
 	else
-		if (helper.grab_state >= GRAB_AGGRESSIVE)
+		//MONKESTATION EDIT START
+		var/feeble = HAS_TRAIT(src, TRAIT_FEEBLE)
+		var/gently = feeble && HAS_TRAIT(helper, TRAIT_PACIFISM) ? "gently " : null
+		// if (helper.grab_state >= GRAB_AGGRESSIVE) - MONKESTATION EDIT ORIGINAL
+		if (helper.grab_state >= GRAB_AGGRESSIVE && !gently)
+		//MONKESTATION EDIT END
 			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
 			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
 		else
-			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+		//MONKESTATION EDIT START
+			// helper.visible_message(span_notice("[helper] [gently]hugs [src] to make [p_them()] feel better!"), \ - MONKESTATION EDIT ORIGINAL
+			// null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src)) - MONKESTATION EDIT ORIGINAL
+			// to_chat(helper, span_notice("You [gently]hug [src] to make [p_them()] feel better!")) - MONKESTATION EDIT ORIGINAL
+			// to_chat(src, span_notice("[helper] [gently]hugs you to make you feel better!")) - MONKESTATION EDIT ORIGINAL
+			helper.visible_message(span_notice("[helper] [gently]hugs [src] to make [p_them()] feel better!"), \
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+			to_chat(helper, span_notice("You [gently]hug [src] to make [p_them()] feel better!"))
+			to_chat(src, span_notice("[helper] [gently]hugs you to make you feel better!"))
+
+		if (feeble && !gently)
+			feeble_quirk_wound_chest(src, hugger=helper, force=helper.grab_state >= GRAB_AGGRESSIVE)
+		//MONKESTATION EDIT END
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)
@@ -520,14 +547,14 @@
 				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
 
 		// Let people know if they hugged someone really warm or really cold
-		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
 			to_chat(src, span_warning("It feels like [helper] is over heating as [helper.p_they()] hug[helper.p_s()] you."))
-		else if(helper.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		else if(helper.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 			to_chat(src, span_warning("It feels like [helper] is freezing as [helper.p_they()] hug[helper.p_s()] you."))
 
-		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
 			to_chat(helper, span_warning("It feels like [src] is over heating as you hug [p_them()]."))
-		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
 		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
@@ -572,9 +599,9 @@
 				visible_message(span_notice("[src] examines [p_them()]self."), \
 					span_notice("You check yourself for shrapnel."))
 			if(I.isEmbedHarmless())
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+				to_chat(src, "\t <a href='byond://?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 			else
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+				to_chat(src, "\t <a href='byond://?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 	return embeds
 

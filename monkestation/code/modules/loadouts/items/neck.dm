@@ -141,9 +141,18 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
 
+/datum/loadout_item/neck/straw_coat
+	name = "Straw Coat"
+	item_path = /obj/item/clothing/neck/straw_coat
+
 /datum/loadout_item/neck/boatcloak
+
 	name = "Boat cloak"
 	item_path = /obj/item/clothing/neck/boatcloak
+
+/datum/loadout_item/neck/ranger_poncho
+	name = "Ranger Poncho"
+	item_path = /obj/item/clothing/neck/ranger_poncho
 
 /datum/loadout_item/neck/polycloak
 	name = "Poly cloak"
@@ -289,12 +298,12 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	restricted_roles = list(JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
-/*
+
 /datum/loadout_item/neck/mantle_bs
 	name = "Blueshield's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/bsmantle
 	restricted_roles = list(JOB_BLUESHIELD)
-*/
+
 /datum/loadout_item/neck/mantle_cap
 	name = "Captain's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/capmantle

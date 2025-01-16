@@ -1,7 +1,7 @@
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
-/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE, l_color = NONSENSICAL_VALUE, l_on)
+/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE)
 	if(!isnum(l_power) && !isnull(l_power))
 		return
 	if(l_outer_range > 0 && l_outer_range < MINIMUM_USEFUL_LIGHT_RANGE)
@@ -28,7 +28,8 @@
 	if(!isnull(l_on))
 		set_light_on(l_on)
 
-	update_light()
+	if(update)
+		update_light()
 
 /// Will update the light (duh).
 /// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
@@ -134,6 +135,17 @@
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
+	if(!new_color) // monkestation edit: trying to trace down what's doing this.
+		var/color_desc
+		if(isnull(new_color))
+			color_desc = "null"
+		else if(istext(new_color))
+			color_desc = "blank string"
+		else
+			color_desc = "false value ([new_color])"
+		stack_trace("tried to set light color of [src] ([type]) to [color_desc]!")
+	else if(islist(new_color))
+		stack_trace("tried to set light color of [src] ([type]) to a list: [json_encode(new_color)]!")
 	if(new_color == light_color)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)

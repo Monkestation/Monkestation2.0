@@ -60,11 +60,10 @@
 		return FALSE
 	if(!owner_dna)//weird edge cases where speaker with no DNA would be able to communicate with lawbringer
 		return FALSE
-	if(iscarbon(speaker))
-		var/mob/living/carbon/C = speaker
-		if(!C.dna && !C.dna.unique_enzymes)
-			return FALSE
-		if(C.dna.unique_enzymes != owner_dna)
+	if(isliving(speaker))
+		var/mob/living/living_speaker = speaker
+		var/unique_enzymes = living_speaker.has_dna()?.unique_enzymes
+		if(!unique_enzymes || unique_enzymes != owner_dna)
 			return FALSE
 	else
 		return FALSE
@@ -160,11 +159,11 @@
 	if(!iscarbon(user))
 		balloon_alert(user, "invalid organism")
 		return
-	var/mob/living/carbon/C = user
 	var/voice = null
-	if(C.dna && C.dna.unique_enzymes)
+	var/unique_enzymes = user.has_dna()?.unique_enzymes
+	if(unique_enzymes)
 		if(!owner_dna)
-			owner_dna = C.dna.unique_enzymes
+			owner_dna = unique_enzymes
 			balloon_alert(user, "biometric lock engaged")
 			new /obj/item/paper/guides/lawbringer(get_turf(src))
 			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
@@ -179,7 +178,7 @@
 
 			playsound(src, voice, 50, FALSE, -2)
 			return
-		if(C.dna.unique_enzymes == owner_dna)
+		if(unique_enzymes == owner_dna)
 			if(locked)
 				balloon_alert(user, "firing mode lock disengaged")
 				locked = FALSE
@@ -312,15 +311,14 @@
 /obj/item/firing_pin/lawbringer/proc/updatepin(mob/living/user)
 	if(!iscarbon(user))//should probably never happen
 		return
-	var/mob/living/carbon/C = user
-	owner_dna = C.dna.unique_enzymes
+	owner_dna = user.has_dna()?.unique_enzymes
 
 /obj/item/firing_pin/lawbringer/pin_auth(mob/living/carbon/user)
 	if(!iscarbon(user))
 		return FALSE
-	if(user && user.dna && user.dna.unique_enzymes)
-		if(user.dna.unique_enzymes == owner_dna)
-			return TRUE
+	var/unique_enzymes = user.has_dna()?.unique_enzymes
+	if(unique_enzymes && user.dna.unique_enzymes == owner_dna)
+		return TRUE
 	return FALSE
 
 /obj/item/firing_pin/lawbringer/auth_fail(mob/living/carbon/user)
@@ -602,23 +600,34 @@
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
-//LOCKER OVERRIDES//
-/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
-	. = ..()
+// HoS weapon beacon
+/obj/item/choice_beacon/hos
+	name = "gun beacon"
+	desc = "A single use beacon to deliver a gunset of your choice to help with security detail."
+	company_source = "Central Command"
+	company_message = span_bold("Supply Pod incoming, please stand back.")
 
-	// Traitor steal objectives
-	new /obj/item/gun/energy/e_gun/lawbringer(src)
+/obj/item/choice_beacon/hos/generate_display_names()
+	var/static/list/selectable_guns = list(
+		"X-01 MultiPhase Energy Gun" = /obj/item/gun/energy/e_gun/hos,
+		"Lawbringer" = /obj/item/gun/energy/e_gun/lawbringer,
+		"Compact Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	)
+	return selectable_guns
 
-//OBJECTIVE OVERRIDES//
-/datum/objective_item/steal/lawbringer
-	name = "the head of security's lawbringer"
-	targetitem = /obj/item/gun/energy/e_gun/lawbringer
+
+// Steal Objective, not just for Lawbringer but all their guns
+/datum/objective_item/steal/hosgun
+	name = "the head of security's personal weapon"
+	targetitem = /obj/item/choice_beacon/hos
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 
-/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
+/obj/item/choice_beacon/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
+
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

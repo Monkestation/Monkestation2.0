@@ -29,28 +29,30 @@
 	if(!check_rights(0))
 		return
 
-	var/dat = "<center><B>Game Panel</B></center><hr>"
+	var/dat = "<html><meta charset='UTF-8'><head><title>Game Panel</title></head><body>"
+	dat += "<center><B>Game Panel</B></center><hr>"
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
-				dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+				dat += {"<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
-		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
 	dat += {"
 		<BR>
-		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
 		"}
 
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
+	dat += "</body></html>"
 	usr << browse(dat, "window=admin2;size=240x280")
 	return
 
@@ -132,23 +134,31 @@
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
+		<html>
+		<meta charset='UTF-8'>
+		<head>
+		<title>Game Panel</title>
+		</head>
+		<body>
 		<center><B><h2>Dynamic Mode Options</h2></B></center><hr>
 		<br/>
 		<h3>Common options</h3>
 		<i>All these options can be changed midround.</i> <br/>
 		<br/>
-		<b>Force extended:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_force_extended=1'> <b>[GLOB.dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
+		<b>Force extended:</b> - Option is <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_force_extended=1'> <b>[GLOB.dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
 		<br/>This will force the round to be extended. No rulesets will be drafted. <br/>
 		<br/>
-		<b>No stacking:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
+		<b>No stacking:</b> - Option is <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
 		<br/>Unless the threat goes above [GLOB.dynamic_stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
 		<br/>
-		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
+		<b>Forced threat level:</b> Current value : <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>
 		<br/>
-		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
+		<b>Stacking threeshold:</b> Current value : <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
 		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
+		</body>
+		</html>
 		"}
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")

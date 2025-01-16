@@ -230,6 +230,8 @@
 	//add the reagent to the existing if it exists
 	for(var/datum/reagent/iter_reagent as anything in cached_reagents)
 		if(iter_reagent.type == reagent)
+			if(!iter_reagent.can_merge)
+				return
 			if(override_base_ph)
 				added_ph = iter_reagent.ph
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
@@ -911,6 +913,12 @@
 			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
+			// monkestation start
+			var/banned_due_to_plant = FALSE
+			if((reaction.reaction_flags & REACTION_NOT_IN_PLANTS) && istype(cached_my_atom, /obj/item/food/grown))
+				banned_due_to_plant = TRUE
+			// monkestation end
+
 			for(var/req_reagent in cached_required_reagents)
 				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*granularity)))
 					break
@@ -945,7 +953,7 @@
 			else
 				meets_ph_requirement = TRUE
 
-			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && !banned_due_to_plant)
 				if(meets_temp_requirement && meets_ph_requirement)
 					possible_reactions += reaction
 				else
@@ -1249,7 +1257,7 @@
 		else
 			. += reagent.volume
 	total_volume = .
-	recalculate_sum_ph()
+	// recalculate_sum_ph() // monkestation edit: we don't use ph or purity
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
@@ -1484,9 +1492,11 @@
 * Arguments:
 * * value - How much to adjust the base pH by
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_all_reagents_ph(value, lower_limit = 0, upper_limit = 14)
 	for(var/datum/reagent/reagent as anything in reagent_list)
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Adjusts the base pH of all of the listed types
@@ -1497,11 +1507,13 @@
 * * input_reagents_list - list of reagent objects to adjust
 * * value - How much to adjust the base pH by
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_specific_reagent_list_ph(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
 	for(var/datum/reagent/reagent as anything in input_reagents_list)
 		if(!reagent) //We can call this with missing reagents.
 			continue
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Adjusts the base pH of a specific type
@@ -1514,15 +1526,18 @@
 * * lower_limit - how low the pH can go
 * * upper_limit - how high the pH can go
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value, lower_limit = 0, upper_limit = 14)
 	var/datum/reagent/reagent = get_reagent(input_reagent)
 	if(!reagent) //We can call this with missing reagents.
 		return FALSE
 	reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Updates the reagents datum pH based off the volume weighted sum of the reagent_list's reagent pH
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/recalculate_sum_ph()
 	if(!reagent_list || !total_volume) //Ensure that this is true
 		ph = CHEMICAL_NORMAL_PH
@@ -1532,6 +1547,7 @@
 		total_ph += (reagent.ph * reagent.volume)
 	//Keep limited
 	ph = clamp(total_ph/total_volume, 0, 14)
+*/
 
 /**
  * Outputs a log-friendly list of reagents based on an external reagent list.
@@ -2032,6 +2048,7 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+	return reagents
 
 /atom/movable/chem_holder
 	name = "This atom exists to hold chems. If you can see this, make an issue report"

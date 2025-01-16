@@ -172,7 +172,6 @@ GLOBAL_LIST_INIT(hijack_employers, list(
 	"Gone Postal",
 	"Tiger Cooperative Fanatic",
 	"Waffle Corporation Terrorist",
-	"The Ashen Forge Member",
 ))
 
 ///employers who hire agents to do a task and escape... or martyrdom. whatever
@@ -186,7 +185,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
-	"The Ashen Forge Member",
 ))
 
 ///employers for malfunctioning ais. they do not have sides, unlike traitors.
@@ -227,6 +225,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+
+/// Checks if the given mob is in the mansus realm
+#define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -333,14 +334,24 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+#define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
+#define ANTAG_GROUP_HUNTERS "Bounty Hunters"
+#define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
+#define ANTAG_GROUP_CREW "Deviant Crew"
 
-#define HUNTER_PACK_COPS "cop_hunters"
-#define HUNTER_PACK_RUSSIAN "russian_hunters"
-#define HUNTER_PACK_BOUNTY "bounty_hunters"
-#define HUNTER_PACK_PSYKER "psyker_hunters"
+#define HUNTER_PACK_COPS "Spacepol Officers"
+#define HUNTER_PACK_RUSSIAN "Russian Smugglers"
+#define HUNTER_PACK_BOUNTY "Bounty Hunters"
+#define HUNTER_PACK_PSYKER "Psyker Shikaris"
 
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG (1 << 0)
+#define FLAG_FAKE_ANTAG					(1 << 0)
+/// monkestation addition: Whether the antagonist can see exploitable info on people they examine.
+#define FLAG_CAN_SEE_EXPOITABLE_INFO	(1 << 1)
+// monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.
+#define FLAG_ANTAG_CAP_IGNORE			(1 << 2)
+// monkestation addition: The storyteller will count everyone on this antag's team as a singular antag instead.
+#define FLAG_ANTAG_CAP_TEAM				(1 << 3)
 
 #define FREEDOM_IMPLANT_CHARGES 4
 

@@ -45,11 +45,13 @@
 	notes_left = end_product_recipe.total_notes
 	total_notes = end_product_recipe.total_notes
 
-	difficulty = round(selected_recipe.difficulty + difficulty_modifier)
+	difficulty = max(1,round(selected_recipe.difficulty + difficulty_modifier - (user.mind.get_skill_level(/datum/skill/smithing) - 3))) //Better smiths have easier times
+	if(HAS_TRAIT(user, TRAIT_DWARF) && difficulty > 1) //Dwarves are better at smithing.
+		difficulty--
 
 	generate_anvil_beats(TRUE)
 
-	if(!user.client || user.incapacitated())
+	if(QDELETED(user.client) || user.incapacitated())
 		return FALSE
 	. = TRUE
 	anvil_hud = new
@@ -57,6 +59,15 @@
 	RegisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY, PROC_REF(check_click))
 
 	START_PROCESSING(SSfishing, src)
+
+/datum/anvil_challenge/Destroy(force)
+	if(anvil_hud)
+		user?.client?.screen -= anvil_hud
+		QDEL_NULL(anvil_hud)
+	user = null
+	selected_recipe = null
+	host_anvil = null
+	return ..()
 
 /datum/anvil_challenge/proc/generate_anvil_beats(init = FALSE)
 	var/list/new_notes = list()
@@ -153,12 +164,22 @@
 				generate_anvil_beats()
 
 /datum/anvil_challenge/proc/end_minigame()
-	success = max(0, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2))))
+	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were plus (smithlevel *5)-15.
+	//So missing nothing, a level 3 smith will make a qual 100 item.
+	var smithlevel = user.mind.get_skill_level(/datum/skill/smithing)
+	success = max(smithlevel * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2)) +((smithlevel * 5) - 15)))
 	UnregisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY)
 	STOP_PROCESSING(SSfishing, src)
 	anvil_presses = null
 	note_pixels_moved = null
+	var/obj/item/mat = host_anvil.working_material
+	if(mat.material_stats)
+		//gives bonus XP for harder mats, so no cheese with gold or wood.
+		user.mind.adjust_experience(/datum/skill/smithing,round((total_notes - failed_notes) * 2.5) + round(2 + (mat.material_stats.hardness + mat.material_stats.density)/2.5))
+	else
+		user.mind.adjust_experience(/datum/skill/smithing, round(2.5 * (total_notes - failed_notes))) //Every good Hit = 2 XP
 	anvil_hud.end_minigame()
+	user.client?.screen -= anvil_hud
 	QDEL_NULL(anvil_hud)
 	host_anvil.smithing = FALSE
 	host_anvil.generate_item(success)

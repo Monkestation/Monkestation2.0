@@ -136,7 +136,7 @@
 
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
+		if(user.is_holding(src) && HAS_TRAIT(potential_chunky_finger_human, TRAIT_CHUNKYFINGERS) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
@@ -423,10 +423,10 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 145
+	stamina_damage = 100 //monke edit
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1 SECONDS
+	cooldown = 1.5 SECONDS //monke edit
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE

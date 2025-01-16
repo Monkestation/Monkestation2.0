@@ -17,7 +17,7 @@
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
-	encode_info = AUGMENT_TG_LEVEL
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/l
 	zone = BODY_ZONE_L_ARM
@@ -43,6 +43,7 @@
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/medibeam
@@ -85,13 +86,27 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis
 	name = "C.H.R.O.M.A.T.A. mantis blade implants"
 	desc = "High tech mantis blade implants, easily portable weapon, that has a high wound potential."
-	items_to_create = list(/obj/item/mantis_blade/chromata)
+	items_to_create = list(/obj/item/mantis_blade)
 	encode_info = AUGMENT_TG_LEVEL
+
+/obj/item/organ/internal/cyberimp/arm/item_set/mantis/l
+	zone = BODY_ZONE_L_ARM
+
+
+/obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield
+	name = "S.A.Y.A. arm defense system implants"
+	desc = "Shield blade implants that allow user to block upcoming attacks at the cost of mobility and offense."
+	items_to_create = list(/obj/item/mantis_blade/shield)
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield/l
+	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis
 	name = "A.R.A.S.A.K.A. mantis blade implants"
 	desc = "Modernized mantis blade designed coined by Tiger operatives, much sharper blade with energy actuators makes it a much deadlier weapon."
 	items_to_create = list(/obj/item/mantis_blade/syndicate)
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
@@ -101,10 +116,11 @@
 	name = "razorwire spool implant"
 	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
 		Built into the back of your hand, try your best to not get it tangled."
-	items_to_create = list(/obj/item/melee/razorwire)
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "razorwire"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	items_to_create = list(/obj/item/melee/razorwire)
 	visual_implant = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/simple/razorwire
 
@@ -210,3 +226,4 @@
 	demolition_mod = 1.25
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
+

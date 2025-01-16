@@ -5,6 +5,7 @@
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
 
 /obj/item/bodypart/chest/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
@@ -13,6 +14,7 @@
 	limb_id = SPECIES_MOTH
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
+	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 
 /obj/item/bodypart/arm/left/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'

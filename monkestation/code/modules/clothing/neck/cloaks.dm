@@ -139,13 +139,26 @@
 	worn_icon_state = "ace"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/admin
+/obj/item/clothing/neck/admincloak
 	name = "admin cloak"
 	desc = "Weh!"
+	icon_state = "admincloak"
+	worn_icon_state = "wadmincloak"
+	greyscale_config = /datum/greyscale_config/admincloak
+	greyscale_config_worn = /datum/greyscale_config/admincloak_worn
+	greyscale_colors = "#FFFFFF"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/neck/mentorcloak
+	name = "mentor cloak"
+	desc = "Buzz!"
 	icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
-	icon_state = "admin"
-	worn_icon_state = "admin"
+	icon_state = "mentor"
+
+/obj/item/clothing/neck/mentorcloak/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_clothes, "mentor_t")
 
 /obj/item/clothing/neck/helldivercape
 	name = "helldiver cape"
@@ -163,3 +176,33 @@
 	name = "Helldiver Cape"
 	item_path = /obj/item/clothing/neck/helldivercape
 	item_cost = 20000
+
+/obj/item/clothing/neck/linjacket
+	name = "ornate coat"
+	desc = "You'll hold this weight."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "linjacket"
+	worn_icon_state = "linjacket"
+	greyscale_config = /datum/greyscale_config/linjacket
+	greyscale_config_worn = /datum/greyscale_config/linjacket_worn
+	greyscale_colors = "#283c55#c4c36d"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/datum/loadout_item/neck/linjacket
+	name = "Ornate Coat"
+	item_path = /obj/item/clothing/neck/linjacket
+
+/datum/store_item/neck/linjacket
+	name = "Ornate Coat"
+	item_path = /obj/item/clothing/neck/linjacket
+	item_cost = 5000
+
+/obj/item/clothing/neck/straw_coat
+	name = "Straw Coat"
+	desc = "Traditional raincoat woven from straw."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "straw_coat"
+	worn_icon_state = "straw_coat"
+

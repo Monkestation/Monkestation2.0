@@ -16,7 +16,7 @@
 	role_name = "slaughter demon"
 
 /datum/round_event/ghost_role/slaughter/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SLAUGHTER_DEMON, pic_source = /mob/living/basic/demon/slaughter, role_name_text = role_name)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SLAUGHTER_DEMON, alert_pic = /mob/living/basic/demon/slaughter, role_name_text = role_name)
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
@@ -32,7 +32,6 @@
 	new /obj/effect/dummy/phased_mob(spawn_location, spawned)
 
 	player_mind.transfer_to(spawned)
-	spawned.generate_antagonist_status()
 
 	message_admins("[ADMIN_LOOKUPFLW(spawned)] has been made into a slaughter demon by an event.")
 	spawned.log_message("was spawned as a slaughter demon by an event.", LOG_GAME)

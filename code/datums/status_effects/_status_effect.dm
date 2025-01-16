@@ -6,10 +6,11 @@
 	/// When set initially / in on_creation, this is how long the status effect lasts in deciseconds.
 	/// While processing, this becomes the world.time when the status effect will expire.
 	/// -1 = infinite duration.
-	var/duration = -1
+	var/duration = STATUS_EFFECT_PERMANENT
 	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will stop processing, if duration is also unlimited (-1).
+	/// 0 = passes processing straight to tick(), generally not that bad of an idea.
 	var/tick_interval = 1 SECONDS
 	/// The mob affected by the status effect.
 	VAR_FINAL/mob/living/owner
@@ -59,12 +60,16 @@
 		linked_alert = new_alert //so we can reference the alert, if we need to
 		update_shown_duration()
 
-	if(duration > 0 || initial(tick_interval) > 0) //don't process if we don't care
+	if(duration > 0 || initial(tick_interval) >= 0) // don't process if we don't care | MONKESTATION EDIT
 		switch(processing_speed)
 			if(STATUS_EFFECT_FAST_PROCESS)
 				START_PROCESSING(SSfastprocess, src)
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
+			// monkestation start: SSpriority_effects
+			if(STATUS_EFFECT_PRIORITY)
+				START_PROCESSING(SSpriority_effects, src)
+			// monkestation end
 
 	update_particles()
 
@@ -76,6 +81,10 @@
 			STOP_PROCESSING(SSfastprocess, src)
 		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
+		// monkestation start: SSpriority_effects
+		if(STATUS_EFFECT_PRIORITY)
+			STOP_PROCESSING(SSpriority_effects, src)
+		// monkestation end
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)

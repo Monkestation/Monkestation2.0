@@ -29,14 +29,33 @@
 
 	required_access = needed_access
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	if(!istype(parent, /obj/item/armament_points_card))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(on_attack_hand))
+		var/atom/atom_target = parent
+		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+		RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(context))
+		inserted_card = parent
 
 /datum/component/armament/Destroy(force)
 	if(inserted_card)
 		inserted_card.forceMove(parent_atom.drop_location())
 		inserted_card = null
 	return ..()
+
+/datum/component/armament/proc/context(datum/source,
+	list/context,
+	obj/item/held_item,
+	mob/user,
+)
+	PRIVATE_PROC(TRUE)
+	SIGNAL_HANDLER
+	context[SCREENTIP_CONTEXT_RMB] = "Open Armament Store"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/component/armament/proc/on_attackby(atom/target, obj/item, mob/user)
 	SIGNAL_HANDLER
@@ -141,6 +160,8 @@
 			buy_ammo(usr, check, params["quantity"])
 			SStgui.update_uis(src)
 		if("eject_card")
+			if(istype(parent, /obj/item/armament_points_card))
+				return
 			eject_card(usr)
 			SStgui.update_uis(src)
 
@@ -371,7 +392,7 @@
 					"ref" = REF(armament_entry),
 					"icon" = armament_entry.cached_base64,
 					"name" = armament_entry.name,
-					"cost" = armament_entry.cost,
+					"cost" = cost_calculate(armament_entry.cost),
 					"buyable_ammo" = armament_entry.magazine ? TRUE : FALSE,
 					"magazine_cost" = armament_entry.magazine_cost,
 					"purchased" = purchased_items[armament_entry] ? purchased_items[armament_entry] : 0,
@@ -471,7 +492,8 @@
 	if(!ishuman(user) && !issilicon(user))
 		return
 
-	if(!buyer.has_money(armament_entry.cost))
+	var/actual_cost = cost_calculate(armament_entry.cost)
+	if(!buyer.has_money(actual_cost))
 		to_chat(user, span_warning("Not enough money!"))
 		return
 
@@ -503,7 +525,7 @@
 
 	var/datum/supply_pack/armament/created_pack = new
 	created_pack.name = initial(armament_entry.item_type.name)
-	created_pack.cost = cost_calculate(armament_entry.cost) //Paid for seperately
+	created_pack.cost = actual_cost //Paid for seperately
 	created_pack.contains = list(armament_entry.item_type)
 
 	var/rank

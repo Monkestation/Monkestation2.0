@@ -109,7 +109,8 @@
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_PHASED)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
-
+	if(check_flags & AB_CHECK_OPEN_TURF)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(owner_has_control)
 		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
@@ -136,6 +137,7 @@
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_MOB_STATCHANGE,
+		COMSIG_MOVABLE_MOVED,
 		SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
 		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
 		SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
@@ -171,7 +173,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "hands blocked!")
 		return FALSE
-	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT_NOT_FROM(owner, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)) // monkestation edit: don't count buckled as immobile
 		if (feedback)
 			owner.balloon_alert(owner, "can't move!")
 		return FALSE
@@ -192,6 +194,10 @@
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
+		return FALSE
+	if((check_flags & AB_CHECK_OPEN_TURF) && !isopenturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "not enough space!")
 		return FALSE
 	return TRUE
 
@@ -312,11 +318,13 @@
  * force - whether an update is forced regardless of existing status
  */
 /datum/action/proc/update_button_status(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(QDELETED(current_button))
+		return
 	current_button.update_keybind_maptext(full_key)
 	if(IsAvailable())
-		current_button?.color = rgb(255,255,255,255)
+		current_button.color = rgb(255,255,255,255)
 	else
-		current_button?.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

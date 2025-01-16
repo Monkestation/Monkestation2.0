@@ -35,6 +35,9 @@
 	var/normal_desc
 	//--end of love :'(--
 
+///Unique pet message
+	var/pet_message
+
 /*
 ** If you add a new plushie please add it to the lists at both:
 ** /obj/effect/spawner/random/entertainment/plushie
@@ -53,11 +56,10 @@
 		else
 			gender = MALE
 
-	love_message = list("\n[src] is so happy, \he could rip a seam!")
-	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
-	heartbroken_message = list("\n[src] looks so sad.")
-	vowbroken_message = list("\n[src] lost \his ring...")
-	parent_message = list("\n[src] can't remember what sleep is.")
+	love_message = list("[p_they(TRUE)] [p_are()] so happy, [p_they()] could rip a seam!")
+	heartbroken_message = list("[p_they(TRUE)] look\s so sad.")
+	vowbroken_message = list("[p_they(TRUE)] threw away [p_their()] wedding ring...")
+	parent_message = list("[p_they(TRUE)] can't remember what sleep is.")
 
 	normal_desc = desc
 
@@ -116,7 +118,7 @@
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
-		to_chat(user, span_notice("You pet [src]. D'awww."))
+		to_chat(user, span_notice("[pet_message ? pet_message : "You pet [src]. D'awww."]"))
 		if(grenade && !grenade.active)
 			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
@@ -286,6 +288,7 @@
 	heal_memories()
 	partner.heal_memories()
 
+	partner_message = list("[p_they(TRUE)] [p_have()] a ring on [p_their()] finger! It says 'Bound to my dear [partner.name].'")
 	mood_message = pick(partner_message)
 	update_desc()
 
@@ -310,8 +313,9 @@
 	maternal_parent = Mama
 	paternal_parent = Dada
 	young = TRUE
-	name = "[Mama] Jr" //Icelandic naming convention pending
-	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	name = "[Mama.name] Jr" //Icelandic naming convention pending
+	normal_desc = "[src] [p_are()] a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	transform *= 0.75
 	update_desc()
 
 	Mama.mood_message = pick(Mama.parent_message)
@@ -381,7 +385,7 @@
 	desc = normal_desc
 	. = ..()
 	if(mood_message)
-		desc += mood_message
+		desc += span_info("\n[mood_message]")
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
@@ -501,6 +505,7 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
+// Worn sprite taken from Space Station 14. Bee hat sprite drawn by Ubaser.
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
@@ -509,6 +514,10 @@
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon_state = "map_plushie_lizard"
+	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
+	body_parts_covered = HEAD // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
@@ -633,6 +642,7 @@
 		say(pick(cry_still_messages))
 	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
 
+// Worn sprite taken from Space Station 14. Lizard hat sprite made by Cinder.
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
@@ -642,6 +652,10 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon_state = "plushie_h"
+	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
+	body_parts_covered = HEAD // Monkestation Edit
 
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
@@ -797,7 +811,7 @@
 	icon_state = "abductor"
 	inhand_icon_state = null
 	attack_verb_continuous = list("abducts", "probes")
-	attack_verb_continuous = list("abduct", "probe")
+	attack_verb_simple = list("abduct", "probe")
 	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
 
 /obj/item/toy/plush/abductor/agent
@@ -806,7 +820,7 @@
 	icon_state = "abductor_agent"
 	inhand_icon_state = null
 	attack_verb_continuous = list("abducts", "probes", "stuns")
-	attack_verb_continuous = list("abduct", "probe", "stun")
+	attack_verb_simple = list("abduct", "probe", "stun")
 	squeak_override = list(
 		'sound/weapons/egloves.ogg' = 2,
 		'sound/weapons/cablecuff.ogg' = 1,
@@ -823,3 +837,13 @@
 		'sound/effects/slosh.ogg' = 1,
 		'sound/effects/splat.ogg' = 2
 	)
+
+/obj/item/toy/plush/shark
+	name = "shark plushie"
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia."
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
+	icon_state = "blahaj"
+	inhand_icon_state = "blahaj"
+	attack_verb_continuous = list("gnaws", "gnashes", "chews")
+	attack_verb_simple = list("gnaw", "gnash", "chew")

@@ -330,7 +330,7 @@
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
+	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call", encode = FALSE) // monkestation edit: fix double-encoded ai shuttle call reasons
 
 	if(incapacitated())
 		return
@@ -779,6 +779,7 @@
 	if (!camera_light_on)
 		to_chat(src, "Camera lights deactivated.")
 
+		list_clear_nulls(lit_cameras)
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.set_light(0)
 			lit_cameras = list()
@@ -797,8 +798,12 @@
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
-			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+			var/list/z_cameras = chunk.cameras[z_key]
+			list_clear_nulls(z_cameras)
+			for(var/obj/machinery/camera/camera as anything in z_cameras)
+				if(QDELETED(camera))
+					continue
+				if(!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
@@ -883,7 +888,7 @@
 
 	var/start = "Relayed Speech: "
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
 	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely

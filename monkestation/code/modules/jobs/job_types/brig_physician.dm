@@ -7,6 +7,9 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOS
+	exp_requirements = 600
+	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "BRIG_PHYSICIAN"
 
@@ -47,7 +50,7 @@
 	uniform = /obj/item/clothing/under/rank/security/scrubs/sec
 	suit = /obj/item/clothing/suit/toggle/labcoat/brig_physician
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/security
+	belt = /obj/item/modular_computer/pda/security/brig_physician
 	ears = /obj/item/radio/headset/headset_secmed
 	head = /obj/item/clothing/head/utility/surgerycap/sec
 	shoes = /obj/item/clothing/shoes/sneakers/secred

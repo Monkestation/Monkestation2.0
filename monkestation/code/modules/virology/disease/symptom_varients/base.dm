@@ -20,7 +20,14 @@
 	setup_varient()
 	host_symptom.update_name()
 
-/datum/symptom_varient/proc/set_disease_parent(datum/disease/attached)
+/datum/symptom_varient/Destroy(force)
+	if(host_symptom)
+		UnregisterSignal(host_symptom, list(COMSIG_SYMPTOM_ATTACH, COMSIG_SYMPTOM_DETACH, COMSIG_SYMPTOM_TRIGGER))
+		host_symptom = null
+	host_disease = null
+	return ..()
+
+/datum/symptom_varient/proc/set_disease_parent(datum/source, datum/disease/attached)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(host_symptom, COMSIG_SYMPTOM_ATTACH)
@@ -38,13 +45,13 @@
 	return TRUE
 
 /datum/symptom_varient/proc/trigger_symptom()
-	if(!host_disease)
+	if(QDELETED(host_disease) || QDELETED(host_disease.affected_mob))
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, host_cooldown))
 		return FALSE
 	host_symptom.run_effect(host_disease.affected_mob, host_disease)
 	COOLDOWN_START(src, host_cooldown, cooldown_time)
+	return TRUE
 
 /datum/symptom_varient/proc/Copy(datum/symptom/new_symp)
-	var/datum/symptom_varient/new_varient = new (new_symp)
-	return new_varient
+	return new type(new_symp)

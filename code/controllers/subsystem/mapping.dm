@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(mapping)
 	// Cache for sonic speed
 	var/list/unused_turfs = src.unused_turfs
 	var/list/world_contents = GLOB.areas_by_type[world.area].contents
-	var/list/world_turf_contents = GLOB.areas_by_type[world.area].contained_turfs
+	var/list/world_turf_contents_by_z = GLOB.areas_by_type[world.area].turfs_by_zlevel
 	var/list/lists_to_reserve = src.lists_to_reserve
 	var/index = 0
 	while(index < length(lists_to_reserve))
@@ -192,15 +192,20 @@ SUBSYSTEM_DEF(mapping)
 				if(index)
 					lists_to_reserve.Cut(1, index)
 				return
-			var/turf/T = packet[packetlen]
-			T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
-			LAZYINITLIST(unused_turfs["[T.z]"])
-			unused_turfs["[T.z]"] |= T
-			var/area/old_area = T.loc
-			old_area.turfs_to_uncontain += T
-			T.turf_flags = UNUSED_RESERVATION_TURF
-			world_contents += T
-			world_turf_contents += T
+			var/turf/reserving_turf = packet[packetlen]
+			reserving_turf.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+			LAZYINITLIST(unused_turfs["[reserving_turf.z]"])
+			unused_turfs["[reserving_turf.z]"] |= reserving_turf
+			var/area/old_area = reserving_turf.loc
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, reserving_turf.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[reserving_turf.z] += reserving_turf
+			reserving_turf.turf_flags = UNUSED_RESERVATION_TURF
+			// reservation turfs are not allowed to interact with atmos at all
+			reserving_turf.blocks_air = TRUE
+
+			world_contents += reserving_turf
+			LISTASSERTLEN(world_turf_contents_by_z, reserving_turf.z, list())
+			world_turf_contents_by_z[reserving_turf.z] += reserving_turf
 			packet.len--
 			packetlen = length(packet)
 
@@ -258,16 +263,16 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	if (ice_ruins.len)
 		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE)
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE, mineral_budget = 21)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
-		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
+		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
@@ -341,9 +346,9 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/determine_fake_sale()
 	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
-		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+		GLOB.arcade_prize_pool[/obj/item/stack/tile/fakeice/loaded] = 1 // monkestation edit: fix null weight
 	else
-		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+		GLOB.arcade_prize_pool[/obj/item/stack/tile/fakespace/loaded] = 1 // monkestation edit: fix null weight
 
 
 /datum/controller/subsystem/mapping/Recover()
@@ -981,12 +986,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Faster
 	if(space_guaranteed)
 		var/area/global_area = GLOB.areas_by_type[world.area]
-		global_area.contained_turfs += Z_TURFS(z_level)
+		LISTASSERTLEN(global_area.turfs_by_zlevel, z_level, list())
+		global_area.turfs_by_zlevel[z_level] = Z_TURFS(z_level)
 		return
 
 	for(var/turf/to_contain as anything in Z_TURFS(z_level))
 		var/area/our_area = to_contain.loc
-		our_area.contained_turfs += to_contain
+		LISTASSERTLEN(our_area.turfs_by_zlevel, z_level, list())
+		our_area.turfs_by_zlevel[z_level] += to_contain
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go

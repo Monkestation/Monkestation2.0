@@ -45,7 +45,7 @@
 		managed_seeds["[i]"] = null
 
 	///we create reagents using max_reagents, then make it visible and an open container
-	movable_parent.create_reagents(max_reagents, (OPENCONTAINER | AMOUNT_VISIBLE))
+	movable_parent.create_reagents(max_reagents, (REFILLABLE | DRAINABLE)) // We don't use OPENCONTAINER, as there's no need for it to be transparent, we have our own examine info handler
 
 	RegisterSignals(parent, list(COMSIG_TRY_PLANT_SEED, COMSIG_ATOM_ATTACKBY), PROC_REF(try_plant_seed))
 	RegisterSignal(parent, COMSIG_TRY_POLLINATE, PROC_REF(try_pollinate))
@@ -73,6 +73,10 @@
 
 	START_PROCESSING(SSplants, src)
 	SEND_SIGNAL(parent, COMSIG_GROWING_WATER_UPDATE, water_precent)
+
+/datum/component/plant_growing/Destroy(force)
+	STOP_PROCESSING(SSplants, src)
+	return ..()
 
 /datum/component/plant_growing/process(seconds_per_tick)
 	if(!length(managed_seeds))
@@ -248,7 +252,7 @@
 	return TRUE
 
 /datum/component/plant_growing/proc/adjust_selfgrow(datum/source, amount)
-	self_sustaining_precent = clamp(self_sustaining_precent + amount, 0, 10)
+	self_sustaining_precent = clamp(self_sustaining_precent + amount, 0, 100)
 
 /datum/component/plant_growing/proc/increase_work_processes(datum/source, amount)
 	next_work -= amount

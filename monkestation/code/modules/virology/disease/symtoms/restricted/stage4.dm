@@ -3,7 +3,9 @@
 	desc = "If left untreated the subject will die!"
 	restricted = TRUE
 	max_multiplier = 5
+	chance = 6
 	var/sound = FALSE
+	badness = EFFECT_DANGER_DEADLY
 
 /datum/symptom/heart_failure/activate(mob/living/carbon/affected_mob)
 	. = ..()
@@ -11,31 +13,31 @@
 		affected_mob.death()
 		return FALSE
 
-	if(!affected_mob.can_heartattack())
+	if(!affected_mob.can_heartattack() && !HAS_TRAIT(affected_mob, TRAIT_STABLEHEART)) //This was so stupid. We had 9 people round removed with no fix other than admins because of this.
 		affected_mob.death()
 		return FALSE
 
 	switch(round(multiplier))
 		if(1 to 2)
-			if(prob(1))
+			if(prob(5))
 				to_chat(affected_mob, span_warning("You feel [pick("discomfort", "pressure", "a burning sensation", "pain")] in your chest."))
-			if(prob(1))
+			if(prob(5))
 				to_chat(affected_mob, span_warning("You feel dizzy."))
 				affected_mob.adjust_confusion(6 SECONDS)
-			if(prob(1.5))
+			if(prob(7.5))
 				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short of breath", "uneasy")]."))
 		if(3 to 4)
 			if(!sound)
 				affected_mob.playsound_local(affected_mob, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				sound = TRUE
-			if(prob(1.5))
+			if(prob(7.5))
 				to_chat(affected_mob, span_danger("You feel a sharp pain in your chest!"))
-				if(prob(25))
+				if(prob(30))
 					affected_mob.vomit(95)
 				affected_mob.emote("cough")
 				affected_mob.Paralyze(40)
 				affected_mob.losebreath += 4
-			if(prob(1.5))
+			if(prob(7.5))
 				to_chat(affected_mob, span_danger("You feel very weak and dizzy..."))
 				affected_mob.adjust_confusion(8 SECONDS)
 				affected_mob.stamina.adjust(-40, FALSE)
@@ -50,6 +52,7 @@
 			affected_mob.set_heartattack(TRUE)
 			affected_mob.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
 			return FALSE
+	multiplier_tweak(0.1)
 
 /datum/symptom/catapult_sneeze
 	name = "Sneezing?"

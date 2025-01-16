@@ -232,3 +232,185 @@
   - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
       overcharge.
   - bugfix: Potential fix for crashes related to drinking sounds.
+2024-08-19:
+  MomoBerri:
+  - rscadd: new light subtypes for mappers
+2024-08-20:
+  Absolucy:
+  - bugfix: The Ashen Forge traitor faction can now actually roll.
+  - bugfix: The Soft-Spoken quirk properly makes you speak softly again.
+  Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3:
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  CannibalHunter:
+  - rscadd: Added new durrcell plushie to the monkeshop!
+2024-08-21:
+  Absolucy:
+  - bugfix: The "Space Adaptation Effect" symptom now actually works as intended.
+  - bugfix: Fixed some runtimes related to pathology symptoms.
+  - code_imp: Cleaned up the code of some pathology symptoms.
+  - qol: Grey Tide viruses will no longer affect airlocks that lead to space.
+  - bugfix: Fixed a runtime related to ghost hearing.
+  - bugfix: Fixed some dirt tiles at centcom that wasted init time with useless atmos
+      processing.
+  - rscadd: Curators will now spawn with some of the tapes they've had approved (if
+      any) in their cassette rack.
+  - qol: Bulk cassette crates will no longer contain duplicates tapes.
+  Absolucy, 13spacemen, Melbert:
+  - code_imp: Poll alerts support small border pictures in the chat message.
+  - code_imp: Poll alert alert picture and jump target do not have to be the same.
+  - qol: Slime intelligence potions ask the user for a reason, this will be shown
+      to ghosts.
+  - bugfix: Fixes polling for things causing said things to have their planes and
+      layers screwed up (causing random objects or mobs to appear above runechat and
+      blindness, for example)
+  Absolucy, Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
+  KnigTheThrasher:
+  - rscadd: Added wind turbines to lavaland mining base
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  RedBaronFlyer:
+  - qol: Janitorial has had a budget increase. All janitors are now equipped with
+      keyrings.
+  Wisemonster:
+  - rscdel: Removed the stage 2 hunger symptom
+  - bugfix: Fixed one of the bars in box station having flooring that can create chasms
+2024-08-22:
+  Absolucy:
+  - refactor: Implemented batch marking for replays. Basically, this should somewhat
+      reduce lag caused by the replay system in some situations.
+  - bugfix: Fixed messages getting bolded for everyone when ghosts are watching.
+  - bugfix: Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat.
+  TTNT789:
+  - bugfix: makes the rage chemical system not explode you repeatedly apon implantation
+2024-08-23:
+  DragonLee66:
+  - rscadd: gave the cryobeaker a different sprite
+2024-08-24:
+  Absolucy:
+  - bugfix: Role prompts now properly show the preview pics in the chat.
+  - bugfix: Fixed intelligence potions being broken.
+  - bugfix: Fixed blood brother gear choosing being broken.
+2024-08-25:
+  Absolucy:
+  - rscadd: Certain jobs, mostly most medical and the janitor, now have naturally
+      stronger immune systems.
+  - bugfix: Tide viruses now properly exclude external airlocks.
+  - qol: As part of an agreement with the Church of Carp'Sie, the windows and walls
+      for the aquarium on Blueshift-model stations has been reinforced.
+  - bugfix: Heavily optimized glowshrooms, resulting in far less lag during shroomlooses.
+  AlbertNanotracen:
+  - bugfix: Nanotrasen Cookery Command has ended the plague of staff complaining that
+      their tomato dishes are just complicated forms of soup by redefining "tomato
+      soup" to include a dash of cream.
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  - bugfix: ' Infinite spider eggs are no more.'
+  - bugfix: Removed duplicate and incorrect Yaki Imo recipe
+  - qol: "Swapped out the flour in \xC6losterrm\xE6sch with two dough slices, to avoid\
+      \ competing reactions while preparing or cooking"
+  - spellcheck: Chicken nugget will have a description in the craft menu, and fiesta
+      skewers will have a description in general
+  - bugfix: Spell burger now has only one recipe
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  - rscadd: Added 28 new food recipes!
+  - qol: 'Martian fried noodles now requires 2 grown peanuts instead of
+
+      salted peanut packet.'
+  - bugfix: Moussaka now only uses eggplants instead of eggplants and potatoes
+  - bugfix: Pita bread no longer burns on the griddle/oven
+  Tag114:
+  - bugfix: Fixes players being unable to switch back to the default title for Brig
+      Physician after selecting an alternate title.
+  ThePooba:
+  - rscadd: added multiple guns to traitor uplink under conspicious
+  Wisemonster:
+  - rscadd: Replaced the drone dispensers on blueshift and ouroboros with pre-loaded
+      variants
+  ven1883:
+  - bugfix: fixed cyberware quirks being incompatible with eachother
+  - bugfix: Bright Eyes now is incompatible with Body Purist
+2024-08-27:
+  Absolucy:
+  - bugfix: Etheral disco balls now lag the server much less
+  - bugfix: Fixed the Overwatch subsystem initialization being reported as erroring,
+      despite the fact it initialized just fine.
+  ThePooba:
+  - rscadd: Choke on this smite
+  V2LenKagamine:
+  - rscadd: New Bomb Vest, strap it to someone for a little trolling
+2024-08-28:
+  Absolucy:
+  - bugfix: Androids can no longer be transform stung by changelings.
+  - bugfix: Androids no longer suffer from liver failure.
+  - bugfix: Facehuggers no longer waste their lives trying to hug androids (who can't
+      host an embryo anyways.)
+  - bugfix: Cleaned up some more roundstart active turfs, leading to slightly better
+      init times.
+  - qol: The curator's PDA no longer disables ringer by default.
+  - rscadd: NT-Brand Auto Composters can now be built and deconstructed.
+  PotatoTomahto:
+  - bugfix: fixes holomap cursor and area hover text
+  Veth-s:
+  - rscadd: Malphy's canopics have been added to the game!
+2024-08-29:
+  Absolucy:
+  - bugfix: Railings can now actually be deconstructed.
+  DexeeXI:
+  - qol: admin mods now have anti rad built it. it's shrimple.
+  - bugfix: fixes the cyka blyat id cards.
+  Gboster-0:
+  - rscadd: New magnitude of power, Raynawatt for all your PTL exporting needs
+  PotatoTomahto:
+  - bugfix: Liquid pump actually works now.
+  V2LenKagamine:
+  - rscadd: Wumpa.
+  Veth-s:
+  - rscadd: Added malphy's canopics to the game.
+  Wisemonster:
+  - bugfix: Heart disease (contracted from the heart attack random event) now has
+      the correct badness level
+  - bugfix: Fixed the radiation leak event, super-matter surge event, and random artifact
+      event not triggering.
+2024-08-30:
+  Absolucy:
+  - bugfix: Fixed hydroponics trays not being able to go above 10% self-sustenance.
+  - bugfix: Fixed plants with >100 potency having small sprites when harvested.
+  RedBaronFlyer:
+  - qol: make the cart hold 2.5x more water
+  ThePooba:
+  - bugfix: now you can buy the worst gun in the game from your uplink for your henchmen
+2024-08-31:
+  Absolucy:
+  - bugfix: Ghost messages are no longer bolded for speakers on another z-level.
+  - rscadd: Added an "event groups" mechanic to event/storyteller logic.
+  - rscadd: Events in the same group will all have a shared cooldown, and some groups
+      have a set maximum amount of times they can run.
+  - rscadd: The more times events in a group have been ran, the cooldown will become
+      more biased towards the upper bound of the possible cooldown time with each
+      run.
+  - rscadd: As an example, the "Anomalies" event group has a cooldown between 10 to
+      25 minutes.
+  - sound: Spitting sounds now respect the volume mixer, and can't be heard from the
+      next room over.
+  SirNightKnight:
+  - rscadd: Nanotrasen has launched a new program to incentivize delivering mail.
+      Mail tokens are now found in every letter and can be returned to Central Command
+      for a decent bit of credits.
+  - qol: The supplying company has further genetically modified their tobacco seeds
+      to remove  nutriment for an easier smoking experience.
+  - rscadd: Nanotrasen has approved Assistants signing up as Test Subjects. Peace
+      to the Intern Union!
+  - bugfix: The smoking pipe and cobpipe don't default to an error texture when lit.
+  - bugfix: Adjusted the smoking pipe texture to look better.
+  Wisemonster:
+  - balance: Removed the access requirements from the maint shutters leading to Blueshifts
+      north-west and north-east upper maints.
+  - balance: Reduced the stage 1 hunger symptom nutrition drain from 25 to 10

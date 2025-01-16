@@ -21,7 +21,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()
@@ -151,6 +151,10 @@
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
+		return FALSE
+	if(istype(item, /obj/item/toy/crayon/spraycan))
+		return FALSE
+	if(istype(item, /obj/item/soap))
 		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item

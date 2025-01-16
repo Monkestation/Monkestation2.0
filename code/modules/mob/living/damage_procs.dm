@@ -34,13 +34,18 @@
 	bare_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
-	attacking_item,
+	obj/item/attacking_item,
 )
 	SHOULD_CALL_PARENT(TRUE)
 	var/damage_amount = damage
 	if(!forced)
 		damage_amount *= ((100 - blocked) / 100)
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+		if(attacking_item)
+			if(!SEND_SIGNAL(attacking_item, COMSIG_ITEM_DAMAGE_MULTIPLIER, src, def_zone))
+				attacking_item.last_multi = 1
+			damage_amount *= attacking_item.last_multi
+
 	if(damage_amount <= 0)
 		return 0
 
@@ -65,7 +70,7 @@
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
 			else
-				damage_dealt = adjustBruteLoss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(isbodypart(def_zone))
 				var/obj/item/bodypart/actual_hit = def_zone
@@ -81,19 +86,38 @@
 					damage_source = attacking_item,
 				))
 					update_damage_overlays()
-				damage_dealt = delta - actual_hit.get_damage() // See above
+				damage_dealt = actual_hit.get_damage() - delta // See above
 			else
-				damage_dealt = adjustFireLoss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			damage_dealt = adjustToxLoss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			damage_dealt = adjustOxyLoss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
-			damage_dealt = adjustCloneLoss(damage_amount, forced = forced)
+			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			damage_dealt = stamina.adjust(-damage)
+			damage_dealt = -1 * stamina?.adjust(-damage)
+		if(PAIN)
+			if(pain_controller)
+				var/pre_pain = pain_controller.get_average_pain()
+				var/pain_amount = damage_amount
+				var/chosen_zone
+				if(spread_damage || isnull(def_zone))
+					chosen_zone = BODY_ZONES_ALL
+					pain_amount /= 6
+				else if(isbodypart(def_zone))
+					var/obj/item/bodypart/actual_hit = def_zone
+					chosen_zone = actual_hit.body_zone
+				else
+					chosen_zone = check_zone(def_zone)
+
+				sharp_pain(chosen_zone, pain_amount, STAMINA, 12.5 SECONDS, 0.8)
+				damage_dealt += pre_pain - pain_controller.get_average_pain()
+				damage_dealt += stamina?.adjust(-damage_amount * 0.25, forced = forced)
+			else
+				damage_dealt = -1 * stamina.adjust(-damage_amount, forced = forced)
 		if(BRAIN)
-			damage_dealt = adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
+			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
 	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	return damage_dealt
@@ -244,8 +268,8 @@
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
 
-	if(stamina)
-		apply_damage(stamina, STAMINA, null, blocked)
+	//if(stamina) //monkestation removal
+	//	apply_damage(stamina, STAMINA, null, blocked) //IF THIS ISN'T AN EFFECT AND IS A DAMAGE TYPE WHY IS IT HERE?
 
 	if(drowsy)
 		adjust_drowsiness(drowsy)
@@ -371,7 +395,13 @@
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
-		return 0
+		return FALSE
+	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
+		return FALSE
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+	if(!forced && !(mob_biotypes & required_biotype))
+		return
 	. = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
@@ -379,17 +409,6 @@
 		return FALSE
 	if(updating_health)
 		updatehealth()
-
-	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
-		return FALSE
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(!forced && !(mob_biotypes & required_biotype))
-		return
-	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
-	if(updating_health)
-		updatehealth()
-	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))

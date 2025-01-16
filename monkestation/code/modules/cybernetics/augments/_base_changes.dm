@@ -3,7 +3,6 @@
 
 /obj/item/organ/internal/cyberimp
 	var/hacked = FALSE
-	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
 	var/list/encode_info = AUGMENT_NO_REQ
 
@@ -88,7 +87,7 @@
 		bodypart_overlay = new bodypart_overlay_path
 		bodypart_overlay.unique_properties(src)
 		ownerlimb.add_bodypart_overlay(bodypart_overlay)
-	owner.update_body_parts()
+	owner?.update_body_parts()
 	return ..()
 
 /obj/item/organ/internal/cyberimp/remove_from_limb()
@@ -182,6 +181,7 @@
 
 /obj/item/organ/internal/cyberimp/cyberlink/syndicate
 	name = "Cybersun Cybernetics Access System"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL_LINK
 
 /obj/item/organ/internal/cyberimp/cyberlink/admin

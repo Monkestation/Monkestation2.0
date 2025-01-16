@@ -34,13 +34,13 @@ map icebox
 	votable
 endmap
 
-map tramstation
-	minplayers 35
+map theseus
+	minplayers 5
 	votable
 endmap
 
-map northstar
-	minplayers 50
+map tramstation
+	minplayers 35
 	votable
 endmap
 
@@ -67,4 +67,7 @@ endmap
 
 map ouroboros
 	votable
+endmap
+
+map graveyard
 endmap

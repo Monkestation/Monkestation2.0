@@ -21,7 +21,7 @@
 	var/list/target_belongings = list()
 
 /datum/traitor_objective/target_player/kidnapping/common
-	progression_reward = list(2 MINUTES, 4 MINUTES)
+	progression_reward = list(10 MINUTES, 15 MINUTES)
 	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Cargo
@@ -57,7 +57,7 @@
 	telecrystal_reward = 3 //go bully the assistants
 
 /datum/traitor_objective/target_player/kidnapping/uncommon //Hard to fish out targets
-	progression_reward = list(4 MINUTES, 8 MINUTES)
+	progression_reward = list(15 MINUTES, 20 MINUTES)
 	telecrystal_reward = list(3, 4)
 	given_contractor_rep = 2
 
@@ -75,7 +75,7 @@
 	alive_bonus = 4
 
 /datum/traitor_objective/target_player/kidnapping/rare
-	progression_reward = list(8 MINUTES, 12 MINUTES)
+	progression_reward = list(20 MINUTES, 25 MINUTES)
 	telecrystal_reward = list(4, 5)
 	given_contractor_rep = 3
 
@@ -89,17 +89,21 @@
 		/datum/job/detective,
 		/datum/job/security_officer,
 		/datum/job/warden,
+		// Monkestation edit: brig docs
+		/datum/job/brig_physician,
 	)
 	alive_bonus = 5
 
 /datum/traitor_objective/target_player/kidnapping/captain
-	progression_reward = list(12 MINUTES, 16 MINUTES)
+	progression_reward = list(25 MINUTES, 30 MINUTES)
 	telecrystal_reward = list(5, 6)
 	given_contractor_rep = 4
 
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
+		// Monkestation edit: Blueshields
+		/datum/job/blueshield,
 	)
 	alive_bonus = 6
 
@@ -289,16 +293,13 @@
 			continue
 		possible_turfs += open_turf
 
-	if(!LAZYLEN(possible_turfs))
-		var/turf/new_turf = get_safe_random_station_turf()
-		if(!new_turf) //SOMEHOW
-			to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-				be able to handle our pod... You will die here instead.\"</i></span>")))
-			if (sent_mob.can_heartattack())
-				sent_mob.set_heartattack(TRUE)
-			return
-
-		possible_turfs += new_turf
+	var/turf/return_turf = get_safe_random_station_turf()
+	if(!return_turf) //SOMEHOW
+		to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+			be able to handle our pod... You will die here instead.\"</i></span>")))
+		if (sent_mob.can_heartattack())
+			sent_mob.set_heartattack(TRUE)
+		return
 
 	var/obj/structure/closet/supplypod/return_pod = new()
 	return_pod.bluespace = TRUE
@@ -322,7 +323,7 @@
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
-	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
+	new /obj/effect/pod_landingzone(return_turf, return_pod)
 
 /// Returns a list of things that the provided mob has which we would rather that they do not have
 /datum/traitor_objective/target_player/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)

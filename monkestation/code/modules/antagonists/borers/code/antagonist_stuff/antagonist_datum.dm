@@ -7,15 +7,15 @@
 	count_against_dynamic_roll_chance = FALSE // there are thousands of them, we do not need them to be the only antagonist
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
+
 	/// Our linked borer, used for the antagonist panel TGUI
 	var/mob/living/basic/cortical_borer/cortical_owner
 
+	/// Borer mob type, used for antag token spawns.
+	var/borer_mob_type = /mob/living/basic/cortical_borer/neutered
+
 /datum/antagonist/cortical_borer/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/list/vents = list()
-	if(isliving(spender) && hosts_mind)
-		hosts_mind.current.unequip_everything()
-		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 20)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
@@ -29,14 +29,20 @@
 				vents += temp_vent
 
 	if(!length(vents))
-		message_admins("Spawning in as a borer failed!")
+		message_admins(span_adminnotice("[spender] ([ckey(spender.key)]) tried spawning in as a borer, but no suitable vents were found!"))
 		return MAP_ERROR
 
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+
 	var/mob/dead/observer/new_borer = spender
-	var/turf/vent_turf = get_turf(pick(vents))
-	var/mob/living/basic/cortical_borer/spawned_cb = new(vent_turf)
+	var/vent = pick(vents)
+	var/mob/living/basic/cortical_borer/spawned_cb = new borer_mob_type(get_turf(vent))
+	spawned_cb.move_into_vent(vent)
 	spawned_cb.ckey = new_borer.ckey
-	spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
+	spawned_cb.mind.add_antag_datum(type)
 	notify_ghosts(
 		"Someone has become a borer due to spending an antag token ([spawned_cb])!",
 		source = spawned_cb,
@@ -55,19 +61,22 @@
 	return finish_preview_icon(icon('monkestation/code/modules/antagonists/borers/icons/animal.dmi', "brainslug"))
 
 /datum/antagonist/cortical_borer/hivemind
+	name = "Hivemind Cortical Borer"
 	roundend_category = "cortical borers"
+	borer_mob_type = /mob/living/basic/cortical_borer
+
 	/// The team of borers
 	var/datum/team/cortical_borers/borers
 
 /datum/antagonist/cortical_borer/hivemind/forge_objectives()
 	var/datum/objective/custom/borer_objective_produce_eggs = new
-	borer_objective_produce_eggs.explanation_text = "we require [GLOB.objective_egg_borer_number] different borers to produce [GLOB.objective_egg_egg_number] eggs to make sure our hive can spread widelly for increasing our chances of survival"
+	borer_objective_produce_eggs.explanation_text = "We require [GLOB.objective_egg_borer_number] different borers to produce [GLOB.objective_egg_egg_number] eggs to spread widely in order to increase our chances of survival."
 
 	var/datum/objective/custom/borer_objective_willing_hosts = new
-	borer_objective_willing_hosts.explanation_text = "we require any amount of the borers to get [GLOB.objective_willing_hosts] willing host's trust to ensure our survival"
+	borer_objective_willing_hosts.explanation_text = "We require [GLOB.objective_willing_hosts] willing hosts to create a backbone for our continued survival, should our prey attempt to exterminate us."
 
 	var/datum/objective/custom/borer_objective_learn_chemicals = new
-	borer_objective_learn_chemicals.explanation_text = "we require any amount of the borers to learn [GLOB.objective_blood_borer] chemicals from blood to aquire further chemical insight"
+	borer_objective_learn_chemicals.explanation_text = "We need to learn [GLOB.objective_blood_borer] chemicals from the bloodstreams of our hosts to acquire further chemical insight."
 
 	objectives += borer_objective_produce_eggs
 	objectives += borer_objective_willing_hosts

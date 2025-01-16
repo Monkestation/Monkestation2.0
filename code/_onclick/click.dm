@@ -91,6 +91,10 @@
 
 	var/list/modifiers = params2list(params)
 
+	if(!client?.holder && (isobserver(A) || isaicamera(A)) && A.invisibility > see_invisible)
+		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(A)] ([A?.type]) [ADMIN_FLW(A)], which they should not be able to see!")
+		log_admin_private("[key_name(src)] clicked on [key_name(A)] ([A?.type]), which they should not be able to see!")
+
 	if(client)
 		client.imode.update_istate(src, modifiers)
 
@@ -185,7 +189,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A,1, modifiers)
 	else
 		if(W)
 			if((istate & ISTATE_SECONDARY))
@@ -232,7 +236,7 @@
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
 
-	while (checking.len && depth > 0)
+	while (length(checking) && depth > 0)
 		var/list/next = list()
 		--depth
 
@@ -311,7 +315,7 @@
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
 
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag, list/params)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return

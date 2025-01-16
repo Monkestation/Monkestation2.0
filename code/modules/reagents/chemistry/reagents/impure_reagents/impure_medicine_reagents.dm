@@ -18,7 +18,7 @@
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3)
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 
 // END SUBTYPES
 
@@ -55,7 +55,7 @@
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
 	metabolization_rate = 1*REM //This is fast
-	tox_damage = 0.25
+	// tox_damage = 0.25 MONKESTATION REMOVAL
 	ph = 14
 	//Compensates for seconds_per_tick lag by spawning multiple hands at the end
 	var/lag_remainder = 0
@@ -81,6 +81,7 @@ I take the 2s interval period and divide it by the number of hands I want to mak
 Basically, we fill the time between now and 2s from now with hands based off the current lag.
 */
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	owner.adjustToxLoss(0.125 * seconds_per_tick) // MONKESTATION EDIT
 	spawn_hands(owner)
 	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
 	seconds_per_tick = FLOOR(seconds_per_tick, 1)
@@ -97,18 +98,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	if(!owner && iscarbon(holder.my_atom))//Catch timer
 		owner = holder.my_atom
-	//Adapted from the end of the curse - but lasts a short time
-	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
-	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
-	if(!spawn_turf)
-		return
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
-	hand.preparePixelProjectile(owner, spawn_turf)
-	if(QDELETED(hand)) //safety check if above fails - above has a stack trace if it does fail
-		return
-	hand.fire()
+	fire_curse_hand(owner)
 
 //At the end, we clear up any loose hanging timers just in case and spawn any remaining lag_remaining hands all at once.
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
@@ -118,14 +108,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		hands++
 	for(var/id in timer_ids) // So that we can be certain that all timers are deleted at the end.
 		deltimer(id)
-	timer_ids.Cut()
+	timer_ids?.Cut()
 	return ..()
 
 /datum/reagent/inverse/helgrasp/heretic
 	name = "Grasp of the Mansus"
 	description = "The Hand of the Mansus is at your neck."
 	metabolization_rate = 1 * REM
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 
 //libital
 //Impure
@@ -224,7 +214,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#C8A5DC"
 	ph = 1.7
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	tox_damage = 0.1
+	// tox_damage = 0.1 MONKESTATION REMOVAL
 	///Probability of scratch - increases as a function of time
 	var/resetting_probability = 0
 	///Prevents message spam
@@ -270,7 +260,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Herignis"
 	description = "This reagent causes a dramatic raise in the patient's body temperature. Overdosing makes the effect even stronger and causes severe liver damage."
 	ph = 0.8
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 	color = "#ff1818"
 	overdose_threshold = 25
 	reagent_weight = 0.6
@@ -280,29 +270,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
-	owner.reagents?.chem_temp += heating
-	owner.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/human = owner
-	human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+	owner.reagents?.expose_temperature(owner.reagents.chem_temp + heating, 1)
+	owner.adjust_bodytemperature(heating * 0.2 KELVIN)
 
 /datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
 	if(!(methods & VAPOR))
 		return
 
-	exposed_mob.adjust_bodytemperature(reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT)
+	exposed_mob.adjust_bodytemperature(reac_volume * 0.33 KELVIN, use_insulation = TRUE)
 	exposed_mob.adjust_fire_stacks(reac_volume / 2)
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
 	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
-	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
-	owner.adjust_bodytemperature(heating) //hot hot
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		human.adjust_coretemperature(heating)
+	owner.adjust_bodytemperature(0.5 KELVIN * creation_purity * REM * seconds_per_tick) //hot hot
 
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
@@ -355,7 +337,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Coveroli"
 	description = "This reagent is known to coat the inside of a patient's lungs, providing greater protection against hot or cold air."
 	ph = 3.82
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 	addiction_types = list(/datum/addiction/medicine = 2.3)
 	//The heat damage levels of lungs when added (i.e. heat_level_1_threshold on lungs)
 	var/cached_heat_level_1
@@ -383,20 +365,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	apply_lung_levels(lungs)
 
 /datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/internal/lungs/lungs)
-	cached_heat_level_1 = lungs.heat_level_1_threshold
-	cached_heat_level_2 = lungs.heat_level_2_threshold
-	cached_heat_level_3 = lungs.heat_level_3_threshold
-	cached_cold_level_1 = lungs.cold_level_1_threshold
-	cached_cold_level_2 = lungs.cold_level_2_threshold
-	cached_cold_level_3 = lungs.cold_level_3_threshold
+	cached_heat_level_1 = lungs.heat_level_warning_threshold
+	cached_heat_level_2 = lungs.heat_level_hazard_threshold
+	cached_heat_level_3 = lungs.heat_level_danger_threshold
+	cached_cold_level_1 = lungs.cold_level_warning_threshold
+	cached_cold_level_2 = lungs.cold_level_hazard_threshold
+	cached_cold_level_3 = lungs.cold_level_danger_threshold
 	//Heat threshold is increased
-	lungs.heat_level_1_threshold *= creation_purity * 1.5
-	lungs.heat_level_2_threshold *= creation_purity * 1.5
-	lungs.heat_level_3_threshold *= creation_purity * 1.5
+	lungs.heat_level_warning_threshold *= creation_purity * 1.5
+	lungs.heat_level_hazard_threshold *= creation_purity * 1.5
+	lungs.heat_level_danger_threshold *= creation_purity * 1.5
 	//Cold threshold is decreased
-	lungs.cold_level_1_threshold *= creation_purity * 0.5
-	lungs.cold_level_2_threshold *= creation_purity * 0.5
-	lungs.cold_level_3_threshold *= creation_purity * 0.5
+	lungs.cold_level_warning_threshold *= creation_purity * 0.5
+	lungs.cold_level_hazard_threshold *= creation_purity * 0.5
+	lungs.cold_level_danger_threshold *= creation_purity * 0.5
 
 /datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
@@ -406,12 +388,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	restore_lung_levels(lungs)
 
 /datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/internal/lungs/lungs)
-	lungs.heat_level_1_threshold = cached_heat_level_1
-	lungs.heat_level_2_threshold = cached_heat_level_2
-	lungs.heat_level_3_threshold = cached_heat_level_3
-	lungs.cold_level_1_threshold = cached_cold_level_1
-	lungs.cold_level_2_threshold = cached_cold_level_2
-	lungs.cold_level_3_threshold = cached_cold_level_3
+	lungs.heat_level_warning_threshold = cached_heat_level_1
+	lungs.heat_level_hazard_threshold = cached_heat_level_2
+	lungs.heat_level_danger_threshold = cached_heat_level_3
+	lungs.cold_level_warning_threshold = cached_cold_level_1
+	lungs.cold_level_hazard_threshold = cached_cold_level_2
+	lungs.cold_level_danger_threshold = cached_cold_level_3
 
 /datum/reagent/inverse/healing/convermol/on_mob_delete(mob/living/owner)
 	. = ..()
@@ -430,7 +412,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 
 	var/time_until_next_poison = 0
 
@@ -504,7 +486,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 ///If they OD, their heart explodes (if they were brought back from the dead)
 /datum/reagent/inverse/penthrite
 	name = "Nooartrium"
-	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
+	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart. Mildly toxic when inert in a patient."
 	ph = 14
 	metabolization_rate = 0.05 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
@@ -545,6 +527,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(!back_from_the_dead)
+		affected_mob.adjustToxLoss(0.2 * seconds_per_tick) // MONKESTATION EDIT: Lower toxin from 0.5/s to 0.2/s and only apply it if inert.
 		return ..()
 	//Following is for those brought back from the dead only
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
@@ -641,7 +624,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 13.4
 	addiction_types = list(/datum/addiction/medicine = 8)
 	metabolization_rate = 0.025 * REM
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 	//The temporary trauma passed to the affected mob
 	var/datum/brain_trauma/temp_trauma
 
@@ -683,7 +666,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 	metabolization_rate = REM
 	chemical_flags = REAGENT_DEAD_PROCESS
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 	///The old heart we're swapping for
 	var/obj/item/organ/internal/heart/original_heart
 	///The new heart that's temp added
@@ -754,7 +737,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.05 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 4.5)
 	color = "#4C8000"
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 
 /datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, seconds_per_tick, times_fired)
 	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
@@ -770,7 +753,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 3)
 	taste_description = "funky toxin"
 	ph = 13
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 	metabolization_rate = 0.2 * REM
 	///Did we get a headache?
 	var/headache = FALSE

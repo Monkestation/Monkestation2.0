@@ -113,7 +113,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = "[person.get_blood_type() || "None"]",
 		character_appearance = character_appearance,
 		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
@@ -130,7 +130,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	var/datum/record/crew/crewfile = new (
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = "[person.get_blood_type() || "None"]",
 		character_appearance = character_appearance,
 		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
@@ -152,6 +152,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	person.mind.crewfile = crewfile
 	person.mind.lockfile = lockfile
+	person.crew_hud_set_crew_status() //MONKE, when someone is added to crew, set their crew hud status, to make hud know they're crew.
 
 	return
 

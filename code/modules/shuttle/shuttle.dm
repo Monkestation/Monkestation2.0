@@ -239,12 +239,15 @@
 		for(var/turf/T in return_turfs())
 			T.turf_flags |= NO_RUINS
 
-	if(SSshuttle.initialized)
-		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
-
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
+
+	if(SSshuttle.initialized)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/docking_port/stationary/LateInitialize()
+	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 /obj/docking_port/stationary/unregister()
 	. = ..()
@@ -334,7 +337,7 @@
 	. = ..()
 	SSshuttle.transit_docking_ports += src
 
-/obj/docking_port/stationary/transit/Destroy(force=FALSE)
+/obj/docking_port/stationary/transit/Destroy(force = FALSE)
 	if(force)
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
@@ -513,13 +516,14 @@
 		var/min_y = -1
 		var/max_x = WORLDMAXX_CUTOFF
 		var/max_y = WORLDMAXY_CUTOFF
-		for(var/area/area as anything in shuttle_areas)
-			for(var/turf/turf in area)
-				min_x = max(turf.x, min_x)
-				max_x = min(turf.x, max_x)
-				min_y = max(turf.y, min_y)
-				max_y = min(turf.y, max_y)
-			CHECK_TICK
+		for(var/area/shuttle_area as anything in shuttle_areas)
+			for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+				for(var/turf/turf as anything in zlevel_turfs)
+					min_x = max(turf.x, min_x)
+					max_x = min(turf.x, max_x)
+					min_y = max(turf.y, min_y)
+					max_y = min(turf.y, max_y)
+				CHECK_TICK
 
 		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")

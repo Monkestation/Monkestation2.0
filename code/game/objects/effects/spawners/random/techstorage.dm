@@ -44,6 +44,16 @@
 		/obj/item/circuitboard/machine/chem_dispenser/drinks,
 		/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
 		/obj/item/circuitboard/computer/slot_machine,
+		// monkestation start: botany stuff
+		/obj/item/circuitboard/machine/composters,
+		/obj/item/circuitboard/machine/plantgenes,
+		/obj/item/circuitboard/machine/biogenerator,
+		/obj/item/circuitboard/machine/splicer,
+		/obj/item/circuitboard/machine/hydroponics,
+		/obj/item/circuitboard/machine/seed_extractor,
+		/obj/item/circuitboard/machine/chicken_grinder,
+		/obj/item/circuitboard/machine/feed_machine,
+		// monkestation end
 	)
 
 /obj/effect/spawner/random/techstorage/rnd_all
@@ -63,6 +73,7 @@
 		/obj/item/circuitboard/machine/nanite_program_hub,
 		/obj/item/circuitboard/computer/scan_consolenew,
 		/obj/item/circuitboard/machine/dnascanner,
+		/obj/item/circuitboard/machine/dna_infuser,
 	)
 
 /obj/effect/spawner/random/techstorage/security_all

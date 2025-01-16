@@ -27,6 +27,7 @@
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/iron
+	var/scrap_type = /obj/item/stack/scrap/plating
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
@@ -62,20 +63,29 @@
 
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
 	visible_message(span_notice("[src] leans against \the [wall]!"), \
 						span_notice("You lean against \the [wall]!"))
-	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_leaning))
+	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_LIVING_RESIST), PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning_dir))
 	update_fov()
 	is_leaning = TRUE
+	update_limbless_locomotion()
+
+/mob/living/carbon/proc/stop_leaning_dir(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if(new_dir != old_dir)
+		stop_leaning()
 
 /mob/living/carbon/proc/stop_leaning()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE))
+	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_RESIST))
 	is_leaning = FALSE
 	pixel_y = base_pixel_y + body_position_pixel_x_offset
 	pixel_x = base_pixel_y + body_position_pixel_y_offset
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
 	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
@@ -138,12 +148,20 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	new sheet_type(src, sheet_amount)
+	var/area/shipbreak/A = get_area(src)
+	if(istype(A)) //if we are actually in the shipbreaking zone...
+		new scrap_type(src, sheet_amount)
+	else
+		new sheet_type(src, sheet_amount)
 	if(girder_type)
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	new sheet_type(src, sheet_amount)
+	var/area/shipbreak/A = get_area(src)
+	if(istype(A))
+		new scrap_type(src, sheet_amount)
+	else
+		new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
 

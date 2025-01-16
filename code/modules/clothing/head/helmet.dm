@@ -6,15 +6,16 @@
 	icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
@@ -63,6 +64,16 @@
 		return TRUE
 
 	return ..()
+
+/obj/item/clothing/head/helmet/press
+	name = "press helmet"
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "helmet_press"
+
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -144,6 +155,12 @@
 	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
 
+/obj/item/clothing/head/helmet/guardmanhelmet
+	name = "guardman's helmet"
+	desc = "Keeps your brain intact when fighting heretics"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "guardman_helmet"
 
 /obj/item/clothing/head/helmet/toggleable
 	dog_fashion = null
@@ -243,9 +260,9 @@
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
 	armor_type = /datum/armor/helmet_swat
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
@@ -270,9 +287,9 @@
 	icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
 	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
 
@@ -287,9 +304,9 @@
 	icon_state = "thunderdome"
 	inhand_icon_state = "thunderdome_helmet"
 	armor_type = /datum/armor/helmet_thunderdome
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 	dog_fashion = null
@@ -305,8 +322,8 @@
 	acid = 90
 
 /obj/item/clothing/head/helmet/thunderdome/holosuit
-	cold_protection = null
-	heat_protection = null
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
 	armor_type = /datum/armor/thunderdome_holosuit
 
 /datum/armor/thunderdome_holosuit
@@ -503,7 +520,7 @@
 	icon_state = "rus_ushanka"
 	inhand_icon_state = "rus_ushanka"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/helmet_rus_ushanka
 
@@ -529,12 +546,12 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /datum/armor/helmet_elder_atmosian
-	melee = 25
-	bullet = 20
+	melee = 30
+	bullet = 30
 	laser = 30
 	energy = 30
 	bomb = 85
 	bio = 10
-	fire = 65
+	fire = 100
 	acid = 40
 	wound = 15

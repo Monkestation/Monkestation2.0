@@ -40,6 +40,8 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)
@@ -230,7 +232,7 @@
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
 
-/datum/heretic_knowledge/limited_amount/Destroy(force, ...)
+/datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
 	return ..()
 
@@ -341,7 +343,7 @@
 	if(!istype(mark))
 		return FALSE
 
-	mark.on_effect()
+	mark.on_effect(source) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	return TRUE
 
 /**
@@ -529,7 +531,21 @@
 	var/mob/living/mob_to_summon
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/mob/living/summoned = new mob_to_summon(loc)
+	summon_ritual_mob(user, loc, mob_to_summon)
+
+/**
+ * Creates the ritual mob and grabs a ghost for it
+ *
+ * * user - the mob doing the summoning
+ * * loc - where the summon is happening
+ * * mob_to_summon - either a mob instance or a mob typepath
+ */
+/datum/heretic_knowledge/proc/summon_ritual_mob(mob/living/user, turf/loc, mob/living/mob_to_summon)
+	var/mob/living/summoned
+	if(isliving(mob_to_summon))
+		summoned = mob_to_summon
+	else
+		summoned = new mob_to_summon(loc)
 	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
@@ -539,37 +555,31 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as a [summoned.name]?",
-		check_jobban = ROLE_HERETIC,
-		poll_time = 10 SECONDS,
-		target_mob = summoned,
-		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
-		role_name_text = summoned.name
-	)
-	if(!LAZYLEN(candidates))
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, checked_target = summoned, ignore_category = poll_ignore_define, alert_pic = summoned, role_name_text = summoned.name)
+	if(isnull(chosen_one))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
 		QDEL_IN(summoned, 0.6 SECONDS)
 		return FALSE
 
-	var/mob/dead/observer/picked_candidate = pick(candidates)
 	// Ok let's make them an interactable mob now, since we got a ghost
 	summoned.alpha = 255
 	REMOVE_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = picked_candidate.key
+	summoned.key = chosen_one.key
 
-	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
+	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
 
+	/* monkestation removal: heretic refactoring
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
+	monkestation end */
 
 	return TRUE
 
@@ -680,6 +690,14 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
+	/// The typepath of the achievement to grant upon successful ascension.
+	var/datum/award/achievement/misc/ascension_achievement
+	/// The text of the ascension announcement.
+	/// %NAME% is replaced with the heretic's real name,
+	/// and %SPOOKY% is replaced with output from [generate_heretic_text]
+	var/announcement_text
+	/// The sound that's played for the ascension announcement.
+	var/announcement_sound
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -742,6 +760,15 @@
 		header = "A Heretic is Ascending!",
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
+	priority_announce(
+		text = replacetext(replacetext(announcement_text, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)),
+		title = generate_heretic_text(),
+		sound = announcement_sound,
+		color_override = "pink",
+	)
+
+	if(!isnull(ascension_achievement))
+		user.client?.give_award(ascension_achievement, user)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

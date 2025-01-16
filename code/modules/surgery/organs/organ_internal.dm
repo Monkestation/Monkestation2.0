@@ -32,7 +32,7 @@
 		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
 			if(organ_owner.stat != DEAD)
 				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
-			organ_owner.death()
+			organ_owner.death(null, "losing your [name]")
 
 	START_PROCESSING(SSobj, src)
 
@@ -43,7 +43,20 @@
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
+	if(HAS_TRAIT(src, TRAIT_NO_ORGAN_DECAY) || (owner && HAS_TRAIT(owner, TRAIT_NO_ORGAN_DECAY)))
+		return
+	var/air_temperature_factor = 1
+	if(owner)
+		if(owner.bodytemperature <= T0C)
+			return
+		air_temperature_factor = min((owner.bodytemperature - T0C) / 20, 1)
+	else
+		var/datum/gas_mixture/exposed_air = return_air()
+		if(exposed_air)
+			if(exposed_air.temperature <= T0C)
+				return
+			air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
+	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here

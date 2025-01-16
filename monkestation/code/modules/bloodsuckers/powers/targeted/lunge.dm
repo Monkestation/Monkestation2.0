@@ -12,9 +12,10 @@
 		Higher levels increase the knockdown dealt to enemies.\n\
 		At level 4, you will no longer spin, but you will be limited to tackling from only 6 tiles away."
 	power_flags = NONE
-	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 10
+	sol_multiplier = 15
 	cooldown_time = 10 SECONDS
 	power_activates_immediately = FALSE
 
@@ -112,13 +113,17 @@
 /datum/action/cooldown/bloodsucker/targeted/lunge/proc/do_lunge(atom/hit_atom)
 	var/turf/targeted_turf = get_turf(hit_atom)
 
-	var/safety = get_dist(owner, targeted_turf) * 3 + 1
-	var/consequetive_failures = 0
-	while(--safety && !hit_atom.Adjacent(owner))
-		if(!step_to(owner, targeted_turf))
-			consequetive_failures++
-		if(consequetive_failures >= 3) // If 3 steps don't work, just stop.
-			break
+	var/dist = get_dist(owner, targeted_turf)
+	if(dist <= target_range)
+		var/safety = dist * 3 + 1
+		var/consequetive_failures = 0
+		while(--safety && !hit_atom.Adjacent(owner))
+			if(!step_to(owner, targeted_turf))
+				consequetive_failures++
+			if(consequetive_failures >= 3) // If 3 steps don't work, just stop.
+				break
+	else
+		owner.balloon_alert(owner, "too far away!")
 
 	lunge_end(hit_atom, targeted_turf)
 

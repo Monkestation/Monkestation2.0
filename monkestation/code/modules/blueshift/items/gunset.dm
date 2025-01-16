@@ -15,6 +15,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.max_total_storage = 7 //enough to hold ONE bulky gun and the ammo boxes
 	atom_storage.max_slots = 4
+	atom_storage.set_holdable(list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/suppressor, /obj/item/microfusion_phase_emitter, /obj/item/microfusion_gun_attachment))
 
 /obj/item/storage/toolbox/guncase/PopulateContents()
 	new weapon_to_spawn (src)
@@ -45,7 +46,7 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 2)
 		new extra_to_spawn (src)
-	new /obj/item/ammo_box/a40mm/rubber (src)
+	new /obj/item/ammo_box/a40mm (src)
 
 /obj/item/storage/toolbox/guncase/rocketlauncher
 	name = "rocket launcher gun case"
@@ -260,15 +261,15 @@
 	name = "\improper Xhihao 'Bogseo' gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/xhihao_smg/no_mag
-	extra_to_spawn = /obj/item/ammo_box/magazine/c585trappiste_pistol
+	extra_to_spawn = /obj/item/ammo_box/magazine/miecz
 
 /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo/PopulateContents()
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/ammo_box/c585trappiste/incapacitator = 1,
-		/obj/item/ammo_box/c585trappiste = 1,
-		/obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty = 3,
+		/obj/item/ammo_box/c27_54cesarzowa/rubber = 2,
+		/obj/item/ammo_box/c27_54cesarzowa = 1,
+		/obj/item/ammo_box/magazine/miecz/spawns_empty = 3,
 	), src)
 
 // Base yellow with symbol trappiste case

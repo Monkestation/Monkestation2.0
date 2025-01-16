@@ -10,21 +10,21 @@ macro "default"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -34,7 +34,7 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
@@ -43,22 +43,22 @@ menu "menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "Refresh TGUI"
 		command = "refresh-tgui"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "Fix Chat"
 		command = "fix-chat"
 		category = "&Help"
@@ -211,7 +211,7 @@ window "infowindow"
 		anchor1 = 71,0
 		anchor2 = 85,0
 		saved-params = "is-checked"
-		text = "Report Issue"
+		text = "Report Bugs"
 		command = "report-issue"
 	elem "fullscreen-toggle"
 		type = BUTTON
@@ -226,7 +226,7 @@ window "infowindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
@@ -277,15 +277,34 @@ window "outputwindow"
 		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
-	elem "browseroutput"
+	elem "mediapanel"
 		type = BROWSER
+		pos = 599,460
+		size = 1x1
+		anchor1 = 100,100
+		anchor2 = -1,-1
+		is-visible = false
+		saved-params = ""
+	elem "legacy_output_selector"
+		type = CHILD
 		pos = 0,0
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		is-visible = false
-		is-disabled = true
-		saved-params = ""
+		saved-params = "splitter"
+		left = "output_legacy"
+		is-vert = false
+
+window "output_legacy"
+	elem "output_legacy"
+		type = MAIN
+		pos = 0,0
+		size = 640x456
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
@@ -293,6 +312,25 @@ window "outputwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
+		saved-params = "max-lines"
+
+window "output_browser"
+	elem "output_browser"
+		type = MAIN
+		pos = 0,0
+		size = 640x456
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "browseroutput"
+		type = BROWSER
+		pos = 0,0
+		size = 640x456
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
 		saved-params = ""
 
 window "popupwindow"
@@ -350,14 +388,6 @@ window "statwindow"
 		anchor2 = 100,100
 		is-visible = false
 		saved-params = ""
-	elem "mediapanel"
-		type = BROWSER
-		pos = 392,25
-		size = 1x1
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		is-visible = false
-		saved-params = ""
 
 window "tgui_say"
 	elem "tgui_say"
@@ -377,4 +407,3 @@ window "tgui_say"
 		anchor1 = 0,0
 		anchor2 = 0,0
 		saved-params = ""
-

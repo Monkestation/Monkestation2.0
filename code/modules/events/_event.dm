@@ -41,7 +41,9 @@
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
 
-	//monkestation vars starts
+	// monkestation start
+	/// The typepath to the event group this event is a part of.
+	var/datum/event_group/event_group = null
 	var/roundstart = FALSE
 	var/cost = 1
 	var/reoccurence_penalty_multiplier = 0.75
@@ -56,7 +58,7 @@
 	var/can_run_post_roundstart = TRUE
 	/// If set then the type or list of types of storytellers we are restricted to being trigged by
 	var/list/allowed_storytellers
-	//monkestation vars end
+	// monkestation end
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
@@ -68,6 +70,12 @@
 	admin_setup.Cut()
 	for(var/admin_setup_type in admin_setup_types)
 		admin_setup += new admin_setup_type(src)
+
+// monkestation start: fix some hard deletes
+/datum/round_event_control/Destroy(force)
+	QDEL_LIST(admin_setup)
+	return ..()
+// monkestation end
 
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
@@ -89,15 +97,17 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-//monkestation edit start
-	if(roundstart && ((SSticker.round_start_time && world.time - SSticker.round_start_time >= 2 MINUTES) || (SSgamemode.ran_roundstart && !fake_check)))
+// monkestation start: event groups and storyteller stuff
+	if(SSgamemode.current_storyteller?.disable_distribution || SSgamemode.halted_storyteller)
 		return FALSE
-	if(istype(src, /datum/round_event_control/antagonist/solo/from_ghosts) && (SSautotransfer.starttime + 85 MINUTES <= world.time))
-		return TRUE // we allow all ghost roles to run at this point and dont care about other checks
-//monkestation edit end
+	if(event_group && !GLOB.event_groups[event_group].can_run())
+		return FALSE
+	if(roundstart && (!SSgamemode.can_run_roundstart || (SSgamemode.ran_roundstart && !fake_check && !SSgamemode.current_storyteller?.ignores_roundstart)))
+		return FALSE
+// monkestation end
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(earliest_start >= world.time-SSticker.round_start_time)
+	if(earliest_start >= (world.time - SSticker.round_start_time))
 		return FALSE
 	if(!allow_magic && wizardevent != SSevents.wizardmode)
 		return FALSE
@@ -110,16 +120,15 @@
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 		return FALSE
 
-	//monkestation edit start - STORYTELLERS
+// monkestation start: storyteller stuff
 	if(checks_antag_cap && !roundstart && !SSgamemode.can_inject_antags())
 		return FALSE
 	if(!check_enemies())
 		return FALSE
-	if(allowed_storytellers && ((islist(allowed_storytellers) && !is_type_in_list(SSgamemode.storyteller, allowed_storytellers)) || SSgamemode.storyteller.type != allowed_storytellers))
+	if(allowed_storytellers && SSgamemode.current_storyteller && ((islist(allowed_storytellers) && \
+		!is_type_in_list(SSgamemode.current_storyteller, allowed_storytellers)) || SSgamemode.current_storyteller.type != allowed_storytellers))
 		return FALSE
-	if(SSgamemode.storyteller.disable_distribution || SSgamemode.halted_storyteller)
-		return FALSE
-	//monkestation edit end - STORYTELLERS
+// monkestation end
 
 	var/datum/game_mode/dynamic/dynamic = SSticker.mode
 	if (istype(dynamic) && dynamic_should_hijack && dynamic.random_event_hijacked != HIJACKED_NOTHING)
@@ -138,15 +147,16 @@
 
 	// We sleep HERE, in pre-event setup (because there's no sense doing it in run_event() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
 	if(alert_observers)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='byond://?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		if(!roundstart)
 			sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
-		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!can_spawn_event(players_amt, fake_check = TRUE) && !forced)
-			message_admins("Second pre-condition check for [name] failed, skipping...")
-			return EVENT_INTERRUPTED
-		if(!can_spawn_event(players_amt, fake_check = TRUE) && forced)
-			message_admins("Second pre-condition check for [name] failed, but event forced, running event regardless this may have issues...")
+
+		if(!can_spawn_event(get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE), fake_check = TRUE) && !forced)
+			if(!forced)
+				message_admins("Second pre-condition check for [name] failed, skipping...")
+				return EVENT_INTERRUPTED
+			else if(forced)
+				message_admins("Second pre-condition check for [name] failed, but event forced, running event regardless this may have issues...")
 
 	if(!triggering)
 		return EVENT_CANCELLED //admin cancelled
@@ -203,6 +213,11 @@ Runs the event
 
 	triggering = FALSE
 	log_game("[random ? "Random" : "Forced"] Event triggering: [name] ([typepath]).")
+
+	// monkestation start: event groups
+	if(event_group)
+		GLOB.event_groups[event_group].on_run(src)
+	// monkestation end
 
 	if(alert_observers)
 		round_event.announce_deadchat(random, event_cause)
@@ -315,12 +330,12 @@ Runs the event
 		if(roundstart)
 			if(!can_run_post_roundstart)
 				return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a>"
-			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a>"
+			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a>"
 		else
-			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a> <a href='?src=[REF(src)];action=force_next'>Force Next</a>"
+			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
 	else
 		if(roundstart)
-			return "<a href='?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='?src=[REF(src)];action=force_next'>Force Roundstart</a>"
+			return "<a href='byond://?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Roundstart</a>"
 		else
 			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
 
@@ -333,7 +348,7 @@ Runs the event
 		if("schedule")
 			message_admins("[key_name_admin(usr)] scheduled event [src.name].")
 			log_admin_private("[key_name(usr)] scheduled [src.name].")
-			SSgamemode.storyteller.buy_event(src, src.track)
+			SSgamemode.current_storyteller.buy_event(src, src.track)
 		if("force_next")
 			if(length(src.admin_setup))
 				for(var/datum/event_admin_setup/admin_setup_datum in src.admin_setup)

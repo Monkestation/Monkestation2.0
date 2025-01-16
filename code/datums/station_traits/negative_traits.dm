@@ -111,11 +111,13 @@
 /datum/station_trait/overflow_job_bureaucracy/get_report()
 	return "[name] - It seems for some reason we put out the wrong job-listing for the overflow role this shift...I hope you like [chosen_job_name]s."
 
+/* monkestation removal: reimplemented in [monkestation\code\datums\station_traits\negative_traits.dm]
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
 	var/datum/job/picked_job = pick(SSjob.joinable_occupations)
 	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
+monkestation end */
 
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
@@ -340,7 +342,7 @@
 /datum/station_trait/revolutionary_trashing/proc/trash_this_place()
 	for(var/area/station/command/area_to_trash in GLOB.areas)
 
-		for(var/turf/current_turf as anything in area_to_trash.get_contained_turfs())
+		for(var/turf/current_turf as anything in area_to_trash.get_turfs_from_all_zlevels())
 			if(isclosedturf(current_turf))
 				continue
 			if(prob(25))

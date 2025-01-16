@@ -1,3 +1,4 @@
+/* monkestation edit: reimplemented in [monkestation\code\controllers\subsystem\init_profiler.dm]
 #define INIT_PROFILE_NAME "init_profiler.json"
 
 ///Subsystem exists so we can separately log init time costs from the costs of general operation
@@ -26,3 +27,4 @@ SUBSYSTEM_DEF(init_profiler)
 	world.Profile(PROFILE_CLEAR) //Now that we're written this data out, dump it. We don't want it getting mixed up with our current round data
 
 #undef INIT_PROFILE_NAME
+monkestation end */

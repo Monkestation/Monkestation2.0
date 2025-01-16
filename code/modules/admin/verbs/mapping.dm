@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_for_obstructed_atmospherics,
+	/client/proc/export_lighting_info, // monkestation addition
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -160,7 +161,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	var/dat = {"<b>List of all map reports:</b><br>"}
 
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
-		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+		dat += "[report.tag] ([report.original_path]) - <a href='byond://?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
 
 	usr << browse(dat, "window=map_reports")
 
@@ -374,7 +375,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
+	to_chat(src, boxed_message(messages.Join("")), confidential = TRUE)
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"

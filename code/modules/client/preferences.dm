@@ -87,8 +87,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
+	///have we finished loading
+	var/loaded = FALSE
 
-/datum/preferences/Destroy(force, ...)
+/datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -121,6 +123,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
+			loaded = TRUE
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
@@ -129,8 +132,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		parent.set_macros()
 
 	if(!loaded_preferences_successfully)
+		if(load_preferences())
+			if(load_character())
+				loaded = TRUE
+				return
+		message_admins("[parent]'s prefs failed to load twice! Their keybindings and tokens may have been lost please check on this.")
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
+	loaded = TRUE
 
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// There used to be code here that readded the preview view if you "rejoined"
@@ -210,7 +219,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	switch (action)
 		if ("update_body")
-			character_preview_view?.update_body()
+			// monkestation start: janky bugfixing for runtimes
+			if(!QDELETED(character_preview_view))
+				character_preview_view.update_body()
+			else
+				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
+			// monkestation end
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -224,7 +238,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.on_new_character(usr)
 
-			character_preview_view.update_body()
+			// monkestation start: janky bugfixing for runtimes
+			if(!QDELETED(character_preview_view))
+				character_preview_view.update_body()
+			else
+				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
+			// monkestation end
 
 			return TRUE
 		if ("rotate")
@@ -280,7 +299,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				default_value || COLOR_WHITE,
 			)
 
-			if (!new_color)
+			if (!new_color && !requested_preference.allows_nulls)
 				return FALSE
 
 			if (!update_preference(requested_preference, new_color))
@@ -353,6 +372,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			continue
 
 		value_cache -= preference.type
+		if(QDELETED(parent))
+			return
 		preference.apply_to_client(parent, read_preference(preference.type))
 
 /// A preview of a character for use in the preferences menu
@@ -389,9 +410,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	QDEL_NULL(body)
 
 	body = new
+	RegisterSignal(body, COMSIG_QDELETING, PROC_REF(clear_body))
 
 	// Without this, it doesn't show up in the menu
 	body.appearance_flags &= ~TILE_BOUND
+
+/atom/movable/screen/map_view/char_preview/proc/clear_body(atom/movable/deletee)
+	if(body == deletee)
+		body = null
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
@@ -462,11 +488,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// Applies the given preferences to a human mob.
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	character.dna.features = list()
+	character.dna.apply_color_palettes(src)
 
+	var/species_type = read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
-
+		if(preference.relevant_inherent_trait && !(preference.relevant_inherent_trait in species.inherent_traits))
+			continue
 		preference.apply_to_human(character, read_preference(preference.type))
 
 	character.dna.real_name = character.real_name

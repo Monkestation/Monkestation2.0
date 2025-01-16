@@ -64,6 +64,15 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact
+	name = "compact shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	icon_state = "cshotgunc"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	w_class = WEIGHT_CLASS_BULKY
+
+
 //Dual Feed Shotgun
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
@@ -89,7 +98,7 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
-	alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
+	//alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire   monkestation edit
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -334,3 +343,4 @@
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+

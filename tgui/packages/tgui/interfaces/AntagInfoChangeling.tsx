@@ -119,8 +119,12 @@ const HivemindSection = (props) => {
             you. Changelings grow in power greatly by absorbing their kind, and
             getting absorbed by another Changeling will leave you as a{' '}
             <span style={fallenstyle}>Fallen Changeling</span>. There is no
-            greater humiliation.
+            greater humiliation.{'\n'}
           </NoticeBox>
+          Additionally changeling rules can be found under{' '}
+          <a href="https://wiki.monkestation.com/#specific-stuff-for-antagonists">
+            Antagonist Guidance.
+          </a>
         </Stack.Item>
       </Stack>
     </Section>
@@ -131,11 +135,7 @@ const IntroductionSection = (props) => {
   const { act, data } = useBackend<Info>();
   const { true_name, hive_name, objectives, can_change_objective } = data;
   return (
-    <Section
-      fill
-      title="Intro"
-      scrollable={!!objectives && objectives.length > 4}
-    >
+    <Section fill title="Intro" style={{ overflowY: 'auto' }}>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are {true_name} from the

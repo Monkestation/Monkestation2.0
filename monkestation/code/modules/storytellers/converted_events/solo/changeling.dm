@@ -4,6 +4,8 @@
 	antag_datum = /datum/antagonist/changeling
 	protected_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -21,8 +23,9 @@
 		JOB_CYBORG,
 	)
 	min_players = 20
-	weight = 9
+	weight = 10
 	shared_occurence_type = SHARED_CHANGELING
+	event_icon_state = "changeling"
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart
 	name = "Changelings"

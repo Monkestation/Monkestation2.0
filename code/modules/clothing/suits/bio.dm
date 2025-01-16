@@ -13,10 +13,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
-/obj/item/clothing/head/bio_hood/Initialize(mapload)
-	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+// MONKESTATION REMOVAL
+//obj/item/clothing/head/bio_hood/Initialize(mapload)
+	//. = ..()
+	//if(flags_inv & HIDEFACE)
+	//	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /datum/armor/head_bio_hood
 	bio = 100
@@ -133,4 +134,4 @@
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()
-	allowed += list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/cane)
+	allowed += list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/cane)

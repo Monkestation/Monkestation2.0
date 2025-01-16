@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	msg = emoji_parse(msg)
 
-	if(SSticker.HasRoundStarted() && (msg[1] in list(".",";",":","#") || findtext_char(msg, "say", 1, 5)))
+	if(SSticker.HasRoundStarted() && ((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5)))
 		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
 			return
 
@@ -81,11 +81,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 
-	if(patreon.access_rank > 0)
+	if(player_details.patreon.access_rank > 0)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("patreon")][keyname]"
 
-	if(twitch.access_rank > 0)
+	if(player_details.twitch.access_rank > 0)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("twitch")][keyname]"
 
@@ -193,6 +193,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
 	else
 		to_chat(src, span_notice("The Message of the Day has not been set."))
+
+	config.ShowLobbyNotices(src) // monkestation edit
 
 /client/proc/self_notes()
 	set name = "View Admin Remarks"

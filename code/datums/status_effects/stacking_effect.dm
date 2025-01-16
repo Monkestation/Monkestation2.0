@@ -1,8 +1,8 @@
 
 /// Status effects that can stack.
 /datum/status_effect/stacking
-	id = "stacking_base"
-	duration = -1 // Only removed under specific conditions.
+	id = STATUS_EFFECT_ID_ABSTRACT
+	duration = STATUS_EFFECT_PERMANENT // Only removed under specific conditions.
 	tick_interval = 1 SECONDS // Deciseconds between decays, once decay starts
 	alert_type = null
 	/// How many stacks are currently accumulated.
@@ -86,8 +86,11 @@
 /datum/status_effect/stacking/proc/add_stacks(stacks_added)
 	if(stacks_added > 0 && !can_gain_stacks())
 		return FALSE
-	owner.cut_overlay(status_overlay)
-	owner.underlays -= status_underlay
+	if(status_overlay)
+		owner.cut_overlay(status_overlay)
+	if(status_underlay)
+		owner.underlays -= status_underlay
+
 	stacks += stacks_added
 	if(stacks > 0)
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
@@ -98,13 +101,15 @@
 		else if(stacks < stack_threshold && threshold_crossed)
 			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
 			on_threshold_drop()
-		if(stacks_added > 0)
-			tick_interval += delay_before_decay //refreshes time until decay
+		if((stacks_added > 0) && delay_before_decay)
+			tick_interval = world.time + delay_before_decay //refreshes time until decay
 		stacks = min(stacks, max_stacks)
-		status_overlay.icon_state = "[overlay_state][stacks]"
-		status_underlay.icon_state = "[underlay_state][stacks]"
-		owner.add_overlay(status_overlay)
-		owner.underlays += status_underlay
+		if(status_overlay)
+			status_overlay.icon_state = "[overlay_state][stacks]"
+			owner.add_overlay(status_overlay)
+		if(status_underlay)
+			status_underlay.icon_state = "[underlay_state][stacks]"
+			owner.underlays += status_underlay
 	else
 		fadeout_effect()
 		qdel(src) //deletes status if stacks fall under one
@@ -117,23 +122,33 @@
 /datum/status_effect/stacking/on_apply()
 	if(!can_have_status())
 		return FALSE
-	status_overlay = mutable_appearance(overlay_file, "[overlay_state][stacks]")
-	status_underlay = mutable_appearance(underlay_file, "[underlay_state][stacks]")
-	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
-	var/icon_height = I.Height()
-	status_overlay.pixel_x = -owner.pixel_x
-	status_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
-	status_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the status's overlay size based on the target's icon size
-	status_underlay.pixel_x = -owner.pixel_x
-	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
-	status_underlay.alpha = 40
-	owner.add_overlay(status_overlay)
-	owner.underlays += status_underlay
-	return ..()
+	if(overlay_file || underlay_file)
+		if(overlay_file)
+			status_overlay = mutable_appearance(overlay_file, "[overlay_state][stacks]")
+		if(underlay_file)
+			status_underlay = mutable_appearance(underlay_file, "[underlay_state][stacks]")
 
-/datum/status_effect/stacking/Destroy()
-	if(owner)
+		var/icon_height = owner.get_cached_height()
+
+		if(status_overlay)
+			status_overlay.pixel_x = -owner.pixel_x
+			status_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
+			status_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the status's overlay size based on the target's icon size
+			owner.add_overlay(status_overlay)
+
+		if(status_underlay)
+			status_underlay.pixel_x = -owner.pixel_x
+			status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
+			status_underlay.alpha = 40
+			owner.underlays += status_underlay
+
+	return TRUE
+
+/datum/status_effect/stacking/on_remove()
+	if(QDELETED(owner))
+		return
+	if(status_overlay)
 		owner.cut_overlay(status_overlay)
+		QDEL_NULL(status_overlay)
+	if(status_underlay)
 		owner.underlays -= status_underlay
-	QDEL_NULL(status_overlay)
-	return ..()

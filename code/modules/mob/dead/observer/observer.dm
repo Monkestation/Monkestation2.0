@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_CREW) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -107,10 +107,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
-			if(HAIR in body_human.dna.species.species_traits)
+			var/datum/species/human_species = body_human.dna.species
+			if(human_species.check_head_flags(HEAD_HAIR))
 				hairstyle = body_human.hairstyle
 				hair_color = brighten_color(body_human.hair_color)
-			if(FACEHAIR in body_human.dna.species.species_traits)
+			if(human_species.check_head_flags(HEAD_FACIAL_HAIR))
 				facial_hairstyle = body_human.facial_hairstyle
 				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
@@ -842,11 +843,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 
-	if(HAIR in species.species_traits)
+	if(species.check_head_flags(HEAD_HAIR))
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
 		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/hair_color))
 
-	if(FACEHAIR in species.species_traits)
+	if(species.check_head_flags(HEAD_FACIAL_HAIR))
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
 		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
 

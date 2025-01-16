@@ -22,9 +22,11 @@
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
 	typepath = /datum/round_event/disease_outbreak
-	max_occurrences = 1
+	max_occurrences = 2
 	min_players = 10
-	weight = 4
+	weight = 0
+	track = EVENT_TRACK_MAJOR //monkie edit
+	earliest_start = 55 MINUTES
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
@@ -51,7 +53,7 @@
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	disease_candidates.Cut() //We clear the list and rebuild it again.
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
-		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
+		if(!(candidate.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
 		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
@@ -143,9 +145,9 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 5 //monkestation change 15 ==> 5
+	weight = 0 //monkestation change 15 ==> 5
 	min_players = 35 // To avoid shafting lowpop
-	earliest_start = 15 MINUTES // give the chemist a chance
+	earliest_start = 55 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6

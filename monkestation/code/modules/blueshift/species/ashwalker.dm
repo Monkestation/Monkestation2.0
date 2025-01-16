@@ -117,8 +117,8 @@
 
 /datum/status_effect/ashwalker_damage //tracks the damage dealt to this mob by ashwalkers
 	id = "ashwalker_damage"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// How much damage has been dealt to the mob
@@ -148,10 +148,12 @@
 /obj/item/bodypart/arm/left/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER
 	burn_modifier = ASHWALKER_BURN_MODIFIER
+	hand_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/right/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER
 	burn_modifier = ASHWALKER_BURN_MODIFIER
+	hand_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/leg/left/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER

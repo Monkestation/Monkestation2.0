@@ -21,6 +21,7 @@
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
 
+	var/super_throw = FALSE
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -172,8 +173,11 @@
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+	var/angle = get_angle(user, pbtarget)+rand(-recoil_deviation, recoil_deviation) + 180
+	if(angle > 360)
+		angle -= 360
 	if(recoil && !tk_firing(user))
-		shake_camera(user, recoil + 1, recoil)
+		recoil_camera(user, recoil+1, (recoil*recoil_backtime_multiplier) + 1, recoil, angle)
 	fire_sounds()
 	if(!suppressed)
 		if(message)
@@ -236,6 +240,10 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	..()
+	if(HAS_TRAIT(user, TRAIT_THROW_GUNS))
+		super_throw = TRUE
+		user.throw_item(target)
+		return
 	return fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
@@ -270,6 +278,7 @@
 			return
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
+
 		shoot_with_empty_chamber(user)
 		return
 
@@ -278,8 +287,9 @@
 
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
-		balloon_alert(user, "use both hands!")
-		return
+		if(!istype(user.get_inactive_held_item(), /obj/item/offhand))
+			balloon_alert(user, "use both hands!")
+			return
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -308,6 +318,17 @@
 				if(!tk_firing(user) && !HAS_TRAIT(src, TRAIT_NODROP))
 					user.dropItemToGround(src, TRUE)
 				return TRUE
+
+
+
+/obj/item/gun/throw_impact(mob/living/carbon/target, datum/thrownthing/throwing_datum)
+	. = ..()
+	if(super_throw)
+		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
+		target.Knockdown((w_class) SECONDS)
+		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
+		do_sparks(5, FALSE, src)
+		qdel(src)
 
 /obj/item/gun/can_trigger_gun(mob/living/user, akimbo_usage)
 	. = ..()

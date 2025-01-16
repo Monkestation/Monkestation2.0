@@ -224,7 +224,10 @@
 			new /obj/item/megaphone(src) // 0 tc
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
-			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
+			// MONKESTATION EDIT START
+			// MONKESTATION EDIT ORIGINAL new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
+			new /obj/item/grenade/chem_grenade/large/bioterrorfoam(src) // 5 tc
+			// MONKESTATION EDIT END
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
@@ -292,17 +295,13 @@
 /obj/item/paper/contractor_guide/Initialize(mapload)
 	default_raw_text = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
-
 			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
 			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
 			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
-
 			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your
 			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
-
 			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
 			with two Rep being provided each time you complete a contract.</p>
-
 			<h3>Using the tablet</h3>
 			<ol>
 				<li>Open the Syndicate Contract Uplink program.</li>
@@ -312,7 +311,6 @@
 				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
 				inside the pod.</li>
 			</ol>
-
 			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it
 			unavailable to take on again.</p>
 			<p>The tablet can also be recharged at any cell charger.</p>
@@ -327,7 +325,6 @@
 			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
 			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever
 			ID card you have equipped, on top of the TC payment we give.</p>
-
 			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
 	return ..()
 
@@ -336,6 +333,14 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "A scoped weapon with low armor penetration, but devestating against flesh. Features instruction manual for making specialty ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
@@ -531,6 +536,22 @@
 	for(var/i in 1 to 2)
 		new /obj/item/food/croissant/throwing(src)
 	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
+
+/obj/item/storage/box/syndie_kit/laser_arm/PopulateContents()
+	new /obj/item/autosurgeon/organ/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/syndicate/laser_arm (src)
+
+/obj/item/storage/box/syndie_kit/nodrop/PopulateContents()
+	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
+	new /obj/item/autosurgeon/syndicate/nodrop(src)
+
+/obj/item/storage/box/syndie_kit/anti_stun/PopulateContents()
+	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
+	new /obj/item/autosurgeon/syndicate/anti_stun(src)
+
+/obj/item/storage/box/syndie_kit/reviver/PopulateContents()
+	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
+	new /obj/item/autosurgeon/syndicate/reviver(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
@@ -748,6 +769,21 @@
 /obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
 	for(var/i in 1 to poster_count)
 		new /obj/item/poster/traitor(src)
+
+/obj/item/storage/box/syndie_kit/cowboy
+	name = "western outlaw pack"
+	desc = "Contains everything you'll need to be the rootin' tootin' cowboy you always wanted. Either play the Lone Ranger or go in with your posse of outlaws."
+
+/obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
+		/obj/item/clothing/head/cowboy/black/syndicate = 1,
+		/obj/item/storage/belt/holster/nukie/cowboy/full = 1,
+		/obj/item/clothing/under/costume/dutch/syndicate = 1,
+		/obj/item/lighter/skull = 1,
+		/obj/item/sbeacondrop/horse = 1,
+		/obj/item/food/grown/apple = 1,
+	), src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

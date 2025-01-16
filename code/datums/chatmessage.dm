@@ -68,15 +68,17 @@
 	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
-	if(QDELETED(owner) || !istype(owner) || !owner.client)
+	if(!istype(owner))
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
+		qdel(src)
+	else if(QDELING(owner) || QDELETED(owner.client)) // honestly they prolly just disconnected at a funny time or something
 		qdel(src)
 		return
 	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
 	remove_from_queue()
-	if (!QDELING(owned_by))
+	if (!QDELETED(owned_by))
 		if(REALTIMEOFDAY < animate_start + animate_lifespan)
 			stack_trace("Del'd before we finished fading, with [(animate_start + animate_lifespan) - REALTIMEOFDAY] time left")
 
@@ -162,6 +164,11 @@
 		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
 		chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for nonverbal messages
+	// monkestation start: looc
+	else if (extra_classes.Find("looc"))
+		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "looc")
+		LAZYADD(prefixes, "\icon[r_icon]")
+	// monkestation end
 
 	if(isnull(chat_color_name_to_use))
 		if(HAS_TRAIT(target, TRAIT_SIGN_LANG))
@@ -332,6 +339,11 @@
 		speaker = v.source
 		spans |= "virtual-speaker"
 
+	// MONKESTATION ADDITION START -- NTSL -- NTSL doesn't pass a speaker when you do broadcast() since technically nothing is actually speaking.
+	if(!speaker)
+		return
+	// MONKESTATION ADDITION END
+
 	// Ignore virtual speaker (most often radio messages) from ourself
 	if (originalSpeaker != src && speaker == src)
 		return
@@ -339,8 +351,10 @@
 	// Display visual above source
 	if(runechat_flags & EMOTE_MESSAGE)
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
-	else if(CHECK_BITFIELD(runechat_flags, LOOC_MESSAGE))
+	// monkestation start: looc
+	else if(runechat_flags & LOOC_MESSAGE)
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("looc", "italics"))
+	// monkestation end
 	else
 		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
 

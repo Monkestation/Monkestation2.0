@@ -103,7 +103,7 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS)
 	var/job_flags = NONE
 
 	/// Multiplier for general usage of the voice of god.
@@ -464,10 +464,7 @@
 			else
 				spawn_points_not_picked += spawn_point
 
-	var/obj/effect/landmark/start/picked = pick(spawn_points_not_picked)
-
-	if(!picked)
-		picked = pick(spawn_points_picked)
+	var/obj/effect/landmark/start/picked = length(spawn_points_not_picked) ? pick(spawn_points_not_picked) : pick(spawn_points_picked)
 
 	. = picked
 	picked.used = TRUE
@@ -548,7 +545,6 @@
 			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
-	dna.species.after_equip_job(job, src, FALSE, player_client.prefs)
 
 /mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
 	if(GLOB.current_anonymous_theme)

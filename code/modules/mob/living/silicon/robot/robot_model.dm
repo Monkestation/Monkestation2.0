@@ -390,6 +390,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil,
+		/obj/item/holosign_creator/atmos,
 	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(
@@ -664,7 +665,7 @@
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/cyborg, //MONKESTATION EDIT
 		/obj/item/reagent_containers/borghypo/medical,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
@@ -760,7 +761,7 @@
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	to_chat(loc, "<span class='userdanger'>You are an Enforcer and Upholder of your active lawset. \
 	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
 /obj/item/robot_model/security
@@ -810,6 +811,11 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
+		// Monkestation edit start: Barbering
+		/obj/item/scissors,
+		/obj/item/hairbrush/comb,
+		/obj/item/dyespray,
+		// Monestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,

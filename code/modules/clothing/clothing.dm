@@ -43,6 +43,9 @@
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 
+	/// If supplied, this is what overlay is used when applying blood effects when worn
+	var/blood_overlay_type = ""
+
 	/// A lazily initiated "food" version of the clothing for moths.
 	// This intentionally does not use the edible component, for a few reasons.
 	// 1. Effectively everything that wants something edible, from now and into the future,
@@ -363,7 +366,7 @@
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
 		if (atom_storage.can_hold?.len) // If pocket type can hold anything, vs only specific items
-			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
+			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='byond://?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
 			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] item\s that are [weight_class_to_text(atom_storage.max_specific_storage)] or smaller.\n"
 		if(atom_storage.quickdraw)
@@ -374,7 +377,7 @@
 		. += how_cool_are_your_threads.Join()
 
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)))
-		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 	//MONKESTATION ADDITION START - Denotes some clothing traits when examining a clothing piece.
 	if(clothing_traits)
@@ -591,3 +594,25 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
+
+/obj/item/clothing/proc/appears_bloody()
+	return GET_ATOM_BLOOD_DNA_LENGTH(src) && can_be_bloody && !(item_flags & NO_BLOOD_ON_ITEM)
+
+/obj/item/clothing/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
+
+	if(blood_overlay_type && appears_bloody())
+		var/mutable_appearance/blood_overlay
+		//MONKESTATION EDIT START
+		/* - MONKESTATION EDIT ORIGINAL -
+		if(clothing_flags & LARGE_WORN_ICON)
+			blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_overlay_type]blood_large")
+		else
+			blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		*/
+		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		//MONKESTATION EDIT END
+		blood_overlay.color = get_blood_dna_color()
+		. += blood_overlay

@@ -1,5 +1,6 @@
 /datum/status_effect/fire_handler
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
@@ -16,6 +17,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
+	/// how long have we been ON FIRE?
+	var/ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -150,7 +153,12 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
+	if(HAS_TRAIT(owner, TRAIT_HUSK))
+		adjust_stacks(-2 * seconds_per_tick)
+		if(stacks <= 0)
+			extinguish()
+	else
+		adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -183,41 +191,30 @@
  *
  */
 
-/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired)
+/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired, no_protection = FALSE)
 	owner.on_fire_stack(seconds_per_tick, times_fired, src)
 
 	var/turf/location = get_turf(owner)
 	location.hotspot_expose(700, 25 * seconds_per_tick, TRUE)
 
-/**
- * Used to deal damage to humans and count their protection.
- *
- * Arguments:
- * - seconds_per_tick
- * - times_fired
- * - no_protection: When set to TRUE, fire will ignore any possible fire protection
- *
- */
-
-/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(seconds_per_tick, times_fired, no_protection = FALSE)
 	var/mob/living/carbon/human/victim = owner
 	var/thermal_protection = victim.get_thermal_protection()
+	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
+		return
+	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
+		return
 
-	if(!no_protection)
-		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			victim.adjust_bodytemperature(5.5 * seconds_per_tick)
-			return
-
-	var/amount_to_heat = (BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick
-	if(owner.bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
-		// Apply dimishing returns upon temp beyond the soft cap
-		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
-
-	victim.adjust_bodytemperature(amount_to_heat)
-	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
-	victim.add_mob_memory(/datum/memory/was_burning)
+	victim.adjust_bodytemperature((stacks KELVIN) * seconds_per_tick)
+	switch(ticks_on_fire)
+		if(0 to 3)
+			victim.apply_damage(0.10 * stacks, BURN)
+		if(3 to 6)
+			victim.apply_damage(0.20 * stacks, BURN)
+		if(6 to 9)
+			victim.apply_damage(0.30 * stacks, BURN)
+		if(10 to INFINITY)
+			victim.apply_damage(0.50 * stacks, BURN)
+	ticks_on_fire += 1 * seconds_per_tick
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -257,6 +254,7 @@
 	for(var/obj/item/equipped in owner.get_equipped_items())
 		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
+	ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

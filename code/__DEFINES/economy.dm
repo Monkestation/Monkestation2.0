@@ -1,7 +1,7 @@
 /// Number of paychecks jobs start with at the creation of a new bank account for a player (So at shift-start or game join, but not a blank new account.)
 #define STARTING_PAYCHECKS 5
 /// How much mail the Economy SS will create per minute, regardless of firing time.
-#define MAX_MAIL_PER_MINUTE 3
+#define MAX_MAIL_PER_MINUTE 8
 /// Probability of using letters of envelope sprites on all letters.
 #define FULL_CRATE_LETTER_ODDS 70
 
@@ -62,6 +62,7 @@
 #define CIV_JOB_GROW 12
 #define CIV_JOB_ATMOS 13
 #define CIV_JOB_RANDOM 14
+#define CIV_JOB_SCI_HEAD 15
 
 //By how much should the station's inflation value be multiplied by when dividing the civilian bounty's reward?
 #define BOUNTY_MULTIPLIER 10

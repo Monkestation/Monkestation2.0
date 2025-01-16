@@ -3,7 +3,7 @@
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
 	progression_minimum = 5 MINUTES
 	cost = 1
-	item = /obj/item/storage/book/bible/mini
+	item = /obj/item/book/bible/mini
 	restricted_roles = list(JOB_CHAPLAIN, JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
@@ -63,3 +63,25 @@
 	pod.custom_objective = objective
 	pod.RefreshParts()
 	pod.locked = TRUE // The pod shouldn't be eligible for cloner event.
+
+/datum/uplink_item/role_restricted/syndicate_plant_gene
+	name = "Catalytic Inhibitor Serum Plant Data Disk"
+	desc = "This plant data disk contains the genetic blueprint for the Catalytic Inhibitor Serum gene.\
+			enabling plants to produce a serum that halts all internal chemical reactions"
+	item = /obj/item/disk/plantgene/syndicate
+	cost = 20
+	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/power_gloves
+	name = "Power Gloves"
+	desc = "Are the Engineers on your station creating too much power? Use this to set them in their place. T-ray scanner not included"
+	cost = 8
+	item = /obj/item/clothing/gloves/color/yellow/power_gloves
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+
+/datum/uplink_item/role_restricted/tunnel_khans
+	name = "Tunnel Khans Care Package"
+	desc = "A... questionably packed box written on with gray crayon. It's really hard to read. We hope that your assistant mind can comprehend it better than us."
+	cost = 13
+	item = /obj/item/storage/box/syndie_kit/khan_package
+	restricted_roles = list(JOB_ASSISTANT)

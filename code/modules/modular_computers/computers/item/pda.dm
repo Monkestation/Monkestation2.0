@@ -13,7 +13,7 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
@@ -303,6 +303,9 @@
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
+		/datum/computer_file/program/borg_monitor,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/crew_manifest,
 	)
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)

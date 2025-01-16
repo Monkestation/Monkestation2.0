@@ -120,7 +120,7 @@
 		var/obj/item/clothing/glasses/G = get_item_by_slot(ITEM_SLOT_EYES)
 		var/are_we_in_weekend_at_bernies = G?.tint && buckled && istype(buckled, /obj/vehicle/ridden/wheelchair)
 
-		if(isliving(user) && (HAS_TRAIT(user, TRAIT_NAIVE) || are_we_in_weekend_at_bernies))
+		if(isliving(user) && (HAS_MIND_TRAIT(user, TRAIT_NAIVE) || are_we_in_weekend_at_bernies))
 			just_sleeping = TRUE
 
 		if(!just_sleeping)
@@ -136,6 +136,7 @@
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
+	var/adjacent = user.Adjacent(src)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/body_part = X
 		if(body_part.bodypart_disabled)
@@ -146,6 +147,12 @@
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [body_part.name]!</B>\n"
 			else
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [body_part.name]!</B>\n"
+
+		if(body_part.current_gauze)
+			var/gauze_href = body_part.current_gauze.name
+			if(adjacent && isliving(user)) // only shows the href if we're adjacent
+				gauze_href = "<a href='?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+			msg += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
 
 		for(var/i in body_part.wounds)
 			var/datum/wound/iter_wound = i
@@ -242,7 +249,7 @@
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
 	var/apparent_blood_volume = blood_volume
-	if((dna.species.use_skintones)&& skin_tone == "albino")
+	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && (skin_tone == "albino"))
 		apparent_blood_volume -= 150 // enough to knock you down one tier
 	if(isethereal(src))//Monkestation Changes Start:
 		if(appears_dead)
@@ -334,9 +341,9 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
-				if (bodytemperature > dna.species.bodytemp_heat_damage_limit)
+				if (bodytemperature > bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
-				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
+				if (bodytemperature < bodytemp_cold_damage_limit)
 					msg += "[t_He] [t_is] shivering.\n"
 
 			msg += "</span>"
@@ -360,7 +367,7 @@
 			else if(brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] temporarly disconnected from their mind. Recovery is likely.")]\n"
 			else if(!client)
-				if(round(((world.time - lastclienttime) / (1 MINUTES)),1) >= 15)
+				if(round(((world.time - lastclienttime) / (1 MINUTES)),1) >= 30) // monkestation edit: Our cyropod time is 30 minutes
 					msg += "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon. They are able to be put into a cryopod by you.\n"
 				else
 					msg += "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon.\n"
@@ -393,7 +400,7 @@
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
-			. += "<span class='deptradio'>Rank:</span> [target_record.rank]\n<a href='?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
+			. += "<span class='deptradio'>Rank:</span> [target_record.rank]\n<a href='byond://?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='byond://?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 			var/cyberimp_detect
 			for(var/obj/item/organ/internal/cyberimp/CI in organs)
@@ -404,13 +411,13 @@
 				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"
 			if(target_record)
 				var/health_record = target_record.physical_status
-				. += "<a href='?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
+				. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
 				health_record = target_record.mental_status
-				. += "<a href='?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
+				. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
 			target_record = find_record(perpname)
 			if(target_record)
-				. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a><br>"
-			. += "<a href='?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
+				. += "<a href='byond://?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a><br>"
+			. += "<a href='byond://?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
 
 		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			if(!user.stat && user != src)
@@ -424,12 +431,12 @@
 					if(target_record.security_note)
 						security_note = target_record.security_note
 
-				. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
+				. += "<span class='deptradio'>Criminal status:</span> <a href='byond://?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
 				. += "<span class='deptradio'>Important Notes: [security_note]"
-				. += jointext(list("<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
+				. += jointext(list("<span class='deptradio'>Security record:</span> <a href='byond://?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>",
+					"<a href='byond://?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
+					"<a href='byond://?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
+					"<a href='byond://?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
 	else if(isobserver(user))
 		. += span_info("<b>Traits:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
 	. += "</span>"

@@ -32,6 +32,32 @@
 		/mob/living/basic/construct/wraith/hostile = 6,
 	)
 
+//begin monkestation edit
+/datum/round_event_control/portal_storm_monkey
+	name = "Portal Storm: Monkeys"
+	typepath = /datum/round_event/portal_storm/portal_storm_monkey
+	weight = 4
+	max_occurrences = 2
+	earliest_start = 20 MINUTES
+	category = EVENT_CATEGORY_ENTITIES
+	track = EVENT_TRACK_MAJOR
+	description = "Angry monkies pour out of portals."
+
+/datum/round_event/portal_storm/portal_storm_monkey
+	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
+	hostile_types = list(
+		/mob/living/carbon/human/species/monkey/angry = 10,
+	)
+
+/datum/round_event/portal_storm/portal_storm_monkey/announce(fake)
+	set waitfor = 0
+	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
+	sleep(8 SECONDS)
+	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
+	sleep(2 SECONDS)
+	sound_to_playing_players('monkestation/sound/misc/monkeystorm.ogg')
+
+//end monkestation edit
 /datum/round_event/portal_storm
 	start_when = 7
 	end_when = 999
@@ -64,10 +90,10 @@
 		number_of_hostiles += hostile_types[hostile]
 
 	while(number_of_bosses > boss_spawn.len)
-		boss_spawn += get_random_station_turf()
+		boss_spawn += get_safe_random_station_turf() // monkestation edit: use [get_safe_random_station_turf] so they don't spawn in weird stupid places
 
 	while(number_of_hostiles > hostiles_spawn.len)
-		hostiles_spawn += get_random_station_turf()
+		hostiles_spawn += get_safe_random_station_turf() // monkestation edit: use [get_safe_random_station_turf] so they don't spawn in weird stupid places
 
 	next_boss_spawn = start_when + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
 	setup = TRUE //MONKESTATION ADDITION
@@ -81,7 +107,7 @@
 	sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()
-	spawn_effects(get_random_station_turf())
+	spawn_effects(get_safe_random_station_turf()) // monkestation edit: use [get_safe_random_station_turf] so they don't spawn in weird stupid places
 
 	if(spawn_hostile() && length(hostile_types))
 		var/type = pick(hostile_types)

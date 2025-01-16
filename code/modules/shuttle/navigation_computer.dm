@@ -60,6 +60,20 @@
 	else
 		QDEL_NULL(my_port)
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname in list(NAMEOF(src, view_range), NAMEOF(src, x_offset), NAMEOF(src, y_offset), NAMEOF(src, see_hidden)))
+		refresh_eye()
+
+/// Destroys the eyeobj of this console, safely refreshing it if the console is currently being used.
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/refresh_eye()
+	var/mob/living/user = current_user
+	if(user)
+		remove_eye_control(user)
+	QDEL_NULL(eyeobj)
+	if(user)
+		attack_hand(user)
+
 /// "Initializes" any default port ids we have, done so add_jumpable_port can be a proper setter
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/set_init_ports()
 	var/list/init_ports = jump_to_ports.Copy()
@@ -98,19 +112,19 @@
 	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
-	for(var/V in shuttle_port.shuttle_areas)
-		var/area/A = V
-		for(var/turf/T in A)
-			if(T.z != origin.z)
-				continue
-			var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
-			var/x_off = T.x - origin.x
-			var/y_off = T.y - origin.y
-			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
-			I.layer = ABOVE_NORMAL_TURF_LAYER
-			SET_PLANE(I, ABOVE_GAME_PLANE, T)
-			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-			the_eye.placement_images[I] = list(x_off, y_off)
+	for(var/area/shuttle_area as anything in shuttle_port.shuttle_areas)
+		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+			for(var/turf/shuttle_turf as anything in zlevel_turfs)
+				if(shuttle_turf.z != origin.z)
+					continue
+				var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+				var/x_off = shuttle_turf.x - origin.x
+				var/y_off = shuttle_turf.y - origin.y
+				I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
+				I.layer = ABOVE_NORMAL_TURF_LAYER
+				SET_PLANE(I, ABOVE_GAME_PLANE, shuttle_turf)
+				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+				the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()

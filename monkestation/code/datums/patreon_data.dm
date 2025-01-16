@@ -1,9 +1,6 @@
-/client
-	var/datum/patreon_data/patreon
-
 /datum/patreon_data
-	///the client that owns this data
-	var/client/owner
+	/// The details of the linked player.
+	var/datum/player_details/owner
 	///the stored patreon client key for the information
 	var/client_key
 	///the stored patreon rank collected from the server
@@ -12,42 +9,27 @@
 	var/access_rank = 0
 
 
-/datum/patreon_data/New(client/created_client)
+/datum/patreon_data/New(datum/player_details/owner)
 	. = ..()
-	if(!created_client)
+	if(!owner)
 		return
-
+	src.owner = owner
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return
 
-	owner = created_client
-
-	fetch_key(owner.ckey)
-	fetch_rank(owner.ckey)
-
+	fetch_key_and_rank()
 	assign_access_rank()
 
-
-/datum/patreon_data/proc/fetch_key(ckey)
-	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+/datum/patreon_data/proc/fetch_key_and_rank()
+	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = owner.ckey))
 	if(query_get_key.warn_execute())
 		if(query_get_key.NextRow())
 			client_key = query_get_key.item[1]
-	qdel(query_get_key)
-
-/datum/patreon_data/proc/fetch_rank(ckey)
-	var/datum/db_query/query_get_rank = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	if(query_get_rank.warn_execute())
-		if(query_get_rank.NextRow())
-			if(query_get_rank.item[1])
-				owned_rank = query_get_rank.item[1]
-				if(owned_rank == "UNSUBBED2")
-					owned_rank = NO_RANK
-			else
+			owned_rank = query_get_key.item[2]
+			if(owned_rank == "UNSUBBED2")
 				owned_rank = NO_RANK
-	qdel(query_get_rank)
-
+	qdel(query_get_key)
 
 /datum/patreon_data/proc/assign_access_rank()
 	switch(owned_rank)
@@ -59,7 +41,7 @@
 			access_rank =  ACCESS_COMMAND_RANK
 		if(TRAITOR_RANK)
 			access_rank =  ACCESS_TRAITOR_RANK
-		if(NUKIE_RANK, OLD_NUKIE_RANK)
+		if(NUKIE_RANK, OLD_NUKIE_RANK, REALLY_ANOTHER_FUCKING_NUKIE_RANK)
 			access_rank =  ACCESS_NUKIE_RANK
 
 /datum/patreon_data/proc/has_access(rank)
@@ -70,6 +52,4 @@
 	return FALSE
 
 /datum/patreon_data/proc/is_donator()
-	if((owned_rank != NO_RANK) && (owned_rank != UNSUBBED))
-		return TRUE
-	return FALSE
+	return owned_rank && owned_rank != NO_RANK && owned_rank != UNSUBBED

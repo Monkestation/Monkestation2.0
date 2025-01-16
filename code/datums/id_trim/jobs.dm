@@ -175,35 +175,9 @@
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		ACCESS_QM,
+		ACCESS_HOP,
 	)
 	job = /datum/job/bitrunner
-
-/datum/id_trim/job/blueshield
-	assignment = "Blueshield"
-	trim_state = "trim_blueshield"
-	department_color = COLOR_COMMAND_BLUE
-	subdepartment_color = COLOR_SECURITY_RED
-	sechud_icon_state = SECHUD_BLUESHIELD
-	minimal_access = list(
-		ACCESS_MEDICAL,
-		ACCESS_SCIENCE,
-		ACCESS_SERVICE,
-		ACCESS_CONSTRUCTION,
-		ACCESS_SECURITY,
-		ACCESS_BRIG_ENTRANCE,
-		ACCESS_COMMAND,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_WEAPONS,
-		)
-	extra_access = list(
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS
-		)
-	job = /datum/job/blueshield
 
 /datum/id_trim/job/botanist
 	assignment = "Botanist"
@@ -350,6 +324,7 @@
 		ACCESS_MINISAT,
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_TCOMMS,
+		ACCESS_TCOMMS_ADMIN, // MONKESTATION ADDITION -- NTSL
 		ACCESS_TECH_STORAGE,
 		)
 	minimal_wildcard_access = list(
@@ -569,6 +544,13 @@
 		ACCESS_TELEPORTER,
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
+		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
+		ACCESS_VAULT,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_MECH_MINING,
+		ACCESS_QM,
+		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOP,
@@ -1151,6 +1133,7 @@
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY, // MONKESTATION EDIT: Pathologists now have access to pharmacy due to their need for chems. Hopefully doesn't get abused too much and MDs have this too.
 		)
 	extra_access = list(
 		ACCESS_PLUMBING,

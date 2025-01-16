@@ -16,13 +16,18 @@
 	e_cost = 62.5
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/carbine
+	projectile_type = /obj/projectile/beam/laser/carbine
+	e_cost = 25 // 40 shots
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 200
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 120
+	e_cost = 90 //monkestation edit
 
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket
@@ -30,6 +35,8 @@
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
+	pellets = 3
+	variance = 10
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice

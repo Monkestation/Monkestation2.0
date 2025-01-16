@@ -5,6 +5,8 @@
 	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
 	protected_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -30,7 +32,7 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 1
-	weight = 12
+	weight = 10
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag

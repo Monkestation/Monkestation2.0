@@ -71,6 +71,13 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 	))
 
 
+// monkestation addition: just trash_loot with a chance of banana peels
+GLOBAL_LIST_INIT(trash_pile_loot, list(
+	GLOB.trash_loot = 500,
+	/obj/item/grown/bananapeel = 10,
+	/obj/item/grown/bananapeel/bluespace = 0.1, // I am SO going to regret this later ~Lucy
+))
+// monkestation end
 
 GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 	list(//tools
@@ -197,9 +204,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/screwdriver = 1,
 		) = 8,
 
+//monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 4,
+		/obj/item/a_gift/anything/wiz_name = 2,
 		) = 8,
+//monkestation edit end
 
 	list(//construction and crafting
 		/obj/item/beacon = 1,
@@ -286,6 +296,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/instrument/violin/golden = 2,
 		) = 2,
 
+	list(//MONKESTATION ADDITION: misc
+		/obj/item/vending_refill/plushvendor = 1,
+		/obj/item/comically_large_spoon = 1,
+		) = 2,
+
 	list(//fakeout items, keep this list at low relative weight
 		/obj/item/clothing/shoes/jackboots = 1,
 		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
@@ -345,14 +360,15 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		) = 1,
 
 	list(//misc
-		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1,
+		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1, //monkestation edit: added maint_gun
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
-		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1,
+		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1, //monkestation edit
 		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
+		/obj/item/seeds/tree/money = 1, //monkestation edit
 		) = 1,
 
 ))
@@ -360,7 +376,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
-		/obj/effect/rune/teleport = 1,
+		/* /obj/effect/rune/teleport = 1, */ // monkestation removal: this should really only have /obj/items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,

@@ -1,3 +1,4 @@
+/* monkestation removal: refactored in [monkestation\code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_knowledge.dm]
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
@@ -27,7 +28,7 @@
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
 
-/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
+/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
@@ -526,3 +527,4 @@
 
 #undef SACRIFICE_SLEEP_DURATION
 #undef SACRIFICE_REALM_DURATION
+monkestation end */

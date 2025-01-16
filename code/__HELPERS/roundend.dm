@@ -1,6 +1,7 @@
 #define POPCOUNT_SURVIVORS "survivors" //Not dead at roundend
 #define POPCOUNT_ESCAPEES "escapees" //Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" //Emergency shuttle only.
+#define POPCOUNT_ESCAPEES_HUMANONLY "human_escapees"
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 #define DISCORD_SUPPRESS_NOTIFICATIONS (1 << 12) // monke edit: discord flag for silent messages
@@ -17,7 +18,10 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
 	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
 	var/num_escapees = 0 //Above and on centcom z
+	var/num_human_escapees = 0 //Above but humans only
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
+	var/list/list_of_human_escapees = list() //References to all escaped humans
+	var/list/list_of_mobs_on_shuttle = list()
 	var/list/area/shuttle_areas
 	if(SSshuttle?.emergency)
 		shuttle_areas = SSshuttle.emergency.shuttle_areas
@@ -35,6 +39,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		if(M.mind)
 			count_only = FALSE
 			mob_data["ckey"] = M.mind.key
+			if(M.onCentCom())
+				list_of_mobs_on_shuttle += M
 			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
@@ -42,6 +48,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 					escape_status = "escapees"
 					if(shuttle_areas[get_area(M)])
 						num_shuttle_escapees++
+						if(ishuman(M))
+							num_human_escapees++
+							list_of_human_escapees += M
 			if(isliving(M))
 				var/mob/living/L = M
 				mob_data["location"] = get_area(L)
@@ -94,8 +103,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
-	file_data["additional data"]["station integrity"] = station_integrity
+	roundend_station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
+	file_data["additional data"]["station integrity"] = roundend_station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
 
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
@@ -105,8 +114,11 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	. = list()
 	.[POPCOUNT_SURVIVORS] = num_survivors
 	.[POPCOUNT_ESCAPEES] = num_escapees
+	.[POPCOUNT_ESCAPEES_HUMANONLY] = num_human_escapees
 	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
-	.["station_integrity"] = station_integrity
+	.["all_mobs_on_shuttle"] = list_of_mobs_on_shuttle
+	.["human_escapees_list"] = list_of_human_escapees
+	.["station_integrity"] = roundend_station_integrity
 
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
@@ -207,11 +219,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
+	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
+
 	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
 		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
+
+	popcount = gather_roundend_feedback()
 
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
@@ -221,7 +237,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 
-	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
 	CHECK_TICK
@@ -242,6 +257,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	log_game("The round has ended.")
 	send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), CONFIG_GET(string/channel_announce_end_game))
 	send2adminchat("Server", "Round just ended.")
+
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
@@ -281,24 +297,27 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
+	save_datums() // we care about this for now
 
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
+	refund_cassette()
 	distribute_rewards()
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
 	send2roundend_webhook(embed)
+	SSplexora.roundended()
 	// monkestation end
 	standard_reboot()
 
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Round End"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.author = "Round Controller"
-	embed.content = "<@&999008528595419278>"
-	if(GLOB.round_end_images.len)
+	embed.content = CONFIG_GET(string/roundend_webhook_content)
+	if(length(GLOB.round_end_images))
 		embed.image = pick(GLOB.round_end_images)
 	var/round_state = "Round has ended"
 
@@ -331,7 +350,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		webhook_info["username"] = CONFIG_GET(string/roundend_webhook_name)
 	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
 		webhook_info["avatar_url"] = CONFIG_GET(string/roundend_webhook_pfp)
-	webhook_info["flags"] = DISCORD_SUPPRESS_NOTIFICATIONS // monke edit: @silent roundend pings
+	webhook_info["flags"] = DISCORD_SUPPRESS_NOTIFICATIONS
 	// Uncomment when servers are moved to TGS4
 	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
@@ -341,6 +360,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	request.begin_async()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
+	world.flush_byond_tracy() // monkestation edit: byond-tracy
 	if(ready_for_reboot)
 		if(GLOB.station_was_nuked)
 			Reboot("Station destroyed by Nuclear Device.", "nuke")
@@ -353,8 +373,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
 
-	//might want to make this a full section
-	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.storyteller ? SSgamemode.storyteller.name : "N/A"]")]</span></div>" //monkestation edit
+	//might want to make this a full section, monkestation edit
+	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "N/A"]")]</span></div>"
 
 	//AI laws
 	parts += law_report()
@@ -718,7 +738,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/datum/action/report/R = new
 	C.player_details.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,"<span class='infoplain'><a href='?src=[REF(R)];report=1'>Show roundend report again</a></span>")
+	to_chat(C,"<span class='infoplain'><a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a></span>")
 
 /datum/action/report
 	name = "Show roundend report"

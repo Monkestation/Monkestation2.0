@@ -472,6 +472,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/dnainfuser
+	name = "DNA Infuser Board"
+	desc = "The circuit board for a DNA Infuser."
+	id = "dnainfuser"
+	build_path = /obj/item/circuitboard/machine/dna_infuser
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/scan_console
 	name = "DNA Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new DNA console."
@@ -597,6 +607,16 @@
 	desc = "The circuit board for a recycler."
 	id = "recycler"
 	build_path = /obj/item/circuitboard/machine/recycler
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/shipbreaker
+	name = "Shipbreaking Recycler Board"
+	desc = "The circuit board for a shipbreaking recycler."
+	id = "shipbreaker_recycler"
+	build_path = /obj/item/circuitboard/machine/shipbreaker
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
