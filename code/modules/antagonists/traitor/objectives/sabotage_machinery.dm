@@ -69,7 +69,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	progression_maximum = 30 MINUTES
 
 	applicable_jobs = list(
-		JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub,
+		/* JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub, */ // monkestation removal: this just makes the round worse for all involved.
 		JOB_SCIENTIST = /obj/machinery/rnd/server,
 	)
 
@@ -225,8 +225,10 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 // Mark valid machines as targets, add a new entry here if you add a new potential target
 
+/* monkestation removal: this just makes the round worse for all involved.
 /obj/machinery/telecomms/hub/add_as_sabotage_target()
 	return add_sabotage_machine(src, /obj/machinery/telecomms/hub) // Not always our specific type because of map helper subtypes
+monkestation end */
 
 /obj/machinery/rnd/server/add_as_sabotage_target()
 	return add_sabotage_machine(src, type)
