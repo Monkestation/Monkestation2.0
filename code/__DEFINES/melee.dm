@@ -10,6 +10,7 @@
 #define MARTIALART_SLEEPINGCARP "sleeping carp"
 #define MARTIALART_WRESTLING "wrestling"
 #define MARTIALART_JUDO "corporate judo"
+#define MARTIALART_AWAKENEDDRAGON "awakened dragon"
 
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / damage, 0.1)

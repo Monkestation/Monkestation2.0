@@ -201,3 +201,51 @@
   - bugfix: Ore dust no longer deleted in the final refinery(Refinery/Smelter) machines.
   - bugfix: Amalgams will now properly jam machines.
   - bugfix: Maintenance hatch now properly displays its open status.
+2025-01-13:
+  Absolucy:
+  - sound: Made the polling sound effect slightly less loud.
+  - code_imp: Made the Power Transmission Laser's code slightly less awful.
+  - bugfix: The PTL laser will no longer affect incorporeal or godmode mobs.
+  Jackary1:
+  - rscadd: Added the Administrator lawset as an Admin-Only lawset for AIs.
+  Sakaniko:
+  - rscadd: Goblins now have a large mood buff while in Maintenance.
+  - rscadd: Added liked and disliked food to Ornithids, since they were default.
+  - bugfix: Simians will now actually vault when bump climbing objects.
+  - bugfix: Tided up some perks on the species select page in the character creation
+      page.
+2025-01-14:
+  Gw0sty:
+  - rscadd: New purchase for assault operatives, "Saboteur cyborg beacon"
+  - rscadd: Added chemicals to the goldeneye cruiser and a stasis bed for surgery.
+  MomoBerri:
+  - bugfix: Shipbreaker conveyors for theseus
+  MrBagHead:
+  - bugfix: Changed the Bar Drone Information GUI to match laws and guidelines for
+      Bar Drones rather than Maintenance Drones.
+  Syndie Kate:
+  - rscadd: Added the Awakened Dragon scroll to the uplink
+  - balance: Changed sleeping carp scroll to 12 tc
+  - balance: Nerfed a sleeping carp's kick and a few numbers
+  flleeppyy:
+  - bugfix: make deepfryers not dry if there's nothing in the basket
+2025-01-15:
+  Absolucy:
+  - bugfix: Fixed the addictions from the Junkie and Smoker quirks curing themselves.
+  - bugfix: Fixed an icon smoothing error caused by shuttles during recursive map
+      loading, i.e the nukie shuttles with their base.
+  - qol: The botanical lexicon now also previews the sprites for the item that harvesting
+      a seed produces.
+  - qol: The chicken encyclopedia now previews the sprites of both the hen and rooster
+      for each chicken.
+  - code_imp: Cleaned up some code related to chicken breeding.
+  - code_imp: Improved UI code related to the botanical lexicon and chicken encyclopedia.
+  flleeppyy:
+  - rscadd: Let people under examine text that you can microwave emags
+2025-01-16:
+  Absolucy:
+  - bugfix: Trash piles can no longer be used to generate infinite trash by canceling
+      early or hiding an item.
+  - qol: Reduces the amount of banana peels from trash piles.
+  Absolucy, SmArtKar:
+  - bugfix: Mindswap can no longer be used inside of pipes
