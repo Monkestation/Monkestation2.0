@@ -26,7 +26,7 @@
 
 /datum/stamina_container/New(parent, maximum = STAMINA_MAX, regen_rate = STAMINA_REGEN)
 	if(maximum <= 0)
-		stack_trace("Attempted to initialize stamian container with an invalid maximum limit of [maximum], defaulting to [STAMINA_MAX]")
+		stack_trace("Attempted to initialize stamina container with an invalid maximum limit of [maximum], defaulting to [STAMINA_MAX]")
 		maximum = STAMINA_MAX
 	src.parent = parent
 	src.maximum = maximum
