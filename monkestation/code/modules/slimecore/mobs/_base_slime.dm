@@ -11,7 +11,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/slime
 	density = FALSE
 
-	maximum_survivable_temperature = 2000
+	bodytemp_heat_damage_limit = 2000
 
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
@@ -38,8 +38,8 @@
 
 	can_be_held = TRUE
 
-	minimum_survivable_temperature = 100
-	maximum_survivable_temperature = 600
+	bodytemp_cold_damage_limit = 100
+	bodytemp_heat_damage_limit = 600
 
 	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
@@ -360,7 +360,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, -200)
 
 	slime_flags &= ~SPLITTING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
@@ -412,7 +412,7 @@
 	change_color(mutating_into)
 
 	slime_flags &= ~MUTATING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)

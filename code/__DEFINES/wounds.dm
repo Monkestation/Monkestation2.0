@@ -48,16 +48,13 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 
 
 // ~determination second wind defines
-// How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind]
-#define WOUND_DETERMINATION_MODERATE 1
-#define WOUND_DETERMINATION_SEVERE 2.5
-#define WOUND_DETERMINATION_CRITICAL 5
-#define WOUND_DETERMINATION_LOSS 7.5
+// How much determination to add each time someone gains a new wound in [/datum/wound/proc/second_wind]
+#define WOUND_DETERMINATION_MODERATE (5 SECONDS)
+#define WOUND_DETERMINATION_SEVERE (10 SECONDS)
+#define WOUND_DETERMINATION_CRITICAL (20 SECONDS)
+#define WOUND_DETERMINATION_LOSS (30 SECONDS)
 /// the max amount of determination you can have
-#define WOUND_DETERMINATION_MAX 10
-
-/// While someone has determination in their system, their bleed rate is slightly reduced
-#define WOUND_DETERMINATION_BLEED_MOD 0.85
+#define WOUND_DETERMINATION_MAX (1 MINUTES)
 
 /// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll. In most cases, you dont want to use this.
 #define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
@@ -125,6 +122,14 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+
+// MONKESTATION ADDITION START
+//Have to put it here so it can be used in the global list of wound series wounding_types_to_series
+/// muscle wounds applied at a low chance from blunt, slash, or pierce attacks
+#define WOUND_MUSCLE "wound_muscle"
+/// T1-T2 Muscle wounds. Both flesh and robotic variants. See muscle.dm and robotic_blunt.dm
+#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
+// MONKESTATION ADDITION END
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
@@ -205,8 +210,12 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	WOUND_BURN = list(
 		WOUND_SERIES_FLESH_BURN_BASIC,
 	),
-	WOUND_PUNCTURE = list(
+	WOUND_PIERCE = list(
 		WOUND_SERIES_FLESH_PUNCTURE_BLEED
+	),
+	//MONKESTATION ADDITION
+	WOUND_MUSCLE = list(
+		WOUND_SERIES_MUSCLE_DAMAGE
 	),
 ))
 

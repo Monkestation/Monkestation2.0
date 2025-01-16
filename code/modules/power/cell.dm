@@ -251,7 +251,7 @@
 			if(charge < CELL_POWER_DRAIN)
 				to_chat(H, span_warning("[src] doesn't have enough power!"))
 				return
-			if(stomach.crystal_charge > charge_limit)
+			if(H.blood_volume > charge_limit)
 				to_chat(H, span_warning("Your charge is full!"))
 				return
 			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
@@ -323,7 +323,7 @@
 
 /obj/item/stock_parts/cell/hos_gun
 	name = "X-01 multiphase energy gun power cell"
-	maxcharge = 1200
+	maxcharge = 1800 //monkestation edit
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"

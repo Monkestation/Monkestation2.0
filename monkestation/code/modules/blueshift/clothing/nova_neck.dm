@@ -56,8 +56,11 @@
 	desc = "A plated mantle that one might wrap around the upper torso. The 'scales' of the garment signify the members of security and how you're carrying them on your shoulders."
 	icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
-	icon_state = "hosmantle_blue" //There's a red version if you remove the _blue, but its not coded in currently.
+	icon_state = "hosmantle"
 
+/obj/item/clothing/neck/mantle/hosmantle/blue
+	icon_state = "hosmantle_blue"
+	
 /obj/item/clothing/neck/mantle/capmantle
 	name = "\proper the captain's mantle"
 	desc = "A formal mantle to drape around the shoulders. Others stand on the shoulders of giants. You're the giant they stand on."
@@ -156,7 +159,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "cowboy_poncho"
-	heat_protection = CHEST
+
 
 /obj/item/clothing/neck/cowboylea/Initialize(mapload)
 	. = ..()
@@ -171,7 +174,7 @@
 	greyscale_config_worn = /datum/greyscale_config/ranger_poncho/worn
 	greyscale_colors = "#917A57#858585"	//Roughly the same color as the original non-greyscale item was
 	flags_1 = IS_PLAYER_COLORABLE_1
-	heat_protection = CHEST
+
 
 /obj/item/clothing/neck/ranger_poncho/Initialize(mapload)
 	. = ..()

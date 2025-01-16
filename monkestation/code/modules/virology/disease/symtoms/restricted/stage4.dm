@@ -3,8 +3,7 @@
 	desc = "If left untreated the subject will die!"
 	restricted = TRUE
 	max_multiplier = 5
-	chance = 20
-	max_chance = 20
+	chance = 6
 	var/sound = FALSE
 	badness = EFFECT_DANGER_DEADLY
 
@@ -14,7 +13,7 @@
 		affected_mob.death()
 		return FALSE
 
-	if(!affected_mob.can_heartattack())
+	if(!affected_mob.can_heartattack() && !HAS_TRAIT(affected_mob, TRAIT_STABLEHEART)) //This was so stupid. We had 9 people round removed with no fix other than admins because of this.
 		affected_mob.death()
 		return FALSE
 

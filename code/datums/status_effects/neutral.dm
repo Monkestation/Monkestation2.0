@@ -2,8 +2,8 @@
 
 /datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
 	id = "crusher_damage"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	var/total_damage = 0
@@ -46,7 +46,7 @@
 
 /datum/status_effect/in_love
 	id = "in_love"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/in_love
 	var/hearts
@@ -84,6 +84,7 @@
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
 	var/mob/living/rewarded
 
 /datum/status_effect/bounty/on_creation(mob/living/new_owner, mob/living/caster)
@@ -118,8 +119,8 @@
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup
 	id = "heldup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/heldup
 
@@ -139,8 +140,8 @@
 // holdup is for the person aiming
 /datum/status_effect/holdup
 	id = "holdup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/holdup
 
@@ -152,8 +153,8 @@
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
 	id = "offering"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// The people who were offered this item at the start
@@ -163,7 +164,7 @@
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/offered)
 	. = ..()
 	if(!.)
 		return
@@ -171,11 +172,11 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	if(offered && is_taker_elligible(offered))
+	if(offered && is_taker_elligible(offered, offer))
 		register_candidate(offered)
 	else
-		for(var/mob/living/carbon/possible_taker in orange(1, owner))
-			if(!is_taker_elligible(possible_taker))
+		for(var/mob/living/possible_taker in orange(1, owner))
+			if(!is_taker_elligible(possible_taker, offer))
 				continue
 
 			register_candidate(possible_taker)
@@ -202,6 +203,7 @@
 	LAZYADD(possible_takers, possible_candidate)
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
 	G.setup(possible_candidate, src)
+	SEND_SIGNAL(possible_candidate, COMSIG_LIVING_GIVE_ITEM_CHECK, G, offered_item)
 
 /// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
@@ -239,8 +241,8 @@
  *
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
-/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
-	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker, obj/item/offer)
+	return (owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)) || SEND_SIGNAL(taker, COMSIG_LIVING_ITEM_OFFERED_PRECHECK, offer)
 
 /**
  * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
@@ -314,8 +316,8 @@
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender
 	id = "surrender"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/surrender
 
@@ -343,7 +345,7 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = INFINITY
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
@@ -488,7 +490,7 @@
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/external/tail/simian/monkey_tail = new ()
+				var/obj/item/organ/external/tail/monkey/monkey_tail = new()
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)

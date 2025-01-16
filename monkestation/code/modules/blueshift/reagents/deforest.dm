@@ -25,7 +25,7 @@
 	color = "#85111f" // 133, 17, 31
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 6.09
-	tox_damage = 0
+	// tox_damage = 0 MONKESTATION REMOVAL
 
 /datum/reagent/inverse/lidocaine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -213,12 +213,11 @@
 // Reaction to make twitch, makes 10u from 17u input reagents
 /datum/chemical_reaction/twitch
 	results = list(
-		/datum/reagent/drug/twitch = 10,
+		/datum/reagent/drug/twitch = 5,
 	)
 	required_reagents = list(
-		/datum/reagent/impedrezene = 5,
-		/datum/reagent/bluespace = 10,
-		/datum/reagent/consumable/liquidelectricity = 2,
+		/datum/reagent/medicine/adminordrazine = 30,
+		/datum/reagent/bluespace = 30 //why? because fuck you thats why. Im gonna leave it at this. Good luck making it.
 	)
 	mob_react = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
@@ -228,10 +227,12 @@
 	name = "TWitch"
 	description = "A drug originally developed by and for plutonians to assist them during raids. \
 		Does not see wide use due to the whole reality-disassociation and heart disease thing afterwards. \
-		Can be intentionally overdosed to increase the drug's effects"
+		However, the gods came to an agreement, and banished it from the realms. \
+		If the gods catch you using this, expect a swift and painful death."
+
 	reagent_state = LIQUID
 	color = "#c22a44"
-	taste_description = "television static"
+	taste_description = "television static, and the gods wrath"
 	metabolization_rate = 0.65 * REAGENTS_METABOLISM
 	ph = 3
 	overdose_threshold = 15
@@ -248,6 +249,8 @@
 
 /datum/reagent/drug/twitch/on_mob_metabolize(mob/living/our_guy)
 	. = ..()
+	if(!our_guy.get_organ_slot(ORGAN_SLOT_HEART))
+		return
 
 	our_guy.add_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
 	our_guy.next_move_modifier -= 0.3 // For the duration of this you move and attack faster
@@ -355,18 +358,20 @@
 
 /datum/reagent/drug/twitch/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
 	. = ..()
+	if(!our_guy.get_organ_slot(ORGAN_SLOT_HEART))
+		return
 
 	constant_dose_time += seconds_per_tick
 
 	// If the target is a robot, or has muscle veins, then they get an effect similar to herignis, heating them up quite a bit
 	if((our_guy.mob_biotypes & MOB_ROBOTIC) || HAS_TRAIT(our_guy, TRAIT_STABLEHEART))
-		var/heating = mob_heating_muliplier * creation_purity * REM * seconds_per_tick
+		var/heating = mob_heating_muliplier * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp += heating
-		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit)
 		if(!ishuman(our_guy))
 			return
 		var/mob/living/carbon/human/human = our_guy
-		human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+		human.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit)
 	else
 		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1 * REM * seconds_per_tick)
 
@@ -394,17 +399,20 @@
 
 /datum/reagent/drug/twitch/overdose_process(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
 	. = ..()
+	if(!our_guy.get_organ_slot(ORGAN_SLOT_HEART))
+		return
+
 	our_guy.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 	// If the target is a robot, or has muscle veins, then they get an effect similar to herignis, heating them up quite a bit
 	if((our_guy.mob_biotypes & MOB_ROBOTIC) || HAS_TRAIT(our_guy, TRAIT_STABLEHEART))
-		var/heating = (mob_heating_muliplier * 2) * creation_purity * REM * seconds_per_tick
+		var/heating = (mob_heating_muliplier * 2) * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp += heating
-		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit - 5)
 		if(!ishuman(our_guy))
 			return
 		var/mob/living/carbon/human/human = our_guy
-		human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+		human.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit - 5)
 	else
 		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * seconds_per_tick, required_organtype = affected_organtype)
 	our_guy.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)

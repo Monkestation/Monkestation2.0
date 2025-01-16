@@ -266,28 +266,24 @@
 
 // .35 Sol Short
 // Pistol caliber caseless round used almost exclusively by SolFed weapons
+//CASELESS VAR IS ADDED SO THAT REVOLVER CHAMBERS KNOW WHAT TO DO WITH IT
 
 /obj/item/ammo_casing/c35sol
 	name = ".35 Sol Short lethal bullet casing"
 	desc = "A SolFed standard caseless lethal pistol round."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "35sol"
-
 	caliber = CALIBER_SOL35SHORT
 	projectile_type = /obj/projectile/bullet/c35sol
 
-
 /obj/item/ammo_casing/c35sol/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/caseless)
 
 
 /obj/projectile/bullet/c35sol
 	name = ".35 Sol Short bullet"
 	damage = 15
-
 	wound_bonus = -5 // Normal bullets are 20
 	bare_wound_bonus = 5
 	embed_falloff_tile = -4
@@ -296,14 +292,10 @@
 /obj/item/ammo_box/c35sol
 	name = "ammo box (.35 Sol Short lethal)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "35box"
-
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
-
 	w_class = WEIGHT_CLASS_NORMAL
-
 	caliber = CALIBER_SOL35SHORT
 	ammo_type = /obj/item/ammo_casing/c35sol
 	max_ammo = 24
@@ -314,9 +306,7 @@
 /obj/item/ammo_casing/c35sol/incapacitator
 	name = ".35 Sol Short incapacitator bullet casing"
 	desc = "A SolFed standard caseless less-lethal pistol round. Exhausts targets on hit, has a tendency to bounce off walls at shallow angles."
-
 	icon_state = "35sol_disabler"
-
 	projectile_type = /obj/projectile/bullet/c35sol/incapacitator
 	harmful = FALSE
 
@@ -325,10 +315,8 @@
 	name = ".35 Sol Short incapacitator bullet"
 	damage = 5
 	stamina = 30
-
 	wound_bonus = -40
 	bare_wound_bonus = -20
-
 	weak_against_armour = TRUE
 
 	// The stats of the ricochet are a nerfed version of detective revolver rubber ammo
@@ -339,7 +327,6 @@
 	ricochet_incidence_leeway = 50
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
-
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
@@ -348,9 +335,7 @@
 /obj/item/ammo_box/c35sol/incapacitator
 	name = "ammo box (.35 Sol Short incapacitator)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The blue stripe indicates this should hold less-lethal ammunition."
-
 	icon_state = "35box_disabler"
-
 	ammo_type = /obj/item/ammo_casing/c35sol/incapacitator
 
 
@@ -359,10 +344,8 @@
 /obj/item/ammo_casing/c35sol/ripper
 	name = ".35 Sol Short ripper bullet casing"
 	desc = "A SolFed standard caseless ripper pistol round. Causes slashing wounds on targets, but is weak to armor."
-
 	icon_state = "35sol_shrapnel"
 	projectile_type = /obj/projectile/bullet/c35sol/ripper
-
 	custom_materials = AMMO_MATS_RIPPER
 	advanced_print_req = TRUE
 
@@ -370,14 +353,10 @@
 /obj/projectile/bullet/c35sol/ripper
 	name = ".35 Sol ripper bullet"
 	damage = 12
-
 	weak_against_armour = TRUE
-
 	sharpness = SHARP_EDGED
-
 	wound_bonus = 20
 	bare_wound_bonus = 20
-
 	embedding = list(
 		embed_chance = 75,
 		fall_chance = 3,
@@ -395,10 +374,28 @@
 /obj/item/ammo_box/c35sol/ripper
 	name = "ammo box (.35 Sol Short ripper)"
 	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The purple stripe indicates this should hold hollowpoint-like ammunition."
-
 	icon_state = "35box_shrapnel"
-
 	ammo_type = /obj/item/ammo_casing/c35sol/ripper
+
+//.35 sol pierce are the AP rounds for this weapon
+
+/obj/item/ammo_casing/c35sol/pierce
+	name = ".35 Sol Short armor piercing bullet casing"
+	desc = "A SolFed standard caseless armor piercing pistol round. Penetrates armor, but is rather weak against un-armored targets."
+	icon_state = "35sol_shrapnel"
+	projectile_type = /obj/projectile/bullet/c35sol/pierce
+
+/obj/projectile/bullet/c35sol/pierce
+	name = ".35 Sol Short armor piercing bullet"
+	damage = 13
+	bare_wound_bonus = -30
+	armour_penetration = 20
+
+/obj/item/ammo_box/c35sol/pierce
+	name = "ammo box (.35 Sol Short armor piercing)"
+	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
+	ammo_type = /obj/item/ammo_casing/c35sol/pierce
+
 
 // .40 Sol Long
 // Rifle caliber caseless ammo that kills people good
@@ -406,24 +403,20 @@
 /obj/item/ammo_casing/c40sol
 	name = ".40 Sol Long lethal bullet casing"
 	desc = "A SolFed standard caseless lethal rifle round."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "40sol"
-
 	caliber = CALIBER_SOL40LONG
 	projectile_type = /obj/projectile/bullet/c40sol
 
 
 /obj/item/ammo_casing/c40sol/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/caseless)
 
 
 /obj/projectile/bullet/c40sol
 	name = ".40 Sol Long bullet"
 	damage = 20
-
 	wound_bonus = 10
 	bare_wound_bonus = 20
 
@@ -640,7 +633,8 @@
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
 	damage = 50
-	armour_penetration = 60
+	armour_penetration = 50
+	wound_bonus = -20
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
@@ -723,8 +717,8 @@
 
 	weak_against_armour = TRUE
 
-	wound_bonus = 30
-	bare_wound_bonus = 40
+	wound_bonus = 10
+	bare_wound_bonus = 20
 
 /obj/item/ammo_box/c585trappiste/hollowpoint
 	name = "ammo box (.585 Trappiste hollowhead)"
@@ -755,9 +749,7 @@
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
 	damage = 15
-	armour_penetration = 30
-	wound_bonus = -30
-	bare_wound_bonus = -10
+	armour_penetration = 15
 
 /obj/item/ammo_box/c27_54cesarzowa
 	name = "ammo box (.27-54 Cesarzowa piercing)"
@@ -881,8 +873,8 @@
 	speed = 0.4
 	damage = 50
 	armour_penetration = 50
-	wound_bonus = 20
-	bare_wound_bonus = 30
+	wound_bonus = 10
+	bare_wound_bonus = 10
 	demolition_mod = 1.8
 	/// How much damage we add to things that are weak to this bullet
 	var/anti_materiel_damage_addition = 30
@@ -891,6 +883,18 @@
 	. = ..()
 	// We do 80 total damage to anything robotic, namely borgs, and robotic simplemobs
 	AddElement(/datum/element/bane, target_type = /mob/living, mob_biotypes = MOB_ROBOTIC, damage_multiplier = 0, added_damage = anti_materiel_damage_addition)
+
+/obj/projectile/bullet/p60strela/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+	if(isliving(target))
+		// If the bullet has already gone through 3 people, stop it on this hit
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+			if(damage > 10) // Lets just be safe with this one
+				damage -= 10
+			armour_penetration -= 10
+
+	return ..()
 
 /obj/item/ammo_box/magazine/m10mm/rifle
 	name = "rifle magazine (10mm)"
@@ -1007,90 +1011,123 @@
 	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
 
 /obj/item/ammo_box/advanced/s12gauge
-	name = "Slug ammo box"
-	desc = "A box of 15 slug shells. Large, singular shots that pack a punch."
+	name = "slug ammo box"
+	desc = "A box of slug shells. Large, singular shots that pack a punch."
 	icon = 'monkestation/code/modules/blueshift/icons/shotbox.dmi'
 	icon_state = "slug"
 	ammo_type = /obj/item/ammo_casing/shotgun
-	max_ammo = 15
+	max_ammo = 16
 	multitype = FALSE // if you enable this and set the box's caliber var to CALIBER_SHOTGUN (at time of writing, "shotgun"), then you can have the fabled any-ammo shellbox
 
+	var/old_ammo_count
+	//var for how long it takes to reload from this ammo box
+	var/reload_delay = 1 SECONDS
+
+/obj/item/ammo_box/advanced/s12gauge/pre_attack(atom/target, mob/living/user)
+	if(DOING_INTERACTION(user, "doafter_reloading"))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(length(stored_ammo) == 0)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(istype(target, /obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/gun = target
+		if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
+		old_ammo_count = length(stored_ammo)
+		if(do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
+			return FALSE
+
+/obj/item/ammo_box/advanced/s12gauge/afterattack(atom/target, mob/user, proximity_flag, click_parameters) //why did i do this, i guess it's funny?
+	. = ..()
+	if(istype(target, /obj/item/gun/ballistic))
+		if(old_ammo_count == length(stored_ammo))
+			to_chat(user, span_notice("You pause for a moment, something isn't right..."))
+
 /obj/item/ammo_box/advanced/s12gauge/buckshot
-	name = "Buckshot ammo box"
-	desc = "A box of 15 buckshot shells. These have a modest spread of weaker projectiles."
+	name = "buckshot ammo box"
+	desc = "A box of buckshot shells. These have a modest spread of weaker projectiles."
 	icon_state = "buckshot"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/rubber
-	name = "Rubbershot ammo box"
-	desc = "A box of 15 rubbershot shells. These have a modest spread of weaker, less-lethal projectiles."
+	name = "rubbershot ammo box"
+	desc = "A box of rubbershot shells. These have a modest spread of weaker, less-lethal projectiles."
 	icon_state = "rubber"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/bean
-	name = "Beanbag Slug ammo box"
-	desc = "A box of 15 beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
+	name = "beanbag Slug ammo box"
+	desc = "A box of beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
 	icon_state = "bean"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/magnum
-	name = "Magnum blockshot ammo box"
-	desc = "A box of 15 magnum blockshot shells. The size of the pellet is larger in diameter than the typical shot, but there are less of them inside each shell."
+	name = "magnum blockshot ammo box"
+	desc = "A box of magnum blockshot shells. The size of the pellet is larger in diameter than the typical shot, but there are less of them inside each shell."
 	icon_state = "magnum"
 	ammo_type = /obj/item/ammo_casing/shotgun/magnum
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/express
-	name = "Express pelletshot ammo box"
-	desc = "A box of 15 express pelletshot shells. The size of the pellet is smaller in diameter than the typical shot, but there are more of them inside each shell."
+	name = "express pelletshot ammo box"
+	desc = "A box of express pelletshot shells. The size of the pellet is smaller in diameter than the typical shot, but there are more of them inside each shell."
 	icon_state = "express"
 	ammo_type = /obj/item/ammo_casing/shotgun/express
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/hunter
-	name = "Hunter slug ammo box"
-	desc = "A box of 15 hunter slug shells. These shotgun slugs excel at damaging the local fauna."
+	name = "hunter slug ammo box"
+	desc = "A box of hunter slug shells. These shotgun slugs excel at damaging the local fauna."
 	icon_state = "hunter"
 	ammo_type = /obj/item/ammo_casing/shotgun/hunter
-	max_ammo = 15
+	max_ammo = 16
+
+/obj/item/ammo_box/advanced/s12gauge/apds
+	name = "AP sabot-slug ammo box"
+	desc = "A box of tungsten sabot-slugs. A vastly higher velocity combined with greater sectional density renders most armor irrelevant."
+	icon_state = "apshell"
+	ammo_type = /obj/item/ammo_casing/shotgun/apds
+	max_ammo = 16
+
 
 /obj/item/ammo_box/advanced/s12gauge/flechette
-	name = "Flechette ammo box"
-	desc = "A box of 15 flechette shells. Each shell contains a small group of tumbling blades that excel at causing terrible wounds."
+	name = "flechette ammo box"
+	desc = "A box of flechette shells. Each shell contains a small group of tumbling blades that excel at causing terrible wounds."
 	icon_state = "flechette"
 	ammo_type = /obj/item/ammo_casing/shotgun/flechette
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/beehive
-	name = "Hornet's nest ammo box"
-	desc = "A box of 15 hornet's nest shells. These are less-lethal shells that will bounce off walls and direct themselves toward nearby targets."
+	name = "hornet's nest ammo box"
+	desc = "A box of hornet's nest shells. These are less-lethal shells that will bounce off walls and direct themselves toward nearby targets."
 	icon_state = "beehive"
 	ammo_type = /obj/item/ammo_casing/shotgun/beehive
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/antitide
-	name = "Stardust ammo box"
-	desc = "A box of 15 express pelletshot shells. These are less-lethal and will embed in targets, causing pain on movement."
+	name = "stardust ammo box"
+	desc = "A box of express pelletshot shells. These are less-lethal and will embed in targets, causing pain on movement."
 	icon_state = "antitide"
 	ammo_type = /obj/item/ammo_casing/shotgun/antitide
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/incendiary
-	name = "Incendiary Slug ammo box"
-	desc = "A box of 15 incendiary slug shells. These will ignite targets and leave a trail of fire behind them."
+	name = "incendiary Slug ammo box"
+	desc = "A box of incendiary slug shells. These will ignite targets and leave a trail of fire behind them."
 	icon_state = "incendiary"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/honkshot
-	name = "Confetti Honkshot ammo box"
-	desc = "A box of 35 shotgun shells."
+	name = "confetti Honkshot ammo box"
+	desc = "A box of 35 Honkshot TM shells."
 	icon_state = "honk"
 	ammo_type = /obj/item/ammo_casing/shotgun/honkshot
-	max_ammo = 35
+	max_ammo = 40
+	reload_delay = 0.1 SECONDS
 
 #define AMMO_MATS_SHOTGUN list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4) // not quite as thick as a half-sheet
 
@@ -1112,6 +1149,12 @@
 	icon = 'monkestation/code/modules/blueshift/icons/shotshells.dmi'
 	desc = "A 12 gauge iron slug."
 	custom_materials = AMMO_MATS_SHOTGUN
+
+/obj/item/ammo_casing/shotgun/apds  //This SHOULD let you print the shells in the ammo lathe
+	can_be_printed = TRUE
+	advanced_print_req = TRUE
+	custom_materials = AMMO_MATS_SHOTGUN_PLASMA //plastanium -> tungsten approximation
+
 
 // THE BELOW TWO SLUGS ARE NOTED AS ADMINONLY AND HAVE ***EIGHTY*** WOUND BONUS. NOT BARE WOUND BONUS. FLAT WOUND BONUS.
 /obj/item/ammo_casing/shotgun/executioner
@@ -1179,30 +1222,6 @@
 	<br><br>\
 	<i>HORNET'S NEST: Fire an overwhelming amount of projectiles in a single shot.</i>"
 	can_be_printed = FALSE
-
-/obj/item/ammo_casing/shotgun/buckshot
-	name = "buckshot shell"
-	desc = "A 12 gauge buckshot shell."
-	icon_state = "gshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
-	pellets = 8 // 8 * 6 for 48 damage if every pellet hits, we want to keep lethal shells ~50 damage
-	variance = 25
-
-/obj/projectile/bullet/pellet/shotgun_buckshot
-	name = "buckshot pellet"
-	damage = 6
-
-/obj/item/ammo_casing/shotgun/rubbershot
-	name = "rubber shot"
-	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
-	icon_state = "rshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
-	pellets = 6 // 6 * 10 for 60 stamina damage, + some small amount of brute, we want to keep less lethal shells ~60
-	variance = 20
-	harmful = FALSE
-
-/obj/projectile/bullet/pellet/shotgun_rubbershot
-	stamina = 10
 
 /obj/item/ammo_casing/shotgun/magnum
 	name = "magnum blockshot shell"
@@ -1301,7 +1320,7 @@
 	icon_state = "lasershell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/antitide
 	pellets = 8 // 8 * 7 for 56 stamina damage, plus whatever the embedded shells do
-	variance = 30
+	variance = 50
 	harmful = FALSE
 	fire_sound = 'sound/weapons/taser.ogg'
 	custom_materials = AMMO_MATS_SHOTGUN_TIDE
@@ -1312,15 +1331,15 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "stardust"
 	damage = 2
-	stamina = 16
+	stamina = 7
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	stutter = 3 SECONDS
 	jitter = 5 SECONDS
 	eyeblur = 1 SECONDS
 	sharpness = NONE
-	range = 8
-	embedding = list(embed_chance=70, pain_chance=25, fall_chance=15, jostle_chance=80, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.9, pain_mult=2, rip_time=10)
+	range = 7
+	embedding = list(embed_chance=75, pain_chance=50, fall_chance=15, jostle_chance=80, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.9, pain_mult=2, rip_time=10)
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/antitide/on_range()
 	do_sparks(1, TRUE, src)
@@ -1358,9 +1377,6 @@
 /obj/projectile/bullet/shotgun_slug/hunter/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, mob_biotypes = MOB_BEAST, damage_multiplier = 5)
-
-/obj/projectile/bullet/pellet/shotgun_improvised
-	weak_against_armour = TRUE // We will not have Improvised are Better 2.0
 
 /obj/item/ammo_casing/shotgun/honkshot
 	name = "confetti shell"

@@ -164,6 +164,9 @@
 	if(deviation == DEVIATION_FULL)
 		return
 
+	if(CAN_BYPASS_INNATE_FLASH_RESISTANCE(user)) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
+		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
+
 	if(targeted)
 		if(flashed.flash_act(1, 1))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
@@ -185,6 +188,8 @@
 		if(flashed.flash_act())
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 
+	REMOVE_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
+
 /**
  * Handles the directionality of the attack
  *
@@ -202,8 +207,8 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
-			return DEVIATION_NONE
+		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE || carbon_victim.get_organ_by_type(/obj/item/organ/internal/eyes/apid)) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
+			return DEVIATION_NONE // MONKESTATION ADDITION APID EYES
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.

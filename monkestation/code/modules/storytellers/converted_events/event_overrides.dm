@@ -22,6 +22,10 @@
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
+/datum/round_event_control/antagonist/solo/blob_infection
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
+	checks_antag_cap = TRUE
+	
 /datum/round_event_control/brain_trauma
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_TARGETED, TAG_MAGICAL) //im putting magical on this because I think this can give the magic brain traumas
@@ -137,6 +141,7 @@
 
 /datum/round_event_control/operative
 	track = EVENT_TRACK_MAJOR //this is a safe guard and does not trigger normally(technically it can but not really) so no tags
+	checks_antag_cap = TRUE
 
 /datum/round_event_control/portal_storm_syndicate
 	track = EVENT_TRACK_MAJOR

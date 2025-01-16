@@ -53,8 +53,17 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		else
 			fullid += REF(key)
 
-	if(length(named_arguments))
-		named_arguments = sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
+	if(named_arguments)
+		sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
 		fullid += named_arguments
 
 	return list2params(fullid)
+
+/datum/controller/subsystem/processing/dcs/proc/_Has_Element(atom/checker, datum/element/element_id)
+	var/datum/element/eletype = elements_by_type[element_id]
+	if(!eletype)
+		return FALSE //not yet created simply return FALSE
+
+	if(!(checker in eletype?._signal_procs)) //shitcode beware
+		return FALSE
+	return TRUE

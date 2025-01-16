@@ -27,6 +27,10 @@
 	response_harm_simple = "splat"
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
+	//MONKESTATION EDIT START
+	death_sound = 'sound/effects/mousesqueek.ogg'
+	death_message = "falls limp and lifeless..."
+	//MONKESTATION EDIT STOP
 
 	/// Whether this rat is friendly to players
 	var/tame = FALSE
@@ -36,10 +40,15 @@
 	var/contributes_to_ratcap = TRUE
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
-	/// responsible for disease stuff
-	var/list/ratdisease = list()
 
 	var/chooses_bodycolor = TRUE
+
+//MONKESTATION EDIT START
+/mob/living/basic/mouse/get_scream_sound()
+	return 'sound/effects/mousesqueek.ogg'
+/mob/living/basic/mouse/get_laugh_sound()
+	return 'sound/effects/mousesqueek.ogg'
+//MONKESTATION EDIT STOP
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
@@ -112,7 +121,6 @@
 
 // On death, remove the mouse from the ratcap, and turn it into an item if applicable
 /mob/living/basic/mouse/death(gibbed)
-	var/list/data = list("viruses" = ratdisease)
 	SSmobs.cheeserats -= src
 	// Rats with a mind will not turn into a lizard snack on death
 	if(mind)
@@ -125,8 +133,15 @@
 		var/obj/item/food/deadmouse/mouse = new(loc)
 		mouse.name = name
 		mouse.icon_state = icon_dead
+		//MONKESTATION EDIT START
+		var/list/data = list("viruses"=list(),"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"immunity"=list())
+		for(var/datum/disease/D as anything in diseases)
+			var/datum/disease/DA = D.Copy()
+			DA.spread_flags = DISEASE_SPREAD_BLOOD //please stop killing the station with the black death from eating rats
+			data["viruses"] += DA
+		data["immunity"] = immune_system.GetImmunity()
+		//MONKESTATION EDIT END
 		mouse.reagents.add_reagent(/datum/reagent/blood, 2, data)
-		mouse.ratdisease = src.ratdisease
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -143,6 +158,24 @@
 	if(istype(attack_target, /obj/item/food/cheese))
 		try_consume_cheese(attack_target)
 		return TRUE
+	//MONKESTATION EDIT START
+	if(istype(attack_target, /obj/item))
+		if(!attack_target.GetComponent(/datum/component/edible))
+			return
+		if(istype(attack_target, /obj/item/food/cheese))
+			return //mice savour cheese differently
+		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
+		edible.UseByMouse(edible, src)
+
+		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
+			if(istype(target_reagent, /datum/reagent/toxin))
+				visible_message(
+					span_warning("[src] devours [attack_target]! They pause for a moment..."),
+					span_warning("You devour [attack_target], something tastes off..."),
+				)
+				if(health != 0)
+					adjust_health(4)
+	//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)
@@ -307,8 +340,6 @@
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
-	///responsible for holding diseases for dead rat
-	var/list/ratdisease = list()
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 

@@ -67,6 +67,10 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
+	if(interview_safety(src, "attempting to observe"))
+		qdel(client)
+		return FALSE
+
 	var/less_input_message
 	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		less_input_message = " - Notice: Observer freelook is currently disabled."
@@ -143,6 +147,10 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	if(interview_safety(src, "attempting to latejoin"))
+		qdel(client)
+		return FALSE
+
 	var/error = IsJobUnavailable(rank)
 	if(error != JOB_AVAILABLE)
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
@@ -189,14 +197,15 @@
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
-	if(character.client && length(character.client?.active_challenges))
-		SSchallenges.apply_challenges(character.client)
-	for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
-		if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-			character.client.reward_this_person += 425
-	for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
-		if(character.job == processing_reward_jobs)
-			character.client.reward_this_person += 425
+	var/datum/player_details/details = get_player_details(character)
+	if(details)
+		SSchallenges.apply_challenges(details)
+		for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
+			if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
+				details.roundend_monkecoin_bonus += 425
+		for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
+			if(character.job == processing_reward_jobs)
+				details.roundend_monkecoin_bonus += 425
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -285,9 +294,11 @@
 	if(QDELETED(src) || !client)
 		return // Disconnected while checking for the appearance ban.
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
-		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
-		mind.set_original_character(spawning_mob)
+		// transfer_to sets mind to null
+		var/datum/mind/preserved_mind = mind
+		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+		preserved_mind.set_original_character(spawning_mob)
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
@@ -388,7 +399,7 @@
 		remove_verb(mob, verb_path)
 
 	// Then we create the interview form and show it to the client
-	var/datum/interview/I = GLOB.interviews.interview_for_client(mob)
+	var/datum/interview/I = GLOB.interviews.interview_for_client(src)
 	if (I)
 		I.ui_interact(mob)
 

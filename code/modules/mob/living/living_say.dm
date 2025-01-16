@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
+	RADIO_KEY_UNCOMMON = RADIO_CHANNEL_UNCOMMON,
 
 
 	//kinda localization -- rastaf0
@@ -56,7 +58,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"щ" = RADIO_CHANNEL_AI_PRIVATE
+	"щ" = RADIO_CHANNEL_AI_PRIVATE,
+	"з" = RADIO_CHANNEL_ENTERTAINMENT,
+	"f" = RADIO_CHANNEL_UNCOMMON,
 ))
 
 /**
@@ -267,7 +271,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(succumbed)
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
-
+	talkcount++
 	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)

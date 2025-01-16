@@ -19,11 +19,15 @@
 	amount = dna.species.spec_stun(src, amount)
 	if(HAS_TRAIT(src, TRAIT_HEAVY_SLEEPER))
 		amount *= (rand(125, 130) * 0.01)
+	if(HAS_TRAIT(src, TRAIT_LIGHT_SLEEPER))
+		amount *= 0.75
 	return ..()
 
 /mob/living/carbon/human/Sleeping(amount)
 	if(HAS_TRAIT(src, TRAIT_HEAVY_SLEEPER))
 		amount *= (rand(125, 130) * 0.01)
+	if(HAS_TRAIT(src, TRAIT_LIGHT_SLEEPER))
+		amount *= 0.75
 	return ..()
 
 /mob/living/carbon/human/cure_husk(list/sources)
@@ -32,7 +36,7 @@
 		update_body_parts()
 
 /mob/living/carbon/human/become_husk(source)
-	if(NOHUSK in dna.species.species_traits) //skeletons shouldn't be husks.
+	if(HAS_TRAIT(src, TRAIT_NO_HUSK)) //skeletons shouldn't be husks.
 		cure_husk()
 		return
 	. = ..()

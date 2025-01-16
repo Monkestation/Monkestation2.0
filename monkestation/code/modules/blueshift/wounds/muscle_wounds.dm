@@ -9,10 +9,6 @@
 	wound_flags = (ACCEPTS_GAUZE)
 
 	processes = TRUE
-	/// How much do we need to regen. Will regen faster if we're splinted and or laying down
-	var/regen_ticks_needed
-	/// Our current counter for healing
-	var/regen_ticks_current = 0
 
 	can_scar = FALSE
 
@@ -22,7 +18,7 @@
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	required_limb_biostate = BIO_FLESH
 
-	required_wounding_types = list(WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE)
+	required_wounding_types = list(WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, WOUND_MUSCLE)
 	match_all_wounding_types = FALSE
 
 	wound_series = WOUND_SERIES_MUSCLE_DAMAGE
@@ -58,8 +54,9 @@
 	return ..()
 
 /datum/wound/muscle/handle_process()
+	if(QDELETED(victim) || QDELETED(limb))
+		return
 	. = ..()
-
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
 		if(prob(50))
@@ -69,13 +66,6 @@
 
 	if(limb.current_gauze)
 		regen_ticks_current += (1-limb.current_gauze.splint_factor)
-
-	if(regen_ticks_current > regen_ticks_needed)
-		if(!victim || !limb)
-			qdel(src)
-			return
-		to_chat(victim, span_green("Your [parse_zone(limb.body_zone)] has regenerated its muscle!"))
-		remove_wound()
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
 /datum/wound/muscle/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)

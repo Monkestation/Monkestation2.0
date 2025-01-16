@@ -164,6 +164,20 @@
 		else
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
+	// monkestation edit: no-heal challenge
+	if(HAS_TRAIT(target, TRAIT_NO_HEALS))
+		render_list += "<span class='alert ml-1'><b>Subject cannot be healed by any known methods.</b></span>\n"
+	// monkestation end
+
+	// monkestation edit: heavy bleeder challenge
+	if(HAS_TRAIT(target, TRAIT_HEAVY_BLEEDER))
+		render_list += "<span class='alert ml-1'><b>Subject will suffer highly abnormal hemorrhaging from laceration or surgical incension.</b></span>\n"
+
+	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
+	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
+	// monkestation end
+
 	if(target.stamina.loss)
 		if(advanced)
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss]%.</span>\n"
@@ -265,51 +279,62 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
 
-		// Organ damage, missing organs
-		if(humantarget.organs && humantarget.organs.len)
-			var/render = FALSE
-			var/toReport = "<span class='info ml-1'>Organs:</span>\
-				<table class='ml-2'><tr>\
-				<td style='width:6em;'><font color='#ff0000'><b>Organ:</b></font></td>\
-				[advanced ? "<td style='width:3em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
-				<td style='width:12em;'><font color='#ff0000'><b>Status</b></font></td>"
+		var/render = FALSE
+		var/toReport = "<span class='info ml-1'>Organ status:</span>\
+		<font face='Verdana'>\
+		<table class='ml-2'>\
+		<tr>\
+		<td style='width:8em;'><font color='#ff0000'><b>Organ:</b></font></td>\
+		[advanced ? "<td style='width:4em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
+		<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>\
+		</tr>"
 
-			for(var/obj/item/organ/organ as anything in humantarget.organs)
-				var/status = organ.get_status_text()
-				if (status != "")
+		var/list/missing_organs = list()
+		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
+			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
+		if(!humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+			missing_organs[ORGAN_SLOT_HEART] = "Heart"
+		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
+			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
+		if(!HAS_TRAIT_FROM(humantarget, TRAIT_LIVERLESS_METABOLISM, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantliver) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
+			missing_organs[ORGAN_SLOT_LIVER] = "Liver"
+		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOHUNGER, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantstomach) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
+			missing_organs[ORGAN_SLOT_STOMACH] ="Stomach"
+		if(!isnull(humantarget.dna.species.mutanttongue) && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
+			missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
+		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
+			missing_organs[ORGAN_SLOT_EARS] = "Ears"
+		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
+			missing_organs[ORGAN_SLOT_EYES] = "Eyes"
+
+		// Follow same order as in the organ_process_order so it's consistent across all humans
+		for(var/sorted_slot in GLOB.organ_process_order)
+			var/obj/item/organ/organ = humantarget.get_organ_slot(sorted_slot)
+			if(isnull(organ))
+				if(missing_organs[sorted_slot])
 					render = TRUE
-					toReport += "<tr><td><font color='#cc3333'>[organ.name]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>[CEILING(organ.damage,1)]</font></td>" : ""]\
-						<td>[status]</td></tr>"
-
-			var/datum/species/the_dudes_species = humantarget.dna.species
-			var/missing_organs = list()
-			if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
-				missing_organs += "brain"
-			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
-				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
-				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
-				missing_organs += "liver"
-			if(the_dudes_species.mutantstomach && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
-				missing_organs += "stomach"
-			if(the_dudes_species.mutanttongue && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
-				missing_organs += "tongue"
-			if(!humantarget.get_organ_slot(ORGAN_SLOT_EARS))
-				missing_organs += "ears"
-			if(!humantarget.get_organ_slot(ORGAN_SLOT_EYES))
-				missing_organs += "eyes"
-
-			if(length(missing_organs))
+					toReport += "<tr><td><font color='#cc3333'>[missing_organs[sorted_slot]]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
+						<td><font color='#cc3333'>Missing</font></td></tr>"
+				continue
+			if(mode != SCANNER_VERBOSE && !organ.show_on_condensed_scans())
+				continue
+			var/status = organ.get_status_text(advanced, tochat)
+			var/appendix = organ.get_status_appendix(advanced, tochat)
+			if(status || appendix)
+				status ||= "<font color='#ffcc33'>OK</font>" // otherwise flawless organs have no status reported by default
 				render = TRUE
-				for(var/organ in missing_organs)
-					toReport += "<tr><td><font color='#cc3333'>[organ]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+				toReport += "<tr>\
+					<td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
+					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
+					<td>[status]</td>\
+					</tr>"
+				if(appendix)
+					toReport += "<tr><td colspan=4><span class='alert ml-2'>&rdsh; [appendix]</span></td></tr>"
 
-			if(render)
-				render_list += toReport + "</table>" // tables do not need extra linebreak
+		if(render)
+			render_list += "<hr>"
+			render_list += toReport + "</table></font>" // tables do not need extra linebreak
 
 		//Genetic stability
 		if(advanced && humantarget.has_dna())
@@ -330,18 +355,19 @@
 			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
-		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
-		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
-			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span>\n"
-		else if(humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
-			render_list += "<span class='alert ml-1'>❄ [core_temperature_message] ❄</span>\n"
-		else
-			render_list += "<span class='info ml-1'>[core_temperature_message]</span>\n"
+	var/skin_temp = target.get_skin_temperature()
+	var/skin_temperature_message = "Skin temperature: [round(KELVIN_TO_CELCIUS(skin_temp), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(skin_temp), 0.1)] &deg;F)"
+	if(skin_temp >= target.bodytemp_heat_damage_limit)
+		render_list += "<span class='alert ml-1'>☼ [skin_temperature_message] ☼</span>\n"
+	else if(skin_temp <= target.bodytemp_cold_damage_limit)
+		render_list += "<span class='alert ml-1'>❄ [skin_temperature_message] ❄</span>\n"
+	else
+		render_list += "<span class='info ml-1'>[skin_temperature_message]</span>\n"
 
-	var/body_temperature_message = "Body temperature: [round(target.bodytemperature-T0C, 0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)"
-	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit())
+	var/body_temperature_message = "Body temperature: [round(KELVIN_TO_CELCIUS(target.bodytemperature), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(target.bodytemperature), 0.1)] &deg;F)"
+	if(target.bodytemperature >= target.bodytemp_heat_damage_limit)
 		render_list += "<span class='alert ml-1'>☼ [body_temperature_message] ☼</span>\n"
-	else if(target.bodytemperature <= target.get_body_temp_cold_damage_limit())
+	else if(target.bodytemperature <= target.bodytemp_cold_damage_limit)
 		render_list += "<span class='alert ml-1'>❄ [body_temperature_message] ❄</span>\n"
 	else
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"
@@ -374,23 +400,20 @@
 			</span>" // divs do not need extra linebreak
 	*/
 	// Blood Level
-	if(target.has_dna())
-		var/mob/living/carbon/carbontarget = target
-		var/blood_id = carbontarget.get_blood_id()
-		if(blood_id)
-			if(carbontarget.is_bleeding())
+	// NON-MODULE CHANGE
+	if(target.has_dna() && target.get_blood_type())
+		if(iscarbon(target))
+			var/mob/living/carbon/bleeder = target
+			if(bleeder.is_bleeding())
 				render_list += "<span class='alert ml-1'><b>Subject is bleeding!</b></span>\n"
-			var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = carbontarget.dna.blood_type
-			if(blood_id != /datum/reagent/blood) // special blood substance
-				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
-				blood_type = R ? R.name : blood_id
-			if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
-			else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent] %</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
-			else
-				render_list += "<span class='info ml-1'>Blood level: [blood_percent] %, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
+		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/blood_type = "[target.get_blood_type() || "None"]"
+		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
+			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [target.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
+		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
+			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent] %</b>, [target.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
+		else
+			render_list += "<span class='info ml-1'>Blood level: [blood_percent] %, [target.blood_volume] cl, type: [blood_type]</span>\n"
 
 	// Cybernetics
 	if(iscarbon(target))
@@ -405,7 +428,7 @@
 	// we handled the last <br> so we don't need handholding
 
 	if(tochat)
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	else
 		return(jointext(render_list, ""))
 
@@ -472,7 +495,7 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
@@ -505,11 +528,9 @@
 
 	var/render_list = ""
 	var/advised = FALSE
-	for(var/limb in patient.get_wounded_bodyparts())
-		var/obj/item/bodypart/wounded_part = limb
-		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
-		for(var/limb_wound in wounded_part.wounds)
-			var/datum/wound/current_wound = limb_wound
+	for(var/obj/item/bodypart/wounded_part as anything in patient.get_wounded_bodyparts())
+		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.plaintext_zone]</b>"
+		for(var/datum/wound/current_wound as anything in wounded_part.wounds)
 			render_list += "<div class='ml-2'>[simple_scan ? current_wound.get_simple_scanner_description() : current_wound.get_scanner_description()]</div>\n"
 			if (scanner.give_wound_treatment_bonus)
 				ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
@@ -527,7 +548,7 @@
 			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
 		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
@@ -638,7 +659,7 @@
 
 	if(!istype(patient))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [patient]."))
+		to_chat(user, span_warning("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [patient]."))
 		show_emotion(AI_EMOTION_SAD)
 		return
 
@@ -705,9 +726,9 @@
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] scans [patient] for diseases."), span_notice("You scan [patient] for diseases."))
 
-	if(!istype(user))
+	if(!istype(patient))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
+		to_chat(user, span_warning("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
 		emotion = AID_EMOTION_SAD
 		update_appearance(UPDATE_OVERLAYS)
 		return
@@ -740,14 +761,14 @@
 		if(istype(disease, /datum/disease/advanced))
 			var/datum/disease/advanced/advanced = disease
 			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] detected</b>\n\
-				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].</div>\
+				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] disease detected</b>\n\
+				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
 				</span>"
 
 		else
 			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
-				<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+				render += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
+				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 				</span>"
 
 	if(!length(render))

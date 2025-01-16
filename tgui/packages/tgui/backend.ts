@@ -176,7 +176,7 @@ export const backendMiddleware = (store) => {
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      setImmediate(() => focusMap());
+      setTimeout(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -206,7 +206,7 @@ export const backendMiddleware = (store) => {
       setupDrag();
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
-      setImmediate(() => {
+      setTimeout(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());
@@ -313,7 +313,6 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  *
  * It is a lot more performant than `setSharedState`.
  *
- * @param context React context.
  * @param key Key which uniquely identifies this state in Redux store.
  * @param initialState Initializes your global variable with this value.
  */

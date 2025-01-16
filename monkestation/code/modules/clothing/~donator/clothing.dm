@@ -127,7 +127,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
+
 	supports_variations_flags = NONE
 
 // Donation reward for Thedragmeme
@@ -292,7 +292,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	supports_variations_flags = NONE
@@ -443,6 +443,10 @@
 	supports_variations_flags = NONE
 	armor_type = /datum/armor/none
 
+/obj/item/clothing/suit/armor/vest/darkcarapace/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
 // Donation reward for inferno707
 /obj/item/clothing/mask/hheart
 	name = "Hollow Heart"
@@ -542,6 +546,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	worn_icon_state = "scraparmor"
 	body_parts_covered = CHEST
+
+/obj/item/clothing/suit/scraparmour/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 // Donation reward for Enzoman
 /obj/item/clothing/mask/luchador/enzo
@@ -664,7 +672,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -675,7 +683,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "chernocoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex

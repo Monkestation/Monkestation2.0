@@ -70,6 +70,12 @@
 	var/list/protected_roles
 	/// Restricted roles from the antag roll
 	var/list/restricted_roles
+	var/event_icon_state
+
+/datum/round_event_control/proc/generate_image(list/mobs)
+	return
+/datum/round_event_control/antagonist/generate_image(list/mobs)
+	SScredits.generate_major_icon(mobs, event_icon_state)
 
 /datum/round_event_control/antagonist/proc/check_required()
 	if(!length(exclusive_roles))
@@ -139,6 +145,8 @@
 	/// A list of extra events to force whenever this one is chosen by the storyteller.
 	/// Can either be normal list or a weighted list.
 	var/list/extra_spawned_events
+	/// Similar to extra_spawned_events however these are only used by roundstart events and will only try and run if we have the points to do so
+	var/list/preferred_events
 
 /datum/round_event_control/antagonist/solo/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
@@ -204,13 +212,18 @@
 	var/prompted_picking = FALSE //TODO: Implement this
 	/// DO NOT SET THIS MANUALLY, THIS IS INHERITED FROM THE EVENT CONTROLLER ON NEW
 	var/list/extra_spawned_events
+	// Same as above
+	var/list/preferred_events
 
 /datum/round_event/antagonist/solo/New(my_processing, datum/round_event_control/event_controller)
 	. = ..()
 	if(istype(event_controller, /datum/round_event_control/antagonist/solo))
 		var/datum/round_event_control/antagonist/solo/antag_event_controller = event_controller
-		if(antag_event_controller?.extra_spawned_events)
-			extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
+		if(antag_event_controller)
+			if(antag_event_controller.extra_spawned_events)
+				extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
+			if(antag_event_controller.preferred_events)
+				preferred_events = fill_with_ones(antag_event_controller.preferred_events)
 
 /datum/round_event/antagonist/solo/setup()
 	var/datum/round_event_control/antagonist/solo/cast_control = control
@@ -235,14 +248,18 @@
 	var/list/cliented_list = list()
 	for(var/mob/living/mob as anything in possible_candidates)
 		cliented_list += mob.client
+
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
 
 	var/list/weighted_candidates = return_antag_rep_weight(possible_candidates)
 
-	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
+	while(length(weighted_candidates) && length(candidates) < antag_count) //both of these pick_n_take from weighted_candidates so this should be fine
 		if(prompted_picking)
-			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/client/picked_client = GLOB.directory[picked_ckey]
+			if(QDELETED(picked_client))
+				continue
 			var/mob/picked_mob = picked_client.mob
 			log_storyteller("Prompted antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			if(picked_mob)
@@ -258,14 +275,16 @@
 					show_candidate_amount = FALSE,
 				)
 		else
-			if(!length(weighted_candidates))
-				break
-			var/client/picked_client = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/client/picked_client = GLOB.directory[picked_ckey]
+			if(QDELETED(picked_client))
+				continue
 			var/mob/picked_mob = picked_client.mob
+			picked_mob?.mind?.picking = TRUE
 			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
-
+	var/list/picked_mobs = list()
 	for(var/i in 1 to antag_count)
 		if(!length(candidates))
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
@@ -282,8 +301,10 @@
 		setup_minds += candidate.mind
 		candidate.mind.special_role = antag_flag
 		candidate.mind.restricted_roles = restricted_roles
+		picked_mobs += WEAKREF(candidate.client)
 
 	setup = TRUE
+	control.generate_image(picked_mobs)
 	if(LAZYLEN(extra_spawned_events))
 		var/event_type = pick_weight(extra_spawned_events)
 		if(!event_type)
@@ -316,6 +337,8 @@
 	old_mob.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
 	old_mob.mind.transfer_to(new_character)
+	if(old_mob.has_quirk(/datum/quirk/anime)) // stupid special case bc this quirk is basically janky wrapper shitcode around some optional appearance prefs
+		new_character.add_quirk(/datum/quirk/anime)
 	if(qdel_old_mob)
 		qdel(old_mob)
 	return new_character
@@ -353,22 +376,21 @@
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
+	var/selected_count = 0
+	while(length(weighted_candidates) && selected_count < antag_count)
+		var/candidate_ckey = pick_n_take_weighted(weighted_candidates)
+		var/client/candidate_client = GLOB.directory[candidate_ckey]
+		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
+			continue
+		var/mob/candidate = candidate_client.mob
 
-	for(var/i in 1 to antag_count)
-		if(!length(weighted_candidates))
-			break
-
-		var/client/mob_client = pick_n_take_weighted(weighted_candidates)
-		var/mob/candidate = mob_client.mob
-
-		if(candidate.client) //I hate this
-			candidate.client.prefs.reset_antag_rep()
+		candidate_client.prefs?.reset_antag_rep()
 
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
-
 		var/mob/living/carbon/human/new_human = make_body(candidate)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind
+		selected_count++
 	setup = TRUE

@@ -41,6 +41,7 @@
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
+	cell_type = /obj/item/stock_parts/cell/upgraded //monkestation ADDITION
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
@@ -67,7 +68,7 @@
 	icon_state = "hoslaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos, /obj/item/ammo_casing/energy/electrode/hos) //monkestation edit
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1

@@ -437,3 +437,215 @@
   - bugfix: Apid hive exits are now anchored
   SirNightKnight:
   - qol: Utility jumpsuits can now be unzipped.
+2024-09-18:
+  Absolucy:
+  - qol: Looms will now "refill" your stack while you're spinning if you have more
+      stacks adjacent to you on the floor.
+  - bugfix: You can now actually see what Craig the Potted Plant is holding!
+  - bugfix: Craig's mini sprite now properly shows up when examining them.
+  - qol: Craig will now automatically pick up an adjacent watering can when loading,
+      if there is one.
+  - qol: You can manually hand Craig a watering can now. You can also swap out a normal
+      can for an advanced one.
+  - bugfix: Fixed Craig's name showing up as "the craig the potted plant" in examines
+      and such.
+  - bugfix: Plant trays no longer have doubled info about contained reagents when
+      examined.
+  - qol: Dexterous basic mobs with inhand sprites will now show what they're holding
+      when examined.
+  MrBagHead:
+  - qol: The Xenobiology/Science Bag can now hold slime crossbreed extracts, allowing
+      for easier management of all slime extracts.
+  Wisemonster:
+  - rscadd: Added the medipen refiller to all in-rotation medbay lobbies
+  - balance: ' Moved the medipen reffiler on voidraptor to the medbay lobby'
+2024-09-19:
+  Absolucy:
+  - refactor: Biocubes are now proper stacks, and behave as such.
+  - image: Made the biocube sprite slightly smaller.
+2024-09-20:
+  Absolucy:
+  - bugfix: Fix constant errors related to pathology symptom varients.
+  - qol: Health Analyzers now tell if someone is incapable of being healed.
+  - qol: Cryotubes will now automatically eject people who are incapable of being
+      healed.
+  - qol: Wound tending surgeries can no longer be started on patients who are incapable
+      of being healed.
+  - bugfix: Hopefully fix bloodsuckers getting stuck in their coffin after torpor.
+  - bugfix: Abandoned areas in maint (i.e gambling den, garden, etc) are now properly
+      protected from radstorms.
+  - rscadd: Radstorm-proofed some more areas.
+  - bugfix: MOD chameleon modules actually work properly - they disguise when the
+      suit is deactivated, undisguise when its activated, and properly handle modsuits
+      that can be equipped to different slots.
+  Ivniinvi:
+  - spellcheck: Fixed some typos in the cassette system
+  PotatoTomahto:
+  - rscadd: Cooking removes diseases from all reagents.
+  - bugfix: Mice properly transfer their disease to their dead carcass.
+  RafRoq:
+  - rscadd: 'New plant trait: Catalytic Inhibitor Serum.'
+  - rscadd: 'New restricted traitor uplink item: plant data disk with Catalytic Inhibitor
+      Serum gene for 20 TC.'
+  - bugfix: Fixed Dank Vesicles and Densified Chemicals interaction.
+  - rscdel: Removed the Potency Limiter gene.
+  ThePooba:
+  - rscadd: added maints between supply and top centcom
+  - bugfix: fixed retirement air
+  - rscadd: Warden requires 10 sec hours now
+  - rscadd: added security bot "Bigsky" (he big!)
+  - balance: Rust heretics mark doesnt delete 75% of your items now and instead does
+      50 damage to your items
+  - balance: cosmic mark makes you confused for 7 seconds
+  Wisemonster:
+  - balance: Heavily slowed the progression of heart worms
+  - qol: Geysers now have a description explaining how to extract chemicals from them.
+2024-09-21:
+  ThePooba:
+  - balance: changed florida men anmes to be character names and not set to florida
+      man
+2024-09-22:
+  Absolucy:
+  - bugfix: Fixed some major lag that'd occur related to alt-clicking.
+  - server: Added a failsafe to immediately restart the MC during certain conditions
+      where a subsystem would loop infinitely while queuing.
+  - balance: The storyteller now actually still continues to matter after the 85 minute
+      mark.
+  - rscadd: Added an automatic crew transfer vote - which will first start at the
+      90 minute mark, and repeat every 30 minutes if it doesn't pass. If it passes,
+      the shuttle will be called (and cannot be recalled). Players cannot manually
+      start transfer votes - only admins or the server itself can.
+  - qol: Made the vote start/end messages in chat look better and easier to see.
+  C0ld0n02:
+  - rscadd: Adds Power gloves as a new 8 tc engineering traitor item.
+  Tractor Mann:
+  - rscadd: Added a new quirk, Tunnel Vision! (-2) using it will add FOV, preventing
+      you from seeing behind you! You can pick a range of 90-180-270 Degrees to not
+      see people in.
+  - rscdel: Removed herobrine.
+2024-09-23:
+  Absolucy:
+  - admin: '"Get Server Logs" can now jump to a specific round ID.'
+  - admin: '"Get Current/Server Logs (Debug)" can now download profiler logs, as users
+      with the permission to use that can use the profiler anyways.'
+2024-09-24:
+  Absolucy:
+  - bugfix: Seedless now works for spliced plants.
+  - bugfix: Made the seed extractor UI a bit less laggy.
+  - bugfix: Fixed the Living Heart ritual deleting your old heart when replacing it
+      instead of having it dramatically burst out of your chest like it should.
+  - qol: The Living Heart ritual will now work if you don't have one at all for some
+      reason, in the same way that'd you use an organic heart in the ritual to replace
+      a cybernetic heart.
+  - qol: The Living Heart ritual, when putting a new heart into your chest, will now
+      heal the heart enough to be just under the "severe damage" threshold, if needed.
+  ancient-engineer:
+  - bugfix: fixed power gloves dusting you if the power was below 10 GWs instead of
+      greater then or equal to 10 GWs
+  flleeppyy:
+  - rscdel: qc some jukebox songs
+2024-09-25:
+  Absolucy, Kashargul:
+  - qol: Hides the delete button on the main chat tab.
+  - qol: You can now reorder chat tabs.
+  CannibalHunter:
+  - rscadd: Added new gravestone decor for mappers
+  - rscadd: Added several admin plushies to the monkeshop!
+  Gw0sty:
+  - rscadd: Adds syndicate boxes for revivers, anti-stun, and anti-drop cybernetics
+      with a cyberlink also.
+  - bugfix: Fixed the Nuclear and Assault Operatives cybernetics by giving them syndicate
+      box bundles instead
+  Shoddd:
+  - bugfix: Vine Tangle for Venus Human traps works again.
+  - rscadd: Vine Tangle heals Venus Human Traps.
+  TTNT789:
+  - rscadd: Eeble Plushie
+  Wisemonster:
+  - balance: Replaced the blueshield's security belt with a sligtly larger, empty
+      one that cannot hold batons. Moved their pepperspray to their locker.
+  - balance: rReduced the amount of scrubbers affected by the overflow event down
+      from 50% to 20%
+2024-09-26:
+  Absolucy:
+  - bugfix: Fixed some minor errors and bugs with bloodsuckers.
+  - rscdel: Changelings can no longer make flesh spiders.
+  - rscadd: Instead, changelings can now birth teratomas, monkeylike menaces with
+      the goal of fucking everything up!
+  - bugfix: Ensured some of the plant genes had proper icons in the Seed Extractor
+      UI.
+  AlbertNanotracen:
+  - bugfix: self respiration messages should no longer spam chat as often
+  Shoddd:
+  - rscadd: Ponys are now orderable from cargo
+  - rscadd: The ranger poncho is now purchable in the loadout menu for 5000 monkecoins
+  - rscadd: New Revolver and Lever action Rifle now orderable from cargo
+  TTNT789:
+  - bugfix: Eeble plushie now adds to loudout when bought (im stupid i know)
+  ThePooba:
+  - bugfix: gary doesnt get aa anymore
+  Wisemonster:
+  - bugfix: Fixed the doubled blueshields lockers on blueshift
+  - balance: Blueshields are now taken into account for spawning various storyteller
+      antag events.
+  flleeppyy:
+  - rscadd: If you are the chaplain, or have the Spiritual trait, you will be divinely
+      warned that it is almost time to go.
+2024-09-27:
+  Absolucy:
+  - bugfix: Fixed malkavian bloodsuckers not getting an objective when another bloodsucker
+      breaks the masquerade.
+  - bugfix: Fixed some logic relating to antag selection (roundstart, midround, and
+      ghost roles), hopefully reducing hard deletes and potential issues.
+  Gw0sty:
+  - bugfix: Fix Delta's hydroponics railings to be on a lower layer than the machines
+  - rscadd: Added spawners for Science security officers, Research Directors, robotists,
+      and scientists on Tram Station.
+  KnigTheThrasher:
+  - rscadd: Added layer adapters to atmos
+  - bugfix: Added cmo spawner to kilo
+  - bugfix: Connected rest of areas to distro
+  PotatoTomahto:
+  - rscadd: Portable gravity machine added as circuit and cargo order.
+  - bugfix: Fields, such as gravity, work now.
+  Shoddd:
+  - bugfix: Long Revolver and Levergun are now loadable
+  ThePooba:
+  - rscadd: Bomb Actualizer machine, available from illegal tech, pop in a ttv and
+      watch it explode bigger and bettert than before
+  Wisemonster:
+  - balance: Added a telescopic baton to the blueshield's locker
+2024-09-28:
+  Absolucy:
+  - server: Profiler logs now sort by overtime and have a proper timestamp in the
+      filename.
+  Absolucy, Kocma-san:
+  - bugfix: Fixed lights stopping emitting light in some situations.
+  RikuTheKiller:
+  - balance: Blood Brothers can now convert members of security if their mindshields
+      are removed.
+  - balance: IPCs are no longer immune to being converted by revolutionaries and blood
+      brothers.
+  - qol: You now get a balloon alert if you get a second flash as a Blood Brother.
+2024-09-29:
+  CannibalHunter:
+  - rscadd: Added several more admin plushies to the monkeshop
+  ThePooba:
+  - rscadd: monkeystorm
+  - bugfix: loneop less
+2024-09-30:
+  Gw0sty:
+  - bugfix: Removed the second windoor on delta botany.
+  - rscadd: adds missing medipen refiller to Kilo
+  - qol: Ensures all surgical tools in robotics are in a container of some sort.
+  - rscadd: Added disk compartmentalizers to most stations virology and hydroponics.
+  - qol: Made Bio bags able to hold GNA disks. (Disease disks)
+  - qol: Moves botany and chicken lexicons into a single bookshelf
+  - rscadd: Added an auto lathe, morgue, and plasteel to Blueshift's robotics
+  KnigTheThrasher:
+  - rscadd: Added a shower to kilo engi
+  - rscadd: Added a windoor to medbay storage on kilo
+  Shoddd:
+  - balance: syndicate bible can now provide anti-magic from pocket and belt
+  t-toasted:
+  - rscadd: Theseus

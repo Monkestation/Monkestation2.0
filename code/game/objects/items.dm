@@ -59,9 +59,9 @@
 
 		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!! */
 
-	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	///Dimensions of the sprite used when this item is worn. Used to center sprites which aren't 32x32 on mobs
 	var/worn_x_dimension = 32
-	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	///Dimensions of the sprite used when this item is worn. Used to center sprites which aren't 32x32 on mobs
 	var/worn_y_dimension = 32
 	///Same as for [worn_x_dimension][/obj/item/var/worn_x_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_x_dimension = 32
@@ -110,13 +110,11 @@
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
 
-	///flags which determine which body parts are protected from heat. [See here][HEAD]
-	var/heat_protection = 0
-	///flags which determine which body parts are protected from cold. [See here][HEAD]
-	var/cold_protection = 0
-	///Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
+	/// Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage.
+	/// Keep at null to disable protection.
 	var/max_heat_protection_temperature
-	///Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
+	/// Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage.
+	/// Keep at null to disable protection.
 	var/min_cold_protection_temperature
 
 	///list of /datum/action's that this item has.
@@ -691,7 +689,7 @@
 	if(user && iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_DROPPED, src)
 	if(!silent)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -757,9 +755,9 @@
 	item_flags |= IN_INVENTORY
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
-			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
+			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE, mixer_channel = equip_mixer_channel) // monkestation: sound mixer
 		else if(slot & ITEM_SLOT_HANDS)
-			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
+			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = pickup_mixer_channel) // monkestation: sound mixer
 	user.update_equipment_speed_mods()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
@@ -864,7 +862,7 @@
 			playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
 
 	else
-		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
 	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)

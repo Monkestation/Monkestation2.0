@@ -165,7 +165,11 @@
 		var/mob/living/carbon/human/human_user = user
 		if(length(human_user.alternative_screams))
 			return pick(human_user.alternative_screams)
-		. = human_user.dna.species.get_scream_sound(user)
+		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
+		. = tongue?.get_scream_sound()
+	if(isbasicmob(user))
+		var/mob/living/basic/mob = user
+		. = mob.get_scream_sound()
 
 /datum/emote/living/scream/should_vary(mob/living/user)
 	if(ishuman(user) && !is_cat_enough(user))
@@ -315,6 +319,18 @@
 		return ..()
 
 	return FALSE
+
+/datum/emote/squint
+	key = "squint"
+	key_third_person = "squints"
+	message = "squints."
+	message_param = "squints at %t."
+
+/datum/emote/living/nodnod
+	key = "nodnod"
+	key_third_person = "nodnods"
+	message = "nodnods."
+	message_param = "nodnods at %t."
 
 //The code from 'Start' to 'End' was ported from Russ-station, with permission.
 //All credit to 'bitch fish'

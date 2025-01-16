@@ -7,8 +7,12 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+//MONKESTATION ADDITION START
+/*
 	head_flags = HEAD_EYESPRITES
-
+*/
+	head_flags = HEAD_EYESPRITES | HEAD_HAIR
+// MONKESTATION ADDITION END
 /obj/item/bodypart/chest/plasmaman
 	icon = 'icons/mob/species/plasmaman/bodyparts.dmi'
 	icon_state = "plasmaman_chest"
@@ -18,6 +22,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	ass_image = 'icons/ass/assplasma.png'
 
 /obj/item/bodypart/arm/left/plasmaman
 	icon = 'icons/mob/species/plasmaman/bodyparts.dmi'

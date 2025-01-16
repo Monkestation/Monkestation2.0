@@ -15,8 +15,8 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 
 	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = TCMB
-	maximum_survivable_temperature = T0C + 1000
+	bodytemp_cold_damage_limit = TCMB
+	bodytemp_heat_damage_limit = T0C + 1000
 
 	ai_controller = /datum/ai_controller/robot_customer
 
@@ -35,7 +35,7 @@
 
 	. = ..()
 
-	ADD_TRAIT(src, list(TRAIT_NOMOBSWAP, TRAIT_NO_TELEPORT, TRAIT_STRONG_GRABBER), INNATE_TRAIT) // never suffer a bitch to fuck with you
+	add_traits(list(TRAIT_NOMOBSWAP, TRAIT_NO_TELEPORT, TRAIT_STRONG_GRABBER), INNATE_TRAIT) // never suffer a bitch to fuck with you
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
 	ai_controller.set_blackboard_key(BB_CUSTOMER_CUSTOMERINFO, customer_info)

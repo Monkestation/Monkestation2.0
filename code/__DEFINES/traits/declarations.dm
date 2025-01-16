@@ -69,6 +69,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Antagonizes the above.
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
+#define TRAIT_CANT_ATTACK "cant_attack"
 // Trait added to the user of a hippocratic oath status effect
 /* #define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath" */
 /// Makes it so the mob ignores all slowdown.
@@ -147,39 +148,44 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Species with this trait are genderless
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
-/* #define TRAIT_BLOOD_CLANS "blood_clans" */
+#define TRAIT_BLOOD_CLANS "blood_clans"
+/// Species with this trait have markings (this SUCKS, remove this later in favor of bodypart overlays)
+#define TRAIT_HAS_MARKINGS "has_markings"
 /// Species with this trait use skin tones for coloration
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait use mutant colors for coloration
+#define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
 /// Humans with this trait won't get bloody hands, nor bloody feet
-/* #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay" */
+#define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
 /// This carbon doesn't show an overlay when they have no brain
-/* #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay" */
+#define TRAIT_FUR_COLORS "trait_fur_colors"
 /// Humans with this trait cannot get augmentation surgery
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry
 #define TRAIT_NOHUNGER "no_hunger"
 /// This carbon doesn't metabolize reagents.
-#define TRAIT_NOMETABOLISM "no_metabolism"
 /// This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
+/// Humans with this trait cannot be affected by changeling transformation stings
+#define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
 /// This carbon can't be overdosed by chems
-/* #define TRAIT_OVERDOSEIMMUNE "overdose_immune" */
+#define TRAIT_OVERDOSEIMMUNE "overdose_immune"
 /// Humans with this trait cannot be turned into zombies
 #define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait cant have their dna scrambled by genetics or a disease retrovirus.
-/* #define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble" */
+#define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble"
 /// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
-/* #define TRAIT_DRINKS_BLOOD "drinks_blood" */
+#define TRAIT_DRINKS_BLOOD "drinks_blood"
 /// Mob is immune to clone (cellular) damage
 #define TRAIT_NOCLONELOSS "no_cloneloss"
 /// Mob is immune to toxin damage
@@ -196,6 +202,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+#define TRAIT_NO_HUSK "no_husk"
 /// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
 /* #define TRAIT_EASYBLEED "easybleed" */
 #define TRAIT_TOXINLOVER "toxinlover"
@@ -387,6 +394,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
+//Gets a mood buff while in maints (used for Goblins).
+#define TRAIT_MAINTENANCE_DWELLER "maintenance_dweller"
 /// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
 /* #define TRAIT_TOO_TALL "too_tall" */
 /// makes your footsteps completely silent
@@ -431,7 +440,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Blowing kisses actually does damage to the victim
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
 /// Syndie kisses can apply burn damage
-/* #define TRAIT_SYNDIE_KISS "syndie_kiss" */
+#define TRAIT_SYNDIE_KISS "syndie_kiss"
 /// Used to activate french kissing
 #define TRAIT_GARLIC_BREATH "kiss_of_garlic_death"
 /// Addictions don't tick down, basically they're permanently addicted
@@ -543,7 +552,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles" */
 
 /// Projectile with this trait will always hit the defined zone of a struck living mob.
-/* #define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone" */
+#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
 
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"

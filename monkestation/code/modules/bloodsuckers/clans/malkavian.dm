@@ -1,3 +1,6 @@
+#define REVELATION_MIN_COOLDOWN	20 SECONDS
+#define REVELATION_MAX_COOLDOWN	1 MINUTES
+
 /datum/bloodsucker_clan/malkavian
 	name = CLAN_MALKAVIAN
 	description = "Little is documented about Malkavians. Complete insanity is the most common theme. \n\
@@ -6,6 +9,7 @@
 	join_description = "Completely insane. You gain constant hallucinations, become a prophet with unintelligable rambling, \
 		and become the enforcer of the Masquerade code."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
+	COOLDOWN_DECLARE(revelation_cooldown)
 
 /datum/bloodsucker_clan/malkavian/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
@@ -32,9 +36,10 @@
 
 /datum/bloodsucker_clan/malkavian/handle_clan_life(datum/antagonist/bloodsucker/source)
 	. = ..()
-	if(prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
+	if(!COOLDOWN_FINISHED(src, revelation_cooldown) || prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
 	var/message = pick(strings("malkavian_revelations.json", "revelations", "monkestation/strings"))
+	COOLDOWN_START(src, revelation_cooldown, rand(REVELATION_MIN_COOLDOWN, REVELATION_MAX_COOLDOWN))
 	INVOKE_ASYNC(bloodsuckerdatum.owner.current, TYPE_PROC_REF(/atom/movable, say), message, , , , , , CLAN_MALKAVIAN)
 
 /datum/bloodsucker_clan/malkavian/on_favorite_vassal(datum/antagonist/bloodsucker/source, datum/antagonist/vassal/vassaldatum)
@@ -55,12 +60,51 @@
 	INVOKE_ASYNC(stone, TYPE_PROC_REF(/obj/item/soulstone/bloodsucker, capture_soul), bloodsuckerdatum.owner.current, forced = TRUE, bloodsuckerdatum = bloodsuckerdatum)
 	return DONT_DUST
 
-/datum/bloodsucker_clan/malkavian/proc/on_bloodsucker_broke_masquerade(datum/antagonist/bloodsucker/masquerade_breaker)
+/datum/bloodsucker_clan/malkavian/proc/on_bloodsucker_broke_masquerade(datum/source, datum/antagonist/bloodsucker/masquerade_breaker)
 	SIGNAL_HANDLER
-	to_chat(bloodsuckerdatum.owner.current, span_userdanger("[masquerade_breaker.owner.current] has broken the Masquerade! Ensure [masquerade_breaker.owner.current.p_they()] [masquerade_breaker.owner.current.p_are()] eliminated at all costs!"))
-	var/datum/objective/assassinate/masquerade_objective = new()
-	masquerade_objective.target = masquerade_breaker.owner.current
-	masquerade_objective.objective_name = "Clan Objective"
-	masquerade_objective.explanation_text = "Ensure [masquerade_breaker.owner.current], who has broken the Masquerade, succumbs to Final Death."
+	if(masquerade_breaker == bloodsuckerdatum)
+		return
+	var/mob/living/target_body = masquerade_breaker.owner.current
+	var/vampiric_name = masquerade_breaker.return_full_name()
+	var/mortal_name = masquerade_breaker.owner.name || target_body.real_name || target_body.name
+	to_chat(bloodsuckerdatum.owner.current, span_userdanger("[vampiric_name], also known as [mortal_name], has broken the Masquerade! Ensure [target_body.p_they()] [target_body.p_are()] eliminated at all costs!"))
+	var/datum/objective/enforce_masquerade/masquerade_objective = new(null, masquerade_breaker)
+	masquerade_objective.owner = bloodsuckerdatum.owner
 	bloodsuckerdatum.objectives += masquerade_objective
 	bloodsuckerdatum.owner.announce_objectives()
+
+/datum/objective/enforce_masquerade
+	name = "kill masquerade breaker"
+	objective_name = "Clan Objective"
+	var/datum/antagonist/bloodsucker/masquerade_breaker
+
+/datum/objective/enforce_masquerade/New(text, datum/antagonist/bloodsucker/masquerade_breaker)
+	. = ..()
+	if(!istype(masquerade_breaker) || !masquerade_breaker.owner)
+		CRASH("Attempted to create [type] objective without a valid target bloodsucker datum!")
+	RegisterSignal(masquerade_breaker, BLOODSUCKER_FINAL_DEATH, PROC_REF(on_target_final_death))
+	src.target = masquerade_breaker.owner
+	src.masquerade_breaker = masquerade_breaker
+	update_explanation_text()
+
+/datum/objective/enforce_masquerade/Destroy()
+	if(masquerade_breaker)
+		UnregisterSignal(masquerade_breaker, BLOODSUCKER_FINAL_DEATH)
+		masquerade_breaker = null
+	return ..()
+
+/datum/objective/enforce_masquerade/update_explanation_text()
+	var/target_name = target.name || target.current?.real_name || target.current?.name
+	explanation_text = "Ensure that [target_name], who has broken the Masquerade, succumbs to Final Death."
+
+// Simple signal handler to mark the objective as completed when the target succumbs to the final death.
+/datum/objective/enforce_masquerade/proc/on_target_final_death(datum/source)
+	SIGNAL_HANDLER
+	completed = TRUE
+
+/datum/objective/enforce_masquerade/check_completion()
+	return ..() || QDELETED(target?.current)
+
+
+#undef REVELATION_MAX_COOLDOWN
+#undef REVELATION_MIN_COOLDOWN

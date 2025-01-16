@@ -9,3 +9,12 @@
 	description = "Glory to the hunt."
 	mood_change = 10
 	hidden = TRUE
+
+/datum/mood_event/pride_pin
+	description = "I love showing off my pride pin!"
+	mood_change = 1
+
+/datum/mood_event/jazzy
+	description = "Oooh, jazzy!"
+	mood_change = 2
+	timeout = 1 MINUTE

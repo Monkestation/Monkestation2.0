@@ -888,7 +888,7 @@
 
 	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
 	weighted_crits[CRUSH_CRIT_PARAPALEGIC] = 80
-	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
+	weighted_crits[CRUSH_CRIT_HEADGIB] = 30
 	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
 
 	return weighted_crits
@@ -931,8 +931,8 @@
 			if (!iscarbon(atom_target))
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
-			visible_message(span_danger("[carbon_target]'s spinal cord is obliterated with a sickening crunch!"), ignored_mobs = list(carbon_target))
-			carbon_target.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+			visible_message(span_danger("[carbon_target]'s spinal cord is wrecked with a sickening crunch!"), ignored_mobs = list(carbon_target))
+			carbon_target.gain_trauma(/datum/brain_trauma/severe/paralysis/crushed)
 			return TRUE
 		if(CRUSH_CRIT_SQUISH_LIMB) // limb squish!
 			if (!iscarbon(atom_target))
@@ -1140,6 +1140,15 @@
 			max_amount = record.max_amount,
 			ref = REF(record),
 		)
+
+		var/atom/printed = record.product_path
+		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
+			static_record["icon"] = initial(printed.icon)
+			static_record["icon_state"] = initial(printed.icon_state)
 
 		var/list/category = record.category || default_category
 		if (!isnull(category))

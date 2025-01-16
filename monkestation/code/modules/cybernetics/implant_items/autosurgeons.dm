@@ -1,14 +1,34 @@
+/obj/item/autosurgeon/organ/syndicate/Initialize(mapload)
+	. = ..()
+	if(istype(stored_organ, /obj/item/organ/internal/cyberimp))
+		var/obj/item/organ/internal/cyberimp/starting_implant = stored_organ
+		starting_implant.organ_flags |= ORGAN_HIDDEN
+
 /obj/item/autosurgeon/organ/syndicate/ammo_counter
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/ammo_counter/syndicate
 
 /obj/item/autosurgeon/organ/syndicate/esword
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/esword
 
+/obj/item/autosurgeon/organ/mantis_blade
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mantis
+	uses = 1
+
+/obj/item/autosurgeon/organ/mantis_blade/l
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mantis/l
+
 /obj/item/autosurgeon/organ/syndicate/syndie_mantis
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis
 
 /obj/item/autosurgeon/organ/syndicate/syndie_mantis/l
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
+
+/obj/item/autosurgeon/organ/shield_blade
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield
+	uses = 1
+
+/obj/item/autosurgeon/organ/shield_blade/l
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield/l
 
 /obj/item/autosurgeon/organ/syndicate/razorwire
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/razorwire
@@ -18,6 +38,9 @@
 
 /obj/item/autosurgeon/organ/syndicate/sandy
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/sandevistan
+
+/obj/item/autosurgeon/organ/syndicate/dualwield
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/dualwield
 
 /obj/item/autosurgeon/skillchip
 	name = "skillchip autosurgeon"
@@ -139,3 +162,4 @@
 
 /obj/item/autosurgeon/organ/chemvat
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/chemvat
+

@@ -33,3 +33,20 @@
 
 #define COMSIG_LIVING_TRACKER_REMOVED "tracker_removed"
 #define COMSIG_CLEAR_SEE "clear_see"
+
+/// Carbon is steppin
+#define COMSIG_CARBON_STEP "carbon_step"
+/// Carbon is steppin on a painful limb
+#define COMSIG_CARBON_PAINED_STEP "carbon_pain_step"
+	/// Stop the pain from happening
+	#define STOP_PAIN (1<<0)
+
+#define COMSIG_LIVING_GIVE_ITEM_CHECK "living_give_item_check"
+
+#define COMSIG_LIVING_ITEM_OFFERED_PRECHECK "living_item_offer_precheck"
+
+/// Initiates a nightmare snuff check (eats dim lights on everything within 2 tiles) with the given args. (turf/start_turf)
+#define COMSIG_NIGHTMARE_SNUFF_CHECK "nightmare_snuff_check"
+
+/// From base of /datum/species/zombie/infectious/proc/set_consumed_flesh(): (new_amount, old_amount)
+#define COMSIG_ZOMBIE_FLESH_ADJUSTED "zombie_flesh_adjusted"

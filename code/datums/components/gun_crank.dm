@@ -12,9 +12,11 @@
 	var/charge_sound_cooldown_time
 	/// Are we currently charging
 	var/is_charging = FALSE
+	/// Should you be able to move while charging, use IGNORE_USER_LOC_CHANGE if you want to move and crank
+	var/charge_move = NONE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/gun_crank/Initialize(charging_cell, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
+/datum/component/gun_crank/Initialize(charging_cell, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -25,6 +27,7 @@
 	src.cooldown_time = cooldown_time
 	src.charge_sound = charge_sound
 	src.charge_sound_cooldown_time = charge_sound_cooldown_time
+	src.charge_move = charge_move
 
 /datum/component/gun_crank/RegisterWithParent()
 	. = ..()
@@ -50,10 +53,13 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_GUNCRANK))
+	SEND_SIGNAL(source, COMSIG_GUN_CRANKING, user) // monkestation edit
+	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_GUNCRANK, timed_action_flags = charge_move))
 		is_charging = FALSE
 		return
 	charging_cell.give(charge_amount)
 	source.update_appearance()
 	is_charging = FALSE
+	SEND_SIGNAL(source, COMSIG_GUN_CRANKED, user) // monkestation edit
 	source.balloon_alert(user, "charged")
+

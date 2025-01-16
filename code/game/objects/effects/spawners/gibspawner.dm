@@ -39,7 +39,7 @@
 		dna_to_add = temp_mob.get_blood_dna_list()
 		qdel(temp_mob)
 	else
-		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
+		dna_to_add = list("UNKNOWN DNA" = random_human_blood_type()) //else, generate a random bloodtype for it.
 
 
 	for(var/i in 1 to gibtypes.len)
@@ -50,10 +50,13 @@
 
 				gib.add_blood_DNA(dna_to_add)
 
+// These might streak off into space and cause annoying flaky failures with mapping nearstation tests
+#ifndef UNIT_TESTS
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
 						gib.streak(directions, mapload)
+#endif
 
 	return INITIALIZE_HINT_QDEL
 

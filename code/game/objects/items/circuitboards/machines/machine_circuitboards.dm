@@ -414,6 +414,15 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
 //Generic
 /obj/item/circuitboard/machine/component_printer
 	name = "\improper Component Printer (Machine Board)"
@@ -1240,6 +1249,14 @@
 	name = "Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/recycler
+	req_components = list(
+		/datum/stock_part/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/shipbreaker
+	name = "Shipbreaking Recycler"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/shipbreaker
 	req_components = list(
 		/datum/stock_part/manipulator = 1)
 	needs_anchored = FALSE

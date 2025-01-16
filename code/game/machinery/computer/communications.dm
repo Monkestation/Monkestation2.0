@@ -200,13 +200,22 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
-			var/new_sec_level = SSsecurity_level.text_level_to_number(params["newSecurityLevel"])
-			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
+			// monkestation start: prevent lowering alert level from delta
+			var/datum/security_level/new_sec_level = SSsecurity_level.available_levels[params["newSecurityLevel"]]
+			if(!new_sec_level)
 				return
-			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
+			var/datum/security_level/current_sec_level = SSsecurity_level.current_security_level
+			if(!current_sec_level.can_crew_change_alert)
+				to_chat(usr, span_warning("Alert cannot be manually lowered from the current security level!"))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 				return
+			if(!new_sec_level.can_set_via_comms_console)
+				return
+			if(current_sec_level == new_sec_level)
+				return
+			// monkestation end
 
-			SSsecurity_level.set_level(new_sec_level)
+			SSsecurity_level.set_level(new_sec_level.name)
 
 			to_chat(usr, span_notice("Authorization confirmed. Modifying security level."))
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -351,7 +360,7 @@
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
@@ -577,7 +586,8 @@
 
 					data["alertLevelTick"] = alert_level_tick
 					data["canMakeAnnouncement"] = TRUE
-					data["canSetAlertLevel"] = issilicon(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
+					if(SSsecurity_level.current_security_level?.can_crew_change_alert)
+						data["canSetAlertLevel"] = issilicon(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
 				else if(syndicate)
 					data["canMakeAnnouncement"] = TRUE
 
@@ -641,11 +651,17 @@
 		ui.open()
 
 /obj/machinery/computer/communications/ui_static_data(mob/user)
-	return list(
+	. = list(
 		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
 		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
 		"maxMessageLength" = MAX_MESSAGE_LEN,
+		"settableLevels" = list(),
 	)
+	for(var/level_name in SSsecurity_level.available_levels)
+		var/datum/security_level/level = SSsecurity_level.available_levels[level_name]
+		if(!level.can_set_via_comms_console)
+			continue
+		.["settableLevels"] += level_name
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if (href_list["reject_cross_comms_message"])

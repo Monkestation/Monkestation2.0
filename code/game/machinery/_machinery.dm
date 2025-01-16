@@ -267,7 +267,7 @@
 		return
 	update_current_power_usage()
 	power_change()
-	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change))
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change), override = TRUE) // we can re-enter the same area due to shuttles and shit
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
@@ -410,6 +410,9 @@
 /obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
 	set_density(density_to_set)
+	if (!density)
+		update_appearance()
+		return
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))

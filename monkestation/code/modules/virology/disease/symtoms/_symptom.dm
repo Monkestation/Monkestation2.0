@@ -32,6 +32,9 @@
 	var/datum/symptom_varient/attached_varient
 		// This is our attached varient used for updating desc and Symptom copy code.
 
+/datum/symptom/Destroy(force)
+	QDEL_NULL(attached_varient)
+	return ..()
 
 /datum/symptom/proc/minormutate()
 	if (prob(20))
@@ -40,13 +43,14 @@
 /datum/symptom/proc/multiplier_tweak(tweak)
 	multiplier = clamp(multiplier+tweak,1,max_multiplier)
 
-
 /datum/symptom/proc/can_run_effect(active_stage = -1, seconds_per_tick)
 	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1 || badness == EFFECT_DANGER_HELPFUL) && prob(min(chance * seconds_per_tick, max_chance)))
 		return TRUE
 	return FALSE
 
 /datum/symptom/proc/run_effect(mob/living/carbon/mob, datum/disease/advanced/disease)
+	if(isnull(mob))
+		CRASH("run_effect called without a valid mob!")
 	if(count < 1)
 		first_activate(mob, disease)
 	activate(mob, disease)

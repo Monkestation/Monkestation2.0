@@ -130,7 +130,7 @@
 		mob_occupant.mind.add_antag_datum(antag_object)
 		mob_occupant.grant_language(/datum/language/codespeak) // So you don't have to remember to grant each and every identical clone codespeak with the manual.
 		mob_occupant.remove_blocked_language(/datum/language/codespeak, source=LANGUAGE_ALL) // All the effects the codespeak manual would have.
-		ADD_TRAIT(mob_occupant, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+		ADD_TRAIT(mob_occupant.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 		var/obj/item/implant/radio/syndicate/imp = new(src)
 		imp.implant(mob_occupant)
 		mob_occupant.faction |= ROLE_SYNDICATE
@@ -404,6 +404,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else
-		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.human_blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

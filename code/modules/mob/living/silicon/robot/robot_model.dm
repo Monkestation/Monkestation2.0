@@ -390,6 +390,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil,
+		/obj/item/holosign_creator/atmos,
 	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(
@@ -810,6 +811,11 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
+		// Monkestation edit start: Barbering
+		/obj/item/scissors,
+		/obj/item/hairbrush/comb,
+		/obj/item/dyespray,
+		// Monestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,

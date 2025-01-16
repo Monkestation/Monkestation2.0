@@ -189,23 +189,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
-	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=[text_ref(src)];[HrefToken()]'>\[Refresh\]</a><BR>"
+	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='byond://?src=[text_ref(src)];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Budgets (Roundstart/Midrounds): <b>[initial_round_start_budget]/[threat_level - initial_round_start_budget]</b><br/>"
 
-	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=[text_ref(src)];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=[text_ref(src)];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='byond://?src=[text_ref(src)];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='byond://?src=[text_ref(src)];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [threat_curve_centre] ; width = [threat_curve_width].<br/>"
 	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
-	dat += "Forced extended: <a href='?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "No stacking (only one round-ender): <a href='?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
+	dat += "Forced extended: <a href='byond://?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "No stacking (only one round-ender): <a href='byond://?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
+	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='byond://?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
-	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
+	dat += "<A href='byond://?src=[text_ref(src)];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
 	if (forced_latejoin_rule)
-		dat += {"<A href='?src=[text_ref(src)];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
-	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
+		dat += {"<A href='byond://?src=[text_ref(src)];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
+	dat += "<A href='byond://?src=[text_ref(src)];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
 	dat += "<br />"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -215,13 +215,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
-	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='byond://?src=[text_ref(src)];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 
 	var/next_injection = next_midround_injection()
 	if (next_injection == INFINITY)
 		dat += "All midrounds have been exhausted."
 	else
-		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='byond://?src=[text_ref(src)];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
@@ -301,40 +301,53 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return
 
 	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
-	switch(round(shown_threat))
-		if(0 to 19)
-			var/show_core_territory = (GLOB.current_living_antags.len > 0)
-			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
-				show_core_territory = !show_core_territory
+	//monkestation edit start:
+	//switch(round(shown_threat))
+	var/list/green_star_storytellers = list(/datum/storyteller/ghost, /datum/storyteller/sleeper) //list for calmer storytellers for a greenshift
+	var/list/midnight_sun_storytellers = list(/datum/storyteller/jester, /datum/storyteller/warrior, /datum/storyteller/brute) //list for the more chaotic storytellers for black sun
+	var/greenshift = FALSE
+	if((SSgamemode.selected_storyteller in green_star_storytellers) || (SSgamemode.current_storyteller.disable_distribution))
+		greenshift = TRUE
+	/*if(0 to 19)
+		var/show_core_territory = (GLOB.current_living_antags.len > 0)
+		if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
+			show_core_territory = !show_core_territory
 
-			if (show_core_territory)
-				. += "Advisory Level: <b>Blue Star</b></center><BR>"
-				. += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor, but cannot be ruled out entirely. Remain vigilant."
-			else
-				. += "Advisory Level: <b>Green Star</b></center><BR>"
-				. += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department advises maintaining vigilance against potential threats, regardless of a lack of known threats."
-		if(20 to 39)
-			. += "Advisory Level: <b>Yellow Star</b></center><BR>"
-			. += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security, alongside maintaining vigilance against potential threats."
-		if(40 to 65)
-			. += "Advisory Level: <b>Orange Star</b></center><BR>"
-			. += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and alertness, and vigilance against threats that may (or will) arise."
-		if(66 to 79)
-			. += "Advisory Level: <b>Red Star</b></center><BR>"
-			. += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
-		if(80 to 99)
-			. += "Advisory Level: <b>Black Orbit</b></center><BR>"
-			. += "Your sector's advisory level is Black Orbit. Your sector's local comms network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert, and as always, we advise remaining vigilant against any other potential threats."
-		if(100)
-			. += "Advisory Level: <b>Midnight Sun</b></center><BR>"
-			. += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
+		if (show_core_territory)
+			. += "Advisory Level: <b>Blue Star</b></center><BR>"
+			. += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor, but cannot be ruled out entirely. Remain vigilant."
+		else
+		*/
+		. += "Advisory Level: <b>Green Star</b></center><BR>"
+		. += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department advises maintaining vigilance against potential threats, regardless of a lack of known threats."
+	/*if(20 to 39)
+		. += "Advisory Level: <b>Yellow Star</b></center><BR>"
+		. += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security, alongside maintaining vigilance against potential threats."
+	if(40 to 65)
+		. += "Advisory Level: <b>Orange Star</b></center><BR>"
+		. += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and alertness, and vigilance against threats that may (or will) arise."
+	if(66 to 79)
+		. += "Advisory Level: <b>Red Star</b></center><BR>"
+		. += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
+	if(80 to 99)
+		. += "Advisory Level: <b>Black Orbit</b></center><BR>"
+		. += "Your sector's advisory level is Black Orbit. Your sector's local comms network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert, and as always, we advise remaining vigilant against any other potential threats."
+	if(100)
+	*/
+	else if(SSgamemode.selected_storyteller in midnight_sun_storytellers)
+		. += "Advisory Level: <b>Midnight Sun</b></center><BR>"
+		. += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
+	else
+		. += "Advisory Level: <b>Orange Star</b></center><BR>"
+		. += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and alertness, and vigilance against threats that may (or will) arise."
 
-	var/min_threat = 100
+	/*var/min_threat = 100
 	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
 		if(ruleset.weight <= 0 || ruleset.cost <= 0)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
-	var/greenshift = SSgamemode.storyteller.disable_distribution //|| (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time //monkestation edit: Makes it so greenshift is based on the storyteller
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+	monkestation edit end*/
 
 	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
@@ -348,7 +361,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
-		priority_announce("[SSsecurity_level.current_security_level.elevating_to_announcement]\n\nA summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT, color_override = SSsecurity_level.current_security_level.announcement_color)
+		priority_announce("[replacetext_char(SSsecurity_level.current_security_level.elevating_to_announcement, "%STATION_NAME%", station_name())]\n\nA summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT, color_override = SSsecurity_level.current_security_level.announcement_color)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())

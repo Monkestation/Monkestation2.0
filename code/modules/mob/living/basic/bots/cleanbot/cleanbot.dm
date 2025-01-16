@@ -98,9 +98,8 @@
 	))
 	///blood we can clean
 	var/static/list/cleanable_blood = typecacheof(list(
-		/obj/effect/decal/cleanable/xenoblood,
 		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/trail_holder,
+		/obj/effect/decal/cleanable/xenoblood, // monkestation addition
 	))
 	///pests we hunt
 	var/static/list/huntable_pests = typecacheof(list(
@@ -112,6 +111,11 @@
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
 		/obj/effect/decal/remains,
+		//monkestation addition: start
+		/obj/item/cigbutt,
+		/obj/item/storage/box/foodpack,
+		/obj/item/ammo_casing,
+		//monkestation addition: end
 	))
 	///drawings we hunt
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))

@@ -33,7 +33,7 @@
 /// Simple status effect for adding a ring of fire around a mob.
 /datum/status_effect/fire_ring
 	id = "fire_ring"
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	/// The radius of the ring around us.
@@ -150,7 +150,7 @@
 			if(L.can_block_magic())
 				L.visible_message(span_danger("The spell bounces off of [L]!"), span_danger("The spell bounces off of you!"))
 				continue
-			if(L in hit_list || L == source)
+			if((L in hit_list) || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)

@@ -181,7 +181,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R, time_override = null)
 	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
@@ -191,8 +191,8 @@
 					if(istype(content, R.result))
 						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time, target = a))
-				return "."
+			if(ismob(a) && !do_after(a, time_override ? time_override : R.time, target = a))
+				return ", interrupted."
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
@@ -322,10 +322,14 @@
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
 	for(var/part in R.parts)
-		if(istype(part, /datum/reagent))
+		//MONKESTATION EDIT START
+		if(ispath(part, /datum/reagent))
 			var/datum/reagent/RG = locate(part) in Deletion
 			if(RG.volume > partlist[part])
 				RG.volume = partlist[part]
+			if(RG.data?["viruses"]) //Purge diseases from food
+				RG.data["viruses"] = list()
+			//MONKESTATION EDIT END
 			. += RG
 			Deletion -= RG
 			continue
@@ -339,6 +343,12 @@
 		else
 			while(partlist[part] > 0)
 				var/atom/movable/AM = locate(part) in Deletion
+				//MONKESTATION EDIT START
+				var/datum/reagents/reagents = AM.reagents
+				for(var/datum/reagent/reagent as anything in reagents?.reagent_list) //Purge diseases from food
+					if(reagent.data?["viruses"])
+						reagent.data["viruses"] = list()
+				//MONKESTATION EDIT END
 				. += AM
 				Deletion -= AM
 				partlist[part] -= 1

@@ -14,6 +14,9 @@
 	icon_living = "chicken_white"
 	icon_dead = "dead_state"
 	held_state = "chicken_white"
+	head_icon = 'monkestation/icons/mob/pets_held.dmi'
+	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
 
 	speak_emote = list("clucks","croons")
 
@@ -40,6 +43,7 @@
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
+	head_icon = 'monkestation/icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	health = maxHealth
@@ -268,7 +272,9 @@
 	for(var/mob/living/basic/animals in view(1, src))
 		animal_count ++
 	if(animal_count >= overcrowding)
-		adjust_happiness(-1)
+		eggs_fertile = FALSE
+	else
+		eggs_fertile = TRUE
 
 	if(!stat && prob(3) && current_feed_amount > 0)
 		current_feed_amount--

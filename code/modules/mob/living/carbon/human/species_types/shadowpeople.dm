@@ -5,7 +5,6 @@
 	id = SPECIES_SHADOW
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
-	species_traits = list()
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,
@@ -85,9 +84,9 @@
 		return
 	var/light_amount = owner_turf.get_lumcount()
 
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+	if(light_amount >= SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying -minor monke edit
 		owner.take_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+	else //heal in the dark -minor monke edit
 		owner.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /obj/item/organ/internal/eyes/shadow

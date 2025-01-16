@@ -103,7 +103,7 @@
 	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal ? 2 : 1) * move_delay()) // monkestation edit: use move_delay() proc instead of raw vehicle_move_delay var
 	return ..()
 
 /datum/component/riding/creature/keycheck(mob/user)
@@ -348,6 +348,32 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony/handle_specials()
+	. = ..()
+	vehicle_move_delay = 1.5
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(-2, 9), TEXT_WEST = list(2, 9)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony
+	COOLDOWN_DECLARE(pony_trot_cooldown)
+
+/datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	. = ..()
+
+	if (. == COMPONENT_DRIVER_BLOCK_MOVE || !COOLDOWN_FINISHED(src, pony_trot_cooldown))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+
+	if(human_user && is_clown_job(human_user.mind?.assigned_role))
+		// there's a new sheriff in town
+		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
+
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()

@@ -59,3 +59,8 @@
 	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)
+
+/*
+/proc/log_enqueue(text, list/data)
+	logger.Log(LOG_CATEGORY_ENQUEUE, text, data)
+*/

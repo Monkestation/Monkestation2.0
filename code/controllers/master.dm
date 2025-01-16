@@ -71,6 +71,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
+	// Ensure usr is null, to prevent any potential weirdness resulting from the MC having a usr if it's manually restarted.
+	usr = null
+
 	if(!config)
 		config = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -229,19 +232,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
+
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
-
 		// Initialize subsystems.
-		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
+		for(var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			init_subsystem(subsystem)
-			if(world.system_type == MS_WINDOWS)
-				var/ss_name = "[subsystem.name]"
-				var/memory_summary = call_ext("memorystats", "get_memory_stats")()
-				var/file = file("data/mem_stat/[GLOB.round_id]-memstat.txt")
-
-				var/string = "[ss_name] [memory_summary]"
-				WRITE_FILE(file, string)
-
 			CHECK_TICK
 		current_initializing_subsystem = null
 		init_stage_completed = current_init_stage
@@ -269,6 +264,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// because who knows how long we took for initializations, and whatever.
 	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // monkestation edit
 
+	SSplexora.serverinitdone(time) // Monkestation edit - plexora
 
 	if(world.system_type == MS_WINDOWS && CONFIG_GET(flag/toast_notification_on_init) && !length(GLOB.clients))
 		world.shelleo("start /min powershell -ExecutionPolicy Bypass -File tools/initToast/initToast.ps1 -name \"[world.name]\" -icon %CD%\\icons\\ui_icons\\common\\tg_16.png -port [world.port]")
@@ -287,7 +283,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
-	SSgamemode.handle_picking_stroyteller() //monkestation edit
+	SSgamemode.handle_picking_storyteller() //monkestation edit
 
 /**
  * Initialize a given subsystem and handle the results.
@@ -388,8 +384,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if (rtn >= MC_LOOP_RTN_GRACEFUL_EXIT || processing < 0)
 		return //this was suppose to happen.
 	//loop ended, restart the mc
-	log_game("MC crashed or runtimed, restarting")
-	message_admins("MC crashed or runtimed, restarting")
+	// Monkestation edit: start - plexora
+	var/msg = "MC crashed or runtimed, restarting"
+	log_game(msg)
+	message_admins(msg)
+	SSplexora.mc_alert(msg)
+	// Monkestation edit: end
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
 		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")

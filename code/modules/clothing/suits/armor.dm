@@ -3,9 +3,9 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
+
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
+
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 40
@@ -63,6 +63,16 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
 
+/obj/item/clothing/suit/armor/vest/press
+	name = "press armor vest"
+	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "armor_press"
+
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
@@ -71,9 +81,9 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/vest_marine
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /datum/armor/vest_marine
@@ -146,8 +156,8 @@
 	inhand_icon_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/armor_hos
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+
 	strip_delay = 80
 
 /datum/armor/armor_hos
@@ -193,8 +203,8 @@
 	icon_state = "warden_alt"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS|HANDS
-	heat_protection = CHEST|GROIN|ARMS|HANDS
+
+
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
@@ -210,8 +220,8 @@
 	icon_state = "leathercoat-sec"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace
@@ -256,8 +266,8 @@
 	icon_state = "riot"
 	inhand_icon_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 	armor_type = /datum/armor/armor_riot
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
@@ -318,8 +328,8 @@
 	inhand_icon_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	heat_protection = CHEST|GROIN|ARMS
+
+
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/hit_reflect_chance = 50
@@ -358,9 +368,9 @@
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.5 //monkestation edit, 0.7 to 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -404,8 +414,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 	armor_type = /datum/armor/armor_tdome
 
 /datum/armor/armor_tdome
@@ -433,8 +443,8 @@
 /obj/item/clothing/suit/armor/tdome/holosuit
 	name = "thunderdome suit"
 	armor_type = /datum/armor/tdome_holosuit
-	cold_protection = null
-	heat_protection = null
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
 
 /datum/armor/tdome_holosuit
 	melee = 10
@@ -493,6 +503,7 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
+	body_parts_covered = CHEST|ARMS //Monke: Durathread covers arms.
 	dog_fashion = null
 
 /datum/armor/vest_durathread
@@ -527,7 +538,7 @@
 	icon_state = "rus_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 	dog_fashion = null
@@ -551,8 +562,8 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 
 /obj/item/clothing/suit/armor/elder_atmosian/Initialize(mapload)
 	. = ..()
@@ -561,13 +572,13 @@
 	)
 
 /datum/armor/armor_elder_atmosian
-	melee = 25
-	bullet = 20
+	melee = 30
+	bullet = 30
 	laser = 30
 	energy = 30
 	bomb = 85
 	bio = 10
-	fire = 65
+	fire = 100
 	acid = 40
 	wound = 15
 
@@ -607,7 +618,7 @@
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/coat_militia
 

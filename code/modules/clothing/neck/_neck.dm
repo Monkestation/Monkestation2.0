@@ -5,6 +5,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	strip_delay = 40
 	equip_delay_other = 40
+	blood_overlay_type = "mask"
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -14,8 +15,9 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+
+/obj/item/clothing/neck/appears_bloody()
+	return ..() && (body_parts_covered & HEAD)
 
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
@@ -64,7 +66,7 @@
 	if(clip_on)
 		return
 	update_appearance(UPDATE_ICON)
-	register_context()
+	// register_context() monkestation: register_context() is already called in ..()
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
@@ -319,7 +321,7 @@
 					render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
-	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+	to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 ///////////
 //SCARVES//

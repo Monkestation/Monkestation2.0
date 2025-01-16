@@ -62,18 +62,11 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "lief_flos"
 
-/obj/item/toy/plush/quilark
-	name = "quilark plush"
-	desc = "A plush of the Lizard Basil. ~Handcrafted lovingly for quilark"
-	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
-	icon_state = "quilark"
-
 /obj/item/toy/plush/gumball_goblin
 	name = "gumball goblin plush"
-	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs.  Help. ~Handcrafted lovingly for elliethedarksun"
+	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs. Help. ~Handcrafted lovingly for elliethedarksun"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "gumball_goblin"
-
 
 /obj/item/toy/plush/glep
 	name = "glep plush"
@@ -142,7 +135,7 @@
 
 /obj/item/toy/plush/pooba_bee_plush
 	name = "bumbliest bee plushie"
-	desc = "God damn thats a cute bee."
+	desc = "God damn that's a cute bee."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "poba_fat_bee"
 
@@ -151,3 +144,21 @@
 	desc = "Hello there."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "toadie_wan_kenfrogi"
+
+/obj/item/toy/plush/trax_the_coward
+	name = "trax the coward plush"
+	desc = "A plushie of Trax the Coward. They're wearing a captains uniform."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "trax_the_coward"
+
+/obj/item/toy/plush/bubblesmothy
+	name = "bubbles mothy plush"
+	desc = "A plushie of Bubbles Mothy. They're wearing a revolutionary coat. They also wield a sword and a sign that you can't read that well."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "bubblesmothy"
+
+/obj/item/toy/plush/donator_xsi
+	name = "xsi plush"
+	desc = "A plushie of XSI. It's a robot!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "xsi"

@@ -81,13 +81,17 @@
 	return
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
+	playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 	if(drill.do_after_mecha(src, user, 60 / drill.drill_level))
 		drill.log_message("Drilled through [src]", LOG_MECHA)
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	if(drill.drill_level >= DRILL_HARDENED)
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		if(drill.do_after_mecha(src, user, 120 / drill.drill_level))
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
@@ -95,7 +99,9 @@
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 			M.gets_drilled()
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
@@ -130,11 +136,7 @@
 		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
 
 		//blood splatters
-		var/splatter_dir = get_dir(chassis, target)
-		if(isalien(target))
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir, COLOR_DARK_PURPLE)
-		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir, COLOR_DARK_RED)
+		target.do_splatter_effect(get_dir(chassis, target))
 
 		//organs go everywhere
 		if(target_part && prob(10 * drill_level))

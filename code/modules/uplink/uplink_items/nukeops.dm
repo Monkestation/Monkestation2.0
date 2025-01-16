@@ -42,6 +42,16 @@
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/bundles_tc/cowboy
+	name = "Syndicate Outlaw Kit"
+	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
+	Now you can be just like 'em! \
+	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with a complimentary apple to tame. \
+	A lighter is also included, though you must supply your own smokes."
+	item = /obj/item/storage/box/syndie_kit/cowboy
+	cost = 18
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
@@ -511,6 +521,14 @@
 	surplus = 35
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/dangerous/syndicat
+	name = "Syndie cat grenade"
+	desc = "This grenade is filled with 3 trained angry cats in special syndicate modsuits. Upon activation, the Syndicate cats are awoken and unleashed unto unlucky bystanders."
+	item = /obj/item/grenade/spawnergrenade/cat/syndicate
+	cost = 20
+	surplus = 50
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
 /datum/uplink_item/explosives/pinata
 	name = "Weapons Grade Pinata Kit"
 	desc = "A pinata filled with both candy and explosives as well as two belts to carry them on, crack it open and see what you get!"
@@ -709,7 +727,7 @@
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/anti_stun
+	item = /obj/item/storage/box/syndie_kit/anti_stun
 	cost = 12
 	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_NUKE_OPS
@@ -735,7 +753,7 @@
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/reviver
+	item = /obj/item/storage/box/syndie_kit/reviver
 	cost = 8
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS

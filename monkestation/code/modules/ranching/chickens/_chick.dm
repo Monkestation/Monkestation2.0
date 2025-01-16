@@ -29,6 +29,12 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	worn_slot_flags = ITEM_SLOT_HEAD
+	held_state = "chick"
+	head_icon = 'monkestation/icons/mob/pets_held.dmi'
+	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
 
 	ai_controller = /datum/ai_controller/basic_controller/chick
 
@@ -92,7 +98,8 @@
 
 	if(istype(new_chicken, /mob/living/basic/chicken/glass))
 		for(var/list_item in glass_egg_reagent)
-			new_chicken.glass_egg_reagents.Add(list_item)
+			new_chicken.glass_egg_reagents |= list_item
+			new_chicken.glass_egg_reagents[list_item] = glass_egg_reagent[list_item]
 
 	if(istype(new_chicken, /mob/living/basic/chicken/stone))
 		if(production_type)

@@ -88,6 +88,7 @@
 	//yes, we register the signal to the top atom too, this is intentional and ensures contained lighting updates properly
 	if(ismovable(new_atom_host) && new_atom_host == source_atom)
 		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
+	RegisterSignal(new_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT, PROC_REF(force_update))
 	return TRUE
 
 ///remove this light source from old_atom_host's light_sources list, unsetting movement registrations
@@ -98,6 +99,7 @@
 	LAZYREMOVE(old_atom_host.light_sources, src)
 	if(ismovable(old_atom_host) && old_atom_host == source_atom)
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(old_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT)
 	return TRUE
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
@@ -195,6 +197,8 @@
 	applied = FALSE
 	var/list/turfs_to_mark = list()
 	for (var/datum/lighting_corner/corner as anything in effect_str)
+		if(isnull(corner))
+			continue
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 
@@ -402,12 +406,16 @@
 
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (var/datum/lighting_corner/corner as anything in new_corners)
+			if(isnull(corner))
+				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 	else
 		for (var/datum/lighting_corner/corner as anything in new_corners)
+			if(isnull(corner))
+				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
@@ -416,6 +424,8 @@
 		// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
 		if(length(corners) != length(new_corners))
 			for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+				if(isnull(corner))
+					continue
 				APPLY_CORNER(corner)
 				if (. != 0)
 					effect_str[corner] = .
@@ -426,6 +436,8 @@
 
 	var/list/datum/lighting_corner/gone_corners = effect_str - corners
 	for (var/datum/lighting_corner/corner as anything in gone_corners)
+		if(isnull(corner))
+			continue
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 	effect_str -= gone_corners

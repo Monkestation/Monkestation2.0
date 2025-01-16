@@ -8,12 +8,10 @@
 	burnmod = 1.5
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
-	species_traits = list(
-		NO_UNDERWEAR,
-		NO_DNA_COPY,
-		NOTRANSSTING,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_RESISTCOLD,
@@ -26,6 +24,12 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 		TRAIT_NOBLOOD,
+		// monkestation addition: pain system
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// monkestation end
 	)
 
 	mutantheart = /obj/item/organ/internal/heart/nightmare

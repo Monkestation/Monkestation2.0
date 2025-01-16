@@ -40,7 +40,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_antennas, GLOB.ipc_antennas_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_chassis, GLOB.ipc_chassis_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list) //Monkestation Addition
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list) //Monkestation Addition
@@ -52,6 +52,10 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_fluff, GLOB.satyr_fluff_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wings, GLOB.arm_wings_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wingsopen, GLOB.arm_wingsopen_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list) //NON-MODULE CHANGE
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()
