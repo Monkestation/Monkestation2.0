@@ -467,6 +467,8 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
+
 //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
 // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
 /atom/movable/screen/lobby/youarehere/Initialize(mapload)
@@ -493,6 +495,8 @@
 	/// The port of this server.
 	var/server_port
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
+
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
 	if(is_available())
@@ -516,7 +520,7 @@
 		var/server_link = "byond://[server_ip]:[server_port]"
 		to_chat_immediate(
 			target = hud.mymob,
-			html = examine_block(span_info(span_big("Connecting you to [server_name]\nIf nothing happens, try manually connecting to the server ([server_link]), or the server may be down!"))),
+			html = boxed_message(span_info(span_big("Connecting you to [server_name]\nIf nothing happens, try manually connecting to the server ([server_link]), or the server may be down!"))),
 			type = MESSAGE_TYPE_INFO,
 		)
 		hud.mymob.client << link(server_link)

@@ -69,6 +69,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Antagonizes the above.
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
+#define TRAIT_CANT_ATTACK "cant_attack"
 // Trait added to the user of a hippocratic oath status effect
 /* #define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath" */
 /// Makes it so the mob ignores all slowdown.
@@ -393,6 +394,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
+//Gets a mood buff while in maints (used for Goblins).
+#define TRAIT_MAINTENANCE_DWELLER "maintenance_dweller"
 /// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
 /* #define TRAIT_TOO_TALL "too_tall" */
 /// makes your footsteps completely silent
