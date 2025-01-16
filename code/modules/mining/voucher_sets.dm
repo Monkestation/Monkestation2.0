@@ -288,6 +288,7 @@
 	new /obj/item/radio/off(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/modular_computer/laptop/preset/security(src)
 	new /obj/item/storage/fancy/donut_box(src)
 	new /obj/item/reagent_containers/cup/glass/coffee(src)
 
