@@ -111,14 +111,14 @@
 /datum/status_effect/food/fire_burps/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, type)
+		ADD_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/fire_burps/on_remove()
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, type)
+		REMOVE_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, TRAIT_STATUS_EFFECT(id))
 
 
 /datum/status_effect/food/fire_burps/proc/Burp()
@@ -261,12 +261,12 @@
 /datum/status_effect/food/belly_slide/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, TRAIT_FOOD_SLIDE, type)
+		ADD_TRAIT(user, TRAIT_FOOD_SLIDE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/belly_slide/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_FOOD_SLIDE, type)
+	REMOVE_TRAIT(owner, TRAIT_FOOD_SLIDE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
 
 
@@ -331,14 +331,14 @@
 /datum/status_effect/food/botanist/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, type)
+		ADD_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/botanist/on_remove()
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, type)
+		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, TRAIT_STATUS_EFFECT(id))
 
 
 /datum/status_effect/food/miner
@@ -353,11 +353,11 @@
 /datum/status_effect/food/miner/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, TRAIT_FOOD_JOB_MINER, type)
+		ADD_TRAIT(user, TRAIT_FOOD_JOB_MINER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/miner/on_remove()
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_MINER, type)
+		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_MINER, TRAIT_STATUS_EFFECT(id))
