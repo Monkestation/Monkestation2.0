@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/death_sandwich_poisoning
+/datum/disease/advanced/premade/death_sandwich_poisoning
 	name = "Death Sandwich Poisoning"
 	form = "Condition"
 	origin = "Death Sandwich"

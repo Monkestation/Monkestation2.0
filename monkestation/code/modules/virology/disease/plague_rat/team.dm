@@ -5,7 +5,7 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 	member_name = "plague rat"
 
 	var/disease_id = ""
-	var/datum/disease/acute/bacteria/plague
+	var/datum/disease/advanced/bacteria/plague
 	var/turf/invasion
 	var/list/hud_icons = list("plague-logo")
 	var/logo_state = "plague-logo"

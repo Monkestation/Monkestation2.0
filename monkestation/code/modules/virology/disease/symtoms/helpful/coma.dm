@@ -9,7 +9,7 @@
 	var/added_to_mob = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 
-/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 	. = ..()
 	if(!added_to_mob && max_multiplier >= 12)
 		added_to_mob = TRUE

@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/decloning
+/datum/disease/advanced/premade/decloning
 	name = "Severe Anxiety"
 	form = "Infection"
 	origin = "Social Settings"

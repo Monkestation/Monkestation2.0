@@ -114,7 +114,7 @@
 	if(do_after(user, 5 SECONDS, src))
 		if(machine_stat & (BROKEN|NOPOWER))
 			return
-		if(!istype(dish.contained_virus, /datum/disease/acute))
+		if(!istype(dish.contained_virus, /datum/disease/advanced))
 			QDEL_NULL(dish)
 			say("ERROR:Bad Pathogen detected PURGING")
 		if (dish.contained_virus.addToDB())

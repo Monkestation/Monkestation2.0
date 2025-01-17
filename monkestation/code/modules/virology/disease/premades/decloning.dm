@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/decloning
+/datum/disease/advanced/premade/decloning
 	name = "Cellular Degeneration"
 	form = "Virus"
 	origin = "Instability"

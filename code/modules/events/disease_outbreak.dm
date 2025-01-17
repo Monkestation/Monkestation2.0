@@ -109,7 +109,7 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
@@ -124,7 +124,7 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 		)
-	var/datum/disease/acute/new_disease = new virus_choice
+	var/datum/disease/advanced/new_disease = new virus_choice
 	new_disease.makerandom(list(30,60),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
@@ -218,7 +218,7 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
@@ -233,7 +233,7 @@
 		EFFECT_DANGER_HARMFUL	= 3,
 		EFFECT_DANGER_DEADLY	= 1,
 		)
-	var/datum/disease/acute/new_disease = new virus_choice
+	var/datum/disease/advanced/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name

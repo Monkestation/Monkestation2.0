@@ -110,7 +110,7 @@
 	restricted = TRUE
 	max_multiplier = 4
 
-/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 
 	switch(round(multiplier, 1))
 		if(2) //also changes say, see say.dm
@@ -148,7 +148,7 @@
 	chance = 25
 	max_chance = 25
 
-/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 	switch(round(multiplier))
 		if(1)
 			if(prob(12))

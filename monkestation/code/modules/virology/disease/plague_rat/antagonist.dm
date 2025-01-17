@@ -9,7 +9,7 @@
 
 	var/static/datum/team/plague_rat/rats_rats_we_are_the_rats
 	var/disease_id
-	var/datum/disease/acute/bacteria/plague
+	var/datum/disease/advanced/bacteria/plague
 	var/turf/invasion
 
 /datum/antagonist/plague_rat/on_gain()

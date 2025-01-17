@@ -380,7 +380,7 @@
 			var/list/blood_viruses = blood.data["viruses"]
 			if (istype(blood_viruses) && blood_viruses.len > 0)
 				var/list/pathogen_list = list()
-				for (var/datum/disease/acute/D as anything  in blood_viruses)
+				for (var/datum/disease/advanced/D as anything  in blood_viruses)
 					if(!istype(D))
 						continue
 					var/pathogen_name = "Unknown [D.form]"
@@ -392,7 +392,7 @@
 				user.set_machine()
 				if (!choice)
 					return result
-				var/datum/disease/acute/target = pathogen_list[choice]
+				var/datum/disease/advanced/target = pathogen_list[choice]
 
 				result[1] = "dish"
 				result[2] = "Unknown [target.form]"
@@ -448,7 +448,7 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/print_dish(datum/disease/acute/D)
+/obj/machinery/disease2/centrifuge/proc/print_dish(datum/disease/advanced/D)
 	special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
 	/*
 	anim(target = src, a_icon = icon, flick_anim = "centrifuge_print", sleeptime = 10)

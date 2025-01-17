@@ -10,7 +10,7 @@
 	var/absorption_coeff = 1
 
 
-/datum/symptom/water_heal/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/water_heal/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
 	. = ..()
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)

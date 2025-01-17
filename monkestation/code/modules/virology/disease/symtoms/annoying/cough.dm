@@ -26,7 +26,7 @@
 				if(mob.check_airborne_sterility())
 					return
 				var/strength = 0
-				for (var/datum/disease/acute/virus  as anything in mob.diseases)
+				for (var/datum/disease/advanced/virus  as anything in mob.diseases)
 					strength += virus.infectionchance
 				strength = round(strength/mob.diseases.len)
 

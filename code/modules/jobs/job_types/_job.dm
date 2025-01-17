@@ -174,7 +174,7 @@
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 	if(prob(25))
-		var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 2,
 			ANTIGEN_COMMON	= 2,
@@ -189,7 +189,7 @@
 			EFFECT_DANGER_HARMFUL	= 2,
 			EFFECT_DANGER_DEADLY	= 2,
 		)
-		var/datum/disease/acute/disease = new virus_choice
+		var/datum/disease/advanced/disease = new virus_choice
 		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
 
 		disease.disease_flags |= DISEASE_DORMANT

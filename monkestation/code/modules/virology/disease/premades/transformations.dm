@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/gondola
+/datum/disease/advanced/premade/gondola
 	name = "Gondola Transformation"
 	form = "Gondola Cells"
 	origin = "Gondola Toxins"
@@ -9,19 +9,19 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/gondola/digital
+/datum/disease/advanced/premade/gondola/digital
 	category = DISEASE_GONDOLA_DIGITAL
 
 	symptoms = list(
 		new /datum/symptom/transformation/gondola/digital
 	)
 
-/datum/disease/acute/premade/xeno
+/datum/disease/advanced/premade/xeno
 	name = "Xenomorph Transformation"
 	form = "Foreign Cells"
 	origin = "UNKNOWN"
@@ -32,12 +32,12 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/corgi
+/datum/disease/advanced/premade/corgi
 	name = "Puppification"
 	form = "Puppy Cells"
 	origin = "Ian"
@@ -48,12 +48,12 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/slime
+/datum/disease/advanced/premade/slime
 	name = "Slime Syndrome"
 	form = "Simplified Cells"
 	origin = "Slime Colonies"
@@ -64,12 +64,12 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/morph
+/datum/disease/advanced/premade/morph
 	name = "Gluttony"
 	form = "Hungering Cells"
 	origin = "The Hivemind"
@@ -80,12 +80,12 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/robot
+/datum/disease/advanced/premade/robot
 	name = "Nanite Conversion"
 	form = "Nanites"
 	origin = "Swarmers"
@@ -96,7 +96,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-
+	
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
