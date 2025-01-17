@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 					if(other_C == core)
 						return
 					if (!other_C.moving)
-						for(var/datum/disease/advanced/V as anything in other_C.viruses)
+						for(var/datum/disease/acute/V as anything in other_C.viruses)
 							if("[V.uniqueID]-[V.subID]" in core.id_list)
 								continue
 							core.viruses |= V.Copy()
