@@ -2355,9 +2355,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "bKv" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Westation Checkpoint office"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
@@ -2365,6 +2362,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/structure/cable,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Westation Checkpoint Office"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "bKA" = (
@@ -2780,7 +2780,7 @@
 /area/station/commons/toilet)
 "cbL" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Eastation Cut off room"
+	name = "Eastation Cut off Room"
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
@@ -6758,11 +6758,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"eEQ" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
 "eFe" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -8114,10 +8109,10 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
 "fwQ" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Westation Cut off room"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Westation Cutoff Room"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "fwZ" = (
@@ -12060,7 +12055,7 @@
 /area/station/engineering/atmos)
 "hVT" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Eastation Checkpoint office"
+	name = "Eastation Checkpoint Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
@@ -21385,9 +21380,6 @@
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "nLx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27768,9 +27760,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "rWD" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Westationeer bypass"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27779,6 +27768,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/obj/machinery/door/airlock/glass_large{
+	name = "Westationeer Bypass"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "rWE" = (
@@ -31055,7 +31047,6 @@
 "ubZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -33744,9 +33735,6 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "vNt" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Eastationeer bypass"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -33761,6 +33749,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/janitor,
 /obj/effect/mapping_helpers/airlock/access/any/service/theatre,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_large{
+	name = "Eastationeer Bypass"
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "vNB" = (
@@ -54830,8 +54821,8 @@ hPJ
 sjg
 dyZ
 qdH
+dyZ
 mQA
-eEQ
 qdH
 dju
 sbq
