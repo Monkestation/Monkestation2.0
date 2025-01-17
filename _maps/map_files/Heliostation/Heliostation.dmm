@@ -16834,11 +16834,11 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "bAb" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/left/directional/east{
 	name = "Plant Separation Door";
 	pixel_x = 4
 	},
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bAc" = (
@@ -17587,8 +17587,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "bET" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bEV" = (
@@ -18129,12 +18129,12 @@
 /turf/open/floor/iron/textured,
 /area/station/engineering/gravity_generator)
 "bIN" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bIO" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bIP" = (
@@ -20471,11 +20471,6 @@
 /obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
-"cdD" = (
-/obj/structure/window/spawner/directional/north,
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/dark,
-/area/station/service/hydroponics)
 "cdX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29446,6 +29441,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "elq" = (
@@ -46066,7 +46062,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics Maintenance"
@@ -50316,9 +50311,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mvo" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "mvs" = (
@@ -54648,8 +54643,8 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "ocP" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/window/spawner/directional/north,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ocT" = (
@@ -56369,7 +56364,6 @@
 "oKG" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/siding/green,
-/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "oKR" = (
@@ -56917,7 +56911,7 @@
 /area/station/hallway/primary/aft)
 "oVc" = (
 /obj/structure/window/spawner/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "oVj" = (
@@ -62872,9 +62866,9 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/command/storage/eva)
 "rja" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/window/spawner/directional/west,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rjf" = (
@@ -63155,12 +63149,12 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
 "rop" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/door/window/left/directional/east{
 	name = "Plant Separation Door";
 	pixel_x = 4
 	},
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ror" = (
@@ -71716,8 +71710,8 @@
 	},
 /area/station/maintenance/department/medical)
 "uIm" = (
-/obj/machinery/hydroponics/constructable,
 /obj/structure/window/spawner/directional/east,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "uIt" = (
@@ -72050,6 +72044,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/spray/plantbgone,
 /obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "uPD" = (
@@ -76367,9 +76362,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "wAM" = (
-/obj/machinery/hydroponics/constructable,
-/obj/structure/window/spawner/directional/south,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/siding/green{
+	dir = 4
+	},
+/obj/machinery/composters,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wAP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -106079,7 +106076,7 @@ bAe
 mvo
 bIN
 bET
-wAM
+oVc
 cWj
 bIL
 bwW
@@ -106847,7 +106844,7 @@ nAD
 bwX
 bAb
 elq
-wAM
+oVc
 bGo
 rLc
 ocP
@@ -107107,7 +107104,7 @@ elq
 oVc
 bDr
 btW
-cdD
+ocP
 vds
 uIm
 bwW
@@ -107874,7 +107871,7 @@ bsI
 bvZ
 bwX
 hHR
-gRT
+wAM
 gRT
 gRT
 gRT
