@@ -36,7 +36,7 @@
 				if(M.check_airborne_sterility())
 					return
 				var/strength = 0
-				for (var/datum/disease/advanced/V  as anything in M.diseases)
+				for (var/datum/disease/acute/V  as anything in M.diseases)
 					strength += V.infectionchance
 				strength = round(strength/M.diseases.len)
 
@@ -57,7 +57,7 @@
 				if(M.check_airborne_sterility())
 					return
 				var/strength = 0
-				for (var/datum/disease/advanced/V  as anything in M.diseases)
+				for (var/datum/disease/acute/V  as anything in M.diseases)
 					strength += V.infectionchance
 				strength = round(strength/M.diseases.len)
 
@@ -203,7 +203,7 @@
 	stage = 2
 	var/food_conversion = FALSE
 
-/datum/symptom/toxolysis/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/toxolysis/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
 	var/mob/living/M = mob
 	switch(round(multiplier))

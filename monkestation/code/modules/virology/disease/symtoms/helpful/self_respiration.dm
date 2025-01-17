@@ -6,7 +6,7 @@
 	badness = EFFECT_DANGER_HELPFUL
 	var/breathing = TRUE
 
-/datum/symptom/oxygen/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/oxygen/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	mob.losebreath = max(0, mob.losebreath - multiplier)
 	mob.adjustOxyLoss(-2 * multiplier)
 	if(multiplier >= 4)
@@ -16,7 +16,7 @@
 			breathing = FALSE
 			ADD_TRAIT(mob, TRAIT_NOBREATH, type)
 
-/datum/symptom/oxygen/deactivate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/oxygen/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
 	if(!breathing)
 		breathing = TRUE
 		REMOVE_TRAIT(mob, TRAIT_NOBREATH, type)

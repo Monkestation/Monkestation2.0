@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	return list(lowest_stage,highest_concentration)
 
-/datum/disease/advanced/cure(add_resistance = TRUE, mob/living/carbon/target)
+/datum/disease/acute/cure(add_resistance = TRUE, mob/living/carbon/target)
 	target = target || affected_mob || usr
 	if(!istype(affected_mob) || QDELING(affected_mob))
 		return
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		ticks = 0
 
 	//Pathogen killing each others
-	for (var/datum/disease/advanced/enemy_pathogen as anything in mob.diseases)
+	for (var/datum/disease/acute/enemy_pathogen as anything in mob.diseases)
 		if(enemy_pathogen == src)
 			continue
 
