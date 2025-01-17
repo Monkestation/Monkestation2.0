@@ -170,6 +170,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
 	///Replaces default stomach with a different organ
 	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
+	//Replaces default spleen with a different organ
+	var/obj/item/organ/internal/spleen/mutantspleen = /obj/item/organ/internal/spleen
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 	///Replaces default butt with a different organ
@@ -348,6 +350,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantlungs
 		if(ORGAN_SLOT_APPENDIX)
 			return mutantappendix
+		if(ORGAN_SLOT_SPLEEN)
+			return mutantspleen
 		if(ORGAN_SLOT_EYES)
 			return mutanteyes
 		if(ORGAN_SLOT_EARS)
@@ -389,6 +393,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_EARS,
 		ORGAN_SLOT_TONGUE,
 		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_SPLEEN,
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_BUTT,
 		ORGAN_SLOT_BLADDER,
@@ -1526,6 +1531,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantears
 	to_store += mutanttongue
 	to_store += mutantliver
+	to_store += mutantspleen
 	to_store += mutantstomach
 	to_store += mutantappendix
 	to_store += mutantbutt
@@ -1776,8 +1782,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = initial(exotic_bloodtype.name),
-			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_bloodtype.name)], which can make recieving medical treatment",
+			SPECIES_PERK_NAME = "[initial(exotic_bloodtype.name)] Blood",
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_bloodtype.name)], which can make recieving medical treatment more difficult.",
 		))
 
 	return to_add
