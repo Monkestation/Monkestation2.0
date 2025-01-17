@@ -47,7 +47,7 @@
 
 /datum/action/cooldown/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	var/distance = get_dist(victim, caster)
-	if(distance >= stun_radius)
+	if(distance > stun_radius)
 		for(var/i in 1 to 3)
 			victim.forceMove(get_step_towards(victim, caster))
 		return
