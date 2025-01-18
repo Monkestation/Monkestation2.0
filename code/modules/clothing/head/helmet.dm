@@ -65,6 +65,26 @@
 
 	return ..()
 
+//MONKESTATION EDIT START
+/obj/item/clothing/head/helmet/surplus
+	name = "surplus helmet"
+	desc = "Standard Security gear. Protects the head from impacts."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/head.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_righthand.dmi'
+//MONKESTATION EDIT STOP
+
+/obj/item/clothing/head/helmet/press
+	name = "press helmet"
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "helmet_press"
+
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
