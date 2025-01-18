@@ -262,6 +262,7 @@
 	icon = 'icons/hud/lobby/observe.dmi'
 	icon_state = "observe_disabled"
 	base_icon_state = "observe"
+	enabled = FALSE
 
 /atom/movable/screen/lobby/button/observe/Initialize(mapload)
 	. = ..()
