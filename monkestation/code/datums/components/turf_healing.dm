@@ -21,7 +21,7 @@
 /datum/component/turf_healing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_LIFE)
 
-/datum/component/turf_healing/proc/handle_healing(seconds_per_tick)
+/datum/component/turf_healing/proc/handle_healing(datum/source, seconds_per_tick) // MONKESTATION EDIT: I was regexing for bad signal handlers and this was expecting seconds_per_tick as the first argument.
 	SIGNAL_HANDLER
 
 	var/mob/living/healed_mob = parent

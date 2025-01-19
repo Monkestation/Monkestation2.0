@@ -35,7 +35,6 @@
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
 	var/static/list/monster_abilities = typecacheof(list(
 		/datum/action/changeling,
-		/datum/action/cooldown/bloodsucker
 	))
 
 /datum/antagonist/monsterhunter/apply_innate_effects(mob/living/mob_override)
@@ -62,8 +61,6 @@
 	INVOKE_ASYNC(src, PROC_REF(load_wonderland))
 	owner.add_traits(mind_traits, HUNTER_TRAIT)
 	//Teach Stake crafting
-	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
-	owner.teach_crafting_recipe(/datum/crafting_recipe/silver_stake)
 	var/mob/living/carbon/criminal = owner.current
 	var/obj/item/rabbit_locator/card = new(criminal.drop_location(), src)
 	var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK, "left pocket" = ITEM_SLOT_LPOCKET, "right pocket" = ITEM_SLOT_RPOCKET)

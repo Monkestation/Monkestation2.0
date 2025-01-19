@@ -84,12 +84,13 @@
  * * params - Parameters added after the emote.
  * * type_override - Override to the current emote_type.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * status_check - Whether the emote should check for the mob's stat. (usually emotes can't run while dead, this can bypass that)
  *
  * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, status_check = TRUE) // MONKESTATION EDIT: Allow using status_check to bypass stat requirements on emotes.
 	. = TRUE
-	if(!can_run_emote(user, TRUE, intentional))
+	if(!can_run_emote(user, status_check, intentional)) // MONKESTATION EDIT: Pass status_check to can_run_emote instead of hardcoding it to TRUE.
 		return FALSE
 	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional) & COMPONENT_CANT_EMOTE)
 		return // We don't return FALSE because the error output would be incorrect, provide your own if necessary.

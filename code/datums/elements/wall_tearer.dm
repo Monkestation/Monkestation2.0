@@ -28,23 +28,23 @@
 	src.tear_time = tear_time
 	src.reinforced_multiplier = reinforced_multiplier
 	src.do_after_key = do_after_key
-	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_wall))
+	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_attacked_wall)) // MONKESTATION EDIT START: COMSIG_HUMAN_EARLY_UNARMED_ATTACK
 
 /datum/element/wall_tearer/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK))
+	UnregisterSignal(source, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)) // MONKESTATION EDIT END: COMSIG_HUMAN_EARLY_UNARMED_ATTACK
 
 /// Try to tear up a wall
 /datum/element/wall_tearer/proc/on_attacked_wall(mob/living/tearer, atom/target, proximity_flag)
 	SIGNAL_HANDLER
 	if (DOING_INTERACTION_WITH_TARGET(tearer, target) || (!isnull(do_after_key) && DOING_INTERACTION(tearer, do_after_key)))
 		tearer.balloon_alert(tearer, "busy!")
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_HOSTILE_NO_ATTACK & COMPONENT_CANCEL_ATTACK_CHAIN // MONKESTATION EDIT START: COMPONENT_CANCEL_ATTACK_CHAIN
 	var/is_valid = validate_target(target, tearer)
 	if (is_valid != WALL_TEAR_ALLOWED)
-		return is_valid == WALL_TEAR_FAIL_CANCEL_CHAIN ? COMPONENT_HOSTILE_NO_ATTACK : NONE
+		return is_valid == WALL_TEAR_FAIL_CANCEL_CHAIN ? COMPONENT_HOSTILE_NO_ATTACK & COMPONENT_CANCEL_ATTACK_CHAIN : NONE
 	INVOKE_ASYNC(src, PROC_REF(rip_and_tear), tearer, target)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	return COMPONENT_HOSTILE_NO_ATTACK & COMPONENT_CANCEL_ATTACK_CHAIN // MONKESTATION EDIT END: COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/element/wall_tearer/proc/rip_and_tear(mob/living/tearer, atom/target)
 	// We need to do this three times to actually destroy it

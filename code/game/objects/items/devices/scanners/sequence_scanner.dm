@@ -24,7 +24,7 @@
 /obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
+	if (!HAS_TRAIT_NOT_PAIRED_WITH(target, TRAIT_GENELESS, TRAIT_FAKEGENES) && !HAS_TRAIT(target, TRAIT_BADDNA)) // MONKESTATION EDIT: TRAIT_FAKEGENES
 		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
 		playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50) // close enough

@@ -49,6 +49,7 @@
 	if(QDELING(owner))
 		return
 
+	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds comes aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE) // MONKESTATION EDIT: "come" -> "comes"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD

@@ -29,6 +29,9 @@
 #define COMSIG_MOB_PICKED_UP "mob_picked_up"
 #define COMSIG_MOB_DROPPED "mob_dropped"
 
+/// From base of /mob/living/carbon/proc/cuff_resist(): (item, breakouttime, cuff_break)
+#define COMSIG_CARBON_CUFF_RESIST "mob_cuff_resist"
+
 #define COMSIG_DRANK_REAGENT "drank_reagent"
 
 #define COMSIG_LIVING_TRACKER_REMOVED "tracker_removed"

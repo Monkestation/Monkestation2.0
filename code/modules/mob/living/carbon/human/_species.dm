@@ -1207,7 +1207,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 		user.do_attack_animation(target, atk_effect)
 
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high) * user.physiology.unarmed_damage_mod // MONKESTATION EDIT: unarmed_damage_mod
+
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
@@ -1262,9 +1263,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "punched")
 
-		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
-			target.visible_message(span_danger("[user] knocks [target] down!"), \
-							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold * user.physiology.unarmed_damage_mod) // MONKESTATION EDIT: unarmed_damage_mod doesn't affect stun
+			target.visible_message(span_danger("[user] knocks [target] down!"),
+			span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You knock [target] down!"))
 			var/knockdown_duration = 40 + (target.stamina.loss + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)

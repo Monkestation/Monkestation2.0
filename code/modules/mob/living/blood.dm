@@ -273,7 +273,7 @@
 	return blood_data
 */
 
-/mob/living/proc/get_blood_type()
+/mob/living/proc/get_blood_type(allow_fake_blood = FALSE)
 	RETURN_TYPE(/datum/blood_type)
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return null
@@ -293,9 +293,11 @@
 		return null
 	return GLOB.blood_types[/datum/blood_type/xenomorph]
 
-/mob/living/carbon/human/get_blood_type()
+/mob/living/carbon/human/get_blood_type(allow_fake_blood)
 	if(HAS_TRAIT(src, TRAIT_HUSK) || isnull(dna) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return null
+	if(allow_fake_blood ? HAS_TRAIT_NOT_PAIRED_WITH(src, TRAIT_NOBLOOD, TRAIT_FAKEBLOOD) : HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return GLOB.blood_types[/datum/blood_type/clown]
 	if(dna.species.exotic_bloodtype)
@@ -309,8 +311,8 @@
 	return get_blood_type()?.make_blood_splatter(src, blood_turf, small_drip)
 
 /mob/living/proc/do_splatter_effect(splat_dir = pick(GLOB.cardinals))
-	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splat_dir, get_blood_type()?.color)
-	splatter.color = get_blood_type()?.color
+	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splat_dir, get_blood_type(TRUE)?.color)
+	splatter.color = get_blood_type(TRUE)?.color
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.

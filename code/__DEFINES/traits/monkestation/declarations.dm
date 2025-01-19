@@ -55,13 +55,29 @@
 #define TRAIT_GHOST_CRITTER "ghost_critter"
 /// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// Allows user to instantly break any grabs.
+#define TRAIT_GRAB_BREAKER "grab_breaker"
+/// Allows user to instantly break any cuffs.
+#define TRAIT_CUFF_BREAKER "cuff_breaker"
 /// For when a mob has been consumed by a zombie
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
+/// Hides TRAIT_NOBLOOD if it's only from the same sources as TRAIT_FAKEBLOOD.
+#define TRAIT_FAKEBLOOD "fakeblood"
+/// Hides TRAIT_GENELESS if it's only from the same sources as TRAIT_FAKEGENES.
+#define TRAIT_FAKEGENES "fakegenes"
+/// Makes your skin pale grey.
+#define TRAIT_PALE_GREY_SKIN "pale_grey_skin"
+/// Trait for the vampire frenzy.
+#define TRAIT_VAMPIRE_FRENZY "vampire_frenzy"
+/// Granted by the "Defiance" ability. Makes you immune to most vampire weaknesses.
+#define TRAIT_VAMPIRE_DEFIANCE "vampire_defiance"
+/// Makes the mob immune to passing out from oxyloss.
+#define TRAIT_NOPASSOUT "nopassout"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS	"cant_sign_spells"
-/// You have special interactions with bloodsuckers and the occult.
+/// You have special interactions with the occult.
 #define TRAIT_OCCULTIST			"occultist"
 
 // /datum/mind

@@ -327,10 +327,6 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 /datum/blood_type/animal
 	name = "Y-"
 
-/datum/blood_type/crew/bloodsucker
-	name = "B++"
-	reagent_type = /datum/reagent/blood/bloodsucker
-
 /datum/blood_type/spider
 	name = "S"
 	color = COLOR_CARP_TURQUOISE

@@ -400,8 +400,7 @@
 			</span>" // divs do not need extra linebreak
 	*/
 	// Blood Level
-	// NON-MODULE CHANGE
-	if(target.has_dna() && target.get_blood_type())
+	if(target.has_dna() && target.get_blood_type(TRUE))
 		if(iscarbon(target))
 			var/mob/living/carbon/bleeder = target
 			if(bleeder.is_bleeding())
