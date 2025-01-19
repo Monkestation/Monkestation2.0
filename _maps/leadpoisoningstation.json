@@ -3,7 +3,18 @@
 	"map_name": "LeadPoisoningStation",
 	"map_path": "map_files/LeadPoisoningStation",
 	"map_file": "LeadPoisoningStation.dmm",
-	
+	"traits": [
+		{
+			"Up": true,
+			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
