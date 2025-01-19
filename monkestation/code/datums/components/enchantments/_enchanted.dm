@@ -94,10 +94,12 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
  * overriden_types - Any values in this list will override allowed_on, this is handled last
  */
 /datum/enchantment/proc/get_allowed_on(list/allowed_on_base = typecacheof(/obj/item), list/denied_from = typesof(/obj/item/clothing), list/overriden_types = list()) //AHHHHH
-	for(var/denied_entry in denied_from)
-		allowed_on_base[denied_entry] = 0
-	for(var/entry in overriden_types)
-		allowed_on_base[entry] = overriden_types[entry]
+	if(denied_from)
+		for(var/denied_entry in denied_from)
+			allowed_on_base[denied_entry] = 0
+	if(overriden_types)
+		for(var/entry in overriden_types)
+			allowed_on_base[entry] = overriden_types[entry]
 	return allowed_on_base
 
 /datum/enchantment/proc/get_component_from_parent(obj/item/parent) as /datum/component/enchanted
@@ -108,13 +110,20 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	return parent_list[text_ref(src)]
 
 /datum/enchantment/proc/can_apply_to(obj/item/checked)
-	return allowed_on[checked.type]
+	return allowed_on[checked.type] && examine_description
 
 /datum/enchantment/proc/apply_effect(obj/item/target, level)
 	register_item(target)
 
+///Handle comsig reg here
 /datum/enchantment/proc/register_item(obj/item/target)
 	return
 
+///Handle comsig unreg here
 /datum/enchantment/proc/unregister_item(obj/item/target)
 	return
+
+/datum/enchantment/clothing
+
+/datum/enchantment/clothing/get_allowed_on(list/allowed_on_base = typecacheof(/obj/item/clothing), list/denied_from = list(), list/overriden_types)
+	return ..()

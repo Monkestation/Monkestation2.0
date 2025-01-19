@@ -5981,6 +5981,7 @@
 #include "monkestation\code\datums\components\enchantments\blocking.dm"
 #include "monkestation\code\datums\components\enchantments\burn.dm"
 #include "monkestation\code\datums\components\enchantments\electricution.dm"
+#include "monkestation\code\datums\components\enchantments\hardened.dm"
 #include "monkestation\code\datums\components\enchantments\haste.dm"
 #include "monkestation\code\datums\components\enchantments\penetration.dm"
 #include "monkestation\code\datums\components\enchantments\sharpness.dm"
