@@ -7,6 +7,7 @@
 	name = "Kakologophobia"
 	desc = "You have an intense fear of swear words."
 	medical_record_text = "Patient has an irrational fear of swear words."
+	icon = FA_ICON_SPIDER
 
 /datum/quirk/kakologophobia/add(client/client_source)
 	var/mob/living/carbon/human_holder = quirk_holder
@@ -29,6 +30,7 @@
 	gain_text = span_danger("You wish people didn't have such dirty mouths.")
 	lose_text = span_notice("You wish more people had dirty mouths.")
 	medical_record_text = "Patient became noticably upset when a nearby doctor cursed in response to stubbing their toe."
+	icon = FA_ICON_SPIDER
 
 	var/static/regex/trigger_regex
 
