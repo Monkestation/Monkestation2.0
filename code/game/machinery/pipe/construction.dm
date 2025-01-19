@@ -240,6 +240,23 @@ Buildable meters
 
 	qdel(src)
 
+/obj/item/pipe/welder_act(mob/living/user, obj/item/welder)
+	. = ..()
+	if(istype(pipe_type, /obj/machinery/atmospherics/components))
+		return TRUE
+	if(!welder.tool_start_check(user, amount=2))
+		return TRUE
+	add_fingerprint(user)
+
+	if(welder.use_tool(src, user, 2 SECONDS, volume=2))
+		new /obj/item/sliced_pipe(drop_location())
+		user.visible_message( \
+			"[user] welds \the [src] in two.", \
+			span_notice("You weld \the [src] in two."), \
+			span_hear("You hear welding."))
+
+		qdel(src)
+
 /**
  * Attempt to automatically resolve a pipe conflict by reconfiguring any smart pipes involved.
  *

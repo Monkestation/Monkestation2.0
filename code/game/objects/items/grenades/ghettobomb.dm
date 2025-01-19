@@ -26,6 +26,7 @@
 		/obj/item/paper = 0,
 		/obj/item/shard = 0,
 		/obj/item/stack/ore/bluespace_crystal/refined = 0,
+		/obj/item/stack/sheet/mineral/uranium = 0,
 	)
 	/// Cooldown to prevent spam
 	COOLDOWN_DECLARE(spam_cd)
@@ -145,6 +146,12 @@
 	if(effects[/obj/item/paper])
 		for(var/turf/open/floor in view(effects[/obj/item/paper], loc)) //this couldve been light impact range but fake pipebombs exploding into confetti is funny
 			new /obj/effect/decal/cleanable/confetti(floor)
+	if(effects[/obj/item/stack/sheet/mineral/uranium])			//Monke, dirtybombs
+		if(effects[/obj/item/stack/sheet/mineral/uranium] >= 3)
+			new /obj/effect/landmark/nuclear_waste_spawner/strong(floor)
+		else
+			new /obj/effect/landmark/nuclear_waste_spawner(floor)
+		radiation_pulse(src, 50 * effects[/obj/item/stack/sheet/mineral/uranium])
 	var/heavy = floor(power * 0.2)
 	var/light = round(power * 0.7, 1)
 	var/flame = round(power + rand(-1, 1), 1)
@@ -166,6 +173,13 @@
 /obj/item/grenade/iedcasing/spawned
 	power = 2.5 //20u welding fuel
 	activator = /obj/item/assembly/timer
+	effects = list(							//Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
+		/obj/item/food/meat/slab = 0,
+		/obj/item/paper = 0,
+		/obj/item/shard = 3,
+		/obj/item/stack/ore/bluespace_crystal/refined = 0,
+		/obj/item/stack/sheet/mineral/uranium = 0,
+	)
 
 #define MAX_STUFFINGS 3
 
@@ -183,6 +197,7 @@
 		/obj/item/paper,
 		/obj/item/shard,
 		/obj/item/stack/ore/bluespace_crystal/refined,
+		/obj/item/stack/sheet/mineral/uranium,
 	))
 	//this probably shouldve been a blacklist instead but god do i not wanna update this anytime a new assembly is added
 	/// A static list of types of assemblies that are allowed to be used to finish the bomb
@@ -198,7 +213,7 @@
 	/// Static list of reagent to explosive power
 	var/static/list/fuel_power = list(
 		/datum/reagent/fuel = 0.5,
-		/datum/reagent/toxin/plasma = 0.75
+		/datum/reagent/toxin/plasma = 0.75	//Monke, you can use plasma for a slightly bigger boom.
 		/datum/reagent/gunpowder = 1,
 		/datum/reagent/nitroglycerin = 2,
 		/datum/reagent/tatp = 2.5,
@@ -241,10 +256,10 @@
 		var/obj/item/stack/cable_coil/coil = item
 		if(!istype(coil))
 			return
-		if (coil.get_amount() < 15)
-			balloon_alert(user, "need 15 length!")
+		if (coil.get_amount() < 5)
+			balloon_alert(user, "need 5 length!")
 			return
-		coil.use(15)
+		coil.use(5)
 
 		var/cur_power = 0
 		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
