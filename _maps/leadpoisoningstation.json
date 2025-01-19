@@ -3,10 +3,11 @@
 	"map_name": "LeadPoisoningStation",
 	"map_path": "map_files/LeadPoisoningStation",
 	"map_file": "LeadPoisoningStation.dmm",
+	"space_ruin_levels": 2,
 	"traits": [
 		{
 			"Up": true,
-			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Baseturf": "/turf/open/floor/plating/airless",
 			"Linkage": "Cross"
 		},
 		{
