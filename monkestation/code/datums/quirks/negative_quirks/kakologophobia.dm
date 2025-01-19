@@ -6,6 +6,8 @@
 /datum/quirk/kakologophobia
 	name = "Kakologophobia"
 	desc = "You have an intense fear of swear words."
+	value = -8
+	// Gain text and lose text is handled by the phobia brain trauma that the quirk holder gains.
 	medical_record_text = "Patient has an irrational fear of swear words."
 	icon = FA_ICON_COMMENT_MEDICAL
 
@@ -27,6 +29,7 @@
 /datum/quirk/easily_offended
 	name = "Easily Offended"
 	desc = "You hate it when others use swear words."
+	value = -1
 	gain_text = span_danger("You wish people didn't have such dirty mouths.")
 	lose_text = span_notice("You wish more people had dirty mouths.")
 	medical_record_text = "Patient became noticably upset when a nearby doctor cursed in response to stubbing their toe."
