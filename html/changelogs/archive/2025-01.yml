@@ -332,3 +332,39 @@
       more resistant to ranged attacks.
   - balance: Bulletproof armour now has 25 wound protection instead of 20.
   - bugfix: Fixed head overlays rotating separate to the head when thrown.
+2025-01-19:
+  Absolucy:
+  - bugfix: Gary can no longer somehow steal items from borgs, alongside stealing
+      other types of abstract or no-drop items.
+  - rscadd: Added wall-mounted MegaSeed and NutriMax vendors (sprites courtesy of
+      SirNightKnight)
+  - rscadd: All maps (and public mining) now have seed/nutriment vendors and a composter
+      in their public garden.
+  - admin: Admins are actually notified when someone accepts/rejects a token, instead
+      of there being no feedback whatsoever.
+  - spellcheck: The flavor text for the bloodsucker Venture clan now properly says
+      to use a persuasion rack instead of a candelabrum to level their favorite vassal
+      up.
+  - spellcheck: Fixed bloodsucker-related moodlets having blank lines after them.
+  - bugfix: Clicking on the persuasion rack while a vassal is buckled after a revenge
+      or favorite vassal has been selected won't automatically make the buckled vassal
+      into the other without prompting.
+  - bugfix: Fixed being able to vassalize antags/mindshielded people regardless of
+      whether they accepted the prompt or not.
+  Absolucy, the-orange-cow:
+  - bugfix: Knock heretics may once again access The Relentless Heartbeat after purchasing
+      Burglar's Finesse.
+  Gw0sty:
+  - rscdel: Removed Miasma sickness
+  MichiRecRoom:
+  - qol: pAIs can now withdraw their candidacy at any time.
+  Shoddd:
+  - balance: .45 long ammo now does 30 damage and is weaker to armor
+  TTNT789:
+  - balance: uncaps stand limit from all sources have fun with being the ultimate
+      stand user
+  ThePooba:
+  - bugfix: disabled rev token why is that enabled
+  Uristthedorf:
+  - balance: Qarad now has a 0.75 damage modifier.
+  - balance: Clown disbelief gives a point.
