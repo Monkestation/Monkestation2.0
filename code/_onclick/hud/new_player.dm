@@ -467,6 +467,8 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
+
 //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
 // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
 /atom/movable/screen/lobby/youarehere/Initialize(mapload)
@@ -492,6 +494,8 @@
 	var/server_ip = "play.monkestation.com"
 	/// The port of this server.
 	var/server_port
+
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
@@ -540,27 +544,32 @@
 	server_port = MRP_PORT
 
 //NRP MONKE
+/*
 /atom/movable/screen/lobby/button/server/nrp
 	screen_loc = "TOP:-110,CENTER:+173"
 	base_icon_state = "nrp"
 	server_name = "Raw Roleplay (NRP)"
 	server_port = NRP_PORT
-
+*/
+//bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
 /atom/movable/screen/lobby/button/server/vanderlin
 	icon = 'icons/hud/lobby/vanderlin_button.dmi'
 	base_icon_state = "vanderlin"
-	screen_loc = "TOP:-140,CENTER:+177"
+	screen_loc = "TOP:-137,CENTER:+177"
 	server_name = "Vanderlin"
 	server_port = VANDERLIN_PORT
 
 /atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
+	return TRUE
+/*
 	switch(day)
 		if(FRIDAY)
 			return (hour >= 15)
 		if(SATURDAY, SUNDAY)
 			return TRUE
 	return FALSE
+*/
 
 #undef VANDERLIN_PORT
 #undef HRP_PORT
