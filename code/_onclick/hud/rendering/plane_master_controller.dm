@@ -31,16 +31,21 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 	return returned_planes
 
 ///Full override so we can just use filterrific
-/atom/movable/plane_master_controller/add_filter(name, priority, list/params)
-	. = ..()
+/atom/movable/plane_master_controller/add_filter(name, priority, list/params, update = TRUE)
+	. = ..(name, priority, params, FALSE)
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
-		pm_iterator.add_filter(name, priority, params)
+		pm_iterator.add_filter(name, priority, params, update = FALSE)
+	if(update)
+		update_filters()
 
 ///Full override so we can just use filterrific
-/atom/movable/plane_master_controller/remove_filter(name_or_names)
-	. = ..()
+/atom/movable/plane_master_controller/remove_filter(name_or_names, update = TRUE)
+	. = ..(name_or_names, FALSE)
+	var/plane_updated = FALSE
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
-		pm_iterator.remove_filter(name_or_names)
+		plane_updated |= pm_iterator.remove_filter(name_or_names, update = FALSE)
+	if(update && (. || plane_updated))
+		update_filters()
 
 /atom/movable/plane_master_controller/update_filters()
 	. = ..()

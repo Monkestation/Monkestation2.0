@@ -618,9 +618,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	. = ..()
 	if(!.)
 		return
-	remove_filter("AO")
+	var/needs_update = remove_filter("AO", update = FALSE)
 	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+	else if(needs_update)
+		update_filters()
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"

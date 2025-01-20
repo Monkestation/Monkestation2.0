@@ -284,7 +284,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!game_plane_master_controller)
 		return FALSE
-	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
+	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS), update = FALSE)
 	game_plane_master_controller.add_filter("psychic_blur", 10, angular_blur_filter(0, 0, 3))
 	return TRUE
 
@@ -292,8 +292,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!game_plane_master_controller)
 		return
-	game_plane_master_controller.remove_filter("psychic_blur")
-	game_plane_master_controller.remove_filter("psychic_wave")
+	game_plane_master_controller.remove_filter(list("psychic_blur", "psychic_wave"))
 
 /datum/status_effect/psychic_projection/tick(seconds_per_tick, times_fired)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)

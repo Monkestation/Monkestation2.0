@@ -10,7 +10,7 @@
 	spawned.pixel_x += rand(-6,6)
 	spawned.pixel_y += rand(-4,4)
 
-	spawned.add_filter("outline", 1, list(type = "outline", size = 1,  color = "#FF3300"))
+	spawned.add_filter("outline", 1, list(type = "outline", size = 1,  color = "#FF3300"), update = FALSE)
 	spawned.add_filter("bloom", 2 , list(type = "bloom", threshold = rgb(255,128,255), size = 5, offset = 4, alpha = 255))
 
 	if(prob(35))

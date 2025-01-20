@@ -33,22 +33,23 @@
 
 	sm.modify_filter(name = "ray", new_params = list(
 		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR
-	))
+	), update = FALSE)
 
 	sm.add_filter(name = "outline", priority = 2, params = list(
 		type = "outline",
 		size = 1,
 		color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR
-	))
+	), update = FALSE)
 
 	if(sm.final_countdown)
 		sm.add_filter(name = "icon", priority = 3, params = list(
 			type = "layer",
 			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
 			flags = FILTER_OVERLAY
-		))
+		), update = FALSE)
 	else
-		sm.remove_filter("icon")
+		sm.remove_filter("icon", update = FALSE)
+	sm.update_filters()
 
 /datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
@@ -95,7 +96,7 @@
 
 	sm.modify_filter(name = "ray", new_params = list(
 		color = SUPERMATTER_TESLA_COLOUR,
-	))
+	), update = FALSE)
 
 	sm.add_filter(name = "icon", priority = 2, params = list(
 		type = "layer",

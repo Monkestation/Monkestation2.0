@@ -73,6 +73,7 @@
 /datum/component/cracked/proc/RemoveCracks(obj/source, count)
 	for(var/i in 1 to count)
 		var/removed_filter = pick(applied_cracks)
-		source.remove_filter(removed_filter)
+		source.remove_filter(removed_filter, update = FALSE)
 		source.cut_overlay(applied_cracks[removed_filter])
 		applied_cracks -= removed_filter
+	source.update_filters()

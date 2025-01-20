@@ -494,8 +494,8 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
-	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
-	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
+	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE), update = FALSE)
+	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15), update = FALSE)
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.base_pixel_y -= 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y, flags = ANIMATION_PARALLEL)

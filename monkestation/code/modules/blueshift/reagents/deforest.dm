@@ -102,8 +102,7 @@
 
 	var/static/list/col_filter_red = list(0.7,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1)
 
-	game_plane_master_controller.add_filter("demoneye_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_RGB))
-
+	game_plane_master_controller.add_filter("demoneye_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_RGB), update = FALSE)
 	game_plane_master_controller.add_filter("demoneye_blur", 1, list("type" = "angular_blur", "size" = 4))
 
 
@@ -142,8 +141,7 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = our_guy.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
-	game_plane_master_controller.remove_filter("demoneye_filter")
-	game_plane_master_controller.remove_filter("demoneye_blur")
+	game_plane_master_controller.remove_filter(list("demoneye_filter", "demoneye_blur"))
 
 
 /datum/reagent/drug/demoneye/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
@@ -274,8 +272,7 @@
 	if(overdosed)
 		color_filter_to_use = col_filter_purple
 
-	game_plane_master_controller.add_filter(TWITCH_SCREEN_FILTER, 10, color_matrix_filter(color_filter_to_use, FILTER_COLOR_RGB))
-
+	game_plane_master_controller.add_filter(TWITCH_SCREEN_FILTER, 10, color_matrix_filter(color_filter_to_use, FILTER_COLOR_RGB), update = FALSE)
 	game_plane_master_controller.add_filter(TWITCH_SCREEN_BLUR, 1, list("type" = "radial_blur", "size" = 0.02))
 
 
@@ -330,8 +327,7 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = our_guy.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
-	game_plane_master_controller.remove_filter(TWITCH_SCREEN_FILTER)
-	game_plane_master_controller.remove_filter(TWITCH_SCREEN_BLUR)
+	game_plane_master_controller.remove_filter(list(TWITCH_SCREEN_FILTER, TWITCH_SCREEN_BLUR))
 
 
 /// Leaves an afterimage behind the mob when they move
