@@ -26,7 +26,6 @@
 		/obj/item/paper = 0,
 		/obj/item/shard = 0,
 		/obj/item/stack/ore/bluespace_crystal/refined = 0,
-		/obj/item/stack/sheet/mineral/uranium = 0,
 	)
 	/// Cooldown to prevent spam
 	COOLDOWN_DECLARE(spam_cd)
@@ -146,12 +145,6 @@
 	if(effects[/obj/item/paper])
 		for(var/turf/open/floor in view(effects[/obj/item/paper], loc)) //this couldve been light impact range but fake pipebombs exploding into confetti is funny
 			new /obj/effect/decal/cleanable/confetti(floor)
-	if(effects[/obj/item/stack/sheet/mineral/uranium])			//Monke, dirtybombs
-		if(effects[/obj/item/stack/sheet/mineral/uranium] >= 3)
-			new /obj/effect/landmark/nuclear_waste_spawner/strong(src)
-		else
-			new /obj/effect/landmark/nuclear_waste_spawner(src)
-		radiation_pulse(src, 50 * effects[/obj/item/stack/sheet/mineral/uranium])
 	var/heavy = floor(power * 0.2)
 	var/light = round(power * 0.7, 1)
 	var/flame = round(power + rand(-1, 1), 1)
@@ -178,7 +171,6 @@
 		/obj/item/paper = 0,
 		/obj/item/shard = 3,							//Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
 		/obj/item/stack/ore/bluespace_crystal/refined = 0,
-		/obj/item/stack/sheet/mineral/uranium = 0,
 	)
 
 /obj/item/grenade/iedcasing/spawned/plasma //MONKE, better ghetto bombs for noobs.
@@ -200,7 +192,6 @@
 		/obj/item/paper,
 		/obj/item/shard,
 		/obj/item/stack/ore/bluespace_crystal/refined,
-		/obj/item/stack/sheet/mineral/uranium,
 	))
 	//this probably shouldve been a blacklist instead but god do i not wanna update this anytime a new assembly is added
 	/// A static list of types of assemblies that are allowed to be used to finish the bomb
