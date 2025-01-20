@@ -36,11 +36,15 @@
 
 /datum/job/cyborg/proc/get_random_open_turf_in_area()
 	var/list/turfs = get_area_turfs(/area/station/ai_monitored/turret_protected/ai_upload)
-	var/turf/open/target_turf = null
-	while(!target_turf)
-		var/turf/turf = pick(turfs)
-		if(!turf.density)
-			target_turf = turf
+	var/turf/open/target_turf
+	while(length(turfs))
+		var/turf/turf = pick_n_take(turfs)
+		if(!isfloorturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		target_turf = turf
+		break
+	if(!target_turf)
+		CRASH("Failed to find eligible spawn turf for a cyborg!")
 	return target_turf
 
 /datum/job/cyborg/after_spawn(mob/living/spawned, client/player_client)
