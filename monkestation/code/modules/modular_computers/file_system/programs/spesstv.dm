@@ -8,8 +8,6 @@
 	network = list()
 	/// The radio used to listen to the entertainment channel.
 	var/obj/item/radio/entertainment/pda/radio
-	/// If TRUE, the PDA will notify the user when a stream starts.
-	var/notify = FALSE
 
 /datum/computer_file/program/secureye/spesstv/New()
 	. = ..()
@@ -36,6 +34,8 @@
 		network |= tv_show_id
 	else
 		network -= tv_show_id
+	if(announcement)
+		computer.alert_call(src, announcement)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
 	//notify(length(network), announcement)
 
