@@ -1591,6 +1591,11 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"aXJ" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "aYI" = (
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
@@ -8477,6 +8482,10 @@
 "fez" = (
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
+"feD" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "feE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8529,6 +8538,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"fgz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/punji_sticks/spikes,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "fgD" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/structure/cable,
@@ -10012,6 +10026,11 @@
 	},
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
+"fYV" = (
+/mob/living/basic/trooper/russian,
+/obj/structure/railing/wooden_fencing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "fZe" = (
 /obj/item/reagent_containers/condiment/ketchup,
 /obj/item/reagent_containers/condiment/ketchup{
@@ -12061,6 +12080,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"hnU" = (
+/obj/structure/punji_sticks/spikes,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "hnY" = (
 /obj/machinery/modular_computer/preset/curator{
 	dir = 1
@@ -15396,6 +15419,10 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"jdj" = (
+/mob/living/basic/trooper/russian/ranged,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "jdl" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/lattice/catwalk,
@@ -16220,6 +16247,10 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/brig)
+"jCo" = (
+/obj/structure/railing/wooden_fencing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "jCF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
@@ -18196,6 +18227,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
+"kOK" = (
+/obj/item/food/bearsteak,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "kOO" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Treatment Center"
@@ -19137,6 +19173,11 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/morgue)
+"lsH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/wooden_fencing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "lsS" = (
 /obj/machinery/computer/order_console/cook{
 	dir = 4
@@ -20685,6 +20726,11 @@
 /mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
+"moW" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/russian/ranged,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "mpc" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
@@ -24039,6 +24085,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"ojX" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "okk" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Eastation Upper - Hallway End";
@@ -24348,6 +24400,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/upper)
+"otL" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/obj/structure/railing/wooden_fencing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "otO" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
@@ -28118,6 +28177,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
+/obj/effect/landmark/observer_start,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "qNA" = (
@@ -29729,6 +29789,10 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
+"rGG" = (
+/mob/living/basic/trooper/russian,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "rGQ" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/decal/cleanable/dirt,
@@ -35554,6 +35618,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/noslip,
 /area/station/hallway/primary/central/aft)
+"vcL" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/russian,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "vcN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
@@ -39857,6 +39926,13 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"xHb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "xHh" = (
 /obj/structure/rack,
 /obj/item/book/manual/wiki/chemistry{
@@ -63884,7 +63960,7 @@ ghX
 ghX
 ghX
 ghX
-tLF
+ghX
 tLF
 tLF
 ghX
@@ -64141,8 +64217,8 @@ ghX
 ghX
 ghX
 bmn
-tLF
-tLF
+ghX
+ghX
 tLF
 ghX
 ghX
@@ -64396,11 +64472,11 @@ tLF
 ghX
 ghX
 tLF
+ghX
+oKv
 tLF
-bmn
 tLF
-tLF
-tLF
+ghX
 ghX
 ghX
 ghX
@@ -64650,8 +64726,8 @@ tLF
 tLF
 tLF
 tLF
-bmn
-bmn
+oKv
+oKv
 bmn
 tLF
 bmn
@@ -64907,10 +64983,10 @@ gue
 tLF
 tLF
 tLF
+oKv
+oKv
 bmn
-bmn
-bmn
-uQZ
+tLF
 ghX
 ghX
 ghX
@@ -65157,14 +65233,14 @@ tLF
 ghX
 ghX
 ghX
-tLF
+uQZ
 tLF
 tLF
 tLF
 bmn
 bmn
 bmn
-tLF
+ghX
 ghX
 ghX
 ghX
@@ -67759,9 +67835,9 @@ tLF
 tLF
 tLF
 bmn
-bmn
+fgz
 gPD
-bmn
+fgz
 bmn
 tLF
 bmn
@@ -68013,13 +68089,13 @@ ghX
 ghX
 ghX
 tLF
-tLF
-tLF
+hnU
+hnU
 bmn
-bmn
+fgz
 gPD
 bmn
-bmn
+fgz
 tLF
 bmn
 bmn
@@ -68528,11 +68604,11 @@ ghX
 ghX
 ghX
 ghX
+ojX
 tLF
-tLF
-bmn
-bmn
-tLF
+xHb
+xHb
+otL
 tLF
 tLF
 bmn
@@ -68787,7 +68863,7 @@ ghX
 ghX
 ghX
 tLF
-bmn
+vcL
 bmn
 tLF
 tLF
@@ -69043,12 +69119,12 @@ ghX
 ghX
 ghX
 fjW
+jdj
 tLF
 tLF
+jCo
 tLF
-tLF
-tLF
-tLF
+hnU
 tLF
 tLF
 tLF
@@ -69296,14 +69372,14 @@ tLF
 tLF
 tLF
 tLF
-tLF
+aXJ
 tLF
 tLF
 exM
 bmn
 bmn
 tLF
-tLF
+fYV
 ghX
 tLF
 tLF
@@ -69552,14 +69628,14 @@ tLF
 tLF
 bmn
 gue
-tLF
-tLF
-bmn
+hnU
+jCo
+moW
 bmn
 uQZ
 bmn
 bmn
-tLF
+jdj
 ghX
 tLF
 tLF
@@ -69816,7 +69892,7 @@ bmn
 bmn
 bmn
 tLF
-tLF
+kOK
 ghX
 tLF
 tLF
@@ -70065,15 +70141,15 @@ bmn
 tLF
 tLF
 blD
+fgz
 bmn
-bmn
-bmn
+lsH
+aXJ
+knK
+jdj
 tLF
-tLF
-tLF
-tLF
-tLF
-tLF
+rGG
+kOK
 ghX
 ghX
 ghX
@@ -70324,12 +70400,12 @@ tLF
 tLF
 tLF
 tLF
-tLF
+hnU
 tLF
 tLF
 ghX
 ghX
-tLF
+feD
 ghX
 ghX
 ghX
@@ -70583,7 +70659,7 @@ tLF
 tLF
 tLF
 gue
-tLF
+hnU
 ghX
 ghX
 ghX
@@ -129164,7 +129240,7 @@ ghX
 ghX
 ghX
 ghX
-vBR
+tLF
 ghX
 ghX
 ghX
@@ -129421,8 +129497,8 @@ ghX
 ghX
 ghX
 vBR
-vBR
-vBR
+tLF
+tLF
 ghX
 ghX
 ghX
@@ -129675,10 +129751,10 @@ hlO
 vBR
 ghX
 vBR
+ghX
 vBR
-vBR
-vBR
-vBR
+tLF
+tLF
 vBR
 ghX
 ghX
@@ -129929,12 +130005,12 @@ vBR
 vBR
 vBR
 vBR
-uZy
+uQZ
+tLF
 vBR
-vBR
-vBR
-vBR
-vBR
+ghX
+ghX
+tLF
 vBR
 vBR
 ghX
@@ -130186,11 +130262,11 @@ vBR
 vBR
 vBR
 vBR
-vBR
-vBR
-vBR
-vBR
-vBR
+tLF
+tLF
+tLF
+tLF
+tLF
 tLF
 tLF
 tLF
@@ -130444,8 +130520,8 @@ vBR
 vBR
 vBR
 vBR
-vBR
-vBR
+tLF
+tLF
 vBR
 vBR
 vBR
