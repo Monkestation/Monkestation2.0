@@ -516,7 +516,8 @@
 	if(!psychonaut.hud_used)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	game_plane_master_controller.remove_filter(list("rainbow", "psilocybin_wave"))
+	game_plane_master_controller.remove_filter("rainbow")
+	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, seconds_per_tick, times_fired)
 	. = ..()
@@ -559,7 +560,7 @@
 	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
 	var/list/col_filter_red = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.900,0,0,0) //most red color
 
-	game_plane_master_controller.add_filter("blastoff_filter", 10, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY), update = FALSE)
+	game_plane_master_controller.add_filter("blastoff_filter", 10, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
 	game_plane_master_controller.add_filter("blastoff_wave", 1, list("type" = "wave", "x" = 32, "y" = 32))
 
 
@@ -586,7 +587,8 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = dancer.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
-	game_plane_master_controller.remove_filter(list("blastoff_filter", "blastoff_wave"))
+	game_plane_master_controller.remove_filter("blastoff_filter")
+	game_plane_master_controller.remove_filter("blastoff_wave")
 	dancer.sound_environment_override = NONE
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, seconds_per_tick, times_fired)

@@ -174,5 +174,5 @@
 	var/icon/shading_to_use = masks_and_shading["[dir_to_use]"]["shading"]
 	var/size = masks_and_shading["[dir_to_use]"]["size"]
 
-	appearance.add_filter("Digitigrade", 1, displacement_map_filter(icon = icon_to_use, size = size), update = FALSE)
+	appearance.add_filter("Digitigrade", 1, displacement_map_filter(icon = icon_to_use, size = size))
 	appearance.add_filter("Digitigrade_shading", 1, layering_filter(icon = shading_to_use, blend_mode = BLEND_MULTIPLY))

@@ -74,7 +74,7 @@
 /datum/addiction/hallucinogens/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	game_plane_master_controller.add_filter("hallucinogen_wave", 10, wave_filter(300, 300, 3, 0, WAVE_SIDEWAYS), update = FALSE)
+	game_plane_master_controller.add_filter("hallucinogen_wave", 10, wave_filter(300, 300, 3, 0, WAVE_SIDEWAYS))
 	game_plane_master_controller.add_filter("hallucinogen_blur", 10, angular_blur_filter(0, 0, 3))
 
 
@@ -85,7 +85,8 @@
 /datum/addiction/hallucinogens/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	game_plane_master_controller.remove_filter(list("hallucinogen_blur", "hallucinogen_blur"))
+	game_plane_master_controller.remove_filter("hallucinogen_blur")
+	game_plane_master_controller.remove_filter("hallucinogen_wave")
 	affected_carbon.remove_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
 
 /datum/addiction/maintenance_drugs

@@ -513,7 +513,7 @@ Moving interrupts
 			target_appearance_with_filters = null
 		else
 			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
-			remove_filter("partial_uncover", update = FALSE)
+			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
 	update_appearance()
