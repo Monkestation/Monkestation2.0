@@ -173,24 +173,16 @@
 /obj/item/grenade/iedcasing/spawned
 	power = 2.5 //20u welding fuel
 	activator = /obj/item/assembly/timer
-	effects = list(							//Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
+	effects = list(
 		/obj/item/food/meat/slab = 0,
 		/obj/item/paper = 0,
-		/obj/item/shard = 3,
+		/obj/item/shard = 3,							//Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
 		/obj/item/stack/ore/bluespace_crystal/refined = 0,
 		/obj/item/stack/sheet/mineral/uranium = 0,
 	)
 
 /obj/item/grenade/iedcasing/spawned/plasma //MONKE, better ghetto bombs for noobs.
 	power = 3.75 //20u plasma
-	activator = /obj/item/assembly/timer
-	effects = list(
-		/obj/item/food/meat/slab = 0,
-		/obj/item/paper = 0,
-		/obj/item/shard = 3,
-		/obj/item/stack/ore/bluespace_crystal/refined = 0,
-		/obj/item/stack/sheet/mineral/uranium = 0,
-	)
 
 #define MAX_STUFFINGS 3
 
