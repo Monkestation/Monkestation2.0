@@ -4,6 +4,7 @@
 	stage = 2
 	restricted = TRUE
 	badness = EFFECT_DANGER_ANNOYING
+	severity = 3
 	max_multiplier = 5
 	var/yawning = FALSE
 
@@ -80,6 +81,7 @@
 	stage = 2
 	restricted = TRUE
 	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 
 	var/list/passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
@@ -201,6 +203,8 @@
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	max_multiplier = 10
 	stage = 2
+	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 	var/food_conversion = FALSE
 
 /datum/symptom/toxolysis/activate(mob/living/carbon/mob, datum/disease/acute/disease)

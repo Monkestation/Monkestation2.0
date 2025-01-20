@@ -4,6 +4,7 @@
 	stage = 3
 	max_count = 1
 	badness = EFFECT_DANGER_HARMFUL
+	severity = 3
 	var/skip = FALSE
 
 /datum/symptom/butterfly_skin/activate(mob/living/carbon/mob)

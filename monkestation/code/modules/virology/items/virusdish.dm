@@ -197,6 +197,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			EFFECT_DANGER_DEADLY	= 0,
 			)
 		contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+		contained_virus.A_Refresh()
 		growth = rand(5, 50)
 		name = "growth dish (Unknown [contained_virus.form])"
 		update_appearance()

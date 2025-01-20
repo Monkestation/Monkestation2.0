@@ -5,6 +5,8 @@
 	stage = 1
 	max_multiplier = 5
 	max_chance = 45
+	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 
 	var/passive_message = span_notice("Your skin feels oddly dry...")
 	var/absorption_coeff = 1

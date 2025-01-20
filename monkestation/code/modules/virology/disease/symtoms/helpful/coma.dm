@@ -4,6 +4,8 @@
 	max_multiplier = 15
 	max_chance = 100
 	stage = 3
+	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 
 	var/passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/added_to_mob = FALSE

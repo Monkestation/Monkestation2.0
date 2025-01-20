@@ -3,6 +3,7 @@
 	desc = "Causes the infected to cough rapidly, releasing pathogenic clouds."
 	stage = 2
 	badness = EFFECT_DANGER_ANNOYING
+	severity = 2
 	max_chance = 10
 
 /datum/symptom/cough/activate(mob/living/mob)

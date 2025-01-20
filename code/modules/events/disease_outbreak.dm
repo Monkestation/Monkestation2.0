@@ -127,6 +127,7 @@
 	var/datum/disease/acute/new_disease = new virus_choice
 	new_disease.makerandom(list(30,60),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
+	new_disease.A_Refresh()
 	illness_type = new_disease.name
 
 	var/mob/living/carbon/human/victim
@@ -237,6 +238,7 @@
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
+	new_disease.A_Refresh()
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))

@@ -242,3 +242,45 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 
 	ticks += speed
+
+//horrible, awful, stolen code from disease/advance. But it WORKS
+/datum/disease/acute
+	var/list/properties = list()
+
+/datum/disease/acute/proc/A_Refresh(new_name = FALSE)
+	A_GenerateProperties()
+	A_assign_properties()
+
+/datum/disease/acute/proc/A_GenerateProperties()
+	properties = list("severity" = 0)
+	for(var/datum/symptom/S in symptoms)
+		if(!S.neutered)
+			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
+
+/datum/disease/acute/proc/A_assign_properties()
+	if(properties?.len)
+		A_set_severity(properties["severity"])
+	else
+		CRASH("Our properties were empty or null!")
+
+
+/datum/disease/acute/proc/A_set_severity(level_sev)
+
+	switch(level_sev)
+
+		if(-INFINITY to 0)
+			severity = DISEASE_SEVERITY_POSITIVE
+		if(1)
+			severity = DISEASE_SEVERITY_NONTHREAT
+		if(2)
+			severity = DISEASE_SEVERITY_MINOR
+		if(3)
+			severity = DISEASE_SEVERITY_MEDIUM
+		if(4)
+			severity = DISEASE_SEVERITY_HARMFUL
+		if(5)
+			severity = DISEASE_SEVERITY_DANGEROUS
+		if(6 to INFINITY)
+			severity = DISEASE_SEVERITY_BIOHAZARD
+		else
+			severity = "Unknown"

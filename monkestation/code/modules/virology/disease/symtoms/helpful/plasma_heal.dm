@@ -18,7 +18,9 @@
 	stage = 1
 	max_multiplier = 5
 	max_chance = 45
-
+	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
+	
 	var/passive_message = span_notice("You feel an odd attraction to plasma.")
 	var/temp_rate = 1
 

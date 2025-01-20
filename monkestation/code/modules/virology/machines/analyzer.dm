@@ -128,6 +128,7 @@
 
 		dish.name = "growth dish ([last_scan_name])"
 		last_scan_info = dish.info
+		dish.contained_virus.A_Refresh()
 		var/datum/browser/popup = new(user, "\ref[dish]", dish.name, 600, 500, src)
 		popup.set_content(dish.info)
 		popup.open()

@@ -4,6 +4,7 @@
 	max_count = 1
 	stage = 4
 	badness = EFFECT_DANGER_FLAVOR
+	severity = 1
 	var/biotypes = MOB_MINERAL | MOB_ROBOTIC
 
 /datum/symptom/adaptation/activate(mob/living/carbon/mob, datum/disease/acute/disease)

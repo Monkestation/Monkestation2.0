@@ -4,6 +4,7 @@
 	stage = 4
 	max_multiplier = 5
 	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 	var/breathing = TRUE
 
 /datum/symptom/oxygen/activate(mob/living/carbon/mob, datum/disease/acute/disease)

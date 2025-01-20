@@ -5,6 +5,7 @@
 	max_count = 10
 	stage = 1
 	badness = EFFECT_DANGER_HARMFUL
+	severity = 3
 	max_chance = 10
 	var/new_form = /mob/living/carbon/human
 	var/bantype
@@ -107,6 +108,7 @@
 	desc = "Causes the host to suffer from severe anxiety"
 	stage = 1
 	badness = EFFECT_DANGER_ANNOYING
+	severity = 3
 	restricted = TRUE
 	max_multiplier = 4
 
@@ -143,6 +145,7 @@
 	desc = "You ate it wrong, and now you will die. Cure: Anacea"
 	stage = 1
 	badness = EFFECT_DANGER_DEADLY
+	severity = 5
 	restricted = TRUE
 	max_multiplier = 3
 	chance = 25
