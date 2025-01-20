@@ -14,7 +14,6 @@
 	important_text = "Work as a team with your fellow survivors and do not abandon them. You are expected to be familiar with Old station for this role."
 	outfit = /datum/outfit/oldcmo
 	spawner_job_path = /datum/job/ancient_crew
-	loadout_enabled = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/oldcmo/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())

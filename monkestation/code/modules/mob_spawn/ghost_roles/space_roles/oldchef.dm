@@ -14,7 +14,6 @@
 	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldchef
 	spawner_job_path = /datum/job/ancient_crew
-	loadout_enabled = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/oldchef/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
