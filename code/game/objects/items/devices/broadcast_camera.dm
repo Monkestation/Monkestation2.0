@@ -76,15 +76,17 @@
 
 /// When activating the camera
 /obj/item/broadcast_camera/proc/on_activating()
-	if(!iscarbon(loc))
+	if(!isliving(loc))
+		return
+	/// The mob who wielded the camera, allegedly
+	var/mob/living/wielder = loc
+	if(!wielder.is_holding(src))
 		return
 	active = TRUE
 	update_icon_state()
-	/// The carbon who wielded the camera, allegedly
-	var/mob/living/carbon/wielding_carbon = loc
 
 	// INTERNAL CAMERA
-	internal_camera = new(wielding_carbon) // Cameras for some reason do not work inside of obj's
+	internal_camera = new(wielder) // Cameras for some reason do not work inside of obj's
 	internal_camera.internal_light = FALSE
 	internal_camera.network = camera_networks
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
