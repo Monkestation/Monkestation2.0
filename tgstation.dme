@@ -7707,6 +7707,7 @@
 #include "monkestation\code\modules\modular_computers\computers\item\role_tablet_presets.dm"
 #include "monkestation\code\modules\modular_computers\file_system\programs\crewmanifest.dm"
 #include "monkestation\code\modules\modular_computers\file_system\programs\lifeline.dm"
+#include "monkestation\code\modules\modular_computers\file_system\programs\spesstv.dm"
 #include "monkestation\code\modules\modular_guns\__base_attachment.dm"
 #include "monkestation\code\modules\modular_guns\__base_modular_gun.dm"
 #include "monkestation\code\modules\modular_guns\attachment_datums\__base_attachment_datum.dm"

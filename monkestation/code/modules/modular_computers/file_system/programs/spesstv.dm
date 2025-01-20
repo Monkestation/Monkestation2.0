@@ -1,0 +1,60 @@
+/datum/computer_file/program/secureye/spesstv
+	filename = "spesstv"
+	filedesc = "Spess.tv"
+	extended_desc = "This program allows users to tune into public streams."
+	transfer_access = list()
+	usage_flags = PROGRAM_ALL
+	program_icon = FA_ICON_VIDEO
+	network = list()
+	/// The radio used to listen to the entertainment channel.
+	var/obj/item/radio/entertainment/pda/radio
+	/// If TRUE, the PDA will notify the user when a stream starts.
+	var/notify = FALSE
+
+/datum/computer_file/program/secureye/spesstv/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
+
+/datum/computer_file/program/secureye/spesstv/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED)
+	QDEL_NULL(radio)
+	return ..()
+
+/datum/computer_file/program/secureye/spesstv/on_start(mob/living/user)
+	. = ..()
+	if(. && QDELETED(radio) && !QDELETED(computer))
+		radio = new(computer)
+
+/datum/computer_file/program/secureye/spesstv/kill_program(mob/user)
+	. = ..()
+	if(.)
+		QDEL_NULL(radio)
+
+/datum/computer_file/program/secureye/spesstv/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)
+	SIGNAL_HANDLER
+	if(is_show_active)
+		network |= tv_show_id
+	else
+		network -= tv_show_id
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
+	//notify(length(network), announcement)
+
+/obj/item/radio/entertainment/pda
+	canhear_range = 0
+
+/obj/item/radio/entertainment/pda/Initialize(mapload)
+	. = ..()
+	if(!istype(loc, /obj/item/modular_computer))
+		stack_trace("[type] spawned outside of a modular computer!")
+		return INITIALIZE_HINT_QDEL
+	RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(on_loc_destroyed))
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+
+/obj/item/radio/entertainment/pda/Destroy()
+	UnregisterSignal(loc, COMSIG_QDELETING)
+	return ..()
+
+/obj/item/radio/entertainment/pda/proc/on_loc_destroyed(datum/source)
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		qdel(src)
