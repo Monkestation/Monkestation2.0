@@ -270,18 +270,17 @@
 			close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
 			close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
-		if(istype(thing_in_range, /obj/machinery/door) || istype(thing_in_range, /obj/structure/door_assembly))
+		else if(istype(thing_in_range, /obj/machinery/door) || istype(thing_in_range, /obj/structure/door_assembly))
 			var/obj/affected_door = thing_in_range
 			affected_door.take_damage(rand(60, 80))
 
-		if(istype(thing_in_range, /obj/structure/window) || istype(thing_in_range, /obj/structure/grille))
+		else if(istype(thing_in_range, /obj/structure/window) || istype(thing_in_range, /obj/structure/grille))
 			var/obj/structure/affected_structure = thing_in_range
 			affected_structure.take_damage(rand(20, 40))
 
-		if(isturf(thing_in_range))
+		else if(isturf(thing_in_range))
 			var/turf/affected_turf = thing_in_range
-			var/datum/gas_mixture/environment = affected_turf.return_air()
-			environment.temperature *= 0.9
+			affected_turf.return_air()?.temperature *= 0.9
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)

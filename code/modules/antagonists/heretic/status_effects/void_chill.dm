@@ -36,12 +36,12 @@
 
 /datum/status_effect/void_chill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
-	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_per_ticks)
-	owner.adjust_bodytemperature(-12 * stacks * seconds_per_ticks)
+	owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
 
 /datum/status_effect/void_chill/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
@@ -79,7 +79,7 @@
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	update_movespeed(stacks)
 	if(stacks >= 5)
-		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
+		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)

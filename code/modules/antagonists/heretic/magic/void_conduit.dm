@@ -2,7 +2,7 @@
 	name = "Void Conduit"
 	desc = "Opens a gate to the Void; it releases an intermittent pulse that damages windows and airlocks, \
 		while afflicting Heathens with  void chill. \
-		Heretics receive are granted the cold resistance and low pressure resistance."
+		Heretics are granted the cold resistance and low pressure resistance."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -95,11 +95,11 @@
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
+			else if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
 				var/obj/affected_door = thing_to_affect
 				affected_door.take_damage(rand(15, 30))
 
-			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
+			else if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
 				var/obj/structure/affected_structure = thing_to_affect
 				affected_structure.take_damage(rand(5, 15))
 
@@ -119,9 +119,9 @@
 	id = "void_conduit"
 
 /datum/status_effect/void_conduit/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/void_conduit/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
 
