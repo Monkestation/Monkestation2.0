@@ -47,7 +47,7 @@
 /obj/projectile/bullet/shrapnel/ied //MONKE, modified to have extra range and more ricochet chance.
 	name = "flying glass shrapnel"
 	damage = 15
-	range = 12
+	range = 8
 	ricochets_max = 2
 	ricochet_chance = 70
 	shrapnel_type = /obj/item/shard

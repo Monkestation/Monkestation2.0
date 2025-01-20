@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	obj_flags = CONDUCTS_ELECTRICITY
+	flags_1 = CONDUCT_1 //MONKE, we dont have CONDUCTS_ELECTRICITY to port.
 	slot_flags = ITEM_SLOT_BELT
 	active = FALSE
 	shrapnel_type = /obj/projectile/bullet/shrapnel/ied
@@ -148,9 +148,9 @@
 			new /obj/effect/decal/cleanable/confetti(floor)
 	if(effects[/obj/item/stack/sheet/mineral/uranium])			//Monke, dirtybombs
 		if(effects[/obj/item/stack/sheet/mineral/uranium] >= 3)
-			new /obj/effect/landmark/nuclear_waste_spawner/strong(floor)
+			new /obj/effect/landmark/nuclear_waste_spawner/strong(src)
 		else
-			new /obj/effect/landmark/nuclear_waste_spawner(floor)
+			new /obj/effect/landmark/nuclear_waste_spawner(src)
 		radiation_pulse(src, 50 * effects[/obj/item/stack/sheet/mineral/uranium])
 	var/heavy = floor(power * 0.2)
 	var/light = round(power * 0.7, 1)
@@ -213,7 +213,7 @@
 	/// Static list of reagent to explosive power
 	var/static/list/fuel_power = list(
 		/datum/reagent/fuel = 0.5,
-		/datum/reagent/toxin/plasma = 0.75	//Monke, you can use plasma for a slightly bigger boom.
+		/datum/reagent/toxin/plasma = 0.75,	//Monke, you can use plasma for a slightly bigger boom.
 		/datum/reagent/gunpowder = 1,
 		/datum/reagent/nitroglycerin = 2,
 		/datum/reagent/tatp = 2.5,
