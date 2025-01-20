@@ -144,7 +144,8 @@
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, move_equipped = FALSE) //MONKESTATION EDIT - Added 'move_equipped = FALSE'	if(!..()) //a check failed or the item has already found its slot
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, move_equipped = FALSE) //MONKESTATION EDIT - Added 'move_equipped = FALSE'
+	if(!..()) //a check failed or the item has already found its slot
 		return
 
 	//MONKESTATION EDIT - Don't fucking nuke our items, please.
