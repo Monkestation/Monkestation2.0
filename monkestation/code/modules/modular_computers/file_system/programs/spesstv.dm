@@ -34,6 +34,11 @@ GLOBAL_LIST(spesstv_viewers)
 		LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 		QDEL_NULL(radio)
 
+/datum/computer_file/program/secureye/spesstv/background_program()
+	. = ..()
+	if(.)
+		LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
+
 /datum/computer_file/program/secureye/spesstv/update_active_camera_screen()
 	. = ..()
 	update_spesstv_watcher_list(REF(src), camera_ref)
