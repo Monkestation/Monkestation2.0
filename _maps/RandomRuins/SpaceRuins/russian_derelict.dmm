@@ -1084,6 +1084,11 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
+"iV" = (
+/obj/structure/frame/machine,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/monke/engineering/engine_room)
 "ja" = (
 /obj/structure/canister_frame,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -2585,11 +2590,6 @@
 /obj/structure/grille,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
-"sT" = (
-/obj/structure/frame/machine,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/monke/engineering/engine_room)
 "sU" = (
 /obj/machinery/atmospherics/components/binary/circulator/cold,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -2827,9 +2827,7 @@
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "uj" = (
 /obj/structure/lattice,
-/obj/item/paper/fluff/ruins/thederelict/nukie_objectives{
-	default_raw_text = s
-	},
+/obj/item/paper/fluff/ruins/thederelict/nukie_objectives,
 /turf/template_noop,
 /area/space/nearstation)
 "uk" = (
@@ -4548,6 +4546,11 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"CF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/monke/engineering/engine_room)
 "CH" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
@@ -8683,11 +8686,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"Wa" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/monke/engineering/engine_room)
 "Wb" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 8
@@ -12961,8 +12959,8 @@ lG
 lG
 rk
 rk
-sT
-sT
+iV
+iV
 yu
 PK
 Fy
@@ -13304,7 +13302,7 @@ Ni
 Ni
 Ni
 Ni
-Wa
+CF
 xK
 Ex
 rT
