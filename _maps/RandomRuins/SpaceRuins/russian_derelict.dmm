@@ -401,9 +401,10 @@
 "di" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/east{
-	id = "derelict_aux1"
+	id = "derelict_aux1";
+	req_access = list("engineering")
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "dj" = (
 /obj/machinery/door/firedoor,
@@ -534,7 +535,7 @@
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "ei" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "el" = (
 /obj/effect/decal/cleanable/dirt,
@@ -693,7 +694,7 @@
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "fy" = (
 /obj/structure/lattice,
@@ -824,6 +825,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_control_room)
+"gC" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/secure_storage)
 "gD" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/engineering/engine_control_room)
@@ -1432,7 +1437,8 @@
 "my" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/button/door/directional/north{
-	id = "derelict_ex2"
+	id = "derelict_ex2";
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_control_room)
@@ -2038,7 +2044,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "qv" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -2489,6 +2495,7 @@
 	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_room)
 "sB" = (
@@ -2765,6 +2772,11 @@
 "tY" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/engineering/atmos)
+"tZ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/grav_gen)
 "ua" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue"
@@ -3925,6 +3937,8 @@
 "zB" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/south,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/repair_bay)
 "zC" = (
@@ -4665,6 +4679,7 @@
 "Dk" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_control_room)
 "Dl" = (
@@ -4743,7 +4758,7 @@
 "DA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "DB" = (
 /obj/structure/table,
@@ -5345,8 +5360,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "Gr" = (
-/obj/machinery/door/poddoor,
 /obj/structure/fans/tiny,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/preopen,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/escape_pod_bay)
 "Gs" = (
@@ -5421,6 +5438,7 @@
 "GL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_room)
 "GM" = (
@@ -5798,6 +5816,7 @@
 "IE" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "IF" = (
@@ -5979,7 +5998,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "JC" = (
 /obj/machinery/door/window/left/directional/south{
@@ -6143,6 +6162,11 @@
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_hallway)
+"Kn" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/grav_gen)
 "Ko" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Bridge Access"
@@ -6777,7 +6801,8 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/button/door/directional/north{
-	id = "derelict_ex"
+	id = "derelict_ex";
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_control_room)
@@ -7132,6 +7157,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"Pp" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/engine_storage)
 "Pq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -8047,7 +8076,7 @@
 "Tg" = (
 /obj/structure/canister_frame,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_engine)
 "Th" = (
 /obj/structure/cable,
@@ -8458,7 +8487,6 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_room)
 "Va" = (
@@ -13145,7 +13173,7 @@ rk
 rk
 rk
 rk
-VU
+Vi
 Qg
 lG
 Ni
@@ -14270,7 +14298,7 @@ KO
 Yc
 Yc
 Yc
-PS
+tZ
 sr
 Fo
 Fo
@@ -14386,7 +14414,7 @@ Yc
 Fo
 Fo
 te
-Fo
+Kn
 te
 pH
 Yl
@@ -14725,7 +14753,7 @@ Yc
 Fo
 Fo
 PS
-PS
+tZ
 Fo
 bs
 TM
@@ -14960,7 +14988,7 @@ TQ
 qv
 Kk
 vf
-rr
+gC
 lF
 qd
 Qg
@@ -15073,11 +15101,11 @@ PH
 TQ
 Pb
 PH
-rr
+gC
 IY
 qd
 gF
-Zv
+Pp
 ID
 YM
 ID
