@@ -454,3 +454,15 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
 	icon_state = "backpack-swat"
 	inhand_icon_state = "backpack_blueshield" //i'm lazy and this fits
+
+/obj/item/clothing/head/beret/private_sec
+	name = "security beret"
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#a52f29#F2F2F2"
+	armor_type = /datum/armor/beret_sec
+	strip_delay = 60
+	dog_fashion = null
+	flags_1 = NONE
