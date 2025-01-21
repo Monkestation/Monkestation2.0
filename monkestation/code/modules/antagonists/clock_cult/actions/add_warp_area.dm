@@ -33,7 +33,7 @@
 
 	if(tgui_alert(owner, "Are you sure you want to add [input_area]? It will cost [cost] vitality.", "Add Area", list("Yes", "No")) == "Yes")
 		if(GLOB.clock_vitality < cost)
-			to_chat(span_brass("Not enough vitality."))
+			to_chat(owner, span_brass("Not enough vitality."))
 			return
 
 		if(SSthe_ark.marked_areas[input_area])
