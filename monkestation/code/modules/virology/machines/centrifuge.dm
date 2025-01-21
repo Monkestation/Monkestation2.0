@@ -497,7 +497,7 @@
 /obj/machinery/disease2/centrifuge/crowbar_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	if(on)
+	if(on == 1)
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
