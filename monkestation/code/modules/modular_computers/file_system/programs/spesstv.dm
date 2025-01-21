@@ -7,7 +7,7 @@
 	program_icon = FA_ICON_VIDEO
 	network = list()
 	/// The radio used to listen to the entertainment channel.
-	var/obj/item/radio/entertainment/pda/radio
+	var/obj/item/radio/entertainment/speakers/pda/radio
 
 /datum/computer_file/program/secureye/spesstv/New()
 	. = ..()
@@ -42,10 +42,10 @@
 	update_static_data_for_all_viewers()
 	//notify(length(network), announcement)
 
-/obj/item/radio/entertainment/pda
+/obj/item/radio/entertainment/speakers/pda
 	canhear_range = 0
 
-/obj/item/radio/entertainment/pda/Initialize(mapload)
+/obj/item/radio/entertainment/speakers/pda/Initialize(mapload)
 	. = ..()
 	if(!istype(loc, /obj/item/modular_computer))
 		stack_trace("[type] spawned outside of a modular computer!")
@@ -53,11 +53,12 @@
 	RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(on_loc_destroyed))
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 
-/obj/item/radio/entertainment/pda/Destroy()
-	UnregisterSignal(loc, COMSIG_QDELETING)
+/obj/item/radio/entertainment/speakers/pda/Destroy()
+	if(!isnull(loc))
+		UnregisterSignal(loc, COMSIG_QDELETING)
 	return ..()
 
-/obj/item/radio/entertainment/pda/proc/on_loc_destroyed(datum/source)
+/obj/item/radio/entertainment/speakers/pda/proc/on_loc_destroyed(datum/source)
 	SIGNAL_HANDLER
 	if(!QDELETED(src))
 		qdel(src)
