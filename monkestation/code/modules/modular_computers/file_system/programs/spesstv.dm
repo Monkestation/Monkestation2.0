@@ -28,19 +28,16 @@
 	if(.)
 		QDEL_NULL(radio)
 
-/datum/computer_file/program/secureye/spesstv/process_tick(seconds_per_tick)
-	update_active_camera_screen()
-
 /datum/computer_file/program/secureye/spesstv/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)
 	SIGNAL_HANDLER
 	if(is_show_active)
 		network |= tv_show_id
 	else
 		network -= tv_show_id
-	if(announcement)
-		computer?.alert_call(src, announcement)
-	update_static_data_for_all_viewers()
-	//notify(length(network), announcement)
+	if(!QDELETED(computer))
+		if(announcement)
+			computer.alert_call(src, announcement)
+		INVOKE_ASYNC(computer, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
 
 /obj/item/radio/entertainment/speakers/pda
 	canhear_range = 0
@@ -51,7 +48,6 @@
 		stack_trace("[type] spawned outside of a modular computer!")
 		return INITIALIZE_HINT_QDEL
 	RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(on_loc_destroyed))
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 
 /obj/item/radio/entertainment/speakers/pda/Destroy()
 	if(!isnull(loc))
@@ -62,3 +58,6 @@
 	SIGNAL_HANDLER
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/item/radio/entertainment/speakers/pda/emp_act(severity)
+	return
