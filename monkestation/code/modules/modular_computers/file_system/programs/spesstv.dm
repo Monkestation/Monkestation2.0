@@ -47,6 +47,7 @@ GLOBAL_LIST(spesstv_viewers)
 		network -= tv_show_id
 		if(!length(network))
 			alert_pending = FALSE
+			LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 	if(!QDELETED(computer))
 		if(announcement)
 			computer.alert_call(src, announcement)
