@@ -1,3 +1,6 @@
+/// Global lazylist containing
+GLOBAL_LIST(spesstv_viewers)
+
 /datum/computer_file/program/secureye/spesstv
 	filename = "spesstv"
 	filedesc = "Spess.tv"
@@ -14,6 +17,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
 
 /datum/computer_file/program/secureye/spesstv/Destroy()
+	LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED)
 	QDEL_NULL(radio)
 	return ..()
@@ -26,7 +30,12 @@
 /datum/computer_file/program/secureye/spesstv/kill_program(mob/user)
 	. = ..()
 	if(.)
+		LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 		QDEL_NULL(radio)
+
+/datum/computer_file/program/secureye/spesstv/update_active_camera_screen()
+	. = ..()
+	update_spesstv_watcher_list(REF(src), camera_ref)
 
 /datum/computer_file/program/secureye/spesstv/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)
 	SIGNAL_HANDLER
@@ -61,3 +70,12 @@
 
 /obj/item/radio/entertainment/speakers/pda/emp_act(severity)
 	return
+
+/proc/update_spesstv_watcher_list(key, obj/machinery/camera/active_camera)
+	if(istype(active_camera, /datum/weakref))
+		var/datum/weakref/camera_ref = active_camera
+		active_camera = camera_ref.resolve()
+	if(QDELETED(active_camera) || !active_camera.can_use())
+		LAZYREMOVE(GLOB.spesstv_viewers, key)
+	else
+		LAZYSET(GLOB.spesstv_viewers, key, active_camera.c_tag)
