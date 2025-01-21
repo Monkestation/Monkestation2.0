@@ -6,14 +6,18 @@
 	var/obj/machinery/camera/camera
 	/// Simple screen element used to hold the maptext for the viewer counter.
 	var/atom/movable/screen/stream_viewers/viewer_display
+	/// Callback to see if the stream is still valid.
+	var/datum/callback/extra_checks
 
 /datum/status_effect/streamer/Destroy()
+	extra_checks = null
 	camera = null
 	QDEL_NULL(viewer_display)
 	return ..()
 
-/datum/status_effect/streamer/on_creation(mob/living/new_owner, obj/machinery/camera/camera)
+/datum/status_effect/streamer/on_creation(mob/living/new_owner, obj/machinery/camera/camera, datum/callback/extra_checks)
 	src.camera = camera
+	src.extra_checks = extra_checks
 	return ..()
 
 /datum/status_effect/streamer/on_apply()
@@ -21,6 +25,8 @@
 		return FALSE
 	else if(!istype(camera))
 		CRASH("Invalid camera ([camera]) passed to [type] (expected an /obj/machinery/camera)")
+	if(extra_checks && !extra_checks.Invoke(src))
+		return FALSE
 	give_hud()
 	RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(give_hud))
 	RegisterSignal(camera, COMSIG_QDELETING, PROC_REF(hamburger_time))
@@ -39,6 +45,9 @@
 	return ..()
 
 /datum/status_effect/streamer/tick(seconds_per_tick, times_fired)
+	if(extra_checks && !extra_checks.Invoke(src))
+		qdel(src)
+		return
 	viewer_display?.update_maptext(camera.count_spesstv_watchers())
 
 /datum/status_effect/streamer/proc/give_hud()
