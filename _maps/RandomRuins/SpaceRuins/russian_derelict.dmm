@@ -2700,10 +2700,6 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
-"tC" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/ruin/space/ks13/ai/corridor)
 "tE" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict5"
@@ -12609,7 +12605,7 @@ Jw
 Jw
 Jw
 Jw
-tC
+Jw
 rk
 aa
 rk
