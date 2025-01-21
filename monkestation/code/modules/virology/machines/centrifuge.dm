@@ -486,6 +486,21 @@
 /obj/machinery/disease2/centrifuge/fullupgrade
 	circuit = /obj/item/circuitboard/machine/centrifuge/fullupgrade
 
+/obj/machinery/disease2/centrifuge/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(on)
+		to_chat(user, span_warning("\The [src] is currently on! Please turn the machine off."))
+		return FALSE
+	return default_deconstruction_screwdriver(user, "centrifugeu", "centrifuge", I)
+
+/obj/machinery/disease2/centrifuge/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(on)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		return FALSE
+	return default_deconstruction_crowbar(I)
 #undef CENTRIFUGE_LIGHTSPECIAL_OFF
 #undef CENTRIFUGE_LIGHTSPECIAL_BLINKING
 #undef CENTRIFUGE_LIGHTSPECIAL_ON

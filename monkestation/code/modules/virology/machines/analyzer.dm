@@ -231,3 +231,20 @@
 
 /obj/machinery/disease2/diseaseanalyser/fullupgrade
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade
+
+
+/obj/machinery/disease2/diseaseanalyser/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(processing)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait for process to finish"))
+		return FALSE
+	return default_deconstruction_screwdriver(user, "analyseru", "analyser", I)
+
+/obj/machinery/disease2/diseaseanalyser/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(processing)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		return FALSE
+	return default_deconstruction_crowbar(I)

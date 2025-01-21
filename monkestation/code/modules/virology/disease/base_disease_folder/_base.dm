@@ -247,6 +247,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 /datum/disease/acute
 	var/list/properties = list()
 
+// Calling A_Refresh effectivley checks for, then sets the severity
+
 /datum/disease/acute/proc/A_Refresh(new_name = FALSE)
 	A_GenerateProperties()
 	A_assign_properties()
