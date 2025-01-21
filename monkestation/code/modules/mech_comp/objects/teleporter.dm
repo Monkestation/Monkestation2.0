@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 
 /obj/item/mcobject/teleporter/proc/set_id_msg(datum/mcmessage/input)
 	teleID = input.cmd
-	say("Teleport ID Changed:[teleID]")
+	say("Teleport ID Changed: [teleID]")
 	return TRUE
 
 /obj/item/mcobject/teleporter/proc/set_id(mob/user, obj/item/tool)
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 		return
 
 	teleID = idx
-	to_chat(span_notice("You set [src]'s id to [teleID]."))
+	to_chat(user, span_notice("You set [src]'s id to [teleID]."))
 	return TRUE
 
 /obj/item/mcobject/teleporter/proc/activate()
