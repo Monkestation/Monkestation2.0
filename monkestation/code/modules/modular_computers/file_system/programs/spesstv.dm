@@ -8,6 +8,7 @@ GLOBAL_LIST(spesstv_viewers)
 	transfer_access = list()
 	usage_flags = PROGRAM_ALL
 	program_icon = FA_ICON_VIDEO
+	alert_able = TRUE
 	network = list()
 	/// The radio used to listen to the entertainment channel.
 	var/obj/item/radio/entertainment/speakers/pda/radio
@@ -41,6 +42,7 @@ GLOBAL_LIST(spesstv_viewers)
 	SIGNAL_HANDLER
 	if(is_show_active)
 		network |= tv_show_id
+		alert_pending = TRUE
 	else
 		network -= tv_show_id
 	if(!QDELETED(computer))
