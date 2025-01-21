@@ -24,8 +24,9 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 	GLOB.live_teleporters += src
 
 /obj/item/mcobject/teleporter/Destroy(force)
-	. = ..()
 	GLOB.live_teleporters -= src
+	teleporter_light = null
+	return ..()
 
 /obj/item/mcobject/teleporter/proc/toggle_send_only()
 	send_only = !send_only
