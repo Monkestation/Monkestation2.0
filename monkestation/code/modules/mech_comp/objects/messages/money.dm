@@ -80,7 +80,7 @@
 
 /obj/item/mcobject/messaging/payment/proc/eject_money()
 	if(collected)
-		var/obj/item/stack/spacecash/c1/money = new(src.loc)
+		var/obj/item/stack/spacecash/c1/money = new(drop_location())
 		money.amount = collected
 		collected = 0
 		update_appearance()
