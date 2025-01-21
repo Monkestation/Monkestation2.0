@@ -358,9 +358,45 @@
 // Area define for organization
 /area/ruin/space/ks13/engineering
 
+/* MONKESTATION REMOVAL
 /area/ruin/space/ks13/engineering/singulo
-	name = "\improper Derelict Singulairty Engine"
+	name = "\improper Derelict Singularity Engine" //MONKESTATION EDIT: corrects misspell of singularity despite the fact this is commented out because fuck you
 	icon_state = "ks13_singulo"
+*/
+
+//MONKESTATION ADDITION
+/area/ruin/space/ks13/engineering/engine_hallway
+	name = "\improper Derelict Engineering Hallway"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/engine_room
+	name = "\improper Derelict Engine Room"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/engine_control_room
+	name = "\improper Derelict Engine Control Room"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/engine_storage
+	name = "\improper Derelict Engineering Storage"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/engine_gas_storage
+	name = "\improper Derelict Engineering Gas Storage"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/aux_engine
+	name = "\improper Derelict Aux Engine"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/escape_pod_bay
+	name = "\improper Derelict Escape Pod Bay"
+	icon_state = "ks13_singulo" //*shrug
+
+/area/ruin/space/ks13/engineering/repair_bay
+	name = "\improper Derelict Repair Bay"
+	icon_state = "ks13_singulo" //*shrug
+//END OF ADDITION
 
 /area/ruin/space/ks13/engineering/atmos
 	name = "\improper Derelict Atmospherics"
