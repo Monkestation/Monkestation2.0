@@ -45,6 +45,8 @@ GLOBAL_LIST(spesstv_viewers)
 		alert_pending = TRUE
 	else
 		network -= tv_show_id
+		if(!length(network))
+			alert_pending = FALSE
 	if(!QDELETED(computer))
 		if(announcement)
 			computer.alert_call(src, announcement)
