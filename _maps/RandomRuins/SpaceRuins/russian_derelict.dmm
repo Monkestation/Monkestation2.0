@@ -1507,10 +1507,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
-"nc" = (
-/obj/structure/frame/machine,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless)
 "nd" = (
 /obj/structure/lattice,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -12483,7 +12479,7 @@ aa
 rk
 aa
 rk
-nc
+iV
 yu
 PK
 pq
