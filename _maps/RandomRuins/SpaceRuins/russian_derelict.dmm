@@ -8527,7 +8527,6 @@
 /obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/repair_bay)
