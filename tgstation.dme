@@ -7386,7 +7386,6 @@
 #include "monkestation\code\modules\goonimizations\goon_keybinds.dm"
 #include "monkestation\code\modules\guns\40mm_grenade.dm"
 #include "monkestation\code\modules\guns\china_lake.dm"
-#include "monkestation\code\modules\guns\laser.dm"
 #include "monkestation\code\modules\holomaps\areas.dm"
 #include "monkestation\code\modules\holomaps\base_datum.dm"
 #include "monkestation\code\modules\holomaps\huds.dm"
