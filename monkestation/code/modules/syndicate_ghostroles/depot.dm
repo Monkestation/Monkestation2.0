@@ -51,6 +51,10 @@
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(
+		l_hand = /obj/item/gun/ballistic/automatic/pistol/aps
+	)
+
 	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	l_pocket = /obj/item/melee/energy/sword/saber
 	r_pocket = /obj/item/flashlight/lantern/syndicate
