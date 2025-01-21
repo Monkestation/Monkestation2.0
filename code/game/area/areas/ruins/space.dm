@@ -365,37 +365,40 @@
 */
 
 //MONKESTATION ADDITION
-/area/ruin/space/ks13/engineering/engine_hallway
+/area/ruin/space/ks13/monke/engineering
+	icon = 'monkestation/icons/area/areas_derelict.dmi'
+
+/area/ruin/space/ks13/monke/engineering/engine_hallway
 	name = "\improper Derelict Engineering Hallway"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_engineering_hallway"
 
-/area/ruin/space/ks13/engineering/engine_room
+/area/ruin/space/ks13/monke/engineering/engine_room
 	name = "\improper Derelict Engine Room"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_engine_room"
 
-/area/ruin/space/ks13/engineering/engine_control_room
+/area/ruin/space/ks13/monke/engineering/engine_control_room
 	name = "\improper Derelict Engine Control Room"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_engine_control_room"
 
-/area/ruin/space/ks13/engineering/engine_storage
+/area/ruin/space/ks13/monke/engineering/engine_storage
 	name = "\improper Derelict Engineering Storage"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_engineering_storage"
 
-/area/ruin/space/ks13/engineering/engine_gas_storage
+/area/ruin/space/ks13/monke/engineering/engine_gas_storage
 	name = "\improper Derelict Engineering Gas Storage"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_engineering_gas_storage"
 
-/area/ruin/space/ks13/engineering/aux_engine
+/area/ruin/space/ks13/monke/engineering/aux_engine
 	name = "\improper Derelict Aux Engine"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_auxiliary_engine"
 
-/area/ruin/space/ks13/engineering/escape_pod_bay
+/area/ruin/space/ks13/monke/engineering/escape_pod_bay
 	name = "\improper Derelict Escape Pod Bay"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_escape_pods"
 
-/area/ruin/space/ks13/engineering/repair_bay
+/area/ruin/space/ks13/monke/engineering/repair_bay
 	name = "\improper Derelict Repair Bay"
-	icon_state = "ks13_singulo" //*shrug
+	icon_state = "ks13_repair_bay"
 //END OF ADDITION
 
 /area/ruin/space/ks13/engineering/atmos
