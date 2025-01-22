@@ -29,6 +29,8 @@
 								 /datum/smite/knot_shoes, /datum/smite/ocky_icky, /datum/smite/scarify)
 
 /datum/action/cooldown/spell/pointed/smite/is_valid_target(atom/cast_on)
+	if(cast_on == owner)
+		return FALSE
 	if(!iscarbon(cast_on)) //im just gonna make this only work on carbon mobs
 		cast_on.balloon_alert(owner, "Can only be cast on advanced life forms!")
 		return FALSE

@@ -7,6 +7,8 @@
 	var/vote_active = FALSE
 	///weakref to our vote timer
 	var/datum/weakref/vote_timer
+	///are we currently polling for an eminence
+	var/polling = FALSE
 
 /obj/structure/destructible/clockwork/eminence_beacon/attack_hand(mob/user)
 	. = ..()
@@ -25,6 +27,10 @@
 
 	var/option = tgui_alert(user, "Becoming the Eminence is not an easy task, be sure you will be able to lead the servants. \
 								   If you choose to do so, your old form with be destroyed.", "Who shall control the Eminence?", list("Yourself", "A ghost", "Cancel"))
+	if(vote_active)
+		balloon_alert(user, "A vote has already been called, if you would like to object you can interact with the spire again.")
+		return
+
 	if(option == "Yourself")
 		send_clock_message(null, span_bigbrass("[user] has elected themselves to become the Eminence. Interact with \the [src] to object."))
 		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE))
@@ -37,10 +43,13 @@
 
 /obj/structure/destructible/clockwork/eminence_beacon/proc/vote_succeed(mob/living/eminence) //if we select a ghost then we dont call any living procs so this is fine
 	vote_active = FALSE
+	if(polling)
+		return
+
 	if(GLOB.current_eminence)
 		message_admins("[type] calling vote_succeed() with a set GLOB.current_eminence, this should not be happening.")
 		return
-
+	polling = TRUE
 	if(!eminence)
 		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 			"Do you want to play as the eminence",
@@ -53,6 +62,7 @@
 		if(length(candidates))
 			eminence = pick(candidates)
 
+	polling = FALSE
 	if(!(eminence?.client))
 		send_clock_message(null, "The Eminence remains in slumber, for now, try waking it again soon.")
 		return

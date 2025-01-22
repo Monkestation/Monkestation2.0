@@ -179,6 +179,7 @@
 	desc = "A brass hammer glowing with energy."
 	base_icon_state = "ratvarian_hammer"
 	icon_state = "ratvarian_hammer0"
+	force = 15
 	throwforce = 25
 	armour_penetration = 6
 	attack_verb_simple = list("bash", "hammer", "attack", "smash")
