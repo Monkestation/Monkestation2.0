@@ -2474,11 +2474,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "Rz" = (
-/obj/structure/table,
-/obj/item/clothing/suit/space/hardsuit/security,
-/obj/item/tank/jetpack/suit,
+/obj/structure/centcom_item_spawner/gun_and_ammo_creator,
 /turf/open/floor/iron,
-/area/station/medical/medbay)
+/area/station/commons/storage/primary)
 "RM" = (
 /obj/structure/closet/secure_closet/hop{
 	locked = 0
@@ -8153,7 +8151,7 @@ dJ
 dJ
 dJ
 dJ
-dJ
+Rz
 cS
 fS
 lH
@@ -8507,7 +8505,7 @@ af
 by
 cz
 by
-Rz
+cm
 es
 by
 eu
@@ -8892,7 +8890,7 @@ aa
 aa
 aa
 ga
-fO
+Xi
 fO
 fO
 Mu
@@ -9076,7 +9074,7 @@ aa
 aa
 aa
 ga
-Xi
+fO
 BK
 fO
 ga
