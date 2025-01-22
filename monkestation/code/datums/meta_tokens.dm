@@ -112,7 +112,6 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
 			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
-			donator_token++
 
 		owner.prefs.token_month = month_number  ///update per-person month counter
 		convert_tokens_to_list()
