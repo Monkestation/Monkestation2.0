@@ -52,7 +52,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	back = /obj/item/storage/backpack/satchel/leather
 	backpack_contents = list(
-		l_hand = /obj/item/gun/ballistic/automatic/pistol/aps
+		/obj/item/gun/ballistic/automatic/pistol/aps = 1
 	)
 
 	head = /obj/item/clothing/head/hats/hos/beret/syndicate

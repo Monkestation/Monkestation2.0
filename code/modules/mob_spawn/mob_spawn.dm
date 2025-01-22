@@ -271,13 +271,13 @@
 		spawned_human.mind.name = spawned_human.real_name // the mind gets initialized with the random name given as a result of the parent create() so we need to readjust it
 	spawned_human.dna.species.give_important_for_life(spawned_human) // make sure they get plasmaman/vox internals etc before anything else
 
-	if(quirks_enabled)
-		SSquirks.AssignQuirks(spawned_human, spawned_human.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
-
 	if(loadout_enabled)
 		spawned_human.equip_outfit_and_loadout(outfit, spawned_human.client.prefs)
 	else
 		equip(spawned_human)
+
+	if(quirks_enabled)
+		SSquirks.AssignQuirks(spawned_human, spawned_human.client, blacklist = list(/datum/quirk/stowaway)) //fok of, stowaway
 
 	return spawned_human
 
