@@ -1982,9 +1982,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"rZ" = (
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/commons/storage/primary)
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
@@ -2663,10 +2660,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science)
-"Yz" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/commons/storage/primary)
 "YL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -7227,10 +7220,10 @@ dl
 GS
 dE
 dB
-rZ
-rZ
-rZ
-Yz
+dl
+dl
+dl
+dp
 dE
 cS
 Tt
