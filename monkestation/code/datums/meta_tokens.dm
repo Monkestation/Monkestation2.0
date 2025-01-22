@@ -104,17 +104,17 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	if(owner.prefs.token_month != month_number)
 
-		if(!patreon.has_access(ACCESS_TRAITOR_RANK)) //if no traitor rank, I.E command only, get just the coins
+		if(!patreon.has_access(ACCESS_TRAITOR_RANK)) ///if no traitor rank, I.E command only, get just the coins
 			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
 
-		if(patreon.has_access(ACCESS_TRAITOR_RANK))  //if traitor rank, get token
+		if(patreon.has_access(ACCESS_TRAITOR_RANK))  ///if traitor rank, get token
 			donator_token++
 
-		if(patreon.has_access(ACCESS_NUKIE_RANK))    //if nukie rank, get coins AND token
+		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
 			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
 			donator_token++
 
-		owner.prefs.token_month = month_number  //update per-person month counter
+		owner.prefs.token_month = month_number  ///update per-person month counter
 		convert_tokens_to_list()
 		return TRUE
 
@@ -123,10 +123,10 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		convert_tokens_to_list()
 		return FALSE
 
-	owner.prefs.token_month = month_number //I don't see any way for this to ever run, but tis good to have a backup in place
+	owner.prefs.token_month = month_number ///I don't see any way for this to ever run, but tis good to have a backup in place
 	convert_tokens_to_list()
 
-	return TRUE //this is so when its proccalled we can tell its working
+	return TRUE ///this is so when its proccalled we can tell its working
 
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
