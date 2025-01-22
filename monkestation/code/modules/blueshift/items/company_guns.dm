@@ -1347,4 +1347,3 @@
 
 	recoil = initial(recoil)
 	spread = initial(spread)
-d
