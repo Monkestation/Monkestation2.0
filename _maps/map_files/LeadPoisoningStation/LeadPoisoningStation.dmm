@@ -1498,6 +1498,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/prison)
+"aTZ" = (
+/obj/machinery/door/airlock/external{
+	name = "Leaded Water Supply"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "aUx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -2089,9 +2096,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "boE" = (
-/mob/living/basic/skeleton/templar,
 /turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
+/area/station/hallway/primary/central)
 "boL" = (
 /obj/structure/transit_tube/crossing/horizontal,
 /obj/structure/lattice/catwalk,
@@ -2353,6 +2359,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/glass,
 /area/station/security/warden)
+"bxb" = (
+/obj/item/stack/ducts/fifty,
+/obj/structure/table/wood,
+/obj/item/stack/ducts/fifty,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "bxt" = (
 /obj/docking_port/stationary/escape_pod{
 	dir = 4
@@ -4441,8 +4453,14 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cMw" = (
-/obj/item/melee/moonlight_greatsword,
 /obj/structure/table/fancywoodentable,
+/obj/item/melee/moonlight_greatsword{
+	name = "Maintscalaber";
+	desc = "Protected by the Knights of the Maints. Who wields this sword is by right of conquest, the king of the maints.";
+	block_chance = 35;
+	force = 32;
+	throwforce = 19
+	},
 /turf/open/floor/fakebasalt,
 /area/station/maintenance/starboard/greater)
 "cMx" = (
@@ -14961,7 +14979,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "iIe" = (
-/obj/machinery/atmospherics/pipe/multiz/purple,
+/obj/machinery/atmospherics/pipe/multiz/purple/visible{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iIp" = (
@@ -16411,6 +16431,14 @@
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
+"jrI" = (
+/obj/item/construction/plumbing/engineering,
+/obj/item/construction/plumbing,
+/obj/item/construction/plumbing/research,
+/obj/item/construction/plumbing/service,
+/obj/structure/table/wood,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "jrK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17826,6 +17854,18 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/diagonal,
 /area/station/security/brig/entrance)
+"kkb" = (
+/obj/machinery/plumbing/synthesizer{
+	desc = "Adds lead to the water to ensure maximum flavor and tangyness.";
+	name = "Lead Synthesizer";
+	dispensable_reagents = list(/datum/reagent/lead);
+	reagent_id = /datum/reagent/lead;
+	amount = 75;
+	buffer = 1000;
+	active_power_usage = 2
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "kkk" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Telecomms - Server Room - Aft"
@@ -22678,11 +22718,13 @@
 	},
 /area/station/science/xenobiology)
 "naO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/atmospherics/pipe/color_adapter{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nbc" = (
@@ -22897,6 +22939,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"nfl" = (
+/obj/machinery/plumbing/floor_pump/input/on/directional/east{
+	drain_flat = 1000;
+	buffer = 1000;
+	desc = "This deceptively small intake can drain a stupendous amount of liquid, be very careful with this thing."
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "nfp" = (
 /obj/effect/spawner/random/structure/closet_private,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -24131,6 +24181,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"nOu" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "nOw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/graffiti,
@@ -24408,6 +24462,10 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"nYY" = (
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "nZw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25495,6 +25553,13 @@
 /obj/item/gun/energy/laser,
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
+"oHI" = (
+/obj/machinery/plumbing/floor_pump/output/on/directional/north{
+	max_ext_kpa = 10000;
+	max_ext_volume = 10000
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "oIE" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -28187,12 +28252,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Atmospherics - North"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "qot" = (
@@ -29966,6 +30029,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
+"rkd" = (
+/obj/machinery/plumbing/synthesizer{
+	amount = 400;
+	reagent_id = /datum/reagent/water;
+	name = "Water Dispenser";
+	desc = "Pumps water from ##### to the station.";
+	buffer = 1000;
+	active_power_usage = 2
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "rke" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -30344,6 +30418,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/command/bridge)
+"ruy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "ruG" = (
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/wood,
@@ -35068,7 +35147,7 @@
 /area/station/hallway/floor2/fore)
 "ufA" = (
 /obj/effect/spawner/structure/window,
-/obj/machinery/atmospherics/pipe/multiz/purple{
+/obj/machinery/atmospherics/pipe/multiz/purple/visible{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -41127,6 +41206,13 @@
 /obj/machinery/washing_machine,
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
+"xDg" = (
+/obj/machinery/plumbing/floor_pump/output/on/directional/north{
+	max_ext_volume = 1000;
+	max_ext_kpa = 10000
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "xDq" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/machinery/light/directional/south,
@@ -64487,7 +64573,7 @@ ghX
 tLF
 tLF
 tLF
-boE
+tLF
 bmn
 ocP
 tLF
@@ -66284,7 +66370,7 @@ ghX
 ghX
 ghX
 tLF
-boE
+tLF
 gue
 ceI
 nvz
@@ -67569,7 +67655,7 @@ ghX
 ghX
 ghX
 ghX
-boE
+tLF
 tLF
 tLF
 ghX
@@ -69607,11 +69693,11 @@ rEG
 wtY
 aHu
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+kpB
+kpB
+kpB
+kpB
 aHu
 aHu
 aHu
@@ -69862,14 +69948,14 @@ brh
 bpW
 rzu
 wtY
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+pUB
+kpB
+kpB
+boE
+boE
+boE
+kpB
+kpB
 aHu
 aHu
 aHu
@@ -70120,13 +70206,13 @@ rgx
 vtb
 wtY
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+nOu
+rkd
+oHI
+boE
+nOu
+kpB
 aHu
 aHu
 aHu
@@ -70377,13 +70463,13 @@ wBC
 khA
 wtY
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+boE
+boE
+boE
+boE
+boE
+kpB
 aHu
 aHu
 aHu
@@ -70633,14 +70719,14 @@ wtY
 wtY
 wtY
 wtY
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+pUB
+kpB
+nOu
+kkb
+xDg
+boE
+nOu
+kpB
 aHu
 aHu
 aHu
@@ -70891,13 +70977,13 @@ kpB
 aHu
 pUB
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+kpB
+boE
+nfl
+boE
+kpB
+kpB
 aHu
 aHu
 aHu
@@ -71149,11 +71235,11 @@ erH
 pUB
 aHu
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+kpB
+ruy
+kpB
+kpB
 aHu
 aHu
 aHu
@@ -71406,11 +71492,11 @@ kpB
 aHu
 aHu
 aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+erH
+jrI
+nYY
+oNn
+erH
 aHu
 aHu
 aHu
@@ -71661,13 +71747,13 @@ oNn
 tDh
 erH
 erH
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+erH
+kpB
+erH
+bxb
+oNn
+xte
+erH
 aHu
 aHu
 aHu
@@ -71917,14 +72003,14 @@ fKG
 fKG
 oNn
 oNn
-kpB
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+aTZ
+oNn
+oNn
+aTZ
+oNn
+oNn
+oNn
+erH
 aHu
 aHu
 aHu
@@ -72176,12 +72262,12 @@ oNn
 iqn
 erH
 erH
-aHu
-aHu
-aHu
-aHu
-aHu
-aHu
+kpB
+erH
+kpB
+kpB
+kpB
+erH
 aHu
 aHu
 aHu
@@ -72435,7 +72521,7 @@ oNn
 kpB
 aHu
 aHu
-aHu
+pUB
 aHu
 aHu
 aHu
@@ -72692,7 +72778,7 @@ suY
 erH
 erH
 aHu
-aHu
+pUB
 aHu
 aHu
 aHu
@@ -72949,7 +73035,7 @@ oNn
 oNn
 kpB
 aHu
-aHu
+pUB
 aHu
 aHu
 aHu
@@ -73206,7 +73292,7 @@ oNn
 nAz
 erH
 erH
-aHu
+pUB
 aHu
 aHu
 aHu
@@ -73463,7 +73549,7 @@ fKG
 oNn
 oNn
 kpB
-aHu
+pUB
 aHu
 aHu
 aHu
@@ -121208,7 +121294,7 @@ cMn
 nva
 uQw
 ulZ
-kdv
+pXl
 naO
 cCv
 oiy
@@ -121465,7 +121551,7 @@ wuW
 qiK
 hIG
 hJv
-ulZ
+kdv
 qoa
 nva
 nva
@@ -135143,11 +135229,11 @@ jIt
 jIt
 qCu
 qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+kpB
+kpB
+kpB
+kpB
+kpB
 qCu
 qCu
 qCu
@@ -135399,13 +135485,13 @@ jwU
 jwU
 jIt
 qCu
+kpB
+kpB
 qCu
 qCu
 qCu
-qCu
-qCu
-qCu
-qCu
+kpB
+kpB
 qCu
 qCu
 qCu
@@ -135656,13 +135742,13 @@ jIt
 jIt
 jIt
 qCu
+kpB
 qCu
 qCu
 qCu
 qCu
 qCu
-qCu
-qCu
+kpB
 qCu
 qCu
 qCu
@@ -135913,13 +135999,13 @@ jwU
 jwU
 jIt
 qCu
+kpB
 qCu
 qCu
 qCu
 qCu
 qCu
-qCu
-qCu
+kpB
 qCu
 qCu
 qCu
@@ -136170,13 +136256,13 @@ erH
 jIt
 jIt
 qCu
+kpB
 qCu
 qCu
 qCu
 qCu
 qCu
-qCu
-qCu
+kpB
 qCu
 qCu
 qCu
@@ -136427,13 +136513,13 @@ erH
 qCu
 qCu
 qCu
+kpB
+kpB
 qCu
 qCu
 qCu
-qCu
-qCu
-qCu
-qCu
+kpB
+kpB
 qCu
 qCu
 qCu
@@ -136685,11 +136771,11 @@ erH
 qCu
 qCu
 qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+kpB
+kpB
+kpB
+kpB
+kpB
 qCu
 qCu
 qCu
@@ -136942,11 +137028,11 @@ erH
 qCu
 qCu
 qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+vWe
+vWe
+vWe
+vWe
+vWe
 qCu
 qCu
 qCu
@@ -137197,13 +137283,13 @@ wbc
 jGG
 erH
 erH
-qCu
-qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+vWe
+vWe
+vWe
+vWe
+vWe
+vWe
+vWe
 qCu
 qCu
 qCu
@@ -137454,13 +137540,13 @@ wbc
 wbc
 wbc
 erH
-qCu
-qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+vWe
+vWe
+vWe
+vWe
+vWe
+vWe
+vWe
 qCu
 qCu
 qCu
@@ -137712,12 +137798,12 @@ jGG
 jGG
 erH
 erH
-qCu
-qCu
-qCu
-qCu
-qCu
-qCu
+vWe
+vWe
+vWe
+vWe
+vWe
+vWe
 qCu
 qCu
 qCu
