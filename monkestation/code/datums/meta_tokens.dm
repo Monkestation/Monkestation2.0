@@ -123,9 +123,6 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		convert_tokens_to_list()
 		return FALSE
 
-	owner.prefs.token_month = month_number ///I don't see any way for this to ever run, but tis good to have a backup in place
-	convert_tokens_to_list()
-
 	return TRUE ///this is so when its proccalled we can tell its working
 
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
