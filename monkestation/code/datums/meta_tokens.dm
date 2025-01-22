@@ -123,8 +123,6 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		convert_tokens_to_list()
 		return FALSE
 
-	return TRUE ///this is so when its proccalled we can tell its working
-
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
 		if(donator_token)
