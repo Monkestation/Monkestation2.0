@@ -4785,8 +4785,29 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/office)
 "cWu" = (
-/obj/structure/cable,
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/button/door/directional/north{
+	id = "westemg";
+	name = "Westation Checkpoint Privacy Shutters"
+	},
+/obj/machinery/camera/motion/directional/north{
+	c_tag = "Westation - Checkpoint office"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/light/directional/west,
+/obj/item/paper_bin/carbon{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/stamp/granted{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "cWy" = (
@@ -5218,9 +5239,13 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Eastation Checkpoint";
-	id = "eastemg"
+	id = "eastemg";
+	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/door/window{
+	name = "Eastation Checkpoint Office";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "dhy" = (
@@ -6727,13 +6752,17 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/secondary/command)
 "ede" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Westation Checkpoint";
+	dir = 8;
+	id = "westemg"
 	},
-/obj/machinery/light/directional/east,
-/obj/machinery/airalarm/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	dir = 8
+	},
 /turf/open/floor/iron,
-/area/station/cargo/lobby)
+/area/station/hallway/primary/central/fore)
 "edp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -9722,6 +9751,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
+"fMq" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Westation Checkpoint";
+	id = "westemg";
+	dir = 8
+	},
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Westation Checkpoint"
+	},
+/obj/item/paper_bin,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "fMu" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stack/sheet/mineral/adamantine,
@@ -14298,10 +14341,20 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/secondary/command)
 "iqn" = (
-/obj/structure/cable,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/directions/security/directional/south{
+	dir = 4;
+	pixel_y = -41
+	},
+/obj/structure/sign/directions/command/directional/south{
+	pixel_y = -23;
+	dir = 4
+	},
+/obj/structure/sign/directions/medical/directional/south{
+	dir = 4
+	},
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "iqu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -14721,7 +14774,7 @@
 /area/station/maintenance/department/science)
 "iEw" = (
 /obj/structure/cable,
-/obj/machinery/power/terminal,
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "iEB" = (
@@ -17520,6 +17573,10 @@
 /area/station/hallway/primary/central)
 "keE" = (
 /obj/machinery/atmospherics/components/binary/valve/on/layer4,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "keR" = (
@@ -19663,11 +19720,16 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lva" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 6
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "Eastation - Checkpoint Office"
 	},
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
+/obj/structure/table/reinforced,
+/obj/item/paper_bin/carbon{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "lvc" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/north,
@@ -20472,12 +20534,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lRX" = (
-/obj/structure/chair/sofa/bench,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
+/obj/machinery/light/directional/east,
+/obj/structure/filingcabinet/employment,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "lSe" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
@@ -22549,9 +22609,10 @@
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
 "nbd" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/machinery/light/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "nbn" = (
@@ -23137,25 +23198,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "nqC" = (
-/obj/machinery/button/door/directional/north{
-	pixel_y = -6;
-	pixel_x = 28;
-	id = "eastemg";
-	name = "Eastation Checkpoint Privacy Shutters"
+/obj/structure/chair/office{
+	dir = 1
 	},
-/obj/machinery/button/door/directional/north{
-	pixel_y = -24;
-	pixel_x = 28;
-	id = "eastfont";
-	name = "Eastation Checkpoint Entrance Shutters"
-	},
-/obj/machinery/button/door/directional/north{
-	pixel_y = -15;
-	pixel_x = 28;
-	id = "eastbck";
-	name = "Eastation Checkpoint Exit Shutters"
-	},
-/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "nqN" = (
@@ -24191,7 +24236,6 @@
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
 "nWk" = (
-/obj/machinery/door/firedoor,
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -24580,18 +24624,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "oiX" = (
-/obj/machinery/door/window{
-	dir = 4;
-	name = "Westation Checkpoint"
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "Westation Checkpoint";
-	dir = 4;
-	id = "westemg"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "oiZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24603,19 +24640,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
 "ojb" = (
-/obj/machinery/button/door/directional/north{
-	id = "westemg";
-	name = "Westation Checkpoint Privacy Shutters"
-	},
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Westation - Checkpoint office"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "ojf" = (
@@ -24987,11 +25012,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "otw" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central/aft)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/filingcabinet/employment,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "otI" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
@@ -27078,10 +27102,11 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Eastation Checkpoint";
-	id = "eastemg"
+	id = "eastemg";
+	dir = 1
 	},
-/obj/machinery/door/window{
-	name = "Eastation Checkpoint Office"
+/obj/structure/window/reinforced/spawner/directional/south{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
@@ -29115,10 +29140,18 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "qUF" = (
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "Eastation - Checkpoint Office"
-	},
 /obj/structure/table/reinforced,
+/obj/item/stamp/denied{
+	pixel_x = 8
+	},
+/obj/item/stamp/granted{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 7
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "qUI" = (
@@ -29273,6 +29306,10 @@
 /area/station/maintenance/fore/greater)
 "qYo" = (
 /obj/machinery/atmospherics/components/binary/valve/on/layer2,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "qYv" = (
@@ -30648,7 +30685,7 @@
 /area/station/hallway/floor2/fore)
 "rLc" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/turf/open/floor/iron/diagonal,
+/turf/closed/wall/r_wall,
 /area/station/hallway/primary/central/aft)
 "rLh" = (
 /turf/closed/wall,
@@ -33202,15 +33239,29 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "tfU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "Westation Checkpoint";
-	dir = 4;
-	id = "westemg"
+/obj/machinery/button/door/directional/north{
+	pixel_y = -6;
+	pixel_x = 28;
+	id = "eastemg";
+	name = "Eastation Checkpoint Privacy Shutters"
 	},
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/obj/machinery/button/door/directional/north{
+	pixel_y = -24;
+	pixel_x = 28;
+	id = "eastfont";
+	name = "Eastation Checkpoint Entrance Shutters"
+	},
+/obj/machinery/button/door/directional/north{
+	pixel_y = -15;
+	pixel_x = 28;
+	id = "eastbck";
+	name = "Eastation Checkpoint Exit Shutters"
+	},
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 8
+	},
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "tga" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -33953,10 +34004,19 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "tDh" = (
-/obj/structure/cable,
-/obj/structure/sign/poster/official/random/directional/east,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/obj/structure/sign/directions/engineering/directional/south{
+	dir = 8;
+	pixel_y = -41
+	},
+/obj/structure/sign/directions/supply/directional/south{
+	dir = 8
+	},
+/obj/structure/sign/directions/science{
+	pixel_y = -23;
+	dir = 8
+	},
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "tDy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -37603,6 +37663,10 @@
 "vKE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "vLa" = (
@@ -60121,7 +60185,7 @@ klI
 bks
 bks
 llE
-lRX
+oKD
 eKm
 wun
 qYS
@@ -60377,8 +60441,8 @@ bks
 dqW
 dnI
 bks
-llE
-oKD
+bPt
+jyr
 eKm
 oVr
 qYS
@@ -60891,8 +60955,8 @@ bks
 klI
 bks
 bks
-bPt
-jyr
+llE
+csj
 eKm
 cNM
 qYS
@@ -61149,7 +61213,7 @@ klI
 bks
 bks
 llE
-csj
+hRY
 eKm
 cRW
 arL
@@ -61405,11 +61469,11 @@ bks
 bks
 bks
 bks
-llE
-hRY
-ede
-lva
-arL
+xyJ
+xyJ
+xyJ
+see
+xyJ
 aHu
 pUB
 aHu
@@ -61662,10 +61726,10 @@ bks
 bks
 bks
 bRd
+yay
 xyJ
-xyJ
-xyJ
-see
+qbe
+qbe
 xyJ
 aHu
 pUB
@@ -61919,9 +61983,9 @@ bks
 bks
 bks
 bks
-yay
+hlQ
 xyJ
-qbe
+tIK
 qbe
 xyJ
 aHu
@@ -62168,17 +62232,17 @@ obq
 yip
 aoC
 lTk
-oJv
-oJv
-cWu
-iqn
-tDh
-oJv
-bks
-bks
-hlQ
-xyJ
-tIK
+wkl
+uHC
+uHC
+uHC
+uHC
+mpH
+mpH
+mpH
+ncb
+ncb
+qbe
 qbe
 xyJ
 aHu
@@ -62425,18 +62489,18 @@ bCk
 lor
 iQd
 lTk
-wkl
-uHC
-uHC
-uHC
-uHC
-mpH
-mpH
-mpH
+bks
+oGz
+aZd
+oPS
+mtW
+upb
+jdd
+upb
+iyo
 ncb
-ncb
-qbe
-qbe
+xyJ
+xyJ
 xyJ
 pUB
 pUB
@@ -62685,16 +62749,16 @@ lTk
 bks
 oGz
 aZd
-oPS
+aZd
 mtW
 upb
-jdd
 upb
-iyo
+upb
+nUM
 ncb
-xyJ
-xyJ
-xyJ
+aHu
+aHu
+aHu
 aHu
 pUB
 aHu
@@ -62939,12 +63003,12 @@ klI
 klI
 klI
 lTk
-bks
-oGz
-aZd
-aZd
-mtW
-upb
+uHC
+uHC
+fMq
+ede
+uHC
+nAI
 upb
 upb
 nUM
@@ -63197,11 +63261,11 @@ bks
 bks
 lTk
 uHC
-uHC
-tfU
-oiX
-uHC
-nAI
+cWu
+vRs
+wHt
+ntv
+upb
 upb
 upb
 lCg
@@ -63455,8 +63519,8 @@ bks
 lTk
 uHC
 ojb
-vRs
-wHt
+bks
+otw
 ntv
 upb
 upb
@@ -63712,7 +63776,7 @@ bks
 lTk
 bKv
 lTk
-bks
+klI
 hVh
 ntv
 upb
@@ -65508,7 +65572,7 @@ aHu
 aHu
 xyJ
 bJk
-wQW
+bJk
 wQW
 dcm
 aHu
@@ -68606,8 +68670,8 @@ aHu
 aHu
 pUB
 aHu
-kpB
-upb
+erH
+erH
 upb
 pJB
 pJB
@@ -68864,7 +68928,7 @@ aHu
 pUB
 aHu
 erH
-erH
+nWk
 upb
 upb
 pJB
@@ -69120,8 +69184,8 @@ aHu
 aHu
 pUB
 aHu
-aHu
-kpB
+erH
+wei
 upb
 upb
 pJB
@@ -69895,7 +69959,7 @@ wQl
 pzS
 erH
 erH
-nWk
+oas
 hIH
 oas
 mUA
@@ -70152,7 +70216,7 @@ phA
 uay
 erH
 erH
-wei
+upb
 pJB
 qMQ
 bYK
@@ -71443,7 +71507,7 @@ erH
 kcl
 uKt
 oNn
-oNn
+tDh
 erH
 erH
 aHu
@@ -71958,7 +72022,7 @@ rdl
 oNn
 fKG
 oNn
-nnN
+iqn
 erH
 erH
 aHu
@@ -76855,7 +76919,7 @@ oNn
 kpB
 aHu
 aHu
-btR
+iGY
 iEw
 uEz
 duj
@@ -78654,8 +78718,8 @@ nVp
 uYK
 uYK
 pGT
+qUF
 dOm
-otw
 cdR
 hVT
 hLI
@@ -78912,8 +78976,8 @@ uYK
 uYK
 dhw
 nqC
-nbd
-qUF
+dOm
+dOm
 iGY
 hLI
 wJh
@@ -79168,9 +79232,9 @@ oLL
 sPZ
 sPZ
 reG
-iGY
-iGY
-iGY
+tfU
+lRX
+lva
 iGY
 hLI
 dOm
@@ -79425,10 +79489,10 @@ nVp
 dOm
 dOm
 rLc
-dOm
-eRV
-uPL
-ems
+iGY
+iGY
+iGY
+iGY
 hLI
 dOm
 dOm
@@ -79683,7 +79747,7 @@ ykv
 ykv
 ykv
 ykv
-ykv
+nbd
 ykv
 ykv
 hLI
@@ -79940,9 +80004,9 @@ vlt
 dOm
 uui
 btj
-dOm
+oiX
 day
-dOm
+ems
 dOm
 dOm
 dOm
