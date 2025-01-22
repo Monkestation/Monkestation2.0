@@ -2712,7 +2712,6 @@
 "tJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/engineering,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/airless,
@@ -5228,11 +5227,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
 "FS" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/atmos)
+/turf/template_noop,
+/area/ruin/space/ks13/monke/engineering/engine_room)
 "FT" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -8512,8 +8508,11 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/repair_bay)
 "Vq" = (
-/turf/template_noop,
-/area/ruin/space/ks13/monke/engineering/engine_room)
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/atmos)
 "Vr" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -11893,11 +11892,11 @@ aa
 aa
 aa
 aa
-Vq
-Vq
-Vq
-Vq
-Vq
+FS
+FS
+FS
+FS
+FS
 fK
 DT
 pq
@@ -12006,10 +12005,10 @@ aa
 aa
 aa
 aa
-Vq
-Vq
-Vq
-Vq
+FS
+FS
+FS
+FS
 uj
 IJ
 bN
@@ -12119,10 +12118,10 @@ aa
 aa
 aa
 aa
-Vq
-Vq
-Vq
-Vq
+FS
+FS
+FS
+FS
 IJ
 IJ
 wi
@@ -12233,9 +12232,9 @@ aa
 rk
 aa
 oO
-Vq
-Vq
-Vq
+FS
+FS
+FS
 IJ
 yu
 II
@@ -12345,9 +12344,9 @@ aa
 rk
 aa
 aa
-Vq
-Vq
-Vq
+FS
+FS
+FS
 IJ
 IJ
 yu
@@ -12458,9 +12457,9 @@ aa
 rk
 aa
 aa
-Vq
+FS
 IJ
-Vq
+FS
 IJ
 iV
 yu
@@ -12571,8 +12570,8 @@ rk
 lG
 aa
 aa
-Vq
-Vq
+FS
+FS
 GC
 yu
 sU
@@ -12684,7 +12683,7 @@ rk
 Vi
 MZ
 aa
-Vq
+FS
 IJ
 IJ
 yu
@@ -12797,7 +12796,7 @@ rk
 Vi
 lG
 aa
-Vq
+FS
 IJ
 yu
 yu
@@ -13744,7 +13743,7 @@ rN
 ve
 WI
 yA
-FS
+Vq
 FG
 FP
 RT
