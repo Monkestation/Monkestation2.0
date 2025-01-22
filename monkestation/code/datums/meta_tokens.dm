@@ -97,22 +97,17 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder/proc/check_for_donator_token()
 	var/datum/patreon_data/patreon = owner?.player_details?.patreon
 
-	if(!patreon?.has_access(ACCESS_COMMAND_RANK))
+	if(!patreon?.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
 
 	var/month_number = text2num(time2text(world.time, "MM"))
 
 	if(owner.prefs.token_month != month_number)
 
-		if(!patreon.has_access(ACCESS_TRAITOR_RANK)) ///if no traitor rank, I.E command only, get just the coins
-			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
-
-		if(patreon.has_access(ACCESS_TRAITOR_RANK))  ///if traitor rank, get token
-			donator_token++
-
 		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
 			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
 
+		donator_token++
 		owner.prefs.token_month = month_number  ///update per-person month counter
 		convert_tokens_to_list()
 		return TRUE
