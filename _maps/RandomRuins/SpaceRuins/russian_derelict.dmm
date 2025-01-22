@@ -916,8 +916,8 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "hQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "hU" = (
@@ -3965,6 +3965,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
+"zO" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/monke/engineering/engine_room)
 "zP" = (
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -5818,9 +5822,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "IJ" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/ks13/monke/engineering/engine_room)
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/atmos)
 "IK" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -8507,12 +8513,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/repair_bay)
-"Vq" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/atmos)
 "Vr" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -12010,7 +12010,7 @@ FS
 FS
 FS
 uj
-IJ
+zO
 bN
 pq
 cy
@@ -12122,8 +12122,8 @@ FS
 FS
 FS
 FS
-IJ
-IJ
+zO
+zO
 wi
 gh
 cy
@@ -12235,7 +12235,7 @@ oO
 FS
 FS
 FS
-IJ
+zO
 yu
 II
 qW
@@ -12347,8 +12347,8 @@ aa
 FS
 FS
 FS
-IJ
-IJ
+zO
+zO
 yu
 az
 gh
@@ -12458,9 +12458,9 @@ rk
 aa
 aa
 FS
-IJ
+zO
 FS
-IJ
+zO
 iV
 yu
 PK
@@ -12684,8 +12684,8 @@ Vi
 MZ
 aa
 FS
-IJ
-IJ
+zO
+zO
 yu
 yu
 yu
@@ -12797,7 +12797,7 @@ Vi
 lG
 aa
 FS
-IJ
+zO
 yu
 yu
 yu
@@ -12909,8 +12909,8 @@ rk
 VU
 lG
 lG
-IJ
-IJ
+zO
+zO
 iV
 iV
 yu
@@ -13743,7 +13743,7 @@ rN
 ve
 WI
 yA
-Vq
+IJ
 FG
 FP
 RT
