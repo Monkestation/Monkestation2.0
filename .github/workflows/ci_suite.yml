@@ -27,8 +27,8 @@ jobs:
       - name: Mandatory Empty Step
         run: exit 0
 
-  setup_caches:
-    name: Setup commonly-used caches
+  setup_byond_cache:
+    name: Setup BYOND caches
     needs: start_gate
     runs-on: ubuntu-latest
     steps:
@@ -144,7 +144,7 @@ jobs:
 
   compile_all_maps:
     name: Compile Maps
-    needs: [ collect_data, setup_caches ]
+    needs: [ collect_data, setup_byond_cache ]
     runs-on: ubuntu-22.04
     timeout-minutes: 5
 
@@ -194,7 +194,7 @@ jobs:
 
   run_all_tests:
     name: Integration Tests
-    needs: [ collect_data, setup_caches ]
+    needs: [ collect_data, setup_byond_cache ]
 
     strategy:
       fail-fast: false
