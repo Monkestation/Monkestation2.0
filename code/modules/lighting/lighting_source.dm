@@ -373,6 +373,7 @@
 					corners[below.lighting_corner_SE] = 0
 					corners[below.lighting_corner_SW] = 0
 					corners[below.lighting_corner_NW] = 0
+					marked_turfs?[below] = TRUE // Monkestation Edit: REPLAYS
 					// ANNND then we add the one below it
 					previous = below
 					below = GET_TURF_BELOW(below)
@@ -389,8 +390,8 @@
 					corners[above.lighting_corner_SE] = 0
 					corners[above.lighting_corner_SW] = 0
 					corners[above.lighting_corner_NW] = 0
+					marked_turfs?[above] = TRUE // Monkestation Edit: REPLAYS
 					above = GET_TURF_ABOVE(above)
-				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
 
 		source_turf.luminosity = oldlum
 
