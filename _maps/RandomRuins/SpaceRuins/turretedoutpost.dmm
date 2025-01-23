@@ -90,7 +90,7 @@
 /obj/structure/guncase{
 	req_access = list("syndicate")
 	},
-/obj/item/gun/energy/recharge/fisher,
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "gP" = (
@@ -283,9 +283,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "qR" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/power_store/cell/hyper{
-	pixel_y = 2
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ro" = (
