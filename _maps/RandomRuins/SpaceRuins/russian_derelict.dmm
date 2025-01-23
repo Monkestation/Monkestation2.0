@@ -166,9 +166,12 @@
 /area/ruin/space/ks13/engineering/tech_storage)
 "aY" = (
 /obj/item/stack/rods/two,
-/obj/item/shard/plasma,
 /obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard/plasma{
+	pixel_x = -8;
+	pixel_y = -9
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "bd" = (
@@ -1139,7 +1142,9 @@
 /area/ruin/space/ks13/tool_storage)
 "jP" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	icon_state = "plasmasmall"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "jV" = (
@@ -2476,7 +2481,11 @@
 "sA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	icon_state = "plasmamedium";
+	pixel_y = -7;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "sB" = (
@@ -2597,6 +2606,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
+"tg" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/monke/engineering/aux_engine)
 "th" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -3701,10 +3714,6 @@
 /obj/structure/sign/departments/court/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
-"yE" = (
-/obj/item/shard/plasma,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ks13/monke/engineering/engine_control_room)
 "yF" = (
 /obj/item/bodypart/head/monkey,
 /obj/item/bodypart/leg/left/monkey{
@@ -3918,9 +3927,13 @@
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "zD" = (
 /obj/structure/grille/broken,
-/obj/item/shard/plasma,
 /obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard/plasma{
+	pixel_x = -7;
+	pixel_y = 3;
+	icon_state = "plasmasmall"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "zE" = (
@@ -6094,12 +6107,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
-"JX" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/monke/engineering/aux_engine)
 "JZ" = (
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	pixel_x = 10;
+	pixel_y = -7;
+	icon_state = "plasmamedium"
+	},
 /obj/effect/decal/cleanable/glass/plasma,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
@@ -7229,9 +7242,17 @@
 /area/ruin/space/ks13/engineering/secure_storage)
 "PI" = (
 /obj/structure/grille/broken,
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	icon_state = "plasmamedium";
+	pixel_y = -7;
+	pixel_x = 7
+	},
 /obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/shard/plasma{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "PJ" = (
@@ -8239,7 +8260,11 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_storage)
 "Uh" = (
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	pixel_x = -7;
+	pixel_y = 3;
+	icon_state = "plasmasmall"
+	},
 /obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
@@ -8994,7 +9019,10 @@
 "XT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
-/obj/item/shard/plasma,
+/obj/item/shard/plasma{
+	pixel_x = 6;
+	pixel_y = -9
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "XU" = (
@@ -13468,7 +13496,7 @@ df
 xJ
 df
 df
-yE
+df
 df
 BI
 lG
@@ -15717,10 +15745,10 @@ gQ
 uu
 Ho
 HY
-JX
+tg
 hU
-JX
-JX
+tg
+tg
 Fb
 aa
 rk
