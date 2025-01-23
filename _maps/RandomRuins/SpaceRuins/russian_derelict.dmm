@@ -14,8 +14,8 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "ae" = (
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "ag" = (
@@ -165,12 +165,10 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "aY" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/effect/decal/cleanable/glass,
-/obj/effect/mapping_helpers/burnt_floor,
 /obj/item/stack/rods/two,
+/obj/item/shard/plasma,
+/obj/effect/decal/cleanable/glass/plasma,
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "bd" = (
@@ -305,8 +303,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
 "cq" = (
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "cr" = (
@@ -576,8 +574,8 @@
 /area/ruin/space/ks13/monke/engineering/engine_hallway)
 "ey" = (
 /obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "eA" = (
@@ -813,7 +811,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/dorms)
 "gv" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "gB" = (
@@ -848,7 +846,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge)
 "gQ" = (
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "gT" = (
@@ -910,7 +908,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "hM" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "hQ" = (
@@ -1140,11 +1138,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
 "jP" = (
-/obj/item/shard{
-	pixel_x = -8;
-	pixel_y = 4
-	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard/plasma,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "jV" = (
@@ -1342,8 +1337,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_hallway)
 "lL" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "lM" = (
@@ -1901,9 +1896,9 @@
 /area/ruin/space/ks13/engineering/grav_gen)
 "pI" = (
 /obj/structure/grille/broken,
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "pJ" = (
@@ -2479,13 +2474,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "sA" = (
-/obj/item/shard{
-	icon_state = "small";
-	pixel_x = 6;
-	pixel_y = -4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
+/obj/item/shard/plasma,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "sB" = (
@@ -2844,8 +2835,8 @@
 /turf/template_noop,
 /area/space/nearstation)
 "uu" = (
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "uv" = (
@@ -3923,11 +3914,9 @@
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "zD" = (
 /obj/structure/grille/broken,
-/obj/item/shard{
-	icon_state = "small"
-	},
+/obj/item/shard/plasma,
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "zE" = (
@@ -4668,9 +4657,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Dk" = (
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/light/small/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "Dl" = (
@@ -4944,7 +4933,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "Ex" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/plasma/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "Ey" = (
@@ -5503,8 +5492,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "Hc" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "Hd" = (
@@ -5561,8 +5550,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
 "Ho" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "Hr" = (
@@ -5714,8 +5703,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "HY" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "Ib" = (
@@ -5934,6 +5923,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
+"Jo" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/monke/engineering/aux_engine)
 "Jp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -6102,12 +6095,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
 "JZ" = (
-/obj/effect/decal/cleanable/glass,
-/obj/item/shard{
-	icon_state = "small";
-	pixel_x = 6;
-	pixel_y = -4
-	},
+/obj/item/shard/plasma,
+/obj/effect/decal/cleanable/glass/plasma,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "Ka" = (
@@ -8254,12 +8243,9 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_storage)
 "Uh" = (
+/obj/item/shard/plasma,
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/glass,
-/obj/item/shard{
-	pixel_x = -8;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "Uj" = (
@@ -8410,9 +8396,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "UQ" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "UT" = (
@@ -8619,8 +8605,8 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/monke/engineering/engine_hallway)
 "VW" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
 "VX" = (
@@ -9010,13 +8996,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
 "XT" = (
-/obj/item/shard{
-	icon_state = "medium";
-	pixel_x = 1;
-	pixel_y = -6
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
+/obj/item/shard/plasma,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_room)
 "XU" = (
@@ -15739,10 +15721,10 @@ gQ
 uu
 Ho
 HY
-lA
+Jo
 hU
-lA
-lA
+Jo
+Jo
 Fb
 aa
 rk
