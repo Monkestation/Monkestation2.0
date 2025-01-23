@@ -70,9 +70,9 @@
 		/obj/item/stamp/centcom = 1,
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/folder/blue = 1,
+		/obj/item/gun/energy/laser/plasmacore = 1,
 	)
 	belt = /obj/item/storage/belt/sabre/cargo
-	back = /obj/item/gun/energy/laser/plasmacore
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
 	l_hand = /obj/item/storage/secure/briefcase/cash
