@@ -8693,6 +8693,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"bGS" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
 "bGU" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/stripes/white/line,
@@ -24143,9 +24147,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
-"gEi" = (
-/turf/closed/wall/rock/porous,
-/area/station/maintenance/department/security)
 "gEj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -71944,6 +71945,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/bartender,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "vwz" = (
@@ -115146,7 +115148,7 @@ iRL
 sSU
 ykX
 sSU
-sSU
+bGS
 sSU
 mGw
 bcs
@@ -170144,7 +170146,7 @@ abW
 abW
 abM
 aaa
-gEi
+aap
 oSg
 aaa
 acm
@@ -171167,7 +171169,7 @@ saa
 omm
 aaa
 aaa
-gEi
+aap
 vjF
 abS
 eUN
@@ -173513,7 +173515,7 @@ afy
 abW
 abW
 aaa
-aaS
+izU
 aaa
 aaa
 aaa
@@ -187931,7 +187933,7 @@ aaa
 aaa
 aaa
 aaa
-xAp
+aap
 qMZ
 ptD
 aac
