@@ -4579,6 +4579,8 @@
 #include "code\modules\mob\living\basic\pets\parrot\parrot_ai\parroting_action.dm"
 #include "code\modules\mob\living\basic\ruin_defender\skeleton.dm"
 #include "code\modules\mob\living\basic\ruin_defender\stickman.dm"
+#include "code\modules\mob\living\basic\ruin_defender\mimic\mimic.dm"
+#include "code\modules\mob\living\basic\ruin_defender\mimic\mimic_ai.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_ai.dm"
 #include "code\modules\mob\living\basic\ruin_defender\wizard\wizard_spells.dm"
