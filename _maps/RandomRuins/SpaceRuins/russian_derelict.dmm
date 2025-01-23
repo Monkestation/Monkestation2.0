@@ -3701,6 +3701,10 @@
 /obj/structure/sign/departments/court/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
+"yE" = (
+/obj/item/shard/plasma,
+/turf/open/floor/engine/airless,
+/area/ruin/space/ks13/monke/engineering/engine_control_room)
 "yF" = (
 /obj/item/bodypart/head/monkey,
 /obj/item/bodypart/leg/left/monkey{
@@ -5923,10 +5927,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
-"Jo" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/monke/engineering/aux_engine)
 "Jp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -6094,6 +6094,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
+"JX" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/monke/engineering/aux_engine)
 "JZ" = (
 /obj/item/shard/plasma,
 /obj/effect/decal/cleanable/glass/plasma,
@@ -7225,17 +7229,9 @@
 /area/ruin/space/ks13/engineering/secure_storage)
 "PI" = (
 /obj/structure/grille/broken,
+/obj/item/shard/plasma,
+/obj/effect/decal/cleanable/glass/plasma,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/shard{
-	icon_state = "small";
-	pixel_x = 6;
-	pixel_y = -4
-	},
-/obj/item/shard{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/engine_control_room)
 "PJ" = (
@@ -13472,7 +13468,7 @@ df
 xJ
 df
 df
-df
+yE
 df
 BI
 lG
@@ -15721,10 +15717,10 @@ gQ
 uu
 Ho
 HY
-Jo
+JX
 hU
-Jo
-Jo
+JX
+JX
 Fb
 aa
 rk
