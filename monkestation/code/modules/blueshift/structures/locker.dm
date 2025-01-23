@@ -24,7 +24,6 @@
 
 /obj/structure/closet/secure_closet/nanotrasen_consultant/PopulateContents()
 	..()
-	new /obj/item/storage/bag/garment/stolen(src)
 	new /obj/item/storage/backpack/satchel/leather(src)
 	new /obj/item/storage/photo_album/personal(src)
 	new /obj/item/assembly/flash(src)
