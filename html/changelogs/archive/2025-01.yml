@@ -437,6 +437,27 @@
   - bugfix: Regal rats can no longer barf up oil/vomit/etc while ventcrawling.
   - qol: Ghost runechat now shows to anyone who can both see and hear ghosts, rather
       than ONLY to ghosts.
+  - bugfix: (TiviPlus) Fixed clients being seen as stuck doing tutorials in some cases
+      when changing mobs.
+  - qol: (Melbert) When you are offered something, you can shift-click the alert to
+      examine the item rather than take it.
+  - qol: (Melbert) Examine blocks for screen alert examining.
+  - qol: (Melbert) Screentips for offer alerts.
+  - bugfix: (grungussuss) It is now possible to succumb without speaking.
+  - qol: (tontyGH) You can now right-click the succumb action button to succumb silently.
+  - qol: (tontyGH) The succumb inputs have a few more titles to choose from now.
+  - bugfix: (tontyGH) The succumb text input now shows the actual correct number of
+      characters you can say.
+  - bugfix: (tontyGH) Attempting to cancel a succumb will no longer kill you.
+  - spellcheck: (tontyGH) The text for failing to succumb is now spanned.
+  - bugfix: (harryob) Ghosts observing ghosts can no longer click on their screen
+      alerts.
+  - qol: (mc-oofert) Alerts that do stuff when clicked glow gold.
+  - qol: (Melbert) Hovering over clickable screen elements will now update your mouse
+      cursor to indicate they're clickable.
+  - qol: (Melbert) Hovering over small wall mounts (light switches, buttons, fire
+      alarms) will now update to mouse cursor indicating you're hovering them.
+  - bugfix: Optimized some code related to filters and mob height.
   Absolucy, StrangeWeirdKitten:
   - bugfix: Things that drop in random places are no longer statistically weighted
       to drop in security.
@@ -460,3 +481,40 @@
       within the range of 4 and pulls people 3 tiles closer to you if they are out
       of stun range, but in the range of the spell. Before it used to have entire
       range of 1 tile.
+2025-01-22:
+  Absolucy:
+  - bugfix: Reverted some recent changes/fixes to satyrs, as they seemed to cause
+      further issues.
+  MichiRecRoom:
+  - bugfix: Word phobias should always apply now, rather than occasionally being missed.
+  - rscadd: Being forced to say something (i.e. through Tourettes) that would normally
+      be blocked by your phobia will now cause your character to freak out.
+  - bugfix: Your phobias can no longer prevent you from being forced to say something
+      by an admin.
+  blakeeeee:
+  - bugfix: Stowaway's inhand starting equipment now is moved to their starting point
+      with them correctly.
+2025-01-23:
+  Absolucy:
+  - bugfix: Fixed a rare bug that would interrupt and prevent the round from properly
+      starting.
+  Gw0sty:
+  - balance: The CMO's Hypospray can now pierces armor.
+  Loiosh42:
+  - bugfix: donors no longer get infinite tokens
+  - bugfix: donors now get paid the right amount of money
+  MichiRecRoom:
+  - rscadd: 'New quirk: Kakologophobia - the fear of curse words.'
+  - rscadd: 'New quirk: Easily Offended - like Kakologophobia, but with moodlets instead
+      of freaking out.'
+  Shoddd:
+  - balance: Unholy water and Eldritch now heal pain
+  - balance: Doubled lion hunter max range
+  SirNightKnight:
+  - rscadd: Added the China Lake grenade launcher to the  uplink for 10 TC.
+  - rscadd: Added a single round grenade launcher to the uplink for 5 TC.
+  - rscadd: Added more varieties of 40mm grenades.
+  - sound: Added sounds for the China Lake grenade launcher.
+  - image: New 40mm grenade sprites.
+  - code_imp: Replaced all mapped 40mm ammo boxs with the new fancy version.
+  - code_imp: Moved all 40mm grenade code to it's own file.
