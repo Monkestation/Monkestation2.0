@@ -7912,7 +7912,6 @@
 #include "monkestation\code\modules\projectiles\guns\special\meat_hook.dm"
 #include "monkestation\code\modules\projectiles\projectile\spells.dm"
 #include "monkestation\code\modules\projectiles\projectile\bullets\c45_caseless.dm"
-#include "monkestation\code\modules\projectiles\projectile\bullets\lmg.dm"
 #include "monkestation\code\modules\projectiles\projectile\bullets\shotgun.dm"
 #include "monkestation\code\modules\ranching\_animations.dm"
 #include "monkestation\code\modules\ranching\chicken_book.dm"
