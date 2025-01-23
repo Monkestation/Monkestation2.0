@@ -3,17 +3,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
-"aaq" = (
-/obj/machinery/plumbing/synthesizer{
-	amount = 400;
-	reagent_id = /datum/reagent/water;
-	name = "Water Dispenser";
-	desc = "Pumps water from ##### to the station.";
-	buffer = 1000;
-	active_power_usage = 2
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "aav" = (
 /obj/structure/chair/pew/left,
 /turf/open/floor/grass,
@@ -417,6 +406,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms)
+"alX" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "amF" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -998,6 +992,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
+/obj/effect/turf_decal/tile/blue/diagonal_edge,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "aEt" = (
@@ -1524,6 +1519,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"aVo" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "aVv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -1901,6 +1900,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
+"bgA" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/turf_decal/tile/brown/diagonal_edge,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/iron/diagonal,
+/area/station/ai_monitored/command/nuke_storage)
 "bgF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
@@ -1951,6 +1957,13 @@
 /obj/machinery/door/window/right,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
+"bhy" = (
+/obj/machinery/plumbing/floor_pump/output/on/directional/north{
+	max_ext_volume = 1000;
+	max_ext_kpa = 10000
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "bhQ" = (
 /obj/machinery/camera/directional/east,
 /turf/open/floor/iron,
@@ -2012,6 +2025,10 @@
 "bks" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"bkT" = (
+/obj/effect/landmark/start/gary/rare,
+/turf/open/floor/carpet/blue,
+/area/station/commons/dorms)
 "bld" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor/heavy,
@@ -2100,10 +2117,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "boE" = (
-/obj/machinery/plumbing/floor_pump/output/on/directional/north{
-	max_ext_volume = 1000;
-	max_ext_kpa = 10000
-	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
 "boL" = (
@@ -2905,14 +2918,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"bQM" = (
-/obj/machinery/plumbing/floor_pump/input/on/directional/east{
-	drain_flat = 1000;
-	buffer = 1000;
-	desc = "This deceptively small intake can drain a stupendous amount of liquid, be very careful with this thing."
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "bQS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3112,6 +3117,14 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
+"bXT" = (
+/obj/item/construction/plumbing/engineering,
+/obj/item/construction/plumbing,
+/obj/item/construction/plumbing/research,
+/obj/item/construction/plumbing/service,
+/obj/structure/table/wood,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "bYg" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/siding/thinplating{
@@ -4715,12 +4728,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
-"cTh" = (
-/obj/item/stack/ducts/fifty,
-/obj/structure/table/wood,
-/obj/item/stack/ducts/fifty,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central)
 "cTk" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair{
@@ -4735,6 +4742,18 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
+"cTP" = (
+/obj/machinery/plumbing/synthesizer{
+	desc = "Adds lead to the water to ensure maximum flavor and tangyness.";
+	name = "Lead Synthesizer";
+	dispensable_reagents = list(/datum/reagent/lead);
+	reagent_id = /datum/reagent/lead;
+	amount = 25;
+	buffer = 1000;
+	active_power_usage = 2
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "cUp" = (
 /obj/vehicle/ridden/wheelchair/gold,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -5222,9 +5241,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/station/hallway/floor2/fore)
-"dfG" = (
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "dga" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7728,7 +7744,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "eCE" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "eCN" = (
@@ -10453,6 +10468,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/diagonal,
 /area/station/command/bridge)
+"gbd" = (
+/obj/machinery/plumbing/floor_pump/input/on/directional/east{
+	drain_flat = 1000;
+	buffer = 1000;
+	desc = "This deceptively small intake can drain a stupendous amount of liquid, be very careful with this thing."
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "gbi" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -11003,8 +11026,6 @@
 /obj/structure/cassette_rack/prefilled{
 	pixel_y = 8
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "gss" = (
@@ -11026,13 +11047,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/security/office)
-"gte" = (
-/obj/machinery/door/airlock/external{
-	name = "Leaded Water Supply"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central)
 "gti" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12364,6 +12378,13 @@
 "hlu" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"hlB" = (
+/obj/machinery/plumbing/floor_pump/output/on/directional/north{
+	max_ext_kpa = 10000;
+	max_ext_volume = 10000
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "hlK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable/multilayer/multiz,
@@ -14047,6 +14068,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "ifv" = (
@@ -14465,6 +14487,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
+"iqL" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/gary/rare,
+/turf/open/floor/eighties,
+/area/station/commons/lounge)
 "iqX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15230,7 +15257,6 @@
 /area/station/command/heads_quarters/hos)
 "iOy" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
@@ -17557,8 +17583,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
 "kcl" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/directions/evac/directional/north{
 	pixel_y = 38
 	},
@@ -20858,7 +20882,6 @@
 /obj/item/device/cassette_tape/random,
 /obj/item/device/cassette_tape/random,
 /obj/item/device/cassette_tape/random,
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "lZo" = (
@@ -21579,6 +21602,7 @@
 /area/station/maintenance/port/greater)
 "mwV" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "mwY" = (
@@ -21941,11 +21965,6 @@
 /obj/structure/ladder,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
-"mHf" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "mHq" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/structure/table,
@@ -24380,6 +24399,7 @@
 /area/station/hallway/primary/central)
 "nWE" = (
 /obj/structure/sink/directional/west,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nWQ" = (
@@ -26305,6 +26325,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"pdC" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "pdL" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/firealarm/directional/south,
@@ -26580,6 +26604,10 @@
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"pnp" = (
+/obj/effect/landmark/start/gary/uncommon,
+/turf/open/floor/stone,
+/area/station/service/hydroponics)
 "pnr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29158,6 +29186,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
+"qOQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "qOS" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/cook,
@@ -31044,6 +31077,12 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"rRc" = (
+/obj/item/stack/ducts/fifty,
+/obj/structure/table/wood,
+/obj/item/stack/ducts/fifty,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "rRk" = (
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
@@ -31264,6 +31303,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
 /area/station/service/chapel)
+"rVB" = (
+/obj/machinery/plumbing/synthesizer{
+	amount = 100;
+	reagent_id = /datum/reagent/water;
+	name = "Water Dispenser";
+	desc = "Pumps water from ##### to the station.";
+	buffer = 1000;
+	active_power_usage = 2
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "rVF" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/structure/table/wood,
@@ -32345,6 +32395,7 @@
 /area/station/maintenance/starboard/greater)
 "syh" = (
 /obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "syi" = (
@@ -32462,18 +32513,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
-"sBU" = (
-/obj/machinery/plumbing/synthesizer{
-	desc = "Adds lead to the water to ensure maximum flavor and tangyness.";
-	name = "Lead Synthesizer";
-	dispensable_reagents = list(/datum/reagent/lead);
-	reagent_id = /datum/reagent/lead;
-	amount = 75;
-	buffer = 1000;
-	active_power_usage = 2
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "sBZ" = (
 /obj/structure/railing{
 	dir = 1
@@ -32698,6 +32737,10 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
+"sHI" = (
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "sHP" = (
 /obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/effect/turf_decal/tile/red/diagonal_edge,
@@ -33233,6 +33276,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"sYv" = (
+/obj/machinery/door/airlock/external{
+	name = "Leaded Water Supply"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "sYw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -33520,14 +33570,6 @@
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pharmacy)
-"thJ" = (
-/obj/item/construction/plumbing/engineering,
-/obj/item/construction/plumbing,
-/obj/item/construction/plumbing/research,
-/obj/item/construction/plumbing/service,
-/obj/structure/table/wood,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central)
 "tik" = (
 /obj/effect/spawner/liquids_spawner/acid_waist,
 /obj/effect/spawner/liquids_spawner/acid_waist,
@@ -34176,6 +34218,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/morgue)
 "tCg" = (
@@ -34589,10 +34632,6 @@
 /obj/machinery/atm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
-"tOQ" = (
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "tOT" = (
 /obj/machinery/computer/nanite_cloud_controller,
 /obj/structure/window/spawner/directional/north,
@@ -34716,6 +34755,11 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
+"tTT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary/rare,
+/turf/open/floor/wood,
+/area/station/service/library)
 "tTV" = (
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
@@ -36373,13 +36417,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/service/library/printer)
-"uPi" = (
-/obj/machinery/plumbing/floor_pump/output/on/directional/north{
-	max_ext_kpa = 10000;
-	max_ext_volume = 10000
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "uPy" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -36444,6 +36481,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
+/obj/effect/turf_decal/tile/blue/diagonal_edge,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "uQC" = (
@@ -37776,10 +37814,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/medical/treatment_center)
-"vHY" = (
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "vIh" = (
 /obj/structure/bed/double{
 	dir = 1
@@ -39912,6 +39946,13 @@
 /obj/structure/broken_flooring/pile/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"wSe" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/landmark/start/gary/rare,
+/turf/open/floor/iron/diagonal,
+/area/station/medical/treatment_center)
 "wSh" = (
 /obj/effect/turf_decal/tile/red/diagonal_edge,
 /obj/effect/decal/cleanable/dirt,
@@ -40221,6 +40262,10 @@
 /obj/item/ammo_casing/rocket,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"xbQ" = (
+/obj/effect/landmark/start/gary,
+/turf/open/floor/iron/checker,
+/area/station/engineering/gravity_generator)
 "xbR" = (
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
@@ -55771,7 +55816,7 @@ mKR
 ixQ
 prV
 nyj
-qbS
+pdC
 oQd
 qqo
 ixQ
@@ -57053,7 +57098,7 @@ iWU
 tfB
 eQc
 poi
-riQ
+alX
 jZA
 nDy
 gdX
@@ -69947,9 +69992,9 @@ wtY
 pUB
 kpB
 kpB
-dfG
-dfG
-dfG
+boE
+boE
+boE
 kpB
 kpB
 aHu
@@ -70203,11 +70248,11 @@ vtb
 wtY
 aHu
 kpB
-vHY
-aaq
-uPi
-dfG
-vHY
+aVo
+rVB
+hlB
+boE
+aVo
 kpB
 aHu
 aHu
@@ -70460,11 +70505,11 @@ khA
 wtY
 aHu
 kpB
-dfG
-dfG
-dfG
-dfG
-dfG
+boE
+boE
+boE
+boE
+boE
 kpB
 aHu
 aHu
@@ -70717,11 +70762,11 @@ wtY
 wtY
 pUB
 kpB
-vHY
-sBU
+aVo
+cTP
+bhy
 boE
-dfG
-vHY
+aVo
 kpB
 aHu
 aHu
@@ -70975,9 +71020,9 @@ pUB
 aHu
 kpB
 kpB
-dfG
-bQM
-dfG
+boE
+gbd
+boE
 kpB
 kpB
 aHu
@@ -71233,7 +71278,7 @@ aHu
 aHu
 kpB
 kpB
-mHf
+qOQ
 kpB
 kpB
 aHu
@@ -71489,8 +71534,8 @@ aHu
 aHu
 aHu
 erH
-thJ
-tOQ
+bXT
+sHI
 oNn
 erH
 aHu
@@ -71746,7 +71791,7 @@ erH
 erH
 kpB
 erH
-cTh
+rRc
 oNn
 xte
 erH
@@ -71999,10 +72044,10 @@ fKG
 fKG
 oNn
 oNn
-gte
+sYv
 oNn
 oNn
-gte
+sYv
 oNn
 oNn
 oNn
@@ -78440,7 +78485,7 @@ uVs
 dOm
 dOm
 dOm
-dOm
+uVs
 epd
 siq
 iGY
@@ -81544,7 +81589,7 @@ wPd
 vLu
 rTl
 xUt
-xmL
+wSe
 uyG
 vGq
 qiM
@@ -124674,7 +124719,7 @@ xEE
 wyy
 eRn
 vrh
-vrh
+xbQ
 vrh
 vrh
 tcG
@@ -134905,7 +134950,7 @@ nMJ
 pzf
 pBv
 uJJ
-uJJ
+pnp
 uMr
 uMr
 nPk
@@ -139367,7 +139412,7 @@ iVF
 rqE
 sGv
 sXt
-sXt
+iqL
 sXt
 dTv
 tUB
@@ -144510,7 +144555,7 @@ dpZ
 rgF
 ulw
 ulw
-ulw
+bkT
 aLJ
 tah
 bpw
@@ -151390,7 +151435,7 @@ qCu
 fmN
 rhA
 fuP
-fuP
+bgA
 qHG
 oDS
 oDS
@@ -152980,7 +153025,7 @@ iOA
 xCA
 jeV
 dDf
-dDf
+tTT
 jlv
 qJB
 qrk
