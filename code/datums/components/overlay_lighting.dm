@@ -170,7 +170,7 @@
 /datum/component/overlay_lighting/proc/clean_old_turfs()
 	var/list/marked_turfs = SSdemo.marked_turfs
 	for(var/turf/lit_turf as anything in affected_turfs)
-		marked_turfs?[affected_turfs] = TRUE
+		marked_turfs?[lit_turf] = TRUE
 		lit_turf.dynamic_lumcount -= lum_power
 	affected_turfs = null
 
