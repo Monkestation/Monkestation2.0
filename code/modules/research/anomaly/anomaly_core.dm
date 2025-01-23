@@ -91,12 +91,12 @@
 // MONKESTATION ADDITION
 
 /obj/item/assembly/signaler/anomaly/random
-	name = "random raw core"
+	name = "random activated core"
 	desc = "You should not see this!"
 	icon_state = "anomaly_core"
 
-/obj/item/raw_anomaly_core/random/Initialize(mapload)
+/obj/item/assembly/signaler/anomaly/random/Initialize(mapload)
 	. = ..()
-	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))
+	var/path = pick(subtypesof(/obj/item/assembly/signaler/anomaly))
 	new path(loc)
 	return INITIALIZE_HINT_QDEL
