@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ..()
 
 /mob/living/basic/mimic/crate/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return ..()
 	if(trigger())
 		to_chat(user, span_danger("As you try to open [src] it [length(contents) ? "stiffens up and " : ""]nearly clamps down on your fingers!"))
@@ -122,11 +122,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		loot.forceMove(lootbox)
 	return ..()
 
-/mob/living/basic/mimic/crate/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+/mob/living/basic/mimic/crate/proc/pre_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(target == src)
 		toggle_open()
 		return FALSE
-	return ..()
+	return
 
 /mob/living/basic/mimic/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -149,17 +149,17 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
 		icon_state = "crateopen"
-		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/crate_open.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
 		icon_state = "crate"
-		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/crate_close.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in get_turf(src))
 			if(movable != src && insert(movable) == CANT_INSERT_FULL)
-				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
+				playsound(src, 'sound/items/trayhit2.ogg', 50, TRUE)
 				break
 
 /**
@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/copy
 	health = 100
 	maxHealth = 100
-	mob_biotypes = MOB_SPECIAL
+	mob_biotypes = MOB_MINERAL
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy
 	/// our creator
 	var/datum/weakref/creator_ref
