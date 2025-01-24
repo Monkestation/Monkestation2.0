@@ -1,6 +1,6 @@
 GLOBAL_LIST(antag_token_config)
 
-#define ANTAG_TOKEN_CONFIG_FILE "config/monkestation/antag-tokens.toml"
+#define ANTAG_TOKEN_CONFIG_FILE "[global.config.directory]/monkestation/antag-tokens.toml"
 #define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
 #define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
 #define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
