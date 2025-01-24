@@ -87,8 +87,9 @@
 	damage = 50
 	speed = 1.5
 	range = 20
+	wound_bonus = -20
 	/// How much the damage is multiplied by when we hit a mob with the correct biotype
-	var/biotype_damage_multiplier = 2
+	var/biotype_damage_multiplier = 3
 	/// What biotype we look for
 	var/biotype_we_look_for = MOB_BEAST
 
