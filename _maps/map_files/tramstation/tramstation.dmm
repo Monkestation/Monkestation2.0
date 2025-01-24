@@ -1936,6 +1936,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/disposals,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal)
 "agE" = (
@@ -8058,7 +8059,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "bwk" = (
-/obj/effect/landmark/navigate_destination/dockescpod2,
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -9501,6 +9501,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/common/auxbaseconst,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "bTx" = (
@@ -14412,6 +14413,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination/servicehallway,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "dwp" = (
@@ -15776,13 +15778,9 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering/supermatter/room)
 "dRv" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/effect/landmark/navigate_destination/bar,
-/obj/effect/landmark/navigate_destination/kitchen,
-/turf/open/floor/iron,
-/area/station/hallway/primary/tram/center)
+/obj/effect/landmark/navigate_destination/disposals,
+/turf/open/floor/glass/reinforced,
+/area/station/security/brig)
 "dRz" = (
 /obj/structure/bed{
 	dir = 4
@@ -25250,6 +25248,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination/disposals,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "gSR" = (
@@ -27924,6 +27923,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "hOE" = (
@@ -52735,6 +52735,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/vault,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "pAC" = (
@@ -55495,7 +55496,6 @@
 	id = "atmos";
 	name = "Atmospherics Blast Door"
 	},
-/obj/effect/landmark/navigate_destination/atmos,
 /obj/machinery/door/window/left/directional/west{
 	base_state = "right";
 	dir = 4;
@@ -58119,6 +58119,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
+/obj/effect/landmark/navigate_destination/aiupload,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "reO" = (
@@ -59954,6 +59955,11 @@
 	},
 /turf/open/floor/grass,
 /area/station/asteroid/tram/pet)
+"rKZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/tools,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "rLf" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Office"
@@ -60364,6 +60370,7 @@
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics"
 	},
+/obj/effect/landmark/navigate_destination/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rQX" = (
@@ -62251,6 +62258,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/navigate_destination/aiupload,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "sxn" = (
@@ -67678,6 +67686,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/common/artstorage,
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
 "uhv" = (
@@ -72859,6 +72868,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/navigate_destination/common/vaccommissary,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "vEj" = (
@@ -115848,7 +115858,7 @@ eJZ
 prW
 prW
 cGi
-prW
+rKZ
 oSl
 ive
 sXV
@@ -164936,7 +164946,7 @@ anD
 pNA
 oFY
 pNA
-lSo
+dRv
 lSo
 lSo
 dxq
@@ -178582,7 +178592,7 @@ vXM
 vXM
 vXM
 vXM
-dRv
+aEj
 ylY
 nOB
 fld
