@@ -1,4 +1,4 @@
-/area/ruin/space/meateor
+/area/ruin/space/has_grav/meateor // MONKESTATION EDIT, /has_grav/
 	name = "\improper Organic Asteroid"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
