@@ -3,6 +3,7 @@
 	desc = "A pair of kitty ears that harvest the true energy of cats. Mrow!"
 	icon_state = "superkitty"
 	decay_factor = 0 // Space ruin item
+	damage_multiplier = 0.5
 
 /datum/action/cooldown/spell/shapeshift/kitty
 	name = "KITTY POWER!!"
@@ -12,6 +13,8 @@
 	invocation = "MRR MRRRW!!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	smoke_type = /datum/effect_system/fluid_spread/smoke
+	smoke_amt = 1
 
 	possible_shapes = list(
 		/mob/living/simple_animal/pet/cat,
