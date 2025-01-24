@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
+GLOBAL_LIST(antag_token_config)
 
 #define ANTAG_TOKEN_CONFIG_FILE "config/monkestation/antag-tokens.toml"
 #define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
@@ -48,6 +48,8 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 				if(client_token_holder.total_low_threat_tokens <= 0)
 					return
 
+	if(isnull(GLOB.antag_token_config))
+		GLOB.antag_token_config = load_antag_token_config()
 	var/list/chosen_tier = GLOB.antag_token_config[tier]
 	var/antag_key = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", chosen_tier)
 	if(!antag_key || !chosen_tier[antag_key])
@@ -111,12 +113,15 @@ GLOBAL_LIST_INIT(antag_token_config, load_antag_token_config())
 	for(var/datum/antagonist/antag_type as anything in antag_types)
 		if(istext(antag_type))
 			antag_type = text2path("/datum/antagonist/[antag_type]")
+			if(isnull(antag_type))
+				stack_trace("Invalid antag datum path '[antag_type]' (/datum/antagonist/[antag_type])")
+				continue
 		if(!ispath(antag_type))
 			continue
 		.[antag_type::name] = antag_type
 
-/proc/load_antag_token_config(list/antag_types)
-	var/static/default_config = list(
+/proc/load_antag_token_config()
+	var/static/list/default_config = list(
 		HIGH_THREAT = init_antag_list(list(
 			/datum/antagonist/cult,
 			/datum/antagonist/wizard,
