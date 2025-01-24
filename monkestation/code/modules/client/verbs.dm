@@ -112,9 +112,10 @@ GLOBAL_LIST(antag_token_config)
 	. = list()
 	for(var/datum/antagonist/antag_type as anything in antag_types)
 		if(istext(antag_type))
-			antag_type = text2path("/datum/antagonist/[antag_type]")
+			var/antag_type_text = "[antag_type]"
+			antag_type = text2path("/datum/antagonist/[antag_type_text]")
 			if(isnull(antag_type))
-				stack_trace("Invalid antag datum path '[antag_type]' (/datum/antagonist/[antag_type])")
+				stack_trace("Invalid antag datum path '[antag_type_text]' (/datum/antagonist/[antag_type_text])")
 				continue
 		if(!ispath(antag_type))
 			continue
