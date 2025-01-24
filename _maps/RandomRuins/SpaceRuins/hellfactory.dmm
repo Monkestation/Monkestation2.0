@@ -994,7 +994,7 @@
 	icon = 'icons/obj/puzzle_small.dmi';
 	icon_living = "laserbox";
 	icon_state = "laserbox";
-	name = holobox;
+	name = "holobox";
 	health = 50
 	},
 /turf/open/floor/iron/grimy,
