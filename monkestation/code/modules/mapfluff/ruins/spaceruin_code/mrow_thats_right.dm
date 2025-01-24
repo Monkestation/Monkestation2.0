@@ -17,9 +17,9 @@
 	smoke_amt = 1
 
 	possible_shapes = list(
-		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/cat/breadcat,
-		/mob/living/simple_animal/pet/cat/original,
+		/mob/living/simple_animal/pet/cat/super,
+		/mob/living/simple_animal/pet/cat/super,
+		/mob/living/simple_animal/pet/cat/super,
 	)
 
 /obj/item/organ/internal/ears/cat/super/attack(mob/target_mob, mob/living/carbon/user, obj/target)
@@ -49,3 +49,12 @@
 	. = ..()
 	var/datum/action/cooldown/spell/shapeshift/kitty/heart = locate() in heart_owner.actions
 	qdel(heart)
+
+/mob/living/simple_animal/pet/cat/super
+	health = 50
+
+/mob/living/simple_animal/pet/cat/breadcat/super
+	health = 50
+
+/mob/living/simple_animal/pet/cat/original/super
+	health = 50
