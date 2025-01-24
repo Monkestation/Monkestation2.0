@@ -1,4 +1,5 @@
-/// Global lazylist containing
+#define STREAM_ALERT_COOLDOWN (5 SECONDS)
+/// Global lazylist containing who's watching what spesstv streams.
 GLOBAL_LIST(spesstv_viewers)
 
 /datum/computer_file/program/secureye/spesstv
@@ -13,6 +14,8 @@ GLOBAL_LIST(spesstv_viewers)
 	network = list()
 	/// The radio used to listen to the entertainment channel.
 	var/obj/item/radio/entertainment/speakers/pda/radio
+	/// Coolwdown for stream alerts.
+	COOLDOWN_DECLARE(alert_cooldown)
 
 /datum/computer_file/program/secureye/spesstv/New()
 	. = ..()
@@ -55,8 +58,9 @@ GLOBAL_LIST(spesstv_viewers)
 			alert_pending = FALSE
 			LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 	if(!QDELETED(computer))
-		if(announcement)
-			computer.alert_call(src, announcement)
+		if(announcement && COOLDOWN_FINISHED(src, alert_cooldown))
+			computer.alert_call(src, announcement, vision_distance = 2)
+			COOLDOWN_START(src, alert_cooldown, STREAM_ALERT_COOLDOWN)
 		INVOKE_ASYNC(computer, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
 
 /obj/item/radio/entertainment/speakers/pda
@@ -90,3 +94,5 @@ GLOBAL_LIST(spesstv_viewers)
 		LAZYREMOVE(GLOB.spesstv_viewers, key)
 	else
 		LAZYSET(GLOB.spesstv_viewers, key, active_camera.c_tag)
+
+#undef STREAM_ALERT_COOLDOWN
