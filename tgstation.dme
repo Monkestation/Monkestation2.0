@@ -7510,6 +7510,7 @@
 #include "monkestation\code\modules\map_gen_expansions\mushroom\extraction\structures\extractor\main.dm"
 #include "monkestation\code\modules\map_gen_expansions\mushroom\mobs\stillcaps.dm"
 #include "monkestation\code\modules\map_gen_expansions\structures\test_spawner.dm"
+#include "monkestation\code\modules\mapfluff\ruins\spaceruin_code\mrow_thats_right.dm"
 #include "monkestation\code\modules\mapfluff\ruins\spaceruin_code\oldstation.dm"
 #include "monkestation\code\modules\mapping\access_helpers.dm"
 #include "monkestation\code\modules\mapping\mapping_helpers.dm"
