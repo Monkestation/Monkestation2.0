@@ -132,7 +132,7 @@
 		. += filling_overlay
 
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
-/obj/item/mod/module/organizer
+/obj/item/mod/module/organ_thrower
 	name = "MOD organizer module"
 	desc = "A device recovered from a crashed Interdyne Pharmaceuticals vessel, \
 		this module has been unearthed for better or for worse. \
