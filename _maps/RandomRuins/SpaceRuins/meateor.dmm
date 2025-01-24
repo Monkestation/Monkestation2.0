@@ -107,7 +107,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/meateor)
 "X" = (
-/mob/living/basic/meteor_heart,
+/mob/living/basic/meteor_heart/meateor,
 /turf/open/floor/material/meat/airless,
 /area/ruin/space/has_grav/meateor)
 
