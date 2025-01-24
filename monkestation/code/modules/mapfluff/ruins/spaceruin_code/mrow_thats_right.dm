@@ -1,6 +1,7 @@
 /obj/item/organ/internal/ears/cat/super
 	name = "Super Kitty Ears"
 	desc = "A pair of kitty ears that harvest the true energy of cats. Mrow!"
+	icon_state = "superkitty"
 	decay_factor = 0 // Space ruin item
 
 /datum/action/cooldown/spell/shapeshift/kitty
