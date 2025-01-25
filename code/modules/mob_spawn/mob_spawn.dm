@@ -260,15 +260,13 @@
 	var/mob/living/carbon/human/spawned_human = ..(mob_possessor, newname, load_prefs)
 
 	if(!load_prefs)
-		var/datum/language_holder/holder = spawned_human.get_language_holder()
-		holder.get_selected_language() //we need this here so a language starts off selected
+		spawned_human.get_language_holder().get_selected_language() //we need this here so a language starts off selected
 
 		return spawned_human
 
 	spawned_human?.client?.prefs?.safe_transfer_prefs_to(spawned_human)
 	spawned_human.dna.update_dna_identity()
-	if(spawned_human.mind)
-		spawned_human.mind.name = spawned_human.real_name // the mind gets initialized with the random name given as a result of the parent create() so we need to readjust it
+	spawned_human.mind?.name = spawned_human.real_name // the mind gets initialized with the random name given as a result of the parent create() so we need to readjust it
 	spawned_human.dna.species.give_important_for_life(spawned_human) // make sure they get plasmaman/vox internals etc before anything else
 
 	if(loadout_enabled)
