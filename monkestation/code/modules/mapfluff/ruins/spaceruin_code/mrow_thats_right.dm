@@ -3,7 +3,7 @@
 	desc = "A pair of kitty ears that harvest the true energy of cats. Mrow!"
 	icon_state = "superkitty"
 	decay_factor = 0 // Space ruin item
-	damage_multiplier = 0.5
+	damage_multiplier = 0.5 // SUPER
 
 /datum/action/cooldown/spell/shapeshift/kitty
 	name = "KITTY POWER!!"
@@ -22,6 +22,7 @@
 		/mob/living/simple_animal/pet/cat/super,
 	)
 
+	// Stole this from demon heart hard, but hey it works
 /obj/item/organ/internal/ears/cat/super/attack(mob/target_mob, mob/living/carbon/user, obj/target)
 	if(target_mob != user)
 		return ..()
@@ -30,7 +31,7 @@
 		span_warning("[user] raises the [src] to [user.p_their()] head and genetly places it on [user.p_their()] head!"),
 		span_danger("A strange feline comes over you. You place the [src] on your head!"),
 	)
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/meow1.ogg', 50, TRUE)
 
 	user.visible_message(
 		span_warning("The [src] melt into [user]'s head!"),
