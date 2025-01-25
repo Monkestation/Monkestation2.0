@@ -155,7 +155,7 @@
 			if(back.atom_storage?.can_insert(equipped, src, FALSE))
 				back.atom_storage?.attempt_insert(equipped, src)
 			else
-				doUnEquip(equipped, FALSE, get_turf(src))
+				doUnEquip(equipped, FALSE, drop_location())
 	//END OF EDIT
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
