@@ -32,6 +32,7 @@ export const KeycardAuth = (props) => {
                     <Button
                       icon="exclamation-triangle"
                       fluid
+                      disabled={!data.can_set_alert}
                       onClick={() => {
                         return act('red_alert');
                       }}
