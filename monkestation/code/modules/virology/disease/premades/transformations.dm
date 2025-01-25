@@ -9,10 +9,15 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/consumable/condensedcapsaicin, 1)) //Pepperspray can ruin anyones peaceful existancce.
+		cure()
 
 /datum/disease/advanced/premade/gondola/digital
 	category = DISEASE_GONDOLA_DIGITAL
@@ -32,10 +37,15 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/phlogiston, 1)) //Fire
+		cure()
 
 /datum/disease/advanced/premade/corgi
 	name = "Puppification"
@@ -48,10 +58,15 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/consumable/coco, 1)) //Feed Ian chocolatebars
+		cure()
 
 /datum/disease/advanced/premade/slime
 	name = "Slime Syndrome"
@@ -64,10 +79,15 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/water, 1)) //Water is effective against slimes
+		cure()
 
 /datum/disease/advanced/premade/morph
 	name = "Gluttony"
@@ -80,10 +100,15 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/morph/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/toxin/lipolicide, 1)) //Empties the hunger
+		cure()
 
 /datum/disease/advanced/premade/robot
 	name = "Nanite Conversion"
@@ -96,7 +121,12 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD
 	robustness = 75
-	
+
 	infectionchance = 0
 	infectionchance_base = 0
 	stage_variance = 0
+
+/datum/disease/advanced/premade/robot/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/medicine/system_cleaner, 1))
+		cure()
