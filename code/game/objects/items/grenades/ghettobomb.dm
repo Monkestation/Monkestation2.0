@@ -54,7 +54,7 @@
 	. = ..()
 	. += span_notice("Using it in-hand activates the assembly, which means timers start timing and so on.")
 	. += span_notice("Using it off-hand allows you to configure the assembly, if possible.")
-	if(contents.len > 1) // above 1, so more than just the activator
+	if(length(contents) > 1) // above 1, so more than just the activator
 		. += span_warning("It seems to have something stuffed in it.")
 	if(isnull(activator))
 		return
@@ -66,18 +66,15 @@
 	return TRUE
 
 /obj/item/grenade/iedcasing/on_found(mob/finder)
-	if(activator)
-		activator.on_found(finder)
+	activator?.on_found(finder)
 
 /obj/item/grenade/iedcasing/Move()
 	. = ..()
-	if(activator)
-		activator.holder_movement()
+	activator?.holder_movement()
 
 /obj/item/grenade/iedcasing/dropped()
 	. = ..()
-	if(activator)
-		activator.dropped()
+	activator?.dropped()
 
 /obj/item/grenade/iedcasing/proc/process_activation(obj/item/assembly)
 	detonate()
@@ -157,8 +154,8 @@
 	qdel(src)
 
 /obj/item/grenade/iedcasing/Destroy()
-	. = ..()
 	activator = null
+	return ..()
 
 
 
@@ -262,7 +259,7 @@
 			cur_power += fuel_power[reagent.type] * reagent.volume / reagents.maximum_volume
 
 		power *= cur_power
-		power -= contents.len / 2
+		power -= length(contents) / 2
 
 		balloon_alert(user, "wires attached")
 		icon_state = "[icon_state]-cable"
