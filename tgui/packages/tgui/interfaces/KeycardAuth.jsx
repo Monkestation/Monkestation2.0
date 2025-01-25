@@ -33,6 +33,10 @@ export const KeycardAuth = (props) => {
                       icon="exclamation-triangle"
                       fluid
                       disabled={!data.can_set_alert}
+                      tooltip={
+                        !data.can_set_alert &&
+                        'The current alert cannot be overriden by the crew!'
+                      }
                       onClick={() => {
                         return act('red_alert');
                       }}
