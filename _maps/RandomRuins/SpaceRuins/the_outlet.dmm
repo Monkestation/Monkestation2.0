@@ -1431,7 +1431,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Ia" = (
-/obj/item/book/granter/action/spell/knock,
+/obj/item/book/granter/action/spell/summonitem,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "Ie" = (
