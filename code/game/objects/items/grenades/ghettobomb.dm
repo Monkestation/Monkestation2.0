@@ -56,9 +56,8 @@
 	. += span_notice("Using it off-hand allows you to configure the assembly, if possible.")
 	if(length(contents) > 1) // above 1, so more than just the activator
 		. += span_warning("It seems to have something stuffed in it.")
-	if(isnull(activator))
-		return
-	. += activator.examine(user)
+	if(!isnull(activator))
+		. += activator.examine(user)
 
 // assembly handling
 
