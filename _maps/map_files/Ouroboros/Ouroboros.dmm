@@ -3917,12 +3917,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
-"biD" = (
-/obj/machinery/atmospherics/components/tank{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/science/ordnance)
 "biO" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -5512,10 +5506,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/evidence)
-"bEJ" = (
-/obj/machinery/atmospherics/components/tank,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/science/ordnance)
 "bEK" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 1
@@ -13135,7 +13125,7 @@
 	},
 /obj/item/stamp{
 	pixel_x = -7;
-	pixel_y = 1
+	pixel_y = -1
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/requests_console/auto_name/directional/south,
@@ -14279,13 +14269,21 @@
 "ekC" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/folder/white,
+/obj/item/stamp/granted{
+	pixel_y = 11;
+	pixel_x = 8
+	},
 /obj/item/stamp/head/cmo{
-	pixel_y = 7;
+	pixel_y = 6;
 	pixel_x = 8
 	},
 /obj/item/flashlight/pen,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8;
+	pixel_y = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
@@ -20333,8 +20331,8 @@
 /area/station/hallway/secondary/command)
 "gcs" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/atmospherics/components/tank{
-	dir = 1
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 4
 	},
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
@@ -28538,9 +28536,6 @@
 	c_tag = "Security - Armory"
 	},
 /obj/effect/spawner/random/armory/disablers,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
-/obj/item/gun/energy/taser,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "ixo" = (
@@ -35620,6 +35615,14 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow{
 	pixel_x = -3
+	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /obj/item/stamp/head/ce,
 /obj/machinery/button/door/directional/west{
@@ -52186,8 +52189,16 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/rd,
 /obj/machinery/light/cold/directional/west,
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/rd,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
 "ptD" = (
@@ -55803,6 +55814,14 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
+/obj/item/stamp/denied{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/obj/item/stamp/granted{
+	pixel_y = 12;
+	pixel_x = -2
+	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
 "qur" = (
@@ -56174,11 +56193,19 @@
 	dir = 1
 	},
 /obj/item/folder/red,
-/obj/item/stamp/head/hos,
 /obj/item/paper_bin{
 	pixel_x = 16;
 	pixel_y = 7
 	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/head/hos,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
 "qyQ" = (
@@ -57621,6 +57648,10 @@
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
+"qZh" = (
+/obj/machinery/composters,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "qZi" = (
 /obj/structure/sign/flag/mothic/directional/north,
 /obj/effect/spawner/random/engineering/tank,
@@ -59275,7 +59306,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/safe)
 "rzH" = (
-/obj/machinery/atmospherics/components/tank,
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 4
+	},
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
@@ -64277,6 +64310,7 @@
 "sXX" = (
 /obj/machinery/growing/soil,
 /obj/machinery/light/warm/directional/north,
+/obj/machinery/vending/hydroseeds/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "sYb" = (
@@ -65271,6 +65305,7 @@
 /obj/machinery/growing/soil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/vending/hydronutrients/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tne" = (
@@ -103261,9 +103296,9 @@ vhx
 uZB
 con
 bev
-bEJ
-biD
-bEJ
+ebQ
+ebQ
+ebQ
 bev
 qlO
 laO
@@ -185307,7 +185342,7 @@ dEd
 lxY
 inH
 uvP
-dHo
+qZh
 odH
 sYM
 jgK

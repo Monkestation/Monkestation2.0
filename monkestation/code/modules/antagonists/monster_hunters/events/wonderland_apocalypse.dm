@@ -28,7 +28,7 @@
 	priority_announce(
 		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
 		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
-		sound = 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg',
+		sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg',
 		encode_title = FALSE, // Gibberish() already sanitizes
 		color_override = "purple"
 	)
@@ -36,9 +36,9 @@
 /datum/round_event/wonderlandapocalypse/start()
 	SSshuttle.emergency_no_recall = TRUE
 	for(var/i = 1 to 16)
-		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf(), null, FALSE)
+		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf_equal_weight(), null, FALSE)
 	for(var/i = 1 to 4)
-		var/obj/structure/wonderland_rift/rift = new(get_safe_random_station_turf())
+		var/obj/structure/wonderland_rift/rift = new(get_safe_random_station_turf_equal_weight())
 		notify_ghosts(
 			"A doorway to the wonderland has been opened!",
 			source = rift,
@@ -123,7 +123,7 @@
 /datum/status_effect/wonderland_district
 	id = "wonderland_district"
 	alert_type = /atom/movable/screen/alert/status_effect/wonderland_district
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
 	var/list/datum/action/registered_actions
 	/// Typecache of spells to NOT trigger the effect on.

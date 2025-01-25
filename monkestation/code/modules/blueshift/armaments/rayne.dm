@@ -15,9 +15,20 @@
 
 /datum/armament_entry/company_import/rayne/first_aid_kit/rayne_mender
 	item_type = /obj/item/storage/medkit/rayne
-	cost = PAYCHECK_COMMAND * 5
+	cost = PAYCHECK_COMMAND * 15
 
-//Rayne Corp Medkit: A portable medkit that contains a cynical artificial intelligence that can diagnose and treat your injuries, but also insults you and makes sarcastic comments about your condition.
+/datum/armament_entry/company_import/rayne/tools
+	subcategory = "Industrial Tools"
+
+/datum/armament_entry/company_import/rayne/tools/sledgehammer
+	item_type = /obj/item/melee/sledgehammer
+	cost = PAYCHECK_CREW * 4
+
+/datum/armament_entry/company_import/rayne/tools/welder
+	item_type = /obj/item/weldingtool/electric/raynewelder
+	cost = PAYCHECK_CREW * 4
+
+
 
 //Rayne Corp Sticky Tiles: A synthetic tile that has a special adhesive property that can cushion any fall and prevent serious damage,
 //but also traps you in place until you can free yourself or get help. The Sticky Tile is ideal for people who are clumsy and prone to accidents.
@@ -25,6 +36,6 @@
 //in an instant. The Teleporter can also create amusing and weird situations, as you may end up with a different appearance, function,
 //or ability, after teleporting. However, the Teleporter can be very painful, and can damage your health, identity, or sanity, if used too often.
 //razor that shaves you so bald you flash people when examined
-//GIANT MOUSETRAP
+//GIANT MOUSETRAP /obj/item/melee/sledgehammer
 //Rayne Corp Homerun bat
 //Rayne corp auto injector (its just autop injects maints pills)

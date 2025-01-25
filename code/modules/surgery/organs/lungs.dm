@@ -114,6 +114,8 @@
 
 	///our last lung pop adventure
 	var/lung_pop_tick = 0
+	//fucking checks if the last breath failed was actually from something or not, and if not clears it
+	var/failed_last_breath_checker = 0
 
 // assign the respiration_type
 /obj/item/organ/internal/lungs/Initialize(mapload)
@@ -481,6 +483,7 @@
 /obj/item/organ/internal/lungs/proc/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
+	/* monkestation removal: Death to advance
 	// Miasma sickness
 	if(prob(0.5 * miasma_pp))
 		var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
@@ -488,6 +491,7 @@
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 		miasma_disease.name = "Unknown"
 		miasma_disease.try_infect(breather)
+		*/
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
@@ -640,6 +644,10 @@
 	// Check for moles of gas and handle partial pressures / special conditions.
 	if(num_moles > 0 && not_low_pressure && not_high_pressure)
 		// Breath has more than 0 moles of gas.
+		//checks if the last breath was one of the not- this fucking breaths so it can clear it
+		if(failed_last_breath_checker)
+			breather.failed_last_breath = FALSE
+			failed_last_breath_checker = FALSE
 		// Route gases through mask filter if breather is wearing one.
 		if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
 			breath = breather.wear_mask.consume_filter(breath)
@@ -672,11 +680,13 @@
 				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
 				apply_organ_damage(5)
 		breather.failed_last_breath = TRUE
+		failed_last_breath_checker = TRUE
 		lung_pop_tick++
 	// Robot, don't care lol
 	else if((owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
 		// Can't breathe!
 		breather.failed_last_breath = TRUE
+		failed_last_breath_checker = TRUE
 
 	// The list of gases in the breath.
 	var/list/breath_gases = breath.gases
@@ -861,7 +871,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)

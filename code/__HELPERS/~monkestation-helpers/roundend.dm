@@ -36,3 +36,29 @@
 			total_payout += listed_challenge.challenge_payout
 		if(total_payout)
 			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards.")
+
+/datum/controller/subsystem/ticker/proc/refund_cassette()
+	if(!length(GLOB.cassette_reviews))
+		return
+
+	for(var/id in GLOB.cassette_reviews)
+		var/datum/cassette_review/review = GLOB.cassette_reviews[id]
+		if(!review || review.action_taken) // Skip if review doesn't exist or already handled (denied / approved)
+			continue
+
+		var/ownerckey = review.submitted_ckey // ckey of who made the cassette.
+		if(!ownerckey)
+			continue
+
+		var/client/client = GLOB.directory[ownerckey] // Use directory for direct lookup (Client might be a differnet mob than when review was made.)
+		if(client && !QDELETED(client?.prefs))
+			var/prev_bal = client?.prefs?.metacoins
+			var/adjusted = client?.prefs?.adjust_metacoins(
+				client?.ckey, 5000,
+				reason = "No action taken on cassette:\[[review.submitted_tape.name]\] before round end.",
+				announces = TRUE, donator_multipler = FALSE
+			)
+			if(!adjusted)
+				message_admins("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
+				log_admin("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
+			qdel(review)
