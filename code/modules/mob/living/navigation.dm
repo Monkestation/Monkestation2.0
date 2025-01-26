@@ -28,7 +28,7 @@
 	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	var/list/destination_list = list()
 	for(var/atom/destination as anything in GLOB.navigate_destinations)
-		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE)
+		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE || !are_zs_connected(destination, src)) // monkestation edit: check to ensure that Z-levels are connected, so we don't get centcom destinations while on station and vice-versa
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
 		if(destination.z != z && (can_go_down || can_go_up)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
