@@ -12,7 +12,7 @@
 /datum/brain_trauma/mild/kleptomania/on_life(seconds_per_tick, times_fired)
 	if(owner.incapacitated())
 		return
-	if(!SPT_PROB(kleptomania_chance, seconds_per_tick))
+	if(!prob(kleptomania_chance))
 		return
 	if(!owner.has_active_hand())
 		return
