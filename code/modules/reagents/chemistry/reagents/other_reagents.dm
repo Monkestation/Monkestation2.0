@@ -278,7 +278,7 @@
 		victim.Knockdown(3 SECONDS)
 		victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 		addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
-		if(iscarbon(victim))
+		if(ishuman(victim))
 			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
 		victim.update_damage_hud()
 	//MONKESTATION EDIT STOP
