@@ -17,6 +17,7 @@
 	force = 15
 	block_chance = 20
 	armour_penetration = 10
+	wound_bonus = 0
 	bare_wound_bonus = 15
 
 
