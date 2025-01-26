@@ -494,3 +494,64 @@
   blakeeeee:
   - bugfix: Stowaway's inhand starting equipment now is moved to their starting point
       with them correctly.
+2025-01-23:
+  Absolucy:
+  - bugfix: Fixed a rare bug that would interrupt and prevent the round from properly
+      starting.
+  Gw0sty:
+  - balance: The CMO's Hypospray can now pierces armor.
+  Loiosh42:
+  - bugfix: donors no longer get infinite tokens
+  - bugfix: donors now get paid the right amount of money
+  MichiRecRoom:
+  - rscadd: 'New quirk: Kakologophobia - the fear of curse words.'
+  - rscadd: 'New quirk: Easily Offended - like Kakologophobia, but with moodlets instead
+      of freaking out.'
+  Shoddd:
+  - balance: Unholy water and Eldritch now heal pain
+  - balance: Doubled lion hunter max range
+  SirNightKnight:
+  - rscadd: Added the China Lake grenade launcher to the  uplink for 10 TC.
+  - rscadd: Added a single round grenade launcher to the uplink for 5 TC.
+  - rscadd: Added more varieties of 40mm grenades.
+  - sound: Added sounds for the China Lake grenade launcher.
+  - image: New 40mm grenade sprites.
+  - code_imp: Replaced all mapped 40mm ammo boxs with the new fancy version.
+  - code_imp: Moved all 40mm grenade code to it's own file.
+2025-01-24:
+  Gw0sty:
+  - qol: Plague rats are now considered biohazards for admin traitor panels
+  Shoddd:
+  - bugfix: ghost can no longer spawn kudzu via heretic painting
+  - rscdel: Removed 2 of 3 You died messages
+  Wisemonster:
+  - rscdel: Removed CC comms from the blueshield and nanotrasen representative
+2025-01-25:
+  DexeeXI:
+  - rscdel: cleaned up unused assets. saves a few kb at most.
+  S1ngulo, BingusSS13:
+  - rscadd: You can customize ghost roles you spawn as, using your loaded character
+      preferences.
+  Shoddd:
+  - rscadd: Ports upstreams law 4 for painter lawset
+  - balance: Atlatl damage lowered to 5, spear lowed to 50, and biomode lowered to
+      2
+  - bugfix: You can no longer infinitely pee into containers
+  flleeppyy:
+  - rscadd: Britarnya's Floor Pill - "Porg Pill"
+  - rscadd: Snackalus floor pill name - "Spice Melange"
+2025-01-26:
+  Absolucy:
+  - bugfix: Fix some stuff related to how server-side antag token configuration is
+      loaded.
+  - bugfix: Swiping for red alert when it's already delta alert or such will no longer
+      lower the alert to red.
+  Absolucy, dwasint:
+  - bugfix: Fixed antag tokens, unusuals, and keybindings being wiped if someone disconnected
+      very early. Hopefully.
+  Blacklist897:
+  - balance: The Hypospray now has a larger storage, and can inject more precise amounts
+  - bugfix: A visual glitch with the reagent overlay of the modsuit injector has been
+      fixed
+  Wisemonster:
+  - balance: The BSA now requires only 10 BS crystals, down from 20
