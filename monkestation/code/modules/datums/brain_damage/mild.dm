@@ -50,7 +50,7 @@
 	)
 
 	owner.log_message("is pickpocketed [item_to_steal] out of [key_name(victim)]'s pockets (kleptomania).", LOG_ATTACK, color = "red")
-	target.log_message("is having [item_to_steal] pickpocketed by [key_name(owner)] (kleptomania).", LOG_VICTIM, color = "orange", log_globally = FALSE)
+	victim.log_message("is having [item_to_steal] pickpocketed by [key_name(owner)] (kleptomania).", LOG_VICTIM, color = "orange", log_globally = FALSE)
 	if(!do_after(owner, item_to_steal.strip_delay, victim) || !victim.temporarilyRemoveItemFromInventory(item_to_steal))
 		owner.visible_message(
 			span_warning("[owner] fails to pickpocket [victim]."),
@@ -60,7 +60,7 @@
 		return
 
 	owner.log_message("has pickpocketed [key_name(victim)] of [item_to_steal] (kleptomania).", LOG_ATTACK, color = "red")
-	target.log_message("has been pickpocketed of [item_to_steal] by [key_name(owner)] (kleptomania).", LOG_VICTIM, color = "orange", log_globally = FALSE)
+	victim.log_message("has been pickpocketed of [item_to_steal] by [key_name(owner)] (kleptomania).", LOG_VICTIM, color = "orange", log_globally = FALSE)
 
 	owner.visible_message(
 		span_warning("[owner] removes [item_to_steal] from [victim]'s pocket!"),
