@@ -42367,6 +42367,10 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
+"mhG" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/grass,
+/area/station/asteroid/tram/pet)
 "mhQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -55030,7 +55034,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/asteroid/tram/pet)
 "qjw" = (
 /obj/machinery/requests_console/directional/north{
 	anon_tips_receiver = 1;
@@ -55351,7 +55355,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/asteroid/tram/pet)
 "qoX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -184779,9 +184783,9 @@ whz
 whz
 whz
 whz
-whz
+ewa
 qjm
-whz
+ewa
 vOW
 vOW
 whz
@@ -185295,7 +185299,7 @@ xTG
 fCF
 xTG
 gcr
-xTG
+mhG
 fCF
 xTG
 xip
