@@ -461,8 +461,11 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#a52f29#F2F2F2"
+	greyscale_colors = "#3C485#F2F2F2"
 	armor_type = /datum/armor/beret_sec
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
+
+/obj/item/clothing/head/beret/private_sec/lieutenant
+	greyscale_colors = "#3C485#f0cc8f"

@@ -21,16 +21,18 @@
 
 //MONKESTATION EDIT START
 /datum/outfit/nanotrasencommander
-	name = "Nanotrasen Private Security Commander Corpse" //monkestation edit
-	uniform = /obj/item/clothing/under/rank/centcom/commander
-	suit = /obj/item/clothing/suit/armor/bulletproof
-	ears = /obj/item/radio/headset/heads/captain
+	name = "Nanotrasen Private Security Commander Corpse"
+	uniform = /obj/item/clothing/under/rank/centcom/private_sec/lieutenant
+	suit = /obj/item/clothing/suit/armor/vest
+	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/eyepatch
-	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
-	head = /obj/item/clothing/head/hats/centhat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat/private_sec
+	head = /obj/item/clothing/head/beret/private_sec/lieutenant
+	back = /obj/item/storage/backpack/satchel/leather
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
+	l_pocket = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/commander
 //MONKESTATION EDIT STOP
@@ -44,6 +46,7 @@
 	name = "Nanotrasen Private Security Officer Corpse" //monkestation edit
 	uniform = /obj/item/clothing/under/rank/centcom/private_sec
 	suit = /obj/item/clothing/suit/armor/vest
+	ears = /obj/item/radio/headset/headset_sec/alt
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	mask = null
