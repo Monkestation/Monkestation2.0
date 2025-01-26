@@ -263,6 +263,26 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	//MONKESTATION EDIT START
+	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+		return
+
+	var/mob/living/victim = exposed_mob
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
+		if(prob(50))
+			victim.emote("scream")
+		else
+			victim.emote("hiss")
+		victim.set_eye_blur_if_lower(5 SECONDS)
+		victim.set_confusion_if_lower(5 SECONDS)
+		victim.Knockdown(3 SECONDS)
+		victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
+		addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
+		if(iscarbon(victim))
+			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+		victim.update_damage_hud()
+	//MONKESTATION EDIT STOP
+
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
