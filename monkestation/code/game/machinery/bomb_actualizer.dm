@@ -131,6 +131,10 @@
 			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
 			return
 
+		else if(src.anchored == FALSE)
+			say("ERROR: Needs to be anchored!")
+			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
+			return
 
 		else if(!on_reebe(src))
 			say("Beginning detonation sequence. Countdown starting.")
