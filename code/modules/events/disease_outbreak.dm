@@ -24,9 +24,9 @@
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 2
 	min_players = 10
-	weight = 0
+	weight = 2
 	track = EVENT_TRACK_MAJOR //monkie edit
-	earliest_start = 55 MINUTES
+	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
@@ -117,8 +117,8 @@
 		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
-		EFFECT_DANGER_HELPFUL	= 0,
-		EFFECT_DANGER_FLAVOR	= 1,
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 0,
@@ -145,9 +145,10 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 0 //monkestation change 15 ==> 5
+	weight = 4 //monkestation change 15 ==> 4
 	min_players = 35 // To avoid shafting lowpop
-	earliest_start = 55 MINUTES // give the chemist a chance
+	earliest_start = 40 MINUTES // give the chemist a chance
+	max_occurrences = 1
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
@@ -227,11 +228,11 @@
 		)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 0,
-		EFFECT_DANGER_FLAVOR	= 0,
+		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 3,
-		EFFECT_DANGER_DEADLY	= 1,
+		EFFECT_DANGER_DEADLY	= 0,
 		)
 	var/datum/disease/advanced/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
