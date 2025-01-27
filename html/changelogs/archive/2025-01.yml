@@ -527,8 +527,49 @@
   Wisemonster:
   - rscdel: Removed CC comms from the blueshield and nanotrasen representative
 2025-01-25:
+  DexeeXI:
+  - rscdel: cleaned up unused assets. saves a few kb at most.
+  S1ngulo, BingusSS13:
+  - rscadd: You can customize ghost roles you spawn as, using your loaded character
+      preferences.
   Shoddd:
   - rscadd: Ports upstreams law 4 for painter lawset
+  - balance: Atlatl damage lowered to 5, spear lowed to 50, and biomode lowered to
+      2
+  - bugfix: You can no longer infinitely pee into containers
   flleeppyy:
   - rscadd: Britarnya's Floor Pill - "Porg Pill"
   - rscadd: Snackalus floor pill name - "Spice Melange"
+2025-01-26:
+  Absolucy:
+  - bugfix: Fix some stuff related to how server-side antag token configuration is
+      loaded.
+  - bugfix: Swiping for red alert when it's already delta alert or such will no longer
+      lower the alert to red.
+  Absolucy, dwasint:
+  - bugfix: Fixed antag tokens, unusuals, and keybindings being wiped if someone disconnected
+      very early. Hopefully.
+  Blacklist897:
+  - balance: The Hypospray now has a larger storage, and can inject more precise amounts
+  - bugfix: A visual glitch with the reagent overlay of the modsuit injector has been
+      fixed
+  Wisemonster:
+  - balance: The BSA now requires only 10 BS crystals, down from 20
+2025-01-27:
+  Absolucy:
+  - code_imp: Hopefully improved the performance of code related to the replay system.
+  Absolucy, Melbert:
+  - qol: Navigate verb better indicates areas on a separate level. Selecting an area
+      on a different level will direct you to the nearest staircase (as with "Nearest
+      Way Up/Down")
+  - qol: Navigating to a staircase or ladder will shorten the cooldown of navigate
+      and clear your existing path for you upon finding it
+  Absolucy, Sapphoqueer:
+  - bugfix: Fixes a bug where AIs, borgs and TK users could effectively break ID's
+      by removing them from modular computers.
+  Shoddd:
+  - qol: adds a few things to runtime station
+  - rscdel: cleans up a lot of unused nukie base space
+  Wisemonster:
+  - qol: The antag token menu will now tell you how many donator tokens you have
+  - qol: Moved the engineer mail destination on box station to the engineer foyer.
