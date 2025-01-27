@@ -649,3 +649,23 @@
 		)
 		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
+
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb
+	name = "Spinal self-destruct implant"
+	desc = "WIP"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_NO_REQ
+	var/starter_z = null
+
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_insert(mob/living/carbon/owner)
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	starter_z = owner_turf.z
+
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	if (starter_z == owner_turf.z)
+		return
+	else
+		owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), src)
