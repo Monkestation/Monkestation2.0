@@ -42,8 +42,8 @@
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	for(var/datum/disease/strain as anything in data?["viruses"])
-		if(istype(strain, /datum/disease/advanced))
-			var/datum/disease/advanced/advanced = strain
+		if(istype(strain, /datum/disease/acute))
+			var/datum/disease/acute/advanced = strain
 			if(methods & (INJECT|INGEST|PATCH))
 				exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
 			if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
@@ -2447,7 +2447,7 @@
 /datum/reagent/pax
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence in its subjects."
-	color = "#AAAAAA55"
+	color = "#aaaaaaff"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 15
