@@ -24,7 +24,7 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 	)
-	var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/datum/disease/acute/D = new virus_choice
 
 	D.makerandom(list(30,55),list(0,50),anti,bad,null)

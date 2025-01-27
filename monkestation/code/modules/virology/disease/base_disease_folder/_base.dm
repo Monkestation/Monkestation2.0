@@ -247,27 +247,26 @@ GLOBAL_LIST_INIT(virusDB, list())
 /datum/disease/acute
 	var/list/properties = list()
 
-// Calling A_Refresh effectivley checks for, then sets the severity
+/// Calls on GenerateProperties and AssignProperties to set a disease severity. From `disease/advance`
+/datum/disease/acute/proc/Refresh_Acute(new_name = FALSE)
+	GenerateProperties_Acute()
+	assign_properties_Acute()
 
-/datum/disease/acute/proc/A_Refresh(new_name = FALSE)
-	A_GenerateProperties()
-	A_assign_properties()
-
-/datum/disease/acute/proc/A_GenerateProperties()
+/// Generates the list for the severity with severity defined at 0, then calls on symtomps severity for final.
+/datum/disease/acute/proc/GenerateProperties_Acute()
 	properties = list("severity" = 0)
 	for(var/datum/symptom/S in symptoms)
 		if(!S.neutered)
 			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 
-/datum/disease/acute/proc/A_assign_properties()
-	if(properties?.len)
-		A_set_severity(properties["severity"])
+/datum/disease/acute/proc/assign_properties_Acute()
+	if(length(properties))
+		set_severity_Acute(properties["severity"])
 	else
 		CRASH("Our properties were empty or null!")
 
-
-/datum/disease/acute/proc/A_set_severity(level_sev)
-
+///sets a serverity level based on the properties["severity"] value of the disease
+/datum/disease/acute/proc/set_severity_Acute(level_sev)
 	switch(level_sev)
 
 		if(-INFINITY to 0)

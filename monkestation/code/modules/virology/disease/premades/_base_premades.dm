@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(global_diseases, list())
 	uniqueID = rand(0,9999)
 	subID = rand(0,9999)
 	strength = rand(70,100)
-	A_Refresh()
+	Refresh_Acute()
 
 /datum/disease/acute/premade/makerandom(list/str = list(), list/rob = list(), list/anti = list(), list/bad = list(), atom/source = null)
 	return

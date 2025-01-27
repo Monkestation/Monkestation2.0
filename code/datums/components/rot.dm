@@ -152,7 +152,7 @@
 		return
 
 	//We're running just under the "worst disease", since we don't want these to be too strong
-	var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 2,
 		ANTIGEN_COMMON	= 2,

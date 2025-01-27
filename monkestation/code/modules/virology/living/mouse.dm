@@ -10,7 +10,7 @@
 	immune_system = new(src)
 
 	if(prob(disease_chance) && diseased)
-		var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 2,
 			ANTIGEN_COMMON	= 2,

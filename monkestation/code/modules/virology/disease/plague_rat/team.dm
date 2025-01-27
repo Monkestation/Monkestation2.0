@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 		plague.speed = 2 //Takes about 100 seconds to advance to the next stage, max stage in 5 minutes
 
 		plague.makerandom(list(90,100),list(40,75),anti,bad,null)
-		plague.A_Refresh()
+		plague.Refresh_Acute()
 		for(var/datum/symptom/e in plague.symptoms)
 			e.chance *= 2 //More likely to trigger symptoms per tick
 

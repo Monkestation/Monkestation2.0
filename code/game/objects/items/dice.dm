@@ -382,7 +382,7 @@
 		if(9)
 			//Cold
 			selected_turf.visible_message(span_userdanger("[user] looks a little under the weather!"))
-			var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+			var/virus_choice = pick(WILD_ACUTE_DISEASES)
 			var/list/anti = list(
 				ANTIGEN_BLOOD	= 1,
 				ANTIGEN_COMMON	= 1,

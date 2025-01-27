@@ -174,7 +174,7 @@
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 	if(prob(25))
-		var/virus_choice = pick(subtypesof(/datum/disease/acute)- typesof(/datum/disease/acute/premade))
+		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 2,
 			ANTIGEN_COMMON	= 2,
@@ -196,7 +196,7 @@
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
 
 		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
-		disease.A_Refresh()
+		disease.Refresh_Acute()
 
 /datum/job/proc/announce_job(mob/living/joining_mob, job_title)
 	if(head_announce)
