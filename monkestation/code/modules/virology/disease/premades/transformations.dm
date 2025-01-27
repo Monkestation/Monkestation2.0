@@ -15,15 +15,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-<<<<<<< HEAD
-/datum/disease/acute/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/acute/premade/gondola/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/consumable/condensedcapsaicin, 1)) //Pepperspray can ruin anyones peaceful existancce.
 		cure()
 
-=======
 /datum/disease/acute/premade/gondola/digital
->>>>>>> upstream/master
 	category = DISEASE_GONDOLA_DIGITAL
 
 	symptoms = list(
@@ -46,15 +43,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-<<<<<<< HEAD
-/datum/disease/acute/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/acute/premade/xeno/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/phlogiston, 1)) //Fire
 		cure()
 
-=======
 /datum/disease/acute/premade/corgi
->>>>>>> upstream/master
 	name = "Puppification"
 	form = "Puppy Cells"
 	origin = "Ian"
@@ -70,16 +64,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-<<<<<<< HEAD
-/datum/disease/acute/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/acute/premade/corgi/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/consumable/coco, 1)) //Feed Ian chocolatebars
 		cure()
 
 /datum/disease/acute/premade/slime
-=======
-/datum/disease/acute/premade/slime
->>>>>>> upstream/master
 	name = "Slime Syndrome"
 	form = "Simplified Cells"
 	origin = "Slime Colonies"
@@ -95,16 +85,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-<<<<<<< HEAD
 /datum/disease/acute/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/water, 1)) //Water is effective against slimes
 		cure()
 
 /datum/disease/acute/premade/morph
-=======
-/datum/disease/acute/premade/morph
->>>>>>> upstream/master
 	name = "Gluttony"
 	form = "Hungering Cells"
 	origin = "The Hivemind"
@@ -120,16 +106,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-<<<<<<< HEAD
 /datum/disease/acute/premade/morph/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/toxin/lipolicide, 1)) //Empties the hunger
 		cure()
 
 /datum/disease/acute/premade/robot
-=======
-/datum/disease/acute/premade/robot
->>>>>>> upstream/master
 	name = "Nanite Conversion"
 	form = "Nanites"
 	origin = "Swarmers"
