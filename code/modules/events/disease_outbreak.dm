@@ -23,7 +23,7 @@
 	name = "Disease Outbreak: Classic"
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 2
-	min_players = 10
+	min_players = 15
 	weight = 2
 	track = EVENT_TRACK_MAJOR //monkie edit
 	earliest_start = 20 MINUTES
@@ -112,12 +112,12 @@
 	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
-		ANTIGEN_COMMON	= 1,
+		ANTIGEN_COMMON	= 2,
 		ANTIGEN_RARE	= 2,
 		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
-		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_HELPFUL	= 2,
 		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
