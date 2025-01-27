@@ -458,7 +458,7 @@ monkestation end */
 	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	*/
-	owner.remove_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
 	//MONKESTATION EDIT END
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
@@ -473,7 +473,7 @@ monkestation end */
 	/* //MONKESTATION EDIT ORIGINAL
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	*/
-	owner.grant_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	owner.grant_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
 	//MONKESTATION EDIT END
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
@@ -489,6 +489,6 @@ monkestation end */
 	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	*/
-	owner.remove_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
 	//MONKESTATION EDIT END
 	to_chat(owner, span_green("The urge subsides."))
