@@ -81,7 +81,7 @@
 		return FALSE
 	var/counter = FALSE
 	var/dodge = FALSE
-	if(istype(/datum/martial_art/cqc))
+	if(istype(martial_art, /datum/martial_art/cqc))
 		counter = TRUE
 	else if(istype(martial_art, /datum/martial_art/the_sleeping_carp))
 		var/datum/martial_art/the_sleeping_carp/eepy_carp = martial_art
