@@ -453,7 +453,12 @@ monkestation end */
 	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
+	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
+	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	*/
+	owner.remove_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	//MONKESTATION EDIT END
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
 	if(isnull(owner.ai_controller))
@@ -463,7 +468,12 @@ monkestation end */
 	if(!SPT_PROB(3, seconds_per_tick))
 		return
 
+	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
+	/* //MONKESTATION EDIT ORIGINAL
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	*/
+	owner.grant_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	//MONKESTATION EDIT END
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
@@ -474,5 +484,10 @@ monkestation end */
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
+	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	*/
+	owner.remove_language(/datum/language/monkey, understood = TRUE, spoken = FALSE, TRAUMA_TRAIT)
+	//MONKESTATION EDIT END
 	to_chat(owner, span_green("The urge subsides."))
