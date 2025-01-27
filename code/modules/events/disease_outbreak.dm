@@ -148,7 +148,6 @@
 	weight = 3 //monkestation change 15 ==> 3
 	min_players = 35 // To avoid shafting lowpop
 	earliest_start = 40 MINUTES // give the chemist a chance
-	max_occurrences = 1
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
