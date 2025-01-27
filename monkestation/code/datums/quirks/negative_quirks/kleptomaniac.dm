@@ -8,9 +8,9 @@
 /datum/quirk/kleptomaniac/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(ishuman(human_holder))
-		human_holder.gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+		human_holder.gain_trauma(/datum/brain_trauma/severe/kleptomaniac, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/kleptomaniac/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(ishuman(human_holder))
-		human_holder.cure_trauma_type(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+		human_holder.cure_trauma_type(/datum/brain_trauma/severe/kleptomaniac, TRAUMA_RESILIENCE_ABSOLUTE)
