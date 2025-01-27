@@ -90,9 +90,11 @@
 			ignored_mobs = list(user)
 		)
 		to_chat(user, span_userdanger("As you attempt to stun [target] with the spell, [target.p_they()] twist[target.p_s()] your arm and send[target.p_s()] the spell back at you!"), type = MESSAGE_TYPE_COMBAT)
+		if(istype(martial_art, /datum/martial_art/the_sleeping_carp/awakened_dragon))
+			INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, say), message = "PATHETIC!", language = /datum/language/common, ignore_spam = TRUE, forced = martial_art)
 		effect_weakened(user, silent = TRUE)
 		return TRUE
-	else if(istype(martial_art, /datum/martial_art/the_sleeping_carp))
+	else if(istype(martial_art, /datum/martial_art/the_sleeping_carp) || istype(martial_art, /datum/martial_art/the_tunnel_arts))
 		var/datum/martial_art/the_sleeping_carp/eepy_carp = martial_art
 		if(eepy_carp.can_deflect(target))
 			target.visible_message(
