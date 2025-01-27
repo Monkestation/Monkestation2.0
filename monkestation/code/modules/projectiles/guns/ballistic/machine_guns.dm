@@ -4,7 +4,7 @@
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
 
-	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'  ///started work on a sprite for the nukie variant, inhands are currently in the same file to make them easy to find
+	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'  ///started work on a sprite for the nukie variant, inhands are currently in the same file to make them easy to find.
 	icon_state = "outomaties"
 
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
@@ -53,9 +53,6 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg/proc/give_autofire()
 	AddComponent(/datum/component/automatic_fire, fire_delay)
 
-/obj/item/gun/ballistic/automatic/quarad_lmg/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
-
 /obj/item/gun/ballistic/automatic/quarad_lmg/examine(mob/user)
 	. = ..()
 	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
@@ -73,7 +70,8 @@
 	return .
 
 
-/obj/item/gun/ballistic/automatic/quarad_lmg/evil
+/obj/item/gun/ballistic/automatic/quarad_lmg/evil  ///CURRENTLY UNAVAILABLE WITHOUT ADMIN INTERVENTION
+	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 
 	icon_state = "outomaties_evil"         ///Sprites ain't done yet. Once they are, this can be moved to the nuclear operative uplink
@@ -89,7 +87,7 @@
 	projectile_damage_multiplier = 2
 
 /obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
-	name = "\improper Quarad light machinegun guncase"
+	name = "\improper Quarad light machinegun storage case"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg/
 	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum

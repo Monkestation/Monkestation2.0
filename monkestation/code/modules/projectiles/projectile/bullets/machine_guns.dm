@@ -20,7 +20,7 @@
 
 	speed = 0.2 ///double standard
 	damage = 5
-	armour_penetration = 45
+	armour_penetration = 60
 	wound_bonus = 5
 	bare_wound_bonus = 0
 
@@ -28,11 +28,20 @@
 	projectile_piercing = PASSMOB
 	biotype_damage_multiplier = 6
 
+/obj/projectile/bullet/c65xeno/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isliving(target))
+		// If the bullet has already gone through 3 people, stop it on this hit
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+	return ..()
+
 
 /obj/projectile/bullet/c65xeno/incendiary
 	name = "6.5mm caseless incendiary bullet"
 	icon_state = "redtrac"
 	damage = 5
+	bare_wound_bonus = 0
 	speed = 0.8 ///half of standard
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
