@@ -170,20 +170,18 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
 		. += span_warning("Well you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
-	if(!user.client.is_mentor())
+	if(!user.client?.is_mentor())
 		. += span_warning("You can feel this cloak dispises you for lacking a high enough level of knowledge")
 
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_NECK)
-		if(user.mind.has_antag_datum(/datum/antagonist/changeling))
+		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
 			to_chat(user, span_notice("I'll let you get way with it this time."))
-			select_cloak_appearance.Grant(user)
-			return
-		if(!user.client.is_mentor())
+		else if(!user.client?.is_mentor())
 			lightningbolt(user)
 			user.dropItemToGround(src)
 			to_chat(user, span_userdanger("No mentor cloak for you!"))
@@ -197,10 +195,7 @@
 
 /obj/item/clothing/neck/mentorcloak/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
-	if(isinhands)
-		return
-
-	if(current_cloak_overlay)
+	if(!isinhands && current_cloak_overlay)
 		. += mutable_appearance('monkestation/icons/mob/clothing/necks/mentor_cloak_overlays.dmi', current_cloak_overlay)
 
 /datum/action/innate/select_cloak_appearance
