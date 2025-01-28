@@ -55,7 +55,7 @@
 	name = "\improper 6.5mm AP drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm saboted tungsten penetrators, designed to punch through multiple targets. Warning: Liable to break windows."
 
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumP"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce
@@ -65,7 +65,7 @@
 	name = "\improper 6.5mm incendiary drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm rounds tipped with an incendiary compound."
 
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumI"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary
