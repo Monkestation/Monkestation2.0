@@ -6,6 +6,7 @@
 		/obj/structure/table,
 		/obj/structure/bookcase,
 		/obj/machinery/computer,
+		/obj/machinery/vending,
 	))
 
 	for(var/obj/machinery/light/floor/light as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light/floor))
