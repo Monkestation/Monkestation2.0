@@ -275,7 +275,7 @@
 			victim.emote("hiss")
 		victim.set_eye_blur_if_lower(5 SECONDS)
 		victim.set_confusion_if_lower(5 SECONDS)
-		victim.Knockdown(3 SECONDS)
+		victim.Stun(0.1 SECONDS)
 		victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 		addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		if(ishuman(victim))
