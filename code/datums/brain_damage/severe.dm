@@ -477,6 +477,18 @@
 	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
 		return
 
+//MONKESTATION EDIT START - Adds pickpocketing to Kleptomaniac, like with our original implementation.
+	if(prob(src.pickpocket_chance_percent))
+		src.steal_from_someone()
+	else
+		src.steal_from_ground()
+
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)
+
+// Use the rest of the original function as the stealing-from-ground code
+/datum/brain_trauma/severe/kleptomaniac/proc/steal_from_ground()
+//MONKESTATION EDIT END
 	// If our main hand is full, that means our offhand is empty, so try stealing with that
 	var/steal_to_offhand = !!owner.get_active_held_item()
 	var/curr_index = owner.active_hand_index
@@ -504,5 +516,7 @@
 	if(steal_to_offhand)
 		owner.swap_hand(curr_index)
 	owner.setDir(pre_dir)
+	/* //MONKESTATION REMOVAL - Moved from here to the edited `on_life` function
 	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
 	COOLDOWN_START(src, steal_cd, 8 SECONDS)
+	*/
