@@ -6,7 +6,7 @@
 	demolition_mod = 0.5
 	var/biotype_damage_multiplier = 3
 
-/obj/projectile/bulletbullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
 	if(target_mob.mob_biotypes != istype(target_mob, /mob/living/carbon/human/))
 		damage *= biotype_damage_multiplier
