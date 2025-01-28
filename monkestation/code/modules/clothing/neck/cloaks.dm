@@ -170,7 +170,7 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
 		. += span_warning("Well you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
 	if(!user.client.is_mentor())
