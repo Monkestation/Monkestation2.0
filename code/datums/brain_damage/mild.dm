@@ -305,6 +305,13 @@
 	RegisterSignals(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(clear_trait))
 	to_chat(owner, span_warning("You feel a need to keep [my_thing] close..."))
 	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(30 SECONDS, 3 MINUTES), TIMER_DELETE_ME)
+	//MONKESTATION ADDITION START - Adds logging to possessive
+	owner.log_message(
+		"became possessive of [my_thing]",
+		LOG_ATTACK,
+		color = "orange"
+	)
+	//MONKESTATION ADDITION END
 
 /datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
 	if(QDELETED(my_thing))
@@ -318,3 +325,10 @@
 
 	REMOVE_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
 	UnregisterSignal(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED))
+	//MONKESTATION ADDITION START - Adds logging to possessive
+	owner.log_message(
+		"is no longer possessive of [my_thing]",
+		LOG_ATTACK,
+		color = "orange",
+	)
+	//MONKESTATION ADDITION END
