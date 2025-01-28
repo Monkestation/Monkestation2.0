@@ -171,10 +171,15 @@
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_NECK)
+		if(user.mind.has_antag_datum(/datum/antagonist/changeling))
+			to_chat(user, span_notice("I'll let you get way this time."))
+			select_cloak_appearance.Grant(user)
+			return
 		if(!user.client.is_mentor())
 			lightningbolt(user)
 			user.dropItemToGround(src)
 			to_chat(user, span_userdanger("No mentor cloak for you!"))
+			return
 		select_cloak_appearance.Grant(user)
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
