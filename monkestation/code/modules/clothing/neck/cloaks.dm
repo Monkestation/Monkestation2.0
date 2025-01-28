@@ -219,6 +219,7 @@
 		"red_cloak" = image(icon = 'monkestation/icons/obj/clothing/necks/mentor_cloaks.dmi', icon_state = "red_cloak"),
 		"purple_cloak" = image(icon = 'monkestation/icons/obj/clothing/necks/mentor_cloaks.dmi', icon_state = "purple_cloak"),
 		"green_cloak" = image(icon = 'monkestation/icons/obj/clothing/necks/mentor_cloaks.dmi', icon_state = "green_cloak"),
+		"bloak" = image(icon = 'monkestation/icons/obj/clothing/necks/mentor_cloaks.dmi', icon_state = "bloak"),
 		"flesh_cloak" = image(icon = 'monkestation/icons/obj/clothing/necks/mentor_cloaks.dmi', icon_state = "flesh_cloak")
 	)
 	var/static/list/possible_cloak_overlays = list(
@@ -228,7 +229,8 @@
 		"human" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "human"),
 		"ethereal" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "ethereal"),
 		"plasmeme" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "plasmeme"),
-		"snek" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "snek")
+		"snek" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "snek"),
+		"bee" = image(icon = 'monkestation/icons/hud/radial_mentor_cloak.dmi', icon_state = "bee")
 	)
 	var/picked_cloak = show_radial_menu(owner, owner, possible_cloaks, radius = 50, require_near = TRUE)
 	if(!picked_cloak)
@@ -246,10 +248,6 @@
 	mentorcloak.worn_icon_state = picked_cloak
 	mentorcloak.update_slot_icon()
 	mentorcloak.update_appearance()
-
-/obj/effect/particle_effect/fluid/smoke/extraquick
-	lifetime = 0.5 SECONDS
-	opacity = FALSE
 
 /obj/item/clothing/neck/helldivercape
 	name = "helldiver cape"
