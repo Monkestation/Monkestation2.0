@@ -195,10 +195,7 @@
 
 /obj/item/clothing/neck/mentorcloak/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
-	if(isinhands)
-		return
-
-	if(current_cloak_overlay)
+	if(!isinhands && current_cloak_overlay)
 		. += mutable_appearance('monkestation/icons/mob/clothing/necks/mentor_cloak_overlays.dmi', current_cloak_overlay)
 
 /datum/action/innate/select_cloak_appearance
