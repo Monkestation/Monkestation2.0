@@ -4,7 +4,7 @@
 /datum/unit_test/floor_lights/Run()
 	for(var/obj/machinery/light/floor/light as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light/floor))
 		var/turf/light_loc = light.loc
-		if(!isturf(light_loc) || (!is_station_level(light_loc.z) && !istype(light_loc.loc, /area/centcom/central_command_areas))) // only check lights on station or in centcom areas
+		if(!isturf(light_loc) || !is_station_level(light_loc.z)) // only check lights on-station
 			continue
 		for(var/obj/thing in light_loc)
 			if(thing.density && thing.layer > light.layer)
