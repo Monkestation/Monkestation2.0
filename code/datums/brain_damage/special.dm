@@ -492,3 +492,11 @@ monkestation end */
 	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
 	//MONKESTATION EDIT END
 	to_chat(owner, span_green("The urge subsides."))
+
+	//MONKESTATION ADDITION START - Adds a log when primal instincts is turned off.
+	owner.log_message(
+		"is no longer controlled by monkey instincts",
+		LOG_ATTACK,
+		color = "orange",
+	)
+	//MONKESTATION ADDITION END
