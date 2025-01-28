@@ -655,7 +655,14 @@
 	desc = "WIP"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_NO_REQ
+	//starting z of when it was inserted, also counts as a zlvl that a person can't leave
 	var/starter_z = null
+	//is the implant currently activated
+	var/on = TRUE
+	//our timer
+	var/detonation_timer = 5
+	//determines if the implant is set off
+	var/not_set_off = TRUE
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_insert(mob/living/carbon/owner)
 	. = ..()
@@ -664,8 +671,21 @@
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
 	. = ..()
-	var/turf/owner_turf = get_turf(owner)
-	if (starter_z == owner_turf.z)
-		return
-	else
-		owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), src)
+	if (on && not_set_off)
+		var/turf/owner_turf = get_turf(owner)
+		if (starter_z == owner_turf.z)
+			//reset the timer if it started ticking
+			if (detonation_timer != 5)
+				detonation_timer = 5
+			return
+		else
+			if (detonation_timer != 0)
+				detonation_timer -= 1
+				to_chat(owner, span_warning("Implant will immobilize you in [detonation_timer] seconds. Please, return to the bounds."))
+				playsound(owner, 'sound/items/timer.ogg', 50, FALSE)
+			else
+				to_chat(owner, span_warning("FUCK!!!!!"))
+				playsound(owner, 'sound/machines/beep.ogg', 100, FALSE)
+				owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), src)
+				owner.cause_pain(list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), 40, BRUTE)
+				not_set_off = FALSE
