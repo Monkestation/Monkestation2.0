@@ -651,41 +651,51 @@
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb
-	name = "Spinal self-destruct implant"
-	desc = "WIP"
-	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	name = "Spinal immobilization implant"
+	desc = "Implant inserted into one's spine to prevent them leaving certain space, and will permamently immobilize them if they do. Do not attempt removal."
 	encode_info = AUGMENT_NO_REQ
-	//starting z of when it was inserted, also counts as a zlvl that a person can't leave
-	var/starter_z = null
-	//is the implant currently activated
+	///starting z of when it was inserted, also counts as a zlvl that a person can't leave
+	var/z_restriction = null
+	///is the implant currently activated
 	var/on = TRUE
-	//our timer
+	///our timer
 	var/detonation_timer = 5
-	//determines if the implant is set off
+	///determines if the implant is set off
 	var/not_set_off = TRUE
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_insert(mob/living/carbon/owner)
 	. = ..()
 	var/turf/owner_turf = get_turf(owner)
-	starter_z = owner_turf.z
+	z_restriction = owner_turf.z
+
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_remove(mob/living/carbon/owner)
+	. = ..()
+	//no removing implant!
+	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
+	explosion(owner, 1, 2, 4, 2, explosion_cause = src)
+
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb/Destroy()
+	. = ..()
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
 	. = ..()
-	if (on && not_set_off)
-		var/turf/owner_turf = get_turf(owner)
-		if (starter_z == owner_turf.z)
-			//reset the timer if it started ticking
-			if (detonation_timer != 5)
-				detonation_timer = 5
-			return
+	if (!on || !not_set_off)
+		return
+	var/turf/owner_turf = get_turf(owner)
+	if (z_restriction == owner_turf.z)
+		//reset the timer if it started ticking
+		if (detonation_timer != 5)
+			detonation_timer = 5
+		return
+	else
+		if (detonation_timer != 0)
+			to_chat(owner, span_warning("Implant will immobilize you in [detonation_timer] seconds. Please, return to the bounds."))
+			detonation_timer -= 1
+			playsound(owner, 'sound/items/timer.ogg', 50, FALSE)
 		else
-			if (detonation_timer != 0)
-				detonation_timer -= 1
-				to_chat(owner, span_warning("Implant will immobilize you in [detonation_timer] seconds. Please, return to the bounds."))
-				playsound(owner, 'sound/items/timer.ogg', 50, FALSE)
-			else
-				to_chat(owner, span_warning("FUCK!!!!!"))
-				playsound(owner, 'sound/machines/beep.ogg', 100, FALSE)
-				owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), src)
-				owner.cause_pain(list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), 40, BRUTE)
-				not_set_off = FALSE
+			to_chat(owner, span_userdanger("FUCK!!!!!"))
+			playsound(owner, 'sound/effects/snap.ogg', 75)
+			playsound(owner, 'sound/effects/splat.ogg', 50)
+			owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
+			owner.cause_pain(list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), 60, BRUTE)
+			not_set_off = FALSE

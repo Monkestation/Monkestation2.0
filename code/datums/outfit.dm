@@ -114,6 +114,13 @@
 	  */
 	var/list/skillchips = null
 
+	/**
+	  * Any organs the mob should have upon spawn.
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/organs = null
+
 	///Should we preload some of this job's items?
 	var/preload = FALSE
 
@@ -256,6 +263,7 @@
 				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
 				I.implant(H, null, TRUE)
 
+
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)
 			for(var/skillchip_path in skillchips)
@@ -270,6 +278,10 @@
 				if(activate_msg)
 					CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
+		if(organs)
+			for(var/organ_path in organs)
+				var/obj/item/organ/organ = SSwardrobe.provide_type(organ_path)
+				organ.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 
 	H.update_body()
 	return TRUE
@@ -363,6 +375,8 @@
 		preload += implant_type
 	for(var/skillpath in skillchips)
 		preload += skillpath
+	for(var/organ_type in organs)
+		preload += organ_type
 
 	return preload
 
@@ -394,6 +408,7 @@
 	.["box"] = box
 	.["implants"] = implants
 	.["accessory"] = accessory
+	.["organs"] = organs
 
 /// Copy most vars from another outfit to this one
 /datum/outfit/proc/copy_from(datum/outfit/target)
@@ -421,6 +436,7 @@
 	box = target.box
 	implants = target.implants
 	accessory = target.accessory
+	organs = target.organs
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
@@ -469,6 +485,12 @@
 		if(imptype)
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
+	var/list/orgn = outfit_data["organs"]
+	organs = list()
+	for(var/organ in orgn)
+		var/organ_type = text2path(organ)
+		if(organ_type)
+			organs += organ_type
 	return TRUE
 
 /datum/outfit/vv_get_dropdown()

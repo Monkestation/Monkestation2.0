@@ -17,6 +17,7 @@
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/flashlight
 	box = /obj/item/storage/box/survival/syndie
+	organs = list(/obj/item/organ/internal/cyberimp/chest/spinal_bomb)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate/guard
 	name = "Syndicate Depot Guard"
