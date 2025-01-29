@@ -48,14 +48,6 @@
 		return
 	create_request(user, card)
 
-/obj/machinery/slime_extract_requestor/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-		return TRUE
-	if(processing)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait for process to finish"))
-		return FALSE
-	return default_deconstruction_screwdriver(user, "civilian_pad_maintence", "civilian_pad", I)
-
 /obj/machinery/slime_extract_requestor/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		return
