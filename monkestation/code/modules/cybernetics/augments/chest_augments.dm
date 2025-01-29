@@ -650,7 +650,7 @@
 		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb
+/obj/item/organ/internal/cyberimp/chest/immobilization
 	name = "Immobilization implant"
 	desc = "Implant inserted into one's spine to prevent them leaving certain space, and will permamently immobilize them if they do. Do not attempt removal."
 	encode_info = AUGMENT_NO_REQ
@@ -661,12 +661,12 @@
 	///determines if the implant is set off
 	var/set_off = FALSE
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_insert(mob/living/carbon/owner)
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_insert(mob/living/carbon/owner)
 	. = ..()
 	var/turf/owner_turf = get_turf(owner)
 	z_restriction = owner_turf.z
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_remove(mob/living/carbon/owner)
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_remove(mob/living/carbon/owner)
 	. = ..()
 	//so deleting the implant doesn't actually explode the owner
 	if(QDELETED(src))
@@ -675,10 +675,10 @@
 	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
 	explosion(owner, 1, 2, 4, 2, explosion_cause = src)
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb/emp_act(severity)
+/obj/item/organ/internal/cyberimp/chest/immobilization/emp_act(severity)
 	return
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_life()
 	. = ..()
 	if (set_off)
 		return
