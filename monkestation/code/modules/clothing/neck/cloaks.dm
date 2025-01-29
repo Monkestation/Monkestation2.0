@@ -196,6 +196,7 @@
 			user.apply_status_effect(/datum/status_effect/confusion)
 			user.apply_status_effect(/datum/status_effect/jitter)
 			user.apply_status_effect(/datum/status_effect/terrified)
+			user.apply_status_effect(/datum/status_effect/temporary_blindness)
 			to_chat(user, span_userdanger("You feel a surge of power hit you like a [span_bolddanger("TRUCK")] draining your stamina instantly"))
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
