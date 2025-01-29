@@ -192,7 +192,7 @@
 			to_chat(user, span_notice("You feel it's power flow through your body"))
 		else if(!user.client?.is_mentor())
 			user.cause_pain(FULL_BODY, 20, STAMINA)
-			user.sharp_pain(list(ARM_LEFT, ARM_RIGHT), 5, BURN, 20)
+			user.sharp_pain(ARMS, 5, BURN, 20)
 			user.apply_status_effect(/datum/status_effect/confusion)
 			user.apply_status_effect(/datum/status_effect/jitter)
 			user.apply_status_effect(/datum/status_effect/terrified)
