@@ -141,6 +141,7 @@ export const chatMiddleware = (store) => {
       }
 
       chatRenderer.processBatch([payload_obj.content]);
+      sequences.push(sequence);
       return;
     }
     if (type === loadChat.type) {
