@@ -162,7 +162,6 @@
 
 	return 1
 
-/mob/var/disease_view = FALSE
 /client/proc/disease_view()
 	set category = "Admin.Debug"
 	set name = "Disease View"
