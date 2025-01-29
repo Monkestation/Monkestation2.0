@@ -66005,6 +66005,9 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
 "vcO" = (

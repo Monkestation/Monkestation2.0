@@ -75135,6 +75135,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
 "rOR" = (

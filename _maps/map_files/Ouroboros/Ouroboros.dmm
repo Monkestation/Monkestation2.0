@@ -75405,6 +75405,9 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "wjw" = (

@@ -6935,6 +6935,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "cdJ" = (

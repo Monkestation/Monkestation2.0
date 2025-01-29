@@ -2647,6 +2647,7 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/hos)
 "aOA" = (
