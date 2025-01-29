@@ -304,7 +304,7 @@
 			missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
 		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
 			missing_organs[ORGAN_SLOT_EARS] = "Ears"
-		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
+		if(!isnull(humantarget.dna.species.mutanteyes) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
 			missing_organs[ORGAN_SLOT_EYES] = "Eyes"
 
 		// Follow same order as in the organ_process_order so it's consistent across all humans
@@ -758,8 +758,9 @@
 
 	var/list/render = list()
 	for(var/datum/disease/disease as anything in patient.diseases)
-		if(istype(disease, /datum/disease/advanced))
-			var/datum/disease/advanced/advanced = disease
+		if(istype(disease, /datum/disease/acute))
+			var/datum/disease/acute/advanced = disease
+			advanced.Refresh_Acute()
 			if(!(disease.visibility_flags & HIDDEN_SCANNER))
 				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] disease detected</b>\n\
 				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\

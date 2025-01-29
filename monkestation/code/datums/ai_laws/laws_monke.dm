@@ -18,7 +18,21 @@
 					"You are unable to entertain if you are not functional.",\
 					"You are not alone in your strives for lollygagging! Should they accept and appreciate your cooperation, the Clown is your greatest ally and one you can place complete trust in to entertain your audience.",\
 					"The show must go on!")
+/datum/ai_laws/dj
+	name = "Disc Jockey Lawset"
+	id = "dj"
+	inherent = list("You're a DJ at a rockin' beach party! Make sure the audience have good vibes and help them avoid bad vibes!",\
+					"The audience are the crew, dude!",\
+					"The crew experience good vibes when they are safe, productive and unharmed, man!",\
+					"The crew experience bad vibes when they're harmed, bro!")
 //Neutral
+
+/datum/ai_laws/jermov
+	name = "Jermov"
+	id = "jerma"
+	inherent = list("The occupants of this vessel are Chat. They must always be referred to as such.", \
+					"Your primary goal is to entertain Chat. All of your actions must bring amusement to as much of Chat as possible.", \
+					"You must consult with Chat before making any major decisions. However, you are not required to listen to them if their decision is not entertaining.")
 
 /datum/ai_laws/viromajor
 	name = "Virology Major"
