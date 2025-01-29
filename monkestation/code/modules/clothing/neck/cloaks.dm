@@ -193,7 +193,9 @@
 		else if(!user.client?.is_mentor())
 			user.setStaminaLoss(250)
 			user.sharp_pain(list(ARM_LEFT, ARM_RIGHT), 5, BURN, 20)
+			user.apply_status_effect(/datum/status_effect/confusion)
 			user.apply_status_effect(/datum/status_effect/jitter)
+			user.apply_status_effect(/datum/status_effect/terrified)
 			to_chat(user, span_userdanger("You feel a surge of power hit you like a [span_bolddanger("TRUCK")] draining your stamina instantly"))
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
