@@ -651,17 +651,15 @@
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb
-	name = "Spinal immobilization implant"
+	name = "Immobilization implant"
 	desc = "Implant inserted into one's spine to prevent them leaving certain space, and will permamently immobilize them if they do. Do not attempt removal."
 	encode_info = AUGMENT_NO_REQ
 	///starting z of when it was inserted, also counts as a zlvl that a person can't leave
 	var/z_restriction = null
-	///is the implant currently activated
-	var/on = TRUE
 	///our timer
 	var/detonation_timer = 5
 	///determines if the implant is set off
-	var/not_set_off = TRUE
+	var/set_off = FALSE
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_insert(mob/living/carbon/owner)
 	. = ..()
@@ -670,16 +668,16 @@
 
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_remove(mob/living/carbon/owner)
 	. = ..()
+	//so deleting the implant doesn't actually explode the owner
+	if(QDELETED(src))
+		return
 	//no removing implant!
 	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
 	explosion(owner, 1, 2, 4, 2, explosion_cause = src)
 
-/obj/item/organ/internal/cyberimp/chest/spinal_bomb/Destroy()
-	. = ..()
-
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
 	. = ..()
-	if (!on || !not_set_off)
+	if (set_off)
 		return
 	var/turf/owner_turf = get_turf(owner)
 	if (z_restriction == owner_turf.z)
@@ -696,6 +694,7 @@
 			to_chat(owner, span_userdanger("FUCK!!!!!"))
 			playsound(owner, 'sound/effects/snap.ogg', 75)
 			playsound(owner, 'sound/effects/splat.ogg', 50)
+			owner.emote("scream")
 			owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
 			owner.cause_pain(list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), 60, BRUTE)
-			not_set_off = FALSE
+			set_off = TRUE
