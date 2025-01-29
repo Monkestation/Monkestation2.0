@@ -103,7 +103,7 @@
 		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
-			for(var/datum/disease/advanced/V as anything in contact)
+			for(var/datum/disease/acute/V as anything in contact)
 				living.infect_disease(V, notes="(Skin Contact - (Bump), coming from [src])")
 
 	if(isliving(M))
@@ -112,7 +112,7 @@
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
-				for(var/datum/disease/advanced/V as anything in contact)
+				for(var/datum/disease/acute/V as anything in contact)
 					infect_disease(V, notes="(Skin Contact - (Bump), coming from [living])")
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
@@ -399,7 +399,7 @@
 				var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 				var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 				if(length(contact) && !block)
-					for(var/datum/disease/advanced/V as anything in contact)
+					for(var/datum/disease/acute/V as anything in contact)
 						living.infect_disease(V, notes="(Skin Contact - (Grab), coming from [src])")
 
 			if(isliving(M))
@@ -408,7 +408,7 @@
 				if(length(living.diseases))
 					var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 					if(length(contact) && !block)
-						for(var/datum/disease/advanced/V as anything in contact)
+						for(var/datum/disease/acute/V as anything in contact)
 							infect_disease(V, notes="(Skin Contact - (Grab), coming from [living])")
 
 			if(iscarbon(L))
@@ -498,10 +498,10 @@
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
-				to_chat(src, text="You are unable to succumb to death! Unless you just press the UI button.", type=MESSAGE_TYPE_INFO)
+				to_chat(src, span_notice("Your immortal body is keeping you alive. If you want to accept death, you must do so [span_bold("quietly")]."), type=MESSAGE_TYPE_INFO)
 				return
 		else
-			to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
+			to_chat(src, span_warning("You are unable to succumb to death! This life continues."), type=MESSAGE_TYPE_INFO)
 			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
