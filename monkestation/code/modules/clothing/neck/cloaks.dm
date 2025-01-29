@@ -187,6 +187,16 @@
 			to_chat(user, span_userdanger("No mentor cloak for you!"))
 			return
 		select_cloak_appearance.Grant(user)
+	if(slot & ITEM_SLOT_HANDS)
+		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
+			to_chat(user, span_notice("You feel it's power flow through your body"))
+		else if(!user.client?.is_mentor())
+			user.setStaminaLoss(250)
+			user.sharp_pain(list(ARM_LEFT, ARM_RIGHT), 5, BURN, 20)
+			user.apply_status_effect(/datum/status_effect/jitter)
+			to_chat(user, span_userdanger("You feel a surge of power hit you like a [span_bolddanger("TRUCK")] draining your stamina instantly"))
+			return
+		select_cloak_appearance.Grant(user)
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
