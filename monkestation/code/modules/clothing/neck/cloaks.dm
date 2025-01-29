@@ -195,8 +195,6 @@
 			user.sharp_pain(list(ARM_LEFT, ARM_RIGHT), 5, BURN, 20)
 			user.apply_status_effect(/datum/status_effect/jitter)
 			to_chat(user, span_userdanger("You feel a surge of power hit you like a [span_bolddanger("TRUCK")] draining your stamina instantly"))
-			return
-		select_cloak_appearance.Grant(user)
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
