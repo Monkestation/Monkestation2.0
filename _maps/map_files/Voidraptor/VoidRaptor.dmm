@@ -40349,6 +40349,7 @@
 	c_tag = "Armory - Interior"
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/dragnet_beacon,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "lrc" = (

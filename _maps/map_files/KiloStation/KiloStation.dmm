@@ -59137,6 +59137,7 @@
 /obj/item/grenade/barrier{
 	pixel_x = 4
 	},
+/obj/item/dragnet_beacon,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},

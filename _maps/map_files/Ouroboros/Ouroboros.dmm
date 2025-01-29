@@ -45098,6 +45098,7 @@
 /obj/item/gun/energy/e_gun/dragnet{
 	pixel_y = -4
 	},
+/obj/item/dragnet_beacon,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "njJ" = (
