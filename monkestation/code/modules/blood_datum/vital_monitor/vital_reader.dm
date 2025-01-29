@@ -60,6 +60,7 @@
 		/obj/machinery/sleeper,
 		/obj/machinery/stasis,
 		/obj/machinery/health_scanner_floor,
+		/obj/structure/table/optable,
 	))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/vitals_reader, 32)
