@@ -483,6 +483,7 @@
 /obj/item/organ/internal/lungs/proc/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
+	/* monkestation removal: Death to advance
 	// Miasma sickness
 	if(prob(0.5 * miasma_pp))
 		var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
@@ -490,6 +491,7 @@
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 		miasma_disease.name = "Unknown"
 		miasma_disease.try_infect(breather)
+		*/
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
@@ -869,7 +871,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)

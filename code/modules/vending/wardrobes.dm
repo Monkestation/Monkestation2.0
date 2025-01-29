@@ -1,7 +1,3 @@
-GLOBAL_VAR_INIT(roaches_deployed, FALSE)
-#define MOTHROACH_START_CHANCE 5
-#define MAX_MOTHROACH_AMOUNT 3
-
 /obj/item/vending_refill/wardrobe
 	icon_state = "refill_clothes"
 
@@ -11,29 +7,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	payment_department = NO_FREEBIES
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
-
-/obj/machinery/vending/wardrobe/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-	if(GLOB.roaches_deployed || !is_station_level(z) || !prob(MOTHROACH_START_CHANCE))
-		return
-	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
-		new /mob/living/basic/mothroach(src)
-	GLOB.roaches_deployed = TRUE
-
-
-/obj/machinery/vending/wardrobe/on_dispense(obj/item/clothing/food)
-	if(!istype(food))
-		return
-	for(var/mob/living/basic/mothroach/roach in contents)
-		food.take_damage(food.get_integrity() * 0.5)
-
-/obj/machinery/vending/wardrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	for(var/mob/living/basic/mothroach/roach in contents)
-		roach.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, src) //scatter away!
-		roach.forceMove(drop_location())
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -48,14 +21,19 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/backpack/duffelbag/sec = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
+		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
-		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
+		/obj/item/clothing/mask/russian_balaclava = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
+		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+		/obj/item/clothing/head/helmet/blueshirt = 3, //monkestation edit
+		/obj/item/clothing/suit/armor/vest/blueshirt = 3, //monkestation edit
 		/obj/item/clothing/suit/armor/secduster = 3,
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
@@ -63,11 +41,23 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/brig_physician = 3, //Monkestation edit
 		/obj/item/clothing/under/rank/security/brig_physician/skirt = 3, //Monkestation edit
 		/obj/item/clothing/suit/toggle/labcoat/brig_physician = 3, //Monkestation edit
-		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
 		/obj/item/clothing/under/civilprotection_uniform = 1, //monkestation edit
-		/obj/item/clothing/gloves/civilprotection_gloves = 1,
 		/obj/item/clothing/shoes/civilprotection_boots = 1, //monkestation edit
+		/obj/item/clothing/gloves/civilprotection_gloves = 1, //monkestation edit
+		/obj/item/clothing/head/helmet/civilprotection_helmet = 1, //monkestation edit
+		/obj/item/clothing/suit/armor/civilprotection_vest = 1, //monkestation edit
+		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
+		/obj/item/clothing/head/helmet/guardmanhelmet = 1, //monkestation edit: Guardman
+		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
 	)
+	//MONKESTATION EDIT START
+	contraband = list(
+		/obj/item/clothing/under/color/red = 3,
+		/obj/item/clothing/shoes/sneakers/brown = 3,
+		/obj/item/clothing/head/helmet/surplus = 3,
+		/obj/item/clothing/suit/armor/surplus = 3,
+	)
+	//MONKESTATION EDIT STOP
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,
 		/obj/item/clothing/suit/jacket/officer/blue = 3,
@@ -320,7 +310,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/glasses/regular = 2,
 		/obj/item/clothing/glasses/regular/jamjar = 1,
 		/obj/item/storage/bag/books = 1,
-		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/radio/headset/headset_srvent = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -660,6 +650,3 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 /obj/item/vending_refill/wardrobe/cent_wardrobe
 	machine_name = "CentDrobe"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
-
-#undef MOTHROACH_START_CHANCE
-#undef MAX_MOTHROACH_AMOUNT

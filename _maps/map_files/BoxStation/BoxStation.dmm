@@ -5804,7 +5804,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/sink/directional/south,
+/obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -32112,8 +32112,7 @@
 	c_tag = "Engineering - Shipbreaking, Storage Room";
 	name = "engineering camera"
 	},
-/obj/structure/closet/emcloset/wall/directional/north,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/closet/secure_closet/shipbreaker,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 1
 	},
@@ -33349,6 +33348,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -52847,10 +52847,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 1
 	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -53265,6 +53262,10 @@
 /mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"ruB" = (
+/obj/structure/sink/directional/south,
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "ruC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60856,11 +60857,14 @@
 /area/station/engineering/break_room)
 "tQC" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
-/obj/structure/disposalpipe/junction,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/break_room)
 "tQD" = (
@@ -62179,16 +62183,7 @@
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "umW" = (
-/obj/structure/rack,
-/obj/item/radio/off{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/radio/off{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/radio/off,
+/obj/structure/closet/secure_closet/shipbreaker,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 9
 	},
@@ -63715,14 +63710,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "uMx" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 6
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/emergency{
-	pixel_y = -6
-	},
+/obj/structure/closet/secure_closet/shipbreaker,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 5
 	},
@@ -67232,7 +67220,7 @@
 /area/station/engineering/atmos)
 "vOV" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/basic/pet/cat/runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
 "vOX" = (
@@ -72906,7 +72894,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/machinery/duct,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -87332,7 +87320,7 @@ fPN
 cwL
 mYW
 vKc
-fPN
+ruB
 kNO
 aKB
 tIO

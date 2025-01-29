@@ -5286,18 +5286,9 @@
 /turf/open/floor/iron/white/small,
 /area/station/common/pool)
 "bzu" = (
-/obj/structure/table,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/citrus/orange,
-/obj/item/food/grown/grapes,
-/obj/item/food/grown/cocoapod,
-/obj/item/food/grown/apple,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/cherries,
-/obj/item/food/grown/soybeans,
-/obj/item/food/grown/citrus/lime,
 /obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/machinery/composters,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/hydroponics/garden)
 "bzE" = (
@@ -11895,7 +11886,7 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dzp" = (
 /obj/structure/window/spawner/directional/south,
-/mob/living/basic/pet/cat/cak,
+/mob/living/simple_animal/pet/cat/cak,
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/starboard/greater)
 "dzx" = (
@@ -12569,7 +12560,7 @@
 	anchored = 1;
 	name = "Jerry's bed"
 	},
-/mob/living/basic/pet/cat/jerry,
+/mob/living/simple_animal/pet/cat/jerry,
 /turf/open/floor/wood,
 /area/station/security/prison/garden)
 "dIf" = (
@@ -48068,8 +48059,16 @@
 /area/station/hallway/secondary/command)
 "nxi" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/item/reagent_containers/cup/watering_can,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/grapes,
+/obj/item/food/grown/cocoapod,
+/obj/item/food/grown/apple,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/cherries,
+/obj/item/food/grown/soybeans,
+/obj/item/food/grown/citrus/lime,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/hydroponics/garden)
 "nxj" = (
@@ -71293,7 +71292,7 @@
 /area/station/engineering/atmos)
 "tLD" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/basic/pet/cat/runtime{
+/mob/living/simple_animal/pet/cat/runtime{
 	icon_dead = "original_dead";
 	icon_living = "original";
 	icon_state = "original"

@@ -839,8 +839,13 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/eva/abandoned)
 "ajt" = (
-/turf/open/floor/plating/airless,
-/area/station/engineering/shipbreaker_hut)
+/obj/machinery/light/directional/west,
+/obj/machinery/conveyor{
+	id = "shitbreaker";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
 "ajG" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -9850,15 +9855,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ckI" = (
-/obj/machinery/light/directional/west{
-	dir = 4
-	},
-/obj/machinery/conveyor/inverted{
-	dir = 10;
-	id = "shitbreaker"
-	},
-/turf/open/floor/plating/airless,
-/area/station/engineering/shipbreaker_hut)
+/turf/closed/wall,
+/area/space)
 "ckP" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -12070,13 +12068,8 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "cMz" = (
-/obj/machinery/conveyor{
-	id = "shitbreaker";
-	dir = 4
-	},
-/obj/machinery/shipbreaker,
-/turf/open/floor/plating/airless,
-/area/station/engineering/shipbreaker_hut)
+/turf/open/floor/iron,
+/area/space)
 "cMA" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
@@ -19345,7 +19338,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "eCs" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
@@ -28287,7 +28279,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "gFK" = (
-/obj/machinery/vending/hydroseeds,
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
 	},
@@ -31136,6 +31127,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "hoR" = (
@@ -43297,6 +43289,16 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office/private_investigators_office)
+"kfc" = (
+/obj/machinery/light/directional/west{
+	dir = 4
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "shitbreaker"
+	},
+/turf/open/floor/iron,
+/area/space)
 "kff" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -43503,7 +43505,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/robotics/lab)
 "khc" = (
-/obj/structure/cable,
 /obj/machinery/seed_extractor,
 /obj/item/seeds/tree,
 /obj/item/seeds/watermelon,
@@ -43514,8 +43515,8 @@
 /obj/item/seeds/cocoapod,
 /obj/item/seeds/banana,
 /obj/item/seeds/apple,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/vending/hydroseeds/wall/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "khl" = (
@@ -56212,7 +56213,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "nkI" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/reagent_containers/condiment/enzyme{
@@ -57545,8 +57545,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "nBA" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating/airless,
+/obj/structure/closet/secure_closet/shipbreaker,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "nBC" = (
 /obj/item/kirbyplants/random,
@@ -59229,6 +59229,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "nXj" = (
@@ -59596,6 +59597,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "obH" = (
@@ -59831,7 +59833,9 @@
 /area/station/maintenance/disposal)
 "oeZ" = (
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "ofa" = (
 /obj/machinery/light/small/directional/west,
@@ -60594,11 +60598,8 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "onz" = (
-/obj/structure/window,
-/obj/machinery/conveyor_switch/oneway{
-	id = "shitbreaker"
-	},
-/turf/open/floor/plating/airless,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "onK" = (
 /obj/structure/cable,
@@ -61321,7 +61322,7 @@
 /area/station/medical/medbay)
 "oyK" = (
 /obj/machinery/computer/shipbreaker,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "oyY" = (
 /obj/effect/landmark/event_spawn,
@@ -63053,7 +63054,7 @@
 /obj/effect/mapping_helpers/apc/full_charge,
 /obj/structure/cable,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "oUU" = (
 /obj/effect/decal/cleanable/dirt,
@@ -63650,6 +63651,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"pdk" = (
+/obj/machinery/conveyor{
+	id = "shitbreaker";
+	dir = 4
+	},
+/obj/machinery/shipbreaker,
+/turf/open/floor/iron,
+/area/space)
 "pdl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -65060,6 +65069,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "puq" = (
@@ -65449,6 +65459,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/aft)
+"pzq" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/iron,
+/area/space)
 "pzr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72835,7 +72849,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
-/mob/living/basic/pet/cat/runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/cmo)
 "rlC" = (
@@ -77854,7 +77868,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sxb" = (
-/mob/living/basic/pet/cat{
+/mob/living/simple_animal/pet/cat{
 	name = "Kattail"
 	},
 /obj/structure/cable,
@@ -80356,7 +80370,7 @@
 /obj/item/weldingtool/electric/raynewelder{
 	pixel_y = -5
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "sZC" = (
 /obj/structure/disposalpipe/segment{
@@ -82281,6 +82295,7 @@
 	c_tag = "Garden"
 	},
 /obj/structure/sign/poster/contraband/random/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "tAJ" = (
@@ -83630,6 +83645,7 @@
 "tPD" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/vending/hydronutrients/wall/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "tPE" = (
@@ -87608,13 +87624,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "uNL" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/conveyor{
-	id = "shitbreaker";
-	dir = 4
-	},
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating/airless,
-/area/station/engineering/shipbreaker_hut)
+/area/space)
 "uNQ" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -90570,6 +90582,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "vxL" = (
@@ -92423,6 +92436,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "vWu" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "vWv" = (
@@ -94678,6 +94693,13 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/arrivals)
+"wuH" = (
+/obj/structure/window,
+/obj/machinery/conveyor_switch/oneway{
+	id = "shitbreaker"
+	},
+/turf/open/floor/iron,
+/area/space)
 "wuZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -96620,7 +96642,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "wTJ" = (
-/obj/machinery/vending/hydronutrients,
+/obj/machinery/composters,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "wTK" = (
@@ -100623,7 +100645,6 @@
 "xSf" = (
 /obj/structure/bed,
 /obj/item/bedsheet/clown,
-/obj/machinery/newscaster/directional/east,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
@@ -115391,12 +115412,12 @@ qYo
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ckI
+ckI
+ckI
+ckI
+pzq
+ckI
 aaa
 efQ
 qYo
@@ -115649,12 +115670,12 @@ qYo
 hcH
 hcH
 hNL
-hcH
-lxy
-lxy
-aaa
-aaa
-aaa
+nBA
+nBA
+nBA
+cMz
+ckI
+ckI
 efQ
 aaa
 efQ
@@ -115905,13 +115926,13 @@ qYo
 aaa
 hcH
 oyK
-nBA
+iyd
+cSQ
+cSQ
+cSQ
+cMz
 ajt
-uNL
-lxy
-aaa
-aaa
-aaa
+ckI
 efQ
 aaa
 qYo
@@ -116162,13 +116183,13 @@ qYo
 qYo
 hNL
 oUJ
-oeZ
-onz
-cMz
-lxy
-aaa
-aaa
-aaa
+wij
+cSQ
+cSQ
+cSQ
+wuH
+pdk
+ckI
 qYo
 aaa
 efQ
@@ -116419,13 +116440,13 @@ qYo
 aaa
 hcH
 sZB
-oeZ
-ajt
+wij
+cSQ
+cSQ
+cSQ
+cMz
+kfc
 ckI
-lxy
-aaa
-aaa
-aaa
 efQ
 qYo
 efQ
@@ -116677,12 +116698,12 @@ aaa
 hcH
 hcH
 oeZ
-hcH
 lxy
 lxy
-aaa
-aaa
-aaa
+onz
+uNL
+ckI
+ckI
 efQ
 aaa
 efQ
