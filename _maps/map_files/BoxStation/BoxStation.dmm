@@ -14602,6 +14602,7 @@
 	pixel_y = 4
 	},
 /obj/item/gun/energy/e_gun/dragnet,
+/obj/item/dragnet_beacon
 /obj/effect/nettingportal,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
