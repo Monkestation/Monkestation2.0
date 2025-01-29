@@ -263,7 +263,6 @@
 				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
 				I.implant(H, null, TRUE)
 
-
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)
 			for(var/skillchip_path in skillchips)
