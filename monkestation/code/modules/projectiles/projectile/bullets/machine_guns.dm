@@ -8,7 +8,7 @@
 
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
-	if(target_mob.mob_biotypes != MOB_HUMANOID)
+	if(!(MOB_HUMANOID in target_mob.mob_biotypes))
 		damage *= biotype_damage_multiplier
 	return ..()
 
