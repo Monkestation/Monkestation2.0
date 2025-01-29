@@ -32,10 +32,21 @@
 
 	if(!(methods & (VAPOR|PATCH|TOUCH)) || set_off || mod.wearer.stat == DEAD)
 		return //remove non-touch reagent exposure
+
+	var/found_part = FALSE
+	for (var/obj/item/part as anything in mod.get_parts())
+		// Don't snap if no parts besides the MOD itself are active
+		if (part.loc != mod && mod.get_part_datum(part)?.sealed)
+			found_part = TRUE
+			break
+
+	if (!found_part)
+		return
+
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
+	RegisterSignals(mod, list(COMSIG_MOD_ACTIVATE, COMSIG_MOD_PART_RETRACTING), PROC_REF(on_activate_spring_block))
 	set_off = TRUE
 
 ///Signal fired when wearer attempts to activate/deactivate suits
@@ -47,7 +58,7 @@
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	UnregisterSignal(mod, list(COMSIG_MOD_ACTIVATE, COMSIG_MOD_PART_RETRACTING))
 	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		return
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
@@ -55,7 +66,16 @@
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
-	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+
+	mod.wearer.get_bodypart(BODY_ZONE_CHEST)?.receive_damage(200, forced = TRUE, sharpness = SHARP_POINTY) // Chest always gets hit, from the back piece you're wearing
+	for (var/obj/item/part as anything in mod.get_parts())
+		if (part.loc == mod || !mod.get_part_datum(part)?.sealed)
+			continue
+
+		for (var/obj/item/bodypart/bodypart as anything in mod.wearer.get_damageable_bodyparts())
+			if (part.body_parts_covered & bodypart.body_part) // can hit chest again
+				bodypart.receive_damage(100, forced = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
 		mod.wearer.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		mod.wearer.death() //just in case, for some reason, they're still alive
