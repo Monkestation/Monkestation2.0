@@ -675,6 +675,9 @@
 	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
 	explosion(owner, 1, 2, 4, 2, explosion_cause = src)
 
+/obj/item/organ/internal/cyberimp/chest/spinal_bomb/emp_act(severity)
+	return
+
 /obj/item/organ/internal/cyberimp/chest/spinal_bomb/on_life()
 	. = ..()
 	if (set_off)
