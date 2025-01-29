@@ -2259,6 +2259,7 @@
 /obj/item/clothing/head/bio_hood/interdyne,
 /obj/item/clothing/head/bio_hood/interdyne,
 /obj/item/clothing/head/bio_hood/interdyne,
+/obj/item/construction/plumbing/research,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "gu" = (
