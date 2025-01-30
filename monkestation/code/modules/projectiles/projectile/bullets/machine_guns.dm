@@ -27,7 +27,7 @@
 	icon_state = "gaussphase"
 
 	speed = 0.3
-	damage = 5
+	damage = 7
 	armour_penetration = 60
 	wound_bonus = 5
 	bare_wound_bonus = 0
@@ -44,7 +44,7 @@
 		if(pierces > 3)
 			projectile_piercing = NONE
 	if(!(isliving(target)))
-		thing_to_break.take_damage(object_damage, BRUTE, BULLET, FALSE)
+		damage += object_damage
 	return ..()
 
 /obj/projectile/bullet/c65xeno/pierce/evil
@@ -53,7 +53,7 @@
 	icon_state = "gaussphase"
 
 	speed = 0.3
-	damage = 5
+	damage = 7
 	armour_penetration = 60
 	wound_bonus = 10
 	bare_wound_bonus = 0
