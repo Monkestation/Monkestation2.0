@@ -50081,19 +50081,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"jJG" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Space Access Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "AIsatAirlock"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
-/turf/open/floor/plating,
-/area/station/ai_monitored/aisat/exterior)
 "jJJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70054,6 +70041,19 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/coldroom)
+"nEX" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Space Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "AIsatAirlock"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
+/turf/open/floor/plating,
+/area/station/ai_monitored/aisat/exterior)
 "nFc" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -97114,7 +97114,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "sOV" = (
@@ -120125,7 +120125,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "xgS" = (
@@ -221421,7 +221421,7 @@ gLc
 gLc
 gLc
 tQB
-jJG
+nEX
 mPm
 kKI
 hKn
