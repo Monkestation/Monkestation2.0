@@ -108,7 +108,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!iscarbon(receiver) || owner == receiver)
 		return FALSE
 
-	if(QDELETED(receiver))
+	if(QDELETED(src))
+		stack_trace("setting owner while we're qdeleting!!!")
+	else if(QDELETED(receiver))
 		stack_trace("setting owner while it's qdeleting!!!")
 
 	var/obj/item/organ/replaced = receiver.get_organ_slot(slot)
