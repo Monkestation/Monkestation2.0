@@ -459,7 +459,6 @@
 /obj/item/radio/radio_mic{
 	pixel_y = 7
 	},
-/obj/machinery/light/floor/has_bulb/warm,
 /obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/service/library/upper)
@@ -8301,6 +8300,7 @@
 "cxX" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "cya" = (
@@ -8591,7 +8591,6 @@
 /area/station/engineering/break_room)
 "cBi" = (
 /obj/structure/bookcase/random/reference,
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/station/service/library)
 "cBm" = (
@@ -19913,7 +19912,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/station/security/processing)
 "fXf" = (
@@ -20226,6 +20224,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"gbR" = (
+/obj/structure/cable,
+/obj/machinery/light/floor/has_bulb/warm,
+/turf/open/floor/carpet/green,
+/area/station/service/library/upper)
 "gbV" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
@@ -22330,11 +22333,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"gJm" = (
-/obj/structure/bookcase/random/nonfiction,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/grimy,
-/area/station/service/library)
 "gJn" = (
 /obj/structure/lattice/catwalk,
 /obj/item/bodypart/arm/right,
@@ -38707,6 +38705,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/station/security/processing)
 "ltX" = (
@@ -47030,6 +47029,10 @@
 "nTC" = (
 /turf/open/floor/iron,
 /area/station/security/office)
+"nTD" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/grimy,
+/area/station/service/library)
 "nTE" = (
 /obj/machinery/computer/warrant,
 /obj/effect/turf_decal/bot,
@@ -51853,7 +51856,6 @@
 /area/station/security/checkpoint/escape)
 "prO" = (
 /obj/structure/bookcase/random/nonfiction,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -58824,6 +58826,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/station/security/processing)
 "rrO" = (
@@ -78112,7 +78115,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Gulag Shuttle Airlock"
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/station/security/processing)
 "wTF" = (
@@ -88742,7 +88744,7 @@ fel
 mux
 saq
 ikP
-iRD
+gbR
 azt
 agO
 mux
@@ -109408,7 +109410,7 @@ uGY
 gck
 prO
 bwX
-gJm
+bwX
 gck
 umk
 tyv
@@ -110178,7 +110180,7 @@ svf
 ifR
 iMW
 fwA
-iLO
+nTD
 aaT
 ttd
 vnu
