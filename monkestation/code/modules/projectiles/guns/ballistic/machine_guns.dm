@@ -74,9 +74,12 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 
-	icon_state = "outomaties_evil"         ///Sprites ain't done yet. Once they are, this can be moved to the nuclear operative uplink
-	worn_icon_state = "infanterie_evil"
-	inhand_icon_state = "infanterie_evil"
+	icon_state = "outomaties_evil"
+	worn_icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
+	worn_icon_state = "outomaties_worn_evil"
+	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns/guns_lefthand48x.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns/guns_righthand48x.dmi'
+	inhand_icon_state = "outomaties_evil"
 
 	fire_delay = 0.1 SECONDS
 
@@ -84,7 +87,7 @@
 	wield_recoil = 0.5
 	spread = 8
 	projectile_wound_bonus = 10
-	projectile_damage_multiplier = 2
+	projectile_damage_multiplier = 1.5
 
 /obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
 	name = "\improper Quarad light machinegun storage case"

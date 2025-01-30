@@ -11,6 +11,13 @@
 	. = ..()
 	AddElement(/datum/element/caseless)
 
+/obj/item/ammo_casing/c65xeno/evil
+	name = "6.5mm FMJ bullet casing"
+	desc = "A 6.5mm caseless frangible round with the projectile replaced by a terrestial military round. Much more effective against armor, and at breaking windows."
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "c65xeno"
+	caliber = CALIBER_C65XENO
+	projectile_type = /obj/projectile/bullet/c65xeno/evil
 
 /obj/item/ammo_casing/c65xeno/pierce
 	name = "6.5mm Subcaliber tungsten sabot round"
@@ -23,6 +30,16 @@
 	custom_materials = AMMO_MATS_AP
 	advanced_print_req = TRUE
 
+/obj/item/ammo_casing/c65xeno/pierce/evil
+	name = "6.5mm UDS"
+	desc = "A 6.5mm Uranium Discarding Sabot. No, NOT depleted uranium. Prepare to be irradiated."
+
+	icon_state = "c65xeno_pierce"
+
+	projectile_type = /obj/projectile/bullet/c65xeno/pierce/evil
+
+	custom_materials = AMMO_MATS_AP
+	advanced_print_req = TRUE
 
 /obj/item/ammo_casing/c65xeno/incendiary
 	name = "6.5mm Subcaliber incendiary round"
@@ -31,6 +48,17 @@
 	icon_state = "c65xeno_flame"
 
 	projectile_type = /obj/projectile/bullet/c65xeno/incendiary
+
+	custom_materials = AMMO_MATS_TEMP
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c65xeno/incendiary/evil
+	name = "6.5mm Inferno round"
+	desc = "A 6.5mm caseless round designed to leave a trail of EXTREMLY flammable substance behind it in flight. Do not smoke within 30 meters of these."
+
+	icon_state = "c65xeno_flame"
+
+	projectile_type = /obj/projectile/bullet/c65xeno/incendiary/evil
 
 	custom_materials = AMMO_MATS_TEMP
 	advanced_print_req = TRUE
@@ -69,4 +97,34 @@
 	icon_state = "c65xeno_drumI"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary
+	max_ammo = 120
+
+/obj/item/ammo_box/magazine/c65xeno_drum/evil
+	name = "\improper 6.5mm incendiary drum magazine"
+	desc = "A hefty 120 round drum of 6.5mm FMJ rounds."
+
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "c65xeno_drumI"
+
+	ammo_type = /obj/item/ammo_casing/c65xeno/evil
+	max_ammo = 120
+
+/obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
+	name = "\improper 6.5mm UDS drum magazine"
+	desc = "A hefty 120 round drum of 6.5mm Uranium Discarding Sabot rounds. No, NOT depleted uranium. Prepare for your enemies to be irradiated."
+
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "c65xeno_drumI"
+
+	ammo_type = /obj/item/ammo_casing/c65xeno/pierce/evil
+	max_ammo = 120
+
+/obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
+	name = "\improper 6.5mm incendiary drum magazine"
+	desc = "A hefty 120 round drum of 6.5mm inferno rounds. They leave a trail of fire as they fly."
+
+	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "c65xeno_drumI"
+
+	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary/evil
 	max_ammo = 120
