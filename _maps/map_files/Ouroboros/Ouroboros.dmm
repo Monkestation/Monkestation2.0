@@ -8644,7 +8644,7 @@
 "cDu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "High-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/harmful,
@@ -23763,7 +23763,7 @@
 "het" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "Low-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/neutral,

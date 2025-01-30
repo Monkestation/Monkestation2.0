@@ -10781,7 +10781,7 @@
 /obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window/left/directional/south{
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -22882,7 +22882,7 @@
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)

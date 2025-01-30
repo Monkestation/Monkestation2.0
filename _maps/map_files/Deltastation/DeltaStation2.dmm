@@ -52081,12 +52081,9 @@
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Core Modules";
-	req_access = list("captain")
+/obj/machinery/door/window/left/directional/west{
+	req_access = list("rd");
+	name = "Core Modules"
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -57079,7 +57076,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	dir = 4;
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/harmful{
 	pixel_y = -16
@@ -91316,7 +91313,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_y = -16
@@ -100397,10 +100394,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/red,
-/obj/machinery/door/window/brigdoor/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
