@@ -23846,9 +23846,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "hwN" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "hwY" = (

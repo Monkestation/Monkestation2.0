@@ -56558,10 +56558,10 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kUZ" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/directional/south,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "kVa" = (

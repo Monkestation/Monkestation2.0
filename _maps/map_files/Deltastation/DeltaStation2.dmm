@@ -26236,12 +26236,12 @@
 "gho" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "ghq" = (

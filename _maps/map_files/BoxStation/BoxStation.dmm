@@ -74251,7 +74251,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},

@@ -27775,9 +27775,9 @@
 /turf/closed/wall/r_wall,
 /area/station/cargo/quartermaster)
 "hXj" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/storage_shared)
 "hXs" = (

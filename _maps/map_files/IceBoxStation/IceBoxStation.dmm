@@ -40095,13 +40095,13 @@
 /area/station/medical/storage)
 "mPz" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/requests_console/directional/east{
 	assistance_requestable = 1;
 	department = "Engineering";
 	name = "Engineering Requests Console";
 	supplies_requestable = 1
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "mPC" = (
