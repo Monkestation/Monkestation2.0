@@ -81,7 +81,7 @@
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
-	fire_delay = 0.2 SECONDS
+	fire_delay = 0.22 SECONDS
 
 	recoil = 2
 	wield_recoil = 0.5
