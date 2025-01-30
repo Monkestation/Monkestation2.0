@@ -18,4 +18,4 @@
 			continue
 		for(var/obj/thing in light_turf)
 			if(thing.density && (is_type_in_typecache(thing, obscuring_typecache) || ((thing.flags_1 & PREVENT_CLICK_UNDER_1) && thing.layer > light.layer)))
-				TEST_FAIL("[light] ([light.type]) obscured by [thing] at [AREACOORD(light_turf)]")
+				TEST_FAIL("[light] ([light.type]) obscured by [thing] ([thing.type]) at [AREACOORD(light_turf)]")
