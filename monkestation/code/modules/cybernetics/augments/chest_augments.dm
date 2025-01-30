@@ -670,6 +670,9 @@
 	. = ..()
 	//so deleting the implant doesn't actually explode the owner
 	if(QDELETED(src))
+		//if the target was paralyzed, remove it
+		if(set_off)
+			owner.remove_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
 		return
 	//no removing implant!
 	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
