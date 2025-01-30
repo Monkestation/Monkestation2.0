@@ -80681,7 +80681,6 @@
 "yho" = (
 /obj/structure/table,
 /obj/machinery/duct,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

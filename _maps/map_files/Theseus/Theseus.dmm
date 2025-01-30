@@ -2324,6 +2324,7 @@
 	},
 /obj/structure/sink/directional/south,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -4252,7 +4253,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /obj/structure/cable,
-/obj/machinery/light/floor/has_bulb,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4427,7 +4427,6 @@
 "bqt" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/gray/fourcorners,
-/obj/machinery/light/floor/red,
 /obj/item/storage/pill_bottle/lsdpsych{
 	pixel_y = 12;
 	name = "Emesis Diazepam"
@@ -12364,6 +12363,7 @@
 /area/station/hallway/primary/starboard)
 "dIf" = (
 /obj/structure/cable,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet,
 /area/station/service/cafeteria)
 "dIl" = (
@@ -13002,7 +13002,6 @@
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
-/obj/machinery/light/floor/has_bulb,
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/station/service/bar)
@@ -25221,6 +25220,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet,
 /area/station/service/cafeteria)
 "hAQ" = (
@@ -26307,7 +26307,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination/common/theatrebackstage,
-/obj/machinery/light/floor/has_bulb,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32979,7 +32978,6 @@
 /obj/item/surgical_drapes,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/drain/big,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34005,7 +34003,6 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/drain/big,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -55983,6 +55980,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/station/service/bar)
+"qBj" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark,
+/area/station/service/theater)
 "qBx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -58892,6 +58896,7 @@
 /area/station/service/library)
 "rsF" = (
 /obj/machinery/iv_drip,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "rsL" = (
@@ -68834,6 +68839,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/station/service/theater)
 "ukt" = (
@@ -81837,6 +81843,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "clown_carpet"
@@ -121448,10 +121455,10 @@ bTD
 ofY
 ukm
 bli
+qBj
 rJj
 rJj
-rJj
-rJj
+qBj
 hSn
 xYR
 vjd
