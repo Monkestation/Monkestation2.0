@@ -84,6 +84,9 @@
 	CHECK_TICK
 	#endif
 
+	var/extra_info = dump_harddel_info()
+	if(extra_info)
+		log_reftracker("Extra info for [type] [text_ref(src)]: [extra_info]")
 	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
 		if(datum_container.last_find_references == search_time)
