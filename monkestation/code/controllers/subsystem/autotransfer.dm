@@ -15,7 +15,6 @@ SUBSYSTEM_DEF(autotransfer)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/autotransfer/Recover()
-	doing_transfer_vote = SSautotransfer.doing_transfer_vote
 	next_transfer_vote = SSautotransfer.next_transfer_vote
 
 /datum/controller/subsystem/autotransfer/fire()
