@@ -77,10 +77,10 @@
 	icon_state = "outomaties_evil"
 	worn_icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
 	worn_icon_state = "outomaties_worn_evil"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns/guns_lefthand48x.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns/guns_righthand48x.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
-
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
 
 	recoil = 2

@@ -8,7 +8,7 @@
 
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
-	if(!(MOB_HUMANOID in target_mob.mob_biotypes))
+	if((MOB_HUMANOID !in target_mob.mob_biotypes))
 		damage *= biotype_damage_multiplier
 	return ..()
 
@@ -19,7 +19,6 @@
 	bare_wound_bonus = 0
 	armour_penetration = 30
 	demolition_mod = 10
-	var/biotype_damage_multiplier = 3
 
 /obj/projectile/bullet/c65xeno/pierce
 	name = "6.5mm subcaliber tungsten sabot round"
@@ -58,12 +57,11 @@
 	demolition_mod = 30  ///This WILL break windows
 	projectile_piercing = PASSMOB
 	biotype_damage_multiplier = 6
-	var/radiation_chance = 50
 
 /obj/projectile/bullet/c65xeno/pierce/evil/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(ishuman(target) && prob(radiation_chance))
+	if(ishuman(target))
 		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
-	..()
+	return ..()
 
 /obj/projectile/bullet/c65xeno/incendiary
 	name = "6.5mm caseless incendiary bullet"
@@ -93,7 +91,6 @@
 	speed = 0.7 ///half of standard
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
-	var/firestacks_to_give = 2
 
 /obj/projectile/bullet/c65xeno/incendiary/evil/Move()
 	. = ..()
