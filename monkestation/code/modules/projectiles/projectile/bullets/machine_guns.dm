@@ -4,7 +4,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 15
 	demolition_mod = 0.5
-	var/biotype_damage_multiplier = 3
+	var/biotype_damage_multiplier = 2.5
 	var/biotype_we_look_for = MOB_HUMANOID
 
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
@@ -34,7 +34,7 @@
 
 	demolition_mod = 20  ///This WILL break windows
 	projectile_piercing = PASSMOB
-	biotype_damage_multiplier = 6
+	biotype_damage_multiplier = 4
 	var/object_damage = 30
 
 /obj/projectile/bullet/c65xeno/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
