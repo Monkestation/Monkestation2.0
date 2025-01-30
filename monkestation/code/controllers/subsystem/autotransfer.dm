@@ -14,6 +14,10 @@ SUBSYSTEM_DEF(autotransfer)
 	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(crew_transfer_setup)))
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/autotransfer/Recover()
+	doing_transfer_vote = SSautotransfer.doing_transfer_vote
+	next_transfer_vote = SSautotransfer.next_transfer_vote
+
 /datum/controller/subsystem/autotransfer/fire()
 	if(can_run_transfer_vote())
 		SSvote.initiate_vote(/datum/vote/shuttle_call, "automatic shuttle vote", forced = TRUE)
