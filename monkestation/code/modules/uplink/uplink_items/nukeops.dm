@@ -49,7 +49,7 @@
 	name = "6.5 Inferno Quarad drum"
 	desc = "A 120 round drum of Inferno bullets for the Quarad, they leave a trail of fire"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
-	cost = 6
+	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
 
@@ -57,7 +57,7 @@
 	name = "6.5 UDS Quarad drum"
 	desc = "No, NOT depleted uranium. 120 round drum of piercing and irradiating bullets for the Quarad"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
-	cost = 6
+	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
 
@@ -65,6 +65,6 @@
 	name = "Syndicate-Enhanced Light Suppression Weapon"
 	desc = "A heavily modified Quarad LMG, complete with bluespace barrel extender and retooled recoil reduction. Takes 120 round drums, good for suppressive fire."
 	item = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
-	cost = 20
+	cost = 16
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE

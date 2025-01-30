@@ -70,36 +70,36 @@
 	return .
 
 
-/obj/item/gun/ballistic/automatic/quarad_lmg/evil  ///CURRENTLY UNAVAILABLE WITHOUT ADMIN INTERVENTION
+/obj/item/gun/ballistic/automatic/quarad_lmg/evil
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 
 	icon_state = "outomaties_evil"
-	worn_icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
-	worn_icon_state = "outomaties_worn_evil"
+	worn_icon = 'monkestation/icons/mob/inhands/gunsx48_worn.dmi'
+	worn_icon_state = "outomaties_evil"
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
-	fire_delay = 0.1 SECONDS
+	fire_delay = 0.2 SECONDS
 
 	recoil = 2
 	wield_recoil = 0.5
 	spread = 8
 	projectile_wound_bonus = 10
-	projectile_damage_multiplier = 1.5
+	projectile_damage_multiplier = 2
 
 /obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
 	name = "\improper Quarad light machinegun storage case"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg/
 	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum
+	extra_to_spawn2 = /obj/item/ammo_box/magazine/c65xeno_drum/pierce
+	extra_to_spawn3 = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary
 
 /obj/item/storage/toolbox/guncase/skyrat/quarad_guncase/PopulateContents()
 	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new extra_to_spawn2 (src)
+	new extra_to_spawn3 (src)
 
-	generate_items_inside(list(
-		/obj/item/ammo_box/magazine/c65xeno_drum,
-		/obj/item/ammo_box/magazine/c65xeno_drum/pierce,
-		/obj/item/ammo_box/magazine/c65xeno_drum/incendiary,
-	), src)

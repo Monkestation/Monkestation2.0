@@ -5,16 +5,17 @@
 	bare_wound_bonus = 15
 	demolition_mod = 0.5
 	var/biotype_damage_multiplier = 3
+	var/biotype_we_look_for = MOB_HUMANOID
 
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
-	if((MOB_HUMANOID !in target_mob.mob_biotypes))
+	if(!(target_mob.mob_biotypes & biotype_we_look_for || istype(target_mob, /mob/living/carbon/human) || istype(target_mob, /mob/living/silicon)))
 		damage *= biotype_damage_multiplier
 	return ..()
 
 /obj/projectile/bullet/c65xeno/evil
 	name = "6.5mm FMJ round"
-	damage = 15
+	damage = 10
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	armour_penetration = 30
@@ -34,13 +35,16 @@
 	demolition_mod = 20  ///This WILL break windows
 	projectile_piercing = PASSMOB
 	biotype_damage_multiplier = 6
+	var/object_damage = 30
 
 /obj/projectile/bullet/c65xeno/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
+	var/obj/thing_to_break = target
 	if(isliving(target))
 		// If the bullet has already gone through 3 people, stop it on this hit
 		if(pierces > 3)
 			projectile_piercing = NONE
-
+	if(!(isliving(target)))
+		thing_to_break.take_damage(object_damage, BRUTE, BULLET, FALSE)
 	return ..()
 
 /obj/projectile/bullet/c65xeno/pierce/evil
