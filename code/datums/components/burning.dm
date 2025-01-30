@@ -40,6 +40,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	STOP_PROCESSING(SSburning, src)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
+	if (ismovable(parent) && particle_type)
+		var/atom/movable/movable_parent = parent
+		movable_parent.remove_shared_particles("[particle_type]_[isitem(parent)]")
 	return ..()
 
 /datum/component/burning/RegisterWithParent()
