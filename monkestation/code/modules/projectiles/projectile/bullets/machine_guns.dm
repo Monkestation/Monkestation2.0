@@ -17,8 +17,8 @@
 /obj/projectile/bullet/c65xeno/evil
 	name = "6.5mm FMJ round"
 	damage = 10
-	wound_bonus = 0
-	bare_wound_bonus = 0
+	wound_bonus = 10
+	bare_wound_bonus = 10
 	armour_penetration = 30
 	demolition_mod = 3
 

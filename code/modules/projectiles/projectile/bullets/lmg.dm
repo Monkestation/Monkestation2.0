@@ -42,7 +42,7 @@
 /obj/projectile/bullet/mm712x82/ap
 	name = "7.12x82mm armor-piercing bullet"
 	armour_penetration = 75
-	speed = 0.2 //monke edit
+	speed = 0.3 //monke edit
 
 /obj/projectile/bullet/mm712x82/hp
 	name = "7.12x82mm hollow-point bullet"
