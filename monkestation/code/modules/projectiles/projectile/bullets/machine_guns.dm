@@ -20,7 +20,7 @@
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	armour_penetration = 30
-	demolition_mod = 10
+	demolition_mod = 3
 
 /obj/projectile/bullet/c65xeno/pierce
 	name = "6.5mm subcaliber tungsten sabot round"
@@ -33,7 +33,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 0
 
-	demolition_mod = 20  ///This WILL break windows
+	demolition_mod = 2  ///This WILL break windows
 	projectile_piercing = PASSMOB
 	biotype_damage_multiplier = 4
 	var/object_damage = 30
@@ -59,7 +59,7 @@
 	wound_bonus = 10
 	bare_wound_bonus = 0
 
-	demolition_mod = 30  ///This WILL break windows
+	demolition_mod = 3  ///This WILL break windows
 	projectile_piercing = PASSMOB
 	biotype_damage_multiplier = 6
 
