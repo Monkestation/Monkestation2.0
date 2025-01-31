@@ -35,7 +35,7 @@
 
 	demolition_mod = 2  ///This WILL break windows
 	projectile_piercing = PASSMOB
-	biotype_damage_multiplier = 4
+	biotype_damage_multiplier = 3
 	var/object_damage = 30
 
 /obj/projectile/bullet/c65xeno/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
