@@ -76,3 +76,4 @@
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
 	speed = 0.6 //monke edit
+
