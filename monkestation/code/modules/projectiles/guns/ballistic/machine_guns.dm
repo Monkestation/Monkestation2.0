@@ -81,12 +81,12 @@
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
-	fire_delay = 0.12 SECONDS
+	fire_delay = 0.1 SECONDS
 	recoil = 2
 	wield_recoil = 0.25
-	spread = 8
+	spread = 12.5
 	projectile_wound_bonus = 10
-	projectile_damage_multiplier = 1.2
+	projectile_damage_multiplier = 1.5
 
 /obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
 	name = "\improper Quarad light machinegun storage case"
