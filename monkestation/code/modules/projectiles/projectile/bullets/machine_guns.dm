@@ -9,8 +9,9 @@
 
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
-	if(!(target_mob.mob_biotypes & biotype_we_look_for || istype(target_mob, /mob/living/carbon/human) || istype(target_mob, /mob/living/silicon)))
-		damage *= biotype_damage_multiplier
+	if(isliving(target))
+		if(!(target_mob.mob_biotypes & biotype_we_look_for || istype(target_mob, /mob/living/carbon/human) || istype(target_mob, /mob/living/silicon)))
+			damage *= biotype_damage_multiplier
 	return ..()
 
 /obj/projectile/bullet/c65xeno/evil
@@ -43,8 +44,8 @@
 		// If the bullet has already gone through 3 people, stop it on this hit
 		if(pierces > 3)
 			projectile_piercing = NONE
-	if(!(isliving(target)))
-		damage += object_damage
+	if(!(isliving(target)) && isobj(target))
+		thing_to_break.take_damage(object_damage, BRUTE, BULLET, FALSE)
 	return ..()
 
 /obj/projectile/bullet/c65xeno/pierce/evil
@@ -90,11 +91,18 @@
 /obj/projectile/bullet/c65xeno/incendiary/evil
 	name = "6.5mm inferno round"
 	icon_state = "redtrac"
-	damage = 5
+	damage = 10
 	bare_wound_bonus = 0
 	speed = 0.7 ///half of standard
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
+	projectile_piercing = PASSMOB
+
+/obj/projectile/bullet/c65xeno/incendiary/evil/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isliving(target))
+		if(pierces > 1)
+			projectile_piercing = NONE
 
 /obj/projectile/bullet/c65xeno/incendiary/evil/Move()
 	. = ..()

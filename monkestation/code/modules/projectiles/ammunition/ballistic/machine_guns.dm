@@ -84,11 +84,11 @@
 	max_ammo = 120
 
 /obj/item/ammo_box/magazine/c65xeno_drum/evil
-	name = "\improper 6.5mm incendiary drum magazine"
+	name = "\improper 6.5mm FMJ drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm FMJ rounds."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "c65xeno_drum"
+	icon_state = "c65xeno_drumevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/evil
 	max_ammo = 120
@@ -98,7 +98,7 @@
 	desc = "A hefty 120 round drum of 6.5mm Uranium Discarding Sabot rounds. No, NOT depleted uranium. Prepare for your enemies to be irradiated."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "c65xeno_drumP"
+	icon_state = "c65xeno_drumPevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce/evil
 	max_ammo = 120
@@ -108,7 +108,7 @@
 	desc = "A hefty 120 round drum of 6.5mm inferno rounds. They leave a trail of fire as they fly."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "c65xeno_drumI"
+	icon_state = "c65xeno_drumIevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary/evil
 	max_ammo = 120
