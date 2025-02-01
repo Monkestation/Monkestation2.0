@@ -14,7 +14,7 @@
 /datum/opposing_force_equipment/implants/cyberlink_nt_high
 	name = "NT-High Cyberlink"
 	admin_note = "Needed to run any non illegal cyberware"
-	item_type = /obj/item/autosurgeon/cyberlink_nt_high
+	item_type = /obj/item/autosurgeon/organ/cyberlink_nt_high
 
 /datum/opposing_force_equipment/implants/sad_trombone
 	name = "Sad Trombone Implant"
