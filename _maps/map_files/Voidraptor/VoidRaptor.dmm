@@ -20540,6 +20540,14 @@
 	dir = 6
 	},
 /area/station/service/chapel)
+"fWZ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/chair,
+/obj/effect/landmark/start/depsec/engineering,
+/turf/open/floor/iron/textured_edge,
+/area/station/security/checkpoint/engineering)
 "fXi" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -22331,6 +22339,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/storage)
 "gvO" = (
@@ -82881,14 +82890,6 @@
 "wWQ" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
-"wWR" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/structure/chair,
-/obj/effect/landmark/start/depsec/engineering,
-/turf/open/floor/iron/textured_edge,
-/area/station/security/checkpoint/engineering)
 "wXc" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -118790,7 +118791,7 @@ uWW
 gXL
 erh
 sxd
-wWR
+fWZ
 hpe
 qks
 hOM
