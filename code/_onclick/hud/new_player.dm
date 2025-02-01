@@ -42,8 +42,9 @@
 
 /atom/movable/screen/lobby/button
 	abstract_type = /atom/movable/screen/lobby/button
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Is the button currently enabled?
-	var/enabled = TRUE
+	VAR_PROTECTED/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
 	/// The ref of the mob that owns this button. Only the owner can click on it.
@@ -104,7 +105,8 @@
 	if(status == enabled)
 		return FALSE
 	enabled = status
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
+	mouse_over_pointer = enabled ? MOUSE_HAND_POINTER : MOUSE_INACTIVE_POINTER
 	return TRUE
 
 ///Prefs menu
@@ -160,6 +162,10 @@
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
+	var/datum/station_trait/overflow_job_bureaucracy/overflow = locate() in SSstation.station_traits
+	if(!ready && overflow?.picked_job && new_player.client?.prefs?.read_preference(/datum/preference/toggle/verify_overflow))
+		if(tgui_alert(new_player, "The current overflow role is [overflow.picked_job.title], are you sure you would like to ready up?", "Overflow Notice", list("Yes", "No")) != "Yes")
+			return
 	ready = !ready
 	if(ready)
 		new_player.ready = PLAYER_READY_TO_PLAY
@@ -169,6 +175,7 @@
 			if(!new_client.readied_store)
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
@@ -180,10 +187,10 @@
 	icon = 'icons/hud/lobby/join.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
-	enabled = FALSE
 
 /atom/movable/screen/lobby/button/join/Initialize(mapload)
 	. = ..()
+	set_button_status(FALSE)
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
 			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
@@ -262,6 +269,7 @@
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
 	else
+		set_button_status(FALSE)
 		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_observing))
 
 /atom/movable/screen/lobby/button/observe/Click(location, control, params)
@@ -299,11 +307,10 @@
 
 /atom/movable/screen/lobby/button/intents/Click(location, control, params)
 	. = ..()
-	if(!hud.mymob.client.challenge_menu)
-		var/datum/challenge_selector/new_tgui = new(hud.mymob)
-		new_tgui.ui_interact(hud.mymob)
-	else
-		hud.mymob.client.challenge_menu.ui_interact(hud.mymob)
+	var/datum/player_details/details = get_player_details(hud.mymob)
+	details.challenge_menu ||= new(details)
+	details.challenge_menu.ui_interact(hud.mymob)
+
 /atom/movable/screen/lobby/button/discord
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "discord"
@@ -450,6 +457,11 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
 
+#define MRP2_PORT		3122
+#define MRP_PORT		3121
+#define HRP_PORT		1342
+#define VANDERLIN_PORT	1541
+
 //This is the changing You are here Button
 /atom/movable/screen/lobby/youarehere
 	var/vanderlin = 0
@@ -458,17 +470,19 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
+
 //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
 // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
 /atom/movable/screen/lobby/youarehere/Initialize(mapload)
 	. = ..()
 	var/port = world.port
 	switch(port)
-		if(1342) //HRP
+		if(HRP_PORT) //HRP
 			screen_loc = "TOP:-32,CENTER:+215"
-		if(1337) //MRP
+		if(MRP_PORT) //MRP
 			screen_loc = "TOP:-65,CENTER:+215"
-		if(2102) //NRP
+		if(MRP2_PORT) //MRP2
 			screen_loc = "TOP:-98,CENTER:+215"
 		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
 			screen_loc = "TOP:0,CENTER:+128"
@@ -477,15 +491,18 @@
 	icon = 'icons/hud/lobby/sister_server_buttons.dmi'
 	abstract_type = /atom/movable/screen/lobby/button/server
 	enabled = FALSE
+	/// The name of the server, used for the connecting message.
+	var/server_name
 	/// The IP of this server.
 	var/server_ip = "play.monkestation.com"
 	/// The port of this server.
 	var/server_port
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
+
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
-	if(is_available())
-		set_button_status(TRUE)
+	set_button_status(is_available())
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
@@ -502,44 +519,63 @@
 /atom/movable/screen/lobby/button/server/Click(location, control, params)
 	. = ..()
 	if(. && world.port != server_port && is_available())
-		hud.mymob.client << link("byond://[server_ip]:[server_port]")
+		var/server_link = "byond://[server_ip]:[server_port]"
+		to_chat_immediate(
+			target = hud.mymob,
+			html = boxed_message(span_info(span_big("Connecting you to [server_name]\nIf nothing happens, try manually connecting to the server ([server_link]), or the server may be down!"))),
+			type = MESSAGE_TYPE_INFO,
+		)
+		hud.mymob.client << link(server_link)
 
 //HRP MONKE
 /atom/movable/screen/lobby/button/server/hrp
 	base_icon_state = "hrp"
 	screen_loc = "TOP:-44,CENTER:+173"
-	server_port = 1342
+	server_name = "Well-Done Roleplay (HRP)"
+	server_port = HRP_PORT
 
 /atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
 	return day == SATURDAY && ISINRANGE(hour, 12, 18)
 
-//MAIN MONKE
+//MAIN MONKE (MEDIUM RARE)
 /atom/movable/screen/lobby/button/server/mrp
 	base_icon_state = "mrp"
 	screen_loc = "TOP:-77,CENTER:+173"
 	enabled = TRUE
-	server_port = 1337
+	server_name = "Medium-Rare Roleplay (MRP)"
+	server_port = MRP_PORT
 
-//NRP MONKE
-/atom/movable/screen/lobby/button/server/nrp
+//MRP 2 MONKE (MEDIUM WELL)
+/atom/movable/screen/lobby/button/server/mrp2
 	screen_loc = "TOP:-110,CENTER:+173"
-	base_icon_state = "nrp"
-	server_port = 2102
+	base_icon_state = "mrp2"
+	server_name = "Medium-Well (MRP)"
+	server_port = MRP2_PORT
 
+//bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
 /atom/movable/screen/lobby/button/server/vanderlin
 	icon = 'icons/hud/lobby/vanderlin_button.dmi'
 	base_icon_state = "vanderlin"
-	screen_loc = "TOP:-140,CENTER:+177"
-	server_port = 1541
+	screen_loc = "TOP:-140,CENTER:+183"
+	server_name = "Vanderlin"
+	server_port = VANDERLIN_PORT
 
 /atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
+	return TRUE
+/*
 	switch(day)
 		if(FRIDAY)
 			return (hour >= 15)
 		if(SATURDAY, SUNDAY)
 			return TRUE
 	return FALSE
+*/
+
+#undef VANDERLIN_PORT
+#undef HRP_PORT
+#undef MRP_PORT
+#undef MRP2_PORT
 
 //Monke button
 /atom/movable/screen/lobby/button/ook
@@ -552,3 +588,76 @@
 	. = ..()
 	if(.)
 		SEND_SOUND(usr, 'monkestation/sound/misc/menumonkey.ogg')
+
+/atom/movable/screen/lobby/overflow_alert
+	screen_loc = "TOP:-48,CENTER-2.7"
+	icon = 'icons/hud/lobby/overflow.dmi'
+	icon_state = ""
+	base_icon_state = "overflow"
+	var/datum/job/overflow_job
+	var/static/disabled = FALSE
+	var/static/mutable_appearance/job_overlay
+
+/atom/movable/screen/lobby/overflow_alert/Initialize(mapload)
+	. = ..()
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(initial_setup))
+	else
+		generate_and_set_icon()
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/overflow_alert/Destroy()
+	overflow_job = null
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+	return ..()
+
+/atom/movable/screen/lobby/overflow_alert/update_icon_state()
+	if(!disabled && !isnull(job_overlay))
+		icon_state = base_icon_state
+	else
+		icon_state = ""
+	return ..()
+
+/atom/movable/screen/lobby/overflow_alert/update_overlays()
+	. = ..()
+	if(!disabled && job_overlay)
+		. += job_overlay
+
+/atom/movable/screen/lobby/overflow_alert/MouseEntered(location,control,params)
+	. = ..()
+	if(!disabled && overflow_job && !QDELETED(src))
+		openToolTip(usr, src, params, title = "Job Overflow", content = "The overflow role this round is <b>[html_encode(overflow_job.title)]</b>!")
+
+/atom/movable/screen/lobby/overflow_alert/MouseExited()
+	closeToolTip(usr)
+
+/atom/movable/screen/lobby/overflow_alert/proc/initial_setup(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSstation, COMSIG_TICKER_ENTER_PREGAME)
+	var/datum/station_trait/overflow_job_bureaucracy/overflow = locate() in SSstation.station_traits
+	overflow_job = overflow?.picked_job
+	if(overflow_job)
+		generate_and_set_icon()
+	else
+		disabled = TRUE
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/overflow_alert/proc/generate_and_set_icon()
+	if(disabled || SSticker.current_state == GAME_STATE_STARTUP || !isnull(job_overlay))
+		return
+	var/datum/station_trait/overflow_job_bureaucracy/overflow = locate() in SSstation.station_traits
+	overflow_job = overflow?.picked_job
+	if(!overflow_job)
+		disabled = TRUE
+		return
+	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)
+	if(!job_icon)
+		return
+	var/icon/resized_icon = resize_icon(job_icon, 16, 16)
+	if(!resized_icon)
+		stack_trace("Failed to upscale icon for [overflow_job], upscaling using BYOND!")
+		job_icon.Scale(16, 16)
+		resized_icon = job_icon
+	job_overlay = mutable_appearance(resized_icon)
+	job_overlay.pixel_x = 8
+	job_overlay.pixel_y = 18

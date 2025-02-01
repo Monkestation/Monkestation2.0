@@ -50,6 +50,18 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
 
+//MONKESTATION EDIT START
+/obj/item/clothing/suit/armor/surplus
+	name = "surplus armor vest"
+	desc = "An armored vest that provides decent protection against most types of damage."
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_state = "armorvest"
+	inhand_icon_state = "armor"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back/armorvest
+//MONKESTATION EDIT STOP
+
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
@@ -62,6 +74,16 @@
 /obj/item/clothing/suit/armor/vest/alt/sec/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/press
+	name = "press armor vest"
+	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "armor_press"
+
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
@@ -309,11 +331,11 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 20
+	wound = 25 //monkestation edit: 20 to 25
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
-	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as occasionally reflecting them."
+	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as reflecting them." //monkestation edit
 	icon_state = "armor_reflec"
 	inhand_icon_state = "armor_reflec"
 	blood_overlay_type = "armor"
@@ -322,7 +344,7 @@
 
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/hit_reflect_chance = 50
+	//var/hit_reflect_chance = 50  //monkestation removal
 
 /datum/armor/armor_laserproof
 	melee = 10
@@ -333,10 +355,12 @@
 	acid = 100
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
+	if(def_zone == "") //something is fucky and this happens every now and then but the damage defaults to the person's chest so this is okayish
+		return TRUE
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
-	if (prob(hit_reflect_chance))
-		return TRUE
+	//if(prob(hit_reflect_chance)) //monkestation removal
+	return TRUE
 
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "detective's flak vest"
@@ -493,6 +517,7 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
+	body_parts_covered = CHEST|ARMS //Monke: Durathread covers arms.
 	dog_fashion = null
 
 /datum/armor/vest_durathread

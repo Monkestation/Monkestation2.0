@@ -1,9 +1,11 @@
 /datum/status_effect/fire_handler
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
 	tick_interval = 2 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY // monkestation edit: high-priority status effect processing
 	/// Current amount of stacks we have
 	var/stacks
 	/// Maximum of stacks that we could possibly get
@@ -16,6 +18,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
+	/// how long have we been ON FIRE?
+	var/ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -91,11 +95,11 @@
  */
 
 /datum/status_effect/fire_handler/proc/set_stacks(new_stacks)
-	stacks = max(0, min(stack_limit, new_stacks))
+	stacks = clamp(new_stacks, 0, stack_limit)
 	cache_stacks()
 
 /datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
-	stacks = max(0, min(stack_limit, stacks + new_stacks))
+	stacks = clamp(stacks + new_stacks, 0, stack_limit)
 	cache_stacks()
 
 /**
@@ -150,14 +154,19 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
+	if(HAS_TRAIT(owner, TRAIT_HUSK))
+		adjust_stacks(-2 * seconds_per_tick)
+		if(stacks <= 0)
+			extinguish()
+	else
+		adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
 
 	if(stacks <= 0)
 		qdel(src)
 		return TRUE
 
-	var/datum/gas_mixture/air = owner.loc.return_air()
-	if(!air.gases[/datum/gas/oxygen] || air.gases[/datum/gas/oxygen][MOLES] < 1)
+	var/list/gases = owner.loc?.return_air()?.gases
+	if(gases && (!gases[/datum/gas/oxygen] || gases[/datum/gas/oxygen][MOLES] < 1))
 		qdel(src)
 		return TRUE
 
@@ -183,11 +192,28 @@
  *
  */
 
-/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired)
+/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired, no_protection = FALSE)
 	owner.on_fire_stack(seconds_per_tick, times_fired, src)
 
 	var/turf/location = get_turf(owner)
 	location.hotspot_expose(700, 25 * seconds_per_tick, TRUE)
+
+	if(ishuman(owner) && !no_protection)
+		var/mob/living/carbon/human/victim = owner
+		if(victim.get_thermal_protection() >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			return
+
+	owner.adjust_bodytemperature((stacks KELVIN) * seconds_per_tick)
+	switch(ticks_on_fire)
+		if(0 to 3)
+			owner.apply_damage(0.10 * stacks, BURN)
+		if(3 to 6)
+			owner.apply_damage(0.20 * stacks, BURN)
+		if(6 to 9)
+			owner.apply_damage(0.30 * stacks, BURN)
+		if(10 to INFINITY)
+			owner.apply_damage(0.50 * stacks, BURN)
+	ticks_on_fire += 1 * seconds_per_tick
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -227,6 +253,7 @@
 	for(var/obj/item/equipped in owner.get_equipped_items())
 		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
+	ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)
@@ -238,6 +265,8 @@
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
 
@@ -248,10 +277,8 @@
 		return
 
 	var/mutable_appearance/created_overlay = owner.get_fire_overlay(stacks, on_fire)
-	if(isnull(created_overlay))
-		return
-
-	overlays |= created_overlay
+	if(!isnull(created_overlay))
+		overlays |= created_overlay
 
 /obj/effect/dummy/lighting_obj/moblight/fire
 	name = "fire"

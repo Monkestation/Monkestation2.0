@@ -23,7 +23,7 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 10,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/dna_vault
@@ -1249,6 +1249,14 @@
 	name = "Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/recycler
+	req_components = list(
+		/datum/stock_part/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/shipbreaker
+	name = "Shipbreaking Recycler"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/shipbreaker
 	req_components = list(
 		/datum/stock_part/manipulator = 1)
 	needs_anchored = FALSE

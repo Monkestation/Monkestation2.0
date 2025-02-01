@@ -753,9 +753,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/projectile/beam/laser
-	lethal_projectile_sound = 'sound/weapons/laser.ogg'
+	lethal_projectile_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/energy/ruin/assess_perp(mob/living/carbon/human/perp)
+	if (!check_access(perp.wear_id?.GetID()))
+		return 10
+	return 0
 
 /datum/armor/syndicate_turret
 	melee = 40
@@ -777,7 +782,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile = /obj/projectile/beam/laser
-	stun_projectile_sound = 'sound/weapons/laser.ogg'
+	stun_projectile_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 /obj/machinery/porta_turret/syndicate/pod

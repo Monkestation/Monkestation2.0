@@ -85,6 +85,7 @@
 		"oven_tray",
 		"packagewrap",
 		"pet_carrier",
+		"pglasses", //Monkestation
 		"plasmaglass",
 		"plasmaman_gas_filter",
 		"plasmareinforcedglass",
@@ -322,6 +323,7 @@
 		"synth_stomach",
 		"synth_ears",
 		"synth_heart",
+		"cybernetic_spleen"
 	)
 
 /datum/techweb_node/basic_circuitry
@@ -533,7 +535,6 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
-		"surgery_heal_robot_upgrade", // monkestation edit: robot surgeries
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
@@ -547,7 +548,6 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade_femto",
 		"surgery_heal_burn_upgrade_femto",
-		"surgery_heal_robot_upgrade_femto", // monkestation edit: robot surgeries
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
@@ -1369,6 +1369,7 @@
 		"cybernetic_liver_tier2",
 		"cybernetic_lungs_tier2",
 		"cybernetic_stomach_tier2",
+		"cybernetic_spleen_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
@@ -1388,6 +1389,7 @@
 		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
 		"cybernetic_stomach_tier3",
+		"cybernetic_spleen_tier3"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
@@ -1598,6 +1600,7 @@
 		"pepperspray",
 		"seclite",
 		"zipties",
+		"dragnet_beacon",
 		"inspector",
 		"rubber_c35", //monkestation edit: taco sec
 	)

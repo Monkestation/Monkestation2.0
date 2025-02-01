@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.uniform)
-			LAZYADD(outfit.backpack_contents, outfit.uniform)
+			spawn_in_backpack(outfit, outfit.uniform, equipper)
 		outfit.uniform = item_path
 	else
 		outfit.uniform = item_path
@@ -159,6 +159,10 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Recolorable Sundress"
 	item_path = /obj/item/clothing/under/dress/sundress
 
+/datum/loadout_item/under/miscellaneous/wlpinafore
+	name = "Recolorable Wonderland Pinafore"
+	item_path = /obj/item/clothing/under/dress/wlpinafore
+
 /datum/loadout_item/under/miscellaneous/kilt
 	name = "Kilt"
 	item_path = /obj/item/clothing/under/costume/kilt
@@ -283,7 +287,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/suit/beige
 
 /datum/loadout_item/under/formal/ballgown
-	name = "Ball gown"
+	name = "Recolorable Ball Gown"
 	item_path = /obj/item/clothing/under/dress/ballgown
 
 /datum/loadout_item/under/formal/black_suit

@@ -39,6 +39,9 @@
 #define RADIO_KEY_AI_PRIVATE "o"
 #define RADIO_TOKEN_AI_PRIVATE ":o"
 
+#define RADIO_CHANNEL_ENTERTAINMENT "Entertainment"
+#define RADIO_KEY_ENTERTAINMENT "p"
+#define RADIO_TOKEN_ENTERTAINMENT ":p"
 
 #define RADIO_CHANNEL_SYNDICATE "Syndicate"
 #define RADIO_KEY_SYNDICATE "t"
@@ -57,6 +60,9 @@
 #define RADIO_CHANNEL_CTF_GREEN "Green Team"
 #define RADIO_CHANNEL_CTF_YELLOW "Yellow Team"
 
+#define RADIO_CHANNEL_UNCOMMON "Uncommon"
+#define RADIO_KEY_UNCOMMON "f"
+#define RADIO_TOKEN_UNCOMMON ":f"
 
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
@@ -75,7 +81,9 @@
 #define FREQ_MEDICAL 1355 // Medical comms frequency, soft blue
 #define FREQ_ENGINEERING 1357 // Engineering comms frequency, orange
 #define FREQ_SECURITY 1359 // Security comms frequency, red
+#define FREQ_ENTERTAINMENT 1415 // Used by entertainment monitors, cyan
 #define FREQ_RADIO 1361 //monkestation edit
+#define FREQ_UNCOMMON 1363 //monkestation addition, Light gray
 
 #define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435

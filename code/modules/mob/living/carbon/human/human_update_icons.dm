@@ -765,13 +765,27 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!standing)
 		standing = mutable_appearance(file2use, t_state, -layer2use)
 
+	// MONKESTATION EDIT START
+	var/width = isinhands ? inhand_x_dimension : worn_x_dimension
+	var/height = isinhands ? inhand_y_dimension : worn_y_dimension
+	standing = center_image(standing, width, height)
+	// MONKESTATION EDIT END
+
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(length(worn_overlays))
+		// MONKESTATION EDIT START
+		if (width != 32 || height != 32)
+			for (var/image/overlay in worn_overlays)
+				overlay.pixel_x -= standing.pixel_x
+				overlay.pixel_y -= standing.pixel_y
+		// MONKESTATION EDIT END
 		standing.overlays += worn_overlays
 
-	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
+	// MONKESTATION EDIT START
+	// standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension) - moved up
+	// MONKESTATION EDIT END
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)
@@ -871,8 +885,8 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/apply_overlay(cache_index)
 	/* MONKESTATION EDIT: made it so that MUTATIONS_LAYER and FRONT_MUTATIONS_LAYER always get their filters updated
 		This is required because they use cached / shared appearences
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM) - original */
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM) - original */
+	if(mob_height == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
@@ -900,7 +914,7 @@ generate/load female uniform sprites matching all previously decided variables
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
 /mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(get_mob_height())
+	var/height_to_use = num2text(mob_height)
 	var/final_offset = 0
 	switch(upper_torso)
 		if(UPPER_BODY)
@@ -916,7 +930,7 @@ generate/load female uniform sprites matching all previously decided variables
 /**
  * Applies a filter to an appearance according to mob height
  */
-/mob/living/carbon/human/proc/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
+/mob/living/carbon/human/proc/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE, parent_adjust_y=0)
 //MONKESTATION EDIT START
 	// Pick a displacement mask depending on the height of the icon, ?x48 icons are used for features which would otherwise get clipped when tall players use them
 	// Note: Due to how this system works it's okay to use a mask which is wider than the appearence but NOT okay if the mask is thinner, taller or shorter
@@ -926,49 +940,60 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mask_icon = 'icons/effects/cut.dmi'
 	if(icon_width != 0 && icon_height != 0)
-		if(icon_height == 48)
+		if(icon_height == 48 && icon_width <= 96)
 			mask_icon = 'monkestation/icons/effects/cut_96x48.dmi'
-			if(icon_width > 96)
-				stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
-		else if(icon_height != 32)
-			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
-		else if(icon_width > 32)
+		else if(icon_height == 64 && icon_width <= 64)
+			mask_icon = 'monkestation/icons/effects/cut_64x64.dmi'
+		else if(icon_height != 32 || icon_width > 32)
 			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
 
-	var/icon/cut_torso_mask = icon(mask_icon, "Cut1")
-	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
-	var/icon/lenghten_torso_mask = icon(mask_icon, "Cut3")
-	var/icon/lenghten_legs_mask = icon(mask_icon, "Cut4")
-	var/icon/lenghten_ankles_mask = icon(mask_icon, "Cut5")
+	// Move the filter up if the image has been moved down, and vice versa
+	var/adjust_y = -appearance.pixel_y - parent_adjust_y
+
+	var/static/list/cached_masks = list()
+	var/list/masks = cached_masks[mask_icon]
+	if(isnull(masks))
+		cached_masks[mask_icon] = masks = list(
+			icon(mask_icon, "Cut1"),
+			icon(mask_icon, "Cut2"),
+			icon(mask_icon, "Cut3"),
+			icon(mask_icon, "Cut4"),
+			icon(mask_icon, "Cut5"),
+		)
+	var/icon/cut_torso_mask = masks[1]
+	var/icon/cut_legs_mask = masks[2]
+	var/icon/lengthen_torso_mask = masks[3]
+	var/icon/lengthen_legs_mask = masks[4]
+	var/icon/lengthen_ankles_mask = masks[5]
 //MONKESTATION EDIT END
 
-	appearance.remove_filter(list(
+	var/should_update = appearance.remove_filter(list(
 		"Cut_Torso",
 		"Cut_Legs",
-		"Lenghten_Ankles", // MONKESTATION ADDITION
-		"Lenghten_Legs",
-		"Lenghten_Torso",
+		"Lengthen_Ankles", // MONKESTATION ADDITION
+		"Lengthen_Legs",
+		"Lengthen_Torso",
 		"Gnome_Cut_Torso",
 		"Gnome_Cut_Legs",
 		"Monkey_Torso",
 		"Monkey_Legs",
 		"Monkey_Gnome_Cut_Torso",
 		"Monkey_Gnome_Cut_Legs",
-	))
+	), update = FALSE) // note: the add_filter(s) calls after this will call update_filters on their own. so by not calling it here, we avoid calling it twice.
 
-	switch(get_mob_height())
+	switch(mob_height)
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
 			appearance.add_filters(list(
 				list(
 					"name" = "Monkey_Gnome_Cut_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3),
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 3),
 				),
 				list(
 					"name" = "Monkey_Gnome_Cut_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
 				),
 			))
 		if(MONKEY_HEIGHT_MEDIUM)
@@ -976,12 +1001,12 @@ generate/load female uniform sprites matching all previously decided variables
 				list(
 					"name" = "Monkey_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 2),
 				),
 				list(
 					"name" = "Monkey_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
 				),
 			))
 		// Don't set this one directly, use TRAIT_DWARF
@@ -990,12 +1015,12 @@ generate/load female uniform sprites matching all previously decided variables
 				list(
 					"name" = "Gnome_Cut_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 2),
 				),
 				list(
 					"name" = "Gnome_Cut_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3),
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 3),
 				),
 			))
 		if(HUMAN_HEIGHT_SHORTEST)
@@ -1003,57 +1028,61 @@ generate/load female uniform sprites matching all previously decided variables
 				list(
 					"name" = "Cut_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 1),
 				),
 				list(
 					"name" = "Cut_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1),
 				),
 			))
 		if(HUMAN_HEIGHT_SHORT)
-			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1))
 		if(HUMAN_HEIGHT_TALL)
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Lengthen_Legs", 1, displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1))
 		if(HUMAN_HEIGHT_TALLER)
 			appearance.add_filters(list(
 				list(
-					"name" = "Lenghten_Torso",
+					"name" = "Lengthen_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
 				),
 				list(
-					"name" = "Lenghten_Legs",
+					"name" = "Lengthen_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1),
 				),
 			))
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filters(list(
 				list(
-					"name" = "Lenghten_Torso",
+					"name" = "Lengthen_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
 				),
 				list(
-					"name" = "Lenghten_Legs",
+					"name" = "Lengthen_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1 /* monke edit: 2 -> 1 */),
+					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1 /* monke edit: 2 -> 1 */),
 				),
 				// MONKESTATION EDIT START
 				list(
-					"name" = "Lenghten_Ankles",
+					"name" = "Lengthen_Ankles",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_ankles_mask, x = 0, y = 0, size = 1),
+					"params" = displacement_map_filter(lengthen_ankles_mask, x = 0, y = adjust_y, size = 1),
 				),
 				// MONKESTATION EDIT END
 			))
+		else
+			// as we don't add any filters - we need to make sure to run update_filters ourselves, as we didn't update during our previous remove_filter, and any other case would've ran it at the end of add_filter(s)
+			if(should_update)
+				appearance.update_filters()
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
 	if(!(appearance.appearance_flags & KEEP_TOGETHER))
 		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
-			apply_height_filters(overlay)
+			apply_height_filters(overlay, parent_adjust_y=adjust_y)
 
 	return appearance
 

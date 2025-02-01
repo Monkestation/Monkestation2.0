@@ -2,8 +2,8 @@
 
 /datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
 	id = "crusher_damage"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	var/total_damage = 0
@@ -46,7 +46,7 @@
 
 /datum/status_effect/in_love
 	id = "in_love"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/in_love
 	var/hearts
@@ -84,6 +84,7 @@
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
 	var/mob/living/rewarded
 
 /datum/status_effect/bounty/on_creation(mob/living/new_owner, mob/living/caster)
@@ -118,8 +119,8 @@
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup
 	id = "heldup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/heldup
 
@@ -139,8 +140,8 @@
 // holdup is for the person aiming
 /datum/status_effect/holdup
 	id = "holdup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/holdup
 
@@ -148,12 +149,13 @@
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
+	clickable_glow = TRUE
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
 	id = "offering"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// The people who were offered this item at the start
@@ -196,7 +198,7 @@
 
 /// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
 /datum/status_effect/offering/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", give_alert_type)
+	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[REF(owner)]_offer", give_alert_type)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
@@ -206,7 +208,7 @@
 
 /// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
-	removed_candidate.clear_alert("[owner]")
+	removed_candidate.clear_alert("[REF(owner)]_offer")
 	LAZYREMOVE(possible_takers, removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
 	if(!possible_takers && !QDELING(src))
@@ -315,8 +317,8 @@
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender
 	id = "surrender"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/surrender
 
@@ -324,6 +326,7 @@
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
 	icon_state = "surrender"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()
@@ -344,7 +347,7 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = -1 // monkestation edit
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
