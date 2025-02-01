@@ -148,17 +148,17 @@
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
 
-/obj/item/autosurgeon/syndicate/thermal_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
+/obj/item/autosurgeon/syndicate/thermal_eyes //monkestation edit start: Syndicate cybernetics
+	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals/syndicate
 
 /obj/item/autosurgeon/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
+	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate
 
 /obj/item/autosurgeon/syndicate/anti_stun
-	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
 
 /obj/item/autosurgeon/syndicate/reviver
-	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver/syndicate //monkestation edit end: Syndicate cybernetics
 
 /obj/item/autosurgeon/syndicate/commsagent
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \

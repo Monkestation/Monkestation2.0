@@ -101,3 +101,11 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/obj/item/organ/internal/eyes/robotic/xray/syndicate
+	name = "contraband x-ray eyes"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
+/obj/item/organ/internal/eyes/robotic/thermals/syndicate
+	name = "contraband thermal eyes"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN

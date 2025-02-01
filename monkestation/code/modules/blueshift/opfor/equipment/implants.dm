@@ -11,6 +11,8 @@
 	description = "A skillchip that, when installed, allows the user to recognise cyborg wire layouts and understand their functionality at a glance."
 
 //Implants
+/datum/opposing_force_equipment/implants/Cybersun
+	item_type = /obj/item/autosurgeon/syndicate/
 /datum/opposing_force_equipment/implants/nodrop
 	item_type = /obj/item/autosurgeon/syndicate/nodrop
 	name = "Anti Drop Implant"
@@ -100,12 +102,12 @@
 	description = "An implanter that grants you the ability to create several EMP pulses, centered on you."
 
 /datum/opposing_force_equipment/implants_illegal/xray
-	name = "X-Ray Eyes"
+	name = "Contraband X-Ray Eyes"
 	item_type = /obj/item/autosurgeon/syndicate/xray_eyes
 	description = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 
 /datum/opposing_force_equipment/implants_illegal/thermal
-	name = "Thermal Eyes"
+	name = "Contraband Thermal Eyes"
 	item_type = /obj/item/autosurgeon/syndicate/thermal_eyes
 	description = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 

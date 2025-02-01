@@ -105,6 +105,11 @@
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
+/obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
+	name = "contraband anti-drop implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/brain/anti_stun
 	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
@@ -157,6 +162,11 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
+	name = "contraband CNS rebooter implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
