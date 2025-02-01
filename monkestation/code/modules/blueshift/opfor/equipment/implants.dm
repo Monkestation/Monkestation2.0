@@ -122,21 +122,23 @@
 /datum/opposing_force_equipment/implants_illegal/armblade
 	name = "Mantis Blade Arm Implant"
 	admin_note = "Force 30 IF emagged. Acts as a power crowbar (Opens airlock after delay)."
-	description = "A pair of armblades, can be used to cut and pry objects open, and pry open airlocks."
+	description = "A pair of armblades, can be used to cut and pry objects and people open alike."
 	item_type = /obj/item/autosurgeon/organ/syndicate/syndie_mantis
 
 /datum/opposing_force_equipment/implants_illegal/nodrop
 	item_type = /obj/item/autosurgeon/syndicate/nodrop
-	name = "Anti Drop Implant"
-	admin_note = "Allows the user to tighten their grip, their held items unable to be dropped by any cause. Hardstuns user for a longtime if hit with EMP."
+	name = "Contraband Anti Drop Implant"
+	admin_note = "Allows the user to tighten their grip, their held items unable to be dropped by any cause. Hardstuns user for a longtime if hit with EMP. Will not show on health analyzers."
 	description = "An implant that prevents you from dropping items in your hand involuntarily. Comes loaded in a syndicate autosurgeon."
 
 /datum/opposing_force_equipment/implants_illegal/cns
-	name = "CNS Rebooter Implant"
+	name = "Contraband CNS Rebooter Implant"
 	item_type = /obj/item/autosurgeon/syndicate/anti_stun
 	description = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned. Comes loaded in a syndicate autosurgeon."
+	admin_note = "Will not show on health analyzers."
 
 /datum/opposing_force_equipment/implants_illegal/reviver
-	name = "Reviver Implant"
+	name = "Contraband Reviver Implant"
 	item_type = /obj/item/autosurgeon/syndicate/reviver
 	description = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart! Comes loaded in a syndicate autosurgeon."
+	admin_note = "Will not show on health analyzers."
