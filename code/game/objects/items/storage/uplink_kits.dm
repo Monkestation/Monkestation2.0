@@ -539,6 +539,7 @@
 
 /obj/item/storage/box/syndie_kit/laser_arm/PopulateContents()
 	new /obj/item/autosurgeon/organ/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/syndicate/organ/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/laser_arm (src)
 
 /obj/item/storage/box/syndie_kit/nodrop/PopulateContents()
