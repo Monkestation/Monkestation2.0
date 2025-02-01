@@ -41279,7 +41279,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/mob/living/basic/pet/dog/corgi,
+/mob/living/basic/pet/dog/corgi{
+	name = "Dirk"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/robotics/lab)
 "lDP" = (
@@ -70070,14 +70072,6 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/engineering/transit_tube)
-"tuJ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/structure/chair,
-/obj/effect/landmark/start/depsec/engineering,
-/turf/open/floor/iron/textured_edge,
-/area/station/security/checkpoint/engineering)
 "tuU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -82887,6 +82881,14 @@
 "wWQ" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
+"wWR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/chair,
+/obj/effect/landmark/start/depsec/engineering,
+/turf/open/floor/iron/textured_edge,
+/area/station/security/checkpoint/engineering)
 "wXc" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -118788,7 +118790,7 @@ uWW
 gXL
 erh
 sxd
-tuJ
+wWR
 hpe
 qks
 hOM
