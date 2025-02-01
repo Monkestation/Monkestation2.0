@@ -187,11 +187,3 @@
 	)
 	encode_info = AUGMENT_NT_LOWLEVEL
 
-/obj/item/organ/internal/cyberimp/arm/item_set/botany/emag_act(mob/user, obj/item/card/emag/emag_card)
-	for(var/datum/weakref/created_item in items_list)
-		var/obj/potential_chainsaw = created_item.resolve()
-		if(istype(/obj/item/chainsaw/mounted_chainsaw, potential_chainsaw))
-			return FALSE
-	balloon_alert(user, "integrated chainsaw unlocked")
-	items_list += WEAKREF(new /obj/item/chainsaw/mounted_chainsaw(src))
-	return TRUE
