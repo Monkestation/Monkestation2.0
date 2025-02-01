@@ -61529,6 +61529,11 @@
 /area/station/engineering/atmos)
 "lTH" = (
 /obj/effect/turf_decal/bot,
+/mob/living/basic/pet/poppy,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Poppy's bed"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "lTN" = (
