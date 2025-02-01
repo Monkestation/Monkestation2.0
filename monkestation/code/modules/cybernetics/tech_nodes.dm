@@ -12,7 +12,7 @@
 	display_name = "Advanced Cybernetic Application"
 	description = "Creation of NT-secure advanced cyberlinks for high-grade cybernetic augmentation"
 	prereq_ids = list("ntlink_low", "adv_cyber_implants","high_efficiency")
-	design_ids = list("ci-nt_high", "ci-cyberconnector")
+	design_ids = list("ci-nt_high", "ci-tg", "ci-cyberconnector")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/job_approved_item_set
@@ -34,12 +34,10 @@
 /datum/techweb_node/security_authorized_implants
 	id = "job_itemsets-sec"
 	display_name = "NT Approved Security Implants"
-	description = "A list of approved item sets that can be implanted into the crew to allow easier access to their tools."
-	prereq_ids = "A list of approved implants for security officers."
+	description = "A list of approved implants for security officers."
 	prereq_ids = list("ntlink_high")
 	design_ids = list(
 		"ci-set-mantis",
 		"ci-set-combat",
-		"ci-tg",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
