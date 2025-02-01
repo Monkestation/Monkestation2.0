@@ -148,13 +148,13 @@
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
 
-/obj/item/autosurgeon/syndicate/thermal_eyes //monkestation edit start: Syndicate cybernetics
-	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals/syndicate
+/obj/item/autosurgeon/syndicate/thermal_eyes
+	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
 
 /obj/item/autosurgeon/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate
+	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
 
-/obj/item/autosurgeon/syndicate/anti_stun
+/obj/item/autosurgeon/syndicate/anti_stun //monkestation edit start: Syndicate cybernetics
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
 
 /obj/item/autosurgeon/syndicate/reviver

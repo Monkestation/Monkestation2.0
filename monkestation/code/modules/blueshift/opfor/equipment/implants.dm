@@ -16,6 +16,17 @@
 	admin_note = "Needed to run any non illegal cyberware"
 	item_type = /obj/item/autosurgeon/organ/cyberlink_nt_high
 
+
+/datum/opposing_force_equipment/implants/xray
+	name = "Contraband X-Ray Eyes"
+	item_type = /obj/item/autosurgeon/syndicate/xray_eyes
+	description = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+
+/datum/opposing_force_equipment/implants/thermal
+	name = "Contraband Thermal Eyes"
+	item_type = /obj/item/autosurgeon/syndicate/thermal_eyes
+	description = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
+
 /datum/opposing_force_equipment/implants/sad_trombone
 	name = "Sad Trombone Implant"
 	item_type = /obj/item/implanter/sad_trombone
@@ -88,16 +99,6 @@
 	item_type = /obj/item/implanter/emp
 	admin_note = "Gives the user a big EMP on an action button. Has three uses after which it becomes useless."
 	description = "An implanter that grants you the ability to create several EMP pulses, centered on you."
-
-/datum/opposing_force_equipment/implants_illegal/xray
-	name = "Contraband X-Ray Eyes"
-	item_type = /obj/item/autosurgeon/syndicate/xray_eyes
-	description = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
-
-/datum/opposing_force_equipment/implants_illegal/thermal
-	name = "Contraband Thermal Eyes"
-	item_type = /obj/item/autosurgeon/syndicate/thermal_eyes
-	description = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 
 /datum/opposing_force_equipment/implants_illegal/armlaser
 	name = "Arm-mounted Laser Implant"
