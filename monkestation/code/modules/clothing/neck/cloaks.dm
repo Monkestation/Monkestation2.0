@@ -247,7 +247,6 @@
 	var/obj/item/clothing/neck/mentorcloak/mentorcloak = owner.get_item_by_slot(ITEM_SLOT_NECK)
 	if(!mentorcloak)
 		return
-	do_smoke(1, 1, owner, get_turf(owner), /obj/effect/particle_effect/fluid/smoke/extraquick)
 	mentorcloak.current_cloak = picked_cloak
 	mentorcloak.current_cloak_overlay = picked_cloak_overlay
 	mentorcloak.icon_state = picked_cloak

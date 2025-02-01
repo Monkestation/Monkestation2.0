@@ -18,10 +18,3 @@
 	fallback_timer = null
 	if(!QDELETED(src))
 		kill_smoke()
-
-/datum/effect_system/fluid_spread/smoke/extraquick
-	effect_type = /obj/effect/particle_effect/fluid/smoke/extraquick
-
-/obj/effect/particle_effect/fluid/smoke/extraquick
-	lifetime = 0.5 SECONDS
-	opacity = FALSE
