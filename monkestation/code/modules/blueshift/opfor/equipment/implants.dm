@@ -11,23 +11,10 @@
 	description = "A skillchip that, when installed, allows the user to recognise cyborg wire layouts and understand their functionality at a glance."
 
 //Implants
-/datum/opposing_force_equipment/implants/Cybersun
-	item_type = /obj/item/autosurgeon/syndicate/
-/datum/opposing_force_equipment/implants/nodrop
-	item_type = /obj/item/autosurgeon/syndicate/nodrop
-	name = "Anti Drop Implant"
-	admin_note = "Allows the user to tighten their grip, their held items unable to be dropped by any cause. Hardstuns user for a longtime if hit with EMP."
-	description = "An implant that prevents you from dropping items in your hand involuntarily. Comes loaded in a syndicate autosurgeon."
-
-/datum/opposing_force_equipment/implants/cns
-	name = "CNS Rebooter Implant"
-	item_type = /obj/item/autosurgeon/syndicate/anti_stun
-	description = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
-
-/datum/opposing_force_equipment/implants/reviver
-	name = "Reviver Implant"
-	item_type = /obj/item/autosurgeon/syndicate/reviver
-	description = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
+/datum/opposing_force_equipment/implants/cyberlink_nt_high
+	name = "NT-High Cyberlink"
+	admin_note = "Needed to run any non illegal cyberware"
+	item_type = /obj/item/autosurgeon/cyberlink_nt_high
 
 /datum/opposing_force_equipment/implants/sad_trombone
 	name = "Sad Trombone Implant"
@@ -52,10 +39,6 @@
 	name = "Janitor Arm Implant"
 	item_type = /obj/item/autosurgeon/janitor
 
-/datum/opposing_force_equipment/implants/armblade
-	name = "Mantis Blade Arm Implant"
-	admin_note = "Force 30 IF emagged."
-	item_type = /obj/item/autosurgeon/organ/syndicate/syndie_mantis
 
 /datum/opposing_force_equipment/implants/muscle
 	name = "Muscle Arm Implant"
@@ -94,6 +77,11 @@
 	item_type = /obj/item/implanter/explosive
 	description = "An implanter that will make you explode on death in a decent-sized explosion."
 */
+/datum/opposing_force_equipment/implants_illegal/cybersun
+	item_type = /obj/item/autosurgeon/syndicate/cyberlink_syndicate
+	name = "Cybersun Cybernetics Access System"
+	admin_note = "Needed to use any illegal cybernetics."
+	description = "Cybersun's patented cyberlink, equipped to run more nefarious and dangerous cyberware. Invisible to medical huds, and comes with a single use autosurgeon."
 
 /datum/opposing_force_equipment/implants_illegal/emp
 	name = "EMP Implant"
@@ -130,3 +118,25 @@
 /datum/opposing_force_equipment/implants_illegal/flash
 	name = "Flash Arm Implant"
 	item_type = /obj/item/autosurgeon/syndicate/flash
+
+/datum/opposing_force_equipment/implants_illegal/armblade
+	name = "Mantis Blade Arm Implant"
+	admin_note = "Force 30 IF emagged. Acts as a power crowbar (Opens airlock after delay)."
+	description = "A pair of armblades, can be used to cut and pry objects open, and pry open airlocks."
+	item_type = /obj/item/autosurgeon/organ/syndicate/syndie_mantis
+
+/datum/opposing_force_equipment/implants_illegal/nodrop
+	item_type = /obj/item/autosurgeon/syndicate/nodrop
+	name = "Anti Drop Implant"
+	admin_note = "Allows the user to tighten their grip, their held items unable to be dropped by any cause. Hardstuns user for a longtime if hit with EMP."
+	description = "An implant that prevents you from dropping items in your hand involuntarily. Comes loaded in a syndicate autosurgeon."
+
+/datum/opposing_force_equipment/implants_illegal/cns
+	name = "CNS Rebooter Implant"
+	item_type = /obj/item/autosurgeon/syndicate/anti_stun
+	description = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned. Comes loaded in a syndicate autosurgeon."
+
+/datum/opposing_force_equipment/implants_illegal/reviver
+	name = "Reviver Implant"
+	item_type = /obj/item/autosurgeon/syndicate/reviver
+	description = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart! Comes loaded in a syndicate autosurgeon."
