@@ -115,6 +115,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "bD" = (
@@ -1126,6 +1127,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "mz" = (
@@ -1204,6 +1206,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "nM" = (
@@ -1224,6 +1227,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/box/red,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "nR" = (
@@ -1239,6 +1243,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "og" = (
@@ -1687,6 +1692,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "tp" = (
@@ -1907,6 +1913,7 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "wD" = (
 /obj/machinery/vending/snack/orange,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "wJ" = (
@@ -2052,6 +2059,10 @@
 /obj/machinery/door/poddoor{
 	id = "syndicate_depot_shipbreaking_gate"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "xD" = (
@@ -2322,6 +2333,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"Ap" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Au" = (
 /obj/machinery/syndicatebomb/self_destruct,
 /obj/structure/cable,
@@ -2786,6 +2804,10 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
+"HN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "HU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2965,6 +2987,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/syndicate/shipbreaking,
 /obj/item/melee/sledgehammer/syndicate_depot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "JN" = (
@@ -3060,6 +3083,10 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/syndicate/shipbreaking,
 /obj/item/melee/sledgehammer/syndicate_depot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "KL" = (
@@ -3269,11 +3296,13 @@
 	pixel_y = 1
 	},
 /obj/effect/turf_decal/loading_area,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Nq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Nu" = (
@@ -3284,6 +3313,7 @@
 	dir = 9;
 	id = "depot_shipbreak"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Nz" = (
@@ -3333,6 +3363,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Oe" = (
@@ -3458,6 +3489,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"PN" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/syndicate_depot)
 "PQ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -3611,6 +3650,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "RB" = (
@@ -3817,6 +3857,7 @@
 /obj/machinery/computer/security/telescreen{
 	network = list("syndicate_depot")
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "TR" = (
@@ -4000,6 +4041,10 @@
 "VR" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/computer/shipbreaker/syndicate_depot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "VY" = (
@@ -4404,6 +4449,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "ZQ" = (
@@ -5102,7 +5148,7 @@ IM
 Xc
 KG
 JG
-wk
+HN
 Nk
 Nw
 Xc
@@ -5178,12 +5224,12 @@ Je
 BF
 BF
 et
-tr
+PN
 xz
-wk
+Ap
 tg
-wk
-wk
+HN
+HN
 Ym
 Xc
 et
@@ -5258,9 +5304,9 @@ Je
 BF
 BF
 et
-tr
+PN
 xz
-wk
+Ap
 Nq
 nJ
 Cj
