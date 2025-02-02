@@ -513,6 +513,11 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/syndicate_depot)
+"fR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "fS" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
@@ -708,6 +713,13 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
+"hV" = (
+/obj/machinery/power/smes/engineering{
+	output_attempt = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "hZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/west,
@@ -1284,6 +1296,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"oy" = (
+/obj/structure/closet/generic/wall/directional/east,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "oz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1582,6 +1600,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/security)
+"sK" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "sR" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/security)
@@ -2028,6 +2050,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
+"xD" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "xM" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -2075,6 +2104,8 @@
 /mob/living/basic/bot/cleanbot{
 	faction = list("neutral","silicon","turret","Syndicate")
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "yD" = (
@@ -2381,6 +2412,11 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"BE" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "BF" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/space/has_grav/syndicate_depot)
@@ -2917,6 +2953,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "JG" = (
@@ -3085,6 +3123,14 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"LS" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "LW" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"
@@ -6927,10 +6973,10 @@ dx
 Fc
 hq
 hq
+hq
+hq
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7005,12 +7051,12 @@ Nu
 Me
 PU
 Fc
+et
+et
 hq
 hq
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7085,12 +7131,12 @@ Fc
 Fc
 Fc
 Fc
+Fc
+et
 hq
 hq
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7161,16 +7207,16 @@ iL
 Dl
 JB
 yB
+xD
+fR
+fR
+fR
 Fc
 et
-et
-hq
 hq
 hq
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7243,15 +7289,15 @@ mz
 mz
 mz
 mz
+BE
+fR
+Fc
 et
 hq
 hq
-hq
 et
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7323,15 +7369,15 @@ on
 nH
 Nb
 mz
+hV
+sK
+Fc
 dZ
-hq
 hq
 hq
 Vj
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7403,15 +7449,15 @@ HW
 Au
 AJ
 mz
+LS
+oy
+Fc
 YP
 hq
 hq
 hq
-hq
 et
 et
-BF
-BF
 BF
 BF
 BF
@@ -7488,8 +7534,8 @@ Oe
 Oe
 Oe
 hq
-et
-et
+hq
+hq
 et
 BF
 BF
