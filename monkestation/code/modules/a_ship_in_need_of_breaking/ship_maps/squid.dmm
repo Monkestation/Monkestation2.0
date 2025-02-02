@@ -5,7 +5,7 @@
 /area/template_noop)
 "bR" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "bZ" = (
 /obj/structure/bed,
@@ -331,9 +331,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/template_noop)
-"ur" = (
-/turf/open/space/basic,
-/area/template_noop)
 "uC" = (
 /turf/closed/wall/mineral/titanium,
 /area/template_noop)
@@ -396,14 +393,14 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "yi" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "zj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -552,7 +549,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Ll" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/layer2{
@@ -594,7 +591,7 @@
 /obj/machinery/power/shuttle_engine/large{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Ol" = (
 /obj/structure/reagent_dispensers/foamtank,
@@ -660,7 +657,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer4{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "TR" = (
 /obj/machinery/door/airlock/highsecurity,
@@ -1057,7 +1054,7 @@ nZ
 nZ
 nZ
 nZ
-ur
+nZ
 NJ
 Lj
 Px
@@ -1084,8 +1081,8 @@ nZ
 nZ
 nZ
 nZ
-ur
-ur
+nZ
+nZ
 Lj
 Px
 cF
@@ -1138,7 +1135,7 @@ nZ
 nZ
 nZ
 nZ
-ur
+nZ
 NJ
 Lj
 Px
@@ -1165,8 +1162,8 @@ nZ
 nZ
 nZ
 nZ
-ur
-ur
+nZ
+nZ
 Lj
 Px
 mL
