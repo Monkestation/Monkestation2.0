@@ -99,6 +99,9 @@
 /area/ruin/space/has_grav/syndicate_depot/hydroponics
 	name = "Syndicate Depot Hydroponics"
 
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking_control
+	name = "Syndicate Depot Shipbreaking Magnet Control"
+
 
 //misc things; fluff, stun-capable turrets
 
@@ -107,3 +110,44 @@
 	desc = "A ballistic machine-gun auto-turret. This one has had one of its barrels replaced with a taser."
 	stun_projectile = /obj/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+
+//shipbreaking features
+/obj/machinery/computer/shipbreaker/syndicate_depot
+	name = "shipbreaker magnet console"
+	desc = "A computer linked to the depot's shipbreaking magnet, capable of pulling in abandoned ships from any location."
+	icon_screen = "syndishuttle"
+	icon_keyboard = "syndie_key"
+	light_color = COLOR_SOFT_RED
+	mapped_start_area = /area/shipbreak/syndicate_depot
+
+/area/shipbreak/syndicate_depot
+	name = "Syndicate Depot Shipbreaking Magnet"
+
+/obj/item/storage/toolbox/syndicate/shipbreaking
+	name = "suspicious salvage toolbox"
+
+/obj/item/storage/toolbox/syndicate/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool/electric/hacked_raynewelder(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/wirecutters(src, "red")
+	new /obj/item/multitool(src)
+	new /obj/item/extinguisher/mini(src)
+
+/obj/item/weldingtool/electric/hacked_raynewelder //id make it a subtype of the rayne welder but then id have to override shit
+	name = "modified laser welding tool"
+	desc = "A Rayne corp laser cutter and welder. This one seems to have been refitted by the Syndicate for general salvage use, though the removal of its safety measures has slightly reduced its efficiency."
+	icon = 'monkestation/icons/obj/rayne_corp/rayne.dmi'
+	icon_state = "raynewelder"
+	inhand_icon_state = "raynewelder"
+	lefthand_file = 'monkestation/icons/mob/inhands/equipment/engineering_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/equipment/engineering_righthand.dmi'
+	light_power = 1
+	light_color = LIGHT_COLOR_FLARE
+	tool_behaviour = NONE
+	toolspeed = 0.3
+	power_use_amount = 25
+	// We don't use fuel
+	change_icons = FALSE
+	max_fuel = 20
