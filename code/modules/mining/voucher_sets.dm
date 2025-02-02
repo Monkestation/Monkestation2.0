@@ -365,3 +365,21 @@
 	set_items = list(
 		/obj/item/sensor_device/brigdoc
 	)
+
+/datum/voucher/security/brig_physician/pinpointer
+	name = "Pinpointer"
+	description = "Tracking issues ? Never heard of them."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "pinpointer_crew"
+	set_items = list(
+		/obj/item/pinpointer/crew
+	)
+
+/datum/voucher/security/brig_physician/pax
+	name = "Pax pills"
+	description = "Lethals ? Nuh huh."
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "pill"
+	set_items = list(
+		/obj/item/storage/pill_bottle/paxpsych = 2
+	)
