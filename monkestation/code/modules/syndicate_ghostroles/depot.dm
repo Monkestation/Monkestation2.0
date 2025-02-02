@@ -151,3 +151,28 @@
 	// We don't use fuel
 	change_icons = FALSE
 	max_fuel = 20
+
+/obj/item/melee/sledgehammer/syndicate_depot //fuck you
+
+/obj/item/melee/sledgehammer/syndicate_depot/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) && user)
+		/// This will already do low damage, so it doesn't need to be intercepted earlier
+		to_chat(user, span_danger("\The [src] is too heavy to attack effectively without being wielded!"))
+		return
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humantarget = target
+		if(!HAS_TRAIT(target, TRAIT_SPLEENLESS_METABOLISM) && humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN) && !isnull(humantarget.dna.species.mutantspleen))
+			var/obj/item/organ/internal/spleen/target_spleen = humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN)
+			target_spleen.apply_organ_damage(5)
+	if(!proximity_flag)
+		return
+
+	if(target.uses_integrity)
+		if(!QDELETED(target))
+			if(istype(get_area(target), /area/ruin/space/has_grav/syndicate_depot/shipbreaking))
+				if(isstructure(target))
+					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // Breaks "structures pretty good"
+				if(ismachinery(target))
+					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // A luddites friend, Sledghammer good at break machine
+			playsound(src, 'sound/effects/bang.ogg', 40, 1)
