@@ -104,6 +104,7 @@
 	if(istype(voucher, /obj/item/security_voucher/assistant))
 		voucher_set = /datum/voucher_set/security/assistant
 	if(istype(voucher, /obj/item/security_voucher/brig_physician))
+		voucher_set = /datum/voucher_set/security/brig_physician
 	set_types = list()
 	for(var/datum/voucher_set/static_set as anything in subtypesof(voucher_set))
 		set_types[initial(static_set.name)] = new static_set
