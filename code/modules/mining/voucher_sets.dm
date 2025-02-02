@@ -354,3 +354,14 @@
 	new /obj/item/gun/energy/taser/old(src)
 	new /obj/item/storage/box/pinpointer_pairs(src)
 	new /obj/item/book/manual/wiki/security_space_law(src)
+
+/// Brig physician kit
+
+/datum/voucher/security/brig_physician/monitor
+	name = "Officers monitor"
+	description = "A dead officer ? Not on your watch."
+	icon = "icons/obj/device.dmi"
+	icon_state = "scanner"
+	set_items = list(
+		/obj/item/sensor_device/brigdoc
+	)
