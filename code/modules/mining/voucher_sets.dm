@@ -385,7 +385,7 @@
 	)
 
 /datum/voucher/security/brig_physician/bodybags
-	name = "Prisoners bodybags
+	name = "Prisoners bodybags"
 	description = "Carrying a prisoner has never been easier."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
