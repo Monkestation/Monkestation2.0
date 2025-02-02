@@ -383,3 +383,12 @@
 	set_items = list(
 		/obj/item/storage/pill_bottle/paxpsych = 2
 	)
+
+/datum/voucher/security/brig_physician/bodybags
+	name = "Prisoners bodybags
+	description = "Carrying a prisoner has never been easier."
+	icon = 'icons/obj/bodybag.dmi'
+	icon_state = "prisonerenvirobag"
+	set_items = list(
+		/obj/structure/closet/body_bag/environmental/prisoner = 4
+	)
