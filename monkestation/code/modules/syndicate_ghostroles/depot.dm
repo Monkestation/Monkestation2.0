@@ -113,15 +113,15 @@
 
 //shipbreaking features
 /obj/machinery/computer/shipbreaker/syndicate_depot
-	name = "shipbreaker magnet console"
+	name = "shipbreaking magnet console"
 	desc = "A computer linked to the depot's shipbreaking magnet, capable of pulling in abandoned ships from any location."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = COLOR_SOFT_RED
-	mapped_start_area = /area/shipbreak/syndicate_depot
+	mapped_start_area = /area/ruin/space/has_grav/syndicate_depot/shipbreaking
 
-/area/shipbreak/syndicate_depot
-	name = "Syndicate Depot Shipbreaking Magnet"
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking
+	name = "Syndicate Depot Shipbreaking Zone"
 
 /obj/item/storage/toolbox/syndicate/shipbreaking
 	name = "suspicious salvage toolbox"

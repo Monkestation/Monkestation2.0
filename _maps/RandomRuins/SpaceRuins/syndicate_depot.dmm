@@ -645,7 +645,7 @@
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "hd" = (
 /turf/template_noop,
-/area/shipbreak/syndicate_depot)
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking)
 "hl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -1210,6 +1210,8 @@
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "nO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "nR" = (
@@ -1767,6 +1769,7 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "uW" = (
 /obj/structure/cable,
+/obj/machinery/cell_charger_multi/wall_mounted/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "uX" = (
@@ -3945,8 +3948,8 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "VR" = (
-/obj/machinery/computer/shipbreaker/syndicate_depot,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer/shipbreaker/syndicate_depot,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "VY" = (
