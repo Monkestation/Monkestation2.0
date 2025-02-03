@@ -950,12 +950,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"kC" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "kH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2457,6 +2451,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/eva_storage)
+"BZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Cj" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -2482,12 +2483,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"CA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "CD" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -2800,6 +2795,18 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"Hn" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
+"Ht" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "Hx" = (
 /obj/machinery/camera/directional/south{
 	network = list("syndicate_depot");
@@ -3002,6 +3009,7 @@
 /obj/item/storage/toolbox/syndicate/shipbreaking,
 /obj/item/melee/sledgehammer/syndicate_depot,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/pushbroom,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "JN" = (
@@ -3101,6 +3109,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/item/pushbroom,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "KL" = (
@@ -4235,13 +4244,6 @@
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"XH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/light/small/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "XK" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor,
@@ -4687,7 +4689,7 @@ Je
 Je
 Je
 Je
-Je
+BF
 BF
 BF
 BF
@@ -4766,7 +4768,7 @@ Je
 Je
 Je
 Je
-Je
+BF
 BF
 BF
 BF
@@ -4845,7 +4847,7 @@ Je
 Je
 Je
 Je
-Je
+BF
 BF
 BF
 BF
@@ -4924,7 +4926,7 @@ hd
 Je
 Je
 Je
-Je
+BF
 BF
 BF
 BF
@@ -5003,8 +5005,8 @@ hd
 hd
 Je
 Je
-Je
-Je
+BF
+BF
 BF
 BF
 BF
@@ -5083,7 +5085,7 @@ hd
 hd
 Je
 Je
-Je
+BF
 BF
 BF
 Tv
@@ -5163,14 +5165,14 @@ hd
 hd
 Je
 Je
-Je
+BF
 BF
 et
 IM
 Xc
 KG
 JG
-CA
+Ht
 Nk
 Nw
 Xc
@@ -5242,9 +5244,9 @@ hd
 hd
 hd
 Je
-Je
 BF
 BF
+et
 et
 PN
 xz
@@ -5321,8 +5323,8 @@ hd
 hd
 hd
 hd
-Je
-Je
+BF
+BF
 BF
 BF
 et
@@ -5401,8 +5403,8 @@ hd
 hd
 hd
 hd
-Je
-Je
+BF
+BF
 BF
 et
 et
@@ -5481,8 +5483,8 @@ hd
 hd
 hd
 hd
-Je
-Je
+PN
+et
 et
 et
 et
@@ -5561,9 +5563,9 @@ hd
 hd
 hd
 hd
-Je
-Je
-BF
+PN
+et
+et
 BF
 BF
 BF
@@ -5641,8 +5643,8 @@ hd
 hd
 hd
 hd
-Je
-Je
+PN
+et
 BF
 BF
 BF
@@ -5721,9 +5723,9 @@ hd
 hd
 hd
 hd
-Je
-Je
-Je
+BF
+BF
+BF
 BF
 BF
 BF
@@ -5802,8 +5804,8 @@ hd
 hd
 hd
 Je
-Je
-Je
+BF
+BF
 BF
 BF
 BF
@@ -5882,8 +5884,8 @@ hd
 hd
 hd
 Je
-Je
-Je
+BF
+BF
 BF
 BF
 BF
@@ -5962,7 +5964,7 @@ hd
 hd
 hd
 Je
-Je
+BF
 BF
 BF
 BF
@@ -6042,7 +6044,7 @@ hd
 hd
 hd
 Je
-Je
+BF
 BF
 BF
 BF
@@ -7200,7 +7202,7 @@ NO
 NO
 AB
 Nu
-kC
+Hn
 Nu
 Fc
 Fc
@@ -7362,7 +7364,7 @@ mz
 mz
 mz
 BE
-XH
+BZ
 Fc
 et
 hq
