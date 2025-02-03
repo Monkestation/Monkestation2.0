@@ -2259,6 +2259,7 @@
 /obj/item/clothing/head/bio_hood/interdyne,
 /obj/item/clothing/head/bio_hood/interdyne,
 /obj/item/clothing/head/bio_hood/interdyne,
+/obj/item/construction/plumbing/research,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "gu" = (
@@ -2637,7 +2638,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kB" = (
@@ -2646,6 +2646,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/south,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kE" = (
@@ -2795,6 +2796,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "sy" = (
@@ -2852,7 +2854,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "vs" = (
@@ -2908,8 +2909,8 @@
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/item/stack/sheet/mineral/plasma/twenty,
-/obj/item/disk/vacuum_upgrade,
-/obj/item/disk/vacuum_upgrade,
+/obj/item/disk/vacuum_upgrade/biomass,
+/obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "wI" = (
@@ -2988,6 +2989,7 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "An" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "Az" = (
@@ -3916,10 +3918,10 @@ KZ
 KZ
 KZ
 ab
-Iy
-Iy
-Iy
-Iy
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -3968,9 +3970,9 @@ iK
 Fv
 KZ
 ab
-Iy
-Iy
-Iy
+ab
+ab
+ab
 ab
 ab
 ab
@@ -4683,7 +4685,7 @@ aa
 aa
 aa
 Iy
-Iy
+ab
 ab
 ab
 ab
