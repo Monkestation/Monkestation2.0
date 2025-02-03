@@ -517,6 +517,7 @@
 "fR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "fS" = (
@@ -1305,6 +1306,7 @@
 /obj/structure/closet/generic/wall/directional/east,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "oz" = (
@@ -1513,6 +1515,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
+"sc" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "sd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -1611,6 +1619,7 @@
 /area/ruin/space/has_grav/syndicate_depot/security)
 "sK" = (
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "sR" = (
@@ -2437,6 +2446,7 @@
 "BE" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/layer4,
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "BF" = (
@@ -3646,6 +3656,13 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/infirmary)
+"Ru" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Rv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -7177,9 +7194,9 @@ mk
 NO
 NO
 AB
-Fc
-Fc
-Fc
+Nu
+sc
+Nu
 Fc
 Fc
 et
@@ -7340,7 +7357,7 @@ mz
 mz
 mz
 BE
-fR
+Ru
 Fc
 et
 hq
