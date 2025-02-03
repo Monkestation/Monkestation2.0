@@ -4,7 +4,10 @@
 	return GLOB.always_state
 
 /datum/crew_manifest/ui_status(mob/user, datum/ui_state/state)
-	return (isnewplayer(user) || isobserver(user) || isAI(user) || ispAI(user)) ? UI_INTERACTIVE : UI_CLOSE
+// MONKESTATION EDIT OLD -- WRAITH
+//	return (isnewplayer(user) || isobserver(user) || isAI(user) || ispAI(user)) ? UI_INTERACTIVE : UI_CLOSE
+// MONKESTATION EDIT NEW
+	return (isnewplayer(user) || isobserver(user) || iswraith(user) || isAI(user) || ispAI(user)) ? UI_INTERACTIVE : UI_CLOSE
 
 /datum/crew_manifest/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

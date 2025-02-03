@@ -28,6 +28,9 @@
 /// is something a worm
 #define iscorticalborer(A) (istype(A, /mob/living/basic/cortical_borer))
 
+/// is something a spookier than normal ghost
+#define iswraith(A) (istype(A, /mob/living/basic/wraith))
+
 /// Is the mob a blood brother
 #define IS_BROTHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brother))
 
@@ -58,3 +61,13 @@
 
 /// How much heretic Mark of Rust mark does to items
 #define RUST_MARK_DAMAGE	50
+
+// Wraith evolutions
+/// Not evolved at all
+#define EVOLUTION_WRAITH_NONE (1<<0)
+/// Focuses on summoning creatures
+#define EVOLUTION_WRAITH_HARBINGER (1<<1)
+/// Focuses on making everyone very annoyed
+#define EVOLUTION_WRAITH_PLAGUEBRINGER (1<<2)
+/// Basically the clown path, you annoy everyone very minorly very often
+#define EVOLUTION_WRAITH_TRICKSTER (1<<3)
