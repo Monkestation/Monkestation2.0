@@ -13742,6 +13742,10 @@
 "dkO" = (
 /turf/open/floor/iron,
 /area/station/security/brig)
+"dkU" = (
+/mob/living/basic/bot/cleanbot/medbay,
+/turf/open/floor/iron/dark,
+/area/station/medical/treatment_center)
 "dlb" = (
 /obj/machinery/bluespace_beacon,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
@@ -44027,6 +44031,15 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
 /area/station/solars/starboard/fore)
+"mJO" = (
+/obj/structure/table,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/prison,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "mKe" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -70907,7 +70920,6 @@
 /area/station/maintenance/starboard/central)
 "vcp" = (
 /obj/structure/curtain,
-/obj/machinery/shower/directional/north,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
@@ -80671,12 +80683,13 @@
 /area/station/commons/fitness/recreation)
 "yho" = (
 /obj/structure/table,
-/obj/item/radio/intercom/prison,
 /obj/machinery/duct,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/flashlight/lamp{
+	pixel_y = 7
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "yhN" = (
@@ -99413,7 +99426,7 @@ cVl
 fdr
 tPb
 yho
-oiF
+mJO
 fdr
 fdr
 cCD
@@ -178627,7 +178640,7 @@ ecW
 dXo
 lTc
 lrQ
-xOn
+dkU
 gHp
 dHv
 xSZ
