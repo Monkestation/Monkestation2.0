@@ -357,7 +357,7 @@
 
 /// Brig physician kit
 
-/datum/voucher/security/brig_physician/monitor
+/datum/voucher_set/security/brig_physician/monitor
 	name = "Officers monitor"
 	description = "A dead officer ? Not on your watch."
 	icon = "icons/obj/device.dmi"
@@ -366,7 +366,7 @@
 		/obj/item/sensor_device/brigdoc
 	)
 
-/datum/voucher/security/brig_physician/pinpointer
+/datum/voucher_set/security/brig_physician/pinpointer
 	name = "Pinpointer"
 	description = "Tracking issues ? Never heard of them."
 	icon = 'icons/obj/device.dmi'
@@ -375,7 +375,7 @@
 		/obj/item/pinpointer/crew
 	)
 
-/datum/voucher/security/brig_physician/pax
+/datum/voucher_set/security/brig_physician/pax
 	name = "Pax pills"
 	description = "Lethals ? Nuh huh."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -384,8 +384,8 @@
 		/obj/item/storage/pill_bottle/paxpsych = 2
 	)
 
-/datum/voucher/security/brig_physician/bodybags
-	name = "Prisoners bodybags
+/datum/voucher_set/security/brig_physician/bodybags
+	name = "Prisoners bodybags"
 	description = "Carrying a prisoner has never been easier."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"

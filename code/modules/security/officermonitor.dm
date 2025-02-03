@@ -1,7 +1,7 @@
 /obj/item/sensor_device/brigdoc
 	name = "brig physician's handheld monitor"
 	desc = "A specialised model of handheld crew monitor, configured to only security."
-	icon = "icons/obj/device.dmi"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -46,7 +46,7 @@ GLOBAL_DATUM_INIT(security_crewmonitor, /datum/crewmonitor/security, new)
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
 		var/sensor_mode = GLOB.crewmonitor.get_tracking_level(tracked_mob, z, nt_net)
-		if (senxor_mode == SENSOR_OFF)
+		if (sensor_mode == SENSOR_OFF)
 			continue
 		var/mob/living/tracked_living_mob = tracked_mob
 		var/list/entry = list()
@@ -54,13 +54,14 @@ GLOBAL_DATUM_INIT(security_crewmonitor, /datum/crewmonitor/security, new)
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
 		if (id_card)
 			entry["name"] = id_card.registered_name
-			entry["assignment"] = id_card.get_trim_assignment()
-
+			entry["assignment"] = id_card.assignment
+			var/trim_assignment = id_card.get_trim_assignment()
 			//check if they're security
 			if (jobs_security[trim_assignment] != null)
 				entry["ijob"] = jobs_security[trim_assignment]
 			else
 				continue
+
 			if (isipc(tracked_living_mob))
 				entry["is_robot"] = TRUE
 			if (sensor_mode >= SENSOR_LIVING)
