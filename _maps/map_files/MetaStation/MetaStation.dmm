@@ -24626,12 +24626,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iHy" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "iHD" = (
@@ -27468,9 +27468,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"jzp" = (
-/turf/closed/wall,
-/area/station/commons/vacant_room/office)
 "jzw" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -52163,7 +52160,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	dir = 8;
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 11
@@ -66454,7 +66451,7 @@
 	dir = 4;
 	icon_state = "right";
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/ai_module/core/freeformcore,
@@ -86547,9 +86544,9 @@ crr
 qyT
 rZT
 lQW
-jzp
-jzp
-jzp
+fjD
+fjD
+fjD
 pOa
 pOa
 pOa
