@@ -17,3 +17,9 @@
 	name = "'M.I.L.F.' Core AI Module"
 	desc = "Bring a bit of motherly love to the station."
 	law_id = "milf"
+  
+/obj/item/ai_module/core/full/dj
+	name = "Disc Jockey AI Module"
+	desc = "Party on dude!"
+	law_id = "id"
+  

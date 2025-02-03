@@ -725,7 +725,9 @@
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		usr.client.VUAP_selected_mob = M
+		usr.client.selectedPlayerCkey = M.ckey
+		usr.client.holder.vuap_open()
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -740,7 +742,9 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		show_player_panel(target_mob)
+		usr.client.VUAP_selected_mob = target_mob
+		usr.client.selectedPlayerCkey = target_mob.ckey
+		usr.client.holder.vuap_open()
 
 	else if(href_list["adminopendemo"])
 		usr.client << link("http://viewer.monkestation.com/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]#[world.time]") //opens current round at current time
@@ -1781,8 +1785,12 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.client_token_holder.approve_antag_token()
-		log_admin("[user_client]'s token has been approved by [owner].")
+		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
+		if(!token_holder?.in_queue)
+			return
+		token_holder.approve_antag_token()
+		message_admins("[key_name_admin(owner)] approved a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
+		log_admin("[user_client]'s [token_holder.in_queue] token has been approved by [owner].")
 
 	else if(href_list["reject_antag_token"])
 		if(!check_rights(R_ADMIN))
@@ -1791,8 +1799,12 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.client_token_holder.reject_antag_token()
-		log_admin("[user_client]'s token has been rejected by [owner].")
+		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
+		if(!token_holder?.in_queue)
+			return
+		token_holder.reject_antag_token()
+		message_admins("[key_name_admin(owner)] rejected a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
+		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
@@ -1810,8 +1822,12 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.client_token_holder.approve_token_event()
-		log_admin("[user_client]'s token event has been approved by [owner].")
+		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
+		if(!token_holder?.queued_token_event)
+			return
+		token_holder.approve_token_event()
+		message_admins("[key_name_admin(owner)] approved a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
+		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been approved by [owner].")
 
 	else if(href_list["reject_token_event"])
 		if(!check_rights(R_ADMIN))
@@ -1820,6 +1836,10 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.client_token_holder.reject_token_event()
-		log_admin("[user_client]'s token event has been rejected by [owner].")
+		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
+		if(!token_holder?.queued_token_event)
+			return
+		token_holder.reject_token_event()
+		message_admins("[key_name_admin(owner)] rejected a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
+		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been rejected by [owner].")
 //monkestation edit end

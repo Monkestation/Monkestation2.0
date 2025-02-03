@@ -1650,6 +1650,7 @@
 /obj/structure/cable,
 /obj/machinery/holopad,
 /obj/machinery/duct,
+/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/storage)
 "aBj" = (
@@ -2955,10 +2956,6 @@
 /obj/effect/spawner/random/bureaucracy/stamp,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"aYq" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/shipbreaker_hut)
 "aYu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -5804,7 +5801,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/sink/directional/south,
+/obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -33348,6 +33345,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -45073,7 +45071,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = -3;
@@ -47549,7 +47547,6 @@
 /area/station/medical/psychology)
 "pvQ" = (
 /obj/machinery/door/airlock/engineering,
-/obj/structure/cable,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/engineering/shipbreaker_hut)
@@ -52846,10 +52843,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 1
 	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -53264,6 +53258,10 @@
 /mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"ruB" = (
+/obj/structure/sink/directional/south,
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "ruC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60855,11 +60853,12 @@
 /area/station/engineering/break_room)
 "tQC" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
-/obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/obj/structure/disposalpipe/sorting/mail,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/break_room)
 "tQD" = (
@@ -60909,7 +60908,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 4;
@@ -72889,7 +72888,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/machinery/duct,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -74251,7 +74250,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -87315,7 +87314,7 @@ fPN
 cwL
 mYW
 vKc
-fPN
+ruB
 kNO
 aKB
 tIO
@@ -94364,7 +94363,7 @@ vCp
 ksa
 pRf
 iRr
-aYq
+eKX
 eVx
 pRf
 ksa
