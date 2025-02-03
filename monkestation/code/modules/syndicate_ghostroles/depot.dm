@@ -126,7 +126,7 @@
 /obj/item/storage/toolbox/syndicate/shipbreaking
 	name = "suspicious salvage toolbox"
 
-/obj/item/storage/toolbox/syndicate/PopulateContents()
+/obj/item/storage/toolbox/syndicate/shipbreaking/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/electric/hacked_raynewelder(src)
