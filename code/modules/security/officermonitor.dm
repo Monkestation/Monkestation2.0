@@ -47,7 +47,6 @@ GLOBAL_DATUM_INIT(security_crewmonitor, /datum/crewmonitor/security, new)
 	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
 		var/sensor_mode = GLOB.crewmonitor.get_tracking_level(tracked_mob, z, nt_net)
 		if (sensor_mode == SENSOR_OFF)
-		if (sensor_mode == SENSOR_OFF)
 			continue
 		var/mob/living/tracked_living_mob = tracked_mob
 		var/list/entry = list()
