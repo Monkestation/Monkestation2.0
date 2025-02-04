@@ -228,8 +228,10 @@
 	return ..()
 
 /turf/closed/wall/r_wall/syndicate
-	name = "hull"
-	desc = "The armored hull of an ominous looking ship."
+	//MONKESTATION EDIT - Swapped original name and description into the hull subtype.
+	name = "reinforced plastitanium wall"
+	desc = "A reinforced, ominous wall made of an alloy of plasma and titanium, with plasteel reinforcement layered underneath. Good luck getting through this."
+	//END OF EDIT
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
@@ -260,23 +262,23 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//MONKESTATION ADDITION - Generic subtype for syndicate r_walls
-/turf/closed/wall/r_wall/syndicate/generic
-	name = "reinforced plastitanium wall"
-	desc = "A reinforced, ominous wall made of an alloy of plasma and titanium, with plasteel reinforcement layered underneath. Good luck getting through this."
+//MONKESTATION ADDITION - Hull subtype for syndicate r_walls
+/turf/closed/wall/r_wall/syndicate/hull
+	name = "hull"
+	desc = "The armored hull of an ominous looking ship."
 
-/turf/closed/wall/r_wall/syndicate/generic/nodiagonal
+/turf/closed/wall/r_wall/syndicate/hull/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/r_wall/syndicate/generic/nosmooth
+/turf/closed/wall/r_wall/syndicate/hull/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	smoothing_flags = NONE
 
-/turf/closed/wall/r_wall/syndicate/generic/overspace
+/turf/closed/wall/r_wall/syndicate/hull/overspace
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)

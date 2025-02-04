@@ -206,7 +206,7 @@
 					var/obj/structure/falsewall/plastitanium/F = new (loc)
 					transfer_fingerprints_to(F)
 					qdel(src)
-					return
+				return
 			else if(state == GIRDER_REINF)
 				amount = 1
 				if(sheets.get_amount() < amount)
@@ -217,7 +217,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall/syndicate/generic)
+					T.PlaceOnTop(/turf/closed/wall/r_wall/syndicate)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
