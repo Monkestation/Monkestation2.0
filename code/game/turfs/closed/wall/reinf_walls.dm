@@ -264,3 +264,4 @@
 /turf/closed/wall/r_wall/syndicate/generic
 	name = "reinforced plastitanium wall"
 	desc = "A durable wall made of an alloy of plasma and titanium. Now with plasteel reinforcement!"
+//END OF ADDITION
