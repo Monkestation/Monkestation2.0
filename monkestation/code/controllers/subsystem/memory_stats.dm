@@ -29,9 +29,11 @@ SUBSYSTEM_DEF(memory_stats)
 /datum/controller/subsystem/memory_stats/proc/get_memory_stats()
 	if(world.system_type != MS_WINDOWS) // whatever
 		return null
-	. = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
-	if(.)
-		stats = parse_memory_stats(.)
+	var/result = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
+	if(!findtext(result, "Server mem usage:"))
+		CRASH("byond-memorystats call errored: [result || "(null)"]")
+	stats = parse_memory_stats(result)
+	return result
 
 /datum/controller/subsystem/memory_stats/proc/parse_memory_stats(text)
 	if(!istext(text))
