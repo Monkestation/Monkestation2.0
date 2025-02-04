@@ -263,7 +263,7 @@
 //MONKESTATION ADDITION - Generic subtype for syndicate r_walls
 /turf/closed/wall/r_wall/syndicate/generic
 	name = "reinforced plastitanium wall"
-	desc = "A durable wall made of an alloy of plasma and titanium. Now with plasteel reinforcement!"
+	desc = "A reinforced, ominous wall made of an alloy of plasma and titanium, with plasteel reinforcement layered underneath. Good luck getting through this."
 
 /turf/closed/wall/r_wall/syndicate/generic/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
