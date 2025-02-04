@@ -40,6 +40,7 @@
 
 /mob/living/simple_animal/hostile/syndicat/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) // monkestation addition: allow ventcrawling, for consistency with /mob/living/simple_animal/pet/cat
 	var/obj/item/implant/toinstall = list(/obj/item/implant/weapons_auth, /obj/item/implant/explosive)
 	for(var/obj/item/implant/original_implants as anything in toinstall)
 		var/obj/item/implant/copied_implant = new original_implants.type

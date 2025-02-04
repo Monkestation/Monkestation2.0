@@ -27,7 +27,7 @@
 
 	screens -= category
 
-	if(animated)
+	if(animated && !QDELETED(src)) // monkestation edit: fix an addtimer runtime
 		animate(screen, alpha = 0, time = animated)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
