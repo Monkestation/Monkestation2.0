@@ -1467,23 +1467,23 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 ///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
 /proc/icon_exists(file, state, scream)
-    var/static/list/screams = list()
-    var/static/list/icon_states_cache = list()
-    if(isnull(file) || isnull(state))
-        return FALSE //This is common enough that it shouldn't panic, imo.
+	var/static/list/screams = list()
+	var/static/list/icon_states_cache = list()
+	if(isnull(file) || isnull(state))
+		return FALSE //This is common enough that it shouldn't panic, imo.
 
-    if(isnull(icon_states_cache[file]))
-        icon_states_cache[file] = list()
-        for(var/istate in icon_states(file))
-            icon_states_cache[file][istate] = TRUE
+	if(isnull(icon_states_cache[file]))
+		icon_states_cache[file] = list()
+		for(var/istate in icon_states(file))
+			icon_states_cache[file][istate] = TRUE
 
-    if(isnull(icon_states_cache[file][state]))
-        if(isnull(screams[file]) && scream)
-            screams[file] = TRUE
-            stack_trace("Icon Lookup for state: [state] in file [file] failed.")
-        return FALSE
-    else
-        return TRUE
+	if(isnull(icon_states_cache[file][state]))
+		if(isnull(screams[file]) && scream)
+			screams[file] = TRUE
+			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
+		return FALSE
+	else
+		return TRUE
 
 /// Cache of the width and height of icon files, to avoid repeating the same expensive operation
 GLOBAL_LIST_EMPTY(icon_dimensions)
