@@ -408,9 +408,6 @@
 		else
 			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
 			return ..()
-	if(ishuman(AM) && AM.CanEnterDisposals())
-		AM.forceMove(src)
-		flush() // Might need to use do_flush if this causes problems.
 	else
 		return ..()
 
