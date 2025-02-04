@@ -217,8 +217,21 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall/syndicate)
+					T.PlaceOnTop(/turf/closed/wall/r_wall/syndicate/generic)
 					transfer_fingerprints_to(T)
+					qdel(src)
+				return
+			else if(state == GIRDER_TRAM)
+				if(sheets.get_amount() < amount)
+					balloon_alert(user, "need [amount] sheets!")
+					return
+				balloon_alert(user, "adding plating...")
+				if (do_after(user, 4 SECONDS, target = src))
+					if(sheets.get_amount() < amount)
+						return
+					sheets.use(amount)
+					var/obj/structure/tramwall/plastitanium/tram_wall = new (loc)
+					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
 			else

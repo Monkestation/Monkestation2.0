@@ -259,3 +259,8 @@
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
+
+//MONKESTATION ADDITION - Generic subtype for syndicate r_walls
+/turf/closed/wall/r_wall/syndicate/generic
+	name = "reinforced plastitanium wall"
+	desc = "A durable wall made of an alloy of plasma and titanium. Now with plasteel reinforcement!"
