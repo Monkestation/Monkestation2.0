@@ -21,6 +21,7 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_EXPLORER,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -114,6 +115,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_EXPLORER,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -172,6 +174,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_EXPLORER,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -358,6 +361,7 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_EXPLORER,
 	)
 	required_candidates = 2
 	weight = 3
@@ -535,6 +539,7 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_EXPLORER,
 	)
 	required_candidates = 3
 	weight = 1

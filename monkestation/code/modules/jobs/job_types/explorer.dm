@@ -1,11 +1,11 @@
 /datum/job/explorer
-	title = JOB_LATEJOIN_EXPLORER
+	title = JOB_EXPLORER
 	description = "Explore space. Salvage supplies. \
 		Visit strange places. Die in space."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
-	total_positions = 6
-	spawn_positions = 6
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "EXPLORER"
@@ -21,7 +21,7 @@
 	display_order = JOB_DISPLAY_ORDER_EXPLORER
 	bounty_types = CIV_JOB_MINE
 	departments_list = list(
-		/datum/job_department/late,
+		/datum/job_department/cargo,
 		)
 
 	family_heirlooms = list(

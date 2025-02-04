@@ -70,6 +70,7 @@
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
 #define JOB_SHAFT_MINER "Shaft Miner"
+#define JOB_EXPLORER "Explorer"
 #define JOB_BITRUNNER "Bitrunner"
 //Service
 #define JOB_BARTENDER "Bartender"
