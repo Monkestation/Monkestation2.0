@@ -195,6 +195,12 @@
 
 /datum/job/engineering_guard //see orderly
 
+/datum/job/explorer
+	alt_titles = list(
+		"Explorer",
+		"Space Salvager",
+		"Insurance Agent",
+	)
 /datum/job/geneticist
 	alt_titles = list(
 		"Geneticist",
