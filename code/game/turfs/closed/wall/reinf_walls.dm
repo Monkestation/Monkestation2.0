@@ -264,4 +264,20 @@
 /turf/closed/wall/r_wall/syndicate/generic
 	name = "reinforced plastitanium wall"
 	desc = "A durable wall made of an alloy of plasma and titanium. Now with plasteel reinforcement!"
+
+/turf/closed/wall/r_wall/syndicate/generic/nodiagonal
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle_nd"
+	base_icon_state = "plastitanium_wall"
+	smoothing_flags = SMOOTH_BITMASK
+
+/turf/closed/wall/r_wall/syndicate/generic/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	smoothing_flags = NONE
+
+/turf/closed/wall/r_wall/syndicate/generic/overspace
+	icon_state = "map-overspace"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	fixed_underlay = list("space" = TRUE)
 //END OF ADDITION
