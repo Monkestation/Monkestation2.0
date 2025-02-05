@@ -6753,6 +6753,10 @@
 /obj/item/flashlight/lamp,
 /mob/living/basic/parrot/poly,
 /obj/machinery/light/directional/north,
+/obj/item/stamp/head/ce{
+	pixel_y = -3;
+	pixel_x = -8
+	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/ce)
 "dQP" = (
@@ -13443,6 +13447,8 @@
 "hul" = (
 /obj/machinery/suit_storage_unit/rd,
 /obj/machinery/light/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "huq" = (
@@ -14460,7 +14466,6 @@
 /area/station/medical/office)
 "hUB" = (
 /obj/structure/closet/secure_closet/research_director,
-/obj/structure/cable,
 /obj/machinery/requests_console/directional/east{
 	department = "Research Director's Desk";
 	name = "Research Director's Requests Console";
@@ -17281,9 +17286,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "jpe" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet,
-/area/station/maintenance/department/crew_quarters/bar)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/security/brig)
 "jpo" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/diagonal,
@@ -22146,6 +22152,7 @@
 "mam" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron/diagonal,
 /area/station/service/bar)
 "maq" = (
@@ -23485,6 +23492,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "mLD" = (
@@ -24609,6 +24617,9 @@
 "nmy" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding/wood,
+/obj/item/stamp/head/qm{
+	pixel_x = -9
+	},
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "nmZ" = (
@@ -27599,6 +27610,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/north,
+/mob/living/basic/pet/dog/corgi/ian,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "oXB" = (
@@ -30116,10 +30128,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/openspace,
 /area/space)
-"qrC" = (
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/engine/atmos)
 "qrD" = (
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -35544,6 +35552,7 @@
 /obj/structure/table/glass,
 /obj/item/stamp/head/cmo,
 /obj/item/paper_bin,
+/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/smooth_corner{
 	dir = 8
 	},
@@ -35812,17 +35821,13 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/ce)
-"tnT" = (
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1
-	},
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine/atmos)
 "toc" = (
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine/atmos)
+/obj/machinery/computer/department_orders/service{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet,
+/area/station/maintenance/department/crew_quarters/bar)
 "tov" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -37775,6 +37780,9 @@
 "urb" = (
 /obj/structure/table/wood,
 /obj/item/storage/lockbox/medal,
+/obj/item/stamp/head/captain{
+	pixel_y = 13
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "urd" = (
@@ -38691,8 +38699,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uQx" = (
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/greater)
+/obj/machinery/computer/department_orders/science,
+/turf/open/floor/iron,
+/area/station/science/lab)
 "uQA" = (
 /obj/structure/transit_tube/horizontal{
 	dir = 1
@@ -38749,8 +38758,6 @@
 "uSg" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/security/brig)
 "uSU" = (
@@ -40176,6 +40183,9 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/stamp/head/hop{
+	pixel_x = -12
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "vKa" = (
@@ -41381,6 +41391,7 @@
 /area/station/security/prison)
 "wnb" = (
 /obj/machinery/modular_computer/preset/research,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "wnF" = (
@@ -77275,7 +77286,7 @@ tLF
 ghX
 ghX
 ghX
-uQx
+jIt
 aHu
 aHu
 aHu
@@ -85161,7 +85172,7 @@ sUv
 sam
 wQj
 jXx
-xXn
+jpe
 mFM
 eTq
 eTq
@@ -117592,7 +117603,7 @@ ghX
 qCu
 qCu
 qCu
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -117850,8 +117861,8 @@ ghX
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -124696,7 +124707,7 @@ uMT
 kPn
 uMT
 gAx
-qrC
+uMT
 ulZ
 jkZ
 vcN
@@ -124953,7 +124964,7 @@ uEO
 pRz
 pRz
 iee
-tnT
+fpt
 ulZ
 dZW
 hSi
@@ -125210,7 +125221,7 @@ uEO
 dKh
 jvn
 mQI
-toc
+bIJ
 ulZ
 eEy
 ulZ
@@ -125467,7 +125478,7 @@ uEO
 bIJ
 jvn
 bIJ
-toc
+bIJ
 uEO
 hjq
 bIJ
@@ -131618,7 +131629,7 @@ jIt
 jIt
 jiM
 wnb
-okn
+iao
 sTz
 lzY
 rsu
@@ -132404,7 +132415,7 @@ cga
 ehD
 xPo
 gWv
-pZv
+uQx
 uZv
 dfa
 kty
@@ -134010,7 +134021,7 @@ qCu
 qCu
 qCu
 qCu
-eRr
+dbW
 ghX
 ghX
 tLF
@@ -134267,7 +134278,7 @@ qCu
 qCu
 qCu
 qCu
-eRr
+dbW
 ghX
 wdP
 exM
@@ -134524,7 +134535,7 @@ qCu
 qCu
 qCu
 qCu
-eRr
+dbW
 ghX
 rZe
 tLF
@@ -135811,7 +135822,7 @@ qCu
 qCu
 qCu
 qCu
-eRr
+dbW
 ghX
 ghX
 ghX
@@ -136324,7 +136335,7 @@ qCu
 qCu
 qCu
 qCu
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -136645,8 +136656,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -136902,7 +136913,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -137414,8 +137425,8 @@ ghX
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -137644,7 +137655,7 @@ iPX
 iPX
 iPX
 iPX
-vBR
+iPX
 vBR
 vBR
 vBR
@@ -137673,8 +137684,8 @@ ghX
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -137900,7 +137911,7 @@ iPX
 nZP
 sxq
 lsS
-iPX
+toc
 iPX
 iPX
 iPX
@@ -137930,8 +137941,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -138157,7 +138168,7 @@ rYb
 tDy
 dgz
 sIv
-jpe
+sIv
 sIv
 sIv
 sIv
@@ -138187,8 +138198,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -138445,7 +138456,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -138703,7 +138714,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -138960,7 +138971,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -139217,7 +139228,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -140501,8 +140512,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -140757,9 +140768,9 @@ vBR
 vBR
 ghX
 ghX
-eRr
-eRr
-eRr
+dbW
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -141014,8 +141025,8 @@ vBR
 vBR
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -141271,8 +141282,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -141527,8 +141538,8 @@ vBR
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -142297,7 +142308,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -142554,7 +142565,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -142811,7 +142822,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -144097,7 +144108,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -144352,9 +144363,9 @@ vBR
 vBR
 ghX
 ghX
-eRr
-eRr
-eRr
+dbW
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -144610,7 +144621,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -144867,7 +144878,7 @@ vBR
 vBR
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -145124,7 +145135,7 @@ vBR
 vBR
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -147951,7 +147962,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -148206,9 +148217,9 @@ vBR
 vBR
 ghX
 ghX
-eRr
-eRr
-eRr
+dbW
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -148463,8 +148474,8 @@ vBR
 vBR
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -148720,7 +148731,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -149746,7 +149757,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -150003,7 +150014,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -150770,7 +150781,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
@@ -151281,8 +151292,8 @@ ghX
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 qCu
 qCu
 qCu
@@ -151538,7 +151549,7 @@ jIt
 ghX
 ghX
 dbW
-qCu
+dbW
 qCu
 qCu
 qCu
