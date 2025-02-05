@@ -70,7 +70,6 @@
 
 /obj/item/clothing/shoes/civilprotection_boots/Initialize(mapload)//copied from jackboots (should these be a subtype of jackboots?)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/shoesteps/combine_boot_sounds)
 

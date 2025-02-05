@@ -12,10 +12,7 @@
 
 /datum/element/shoesteps/Detach(atom/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(source, COMSIG_CLICK_CTRL)
-	UnregisterSignal(source, COMSIG_ITEM_EQUIPPED)
-	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_CLICK_CTRL, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 /datum/element/shoesteps/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -30,14 +27,14 @@
 
 /datum/element/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
 	if(do_after(clicker, 1.5 SECONDS))
-		sounds ^= 1
-		to_chat(clicker, span_warning("[(sounds) ? "You turn on the noisemaker." : "You turn the noisemaker off."]"))
+		sounds = !sounds
+		to_chat(clicker, span_warning("You turn the noisemaker [sounds ? "on" : "off"]."))
 
 /datum/element/shoesteps/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(ishuman(equipper) && slot & ITEM_SLOT_FEET)
-		RegisterSignal(equipper, COMSIG_MOB_PREPARE_STEP_SOUND, PROC_REF(prepare_steps))
+	if(ishuman(equipper) && (slot & ITEM_SLOT_FEET))
+		RegisterSignal(equipper, COMSIG_MOB_PREPARE_STEP_SOUND, PROC_REF(prepare_steps), override = TRUE)
 
 /datum/element/shoesteps/proc/on_drop(datum/source, mob/living/carbon/user, slot)
 	SIGNAL_HANDLER
@@ -324,5 +321,4 @@ extra range addition
 
 /obj/item/clothing/shoes/clown_shoes/orchestra/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/shoesteps/orchestra_hit)
