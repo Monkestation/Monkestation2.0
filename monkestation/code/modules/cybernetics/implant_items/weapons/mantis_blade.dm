@@ -152,7 +152,7 @@
 	l_hand = owner.get_held_items_for_side(LEFT_HANDS, FALSE)
 	r_hand.block_chance += 65
 	l_hand.block_chance += 65
-	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, id)
+	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")
 	r_hand.in_stance = TRUE
