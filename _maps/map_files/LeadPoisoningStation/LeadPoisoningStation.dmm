@@ -8817,8 +8817,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "eRr" = (
-/turf/open/space/openspace,
-/area/station/maintenance/starboard/greater)
+/obj/machinery/computer/department_orders/science,
+/turf/open/floor/iron,
+/area/station/science/lab)
 "eRv" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -17285,11 +17286,6 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
-"jpe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/diagonal,
-/area/station/security/brig)
 "jpo" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/diagonal,
@@ -30128,6 +30124,11 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/openspace,
 /area/space)
+"qrC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/security/brig)
 "qrD" = (
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -35821,13 +35822,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/ce)
-"toc" = (
-/obj/machinery/computer/department_orders/service{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet,
-/area/station/maintenance/department/crew_quarters/bar)
 "tov" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -38699,9 +38693,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uQx" = (
-/obj/machinery/computer/department_orders/science,
-/turf/open/floor/iron,
-/area/station/science/lab)
+/obj/machinery/computer/department_orders/service{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet,
+/area/station/maintenance/department/crew_quarters/bar)
 "uQA" = (
 /obj/structure/transit_tube/horizontal{
 	dir = 1
@@ -85172,7 +85169,7 @@ sUv
 sam
 wQj
 jXx
-jpe
+qrC
 mFM
 eTq
 eTq
@@ -132415,7 +132412,7 @@ cga
 ehD
 xPo
 gWv
-uQx
+eRr
 uZv
 dfa
 kty
@@ -135830,7 +135827,7 @@ ghX
 ghX
 ghX
 ghX
-eRr
+dbW
 ghX
 ghX
 ghX
@@ -136083,8 +136080,8 @@ ghX
 ghX
 ghX
 ghX
-eRr
-eRr
+dbW
+dbW
 ghX
 qCu
 ghX
@@ -137911,7 +137908,7 @@ iPX
 nZP
 sxq
 lsS
-toc
+uQx
 iPX
 iPX
 iPX
@@ -143594,7 +143591,7 @@ vBR
 ghX
 ghX
 ghX
-eRr
+dbW
 qCu
 qCu
 qCu
