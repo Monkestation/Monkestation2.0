@@ -1,3 +1,5 @@
+#define DOAFTER_SOURCE_SHOESTEP_TOGGLE "doafter_shoestep_toggle"
+
 ///A simple element that lets shoes have togglable custom sounds
 /datum/element/shoesteps
 	var/list/custom_sounds = list()
@@ -26,7 +28,7 @@
 	INVOKE_ASYNC(src, PROC_REF(toggle_sounds), clicker)
 
 /datum/element/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
-	if(do_after(clicker, 1.5 SECONDS))
+	if(do_after(clicker, 1.5 SECONDS, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
 		sounds = !sounds
 		to_chat(clicker, span_warning("You turn the noisemaker [sounds ? "on" : "off"]."))
 
@@ -322,3 +324,5 @@ extra range addition
 /obj/item/clothing/shoes/clown_shoes/orchestra/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/shoesteps/orchestra_hit)
+
+#undef DOAFTER_SOURCE_SHOESTEP_TOGGLE
