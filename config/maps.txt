@@ -71,3 +71,6 @@ endmap
 
 map graveyard
 endmap
+
+map leadpoisoningstation
+endmap
