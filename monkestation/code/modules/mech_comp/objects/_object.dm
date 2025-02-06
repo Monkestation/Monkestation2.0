@@ -15,6 +15,7 @@
 	configs = list()
 	inputs = list()
 	update_icon_state()
+	register_context()
 
 	MC_ADD_CONFIG(MC_CFG_LINK, add_linker)
 	MC_ADD_CONFIG(MC_CFG_UNLINK, unlink)
@@ -28,6 +29,17 @@
 	. = ..()
 	. += span_notice("You can left-click with a multitool to put up a list of options available for linking.")
 	. += span_notice("You can right-click with a multitool to quickly start linking the device as an output.")
+
+/obj/item/mcobject/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item) || held_item.tool_behaviour != TOOL_MULTITOOL)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "View available operations"
+	if(anchored)
+		context[SCREENTIP_CONTEXT_RMB] = "Start linking"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/mcobject/update_icon_state()
 	. = ..()

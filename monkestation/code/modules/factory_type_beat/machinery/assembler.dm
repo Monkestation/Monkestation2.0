@@ -13,7 +13,6 @@
 	icon = 'monkestation/code/modules/factory_type_beat/icons/mining_machines.dmi'
 	icon_state = "assembler"
 
-
 /obj/machinery/assembler/Initialize(mapload)
 	. = ..()
 
