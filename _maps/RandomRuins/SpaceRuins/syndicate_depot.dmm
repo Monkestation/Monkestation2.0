@@ -1117,7 +1117,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/floorsign/medical,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "mr" = (
@@ -1412,6 +1413,9 @@
 "qM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/tile/orange{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "qP" = (
@@ -1856,6 +1860,8 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/plants,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/hatchet/wooden,
+/obj/item/clothing/gloves/botanic_leather,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "vT" = (
@@ -2362,6 +2368,7 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/structure/closet/emcloset,
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /turf/open/floor/iron/smooth_half,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "AB" = (
@@ -2404,6 +2411,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer4,
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/orange{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "Bx" = (
@@ -2724,6 +2734,7 @@
 "FS" = (
 /obj/machinery/computer/station_alert,
 /obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "FY" = (
@@ -3027,6 +3038,17 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"JX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/turf_decal/floorsign/engineering,
+/obj/effect/turf_decal/tile/orange{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/syndicate_depot/hallway)
 "Kb" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2{
 	dir = 9
@@ -3369,7 +3391,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
-/obj/machinery/firealarm/directional/north,
+/obj/structure/sign/warning/fire/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "NO" = (
@@ -3984,8 +4006,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
+/obj/effect/turf_decal/floorsign/cargo,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
@@ -5252,7 +5275,7 @@ BF
 BF
 et
 et
-PN
+tr
 xz
 Ap
 tg
@@ -5332,7 +5355,7 @@ BF
 BF
 BF
 et
-PN
+tr
 xz
 Ap
 Nq
@@ -6951,7 +6974,7 @@ SO
 rg
 Se
 Bn
-vZ
+JX
 qM
 RS
 iD
