@@ -91,7 +91,11 @@
 		/mob/living/simple_animal/soulscythe,
 
 		//MONKESTATION-SPECIFIC ENTRIES END
-		/mob/living/simple_animal/buttbot,
+		/mob/living/simple_animal/bot/buttbot,
+		/mob/living/simple_animal/hostile/feral,
+		/mob/living/simple_animal/hostile/feraltabby,
+		/mob/living/simple_animal/hostile/syndicat,
+		/mob/living/simple_animal/pet/hamster,
 		//MONKESTATION-SPECIFIC ENTRIES END
 
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
