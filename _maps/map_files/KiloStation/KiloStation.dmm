@@ -3218,7 +3218,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass/critical{
 	name = "PTL Access"
 	},
@@ -22899,7 +22898,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "hja" = (
 /obj/structure/cable,
@@ -23847,9 +23846,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "hwN" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "hwY" = (
@@ -45119,7 +45118,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/airless,
 /area/station/engineering/gravity_generator)
@@ -53220,7 +53218,7 @@
 	base_state = "right";
 	icon_state = "right";
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
@@ -55168,7 +55166,7 @@
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 11

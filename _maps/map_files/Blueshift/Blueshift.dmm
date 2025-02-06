@@ -525,6 +525,9 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/item/restraints/handcuffs/cable/orange,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -9618,11 +9621,11 @@
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "bSa" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "bSd" = (
@@ -20925,7 +20928,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "tcomms-internal"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "dYM" = (
@@ -21416,11 +21419,11 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Shared Engineering Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "eeY" = (
@@ -25072,7 +25075,6 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/theater)
 "eNV" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/ai_module/core/freeformcore{
@@ -25085,6 +25087,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "eNX" = (
@@ -32964,7 +32967,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "gqZ" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/ai_module/supplied/oxygen{
@@ -32973,8 +32975,10 @@
 	},
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	id = list("ai_upload");
-	name = "High-Risk Modules"
+	name = "High-Risk Modules";
+	req_access = list("rd")
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "grb" = (
@@ -34005,7 +34009,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Break Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -34013,6 +34016,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "gBa" = (
@@ -34417,10 +34421,9 @@
 	cycle_id = "tcomms-internal"
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "gFA" = (
@@ -36719,11 +36722,11 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Shared Engineering Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "hdL" = (
@@ -43966,7 +43969,6 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Secure Tools Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "Secure Tool";
@@ -43975,6 +43977,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "iyE" = (
@@ -49746,13 +49749,13 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "jGA" = (
@@ -55673,11 +55676,10 @@
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Space Access Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "AIsatAirlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/plating,
 /area/station/ai_monitored/aisat/exterior)
 "kKN" = (
@@ -56557,10 +56559,10 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kUZ" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/directional/south,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "kVa" = (
@@ -61507,9 +61509,9 @@
 	name = "Telecoms Cooling"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "lTC" = (
@@ -61528,6 +61530,11 @@
 /area/station/engineering/atmos)
 "lTH" = (
 /obj/effect/turf_decal/bot,
+/mob/living/basic/pet/poppy,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Poppy's bed"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "lTN" = (
@@ -62024,7 +62031,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "lYQ" = (
-/obj/structure/table,
 /obj/item/ai_module/supplied/quarantine{
 	pixel_x = 3;
 	pixel_y = 3
@@ -62037,6 +62043,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "lYV" = (
@@ -65234,7 +65241,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/table/reinforced,
+/obj/machinery/computer/security,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -66574,7 +66581,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /mob/living/basic/pet/potty,
 /obj/structure/sink/directional/east,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/common/night_club/changing_room)
 "mTN" = (
@@ -70043,6 +70049,19 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/coldroom)
+"nEX" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Space Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "AIsatAirlock"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
+/turf/open/floor/plating,
+/area/station/ai_monitored/aisat/exterior)
 "nFc" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -72741,9 +72760,9 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "ofN" = (
 /obj/machinery/newscaster/directional/west,
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/obj/item/restraints/handcuffs/cable/orange,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "ofS" = (
@@ -78236,9 +78255,11 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "phZ" = (
-/obj/structure/filingcabinet,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "pic" = (
@@ -79809,14 +79830,14 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "pxn" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/spawner/random/aimodule/neutral,
-/obj/machinery/door/window/right/directional/east{
+/obj/machinery/door/window/left/directional/east{
 	name = "Core Modules";
-	req_access = list("ai_upload")
+	req_access = list("rd")
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pxt" = (
@@ -79941,7 +79962,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/greater)
 "pyq" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/ai_module/supplied/protect_station,
@@ -79951,8 +79971,10 @@
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	id = list("ai_upload");
-	name = "High-Risk Modules"
+	name = "High-Risk Modules";
+	req_access = list("rd")
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pyr" = (
@@ -80897,14 +80919,14 @@
 /turf/open/floor/wood/large,
 /area/station/science/auxlab/firing_range)
 "pJf" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/aimodule/harmless,
 /obj/machinery/door/window/right/directional/east{
 	name = "Core Modules";
-	req_access = list("ai_upload")
+	req_access = list("rd")
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pJq" = (
@@ -85416,7 +85438,9 @@
 /area/station/service/forge)
 "qCz" = (
 /obj/machinery/firealarm/directional/west,
-/obj/structure/table/reinforced,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "qCC" = (
@@ -89063,8 +89087,7 @@
 	name = "MiniSat Antechamber"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "rml" = (
@@ -95798,7 +95821,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/upper)
 "sCJ" = (
-/obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio,
 /obj/structure/cable,
@@ -95806,6 +95828,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -97095,7 +97118,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sOT" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "AISATFOYER"
 	},
@@ -97105,6 +97127,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "sOV" = (
@@ -102934,8 +102957,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "tTy" = (
@@ -106243,8 +106265,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "uAR" = (
@@ -107573,20 +107594,6 @@
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
-"uOa" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Space Access Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "AIsatAirlock"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/ai_monitored/aisat/exterior)
 "uOh" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
@@ -107744,10 +107751,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "tcomms-internal"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "uQb" = (
@@ -109309,8 +109316,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "vfS" = (
@@ -109880,10 +109886,10 @@
 	name = "MiniSat Transit Tube Access"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "vkG" = (
@@ -117184,9 +117190,7 @@
 	},
 /area/station/security/execution/transfer)
 "wCw" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Courtroom - Holding Cell"
-	},
+/obj/machinery/camera/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
@@ -119931,8 +119935,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "xeY" = (
@@ -120119,9 +120122,9 @@
 	name = "MiniSat Access"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "xgS" = (
@@ -120989,11 +120992,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "xqe" = (
@@ -121528,8 +121531,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "tcomms-internal"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "xuJ" = (
@@ -220903,7 +220906,7 @@ gLc
 gLc
 gLc
 tQB
-uOa
+nEX
 mcW
 kKI
 xya
@@ -221417,7 +221420,7 @@ gLc
 gLc
 gLc
 tQB
-uOa
+nEX
 mPm
 kKI
 hKn
