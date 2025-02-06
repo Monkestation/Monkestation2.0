@@ -16777,13 +16777,6 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
-/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
-/obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/effect/mapping_helpers/airlock/access/any/service/bar,
-/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
-/obj/effect/mapping_helpers/airlock/access/any/service/janitor,
-/obj/effect/mapping_helpers/airlock/access/any/service/theatre,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_large{
 	name = "Eastationeer Bypass"
@@ -16800,6 +16793,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/service/general,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "jdd" = (
@@ -17412,7 +17406,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/structure/table,
@@ -40345,21 +40338,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
-/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
-/obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/effect/mapping_helpers/airlock/access/any/service/bar,
-/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
-/obj/effect/mapping_helpers/airlock/access/any/service/janitor,
-/obj/effect/mapping_helpers/airlock/access/any/service/theatre,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_large{
 	name = "Eastationeer Bypass"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/service/general,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "vNB" = (
