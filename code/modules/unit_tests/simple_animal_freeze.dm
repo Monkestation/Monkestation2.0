@@ -37,15 +37,6 @@
 		/mob/living/simple_animal/hostile/asteroid/elite/pandora,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/lesser,
-		/mob/living/simple_animal/hostile/carp,
-		/mob/living/simple_animal/hostile/carp/cayenne,
-		/mob/living/simple_animal/hostile/carp/holocarp,
-		/mob/living/simple_animal/hostile/carp/lia,
-		/mob/living/simple_animal/hostile/carp/megacarp,
-		/mob/living/simple_animal/hostile/carp/ranged,
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,
-		/mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology,
-		/mob/living/simple_animal/hostile/carp/ranged/xenobiology,
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/simple_animal/hostile/illusion/escape,
@@ -98,6 +89,11 @@
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
 		/mob/living/simple_animal/soulscythe,
+
+		//MONKESTATION-SPECIFIC ENTRIES END
+		/mob/living/simple_animal/buttbot,
+		//MONKESTATION-SPECIFIC ENTRIES END
+
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
 		// READ THE COMMENT ABOVE
 	)
