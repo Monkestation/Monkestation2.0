@@ -92,9 +92,27 @@
 
 		//MONKESTATION-SPECIFIC ENTRIES END
 		/mob/living/simple_animal/bot/buttbot,
+		/mob/living/simple_animal/bot/secbot/beepsky/big,
+		/mob/living/simple_animal/fish,
+		/mob/living/simple_animal/fish/angelfish,
+		/mob/living/simple_animal/fish/catfish,
+		/mob/living/simple_animal/fish/clownfish,
+		/mob/living/simple_animal/fish/dwarf_moonfish,
+		/mob/living/simple_animal/fish/goldfish,
+		/mob/living/simple_animal/fish/gunner_jellyfish,
+		/mob/living/simple_animal/fish/guppy,
+		/mob/living/simple_animal/fish/firefish,
+		/mob/living/simple_animal/fish/greenchromis,
+		/mob/living/simple_animal/fish/plasmatetra,
 		/mob/living/simple_animal/hostile/feral,
 		/mob/living/simple_animal/hostile/feraltabby,
+		/mob/living/simple_animal/hostile/illusion/khan_warrior,
+		/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
 		/mob/living/simple_animal/hostile/syndicat,
+		/mob/living/simple_animal/pet/cat/breadcat/super,
+		/mob/living/simple_animal/pet/cat/original/super,
+		/mob/living/simple_animal/pet/cat/super,
+		/mob/living/simple_animal/pet/gondola/funky,
 		/mob/living/simple_animal/pet/hamster,
 		//MONKESTATION-SPECIFIC ENTRIES END
 
