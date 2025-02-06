@@ -2774,6 +2774,16 @@
 /obj/item/clothing/head/soft/black,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
+"Gh" = (
+/obj/docking_port/stationary{
+	height = 16;
+	shuttle_id = "syndicate_depot";
+	name = "Syndicate Depot";
+	width = 16;
+	dwidth = 6
+	},
+/turf/template_noop,
+/area/template_noop)
 "Gj" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -7512,7 +7522,7 @@ Je
 Je
 Je
 Je
-Je
+Gh
 et
 et
 et
