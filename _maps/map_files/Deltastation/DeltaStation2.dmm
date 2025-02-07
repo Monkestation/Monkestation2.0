@@ -17763,6 +17763,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "eiK" = (
@@ -19338,7 +19339,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "eCs" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
@@ -26237,12 +26237,12 @@
 "gho" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "ghq" = (
@@ -28280,7 +28280,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "gFK" = (
-/obj/machinery/vending/hydroseeds,
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
 	},
@@ -31129,6 +31128,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "hoR" = (
@@ -34949,6 +34949,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Poppy's bed"
+	},
+/mob/living/basic/pet/poppy,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "ikx" = (
@@ -43506,7 +43511,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/robotics/lab)
 "khc" = (
-/obj/structure/cable,
 /obj/machinery/seed_extractor,
 /obj/item/seeds/tree,
 /obj/item/seeds/watermelon,
@@ -43517,8 +43521,8 @@
 /obj/item/seeds/cocoapod,
 /obj/item/seeds/banana,
 /obj/item/seeds/apple,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/vending/hydroseeds/wall/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "khl" = (
@@ -52083,12 +52087,9 @@
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Core Modules";
-	req_access = list("captain")
+/obj/machinery/door/window/left/directional/west{
+	req_access = list("rd");
+	name = "Core Modules"
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -56215,7 +56216,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "nkI" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/reagent_containers/condiment/enzyme{
@@ -57082,7 +57082,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	dir = 4;
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/harmful{
 	pixel_y = -16
@@ -59232,6 +59232,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "nXj" = (
@@ -59599,6 +59600,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "obH" = (
@@ -65070,6 +65072,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "puq" = (
@@ -82295,6 +82298,7 @@
 	c_tag = "Garden"
 	},
 /obj/structure/sign/poster/contraband/random/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "tAJ" = (
@@ -83644,6 +83648,7 @@
 "tPD" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/vending/hydronutrients/wall/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "tPE" = (
@@ -90580,6 +90585,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "vxL" = (
@@ -91313,7 +91319,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_y = -16
@@ -92433,6 +92439,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "vWu" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "vWv" = (
@@ -96637,7 +96645,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "wTJ" = (
-/obj/machinery/vending/hydronutrients,
+/obj/machinery/composters,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "wTK" = (
@@ -100392,10 +100400,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/red,
-/obj/machinery/door/window/brigdoor/left/directional/south{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -100640,7 +100647,6 @@
 "xSf" = (
 /obj/structure/bed,
 /obj/item/bedsheet/clown,
-/obj/machinery/newscaster/directional/east,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
