@@ -108,7 +108,7 @@
 
 /obj/item/clothing/under/dress/ribbondress
 	name = "ribboned gown"
-	desc = "A classy and elegant gown, with ribbon sleeves."
+	desc = "A classy and elegant gown with ribbon sleeves. It has the initials 'VA' stitched on the back hem."
 	icon_state = "ribbondress"
 	custom_price = PAYCHECK_COMMAND
 	greyscale_config = /datum/greyscale_config/ribbondress
