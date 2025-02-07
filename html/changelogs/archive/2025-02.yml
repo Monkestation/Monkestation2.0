@@ -96,3 +96,43 @@
   - admin: Replaced player panel and player options panel with a tgui version. Includes
       a verb in the Admin Game category, and an option on right clicking a mob.
   - admin: Rebound F6 to the new TGUI player panel.
+2025-02-05:
+  Absolucy:
+  - bugfix: (IndieanaJones) Blob Zombies now render their blob heads correctly again.
+  - bugfix: (Rhials) The tide of post-round blob zombies when a blob wins will no
+      longer break the speakers in your headset.
+  - bugfix: (SmArtKar) Blob victory no longer spams spore zombie notifications to
+      ghosts.
+  - qol: Unremovable or hidden organs/limbs will no longer be bioscrambled, and are
+      also no longer eligible bioscrambler results.
+  Absolucy, Ghommie, SmArtKar:
+  - admin: godmode is now a datum trait instead of a bitflag. This means the process
+      for toggling it is a little different now.
+  Veth-s:
+  - bugfix: Fixes a money dupe by blacklisting spacecash and monkecoin from interaction
+      components.
+2025-02-06:
+  MichiRecRoom:
+  - bugfix: IceBox had a vent and scrubber not connected, within the security post
+      at the Departures Lobby. That's fixed now.
+2025-02-07:
+  Absolucy:
+  - qol: Made the Biogenerator UI slightly prettier.
+  - bugfix: The Biogenerator UI now properly calculates the max amount of something
+      that can be produced.
+  - qol: The composter now actually benefits somewhat from upgraded parts.
+  - qol: The composter now prompts you for how many biocubes you want to generate,
+      rather than requiring spam-clicking to make multiple.
+  Gboster-0:
+  - rscadd: Interaction components can now have a filter that only interacts with
+      specific items.
+  - qol: Mech components can now have themselfes quickly put into the multitool buffer
+      as a device to link if you right-click them.
+  - balance: automatic assemblers can now make any* crafting recipe thats made using
+      sheets in your hand
+  - bugfix: There is no longer a coffin recipe that takes 10 times as long to craft
+      in the crafting menu.
+  RikuTheKiller:
+  - rscadd: There's a BCI manipulator in Void Raptor's circuit lab now.
+  flleeppyy:
+  - admin: fix supplypod fall sound varying when it shouldnt
