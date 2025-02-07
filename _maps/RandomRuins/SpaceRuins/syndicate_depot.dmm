@@ -407,6 +407,14 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
+"eW" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/camera/directional/west{
+	network = list("syndicate_depot");
+	c_tag = "Exterior: Hydroponics East"
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/syndicate_depot)
 "eY" = (
 /obj/machinery/growing/tray,
 /obj/machinery/light_switch/directional/south,
@@ -1106,6 +1114,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"mh" = (
+/obj/machinery/plantgenes,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "mk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1537,6 +1549,19 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer4,
 /turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"sf" = (
+/obj/structure/closet/syndicate,
+/obj/item/cultivator,
+/obj/item/shovel/spade,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/hatchet/wooden,
+/obj/item/clothing/gloves/botanic_leather,
+/obj/item/secateurs,
+/obj/item/plant_analyzer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "si" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax{
@@ -1854,14 +1879,8 @@
 /turf/open/floor/iron/white/small,
 /area/ruin/space/has_grav/syndicate_depot/infirmary)
 "vM" = (
-/obj/structure/closet/syndicate,
-/obj/item/cultivator,
-/obj/item/shovel/spade,
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/storage/bag/plants,
+/obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/hatchet/wooden,
-/obj/item/clothing/gloves/botanic_leather,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "vT" = (
@@ -4171,6 +4190,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/item/storage/box/plant_gene{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "WE" = (
@@ -8677,7 +8700,7 @@ hq
 yo
 RN
 wh
-zd
+vM
 eY
 yo
 hq
@@ -8755,10 +8778,10 @@ lH
 hq
 hq
 yo
-yo
-vM
-WC
-yo
+mh
+wh
+zd
+lz
 yo
 hq
 bc
@@ -8834,16 +8857,16 @@ et
 RB
 et
 hq
-hq
 yo
 yo
+sf
+WC
 yo
 yo
-hq
 hq
 et
 et
-BF
+et
 BF
 BF
 BF
@@ -8913,17 +8936,17 @@ et
 et
 et
 et
-zl
 hq
 hq
-hq
-hq
+yo
+yo
+yo
+yo
 hq
 hq
 et
 et
 et
-BF
 BF
 BF
 BF
@@ -8993,16 +9016,16 @@ BF
 et
 et
 et
+zl
+hq
+hq
+hq
+lH
+hq
+hq
 et
 et
 et
-et
-et
-et
-et
-et
-et
-BF
 BF
 BF
 BF
@@ -9075,13 +9098,13 @@ BF
 et
 et
 et
-BF
-BF
+et
+et
+eW
 et
 et
 et
-BF
-BF
+et
 BF
 BF
 BF
@@ -9156,10 +9179,10 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
+et
+et
+et
+et
 BF
 BF
 BF
