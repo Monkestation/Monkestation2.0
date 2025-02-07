@@ -115,3 +115,5 @@
 	greyscale_config_worn = /datum/greyscale_config/ribbondress_worn
 	greyscale_colors = "#845FAA#D5A6F4"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	flags_inv = HIDESHOES
+
