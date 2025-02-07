@@ -10016,22 +10016,16 @@
 /area/station/cargo/miningdock)
 "fAL" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase/riches,
-/obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/advanced/silver/reaper,
-/obj/item/lazarus_injector,
-/obj/item/gun/energy/disabler,
-/obj/item/gun/ballistic/revolver/russian,
-/obj/item/ammo_box/a357,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/book{
-	desc = "An undeniably handy book.";
-	icon_state = "bookknock";
-	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes"
-	},
 /obj/effect/turf_decal/siding{
 	dir = 9
 	},
+/obj/item/clothing/head/costume/pirate/captain,
+/obj/item/clothing/suit/costume/pirate/captain,
+/obj/item/nullrod/claymore/saber/pirate,
+/obj/item/stack/cannonball/the_big_one,
+/obj/item/stack/cannonball/fourteen,
+/obj/item/stack/cannonball/fourteen,
+/obj/structure/cannon,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "fAS" = (
