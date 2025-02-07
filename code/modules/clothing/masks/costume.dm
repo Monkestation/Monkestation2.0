@@ -66,3 +66,13 @@
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+
+/obj/item/clothing/mask/joy/manhunt
+	name = "Smiley mask"
+	desc = "Express your happiness or hide your sorrows with this cultured cutout."
+	icon_state = "happy"
+	unique_reskin = list(
+			"Happy" = "happy",
+			"Bloodied" = "bloodied",
+			"Stop me" = "stop_me",
+	)
