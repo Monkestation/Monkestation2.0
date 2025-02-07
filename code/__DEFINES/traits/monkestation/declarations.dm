@@ -1,5 +1,9 @@
 // BEGIN TRAIT DEFINES
 
+// /mob
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+
 // /mob/living
 /// Monkeys are friendly/neutral to this mob by defaulot.
 #define TRAIT_MONKEYFRIEND 	"monkeyfriend"

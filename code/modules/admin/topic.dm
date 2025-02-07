@@ -1808,6 +1808,8 @@
 		message_admins("[key_name_admin(owner)] rejected a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 
+#warn TODO: cassette reviews
+/*
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1816,7 +1818,7 @@
 		if(!istype(cassette_review))
 			return
 		cassette_review.ui_interact(usr)
-
+*/
 	else if(href_list["approve_token_event"])
 		if(!check_rights(R_ADMIN))
 			return
