@@ -238,19 +238,22 @@
 
 // Returns a multitool from a user depending on their mobtype.
 
+/// Returns a multitool from a user depending on their mobtype.
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/P = null
+	var/obj/item/multitool/multitool = null
 	// Let's double check
 	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		P = user.get_active_held_item()
+		multitool = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
+		multitool = U.aiMulti
 	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			P = user.get_active_held_item()
-	return P
-
+		var/mob/living/silicon/robot/borguser = user
+		for(var/obj/item/borg/cyborg_omnitool/toolarm in borguser.held_items)
+			if(istype(toolarm.selected, /obj/item/multitool))
+				multitool = toolarm.selected
+				break
+	return multitool
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return TRUE
