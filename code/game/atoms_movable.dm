@@ -4,8 +4,6 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 
 	var/last_move = null
-	/// A list containing arguments for Moved().
-	VAR_PRIVATE/tmp/list/active_movement
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -140,7 +138,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(src, render_target)
+			em_block = new(null, src)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -215,13 +213,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYNULL(client_mobs_in_contents)
-
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
-#endif
+	LAZYCLEARLIST(client_mobs_in_contents)
 
 	. = ..()
 
@@ -233,7 +225,7 @@
 	//This absolutely must be after moveToNullspace()
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
-	LAZYNULL(important_recursive_contents)
+	LAZYCLEARLIST(important_recursive_contents)
 
 
 	vis_locs = null //clears this atom out of all viscontents
@@ -251,9 +243,11 @@
 	// This saves several hundred milliseconds of init time.
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-			if(!em_block && !QDELETED(src))
+			if(em_block)
+				SET_PLANE(em_block, EMISSIVE_PLANE, src)
+			else if(!QDELETED(src))
 				render_target = ref(src)
-				em_block = new(src, render_target)
+				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
 	// EMISSIVE_BLOCK_GENERIC == 0
@@ -269,7 +263,7 @@
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
 	if(!generate_for.render_target)
 		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)
@@ -602,7 +596,6 @@
  * most of the time you want forceMove()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
-	RESOLVE_ACTIVE_MOVEMENT // This should NEVER happen, but, just in case...
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
@@ -616,9 +609,6 @@
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
-
-	// A mid-movement... movement... occured, resolve that first.
-	RESOLVE_ACTIVE_MOVEMENT
 
 	if(!direction)
 		direction = get_dir(src, newloc)
@@ -640,12 +630,13 @@
 
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
-		var/dx = newloc.x
-		var/dy = newloc.y
-		var/dz = newloc.z
 		new_locs = block(
-			dx, dy, dz,
-			dx + ceil(bound_width / 32), dy + ceil(bound_height / 32), dz
+			newloc,
+			locate(
+				min(world.maxx, newloc.x + CEILING(bound_width / 32, 1)),
+				min(world.maxy, newloc.y + CEILING(bound_height / 32, 1)),
+				newloc.z
+				)
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
@@ -668,7 +659,6 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
-	SET_ACTIVE_MOVEMENT(oldloc, direction, FALSE, old_locs)
 	loc = newloc
 
 	. = TRUE
@@ -689,7 +679,7 @@
 	if(oldarea != newarea)
 		newarea.Entered(src, oldarea)
 
-	RESOLVE_ACTIVE_MOVEMENT
+	Moved(oldloc, direction, FALSE, old_locs)
 
 ////////////////////////////////////////
 
@@ -786,6 +776,7 @@
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
 			check_pulling()
+
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
@@ -1108,13 +1099,8 @@
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
-	RESOLVE_ACTIVE_MOVEMENT
-
 	var/atom/oldloc = loc
 	var/is_multi_tile = bound_width > world.icon_size || bound_height > world.icon_size
-
-	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
-
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
 		if(pulledby && !currently_z_moving)
@@ -1131,12 +1117,13 @@
 
 		if(!same_loc)
 			if(is_multi_tile && isturf(destination))
-				var/dx = destination.x
-				var/dy = destination.y
-				var/dz = destination.z
 				var/list/new_locs = block(
-					dx, dy, dz,
-					dx + ROUND_UP(bound_width / 32), dy + ROUND_UP(bound_height / 32), dz
+					destination,
+					locate(
+						min(world.maxx, destination.x + ROUND_UP(bound_width / 32)),
+						min(world.maxy, destination.y + ROUND_UP(bound_height / 32)),
+						destination.z
+					)
 				)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)
@@ -1175,7 +1162,7 @@
 			if(old_area)
 				old_area.Exited(src, NONE)
 
-	RESOLVE_ACTIVE_MOVEMENT
+	Moved(oldloc, NONE, TRUE)
 
 /**
  * Called when a movable changes z-levels.
@@ -1485,8 +1472,11 @@
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
-/atom/movable/proc/get_language_holder(get_minds = TRUE) as /datum/language_holder
-	RETURN_TYPE(/datum/language_holder)
+/atom/movable/proc/get_language_holder(get_minds = TRUE)
+	if(QDELING(src))
+		CRASH("get_language_holder() called on a QDELing atom, \
+			this will try to re-instantiate the language holder that's about to be deleted, which is bad.")
+
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder
