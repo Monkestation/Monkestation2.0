@@ -64,6 +64,7 @@
 	var/pinless = FALSE
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
+	var/has_manufacturer = TRUE // Set to true by default. This didn't exist until Brad needed to make a new pipe-gun esque weapon.
 	var/obj/item/knife/bayonet
 	var/knife_x_offset = 0
 	var/knife_y_offset = 0
@@ -79,7 +80,9 @@
 		pin = new pin(src)
 
 	add_seclight_point()
-	give_manufacturer_examine()
+
+	if(has_manufacturer)
+		give_manufacturer_examine()
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -564,7 +567,7 @@
 	if(bayonet)
 		var/mutable_appearance/knife_overlay
 		var/state = "bayonet" //Generic state.
-		if(bayonet.icon_state in icon_states('icons/obj/weapons/guns/bayonets.dmi')) //Snowflake state?
+		if(icon_exists('icons/obj/weapons/guns/bayonets.dmi', bayonet.icon_state)) //Snowflake state? //MONKESTATION EDIT - Refactored to `icon_exists`.
 			state = bayonet.icon_state
 		var/icon/bayonet_icons = 'icons/obj/weapons/guns/bayonets.dmi'
 		knife_overlay = mutable_appearance(bayonet_icons, state)

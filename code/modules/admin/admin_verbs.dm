@@ -51,6 +51,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/kick_player_by_ckey, //MONKESTATION ADDITION - kick a player by their ckey
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
+	/datum/admins/proc/player_panel_veth,
+	/datum/admins/proc/vuap_open_context,
+	/datum/admins/proc/vuap_open,
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -888,7 +891,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
 	for (var/i in 1 to amount)
-		var/turf/tile = get_safe_random_station_turf()
+		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
