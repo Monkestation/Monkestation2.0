@@ -1836,6 +1836,10 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"uV" = (
+/obj/machinery/smartfridge/food,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "uW" = (
 /obj/structure/cable,
 /obj/machinery/cell_charger_multi/wall_mounted/directional/east,
@@ -8297,7 +8301,7 @@ fy
 Ix
 up
 Gv
-DQ
+uV
 fc
 Kp
 bG
