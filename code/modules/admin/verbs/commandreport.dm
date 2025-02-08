@@ -1,5 +1,7 @@
 /// The default command report announcement sound.
-#define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
+#define DEFAULT_COMMANDREPORT_SOUND "default_commandreport"
+#define DEFAULT_ALERT_SOUND "default_alert"
+#define CUSTOM_ALERT_SOUND "custom_alert"
 
 /// Preset central command names to chose from for centcom reports.
 #define CENTCOM_PRESET "Central Command"
@@ -49,7 +51,7 @@
 	/// Whether a copy of the report is printed at every console.
 	var/print_report = TRUE
 	/// The sound that's going to accompany our message.
-	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
+	var/played_sound = DEFAULT_COMMANDREPORT_SOUND
 	/// The colour of the announcement when sent
 	var/announcement_color = "default"
 	/// The subheader to include when sending the announcement. Keep blank to not include a subheader
@@ -91,7 +93,7 @@
 /datum/command_report_menu/ui_static_data(mob/user)
 	var/list/data = list()
 	data["command_name_presets"] = preset_names
-	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
+	data["announcer_sounds"] = list(DEFAULT_COMMANDREPORT_SOUND, DEFAULT_ALERT_SOUND, CUSTOM_ALERT_SOUND) + GLOB.announcer_keys // Monkestation edit - custom alert sounds
 	data["announcement_colors"] = ANNOUNCEMENT_COLORS
 
 	return data
@@ -110,7 +112,17 @@
 
 			command_name = params["updated_name"]
 		if("set_report_sound")
-			played_sound = params["picked_sound"]
+			// monkestation start
+			if (params["picked_sound"] == CUSTOM_ALERT_SOUND)
+				var/soundInput = input(ui_user, "Please pick a sound file to play when you create the command report.", "Pick a Sound File") as null|sound
+				if (isnull(soundInput))
+					custom_played_sound = null
+				else
+					custom_played_sound = soundInput
+					played_sound = CUSTOM_ALERT_SOUND
+			else
+				played_sound = params["picked_sound"]
+		//monkestation end
 		if("toggle_announce")
 			announce_contents = !announce_contents
 		if("toggle_printing")
@@ -146,8 +158,20 @@
 
 	/// The sound we're going to play on report.
 	var/report_sound = played_sound
-	if(played_sound == DEFAULT_ANNOUNCEMENT_SOUND)
-		report_sound = SSstation.announcer.get_rand_report_sound()
+	// monkestation edit start - Custom alert sounds
+	switch(played_sound)
+		if (DEFAULT_COMMANDREPORT_SOUND)
+			report_sound = SSstation.announcer.get_rand_report_sound()
+		if (DEFAULT_ALERT_SOUND)
+			report_sound = SSstation.announcer.get_rand_alert_sound()
+		if (CUSTOM_ALERT_SOUND)
+			if (!isnull(custom_played_sound))
+				report_sound = custom_played_sound
+			else
+				to_chat(ui_user, span_danger("The custom sound you selected was not able to be played. Aborting..."))
+				change_command_name(original_command_name)
+				return
+	// monkestation end
 
 	if(announce_contents)
 		var/chosen_color = announcement_color
@@ -156,7 +180,7 @@
 				chosen_color = "red"
 			else if(command_name == WIZARD_PRESET)
 				chosen_color = "purple"
-		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
+		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color, append_update = append_update_name) //Monkestation edit - togglable "... Update"
 
 	if(!announce_contents || print_report)
 		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents)
@@ -167,7 +191,9 @@
 	message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
 
 
-#undef DEFAULT_ANNOUNCEMENT_SOUND
+#undef DEFAULT_COMMANDREPORT_SOUND
+#undef DEFAULT_ALERT_SOUND
+#undef CUSTOM_ALERT_SOUND
 
 #undef CENTCOM_PRESET
 #undef SYNDICATE_PRESET

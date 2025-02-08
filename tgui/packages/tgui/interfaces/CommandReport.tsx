@@ -22,6 +22,7 @@ type Data = {
   custom_name: string;
   played_sound: string;
   print_report: string;
+  append_update_name: boolean;
 };
 
 export const CommandReport = () => {
@@ -29,7 +30,7 @@ export const CommandReport = () => {
     <Window
       title="Create Command Report"
       width={325}
-      height={685}
+      height={715}
       theme="admin"
     >
       <Window.Content>
@@ -54,7 +55,12 @@ export const CommandReport = () => {
 /** Allows the user to set the "sender" of the message via dropdown */
 const CentComName = (props) => {
   const { act, data } = useBackend<Data>();
-  const { command_name, command_name_presets = [], custom_name } = data;
+  const {
+    command_name,
+    command_name_presets = [],
+    custom_name,
+    append_update_name,
+  } = data;
 
   return (
     <Section title="Set Central Command name" textAlign="center">
@@ -81,6 +87,12 @@ const CentComName = (props) => {
           }
         />
       )}
+      <Button.Checkbox
+        mt={1}
+        content='Append "Update" to command name'
+        checked={append_update_name}
+        onClick={() => act('toggle_update_append')}
+      />
     </Section>
   );
 };

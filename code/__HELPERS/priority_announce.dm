@@ -37,7 +37,7 @@
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override, append_update = TRUE)
 	if(!text)
 		return
 
@@ -74,7 +74,7 @@
 			header = MAJOR_ANNOUNCEMENT_TITLE("Station Announcement by [sender.name] (AI)")
 		// MONKESTATION ADDITION END
 		else
-			header += generate_unique_announcement_header(title, sender_override)
+			header += generate_unique_announcement_header(title, sender_override, append_update) // Monkestation edit - update append
 
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
 
@@ -96,7 +96,7 @@
 		if(length(title) > 0)
 			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", "Station Announcements", null)
 		else
-			GLOB.news_network.submit_article(text, "[command_name()] Update", "Station Announcements", null)
+			GLOB.news_network.submit_article(text, "[command_name()][append_update ? " Update" : ""]", "Station Announcements", null)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
@@ -179,10 +179,10 @@
 
 /// Proc that just generates a custom header based on variables fed into `priority_announce()`
 /// Will return a string.
-/proc/generate_unique_announcement_header(title, sender_override)
+/proc/generate_unique_announcement_header(title, sender_override, append_update = TRUE)
 	var/list/returnable_strings = list()
 	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()][append_update ? " Update" : ""]")
 	else
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 
