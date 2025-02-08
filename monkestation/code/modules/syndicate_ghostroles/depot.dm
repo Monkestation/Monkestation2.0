@@ -1,5 +1,7 @@
 // syndicate depot, meant to be a safe space for syndicate ghostroles to evacuate to if they're knocked out and to provide supplies and materials for their comrades.
 
+/datum/outfit/syndicate_empty/depot
+
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate
 	name = "Syndicate Depot Worker"
 	prompt_name = "a syndicate depot worker"
@@ -9,7 +11,13 @@
 	outfit = /datum/outfit/syndicate_empty/depot
 	spawner_job_path = /datum/job/lavaland_syndicate/space
 
-/datum/outfit/syndicate_empty/depot
+
+/datum/outfit/syndicate_empty/depot/pre_equip(mob/living/carbon/human/H)
+	var/obj/item/organ/implant = new /obj/item/organ/internal/cyberimp/chest/immobilization
+	implant.Insert(H, special = TRUE, drop_if_replaced = FALSE)
+
+
+/datum/outfit/syndicate_empty/depot/worker
 	name = "Syndicate Depot Technician"
 	suit = /obj/item/clothing/suit/hazardvest
 	back = /obj/item/storage/backpack
@@ -17,7 +25,9 @@
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/flashlight
 	box = /obj/item/storage/box/survival/syndie
-	organs = list(/obj/item/organ/internal/cyberimp/chest/immobilization)
+
+/datum/outfit/syndicate_empty/depot/worker/pre_equip(mob/living/carbon/human/H)
+	return
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate/guard
 	name = "Syndicate Depot Guard"
