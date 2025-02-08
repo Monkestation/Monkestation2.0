@@ -114,11 +114,10 @@
 
 ///returns turfs within our projected rectangle in no particular order
 /obj/docking_port/proc/return_turfs()
-	var/list/coords = return_coords()
-	return block(
-		coords[1], coords[2], z,
-		coords[3], coords[4], z
-	)
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	return block(T0,T1)
 
 ///returns turfs within our projected rectangle in a specific order.this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
@@ -152,15 +151,17 @@
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
 	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
-	var/list/coords = return_coords()
-	for(var/turf/T in block(coords[1], coords[2], z, coords[3], coords[4], z))
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	for(var/turf/T in block(T0,T1))
 		T.color = _color
 		LAZYINITLIST(T.atom_colours)
 		T.maptext = null
 	if(_color)
-		var/turf/T = locate(coords[1], coords[2], z)
+		var/turf/T = locate(L[1], L[2], z)
 		T.color = "#0f0"
-		T = locate(coords[3], coords[4], z)
+		T = locate(L[3], L[4], z)
 		T.color = "#00f"
 #endif
 
@@ -238,15 +239,12 @@
 		for(var/turf/T in return_turfs())
 			T.turf_flags |= NO_RUINS
 
+	if(SSshuttle.initialized)
+		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
+
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
-
-	if(SSshuttle.initialized)
-		return INITIALIZE_HINT_LATELOAD
-
-/obj/docking_port/stationary/LateInitialize()
-	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 /obj/docking_port/stationary/unregister()
 	. = ..()
@@ -336,7 +334,7 @@
 	. = ..()
 	SSshuttle.transit_docking_ports += src
 
-/obj/docking_port/stationary/transit/Destroy(force = FALSE)
+/obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
@@ -515,14 +513,13 @@
 		var/min_y = -1
 		var/max_x = WORLDMAXX_CUTOFF
 		var/max_y = WORLDMAXY_CUTOFF
-		for(var/area/shuttle_area as anything in shuttle_areas)
-			for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
-				for(var/turf/turf as anything in zlevel_turfs)
-					min_x = max(turf.x, min_x)
-					max_x = min(turf.x, max_x)
-					min_y = max(turf.y, min_y)
-					max_y = min(turf.y, max_y)
-				CHECK_TICK
+		for(var/area/area as anything in shuttle_areas)
+			for(var/turf/turf in area)
+				min_x = max(turf.x, min_x)
+				max_x = min(turf.x, max_x)
+				min_y = max(turf.y, min_y)
+				max_y = min(turf.y, max_y)
+			CHECK_TICK
 
 		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
