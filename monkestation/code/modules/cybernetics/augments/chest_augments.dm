@@ -657,10 +657,10 @@
 	///starting z of when it was inserted, also counts as a zlvl that a person can't leave
 	var/z_restriction = null
 	///our timer
-	var/detonation_timer = 15
+	var/activation_timer = 15
 	///determines if the implant is set off
 	var/set_off = FALSE
-	//ticking
+	//ticking of timer
 	var/ticking = FALSE
 
 /obj/item/organ/internal/cyberimp/chest/immobilization/on_insert(mob/living/carbon/owner)
@@ -689,9 +689,9 @@
 	. = ..()
 	if (set_off || !ticking)
 		return
-	if (detonation_timer != 0)
-		to_chat(owner, span_warning("Implant will immobilize you in [detonation_timer] seconds. Please, return to the bounds."))
-		detonation_timer -= 1
+	if (activation_timer != 0)
+		to_chat(owner, span_warning("Implant will immobilize you in [activation_timer] seconds. Please, return to the bounds."))
+		activation_timer -= 1
 		playsound(owner, 'sound/items/timer.ogg', 50, FALSE)
 	else
 		to_chat(owner, span_userdanger("FUCK!!!!!"))
@@ -707,8 +707,8 @@
 	var/turf/owner_turf = get_turf(owner)
 	if (z_restriction == owner_turf.z)
 		//reset the timer if it started ticking
-		if (detonation_timer != initial(detonation_timer))
-			detonation_timer = initial(detonation_timer)
+		if (activation_timer != initial(activation_timer))
+			activation_timer = initial(activation_timer)
 			ticking = FALSE
 		return
 	else
