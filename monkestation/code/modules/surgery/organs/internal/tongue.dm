@@ -56,6 +56,7 @@
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	maxHealth = 100 //RoboTongue!
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_TONGUE
