@@ -18,6 +18,11 @@
 		SSdemo.mark_dirty(target)
 	// monkestation end: REPLAYS
 
+	if(ishuman(user)) // Should prevent you from doing even surgery with a tool. Its a de-abilitating effect
+		var/datum/status_effect/weapon_lock/locked = user.has_status_effect(/datum/status_effect/weapon_lock)
+		if(istype(locked) && locked.locked_check(target, user, src))
+			return TRUE
+
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
 

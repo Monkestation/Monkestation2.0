@@ -1,8 +1,6 @@
 ///
 // PORTED FROM PARADISE STATION
 ///
-//Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
-#define BANNEDTYPES list(/obj/item/melee/baton, /obj/item/borg/stun)
 #define MIN_COMBO 2
 
 ///
@@ -52,40 +50,18 @@
 	. = ..()
 	QDEL_NULL(style)
 
-/obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/user, slot)
+/obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/living/user, slot)
 	. = ..()
 	if(ishuman(user) && slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
-		ADD_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
+		user.apply_status_effect(/datum/status_effect/weapon_lock)
 
-/obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/user)
+/obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/living/user)
 	. = ..()
 	if(ishuman(user) && user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		style.remove(user)
-		REMOVE_TRAIT(user, TRAIT_NO_WEAPONTYPE, src)
+		user.remove_status_effect(/datum/status_effect/weapon_lock)
 
-
-/mob/living/proc/is_weapon_restricted(mob/living/defender, obj/item/weapon, mob/living/attacker)
-	if(HAS_TRAIT(attacker, TRAIT_NO_WEAPONTYPE))
-		for(var/type in BANNEDTYPES)
-			if(istype(weapon, type))
-				if(attacker == defender)
-					to_chat(attacker, "<span class='warning'>Remember, the path of Corporate Judo is strength through balance and increased market share—not the folly of striking yourself with crude implements.</span>")
-				else
-					defender.visible_message("<span class='warning'>[attacker] remembers their Sensei's words: &quot;There is a time and place for everything...&quot; WAIT, YOU DON'T HAVE A SENSEI!</span>", \
-							"<span class='userdanger'>[attacker] freezes before striking, [attacker.p_their()] face giving off a pained expression!</span>")
-				return TRUE
-	return FALSE
-
-/mob/living/attackby(obj/item/weapon, mob/living/user)
-	if(ishuman(user) && is_weapon_restricted(src, weapon, user))
-		return
-	..()
-
-/mob/living/attackby_secondary(obj/item/weapon, mob/living/user)
-	if(ishuman(user) && is_weapon_restricted(src, weapon, user))
-		return
-	..()
 ///
 // MARTIAL ART STYLE
 ///
@@ -306,4 +282,3 @@
 		return MARTIAL_ATTACK_INVALID
 
 #undef MIN_COMBO
-#undef BANNEDTYPES

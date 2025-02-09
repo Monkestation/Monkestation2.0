@@ -515,6 +515,26 @@
 		QDEL_NULL(alt_clone)
 	return ..()
 
+/datum/status_effect/weapon_lock //prevents certain items from being used to attack
+	id = "weapon_lock"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	//Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
+	var/list/bannedtypes = list(/obj/item/melee/baton, /obj/item/borg/stun)
+
+/datum/status_effect/weapon_lock/proc/locked_check(mob/living/defender, mob/living/attacker, obj/item/weapon)
+	for(var/type in bannedtypes)
+		if(istype(weapon, type))
+			if(attacker == defender)
+				to_chat(attacker, "<span class='warning'>Remember, the path of Corporate Judo is strength through balance and increased market share—not the folly of striking yourself with crude implements.</span>")
+			else
+				defender.visible_message("<span class='warning'>[attacker] remembers their Sensei's words: &quot;There is a time and place for everything...&quot; WAIT, YOU DON'T HAVE A SENSEI!</span>", \
+							"<span class='userdanger'>[attacker] freezes before striking, [attacker.p_their()] face giving off a pained expression!</span>")
+			return TRUE
+	return FALSE
+
 #undef EIGENSTASIUM_MAX_BUFFER
 #undef EIGENSTASIUM_STABILISATION_RATE
 #undef EIGENSTASIUM_PHASE_1_END
