@@ -20551,12 +20551,10 @@
 /area/centcom/central_command_areas/admin)
 "dNQ" = (
 /obj/structure/table/greyscale,
-/obj/structure/fluff{
-	icon = 'icons/obj/fax.dmi';
-	icon_state = "fax";
-	name = "fax machine";
-	desc = "A CentCom-owned fax machine. It's been disconnected from the network.";
-	density = 1
+/obj/machinery/fax/messageadmins{
+	fax_name = "Central Command Intern Office";
+	pixel_y = 4;
+	visible_to_network = 0
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin)
