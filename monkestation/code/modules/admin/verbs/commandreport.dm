@@ -2,10 +2,6 @@
 	var/append_update_name = TRUE
 	var/custom_played_sound
 
-/datum/command_report_menu/ui_static_data(mob/user)
-	. = ..()
-	.["append_update_name"] = append_update_name
-
 /datum/command_report_menu/ui_data(mob/user)
 	. = ..()
 	.["append_update_name"] = append_update_name
