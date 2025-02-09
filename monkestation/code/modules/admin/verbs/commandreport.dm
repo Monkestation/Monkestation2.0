@@ -16,25 +16,31 @@
 			sanitize_content = !sanitize_content
 		if("preview_sound")
 			preview_sound()
-		if("preview_report")
-			send_announcement(preview = TRUE)
+		if("preview_paper_report")
+			preview_paper_report(params["report"])
 
 	. = ..()
+
+/datum/command_report_menu/proc/preview_paper_report(report)
+	var/obj/item/paper/report_paper = new /obj/item/paper(null)
+	report_paper.name = "paper - '[announce_contents ? "" : "Classified "][command_name] Update'"
+	report_paper.add_raw_text(report, advanced_html = !sanitize_content)
+	report_paper.ui_interact(ui_user)
 
 /datum/command_report_menu/proc/preview_sound()
 	var/volume_pref = ui_user.client.prefs.channel_volume["[CHANNEL_VOX]"]
 	switch(played_sound)
 		if(DEFAULT_COMMANDREPORT_SOUND)
-			playsound(ui_user, SSstation.announcer.get_rand_report_sound(), volume_pref)
+			SEND_SOUND(ui_user, sound(SSstation.announcer.get_rand_report_sound(), volume = volume_pref))
 		if(DEFAULT_ALERT_SOUND)
-			playsound(ui_user, SSstation.announcer.get_rand_alert_sound(), volume_pref)
+			SEND_SOUND(ui_user, sound(SSstation.announcer.get_rand_alert_sound(), volume = volume_pref))
 		if(CUSTOM_ALERT_SOUND)
 			if (isnull(custom_played_sound))
 				to_chat(ui_user, span_danger("There's no custom alert loaded! Cannot preview."))
 				return
-			playsound(ui_user, custom_played_sound, volume_pref)
+			SEND_SOUND(ui_user, sound(custom_played_sound, volume = volume_pref))
 		else
 			if(SSstation.announcer.event_sounds[played_sound])
-				playsound(ui_user, SSstation.announcer.event_sounds[played_sound], volume_pref)
+				SEND_SOUND(ui_user, sound(SSstation.announcer.event_sounds[played_sound], volume = volume_pref))
 			else
 				to_chat(ui_user, span_danger("No announcer sound available for [played_sound]"))

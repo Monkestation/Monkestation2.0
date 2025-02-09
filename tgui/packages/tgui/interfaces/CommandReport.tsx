@@ -149,6 +149,7 @@ const AnnouncementSound = (props) => {
   const { act, data } = useBackend<Data>();
   const { announcer_sounds = [], played_sound } = data;
 
+  // We have to do a shitty style hack below because applying props to <Dropdown> doesn't apply it to the root element, and in order for it to have a full width, we have to do this, and this is the only way I could figure it out.
   return (
     <Section title="Set announcement sound" textAlign="center">
       <style>
@@ -159,13 +160,7 @@ const AnnouncementSound = (props) => {
       }
     `}
       </style>
-      <Flex
-        id="announcement-sound-container"
-        direction="row"
-        width="100%"
-        grow
-        style
-      >
+      <Flex id="announcement-sound-container" direction="row" width="100%" grow>
         <Button
           width="24px"
           height="22px"
@@ -229,43 +224,15 @@ const ReportText = (props) => {
       />
       <Stack vertical>
         <Stack.Item>
-          <Button.Checkbox
-            fluid
-            checked={announce_contents}
-            onClick={() => act('toggle_announce')}
-          >
-            Announce Contents
-          </Button.Checkbox>
-          <Button.Checkbox
-            fluid
-            checked={print_report || !announce_contents}
-            disabled={!announce_contents}
-            onClick={() => act('toggle_printing')}
-            tooltip={
-              !announce_contents &&
-              "Printing the report is required since we aren't announcing its contents."
-            }
-            tooltipPosition="top"
-          >
-            Print Report
-          </Button.Checkbox>
-        </Stack.Item>
-        <Stack.Item>
-          <Flex
-            id="announcement-sound-container"
-            direction="row"
-            width="100%"
-            grow
-            style
-          >
-            <Button.Confirm
+          <Flex direction="row" width="100%" grow>
+            <Button.Checkbox
               fluid
               width="100%"
-              icon="check"
-              textAlign="center"
-              content="Submit Report"
-              onClick={() => act('submit_report', { report: commandReport })}
-            />
+              checked={announce_contents}
+              onClick={() => act('toggle_announce')}
+            >
+              Announce Contents
+            </Button.Checkbox>
             <Button
               ml="2px"
               width="24px"
@@ -279,6 +246,44 @@ const ReportText = (props) => {
               }
             />
           </Flex>
+          <Flex direction="row" width="100%" grow>
+            <Button.Checkbox
+              fluid
+              width="100%"
+              checked={print_report || !announce_contents}
+              disabled={!announce_contents}
+              onClick={() => act('toggle_printing')}
+              tooltip={
+                !announce_contents &&
+                "Printing the report is required since we aren't announcing its contents."
+              }
+              tooltipPosition="top"
+            >
+              Print Report
+            </Button.Checkbox>
+            <Button
+              ml="2px"
+              width="24px"
+              height="20px"
+              icon="eye"
+              onClick={() =>
+                act('preview_paper_report', { report: commandReport })
+              }
+              tooltip={
+                'Preview page report - Shows you a preview of what the printed report page will look like.'
+              }
+            />
+          </Flex>
+        </Stack.Item>
+        <Stack.Item>
+          <Button.Confirm
+            fluid
+            width="100%"
+            icon="check"
+            textAlign="center"
+            content="Submit Report"
+            onClick={() => act('submit_report', { report: commandReport })}
+          />
         </Stack.Item>
       </Stack>
     </Section>

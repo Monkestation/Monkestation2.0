@@ -98,7 +98,7 @@
 		else
 			GLOB.news_network.submit_article(text, "[command_name()][append_update ? " Update" : ""]", "Station Announcements", null)
 
-/proc/print_command_report(text = "", title = null, announce=TRUE)
+/proc/print_command_report(text = "", title = null, announce = TRUE, sanitize = TRUE) // monkestation edit - sanitization
 	if(!title)
 		title = "Classified [command_name()] Update"
 
@@ -114,7 +114,7 @@
 	message.title = title
 	message.content = text
 
-	SScommunications.send_message(message)
+	SScommunications.send_message(message, sanitize)// monkestation edit - sanitization
 
 /**
  * Sends a minor annoucement to players.
