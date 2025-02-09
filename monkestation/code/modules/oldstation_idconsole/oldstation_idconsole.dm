@@ -29,7 +29,7 @@
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/card = I
 
-		if(I.type in blacklisted_types || card.trim)
+		if((I.type in blacklisted_types) || card.trim)
 			to_chat(user, span_warning("You can't paint this card!"))
 			return FALSE
 
