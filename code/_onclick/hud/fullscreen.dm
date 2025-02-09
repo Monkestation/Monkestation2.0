@@ -167,7 +167,7 @@
 
 	. = ..()
 
-	color = COLOR_MATRIX_IDENTITY //We convert it early to avoid a sudden weird jitter.
+	color = color_matrix_identity() //We convert it early to avoid a sudden weird jitter.
 	alpha = 0
 
 	animate(src, alpha = 255, time = 5 SECONDS) //Fade in.
