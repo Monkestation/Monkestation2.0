@@ -11,13 +11,14 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.05
-	//dont turn these ids into charlie station ids please
+	//dont turn these ids into charlie station ids please, this might be redundant
 	var/list/blacklisted_types = list()
 
 /obj/machinery/oldpdapainter/Initialize()
 	blacklisted_types += typesof(/obj/item/card/id/away)
 	blacklisted_types += typesof(/obj/item/card/id/advanced/silver)
 	blacklisted_types += typesof(/obj/item/card/id/advanced/gold)
+	blacklisted_types += typesof(/obj/item/card/id/advanced/chameleon)
 	. = ..()
 
 /obj/machinery/oldpdapainter/attackby(obj/item/I, mob/living/user, params)
@@ -25,16 +26,22 @@
 		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
 
-	if(istype(I, /obj/item/card/id) && !(I.type in blacklisted_types))
-		to_chat(user, span_notice("You start painting \the [I]..."))
+	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/card = I
+
+		if(I.type in blacklisted_types || card.trim)
+			to_chat(user, span_warning("You can't paint this card!"))
+			return FALSE
+
+		to_chat(user, span_notice("You start painting \the [card]..."))
 
 		if(!do_after(user, 40, target = src))
 			return FALSE
 
 		use_power(active_power_usage)
 
-		var/old_name = I.name
-		QDEL_NULL(I)
+		var/old_name = card.name
+		QDEL_NULL(card)
 
 		var/obj/item/card/id/away/old/custom/new_id = new(get_turf(src))
 		SSid_access.apply_trim_to_card(new_id, /datum/id_trim/job/away/old/custom, copy_access = FALSE)
