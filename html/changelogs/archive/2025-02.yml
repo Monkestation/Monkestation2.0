@@ -1,0 +1,182 @@
+2025-02-01:
+  Absolucy:
+  - bugfix: Awakened Dragon's attacks now do the intended amount of damage.
+  - bugfix: Awakened Dragon and Tunnel Arts now have fully consistent counter/dodge
+      effects with the blood cult stun hand.
+  - bugfix: When a touch attack gets dodged by a martial arts user, the attacker will
+      properly have their click cooldown set.
+  - balance: Sleeping Carp, Awakened Dragon, and Tunnel Arts will now dodge/counter
+      touch attacks regardless of combat mode if they're considered a "dangerous"
+      attack (pretty much everything except genetics shock touch)
+  - balance: Tunnel Arts' illusionary warriors now move at the same speed as normal
+      humans, rather than the typical slower rate than most simplemobs do.
+  - qol: Categorized many martial arts-related chat messages as being combat-related
+      in chat tabs.
+  - rscadd: PDAs can now tune into the broadcast camera's streams, with the pre-installed
+      Spess.tv app!
+  - refactor: Refactored some stuff about how camera broadcasts work.
+  - bugfix: Mark of Rust can no longer damage indestructible items.
+  - bugfix: Fixed the chat reliability subsystem being completely useless (hopefully).
+  - balance: Securitrons/Beepsky now only deal stamina damage instead of instantly
+      hardstunning someone.
+  - balance: Having baton resistance now also provides resistance against beepsky.
+  - balance: Beepsky can now be blocked/parried with shields and such.
+  Absolucy, SyncIt21:
+  - bugfix: Quirks now properly process again.
+  Gw0sty:
+  - rscadd: Added cures to the various transformation diseases
+  - balance: Lowered the maximum trigger chance of transformation symptoms.
+  - bugfix: Boxstation engineering disposals will no longer explode.
+  RikuTheKiller:
+  - spellcheck: You no longer loosen your balance, instead you lose it when throwing
+      a bulky item.
+  TheColorCyan:
+  - rscadd: Added NT frontier and NT Science Hub to Scientist PDAs
+  - rscadd: Added NT frontier to RD PDAs
+  ThePooba:
+  - bugfix: Fixed ships being unabled to be recalled after completing your first ship
+      on blueshift
+  - bugfix: box station shipbreaker hut wont run out of power now
+2025-02-03:
+  Absolucy:
+  - bugfix: Fixed 3 walls in the MetaStation arrivals bathroom being erroneously marked
+      as the "Vacant Office"
+  - qol: Magically summoned food (such as the Summon Cheese spell) no longer decomposes.
+      It's magical food, I ain't gotta explain shit.
+  - balance: Slightly raised the health of securitrons/beepsky. (From 25 to 35)
+  Ancient_Engineer, Killermankey, Camroid:
+  - rscadd: 'New and improved mentor cloak I''d advise against trying to steal it
+      (:'
+  Gw0sty:
+  - rscadd: Added Dr. Scrubs to remaining maps
+  - rscadd: Added Poppy the safety inspector into the remaining SM maps
+  - bugfix: Fixed a missing airlock helping on minisat.
+  - rscadd: Added cloning to Void Raptor
+  - rscadd: Added medbot supplies to Void Raptor Robotics
+  - rscadd: Added departmental security spawns to voidraptor.
+  - rscadd: Dr. Scrubs is now on voidraptor
+  - rscadd: Robotics dog is now named Dirk. (Thank Britarnya)
+  - bugfix: Adjusted the layout of voidraptor robotics to create more space
+  - balance: Replaced circuit Imprinter in engineering with Engineering Circuit Imprinter
+  - balance: AI Upload board access has been replaced with RD access.
+  Loiosh42:
+  - add: Adds a shield to cargo with integral shotgun loader, along with a crate with
+      2 and a pair of bobrs to the armory tab
+  - code: Adds support for ammoboxes where the sprite doesn't change
+  Wernerses:
+  - balance: reduced minimum apid honey require to make beehives from 150 to 70
+  - balance: reduced beehive cooldown from 25 minutes to 5 minutes.
+  Wisemonster:
+  - balance: Assault operative's rifle now has a 1.25 damage mult, 5 wound bonus,
+      and 0.3 second fire delay.
+  - balance: Assault operative's shotgun now has a 15 wound bonus.
+  - balance: Assault operative's SMG now has 5 spread and 5 wound bonus.
+  - balance: Assault operative's grenade launcher now has 0.3 fire delay and 5 wound
+      bonus
+  - balance: Assault operatives shuttle stall time increased from 3 to 5 minutes.
+2025-02-04:
+  Absolucy:
+  - bugfix: You can now properly select "Command Outfitting Station", "Fab-O-Vend",
+      and "ThinkTronic MechComp Dispenser" when screwdrivering a vendor board.
+  - bugfix: Species that are supposed to be immune to transformation stings are now
+      actually immune to transformation stings.
+  - rscadd: Added a new surgery, DNA Recovery, which can unhusk people, including
+      changeling absorption victims. It's unlocked by experimental surgery node, and
+      requires either rezadone, amanitin, or entropic polypnium.
+  Absolucy, SmArtKar:
+  - refactor: Various status effects and objects now use a new "shared" particles
+      system, which should considerably improve client performance when encountering
+      entities with a lot of particle effects.
+  Gw0sty:
+  - bugfix: Roboticists finally figured out the cybernetic connectors purpose is and
+      will now be able to hack cybernetics for others.
+  Kitsunemitsu:
+  - rscadd: Added 3 new AI lawsets.
+  Veth-s:
+  - admin: Replaced player panel and player options panel with a tgui version. Includes
+      a verb in the Admin Game category, and an option on right clicking a mob.
+  - admin: Rebound F6 to the new TGUI player panel.
+2025-02-05:
+  Absolucy:
+  - bugfix: (IndieanaJones) Blob Zombies now render their blob heads correctly again.
+  - bugfix: (Rhials) The tide of post-round blob zombies when a blob wins will no
+      longer break the speakers in your headset.
+  - bugfix: (SmArtKar) Blob victory no longer spams spore zombie notifications to
+      ghosts.
+  - qol: Unremovable or hidden organs/limbs will no longer be bioscrambled, and are
+      also no longer eligible bioscrambler results.
+  Absolucy, Ghommie, SmArtKar:
+  - admin: godmode is now a datum trait instead of a bitflag. This means the process
+      for toggling it is a little different now.
+  Veth-s:
+  - bugfix: Fixes a money dupe by blacklisting spacecash and monkecoin from interaction
+      components.
+2025-02-06:
+  MichiRecRoom:
+  - bugfix: IceBox had a vent and scrubber not connected, within the security post
+      at the Departures Lobby. That's fixed now.
+2025-02-07:
+  Absolucy:
+  - qol: Made the Biogenerator UI slightly prettier.
+  - bugfix: The Biogenerator UI now properly calculates the max amount of something
+      that can be produced.
+  - qol: The composter now actually benefits somewhat from upgraded parts.
+  - qol: The composter now prompts you for how many biocubes you want to generate,
+      rather than requiring spam-clicking to make multiple.
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  - bugfix: The "Delightful Effect" symptom no longer causes brain damage, and should
+      also no longer potentially spam chat.
+  Gboster-0:
+  - rscadd: Interaction components can now have a filter that only interacts with
+      specific items.
+  - qol: Mech components can now have themselfes quickly put into the multitool buffer
+      as a device to link if you right-click them.
+  - balance: automatic assemblers can now make any* crafting recipe thats made using
+      sheets in your hand
+  - bugfix: There is no longer a coffin recipe that takes 10 times as long to craft
+      in the crafting menu.
+  RikuTheKiller:
+  - rscadd: There's a BCI manipulator in Void Raptor's circuit lab now.
+  flleeppyy:
+  - admin: fix supplypod fall sound varying when it shouldnt
+2025-02-08:
+  Absolucy:
+  - qol: The shuttle timer for Amber and Yellow alerts are now the same as Blue alert.
+  - balance: The effects of Bioluminescence, Shadow Emission, Bluespace Activity,
+      Gaseous Decomposition, and Slippery Skin no longer scale absurdly past 100 potency.
+  - qol: Glowshrooms and such once again use complex lighting, which shouldn't lag
+      anymore as they can no longer be bright enough for a single glowshroom to illuminate
+      the entire station and then some.
+  - bugfix: Fixed the biogenerator UI shifting when adding reagents to a container.
+  - bugfix: Made the biogenerator window's default height tall enough to show everything
+      by default.
+  MichiRecRoom, san7890, Time-Green, JohnFulpWillard:
+  - refactor: (san7890) Holodeck monkeys have been moved to the same system as old
+      monkeys, and should retain the similar "ephermeal" behavior, while being a whole
+      lot smarter by leveraging new AI. Please report anything that is completely
+      wack about this.
+  Siro, Tractir Mann:
+  - rscadd: Added new walksounds to jackboots! Hate em? Turn them off with Control
+      Click!
+  - balance: Civil Protection Boots now have pockets akin to the Jackboots.
+  flleeppyy:
+  - bugfix: Fixed an RCE exploit in NTSL.
+  - qol: Mentor's now have a per-round bonus of 500 coins
+  leaKsi:
+  - bugfix: Fixed a crash-inducing function in NTSL.
+2025-02-09:
+  Absolucy:
+  - bugfix: Admins can once again use the Lua editor.
+  Siro:
+  - bugfix: fixes various bugs check PR for list.
+  Siro, Tractor Mann:
+  - rscadd: Jackboots, Civil Protection Boots, and Cowboy boots now have new walksounds!
+      Hate the walksounds? dont worry! you can turn them off with Ctrl-Click!
+  - balance: Civil Protection boots now have boot pockets akin to the jackboots.
+  - sound: Added HL:A Combine walksounds.
+  - code_imp: Added the shoesteps element, which should hopefully make adding custom
+      step sounds for specific boots easier.
+  ThePooba:
+  - rscadd: ports and stuff are defines now
+  - rscadd: MRP2 now gets 500 BONUS COINS EVERY ROUND YEEHAW

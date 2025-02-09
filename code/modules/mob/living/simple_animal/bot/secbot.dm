@@ -5,8 +5,10 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxHealth = 25
+	// monkestation edit: slightly raise beepsky's health (25 -> 35)
+	health = 35
+	maxHealth = 35
+	// monkestation end
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	istate = ISTATE_HARM|ISTATE_BLOCKING
@@ -50,6 +52,8 @@
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
+
+	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
@@ -97,19 +101,6 @@
 	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	bot_mode_flags = BOT_MODE_ON
 	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
-
-//monkestation edit begin
-/mob/living/simple_animal/bot/secbot/beepsky/big
-	name = "Officer Bigsky"
-	desc = "It's Commander Beep O'sky's massive, just-as aggressive cousin, Bigsky."
-	health = 150
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
-	commissioned = FALSE
-
-/mob/living/simple_animal/bot/secbot/beepsky/big/Initialize(mapload)
-	. = ..()
-	update_transform(1.3)
-//monkestation edit end
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
@@ -321,7 +312,7 @@
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
-	var/judgement_criteria = judgement_criteria()
+	//var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
@@ -329,15 +320,17 @@
 
 	if(harm)
 		weapon.attack(current_target, src)
+
+	// monkestation start: check shields and baton resistance, deal stamina damage
 	if(ishuman(current_target))
-		current_target.set_stutter(10 SECONDS)
-		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
-		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, PROC_REF(check_for_weapons)))
+		if(human_target.check_shields(src, 0, "\the [name]", MELEE_ATTACK))
+			return
+	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
+		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
 	else
-		current_target.Paralyze(100)
-		current_target.set_stutter(10 SECONDS)
-		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, PROC_REF(check_for_weapons)))
+		current_target.stamina.adjust(-stamina_damage)
+	// monkestation end
 
 	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
