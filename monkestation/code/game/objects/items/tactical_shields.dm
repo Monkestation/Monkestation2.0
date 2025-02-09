@@ -1,5 +1,5 @@
 /// Tutel shield, designed to work with the Bobr
-/// Comes with a built-in 4 round ammobox to allow for easy reloading
+/// Comes with a built-in 8 round ammobox to allow for easy reloading
 /// I based it off of ammo_box instead of shield because I believe ammo_box is more complicated
 
 /obj/item/ammo_box/tacshield/tutel/
@@ -12,11 +12,11 @@
 	inhand_icon_state = "tutel"
 	worn_icon_state = "ammobox"
 	ammo_type = /obj/item/ammo_casing/shotgun
-	max_ammo = 4
+	max_ammo = 8
 	caliber = CALIBER_SHOTGUN
 	multitype = TRUE
-	block_chance = 50
-	max_integrity = 65 //breaks on the second slug block, survives the first
+	block_chance = 40
+	max_integrity = 60 //breaks on the second slug block, survives the first
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -61,6 +61,9 @@
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
+			return
+		if(do_after(user, 1 SECONDS, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_shieldrepair"))
+			to_chat(user, span_warning("You were interrupted."))
 			return
 		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
 		titanium_sheet.use(1)
@@ -119,6 +122,6 @@
 		/obj/item/broken_shield = 1,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
-	time = 5 SECONDS
+	time = 3 SECONDS
 	category = CAT_WEAPON_MELEE
 
