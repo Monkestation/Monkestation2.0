@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -22,7 +23,7 @@ type Data = {
   custom_name: string;
   played_sound: string;
   print_report: string;
-  append_update_name: boolean;
+  append_update_name: BooleanLike;
 };
 
 export const CommandReport = () => {
