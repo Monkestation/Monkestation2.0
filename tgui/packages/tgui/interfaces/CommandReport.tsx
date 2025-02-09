@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
   Section,
   Stack,
@@ -17,6 +18,7 @@ type Data = {
   command_name: string;
   command_name_presets: string[];
   command_report_content: string;
+  sanitize_content: BooleanLike;
   announcement_color: string;
   announcement_colors: string[];
   subheader: string;
@@ -149,16 +151,41 @@ const AnnouncementSound = (props) => {
 
   return (
     <Section title="Set announcement sound" textAlign="center">
-      <Dropdown
+      <style>
+        {`
+      #announcement-sound-container div:last-child {
+        width: 100%;
+        flex-grow: true;
+      }
+    `}
+      </style>
+      <Flex
+        id="announcement-sound-container"
+        direction="row"
         width="100%"
-        displayText={played_sound}
-        options={announcer_sounds}
-        onSelected={(value) =>
-          act('set_report_sound', {
-            picked_sound: value,
-          })
-        }
-      />
+        grow
+        style
+      >
+        <Button
+          width="24px"
+          height="22px"
+          icon="volume-up"
+          onClick={() => act('preview_sound')}
+          tooltip={
+            'Preview sound - Some sounds have variations such as default_alert and default_commandreport, so what you preview here may be different than what is played for the station. Respects volume mixer preferences.'
+          }
+        />
+        <Dropdown
+          width="100%"
+          displayText={played_sound}
+          options={announcer_sounds}
+          onSelected={(value) =>
+            act('set_report_sound', {
+              picked_sound: value,
+            })
+          }
+        />
+      </Flex>
     </Section>
   );
 };
@@ -166,14 +193,34 @@ const AnnouncementSound = (props) => {
 /** Creates the report textarea with a submit button. */
 const ReportText = (props) => {
   const { act, data } = useBackend<Data>();
-  const { announce_contents, print_report, command_report_content } = data;
+  const {
+    announce_contents,
+    print_report,
+    command_report_content,
+    sanitize_content,
+  } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
     'textArea',
     command_report_content,
   );
 
   return (
-    <Section title="Set report text" textAlign="center">
+    <Section
+      title="Set report text"
+      textAlign="center"
+      buttons={
+        <Button.Checkbox
+          fluid
+          checked={sanitize_content}
+          onClick={() => act('toggle_sanitization')}
+          tooltip={
+            "Whether or not to sanitize the contents. Disabling this means you can use custom HTML in your reports. Be careful though, you don't want to get ridiculed for an embed fail :) "
+          }
+        >
+          Sanitize
+        </Button.Checkbox>
+      }
+    >
       <TextArea
         height="200px"
         mb={1}
@@ -204,13 +251,34 @@ const ReportText = (props) => {
           </Button.Checkbox>
         </Stack.Item>
         <Stack.Item>
-          <Button.Confirm
-            fluid
-            icon="check"
-            textAlign="center"
-            content="Submit Report"
-            onClick={() => act('submit_report', { report: commandReport })}
-          />
+          <Flex
+            id="announcement-sound-container"
+            direction="row"
+            width="100%"
+            grow
+            style
+          >
+            <Button.Confirm
+              fluid
+              width="100%"
+              icon="check"
+              textAlign="center"
+              content="Submit Report"
+              onClick={() => act('submit_report', { report: commandReport })}
+            />
+            <Button
+              ml="2px"
+              width="24px"
+              height="20px"
+              icon="eye"
+              onClick={() =>
+                act('submit_report', { report: commandReport, preview: true })
+              }
+              tooltip={
+                'Preview report - Sends the report to only you to preview it.'
+              }
+            />
+          </Flex>
         </Stack.Item>
       </Stack>
     </Section>
