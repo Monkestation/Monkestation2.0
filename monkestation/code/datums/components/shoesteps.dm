@@ -323,6 +323,6 @@ extra range addition
 
 /obj/item/clothing/shoes/clown_shoes/orchestra/Initialize(mapload)
 	. = ..()
-	src.AddComponent(/datum/component/shoesteps/orchestra_hit)
+	AddComponent(/datum/component/shoesteps/orchestra_hit)
 
 #undef DOAFTER_SOURCE_SHOESTEP_TOGGLE
