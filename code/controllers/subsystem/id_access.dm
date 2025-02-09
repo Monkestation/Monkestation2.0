@@ -325,7 +325,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 	desc_by_access["[ACCESS_PERMABRIG]"] = "Permabrig" // monkestation edit: add permabrig-only access
-	//MONKESTATION EDITION - Adds descriptions to Charlie Station access levels. Used for Charlie Station ID Console.
+	//MONKESTATION ADDITION - Adds descriptions to Charlie Station access levels. Used for Charlie Station ID Console.
 	desc_by_access["[ACCESS_AWAY_GENERAL]"] = "Charlie Station General"
 	desc_by_access["[ACCESS_AWAY_SCIENCE]"] = "Charlie Station Science"
 	desc_by_access["[ACCESS_AWAY_MAINTENANCE]"] = "Charlie Station Maintenance"
