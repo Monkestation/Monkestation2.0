@@ -19500,12 +19500,10 @@
 /area/centcom/central_command_areas/admin)
 "brG" = (
 /obj/structure/table/reinforced/plasmarglass,
-/obj/structure/fluff{
-	icon = 'icons/obj/fax.dmi';
-	icon_state = "fax";
-	name = "fax machine";
-	desc = "A CentCom-owned fax machine. It's been disconnected from the network.";
-	density = 1
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk";
+	name = "Cassiel's Fax Machine";
+	visible_to_network = 0
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/adminroom)
@@ -20195,12 +20193,9 @@
 	layer = 2.8
 	},
 /obj/structure/table/wood,
-/obj/structure/fluff{
-	icon = 'icons/obj/fax.dmi';
-	icon_state = "fax";
-	name = "fax machine";
-	desc = "A CentCom-owned fax machine. It's been disconnected from the network.";
-	density = 1
+/obj/machinery/fax/messageadmins{
+	fax_name = "Wolf's Office";
+	visible_to_network = 0
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
@@ -25129,12 +25124,9 @@
 /area/centcom/central_command_areas/retirement_yard)
 "pcz" = (
 /obj/structure/table/reinforced,
-/obj/structure/fluff{
-	icon = 'icons/obj/fax.dmi';
-	icon_state = "fax";
-	name = "fax machine";
-	desc = "A CentCom-owned fax machine. It's been disconnected from the network.";
-	density = 1
+/obj/machinery/fax{
+	name = "Beverly's Fax Machine";
+	visible_to_network = 0
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
