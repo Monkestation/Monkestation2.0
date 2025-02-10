@@ -76362,10 +76362,6 @@
 /obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"vgn" = (
-/obj/item/tank/jetpack/oxygen,
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/station/maintenance/department/medical)
 "vgq" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -111569,7 +111565,7 @@ hPi
 hPi
 kAJ
 sAM
-vgn
+odD
 ycv
 sAM
 uwo
