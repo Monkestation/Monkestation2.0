@@ -114,6 +114,7 @@
 	if(public_options.value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
+	TIMER_COOLDOWN_START(parent, COOLDOWN_SIGNALLER_SEND, signal_cooldown_time)
 	trigger_output.set_output(COMPONENT_SIGNAL)
 
 #undef COMP_RADIO_PUBLIC
