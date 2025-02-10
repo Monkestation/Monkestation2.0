@@ -1034,7 +1034,7 @@
 			if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 		else
-			var/live_ammo = target.ammo_count(FALSE)
+			var/live_ammo = gun.magazine.ammo_count(FALSE)
 			if(live_ammo >= length(gun.magazine.stored_ammo))
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
