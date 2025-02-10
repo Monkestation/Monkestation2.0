@@ -27,7 +27,12 @@
 	attack_sound = 'sound/weapons/blade1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee)
+	//MONKESTATION EDIT START - We use `light_(outer|inner)_range` instead of just `light_range`
+	/* //MONKESTATION EDIT ORIGINAL
 	light_range = 2
+	*/
+	light_outer_range = 2
+	//MONKESTATION EDIT END
 	light_power = 2.5
 	light_color = COLOR_SOFT_RED
 	loot = list(
@@ -41,7 +46,12 @@
 /mob/living/basic/trooper/pirate/melee/space
 	name = "Space Pirate Swashbuckler"
 	unsuitable_atmos_damage = 0
+	//MONKESTATION EDIT START - We use `bodytemp_cold_damage_limit` instead of `minimum_survivable_temperature`
+	/* //MONKESTATION EDIT ORIGINAL
 	minimum_survivable_temperature = 0
+	*/
+	bodytemp_cold_damage_limit = -1
+	//MONKESTATION EDIT END
 	speed = 1
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
@@ -78,7 +88,12 @@
 /mob/living/basic/trooper/pirate/ranged/space
 	name = "Space Pirate Gunner"
 	unsuitable_atmos_damage = 0
+	//MONKESTATION EDIT START - We use `bodytemp_cold_damage_limit` instead of `minimum_survivable_temperature`
+	/* //MONKESTATION EDIT ORIGINAL
 	minimum_survivable_temperature = 0
+	*/
+	bodytemp_cold_damage_limit = -1
+	//MONKESTATION EDIT END
 	speed = 1
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
