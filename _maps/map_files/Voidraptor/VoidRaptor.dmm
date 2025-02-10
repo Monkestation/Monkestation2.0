@@ -71651,6 +71651,10 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/engineering,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "tQV" = (
@@ -76358,6 +76362,10 @@
 /obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"vgn" = (
+/obj/item/tank/jetpack/oxygen,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/station/maintenance/department/medical)
 "vgq" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -111561,7 +111569,7 @@ hPi
 hPi
 kAJ
 sAM
-odD
+vgn
 ycv
 sAM
 uwo

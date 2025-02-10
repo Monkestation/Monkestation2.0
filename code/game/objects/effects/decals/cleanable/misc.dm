@@ -241,15 +241,12 @@
 	name = "blue glitter"
 	icon_state = "freon"
 
-//MONKESTATION EDIT START: MADE THE EFFECT NOT FLOUR, IT'S PAIN
+//MONKESTATION EDIT START: MADE THE EFFECT NOT FLOUR, IT'S PAIN!
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "purpleglow"
-	icon = 'monkestation/icons/effects/stablized_plasma.dmi'
-	light_power = 3
-	light_outer_range = 2
-	light_color = LIGHT_COLOR_PURPLE
+	icon = 'monkestation/icons/effects/stabilized_plasma.dmi'
 //MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
