@@ -68,11 +68,12 @@
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
 /obj/item/clothing/mask/joy/manhunt
-	name = "Smiley mask"
-	desc = "Express your happiness or hide your sorrows with this cultured cutout."
+	name = "smiley mask"
+	desc = "A happy mask! Doesn't seem like there is anything wrong with it...right?"
 	icon_state = "happy"
 	unique_reskin = list(
 			"Happy" = "happy",
 			"Bloodied" = "bloodied",
 			"Stop me" = "stop_me",
+			"Cracked" = "cracked",
 	)
