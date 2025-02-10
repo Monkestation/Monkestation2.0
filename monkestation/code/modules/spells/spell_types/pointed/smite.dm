@@ -74,7 +74,7 @@
 		else
 			picked_smite = new picked_smite
 			do_smite(picked_smite, cast_on)
-	to_chat(owner, span_notice("You call down a strike from the heavens upon [cast_on], resulting in [picked_smite::name]!"))
+	to_chat(owner, span_notice("You call down a strike from the heavens upon [cast_on], resulting in [picked_smite.name]!"))
 
 /datum/action/cooldown/spell/pointed/smite/after_cast(atom/cast_on)
 	. = ..()
