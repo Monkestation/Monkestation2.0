@@ -25,6 +25,9 @@
 	var/oxygen_moles = 0
 	var/obj/machinery/portable_atmospherics/purification_input/oxygen_input
 
+/obj/machinery/bouldertech/purification_chamber/examine(mob/user)
+	. = ..()
+	. += span_nicegreen("Alt+Click to deploy the built in oxygen pump onto a gas connector.")
 /obj/machinery/bouldertech/purification_chamber/AltClick(mob/user)
 	. = ..()
 	if(oxygen_input)
@@ -183,3 +186,7 @@
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
 
 	SSair.start_processing_machine(src)
+
+/obj/machinery/bouldertech/portable_atmospherics/purification_input/examine(mob/user)
+	. = ..()
+	. += span_boldwarning("The sticker on the side says: Ore purification requires 25 mols of Oxygen per boulder. Advised to connect to gas pipe network.")

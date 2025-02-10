@@ -97,9 +97,9 @@
 			var/output_pipe = initial(pipes.supply_connects)
 			var/layer_name = (pipes.ducting_layer == THIRD_DUCT_LAYER) ? "Third Layer" : GLOB.plumbing_layer_names["[pipes.ducting_layer]"]
 			if(istype(pipes, /datum/component/plumbing/dissolution_chamber))
-				. += span_nicegreen("Sulfuric Acid supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with YELLOW pipes on the [layer_name]")
+				. += span_nicegreen("Sulfuric Acid supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with YELLOW fluid ducts on the [layer_name]")
 			if(istype(pipes, /datum/component/plumbing/dissolution_chamber_output))
-				. += span_nicegreen("Dirty Slurry export connects to the [dir2text(turn(output_pipe, cur_ang_offset))] with BLUE pipes on the [layer_name]")
+				. += span_nicegreen("Dirty Slurry export connects to the [dir2text(turn(output_pipe, cur_ang_offset))] with BLUE fluid ducts on the [layer_name]")
 
 /datum/component/plumbing/dissolution_chamber
 	demand_connects = SOUTH

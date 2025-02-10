@@ -88,9 +88,9 @@
 				var/output_pipe = initial(pipes.supply_connects)
 				var/layer_name = (pipes.ducting_layer == THIRD_DUCT_LAYER) ? "Third Layer" : GLOB.plumbing_layer_names["[pipes.ducting_layer]"]
 				if(istype(pipes, /datum/component/plumbing/chemical_washer_water))
-					. += span_nicegreen("Water supply connects to the [dir2text(input_pipe)] with BLUE pipes on the [layer_name]")
+					. += span_nicegreen("Water supply connects to the [dir2text(input_pipe)] with BLUE fluid ducts on the [layer_name]")
 				if(istype(pipes, /datum/component/plumbing/brine_controller))
-					. += span_nicegreen("Brine export connects to the [dir2text(output_pipe)] with GREEN pipes on the [layer_name]")
+					. += span_nicegreen("Brine export connects to the [dir2text(output_pipe)] with GREEN fluid ducts on the [layer_name]")
 
 /obj/structure/brine_chamber/controller/process(seconds_per_tick)
 	if(process_count < 10)

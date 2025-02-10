@@ -48,7 +48,7 @@
 			var/input_pipe = initial(pipes.demand_connects) // Call for the initial position then use turn to get its current direction.
 			var/layer_name = (pipes.ducting_layer == THIRD_DUCT_LAYER) ? "Third Layer" : GLOB.plumbing_layer_names["[pipes.ducting_layer]"]
 			if(istype(pipes, /datum/component/plumbing/material_crystalizer))
-				. += span_nicegreen("Clean Slurry supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with RED pipes on the [layer_name]")
+				. += span_nicegreen("Clean Slurry supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with RED fluid ducts on the [layer_name]")
 
 /obj/machinery/bouldertech/crystalizer/process()
 	if(!anchored)
