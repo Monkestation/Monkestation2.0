@@ -74,7 +74,7 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_radio_input), port)
 
 /obj/item/circuit_component/radio/proc/handle_radio_input(datum/port/input/port)
-	if(!TIMER_COOLDOWN_CHECK(parent, COOLDOWN_SIGNALLER_SEND))
+	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_SIGNALLER_SEND))
 		return
 
 	var/frequency = freq.value
@@ -103,6 +103,9 @@
 
 /obj/item/circuit_component/radio/receive_signal(datum/signal/signal)
 	. = FALSE
+	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_SIGNALLER_SEND))
+		// Maybe not needed but might allow fast triggering from different sources with same signal without it.
+		return
 	if(!signal)
 		return
 	if(signal.data["code"] != round(code.value || 0))
