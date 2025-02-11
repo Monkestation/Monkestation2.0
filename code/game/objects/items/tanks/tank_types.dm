@@ -11,7 +11,7 @@
 /// Allows carbon to toggle internals via AltClick of the equipped tank.
 //MONKESTATION EDIT START
 /obj/item/tank/internals
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 //MONKESTATION EDIT STOP
 /obj/item/tank/internals/AltClick(mob/user)
 	..()

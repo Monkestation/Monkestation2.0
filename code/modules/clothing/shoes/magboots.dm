@@ -26,7 +26,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
-	ADD_TRAIT(src, TRAIT_ALWAYS_RENDER, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ALWAYS_RENDER, INNATE_TRAIT) //monkestation addition
 
 /// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
 /obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)

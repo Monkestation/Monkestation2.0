@@ -834,6 +834,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ABOVE_SUIT_LAYER (SUIT_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+/// The layer above the head layer
+#define ABOVE_HEAD_LAYER (HEAD_LAYER-1)
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
