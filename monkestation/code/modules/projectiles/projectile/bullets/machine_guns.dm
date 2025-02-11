@@ -99,9 +99,8 @@
 
 /obj/projectile/bullet/c65xeno/incendiary/evil/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
-		if(pierces > 1)
-			projectile_piercing = NONE
+	if(isliving(target) && pierces > 1)
+		projectile_piercing = NONE
 
 /obj/projectile/bullet/c65xeno/incendiary/evil/Move()
 	. = ..()
