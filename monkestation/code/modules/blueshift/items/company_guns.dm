@@ -161,6 +161,7 @@
 	icon_state = "infanterie_evil"
 	worn_icon_state = "infanterie_evil"
 	inhand_icon_state = "infanterie_evil"
+	projectile_wound_bonus = 5
 	projectile_damage_multiplier = 1.5 ///Ass op weapon, it should be more powerful than crew guns. This brings it up to 30 damage
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
