@@ -22,8 +22,8 @@
 /obj/item/storage/box/nanofrost
 	name = "box of nanofrost grenades"
 	desc = "A box of A NanoFrost™ smoke grenades. Nanotrasen's response to frequent plasma related fires onboard their research stations."
-	icon_state = "plasticbox"
 	illustration = "grenade"
+
 /obj/item/storage/box/nanofrost/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/smokebomb/nanofrost(src)
