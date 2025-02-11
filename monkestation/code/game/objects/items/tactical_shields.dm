@@ -16,7 +16,7 @@
 	caliber = CALIBER_SHOTGUN
 	multitype = TRUE
 	block_chance = 40
-	max_integrity = 60 //breaks on the second slug block, survives the first
+	max_integrity = 55 //breaks on the second slug block, survives the first
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
