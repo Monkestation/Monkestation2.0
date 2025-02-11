@@ -40,10 +40,9 @@
 
 /obj/projectile/bullet/c65xeno/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/thing_to_break = target
-	if(isliving(target))
+	if(isliving(target) && pierces > 3)
 		// If the bullet has already gone through 3 people, stop it on this hit
-		if(pierces > 3)
-			projectile_piercing = NONE
+		projectile_piercing = NONE
 	if(!(isliving(target)) && isobj(target))
 		thing_to_break.take_damage(object_damage, BRUTE, BULLET, FALSE)
 	return ..()
