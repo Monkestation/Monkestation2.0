@@ -53,6 +53,6 @@
 	name = "nanofrost smoke grenade"
 	icon_state = "smokeblue"
 	smoke_type = /datum/effect_system/fluid_spread/smoke/freezing
-	desc = "A NanoFrost™ smoke grenade. The smoke neutralizes aireborne plasma by turning it into nitrogen and seals vents. Handy for dealing with fires."
+	desc = "A NanoFrost™ smoke grenade. The smoke neutralizes airborne plasma by converting it into cold nitrogen while freezing vents shut. Handy for dealing with fires."
 	bruh_description = FALSE
 //MONKESTATION EDIT STOP

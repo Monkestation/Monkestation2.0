@@ -123,7 +123,8 @@
 #define TRAIT_TRASH_ITEM			"trash_item"
 /// This item came from a gift.
 #define TRAIT_GIFT_ITEM				"gift_item"
-
+///This item always renders. (only used for stupid magboots rn)
+#define TRAIT_ALWAYS_RENDER			"always_render"
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.
 #define TRAIT_GOES_THROUGH_WOODEN_BARRICADES	"goes_through_wooden_barricades"
