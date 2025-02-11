@@ -214,3 +214,39 @@
   ThePooba:
   - rscadd: ports and stuff are defines now
   - rscadd: MRP2 now gets 500 BONUS COINS EVERY ROUND YEEHAW
+2025-02-10:
+  Absolucy:
+  - bugfix: Shields (and anything else that can block thrown items) now properly block
+      thrown plants, i.e bluespace tomatoes and prickly plants.
+  Absolucy, Danny Boy:
+  - bugfix: Signers no longer sign with their species' tongue
+  leaKsi:
+  - bugfix: (FlufflesTheDog) Sanitization on citation pda alerts.
+  - bugfix: (MrMelbert) Sanitization for pAIs and medical/security records.
+  - bugfix: Sanitization for mechanical components, pathology records, integrated
+      circuit/shells, and PDA app notifications.
+2025-02-11:
+  Absolucy, grungussuss, and kayozz:
+  - sound: gravity generator has a new sound
+  Addust:
+  - bugfix: Johnson and Co Architecture has sent in a crack team to forcibly reprogram
+      every fax machine at Central Command to prevent break-ins.
+  MichiRecRoom, MrMelbert:
+  - rscadd: Adds a new Mild-type brain trauma, Possessive. Occasionally, an item you're
+      holding in your hand will become undroppable for a short time.
+  - rscadd: Adds a new Special-type brain trauma, Primal Instincts. Occasionally,
+      your character will be taken over by a (possibly aggressive) monkey AI.
+  - rscadd: Rewrites our Kleptomania atop the new Kleptomania. This brings a number
+      of changes, including activating more frequently (but with a cooldown), and
+      the ability for the trauma to steal to any available hand.
+  - admin: New logs for the new brain traumas. See PR 5138 for the details of these
+      logs, and where to find them.
+  MichiRecRoom, jlsnow301:
+  - code_imp: 'TGUI dependencies have been updated. This should not result in any
+      player-facing changes, but suffice to say: PLEASE LET ME KNOW IF THIS HAS BROKEN
+      ANY INTERFACES.'
+  Siro:
+  - rscadd: Using the door charge lets you record a taunt
+  - qol: 'Door charge triggers on bumping into the door. fixes #5110'
+  TheColorCyan:
+  - rscadd: Added manhunt smiley mask.
