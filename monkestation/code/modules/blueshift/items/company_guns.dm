@@ -234,6 +234,7 @@
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
+	projectile_damage_multiplier = 1.1
 
 // Low caliber grenade launcher (fun & games)
 
