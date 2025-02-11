@@ -52,6 +52,10 @@
 			var/turf/owner_turf = get_turf(owner)
 			owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))
 			shatter(owner)
+			var/turf_mag = get_turf(src)
+			for(var/obj/item/ammo in stored_ammo)
+				ammo.forceMove(turf_mag)
+				stored_ammo -= ammo
 			qdel(src)
 			return TRUE
 		take_damage(damage)
@@ -62,7 +66,7 @@
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
 			return
-		if(do_after(user, 1 SECONDS, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_shieldrepair"))
+		if(!do_after(user, 1 SECONDS, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_shieldrepair"))
 			to_chat(user, span_warning("You were interrupted."))
 			return
 		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
