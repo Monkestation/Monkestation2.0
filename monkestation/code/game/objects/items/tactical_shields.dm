@@ -15,7 +15,7 @@
 	max_ammo = 8
 	caliber = CALIBER_SHOTGUN
 	multitype = TRUE
-	block_chance = 40
+	block_chance = 35
 	max_integrity = 55 //breaks on the second slug block, survives the first
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	force = 15
