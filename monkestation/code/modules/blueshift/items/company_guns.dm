@@ -135,6 +135,7 @@
 	wield_recoil = 0.5
 	spread = 12.5
 	projectile_wound_bonus = -20
+	projectile_damage_multiplier = 0.75
 
 /obj/item/gun/ballistic/automatic/sol_rifle/machinegun/examine_more(mob/user)
 	. = ..()
@@ -160,6 +161,9 @@
 	icon_state = "infanterie_evil"
 	worn_icon_state = "infanterie_evil"
 	inhand_icon_state = "infanterie_evil"
+	projectile_wound_bonus = 5
+	projectile_damage_multiplier = 1.25
+	fire_delay = 0.3 SECONDS
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -230,6 +234,7 @@
 	icon_state = "renoster_evil"
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
+	projectile_wound_bonus = 15
 
 // Low caliber grenade launcher (fun & games)
 
@@ -324,6 +329,8 @@
 	icon_state = "kiboko_evil"
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
+	projectile_wound_bonus = 5
+	fire_delay = 0.30 SECONDS
 
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
@@ -423,15 +430,12 @@
 	suppressor_x_offset = 9
 
 	burst_size = 2
-	fire_delay = 0.15 SECONDS
+	fire_delay = 0.5 SECONDS
 	actions_types = list()
-
-	// Because we're firing a lot of these really fast, we want a lot less wound chance
-	projectile_wound_bonus = -20
-	spread = 12.5
+	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
-	wield_recoil = 0.5
+	wield_recoil = 1
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
@@ -758,7 +762,6 @@
 	recoil = 1.5
 	wield_recoil = 0.5
 	spread = 2.5
-	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
 	. = ..()
@@ -1049,6 +1052,8 @@
 
 	icon_state = "sindano_evil"
 	inhand_icon_state = "sindano_evil"
+	spread = 5
+	projectile_wound_bonus = 5
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE

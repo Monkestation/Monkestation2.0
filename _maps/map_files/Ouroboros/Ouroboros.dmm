@@ -8644,7 +8644,7 @@
 "cDu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "High-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/harmful,
@@ -13125,7 +13125,7 @@
 	},
 /obj/item/stamp{
 	pixel_x = -7;
-	pixel_y = 1
+	pixel_y = -1
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/requests_console/auto_name/directional/south,
@@ -14269,13 +14269,21 @@
 "ekC" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/folder/white,
+/obj/item/stamp/granted{
+	pixel_y = 11;
+	pixel_x = 8
+	},
 /obj/item/stamp/head/cmo{
-	pixel_y = 7;
+	pixel_y = 6;
 	pixel_x = 8
 	},
 /obj/item/flashlight/pen,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8;
+	pixel_y = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
@@ -23755,7 +23763,7 @@
 "het" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "Low-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/neutral,
@@ -31746,10 +31754,10 @@
 "jux" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/lobby)
 "juy" = (
@@ -35607,6 +35615,14 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow{
 	pixel_x = -3
+	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /obj/item/stamp/head/ce,
 /obj/machinery/button/door/directional/west{
@@ -52173,8 +52189,16 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/rd,
 /obj/machinery/light/cold/directional/west,
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/rd,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
 "ptD" = (
@@ -55790,6 +55814,14 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
+/obj/item/stamp/denied{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/obj/item/stamp/granted{
+	pixel_y = 12;
+	pixel_x = -2
+	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
 "qur" = (
@@ -56161,11 +56193,19 @@
 	dir = 1
 	},
 /obj/item/folder/red,
-/obj/item/stamp/head/hos,
 /obj/item/paper_bin{
 	pixel_x = 16;
 	pixel_y = 7
 	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/head/hos,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
 "qyQ" = (
@@ -57608,6 +57648,10 @@
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
+"qZh" = (
+/obj/machinery/composters,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "qZi" = (
 /obj/structure/sign/flag/mothic/directional/north,
 /obj/effect/spawner/random/engineering/tank,
@@ -64266,6 +64310,7 @@
 "sXX" = (
 /obj/machinery/growing/soil,
 /obj/machinery/light/warm/directional/north,
+/obj/machinery/vending/hydroseeds/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "sYb" = (
@@ -65260,6 +65305,7 @@
 /obj/machinery/growing/soil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/vending/hydronutrients/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tne" = (
@@ -185296,7 +185342,7 @@ dEd
 lxY
 inH
 uvP
-dHo
+qZh
 odH
 sYM
 jgK

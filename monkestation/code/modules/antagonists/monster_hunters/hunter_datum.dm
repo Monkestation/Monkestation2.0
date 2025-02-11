@@ -3,7 +3,7 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	hud_icon = 'monkestation/icons/mob/huds/antags/monster_hunter.dmi'
+	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
@@ -77,7 +77,7 @@
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
 	RegisterSignal(src, COMSIG_BEASTIFY, PROC_REF(turn_beast))
 	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf()
+		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
 		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
@@ -159,6 +159,7 @@
 	mask = /obj/item/clothing/mask/monster_preview_mask
 	uniform = /obj/item/clothing/under/suit/black
 	suit =  /obj/item/clothing/suit/hooded/techpriest
+	head = /obj/item/clothing/head/hooded/techpriest
 	gloves = /obj/item/clothing/gloves/color/white
 
 /// Mind version

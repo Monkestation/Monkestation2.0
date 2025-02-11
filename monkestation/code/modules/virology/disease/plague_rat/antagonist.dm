@@ -1,6 +1,7 @@
 /datum/antagonist/plague_rat
 	name = "Plague Rat"
 	job_rank = ROLE_PLAGUERAT
+	antagpanel_category = ANTAG_GROUP_BIOHAZARDS
 
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
@@ -9,7 +10,7 @@
 
 	var/static/datum/team/plague_rat/rats_rats_we_are_the_rats
 	var/disease_id
-	var/datum/disease/advanced/bacteria/plague
+	var/datum/disease/acute/bacteria/plague
 	var/turf/invasion
 
 /datum/antagonist/plague_rat/on_gain()

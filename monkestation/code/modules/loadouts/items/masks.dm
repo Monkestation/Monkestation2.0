@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.mask)
-			LAZYADD(outfit.backpack_contents, outfit.mask)
+			spawn_in_backpack(outfit, outfit.mask, equipper)
 		outfit.mask = item_path
 	else
 		outfit.mask = item_path
@@ -60,6 +60,10 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/gas_mask
 	name = "Gas Mask"
 	item_path = /obj/item/clothing/mask/gas
+
+/datum/loadout_item/mask/atp_mask
+	name = "ATP Engineer Mask"
+	item_path = /obj/item/clothing/mask/gas/atp
 
 /*
 *	JOB-LOCKED

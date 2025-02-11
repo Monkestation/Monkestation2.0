@@ -147,7 +147,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M == src)
 			continue
-		if(!isdead(M))
+		if(SSticker.current_state != GAME_STATE_FINISHED && (M.see_invisible < invisibility || (!isdead(M) && !HAS_TRAIT(M, TRAIT_SIXTHSENSE))))
 			continue
 		if (M.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			M.create_chat_message(src, /datum/language/common, message)
@@ -170,7 +170,7 @@
 	var/customsaypos = findtext(message, "*")
 	if(!customsaypos)
 		return message
-	if (is_banned_from(ckey, "Emote"))
+	if (!isnull(ckey) && is_banned_from(ckey, "Emote"))
 		return copytext(message, customsaypos + 1)
 	mods[MODE_CUSTOM_SAY_EMOTE] = copytext(message, 1, customsaypos)
 	message = copytext(message, customsaypos + 1)

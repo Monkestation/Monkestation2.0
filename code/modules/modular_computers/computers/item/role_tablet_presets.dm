@@ -102,6 +102,7 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/scipaper_program,
 	)
 
 /obj/item/modular_computer/pda/heads/quartermaster
@@ -140,6 +141,9 @@
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
+		//MONKESTATION EDIT START
+		/datum/computer_file/program/lifeline
+		//MONKESTATION EDIT END
 	)
 
 /obj/item/modular_computer/pda/warden
@@ -184,6 +188,8 @@
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 	)
 
 /obj/item/modular_computer/pda/roboticist
@@ -219,7 +225,7 @@
 	name = "paramedic PDA"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/radar/lifeline,
+		/datum/computer_file/program/lifeline, // monkestation edit `/datum/computer_file/program/radar/lifeline` -> `/datum/computer_file/program/lifeline`
 	)
 
 /obj/item/modular_computer/pda/viro

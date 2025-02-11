@@ -11,12 +11,11 @@
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
+	living_flags = ALWAYS_DEATHGASP
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/organs_slot = list()
-	///How many dream images we have left to send
-	var/dreaming = 0
 
 	///Whether or not the mob is handcuffed
 	var/obj/item/handcuffed = null
@@ -47,7 +46,7 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon
+	/// Carbon, you should really only be accessing this through has_dna() but it's your life
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
