@@ -43,7 +43,7 @@
 	if(isliving(target) && pierces > 3)
 		// If the bullet has already gone through 3 people, stop it on this hit
 		projectile_piercing = NONE
-	if(!(isliving(target)) && isobj(target))
+	if(isobj(target))
 		thing_to_break.take_damage(object_damage, BRUTE, BULLET, FALSE)
 	return ..()
 
