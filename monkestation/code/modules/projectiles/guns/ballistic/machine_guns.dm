@@ -67,7 +67,6 @@
 		like nothing else. After a string of expensive xenomorph breaches on research stations,\
 		NT pulled these machine guns out of deep storage, many still in their original packaging."
 
-	return .
 
 
 /obj/item/gun/ballistic/automatic/quarad_lmg/evil
