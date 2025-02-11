@@ -403,14 +403,14 @@
 	if(temp_gender != PLURAL)
 		. = "es"
 
-/datum/mind/p_they(temp_gender)
-	return current?.p_they(temp_gender) || ..()
+/datum/mind/p_they(capitalized, temp_gender)
+	return current?.p_they(capitalized, temp_gender) || ..()
 
-/datum/mind/p_their(temp_gender)
-	return current?.p_their(temp_gender) || ..()
+/datum/mind/p_their(capitalized, temp_gender)
+	return current?.p_their(capitalized, temp_gender) || ..()
 
-/datum/mind/p_theirs(temp_gender)
-	return current?.p_theirs(temp_gender) || ..()
+/datum/mind/p_theirs(capitalized, temp_gender)
+	return current?.p_theirs(capitalized, temp_gender) || ..()
 
 /datum/mind/p_them(capitalized, temp_gender)
 	return current?.p_them(capitalized, temp_gender) || ..()
