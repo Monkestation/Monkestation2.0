@@ -10,7 +10,7 @@
 /obj/projectile/bullet/c65xeno/on_hit(atom/target, blocked, pierce_hit)
 	var/mob/living/target_mob = target
 	if(isliving(target))
-		if(!(target_mob.mob_biotypes & biotype_we_look_for || istype(target_mob, /mob/living/carbon/human) || istype(target_mob, /mob/living/silicon)))
+		if(!((target_mob.mob_biotypes & biotype_we_look_for) || ishuman(target_mob) || issilicon(target_mob)))
 			damage *= biotype_damage_multiplier
 	return ..()
 
