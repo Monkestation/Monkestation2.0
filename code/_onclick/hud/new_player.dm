@@ -42,8 +42,9 @@
 
 /atom/movable/screen/lobby/button
 	abstract_type = /atom/movable/screen/lobby/button
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Is the button currently enabled?
-	var/enabled = TRUE
+	VAR_PROTECTED/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
 	/// The ref of the mob that owns this button. Only the owner can click on it.
@@ -104,7 +105,8 @@
 	if(status == enabled)
 		return FALSE
 	enabled = status
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
+	mouse_over_pointer = enabled ? MOUSE_HAND_POINTER : MOUSE_INACTIVE_POINTER
 	return TRUE
 
 ///Prefs menu
@@ -185,10 +187,10 @@
 	icon = 'icons/hud/lobby/join.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
-	enabled = FALSE
 
 /atom/movable/screen/lobby/button/join/Initialize(mapload)
 	. = ..()
+	set_button_status(FALSE)
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
 			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
@@ -267,6 +269,7 @@
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
 	else
+		set_button_status(FALSE)
 		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_observing))
 
 /atom/movable/screen/lobby/button/observe/Click(location, control, params)
@@ -454,11 +457,6 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
 
-#define NRP_PORT		2102
-#define MRP_PORT		3121
-#define HRP_PORT		1342
-#define VANDERLIN_PORT	1541
-
 //This is the changing You are here Button
 /atom/movable/screen/lobby/youarehere
 	var/vanderlin = 0
@@ -479,7 +477,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
 			screen_loc = "TOP:-32,CENTER:+215"
 		if(MRP_PORT) //MRP
 			screen_loc = "TOP:-65,CENTER:+215"
-		if(NRP_PORT) //NRP
+		if(MRP2_PORT) //MRP2
 			screen_loc = "TOP:-98,CENTER:+215"
 		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
 			screen_loc = "TOP:0,CENTER:+128"
@@ -499,8 +497,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 
 /atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
-	if(is_available())
-		set_button_status(TRUE)
+	set_button_status(is_available())
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
@@ -535,7 +532,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 /atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
 	return day == SATURDAY && ISINRANGE(hour, 12, 18)
 
-//MAIN MONKE
+//MAIN MONKE (MEDIUM RARE)
 /atom/movable/screen/lobby/button/server/mrp
 	base_icon_state = "mrp"
 	screen_loc = "TOP:-77,CENTER:+173"
@@ -543,20 +540,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 	server_name = "Medium-Rare Roleplay (MRP)"
 	server_port = MRP_PORT
 
-//NRP MONKE
-/*
-/atom/movable/screen/lobby/button/server/nrp
+//MRP 2 MONKE (MEDIUM WELL)
+/atom/movable/screen/lobby/button/server/mrp2
 	screen_loc = "TOP:-110,CENTER:+173"
-	base_icon_state = "nrp"
-	server_name = "Raw Roleplay (NRP)"
-	server_port = NRP_PORT
-*/
+	base_icon_state = "mrp2"
+	server_name = "Medium-Well (MRP)"
+	server_port = MRP2_PORT
+
 //bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
 /atom/movable/screen/lobby/button/server/vanderlin
 	icon = 'icons/hud/lobby/vanderlin_button.dmi'
 	base_icon_state = "vanderlin"
-	screen_loc = "TOP:-137,CENTER:+177"
+	screen_loc = "TOP:-140,CENTER:+183"
 	server_name = "Vanderlin"
 	server_port = VANDERLIN_PORT
 
@@ -570,11 +566,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
 			return TRUE
 	return FALSE
 */
-
-#undef VANDERLIN_PORT
-#undef HRP_PORT
-#undef MRP_PORT
-#undef NRP_PORT
 
 //Monke button
 /atom/movable/screen/lobby/button/ook

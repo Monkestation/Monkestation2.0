@@ -624,7 +624,7 @@
  * * breather: A carbon mob that is using the lungs to breathe.
  */
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather, skip_breath)
-	if(breather.status_flags & GODMODE)
+	if(HAS_TRAIT(breather, TRAIT_GODMODE))
 		breather.failed_last_breath = FALSE
 		return FALSE
 
@@ -871,7 +871,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)

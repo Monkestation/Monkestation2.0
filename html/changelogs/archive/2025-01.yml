@@ -368,3 +368,326 @@
   Uristthedorf:
   - balance: Qarad now has a 0.75 damage modifier.
   - balance: Clown disbelief gives a point.
+2025-01-20:
+  Absolucy:
+  - balance: Prison loaves no longer decompose.
+  - bugfix: You can no longer "cheese" killing a bloodsucker by beheading them (which
+      would avoid triggering the revenge vassal and such). Stake them like you're
+      supposed to.
+  BValon:
+  - admin: Remodeled Empty Office in Centcom Admin Area with furnishings and items.
+  - admin: Added Pooba's Coder Closet
+  - rscadd: gravestone for personal cat next to remodeled office.
+  Gw0sty:
+  - rscadd: Added a photo ablum for the NT rep and Blueshield (Say cheese!)
+  - rscdel: Removed defib mount from CMO's locker.
+  - qol: Moved biosuits from head's lockers to their suit storages.
+  - qol: Moved CMO's advanced health analyzer into their medkit.
+  - bugfix: NT Rep's Pen. Will now start in their pda.
+  - code_imp: Atomize code towards correct postions. Mainly relating to the NT Rep
+      and Blueshield. (Bit of brig physician too.)
+  - rscadd: Contractors received a wider target list, (Sig Techinicans, Barber, Spooktober
+      roles)
+  - rscadd: Deep storage was given another room area (Preventing two apcs for one
+      room)
+  - rscadd: Added/adjusted positions of crew monitor (Sig Techinican, Explorer, Barber)
+  - rscdel: Removed egg camera on deltastation
+  - rscadd: Away lathes get access to exotic organs for limb growers.
+  - bugfix: New cybernetic sprites should properly show
+  - bugfix: Security hud implants now no longer show as a broken organ
+  - rscadd: Readded antitoxin virus after accidental removal.
+  - code_imp: Reorganized virus stages folder a bit.
+  - rscadd: added complete privacy shutters to tram robotics and genetics
+  - qol: Adjusted the layout of tram station robotics
+  - bugfix: Tram station mech rechargers should now no longer incorrectly link with
+      the opposite console.
+  Loiosh42:
+  - bugfix: Reagent explosions now obey the explosion cap, like all other editable
+      explosions do by default.
+  - balance: +1 bartender slot
+  RikuTheKiller:
+  - bugfix: Laser carbines can no longer akimbo. They were never supposed to.
+  Shoddd:
+  - rscdel: Captains gun no longer has disabler mode
+  - rscdel: Captains gun case can no longer be opened with ID only
+  - bugfix: Shuttles that should be able to can now jump to blueshift z level
+  - rscadd: RDS is now under IPC punishment
+  - bugfix: heroic laser musket no longer doing more damage than intended
+  - bugfix: BDM can pathfind over lava
+  ThePooba:
+  - rscadd: dj lawset
+  Wisemonster:
+  - balance: Communication consoles on assault operative ships can no longer recall
+      the shuttle or change the security levels.
+  blakeeeee:
+  - rscdel: Foreigner and Bilingual are no longer conflicting quirks
+2025-01-21:
+  Absolucy:
+  - bugfix: Experimental fix for give/offer alerts getting stuck on-screen.
+  - bugfix: Borers will no longer lose Galactic Common upon entering someone who can't
+      speak it - instead, they will always be able to understand any languages their
+      host does, in addition to common.
+  - bugfix: Fixed food buffs potentially resulting in negative maximum stamina, resulting
+      in permanent slowdown.
+  - bugfix: Latejoin cyborgs will now only spawn on non-blocked floors in the AI upload,
+      so they'll no longer end up stuck in a wall or something.
+  - rscadd: (MTandi) Heretics can now get clues about objects around unused influences
+      in their dreams, with a 5 minute cooldown.
+  - rscadd: (ninjanomnom) New dream that plays sound at you.
+  - bugfix: Regal rats can no longer barf up oil/vomit/etc while ventcrawling.
+  - qol: Ghost runechat now shows to anyone who can both see and hear ghosts, rather
+      than ONLY to ghosts.
+  - bugfix: (TiviPlus) Fixed clients being seen as stuck doing tutorials in some cases
+      when changing mobs.
+  - qol: (Melbert) When you are offered something, you can shift-click the alert to
+      examine the item rather than take it.
+  - qol: (Melbert) Examine blocks for screen alert examining.
+  - qol: (Melbert) Screentips for offer alerts.
+  - bugfix: (grungussuss) It is now possible to succumb without speaking.
+  - qol: (tontyGH) You can now right-click the succumb action button to succumb silently.
+  - qol: (tontyGH) The succumb inputs have a few more titles to choose from now.
+  - bugfix: (tontyGH) The succumb text input now shows the actual correct number of
+      characters you can say.
+  - bugfix: (tontyGH) Attempting to cancel a succumb will no longer kill you.
+  - spellcheck: (tontyGH) The text for failing to succumb is now spanned.
+  - bugfix: (harryob) Ghosts observing ghosts can no longer click on their screen
+      alerts.
+  - qol: (mc-oofert) Alerts that do stuff when clicked glow gold.
+  - qol: (Melbert) Hovering over clickable screen elements will now update your mouse
+      cursor to indicate they're clickable.
+  - qol: (Melbert) Hovering over small wall mounts (light switches, buttons, fire
+      alarms) will now update to mouse cursor indicating you're hovering them.
+  - bugfix: Optimized some code related to filters and mob height.
+  Absolucy, StrangeWeirdKitten:
+  - bugfix: Things that drop in random places are no longer statistically weighted
+      to drop in security.
+  Absolucy, itsmeowdev, carpotoxin:
+  - rscadd: Added two new emotes, *sweatdrop/*sweat and *annoyed, which have some
+      small visual+audible effects to indicate reactions/emotions.
+  - bugfix: Properly adjust the visual effects for *glasses and *sigh to adjust based
+      on mob height.
+  TheColorCyan:
+  - rscadd: New Heretic Side Knowledge, Void Prison.
+  - rscadd: New Void Spell Void Conduit has now replaced Void Blast.
+  - balance: Void Chill is now a stacking debuff, upon reaching the cap, makes the
+      target unable to heat up.
+  - balance: Aristocrat's way now grants immunity to ice and water slips on cold turfs.
+  - balance: Void Phase and Void pull have received a minor CD reduction.
+  - balance: Seeking Blade now applies a couple of stacks of void chill.
+  - balance: Void Heretic Ascension has been overhauled, it's now protects the heretic
+      from projectiles, destroys windows and airlocks and applies void chills to non
+      heretics.
+  - bugfix: Makes Void Pull work as inteded. Damages victims in range of 1 tile, stuns
+      within the range of 4 and pulls people 3 tiles closer to you if they are out
+      of stun range, but in the range of the spell. Before it used to have entire
+      range of 1 tile.
+2025-01-22:
+  Absolucy:
+  - bugfix: Reverted some recent changes/fixes to satyrs, as they seemed to cause
+      further issues.
+  MichiRecRoom:
+  - bugfix: Word phobias should always apply now, rather than occasionally being missed.
+  - rscadd: Being forced to say something (i.e. through Tourettes) that would normally
+      be blocked by your phobia will now cause your character to freak out.
+  - bugfix: Your phobias can no longer prevent you from being forced to say something
+      by an admin.
+  blakeeeee:
+  - bugfix: Stowaway's inhand starting equipment now is moved to their starting point
+      with them correctly.
+2025-01-23:
+  Absolucy:
+  - bugfix: Fixed a rare bug that would interrupt and prevent the round from properly
+      starting.
+  Gw0sty:
+  - balance: The CMO's Hypospray can now pierces armor.
+  Loiosh42:
+  - bugfix: donors no longer get infinite tokens
+  - bugfix: donors now get paid the right amount of money
+  MichiRecRoom:
+  - rscadd: 'New quirk: Kakologophobia - the fear of curse words.'
+  - rscadd: 'New quirk: Easily Offended - like Kakologophobia, but with moodlets instead
+      of freaking out.'
+  Shoddd:
+  - balance: Unholy water and Eldritch now heal pain
+  - balance: Doubled lion hunter max range
+  SirNightKnight:
+  - rscadd: Added the China Lake grenade launcher to the  uplink for 10 TC.
+  - rscadd: Added a single round grenade launcher to the uplink for 5 TC.
+  - rscadd: Added more varieties of 40mm grenades.
+  - sound: Added sounds for the China Lake grenade launcher.
+  - image: New 40mm grenade sprites.
+  - code_imp: Replaced all mapped 40mm ammo boxs with the new fancy version.
+  - code_imp: Moved all 40mm grenade code to it's own file.
+2025-01-24:
+  Gw0sty:
+  - qol: Plague rats are now considered biohazards for admin traitor panels
+  Shoddd:
+  - bugfix: ghost can no longer spawn kudzu via heretic painting
+  - rscdel: Removed 2 of 3 You died messages
+  Wisemonster:
+  - rscdel: Removed CC comms from the blueshield and nanotrasen representative
+2025-01-25:
+  DexeeXI:
+  - rscdel: cleaned up unused assets. saves a few kb at most.
+  S1ngulo, BingusSS13:
+  - rscadd: You can customize ghost roles you spawn as, using your loaded character
+      preferences.
+  Shoddd:
+  - rscadd: Ports upstreams law 4 for painter lawset
+  - balance: Atlatl damage lowered to 5, spear lowed to 50, and biomode lowered to
+      2
+  - bugfix: You can no longer infinitely pee into containers
+  flleeppyy:
+  - rscadd: Britarnya's Floor Pill - "Porg Pill"
+  - rscadd: Snackalus floor pill name - "Spice Melange"
+2025-01-26:
+  Absolucy:
+  - bugfix: Fix some stuff related to how server-side antag token configuration is
+      loaded.
+  - bugfix: Swiping for red alert when it's already delta alert or such will no longer
+      lower the alert to red.
+  Absolucy, dwasint:
+  - bugfix: Fixed antag tokens, unusuals, and keybindings being wiped if someone disconnected
+      very early. Hopefully.
+  Blacklist897:
+  - balance: The Hypospray now has a larger storage, and can inject more precise amounts
+  - bugfix: A visual glitch with the reagent overlay of the modsuit injector has been
+      fixed
+  Wisemonster:
+  - balance: The BSA now requires only 10 BS crystals, down from 20
+2025-01-27:
+  Absolucy:
+  - code_imp: Hopefully improved the performance of code related to the replay system.
+  - bugfix: Gary no longer randomly dies for seemingly no reason.
+  Absolucy, Melbert:
+  - qol: Navigate verb better indicates areas on a separate level. Selecting an area
+      on a different level will direct you to the nearest staircase (as with "Nearest
+      Way Up/Down")
+  - qol: Navigating to a staircase or ladder will shorten the cooldown of navigate
+      and clear your existing path for you upon finding it
+  Absolucy, Sapphoqueer:
+  - bugfix: Fixes a bug where AIs, borgs and TK users could effectively break ID's
+      by removing them from modular computers.
+  Absolucy, merryScronchmas:
+  - image: Gave the "Vote" action button a new animated icon. Sprite by merryScronchmas.
+  Gw0sty:
+  - rscadd: Added more areas to tramstation to differentate areas
+  - rscadd: Reworked most of the tramstations bars to remove unnecessary walling and
+      airlocks.
+  - rscadd: Added a single barkeep spawner in the barkeep backroom.
+  - rscadd: More navigation locations
+  - rscdel: Removed a set of floating lights at tramstation middle towards the east
+      side.
+  - balance: A singular robotic repair patch wont trigger a overdose and now will
+      heal.
+  - balance: Blood bag and full coil roll has been added to the premium robotic repair
+      bag. And 5 coil added to basic robotic repair bag
+  - bugfix: Fixed pax functionally being invisible.
+  - rscadd: Gave paramedics a GPS for finding Oozelings and Miners. Rejoyce!
+  - rscadd: Maintence panels and sprites to viro machines
+  - rscdel: Removed Epidermolysis Bullosa, Biometalic replication, and Porokeratosis
+      Acanthus symptoms from appearing
+  - balance: Delightful effect is now considered a helpful effect
+  - balance: Viro's incubators are now twice as fast overall (10%:40% to 20%:80%)
+  - bugfix: Disease severities and hud states will now properly set
+  - code_imp: Changed the subtype for diseases
+  - rscadd: Gave medical cyborgs a immunity scanner.
+  - balance: Medical and syndicate medical get augmented tools rather than normal
+      tools.
+  Shoddd:
+  - qol: adds a few things to runtime station
+  - rscdel: cleans up a lot of unused nukie base space
+  - bugfix: large pacels can no longer be picked up with bags
+  - balance: drops stats of cargo sabre
+  - bugfix: Bomb actualizer no longer armable while unanchored or in space
+  - balance: higher demo mod on sledge hammer
+  - spellcheck: '"Cates" now "crates"'
+  - code_imp: clears up sabre code
+  Uristthedorf:
+  - rscadd: Adds new IEDs to replace the old ones.
+  - rscdel: Removes old ieds
+  Wisemonster:
+  - qol: The antag token menu will now tell you how many donator tokens you have
+  - qol: Moved the engineer mail destination on box station to the engineer foyer.
+2025-01-29:
+  Absolucy:
+  - qol: Small and tiny mobs no longer trigger squeaking objects when walking over
+      them.
+  - qol: Removed the arbitrary limit of 10 maximum chat highlights.
+  BValon:
+  - rscadd: Chocodemon's Floor Pill - "Rat"
+  Snack-Max:
+  - rscadd: Tied Flowy added to hair options
+  ThePooba:
+  - image: Updated the title button image
+  Veth-s:
+  - rscadd: You can now carry 3 plushies in your loadout in addition to 3 misc items.
+2025-01-30:
+  Absolucy:
+  - qol: The corrupt appendix and lungs now have a cooldown, to prevent stunlocks
+      or rapidly filling entire rooms with plasma if you're super unlucky.
+  - bugfix: Fixed some minor map issues.
+  - bugfix: Fixed a few floor lights that were obscured by dense objects.
+  - bugfix: Fixed crew transfer votes being spammed if nobody votes on them.
+  - bugfix: Scrollbars are now properly themed on BYOND 516.
+  - bugfix: Fixed not being able to scroll properly through techfabs/lathes on BYOND
+      516.
+  - bugfix: Fixed various minor errors.
+  BingusSS13:
+  - qol: Updates The Derelict / KS13 / Drone Station / Russian Station's engineering
+      to look like it's original map's engineering.
+  - qol: General improvements to KS13's consistency with it's original map.
+  - qol: Gives KS13's atmospherics O2, N2 & Plasma gas miners, you won't have to worry
+      about distro somehow running out anymore.
+  - bugfix: Fixes KS13's kitchen and hydroponics, which had bad area placement.
+  - bugfix: Removes the duplicate APC in KS13's security.
+  - bugfix: FINALLY fixes the mapping mistake that caused derelict drones to only
+      get 3 sheets of silver.
+  Gboster-0:
+  - rscadd: Made it so IPC's can now be emagged
+  Gw0sty:
+  - balance: 'Disease: Classic, Advanced, and plague rats are all more common. (From
+      0:0:1) to (4:3:2)'
+  - balance: 'Disease: Classic, and Advanced can occur earlier in the round. (55 mins:55
+      mins) to (20 mins:40mins)'
+  - balance: 'Disease: Classic will now have an additional chance to contain helpful
+      and flavour symptoms. (0:1) to (2:2) chances respectively'
+  - balance: 'Disease: Advanced will no longer contain deadly symptoms and a small
+      chance for flavour. (1:0) to (0:2) chances respectively'
+  - balance: Minimum players required for a Disease/plague outbreak are all increased
+  - balance: 'Fake virus''s will now share starting conditions with Disease: Classic
+      rather than Plague rats.'
+  - bugfix: Engineering is properly accessed by Construction access.
+  - bugfix: Tcomms is properly accessed with TComms access.
+  - bugfix: AI sat is properly accessed by minisat access
+  MrBagHead:
+  - qol: Renamed "Midround Heretics" event to "Forbidden Calling (Heretics)" for consistency.
+  Shoddd:
+  - rscadd: Adds super kitty ears
+  - balance: 'rebalances a lot of space ruins, see PR #5048'
+  - balance: gives explorer hardsuit now has 30% bullet armor 30% laser
+  - code_imp: changed mimics and shamblers into basic mobs
+  Veth-s:
+  - bugfix: fixed donator tokens being buggy (hopefully)
+  - rscadd: Syndicate Depot's Operatives are reminded of escalation requirements when
+      faxing or teleporting stuff to the station.
+  - bugfix: Donator Tokens.
+  - bugfix: Tokens now backup appropriately after being spent.
+2025-01-31:
+  Gw0sty:
+  - rscadd: Added security camera consoles to blueshift outposts.
+  - rscadd: Rockroach disks finally lost their copyright and are now purchasable on
+      the slime market.
+  - rscdel: Removed old rhinovirus and cold bottles from viro fridges
+  - bugfix: Boxstation no longer has ooze suckers that link to its neighbour pens
+  - bugfix: Deepstation engineers stopped cutting corners, and completed the ooze
+      network, and gave proper upgrade disks, and a plumbing device
+  - bugfix: Colour mutation syringes no longer pretend to be No Ooze syringes in the
+      market
+  - bugfix: Tram station's super matter will no longer have a delam counter hanging
+      off the wall.
+  - bugfix: Blueshift no longer has a dedicated camera for looking at a wall.
+  - bugfix: Xenobiology has finally figured out what the hell a possum is. Thus are
+      printable by vacuum backpacks
+  - bugfix: Semi-organic bugs will be unlocked on red slimes, instead of dark purple
+      slimes

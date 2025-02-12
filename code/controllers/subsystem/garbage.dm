@@ -57,11 +57,12 @@ SUBSYSTEM_DEF(garbage)
 	#endif
 
 	// monkestation start: disabling hard deletes
+#ifndef UNIT_TESTS
 	/// Toggle for enabling/disabling hard deletes. Objects that don't explicitly request hard deletion with this disabled will leak.
 	var/enable_hard_deletes = FALSE
+#endif
 	var/list/failed_hard_deletes = list()
 	// monkestation end
-
 
 /datum/controller/subsystem/garbage/PreInit()
 	InitQueues()
@@ -290,9 +291,11 @@ SUBSYSTEM_DEF(garbage)
 	// monkestation start: disable hard deletes
 	if(!D)
 		return
+#ifndef UNIT_TESTS
 	if(!enable_hard_deletes && !override)
 		failed_hard_deletes |= D
 		return
+#endif
 	// monkestation end
 	++delslasttick
 	++totaldels
@@ -360,7 +363,9 @@ SUBSYSTEM_DEF(garbage)
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/to_delete, force = FALSE)
 	if(!istype(to_delete))
+#ifndef DISABLE_DREAMLUAU
 		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
+#endif
 		del(to_delete)
 		return
 
