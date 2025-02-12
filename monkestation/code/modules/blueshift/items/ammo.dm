@@ -634,7 +634,7 @@
 	name = ".310 armor-piercing bullet"
 	damage = 50
 	armour_penetration = 50
-	wound_bonus = -40
+	wound_bonus = -45
 	wound_falloff_tile = -2
 
 // .585 Trappiste
