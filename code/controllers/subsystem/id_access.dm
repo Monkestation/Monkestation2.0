@@ -324,7 +324,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 	desc_by_access["[ACCESS_PERMABRIG]"] = "Permabrig" // monkestation edit: add permabrig-only access
-
+	desc_by_access["[ACCESS_TCOMMS_ADMIN]"] = "Telecommunications Admin" // monkestation addition
 /**
  * Returns the access bitflags associated with any given access level.
  *
