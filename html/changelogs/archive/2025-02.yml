@@ -111,3 +111,181 @@
   Veth-s:
   - bugfix: Fixes a money dupe by blacklisting spacecash and monkecoin from interaction
       components.
+2025-02-06:
+  MichiRecRoom:
+  - bugfix: IceBox had a vent and scrubber not connected, within the security post
+      at the Departures Lobby. That's fixed now.
+2025-02-07:
+  Absolucy:
+  - qol: Made the Biogenerator UI slightly prettier.
+  - bugfix: The Biogenerator UI now properly calculates the max amount of something
+      that can be produced.
+  - qol: The composter now actually benefits somewhat from upgraded parts.
+  - qol: The composter now prompts you for how many biocubes you want to generate,
+      rather than requiring spam-clicking to make multiple.
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  - bugfix: The "Delightful Effect" symptom no longer causes brain damage, and should
+      also no longer potentially spam chat.
+  Gboster-0:
+  - rscadd: Interaction components can now have a filter that only interacts with
+      specific items.
+  - qol: Mech components can now have themselfes quickly put into the multitool buffer
+      as a device to link if you right-click them.
+  - balance: automatic assemblers can now make any* crafting recipe thats made using
+      sheets in your hand
+  - bugfix: There is no longer a coffin recipe that takes 10 times as long to craft
+      in the crafting menu.
+  RikuTheKiller:
+  - rscadd: There's a BCI manipulator in Void Raptor's circuit lab now.
+  flleeppyy:
+  - admin: fix supplypod fall sound varying when it shouldnt
+2025-02-08:
+  Absolucy:
+  - qol: The shuttle timer for Amber and Yellow alerts are now the same as Blue alert.
+  - balance: The effects of Bioluminescence, Shadow Emission, Bluespace Activity,
+      Gaseous Decomposition, and Slippery Skin no longer scale absurdly past 100 potency.
+  - qol: Glowshrooms and such once again use complex lighting, which shouldn't lag
+      anymore as they can no longer be bright enough for a single glowshroom to illuminate
+      the entire station and then some.
+  - bugfix: Fixed the biogenerator UI shifting when adding reagents to a container.
+  - bugfix: Made the biogenerator window's default height tall enough to show everything
+      by default.
+  MichiRecRoom, san7890, Time-Green, JohnFulpWillard:
+  - refactor: (san7890) Holodeck monkeys have been moved to the same system as old
+      monkeys, and should retain the similar "ephermeal" behavior, while being a whole
+      lot smarter by leveraging new AI. Please report anything that is completely
+      wack about this.
+  Siro, Tractir Mann:
+  - rscadd: Added new walksounds to jackboots! Hate em? Turn them off with Control
+      Click!
+  - balance: Civil Protection Boots now have pockets akin to the Jackboots.
+  flleeppyy:
+  - bugfix: Fixed an RCE exploit in NTSL.
+  - qol: Mentor's now have a per-round bonus of 500 coins
+  leaKsi:
+  - bugfix: Fixed a crash-inducing function in NTSL.
+2025-02-09:
+  Absolucy:
+  - bugfix: Admins can once again use the Lua editor.
+  - qol: Seedlings and Craig now use JPS pathfinding instead of basic avoidance, so
+      they're less likely to get stuck on stupid obstacles.
+  - qol: You no longer have an completely random and unpredictable chance of being
+      automatically dusted while searching through a trash pile. If you dig out a
+      random d20 and decide to roll it yourself, though, that's your gamble to make.
+  Absolucy, BurgerBB:
+  - qol: Reworks the Druggy visual effect to cause less eye strain.
+  Absolucy, Danny Boy:
+  - bugfix: Fixed Signer eyebrow raising/lowering indicators and emotes
+  - bugfix: Fixed Signer RuneChat punctuation
+  Addust:
+  - rscadd: The Syndicate depot now has shipbreaking!
+  - rscadd: Shipbreaking can now also be integrated into other space ghostroles with
+      enough effort! (good luck lmao)
+  - balance: The Syndicate depot's circuit imprinter is now the shit ancient one,
+      but they have been provided quantum pad boards so they can still be buddy-buddy
+      with other outposts.
+  - bugfix: Nanotrasen AIs can no longer fuck with the syndicate depot, at least on
+      the interior. They can still see the outside, but it's now much harder for them
+      to do anything.
+  Gw0sty:
+  - rscdel: Removed ability to set revolution preferences, as they are currently disabled.
+  - balance: 'Delightful syndrome moodlet: 50+->30+'
+  - rscadd: Added upgraded rechargers to the Goldeneye cruiser.
+  - rscadd: Added an advanced surgery disk to the Goldeneye cruiser.
+  - bugfix: fixed the advanced surgery disk not giving correct surgeries
+  RikuTheKiller:
+  - refactor: Husks no longer "kind of do kind of don't" have blood, rather they just
+      don't have any, proper. Report issues.
+  - refactor: Refactored the trait that makes people not get hungry and made obesity
+      code less dumb. Report any problems please.
+  Siro:
+  - bugfix: fixes various bugs check PR for list.
+  - bugfix: Fixed all jackboots being quantum entangled - toggling the noisemaker
+      for one pair of jackboots no longer changes it for every other pair of jackboots
+      too.
+  Siro, Tractor Mann:
+  - rscadd: Jackboots, Civil Protection Boots, and Cowboy boots now have new walksounds!
+      Hate the walksounds? dont worry! you can turn them off with Ctrl-Click!
+  - balance: Civil Protection boots now have boot pockets akin to the jackboots.
+  - sound: Added HL:A Combine walksounds.
+  - code_imp: Added the shoesteps element, which should hopefully make adding custom
+      step sounds for specific boots easier.
+  ThePooba:
+  - rscadd: ports and stuff are defines now
+  - rscadd: MRP2 now gets 500 BONUS COINS EVERY ROUND YEEHAW
+2025-02-10:
+  Absolucy:
+  - bugfix: Shields (and anything else that can block thrown items) now properly block
+      thrown plants, i.e bluespace tomatoes and prickly plants.
+  Absolucy, Danny Boy:
+  - bugfix: Signers no longer sign with their species' tongue
+  leaKsi:
+  - bugfix: (FlufflesTheDog) Sanitization on citation pda alerts.
+  - bugfix: (MrMelbert) Sanitization for pAIs and medical/security records.
+  - bugfix: Sanitization for mechanical components, pathology records, integrated
+      circuit/shells, and PDA app notifications.
+2025-02-11:
+  Absolucy, grungussuss, and kayozz:
+  - sound: gravity generator has a new sound
+  Addust:
+  - bugfix: Johnson and Co Architecture has sent in a crack team to forcibly reprogram
+      every fax machine at Central Command to prevent break-ins.
+  MichiRecRoom, MrMelbert:
+  - rscadd: Adds a new Mild-type brain trauma, Possessive. Occasionally, an item you're
+      holding in your hand will become undroppable for a short time.
+  - rscadd: Adds a new Special-type brain trauma, Primal Instincts. Occasionally,
+      your character will be taken over by a (possibly aggressive) monkey AI.
+  - rscadd: Rewrites our Kleptomania atop the new Kleptomania. This brings a number
+      of changes, including activating more frequently (but with a cooldown), and
+      the ability for the trauma to steal to any available hand.
+  - admin: New logs for the new brain traumas. See PR 5138 for the details of these
+      logs, and where to find them.
+  MichiRecRoom, jlsnow301:
+  - code_imp: 'TGUI dependencies have been updated. This should not result in any
+      player-facing changes, but suffice to say: PLEASE LET ME KNOW IF THIS HAS BROKEN
+      ANY INTERFACES.'
+  Siro:
+  - rscadd: Using the door charge lets you record a taunt
+  - qol: 'Door charge triggers on bumping into the door. fixes #5110'
+  TheColorCyan:
+  - rscadd: Added manhunt smiley mask.
+2025-02-12:
+  Absolucy:
+  - rscadd: Added the Super Syndie-Kitty Ears to the syndicate uplink for 16 TC, which
+      allow the user to shapeshift into a Syndie Cat, clad in blood-red armor. However,
+      while you do gain the abilities of a cat, you still have less health while in
+      this form!
+  - qol: Shapeshift spells now use your original form's gender for your shapeshifted
+      form.
+  - qol: Shapeshifting using the Super Kitty Ears now keeps your name in cat form.
+  - qol: You can no longer accidentally eat the Super Kitty Ears while trying to use
+      them.
+  - balance: Cats can see in the dark now.
+  - balance: Super Kitty Ears cat forms now move at normal humanoid speeds, rather
+      than the slower simplemob speeds.
+  - bugfix: Fixed the Tramstation shipbreaking hut being spaced roundstart.
+  - bugfix: Smite (the spell) is now properly blocked by antimagic.
+  - qol: Smite now tells the caster which smite was inflicted.
+  - bugfix: Dying oozelings now properly unequip items before moving them to their
+      core.
+  - bugfix: Fixed Fluffy Tongue applying to sign language.
+  Gw0sty:
+  - rscadd: Praetorian modsuits now have better cells and storage
+  - qol: Pinned several modsuits preinstalled modules
+  - code_imp: Modularlized some blueshield code
+  - rscadd: Added immunity scanners to blueshift
+  - rscadd: Added the evidence storage room/apc
+  - bugfix: Sec engi's should be able to access lathe again.
+  Loiosh42:
+  - balance: Stat nerf on Tutel, ammo storage increase
+  - bugfix: You can now reload the Bobr with fancy ammoboxes
+  MichiRecRoom:
+  - bugfix: Clicking "Apply" when coloring a loadout item will now update your character
+      preview to use the new colors. This enables you to live(-ish) preview what a
+      certain set of colors will look like on your character.
+  Siro:
+  - bugfix: wiremod radio circuit now receives and triggers as it should.
+  - bugfix: Money mechcomp component now accepts money and fires signals as it should.
+  - bugfix: Beach ruins now uses station public jukebox. Now all can use it.
+  - balance: Tirizine values buffed for monkestation stamina adjustments.
