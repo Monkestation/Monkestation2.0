@@ -673,7 +673,7 @@
 				to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
 				breather.failed_last_breath = TRUE
 				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
-				apply_organ_damage(50)
+				apply_organ_damage(35)
 
 		failed_last_breath_checker = TRUE
 		if(num_moles < 0.02)
