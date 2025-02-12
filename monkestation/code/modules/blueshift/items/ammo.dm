@@ -417,8 +417,8 @@
 /obj/projectile/bullet/c40sol
 	name = ".40 Sol Long bullet"
 	damage = 20
-	wound_bonus = 10
-	bare_wound_bonus = 20
+	wound_bonus = -10
+	bare_wound_bonus = 5
 
 
 /obj/item/ammo_box/c40sol
@@ -460,7 +460,7 @@
 	weak_against_armour = TRUE
 
 	sharpness = SHARP_EDGED
-	wound_bonus = 0
+	wound_bonus = -5
 	bare_wound_bonus = 10
 
 	shrapnel_type = /obj/item/shrapnel/stingball
@@ -634,7 +634,7 @@
 	name = ".310 armor-piercing bullet"
 	damage = 50
 	armour_penetration = 50
-	wound_bonus = -20
+	wound_bonus = -30
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
@@ -652,7 +652,7 @@
 /obj/projectile/bullet/c585trappiste
 	name = ".585 Trappiste bullet"
 	damage = 25
-	wound_bonus = 0 // Normal bullets are 20
+	wound_bonus = -10 // Normal bullets are 20
 
 /obj/item/ammo_box/c585trappiste
 	name = "ammo box (.585 Trappiste lethal)"
@@ -750,6 +750,7 @@
 	name = ".27-54 Cesarzowa piercing bullet"
 	damage = 15
 	armour_penetration = 15
+	wound_bonus = -10
 
 /obj/item/ammo_box/c27_54cesarzowa
 	name = "ammo box (.27-54 Cesarzowa piercing)"
@@ -1241,7 +1242,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum
 	name = "magnum blockshot pellet"
 	damage = 12
-	wound_bonus = 10
+	wound_bonus = 7
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
@@ -1280,8 +1281,8 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "flechette"
 	damage = 6
-	wound_bonus = 10
-	bare_wound_bonus = 20
+	wound_bonus = 8
+	bare_wound_bonus = 16
 	sharpness = SHARP_EDGED //Did you knew flechettes fly sideways into people
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/flechette/Initialize(mapload)
