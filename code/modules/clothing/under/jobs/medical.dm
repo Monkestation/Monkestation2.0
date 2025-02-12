@@ -81,7 +81,8 @@
 
 /obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
-
+	icon_state = "scrubsblue"
+	
 /obj/item/clothing/under/rank/medical/scrubs/blue
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
