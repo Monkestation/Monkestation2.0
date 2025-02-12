@@ -61,8 +61,9 @@
 	return MODULAR_SAVEFILE_UP_TO_DATE
 
 /// Brings a savefile up to date with modular preferences. Called if savefile_needs_update_monkestation() returned a value higher than 0
-/datum/preferences/proc/update_character_monkestation(current_version, list/save_data)
-	return
+/datum/preferences/proc/update_character_monkestation(current_modular_version, list/save_data)
+	if(current_modular_version < 4)
+		monkestation_sanitize_alt_job_titles(save_data)
 
 /datum/preferences/proc/update_preferences_monkestation(current_modular_version, datum/json_savefile/save_data)
 	return
