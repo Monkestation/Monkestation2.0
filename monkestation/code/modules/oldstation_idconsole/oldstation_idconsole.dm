@@ -53,6 +53,7 @@
 /datum/computer_file/program/card_mod/old
 	filename = "charliestationidwriter"
 	filedesc = "Charlie Station Access Management"
+	available_on_ntnet = FALSE //charlie station only fools
 
 	//every access i could find on charlie station ids
 	valid_access = list(
