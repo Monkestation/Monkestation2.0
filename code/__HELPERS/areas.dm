@@ -196,6 +196,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
 
+	//MONKESTATION ADDITION - force lighting update to fix lighting bugs in custom areas, this is a REALLY shitty solution please replace it at the earliest convenience
+	for(var/turf/unlit_turf as anything in turfs)
+		unlit_turf.ChangeTurf(unlit_turf.type)
+	//END OF ADDITION
+
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
