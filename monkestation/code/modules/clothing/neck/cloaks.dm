@@ -174,7 +174,7 @@
 		. += span_warning("While you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
 	if(!user.client?.is_mentor())
-		. += span_warning("You can feel this cloak dispises you for lacking a high enough level of knowledge")
+		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge")
 
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
