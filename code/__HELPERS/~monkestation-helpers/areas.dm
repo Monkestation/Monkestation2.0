@@ -32,9 +32,7 @@
 	if(GLOB.the_station_areas.Find(area.type))
 		return TRUE
 	for(var/area/adjacent_area as anything in find_adjacent_areas(area))
-		if(GLOB.the_station_areas.Find(adjacent_area.type))
-			return TRUE
-		else if(!istype(area, /area/icemoon) && istype(adjacent_area, /area/icemoon)) // yeah sure you can make a neat little base in an icebox cabin
+		if(GLOB.the_station_areas.Find(adjacent_area.type) || istype(adjacent_area, /area/icemoon)) // yeah sure you can make a neat little base in an icebox cabin
 			return TRUE
 	return FALSE
 
