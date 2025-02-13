@@ -156,6 +156,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/necks/mentor_cloaks.dmi'
 	icon_state = "green_cloak"
 	worn_icon_state = "green_cloak"
+	var/roundstart_loadout = TRUE
 	var/current_cloak = "green"
 	var/current_cloak_overlay = "lizar"
 	var/datum/action/innate/select_cloak_appearance/select_cloak_appearance
@@ -170,8 +171,8 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
-		. += span_warning("Well you can still feel the displeasure from the cloak it feels like \
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
+		. += span_warning("While you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
 	if(!user.client?.is_mentor())
 		. += span_warning("You can feel this cloak dispises you for lacking a high enough level of knowledge")
@@ -179,16 +180,18 @@
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_NECK)
-		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
+		if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
 			to_chat(user, span_notice("I'll let you get way with it this time."))
-		else if(!user.client?.is_mentor())
+		else if(!user.client?.is_mentor() && !roundstart_loadout)
 			lightningbolt(user)
 			user.dropItemToGround(src)
 			to_chat(user, span_userdanger("No mentor cloak for you!"))
 			return
+		else
+			roundstart_loadout = FALSE
 		select_cloak_appearance.Grant(user)
 	if(slot & ITEM_SLOT_HANDS)
-		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
+		if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
 			to_chat(user, span_notice("You feel it's power flow through your body"))
 		else if(!user.client?.is_mentor())
 			user.cause_pain(FULL_BODY, 20, STAMINA)
