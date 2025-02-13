@@ -156,7 +156,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/necks/mentor_cloaks.dmi'
 	icon_state = "green_cloak"
 	worn_icon_state = "green_cloak"
-	var/roundstart_loadout = TRUE
 	var/current_cloak = "green"
 	var/current_cloak_overlay = "lizar"
 	var/datum/action/innate/select_cloak_appearance/select_cloak_appearance
@@ -182,13 +181,11 @@
 	if(slot & ITEM_SLOT_NECK)
 		if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
 			to_chat(user, span_notice("I'll let you get way with it this time."))
-		else if(!user.client?.is_mentor() && !roundstart_loadout)
+		else if(!user.client?.is_mentor())
 			lightningbolt(user)
 			user.dropItemToGround(src)
 			to_chat(user, span_userdanger("No mentor cloak for you!"))
 			return
-		else
-			roundstart_loadout = FALSE
 		select_cloak_appearance.Grant(user)
 	if(slot & ITEM_SLOT_HANDS)
 		if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
