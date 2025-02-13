@@ -599,6 +599,7 @@
 #include "code\__HELPERS\sorts\sort_instance.dm"
 #include "code\__HELPERS\~monkestation-helpers\announcements.dm"
 #include "code\__HELPERS\~monkestation-helpers\antags.dm"
+#include "code\__HELPERS\~monkestation-helpers\areas.dm"
 #include "code\__HELPERS\~monkestation-helpers\atoms.dm"
 #include "code\__HELPERS\~monkestation-helpers\blood_datums.dm"
 #include "code\__HELPERS\~monkestation-helpers\clients.dm"

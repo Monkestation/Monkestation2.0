@@ -6,7 +6,7 @@
 		else
 			to_chat(owner, "This [src] has already been claimed by another.")
 		return FALSE
-	if(!(GLOB.the_station_areas.Find(current_area.type)))
+	if(!is_station_area_or_adjacent(current_area))
 		claimed.balloon_alert(owner.current, "not part of station!")
 		return
 	// This is my Lair
@@ -147,33 +147,37 @@
 	if(!.)
 		return FALSE
 	if(user in src)
-		var/list/turf/area_turfs = get_area_turfs(get_area(src))
+		var/area/our_area = get_area(src)
+		var/list/turf/area_turfs = our_area.get_turfs_by_zlevel(z)
 		// Create Dirt etc.
 		var/turf/T_Dirty = pick(area_turfs)
 		if(T_Dirty && !T_Dirty.density)
 			// Default: Dirt
 			// STEP ONE: COBWEBS
-			// CHECK: Wall to North?
-			var/turf/check_N = get_step(T_Dirty, NORTH)
-			if(istype(check_N, /turf/closed/wall))
-				// CHECK: Wall to West?
-				var/turf/check_W = get_step(T_Dirty, WEST)
-				if(istype(check_W, /turf/closed/wall))
-					new /obj/effect/decal/cleanable/cobweb(T_Dirty)
-				// CHECK: Wall to East?
-				var/turf/check_E = get_step(T_Dirty, EAST)
-				if(istype(check_E, /turf/closed/wall))
-					new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
-			new /obj/effect/decal/cleanable/dirt(T_Dirty)
+			if(!(locate(/obj/effect/decal/cleanable/cobweb) in T_Dirty))
+				// CHECK: Wall to North?
+				var/turf/check_N = get_step(T_Dirty, NORTH)
+				if(iswallturf(check_N))
+					// CHECK: Wall to West?
+					var/turf/check_W = get_step(T_Dirty, WEST)
+					if(iswallturf(check_W))
+						new /obj/effect/decal/cleanable/cobweb(T_Dirty)
+					else
+						// CHECK: Wall to East?
+						var/turf/check_E = get_step(T_Dirty, EAST)
+						if(iswallturf(check_E))
+							new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
+			if(!(locate(/obj/effect/decal/cleanable/dirt) in T_Dirty))
+				new /obj/effect/decal/cleanable/dirt(T_Dirty)
 
 /obj/structure/closet/crate/proc/unclaim_coffin(manual = FALSE)
 	// Unanchor it (If it hasn't been broken, anyway)
 	anchored = FALSE
-	if(!resident || !resident.mind)
+	if(!resident?.mind)
 		return
 	// Unclaiming
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = resident.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum && bloodsuckerdatum.coffin == src)
+	if(bloodsuckerdatum?.coffin == src)
 		bloodsuckerdatum.coffin = null
 		bloodsuckerdatum.bloodsucker_lair_area = null
 	for(var/obj/structure/bloodsucker/bloodsucker_structure in get_area(src))
