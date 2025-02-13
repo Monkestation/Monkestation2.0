@@ -830,6 +830,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 /// The layer above shoes
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
+/// The layer above suits
+#define ABOVE_SUIT_LAYER (SUIT_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
