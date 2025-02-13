@@ -22,10 +22,10 @@
 		area = get_area(get_turf(area))
 	if(isnull(area))
 		return FALSE
-	if(GLOB.the_station_areas.Find(area))
+	if(GLOB.the_station_areas.Find(area.type))
 		return TRUE
-	for(var/adjacent_area in find_adjacent_areas(area))
-		if(GLOB.the_station_areas.Find(adjacent_area))
+	for(var/area/adjacent_area as anything in find_adjacent_areas(area))
+		if(GLOB.the_station_areas.Find(adjacent_area.type))
 			return TRUE
 	return FALSE
 
