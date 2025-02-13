@@ -2,8 +2,12 @@
 //#define BLOODSUCKER_TESTING
 
 #ifdef BLOODSUCKER_TESTING
+#ifdef CIBUILDING
+#error BLOODSUCKER_TESTING is enabled, disable this!!!
+#else
 #warn BLOODSUCKER_TESTING is enabled, you REALLY do not want this enabled outside of local testing!!
-#endif
+#endif //ifdef CIBUILDING
+#endif //ifdef BLOODSUCKER_TESTING
 
 /**
  * Blood-level defines
