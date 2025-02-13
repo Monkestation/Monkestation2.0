@@ -43,7 +43,7 @@
 		var/old_name = card.name
 		QDEL_NULL(card)
 
-		var/obj/item/card/id/away/old/custom/new_id = new(get_turf(src))
+		var/obj/item/card/id/away/old/custom/new_id = new(drop_location())
 		SSid_access.apply_trim_to_card(new_id, /datum/id_trim/job/away/old/custom, copy_access = FALSE)
 
 		to_chat(user, span_notice("You paint \the [old_name]!"))
