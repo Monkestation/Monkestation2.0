@@ -123,6 +123,8 @@
 #define TRAIT_TRASH_ITEM			"trash_item"
 /// This item came from a gift.
 #define TRAIT_GIFT_ITEM				"gift_item"
+/// The mob can see pathogen clouds and such.
+#define TRAIT_VIRUS_SCANNER "virus_scanner"
 ///This item always renders. (only used for stupid magboots rn)
 #define TRAIT_ALWAYS_RENDER			"always_render"
 // /atom/movable
