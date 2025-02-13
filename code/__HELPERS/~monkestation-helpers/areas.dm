@@ -1,11 +1,16 @@
 /// Find all areas adjacent to a given area.
 /proc/find_adjacent_areas(area/area)
 	. = list()
+	var/static/list/blacklisted_areas = typecacheof(list(
+		/area/space,
+		/area/station/asteroid,
+		/area/shuttle,
+	))
 	if(ispath(area, /area))
 		area = GLOB.areas_by_type[area]
 	else if(isatom(area))
 		area = get_area(get_turf(area))
-	if(isnull(area))
+	if(isnull(area) || is_type_in_typecache(area, blacklisted_areas))
 		return
 	var/list/area_turfs = area.get_turfs_from_all_zlevels()
 	var/list/adjacent_turfs = list()
