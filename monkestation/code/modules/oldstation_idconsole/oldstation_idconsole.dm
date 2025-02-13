@@ -24,8 +24,8 @@
 		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
 
-	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/card = I
+	if(istype(item, /obj/item/card/id))
+		var/obj/item/card/id/card = item
 
 		if(is_type_in_typecache(card, blacklisted_typecache) || card.trim)
 			to_chat(user, span_warning("You can't paint this card!"))
