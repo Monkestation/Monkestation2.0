@@ -632,9 +632,10 @@
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
-	damage = 50
+	damage = 45
 	armour_penetration = 50
 	wound_bonus = -20
+	speed = 0.3
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
@@ -1030,8 +1031,13 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = target
-		if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+		if(!(istype(target, /obj/item/gun/ballistic/revolver)))
+			if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		else
+			var/live_ammo = gun.magazine.ammo_count(FALSE)
+			if(live_ammo >= length(gun.magazine.stored_ammo))
+				return COMPONENT_CANCEL_ATTACK_CHAIN
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
 		old_ammo_count = length(stored_ammo)
 		if(do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))

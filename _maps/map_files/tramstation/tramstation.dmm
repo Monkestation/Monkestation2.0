@@ -13742,6 +13742,10 @@
 "dkO" = (
 /turf/open/floor/iron,
 /area/station/security/brig)
+"dkU" = (
+/mob/living/basic/bot/cleanbot/medbay,
+/turf/open/floor/iron/dark,
+/area/station/medical/treatment_center)
 "dlb" = (
 /obj/machinery/bluespace_beacon,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
@@ -16132,7 +16136,7 @@
 /obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window/left/directional/east{
 	name = "Neutral Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
@@ -26536,7 +26540,7 @@
 	name = "Delivery Lockdown";
 	id = "nodeliver"
 	},
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "hqi" = (
@@ -44027,6 +44031,15 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
 /area/station/solars/starboard/fore)
+"mJO" = (
+/obj/structure/table,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/prison,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "mKe" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -61497,7 +61510,7 @@
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/left/directional/east{
 	name = "Dangerous Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/supplied/crimereligion,
 /obj/item/ai_module/zeroth/coderedmartiallaw,
@@ -70907,7 +70920,6 @@
 /area/station/maintenance/starboard/central)
 "vcp" = (
 /obj/structure/curtain,
-/obj/machinery/shower/directional/north,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
@@ -80671,12 +80683,13 @@
 /area/station/commons/fitness/recreation)
 "yho" = (
 /obj/structure/table,
-/obj/item/radio/intercom/prison,
 /obj/machinery/duct,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/flashlight/lamp{
+	pixel_y = 7
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "yhN" = (
@@ -99413,7 +99426,7 @@ cVl
 fdr
 tPb
 yho
-oiF
+mJO
 fdr
 fdr
 cCD
@@ -173277,11 +173290,11 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
 jhd
 jhd
 jhd
@@ -173532,17 +173545,17 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 jhd
 jhd
 jhd
@@ -173789,17 +173802,17 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 jhd
 jhd
 jhd
@@ -174046,13 +174059,13 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 cse
 cse
 cse
@@ -174303,13 +174316,13 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 cse
 cse
 cse
@@ -174560,13 +174573,13 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 cse
 cse
 cse
@@ -174817,13 +174830,13 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 cse
 cse
 cse
@@ -175074,13 +175087,13 @@ jhd
 jhd
 jhd
 jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
+cse
+cse
+cse
+cse
+cse
+cse
+cse
 cse
 cse
 cse
@@ -178627,7 +178640,7 @@ ecW
 dXo
 lTc
 lrQ
-xOn
+dkU
 gHp
 dHv
 xSZ

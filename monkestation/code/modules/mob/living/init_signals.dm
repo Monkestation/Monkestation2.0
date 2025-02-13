@@ -1,5 +1,8 @@
 /mob/living/register_init_signals()
 	. = ..()
+
+	cascade_trait(TRAIT_HUSK, TRAIT_NOBLOOD)
+
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IGNOREDAMAGESLOWDOWN), PROC_REF(on_ignoredamageslowdown_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IGNOREDAMAGESLOWDOWN), PROC_REF(on_ignoredamageslowdown_trait_loss))
 
@@ -11,6 +14,9 @@
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUS_SCANNER), PROC_REF(on_virus_scanner_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_VIRUS_SCANNER), PROC_REF(on_virus_scanner_trait_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), PROC_REF(on_nohunger_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER), PROC_REF(on_nohunger_trait_loss))
 
 /mob/living/proc/on_ignoredamageslowdown_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -46,3 +52,11 @@
 /mob/living/proc/on_virus_scanner_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/virus_viewer)
+
+/mob/living/proc/on_nohunger_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	reset_hunger()
+
+/mob/living/proc/on_nohunger_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	reset_hunger()
