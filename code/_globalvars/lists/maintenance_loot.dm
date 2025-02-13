@@ -369,6 +369,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
 		/obj/item/seeds/tree/money = 1, //monkestation edit
+		/obj/item/disk/design_disk/fss = 1, //monkestation edit
 		) = 1,
 
 ))
