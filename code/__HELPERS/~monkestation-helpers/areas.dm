@@ -2,10 +2,11 @@
 /proc/find_adjacent_areas(area/area)
 	. = list()
 	var/static/list/blacklisted_areas = typecacheof(list(
+		/area/icemoon,
+		/area/misc,
+		/area/shuttle,
 		/area/space,
 		/area/station/asteroid,
-		/area/shuttle,
-		/area/misc,
 	))
 	if(ispath(area, /area))
 		area = GLOB.areas_by_type[area]
@@ -32,6 +33,8 @@
 		return TRUE
 	for(var/area/adjacent_area as anything in find_adjacent_areas(area))
 		if(GLOB.the_station_areas.Find(adjacent_area.type))
+			return TRUE
+		else if(!istype(area, /area/icemoon) && istype(adjacent_area, /area/icemoon)) // yeah sure you can make a neat little base in an icebox cabin
 			return TRUE
 	return FALSE
 
