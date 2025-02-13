@@ -21,7 +21,7 @@
 	blacklisted_types += typesof(/obj/item/card/id/advanced/chameleon)
 	. = ..()
 
-/obj/machinery/oldpdapainter/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/oldpdapainter/attackby(obj/item/item, mob/living/user, params)
 	if(!is_operational)
 		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
