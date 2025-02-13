@@ -158,9 +158,13 @@ GLOBAL_LIST(valentine_mobs)
 	for(var/mob/living/carbon/human/candidate in GLOB.player_list)
 		if(candidate == user || !is_valid_valentine(candidate))
 			continue
-		var/turf/candidate_turf = get_turf(candidate)
-		if(!candidate_turf || !are_zs_connected(user_turf, candidate_turf))
-			continue
+		// if their jobs have the same faction, we shouldn't really care about z-levels (to avoid issues with miners and explorers)
+		if(user.mind?.assigned_role?.faction != candidate.mind?.assigned_role?.faction)
+			var/turf/candidate_turf = get_turf(candidate)
+			if(!candidate_turf)
+				continue
+			if(!are_zs_connected(user_turf, candidate_turf))
+				continue
 		mob_names["[candidate.mind.name || candidate.real_name]"] = candidate
 	if(!length(mob_names))
 		to_chat(user, span_warning("There's no one for you to love..."))
