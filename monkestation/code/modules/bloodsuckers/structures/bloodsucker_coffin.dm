@@ -7,7 +7,7 @@
 			to_chat(owner, "This [src] has already been claimed by another.")
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
-	if(!coffin_turf || !is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
+	if(!coffin_turf || !is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area, allow_icebox_cabins = TRUE))
 		claimed.balloon_alert(owner.current, "not part of station!")
 		return
 	// This is my Lair

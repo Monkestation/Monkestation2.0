@@ -22,7 +22,7 @@
 	for(var/turf/turf as anything in adjacent_turfs)
 		. |= get_area(turf)
 
-/proc/is_station_area_or_adjacent(area/area)
+/proc/is_station_area_or_adjacent(area/area, allow_icebox_cabins = FALSE)
 	if(ispath(area, /area))
 		area = GLOB.areas_by_type[area]
 	else if(isatom(area))
@@ -32,7 +32,7 @@
 	if(GLOB.the_station_areas.Find(area.type))
 		return TRUE
 	for(var/area/adjacent_area as anything in find_adjacent_areas(area))
-		if(GLOB.the_station_areas.Find(adjacent_area.type) || istype(adjacent_area, /area/icemoon)) // yeah sure you can make a neat little base in an icebox cabin
+		if(GLOB.the_station_areas.Find(adjacent_area.type) || (allow_icebox_cabins && istype(adjacent_area, /area/icemoon))) // yeah sure you can make a neat little base in an icebox cabin
 			return TRUE
 	return FALSE
 
