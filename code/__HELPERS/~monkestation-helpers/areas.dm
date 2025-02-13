@@ -2,16 +2,25 @@
 /proc/find_adjacent_areas(area/area)
 	. = list()
 	var/static/list/blacklisted_areas = typecacheof(list(
+		/area/centcom,
+		/area/forestplanet,
 		/area/icemoon,
+		/area/lavaland,
 		/area/misc,
+		/area/ocean,
+		/area/ruin,
+		/area/shipbreak,
 		/area/shuttle,
 		/area/space,
 		/area/station/asteroid,
 	))
-	if(ispath(area, /area))
-		area = GLOB.areas_by_type[area]
-	else if(isatom(area))
-		area = get_area(get_turf(area))
+	if(!isarea(area))
+		if(ispath(area, /area))
+			area = GLOB.areas_by_type[area]
+		else if(isatom(area))
+			area = get_area(get_turf(area))
+		else
+			return
 	if(isnull(area) || is_type_in_typecache(area, blacklisted_areas))
 		return
 	var/list/area_turfs = area.get_turfs_from_all_zlevels()
@@ -23,16 +32,23 @@
 		. |= get_area(turf)
 
 /proc/is_station_area_or_adjacent(area/area)
-	if(ispath(area, /area))
-		area = GLOB.areas_by_type[area]
-	else if(isatom(area))
-		area = get_area(get_turf(area))
+	var/static/list/outdoor_areas = typecacheof(list(
+		/area/forestplanet,
+		/area/icemoon,
+	))
+	if(!isarea(area))
+		if(ispath(area, /area))
+			area = GLOB.areas_by_type[area]
+		else if(isatom(area))
+			area = get_area(get_turf(area))
+		else
+			return FALSE
 	if(isnull(area))
 		return FALSE
 	if(GLOB.the_station_areas.Find(area.type))
 		return TRUE
 	for(var/area/adjacent_area as anything in find_adjacent_areas(area))
-		if(GLOB.the_station_areas.Find(adjacent_area.type) || istype(adjacent_area, /area/icemoon)) // yeah sure you can make a neat little base in an icebox cabin
+		if(GLOB.the_station_areas.Find(adjacent_area.type) || is_type_in_typecache(adjacent_area, outdoor_areas)) // yeah sure you can make a neat little base in an icebox cabin
 			return TRUE
 	return FALSE
 

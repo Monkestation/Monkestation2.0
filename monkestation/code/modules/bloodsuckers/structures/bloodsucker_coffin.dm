@@ -7,17 +7,26 @@
 			to_chat(owner, "This [src] has already been claimed by another.")
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
-	if(!coffin_turf || !is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
+	// this if check is split up bc it's annoying to read and mentally parse when it's combined into one big if statement
+	var/valid_lair_area = TRUE
+	if(!coffin_turf)
+		valid_lair_area = FALSE
+	else if(!is_eclipse_level(coffin_turf.z)) // if we ever get planet colonizing back, let's allow bloodsuckers to make colony lairs, 'cuz why not
+		if(!is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
+			valid_lair_area = FALSE
+	if(!valid_lair_area)
 		claimed.balloon_alert(owner.current, "not part of station!")
 		return
 	// This is my Lair
 	coffin = claimed
 	bloodsucker_lair_area = current_area
-	if(!(/datum/crafting_recipe/vassalrack in owner?.learned_recipes))
-		owner.teach_crafting_recipe(/datum/crafting_recipe/vassalrack)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/candelabrum)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/bloodthrone)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/meatcoffin)
+	if(!(/datum/crafting_recipe/vassalrack in owner.learned_recipes))
+		owner.teach_crafting_recipe(list(
+			/datum/crafting_recipe/vassalrack,
+			/datum/crafting_recipe/candelabrum,
+			/datum/crafting_recipe/bloodthrone,
+			/datum/crafting_recipe/meatcoffin,
+		))
 		owner.current.balloon_alert(owner.current, "new recipes learned!")
 	to_chat(owner, span_userdanger("You have claimed the [claimed] as your place of immortal rest! Your lair is now [bloodsucker_lair_area]."))
 	to_chat(owner, span_announce("Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i>, including the <i>Persuasion Rack</i> for converting crew into Vassals."))
@@ -30,6 +39,9 @@
 	var/mob/living/resident
 	///The time it takes to pry this open with a crowbar.
 	var/pry_lid_timer = 25 SECONDS
+
+/obj/structure/closet/crate/coffin
+	COOLDOWN_DECLARE(bloodsucker_dirt_cooldown)
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
@@ -144,32 +156,31 @@
 	return ..()
 
 /obj/structure/closet/crate/coffin/process(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user in src)
-		var/area/our_area = get_area(src)
-		var/list/turf/area_turfs = our_area.get_turfs_by_zlevel(z)
-		// Create Dirt etc.
-		var/turf/T_Dirty = pick(area_turfs)
-		if(T_Dirty && !T_Dirty.density)
-			// Default: Dirt
-			// STEP ONE: COBWEBS
-			if(!(locate(/obj/effect/decal/cleanable/cobweb) in T_Dirty))
-				// CHECK: Wall to North?
-				var/turf/check_N = get_step(T_Dirty, NORTH)
-				if(iswallturf(check_N))
-					// CHECK: Wall to West?
-					var/turf/check_W = get_step(T_Dirty, WEST)
-					if(iswallturf(check_W))
-						new /obj/effect/decal/cleanable/cobweb(T_Dirty)
-					else
-						// CHECK: Wall to East?
-						var/turf/check_E = get_step(T_Dirty, EAST)
-						if(iswallturf(check_E))
-							new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
-			if(!(locate(/obj/effect/decal/cleanable/dirt) in T_Dirty))
-				new /obj/effect/decal/cleanable/dirt(T_Dirty)
+	if(!COOLDOWN_FINISHED(src, bloodsucker_dirt_cooldown) || !(user in src))
+		return
+	var/area/our_area = get_area(src)
+	var/list/turf/area_turfs = our_area.get_turfs_by_zlevel(z)
+	// Create Dirt etc.
+	var/turf/T_Dirty = pick(area_turfs)
+	if(T_Dirty && !T_Dirty.density)
+		// Default: Dirt
+		// STEP ONE: COBWEBS
+		if(!(locate(/obj/effect/decal/cleanable/cobweb) in T_Dirty))
+			// CHECK: Wall to North?
+			var/turf/check_N = get_step(T_Dirty, NORTH)
+			if(iswallturf(check_N))
+				// CHECK: Wall to West?
+				var/turf/check_W = get_step(T_Dirty, WEST)
+				if(iswallturf(check_W))
+					new /obj/effect/decal/cleanable/cobweb(T_Dirty)
+				else
+					// CHECK: Wall to East?
+					var/turf/check_E = get_step(T_Dirty, EAST)
+					if(iswallturf(check_E))
+						new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
+		if(!(locate(/obj/effect/decal/cleanable/dirt) in T_Dirty))
+			new /obj/effect/decal/cleanable/dirt(T_Dirty)
+	COOLDOWN_START(src, bloodsucker_dirt_cooldown, rand(30 SECONDS, 1.5 MINUTES))
 
 /obj/structure/closet/crate/proc/unclaim_coffin(manual = FALSE)
 	// Unanchor it (If it hasn't been broken, anyway)
@@ -201,7 +212,7 @@
 			update_icon()
 		locked = FALSE
 		return TRUE
-	playsound(get_turf(src), 'sound/machines/door_locked.ogg', 20, 1)
+	playsound(get_turf(src), 'sound/machines/door_locked.ogg', vol = 20, vary = TRUE)
 	to_chat(user, span_notice("[src] appears to be locked tight from the inside."))
 
 /obj/structure/closet/crate/coffin/close(mob/living/user)
@@ -210,7 +221,7 @@
 		return FALSE
 	// Only the User can put themself into Torpor. If already in it, you'll start to heal.
 	if(user in src)
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(user)
 		if(!bloodsuckerdatum)
 			return FALSE
 		var/area/current_area = get_area(src)
@@ -267,7 +278,8 @@
 		balloon_alert(user, "unclaim coffin?")
 		var/static/list/unclaim_options = list(
 			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
-			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"))
+			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		)
 		var/unclaim_response = show_radial_menu(user, src, unclaim_options, radius = 36, require_near = TRUE)
 		switch(unclaim_response)
 			if("Yes")
