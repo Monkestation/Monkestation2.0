@@ -32,7 +32,7 @@ GLOBAL_LIST(valentine_mobs)
 	sad_one.mind.add_antag_datum(third_wheel)
 
 /datum/round_event/valentines
-	end_when = 5 MINUTES
+	end_when = 300 // this is seconds
 
 /datum/round_event/valentines/start()
 	LAZYINITLIST(GLOB.valentine_mobs)
