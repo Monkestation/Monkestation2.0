@@ -12,14 +12,12 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.05
 	//dont turn these ids into charlie station ids please, this might be redundant
-	var/list/blacklisted_types = list()
-
-/obj/machinery/oldpdapainter/Initialize()
-	blacklisted_types += typesof(/obj/item/card/id/away)
-	blacklisted_types += typesof(/obj/item/card/id/advanced/silver)
-	blacklisted_types += typesof(/obj/item/card/id/advanced/gold)
-	blacklisted_types += typesof(/obj/item/card/id/advanced/chameleon)
-	. = ..()
+	var/static/list/blacklisted_typecache = typecacheof(list(
+		/obj/item/card/id/away,
+		/obj/item/card/id/advanced/silver,
+		/obj/item/card/id/advanced/gold,
+		/obj/item/card/id/advanced/chameleon,
+	))
 
 /obj/machinery/oldpdapainter/attackby(obj/item/item, mob/living/user, params)
 	if(!is_operational)
