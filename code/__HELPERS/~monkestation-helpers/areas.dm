@@ -5,6 +5,7 @@
 		/area/space,
 		/area/station/asteroid,
 		/area/shuttle,
+		/area/misc,
 	))
 	if(ispath(area, /area))
 		area = GLOB.areas_by_type[area]
