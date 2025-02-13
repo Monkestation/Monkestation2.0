@@ -35,7 +35,7 @@
 
 		to_chat(user, span_notice("You start painting \the [card]..."))
 
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 4 SECONDS, target = src))
 			return FALSE
 
 		use_power(active_power_usage)
