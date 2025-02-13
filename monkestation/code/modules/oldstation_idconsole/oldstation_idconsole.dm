@@ -81,7 +81,6 @@
 	if((ACCESS_AWAY_COMMAND in auth_card.access))
 		authenticated_card = "[auth_card.name]"
 		authenticated_user = auth_card.registered_name ? auth_card.registered_name : "Unknown"
-		update_static_data(user)
 		return TRUE
 
 	return FALSE
