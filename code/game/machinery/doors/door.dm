@@ -179,7 +179,7 @@
 /obj/machinery/door/proc/try_remove_seal(mob/user)
 	return
 
-/obj/machinery/door/Bumped(atom/movable/AM)
+/obj/machinery/door/Bumped(atom/movable/AM, special_args)
 	. = ..()
 	if(operating || (obj_flags & EMAGGED) || (!can_open_with_hands && density))
 		return
@@ -198,7 +198,9 @@
 				return
 			if(try_safety_unlock(M))
 				return
-			bumpopen(M)
+			var/speedy_open = (special_args && ("speedy_open" in special_args))
+
+			bumpopen(M, spd_open = speedy_open)
 			return
 		return
 
@@ -226,7 +228,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
-/obj/machinery/door/proc/bumpopen(mob/user)
+/obj/machinery/door/proc/bumpopen(mob/user, spd_open = FALSE)
 	if(operating || !can_open_with_hands)
 		return
 
@@ -242,7 +244,7 @@
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
 		open()
 	else if(requiresID() && allowed(user))
-		open()
+		open(alt_open_mode = spd_open)
 	else
 		do_animate("deny")
 
@@ -397,7 +399,7 @@
 
 /// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
-/obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS, alt_open_mode = FALSE)
 	if(!density)
 		return TRUE
 	if(operating)
@@ -406,7 +408,8 @@
 	use_power(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	if(!alt_open_mode)
+		SLEEP_NOT_DEL(0.5 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	SLEEP_NOT_DEL(0.5 SECONDS)

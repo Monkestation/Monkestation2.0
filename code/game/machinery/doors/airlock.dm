@@ -317,7 +317,7 @@
 		seal = null
 		update_appearance()
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user)
+/obj/machinery/door/airlock/bumpopen(mob/living/user, spd_open = FALSE)
 	if(!hasPower())
 		return
 
@@ -1232,7 +1232,7 @@
 		//MONKESTATION EDIT END
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
-/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS, alt_open_mode = FALSE)
 	if( operating || welded || locked || seal )
 		return FALSE
 
@@ -1267,10 +1267,12 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
-	sleep(0.1 SECONDS)
+	if(!alt_open_mode)
+		sleep(0.1 SECONDS)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(0.4 SECONDS)
+	if(!alt_open_mode)
+		sleep(0.4 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)

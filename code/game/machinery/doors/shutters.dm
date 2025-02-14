@@ -48,7 +48,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/door/poddoor/shutters/radiation/open()
+/obj/machinery/door/poddoor/shutters/radiation/open(alt_open_mode = FALSE)
 	. = ..()
 	rad_insulation = RAD_NO_INSULATION
 

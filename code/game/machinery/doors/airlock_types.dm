@@ -648,7 +648,7 @@
 
 // set_density on both open and close procs has a check and return builtin.
 
-/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS, alt_open_mode = FALSE)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	set_density(FALSE)

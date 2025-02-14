@@ -118,7 +118,7 @@
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
 
-/obj/machinery/door/window/tram/bumpopen(mob/user)
+/obj/machinery/door/window/tram/bumpopen(mob/user, spd_open = FALSE)
 	if(operating || !density)
 		return
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()

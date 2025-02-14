@@ -469,7 +469,7 @@
 		return ..()
 	return FALSE
 
-/obj/machinery/door/firedoor/bumpopen(mob/living/user)
+/obj/machinery/door/firedoor/bumpopen(mob/living/user, spd_open = FALSE)
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
@@ -659,7 +659,7 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 		return
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/open(alt_open_mode = FALSE)
 	if(welded)
 		return
 	var/old_activity = active

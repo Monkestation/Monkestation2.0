@@ -116,7 +116,9 @@
 		var/pre_slip_result = SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_SLIP, next_place)
 		if(pre_slip_result & MOVELOOP_PATH_BLOCKED)
 			lifetime = 0 // Something told this mob to stop for lube effects.
-
+		if(pre_slip_result & MOVELOOP_BUMPDOOR_PROCEED)
+			var/obj/machinery/door/blocking_door = (locate(/obj/machinery/door) in next_place)
+			blocking_door.Bumped(moving, list("speedy_open"))
 	lifetime -= old_delay //This needs to be based on work over time, not just time passed
 
 	if(lifetime < 0) //Otherwise lag would make things look really weird

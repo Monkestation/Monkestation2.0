@@ -39,6 +39,13 @@
 	// check if something funny is in our way for slipping circumstances we need to have a target location to check.
 	if(istype(source, /datum/move_loop/has_target/move_towards))
 		var/mob/living/mob_parent = parent
+		var/obj/machinery/door/blocking_door = (locate(/obj/machinery/door) in next_location)
+		if(istype(blocking_door, /obj/machinery/door) && (blocking_door.density))
+			if(!blocking_door.operating && blocking_door.is_operational)
+				return MOVELOOP_BUMPDOOR_PROCEED
+			else
+				INVOKE_ASYNC(mob_parent, /atom/movable/proc/throw_at, next_location, 1, 1)
+				return MOVELOOP_PATH_BLOCKED
 
 		var/obj/machinery/disposal/dis_machine = (locate(/obj/machinery/disposal/bin) in next_location)
 		if(istype(dis_machine, /obj/machinery/disposal/bin))

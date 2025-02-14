@@ -144,7 +144,7 @@
 		return
 	bumpopen(M)
 
-/obj/machinery/door/window/bumpopen(mob/user)
+/obj/machinery/door/window/bumpopen(mob/user, spd_open = FALSE)
 	if(operating || !density)
 		return
 
@@ -207,7 +207,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS, alt_open_mode = FALSE)
 	if(!density)
 		return TRUE
 

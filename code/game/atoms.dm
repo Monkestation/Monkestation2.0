@@ -585,7 +585,8 @@
 	SIGNAL_HANDLER
 	return
 
-/atom/proc/Bumped(atom/movable/bumped_atom)
+/// Handles bumping special_args may change how certain atoms handle special bumps.
+/atom/proc/Bumped(atom/movable/bumped_atom, list/special_args = null)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_ATOM_BUMPED, bumped_atom)
 
