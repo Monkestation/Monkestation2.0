@@ -109,6 +109,13 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
 		return
+	if((lifetime > 0) && isliving(moving) && istype(src, /datum/move_loop/has_target/move_towards))
+		var/datum/move_loop/has_target/move_towards/movement_datum = src
+		var/next_place = get_step(moving, get_dir(moving, movement_datum.target))
+
+		var/pre_slip_result = SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_SLIP, next_place)
+		if(pre_slip_result & MOVELOOP_PATH_BLOCKED)
+			lifetime = 0 // Something told this mob to stop for lube effects.
 
 	lifetime -= old_delay //This needs to be based on work over time, not just time passed
 
@@ -128,11 +135,6 @@
 	owner?.processing_move_loop_flags = NONE
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
-/*
-	if(result == MOVELOOP_FAILURE && ishuman(src.moving) && istype(src, /datum/move_loop/has_target/move_towards)) // Tell the mob we slipped and what happened
-		var/datum/move_loop/has_target/move_towards/collide_move = src
-		SEND_SIGNAL(src.moving, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay, collide_move.moving_towards, src)
-*/
 	if(QDELETED(src) || result != MOVELOOP_SUCCESS) //Can happen
 		return
 
