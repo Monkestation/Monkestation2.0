@@ -250,3 +250,85 @@
   - qol: 'Door charge triggers on bumping into the door. fixes #5110'
   TheColorCyan:
   - rscadd: Added manhunt smiley mask.
+2025-02-12:
+  Absolucy:
+  - rscadd: Added the Super Syndie-Kitty Ears to the syndicate uplink for 16 TC, which
+      allow the user to shapeshift into a Syndie Cat, clad in blood-red armor. However,
+      while you do gain the abilities of a cat, you still have less health while in
+      this form!
+  - qol: Shapeshift spells now use your original form's gender for your shapeshifted
+      form.
+  - qol: Shapeshifting using the Super Kitty Ears now keeps your name in cat form.
+  - qol: You can no longer accidentally eat the Super Kitty Ears while trying to use
+      them.
+  - balance: Cats can see in the dark now.
+  - balance: Super Kitty Ears cat forms now move at normal humanoid speeds, rather
+      than the slower simplemob speeds.
+  - bugfix: Fixed the Tramstation shipbreaking hut being spaced roundstart.
+  - bugfix: Smite (the spell) is now properly blocked by antimagic.
+  - qol: Smite now tells the caster which smite was inflicted.
+  - bugfix: Dying oozelings now properly unequip items before moving them to their
+      core.
+  - bugfix: Fixed Fluffy Tongue applying to sign language.
+  Gw0sty:
+  - rscadd: Praetorian modsuits now have better cells and storage
+  - qol: Pinned several modsuits preinstalled modules
+  - code_imp: Modularlized some blueshield code
+  - rscadd: Added immunity scanners to blueshift
+  - rscadd: Added the evidence storage room/apc
+  - bugfix: Sec engi's should be able to access lathe again.
+  Loiosh42:
+  - balance: Stat nerf on Tutel, ammo storage increase
+  - bugfix: You can now reload the Bobr with fancy ammoboxes
+  MichiRecRoom:
+  - bugfix: Clicking "Apply" when coloring a loadout item will now update your character
+      preview to use the new colors. This enables you to live(-ish) preview what a
+      certain set of colors will look like on your character.
+  Siro:
+  - bugfix: wiremod radio circuit now receives and triggers as it should.
+  - bugfix: Money mechcomp component now accepts money and fires signals as it should.
+  - bugfix: Beach ruins now uses station public jukebox. Now all can use it.
+  - balance: Tirizine values buffed for monkestation stamina adjustments.
+2025-02-13:
+  Absolucy:
+  - qol: Restyled the Show Server Revision verb to be prettier.
+  Absolucy, Melbert:
+  - rscadd: Valentines Day now polls all players for candidates when it triggers rather
+      than forcing all players to be a Valentine. Consent is important.
+  - rscadd: Valentine silicons now gain special laws pertaining to their date.
+  - qol: Valentines Cards are now paper, so you can write on them, stamp them, or
+      burn them.
+  - qol: Valentine's roundend report no longer takes up a massive amount of space
+      and also no longer sound so, so weird.
+  Absolucy, TealSeer:
+  - qol: The time until the server reboots is now visible in the status tab.
+  Absolucy, hyperjll:
+  - qol: The Syndicate Tome's uplink description has been changed to mention it's
+      functionality.
+  Loiosh42:
+  - rscadd: Recolorable ribboned gown to loadout store
+  - rscadd: Syndicate enhanced Quarad with special ammo and sprites - nuke ops only
+  - balance: Quarad nerf + removal from cargo + add to armory + extra effect vs Xenos
+  - balance: Mild buff CR20
+  - balance: Mild Lanca AP ammo nerf
+  - balance: Moderate Riot Dart buff
+  - balance: Armory Kiboko now gets shrapnel instead of practice shells.
+  MichiRecRoom:
+  - bugfix: Blueshield's alt job titles should work now.
+  RikuTheKiller:
+  - rscadd: New pathology goggles with a nifty toggle for the pathogen visuals. No
+      more visual overload!
+  - balance: Science goggles can't see pathogens anymore. You're more reliant on the
+      pathologist again.
+  - bugfix: Virus view now works at roundstart. I fixed it by just refactoring it
+      into something sensible.
+  Wisemonster:
+  - balance: License to Plasmaflood has been rebranded to License to Murderbone
+  flleeppyy:
+  - server: Allow mentors/admins/donators to bypass the popcap
+2025-02-14:
+  BingusSS13:
+  - rscadd: Added unique ID console program to Charlie Station.
+  - rscadd: Added unique "ID painter" to Charlie Station.
+  - rscadd: Added subtype of airlock electronics for Charlie Station.
+  - qol: Charlie Station IDs now have extra access on lowpop.

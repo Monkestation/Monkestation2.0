@@ -636,6 +636,7 @@
 		"high_micro_laser",
 		"mesons",
 		"nano_mani",
+		"airlock_board_offstation", //MONKESTATION ADDITION - old airlock board for charlie station
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -1296,6 +1297,7 @@
 		"diagnostic_hud",
 		"health_hud",
 		"scigoggles",
+		"pathology_goggles", // monkestation edit
 		"security_hud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
@@ -1311,6 +1313,7 @@
 		"night_visision_goggles",
 		"nvgmesons",
 		"nv_scigoggles",
+		"nv_pathology_goggles", // monkestation edit
 		"security_hud_night",
 		"mech_light_amplification",
 	)
