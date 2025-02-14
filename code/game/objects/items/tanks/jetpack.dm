@@ -17,7 +17,7 @@
 	var/datum/callback/get_mover
 	var/datum/callback/check_on_move
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE //monkestation edit
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER //monkestation edit
+	alternate_worn_layer = ABOVE_HEAD_LAYER //monkestation edit
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
