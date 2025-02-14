@@ -636,6 +636,7 @@
 	armour_penetration = 50
 	wound_bonus = -45
 	wound_falloff_tile = -2
+	speed = 0.3
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
