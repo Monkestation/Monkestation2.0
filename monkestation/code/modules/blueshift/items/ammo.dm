@@ -632,7 +632,7 @@
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
-	damage = 50
+	damage = 45
 	armour_penetration = 50
 	wound_falloff_tile = -2
 	wound_bonus = -45
