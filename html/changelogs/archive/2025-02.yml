@@ -115,3 +115,68 @@
   MichiRecRoom:
   - bugfix: IceBox had a vent and scrubber not connected, within the security post
       at the Departures Lobby. That's fixed now.
+2025-02-07:
+  Absolucy:
+  - qol: Made the Biogenerator UI slightly prettier.
+  - bugfix: The Biogenerator UI now properly calculates the max amount of something
+      that can be produced.
+  - qol: The composter now actually benefits somewhat from upgraded parts.
+  - qol: The composter now prompts you for how many biocubes you want to generate,
+      rather than requiring spam-clicking to make multiple.
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  - bugfix: The "Delightful Effect" symptom no longer causes brain damage, and should
+      also no longer potentially spam chat.
+  Gboster-0:
+  - rscadd: Interaction components can now have a filter that only interacts with
+      specific items.
+  - qol: Mech components can now have themselfes quickly put into the multitool buffer
+      as a device to link if you right-click them.
+  - balance: automatic assemblers can now make any* crafting recipe thats made using
+      sheets in your hand
+  - bugfix: There is no longer a coffin recipe that takes 10 times as long to craft
+      in the crafting menu.
+  RikuTheKiller:
+  - rscadd: There's a BCI manipulator in Void Raptor's circuit lab now.
+  flleeppyy:
+  - admin: fix supplypod fall sound varying when it shouldnt
+2025-02-08:
+  Absolucy:
+  - qol: The shuttle timer for Amber and Yellow alerts are now the same as Blue alert.
+  - balance: The effects of Bioluminescence, Shadow Emission, Bluespace Activity,
+      Gaseous Decomposition, and Slippery Skin no longer scale absurdly past 100 potency.
+  - qol: Glowshrooms and such once again use complex lighting, which shouldn't lag
+      anymore as they can no longer be bright enough for a single glowshroom to illuminate
+      the entire station and then some.
+  - bugfix: Fixed the biogenerator UI shifting when adding reagents to a container.
+  - bugfix: Made the biogenerator window's default height tall enough to show everything
+      by default.
+  MichiRecRoom, san7890, Time-Green, JohnFulpWillard:
+  - refactor: (san7890) Holodeck monkeys have been moved to the same system as old
+      monkeys, and should retain the similar "ephermeal" behavior, while being a whole
+      lot smarter by leveraging new AI. Please report anything that is completely
+      wack about this.
+  Siro, Tractir Mann:
+  - rscadd: Added new walksounds to jackboots! Hate em? Turn them off with Control
+      Click!
+  - balance: Civil Protection Boots now have pockets akin to the Jackboots.
+  flleeppyy:
+  - bugfix: Fixed an RCE exploit in NTSL.
+  - qol: Mentor's now have a per-round bonus of 500 coins
+  leaKsi:
+  - bugfix: Fixed a crash-inducing function in NTSL.
+2025-02-09:
+  Absolucy:
+  - bugfix: Admins can once again use the Lua editor.
+  Siro:
+  - bugfix: fixes various bugs check PR for list.
+  Siro, Tractor Mann:
+  - rscadd: Jackboots, Civil Protection Boots, and Cowboy boots now have new walksounds!
+      Hate the walksounds? dont worry! you can turn them off with Ctrl-Click!
+  - balance: Civil Protection boots now have boot pockets akin to the jackboots.
+  - sound: Added HL:A Combine walksounds.
+  - code_imp: Added the shoesteps element, which should hopefully make adding custom
+      step sounds for specific boots easier.
+  ThePooba:
+  - rscadd: ports and stuff are defines now
+  - rscadd: MRP2 now gets 500 BONUS COINS EVERY ROUND YEEHAW
