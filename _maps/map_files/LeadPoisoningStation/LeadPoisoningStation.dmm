@@ -3495,6 +3495,9 @@
 	network = list("ss13","rd");
 	dir = 1
 	},
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "cdJ" = (
@@ -6160,11 +6163,11 @@
 /turf/closed/wall/mineral/uranium,
 /area/station/maintenance/starboard/greater)
 "dyr" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
-	},
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 6
+	},
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "4"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -6887,6 +6890,7 @@
 "dTm" = (
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/structure/window/spawner/directional/west,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "dTv" = (
@@ -9184,6 +9188,7 @@
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "fbD" = (
@@ -14498,12 +14503,12 @@
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "hTP" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 5
+	},
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "3";
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -14890,11 +14895,11 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "idX" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4"
-	},
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 5
+	},
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "6"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -23586,6 +23591,8 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/structure/table/glass,
 /obj/item/stack/sheet/plasteel/fifty,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mNR" = (
@@ -24416,6 +24423,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "ngP" = (
@@ -28474,6 +28482,11 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
+"puM" = (
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron,
+/area/station/science/lab)
 "puO" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
@@ -30809,6 +30822,7 @@
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/west,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "qJB" = (
@@ -33691,12 +33705,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "sdx" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 5
+	},
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "2";
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -36817,6 +36831,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "tOy" = (
@@ -38434,6 +38449,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "uGp" = (
@@ -38514,6 +38530,7 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "uJJ" = (
@@ -132793,7 +132810,7 @@ ePI
 rjF
 uZv
 dfa
-pZv
+puM
 pZv
 rjF
 rjF
