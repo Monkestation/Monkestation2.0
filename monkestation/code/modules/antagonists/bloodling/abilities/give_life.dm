@@ -21,6 +21,7 @@
 
 /datum/action/cooldown/mob_cooldown/bloodling/give_life/Activate(atom/target)
 	var/mob/living/target_mob = target
+	var/mob/living/basic/bloodling/proper/our_bloodling = owner
 
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		"Would you like to be a [target_mob] servant of [owner]?",
@@ -34,7 +35,7 @@
 
 	if(!LAZYLEN(candidates))
 		owner.balloon_alert(owner, "[target_mob] rejects your generous gift...for now...")
-		owner.add_biomass(20)
+		our_bloodling.add_biomass(20)
 		return FALSE
 
 	target_mob.ghostize(FALSE)
