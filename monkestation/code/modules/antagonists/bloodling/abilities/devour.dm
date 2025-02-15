@@ -38,7 +38,7 @@
 
 	target_part.dismember()
 	qdel(target_part)
-	our_mob.add_biomass(5)
+	our_mob.add_biomass(15)
 
 	our_mob.visible_message(
 		span_alertalien("[our_mob] snaps its maw over [target]s [target_part] and swiftly devours it!"),

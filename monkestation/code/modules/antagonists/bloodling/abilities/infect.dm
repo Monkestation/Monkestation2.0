@@ -67,11 +67,16 @@
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	thrall.set_master(owner)
 
+	carbon_mob.balloon_alert(owner, "[carbon_mob] is successfully infected!")
+
 	var/mob/living/basic/bloodling/proper/tier1/bloodling = new /mob/living/basic/bloodling/proper/tier1/(old_body.loc)
 	owner.mind.transfer_to(bloodling)
+
 	old_body.gib()
+
 	var/datum/antagonist/bloodling_datum = IS_BLOODLING(bloodling)
 	for(var/datum/objective/objective in bloodling_datum.objectives)
 		objective.update_explanation_text()
+
 	playsound(get_turf(bloodling), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
 	qdel(src)
