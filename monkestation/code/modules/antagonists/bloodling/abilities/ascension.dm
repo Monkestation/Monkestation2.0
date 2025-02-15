@@ -110,6 +110,7 @@
 	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/flesh_tile.dmi'
 	icon_state = "flesh_tile-0"
 	base_icon_state = "flesh_tile"
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-16, -16), matrix())
 	baseturfs = /turf/open/floor/plating
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_BLOODLING
@@ -121,11 +122,6 @@
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
-
-	var/matrix/translation = new
-	translation.Translate(-9, -9)
-	transform = translation
-	QUEUE_SMOOTH(src)
 
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
