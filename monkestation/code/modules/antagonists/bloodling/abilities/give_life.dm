@@ -1,7 +1,8 @@
 /datum/action/cooldown/mob_cooldown/bloodling/give_life
 	name = "Give Life"
-	desc = "Bestow the gift of life onto the ignorant."
+	desc = "Bestow the gift of life onto the ignorant. Costs 20 biomass."
 	button_icon_state = "give_life"
+	biomass_cost = 20
 
 /datum/action/cooldown/mob_cooldown/bloodling/give_life/PreActivate(atom/target)
 	if(!ismob(target))
@@ -30,9 +31,12 @@
 		POLL_IGNORE_SHUTTLE_DENIZENS,
 		alert_pic = target_mob
 	)
+
 	if(!LAZYLEN(candidates))
 		owner.balloon_alert(owner, "[target_mob] rejects your generous gift...for now...")
+		owner.add_biomass(20)
 		return FALSE
+
 	target_mob.ghostize(FALSE)
 	var/mob/dead/observer/candie = pick_n_take(candidates)
 	message_admins("[key_name_admin(candie)] has taken control of ([key_name_admin(target_mob)])")
