@@ -175,6 +175,8 @@
 	evolution_mind_change(new_bloodling)
 	new_bloodling.update_health_hud()
 
+	return new_bloodling
+
 
 /mob/living/basic/bloodling/proper/proc/evolution_mind_change(mob/living/basic/bloodling/proper/new_bloodling)
 	new_bloodling.setDir(dir)

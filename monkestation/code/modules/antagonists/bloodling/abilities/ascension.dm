@@ -3,20 +3,22 @@
 	desc = "We spread our wings across the station...Mass consumption is required. Costs 500 Biomass and takes 5 minutes for you to ascend. Your presence will be alerted to the crew. Fortify the hive."
 	button_icon_state = "ascend"
 	biomass_cost = 500
+	biomass_cap = TRUE
+
 	var/list/responses = list("Yes", "No")
 
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
 	if(antag.is_ascended)
+		del(src)
 		return FALSE
+
 	return ..()
 
 /datum/action/cooldown/bloodling/ascension/Activate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner
-	// Adds 500 biomass back
-	our_mob.add_biomass(500)
-	var/choice = tgui_input_list(owner, "Are you REALLY sure you wish to start the ascension process?", "Are you sure you wish to ascend?", responses)
+	var/choice = tgui_input_list(owner, "Are you REALLY sure you wish to start the ascension process? It will take 5 minutes.", "Are you sure you wish to ascend?", responses)
 	if(isnull(choice) || QDELETED(src) || QDELETED(owner))
 		return FALSE
 	if(choice == "No")

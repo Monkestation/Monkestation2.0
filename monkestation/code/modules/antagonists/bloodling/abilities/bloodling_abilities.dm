@@ -52,6 +52,8 @@
 	background_icon_state = "button_bg"
 	// The biomass cost of the ability
 	var/biomass_cost = 0
+	// If the spell is free but instead requires a biomass cap
+	var/biomass_cap = FALSE
 
 /datum/action/cooldown/bloodling/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -74,6 +76,9 @@
 	// Since bloodlings evolve it may result in them or their abilities going away
 	// so we can just return true here
 	if(QDELETED(src) || QDELETED(owner))
+		return TRUE
+
+	if(biomass_cap)
 		return TRUE
 
 	our_mob.add_biomass(-biomass_cost)
