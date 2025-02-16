@@ -11,7 +11,7 @@
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
 	if(antag.is_ascended)
-		del(src)
+		qdel(src)
 		return FALSE
 
 	return ..()

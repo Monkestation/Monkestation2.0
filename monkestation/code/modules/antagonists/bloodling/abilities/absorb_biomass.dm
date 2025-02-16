@@ -27,7 +27,7 @@
 
 	var/mob/living/mob_to_absorb = target
 
-	if(!HAS_TRAIT(mob_to_absorb, MOB_ORGANIC))
+	if(!(mob_to_absorb.mob_biotypes & MOB_ORGANIC))
 		owner.balloon_alert(owner, "doesn't work on non-organics!")
 		return FALSE
 
