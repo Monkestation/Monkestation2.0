@@ -77901,11 +77901,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "xar" = (
-/obj/machinery/power/transmission_laser{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 10
+	},
+/obj/machinery/power/transmission_laser{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
