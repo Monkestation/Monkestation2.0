@@ -624,8 +624,7 @@
 				if(!user.temporarilyRemoveItemFromInventory(part))
 					return
 				balloon_alert(user, "assembly finished!")
-				var/obj/item/tank/internals/emergency_oxygen/assembly_tank
-				assembly_tank = part
+				var/obj/item/tank/internals/emergency_oxygen/assembly_tank = part
 				var/obj/vehicle/sealed/car/vim/new_vim = new(drop_location())
 				new_vim.name = created_name
 				new_vim.tank = assembly_tank
