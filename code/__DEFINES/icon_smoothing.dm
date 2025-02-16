@@ -117,7 +117,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 // Monkestation edit start
 #define SMOOTH_GROUP_FLOOR_BLOODLING S_TURF(63) ////turf/open/floor/bloodling
 
-#define SMOOTH_GROUP_MUSHROOM S_TURF(63)
+#define SMOOTH_GROUP_MUSHROOM S_TURF(64)
 
 #define MAX_S_TURF 64 //Always match this value with the one above it.
 // Monkestation edit end
