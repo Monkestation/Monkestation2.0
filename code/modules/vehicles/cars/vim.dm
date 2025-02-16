@@ -133,10 +133,7 @@
 		return loc.return_air()
 
 /obj/vehicle/sealed/car/vim/return_analyzable_air()
-	if(tank)
-		return tank.return_analyzable_air()
-	else
-		return null
+	return tank?.return_analyzable_air()
 //MONKESTATION EDIT STOP
 
 /obj/item/circuit_component/vim
