@@ -208,7 +208,7 @@
 
 /obj/item/syndicate_blackbox
 	name = "\proper syndicate black box"
-	desc = "A large, heavily armoured black box bearing the insignia of the Syndicate coalition, containing extremely valuable intelligence data. It can be sold on the cargo shuttle to Central Command; getting it there, however..."
+	desc = "A large, heavily armoured black box bearing the insignia of the Syndicate coalition, containing extremely valuable intelligence data. It cannot be teleported with a cargo teleporter. It can be sold on the cargo shuttle to Central Command; getting it there, however..."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackcube"
 	inhand_icon_state = "blackcube"
@@ -278,3 +278,33 @@
 /obj/machinery/syndicate_blackbox_recorder/update_icon_state()
 	icon_state = "blackbox[stored ? null : "_b"]"
 	return ..()
+
+/obj/machinery/syndicatebomb/self_destruct/announce
+
+	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age. Alerts Syndicate personnel once armed."
+	var/obj/item/radio/radio //i hate this fucking code
+	var/radio_channel = RADIO_CHANNEL_SYNDICATE
+
+/obj/machinery/syndicatebomb/self_destruct/announce/Initialize(mapload)
+	. = ..()
+	radio = new(src)
+	radio.make_syndie()
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
+	radio.command = TRUE
+	radio.use_command = TRUE
+
+
+/obj/machinery/syndicatebomb/self_destruct/announce/activate()
+	active = TRUE
+	begin_processing()
+	countdown.start()
+	next_beep = world.time + 10
+	detonation_timer = world.time + (timer_set * 10)
+	var/area/A = get_area(loc)
+	var/message = "ALERT: Self-destruct charge activated in [initial(A.name)]! Detonation in [timer_set] seconds! Evacuate the area immediately!"
+	radio.talk_into(src, message, radio_channel)
+	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	update_appearance()
