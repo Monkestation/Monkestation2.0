@@ -27,7 +27,10 @@
 		return FALSE
 	if(GLOB.the_station_areas.Find(area.type))
 		return TRUE
-	for(var/area/adjacent_area as anything in get_area_edge_turfs(area, return_adjacent_areas = TRUE))
+	var/list/edge_areas = list()
+	for(var/adjacent_areas_list in get_area_edge_turfs(area, return_adjacent_areas = TRUE)) // returns a list of lists for some reason
+		edge_areas |= adjacent_areas_list
+	for(var/area/adjacent_area as anything in edge_areas)
 		if(GLOB.the_station_areas.Find(adjacent_area.type) || is_type_in_typecache(adjacent_area, outdoor_areas)) // yeah sure you can make a neat little base in an icebox cabin
 			return TRUE
 	return FALSE
