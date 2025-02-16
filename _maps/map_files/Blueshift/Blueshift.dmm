@@ -28456,7 +28456,7 @@
 "fuY" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "fuZ" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -28825,7 +28825,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "fyv" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -29913,7 +29913,7 @@
 "fLL" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "fLS" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
@@ -63939,7 +63939,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/security/lesser)
+/area/station/maintenance/port/fore)
 "msV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -79347,7 +79347,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "ptt" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -80097,7 +80097,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "pzC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
@@ -82620,9 +82620,6 @@
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"qai" = (
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
 "qak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -90581,9 +90578,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/auxlab/firing_range)
-"rBM" = (
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/security/lesser)
 "rBP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -101112,7 +101106,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/maintenance/department/security/lesser)
+/area/station/security/courtroom)
 "tBT" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/kirbyplants/organic/plant21,
@@ -152190,12 +152184,12 @@ bnX
 sZJ
 sZJ
 sZJ
-rBM
-rBM
+iGF
+iGF
 msS
-rBM
-rBM
-rBM
+iGF
+iGF
+iGF
 iGF
 djK
 bNM
@@ -152451,8 +152445,8 @@ ptr
 fLL
 fyt
 fuY
-qai
-qai
+tle
+tle
 tan
 hel
 dxa
