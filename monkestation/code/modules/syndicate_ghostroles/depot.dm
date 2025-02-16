@@ -183,7 +183,7 @@
 
 /obj/machinery/syndicate_blackbox_recorder
 	name = "syndicate blackbox recorder"
-	desc = "A modified blackbox recorder used by Syndicate outposts, usually documenting general happenings of outposts, but also more strategically exotic information such as supply manifests and strike team dispatches. A sticker on it says 'WARNING: REMOVAL OF BLACKBOX WILL SEND A DISTRESS SIGNAL'. Huh."
+	desc = "A modified blackbox recorder used by Syndicate outposts, usually documenting general happenings of outposts, but also more strategically exotic information such as supply manifests and strike team dispatches. While the black-box is inside, it can't be destroyed. A sticker on it says 'WARNING: REMOVAL OF BLACKBOX WILL SEND A DISTRESS SIGNAL'. Huh."
 	density = TRUE
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackbox"
