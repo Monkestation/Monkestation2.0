@@ -28921,6 +28921,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plastic,
 /area/station/maintenance/department/medical)
+"dVr" = (
+/obj/structure/cable,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "dVs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
@@ -64125,6 +64130,13 @@
 /obj/machinery/duct,
 /turf/open/floor/plastic,
 /area/station/commons/toilet/auxiliary)
+"rAH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/hfr_room)
 "rAV" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/computer/operating{
@@ -65046,6 +65058,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage/gas)
+"rVM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "rVS" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -77108,8 +77127,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "wHL" = (
-/obj/machinery/light/floor,
 /obj/effect/turf_decal/box,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "wHR" = (
@@ -77850,7 +77869,7 @@
 /area/station/security/prison)
 "wZf" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "wZn" = (
@@ -103428,7 +103447,7 @@ oYW
 xqc
 vSJ
 kMc
-xOu
+rAH
 wQL
 fWr
 eAG
@@ -103664,12 +103683,12 @@ iqA
 tnE
 mBw
 crj
-aAO
+rVM
 omW
 vpk
 vpk
 vpk
-vpk
+dVr
 vpk
 vpk
 vpk
