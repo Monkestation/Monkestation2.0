@@ -79,4 +79,4 @@
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
 	icon_state = "syndiemag0"
 	base_icon_state = "syndiemag"
-	slowdown_active = SHOES_SLOWDOWN //monkestation addition
+	slowdown_active = 0.5 //monkestation addition
