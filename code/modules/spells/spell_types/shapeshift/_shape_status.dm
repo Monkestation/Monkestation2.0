@@ -30,9 +30,13 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/on_apply()
+	// monkestation start: always use caster's gender for the mob
+	owner.gender = caster_mob.gender
+	owner.regenerate_icons()
+	// monkestation end
 	caster_mob.mind?.transfer_to(owner)
 	caster_mob.forceMove(owner)
-	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
+	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
 	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, PROC_REF(on_pre_wabbajack))
@@ -87,7 +91,7 @@
 	UnregisterSignal(caster_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
 	caster_mob.forceMove(owner.loc)
-	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
+	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 	owner.mind?.transfer_to(caster_mob)
 

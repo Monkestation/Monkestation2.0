@@ -86,7 +86,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(remove_bodypart))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_analyzed))
 	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_healed))
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
+//	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_parent_statchance))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_NO_PAIN_EFFECTS), SIGNAL_REMOVETRAIT(TRAIT_NO_PAIN_EFFECTS)), PROC_REF(refresh_pain_attributes))
 	RegisterSignal(parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_message))
@@ -246,7 +246,7 @@
 	// No pain at all
 	if(amount == 0)
 		return FALSE
-	if(amount > 0 && (parent.status_flags & GODMODE))
+	if(amount > 0 && (HAS_TRAIT(parent, TRAIT_GODMODE)))
 		return FALSE
 
 	for(var/zone in shuffle(def_zones))
@@ -363,7 +363,7 @@
  * damage - the amount of damage sustained
  * damagetype - the type of damage sustained
  * def_zone - the limb being targeted with damage (either a bodypart zone or an obj/item/bodypart)
- */
+
 /datum/pain/proc/add_damage_pain(
 	mob/living/carbon/source,
 	damage,
@@ -379,7 +379,7 @@
 
 	SIGNAL_HANDLER
 
-	if(damage <= 2.5 || (parent.status_flags & GODMODE))
+	if(damage <= 2.5 || HAS_TRAIT(parent, TRAIT_GODMODE))
 		return
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/targeted_part = def_zone
@@ -483,7 +483,7 @@
 #endif
 
 	adjust_bodypart_pain(def_zone, pain, damagetype)
-
+*/
 /**
  * Add pain in from a received wound based on severity.
  *
