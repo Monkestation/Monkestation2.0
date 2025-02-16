@@ -270,9 +270,6 @@
 		source = src,
 		header = "That's gotta hurt!",
 		)
-		var/area/A = get_area(loc)
-		var/message = "DANGER: Recorder integrity compromised at [initial(A.name)]!! All units respond immediately!!!"
-		radio.talk_into(src, message, radio_channel)
 		QDEL_NULL(radio)
 		stored.forceMove(loc)
 		new /obj/effect/decal/cleanable/oil(loc)
