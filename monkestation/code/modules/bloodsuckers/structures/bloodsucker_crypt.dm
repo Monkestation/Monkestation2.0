@@ -480,7 +480,8 @@
 	base_icon_state = "candelabrum"
 	light_color = "#66FFFF"
 	light_power = 3
-	light_outer_range = 0 // to 2
+	light_outer_range = 2
+	light_on = FALSE
 	density = FALSE
 	can_buckle = TRUE
 	anchored = FALSE
