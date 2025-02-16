@@ -176,3 +176,101 @@
 				if(ismachinery(target))
 					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // A luddites friend, Sledghammer good at break machine
 			playsound(src, 'sound/effects/bang.ogg', 40, 1)
+
+//UNIQUE CARGO THEFT ITEM: SYNDICATE BLACKBOX
+//syndicate blackboxes contain data that Nanotrasen REALLY wants: can be sold on the cargo shuttle for a hefty sum
+//however, will make alert ghosts and radio syndicate outpost staff that it's been stolen
+
+/obj/machinery/syndicate_blackbox_recorder
+	name = "syndicate blackbox recorder"
+	desc = "A modified blackbox recorder used by Syndicate outposts, usually documenting general happenings of outposts, but also more strategically exotic information such as supply manifests and strike team dispatches. A sticker on it says 'WARNING: REMOVAL OF BLACKBOX WILL SEND A DISTRESS SIGNAL'. Huh."
+	density = TRUE
+	///The machine's internal radio, used to broadcast alerts.
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "blackbox"
+	armor_type = /datum/armor/machinery_blackbox_recorder
+	var/obj/item/stored
+
+
+/obj/machinery/blackbox_recorder/syndicate/Initialize(mapload)
+	. = ..()
+	stored = new /obj/item/syndicate_blackbox(src)
+
+/obj/item/syndicate_blackbox
+	name = "\proper syndicate black box"
+	desc = "A large, heavily armoured black box bearing the insignia of the Syndicate coalition, containing extremely valuable intelligence data. The weight of its armour makes it tricky to move around while carrying it. It can be sold on the cargo shuttle to Central Command; getting it there, however..."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "blackcube"
+	inhand_icon_state = "blackcube"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	slowdown = 1
+
+
+
+/obj/machinery/syndicate_blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/syndicate_blackbox))
+		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
+			to_chat(user, span_warning("[I] is stuck to your hand!"))
+			return
+		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		var/area/A = get_area(loc)
+		var/message = "Storage device re-connected in [initial(A.name)]. All units return to code 4."
+		radio.talk_into(src, message, radio_channel)
+		stored = I
+		update_appearance()
+		return
+	if(istype(I, /obj/item/blackbox))
+		user.visible_message(span_notice("[src] buzzes; seems like this type of black-box isn't compatible with the recorder."))
+		playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
+		return
+	return ..()
+
+/obj/machinery/syndicate_blackbox_recorder/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(stored)
+		stored.forceMove(drop_location())
+		if(Adjacent(user))
+			user.put_in_hands(stored)
+		stored = null
+		to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning, and you realise the Syndicate are on to you now."))
+		notify_ghosts("A Syndicate black-box has been stolen or tampered with!",
+		source = src,
+		header = "Explorers afoot!",
+		)
+		var/area/A = get_area(loc)
+		var/message = "ALERT: Confidential storage device removed in [initial(A.name)]! Immediate response required!"
+		radio.talk_into(src, message, radio_channel)
+		update_appearance()
+		return
+	else
+		to_chat(user, span_warning("It seems that the blackbox is missing..."))
+		return
+
+/obj/machinery/syndicate_blackbox_recorder/Destroy()
+	if(stored)
+		notify_ghosts("A Syndicate black-box recorder has been destroyed!",
+		source = src,
+		header = "That's gotta hurt!",
+		)
+		var/area/A = get_area(loc)
+		var/message = "DANGER: Recorder integrity compromised at [initial(A.name)]!! All units respond immediately!!!"
+		radio.talk_into(src, message, radio_channel)
+		stored.forceMove(loc)
+		new /obj/effect/decal/cleanable/oil(loc)
+	return ..()
+
+/obj/machinery/syndicate_blackbox_recorder/update_icon_state()
+	icon_state = "blackbox[stored ? null : "_b"]"
+	return ..()
+
+/obj/machinery/sydnicate_black_box/get_communication_players()
+	var/list/targets = list()
+	for(var/mob/target in GLOB.player_list)
+		if(target.stat == DEAD || target.z == z)
+			targets += target
+	return targets
