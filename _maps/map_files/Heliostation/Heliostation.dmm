@@ -29487,12 +29487,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"ejV" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ejX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -33933,10 +33927,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"fZV" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "gad" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -36933,10 +36923,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
-"hku" = (
-/turf/open/space/basic,
-/area/space,
-/area/space)
 "hky" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -50588,10 +50574,6 @@
 	dir = 8
 	},
 /area/station/ai_monitored/turret_protected/aisat/hallway)
-"mxe" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "mxi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -98272,7 +98254,7 @@ aaa
 aaa
 aaa
 aaa
-ejV
+nwT
 aaa
 aaa
 aak
@@ -102382,7 +102364,7 @@ qIZ
 cyo
 cyt
 cyo
-fZV
+cyo
 aaa
 mRm
 aak
@@ -102639,7 +102621,7 @@ eAG
 cnK
 exf
 xar
-fZV
+cyo
 aaa
 mRm
 aak
@@ -102670,7 +102652,7 @@ aaa
 aaa
 aaa
 aaa
-hku
+aaa
 aaa
 aaa
 aaa
@@ -102896,7 +102878,7 @@ eAG
 ybf
 czV
 alW
-fZV
+cyo
 aaa
 mRm
 aak
@@ -103153,7 +103135,7 @@ eAG
 rBJ
 sDu
 sKD
-mxe
+cyo
 aak
 mRm
 aak
@@ -103410,7 +103392,7 @@ eAG
 eAG
 ejz
 eAG
-fZV
+cyo
 aaa
 mRm
 aak
@@ -103667,7 +103649,7 @@ eAG
 eAG
 ikK
 cDK
-fZV
+cyo
 aaa
 mRm
 aak
@@ -103924,7 +103906,7 @@ dhV
 eAG
 ikK
 eAG
-fZV
+cyo
 aak
 upe
 dkP
