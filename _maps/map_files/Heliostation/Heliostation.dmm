@@ -22437,7 +22437,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Engineering - Storage";
 	network = list("ss13","engineering")
@@ -27036,6 +27035,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"dfI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/port)
 "dfP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
@@ -28216,6 +28225,7 @@
 	},
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "dDC" = (
@@ -44891,6 +44901,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
+"kiv" = (
+/obj/machinery/station_map/engineering,
+/turf/closed/wall/r_wall,
+/area/station/engineering/main)
 "kiw" = (
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -51546,6 +51560,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
+"mRa" = (
+/obj/machinery/station_map/engineering,
+/turf/closed/wall,
+/area/station/engineering/storage)
 "mRc" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
@@ -67840,6 +67858,10 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"tdh" = (
+/obj/machinery/station_map/engineering,
+/turf/closed/wall/r_wall,
+/area/station/tcommsat/computer)
 "tdn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -74146,6 +74168,14 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"vAU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/science/central)
 "vBm" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
@@ -74230,6 +74260,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"vDu" = (
+/obj/machinery/cassette/mailbox,
+/turf/open/floor/wood,
+/area/station/service/library)
 "vDU" = (
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Command - Outer Bridge E";
@@ -74507,6 +74541,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
+"vJe" = (
+/obj/machinery/station_map/engineering,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/ce)
 "vJf" = (
 /obj/structure/filingcabinet/security,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -79032,6 +79070,11 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/hallway/secondary/entry)
+"xwF" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "xwG" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating,
@@ -96674,7 +96717,7 @@ hRM
 cbL
 iwk
 geT
-geT
+dfI
 qjW
 fpd
 qjW
@@ -104673,7 +104716,7 @@ cbY
 cbY
 cbY
 cbY
-cbY
+vJe
 cbY
 cbY
 bXs
@@ -106372,7 +106415,7 @@ aak
 aak
 aDr
 aCR
-dop
+xwF
 aCR
 aGR
 azQ
@@ -107506,7 +107549,7 @@ cNJ
 mTp
 rAq
 mVl
-bXs
+kiv
 bXs
 vUC
 czV
@@ -108007,7 +108050,7 @@ qvc
 kZb
 dsP
 mcy
-qvc
+mRa
 pyz
 nrn
 nrn
@@ -111603,7 +111646,7 @@ tot
 jAa
 eUG
 vJs
-bXq
+tdh
 tdn
 pCf
 tdn
@@ -118751,7 +118794,7 @@ cGU
 bwl
 eHp
 bxm
-byO
+vDu
 byN
 xIR
 bBY
@@ -129330,7 +129373,7 @@ xaK
 cTJ
 cUB
 cCQ
-cFd
+vAU
 dRF
 cRj
 xaK
