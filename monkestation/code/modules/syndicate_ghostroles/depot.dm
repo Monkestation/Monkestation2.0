@@ -250,7 +250,7 @@
 				user.put_in_hands(stored)
 			stored = null
 			to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning, and you realize the Syndicate are on to you now."))
-			notify_ghosts("A Syndicate black-box has been stolen or tampered with!",
+			notify_ghosts("A Syndicate black-box has been stolen!",
 			source = src,
 			header = "Explorers afoot!",
 			)
