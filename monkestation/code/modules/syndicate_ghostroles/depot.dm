@@ -266,10 +266,6 @@
 
 /obj/machinery/syndicate_blackbox_recorder/Destroy()
 	if(stored)
-		notify_ghosts("A Syndicate black-box recorder has been destroyed!",
-		source = src,
-		header = "That's gotta hurt!",
-		)
 		QDEL_NULL(radio)
 		stored.forceMove(loc)
 		new /obj/effect/decal/cleanable/oil(loc)
@@ -284,6 +280,7 @@
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age. Alerts Syndicate personnel once armed."
 	var/obj/item/radio/radio //i hate this fucking code
 	var/radio_channel = RADIO_CHANNEL_SYNDICATE
+	anchored = TRUE
 
 /obj/machinery/syndicatebomb/self_destruct/announce/Initialize(mapload)
 	. = ..()
