@@ -249,7 +249,8 @@
 			if(Adjacent(user))
 				user.put_in_hands(stored)
 			stored = null
-			to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning, and you hear a quiet alarm from inside the recorder."))
+			to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning, and you hear an alarm from inside the recorder."))
+			playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 			notify_ghosts("A Syndicate black-box has been stolen!",
 			source = src,
 			header = "Explorers afoot!",
