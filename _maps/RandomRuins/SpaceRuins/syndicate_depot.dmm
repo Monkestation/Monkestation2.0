@@ -692,7 +692,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/blackbox_recorder/syndicate,
+/obj/machinery/syndicate_blackbox_recorder,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "hJ" = (
@@ -3240,6 +3240,7 @@
 /obj/item/circuitboard/machine/quantumpad,
 /obj/item/circuitboard/machine/quantumpad,
 /obj/item/storage/toolbox/electrical,
+/obj/item/circuitboard/machine/spaceship_navigation_beacon,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "KP" = (
