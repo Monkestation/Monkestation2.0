@@ -111,3 +111,278 @@
   Veth-s:
   - bugfix: Fixes a money dupe by blacklisting spacecash and monkecoin from interaction
       components.
+2025-02-06:
+  MichiRecRoom:
+  - bugfix: IceBox had a vent and scrubber not connected, within the security post
+      at the Departures Lobby. That's fixed now.
+2025-02-07:
+  Absolucy:
+  - qol: Made the Biogenerator UI slightly prettier.
+  - bugfix: The Biogenerator UI now properly calculates the max amount of something
+      that can be produced.
+  - qol: The composter now actually benefits somewhat from upgraded parts.
+  - qol: The composter now prompts you for how many biocubes you want to generate,
+      rather than requiring spam-clicking to make multiple.
+  - bugfix: Void Cloaks now properly hide blades and such in the suit storage from
+      the wearer's sprite.
+  - bugfix: The "Delightful Effect" symptom no longer causes brain damage, and should
+      also no longer potentially spam chat.
+  Gboster-0:
+  - rscadd: Interaction components can now have a filter that only interacts with
+      specific items.
+  - qol: Mech components can now have themselfes quickly put into the multitool buffer
+      as a device to link if you right-click them.
+  - balance: automatic assemblers can now make any* crafting recipe thats made using
+      sheets in your hand
+  - bugfix: There is no longer a coffin recipe that takes 10 times as long to craft
+      in the crafting menu.
+  RikuTheKiller:
+  - rscadd: There's a BCI manipulator in Void Raptor's circuit lab now.
+  flleeppyy:
+  - admin: fix supplypod fall sound varying when it shouldnt
+2025-02-08:
+  Absolucy:
+  - qol: The shuttle timer for Amber and Yellow alerts are now the same as Blue alert.
+  - balance: The effects of Bioluminescence, Shadow Emission, Bluespace Activity,
+      Gaseous Decomposition, and Slippery Skin no longer scale absurdly past 100 potency.
+  - qol: Glowshrooms and such once again use complex lighting, which shouldn't lag
+      anymore as they can no longer be bright enough for a single glowshroom to illuminate
+      the entire station and then some.
+  - bugfix: Fixed the biogenerator UI shifting when adding reagents to a container.
+  - bugfix: Made the biogenerator window's default height tall enough to show everything
+      by default.
+  MichiRecRoom, san7890, Time-Green, JohnFulpWillard:
+  - refactor: (san7890) Holodeck monkeys have been moved to the same system as old
+      monkeys, and should retain the similar "ephermeal" behavior, while being a whole
+      lot smarter by leveraging new AI. Please report anything that is completely
+      wack about this.
+  Siro, Tractir Mann:
+  - rscadd: Added new walksounds to jackboots! Hate em? Turn them off with Control
+      Click!
+  - balance: Civil Protection Boots now have pockets akin to the Jackboots.
+  flleeppyy:
+  - bugfix: Fixed an RCE exploit in NTSL.
+  - qol: Mentor's now have a per-round bonus of 500 coins
+  leaKsi:
+  - bugfix: Fixed a crash-inducing function in NTSL.
+2025-02-09:
+  Absolucy:
+  - bugfix: Admins can once again use the Lua editor.
+  - qol: Seedlings and Craig now use JPS pathfinding instead of basic avoidance, so
+      they're less likely to get stuck on stupid obstacles.
+  - qol: You no longer have an completely random and unpredictable chance of being
+      automatically dusted while searching through a trash pile. If you dig out a
+      random d20 and decide to roll it yourself, though, that's your gamble to make.
+  Absolucy, BurgerBB:
+  - qol: Reworks the Druggy visual effect to cause less eye strain.
+  Absolucy, Danny Boy:
+  - bugfix: Fixed Signer eyebrow raising/lowering indicators and emotes
+  - bugfix: Fixed Signer RuneChat punctuation
+  Addust:
+  - rscadd: The Syndicate depot now has shipbreaking!
+  - rscadd: Shipbreaking can now also be integrated into other space ghostroles with
+      enough effort! (good luck lmao)
+  - balance: The Syndicate depot's circuit imprinter is now the shit ancient one,
+      but they have been provided quantum pad boards so they can still be buddy-buddy
+      with other outposts.
+  - bugfix: Nanotrasen AIs can no longer fuck with the syndicate depot, at least on
+      the interior. They can still see the outside, but it's now much harder for them
+      to do anything.
+  Gw0sty:
+  - rscdel: Removed ability to set revolution preferences, as they are currently disabled.
+  - balance: 'Delightful syndrome moodlet: 50+->30+'
+  - rscadd: Added upgraded rechargers to the Goldeneye cruiser.
+  - rscadd: Added an advanced surgery disk to the Goldeneye cruiser.
+  - bugfix: fixed the advanced surgery disk not giving correct surgeries
+  RikuTheKiller:
+  - refactor: Husks no longer "kind of do kind of don't" have blood, rather they just
+      don't have any, proper. Report issues.
+  - refactor: Refactored the trait that makes people not get hungry and made obesity
+      code less dumb. Report any problems please.
+  Siro:
+  - bugfix: fixes various bugs check PR for list.
+  - bugfix: Fixed all jackboots being quantum entangled - toggling the noisemaker
+      for one pair of jackboots no longer changes it for every other pair of jackboots
+      too.
+  Siro, Tractor Mann:
+  - rscadd: Jackboots, Civil Protection Boots, and Cowboy boots now have new walksounds!
+      Hate the walksounds? dont worry! you can turn them off with Ctrl-Click!
+  - balance: Civil Protection boots now have boot pockets akin to the jackboots.
+  - sound: Added HL:A Combine walksounds.
+  - code_imp: Added the shoesteps element, which should hopefully make adding custom
+      step sounds for specific boots easier.
+  ThePooba:
+  - rscadd: ports and stuff are defines now
+  - rscadd: MRP2 now gets 500 BONUS COINS EVERY ROUND YEEHAW
+2025-02-10:
+  Absolucy:
+  - bugfix: Shields (and anything else that can block thrown items) now properly block
+      thrown plants, i.e bluespace tomatoes and prickly plants.
+  Absolucy, Danny Boy:
+  - bugfix: Signers no longer sign with their species' tongue
+  leaKsi:
+  - bugfix: (FlufflesTheDog) Sanitization on citation pda alerts.
+  - bugfix: (MrMelbert) Sanitization for pAIs and medical/security records.
+  - bugfix: Sanitization for mechanical components, pathology records, integrated
+      circuit/shells, and PDA app notifications.
+2025-02-11:
+  Absolucy, grungussuss, and kayozz:
+  - sound: gravity generator has a new sound
+  Addust:
+  - bugfix: Johnson and Co Architecture has sent in a crack team to forcibly reprogram
+      every fax machine at Central Command to prevent break-ins.
+  MichiRecRoom, MrMelbert:
+  - rscadd: Adds a new Mild-type brain trauma, Possessive. Occasionally, an item you're
+      holding in your hand will become undroppable for a short time.
+  - rscadd: Adds a new Special-type brain trauma, Primal Instincts. Occasionally,
+      your character will be taken over by a (possibly aggressive) monkey AI.
+  - rscadd: Rewrites our Kleptomania atop the new Kleptomania. This brings a number
+      of changes, including activating more frequently (but with a cooldown), and
+      the ability for the trauma to steal to any available hand.
+  - admin: New logs for the new brain traumas. See PR 5138 for the details of these
+      logs, and where to find them.
+  MichiRecRoom, jlsnow301:
+  - code_imp: 'TGUI dependencies have been updated. This should not result in any
+      player-facing changes, but suffice to say: PLEASE LET ME KNOW IF THIS HAS BROKEN
+      ANY INTERFACES.'
+  Siro:
+  - rscadd: Using the door charge lets you record a taunt
+  - qol: 'Door charge triggers on bumping into the door. fixes #5110'
+  TheColorCyan:
+  - rscadd: Added manhunt smiley mask.
+2025-02-12:
+  Absolucy:
+  - rscadd: Added the Super Syndie-Kitty Ears to the syndicate uplink for 16 TC, which
+      allow the user to shapeshift into a Syndie Cat, clad in blood-red armor. However,
+      while you do gain the abilities of a cat, you still have less health while in
+      this form!
+  - qol: Shapeshift spells now use your original form's gender for your shapeshifted
+      form.
+  - qol: Shapeshifting using the Super Kitty Ears now keeps your name in cat form.
+  - qol: You can no longer accidentally eat the Super Kitty Ears while trying to use
+      them.
+  - balance: Cats can see in the dark now.
+  - balance: Super Kitty Ears cat forms now move at normal humanoid speeds, rather
+      than the slower simplemob speeds.
+  - bugfix: Fixed the Tramstation shipbreaking hut being spaced roundstart.
+  - bugfix: Smite (the spell) is now properly blocked by antimagic.
+  - qol: Smite now tells the caster which smite was inflicted.
+  - bugfix: Dying oozelings now properly unequip items before moving them to their
+      core.
+  - bugfix: Fixed Fluffy Tongue applying to sign language.
+  Gw0sty:
+  - rscadd: Praetorian modsuits now have better cells and storage
+  - qol: Pinned several modsuits preinstalled modules
+  - code_imp: Modularlized some blueshield code
+  - rscadd: Added immunity scanners to blueshift
+  - rscadd: Added the evidence storage room/apc
+  - bugfix: Sec engi's should be able to access lathe again.
+  Loiosh42:
+  - balance: Stat nerf on Tutel, ammo storage increase
+  - bugfix: You can now reload the Bobr with fancy ammoboxes
+  MichiRecRoom:
+  - bugfix: Clicking "Apply" when coloring a loadout item will now update your character
+      preview to use the new colors. This enables you to live(-ish) preview what a
+      certain set of colors will look like on your character.
+  Siro:
+  - bugfix: wiremod radio circuit now receives and triggers as it should.
+  - bugfix: Money mechcomp component now accepts money and fires signals as it should.
+  - bugfix: Beach ruins now uses station public jukebox. Now all can use it.
+  - balance: Tirizine values buffed for monkestation stamina adjustments.
+2025-02-13:
+  Absolucy:
+  - qol: Restyled the Show Server Revision verb to be prettier.
+  Absolucy, Melbert:
+  - rscadd: Valentines Day now polls all players for candidates when it triggers rather
+      than forcing all players to be a Valentine. Consent is important.
+  - rscadd: Valentine silicons now gain special laws pertaining to their date.
+  - qol: Valentines Cards are now paper, so you can write on them, stamp them, or
+      burn them.
+  - qol: Valentine's roundend report no longer takes up a massive amount of space
+      and also no longer sound so, so weird.
+  Absolucy, TealSeer:
+  - qol: The time until the server reboots is now visible in the status tab.
+  Absolucy, hyperjll:
+  - qol: The Syndicate Tome's uplink description has been changed to mention it's
+      functionality.
+  Loiosh42:
+  - rscadd: Recolorable ribboned gown to loadout store
+  - rscadd: Syndicate enhanced Quarad with special ammo and sprites - nuke ops only
+  - balance: Quarad nerf + removal from cargo + add to armory + extra effect vs Xenos
+  - balance: Mild buff CR20
+  - balance: Mild Lanca AP ammo nerf
+  - balance: Moderate Riot Dart buff
+  - balance: Armory Kiboko now gets shrapnel instead of practice shells.
+  MichiRecRoom:
+  - bugfix: Blueshield's alt job titles should work now.
+  RikuTheKiller:
+  - rscadd: New pathology goggles with a nifty toggle for the pathogen visuals. No
+      more visual overload!
+  - balance: Science goggles can't see pathogens anymore. You're more reliant on the
+      pathologist again.
+  - bugfix: Virus view now works at roundstart. I fixed it by just refactoring it
+      into something sensible.
+  Wisemonster:
+  - balance: License to Plasmaflood has been rebranded to License to Murderbone
+  flleeppyy:
+  - server: Allow mentors/admins/donators to bypass the popcap
+2025-02-14:
+  BingusSS13:
+  - rscadd: Added unique ID console program to Charlie Station.
+  - rscadd: Added unique "ID painter" to Charlie Station.
+  - rscadd: Added subtype of airlock electronics for Charlie Station.
+  - qol: Charlie Station IDs now have extra access on lowpop.
+2025-02-15:
+  Absolucy:
+  - rscadd: You can now hide items in potted plants. They have a single slot that
+      can store a normal-sized item, and you can check their storage via alt-click.
+  Ancient_Engineer, Tractor Mann:
+  - bugfix: Fixes several grammatical errors with the mentor cloak
+  - bugfix: Mentor cloak now spawns in the backpack so it doesn't strike the mentor
+      with lightning
+  - bugfix: Changeling flavor text no longer appears for mentor changelings
+  Gw0sty:
+  - rscadd: Added more contraband cybernetics (Invisible to health huds and use syndicate
+      access)
+  - rscadd: Added NT high link and Cybersun link to OPFOR equipment
+  - qol: added categories and cleaned up assault operatives cybernetics implantation
+      category
+  - balance: Syndicate themed groups will now all use cybersun cyberlinks and contraband
+      cybernetics
+  - balance: Wireless connectors are later in research and universal connectors are
+      later in research.
+  - balance: Terran cyberlinks are now unlocked alongside NT High cybernetics.
+  - balance: Combat and security related/useable implants are now printable at security
+      lathe
+  - balance: Antidrops, Antistuns, and detective arms are now no longer printable
+      at the medical lathe,
+  - bugfix: Surgical set arms are now properly emagable.
+  Loiosh42:
+  - bugfix: The Ribboned Gown SHOULD now be actually buyable from loadout
+  Mqiib, SapphicOverload:
+  - rscadd: Adds numerous new horns, frills, and a tail + spine option
+  - image: Resolves the issue of the light tiger tail looking wrong
+  - rscadd: Sexual dimorphism is back for lizards but DON'T WORRY, they're still flat
+  - image: Lizard sprites slightly darkened for reasons
+  Shoddd:
+  - rscdel: Taking damage no longer causes pain, things like wounds still do.
+  - rscadd: Updated genturf description
+  - bugfix: bomb actuallizer checks proper area
+  SirNightKnight:
+  - balance: 'Reworks lung popping to only happen if your lungs arent getting enough
+      air for 5 breaths. Lung popping also does more damage to your lungs. TLDR: Don''t
+      breathe in space.'
+  TheColorCyan:
+  - balance: buffed force, attack speed and wound bonus of shield blades.
+  - balance: shield blades can now slightly pierce armor.
+  - balance: you can now shove people while in shield blade's blocking stance.
+  Veth-s:
+  - bugfix: Slasher redone, remade, check the wiki https://wiki.monkestation.com/jobs/antagonists/slasher
+  - rscadd: Ports Boomboots from Monke1/Goon as a clown-exclusive traitor item.
+  - qol: Ghost control polling is now 20 seconds, up from 10, to give ghosts a longer
+      time to decide if they want to take a role.
+  - bugfix: Slasher fullscreen overlay from fear should not last the entire round.
+      If you still have it after a long time, contact veth.
+  - bugfix: People with fear now appropriately lose it if the slasher isn't in range.
+  distributivgesetz:
+  - qol: Made reading text with the PDA retro theme a bit more accessible.
