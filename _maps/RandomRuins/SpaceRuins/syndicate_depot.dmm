@@ -34,7 +34,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "aS" = (
@@ -7857,7 +7857,7 @@ vZ
 Ay
 Am
 gR
-aR
+kc
 nM
 yS
 qt
@@ -8017,7 +8017,7 @@ Uf
 Eq
 Am
 ln
-kc
+aR
 Ay
 Ay
 vZ
