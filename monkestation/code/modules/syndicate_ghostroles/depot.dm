@@ -192,9 +192,7 @@
 	var/obj/item/radio/radio //i hate this fucking code
 	var/radio_channel = RADIO_CHANNEL_SYNDICATE
 	var/obj/item/stored
-	var/next_warning = 0
-	///The amount of time we have between warnings
-	var/minimum_time_between_warnings = 40 SECONDS
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //meant to be breakable when box not inserted, but it might shit itself if i change resistance flags mid-operation
 
 /obj/machinery/syndicate_blackbox_recorder/Initialize(mapload)
 	. = ..()
@@ -228,6 +226,7 @@
 			return
 		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+		resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		var/area/A = get_area(loc)
 		var/message = "Storage device re-connected in [initial(A.name)]."
@@ -258,6 +257,7 @@
 			var/area/A = get_area(loc)
 			var/message = "ALERT: Confidential storage device removed in [initial(A.name)]! Immediate response required!"
 			radio.talk_into(src, message, radio_channel)
+			resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 			update_appearance()
 		return
 	else
