@@ -71,6 +71,9 @@
 /mob/living/basic/bloodling/proper/ascending/proc/ascend()
 	// Calls the shuttle
 	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
+	// Makes it unable to be recalled
+	SSshuttle.emergency_no_recall = TRUE
+
 	src.add_biomass(src.biomass_max-src.biomass)
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
 	antag.is_ascended = TRUE
