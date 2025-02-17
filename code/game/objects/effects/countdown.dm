@@ -112,7 +112,7 @@
 	if(locate(/obj/machinery/nuclearbomb) in get_turf(src))
 		return
 	if(D.unsecured_time != 0)
-		return round(D.unsecured_time/60, 0.1)
+		return round(D.unsecured_time/60, 1)
 //MONKESTATION EDIT STOP
 
 /obj/effect/countdown/supermatter

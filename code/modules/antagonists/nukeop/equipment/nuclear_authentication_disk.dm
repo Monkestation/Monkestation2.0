@@ -146,7 +146,7 @@
 	QDEL_NULL(unsecured_timer)
 	return ..()
 /obj/item/disk/nuclear/proc/spawn_op()
-	force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 0.1)] minutes")
+	force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
 //MONKESTATION EDIT STOP
 
 /obj/item/disk/nuclear/fake

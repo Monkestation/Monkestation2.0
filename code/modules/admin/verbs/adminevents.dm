@@ -311,7 +311,7 @@
 //MONKESTATION EDIT START
 /client/proc/toggle_junior_op()
 	set category = "Admin.Events"
-	set name = "Toggle Junior OP"
+	set name = "Toggle Junior OP Spawning"
 	set popup_menu = FALSE
 	if(!check_rights(R_DEBUG))
 		return
@@ -322,7 +322,7 @@
 			disky.can_trigger_junior_operative = TRUE
 		log_admin("[key_name(usr)] toggled [disky.can_trigger_junior_operative ? "on" : "off"] junior lone operative spawning on a nuke disk at [AREACOORD(disky)].")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] toggled [disky.can_trigger_junior_operative ? "on" : "off"] junior lone operative spawning on a nuke disk at [AREACOORD(disky)].")
-		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Junior OP", "[disky.can_trigger_junior_operative]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Junior OP Spawning", "[disky.can_trigger_junior_operative]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 //MONKESTATION EDIT STOP
 
 /client/proc/admin_change_sec_level()
