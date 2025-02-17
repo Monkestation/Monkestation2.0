@@ -77587,8 +77587,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/storage)
-"wSH" = (
-/turf/closed/mineral/random/labormineral)
 "wSS" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 4
@@ -101243,7 +101241,7 @@ aqB
 ajB
 uYI
 wbW
-wSH
+uPb
 uPb
 lLw
 ydB
