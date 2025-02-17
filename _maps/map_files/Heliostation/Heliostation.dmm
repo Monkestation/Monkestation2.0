@@ -25,10 +25,6 @@
 /obj/effect/spawner/random/contraband/prison,
 /turf/open/misc/asteroid/airless,
 /area/centcom/asteroid)
-"aah" = (
-/obj/item/tank/internals/oxygen/yellow,
-/turf/open/misc/asteroid/airless,
-/area/centcom/asteroid)
 "aai" = (
 /obj/structure/fluff/fokoff_sign,
 /turf/open/misc/asteroid/airless,
@@ -139517,7 +139513,7 @@ aab
 aab
 aab
 aad
-aah
+aad
 aad
 aad
 aab
