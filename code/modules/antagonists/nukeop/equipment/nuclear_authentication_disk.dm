@@ -144,6 +144,8 @@
 //MONKESTATION EDIT START
 /obj/item/disk/nuclear/Destroy()
 	QDEL_NULL(unsecured_timer)
+	if(src in GLOB.nuke_disk_list)
+		GLOB.nuke_disk_list -= src
 	return ..()
 /obj/item/disk/nuclear/proc/spawn_op()
 	force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
