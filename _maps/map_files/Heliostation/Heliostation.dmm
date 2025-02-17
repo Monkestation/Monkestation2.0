@@ -35872,8 +35872,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"gPJ" = (
-/turf/closed/wall)
 "gQe" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -44845,16 +44843,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"khw" = (
-/obj/machinery/door/airlock/mining{
-	name = "Bitrunning Den"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/cargo/miningoffice)
 "khA" = (
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
@@ -66976,13 +66964,6 @@
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"sLw" = (
-/obj/structure/lattice,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "sLV" = (
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
@@ -118085,7 +118066,7 @@ aaa
 aak
 aaa
 aaa
-sLw
+eAn
 aaa
 kHY
 kuo
@@ -118341,9 +118322,9 @@ cBL
 cBL
 kUi
 kUi
-gPJ
-gPJ
-gPJ
+aaa
+aaa
+aaa
 kHY
 kHY
 ezL
@@ -119368,7 +119349,7 @@ wCy
 cCh
 cEM
 jFA
-khw
+kUi
 aaa
 aaa
 aaa
@@ -119883,9 +119864,9 @@ cBL
 cBL
 kUi
 kUi
-gPJ
-gPJ
-gPJ
+aaa
+aaa
+aaa
 kHY
 kHY
 aUH
