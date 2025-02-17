@@ -27,14 +27,14 @@
 	ricochet_auto_aim_range = 0
 	ricochet_incidence_leeway = 50
 	embedding = null
-	demolition_mod = 5 //High-velocity tungsten > steel doors
+	demolition_mod = 3 //High-velocity tungsten > steel doors
 	projectile_piercing = PASSMOB
 
 
 /obj/projectile/bullet/shotgun_slug/apds/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
-		// If the bullet has already gone through 3 people, stop it on this hit
-		if(pierces > 3)
+		// If the bullet has already gone through 2 people, stop it on this hit
+		if(pierces > 2)
 			projectile_piercing = NONE
 
 			if(damage > 10) // Lets just be safe with this one
