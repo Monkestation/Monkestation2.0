@@ -24,7 +24,7 @@
 
 /datum/action/cooldown/mob_cooldown/bloodling/infest/Activate(atom/target)
 	var/mob/living/mob = target
-	var/infest_time = 30 SECONDS
+	var/infest_time = 15 SECONDS
 
 	// If they are standing on the ascended bloodling tiles it takes 1/3rd of the time to infest them
 	if(isturf(get_turf(mob), /turf/open/misc/bloodling))
