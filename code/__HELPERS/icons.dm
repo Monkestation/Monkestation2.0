@@ -1471,9 +1471,18 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /// If you want a stack trace to be output when the given state/file doesn't exist, use
 /// `/proc/icon_exists_or_scream()`.
 /proc/icon_exists(file, state)
-	var/static/list/icon_states_cache = list()
+	// monkestation start: icon_exists cache
+	var/static/list/icon_states_cache
+	if(isnull(icon_states_cache))
+		icon_states_cache = load_icon_exists_cache() || list()
+	// monkestation end
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
+
+	// monkestation start: icon_exists cache
+	if(isfile(file) && !isnull(icon_states_cache["[file]"]?[state]))
+		return TRUE
+	// monkestation end
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()

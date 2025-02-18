@@ -245,3 +245,6 @@ config/dbconfig.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+
+# monkestation addition: icon_exists cache
+icon_exists_cache.json
