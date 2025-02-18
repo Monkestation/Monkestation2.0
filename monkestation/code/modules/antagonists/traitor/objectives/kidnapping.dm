@@ -47,7 +47,7 @@
 		/datum/job/janitor,
 		/datum/job/lawyer,
 		/datum/job/mime,
-		// monkestation addition: barbers and spooktober
+		// barbers and spooktober
 		/datum/job/barber,
 		/datum/job/yellowclown,
 		/datum/job/skeleton,
@@ -76,6 +76,8 @@
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/paramedic,
+		// Science
+		/datum/job/xenobiologist,
 		// Service
 		/datum/job/cook,
 		// Monkestation addition: Security

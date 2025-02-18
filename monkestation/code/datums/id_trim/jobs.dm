@@ -123,3 +123,28 @@
 		ACCESS_CHANGE_IDS
 		)
 	job = /datum/job/blueshield
+
+/datum/id_trim/job/xenobiologist
+	assignment = "Xenobiologist"
+	trim_state = "trim_xenobiologist"
+	department_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_SCIENCE_PINK
+	sechud_icon_state = SECHUD_XENOBIOLOGIST
+	minimal_access = list(
+		ACCESS_MECH_SCIENCE,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_RESEARCH,
+		ACCESS_SCIENCE,
+		ACCESS_XENOBIOLOGY,
+		)
+	extra_access = list(
+		ACCESS_GENETICS,
+		ACCESS_ROBOTICS,
+		ACCESS_AUX_BASE,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_RD,
+		)
+	job = /datum/job/xenobiologist

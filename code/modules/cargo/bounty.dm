@@ -66,10 +66,9 @@
 			if(CIV_JOB_VIRO)
 				chosen_type = /datum/bounty/item/virus // Monkestation Edit: Pathology Bounties
 			if(CIV_JOB_SCI)
-				if(prob(50))
-					chosen_type = pick(subtypesof(/datum/bounty/item/science))
-				else
-					chosen_type = pick(subtypesof(/datum/bounty/item/slime))
+				chosen_type = pick(subtypesof(/datum/bounty/item/science))
+			if(CIV_JOB_XENO)
+				chosen_type = pick(subtypesof(/datum/bounty/item/slime))
 			if(CIV_JOB_SCI_HEAD) //monkestation addition : RD bounties. 50% for science bounty, 50% for robo bounty.
 				if(prob(50))
 					if(prob(50))
