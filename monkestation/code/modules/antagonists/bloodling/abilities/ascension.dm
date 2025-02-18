@@ -6,12 +6,19 @@
 	biomass_cap = TRUE
 
 	var/list/responses = list("Yes", "No")
+	var/turf/our_turf
 
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
+	var/turf/our_turf = get_turf(our_mob)
+
 	if(antag.is_ascended)
 		qdel(src)
+		return FALSE
+
+	if(!is_station_level(our_turf.z))
+		to_chat(our_mob, span_noticealien("There is not enough matter here for ascension... Unworthy..."))
 		return FALSE
 
 	return ..()
@@ -24,7 +31,6 @@
 	if(choice == "No")
 		return FALSE
 
-	var/turf/our_turf = get_turf(our_mob)
 	to_chat(our_mob, span_noticealien("You grow a chrysalis to begin the change..."))
 	priority_announce("ALERT: LEVEL 4 BIOHAZARD MORPHING IN [get_area(our_turf)]. STOP IT AT ALL COSTS.", "Biohazard")
 	playsound(our_turf, 'sound/effects/blobattack.ogg', 60)
@@ -48,7 +54,8 @@
 	)
 	speed = 0
 	move_resist = INFINITY
-	var/static/datum/dimension_theme/chosen_theme
+	/// Var storing the ascension datum
+	var/datum/bloodling_ascension/ascension_datum
 
 /mob/living/basic/bloodling/proper/ascending/Initialize(mapload)
 	. = ..()
@@ -68,16 +75,38 @@
 	// Runs = instead of add_biomass because the tier 1 bloodling has 50 biomass to start with
 	new_bloodling.biomass = biomass
 
+// A bit ugly but we do NOT want the cocoon to check evo or instantly gib in one hit
+/mob/living/basic/bloodling/proper/ascending/add_biomass(amount)
+	if(biomass + amount >= biomass_max)
+		biomass = biomass_max
+		balloon_alert(src, "already maximum biomass")
+		return
+
+	biomass += amount
+	obj_damage = biomass * 0.2
+	if(biomass > 50)
+		melee_damage_lower = biomass * 0.1
+		melee_damage_upper = biomass * 0.1
+	update_health_hud()
+
 /mob/living/basic/bloodling/proper/ascending/proc/ascend()
+	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
+	src.add_biomass(src.biomass_max-src.biomass)
+	antag.is_ascended = TRUE
+	src.evolution(5)
+	ascension_datum.ascend(src)
+	src.gib()
+
+// Ascension stored in a datum, most everything else has large potential issues
+/datum/bloodling_ascension
+	var/static/datum/dimension_theme/chosen_theme
+	var/turf/start_turf
+
+/datum/bloodling_ascension/proc/ascend(mob)
 	// Calls the shuttle
 	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
 	// Makes it unable to be recalled
 	SSshuttle.emergency_no_recall = TRUE
-
-	src.add_biomass(src.biomass_max-src.biomass)
-	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
-	antag.is_ascended = TRUE
-	src.evolution(5)
 
 	if(isnull(chosen_theme))
 		chosen_theme = new /datum/dimension_theme/bloodling()
@@ -102,13 +131,13 @@
 			continue
 		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (5 SECONDS) * iterator)
 
-/mob/living/basic/bloodling/proper/ascending/proc/transform_area(list/turfs)
+
+/datum/bloodling_ascension/proc/transform_area(list/turfs)
 	for (var/turf/transform_turf as anything in turfs)
 		if (!chosen_theme.can_convert(transform_turf))
 			continue
 		chosen_theme.apply_theme(transform_turf)
 		CHECK_TICK
-
 
 /turf/open/misc/bloodling
 	name = "nerve threads"
@@ -141,7 +170,6 @@
 	transform = translation
 
 	underlay_appearance.transform = transform
-
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'

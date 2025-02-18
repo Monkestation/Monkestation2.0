@@ -14,13 +14,17 @@
 
 /datum/antagonist/bloodling/on_gain()
 	forge_objectives()
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are a horrific blob of flesh who can manifest a million tongues.
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	var/mob/living/our_mob = owner.current
+	our_mob.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are a horrific blob of flesh who can manifest a million tongues.
+	our_mob.playsound_local(get_turf(our_mob), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	// The midround version of this antag begins as a bloodling, not as a human
-	if(!ishuman(owner.current))
+	if(!ishuman(our_mob))
 		return ..()
 	var/datum/action/cooldown/bloodling_infect/infect = new /datum/action/cooldown/bloodling_infect()
-	infect.Grant(owner.current)
+	infect.Grant(our_mob)
+
+	add_team_hud(our_mob, /datum/antagonist/changeling/bloodling_thrall)
+	add_team_hud(our_mob, /datum/antagonist/infested_thrall)
 	return ..()
 
 /datum/antagonist/bloodling/forge_objectives()
