@@ -45,7 +45,7 @@
 		//MONKESTATION EDIT START
 		unsecured_timer = new(src)
 		unsecured_timer.start()
-		junior_lone_operative_trigger_time = (25 + rand(-5, 5)) * 60 //25 minutes + -5 to 5 minutes
+		junior_lone_operative_trigger_time = (15 + rand(-5, 5)) * 60 //15 minutes + -5 to 5 minutes
 		can_trigger_junior_operative = TRUE
 		GLOB.nuke_disk_list += src
 		//MONKESTATION EDIT STOP
