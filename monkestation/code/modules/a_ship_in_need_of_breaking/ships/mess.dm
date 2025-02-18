@@ -6,6 +6,6 @@
 	Recycle eight other shuttles and/or prefab buildings and/or unknowable horrors of the void? \
 	And what better way than to traverse the cosmos than in one of these unique shuttles? \
 	As each Mess shuttle is made from recycled materials, final product may differ from advertisement materials."
-	mappath = "monkestation/code/modules/a_ship_in_need_of_breaking/ship_maps/mess.dmm
+	mappath = "_maps/~monkestation/shipbreaking/mess.dmm
 	emag_only = 1
 */

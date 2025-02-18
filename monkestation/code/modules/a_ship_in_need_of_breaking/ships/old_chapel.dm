@@ -2,4 +2,4 @@
 	name = "Old Chapel Ship"
 	template_id = "old_chapel"
 	description = "mapshaker_old_chapel"
-	mappath = "monkestation/code/modules/a_ship_in_need_of_breaking/ship_maps/old_chapel.dmm"
+	mappath = "_maps/~monkestation/shipbreaking/old_chapel.dmm"
