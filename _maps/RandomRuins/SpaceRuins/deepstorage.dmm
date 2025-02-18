@@ -431,7 +431,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/item/circuitboard/machine/techfab/department/science,
+/obj/item/circuitboard/machine/protolathe/offstation,
 /obj/item/mod/module/jetpack,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
