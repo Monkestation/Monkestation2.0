@@ -192,6 +192,9 @@
 /datum/armament_entry/assault_operatives/secondary/martial/krav_implanter
 	item_type = /obj/item/implanter/krav_maga
 
+/datum/armament_entry/assault_operatives/secondary/martial/cqc
+	item_type = /obj/item/book/granter/martial/cqc
+
 #undef OPS_SUBCATEGORY_LETHAL_SIDE
 #undef OPS_SUBCATEGORY_NONLETHAL_SIDE
 #undef OPS_SUBCATEGORY_MARTIAL_SIDE
