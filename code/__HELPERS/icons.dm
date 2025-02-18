@@ -1474,14 +1474,20 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	// monkestation start: icon_exists cache
 	var/static/list/icon_states_cache
 	if(isnull(icon_states_cache))
+#ifdef PRELOAD_ICON_EXISTS_CACHE
 		icon_states_cache = load_icon_exists_cache() || list()
+#else
+		icon_states_cache = list()
+#endif
 	// monkestation end
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
 
 	// monkestation start: icon_exists cache
+#ifdef PRELOAD_ICON_EXISTS_CACHE
 	if(isfile(file) && !isnull(icon_states_cache["[file]"]?[state]))
 		return TRUE
+#endif
 	// monkestation end
 
 	if(isnull(icon_states_cache[file]))

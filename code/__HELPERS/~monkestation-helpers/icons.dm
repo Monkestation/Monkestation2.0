@@ -64,6 +64,7 @@
 	if(icon_cache[job_type] && (include_unknown || !unknown_huds[job_type]))
 		return icon(icon_cache[job_type])
 
+#ifdef PRELOAD_ICON_EXISTS_CACHE
 /proc/load_icon_exists_cache()
 	. = null
 	if(!fexists("icon_exists_cache.json"))
@@ -87,3 +88,4 @@
 	else
 		log_world("loaded icon_exists cache without verifying revision")
 	return icons
+#endif
