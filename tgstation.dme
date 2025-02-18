@@ -6217,6 +6217,7 @@
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\area.dm"
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\scrap.dm"
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\ships.dm"
+#include "monkestation\code\modules\a_ship_in_need_of_breaking\code\controllers\subsystem\mapping.dm"
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\machines\console.dm"
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\machines\recycler.dm"
 #include "monkestation\code\modules\a_ship_in_need_of_breaking\tool\raynewelder.dm"
