@@ -1,0 +1,32 @@
+--------------------------------------------------------------------------------------------------------------
+	name: The Syndicate
+	desc: Misc syndi propaganda
+Central Command eats babies. It's true! Do your own research.
+Join the Syndicate! Limited positions open! If you don't I'm sure your friends will!
+Try Nanotreason today!
+Nanotrasen, hiring only the most incompetent security since 1995!
+There is no escape from the Syndicate. Surrender is your only chance of salvation.
+Do you really think Nanotrasen would send their best and brightest to work on a hunk of scrap so far from Sol?
+It's honestly pathetic that you don't realize just how dead you are.
+Are you really willing to risk your life for some mediocre tech company?
+Do you feel safe sealed inside a box full of mentally unstable and underqualified lunatics?
+Nanotrasen ought to spend more on training, this is just embarrassing.
+The Syndicate knows who you are, where you come from and we +will+ know where you go.
+We see everything.
+What kind of corporation attaches a self destruct device to their workplaces?
+The souls of those who serve the beast of Nanotrasen are forfeit in the eyes of the gods.
+After 6 centuries of clawing to the top, there are few atrocities which Nanotrasen has +not+ commited.
+You can pledge your life to Nanotrasen, but you'll always be second choice to your boss' clone.
+In space nobody can hear you "help maint"
+Nanotrasen may be ready to clone you no matter how we kill you. But they don't extend that to your family.
+Now that Nanotrasen has your soul under lock and key, we are your +only+ hope of salvation.
+You may be be very good at keeping secrets from CentCom. But our eyes see much, +much+ more than they do.
+The only person you're making a fortune for working in the Spinward Sector is your boss' boss.
+The Nanotrasen banner hangs without shame over countless butchered planets.
+Nanotrasen has no interest in a better galaxy or humanity. All it desires is to devour life for a tidy profit.
+Why would a corporation which values worker safety not give them their strongest forms of self-defense?
+Watch the shadows, because they're watching you.
+TerraGov had to refit the whole Sol waste disposal system just to handle the volume of crap said by NT Reps.
+--------------------------------------------------------------------------------------------------------------
+	name: Cybersun Industries
+Remember to choose Cybersun for AI units which won't try to kill you!

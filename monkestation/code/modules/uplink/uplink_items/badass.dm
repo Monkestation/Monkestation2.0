@@ -9,7 +9,7 @@
 
 /datum/uplink_item/badass/costumes/syndibunny
 	name = "Syndicate Bunny Suit"
-	desc = "A box containing a bunny suit and tailcoat. Due to a catastrophic typo we recieved a specialized syndicate bunny suit instead of a battle suit. Just get rid of it."
+	desc = "A box containing a bunny suit and tailcoat. Due to a catastrophic typo we received a specialized syndicate bunny suit instead of a battle suit. Just get rid of it."
 	item = /obj/item/storage/box/syndibunny
 	cost = 4
 	purchasable_from = ALL
@@ -20,6 +20,14 @@
 	name = "Leaked Sticker Pack"
 	desc = "A box of leaked stickers from the NT production line."
 	item = /obj/item/storage/box/monkestation_stickers/bad_time
+	cost = 1
+	purchasable_from = ALL
+	cant_discount = TRUE
+
+/datum/uplink_item/implants/syndi_propaganda
+	name = "Box of Propaganda Implants"
+	desc = "A box of NT sponsorship implants rewired to tune into the Syndicate Propaganda Network."
+	item = /obj/item/storage/box/syndie_kit/syndi_propaganda
 	cost = 1
 	purchasable_from = ALL
 	cant_discount = TRUE
