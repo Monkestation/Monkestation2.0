@@ -1,3 +1,5 @@
+/// Traits related to the comically large spoon's suicide.
+#define SPOON_SUICIDE_TRAIT "spoon_suicide"
 /// Traits given by mechs.
 #define MECH_TRAIT "mech_trait"
 /// Traits given by nanites.
@@ -28,8 +30,6 @@
 #define HUNTER_TRAIT "monsterhunter_trait"
 /// Source trait while Feeding
 #define FEED_TRAIT "feed_trait"
-/// Source trait during a Frenzy
-#define FRENZY_TRAIT "frenzy_trait"
 /// Source trait for slashers.
 #define TRAIT_SLASHER "slasher_trait"
 /// Source trait for zombies

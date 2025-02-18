@@ -7,6 +7,7 @@
 	mutanteyes = /obj/item/organ/internal/eyes/ethereal
 	mutanttongue = /obj/item/organ/internal/tongue/ethereal
 	mutantheart = /obj/item/organ/internal/heart/ethereal
+	mutantspleen = null
 	external_organs = list(
 		/obj/item/organ/external/ethereal_horns = "None",
 		/obj/item/organ/external/tail/ethereal = "None")
@@ -26,6 +27,7 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_BLOODLOSS_DAMAGE, //we handle that species-side.
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/energybar
@@ -195,12 +197,25 @@
 
 /datum/species/ethereal/proc/on_after_attackedby(mob/living/lightbulb, obj/item/item, mob/living/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
-	var/obj/item/clothing/mask/cigarette/cig = item
-	if(!proximity_flag || !istype(cig) || !istype(user) || cig.lit)
+	if(!proximity_flag || !istype(user))
 		return
-	cig.light()
-	user.visible_message(span_notice("[user] quickly strikes [item] across [lightbulb]'s skin, [lightbulb.p_their()] warmth lighting it!"))
-	return COMPONENT_NO_AFTERATTACK
+
+	if(istype(item, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/cig = item
+		if(!cig.lit)
+			cig.light()
+			user.visible_message(span_notice("[user] quickly strikes [item] across [lightbulb]'s skin, [lightbulb.p_their()] warmth lighting it!"))
+			return COMPONENT_NO_AFTERATTACK
+		return
+
+	if(istype(item, /obj/item/match))
+		var/obj/item/match/match = item
+		if(!match.lit)
+			match.matchignite()
+			user.visible_message(span_notice("[user] strikes [item] against [lightbulb], sparking it to life!"))
+			return COMPONENT_NO_AFTERATTACK
+		return
+	return
 
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \

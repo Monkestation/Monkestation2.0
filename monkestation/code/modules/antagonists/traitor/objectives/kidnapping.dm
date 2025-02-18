@@ -47,6 +47,15 @@
 		/datum/job/janitor,
 		/datum/job/lawyer,
 		/datum/job/mime,
+		// monkestation addition: barbers and spooktober
+		/datum/job/barber,
+		/datum/job/yellowclown,
+		/datum/job/skeleton,
+		/datum/job/candysalesman,
+		/datum/job/dietwizard,
+		/datum/job/ghost,
+		/datum/job/godzilla,
+		/datum/job/gorilla,
 	)
 	alive_bonus = 3
 
@@ -69,8 +78,10 @@
 		/datum/job/paramedic,
 		// Service
 		/datum/job/cook,
-		// Monkestation edit: security assistants
+		// Monkestation addition: Security
 		/datum/job/security_assistant,
+		// Monkestation addition: Engineering
+		/datum/job/signal_technician,
 	)
 	alive_bonus = 4
 
@@ -293,7 +304,7 @@
 			continue
 		possible_turfs += open_turf
 
-	var/turf/return_turf = get_safe_random_station_turf()
+	var/turf/return_turf = get_safe_random_station_turf_equal_weight()
 	if(!return_turf) //SOMEHOW
 		to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
 			be able to handle our pod... You will die here instead.\"</i></span>")))

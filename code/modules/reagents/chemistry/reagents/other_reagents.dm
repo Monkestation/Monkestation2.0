@@ -42,8 +42,8 @@
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	for(var/datum/disease/strain as anything in data?["viruses"])
-		if(istype(strain, /datum/disease/advanced))
-			var/datum/disease/advanced/advanced = strain
+		if(istype(strain, /datum/disease/acute))
+			var/datum/disease/acute/advanced = strain
 			if(methods & (INJECT|INGEST|PATCH))
 				exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
 			if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
@@ -251,6 +251,8 @@
 /**
  * Water reaction to a mob
  */
+#define WAS_SPRAYED "was_sprayed" //monkestation edit
+
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
 	if(methods & TOUCH)
@@ -263,6 +265,28 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	//MONKESTATION EDIT START
+	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+		return
+
+	var/mob/living/victim = exposed_mob
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
+		victim.set_eye_blur_if_lower(3 SECONDS)
+		victim.set_confusion_if_lower(5 SECONDS)
+		if(ishuman(victim))
+			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+		victim.update_damage_hud()
+		if(HAS_TRAIT(victim, WAS_SPRAYED))
+			return
+		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
+		if(prob(50))
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
+		else
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
+		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
+	//MONKESTATION EDIT STOP
+
+#undef WAS_SPRAYED //monkestation edit
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
@@ -480,6 +504,7 @@
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
+		affected_mob.cause_pain(BODY_ZONES_ALL, -8 * REM * seconds_per_tick) //MONKESTATION ADDITION
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
@@ -496,6 +521,8 @@
 	taste_description = "burning"
 	ph = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	process_flags = ORGANIC | SYNTHETIC
+
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
@@ -650,6 +677,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //metabolizes to prevent micro-dosage
 	taste_description = "slime"
 	var/race = /datum/species/human
+	process_flags = ORGANIC | SYNTHETIC
 	var/list/mutationtexts = list( "You don't feel very well." = MUT_MSG_IMMEDIATE,
 									"Your skin feels a bit abnormal." = MUT_MSG_IMMEDIATE,
 									"Your limbs begin to take on a different shape." = MUT_MSG_EXTENDED,
@@ -1010,6 +1038,7 @@
 	taste_description = "acid"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	process_flags = ORGANIC | SYNTHETIC
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
@@ -1124,6 +1153,7 @@
 	taste_description = "the inside of a reactor"
 	/// How much tox damage to deal per tick
 	var/tox_damage = 0.5
+	process_flags = ORGANIC | SYNTHETIC
 	ph = 4
 	material = /datum/material/uranium
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1163,7 +1193,8 @@
 	reagent_state = SOLID
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
-	tox_damage = 1*REM
+	tox_damage = 2*REM
+	process_flags = ORGANIC | SYNTHETIC
 	material = null
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1187,6 +1218,7 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	process_flags = ORGANIC | SYNTHETIC
 	material = /datum/material/bluespace
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1234,6 +1266,7 @@
 	taste_description = "gross metal"
 	penetrates_skin = NONE
 	ph = 4
+	process_flags = ORGANIC | SYNTHETIC
 	burning_temperature = 1725 //more refined than oil
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1746,7 +1779,7 @@
 	name = "Stable Plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#2D2D2D"
+	color = "#8228a0c6" //monkestation edit
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	ph = 1.5
@@ -2438,7 +2471,7 @@
 /datum/reagent/pax
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence in its subjects."
-	color = "#AAAAAA55"
+	color = "#aaaaaaff"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 15
@@ -2735,6 +2768,7 @@
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else

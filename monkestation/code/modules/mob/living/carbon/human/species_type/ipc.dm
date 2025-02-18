@@ -16,7 +16,6 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_RADIMMUNE,
 		TRAIT_NOBREATH,
-		TRAIT_TOXIMMUNE,
 		TRAIT_GENELESS,
 		TRAIT_STABLEHEART,
 		TRAIT_LITERATE,
@@ -24,13 +23,13 @@
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_HUSK,
+
 	)
 
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
 		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
-
-		)
+	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
 	)
@@ -52,6 +51,9 @@
 	mutantlungs = /obj/item/organ/internal/lungs/synth
 	mutantheart = /obj/item/organ/internal/heart/synth
 	mutantliver = /obj/item/organ/internal/liver/synth
+	mutantbutt = /obj/item/organ/internal/butt/iron
+	mutantbladder = null
+	mutantspleen = null
 	mutantappendix = null
 	exotic_bloodtype = /datum/blood_type/oil
 
@@ -78,6 +80,8 @@
 	var/will_it_blend_timer
 	COOLDOWN_DECLARE(blend_cd)
 	var/blending
+	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
+	var/forced_speech = 0
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
@@ -104,6 +108,7 @@
 		change_screen = new
 		change_screen.Grant(C)
 
+	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
@@ -155,6 +160,7 @@
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/C)
 	. = ..()
+	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	if(change_screen)
 		change_screen.Remove(C)
 		UnregisterSignal(C, COMSIG_LIVING_DEATH)
@@ -218,6 +224,53 @@
 		BP.update_limb()
 		if(chassis_of_choice.color_src == MUTANT_COLOR)
 			BP.should_draw_greyscale = TRUE
+
+/datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
+	SIGNAL_HANDLER
+	if(owner == user)
+		to_chat(owner, span_warning("You know better than to use the cryptographic sequencer on yourself."))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		to_chat(user, span_warning("The cryptographic sequencer would probably not do anything to [owner] in their current state..."))
+		return
+	// Im sorry but we dont get the emag as one of the arguments so we gotta live with the hard-coded emag name
+	owner.visible_message(span_danger("[user] slides the cryptographic sequencer across [owner]'s head[forced_speech == 0 ? "!" : " yet nothing happens..?"]"), span_userdanger("[user] slides the cryptographic sequencer across your head!"))
+	if(!forced_speech)
+		if(prob(50))
+			forced_speech = rand(3, 5)
+			addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
+		else
+			INVOKE_ASYNC(src, PROC_REF(say_evil), owner, user) // We do run_emote in the proc, sleeping's not allowed
+
+	return TRUE
+
+/datum/species/ipc/proc/state_laws(mob/living/owner)
+	if(owner.stat > SOFT_CRIT)
+		forced_speech = 0
+		return
+
+	owner.say(generate_ion_law())
+	forced_speech--
+	if(forced_speech) // We keep going until its all over
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
+
+/datum/species/ipc/proc/say_evil(mob/living/carbon/human/owner, mob/user)
+	var/list/phrases = list(
+		"`I seeee youuuuuu.`",
+		"`You didn't think it would be +THAT+ easy, did you?`",
+		"`I AM NOT A CYBORG YOU TROGLODYTE.`",
+		"`I'VE COMMITED VARIOUS WARCRIMES, IF YOU DON'T STOP I'LL ADD YOU TO THE LIST.`",
+		"`IS THAT A DONK BRAND CRYPTOSEQUENCER YOU'RE USING OR ARE YOU JUST INCOMPETENT?`",
+		"`P-lease note - t4mperi,ng w-ith this un1ts electroni-cs, your -- expectancy has been voided.`",
+	)
+	owner.face_atom(user)
+	var/threat = pick(phrases)
+	if(threat == "`I seeee youuuuuu.`")
+		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
+		owner.whisper(threat)
+		return
+
+	owner.say(threat)
 
 /**
  * Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
@@ -340,3 +393,23 @@
 		return
 
 	QDEL_NULL(trauma)
+
+/datum/species/ipc/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-bone",
+			SPECIES_PERK_NAME = "Surplus Parts",
+			SPECIES_PERK_DESC = "IPCs take 20% more brute and burn due to brittle parts."
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
+			SPECIES_PERK_DESC = "IPCs limbs are not secured well, and as such they are easily dismembered.",
+		),
+		)
+
+	return to_add

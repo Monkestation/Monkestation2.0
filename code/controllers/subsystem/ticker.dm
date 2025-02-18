@@ -71,6 +71,9 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	/// ID of round reboot timer, if it exists
+	var/reboot_timer = null
+
 	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
 	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
 	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
@@ -320,11 +323,8 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
 
-	for(var/mob/M as anything in GLOB.player_list)
-		if(!M.client)
-			SEND_SOUND(M, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
-		else if("[CHANNEL_VOX]" in M.client.prefs.channel_volume)
-			SEND_SOUND(M, sound(SSstation.announcer.get_rand_welcome_sound(), volume = M.client.prefs.channel_volume["[CHANNEL_VOX]"] * (M.client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
+	for(var/mob/player as anything in GLOB.player_list)
+		welcome_player(player)
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -339,6 +339,14 @@ SUBSYSTEM_DEF(ticker)
 	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
 
 	return TRUE
+
+/datum/controller/subsystem/ticker/proc/welcome_player(mob/player)
+	var/client/client = player.client
+	var/list/channel_volume = client?.prefs?.channel_volume?.Copy()
+	if(!client)
+		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
+	else if("[CHANNEL_VOX]" in channel_volume)
+		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = channel_volume["[CHANNEL_VOX]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
@@ -396,20 +404,22 @@ SUBSYSTEM_DEF(ticker)
 		qdel(bomb)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
-			if(interview_safety(player, "readied up"))
-				player.ready = PLAYER_NOT_READY
-				QDEL_IN(player.client, 0)
-				continue
-			GLOB.joined_player_list += player.ckey
-			var/chosen_title = player.client?.prefs.alt_job_titles[player.mind.assigned_role.title] || player.mind.assigned_role.title
-			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point(chosen_title)
-			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
-				continue
-			player.create_character(destination)
+	for(var/player in GLOB.new_player_list)
+		create_character(player)
 		CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/create_character(mob/dead/new_player/player)
+	if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
+		if(interview_safety(player, "readied up"))
+			player.ready = PLAYER_NOT_READY
+			QDEL_IN(player.client, 0)
+			return
+		GLOB.joined_player_list += player.ckey
+		var/chosen_title = player.client?.prefs.alt_job_titles[player.mind.assigned_role.title] || player.mind.assigned_role.title
+		var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point(chosen_title)
+		if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
+			return
+		player.create_character(destination)
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/i in GLOB.new_player_list)
@@ -777,11 +787,10 @@ SUBSYSTEM_DEF(ticker)
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	sleep(delay - (world.time - start_wait))
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay - (world.time - start_wait), TIMER_STOPPABLE)
 
-	if(delay_end && !skip_delay)
-		to_chat(world, span_boldannounce("Reboot was cancelled by an admin."))
-		return
+
+/datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)
 	if(end_string)
 		end_state = end_string
 
@@ -795,6 +804,21 @@ SUBSYSTEM_DEF(ticker)
 	log_game(span_boldannounce("Rebooting World. [reason]"))
 
 	world.Reboot()
+
+/**
+ * Deletes the current reboot timer and nulls the var
+ *
+ * Arguments:
+ * * user - the user that cancelled the reboot, may be null
+ */
+/datum/controller/subsystem/ticker/proc/cancel_reboot(mob/user)
+	if(!reboot_timer)
+		to_chat(user, span_warning("There is no pending reboot!"))
+		return FALSE
+	to_chat(world, span_boldannounce("An admin has delayed the round end."))
+	deltimer(reboot_timer)
+	reboot_timer = null
+	return TRUE
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot

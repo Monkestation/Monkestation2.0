@@ -12,39 +12,39 @@
 	var/unlatching = FALSE
 	///our callback
 	var/datum/callback/check_and_replace
+	///if we care about bio protection
+	var/bio_protected
 
-/datum/component/latch_feeding/Initialize(atom/movable/target, damage_type, damage_amount, hunger_restore, stops_at_crit, datum/callback/callback, checks_loc = TRUE)
+/datum/component/latch_feeding/Initialize(atom/movable/target, bio_protected, damage_type, damage_amount, hunger_restore, stops_at_crit, datum/callback/callback, checks_loc = TRUE)
 	. = ..()
 	src.target = target
 	if(QDELETED(target))
 		return COMPONENT_INCOMPATIBLE
 
+	src.bio_protected = bio_protected
 	src.damage_type = damage_type
 	src.damage_amount = damage_amount
 	src.hunger_restore = hunger_restore
 	src.stops_at_crit = stops_at_crit
 	src.check_and_replace = callback
-
 	if(!latch_target(loc_check = checks_loc))
 		return COMPONENT_INCOMPATIBLE
-
-	ADD_TRAIT(parent, TRAIT_FEEDING, LATCH_TRAIT)
-
 	START_PROCESSING(SSobj, src)
 
 /datum/component/latch_feeding/Destroy(force)
-	REMOVE_TRAIT(parent, TRAIT_FEEDING, LATCH_TRAIT)
+	STOP_PROCESSING(SSobj, src)
 	target = null
 	check_and_replace = null
 	return ..()
 
 /datum/component/latch_feeding/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_FEEDING, REF(src))
 	RegisterSignal(parent, COMSIG_LIVING_SET_BUCKLED, PROC_REF(check_buckled))
 	RegisterSignal(parent, COMSIG_MOB_OVERATE, PROC_REF(stop_feeding))
 
 /datum/component/latch_feeding/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_LIVING_SET_BUCKLED)
-	UnregisterSignal(parent, COMSIG_MOB_OVERATE)
+	REMOVE_TRAIT(parent, TRAIT_FEEDING, REF(src))
+	UnregisterSignal(parent, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_MOB_OVERATE))
 
 /datum/component/latch_feeding/proc/latch_target(init = FALSE, loc_check = TRUE)
 	var/mob/basic_mob = parent
@@ -57,7 +57,15 @@
 		else
 			qdel(src)
 			return FALSE
-
+	if(bio_protected)
+		var/living_target_armor = living_target.run_armor_check(attack_flag = BIO, silent = TRUE)
+		if(living_target_armor >= 100)
+			to_chat(basic_mob, span_notice("You failed to latch onto [living_target]."))
+			if(init)
+				return FALSE
+			else
+				qdel(src)
+				return FALSE
 	target.unbuckle_all_mobs(force = TRUE)
 	if(target.buckle_mob(basic_mob, TRUE, loc_check))
 		basic_mob.layer = target.layer + 0.1

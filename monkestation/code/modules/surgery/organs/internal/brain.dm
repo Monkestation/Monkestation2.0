@@ -87,6 +87,14 @@
 
 /obj/item/organ/internal/brain/slime/Destroy(force)
 	QDEL_NULL(membrane_mur)
+	QDEL_NULL(stored_dna)
+	QDEL_LIST(stored_quirks)
+
+	if(stored_items)
+		if(!isnull(src.loc))
+			drop_items_to_ground(src.drop_location(), explode = TRUE)
+		else
+			QDEL_LIST(stored_items)
 	return ..()
 
 /obj/item/organ/internal/brain/slime/examine()
@@ -102,7 +110,7 @@
 		span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
 		gps_active ? span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into the core, feeling for any dense objects. Slime covers your arm."),
 		span_notice("You hear an obscene squelching sound.")
-    )
+	)
 	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
@@ -149,7 +157,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
-/obj/item/organ/internal/brain/slime/proc/enable_coredeath()
+/obj/item/organ/internal/brain/slime/proc/enable_coredeath() // No longer used.
 	coredeath = TRUE
 	if(owner?.stat == DEAD)
 		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
@@ -164,10 +172,8 @@
 	if(QDELETED(stored_dna))
 		stored_dna = new
 
-	if(victim.dna)
-		victim.dna.copy_dna(stored_dna)
-	else
-		src.stored_dna = null
+	isnull(victim.dna) ? (stored_dna = null) : victim.dna.copy_dna(stored_dna)
+
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
@@ -213,14 +219,10 @@
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
-	rebuilt = FALSE
-	if(src.stored_dna)
+	if(stored_dna)
+		rebuilt = FALSE
 		victim.transfer_observers_to(src)
-	else //Gibbing is usually what causes this. No dna to get from a destroyed body.
-		drop_items_to_ground(get_turf(src), TRUE)
-		Destroy()
-		qdel()
-	victim.transfer_observers_to(src)
+
 	Remove(victim)
 	qdel(victim)
 
@@ -270,31 +272,43 @@
 
 /obj/item/organ/internal/brain/slime/proc/process_items(mob/living/carbon/human/victim) // Handle all items to be stored into core.
 	var/list/focus_slots = list(
-    	ITEM_SLOT_SUITSTORE,
-    	ITEM_SLOT_BELT,
-    	ITEM_SLOT_ID,
-    	ITEM_SLOT_LPOCKET,
-    	ITEM_SLOT_RPOCKET
+		ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_ID,
+		ITEM_SLOT_LPOCKET,
+		ITEM_SLOT_RPOCKET
 	)
 	for(var/islot in focus_slots) // Focus on storage items and any others that drop when uniform is unequiped
-		process_and_store_item(victim.get_item_by_slot(islot), victim)
+		var/obj/item/item = victim.get_item_by_slot(islot)
+		if(QDELETED(item))
+			continue
+		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
+		process_and_store_item(item, victim)
 
-	process_and_store_item(victim.back, victim)// Jank to handle modsuit covering items, so it's removed first. Fix this.
+	var/obj/item/back_item = victim.back
+	if(!QDELETED(back_item))
+		victim.temporarilyRemoveItemFromInventory(back_item, force = TRUE, idrop = FALSE)
+		process_and_store_item(back_item, victim) // Jank to handle modsuit covering items, so it's removed first. Fix this.
 
-	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST)// Store chest cavity item
-	process_and_store_item(target_chest.cavity_item, victim)
+	var/obj/item/bodypart/chest/target_chest = victim.get_bodypart(BODY_ZONE_CHEST) // Store chest cavity item
+	if(istype(target_chest))
+		process_and_store_item(target_chest.cavity_item, victim)
 
-	for(var/atom/movable/item in victim.get_equipped_items(include_pockets = TRUE)) // Store rest of equipment
+	for(var/obj/item/item as anything in victim.get_equipped_items(include_pockets = TRUE)) // Store rest of equipment
+		if(QDELETED(item))
+			continue
+		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
 		process_and_store_item(item, victim)
 
 	for(var/obj/item/implant/curimplant in victim.implants) // Process and store implants
-		if(is_type_in_typecache(curimplant, allowed_implants))
-			if(curimplant.removed(victim))
-				var/obj/item/implantcase/case =  new /obj/item/implantcase
-				case.imp = curimplant
-				curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
-				case.update_appearance()
-				process_and_store_item(case, victim)
+		if(!is_type_in_typecache(curimplant, allowed_implants))
+			continue
+		if(curimplant.removed(victim))
+			var/obj/item/implantcase/case =  new /obj/item/implantcase
+			case.imp = curimplant
+			curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
+			case.update_appearance()
+			process_and_store_item(case, victim)
 
 	for(var/obj/item/organ/organ in victim.organs) // Process and store organ implants and related organs
 		if(is_type_in_typecache(organ, allowed_organ_types))
@@ -302,14 +316,14 @@
 			process_and_store_item(organ, victim)
 
 /obj/item/organ/internal/brain/slime/proc/process_and_store_item(atom/movable/item, mob/living/carbon/human/victim) // Helper proc to finally move items
-	if(!item)
+	if(QDELETED(item))
 		return
 	if(!isnull(item.contents))
 		for(var/atom/movable/content_item in item.get_all_contents())
 			if(is_type_in_typecache(content_item, bannedcore))
-				content_item.forceMove(get_turf(victim)) // Move item from container to victims turf if banned
+				content_item.forceMove(victim.drop_location()) // Move item from container to victims turf if banned
 	if(is_type_in_typecache(item, bannedcore))
-		item.forceMove(get_turf(victim)) // Move banned item from victim to the victim's turf if banned.
+		item.forceMove(victim.drop_location()) // Move banned item from victim to the victim's turf if banned.
 	else
 		item.forceMove(src)
 		stored_items |= item

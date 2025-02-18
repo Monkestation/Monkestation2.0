@@ -44,7 +44,14 @@
 	rpg_title = "Guard"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
-	alt_titles = list()
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
@@ -70,6 +77,7 @@
 	belt = /obj/item/storage/belt/security/blueshield
 	l_pocket = /obj/item/sensor_device/blueshield
 	r_pocket = /obj/item/modular_computer/pda/blueshield
+	pda_slot = ITEM_SLOT_RPOCKET
 	id_trim = /datum/id_trim/job/blueshield
 
 /datum/outfit/plasmaman/blueshield

@@ -34,10 +34,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/disease_view = FALSE //Is disease view currently enabled? (Init signals is on living and I'm not poking that bear.) MONKESTATION EDIT
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_CREW) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -783,6 +784,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, span_notice("Data HUDs enabled."))
 		data_huds_on = 1
+
+// MONKESTATION ADDITION START
+/mob/dead/observer/verb/toggle_disease_view()
+	set name = "Toggle Disease View"
+	set desc = "Toggles whether you see disease infection vectors. (dormant, blood, contact and airborne)"
+	set category = "Ghost"
+
+	if(disease_view)
+		RemoveElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view disabled."))
+	else
+		AddElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view enabled."))
+
+	disease_view = !disease_view
+// MONKESTATION ADDITION END
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"

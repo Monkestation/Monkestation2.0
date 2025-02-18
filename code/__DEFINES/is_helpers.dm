@@ -97,12 +97,12 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
-#define isipc(A) (is_species(A, /datum/species/ipc))
+#define isipc(A) (is_species(A, /datum/species/ipc)) // Monkestation Addition
 #define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
 #define isfloran(A) (is_species(A, /datum/species/floran)) //Monkestation Addition
 #define isarachnid(A) (is_species(A, /datum/species/arachnid)) //Monkestation Addition
 #define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
-
+#define isapid(A) (is_species(A, /datum/species/apid)) //Monkestation Addition
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -166,7 +166,14 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
-#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
+	/mob/living/simple_animal/pet/cat,
+	/mob/living/simple_animal/hostile/syndicat,
+	/mob/living/simple_animal/hostile/feral,
+	/mob/living/simple_animal/hostile/feraltabby,
+)))
+
+#define iscat(A) (is_type_in_typecache(A, GLOB.cat_typecache))
 
 #define isdog(A) (istype(A, /mob/living/basic/pet/dog))
 
