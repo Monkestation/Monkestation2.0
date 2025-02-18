@@ -64,13 +64,13 @@
 	name = "Mule Freighter"
 	template_id = "mule"
 	description = "Listen, I've got a plan, get everything aboard the ship, we'll sell that to some greasy jacket wearing monkey."
-	mappath = "_maps/~monkestation/shipbreaking
+	mappath = "_maps/~monkestation/shipbreaking/mule.dmm"
 
 /datum/map_template/shipbreaker/old_altar
 	name = "Old Ashwalker Altar Ship"
 	template_id = "old_altar"
 	description = "mapshaker_old_altar"
-	mappath = "_maps/~monkestation/shipbreaking
+	mappath = "_maps/~monkestation/shipbreaking/old_altar.dmm"
 
 /datum/map_template/shipbreaker/old_banana
 	name = "Old Honk Ship"
@@ -82,7 +82,7 @@
 	name = "Old Bathroom Ship"
 	template_id = "old_Bathroom"
 	description = "mapshaker_old_bathroom"
-	mappath = "_maps/~monkestation/shipbreaking
+	mappath = "_maps/~monkestation/shipbreaking/old_bathroom.dmm"
 
 /datum/map_template/shipbreaker/old_chapel
 	name = "Old Chapel Ship"
