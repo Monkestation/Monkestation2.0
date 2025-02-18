@@ -56,7 +56,7 @@
 /area/template_noop)
 "bZ" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Master at Arms"
+	name = "Master At Arms"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/leader,
@@ -691,7 +691,7 @@
 /area/template_noop)
 "vc" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Master at Arms"
+	name = "Master At Arms"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
