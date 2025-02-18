@@ -28883,6 +28883,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/dragnet_beacon,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "jkt" = (
@@ -66020,6 +66021,9 @@
 /obj/item/stamp/denied{
 	pixel_x = 10;
 	pixel_y = 2
+	},
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
