@@ -228,7 +228,6 @@
 /obj/structure/closet/secure_closet/medical1{
 	req_access = list("syndicate")
 	},
-/obj/structure/closet/firecloset/wall/directional/south,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "hK" = (
@@ -1257,6 +1256,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/structure/closet/firecloset/wall/directional/east,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "Kk" = (
