@@ -1479,6 +1479,11 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
 
+	// monkestation start: icon_exists cache
+	if(isfile(file) && !isnull(icon_states_cache["[file]"]?[state]))
+		return TRUE
+	// monkestation end
+
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
 		for(var/istate in icon_states(file))
