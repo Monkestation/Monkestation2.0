@@ -374,7 +374,10 @@
 			icon_state = "2"
 		if(CABLED_CORE)
 			if(core_mmi)
-				icon_state = "3b"
+				if (istype(core_mmi, /obj/item/mmi/posibrain))
+					icon_state = "3c"
+				else
+					icon_state = "3b"
 			else
 				icon_state = "3"
 		if(GLASS_CORE)

@@ -27,7 +27,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
-		list("Quadruple Amputee", "Paraplegic"),
+		list("Quadruple Amputee", "Paraplegic", /*"Hemiplegic"*/), // MONKESTATION EDIT removed Hemiplegic
 		list("Quadruple Amputee", "Frail"),
 		list("Gigantism", "Dwarfism"),
 		list("Social Anxiety", "Mute"),
@@ -39,6 +39,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
 		list("Hypoalgesia","Hyperalgesia"),
+		list("Paraplegic", "Hemiplegic", "Paralysed Limb"), // Monkestation addition
+		list("Listener", "Uncommon"), // Monkestation addition
+		list("Species Outsider", "Uncommon"), // Monkestation addition
+		list("Deaf", "Hard Of Hearing"), // Monkestation addition
 		list("Kakologophobia", "Easily Offended"), //MONKESTATION ADDITION
 	)
 

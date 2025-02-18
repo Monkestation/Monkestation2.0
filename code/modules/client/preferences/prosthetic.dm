@@ -1,3 +1,13 @@
+// MONKESTATION EDIT START
+/datum/preference/toggle/limb_missing/prosthetic
+	savefile_key = "prosthetic_missing"
+	quirk_name = "Prosthetic Limb"
+
+/datum/preference/choiced/limb/prosthetic
+	savefile_key = "prosthetic"
+	quirk_name = "Prosthetic Limb"
+
+/* original
 /datum/preference/choiced/prosthetic
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "prosthetic"
@@ -15,3 +25,5 @@
 
 /datum/preference/choiced/prosthetic/apply_to_human(mob/living/carbon/human/target, value)
 	return
+*/
+// MONKESTATION EDIT END

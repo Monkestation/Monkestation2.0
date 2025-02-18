@@ -71,12 +71,13 @@
 
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE)
+///TODO, fix or properly document the issue that that dismembered is always FALSE
+/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE, painless = FALSE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
 
-	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered, special)
+	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered, special, painless)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(dropping_limb = TRUE)
 	//limb is out and about, it can't really be considered an implant
@@ -241,11 +242,11 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, violent, painless)
 	if(special)
 		return ..()
 
-/obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, violent, painless)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -278,7 +279,7 @@
 	new_arm_owner.update_worn_gloves()
 
 
-/obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/leg/drop_limb(special, dismembered, violent, painless)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -289,7 +290,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/drop_limb(special, dismembered, violent, painless)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))

@@ -1,3 +1,6 @@
+/obj/item/choice_beacon
+	w_class = WEIGHT_CLASS_SMALL
+
 // Pet Beacon for Monkecoin shop
 
 /obj/item/choice_beacon/pet
@@ -13,6 +16,7 @@
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
 	)
+
 
 /obj/item/choice_beacon/pet/generate_display_names()
 	var/static/list/pet_list

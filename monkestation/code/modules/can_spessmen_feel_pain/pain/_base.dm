@@ -148,7 +148,7 @@
  * special - whether this limb being removed should have side effects (if TRUE, likely being removed on initialization)
  * dismembered - whether this limb was dismembered
  */
-/datum/pain/proc/remove_bodypart(mob/living/carbon/source, obj/item/bodypart/lost_limb, dismembered, special)
+/datum/pain/proc/remove_bodypart(mob/living/carbon/source, obj/item/bodypart/lost_limb, dismembered, special, painless = FALSE)
 	SIGNAL_HANDLER
 
 	var/bad_zone = lost_limb.body_zone
@@ -159,7 +159,7 @@
 	UnregisterSignal(lost_limb, COMSIG_QDELETING)
 
 	if(!QDELETED(parent))
-		if(!special && !(HAS_TRAIT(source, TRAIT_LIMBATTACHMENT) && (lost_limb.bodytype & BODYTYPE_ROBOTIC)))
+		if(!special && !(HAS_TRAIT(source, TRAIT_LIMBATTACHMENT) && (lost_limb.bodytype & BODYTYPE_ROBOTIC)) && !painless)
 			var/limb_removed_pain = (dismembered ? PAIN_LIMB_DISMEMBERED : PAIN_LIMB_REMOVED)
 			if(!isnewplayer(usr)) //painful this should be avoided
 				adjust_bodypart_pain(BODY_ZONE_CHEST, limb_removed_pain)

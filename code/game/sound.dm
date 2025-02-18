@@ -168,6 +168,11 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
 		sound_to_use.volume *= 0
 
+	// MONKESTATION EDIT START
+	if(HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		sound_to_use.volume *= 0.1
+	// MONKESTATION EDIT END
+
 	if(vary)
 		if(frequency)
 			sound_to_use.frequency = frequency

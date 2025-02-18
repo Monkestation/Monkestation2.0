@@ -2,6 +2,7 @@
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
 	icon = FA_ICON_WHEELCHAIR
+	quirk_flags = QUIRK_CHANGES_APPEARANCE // monkestation addition
 	value = -12
 	gain_text = null // Handled by trauma.
 	lose_text = null
@@ -31,6 +32,13 @@
 	for(var/obj/item/dropped_item in holder_turf)
 		if(dropped_item.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(dropped_item)
+
+	// MONKESTATION EDIT START
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if(client_source?.prefs?.read_preference(/datum/preference/toggle/limb_missing/paraplegic))
+		carbon_holder.remove_bodypart_painlessly(BODY_ZONE_L_LEG)
+		carbon_holder.remove_bodypart_painlessly(BODY_ZONE_R_LEG)
+	// MONKESTATION EDIT END
 
 /datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder

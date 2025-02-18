@@ -68,6 +68,7 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/autosurgeon/security_hud(src) //monkestation edit: so arachnids can have a sechud
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -104,6 +105,7 @@
 	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
+	new /obj/item/autosurgeon/security_hud(src) //monkestation edit: so arachnids can have a sechud
 
 
 /obj/structure/closet/secure_closet/security
