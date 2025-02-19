@@ -266,3 +266,12 @@
 
 /datum/round_event_control/shuttle_loan
 	tags = list(TAG_COMMUNAL)
+
+/datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation
+	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_DESTRUCTIVE, TAG_TEAM_ANTAG)
+
+/datum/round_event_control/dark_matteor
+	track = EVENT_TRACK_OBJECTIVES
+
+/datum/round_event_control/portal_storm_monkey
+	tags = list(TAG_EXTERNAL, TAG_COMMUNAL)
