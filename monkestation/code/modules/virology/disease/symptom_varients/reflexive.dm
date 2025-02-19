@@ -2,7 +2,7 @@
 	name = "Reflexive"
 	desc = "Automatically takes effect when the host is damaged."
 
-	cooldown_time = 30 SECONDS
+	cooldown_time = 15 SECONDS
 
 	var/mob/living/host_mob
 

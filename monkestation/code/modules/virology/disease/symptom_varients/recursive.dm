@@ -2,7 +2,7 @@
 	name = "Recursive"
 	desc = "Triggers a symptom 3 extra times 2 seconds apart from eachother."
 
-	cooldown_time = 30 SECONDS
+	cooldown_time = 15 SECONDS
 
 /datum/symptom_varient/recursive/Destroy(force)
 	UnregisterSignal(host_symptom, COMSIG_SYMPTOM_TRIGGER)
