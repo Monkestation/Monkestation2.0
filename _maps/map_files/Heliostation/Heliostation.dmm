@@ -1726,7 +1726,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
 "aid" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "aif" = (
@@ -27339,7 +27339,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dlL" = (
-/obj/machinery/hydroponics/soil,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -27349,6 +27348,7 @@
 	},
 /obj/item/shovel/spade,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/half,
 /area/station/service/hydroponics/garden/abandoned)
 "dma" = (
@@ -29134,8 +29134,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "ecw" = (
-/obj/machinery/hydroponics/soil,
 /obj/item/shovel/spade,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "ecC" = (
@@ -33908,12 +33908,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/line,
-/obj/machinery/hydroponics/soil,
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/half,
 /area/station/service/hydroponics/garden/abandoned)
 "fZI" = (
@@ -35464,13 +35464,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gIW" = (
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/line,
 /obj/structure/sign/poster/contraband/kudzu/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/half,
 /area/station/service/hydroponics/garden/abandoned)
 "gIY" = (
@@ -37397,12 +37397,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "hrN" = (
-/obj/machinery/hydroponics/soil,
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/food_or_drink/seed,
+/obj/machinery/growing/soil,
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden/abandoned)
 "hsj" = (
@@ -47599,9 +47599,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "loa" = (
-/obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
 /obj/structure/cable,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "lob" = (
@@ -51414,7 +51414,7 @@
 "mMJ" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/shovel/spade,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "mNb" = (
@@ -62957,8 +62957,8 @@
 "rgk" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/cultivator,
-/obj/machinery/hydroponics/constructable,
 /obj/structure/cable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "rgr" = (
@@ -66871,13 +66871,13 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "sJB" = (
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/line,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/half,
 /area/station/service/hydroponics/garden/abandoned)
 "sJH" = (
@@ -79916,9 +79916,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/line,
-/obj/machinery/hydroponics/soil,
 /obj/effect/spawner/random/food_or_drink/seed,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/half,
 /area/station/service/hydroponics/garden/abandoned)
 "xMy" = (
