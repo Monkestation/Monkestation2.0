@@ -1,5 +1,3 @@
-// DISABLED UNTIL SOMEONE BALANCES
-/*
 /datum/symptom_varient/strength
 	name = "Strengthen"
 	desc = "Raises a symptoms strength."
@@ -20,4 +18,3 @@
 
 /datum/symptom_varient/strength/proc/increase_strength()
 	host_symptom.multiplier = min(host_symptom.multiplier++, host_symptom.max_multiplier)
-*/

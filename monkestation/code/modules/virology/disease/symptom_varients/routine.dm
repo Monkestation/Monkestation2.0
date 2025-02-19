@@ -1,5 +1,3 @@
-// DISABLED UNTIL SOMEONE BALANCES
-/*
 /datum/symptom_varient/routine
 	name = "Clockwork"
 	desc = "Like clockwork this symptom triggers every 10 seconds"
@@ -24,4 +22,3 @@
 		return
 	COOLDOWN_START(src, next_process, 10 SECONDS)
 	trigger_symptom()
-*/

@@ -1,10 +1,8 @@
-// DISABLED UNTIL SOMEONE BALANCES
-/*
 /datum/symptom_varient
 	var/name = "Generic Varient"
 	var/desc = "An amalgamation of genes."
 
-	var/weight = 10
+	var/weight = 0
 
 	var/datum/symptom/host_symptom
 	var/datum/disease/host_disease
@@ -57,5 +55,3 @@
 
 /datum/symptom_varient/proc/Copy(datum/symptom/new_symp)
 	return new type(new_symp)
-*/
-
