@@ -11,7 +11,7 @@
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
-	var/turf/our_turf = get_turf(our_mob)
+	our_turf = get_turf(our_mob)
 
 	if(antag.is_ascended)
 		qdel(src)
@@ -37,6 +37,8 @@
 	our_mob.evolution(6)
 	return TRUE
 
+// The cocoon the bloodling inhabits for the duration of the ascension
+// It acts a special version of the bloodling which doesnt devolve or evolve but still has biomass
 /mob/living/basic/bloodling/proper/ascending
 	name = "Fleshy Cocoon"
 	icon = 'icons/mob/simple/meteor_heart.dmi'
@@ -87,14 +89,20 @@
 	if(biomass > 50)
 		melee_damage_lower = biomass * 0.1
 		melee_damage_upper = biomass * 0.1
+
+	if(biomass <= 0)
+		gib()
+
 	update_health_hud()
 
 /mob/living/basic/bloodling/proper/ascending/proc/ascend()
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
-	src.add_biomass(src.biomass_max-src.biomass)
 	antag.is_ascended = TRUE
+	// Gives em 750 biomass
+	add_biomass(biomass_max - biomass)
+	ascension_datum = new /datum/bloodling_ascension()
+	ascension_datum.ascend(get_turf(src))
 	src.evolution(5)
-	ascension_datum.ascend(src)
 	src.gib()
 
 // Ascension stored in a datum, most everything else has large potential issues
@@ -102,7 +110,7 @@
 	var/static/datum/dimension_theme/chosen_theme
 	var/turf/start_turf
 
-/datum/bloodling_ascension/proc/ascend(mob)
+/datum/bloodling_ascension/proc/ascend(turf)
 	// Calls the shuttle
 	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
 	// Makes it unable to be recalled
@@ -110,7 +118,7 @@
 
 	if(isnull(chosen_theme))
 		chosen_theme = new /datum/dimension_theme/bloodling()
-	var/turf/start_turf = get_turf(src)
+	var/turf/start_turf = turf
 	var/greatest_dist = 0
 	var/list/turfs_to_transform = list()
 	for (var/turf/transform_turf as anything in GLOB.station_turfs)

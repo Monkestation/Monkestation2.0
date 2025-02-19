@@ -61,8 +61,8 @@
 /mob/living/basic/bloodling/proper
 	name = "mass of flesh"
 	desc = "An abomination of some spawn. A mess of tendrils, mouths and chitin, whatever created it was not merciful."
-	maxHealth = INFINITE // Bloodlings have unlimited health, instead biomass acts as their health
-	health = INFINITE
+	maxHealth = SHORT_REAL_LIMIT // Bloodlings have unlimited health, instead biomass acts as their health
+	health = SHORT_REAL_LIMIT
 	sight = SEE_SELF|SEE_MOBS
 	hud_type = /datum/hud/bloodling
 
