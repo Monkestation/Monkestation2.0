@@ -81,7 +81,7 @@
 	if (count > 0)
 		deactivate(mob, disease)
 
-
+/*
 /datum/symptom/proc/update_name()
 	var/name_string = ""
 	if(attached_varient)
@@ -89,3 +89,4 @@
 	name_string += initial(name)
 
 	name = name_string
+*/

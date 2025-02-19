@@ -73,12 +73,12 @@
 	new_symp.chance = chance
 	new_symp.max_chance = max_chance
 	new_symp.max_multiplier = max_multiplier
-
+/* DISABLED UNTIL SOMEONE BALANCES
 	if(attached_varient)
 		var/datum/symptom_varient/varient = attached_varient.Copy(new_symp)
 		new_symp.attached_varient = varient
 	return new_symp
-
+*/
 /datum/symptom/proc/generate_threshold_desc()
 	return
 

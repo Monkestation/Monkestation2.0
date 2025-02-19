@@ -1,8 +1,10 @@
+// DISABLED UNTIL SOMEONE BALANCES
+/*
 /datum/symptom_varient/recursive
 	name = "Recursive"
 	desc = "Triggers a symptom 3 extra times 2 seconds apart from eachother."
 
-	cooldown_time = 30 SECONDS
+	cooldown_time = 15 SECONDS
 
 /datum/symptom_varient/recursive/Destroy(force)
 	UnregisterSignal(host_symptom, COMSIG_SYMPTOM_TRIGGER)
@@ -23,3 +25,4 @@
 
 /datum/symptom_varient/recursive/proc/trigger()
 	host_symptom.run_effect(host_disease.affected_mob, host_disease)
+*/
