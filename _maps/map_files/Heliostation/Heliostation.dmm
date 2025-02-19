@@ -540,14 +540,22 @@
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer{
+	pixel_x = 0;
+	pixel_y = 7
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "acM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks{
+	pixel_y = 7;
+	pixel_x = 0
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "acP" = (
@@ -1010,14 +1018,16 @@
 /turf/open/floor/wood/large,
 /area/station/security/prison/visit)
 "aeZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/green{
-	dir = 8
+/obj/structure/window/spawner/directional/north,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
+/obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/service/hydroponics/garden)
 "afa" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
@@ -12853,7 +12863,6 @@
 /area/station/science/explab)
 "bki" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/siding/green,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "bko" = (
@@ -15555,9 +15564,7 @@
 /area/station/hallway/primary/port)
 "btW" = (
 /obj/structure/table,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/splicer,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "btX" = (
@@ -17367,7 +17374,9 @@
 /area/station/service/janitor)
 "bDr" = (
 /obj/structure/table,
-/obj/item/book/manual/hydroponics_pod_people,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bDt" = (
@@ -17767,7 +17776,7 @@
 /area/station/service/chapel)
 "bGo" = (
 /obj/structure/table,
-/obj/item/toy/figure/botanist,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bGs" = (
@@ -27530,6 +27539,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
 /obj/effect/turf_decal/siding/green,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "dpC" = (
@@ -29538,14 +29550,12 @@
 /area/shipbreak)
 "elg" = (
 /obj/structure/sign/departments/maint/alt/directional/west,
-/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	location = "Hydroponics"
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
+/obj/structure/plasticflaps/opaque,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "elq" = (
@@ -46243,7 +46253,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "kJV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
@@ -46251,6 +46260,8 @@
 	name = "Hydroponics Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kKa" = (
@@ -49067,6 +49078,7 @@
 /obj/effect/turf_decal/siding/green/end{
 	dir = 4
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "lRq" = (
@@ -54990,9 +55002,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "oeM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
 	},
@@ -58863,7 +58872,7 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Control Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pCn" = (
@@ -59647,7 +59656,7 @@
 /obj/machinery/duct,
 /obj/effect/turf_decal/siding/green,
 /obj/structure/table,
-/obj/machinery/splicer,
+/obj/item/toy/figure/botanist,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pRH" = (
@@ -60168,9 +60177,6 @@
 	},
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/green{
 	dir = 10
 	},
@@ -64604,8 +64610,7 @@
 /area/station/medical/morgue)
 "rLc" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/bottle/nutrient/ez,
-/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rLU" = (
@@ -67014,8 +67019,8 @@
 /obj/machinery/duct,
 /obj/effect/turf_decal/siding/green,
 /obj/structure/table,
-/obj/machinery/smartfridge/disks,
 /obj/machinery/light/directional/south,
+/obj/item/book/manual/hydroponics_pod_people,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sMm" = (
@@ -72395,9 +72400,9 @@
 /area/station/hallway/primary/starboard)
 "uPx" = (
 /obj/structure/table,
-/obj/item/reagent_containers/spray/plantbgone,
 /obj/structure/sign/poster/contraband/random/directional/west,
-/obj/machinery/plantgenes,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "uPD" = (
@@ -106513,7 +106518,7 @@ bLQ
 jdv
 uPx
 oeM
-aeZ
+aKc
 qdk
 elg
 jhF
@@ -106770,7 +106775,7 @@ bLR
 cWk
 hny
 gvt
-hny
+gvt
 dpB
 kJV
 vfB
@@ -115483,7 +115488,7 @@ bfZ
 bhh
 pcp
 bjY
-bDP
+bki
 wlx
 bDP
 bDP
@@ -116252,7 +116257,7 @@ jOj
 aYK
 qZT
 bhk
-ovj
+aeZ
 bsF
 blE
 bnl
@@ -116510,7 +116515,7 @@ aYK
 bgd
 bhj
 ovj
-bki
+bsF
 aTV
 bnl
 aTV
