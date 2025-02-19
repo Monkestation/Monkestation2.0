@@ -62,9 +62,11 @@
 	// Basically we only want bloodlings to have this
 	if(!istype(owner, /mob/living/basic/bloodling))
 		return FALSE
+
 	var/mob/living/basic/bloodling/our_mob = owner
 	if(our_mob.biomass <= biomass_cost)
 		return FALSE
+
 	// Hardcoded for the bloodling biomass system. So it will not function on non-bloodlings
 	return istype(owner, /mob/living/basic/bloodling)
 

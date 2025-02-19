@@ -9,6 +9,7 @@
 	var/turf/our_turf
 
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
+	. = ..()
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
 	our_turf = get_turf(our_mob)
@@ -21,7 +22,7 @@
 		to_chat(our_mob, span_noticealien("There is not enough matter here for ascension... Unworthy..."))
 		return FALSE
 
-	return ..()
+	return
 
 /datum/action/cooldown/bloodling/ascension/Activate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner

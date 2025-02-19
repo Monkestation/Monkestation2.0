@@ -7,11 +7,15 @@
 	button_icon_state = "hivemind"
 
 /datum/action/cooldown/bloodling_hivespeak/IsAvailable(feedback = FALSE)
+	. = ..()
+
 	if(IS_BLOODLING_OR_THRALL(owner))
 		return TRUE
-	return ..()
+	return
 
 /datum/action/cooldown/bloodling_hivespeak/Activate()
+	. = ..()
+
 	var/input = tgui_input_text(usr, "Message to tell your hive", "Commune of Hive")
 	if(!input || !IsAvailable(feedback = TRUE))
 		return

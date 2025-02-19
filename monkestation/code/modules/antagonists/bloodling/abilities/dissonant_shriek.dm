@@ -5,7 +5,7 @@
 	biomass_cost = 30
 
 /datum/action/cooldown/bloodling/dissonant_shriek/Activate(atom/target)
-	..()
+	. = ..()
 	if(owner.movement_type & VENTCRAWLING)
 		owner.balloon_alert(owner, "can't shriek in pipes!")
 		return FALSE

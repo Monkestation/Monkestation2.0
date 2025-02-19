@@ -5,6 +5,8 @@
 	biomass_cost = 50
 
 /datum/action/cooldown/mob_cooldown/bloodling/heal/PreActivate(atom/target)
+	. = ..()
+
 	if(!ismob(target))
 		return FALSE
 
@@ -14,9 +16,11 @@
 
 	if(!IS_BLOODLING_THRALL(targetted_mob))
 		return FALSE
-	return ..()
+	return
 
 /datum/action/cooldown/mob_cooldown/bloodling/heal/Activate(atom/target)
+	. = ..()
+
 	var/mob/living/carbon/carbon_mob = target
 	if(!do_after(owner, 2 SECONDS))
 		return FALSE

@@ -5,13 +5,15 @@
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/mob_cooldown/bloodling/devour/PreActivate(atom/target)
+	. = ..()
 	var/mob/living/mob = target
 	if(!iscarbon(mob))
 		owner.balloon_alert(owner, "only works on carbons!")
 		return FALSE
-	return ..()
+	return
 
 /datum/action/cooldown/mob_cooldown/bloodling/devour/Activate(atom/target)
+	. = ..()
 	StartCooldown()
 	var/mob/living/basic/bloodling/our_mob = owner
 	var/list/candidate_for_removal = list()

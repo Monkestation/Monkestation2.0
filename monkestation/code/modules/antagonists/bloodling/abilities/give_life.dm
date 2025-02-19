@@ -5,6 +5,8 @@
 	biomass_cost = 20
 
 /datum/action/cooldown/mob_cooldown/bloodling/give_life/PreActivate(atom/target)
+	. = ..()
+
 	if(!ismob(target))
 		owner.balloon_alert(owner, "only works on mobs!")
 		return FALSE
@@ -17,9 +19,11 @@
 	if(iscarbon(mob_target))
 		owner.balloon_alert(owner, "doesn't work on carbons!")
 		return FALSE
-	return ..()
+	return
 
 /datum/action/cooldown/mob_cooldown/bloodling/give_life/Activate(atom/target)
+	. = ..()
+
 	var/mob/living/target_mob = target
 	var/mob/living/basic/bloodling/proper/our_bloodling = owner
 

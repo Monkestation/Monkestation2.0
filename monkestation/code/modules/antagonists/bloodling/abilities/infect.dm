@@ -9,6 +9,8 @@
 	var/is_infecting = FALSE
 
 /datum/action/cooldown/bloodling_infect/Activate(atom/target)
+	. = ..()
+
 	if(is_infecting)
 		owner.balloon_alert(owner, "already infecting!")
 		return
@@ -73,7 +75,6 @@
 	owner.mind.transfer_to(bloodling)
 
 	old_body.gib()
-
 	var/datum/antagonist/bloodling_datum = IS_BLOODLING(bloodling)
 	for(var/datum/objective/objective in bloodling_datum.objectives)
 		objective.update_explanation_text()

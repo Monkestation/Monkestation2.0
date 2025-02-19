@@ -30,6 +30,8 @@
 	var/list/initial_powers = list(
 		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
 	)
+	/// A list containing our created abilties
+	var/list/our_abilties = list()
 
 /mob/living/basic/bloodling/Initialize(mapload)
 	. = ..()
@@ -56,6 +58,7 @@
 	for(var/datum/action/path as anything in initial_powers)
 		var/datum/action/bloodling_action = new path()
 		bloodling_action.Grant(src)
+		our_abilties += bloodling_action
 
 //////////////////// The actual bloodling mob ////////////////////
 /mob/living/basic/bloodling/proper
@@ -190,6 +193,9 @@
 		mind.transfer_to(new_bloodling)
 	// Runs = instead of add_biomass because the tier 1 bloodling has 50 biomass to start with
 	new_bloodling.biomass = biomass
+	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
+		ability.build_button_icon()
+
 	qdel(src)
 
 /mob/living/basic/bloodling/proper/Destroy()
