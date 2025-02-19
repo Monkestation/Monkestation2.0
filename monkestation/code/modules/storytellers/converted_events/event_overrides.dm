@@ -58,7 +58,7 @@
 	event_group = /datum/event_group/comms
 
 /datum/round_event_control/disease_outbreak
-	track = EVENT_TRACK_MEDIUM
+	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/disease_outbreak/advanced
