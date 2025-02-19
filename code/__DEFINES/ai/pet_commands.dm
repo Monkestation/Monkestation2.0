@@ -7,6 +7,5 @@
 #define BB_PET_TARGETING_STRATEGY "BB_pet_targeting"
 /// Typecache of weakrefs to mobs this mob is friends with, will follow their instructions and won't attack them
 #define BB_FRIENDS_LIST "BB_friends_list"
-
-///mothroach next meal key!
-#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+/// List of strings we might say to encourage someone to make better choices.
+#define BB_OWNER_SELF_HARM_RESPONSES "BB_self_harm_responses"

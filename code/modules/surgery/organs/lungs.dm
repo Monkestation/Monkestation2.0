@@ -483,6 +483,7 @@
 /obj/item/organ/internal/lungs/proc/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
+	/* monkestation removal: Death to advance
 	// Miasma sickness
 	if(prob(0.5 * miasma_pp))
 		var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
@@ -490,6 +491,7 @@
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 		miasma_disease.name = "Unknown"
 		miasma_disease.try_infect(breather)
+		*/
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
@@ -622,7 +624,7 @@
  * * breather: A carbon mob that is using the lungs to breathe.
  */
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather, skip_breath)
-	if(breather.status_flags & GODMODE)
+	if(HAS_TRAIT(breather, TRAIT_GODMODE))
 		breather.failed_last_breath = FALSE
 		return FALSE
 
@@ -664,22 +666,18 @@
 	// We're in a low / high pressure environment, can't breathe, but trying to, so this hurts the lungs
 	// Unless it's cybernetic then it just doesn't care. Handwave magic whatever
 	else if(!skip_breath && (owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
-		if(lung_pop_tick > 10)
+		if(lung_pop_tick > 5)
 			lung_pop_tick = 0
-			if(!failed)
+			if(!failed && num_moles < 0.02)
 				// Lungs are poppin
-				if(damage >= 40 && damage <= 50 && breather.can_feel_pain())
-					to_chat(breather, span_userdanger("You feel a stabbing pain in your chest!"))
-				else if(num_moles < 0.02)
-					to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
-				else if(num_moles > 0.1)
-					to_chat(breather, span_boldwarning("You feel air force itself into your lungs!"))
-
+				to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
+				breather.failed_last_breath = TRUE
 				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
-				apply_organ_damage(5)
-		breather.failed_last_breath = TRUE
+				apply_organ_damage(35)
+
 		failed_last_breath_checker = TRUE
-		lung_pop_tick++
+		if(num_moles < 0.02)
+			lung_pop_tick++
 	// Robot, don't care lol
 	else if((owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
 		// Can't breathe!
@@ -869,7 +867,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)

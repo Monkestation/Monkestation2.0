@@ -108,8 +108,8 @@ There are several things that need to be remembered:
 				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
 				if(species_icon_file)
 					icon_file = species_icon_file
-		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.visual_gender & dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		//Female sprites have lower priority than digitigrade sprites - MONKESTATION EDIT - ALL WOMEN DESERVE REPRESENTATION
+		if(dna.species.visual_gender & dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -319,8 +319,10 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = shoes
 		update_hud_shoes(worn_item)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
+		//MONKESTATION EDIT START
+		if(!HAS_TRAIT(shoes, TRAIT_ALWAYS_RENDER) && (check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET))
 			return
+		//MONKESTATION EDIT STOP
 
 		var/icon_file = DEFAULT_SHOES_FILE
 
@@ -619,11 +621,11 @@ There are several things that need to be remembered:
 		hands += hand_overlay
 	return hands
 
-/proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
+/proc/wear_female_version(t_color, icon, layer, type, greyscale_colors, flat)
 	var/index = "[t_color]-[greyscale_colors]"
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index, t_color, icon, type)
+		generate_female_clothing(index, t_color, icon, type, flat)
 	return mutable_appearance(GLOB.female_clothing_icons[index], layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
@@ -758,10 +760,12 @@ generate/load female uniform sprites matching all previously decided variables
 	var/file2use = override_file || (isinhands ? null : worn_icon) || default_icon_file
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer || default_layer
+	//Find who's wearing it
+	var/mob/living/carbon/human/wearer = loc
 
 	var/mutable_appearance/standing
-	if(female_uniform)
-		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors) //should layer2use be in sync with the adjusted value below? needs testing - shiz
+	if(female_uniform)																				//MONKESTATION EDIT (below) - Dimorphic lizards
+		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors, !!(wearer.mob_biotypes & MOB_REPTILE)) //should layer2use be in sync with the adjusted value below? needs testing - shiz
 	if(!standing)
 		standing = mutable_appearance(file2use, t_state, -layer2use)
 
@@ -885,8 +889,8 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/apply_overlay(cache_index)
 	/* MONKESTATION EDIT: made it so that MUTATIONS_LAYER and FRONT_MUTATIONS_LAYER always get their filters updated
 		This is required because they use cached / shared appearences
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM) - original */
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM) - original */
+	if(mob_height == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
@@ -914,7 +918,7 @@ generate/load female uniform sprites matching all previously decided variables
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
 /mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(get_mob_height())
+	var/height_to_use = num2text(mob_height)
 	var/final_offset = 0
 	switch(upper_torso)
 		if(UPPER_BODY)
@@ -950,28 +954,38 @@ generate/load female uniform sprites matching all previously decided variables
 	// Move the filter up if the image has been moved down, and vice versa
 	var/adjust_y = -appearance.pixel_y - parent_adjust_y
 
-	var/icon/cut_torso_mask = icon(mask_icon, "Cut1")
-	var/icon/cut_legs_mask = icon(mask_icon, "Cut2")
-	var/icon/lenghten_torso_mask = icon(mask_icon, "Cut3")
-	var/icon/lenghten_legs_mask = icon(mask_icon, "Cut4")
-	var/icon/lenghten_ankles_mask = icon(mask_icon, "Cut5")
+	var/static/list/cached_masks = list()
+	var/list/masks = cached_masks[mask_icon]
+	if(isnull(masks))
+		cached_masks[mask_icon] = masks = list(
+			icon(mask_icon, "Cut1"),
+			icon(mask_icon, "Cut2"),
+			icon(mask_icon, "Cut3"),
+			icon(mask_icon, "Cut4"),
+			icon(mask_icon, "Cut5"),
+		)
+	var/icon/cut_torso_mask = masks[1]
+	var/icon/cut_legs_mask = masks[2]
+	var/icon/lengthen_torso_mask = masks[3]
+	var/icon/lengthen_legs_mask = masks[4]
+	var/icon/lengthen_ankles_mask = masks[5]
 //MONKESTATION EDIT END
 
-	appearance.remove_filter(list(
+	var/should_update = appearance.remove_filter(list(
 		"Cut_Torso",
 		"Cut_Legs",
-		"Lenghten_Ankles", // MONKESTATION ADDITION
-		"Lenghten_Legs",
-		"Lenghten_Torso",
+		"Lengthen_Ankles", // MONKESTATION ADDITION
+		"Lengthen_Legs",
+		"Lengthen_Torso",
 		"Gnome_Cut_Torso",
 		"Gnome_Cut_Legs",
 		"Monkey_Torso",
 		"Monkey_Legs",
 		"Monkey_Gnome_Cut_Torso",
 		"Monkey_Gnome_Cut_Legs",
-	))
+	), update = FALSE) // note: the add_filter(s) calls after this will call update_filters on their own. so by not calling it here, we avoid calling it twice.
 
-	switch(get_mob_height())
+	switch(mob_height)
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
 			appearance.add_filters(list(
@@ -1029,40 +1043,44 @@ generate/load female uniform sprites matching all previously decided variables
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1))
 		if(HUMAN_HEIGHT_TALL)
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = adjust_y, size = 1))
+			appearance.add_filter("Lengthen_Legs", 1, displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1))
 		if(HUMAN_HEIGHT_TALLER)
 			appearance.add_filters(list(
 				list(
-					"name" = "Lenghten_Torso",
+					"name" = "Lengthen_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = adjust_y, size = 1),
+					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
 				),
 				list(
-					"name" = "Lenghten_Legs",
+					"name" = "Lengthen_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = adjust_y, size = 1),
+					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1),
 				),
 			))
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filters(list(
 				list(
-					"name" = "Lenghten_Torso",
+					"name" = "Lengthen_Torso",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = adjust_y, size = 1),
+					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
 				),
 				list(
-					"name" = "Lenghten_Legs",
+					"name" = "Lengthen_Legs",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = adjust_y, size = 1 /* monke edit: 2 -> 1 */),
+					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1 /* monke edit: 2 -> 1 */),
 				),
 				// MONKESTATION EDIT START
 				list(
-					"name" = "Lenghten_Ankles",
+					"name" = "Lengthen_Ankles",
 					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_ankles_mask, x = 0, y = adjust_y, size = 1),
+					"params" = displacement_map_filter(lengthen_ankles_mask, x = 0, y = adjust_y, size = 1),
 				),
 				// MONKESTATION EDIT END
 			))
+		else
+			// as we don't add any filters - we need to make sure to run update_filters ourselves, as we didn't update during our previous remove_filter, and any other case would've ran it at the end of add_filter(s)
+			if(should_update)
+				appearance.update_filters()
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
