@@ -710,7 +710,7 @@
 	name = "Enterance Zone Hallway"
 
 /area/ruin/space/has_grav/abandonedscpsite/engineering
-	name = "Engineering"
+	name = "Containment Site Engineering"
 
 /area/ruin/space/has_grav/abandonedscpsite/office1
 	name = "General Office"
@@ -733,8 +733,8 @@
 /area/ruin/space/has_grav/abandonedscpsite/hczhall
 	name = "HCZ Hall"
 
-/area/ruin/space/has_grav/abandonedscpsite/brig
-	name = "Brig"
+/area/ruin/space/has_grav/abandonedscpsite/czbrig
+	name = "Containment Site Brig"
 
 /area/ruin/space/has_grav/abandonedscpsite/containment1
 	name = "Containment 1"
@@ -742,8 +742,8 @@
 /area/ruin/space/has_grav/abandonedscpsite/containment2
 	name = "Containment 2"
 
-/area/ruin/space/has_grav/abandonedscpsite/medbay
-	name = "Medbay"
+/area/ruin/space/has_grav/abandonedscpsite/czmedbay
+	name = "Containment Site Medbay"
 
 /area/ruin/space/has_grav/abandonedscpsite/lounge
 	name = "Break Room"
@@ -754,8 +754,8 @@
 /area/ruin/space/has_grav/abandonedscpsite/office2
 	name = "Specialized Office"
 
-/area/ruin/space/has_grav/abandonedscpsite/prison
-	name = "Prison"
+/area/ruin/space/has_grav/abandonedscpsite/czprison
+	name = "Containment Site Prison"
 
 /area/ruin/space/has_grav/abandonedscpsite/prisoncafe
 	name = "Prison Cafeteria"
@@ -763,7 +763,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/prisonlibrary
 	name = "Prison Library"
 
-/area/ruin/space/has_grav/abandonedscpsite/maintenance
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance
 	name = "Maintenance"
 
 /area/ruin/space/has_grav/abandonedscpsite/prisonguard
