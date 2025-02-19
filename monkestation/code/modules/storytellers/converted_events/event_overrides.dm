@@ -22,10 +22,6 @@
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
-/datum/round_event_control/antagonist/solo/blob_infection
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
-	checks_antag_cap = TRUE
-	
 /datum/round_event_control/brain_trauma
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_TARGETED, TAG_MAGICAL) //im putting magical on this because I think this can give the magic brain traumas
@@ -62,8 +58,11 @@
 	event_group = /datum/event_group/comms
 
 /datum/round_event_control/disease_outbreak
+	track = EVENT_TRACK_MEDIUM
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
+
+/datum/round_event_control/disease_outbreak/advanced
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN, TAG_MAGICAL)
 
 /datum/round_event_control/electrical_storm
 	track = EVENT_TRACK_MUNDANE
@@ -81,7 +80,7 @@
 
 /datum/round_event_control/fugitives
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 
 /datum/round_event_control/gravity_generator_blackout
 	track = EVENT_TRACK_MODERATE
@@ -100,7 +99,7 @@
 
 /datum/round_event_control/heart_attack
 	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_TARGETED, TAG_MAGICAL)
+	tags = list(TAG_TARGETED)
 
 /datum/round_event_control/immovable_rod
 	track = EVENT_TRACK_MODERATE
@@ -145,7 +144,7 @@
 
 /datum/round_event_control/portal_storm_syndicate
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_COMMUNAL)
 	event_group = /datum/event_group/guests
 
 /datum/round_event_control/processor_overload
@@ -179,7 +178,7 @@
 
 /datum/round_event_control/scrubber_clog/critical
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN, TAG_MAGICAL)
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/scrubber_overflow
 	track = EVENT_TRACK_MODERATE
@@ -192,7 +191,7 @@
 
 /datum/round_event_control/sentient_disease
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/shuttle_catastrophe
@@ -205,7 +204,7 @@
 
 /datum/round_event_control/slaughter
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL)
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/space_dust
@@ -235,7 +234,7 @@
 
 /datum/round_event_control/stray_cargo
 	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL)
+	tags = list(TAG_COMMUNAL, TAG_POSITIVE)
 
 /datum/round_event_control/stray_meteor
 	track = EVENT_TRACK_MODERATE
@@ -261,3 +260,9 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL, TAG_MAGICAL)
 	event_group = /datum/event_group/anomalies
+
+/datum/round_event_control/bitrunning_glitch
+	tags = list(TAG_OUTSIDER_ANTAG, TAG_TARGETED, TAG_COMBAT)
+
+/datum/round_event_control/shuttle_loan
+	tags = list(TAG_COMMUNAL)

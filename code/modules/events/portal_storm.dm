@@ -42,7 +42,8 @@
 	category = EVENT_CATEGORY_ENTITIES
 	track = EVENT_TRACK_MAJOR
 	description = "Angry monkies pour out of portals."
-
+	tags = list(TAG_EXTERNAL, TAG_COMMUNAL)
+	
 /datum/round_event/portal_storm/portal_storm_monkey
 	boss_types = list(/mob/living/basic/gorilla/lesser = 1)
 	hostile_types = list(
