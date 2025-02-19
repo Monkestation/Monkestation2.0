@@ -8871,9 +8871,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "aTW" = (
@@ -9053,9 +9051,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "aUD" = (
@@ -9090,15 +9086,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
-"aUJ" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 8
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "aUO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -13213,9 +13200,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
 	},
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "blF" = (
@@ -14837,10 +14822,8 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "brm" = (
@@ -35129,10 +35112,8 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
-/obj/machinery/hydroponics/soil{
-	pixel_y = 7
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "gCF" = (
@@ -116263,7 +116244,7 @@ blE
 bnl
 blE
 lFR
-aUJ
+blE
 blB
 vxy
 bub
