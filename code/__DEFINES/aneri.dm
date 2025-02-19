@@ -88,3 +88,4 @@
 #define rustg_file_append(text, fname)		aneri_file_append(text, fname)
 #define rustg_file_get_line_count(fname)	aneri_file_get_line_count(fname)
 #define rustg_file_seek_line(fname, line)	aneri_file_seek_line(fname, line)
+#define rustg_json_is_valid(json)			aneri_json_is_valid(json)
