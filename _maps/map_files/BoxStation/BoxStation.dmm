@@ -37303,9 +37303,6 @@
 	specialfunctions = 4
 	},
 /obj/structure/closet/secure_closet/blueshield,
-/obj/item/storage/backpack/blueshield,
-/obj/item/storage/backpack/duffelbag/blueshield,
-/obj/item/storage/backpack/satchel/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "maL" = (
@@ -39058,7 +39055,11 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mEz" = (
-/obj/structure/dresser,
+/obj/machinery/camera/autoname/directional/west,
+/mob/living/basic/pet/dog/bullterrier/walter,
+/obj/structure/bed/dogbed{
+	name = "Walter's Dogbed"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "mEH" = (
@@ -46248,9 +46249,7 @@
 "oYJ" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/keycard_auth/directional/east,
-/obj/structure/closet/secure_closet/tac{
-	req_access = list("captain")
-	},
+/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "oYQ" = (
@@ -63247,6 +63246,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/skub,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "uFM" = (

@@ -4899,8 +4899,8 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "buK" = (
-/obj/structure/table/wood,
 /obj/machinery/light_switch/directional/north,
+/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "buM" = (
@@ -13016,6 +13016,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"dSZ" = (
+/obj/structure/table,
+/obj/effect/mob_spawn/ghost_role/drone/bar,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
 "dTg" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
@@ -18661,7 +18666,7 @@
 	anchored = 1;
 	name = "Walter's bed"
 	},
-/mob/living/basic/pet/dog/dobermann/walter,
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "fAx" = (
@@ -117204,7 +117209,7 @@ lNk
 iVj
 nKb
 mkO
-oED
+dSZ
 xHt
 mwA
 lNk
