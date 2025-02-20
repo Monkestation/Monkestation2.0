@@ -49,7 +49,8 @@
 		say("ERROR: SHIPBREAKING ZONE NOT CLEAR, PLEASE REMOVE ALL REMAINING FLOORS, STRUCTURES, AND MACHINERY")
 		return
 
-	var/datum/map_template/shipbreaker/ship_to_spawn = pick(SSmapping.shipbreaker_templates)
+	var/random_ship = pick(SSmapping.shipbreaker_templates)
+	var/datum/map_template/shipbreaker/ship_to_spawn = SSmapping.shipbreaker_templates[random_ship]
 
 	ship_to_spawn.load(bottom_left)
 
