@@ -3955,6 +3955,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/computer/order_console/bitrunning,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
 "aws" = (
@@ -26607,6 +26608,11 @@
 "cXW" = (
 /obj/item/radio/intercom/directional/south,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier/walter/smallter{
+	name = "Goliath";
+	real_name = "Goliath"
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "cYb" = (
@@ -68035,7 +68041,6 @@
 /area/station/service/cafeteria)
 "tfy" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/computer/order_console/bitrunning,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
