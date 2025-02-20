@@ -13691,7 +13691,6 @@
 /area/station/security/range)
 "bny" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "QMLoad"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -13701,7 +13700,6 @@
 /area/station/cargo/storage)
 "bnz" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -21663,12 +21661,12 @@
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "cqM" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "QMLoad"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "QMLoad"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -21734,7 +21732,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "crg" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
@@ -22188,12 +22186,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "cvB" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "QMLoad2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "QMLoad2"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -22252,7 +22250,7 @@
 	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/siding/brown,
@@ -38372,7 +38370,6 @@
 /area/station/medical/abandoned)
 "hLp" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -46925,7 +46922,6 @@
 /area/station/security/checkpoint/engineering)
 "kZo" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "QMLoad"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -58535,7 +58531,7 @@
 "pvU" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/siding/brown,
@@ -58659,7 +58655,7 @@
 	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/siding/brown{
@@ -68740,7 +68736,7 @@
 /area/station/security/prison/visit)
 "tuB" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -73303,7 +73299,7 @@
 /area/station/maintenance/disposal/incinerator)
 "vnd" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
