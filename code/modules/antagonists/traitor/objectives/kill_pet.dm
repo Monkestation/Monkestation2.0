@@ -44,6 +44,11 @@
 	progression_minimum = 10 MINUTES
 	progression_reward = list(5 MINUTES, 8 MINUTES)
 	limited_to_department_head = FALSE
+	possible_heads = list(
+		JOB_BLUESHIELD = list(
+			/mob/living/basic/pet/dog/bullterrier/walter,
+		)
+	)
 
 /datum/traitor_objective/kill_pet/high_risk
 	progression_minimum = 25 MINUTES
