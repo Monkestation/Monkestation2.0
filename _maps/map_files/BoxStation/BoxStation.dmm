@@ -66269,6 +66269,11 @@
 /area/station/command/heads_quarters/cmo)
 "vAj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/mob/living/basic/rabbit/daisy,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "vAm" = (

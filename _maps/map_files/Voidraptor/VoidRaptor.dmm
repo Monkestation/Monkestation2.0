@@ -2862,6 +2862,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
+"aOA" = (
+/obj/structure/table/reinforced,
+/obj/effect/mob_spawn/ghost_role/drone/bar,
+/turf/open/floor/carpet/purple,
+/area/station/common/night_club)
 "aOI" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -28811,6 +28816,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/mob/living/basic/pet/dog/corgi{
+	name = "Dirk";
+	real_name = "Dirk"
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -41288,9 +41297,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/mob/living/basic/pet/dog/corgi{
-	name = "Dirk"
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/robotics/lab)
 "lDP" = (
@@ -50398,11 +50404,6 @@
 	},
 /turf/open/floor/iron/white/textured_edge,
 /area/station/medical/exam_room)
-"ofL" = (
-/obj/structure/table/reinforced,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
-/turf/open/floor/carpet/purple,
-/area/station/common/night_club)
 "ofY" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
@@ -130407,7 +130408,7 @@ kLc
 unI
 poE
 mRm
-ofL
+aOA
 rgt
 unI
 unI
