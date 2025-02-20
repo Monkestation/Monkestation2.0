@@ -36181,7 +36181,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/work)
 "mzK" = (
-/obj/machinery/suit_storage_unit/security,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "mzL" = (

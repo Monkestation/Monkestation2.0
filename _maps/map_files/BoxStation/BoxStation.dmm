@@ -52662,7 +52662,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "rhI" = (
-/obj/machinery/suit_storage_unit/security,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "rhW" = (

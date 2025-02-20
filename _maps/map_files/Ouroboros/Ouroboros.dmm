@@ -76894,12 +76894,12 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/suit_storage_unit/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/blueshield)
 "wFN" = (

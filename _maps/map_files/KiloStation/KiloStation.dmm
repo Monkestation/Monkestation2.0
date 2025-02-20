@@ -73717,8 +73717,8 @@
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 9
 	},
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/blueshield)
 "xaz" = (

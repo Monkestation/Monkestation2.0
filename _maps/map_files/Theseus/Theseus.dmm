@@ -46114,9 +46114,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nEA" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "nEB" = (

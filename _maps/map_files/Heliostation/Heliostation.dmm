@@ -66984,7 +66984,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sMm" = (
-/obj/machinery/suit_storage_unit/security,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "sMr" = (

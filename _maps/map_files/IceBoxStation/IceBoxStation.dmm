@@ -33348,8 +33348,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "kFw" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/machinery/camera/directional/east,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "kFG" = (

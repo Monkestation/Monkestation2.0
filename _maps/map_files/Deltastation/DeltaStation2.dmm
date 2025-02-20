@@ -21988,8 +21988,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
 "fgp" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/box/red,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "fgq" = (

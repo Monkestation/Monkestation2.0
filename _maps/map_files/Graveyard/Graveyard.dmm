@@ -7324,8 +7324,8 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "cLs" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/machinery/light/directional/north,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "cLw" = (
