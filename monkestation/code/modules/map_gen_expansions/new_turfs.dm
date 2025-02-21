@@ -119,9 +119,15 @@
 	desc = "Sturdy exterior hull plating that separates you from the outside world"
 	initial_gas_mix = FOREST_DEFAULT_ATMOS
 
+/turf/open/floor/engine/hull/reinforced/planetary/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/engine/hull/planetary
 	desc = "Sturdy exterior hull plating that separates you from the outside world."
 	initial_gas_mix = FOREST_DEFAULT_ATMOS
+
+/turf/open/floor/engine/hull/planetary/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/lava/plasma/forest
 	initial_gas_mix = FOREST_DEFAULT_ATMOS
