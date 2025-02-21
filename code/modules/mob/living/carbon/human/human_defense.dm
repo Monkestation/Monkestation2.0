@@ -785,6 +785,13 @@
 			damaged_message += D
 		combined_msg += span_info("Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.")
 
+	// monkestation edit start
+	if (HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
+		combined_msg += span_warning("You cannot hear anything but a high pitch ringing.")
+	else if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		combined_msg += span_warning("Everything sounds quiet.")
+	// monkestation edit end
+
 	if(quirks.len)
 		combined_msg += span_notice("You have these quirks: [get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
 
