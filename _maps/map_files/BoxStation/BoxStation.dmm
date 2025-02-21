@@ -13435,8 +13435,14 @@
 /obj/machinery/button/door{
 	id = "testlab";
 	name = "Xenobiology Secure Chamber Blast Doors";
-	pixel_y = 5;
-	req_access = list("xenobiology")
+	pixel_y = 0;
+	req_access = list("xenobiology");
+	pixel_x = 5
+	},
+/obj/machinery/button/ignition{
+	id = "Xenobio";
+	pixel_x = -6;
+	pixel_y = -1
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -23053,7 +23059,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "huJ" = (
@@ -30298,6 +30304,7 @@
 /area/station/science/xenobiology)
 "jNL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "jNT" = (
@@ -42142,6 +42149,7 @@
 /area/station/security/prison/shower)
 "nGs" = (
 /obj/machinery/duct,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "nGw" = (
@@ -56950,6 +56958,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sGk" = (
@@ -58920,6 +58929,12 @@
 /obj/item/pai_card,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"tms" = (
+/obj/machinery/sparker/directional/north{
+	id = "Xenobio"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "tmt" = (
 /obj/machinery/firealarm/directional/east{
 	pixel_y = -5
@@ -60177,7 +60192,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "tEP" = (
@@ -123014,7 +123029,7 @@ uoo
 fJl
 fJl
 fJl
-fck
+tms
 wiL
 fck
 fJl
