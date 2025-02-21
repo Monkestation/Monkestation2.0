@@ -21963,6 +21963,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/gbp_redemption{
+	pixel_y = 6
+	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "csR" = (
