@@ -6788,9 +6788,6 @@
 /area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "zt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/abstract/liquid_turf{
-	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/line{
 	dir = 5;
@@ -8966,10 +8963,6 @@
 /area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "Ie" = (
 /obj/structure/table/wood/fancy/royalblack,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey{
-	pixel_y = 12;
-	pixel_x = -16
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_y = 9;
@@ -12741,9 +12734,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/prisoncafe)
 "VV" = (
-/obj/effect/abstract/liquid_turf{
-	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)
-	},
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
@@ -12824,9 +12814,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/office1)
 "Wj" = (
-/obj/effect/abstract/liquid_turf{
-	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)
-	},
 /obj/item/knife{
 	pixel_y = -2;
 	pixel_x = -5
