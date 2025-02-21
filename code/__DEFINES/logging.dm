@@ -5,6 +5,9 @@
 /// Admins can still manually request a re-render
 #define LOG_UPDATE_TIMEOUT 5 SECONDS
 
+// The maximum number of entries allowed in the signaler investigate log, keep this relatively small to prevent performance issues when an admin tries to query it
+#define INVESTIGATE_SIGNALER_LOG_MAX_LENGTH 500
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
@@ -137,7 +140,9 @@
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
 #define LOG_CATEGORY_DEBUG_HREF "debug-href"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
+#ifndef DISABLE_DREAMLUAU
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
+#endif
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"

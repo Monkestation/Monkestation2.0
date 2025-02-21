@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/traitor
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
-	tags = list(TAG_COMBAT)
+	tags = list(TAG_COMBAT, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -22,7 +22,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	weight = 15
+	weight = 13
 	event_icon_state = "traitor"
 
 /datum/round_event_control/antagonist/solo/traitor/roundstart

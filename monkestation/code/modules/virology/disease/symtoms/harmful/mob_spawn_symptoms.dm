@@ -4,11 +4,12 @@
 	stage = 4
 	max_multiplier = 7
 	badness = EFFECT_DANGER_HARMFUL
+	severity = 2
 	var/list/spawn_types= list(/mob/living/basic/spider/growing/spiderling/guard = 10)
 	///what gets added based on multiplier NOT INCLUSIVE OF PREVIOUS TIERS
 	var/list/multipler_unlocks = list()
 
-/datum/symptom/spawn/activate(mob/living/carbon/mob)
+/datum/symptom/spawn/activate(mob/living/mob)
 	check_unlocks()
 	playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/atom/spawn_type = pick_weight(spawn_types)
@@ -35,6 +36,7 @@
 	desc = "Converts the infected's stomach to begin producing creatures of the blattid variety."
 	stage = 4
 	badness = EFFECT_DANGER_HINDRANCE
+	severity = 3
 	spawn_types = list(/mob/living/basic/cockroach = 10)
 	multipler_unlocks = list(
 		"4" = list(/mob/living/basic/cockroach/glockroach = 3),

@@ -174,6 +174,14 @@
 			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
 			qdel(src)
 
+/// Nebula vomit with extra guests
+/obj/effect/decal/cleanable/vomit/nebula/worms
+
+/obj/effect/decal/cleanable/vomit/nebula/worms/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for (var/i in 1 to rand(2, 3))
+		new /mob/living/basic/hivelord_brood(loc)
+
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
@@ -233,12 +241,13 @@
 	name = "blue glitter"
 	icon_state = "freon"
 
+//MONKESTATION EDIT START: MADE THE EFFECT NOT FLOUR, IT'S PAIN!
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
-	icon_state = "flour"
-	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#2D2D2D"
+	icon_state = "purpleglow"
+	icon = 'monkestation/icons/effects/stabilized_plasma.dmi'
+//MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"

@@ -1,16 +1,17 @@
 /datum/round_event_control/plague_rat
 	name = "Spawn Plague Rats"
 	typepath = /datum/round_event/ghost_role/plague_rat
-	weight = 1
+	weight = 2
 	max_occurrences = 1
 	track = EVENT_TRACK_MAJOR
-	min_players = 30 //monke edit: 20 to 30
-	earliest_start = 55 MINUTES //monke edit: 20 to 60
+	min_players = 35 //monke edit: 20 to 35
+	earliest_start = 55 MINUTES //monke edit: 20 to 55
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a horde of plague rats."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	tags = list(TAG_OUTSIDER_ANTAG, TAG_COMMUNAL, TAG_COMBAT, TAG_ALIEN)
 
 /datum/round_event/ghost_role/plague_rat
 	minimum_required = 1

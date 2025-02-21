@@ -708,6 +708,26 @@
 	name = "Worn Ballgown"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+
+/datum/greyscale_config/wlpinafore
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore.json'
+
+/datum/greyscale_config/wlpinafore_worn
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore_worn.json'
+
+/datum/greyscale_config/ribbondress
+	name = "Ribboned Gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress.json'
+
+/datum/greyscale_config/ribbondress_worn
+	name = "Ribboned Gown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
 //MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
@@ -1089,6 +1109,16 @@
 	name = "wboatcloak"
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
+
+/datum/greyscale_config/admincloak
+	name = "admincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloak.json'
+
+/datum/greyscale_config/admincloak_worn
+	name = "wadmincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloakworn.json'
 
 /datum/greyscale_config/fish_analyzer_inhand_left
 	name = "Held Fish Analyzer, Left"

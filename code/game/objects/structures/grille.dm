@@ -73,6 +73,14 @@
 			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
 				cost = 12
 				delay = 4 SECONDS
+			//MONKESTATION ADDITION? This was in /tg/station's codebase, did we change it? And if so, why??
+			else if(the_rcd.window_type  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
+			//END OF ADDITION
 			if(!cost)
 				return FALSE
 
@@ -101,8 +109,13 @@
 			var/obj/structure/window/window_path = the_rcd.window_type
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
-			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
-				return FALSE
+			if(!initial(window_path.fulltile)) //only fulltile windows can be built here //Not anymore, buddy.
+				//return FALSE
+				//MONKESTATION ADDITION
+				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+				//END OF ADDITION
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
@@ -190,6 +203,10 @@
 	if(shock(user, 100))
 		return
 	tool.play_tool_sound(src, 100)
+	//MONKESTATION EDIT START
+	if(feeble_quirk_slow_interact(user, "cut", src))
+		return
+	//MONKESTATION EDIT END
 	deconstruct()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -201,6 +218,10 @@
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
+	//MONKESTATION EDIT START
+	if(feeble_quirk_slow_interact(user, "[anchored ? "unfasten" : "fasten"]", src))
+		return
+	//MONKESTATION EDIT END
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))

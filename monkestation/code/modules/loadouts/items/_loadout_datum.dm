@@ -58,6 +58,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/requires_purchase = TRUE
 	///can only admins use this?
 	var/admin_only = FALSE
+	//can only mentors use this?
+	var/mentor_only = FALSE
 
 /*
  * Place our [var/item_path] into [outfit].
@@ -70,7 +72,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		spawn_in_backpack(outfit, item_path, equipper)
 
 /*
  * To be called before insert_path_into_outfit()
@@ -86,7 +88,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/pre_equip_item(datum/outfit/outfit, datum/outfit/outfit_important_for_life, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		spawn_in_backpack(outfit, item_path, equipper)
 
 /*
  * Called When the item is equipped on [equipper].
@@ -126,3 +128,12 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/post_equip_item(datum/preferences/preference_source, mob/living/carbon/human/equipper)
 	return FALSE
+
+/*
+ * quick check proc to try spawn in backpack else, spawn them on the floor
+ */
+/datum/loadout_item/proc/spawn_in_backpack(datum/outfit/outfit_contents, item_path_to_spawn, mob/living/carbon/human/equipper)
+	if(ispath(outfit_contents.back, /obj/item/storage) || (!outfit_contents.back && (ispath(equipper.back, /obj/item/storage) || !isnull(equipper.backpack))))
+		LAZYADD(outfit_contents.backpack_contents, item_path_to_spawn)
+	else
+		new item_path_to_spawn(equipper.drop_location())

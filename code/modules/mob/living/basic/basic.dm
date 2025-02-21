@@ -96,6 +96,18 @@
 	var/list/weather_immunities
 //MONKESTATION EDIT END
 
+	//MONKESTATION EDIT START - These variables were changed as part of a temperature overhaul by
+	// Borbop, in #3301.
+	// WHEN PORTING THESE OVER:
+	// * `minimum_survivable_temperature` -> `bodytemp_cold_damage_limit`
+	// * `maximum_survivable_temperature` -> `bodytemp_heat_damage_limit`
+	// * If either one has a value of `0`, set it to `-1`.
+	/* //MONKESTATION EDIT ORIGINAL
+	///Minimal body temperature without receiving damage
+	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
+	///Maximal body temperature without receiving damage
+	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
+	*/
 	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
 	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -234,7 +246,7 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)

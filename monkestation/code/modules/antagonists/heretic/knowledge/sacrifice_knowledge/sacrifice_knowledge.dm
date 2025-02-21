@@ -26,6 +26,16 @@
 	var/datum/mind/heretic_mind
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
+	/// Evil organs we can put in people
+	var/static/list/grantable_organs = list(
+		/obj/item/organ/internal/appendix/corrupt,
+		/obj/item/organ/internal/eyes/corrupt,
+		/obj/item/organ/internal/heart/corrupt,
+		/obj/item/organ/internal/liver/corrupt,
+		/obj/item/organ/internal/lungs/corrupt,
+		/obj/item/organ/internal/stomach/corrupt,
+		/obj/item/organ/internal/tongue/corrupt,
+	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -177,8 +187,10 @@
 		else if(istype(sacrifice_candidate, /obj/item/organ/internal/brain/slime))
 			var/obj/item/organ/internal/brain/slime/core = sacrifice_candidate
 			sacrifice = core.rebuild_body(nugget = FALSE)
-			selected_atoms -= core
-			break
+			if(!sacrifice && core.brainmob)
+				sacrifice = core.brainmob
+				selected_atoms -= core
+				break
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
 	if(!heretic_datum.can_sacrifice(sacrifice))
@@ -189,7 +201,13 @@
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
 	var/feedback = "Your patrons accept your offer"
-	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
+	var/sac_department_flag = 0
+
+	if(sacrifice.mind)
+		sac_department_flag |= sacrifice.mind.assigned_role?.departments_bitflags
+	if(istype(sacrifice, /mob/living/carbon/human) && sacrifice.last_mind) // If mob even has a last mind. Oozling issue.
+		sac_department_flag |= sacrifice.last_mind.assigned_role?.departments_bitflags
+
 	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
@@ -199,8 +217,20 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
-	if(!begin_sacrifice(sacrifice))
-		disembowel_target(sacrifice)
+	if(!istype(sacrifice, /mob/living/carbon/human))
+		notify_ghosts(	// Sorry for copy paste. Trying to keep consistency
+			"[heretic_mind.name] has sacrificed [sacrifice] to the Mansus!",
+			source = sacrifice,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Oozling core Sacrificed to Mansus.",
+			)
+		log_combat(heretic_mind.current, sacrifice, "sacrificed")
+	else
+		sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+
+		if(!begin_sacrifice(sacrifice))
+			disembowel_target(sacrifice)
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
@@ -255,9 +285,14 @@
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
 	sac_target.grab_ghost() // monke edit: try to grab their ghost
+
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
+	//monkestation addition start:
+	sac_target.reagents?.remove_all(sac_target.reagents.total_volume) //stops chems from killing in the mansus
+	sac_target.restore_blood() //stops target from just dying from low blood in the mansus
+	//monkestation addition end
 	if(sac_target.AdjustUnconscious(SACRIFICE_SLEEP_DURATION))
 		to_chat(sac_target, span_hypnophrase("Your mind feels torn apart as you fall into a shallow slumber..."))
 	else
@@ -291,6 +326,8 @@
 		disembowel_target(sac_target)
 		return
 
+	curse_organs(sac_target)
+
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
@@ -308,10 +345,39 @@
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
+	//monkestation addition start:
+	sac_target.reagents?.remove_all(sac_target.reagents.total_volume) //stops chems from killing in the mansus
+	sac_target.restore_blood() //stops target from just dying from low blood in the mansus
+	//monkestation addition end
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
+
+/// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
+	var/usable_organs = grantable_organs.Copy()
+	if (isplasmaman(sac_target))
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+
+	var/total_implant = rand(2, 4)
+	var/gave_any = FALSE
+
+	for (var/i in 1 to total_implant)
+		if (!length(usable_organs))
+			break
+		var/organ_path = pick_n_take(usable_organs)
+		var/obj/item/organ/internal/to_give = new organ_path
+		if (!to_give.Insert(sac_target))
+			qdel(to_give)
+		else
+			gave_any = TRUE
+
+	if (!gave_any)
+		return
+
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
 
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
@@ -389,8 +455,6 @@
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
-	else
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_LOBOTOMY) // monke edit: allow lobotomy to cure the phobia
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
@@ -403,7 +467,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)

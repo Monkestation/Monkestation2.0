@@ -673,7 +673,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
 	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
 	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(2, 2),
+	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
+	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
 ))
 
 // Mob Overlays Indexes
@@ -779,9 +780,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	monkestation end */
+	/* monkestation edit start
+		it's okay for these layers to use shared appearences so long as the filters are reset before adding them as overlays
+		this is because adding an appearence to `overlays` copies it
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	monkestation edit end */
 	// These DO get a filter, I'm leaving them here as reference,
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
@@ -825,8 +830,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 /// The layer above shoes
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
+/// The layer above suits
+#define ABOVE_SUIT_LAYER (SUIT_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+/// The layer above the head layer
+#define ABOVE_HEAD_LAYER (HEAD_LAYER-1)
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
@@ -935,6 +944,15 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEALING_TOUCH_ANYONE "healing_touch_anyone"
 #define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
 #define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
+
+//MONKESTATION REMOVAL - These constants were moved as part of a temperature overhaul by Borbop, in
+// #3301. They now reside in `code\__DEFINES\atmospherics\atmos_mob_interaction.dm`.
+/*
+/// Default minimum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MIN_TEMP 250
+/// Default maximum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MAX_TEMP 350
+*/
 
 // Flags for mobs which can't do certain things while someone is looking at them
 /// Flag which stops you from moving while observed

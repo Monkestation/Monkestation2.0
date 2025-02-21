@@ -252,7 +252,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	else
 		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent) // monkestation edit: PLEXORA
 		MessageNoRecipient(msg_raw, urgent)
-		send_message_to_tgs(msg, urgent)
+		send_message_to_tgs(html_decode(msg), urgent)
 	GLOB.ahelp_tickets.active_tickets += src
 
 /datum/admin_help/proc/format_embed_discord(message)
@@ -414,7 +414,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
-	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [span_linkify(keywords_lookup(msg))]"))
+	var/admin_msg = fieldset_block(
+		span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]"),
+		"<b>[LinkedReplyName(ref_src)]</b>\n\n\
+		[span_linkify(keywords_lookup(msg))]\n\n\
+		<b class='smaller'>[FullMonty(ref_src)]</b>",
+		"boxed_message red_box")
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>", player_message = "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [msg]")
@@ -798,7 +803,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(user_client.current_ticket)
 		user_client.current_ticket.TimeoutVerb()
 		if(urgent)
-			var/sanitized_message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
+			var/sanitized_message = sanitize(trim(message, MAX_MESSAGE_LEN), encode = FALSE)
 			user_client.current_ticket.send_message_to_tgs(sanitized_message, urgent = TRUE)
 		user_client.current_ticket.MessageNoRecipient(message, urgent)
 		return

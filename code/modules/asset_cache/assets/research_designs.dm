@@ -15,7 +15,7 @@
 			icon_file = initial(path.research_icon)
 			icon_state = initial(path.research_icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
-				if(!(icon_state in icon_states(icon_file)))
+				if(!icon_exists(icon_file, icon_state))
 					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)
@@ -48,7 +48,7 @@
 
 			icon_state = initial(item.icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
-				if(!(icon_state in icon_states(icon_file)))
+				if(!icon_exists(icon_file, icon_state))
 					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)
@@ -58,10 +58,9 @@
 				var/obj/machinery/computer/C = item
 				var/screen = initial(C.icon_screen)
 				var/keyboard = initial(C.icon_keyboard)
-				var/all_states = icon_states(icon_file)
-				if (screen && (screen in all_states))
+				if (screen && icon_exists(icon_file, screen))
 					I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
-				if (keyboard && (keyboard in all_states))
+				if (keyboard && icon_exists(icon_file, keyboard))
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		Insert(initial(path.id), I)

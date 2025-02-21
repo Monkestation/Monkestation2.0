@@ -88,6 +88,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	process_flags = ORGANIC | SYNTHETIC
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 	ph = 4
@@ -538,13 +539,13 @@
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	silent_toxin = TRUE
 	color = "#6E2828"
-	data = 15
+	data = 45 // monkestation edit
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.stamina.adjust(-data * REM * seconds_per_tick, 0)
-	data = max(data - 1, 3)
+	data = max(data - 3, 9) // monkestation edit
 	..()
 	. = TRUE
 
@@ -555,6 +556,7 @@
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
+	process_flags = ORGANIC | SYNTHETIC
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -955,6 +957,7 @@
 	toxpwr = 0.5
 	ph = 6.2
 	taste_description = "spinning"
+	process_flags = ORGANIC | SYNTHETIC
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -1006,6 +1009,7 @@
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
+	process_flags = ORGANIC | SYNTHETIC
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
