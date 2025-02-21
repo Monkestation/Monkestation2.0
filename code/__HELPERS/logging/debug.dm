@@ -66,3 +66,6 @@
 /proc/log_enqueue(text, list/data)
 	logger.Log(LOG_CATEGORY_ENQUEUE, text, data)
 */
+
+/proc/log_icon_exists_cache(text, list/data)
+	logger.Log(LOG_CATEGORY_ICON_EXISTS_CACHE, text, data)
