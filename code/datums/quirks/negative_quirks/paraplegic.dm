@@ -2,12 +2,13 @@
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
 	icon = FA_ICON_WHEELCHAIR
-	value = -12
+	value = QUIRK_COST_PARAPLEGIC // monkestation edit -12 -> QUIRK_COST_PARAPLEGIC
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
-	hardcore_value = 15
+	hardcore_value = QUIRK_HARDCORE_PARAPLEGIC // monkestation edit 15 -> QUIRK_HARDCORE_PARAPLEGIC
 	mail_goodies = list(/obj/vehicle/ridden/wheelchair/motorized) //yes a fullsized unfolded motorized wheelchair does fit
+	quirk_flags = QUIRK_CHANGES_APPEARANCE // monkestation addition
 
 /datum/quirk/paraplegic/add_unique(client/client_source)
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
@@ -31,6 +32,13 @@
 	for(var/obj/item/dropped_item in holder_turf)
 		if(dropped_item.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(dropped_item)
+
+	// monkestation edit start
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if (client_source?.prefs?.read_preference(/datum/preference/toggle/limb_missing/paraplegic))
+		carbon_holder.remove_bodypart_painlessly(BODY_ZONE_L_LEG)
+		carbon_holder.remove_bodypart_painlessly(BODY_ZONE_R_LEG)
+	// monkestation edit
 
 /datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
