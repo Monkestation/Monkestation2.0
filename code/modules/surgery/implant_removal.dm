@@ -1,5 +1,8 @@
 /datum/surgery/implant_removal
-	name = "Implant Removal"
+	// MONKESTATION EDIT START
+	// name = "Implant Removal" - monkestation edit original
+	name = "Subdermal Implant Removal"
+	// MONKESTATION EDIT END
 	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
@@ -20,11 +23,16 @@
 	time = 64
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
+	// MONKESTATION EDIT START
+	repeatable = TRUE
+	// MONKESTATION EDIT END
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/obj/item/object in target.implants)
 		implant = object
-		break
+		// MONKESTATION REMOVAL START - Make implant removal LIFO
+		// break
+		// MONKESTATION REMOVAL END
 	if(implant)
 		display_results(
 			user,

@@ -74,3 +74,12 @@
 
 	maptext_x = -16
 	maptext_width = 64
+
+/obj/item/circuitboard/machine/vital_floor_scanner
+	name = "\improper Vitals Scanning Pad"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/health_scanner_floor
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/scanning_module = 1,
+	)

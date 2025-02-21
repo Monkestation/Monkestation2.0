@@ -1,16 +1,15 @@
-/obj/machinery/computer/operating
+// I don't think emagging operating computers actually does anything yet
+// /obj/machinery/computer/operating/emag_act(mob/user, obj/item/card/emag/emag_card)
+// 	. = ..()
+// 	if(obj_flags & EMAGGED)
+// 		return
+// 	if(!is_operational)
+// 		return
 
-/obj/machinery/computer/operating/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(obj_flags & EMAGGED)
-		return
-	if(!is_operational)
-		return
-
-	obj_flags |= EMAGGED
-	balloon_alert(user, "safeties overridden")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+// 	obj_flags |= EMAGGED
+// 	balloon_alert(user, "safeties overridden")
+// 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+// 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = ..()

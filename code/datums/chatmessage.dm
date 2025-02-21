@@ -133,7 +133,12 @@
 	// Clip message
 	var/maxlen = owned_by.prefs.read_preference(/datum/preference/numeric/max_chat_length)
 	if (length_char(text) > maxlen)
-		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
+		// MONKESTATION EDIT START - prevent escaped characters from increasing the message length
+		// text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment - monkestation edit original
+		var/decoded_text = html_decode(text)
+		if (length_char(decoded_text) > maxlen)
+			text = html_encode(copytext_char(decoded_text, 1, maxlen + 1)) + "..." // BYOND index moment
+		// MONKESTATION EDIT END
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
@@ -196,6 +201,11 @@
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+
+	// MONKESTATION EDIT START
+	if ("syndi-propaganda" in extra_classes)
+		tgt_color = "#eb0a0a"
+	// MONKESTATION EDIT END
 
 	// Approximate text height
 	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.say_emphasis(text)]</span></span>"
