@@ -59,16 +59,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/lczhall)
-"ak" = (
-/obj/structure/table,
-/obj/structure/table,
-/obj/item/clothing/suit/bio_suit/general,
-/obj/item/clothing/head/bio_hood{
-	pixel_y = 7
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/containment1)
 "am" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/peppermill{
@@ -840,7 +830,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "dr" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
@@ -8981,19 +8970,16 @@
 	pixel_y = 12;
 	pixel_x = -16
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 1;
-	pixel_y = 15;
-	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey =  27);
-	icon_state = "whiskeyglass"
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 10;
-	pixel_y = 3;
-	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 25);
-	icon_state = "whiskeyglass"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_y = 9;
+	icon_state = "whiskeyglass"
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_y = 1;
+	icon_state = "whiskeyglass";
+	pixel_x = 13
+	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/abandonedscpsite/moffice)
 "If" = (
@@ -16484,7 +16470,7 @@ nx
 xM
 Ou
 uT
-ak
+uT
 WL
 ub
 Ou
