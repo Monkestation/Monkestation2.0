@@ -164,6 +164,7 @@
 	projectile_wound_bonus = 5
 	projectile_damage_multiplier = 1.25
 	fire_delay = 0.3 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -235,6 +236,7 @@
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
+	pin = /obj/item/firing_pin/implant/pindicate
 
 // Low caliber grenade launcher (fun & games)
 
@@ -331,6 +333,7 @@
 	inhand_icon_state = "kiboko_evil"
 	projectile_wound_bonus = 5
 	fire_delay = 0.30 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
 
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
@@ -384,7 +387,7 @@
 	desc = "How did you get it out?"
 	ammo_type = /obj/item/ammo_casing/strilka310
 	caliber = CALIBER_STRILKA310
-	max_ammo = 8
+	max_ammo = 10
 
 /obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
 	start_empty = TRUE
@@ -473,6 +476,9 @@
 	suppressor_x_offset = 3
 	w_class = WEIGHT_CLASS_SMALL
 	can_suppress = TRUE
+
+/obj/item/gun/ballistic/revolver/sol/evil
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
@@ -597,6 +603,7 @@
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
 
 	icon_state = "wespe_evil"
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -1054,6 +1061,7 @@
 	inhand_icon_state = "sindano_evil"
 	spread = 5
 	projectile_wound_bonus = 5
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE
