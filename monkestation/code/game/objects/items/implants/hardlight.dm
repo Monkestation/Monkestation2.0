@@ -40,7 +40,7 @@
 	spell_to_give.Grant(target)
 	return TRUE
 
-/obj/item/implant/hard_spear/removed(mob/living/source, silent, special)
+/obj/item/implant/hard_spear/removed(mob/living/source, silent, special, forced)
 	. = ..()
 	if (!.)
 		return FALSE
