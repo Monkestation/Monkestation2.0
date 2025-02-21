@@ -85,3 +85,16 @@ GLOBAL_LIST_INIT(liquid_blacklist, list(
 	/datum/reagent/liquid_dark_matter,
 	/datum/reagent/hydrogen_peroxide, // no instahusk pools please
 ))
+
+// Previously act_on_queue(), this runs a lot so I macroified it.
+#define PROCESS_LIQUID_TEMP(group, turf) \
+	if(group.temperature_shift_needs_action && turf.air) { \
+		var/_cached_temperature_shift = group.cached_temperature_shift; \
+		\
+		turf.air.temperature = _cached_temperature_shift; \
+		group.group_temperature = _cached_temperature_shift; \
+		group.reagents.chem_temp = _cached_temperature_shift; \
+		\
+		group.current_temperature_queue -= turf; \
+		group.temperature_shift_needs_action = length(group.current_temperature_queue); \
+	}; \

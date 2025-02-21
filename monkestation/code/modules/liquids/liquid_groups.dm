@@ -1049,6 +1049,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	current_temperature_queue = returned
 	return returned
 
+/* Macro-ified to PROCESS_LIQUID_TEMP(group, turf)
 /datum/liquid_group/proc/act_on_queue(turf/member)
 	if(!temperature_shift_needs_action)
 		return
@@ -1066,3 +1067,4 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	current_temperature_queue -= member
 	if(!length(current_temperature_queue))
 		temperature_shift_needs_action = FALSE
+*/
