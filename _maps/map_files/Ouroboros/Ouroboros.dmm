@@ -45102,6 +45102,7 @@
 /obj/item/gun/energy/e_gun/dragnet{
 	pixel_y = -4
 	},
+/obj/item/dragnet_beacon,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "njJ" = (
@@ -75409,6 +75410,9 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "wjw" = (
