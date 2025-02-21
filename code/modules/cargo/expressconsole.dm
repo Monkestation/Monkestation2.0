@@ -181,7 +181,12 @@
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = GLOB.areas_by_type[/area/station/cargo/storage]
+//monkestation edit start
+						if(landingzone_override)
+							landingzone = GLOB.areas_by_type[landingzone_override]
+						else
+//monkestation edit end
+							landingzone = GLOB.areas_by_type[/area/station/cargo/storage]
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
