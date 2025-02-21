@@ -102,8 +102,21 @@ effective or pretty fucking useless.
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+/* MONKESTATION EDIT START
 	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
+*/
+	if(QDELETED(M) || !ishuman(M))
+		return
+
+	if(HAS_TRAIT(M, TRAIT_RADHEALING))
+		M.adjustBruteLoss(-round(passed_intensity/0.075))
+		M.adjustFireLoss(-round(passed_intensity/0.075))
+
+	if(HAS_TRAIT(M, TRAIT_RADIMMUNE))
+		return
+
+// MONKESTATION EDIT END
 
 	if(passed_intensity >= 5)
 		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout

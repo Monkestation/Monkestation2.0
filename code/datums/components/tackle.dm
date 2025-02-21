@@ -270,7 +270,8 @@
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_DWARF))
+//	if(HAS_TRAIT(target, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(target, TRAIT_DWARF) && !HAS_TRAIT(target, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
