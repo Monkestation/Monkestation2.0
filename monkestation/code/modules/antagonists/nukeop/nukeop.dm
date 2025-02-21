@@ -149,6 +149,6 @@ their person at all times.
 <br>
 <br> 4. Arm the self destruct and remove and take the disk to prevent disarmament of the self destruct mechanism.
 <br>
-<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE<B>
+<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE. AN OVERRAL DIGIT MAY BE OMITTED<B>
 <br>
 	"}
