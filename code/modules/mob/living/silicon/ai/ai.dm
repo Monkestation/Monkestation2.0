@@ -446,14 +446,19 @@
 	*/
 	if (!the_mmi)
 		the_mmi = make_mmi(posibrain_inside)
+	if (hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
 	// monkestation edit end
 
 	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
 	the_mmi.brainmob.set_suicide(has_suicided_trait)
 	// monkestation edit start
-	if(the_mmi.brain)
-	// monkestation edit end
+	/* original
+	the_mmi.brain.suicided = has_suicided_trait
+	*/
+	if (the_mmi.brain)
 		the_mmi.brain.suicided = has_suicided_trait
+	// monkestation edit end
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.core_mmi = the_mmi

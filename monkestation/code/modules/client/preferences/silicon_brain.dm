@@ -16,19 +16,23 @@
 	posibrain_inside = player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic"
 	. = ..()
 
-/mob/living/silicon/proc/make_mmi(posibrain=FALSE)
+/mob/living/silicon/proc/make_mmi(positronic=FALSE, organic_name=null)
+	var/name_to_use = organic_name
+	if (!name_to_use || positronic)
+		name_to_use = real_name
+
 	var/obj/item/mmi/mmi
-	if(posibrain)
+	if (positronic)
 		mmi = new/obj/item/mmi/posibrain/unjoinable(src, /* autoping = */ FALSE)
 	else
 		mmi = new/obj/item/mmi(src)
 		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.organ_flags |= ORGAN_FROZEN
-		mmi.brain.name = "[real_name]'s brain"
-	mmi.name = "[initial(mmi.name)]: [real_name]"
+		mmi.brain.name = "[name_to_use]'s brain"
+	mmi.name = "[initial(mmi.name)]: [name_to_use]"
 	mmi.set_brainmob(new /mob/living/brain(mmi))
-	mmi.brainmob.name = src.real_name
-	mmi.brainmob.real_name = src.real_name
+	mmi.brainmob.name = name_to_use
+	mmi.brainmob.real_name = name_to_use
 	mmi.brainmob.container = mmi
 	mmi.update_appearance()
 	return mmi

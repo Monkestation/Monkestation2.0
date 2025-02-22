@@ -573,18 +573,17 @@
 			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
 		// monkestation edit start
-		if (player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic")
-			if (mmi != null)
-				qdel(mmi)
-			mmi = make_mmi(posibrain=TRUE)
-		else
+		/* original
+		mmi.name = "[initial(mmi.name)]: [organic_name]"
+		if(mmi.brain)
+			mmi.brain.name = "[organic_name]'s brain"
+		if(mmi.brainmob)
+			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
+			mmi.brainmob.name = organic_name
+		*/
+		qdel(mmi)
+		mmi = make_mmi(positronic=(player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic"), organic_name=organic_name)
 		// monkestation edit end
-			mmi.name = "[initial(mmi.name)]: [organic_name]"
-			if(mmi.brain)
-				mmi.brain.name = "[organic_name]'s brain"
-			if(mmi.brainmob)
-				mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
-				mmi.brainmob.name = organic_name
 
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
