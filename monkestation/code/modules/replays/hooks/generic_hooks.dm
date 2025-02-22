@@ -43,6 +43,9 @@
 /obj/effect/turf_decal
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 
+/obj/effect/mapping_helpers
+	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+
 /obj/effect/abstract/name_tag
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 
