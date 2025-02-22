@@ -35,7 +35,7 @@
 		hud_trait = null
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(hud_attachable && !hud_glasses && istype(I, /obj/item/clothing/glasses))
+	if(hud_attachable && !hud_glasses && istype(I, /obj/item/clothing/glasses/hud))
 		user.transferItemToLoc(I, src)
 		hud_glasses = I
 
@@ -82,4 +82,4 @@
 	if(hud_glasses)
 		. += "It has \a [hud_glasses] [hud_attachable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
 	else if (hud_attachable)
-		. += "It has a mounting point for a <b>HUD</b>."
+		. += "It has a mounting point for some <b>HUD</b> glasses."
