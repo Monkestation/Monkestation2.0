@@ -247,9 +247,6 @@
 	. = ..()
 	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
 
-	. = ..()
-	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
-
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
