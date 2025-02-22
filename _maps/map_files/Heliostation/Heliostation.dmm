@@ -5136,10 +5136,6 @@
 /obj/effect/landmark/start/detective,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"aEL" = (
-/obj/machinery/egg_incubator,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "aEN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -27702,6 +27698,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"drW" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Virology Breach";
+	name = "Virology Breach Prevention"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/medical/virology/isolation)
 "dsh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -30299,7 +30303,7 @@
 /area/station/security/brig)
 "ezR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hydroponics Maintenance"
+	name = "Chicken Ranch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/structure/cable,
@@ -38632,14 +38636,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"hQa" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "Virology Breach";
-	name = "Virology Breach Prevention"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/medical/virology/isolation)
 "hQe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/steam_vent,
@@ -78490,6 +78486,10 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/ce)
+"xnh" = (
+/obj/machinery/egg_incubator,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "xni" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/turf_decal/bot,
@@ -107455,7 +107455,7 @@ bwW
 dOc
 owp
 qAp
-aEL
+xnh
 nmH
 reH
 uGE
@@ -129495,7 +129495,7 @@ gOL
 gOL
 dqt
 gOL
-hQa
+drW
 aEe
 iYc
 lJM
