@@ -9,6 +9,8 @@
 	cooldown = 5 SECONDS //Honestly, this should be easy to turn off at any time if you don't want it anymore.
 	activate_message = span_notice("You suddenly understand the need to shout about things you point at.")
 	deactivate_message = span_notice("You no longer understand why you were yelling so much.")
+	var/datum/action/toggle_action
+	var/disabled = FALSE
 	//5-10 second delay for radio messages
 	COOLDOWN_DECLARE(radio_cooldown)
 	//1 second delay for regular point shouts
@@ -160,11 +162,14 @@
 /obj/item/skillchip/drg_callout/on_activate(mob/living/carbon/user, silent)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+	if (isnull(toggle_action))
+		toggle_action = new /datum/action/item_action/hands_free/drg_callout(src)
+	toggle_action.Grant(user)
 
 /obj/item/skillchip/drg_callout/proc/point_handler(mob/pointing_mob, atom/pointed_at)
 	SIGNAL_HANDLER
 
-	if(!COOLDOWN_FINISHED(src, shout_cooldown))
+	if(disabled || !COOLDOWN_FINISHED(src, shout_cooldown))
 		return
 
 	var/type = is_path_in_list_return_path(pointed_at.type, miner_callouts)
@@ -174,8 +179,15 @@
 	if(!length(callouts))
 		return
 
-	if(COOLDOWN_FINISHED(src, radio_cooldown))
-		pointing_mob.say(".h [pick(callouts)]", forced = "Miner Skillchip")
+	var/turf/our_turf = get_turf(pointing_mob)
+	var/pressure = our_turf.return_air()?.return_pressure() || 0
+	var/thin_air = pressure < (ONE_ATMOSPHERE * 0.4)
+
+	if(thin_air && COOLDOWN_FINISHED(src, radio_cooldown))
+		if (is_mining_level(our_turf.z))
+			pointing_mob.say(".h [pick(callouts)]", forced = "Miner Skillchip")
+		else
+			pointing_mob.say("; [pick(callouts)]", forced = "Miner Skillchip")
 		COOLDOWN_START(src, radio_cooldown, rand(5 SECONDS, 10 SECONDS))
 	else
 		pointing_mob.say("[pick(callouts)]", forced = "Miner Skillchip")
@@ -187,3 +199,19 @@
 /obj/item/skillchip/drg_callout/on_deactivate(mob/living/carbon/user, silent)
 	. = ..()
 	UnregisterSignal(holding_brain.owner, COMSIG_MOB_POINTED)
+	toggle_action.Remove(user)
+
+/obj/item/skillchip/drg_callout/ui_action_click()
+	disabled = !disabled
+	if (disabled)
+		to_chat(holding_brain.owner, "D.R.G.R.A.S skillchip disabled.")
+	else
+		to_chat(holding_brain.owner, "D.R.G.R.A.S skillchip enabled.")
+
+/obj/item/skillchip/drg_callout/item_action_slot_check(slot, mob/user)
+	return user == holding_brain.owner
+
+/datum/action/item_action/hands_free/drg_callout
+	name = "Toggle D.R.G.R.A.S Skillchip"
+	button_icon = 'icons/obj/mining.dmi'
+	button_icon_state = "pickaxe"
