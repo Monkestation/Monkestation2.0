@@ -10,7 +10,7 @@
 	activate_message = span_notice("You suddenly understand the need to shout about things you point at.")
 	deactivate_message = span_notice("You no longer understand why you were yelling so much.")
 	var/datum/action/item_action/hands_free/drg_callout/toggle_action
-	var/disabled = TRUE
+	var/disabled = FALSE
 	//5-10 second delay for radio messages
 	COOLDOWN_DECLARE(radio_cooldown)
 	//1 second delay for regular point shouts
