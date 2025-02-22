@@ -579,11 +579,13 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/get_recipe_complexity()
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
 		return 0 // It is factory made. Soulless.
-	/* MONKESTATION REMOVAL START - food complexity is unported
+	// monkestation edit start
+	/* original - food complexity is unported
 	var/obj/item/food/food = parent
 	return food.crafting_complexity
 	*/
 	return FOOD_QUALITY_NICE
+	// monkestatione edit end
 
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
