@@ -71,6 +71,16 @@
 	name = "Silky"
 	icon_state = "hair_silky"
 
+/datum/sprite_accessory/hair/archedmohawk
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Arched Mohawk"
+	icon_state = "hair_archedmohawk"
+
+/datum/sprite_accessory/hair/tailedmohawk
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Tailed Mohawk"
+	icon_state = "hair_tailedmohawk"
+
 /datum/sprite_accessory/hair/shortchoppy
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Short Choppy"
