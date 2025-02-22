@@ -68,7 +68,6 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
-	new /obj/item/autosurgeon/security_hud(src) //monkestation edit: so arachnids can have a sechud
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -87,7 +86,7 @@
 	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/holosign_creator/security(src)
-	new /obj/item/storage/bag/garment/warden
+	new /obj/item/storage/bag/garment/warden(src)
 	new /obj/item/storage/box/zipties(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/belt/security/full(src)
@@ -96,7 +95,6 @@
 	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
-	new /obj/item/autosurgeon/security_hud(src) //monkestation edit: so arachnids can have a sechud
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

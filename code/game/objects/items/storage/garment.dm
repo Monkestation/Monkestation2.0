@@ -93,6 +93,7 @@
 	new /obj/item/clothing/head/hats/hos/cap(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/neck/cloak/hos(src)
+	new /obj/item/clothing/head/helmet/sec(src) // monkestation addition
 
 /obj/item/storage/bag/garment/warden/PopulateContents()
 	new /obj/item/clothing/suit/armor/vest/warden(src)
@@ -105,6 +106,7 @@
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/head/helmet/sec(src) // monkestation addition
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
 	new /obj/item/clothing/under/rank/rnd/research_director(src)

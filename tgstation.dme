@@ -7210,7 +7210,6 @@
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\medical.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\misc.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\science.dm"
-#include "monkestation\code\modules\clothing\spacesuits\hardsuits\security.dm"
 #include "monkestation\code\modules\clothing\suit_accessories\bodycamera.dm"
 #include "monkestation\code\modules\clothing\suit_accessories\bodycamera_box.dm"
 #include "monkestation\code\modules\clothing\suit_accessories\camera.dm"
