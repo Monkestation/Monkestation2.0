@@ -27,7 +27,7 @@
 
 /datum/quirk/language_holder/outsider
 	name = "Outsider"
-	desc = "You don't know your species' language."
+	desc = "You don't know your species' language. If you are human you know a random language instead of Galactic Common."
 	icon = FA_ICON_BAN
 	value = QUIRK_COST_OUTSIDER
 	gain_text = span_notice("You can't understand your species' language.")
@@ -38,6 +38,7 @@
 	desc = "You are unable to speak Galactic Common though you understand it just fine."
 	icon = FA_ICON_BELL_SLASH
 	value = QUIRK_COST_LISTENER
+	hardcore_value = QUIRK_HARDCORE_LISTENER
 	gain_text = span_notice("You don't know how to speak Galactic Common.")
 	lose_text = span_notice("You're able to speak Galactic Common.")
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."

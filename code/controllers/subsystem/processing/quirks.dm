@@ -35,8 +35,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Stormtrooper Aim", "Big Hands"),
 		//list("Bilingual", "Foreigner"), //monkestation edit, commented out
 		list("Listener", "Uncommon"), // monkestation addition
-		list("Species Outsider", "Uncommon"), // monkestation addition
-		list("Deaf", "Hard Of Hearing"), // monkestation addition
+		list("Outsider", "Uncommon"), // monkestation addition
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
