@@ -325,8 +325,6 @@
 	if(catwalk_bait)
 		if(used_rods.use(1))
 			to_chat(user, span_notice("You construct a catwalk."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/catwalk(src)
 			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			catwalk_bait.replace_with_catwalk()
 		else

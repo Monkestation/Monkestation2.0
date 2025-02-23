@@ -56,6 +56,9 @@
 /datum/proc/p_themselves(temp_gender)
 	return "itself"
 
+/datum/proc/p_themselves(temp_gender)
+	return "itself"
+
 /datum/proc/plural_s(pluralize)
 	switch(copytext_char(pluralize, -2))
 		if ("ss")
@@ -173,6 +176,19 @@
 		else
 			return "itself"
 
+/client/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
 /mob/p_they(capitalized, temp_gender)
 	if(!temp_gender)
@@ -269,6 +285,19 @@
 		temp_gender = gender
 	if(temp_gender != PLURAL)
 		. = "es"
+
+/mob/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
 
 /mob/p_themselves(temp_gender)
 	if(!temp_gender)
@@ -440,6 +469,19 @@
 
 /datum/mind/p_they(capitalized, temp_gender)
 	return current?.p_they(capitalized, temp_gender) || ..()
+/obj/item/clothing/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
 /obj/item/clothing/p_themselves(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
