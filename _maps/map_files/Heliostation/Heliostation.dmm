@@ -34598,6 +34598,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/cafeteria)
+"goy" = (
+/obj/machinery/egg_incubator,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "goM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -106429,7 +106433,7 @@ qAp
 qAp
 sKc
 von
-von
+goy
 uGE
 rcL
 pMa
