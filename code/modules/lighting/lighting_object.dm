@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
 	animate(affected_turf, 10, color = null)
 	addtimer(CALLBACK(affected_turf, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
-#endif
+#endif // VISUALIZE_LIGHT_UPDATES
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
@@ -78,22 +78,42 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
 	var/datum/lighting_corner/alpha_corner = affected_turf.lighting_corner_NE || dummy_lighting_corner
 
+#ifdef ANERI_LIGHTING
+	var/transparent = null
+	var/set_luminosity = null
+	var/list/light_underlay_color = null
+
+	ANERI_CALL(experiment_lighting_object_update, \
+		red_corner, \
+		green_corner, \
+		blue_corner, \
+		alpha_corner, \
+		&transparent, \
+		&set_luminosity, \
+		&light_underlay_color \
+	)
+#else // ANERI_LIGHTING
 	var/max = max(red_corner.largest_color_luminosity, green_corner.largest_color_luminosity, blue_corner.largest_color_luminosity, alpha_corner.largest_color_luminosity)
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
-	#else
+	#else // LIGHTING_SOFT_THRESHOLD != 0
 	// Because of floating points™?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
-	#endif
+	#endif // LIGHTING_SOFT_THRESHOLD != 0
+#endif // ANERI_LIGHTING
 
 	var/mutable_appearance/current_underlay = src.current_underlay
 	affected_turf.underlays -= current_underlay
 
+#ifdef ANERI_LIGHTING
+	if(transparent)
+#else // ANERI_LIGHTING
 	if(red_corner.cache_r & green_corner.cache_r & blue_corner.cache_r & alpha_corner.cache_r && \
 		(red_corner.cache_g + green_corner.cache_g + blue_corner.cache_g + alpha_corner.cache_g + \
 		red_corner.cache_b + green_corner.cache_b + blue_corner.cache_b + alpha_corner.cache_b == 8))
+#endif // ANERI_LIGHTING
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "lighting_transparent"
@@ -106,7 +126,20 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 		affected_turf.underlays += current_underlay
 	else
 		affected_turf.underlays -= current_underlay
-		current_underlay.icon_state ="light"
+		current_underlay.icon_state = "light"
+#ifdef ANERI_LIGHTING
+		if(!isnull(light_underlay_color))
+			current_underlay.color = light_underlay_color
+		else
+			stack_trace("light_underlay_color not precalculated for some stupid reason")
+			current_underlay.color = list(
+				red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
+				green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
+				blue_corner.cache_r, blue_corner.cache_g, blue_corner.cache_b, 00,
+				alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
+				00, 00, 00, 01
+			)
+#else // ANERI_LIGHTING
 		current_underlay.color = list(
 			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
 			green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
@@ -114,6 +147,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
 			00, 00, 00, 01
 		)
+#endif // ANERI_LIGHTING
 
 	if(red_corner.applying_additive || green_corner.applying_additive || blue_corner.applying_additive || alpha_corner.applying_additive)
 		affected_turf.underlays -= additive_underlay

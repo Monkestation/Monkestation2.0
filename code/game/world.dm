@@ -266,7 +266,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	log_runtime(GLOB.revdata.get_log_message())
 
 	// monke edit: set aneri panic output folder
-	ANERI_CALL("set_panic_output_folder", "[GLOB.log_directory || "./data"]/aneri")
+	ANERI_CALL(set_panic_output_folder, "[GLOB.log_directory || "./data"]/aneri")
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")

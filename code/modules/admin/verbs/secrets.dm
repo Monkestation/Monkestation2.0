@@ -349,17 +349,21 @@ monkestation end */
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
 			message_admins("[key_name_admin(holder)] broke all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
-				L.break_light_tube()
-				stoplag()
+			for(var/obj/machinery/light/light as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
+				if(QDELETED(light) || !is_station_level(light.z))
+					continue
+				light.break_light_tube()
+				CHECK_TICK
 		if("whiteout")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Fix All Lights"))
 			message_admins("[key_name_admin(holder)] fixed all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
-				L.fix()
-				stoplag()
+			for(var/obj/machinery/light/light as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
+				if(QDELETED(light) || !is_station_level(light.z))
+					continue
+				light.fix()
+				CHECK_TICK
 		if("customportal")
 			if(!is_funmin)
 				return

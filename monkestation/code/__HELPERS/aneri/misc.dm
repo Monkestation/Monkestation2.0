@@ -4,6 +4,6 @@
 		path = "[soundin.file]"
 	if(!path)
 		return
-	. = ANERI_CALL("audio_length", "[path]")
+	. = ANERI_CALL(audio_length, "[path]")
 	if(. && round_up)
 		return CEILING(., round_up)

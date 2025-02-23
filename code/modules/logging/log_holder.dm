@@ -280,7 +280,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 /* monkestation removal: replaced with human_readable_timestamp() define
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	return ANERI_CALL("human_readable_timestamp", precision)
+	return ANERI_CALL(human_readable_timestamp, precision)
 monkestation end */
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
