@@ -7,6 +7,7 @@
 
 	category = EVENT_CATEGORY_INVASION
 	description = "A junior nuclear operative infiltrates the station."
+	weight = 1
 
 /datum/round_event/ghost_role/junior_operative
 	minimum_required = 1
@@ -14,7 +15,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/junior_operative/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/machinery/nuclearbomb)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/item/clothing/head/helmet/space/syndicate, role_name_text = "Junior Lone Operative")
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
@@ -143,12 +144,12 @@ their person at all times.
 <br>
 <br> 1. Insert the nuclear authentication disk into the terminal.
 <br>
-<br> 2. Enter the five digit nuke authorization code.
+<br> 2. Enter the five digit nuclear authorization code.
 <br>
 <br> 5. Set the timer by entering a time between 90 and 3600 seconds.
 <br>
-<br> 4. Arm the self destruct and remove and take the disk to prevent disarmament of the self destruct mechanism.
+<br> 4. Arm the self destruct. Remove and take the disk to prevent disarmament of the self destruct mechanism.
 <br>
-<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE. AN OVERRAL DIGIT MAY BE OMITTED.<B>
+<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE. AN OVERALL DIGIT MAY BE OMITTED.<B>
 <br>
 	"}
