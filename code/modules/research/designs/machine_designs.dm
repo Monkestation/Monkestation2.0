@@ -488,7 +488,7 @@
 	id = "scan_console"
 	build_path = /obj/item/circuitboard/computer/scan_consolenew
 	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_COMPUTER_GENETICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
@@ -1126,7 +1126,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/navbeacon
-	name = "Machine Design (Bot Navigational Beacon)"
+	name = "Bot Navigational Beacon" // Monkestation edit:
 	desc = "The circuit board for a beacon that aids bot navigation."
 	id = "botnavbeacon"
 	build_type = IMPRINTER
