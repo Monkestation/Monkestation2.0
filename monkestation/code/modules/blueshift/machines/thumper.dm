@@ -204,9 +204,6 @@
 	var/is_there_a_thumper_too = FALSE
 	for(var/turf/nearby_turf in orange(ore_spawn_range, src))
 		for(var/ore as anything in nearby_turf.contents)
-			if(istype(ore, /obj/item/boulder))
-				nearby_ore += 1
-				continue
 			if(istype(ore, /obj/machinery/power/colony_ore_thumper))
 				if(ore == src)
 					continue
@@ -242,17 +239,14 @@
 		nearby_valid_turfs.Add(get_turf(src))
 
 	for(var/iteration in 1 to rand(2, 4))
-		var/turf/target_turf = pick(nearby_valid_turfs)
 		var/obj/item/stack/ore/new_ore = pick_weight(ore_weight_list)
 		var/obj/item/stack/ore/created_ore = new new_ore
-		var/obj/item/boulder/new_boulder = new (target_turf)
 
 		var/list/new_mats = list()
 		for(var/datum/material/material as anything in created_ore.mats_per_unit)
 			new_mats[material] = ore_spawn_values[created_ore.type]
 
 		qdel(created_ore)
-		new_boulder.set_custom_materials(new_mats)
 
 	slam_jams -= slam_jams_needed
 
