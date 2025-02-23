@@ -448,5 +448,52 @@
 
 /datum/config_entry/flag/give_tutorials_without_db
 
+<<<<<<< HEAD
 /datum/config_entry/string/metacurrency_name
 	config_entry_value = "Monkecoins"
+=======
+/datum/config_entry/string/new_player_alert_role_id
+
+/datum/config_entry/keyed_list/positive_station_traits
+	default = list("0" = 8, "1" = 4, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/negative_station_traits
+	default = list("0" = 8, "1" = 4, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/neutral_station_traits
+	default = list("0" = 10, "1" = 10, "2" = 3, "2.5" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+// Configs for the Quirk system
+/// Disables Quirk point balancing for the server and clients.
+/datum/config_entry/flag/disable_quirk_points
+
+/// The maximum amount of positive quirks one character can have at roundstart.
+/datum/config_entry/number/max_positive_quirks
+	default = 6
+	min_val = -1
+
+/**
+ * A config that skews with the random spawners weights
+ * If the value is lower than 1, it'll tend to even out the odds
+ * If higher than 1, it'll lean toward common spawns even more.
+ */
+/datum/config_entry/number/random_loot_weight_modifier
+	integer = FALSE
+	default = 1
+	min_val = 0.05
+
+
+//Custom Shuttles
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	default = 6
+
+/datum/config_entry/number/max_shuttle_size
+	default = 250
+>>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

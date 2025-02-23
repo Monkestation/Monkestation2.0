@@ -1212,6 +1212,147 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_plunger
+	name = "Integrated Plunger"
+	id = "borg_upgrade_plunger"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/plunger
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	)
+
+/datum/design/borg_upgrade_high_capacity_replacer
+	name = "High Capacity Light Replacer"
+	id = "borg_upgrade_high_capacity_replacer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/high_capacity_light_replacer
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*0.75,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	)
+
+/datum/design/borg_upgrade_rolling_table
+	name = "Rolling Table Dock"
+	id = "borg_upgrade_rolling_table"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rolling_table
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT*7.5,
+	) //steeper price than a regular rolling table, with some added titanium to make up for the relative rarity of regular rolling tables
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_condiment_synthesizer
+	name = "Condiment Synthesizer"
+	id = "borg_upgrade_condiment_synthesizer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/condiment_synthesizer
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*6,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT*3,
+	) //a bit cheaper than an expanded hypo for medical borg,
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_silicon_knife
+	name = "Kitchen Toolset"
+	id = "borg_upgrade_silicon_knife"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/silicon_knife
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_botany
+	name = "Botany Tools"
+	id = "borg_upgrade_botany"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/botany_upgrade
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*13,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2 // approx. all mats that u wasting on those tools on lathe
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+
+/datum/design/borg_upgrade_drink_apparatus
+	name = "Drink Apparatus"
+	id = "borg_upgrade_drink_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/drink_app
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_service_apparatus
+	name = "Service Apparatus"
+	id = "borg_upgrade_service_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/service_apparatus
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_service_cookbook
+	name = "Service Cookbook"
+	id = "borg_upgrade_service_cookbook"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/service_cookbook
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_shuttle_blueprints
+	name = "Engineering Shuttle Blueprints"
+	id = "borg_upgrade_engineering_shuttle_blueprints"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/shuttle_blueprints
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2.5,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	)
+
 /datum/design/borg_upgrade_expand
 	name = "Expand Module"
 	id = "borg_upgrade_expand"

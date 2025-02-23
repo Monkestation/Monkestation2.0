@@ -78,6 +78,30 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	return ..()
 
 /obj/docking_port/mobile/supply/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
+/obj/docking_port/mobile/supply/check_dock(obj/docking_port/stationary/S, silent)
+	. = ..()
+
+	if(!.)
+		return
+
+	// If we're not trying to dock at Centcom, we don't care.
+	if(S.shuttle_id != "cargo_away")
+		return
+
+	// Else we are docking at Centcom, check the blacklist to make sure no contraband was put onto the shuttle mid-transit.
+	// If there's anything contrabandy, send these items back to the origin docking port.
+	// This is a sort of catch-all Centcom exploit check.
+	var/list/stuff_sent_home = return_blacklisted_things_home(shuttle_areas, previous)
+	if(!length(stuff_sent_home))
+		return
+
+	for(var/atom/thing_sent_home as anything in stuff_sent_home)
+		investigate_log("Blacklisted item found on in-transit Cargo Shuttle: [thing_sent_home] ([thing_sent_home.type])", INVESTIGATE_CARGO)
+
+	message_admins("Blacklisted item found on in-transit Cargo Shuttle. See cargo logs for more details.")
+	SSshuttle.centcom_message = "Contraband found on Cargo Shuttle. This has been returned via drop pod."
+
+/obj/docking_port/mobile/supply/initiate_docking(obj/docking_port/stationary/new_dock, force=FALSE)
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
 		buy()
 		create_mail()

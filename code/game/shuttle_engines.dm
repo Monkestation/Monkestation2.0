@@ -26,6 +26,8 @@
 	///The mobile ship we are connected to.
 	var/datum/weakref/connected_ship_ref
 
+	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_turf_added_to_shuttle))
+
 /datum/armor/power_shuttle_engine
 	melee = 100
 	bullet = 10
@@ -33,6 +35,14 @@
 	fire = 50
 	acid = 70
 
+<<<<<<< HEAD
+=======
+/obj/machinery/power/shuttle_engine/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+	register_context()
+
+>>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 /obj/machinery/power/shuttle_engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)
@@ -58,6 +68,7 @@
 		port.engine_list -= src
 		port.current_engine_power -= initial(engine_power)
 	connected_ship_ref = null
+	RemoveElement(/datum/element/connect_loc, connections)
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/machinery/power/shuttle_engine/can_be_unfasten_wrench(mob/user, silent)
@@ -72,10 +83,16 @@
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
 			connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
+			if(!connected_ship_ref?.resolve())
+				AddElement(/datum/element/connect_loc, connections)
 			engine_state = ENGINE_WRENCHED
 		else
 			unsync_ship() //not part of the ship anymore
 			engine_state = ENGINE_UNWRENCHED
+
+/obj/machinery/power/shuttle_engine/proc/on_turf_added_to_shuttle(turf/source, obj/docking_port/mobile/port)
+	SIGNAL_HANDLER
+	connect_to_shuttle(port = port)
 
 /obj/machinery/power/shuttle_engine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

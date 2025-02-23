@@ -324,18 +324,29 @@
 
 	if(catwalk_bait)
 		if(used_rods.use(1))
-			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
+<<<<<<< HEAD
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/catwalk(src)
+=======
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			catwalk_bait.replace_with_catwalk()
+>>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
 		return
 
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
+<<<<<<< HEAD
 		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		new /obj/structure/lattice(src)
+=======
+		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+		var/obj/structure/lattice/new_lattice = new (src)
+		if(istype(used_rods, /obj/item/stack/rods/shuttle) && !istype(loc, /area/shuttle))
+			new_lattice.AddElement(/datum/element/shuttle_construction_lattice)
+>>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
 
@@ -350,8 +361,15 @@
 		balloon_alert(user, "need a floor tile to build!")
 		return
 
+<<<<<<< HEAD
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+=======
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(istype(loc, /area/shuttle))
+		new_plating.insert_baseturf(turf_type = /turf/baseturf_skipover/shuttle)
+>>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 	if(lattice)
 		qdel(lattice)
 	else
