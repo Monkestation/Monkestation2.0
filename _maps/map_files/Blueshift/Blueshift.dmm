@@ -6432,7 +6432,7 @@
 /obj/effect/landmark/blobstart,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "bnQ" = (
 /obj/structure/table/wood,
 /obj/item/instrument/piano_synth,
@@ -23688,7 +23688,7 @@
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "eBa" = (
 /obj/structure/railing{
 	dir = 4
@@ -28503,7 +28503,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "fvC" = (
 /obj/machinery/photocopier,
 /obj/effect/turf_decal/bot,
@@ -29596,7 +29596,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "fIe" = (
 /obj/structure/chair/office/light,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -36717,7 +36717,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "hda" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
@@ -45800,7 +45800,7 @@
 /area/station/commons/dorms/room7)
 "iTQ" = (
 /turf/closed/wall/r_wall,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "iTR" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -54081,7 +54081,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "kus" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -70640,7 +70640,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "nKc" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -74175,7 +74175,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "osu" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -81737,7 +81737,7 @@
 /obj/structure/trash_pile,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "pQQ" = (
 /obj/machinery/camera/directional/south{
 	c_tag = " Prison - Showers";
@@ -84012,7 +84012,7 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "qpm" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -89628,7 +89628,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "rrI" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
@@ -100796,7 +100796,7 @@
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "tzA" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -107155,7 +107155,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
+/area/station/maintenance/chicken)
 "uIJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -108877,6 +108877,9 @@
 "uZK" = (
 /turf/closed/wall,
 /area/station/medical/virology/isolation)
+"uZP" = (
+/turf/closed/wall,
+/area/station/maintenance/chicken)
 "uZR" = (
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
@@ -143759,7 +143762,7 @@ gwm
 bbr
 rsZ
 hsI
-gXE
+uZP
 fId
 fvy
 rrD
@@ -144273,7 +144276,7 @@ pjV
 pjV
 qZG
 ghs
-gXE
+uZP
 kuh
 bnM
 pQK
@@ -144527,10 +144530,10 @@ gXE
 wHF
 tNM
 kiZ
-gXE
-gXE
-gXE
-gXE
+uZP
+uZP
+uZP
+uZP
 kuh
 cFU
 cFU
@@ -145041,10 +145044,10 @@ gXE
 hxV
 ckL
 dao
-gXE
-gXE
-gXE
-gXE
+uZP
+uZP
+uZP
+uZP
 eAV
 cFU
 knN
