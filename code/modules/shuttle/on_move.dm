@@ -207,6 +207,11 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
+/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
