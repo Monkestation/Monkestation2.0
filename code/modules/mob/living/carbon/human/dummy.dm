@@ -110,10 +110,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return consistent_entry
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	// target.dna.initialize_dna(/datum/blood_type/crew/human/o_plus, skip_index = TRUE)
 	target.dna.initialize_dna(skip_index = TRUE)
+	/* monkestation removal
 	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
 	target.dna.features["ethcolor"] = COLOR_WHITE
+	*/
 	target.dna.features["body_markings"] = get_consistent_feature_entry(GLOB.body_markings_list)
 	target.dna.features["ears"] = get_consistent_feature_entry(GLOB.ears_list)
 	target.dna.features["frills"] = get_consistent_feature_entry(GLOB.frills_list)
@@ -147,6 +148,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["arm_wings"] = get_consistent_feature_entry(GLOB.arm_wings_list) //Monkestation Addition
 	target.dna.features["ears_avian"] = get_consistent_feature_entry(GLOB.avian_ears_list) //Monkestation Addition
 	target.dna.features["tail_avian"] = get_consistent_feature_entry(GLOB.tails_list_avian) //Monkestation Addition
+
+	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
+	palette.mutant_color = COLOR_VIBRANT_LIME
+	palette.mutant_color_secondary = COLOR_VIBRANT_LIME
+	palette.ethereal_color = COLOR_WHITE
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
