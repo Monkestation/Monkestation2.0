@@ -63,9 +63,24 @@
 
 /proc/mineral_scan_pulse(turf/T, range = world.view)
 	var/list/minerals = list()
+	var/vents_nearby = FALSE
+	var/radar_volume = 30
 	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
+
+	for(var/obj/structure/ore_vent/vent in range(range, T))
+		if(!vents_nearby && (!vent.discovered || !vent.tapped))
+			vents_nearby = TRUE
+			if(vent.discovered)
+				to_chat(world, "What is this?")
+				//undiscovered = TRUE
+		var/potential_volume = 80 - (get_dist(T.loc, vent) * 10)
+		radar_volume = max(potential_volume, radar_volume)
+		vent.add_mineral_overlays()
+	if(vents_nearby) // Lets player know if they are close to a vent.
+		playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
+
 	if(LAZYLEN(minerals))
 		for(var/turf/closed/mineral/M in minerals)
 			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
@@ -73,6 +88,15 @@
 				qdel(oldC)
 			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
+/*
+	if(vents_nearby && scanner) // Lets player know if they are close to a vent.
+		if(undiscovered)
+			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
+		else
+			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
+		scanner.balloon_alert_to_viewers("ore vent nearby")
+		scanner.spasm_animation(1.5 SECONDS)
+*/
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE

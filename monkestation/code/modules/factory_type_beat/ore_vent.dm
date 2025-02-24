@@ -154,7 +154,23 @@
 
 	start_wave_defense()
 
-
+/**
+ * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
+ * If undiscovered, adds a single overlay with the icon_state "unknown".
+ */
+/obj/structure/ore_vent/proc/add_mineral_overlays()
+	var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
+	new_mat.icon_state = "unknown"
+	return
+/*
+	if(mineral_breakdown.len && !discovered)
+		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
+		new_mat.icon_state = "unknown"
+		return
+	for(var/datum/material/selected_mat as anything in mineral_breakdown)
+		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
+		new_mat.icon_state = selected_mat.name
+*/
 /obj/structure/ore_vent/random
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
