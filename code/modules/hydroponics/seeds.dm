@@ -611,7 +611,7 @@
 	var/list/allowed_reagents = list(
 		/datum/reagent/water, /datum/reagent/consumable/nutriment, /datum/reagent/medicine/c2/multiver,
 		/datum/reagent/potassium, /datum/reagent/toxin/acid, /datum/reagent/toxin/acid/fluacid,
-		/datum/reagent/consumable/banana, /datum/reagent/medicine/silibinin, /datum/reagent/toxin/formaldehyde
+		/datum/reagent/consumable/banana, /datum/reagent/medicine/silibinin, /datum/reagent/toxin/formaldehyde,
 		/datum/reagent/consumable/nutriment/vitamin, /datum/reagent/fluorine, /datum/reagent/medicine/c2/aiuri,
 		/datum/reagent/medicine/c2/libital, /datum/reagent/drug/space_drugs, /datum/reagent/toxin,
 		/datum/reagent/medicine/omnizine, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/earthsblood,
