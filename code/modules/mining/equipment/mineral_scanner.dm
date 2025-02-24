@@ -59,9 +59,9 @@
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown
 		var/turf/t = get_turf(src)
-		mineral_scan_pulse(t, range)
+		mineral_scan_pulse(t, range, src)
 
-/proc/mineral_scan_pulse(turf/T, range = world.view)
+/proc/mineral_scan_pulse(turf/T, range = world.view, obj/item/scanner)
 	var/list/minerals = list()
 	var/vents_nearby = FALSE
 	var/radar_volume = 30

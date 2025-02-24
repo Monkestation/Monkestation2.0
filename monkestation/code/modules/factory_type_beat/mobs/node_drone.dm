@@ -17,12 +17,59 @@
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
 
-	ai_controller = null //datum/ai_controller/basic_controller/node_drone
+	maxHealth = 500
+	health = 500
+	density = TRUE
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
+	mob_size = MOB_SIZE_LARGE
+	mob_biotypes = MOB_ROBOTIC
+	faction = list(FACTION_STATION, FACTION_NEUTRAL)
+	light_outer_range = 4
+	basic_mob_flags = DEL_ON_DEATH
+
+	speak_emote = list("chirps")
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "clangs"
+	response_harm_simple = "clang against"
+
+	ai_controller = /datum/ai_controller/basic_controller/node_drone
 
 	/// What status do we currently track for icon purposes?
 	var/flying_state = NEUTRAL_STATE
 	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
+
+/mob/living/basic/node_drone/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ai_retaliate)
+
+/mob/living/basic/node_drone/death(gibbed)
+	. = ..()
+	explosion(origin = src, light_impact_range = 1, smoke = 1)
+
+/mob/living/basic/node_drone/Destroy()
+	//attached_vent?.node = null //clean our reference to the vent both ways.
+	//attached_vent = null
+	return ..()
+
+/mob/living/basic/node_drone/examine(mob/user)
+	. = ..()
+	var/sameside = user.faction_check_atom(src, exact_match = FALSE)
+	if(sameside)
+		. += span_notice("This drone is currently attached to a mineral vent. You should protect it from harm to secure the mineral vent.")
+	else
+		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
+
+/mob/living/basic/node_drone/update_icon_state()
+	. = ..()
+
+	icon_state = "mining_node_active"
+
+	if(flying_state == FLY_IN_STATE || flying_state == FLY_OUT_STATE)
+		icon_state = "mining_node_flying"
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
@@ -30,3 +77,62 @@
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400
 	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+	src.ai_controller?.set_blackboard_key(BB_CURRENT_HUNTING_TARGET, attached_vent) // Makes it immediately hunt it's parent.
+
+/// The node drone AI controller
+//	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
+/datum/ai_controller/basic_controller/node_drone
+	blackboard = list(
+		BB_CURRENT_HUNTING_TARGET = null, // Hunts for vents.
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find vents to run away from assailants.
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = null // Should be mining or trying to do something. No idling.
+	planning_subtrees = list(
+		// Priority is see if lavaland mobs are attacking us to flee from them.
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		// Fly you fool
+		/datum/ai_planning_subtree/flee_target/node_drone,
+		// Otherwise, look for and execute hunts for vents to latch onto.
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
+	)
+
+// Node subtree to hunt down ore vents. Should focus on the one it is parented to first. (Until extended behavior is added later.)
+/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent
+	hunting_behavior = /datum/ai_behavior/hunt_target/latch_onto/node_drone
+	hunt_targets = list(/obj/structure/ore_vent) // What it will look for if it doesn't have a target.
+	hunt_range = 7 // Hunt vents to the end of the earth.
+
+// Finish override to make the drone return to hunting behavior sooner.
+/datum/ai_behavior/run_away_from_target/drone/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
+	if(succeeded)
+		var/list/shitlist = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+		var/atom/existing_target = controller.blackboard[target_key]
+		if(length(shitlist) && (existing_target in shitlist)) // Drone is dumb and forgets all assualts when it gets away.
+			controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+	return ..() // Must be done after as target_key gets cleared by parent.
+
+// node drone behavior for buckling down on a vent.
+/datum/ai_behavior/hunt_target/latch_onto/node_drone
+	hunt_cooldown = 5 SECONDS
+
+// Evasion behavior.
+/datum/ai_planning_subtree/flee_target/node_drone
+	flee_behaviour = /datum/ai_behavior/run_away_from_target/drone
+
+/datum/ai_behavior/run_away_from_target/drone
+	action_cooldown = 1 SECONDS
+	run_distance = 3
+
+/datum/ai_behavior/run_away_from_target/drone/setup(datum/ai_controller/controller, target_key, hiding_location_key)
+	. = ..()
+
+	var/mob/living/coward = controller.pawn
+	if(istype(coward) && coward.buckled)
+		coward.buckled.unbuckle_mob(coward)
+
+#undef FLY_IN_STATE
+#undef FLY_OUT_STATE
+#undef NEUTRAL_STATE
