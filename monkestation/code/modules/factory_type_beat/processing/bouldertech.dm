@@ -84,7 +84,7 @@
 
 /**
  * Override Getter proc to determine what exotic items are contained in the machine.
- * Ovveride this proc for your machines purposes.
+ * Override this proc for your machines purposes.
  */
 /obj/machinery/bouldertech/proc/return_extras()
 	return list()
