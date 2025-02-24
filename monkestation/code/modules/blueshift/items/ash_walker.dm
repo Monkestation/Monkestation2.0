@@ -61,8 +61,6 @@
 	icon_state = "mesh"
 	var/list/static/seeds_blacklist = list(
 		/obj/item/seeds/lavaland,
-		/obj/item/seeds/gatfruit,
-		/obj/item/seeds/tree/money,
 	)
 
 /obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)
