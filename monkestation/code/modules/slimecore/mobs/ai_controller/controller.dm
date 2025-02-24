@@ -6,6 +6,7 @@
 		BB_BASIC_MOB_SCARED_ITEM = /obj/item/extinguisher,
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_WONT_TARGET_CLIENTS = FALSE, //specifically to stop targetting clients
+		BB_BASIC_MOB_TARGETED_TRAIT = TRAIT_LATCH_FEEDERED,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -16,7 +17,7 @@
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee_has_item,
 		/datum/ai_planning_subtree/flee_target,
 		//now we try to
-		/datum/ai_planning_subtree/simple_find_target_no_trait/slime,
+		/datum/ai_planning_subtree/simple_find_target_no_trait,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/slime,
 	)
 	can_idle = FALSE // we want these to be running always
