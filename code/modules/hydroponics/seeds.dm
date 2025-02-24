@@ -607,6 +607,7 @@
 	maturation = rand(6, 12)
 
 /obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
+	// MONKESTATION EDIT START
 	// Defines list of allowed plant reagents
 	var/list/allowed_reagents = list(
 		/datum/reagent/water, /datum/reagent/consumable/nutriment, /datum/reagent/medicine/c2/multiver,
@@ -642,12 +643,16 @@
 		/datum/reagent/toxin/coffeepowder, /datum/reagent/medicine/ephedrine, /datum/reagent/medicine/salbutamol,
 		/datum/reagent/blood, /datum/reagent/lube, /datum/reagent/cellulose, /datum/reagent/iron
 	)
+	// MONKESTATION EDIT END
 
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
+		// MONKESTATION EDIT START
+		// var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount) - MONKESTATION EDIT ORIGINAL
 		var/selected_reagent = pick(allowed_reagents)// Selects a random reagent from the allowed list
 		var/datum/plant_gene/reagent/R = new(selected_reagent, random_amount)
+		// MONKESTATION EDIT END
 		if(R.can_add(src))
 			if(!R.try_upgrade_gene(src))
 				genes += R
