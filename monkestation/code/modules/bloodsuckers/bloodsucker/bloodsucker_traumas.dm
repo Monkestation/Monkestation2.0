@@ -18,6 +18,7 @@
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_lose(silent)
 	for(var/obj/effect/client_image_holder/phobetor/phobetor_tears as anything in created_firsts)
 		qdel(phobetor_tears)
+	..()
 
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_life(seconds_per_tick, times_fired)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
@@ -141,9 +142,9 @@
 	for(var/mob/living/nearby_viewers in viewers(target_turf))
 		if(nearby_viewers == subject)
 			continue
-		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client)
+		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client || nearby_viewers.client?.is_afk())
 			continue
-		if(IS_BLOODSUCKER(nearby_viewers) || IS_VASSAL(nearby_viewers) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST))
+		if(IS_BLOODSUCKER(nearby_viewers) || IS_VASSAL(nearby_viewers) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
 		if(nearby_viewers.has_unlimited_silicon_privilege || nearby_viewers.is_blind())
 			continue

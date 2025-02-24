@@ -65,11 +65,6 @@
 		/mob/living/simple_animal/hostile/ooze,
 		/mob/living/simple_animal/hostile/ooze/gelatinous,
 		/mob/living/simple_animal/hostile/ooze/grapes,
-		/mob/living/simple_animal/hostile/pirate,
-		/mob/living/simple_animal/hostile/pirate/melee,
-		/mob/living/simple_animal/hostile/pirate/melee/space,
-		/mob/living/simple_animal/hostile/pirate/ranged,
-		/mob/living/simple_animal/hostile/pirate/ranged/space,
 		/mob/living/simple_animal/hostile/retaliate,
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
@@ -89,7 +84,7 @@
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
 		/mob/living/simple_animal/soulscythe,
 
-		//MONKESTATION-SPECIFIC ENTRIES END
+		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/bot/buttbot,
 		/mob/living/simple_animal/bot/secbot/beepsky/big,
 		/mob/living/simple_animal/fish,
@@ -108,6 +103,7 @@
 		/mob/living/simple_animal/hostile/illusion/khan_warrior,
 		/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
 		/mob/living/simple_animal/hostile/syndicat,
+		/mob/living/simple_animal/hostile/syndicat/super,
 		/mob/living/simple_animal/pet/cat/breadcat/super,
 		/mob/living/simple_animal/pet/cat/original/super,
 		/mob/living/simple_animal/pet/cat/super,

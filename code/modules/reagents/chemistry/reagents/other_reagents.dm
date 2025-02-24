@@ -251,6 +251,8 @@
 /**
  * Water reaction to a mob
  */
+#define WAS_SPRAYED "was_sprayed" //monkestation edit
+
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
 	if(methods & TOUCH)
@@ -263,6 +265,28 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	//MONKESTATION EDIT START
+	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+		return
+
+	var/mob/living/victim = exposed_mob
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
+		victim.set_eye_blur_if_lower(3 SECONDS)
+		victim.set_confusion_if_lower(5 SECONDS)
+		if(ishuman(victim))
+			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+		victim.update_damage_hud()
+		if(HAS_TRAIT(victim, WAS_SPRAYED))
+			return
+		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
+		if(prob(50))
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
+		else
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
+		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
+	//MONKESTATION EDIT STOP
+
+#undef WAS_SPRAYED //monkestation edit
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
@@ -350,6 +374,52 @@
 		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	// monkestation edit start
+	/* original - this version of the code depends on https://github.com/tgstation/tgstation/pull/78657 which has not been ported yet
+	. = ..()
+
+	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
+
+	affected_mob.adjust_jitter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+	var/need_mob_update = FALSE
+
+	if(IS_CULTIST(affected_mob))
+		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+			var/removed_any = FALSE
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				removed_any = TRUE
+				qdel(BS)
+			if(removed_any)
+				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+
+	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
+		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+		affected_mob.set_dizzy_if_lower(10 SECONDS)
+		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
+			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
+			if(prob(10))
+				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
+				affected_mob.Unconscious(12 SECONDS)
+				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
+			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
+				affected_mob.emote("scream")
+				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+
+	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
+		if(IS_CULTIST(affected_mob))
+			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
+			affected_mob.Unconscious(10 SECONDS)
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
+			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
+				need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
+		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 	if(!data)
@@ -361,6 +431,24 @@
 		if(handle_cultists(affected_mob, seconds_per_tick)) //only returns TRUE on deconversion
 			return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
+
+	var/need_mob_update = FALSE
+
+	if (!HAS_TRAIT(affected_mob, TRAIT_EVIL) || IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role == HOLY_ROLE_PRIEST)
+		return
+	if(data["misc"] >= (25 SECONDS)) // 10 units
+		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+		affected_mob.set_dizzy_if_lower(10 SECONDS)
+		if(SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
+			affected_mob.emote("scream")
+			need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+	if(data["misc"] >= (1 MINUTES)) // 24 units
+		need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
+		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+	return need_mob_update
+	// monkestation edit edit
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1755,7 +1843,7 @@
 	name = "Stable Plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#2D2D2D"
+	color = "#8228a0c6" //monkestation edit
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	ph = 1.5
