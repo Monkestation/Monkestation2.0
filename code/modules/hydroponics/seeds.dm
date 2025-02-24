@@ -609,11 +609,38 @@
 /obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
 	// Defines list of allowed plant reagents
 	var/list/allowed_reagents = list(
-		/datum/reagent/water,
-		/datum/reagent/consumable/nutriment,
-		/datum/reagent/potassium,
-		/datum/reagent/consumable/banana,
-		/datum/reagent/consumable/nutriment/vitamin
+		/datum/reagent/water, /datum/reagent/consumable/nutriment, /datum/reagent/medicine/c2/multiver,
+		/datum/reagent/potassium, /datum/reagent/toxin/acid, /datum/reagent/toxin/acid/fluacid,
+		/datum/reagent/consumable/banana, /datum/reagent/medicine/silibinin, /datum/reagent/toxin/formaldehyde
+		/datum/reagent/consumable/nutriment/vitamin, /datum/reagent/fluorine, /datum/reagent/medicine/c2/aiuri,
+		/datum/reagent/medicine/c2/libital, /datum/reagent/drug/space_drugs, /datum/reagent/toxin,
+		/datum/reagent/medicine/omnizine, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/earthsblood,
+		/datum/reagent/gold, /datum/reagent/consumable/nothing, /datum/reagent/toxin/mutetoxin,
+		/datum/reagent/bluespace, /datum/reagent/liquid_dark_matter, /datum/reagent/consumable/cooking_oil,
+		/datum/reagent/toxin/carpotoxin, /datum/reagent/ants, /datum/reagent/toxin/cyanide,
+		/datum/reagent/toxin/staminatoxin, /datum/reagent/toxin/coniine, /datum/reagent/uranium,
+		/datum/reagent/iodine, /datum/reagent/consumable/sugar, /datum/reagent/toxin/itching_powder,
+		/datum/reagent/sulfur, /datum/reagent/consumable/liquidelectricity, /datum/reagent/drug/cannabis,
+		/datum/reagent/colorful_reagent, /datum/reagent/medicine/psicodine, /datum/reagent/drug/happiness,
+		/datum/reagent/toxin/mindbreaker, /datum/reagent/toxin/lipolicide, /datum/reagent/mercury,
+		/datum/reagent/lithium, /datum/reagent/medicine/atropine, /datum/reagent/drug/methamphetamine,
+		/datum/reagent/drug/bath_salts, /datum/reagent/drug/krokodil, /datum/reagent/drug/nicotine,
+		/datum/reagent/oxygen, /datum/reagent/gunpowder, /datum/reagent/consumable/capsaicin,
+		/datum/reagent/consumable/frostoil, /datum/reagent/consumable/condensedcapsaicin, /datum/reagent/fuel,
+		/datum/reagent/medicine/haloperidol, /datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla,
+		/datum/reagent/consumable/enzyme, /datum/reagent/toxin/bungotoxin, /datum/reagent/consumable/cornoil,
+		/datum/reagent/fuel/oil, /datum/reagent/consumable/ethanol/moonshine, /datum/reagent/medicine/granibitaluri,
+		/datum/reagent/plastic_polymers, /datum/reagent/consumable/garlic, /datum/reagent/carbon,
+		/datum/reagent/nitrogen, /datum/reagent/hydrogen, /datum/reagent/consumable/korta_nectar,
+		/datum/reagent/water/holywater, /datum/reagent/consumable/ethanol/ale, /datum/reagent/medicine/painkiller/morphine,
+		/datum/reagent/growthserum, /datum/reagent/toxin/amatoxin, /datum/reagent/drug/mushroomhallucinogen,
+		/datum/reagent/toxin/amanitin, /datum/reagent/uranium/radium, /datum/reagent/phosphorus,
+		/datum/reagent/teslium, /datum/reagent/toxin/spore, /datum/reagent/consumable/tearjuice,
+		/datum/reagent/consumable/laughter, /datum/reagent/pax, /datum/reagent/impurity/rosenol,
+		/datum/reagent/lead, /datum/reagent/ammonia, /datum/reagent/chlorine,
+		/datum/reagent/medicine/oculine, /datum/reagent/aluminium, /datum/reagent/toxin/teapowder,
+		/datum/reagent/toxin/coffeepowder, /datum/reagent/medicine/ephedrine, /datum/reagent/medicine/salbutamol,
+		/datum/reagent/blood, /datum/reagent/lube, /datum/reagent/cellulose, /datum/reagent/iron
 	)
 
 	var/amount_random_reagents = rand(lower, upper)
