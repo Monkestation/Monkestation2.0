@@ -17,7 +17,3 @@
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/mech_medical_beamgun
-	name = "Exosuit Medical Beamgun"
-
