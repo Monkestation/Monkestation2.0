@@ -607,10 +607,20 @@
 	maturation = rand(6, 12)
 
 /obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
+	// Defines list of allowed plant reagents
+	var/list/allowed_reagents = list(
+		/datum/reagent/water,
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/potassium,
+		/datum/reagent/consumable/banana,
+		/datum/reagent/consumable/nutriment/vitamin
+	)
+
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
-		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
+		var/selected_reagent = pick(allowed_reagents)// Selects a random reagent from the allowed list
+		var/datum/plant_gene/reagent/R = new(selected_reagent, random_amount)
 		if(R.can_add(src))
 			if(!R.try_upgrade_gene(src))
 				genes += R
