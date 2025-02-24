@@ -641,7 +641,8 @@
 		/datum/reagent/lead, /datum/reagent/ammonia, /datum/reagent/chlorine,
 		/datum/reagent/medicine/oculine, /datum/reagent/aluminium, /datum/reagent/toxin/teapowder,
 		/datum/reagent/toxin/coffeepowder, /datum/reagent/medicine/ephedrine, /datum/reagent/medicine/salbutamol,
-		/datum/reagent/blood, /datum/reagent/lube, /datum/reagent/cellulose, /datum/reagent/iron
+		/datum/reagent/blood, /datum/reagent/lube, /datum/reagent/cellulose, 
+		/datum/reagent/iron, /datum/reagent/drug/cocaine
 	)
 	// MONKESTATION EDIT END
 
