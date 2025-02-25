@@ -843,7 +843,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"personnel" = 'sound/vox_fem/personnel.ogg',
 	"pipe" = 'sound/vox_fem/pipe.ogg',
 	"piping" = 'sound/vox_fem/piping.ogg',
-	"piss" = 'sound/vox_fem/piss.ogg'
+	"piss" = 'sound/vox_fem/piss.ogg',
 	"plant" = 'sound/vox_fem/plant.ogg',
 	"plasma" = 'sound/vox_fem/plasma.ogg',
 	"plasmaman" = 'sound/vox_fem/plasmaman.ogg',
