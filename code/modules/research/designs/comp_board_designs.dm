@@ -350,7 +350,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exoscanner_console
 	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
@@ -361,7 +361,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exodrone_console
 	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 

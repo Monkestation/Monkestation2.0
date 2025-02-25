@@ -135,7 +135,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/botpad
-	name = "Bot launchpad"
+	name = "Bot launchpad" // Monkesation edit:
 	desc = "The circuit board for a bot launchpad."
 	id = "botpad"
 	build_type = IMPRINTER
@@ -488,7 +488,7 @@
 	id = "scan_console"
 	build_path = /obj/item/circuitboard/computer/scan_consolenew
 	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_GENETICS
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_GENETICS // Monkestation edit:
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
@@ -724,7 +724,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rad_collector
-	name = "Radiation Collector Board"
+	name = "Radiation Collector Board" // Monkestation edit:
 	desc = "The circuit board for a radiation collector array."
 	id = "rad_collector"
 	build_path = /obj/item/circuitboard/machine/rad_collector
@@ -734,7 +734,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/plantgenes
-	name = "Plant DNA Manipulator Board"
+	name = "Plant DNA Manipulator Board" // Monkestation edit:
 	desc = "The circuit board for a plant DNA manipulator."
 	id = "plantgenes"
 	build_path = /obj/item/circuitboard/machine/plantgenes
