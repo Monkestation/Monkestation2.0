@@ -213,7 +213,10 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
             />
           </Section>
         </Stack.Item>
-        <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+        <Stack.Item
+          grow
+          style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
+        >
           <Section fill>
             <QueueList availableMaterials={availableMaterials} />
           </Section>

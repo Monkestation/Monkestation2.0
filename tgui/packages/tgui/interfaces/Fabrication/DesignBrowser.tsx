@@ -207,7 +207,10 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section title="Categories" fitted />
             </Stack.Item>
-            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+            <Stack.Item
+              grow
+              style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
+            >
               <Section fill>
                 <div className="FabricatorTabs">
                   <div
@@ -267,7 +270,10 @@ export const DesignBrowser = <T extends Design = Design>(
                 />
               </Section>
             </Stack.Item>
-            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+            <Stack.Item
+              grow
+              style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
+            >
               <Section fill>
                 {searchText.length > 0 ? (
                   sortBy((design: T) => design.name)(
