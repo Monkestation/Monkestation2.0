@@ -11764,6 +11764,9 @@
 "bfZ" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/machinery/airalarm/directional/north,
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "bgb" = (
@@ -12053,6 +12056,7 @@
 /area/station/service/hydroponics/garden)
 "bhh" = (
 /obj/structure/flora/bush/fullgrass/style_random,
+/mob/living/basic/chicken/brown,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "bhi" = (
@@ -12068,6 +12072,7 @@
 "bhk" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
+/mob/living/basic/chicken/hen,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "bhl" = (
@@ -35876,6 +35881,12 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"gPB" = (
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "gPG" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/sign/nanotrasen{
@@ -51776,6 +51787,9 @@
 	},
 /obj/structure/railing/wooden_fencing{
 	dir = 4
+	},
+/mob/living/basic/chicken{
+	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -73079,6 +73093,9 @@
 "vgk" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
+	},
+/mob/living/basic/chicken{
+	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -105403,7 +105420,7 @@ gyV
 uFX
 uGE
 gSt
-otr
+gPB
 doo
 reH
 uGE
