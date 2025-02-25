@@ -218,6 +218,7 @@
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
+// Monkestation Edit Start: Code Cleanup.
 
 /datum/design/mech_scattershot
 	name = "LBX AC 10 \"Scattershot\""
@@ -786,3 +787,5 @@
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+//Monkestation edit: Code Cleanup

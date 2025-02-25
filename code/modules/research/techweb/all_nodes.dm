@@ -686,6 +686,7 @@
 		"sheetifier",
 		"weldingmask",
 		"bolter_wrench",
+		"multi_cell_charge", //Monkestation addition 
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	discount_experiments = list(
