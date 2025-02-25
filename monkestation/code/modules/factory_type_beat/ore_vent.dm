@@ -64,7 +64,6 @@
  * Will summon a number of waves of mobs, ending in the vent being tapped after the final wave.
  */
 /obj/structure/ore_vent/proc/start_wave_defense()
-/*
 	AddComponent(\
 		/datum/component/spawner, \
 		spawn_types = defending_mobs, \
@@ -75,7 +74,7 @@
 		spawn_distance = 4, \
 		spawn_distance_exclude = 3, \
 	)
-*/
+
 	var/wave_timer = 60 SECONDS
 	if(boulder_size == BOULDER_SIZE_MEDIUM)
 		wave_timer = 90 SECONDS
@@ -96,6 +95,33 @@
  * Also gives xp and mining points to all nearby miners in equal measure.
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
+	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
+	COOLDOWN_RESET(src, wave_cooldown)
+	remove_shared_particles(/particles/smoke/ash)
+	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
+		tapped = TRUE
+		//SSore_generation.processed_vents += src
+		balloon_alert_to_viewers("vent tapped!")
+		icon_state = icon_state_tapped
+		update_appearance(UPDATE_ICON_STATE)
+		UnregisterSignal(node, COMSIG_QDELETING)
+	else
+		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
+		icon_state = initial(icon_state)
+		update_appearance(UPDATE_ICON_STATE)
+		return FALSE //Bad end, try again.
+
+	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
+		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
+		if(miner.stat <= SOFT_CRIT)
+			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
+		if(!user_id_card)
+			continue
+		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+		user_id_card.registered_account.mining_points += point_reward_val
+		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+	node.pre_escape() //Visually show the drone is done and flies away.
+	add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**
  * Called when the ore vent is tapped by a scanning device.
@@ -140,7 +166,7 @@
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
 	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
-	particles = new /particles/smoke/ash()
+	add_shared_particles(/particles/smoke/ash)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))

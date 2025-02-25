@@ -26,6 +26,8 @@
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	light_outer_range = 4
 	basic_mob_flags = DEL_ON_DEATH
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
@@ -41,6 +43,8 @@
 	var/flying_state = NEUTRAL_STATE
 	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
+	/// Set when the drone is begining to leave lavaland after the vent is secured.
+	var/escaping = FALSE
 
 /mob/living/basic/node_drone/Initialize(mapload)
 	. = ..()
@@ -51,8 +55,8 @@
 	explosion(origin = src, light_impact_range = 1, smoke = 1)
 
 /mob/living/basic/node_drone/Destroy()
-	//attached_vent?.node = null //clean our reference to the vent both ways.
-	//attached_vent = null
+	attached_vent?.node = null //clean our reference to the vent both ways.
+	attached_vent = null
 	return ..()
 
 /mob/living/basic/node_drone/examine(mob/user)
@@ -78,6 +82,34 @@
 	pixel_z = 400
 	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 	src.ai_controller?.set_blackboard_key(BB_CURRENT_HUNTING_TARGET, attached_vent) // Makes it immediately hunt it's parent.
+
+/**
+ * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
+ */
+/mob/living/basic/node_drone/proc/escape()
+	var/funny_ending = FALSE
+	flying_state = FLY_OUT_STATE
+	update_appearance(UPDATE_ICON_STATE)
+	if(prob(1))
+		say("I have to go now, my planet needs me.")
+		funny_ending = TRUE
+	visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	sleep(2 SECONDS)
+	if(funny_ending)
+		playsound(src, 'sound/effects/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
+		visible_message(span_notice("...or maybe not."))
+	qdel(src)
+
+/mob/living/basic/node_drone/proc/pre_escape()
+	if(attached_vent)
+		attached_vent.unbuckle_mob(src)
+		attached_vent = null
+	if(!escaping)
+		escaping = TRUE
+		flick("mining_node_escape", src)
+		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
+		return
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
