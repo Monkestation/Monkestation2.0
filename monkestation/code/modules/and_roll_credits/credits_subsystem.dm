@@ -4,8 +4,6 @@ SUBSYSTEM_DEF(credits)
 	init_order = INIT_ORDER_CREDITS
 
 	var/director = "Some monkey we found on the street"
-	var/star = ""
-	var/ss = ""
 	var/list/disclaimers = list()
 	var/list/datum/episode_name/episode_names = list()
 
@@ -18,12 +16,8 @@ SUBSYSTEM_DEF(credits)
 
 	//If any of the following five are modified, the episode is considered "not a rerun".
 	var/customized_name = ""
-	var/customized_star = ""
-	var/customized_ss = ""
 	var/rare_episode_name = FALSE
 	var/theme = "NT"
-
-	var/js_args = list()
 
 	var/list/contributer_pref_images = list()
 	var/list/admin_pref_images = list()
@@ -129,15 +123,6 @@ SUBSYSTEM_DEF(credits)
 		appearance.maptext = "<center>[ckey]</center>"
 		admin_pref_images += appearance
 
-/datum/controller/subsystem/credits/proc/draft_star()
-	var/mob/living/carbon/human/most_talked
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(!H.ckey || H.stat == DEAD)
-			continue
-		if(!most_talked || H.talkcount > most_talked.talkcount)
-			most_talked = H
-	star = thebigstar(most_talked)
-
 /datum/controller/subsystem/credits/proc/finalize_name()
 	if(customized_name)
 		episode_name = customized_name
@@ -210,13 +195,6 @@ SUBSYSTEM_DEF(credits)
 		cast_string += "<center><h3>[true_story_bro]</h3><br>In memory of those that did not make it.<br>[english_list(corpses)].<br></center>"
 	cast_string += "<br>"
 
-/datum/controller/subsystem/credits/proc/thebigstar(star)
-	if(istext(star))
-		return star
-	if(ismob(star))
-		var/mob/M = star
-		return "[uppertext(M.mind.key)] as [M.real_name]"
-
 /datum/controller/subsystem/credits/proc/generate_major_icon(list/mobs, passed_icon_state)
 	if(!passed_icon_state)
 		return
@@ -275,8 +253,6 @@ SUBSYSTEM_DEF(credits)
 		created_appearances += appearance
 
 	return created_appearances
-
-/mob/living/var/talkcount = 0
 
 /obj/effect/title_card_object
 	plane = SPLASHSCREEN_PLANE
