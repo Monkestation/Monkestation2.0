@@ -489,6 +489,8 @@
   Absolucy:
   - rscadd: The comically large spoon can now be used as a shovel.
 2025-02-21:
+  Absolucy:
+  - bugfix: The ticker component now repeats properly.
   Absolucy, That0nePerson:
   - rscadd: Clockwork Cult's Kindle spell now applies a new clockwork-themed slurring
       effect, instead of the blood cult-themed slurring.
@@ -539,6 +541,8 @@
   - balance: Medical Borer Crates now comes with three cages.
   - code_imp: Chief Medical Officer, Medical Doctors, Chemists, and Brig Physicians
       are now classified as the new enemies for Cortical Borers to spawn
+  - qol: Immunity scanners can be stored in medical toolbelts and surgical medkits
+  - balance: PENLITE can create 6, instead of 3 barriers.
   MichiRecRoom:
   - bugfix: Floran characters should no longer float hats above their head, if you
       set their hairstyle to one that vertically offsets hats before switching to
@@ -562,7 +566,125 @@
   - rscadd: more ruins
   Veth-s:
   - bugfix: fixed some of slashers stuff i hope to god
+  Wisemonster:
+  - balance: Reduced the time it takes for an unsecure disk to start increasing lone
+      op weight (5 minutes, down from 8.3)
+  - balance: Lone ops now have a minimum weight of 1
   Ziiro:
   - refactor: Refactored the way silicon emotes are handled in silicons, robots, and
       synthetic voiceboxes
   - bugfix: synthetic voiceboxes can *beep again!
+  destrucktoid:
+  - balance: Borers can no longer be squashed by walking over them
+  - balance: Borers now have a bigger sprite.
+  wraith-54321:
+  - bugfix: Enables new zombies
+2025-02-22:
+  Absolucy:
+  - balance: The malf AI intercom honk (Percussive Intercomm Interference) no longer
+      stacks with multiple intercoms on a single person, which could instantly deafen
+      people in an unlucky spot.
+  - balance: The intercom honk also won't affect people who can't hear anyways.
+  - balance: The intercom honk now doesn't affect people in spaced areas unless they're
+      right next to the intercom, like how sound usually works.
+  - balance: The intercom honk now only affects Z-levels connected to the AI's z-level
+      (i.e an on-station AI will only affect station intercoms)
+  - bugfix: Being a team antagonist will no longer hide all of your other antagonist
+      roles from the roundend report, i.e a BB+traitor will properly show as both
+      a BB and a traitor in the roundend report.
+  - bugfix: You no longer whack window sills with glass sheets when building windows
+      on them.
+  - bugfix: Window sills will no longer create nonexistent/negative stacks of glass.
+  - bugfix: You can now create plastitanium glass windows on window sills.
+  - qol: You can now walk to another window sill while already standing a window sill.
+  - qol: Flying/floating mobs can now pass window sills.
+  - rscadd: Window sills now elevate you while standing on them.
+  Gw0sty:
+  - rscadd: Limb Grower design for spleens
+  Shoddd:
+  - balance: rebalanced pain quirk values with pain being mostly gone
+  Ziiro:
+  - bugfix: IPC Cyberkinetics Chassis (Greyscale) now accepts Mutant colors
+  - rscadd: IPC Antenna options now accept Secondary Mutant colors
+2025-02-23:
+  Absolucy:
+  - bugfix: The balloon alerts when building on a window sill will now actually say
+      what you're doing, instead of just your name and nothing else.
+  - bugfix: Revenge Vassals can now properly bring ex-Vassals back into the fold with
+      the "Help Vassal" ability.
+  - bugfix: Fixed some various minor errors.
+  BebeYoshi:
+  - bugfix: Reality Dissociation Syndrome properly works now.
+  Shoddd:
+  - bugfix: tundra moth limbs have proper names
+  - bugfix: heliostation has a egg incubator now
+  Snack-Max:
+  - rscadd: Two New Hairstyles, Long Undercut and Alpaca
+  - bugfix: Updated Long Sidecut
+2025-02-24:
+  MissClassyPineapple:
+  - rscadd: Adds the Caffeine dependence quirk. Get to drinking that coffee.
+  - rscadd: Makes coffee mildly addictive.
+  - rscadd: Coffee addiction.
+  Sorenon:
+  - qol: Boxed roundstart / latejoin job information.
+  - qol: Captain gets a little bit more information about how their radio works roundstart.
+  - bugfix: Fixed roundstart players not getting radio information.
+  - rscadd: Added Alcoholic as a negative quirk.
+  - rscadd: Added a toggle to the DRG Miner Training quirk skillchip and some checks
+      to see which (if any) radio channel should be used
+  - rscadd: added large scarves to the loadout store
+  - qol: shrunk the choice beacon item to be pocket sized
+  - bugfix: fixed the top few pixels of anime implant ears getting trimmed for tallest
+      humans
+  - bugfix: fixed QMs showing up on lifeline's blueshield mode
+  - bugfix: fixed missing / disabled legs slowing down flying players
+  - bugfix: fixed the number displayed number of bullets in fingerguns not decreasing
+  - bugfix: fixed the speen emote not making sound
+  - bugfix: fixed latejoin borgs with an AI connection being told they were unlinked
+  - bugfix: fixed the muzzle preventing custom emotes
+  - bugfix: fixed players being unable to resist to get out of vents/scrubbers while
+      ventcrawling
+  - bugfix: fixed seclights being unattachable to the lawbringer
+  - balance: 'Honorbound no longer cares about innocence when it comes to
+
+      lesser creatures. They can still be considered unready in some cases.'
+  - balance: 'Attacking a cultist with a halo or a nuclear operative first
+
+      instantly makes THEM guilty, allowing further attacks.'
+  - balance: More favor for converting someone to the honorbound rules
+  - rscadd: 'Fundamentally Evil quirk. You might act normal, but you know deep
+
+      down that you totally don''t give a shit about anyone but yourself.
+
+      Empaths better watch out.'
+  - rscadd: 'Players who choose to be evil via the quirk menu will be reminded
+
+      at roundstart that this doesn''t exempt them from server rules.'
+2025-02-25:
+  Absolucy:
+  - balance: Bluespace artillery cannons can no longer target oozeling cores.
+  Gw0sty:
+  - qol: Gave ranching its own unique room subtype
+  - bugfix: Heliostation pathology should have functional Airlocks.
+  - bugfix: Theseus has a increased request console network
+  Mqiib:
+  - balance: Flashbangs only get a guaranteed stun on the same tile, not adjacent
+      tiles.
+  RikuTheKiller:
+  - bugfix: Liquids should run much faster now.
+  Shoddd:
+  - balance: ethereal blood immobilizes instead of knockdown stuns
+  - bugfix: plates breaking inside of walls
+  Sorenon:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
+  - rscadd: Added Goblin Noses
+  - bugfix: You can no longer manipulate "None" organs
+  - rscadd: Added the ability to attach HUD glasses to security helmets, with security
+      hardsuit helmets having an unremovable sec HUD.
+  - rscadd: Most prebuilt modsuits now start with their department's relevant HUD
+      module
+  - qol: The Warden's locker now has a garment bag
+  flleeppyy:
+  - admin: added "Reload Mentors" verb.
