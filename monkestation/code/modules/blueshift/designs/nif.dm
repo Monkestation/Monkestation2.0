@@ -82,7 +82,7 @@
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
 	)
 	category = list(
-		RND_CATEGORY_EQUIPMENT,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MISC,
 	)
 
 /datum/design/nifsoft_hud/medical
@@ -139,7 +139,7 @@
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
 	)
 	category = list(
-		RND_CATEGORY_EQUIPMENT,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MISC,
 	)
 	build_path = /obj/item/nif_hud_adapter
 
