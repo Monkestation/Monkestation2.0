@@ -118,7 +118,7 @@
 	current_extrapolator = null
 	SStgui.close_uis(puzzle)
 	UnregisterSignal(src, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
-	qdel(puzzle)
+	QDEL_NULL(puzzle)
 
 /datum/component/symptom_genes/proc/on_puzzle_success()
 	playsound(current_user, 'sound/machines/defib_success.ogg', 50, FALSE)
@@ -153,8 +153,8 @@
 	symptom_types -= current_choice
 	symptom_type_name -= initial(current_choice.name)
 	current_choice = null
-	if(prob(text2num(created_symptom.badness) * (15 * current_extrapolator.scanner.rating)))
-		current_extrapolator.generate_varient()
+//	if(prob(text2num(created_symptom.badness) * (15 * current_extrapolator.scanner.rating)))
+//		current_extrapolator.generate_varient()
 	current_extrapolator = null
 
 	UnregisterSignal(src, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
