@@ -13,5 +13,5 @@
 	final_hunt_list += controller.blackboard[BB_HUNTABLE_PESTS]
 	final_hunt_list += controller.blackboard[BB_HUNTABLE_TRASH]
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets_slime, BB_CLEAN_TARGET, final_hunt_list)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets/slime, BB_CLEAN_TARGET, final_hunt_list) // Add a final parameter here if you want a search range
 
