@@ -45814,6 +45814,10 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -46707,6 +46711,16 @@
 	dir = 4
 	},
 /area/station/security/prison/safe)
+"paC" = (
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/botanist,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/service/hydroponics)
 "paH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -90674,7 +90688,7 @@ jZY
 nQm
 dyk
 ufA
-emg
+paC
 juc
 kgn
 kgn
