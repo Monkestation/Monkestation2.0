@@ -40,10 +40,26 @@
 		/obj/item/mining_scanner,
 	)
 
+	/// What base icon_state do we use for this vent's boulders?
+	var/boulder_icon_state = "boulder"
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
 
 /obj/structure/ore_vent/Initialize(mapload)
+	if(mapload)
+		generate_description()
+	register_context()
+	SSore_generation.possible_vents += src
+	boulder_icon_state = pick(list(
+		"boulder",
+		"rock",
+		"stone",
+	))
+	if(tapped)
+		SSore_generation.processed_vents += src
+		icon_state = icon_state_tapped
+		update_appearance(UPDATE_ICON_STATE)
+		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, ABOVE_MOB_LAYER))
 	return ..()
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
@@ -147,7 +163,7 @@
 			return
 		discovered = TRUE
 		balloon_alert(user, "vent scanned!")
-		//generate_description(user)
+		generate_description(user)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
 		if(isnull(user_id_card))
 			return
@@ -179,6 +195,12 @@
 		sleep(0.6 SECONDS)
 
 	start_wave_defense()
+
+/**
+ * Generates a description of the ore vent to ore_string, based on the minerals contained within it.
+ * Ore_string is passed to examine().
+ */
+/obj/structure/ore_vent/proc/generate_description(mob/user)
 
 /**
  * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
