@@ -16,10 +16,9 @@
 	for(var/client/client in GLOB.clients)
 		add_verb(client, /client/proc/ClearCredits)
 
-	var/credit_order = SScredits.credit_order
 	var/count = 0
 
-	for(var/credit in credit_order)
+	for(var/credit in SScredits.credit_order)
 		if(istype(credit, /obj/effect/title_card_object)) //huge image sleep
 			sleep(CREDIT_SPAWN_SPEED * 3.3)
 			count = 0
