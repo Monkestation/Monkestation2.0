@@ -23,9 +23,14 @@
 	qdel(target) // Sent to the shadow realm to never be seen again
 	finish_action(controller, TRUE, target_key)
 
+// Copied from `/datum/ai_behavior/execute_clean/finish_action`, but only the parts wanted for
+// supporting cleaner slimes.
 /datum/ai_behavior/execute_clean_slime/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
+	if(!succeeded && !isnull(target))
+		controller.clear_blackboard_key(target_key)
+		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return
 	if(!iscarbon(target))
