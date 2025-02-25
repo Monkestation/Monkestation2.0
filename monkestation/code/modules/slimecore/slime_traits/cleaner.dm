@@ -85,8 +85,10 @@
 	qdel(parent.GetComponent(/datum/component/pollution_scrubber))
 	REMOVE_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
 
-/datum/slime_trait/proc/on_unarmed_attack(mob/living/parent, atom/target, proximity, modifiers)
-	if(target in cleanable_decals || target in cleanable_blood || target in huntable_pests || target in huntable_trash)
+/datum/slime_trait/cleaner/proc/on_unarmed_attack(mob/living/parent, atom/target, proximity, modifiers)
+	// Putting this conditional inside the `if` statement causes dreamchecker to complain about an "ambiguous `in`"
+	var/dissolvable = (target in cleanable_decals) || (target in cleanable_blood) || (target in huntable_pests) || (target in huntable_trash)
+	if(dissolvable)
 		parent.balloon_alert_to_viewers("cleaned")
 		parent.visible_message(span_notice("[parent] dissolves \the [target]."))
 		SEND_SIGNAL(parent, COMSIG_MOB_FEED, target, 20)
