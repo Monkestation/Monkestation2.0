@@ -36,6 +36,9 @@
 	var/atom/target_loc = the_target.loc
 	var/atom/mob_loc = living_mob.loc
 
+	if(QDELETED(target_loc) || QDELETED(mob_loc))
+		return FALSE // I don't know how you'd end up in this situation, but let's just... not.
+
 	if(HAS_TRAIT(target_loc, TRAIT_SECLUDED_LOCATION))
 		return FALSE // don't attack people in an out-of-bounds location (aka if they're using a desynchronizer)
 
