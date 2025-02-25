@@ -36,6 +36,9 @@
 	var/atom/target_loc = the_target.loc
 	var/atom/mob_loc = living_mob.loc
 
+	if(HAS_TRAIT(target_loc, TRAIT_SECLUDED_LOCATION))
+		return FALSE // don't attack people in an out-of-bounds location (aka if they're using a desynchronizer)
+
 	if(isobj(target_loc))
 		var/obj/container = target_loc
 		if(container.resistance_flags & INDESTRUCTIBLE)
