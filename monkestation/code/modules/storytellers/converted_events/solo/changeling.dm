@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/changeling
 	antag_flag = ROLE_CHANGELING
-	tags = list(TAG_COMBAT, TAG_ALIEN)
+	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -23,7 +23,7 @@
 		JOB_CYBORG,
 	)
 	min_players = 20
-	weight = 9
+	weight = 10
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 

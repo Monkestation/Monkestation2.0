@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
+	RADIO_KEY_UNCOMMON = RADIO_CHANNEL_UNCOMMON,
 
 
 	//kinda localization -- rastaf0
@@ -56,7 +58,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"щ" = RADIO_CHANNEL_AI_PRIVATE
+	"щ" = RADIO_CHANNEL_AI_PRIVATE,
+	"з" = RADIO_CHANNEL_ENTERTAINMENT,
+	"f" = RADIO_CHANNEL_UNCOMMON,
 ))
 
 /**
@@ -201,11 +205,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	last_say_args_ref = REF(args)
 	#endif
 
-	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
-		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
-		if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
-			message = uppertext(message)
+	// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
+	if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
 
 	if(!message)
 		if(succumbed)
@@ -536,6 +539,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
 
 /mob/living/get_language_holder(get_minds = TRUE)
+	RETURN_TYPE(/datum/language_holder)
 	if(get_minds && mind)
 		return mind.get_language_holder()
 	. = ..()

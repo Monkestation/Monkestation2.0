@@ -19,12 +19,12 @@
 	return ..()
 
 /datum/status_effect/unholy_determination/on_apply()
-	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), type)
+	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
 	owner.add_homeostasis_level(id, owner.standard_body_temperature, 10 KELVIN)
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
-	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), type)
+	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
 	owner.remove_homeostasis_level(id)
 
 /datum/status_effect/unholy_determination/tick()
@@ -86,3 +86,17 @@
 		return
 
 	bloodiest_wound.adjust_blood_flow(-0.5)
+
+/// Torment the target with a frightening hand
+/proc/fire_curse_hand(mob/living/carbon/victim)
+	var/grab_dir = turn(victim.dir, pick(-90, 90, 180, 180)) // Not in front, favour behind
+	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, 8)
+	if (isnull(spawn_turf))
+		return
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, victim.dir)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
+	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
+	hand.preparePixelProjectile(victim, spawn_turf)
+	if (QDELETED(hand)) // safety check if above fails - above has a stack trace if it does fail
+		return
+	hand.fire()

@@ -177,6 +177,12 @@
 	name = "The Twin-Nexus Hotel"
 	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
+/datum/map_template/ruin/space/spacerealhotel
+	id = "spacerealhotel"
+	suffix = "spacerealhotel.dmm"
+	name = "The Twin-Nexus Hotel"
+	description = "An actual working interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
 	suffix = "turretedoutpost.dmm"
@@ -460,3 +466,9 @@
 	suffix = "infested_frigate.dmm"
 	name = "SYN-C Brutus"
 	description = "This wasn't an outbreak, this was a repelled attack."
+
+/datum/map_template/ruin/space/syndicate_depot
+	id = "syndicate_depot"
+	suffix = "syndicate_depot.dmm"
+	name = "Syndicate Depot"
+	description = "A small depot ran by the Syndicate sitting out in space, responsible for logistics across the vast reaches of space."

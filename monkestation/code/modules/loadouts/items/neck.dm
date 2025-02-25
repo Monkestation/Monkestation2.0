@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK)
 		if(outfit.neck)
-			LAZYADD(outfit.backpack_contents, outfit.neck && !visuals_only)
+			spawn_in_backpack(outfit, outfit.neck && !visuals_only, equipper)
 		outfit.neck = item_path
 	else
 		outfit.neck = item_path
@@ -95,6 +95,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	item_path = /obj/item/clothing/neck/ascot
 	requires_purchase = FALSE
 
+/datum/loadout_item/neck/large_scarf
+	name = "Large Scarf"
+	item_path = /obj/item/clothing/neck/large_scarf
+
 /*
 *	NECKTIES
 */
@@ -140,6 +144,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/bowtie_collar
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
+
+/datum/loadout_item/neck/straw_coat
+	name = "Straw Coat"
+	item_path = /obj/item/clothing/neck/straw_coat
 
 /datum/loadout_item/neck/boatcloak
 

@@ -2,7 +2,7 @@
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
 	typepath = /datum/round_event/antagonist/solo/brother
-	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG)
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
@@ -32,7 +32,7 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 1
-	weight = 12
+	weight = 10
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag

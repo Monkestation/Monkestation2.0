@@ -493,9 +493,17 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index, t_color, icon, type)
+/proc/generate_female_clothing(index, t_color, icon, type, flat = FALSE)	//MONKESTATION EDIT - Dimorphic lizards
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
-	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+	var/female_icon_state = "female"
+
+	if(type & FEMALE_UNIFORM_FULL)	//MONKESTATION EDIT - Dimorphic lizards and splitting up a crazy long single line to be able to read it
+		female_icon_state += "_full"
+	else if((!type || (type & FEMALE_UNIFORM_TOP_ONLY)))
+		female_icon_state += "_top"
+	if(type & FEMALE_UNIFORM_NO_BREASTS || flat)
+		female_icon_state += "_no_breasts"
+
 	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
 	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
@@ -605,9 +613,14 @@ BLIND     // can't see anything
 
 	if(blood_overlay_type && appears_bloody())
 		var/mutable_appearance/blood_overlay
+		//MONKESTATION EDIT START
+		/* - MONKESTATION EDIT ORIGINAL -
 		if(clothing_flags & LARGE_WORN_ICON)
 			blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_overlay_type]blood_large")
 		else
 			blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		*/
+		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		//MONKESTATION EDIT END
 		blood_overlay.color = get_blood_dna_color()
 		. += blood_overlay

@@ -21,7 +21,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
-		handle_virus_updates(seconds_per_tick)
+		handle_virus_updates(seconds_per_tick, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
@@ -56,6 +56,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		setOxyLoss(0) //idk how because spec life should cover this
 		losebreath = 0
+		failed_last_breath = 0
 		return
 
 	var/next_breath = 4
@@ -413,7 +414,7 @@
 ///Check to see if we have the liver, if not automatically gives you last-stage effects of lacking a liver.
 
 /mob/living/carbon/proc/handle_liver(seconds_per_tick, times_fired)
-	if(!dna)
+	if(isnull(has_dna()))
 		return
 
 	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
@@ -478,7 +479,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/set_heartattack(status)
-	if(!can_heartattack())
+	if(status && !can_heartattack())
 		return FALSE
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)

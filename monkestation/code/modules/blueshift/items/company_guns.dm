@@ -115,8 +115,8 @@
 /obj/item/gun/ballistic/automatic/sol_rifle/marksman/no_mag
 	spawnwithmagazine = FALSE
 
-// Machinegun based on the base Sol rifle
-
+// Machinegun based on the base Sol rifle ///monke edit: Rechambered to 6.5mm Anti-Xeno, now in monkestation/modules/projectiles
+/*
 /obj/item/gun/ballistic/automatic/sol_rifle/machinegun
 	name = "\improper Qarad Light Machinegun"
 	desc = "A hefty machinegun commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
@@ -135,6 +135,7 @@
 	wield_recoil = 0.5
 	spread = 12.5
 	projectile_wound_bonus = -20
+	projectile_damage_multiplier = 0.75
 
 /obj/item/gun/ballistic/automatic/sol_rifle/machinegun/examine_more(mob/user)
 	. = ..()
@@ -151,7 +152,7 @@
 
 /obj/item/gun/ballistic/automatic/sol_rifle/machinegun/no_mag
 	spawnwithmagazine = FALSE
-
+*/
 // Evil version of the rifle (nothing different its just black)
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil
@@ -160,6 +161,10 @@
 	icon_state = "infanterie_evil"
 	worn_icon_state = "infanterie_evil"
 	inhand_icon_state = "infanterie_evil"
+	projectile_wound_bonus = 5
+	projectile_damage_multiplier = 1.25
+	fire_delay = 0.3 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -230,6 +235,8 @@
 	icon_state = "renoster_evil"
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
+	projectile_wound_bonus = 15
+	pin = /obj/item/firing_pin/implant/pindicate
 
 // Low caliber grenade launcher (fun & games)
 
@@ -257,6 +264,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
@@ -323,8 +331,11 @@
 	icon_state = "kiboko_evil"
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
+	projectile_wound_bonus = 5
+	fire_delay = 0.30 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
 
-	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -376,7 +387,7 @@
 	desc = "How did you get it out?"
 	ammo_type = /obj/item/ammo_casing/strilka310
 	caliber = CALIBER_STRILKA310
-	max_ammo = 8
+	max_ammo = 10
 
 /obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
 	start_empty = TRUE
@@ -422,15 +433,12 @@
 	suppressor_x_offset = 9
 
 	burst_size = 2
-	fire_delay = 0.15 SECONDS
+	fire_delay = 0.5 SECONDS
 	actions_types = list()
-
-	// Because we're firing a lot of these really fast, we want a lot less wound chance
-	projectile_wound_bonus = -20
-	spread = 12.5
+	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
-	wield_recoil = 0.5
+	wield_recoil = 1
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
@@ -468,6 +476,9 @@
 	suppressor_x_offset = 3
 	w_class = WEIGHT_CLASS_SMALL
 	can_suppress = TRUE
+
+/obj/item/gun/ballistic/revolver/sol/evil
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
@@ -592,6 +603,7 @@
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
 
 	icon_state = "wespe_evil"
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -757,7 +769,6 @@
 	recoil = 1.5
 	wield_recoil = 0.5
 	spread = 2.5
-	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
 	. = ..()
@@ -963,6 +974,8 @@
 	icon_state = "bobr"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
 	spread = SAWN_OFF_ACC_PENALTY
+	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
+	projectile_wound_bonus = -5  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
 
 /obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
@@ -1046,6 +1059,9 @@
 
 	icon_state = "sindano_evil"
 	inhand_icon_state = "sindano_evil"
+	spread = 5
+	projectile_wound_bonus = 5
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE

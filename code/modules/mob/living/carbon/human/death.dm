@@ -10,6 +10,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
+	if(flags_1 & HOLOGRAM_1)
+		return
 	if(with_bodyparts)
 		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
 	else
@@ -46,15 +48,14 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
 				<b>Blood volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
-	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab."))
-	to_chat(src, span_greentext("You can no longer recall who was responsible for your death.")) // MONKESTATION EDIT: making an explicit request that someone review DA RULEZ.
+	//to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.")) // MONKESTATION REMOVAL
 
 	var/death_block = ""
 	death_block += span_danger("<center><span style='font-size: 32px'>You have succumbed to [cause_of_death].</font></center>")
 	death_block += "<hr>"
 	death_block += span_danger("Barring complete bodyloss, you can (in most cases) be revived by other players. \
 		If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.")
-	to_chat(src, examine_block(death_block))
+	to_chat(src, boxed_message(death_block))
 
 /mob/living/carbon/human/proc/get_cause_of_death(probable_cause)
 	switch(probable_cause)

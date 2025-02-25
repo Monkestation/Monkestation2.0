@@ -27,7 +27,7 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
+	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum, /obj/item/gun/energy/laser/musket, /obj/item/gun/energy/disabler/smoothbore)
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/pirate/armored
@@ -67,6 +67,10 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
 
+/obj/item/clothing/suit/costume/justice/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
 /datum/armor/costume_justice
 	melee = 35
 	bullet = 30
@@ -100,11 +104,11 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
-	name = "black and red space suit replica"
-	icon_state = "syndicate-black-red"
+	name = "red space suit replica" //monkestation edit
+	icon_state = "syndicate" //monkestation edit
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
-	inhand_icon_state = "syndicate-black-red"
+	inhand_icon_state = "space_suit_syndicate" //monkestation edit
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -553,12 +557,21 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/clothing/suit/costume/soviet/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
+
 /obj/item/clothing/suit/costume/yuri
 	name = "yuri initiate coat"
 	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "yuri_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/costume/yuri/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/costume/tmc
 	name = "\improper Lost M.C. cut"
@@ -583,3 +596,7 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/irs/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed

@@ -336,7 +336,8 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)  /* monkestation edit: add permabrig-only access */
+	ACCESS_BRIG_PHYSICIAN, \
+)  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
@@ -366,7 +367,10 @@
 	ACCESS_HOP, \
 	ACCESS_QM, \
 	ACCESS_RD, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep above
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
 #define CAPTAIN_ACCESS list( \
@@ -462,11 +466,15 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
+	ACCESS_BRIG_PHYSICIAN, \
 )
+//MONKESTATION ADDITION: Added brig physcian access to above
+
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
+	ACCESS_AI_UPLOAD, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -529,11 +537,40 @@
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep to command region above
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
+
+/// MONKESTATION ADDITION - Adds Charlie Station region, for the Charlie Station ID console.
+/// Name for the Charlie Station region.
+#define REGION_CHARLIE_STATION "Charlie Station"
+/// Used to seed the accesses_by_region list in SSid_access. A list of all ACCESS_AWAY regional accesses.
+#define REGION_ACCESS_CHARLIE_STATION list( \
+	ACCESS_AWAY_GENERAL, \
+	ACCESS_ROBOTICS, \
+	ACCESS_ORDNANCE, \
+	ACCESS_RESEARCH, \
+	ACCESS_AWAY_SCIENCE, \
+	ACCESS_AWAY_MAINTENANCE, \
+	ACCESS_AWAY_SUPPLY, \
+	ACCESS_AWAY_GENERIC1, \
+	ACCESS_AWAY_GENERIC2, \
+	ACCESS_AWAY_GENERIC3, \
+	ACCESS_AWAY_GENERIC4, \
+	ACCESS_AWAY_COMMAND, \
+	ACCESS_AWAY_MEDICAL, \
+	ACCESS_AWAY_SEC, \
+	ACCESS_AWAY_ENGINEERING, \
+	ACCESS_ENGINEERING, \
+	ACCESS_ENGINE_EQUIP, \
+)
+/// END OF ADDITION
 
 /**
  * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
@@ -577,6 +614,11 @@
 	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
 	/obj/item/modular_computer/pda/quartermaster = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/pda/security/brig_physician = list(REGION_SECURITY), \
+	/obj/item/modular_computer/pda/psychologist = list(REGION_GENERAL), \
+	/obj/item/modular_computer/pda/blueshield  = list(REGION_COMMAND), \
+	/obj/item/modular_computer/pda/signal = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/pda/barber = list(REGION_GENERAL), \
 )
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \

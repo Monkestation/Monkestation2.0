@@ -45,6 +45,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
+		"notices" = config.lobby_notices, // monkestation edit - lobby notices
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -116,7 +117,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 /datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
-	if(!ui.user.client || ui.user.client.interviewee || !isnewplayer(ui.user))
+	if(!ui.user.client || should_be_interviewing(ui.user) || !isnewplayer(ui.user))
 		return TRUE
 
 	var/mob/dead/new_player/owner = ui.user
@@ -149,7 +150,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			else
 				relevant_cap = max(hard_popcap, extreme_popcap)
 
-			if(SSticker.queued_players.len && !(ckey(owner.key) in GLOB.admin_datums))
+			if(length(SSticker.queued_players) && !(get_player_details(owner)?.patreon?.is_donator() || is_admin(owner.client) || owner.client?.is_mentor()))
 				if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE

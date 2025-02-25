@@ -1,6 +1,14 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
 //#define BLOODSUCKER_TESTING
 
+#ifdef BLOODSUCKER_TESTING
+#ifdef CIBUILDING
+#error BLOODSUCKER_TESTING is enabled, disable this!!!
+#else
+#warn BLOODSUCKER_TESTING is enabled, you REALLY do not want this enabled outside of local testing!!
+#endif //ifdef CIBUILDING
+#endif //ifdef BLOODSUCKER_TESTING
+
 /**
  * Blood-level defines
  */
@@ -151,7 +159,6 @@
 #define ROLE_BLOODSUCKER "Bloodsucker"
 #define ROLE_VAMPIRICACCIDENT "Vampiric Accident"
 #define ROLE_BLOODSUCKERBREAKOUT "Bloodsucker Breakout"
-#define ROLE_MONSTERHUNTER "Monster Hunter"
 #define ROLE_INFILTRATOR "Infiltrator"
 
 /**
@@ -165,16 +172,6 @@
 #define IS_FAVORITE_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal/favorite))
 ///Whether a mob is a Revenge Vassal
 #define IS_REVENGE_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal/revenge))
-///Whether a mob is a Monster Hunter
-#define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))
 
 //Used in bloodsucker_life.dm
 #define MARTIALART_FRENZYGRAB "frenzy grabbing"
-
-///monsterhunter signals
-#define COMSIG_RABBIT_FOUND "rabbit_found"
-#define COMSIG_GAIN_INSIGHT "gain_insight"
-#define COMSIG_BEASTIFY "beastify"
-
-///Define for the 'Rabbits' Faction.
-#define FACTION_RABBITS "rabbits"

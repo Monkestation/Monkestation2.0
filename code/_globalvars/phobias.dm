@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"the supernatural" = construct_phobia_regex("the supernatural"),
 	"blood" = construct_phobia_regex("blood"),
 	"christian minecraft" = construct_phobia_regex("christian minecraft"), //monkestation edit: added for new smite. -dexee 05/24/24
+	"swearing" = construct_phobia_regex("swearing"), //MONKESTATION ADDITION: kakologophobia and easily offended quirks
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -104,7 +105,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/wizard,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/zombie,
+		/mob/living/basic/zombie,
 	)),
 	"aliens" = typecacheof(list(
 		/mob/living/carbon/alien,
@@ -626,6 +627,6 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	for(var/word in words)
 		words_match += "[REGEX_QUOTE(word)]|"
 	words_match = copytext(words_match, 1, -1)
-	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "ig")
+	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "i")
 
 #undef PHOBIA_FILE

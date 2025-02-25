@@ -257,6 +257,9 @@
 		return
 	var/kiss_type = /obj/item/hand_item/kisser
 
+	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
+		kiss_type = /obj/item/hand_item/kisser/syndie
+
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
@@ -391,12 +394,12 @@ monkestation edit end */
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
-/datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
+/datum/emote/living/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
 	if(!ishuman(user))
 		return
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sigh")
-	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
+	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 2.0 SECONDS)
 
 /datum/emote/living/sit
 	key = "sit"
@@ -623,6 +626,8 @@ monkestation edit end */
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	muzzle_ignore = TRUE // monkestation addition
+	stat_allowed = SOFT_CRIT // monkestation addition
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
 	. = ..() && intentional
@@ -639,7 +644,7 @@ monkestation edit end */
 	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
-	if(is_banned_from(user.ckey, "Emote"))
+	if(!isnull(user.ckey) && is_banned_from(user.ckey, "Emote"))
 		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
 		return FALSE
 	else if(QDELETED(user))
@@ -671,15 +676,6 @@ monkestation edit end */
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
-
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
 	key = "inhale"

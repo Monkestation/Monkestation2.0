@@ -41,6 +41,7 @@
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
+	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
@@ -74,6 +75,7 @@
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -385,17 +387,21 @@
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
+	var/datum/atom_hud/crewsensor = GLOB.huds[crew_hud]
 	secsensor.hide_from(src)
 	medsensor.hide_from(src)
 	diagsensor.hide_from(src)
+	crewsensor.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
+	var/datum/atom_hud/crewsensor = GLOB.huds[crew_hud]
 	secsensor.show_to(src)
 	medsensor.show_to(src)
 	diagsensor.show_to(src)
+	crewsensor.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())

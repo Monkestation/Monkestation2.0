@@ -6,8 +6,9 @@
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
+	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/painkiller/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -15,27 +16,22 @@
 	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
-	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out..."
+	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
 /datum/quirk/item_quirk/junkie/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(!reagent_type)
-		reagent_type = pick(drug_list)
-
-	reagent_instance = new reagent_type()
+	reagent_type ||= pick(drug_list)
+	reagent_instance = new reagent_type
 
 	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
-	var/current_turf = get_turf(quirk_holder)
+	drug_container_type ||= /obj/item/storage/pill_bottle
 
-	if(!drug_container_type)
-		drug_container_type = /obj/item/storage/pill_bottle
-
-	var/obj/item/drug_instance = new drug_container_type(current_turf)
+	var/obj/item/drug_instance = new drug_container_type(quirk_holder.drop_location())
 	if(istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
@@ -71,22 +67,21 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
+	if(!COOLDOWN_FINISHED(src, next_process))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(world.time > next_process)
-		next_process = world.time + process_interval
-		var/deleted = QDELETED(reagent_instance)
-		var/missing_addiction = FALSE
-		for(var/addiction_type in reagent_instance.addiction_types)
-			if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
-				missing_addiction = TRUE
-		if(deleted || missing_addiction)
-			if(deleted)
-				reagent_instance = new reagent_type()
-			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
-			for(var/addiction in reagent_instance.addiction_types)
-				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+	COOLDOWN_START(src, next_process, process_interval)
+	var/deleted = QDELETED(reagent_instance)
+	var/missing_addiction = FALSE
+	for(var/addiction_type in reagent_instance.addiction_types)
+		if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
+			missing_addiction = TRUE
+	if(deleted || missing_addiction)
+		if(deleted)
+			reagent_instance = new reagent_type
+		to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
+		for(var/addiction in reagent_instance.addiction_types)
+			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
@@ -147,7 +142,7 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
-/* /datum/quirk/item_quirk/junkie/alcoholic - monkestation disabled for now
+/datum/quirk/item_quirk/junkie/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
@@ -196,7 +191,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
 	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
+	if(alcohol_liver && !(alcohol_liver.organ_flags & ORGAN_SYNTHETIC)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
@@ -214,4 +209,25 @@
 		quirk_holder.clear_mood_event("wrong_alcohol")
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
- */
+
+/datum/quirk/item_quirk/junkie/caffeinedependence
+	name = "Caffeine Dependence"
+	desc = "You are just not the same without a cup of coffee"
+	icon = FA_ICON_COFFEE
+	value = -2
+	gain_text = span_danger("You'd really like a cup of coffee")
+	lose_text = span_notice("Coffee just doesn't seem as appealing anymore")
+	medical_record_text = "Patient is highly dependent on caffeine"
+	reagent_type = /datum/reagent/consumable/coffee
+	drug_container_type = /obj/item/reagent_containers/cup/glass/coffee
+	mob_trait = TRAIT_CAFFEINE_DEPENDENCE
+	hardcore_value = 0
+	drug_flavour_text = "Better make good friends with the coffee machine"
+	mail_goodies = list(
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/icecoffee,
+		/datum/reagent/consumable/hot_ice_coffee,
+		/datum/reagent/consumable/soy_latte,
+		/datum/reagent/consumable/cafe_latte,
+		/datum/reagent/consumable/pumpkin_latte,
+	)

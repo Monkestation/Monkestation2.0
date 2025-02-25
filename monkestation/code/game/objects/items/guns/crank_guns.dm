@@ -21,17 +21,6 @@
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
 
-/obj/projectile/beam/laser/musket
-	damage = 30
-	stamina = 45
-
-/obj/projectile/beam/laser/musket/prime
-	damage = 35
-	stamina = 60
-
-/obj/projectile/beam/disabler/smoothbore/prime
-	stamina = 65
-
 /obj/item/ammo_casing/energy/laser/musket
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -47,3 +36,5 @@
 	weak_against_armour = FALSE
 	armour_penetration = 25 //less powerful than armor piercing rounds
 	wound_bonus = 10
+	debilitating = TRUE
+	debilitate_mult = 2

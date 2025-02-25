@@ -81,8 +81,9 @@
 // Traits given by quirks
 #define TRAIT_ANIME				"anime"
 #define TRAIT_CAT				"cat"
+#define TRAIT_FEEBLE			"feeble"
 #define TRAIT_GOURMAND			"gourmand"
-#define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
+#define TRAIT_CLOWN_DISBELIEVER	"clown_disbeliever"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_JAILBIRD			"jailbird"
 #define TRAIT_LOUD_ASS			"loud_ass"
@@ -120,7 +121,12 @@
 #define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)
 #define TRAIT_TRASH_ITEM			"trash_item"
-
+/// This item came from a gift.
+#define TRAIT_GIFT_ITEM				"gift_item"
+/// The mob can see pathogen clouds and such.
+#define TRAIT_VIRUS_SCANNER "virus_scanner"
+///This item always renders. (only used for stupid magboots rn)
+#define TRAIT_ALWAYS_RENDER			"always_render"
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.
 #define TRAIT_GOES_THROUGH_WOODEN_BARRICADES	"goes_through_wooden_barricades"
@@ -146,5 +152,8 @@
 
 /// Mob can't strip other mobs, overrides TRAIT_CAN_STRIP. Importantly, they cannot *open* strip menus, so this is used for mayhem in a bottle.
 #define TRAIT_CANT_STRIP "cant_strip"
-
+/// Mob sleeps less, counter to TRAIT_HEAVY_SLEEPER
+#define TRAIT_LIGHT_SLEEPER "light_sleeper"
+/// Makes a mob throw guns instead of shooting them, works with TRAIT_NOGUNS
+#define TRAIT_THROW_GUNS "throw_guns"
 // END TRAIT DEFINES
