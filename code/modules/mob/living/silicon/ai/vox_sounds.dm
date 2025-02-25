@@ -843,6 +843,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"personnel" = 'sound/vox_fem/personnel.ogg',
 	"pipe" = 'sound/vox_fem/pipe.ogg',
 	"piping" = 'sound/vox_fem/piping.ogg',
+	"piss" = 'sound/vox_fem/piss.ogg'
 	"plant" = 'sound/vox_fem/plant.ogg',
 	"plasma" = 'sound/vox_fem/plasma.ogg',
 	"plasmaman" = 'sound/vox_fem/plasmaman.ogg',
@@ -1012,6 +1013,10 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"shifts" = 'sound/vox_fem/shifts.ogg',
 	"shipment" = 'sound/vox_fem/shipment.ogg',
 	"shirt" = 'sound/vox_fem/shirt.ogg',
+	"shit" = 'sound/vox_fem/shit.ogg',
+	"shitlord" = 'sound/vox_fem/shitlord.ogg',
+	"shits" = 'sound/vox_fem/shits.ogg',
+	"shitting" = 'sound/vox_fem/shitting.ogg',
 	"shock" = 'sound/vox_fem/shock.ogg',
 	"shonk" = 'sound/vox_fem/shonk.ogg',
 	"shoot" = 'sound/vox_fem/shoot.ogg',
