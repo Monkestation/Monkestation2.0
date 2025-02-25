@@ -86,9 +86,13 @@
 	REMOVE_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
 
 /datum/slime_trait/cleaner/proc/on_unarmed_attack(mob/living/parent, atom/target, proximity, modifiers)
-	// Putting this conditional inside the `if` statement causes dreamchecker to complain about an "ambiguous `in`"
-	var/dissolvable = (target in cleanable_decals) || (target in cleanable_blood) || (target in huntable_pests) || (target in huntable_trash)
-	if(dissolvable)
+	var/target_is_dissolvable = \
+		is_type_in_typecache(target, cleanable_decals) \
+		|| is_type_in_typecache(target, cleanable_blood) \
+		|| is_type_in_typecache(target, huntable_pests) \
+		|| is_type_in_typecache(target, huntable_trash)
+
+	if(target_is_dissolvable)
 		parent.balloon_alert_to_viewers("cleaned")
 		parent.visible_message(span_notice("[parent] dissolves \the [target]."))
 		SEND_SIGNAL(parent, COMSIG_MOB_FEED, target, 20)
