@@ -66,6 +66,8 @@
 		throwforce = 1.1 * throwforce
 	else
 		throwforce = throwforce * (max(clamp((1 - turf_light_level), 0, 1)))
+	// Who knows, the slasher might have TRAIT_PACIFIST. (Or more likely, the machette is no-drop.)
+	return ..()
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))
