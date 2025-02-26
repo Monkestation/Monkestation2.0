@@ -128,9 +128,10 @@
 // The numbers just define the ordering, they are meaningless otherwise.
 
 #define INIT_ORDER_PROFILER 101
-#define INIT_ORDER_TITLE 100
 #define INIT_ORDER_GARBAGE 99
-#define INIT_ORDER_DBCORE 95
+#define INIT_ORDER_DBCORE 98
+#define INIT_ORDER_PLEXORA 97
+#define INIT_ORDER_TITLE 96
 #define INIT_ORDER_BLACKBOX 94
 #define INIT_ORDER_SERVER_MAINT 93
 #define INIT_ORDER_METRICS 91
@@ -141,9 +142,7 @@
 #define INIT_ORDER_GREYSCALE 81
 #define INIT_ORDER_VIS 80
 #define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
-#define INIT_ORDER_DISCORD 78
-#define INIT_ORDER_PLEXORA 77 // monkestation addition
-#define INIT_ORDER_ACHIEVEMENTS 76 // monkestation edit: 77 -> 76 for plexora
+#define INIT_ORDER_ACHIEVEMENTS 77
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem

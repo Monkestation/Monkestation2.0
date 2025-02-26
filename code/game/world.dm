@@ -337,8 +337,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
-		SSplexora.Shutdown(TRUE, usr ? key_name(usr) : null) // Monkestation edit: plexora
+		SSplexora.Shutdown(PLEXORA_SHUTDOWN_HARDEST, usr ? key_name(usr) : null) // Monkestation edit: plexora
 	else
+		SSplexora.Shutdown(PLEXORA_SHUTDOWN_HARD, usr ? key_name(usr) : null) // Monkestation edit: plexora
 		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
 

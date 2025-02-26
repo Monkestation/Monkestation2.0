@@ -111,7 +111,9 @@ GLOBAL_PROTECT(href_token)
 	QDEL_NULL(plane_debug)
 
 	if(owner)
-		dementor(owner)
+		// basically if they're a mentor in the mentors file, we can let them keep their mentor status
+		if(!owner.mentor_datum.from_file)
+			dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]

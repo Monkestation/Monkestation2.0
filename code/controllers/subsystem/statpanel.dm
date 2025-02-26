@@ -135,34 +135,8 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 	target.stat_panel.send_message("update_tickets", ahelp_tickets)
-	var/datum/interview_manager/m = GLOB.interviews
 
-	// get open interview count
-	var/dc = 0
-	for (var/ckey in m.open_interviews)
-		var/datum/interview/current_interview = m.open_interviews[ckey]
-		if (current_interview && !current_interview.owner)
-			dc++
-	var/stat_string = "([m.open_interviews.len - dc] online / [dc] disconnected)"
-
-	// Prepare each queued interview
-	var/list/queued = list()
-	for (var/datum/interview/queued_interview in m.interview_queue)
-		queued += list(list(
-			"ref" = REF(queued_interview),
-			"status" = "\[[queued_interview.pos_in_queue]\]: [queued_interview.owner_ckey][!queued_interview.owner ? " (DC)": ""] \[INT-[queued_interview.id]\]"
-		))
-
-	var/list/data = list(
-		"status" = list(
-			"Active:" = "[m.open_interviews.len] [stat_string]",
-			"Queued:" = "[m.interview_queue.len]",
-			"Closed:" = "[m.closed_interviews.len]"),
-		"interviews" = queued
-	)
-
-	// Push update
-	target.stat_panel.send_message("update_interviews", data)
+	// TODO: This should show the clients that are in the process of verifying discord
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()

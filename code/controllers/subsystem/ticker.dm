@@ -193,6 +193,9 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
+				if (C.not_discord_verified)
+					to_chat(C, span_red(span_big(span_notice("Welcome to Monkestation! Your client is [span_bold("NOT verified")]! Please go to the OOC tab and click 'Verify Discord Account' to begin the verification process."))))
+					C.verify_in_discord()
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
@@ -410,7 +413,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_character(mob/dead/new_player/player)
 	if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
-		if(interview_safety(player, "readied up"))
+		if(verification_safety(player, "readied up"))
 			player.ready = PLAYER_NOT_READY
 			QDEL_IN(player.client, 0)
 			return

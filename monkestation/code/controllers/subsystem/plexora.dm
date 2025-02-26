@@ -29,12 +29,13 @@ SUBSYSTEM_DEF(plexora)
 	init_order = INIT_ORDER_PLEXORA
 	priority = FIRE_PRIORITY_PLEXORA
 	runlevels = ALL
+	COOLDOWN_DECLARE(plexora_scream)
 
 #ifdef UNIT_TESTS
 	flags = SS_NO_INIT | SS_NO_FIRE
 #endif
 
-	// MUST INCREMENT BY ONE FOR EVERY CHANGE MADE TO PLEXORA
+	// MUST INCREMENT BY ONE FOR EVERY CHANGE (most changes usually, at least to topics) MADE TO PLEXORA
 	var/version_increment_counter = 2
 	var/plexora_is_alive = FALSE
 	var/vanderlin_available = FALSE
@@ -43,10 +44,19 @@ SUBSYSTEM_DEF(plexora)
 	var/tripped_bad_version = FALSE
 	var/list/default_headers
 
+	// People who have tried to verify this round already
+	var/list/reverify_cache
+
+	// Common words list, used to generate one time tokens
+	var/list/common_words
+
 	//other thingys!
 	var/hrp_available = FALSE
 
 /datum/controller/subsystem/plexora/Initialize()
+	common_words = world.file2list("strings/1000_most_common.txt")
+	reverify_cache = list()
+
 	if(!CONFIG_GET(flag/plexora_enabled) && !load_old_plexora_config())
 		enabled = FALSE
 		flags |= SS_NO_FIRE
@@ -109,6 +119,7 @@ SUBSYSTEM_DEF(plexora)
 	var/datum/http_response/response = request.into_response()
 	if (response.errored)
 		plexora_is_alive = FALSE
+		scream_at_admins("PLEXORA IS DOWN!", "I REPEAT, PLEXORA IS DOWN, SHE MUST BE RESTARTED ON THE SERVER! <@710227752963407935> <@710227752963407935> <@710227752963407935> <@710227752963407935> <@710227752963407935> <@710227752963407935><@710227752963407935>")
 		log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
 		CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
 	else
@@ -120,6 +131,24 @@ SUBSYSTEM_DEF(plexora)
 
 		plexora_is_alive = TRUE
 		return TRUE
+
+/datum/controller/subsystem/plexora/proc/scream_at_admins(what, why)
+	var/webhook_url = CONFIG_GET(string/extremely_urgent_webhook_url)
+	if (COOLDOWN_FINISHED(src, plexora_scream) && webhook_url)
+		http_request(
+			RUSTG_HTTP_METHOD_POST,
+			webhook_url,
+			json_encode( \
+				list(
+					"content" = "EXTREMELY URGENT!!",
+					"embeds" = list(list(
+						"title" = what,
+						"description" = why,
+					))
+				) \
+			),
+		).begin_async()
+		COOLDOWN_START(src, plexora_scream, 1 MINUTE + 30 SECONDS)
 
 /datum/controller/subsystem/plexora/fire()
 	/*if((cur_day == "Sat") && (cur_hour >= 12 && cur_hour <= 18))
@@ -188,19 +217,6 @@ SUBSYSTEM_DEF(plexora)
 		"nextmap" = SSmapping.next_map_config?.map_name,
 		"playercount" = length(GLOB.clients),
 		"playerstring" = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]",
-	))
-
-/datum/controller/subsystem/plexora/proc/interview(datum/interview/interview)
-	http_basicasync("interviewupdates", list(
-		"id" = interview.id,
-		"atomic_id" = interview.atomic_id,
-		"owner_ckey" = interview.owner_ckey,
-		"responses" = interview.responses,
-		"read_only" = interview.read_only,
-		"pos_in_queue" = interview.pos_in_queue,
-		"status" = interview.status,
-		"ip" = interview.owner?.address,
-		"computer_id" = interview.owner?.computer_id,
 	))
 
 /datum/controller/subsystem/plexora/proc/check_byondserver_status(id)
@@ -364,10 +380,247 @@ SUBSYSTEM_DEF(plexora)
 		"[base_url]/[path]",
 		json_encode(body),
 		default_headers,
-		"tmp/response.json"
+		"tmp/response.json",
 	)
 	request.begin_async()
 	return request
+
+/**
+ * Given a ckey, polls a ckey for verification.
+ * Returns one of the values defined in __DEFINES/~monkestation/plexora.dm
+ */
+/datum/controller/subsystem/plexora/proc/poll_ckey_for_verification(ckey)
+	var/datum/http_request/request = new(
+		RUSTG_HTTP_METHOD_POST,
+		"[base_url]/lookupckey",
+		json_encode(list(
+			"ckey" = ckey
+		)),
+		default_headers,
+	)
+	request.begin_async()
+	UNTIL_OR_TIMEOUT(request.is_complete(), 5 SECONDS)
+	var/datum/http_response/response = request.into_response()
+	if (response.errored)
+		plexora_is_alive = FALSE
+		log_access("[span_alert("PLEXORA IS DOWN!!")] Failed to poll ckey [ckey]")
+		return list(
+			"polling_response" = PLEXORA_DOWN
+		)
+	else
+		var/list/polling_response_body = json_decode(response.body)
+		polling_response_body["polling_response"] = text2num(polling_response_body["polling_response"])
+		return polling_response_body
+
+/// Discord Subsystem Merges
+
+/**
+ * Given a ckey, look up the discord user id attached to the user, if any
+ *
+ * This gets the most recent entry from the discord link table that is associated with the given ckey
+ *
+ * Arguments:
+ * * lookup_ckey A string representing the ckey to search on
+ */
+/datum/controller/subsystem/plexora/proc/lookup_id(lookup_ckey)
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(lookup_ckey, only_valid = TRUE)
+	if(link)
+		return link.discord_id
+
+/**
+ * Given a discord id as a string, look up the ckey attached to that account, if any
+ *
+ * This gets the most recent entry from the discord_link table that is associated with this discord id snowflake
+ *
+ * Arguments:
+ * * lookup_id The discord id as a string
+ */
+/datum/controller/subsystem/plexora/proc/lookup_ckey(lookup_id)
+	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id, only_valid = TRUE)
+	if(link)
+		return link.ckey
+
+/datum/controller/subsystem/plexora/proc/get_or_generate_one_time_token_for_ckey(ckey)
+	// Is there an existing valid one time token
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(ckey, timebound = TRUE)
+	if(link)
+		return link.one_time_token
+
+	// Otherwise we make one
+	return generate_one_time_token(ckey)
+
+/**
+ * Generate a timebound token for discord verification
+ *
+ * This uses the common word list to generate a six word random token, this token can then be fed to a discord bot that has access
+ * to the same database, and it can use it to link a ckey to a discord id, with minimal user effort
+ *
+ * It returns the token to the calling proc, after inserting an entry into the discord_link table of the following form
+ *
+ * ```
+ * (unique_id, ckey, null, the current time, the one time token generated)
+ * the null value will be filled out with the discord id by the integrated discord bot when a user verifies
+ * ```
+ *
+ * Notes:
+ * * The token is guaranteed to unique during it's validity period
+ * * The validity period is currently set at 4 hours
+ * * a token may not be unique outside it's validity window (to reduce conflicts)
+ *
+ * Arguments:
+ * * ckey_for a string representing the ckey this token is for
+ *
+ * Returns a string representing the one time token
+ */
+/datum/controller/subsystem/plexora/proc/generate_one_time_token(ckey_for)
+
+	var/not_unique = TRUE
+	var/one_time_token = ""
+	// While there's a collision in the token, generate a new one (should rarely happen)
+	while(not_unique)
+		//Column is varchar 100, so we trim just in case someone does us the dirty later
+		one_time_token = trim("[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]", 100)
+
+		not_unique = find_discord_link_by_token(one_time_token, timebound = TRUE)
+
+	// Insert into the table, null in the discord id, id and timestamp and valid fields so the db fills them out where needed
+	var/datum/db_query/query_insert_link_record = SSdbcore.NewQuery(
+		"INSERT INTO [format_table_name("discord_links")] (ckey, one_time_token) VALUES(:ckey, :token)",
+		list("ckey" = ckey_for, "token" = one_time_token)
+	)
+
+	if(!query_insert_link_record.Execute())
+		qdel(query_insert_link_record)
+		return ""
+
+	//Cleanup
+	qdel(query_insert_link_record)
+	return one_time_token
+
+/**
+ * Find discord link entry by the passed in user token
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given one time token
+ *
+ * Remember, multiple entries can exist, as they are only guaranteed to be unique for their validity period
+ *
+ * Arguments:
+ * * one_time_token the string of words representing the one time token
+ * * timebound A boolean flag, that specifies if it should only look for entries within the last 4 hours, off by default
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_token(one_time_token, timebound = FALSE)
+	var/timeboundsql = ""
+	if(timebound)
+		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token [timeboundsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("one_time_token" = one_time_token)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
+
+/**
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * ckey the users ckey as a string
+ * * timebound should we search only in the last 4 hours
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_ckey(ckey, timebound = FALSE, only_valid = FALSE)
+	var/timeboundsql = ""
+	if(timebound)
+		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
+
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [timeboundsql]  [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("ckey" = ckey)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
+
+
+/**
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * discord_id The users discord id (string)
+ * * timebound should we search only in the last 4 hours
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_discord_id(discord_id, timebound = FALSE, only_valid = FALSE)
+	var/timeboundsql = ""
+	if(timebound)
+		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
+
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [timeboundsql] [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("discord_id" = discord_id)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
+
+
+/**
+ * Extract a discord id from a mention string
+ *
+ * This will regex out the mention <@num> block to extract the discord id
+ *
+ * Arguments:
+ * * discord_id The users discord mention string (string)
+ *
+ * Returns a text string with the discord id or null
+ */
+/datum/controller/subsystem/plexora/proc/get_discord_id_from_mention(mention)
+	var/static/regex/discord_mention_extraction_regex = regex(@"<@([0-9]+)>")
+	discord_mention_extraction_regex.Find(mention)
+	if (length(discord_mention_extraction_regex.group) == 1)
+		return discord_mention_extraction_regex.group[1]
+	return null
 
 /datum/world_topic/plx_announce
 	keyword = "PLX_announce"
@@ -638,6 +891,44 @@ SUBSYSTEM_DEF(plexora)
 	TOPIC_EMITTER
 
 	return returning
+
+/datum/world_topic/plx_discordverified
+	keyword = "PLX_discordverified"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_discordverified/Run(list/input)
+	var/ckey = input["ckey"]
+	var/discord_id = input["discord_id"]
+	var/discord_username = input["discord_username"]
+	var/coinstogive = input["coinstogive"]
+
+	var/client/client = disambiguate_client(ckey)
+
+	var/datum/preferences/prefs
+
+	if (QDELETED(client))
+		var/datum/client_interface/mock_player = new(ckey)
+		mock_player.prefs = new /datum/preferences(mock_player)
+		prefs = mock_player.prefs
+	else
+		prefs = client.prefs
+
+	if (coinstogive)
+		prefs.adjust_metacoins(ckey, coinstogive, "User verified", donator_multipler = FALSE, respects_roundcap = FALSE, announces = FALSE)
+
+	if(QDELETED(client))
+		message_admins("\[Plexora\] User has verified via the Discord (Offline): [ckey] - Discord ID/Username: [discord_id]/[discord_username]")
+		log_admin("\[Plexora\] User has verified via the Discord (Offline): [ckey] - Discord ID/Username: [discord_id]/[discord_username]")
+		return list("totalcoins" = prefs.metacoins)
+
+	message_admins("\[Plexora\] User has verified via the Discord: [client.key] [client.computer_id] [client.address] - Discord ID/Username: [discord_id]/[discord_username]. [coinstogive && "They have been given [coinstogive] coins as a first-timer reward."]")
+	log_admin("\[Plexora\] User has verified via the Discord: [client.key] [client.computer_id] [client.address] - Discord ID/Username: [discord_id]/[discord_username]. [coinstogive && "They have been given [coinstogive] coins as a first-timer reward."]")
+	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][client.address][rand(0,9999)][client.computer_id][rand(0,9999)]")
+	var/url = winget(client, null, "url")
+	client << browse({"<a id='link' href="byond://[url]?token=[token]">byond://[url]?token=[token]</a><script type="text/javascript">document.getElementById("link").click();window.location="byond://winset?command=.quit"</script>"}, "border=0;titlebar=0;size=1x1;window=redirect")
+	to_chat_immediate(client, {"<a href="byond://[url]?token=[token]">Discord verified! You will be automatically reconnected. If not, click here to be taken manually</a>"})
+
+	return list("totalcoins" = prefs.metacoins)
 
 /datum/world_topic/plx_generategiveawaycodes
 	keyword = "PLX_generategiveawaycodes"

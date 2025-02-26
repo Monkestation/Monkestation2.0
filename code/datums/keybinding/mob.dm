@@ -11,7 +11,7 @@
 
 /datum/keybinding/mob/stop_pulling/down(client/user)
 	. = ..()
-	if(.)
+	if(. || isdead(user.mob))
 		return
 	var/mob/M = user.mob
 	if(!M.pulling)

@@ -25,6 +25,9 @@
 	default = "<@&999008528595419278>"
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/extremely_urgent_webhook_url
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/bot_dump_url
 
 //API key for Github Issues.
@@ -34,6 +37,9 @@
 //Endpoint for Github Issues, the `owner/repo` part.
 /datum/config_entry/string/issue_slug
 	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/discordurl
+	default = "https://discord.monkestation.com/"
 
 /datum/config_entry/flag/looc_enabled
 

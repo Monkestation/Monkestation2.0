@@ -194,7 +194,6 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/panicbunker,
 	/client/proc/toggle_cdn,
 	/client/proc/toggle_hub,
-	/client/proc/toggle_interviews,
 	/client/proc/toggle_random_events,
 	/client/proc/Overwatch_ASN_panel,
 	/client/proc/Overwatch_WhitelistPanel,
