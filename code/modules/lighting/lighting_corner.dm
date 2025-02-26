@@ -110,6 +110,17 @@
 		SSlighting.corners_queue += src
 
 /datum/lighting_corner/proc/update_objects()
+#ifdef ANERI_LIGHTING
+	var/should_not_update = null
+	. = ANERI_CALL(experiment_lighting_corner_update_objects, src, &should_not_update)
+#ifdef VISUALIZE_LIGHT_UPDATES
+	if(!SSlighting.allow_duped_corners && should_not_update)
+		return
+#else // VISUALIZE_LIGHT_UPDATES
+	if(should_not_update)
+		return
+#endif // VISUALIZE_LIGHT_UPDATES
+#else // ANERI_LIGHTING
 	// Cache these values ahead of time so 4 individual lighting objects don't all calculate them individually.
 	var/lum_r = src.lum_r
 	var/lum_g = src.lum_g
@@ -135,7 +146,7 @@
 	cache_r = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	cache_g = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
-	#else
+	#else // LIGHTING_SOFT_THRESHOLD != 0
 	cache_r = round(lum_r * ., LIGHTING_ROUND_VALUE)
 	cache_g = round(lum_g * ., LIGHTING_ROUND_VALUE)
 	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE)
@@ -156,10 +167,11 @@
 #ifdef VISUALIZE_LIGHT_UPDATES
 	if(!SSlighting.allow_duped_corners && old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_b == add_b && old_add_g == add_g)
 		return
-#else
+#else // VISUALIZE_LIGHT_UPDATES
 	if(old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_b == add_b && old_add_g == add_g)
 		return
-#endif
+#endif // VISUALIZE_LIGHT_UPDATES
+#endif // ANERI_LIGHTING
 
 	var/datum/lighting_object/lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
