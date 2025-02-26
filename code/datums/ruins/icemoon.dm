@@ -167,3 +167,9 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndicate
+	name = "Icemoon Syndicate Research Outpost"
+	id = "syndicate_icemoon"
+	description = "A lightly fortified joint outpost manned by various Syndicate organisations, responsible for research and development of various advanced technologies."
+	suffix = "icemoon_underground_syndicate.dmm"
