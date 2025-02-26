@@ -17,10 +17,10 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		//we try to flee first these flip flop based on flee state which is controlled by a componenet on the mob
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee_has_item,
+		/datum/ai_planning_subtree/slime_find_scared_item,
 		/datum/ai_planning_subtree/flee_target,
 		//now we try to
-		/datum/ai_planning_subtree/simple_find_target_no_trait,
+		/datum/ai_planning_subtree/slime_find_non_latched_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/slime,
 	)
 	can_idle = FALSE // we want these to be running always

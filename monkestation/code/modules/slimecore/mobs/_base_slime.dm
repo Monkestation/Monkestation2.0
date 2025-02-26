@@ -227,7 +227,7 @@
 	new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/pet_planning)
 
 	if(!HAS_TRAIT(src, TRAIT_SLIME_RABID))
-		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/simple_find_nearest_target_to_flee_has_item)
+		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/slime_find_scared_item)
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/flee_target)
 
 	if(slime_flags & CLEANER_SLIME)
@@ -235,7 +235,7 @@
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
-		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/simple_find_target_no_trait)
+		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/slime_find_non_latched_target)
 
 	if(length(compiled_liked_foods))
 		AddElement(/datum/element/basic_eating, food_types = compiled_liked_foods)
