@@ -1,3 +1,34 @@
+/obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
+	if (owner.stat == DEAD)
+		return
+	if (advanced)
+		if (HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+			return "Subject is temporarily hard of hearing from ear damage."
+	return ..()
+
+/obj/item/organ/internal/ears/proc/update_hearing_loss()
+	var/was_deaf = HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE)
+	var/was_hoh = HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+
+	if (!deaf)
+		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		return
+
+	if (damage < 25 && !(organ_flags & ORGAN_FAILING))
+		ADD_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		if (!was_hoh)
+			if (was_deaf)
+				to_chat(owner, span_warning("You're able to hear again, but everything sounds quiet."))
+			else
+				to_chat(owner, span_warning("Everything sounds quiet."))
+	else
+		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		if (!was_deaf)
+			to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises."))
+
 /obj/item/organ/internal/ears/robot/clockwork
 	name = "biometallic recorder"
 	desc = "An odd sort of microphone that looks grown, rather than built."
