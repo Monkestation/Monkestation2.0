@@ -395,7 +395,7 @@
 					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
 					eyes.Remove(new_body)
 					qdel(eyes)
-			bodypart.drop_limb() // Drop limb should delete the limb for oozlings unless someone changes it.
+			new_body.remove_bodypart_painlessly(bodypart.body_zone)
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
 		//Make oozlings revive similar to other species.

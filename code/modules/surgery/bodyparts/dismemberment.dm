@@ -26,12 +26,14 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
+	// monkestation edit start
 	if((limb_id == SPECIES_OOZELING))
 		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
 		playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
+	// monkestation edit end
 
-	drop_limb()
+	drop_limb(dismembered = TRUE)
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
@@ -71,12 +73,15 @@
 
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE)
+///monkestation addition: "painless" argument
+/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE, painless = FALSE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
 
-	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered, special)
+	// monkestation edit start
+	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered, special, painless)
+	// monkestation edit end
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(dropping_limb = TRUE)
 	//limb is out and about, it can't really be considered an implant
@@ -241,11 +246,11 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, violent, painless)
 	if(special)
 		return ..()
 
-/obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, violent, painless)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -278,7 +283,7 @@
 	new_arm_owner.update_worn_gloves()
 
 
-/obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/leg/drop_limb(special, dismembered, violent, painless)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -289,7 +294,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/drop_limb(special, dismembered, violent, painless)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))

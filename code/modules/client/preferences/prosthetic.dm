@@ -1,3 +1,4 @@
+/* monkestation removal - functionality moved to monkestation/../limb_quirks.dm
 /datum/preference/choiced/prosthetic
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "prosthetic"
@@ -15,3 +16,4 @@
 
 /datum/preference/choiced/prosthetic/apply_to_human(mob/living/carbon/human/target, value)
 	return
+*/
