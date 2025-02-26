@@ -66,7 +66,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fa-book-dead",
 			SPECIES_PERK_NAME = "Fey Ancenstry",
-			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to silver.",
+			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to iron.",
 		)
 	)
 	return to_add
@@ -100,7 +100,7 @@
 	qdel(drunk)
 
 /datum/species/satyr/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(chem.type == (/datum/reagent/silver)) //
+	if(chem.type == (/datum/reagent/iron))
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
