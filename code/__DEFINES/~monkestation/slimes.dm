@@ -17,8 +17,11 @@
 #define LATCH_TRAIT "latch_trait"
 #define TRAIT_LATCH_FEEDERED "feeder_targetted"
 
-#define BB_BASIC_MOB_TARGETED_TRAIT "BB_basic_mob_targeted_trait"
 #define BB_BASIC_MOB_SCARED_ITEM "BB_basic_mob_scared_item"
+#define BB_BASIC_MOB_TARGETED_TRAIT "BB_basic_mob_targeted_trait"
+#define BB_SLIME_NON_LATCHED_TARGETING_STRATEGY "BB_slime_non_latched_targeting_strategy"
+#define BB_SLIME_NON_LATCHED_AND_SMALLER_TARGETING_STRATEGY "BB_slime_non_latched_and_smaller_targeting_strategy"
+#define BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY "BB_slime_scared_item_targeting_strategy"
 #define BB_WONT_TARGET_CLIENTS "BB_wont_target_clients"
 
 #define TRAIT_CAREFUL_STEPS "careful_steps"
