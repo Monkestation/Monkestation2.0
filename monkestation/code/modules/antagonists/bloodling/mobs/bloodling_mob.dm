@@ -122,6 +122,9 @@
 	if(biomass > 50)
 		melee_damage_lower = biomass * 0.1
 		melee_damage_upper = biomass * 0.1
+	// Should refresh our abilities
+	for(var/datum/action/cooldown/ability in src.our_abilties)
+		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	update_health_hud()
 	check_evolution()
 
@@ -194,7 +197,7 @@
 	// Runs = instead of add_biomass because the tier 1 bloodling has 50 biomass to start with
 	new_bloodling.biomass = biomass
 	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
-		ability.build_button_icon()
+		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 	qdel(src)
 
