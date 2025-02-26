@@ -1,29 +1,28 @@
 /datum/ai_behavior/find_potential_targets/without_trait
-	///our max size
+
+/datum/targeting_strategy/basic/lacking_trait
+	var/target_trait_key = BB_BASIC_MOB_TARGETED_TRAIT
+	/// Only select from targets that are equal or smaller in size to us. This only has an effect
+	/// when checking `/mob/living`-type targets - non-living targets will be processed as normal.
 	var/checks_size = FALSE
 
-/datum/ai_behavior/find_potential_targets/without_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
-	var/list/filtered_further = list()
-	for(var/mob/living/filtered_target in filtered_targets)
-		if(HAS_TRAIT(filtered_target, controller.blackboard[BB_BASIC_MOB_TARGETED_TRAIT]))
-			continue
+/datum/targeting_strategy/basic/lacking_trait/can_attack(mob/living/living_mob, atom/target, vision_range)
+	var/targeted_trait = controller.blackboard[target_trait_key]
 
-		if(filtered_target.client && controller.blackboard[BB_WONT_TARGET_CLIENTS])
-			continue
+	if (targeted_trait == null)
+		return FALSE // no nop
 
-		// `mob_size` only exists on `/mob/living` - anything else will ignore `checks_size`
-		if(checks_size && isliving(controller.pawn))
-			var/mob/living/us = controller.pawn
-			if(filtered_target.mob_size >= us.mob_size)
-				continue
+	// Check if our parent behaviour agrees we can attack this target (we ignore faction by default)
+	var/can_attack = ..()
+	if(can_attack && HAS_TRAIT(target, targeted_trait))
+		if(checks_size && isliving(target))
+			var/mob/living/them = target
+			if(them.mob_size < living_mob.mob_size)
+				return TRUE
+		else
+			return TRUE // they have the trait
+	// No valid target
+	return FALSE
 
-		filtered_further += filtered_target
-
-	if(filtered_further.len)
-		return pick(filtered_further)
-	// Otherwise we will return `null`
-
-/datum/ai_behavior/find_potential_targets/without_trait/smaller
-	/// Only select from targets that are equal or smaller in size to us. Has no effect if this ai
-	/// behavior is ran by a non-`/mob/living`.
+/datum/targeting_strategy/basic/lacking_trait/smaller
 	checks_size = TRUE

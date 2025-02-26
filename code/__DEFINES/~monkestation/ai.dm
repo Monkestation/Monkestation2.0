@@ -19,4 +19,6 @@
 #define BB_GARY_WANDER_COOLDOWN "BB_gary_wander_cooldown"
 
 // slime defines
+#define BB_SLIME_NON_LATCHED_TARGETING_STRATEGY "BB_slime_non_latched_targeting_strategy"
+#define BB_SLIME_NON_LATCHED_AND_SMALLER_TARGETING_STRATEGY "BB_slime_non_latched_and_smaller_targeting_strategy"
 #define BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY "BB_slime_scared_item_targeting_strategy"

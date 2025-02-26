@@ -3,11 +3,11 @@
 /datum/ai_planning_subtree/simple_find_target_no_trait/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
-	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/without_trait, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/without_trait, BB_BASIC_MOB_CURRENT_TARGET, BB_SLIME_NON_LATCHED_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /datum/ai_planning_subtree/simple_find_target_no_trait_and_smaller
 
 /datum/ai_planning_subtree/simple_find_target_no_trait_and_smaller/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
-	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/without_trait/smaller, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/without_trait, BB_BASIC_MOB_CURRENT_TARGET, BB_SLIME_NON_LATCHED_AND_SMALLER_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
