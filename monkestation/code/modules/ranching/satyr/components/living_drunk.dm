@@ -48,7 +48,7 @@
 	if(!COOLDOWN_FINISHED(src, drank_grace))
 		return
 
-	current_drunkness = max(min_drunkness, (current_drunkness -= 1.5))
+	current_drunkness = max(min_drunkness, (current_drunkness -= 0.15))
 	drunkness_change_effects()
 
 /datum/component/living_drunk/proc/drunkness_change_effects()
