@@ -17,6 +17,7 @@
 #define LATCH_TRAIT "latch_trait"
 #define TRAIT_LATCH_FEEDERED "feeder_targetted"
 
+#define BB_BASIC_MOB_TARGETED_TRAIT "BB_basic_mob_targeted_trait"
 #define BB_BASIC_MOB_SCARED_ITEM "BB_basic_mob_scared_item"
 #define BB_WONT_TARGET_CLIENTS "BB_wont_target_clients"
 
