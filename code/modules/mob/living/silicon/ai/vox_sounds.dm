@@ -1232,6 +1232,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"w" = 'sound/vox_fem/w.ogg',
 	"walk" = 'sound/vox_fem/walk.ogg',
 	"wall" = 'sound/vox_fem/wall.ogg',
+	"wanker" = 'sound/vox_fem/wanker.ogg',
 	"want" = 'sound/vox_fem/want.ogg',
 	"wanted" = 'sound/vox_fem/wanted.ogg',
 	"warden" = 'sound/vox_fem/warden.ogg',
