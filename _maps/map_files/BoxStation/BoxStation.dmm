@@ -3943,19 +3943,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "boe" = (
-/obj/machinery/newscaster/directional/west,
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
-/obj/item/pen{
-	pixel_x = -4;
-	pixel_y = -4
+/obj/machinery/status_display/supply{
+	pixel_x = -32
 	},
-/obj/item/pen/red,
-/obj/effect/spawner/random/entertainment/coin{
-	pixel_y = 7;
-	pixel_x = 7
-	},
+/obj/structure/filingcabinet,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "bog" = (
@@ -11580,6 +11571,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/xenobiology)
 "dJx" = (
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/computer/records/medical{
 	dir = 8
 	},
@@ -13430,7 +13422,6 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/table/wood,
 /obj/item/paper_bin,
-/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "epc" = (
@@ -15016,11 +15007,13 @@
 /area/station/hallway/primary/central)
 "ePQ" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/bed/dogbed,
-/mob/living/basic/pet/dog/bullterrier{
-	name = "Walter";
-	real_name = "Walter";
-	desc = "It's Walter!"
+/obj/structure/bed/dogbed{
+	name = "Justice's bed"
+	},
+/mob/living/basic/pet/dog/australianshepherd{
+	name = "Justice";
+	desc = "It's Justice!";
+	real_name = "Justice"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -15614,7 +15607,13 @@
 /area/station/engineering/shipbreaker_hut)
 "fbw" = (
 /obj/structure/table,
-/obj/item/toy/figure/qm,
+/obj/item/toy/figure/qm{
+	pixel_x = -7
+	},
+/obj/effect/spawner/random/entertainment/coin{
+	pixel_y = 7;
+	pixel_x = 3
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "fbx" = (
@@ -21566,6 +21565,7 @@
 	pixel_y = 7;
 	pixel_x = -8
 	},
+/obj/item/toy/figure/curator,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "gSE" = (
@@ -26248,9 +26248,7 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "iue" = (
-/obj/machinery/status_display/supply{
-	pixel_x = -32
-	},
+/obj/machinery/newscaster/directional/west,
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = -6
@@ -37536,9 +37534,6 @@
 	specialfunctions = 4
 	},
 /obj/structure/closet/secure_closet/blueshield,
-/obj/item/storage/backpack/blueshield,
-/obj/item/storage/backpack/duffelbag/blueshield,
-/obj/item/storage/backpack/satchel/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "maL" = (
@@ -39308,7 +39303,10 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mEz" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/dresser,
+/obj/structure/bed/dogbed{
+	name = "Walter's bed"
+	},
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "mEH" = (
@@ -41313,13 +41311,11 @@
 /area/station/commons/fitness)
 "npc" = (
 /obj/machinery/light/directional/west,
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen/red,
-/obj/item/pen/blue{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
 	},
+/mob/living/basic/rabbit/daisy,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "npm" = (
@@ -45479,11 +45475,15 @@
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/lighter{
-	pixel_x = 8;
-	pixel_y = 4
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_y = 2
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	pixel_x = -9;
+	pixel_y = 7
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -47623,7 +47623,10 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
-/obj/structure/filingcabinet,
+/obj/structure/bed/dogbed{
+	name = "Markus's bed"
+	},
+/mob/living/basic/pet/dog/markus,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "prz" = (
@@ -50520,7 +50523,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "qoW" = (
-/obj/structure/filingcabinet,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "qpg" = (
@@ -53042,6 +53045,10 @@
 /area/station/maintenance/department/engine)
 "rhI" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Command - Blueshield's Quarters";
+	name = "command camera"
+	},
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
@@ -53324,7 +53331,10 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "rny" = (
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Command - Blueshield's Office";
+	name = "command camera"
+	},
 /obj/structure/sign/calendar/directional/east,
 /obj/machinery/computer/records/security{
 	dir = 8
@@ -55686,6 +55696,11 @@
 /obj/item/folder/red{
 	pixel_y = 9
 	},
+/obj/item/pen,
+/obj/item/pen/red{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "rZN" = (
@@ -56338,8 +56353,7 @@
 	req_access = list("library")
 	},
 /obj/machinery/newscaster/directional/east,
-/obj/structure/table/wood,
-/obj/item/toy/figure/curator,
+/obj/structure/filingcabinet,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "slS" = (
@@ -56797,9 +56811,12 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen,
+/obj/item/pen/red{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -66575,7 +66592,10 @@
 /area/station/hallway/primary/central)
 "vyC" = (
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/booze,
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "vyJ" = (
@@ -67041,6 +67061,10 @@
 /area/station/command/heads_quarters/captain)
 "vDX" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Command - Captain's Quarters";
+	name = "command camera"
+	},
 /obj/machinery/digital_clock/directional/east,
 /obj/structure/bed/double,
 /obj/item/bedsheet/captain/double,
@@ -74561,17 +74585,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -5
 	},
-/obj/structure/table/wood,
-/obj/item/folder{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/folder,
-/obj/item/folder{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/pen,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "xYn" = (
@@ -74645,6 +74659,36 @@
 	dir = 10
 	},
 /area/station/commons/fitness/recreation)
+"xZm" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/folder{
+	pixel_y = -3;
+	pixel_x = 7
+	},
+/obj/item/folder{
+	pixel_x = 7
+	},
+/obj/item/folder{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/item/pen{
+	pixel_x = 9
+	},
+/obj/item/pen/red{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/pen/blue{
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "xZo" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/airalarm/directional/south,
@@ -123604,7 +123648,7 @@ ccp
 sQW
 qaG
 afd
-qaG
+xZm
 gji
 dOL
 nVc
