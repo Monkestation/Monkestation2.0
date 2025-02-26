@@ -77,7 +77,7 @@
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
-	bubble_icon = "default"
+	// MONKESTATION REMOVAL var/bubble_icon = "default"
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
@@ -390,9 +390,7 @@
 
 // monkestation edit start
 /* original
-/mob/camera/imaginary_friend/create_thinking_indicator(channel)
-	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
-
+/mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
@@ -404,9 +402,7 @@
 	remove_image_from_clients(active_thinking_indicator, group_clients())
 	active_thinking_indicator = null
 
-/mob/camera/imaginary_friend/create_typing_indicator(channel)
-	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
-
+/mob/camera/imaginary_friend/create_typing_indicator()
 	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)

@@ -44,7 +44,10 @@
 	if(isabductor(client.mob) && !HAS_TRAIT(client.mob, TRAIT_SIGN_LANG)) // monkestation edit: abductor signing
 		return FALSE
 	client.mob.thinking_IC = TRUE
-	client.mob.create_thinking_indicator(current_channel)
+	// monkestation edit start
+	// client.mob.create_thinking_indicator() original
+	client.mob.create_thinking_indicator(initial_channel)
+	// monkestation edit end
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_say/proc/stop_thinking()
@@ -58,7 +61,10 @@
 	client.mob.remove_thinking_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE
-	client.mob.create_typing_indicator(current_channel)
+	// monkestation edit start
+	// client.mob.create_typing_indicator() original
+	client.mob.create_typing_indicator(initial_channel)
+	// monkestation edit end
 	addtimer(CALLBACK(src, PROC_REF(stop_typing)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 
 /**
@@ -71,45 +77,41 @@
 	client.mob.remove_typing_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE
-	client.mob.create_thinking_indicator(current_channel)
+	// monkestation edit start
+	// client.mob.create_thinking_indicator() original
+	client.mob.create_thinking_indicator(initial_channel)
+	// monkestation edit end
 
-/mob/proc/add_typing_overlay(image)
-	add_overlay(image)
+/* monkestation removal
+/// Overrides for overlay creation
+/mob/living/create_thinking_indicator()
+	if(active_thinking_indicator || active_typing_indicator || !thinking_IC || stat != CONSCIOUS )
+		return FALSE
+	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
+	add_overlay(active_thinking_indicator)
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
-/mob/proc/remove_typing_overlay(image)
-	cut_overlay(image)
-
-/// Overrides for overlay creation
-/mob/create_thinking_indicator(channel)
-	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
-
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC || (isliving(src) && stat > SOFT_CRIT) )
-		return FALSE
-	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
-	add_typing_overlay(active_thinking_indicator)
-
-/mob/remove_thinking_indicator()
+/mob/living/remove_thinking_indicator()
 	if(!active_thinking_indicator)
 		return FALSE
-	remove_typing_overlay(active_thinking_indicator)
+	cut_overlay(active_thinking_indicator)
 	active_thinking_indicator = null
 
-/mob/create_typing_indicator(channel)
-	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
-
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC || (isliving(src) && stat > SOFT_CRIT))
+/mob/living/create_typing_indicator()
+	if(active_typing_indicator || active_thinking_indicator || !thinking_IC || stat != CONSCIOUS)
 		return FALSE
-	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
-	add_typing_overlay(active_typing_indicator)
+	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
+	add_overlay(active_typing_indicator)
+	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
-/mob/remove_typing_indicator()
+/mob/living/remove_typing_indicator()
 	if(!active_typing_indicator)
 		return FALSE
-	remove_typing_overlay(active_typing_indicator)
+	cut_overlay(active_typing_indicator)
 	active_typing_indicator = null
 
-/mob/remove_all_indicators()
+/mob/living/remove_all_indicators()
 	thinking_IC = FALSE
 	remove_thinking_indicator()
 	remove_typing_indicator()
+*/

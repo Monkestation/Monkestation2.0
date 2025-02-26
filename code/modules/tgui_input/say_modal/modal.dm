@@ -31,8 +31,10 @@
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
-
-	var/current_channel
+	/// monkestation addition
+	/// stores whichever channel the window was opened with
+	/// ideally this would instead be the window's selected channel but that will require a more involved change
+	var/initial_channel
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
@@ -87,8 +89,10 @@
 	if(!payload?["channel"])
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
-	if(payload["channel"] != OOC_CHANNEL && (payload["channel"] != ADMIN_CHANNEL) && (payload["channel"] != MENTOR_CHANNEL)) // monke: add LOOC
-		current_channel = payload["channel"]
+	if(payload["channel"] != OOC_CHANNEL && (payload["channel"] != ADMIN_CHANNEL) && (payload["channel"] != MENTOR_CHANNEL))
+		// monkestation edit start
+		initial_channel = payload["channel"]
+		// monkestation edit end
 		start_thinking()
 	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
@@ -100,10 +104,12 @@
  */
 /datum/tgui_say/proc/close()
 	window_open = FALSE
-	current_channel = null
 	stop_thinking()
 	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators DISABLED.")
+	// monkestation edit start
+	initial_channel = null
+	// monkestation edit end
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
