@@ -55,10 +55,10 @@
 /datum/component/living_drunk/proc/drunkness_change_effects()
 	var/mob/living/living = parent
 	if((current_drunkness <= 10) && drunk_state != 2)
-		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 80)
+		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 71)
 		drunk_state = 2
 		return
-	if((current_drunkness <= 30) && (drunk_state != 1 || drunk_state != 2))
+	if((current_drunkness <= 30) && (drunk_state != 1 && drunk_state != 2))
 		living.apply_status_effect(/datum/status_effect/inebriated/tipsy, 5)
 		drunk_state = 1
 		return
