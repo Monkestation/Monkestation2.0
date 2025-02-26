@@ -78,6 +78,9 @@
 /// Trait for rocks to randomly drop ore.
 #define TRAIT_FOOD_JOB_MINER	"food_job_miner"
 
+#define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
+#define TRAIT_SPONSOR_IMPLANT_SYNDI "sponsor_implant_syndi"
+
 // Traits given by quirks
 #define TRAIT_ANIME				"anime"
 #define TRAIT_CAT				"cat"

@@ -336,7 +336,10 @@
 		component_type = new_component.type
 
 	raw_args[1] = src
-	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE && dupe_mode != COMPONENT_DUPE_SOURCES)
+	// MONKESTATION EDIT START - fix COMPONENT_DUPE_SOURCES duplicating components instead of adding to the list of sources
+	// 	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE && dupe_mode != COMPONENT_DUPE_SOURCES) - monkestation edit original
+	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE)
+	// MONKESTATION EDIT END
 		if(!dupe_type)
 			old_component = GetExactComponent(component_type)
 		else
@@ -389,16 +392,22 @@
 		if(!new_component && make_new_component)
 			new_component = new component_type(raw_args)
 
-	else if(dupe_mode == COMPONENT_DUPE_SOURCES)
-		new_component = new component_type(raw_args)
-		if(new_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
-			stack_trace("incompatible source added to a [new_component.type]. Args: [json_encode(raw_args)]")
-			return null
+	// MONKESTATION REMOVAL START - fix COMPONENT_DUPE_SOURCES duplicating components instead of adding to the list of sources
+	// else if(dupe_mode == COMPONENT_DUPE_SOURCES)
+	// 	new_component = new component_type(raw_args)
+	// 	if(new_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
+	// 		stack_trace("incompatible source added to a [new_component.type]. Args: [json_encode(raw_args)]")
+	// 		return null
+	// MONKESTATION REMOVAL END
 
 	else if(!new_component)
 		new_component = new component_type(raw_args) // Dupes are allowed, act like normal
 
 	if(!old_component && !QDELETED(new_component)) // Nothing related to duplicate components happened and the new component is healthy
+		// MONKESTATION EDIT START - fix COMPONENT_DUPE_SOURCES duplicating components instead of adding to the list of sources
+		if(uses_sources) // make sure they have the source added if they use sources
+			new_component.on_source_add(arglist(list(source) + raw_args.Copy(2)))
+		// MONKESTATION EDIT END
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_component)
 		return new_component
 
