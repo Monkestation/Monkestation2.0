@@ -66,7 +66,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fa-book-dead",
 			SPECIES_PERK_NAME = "Fey Ancenstry",
-			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to iron.",
+			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to cold iron.",
 		)
 	)
 	return to_add
