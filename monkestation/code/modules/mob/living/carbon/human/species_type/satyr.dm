@@ -18,7 +18,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/satyr
 	mutantliver = /obj/item/organ/internal/liver/satyr
 	maxhealthmod = 1
-	stunmod = 1.2
+	stunmod = 1.1
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/satyr,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/satyr,
