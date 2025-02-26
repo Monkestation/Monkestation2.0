@@ -17,7 +17,7 @@
 	meat = /obj/item/food/meat/steak
 	mutanttongue = /obj/item/organ/internal/tongue/satyr
 	mutantliver = /obj/item/organ/internal/liver/satyr
-	maxhealthmod = 0.8
+	maxhealthmod = 1
 	stunmod = 1.2
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/satyr,
@@ -61,7 +61,14 @@
 			SPECIES_PERK_DESC = "Satyr's require a constant supply of booze to not become drunk.",
 		)
 	)
-
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-book-dead",
+			SPECIES_PERK_NAME = "Fey Ancenstry",
+			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to silver.",
+		)
+	)
 	return to_add
 
 /obj/item/organ/internal/tongue/satyr
