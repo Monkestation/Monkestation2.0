@@ -1,3 +1,4 @@
+/* monkestation removal - replaced with /datum/quirk/language_holder/uncommon
 /datum/quirk/foreigner
 	name = "Foreigner"
 	desc = "You're not from around here. You don't know Galactic Common!"
@@ -19,3 +20,4 @@
 	human_holder.remove_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
 		human_holder.remove_language(/datum/language/uncommon)
+*/
