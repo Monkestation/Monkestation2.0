@@ -3227,6 +3227,7 @@
 	dir = 4;
 	layer = 2.8
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "bjm" = (
@@ -5388,6 +5389,7 @@
 /area/station/maintenance/abandon_art_studio)
 "cbt" = (
 /obj/structure/chair/sofa/corp/left,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cbz" = (
@@ -13063,6 +13065,7 @@
 "fav" = (
 /obj/structure/chair/sofa/corp/right,
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "faz" = (
@@ -13511,6 +13514,7 @@
 /area/station/cargo/sorting)
 "flq" = (
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "flK" = (
@@ -13872,6 +13876,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 4
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "ftF" = (
@@ -15538,7 +15543,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "gay" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "gaD" = (
@@ -18129,6 +18134,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
+"haf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/science/cytology)
 "hap" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -22212,6 +22221,7 @@
 "iGA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/duct,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "iGB" = (
@@ -26343,6 +26353,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "kpm" = (
@@ -33891,6 +33902,17 @@
 /area/station/maintenance/aft)
 "neX" = (
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/item/storage/box/beakers{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/wrench,
+/obj/item/knife/kitchen,
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
 "nfb" = (
@@ -44833,7 +44855,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/smartfridge/petri/preloaded,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "rxk" = (
@@ -46638,17 +46659,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/rack,
-/obj/item/storage/box/beakers{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/storage/box/syringes{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/wrench,
-/obj/item/knife/kitchen,
+/obj/machinery/smartfridge/petri/preloaded,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "slP" = (
@@ -56934,6 +56945,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "whM" = (
@@ -58013,6 +58025,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "wDH" = (
@@ -116728,8 +116741,8 @@ neX
 slM
 bpM
 rxj
-rnG
-rnG
+haf
+haf
 wTZ
 aXe
 aXe
