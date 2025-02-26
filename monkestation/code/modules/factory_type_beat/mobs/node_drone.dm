@@ -48,7 +48,7 @@
 
 /mob/living/basic/node_drone/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_retaliate/enemies)
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
@@ -103,8 +103,11 @@
 
 /mob/living/basic/node_drone/proc/pre_escape()
 	if(attached_vent)
-		attached_vent.unbuckle_mob(src)
 		attached_vent = null
+	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
+	if(src.buckled)
+		src.buckled.unbuckle_mob(src) // Unbuckle us from whatever it is. Prevents runtimes.
+	pull_force = MOVE_FORCE_VERY_STRONG // You can no longer pull it. Time to go.
 	if(!escaping)
 		escaping = TRUE
 		flick("mining_node_escape", src)

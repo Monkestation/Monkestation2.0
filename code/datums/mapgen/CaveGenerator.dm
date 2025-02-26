@@ -95,6 +95,7 @@
 	if(!weighted_feature_spawn_list)
 		weighted_feature_spawn_list = list(
 			/obj/structure/geyser/random = 1,
+			/obj/structure/ore_vent = 1, // Some how this being here adds vents despite being overriden.
 		)
 	feature_spawn_list = expand_weights(weighted_feature_spawn_list)
 	open_turf_types = expand_weights(weighted_open_turf_types)
