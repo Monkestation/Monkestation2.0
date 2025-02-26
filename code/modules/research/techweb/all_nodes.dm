@@ -1542,6 +1542,7 @@
 		"plantgenes",
 		// monkestation edit: our hydroponics stuff
 		"composters",
+		"genesis_chamber",
 		"splicer",
 		// monkestation end
 	)

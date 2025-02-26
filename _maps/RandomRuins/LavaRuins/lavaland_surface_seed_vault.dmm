@@ -641,6 +641,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
+"tn" = (
+/obj/machinery/genesis_chamber,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/seedvault)
 "vK" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/clothing/mask/breath,
@@ -961,7 +965,7 @@ al
 al
 PH
 ah
-al
+tn
 aD
 ac
 aK

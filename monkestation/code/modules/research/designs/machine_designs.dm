@@ -100,6 +100,17 @@
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/genesis_chamber
+	name = "Machine Design (G.E.N.E.S.I.S Chamber)"
+	desc = "The circuit board for a G.E.N.E.S.I.S Chamber"
+	id = "genesis_chamber"
+	build_path = /obj/item/circuitboard/machine/genesis_chamber
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_BOTANY
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
+
+
 /datum/design/board/splicer
 	name = "Machine Design (Splicer Board)"
 	desc = "The circuit board for a Splicer."
