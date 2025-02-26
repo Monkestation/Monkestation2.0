@@ -86,7 +86,7 @@
 
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC || (isliving(src) && stat > SOFT_CRIT) )
 		return FALSE
-	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
+	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_typing_overlay(active_thinking_indicator)
 
 /mob/remove_thinking_indicator()
@@ -100,7 +100,7 @@
 
 	if(active_typing_indicator || active_thinking_indicator || !thinking_IC || (isliving(src) && stat > SOFT_CRIT))
 		return FALSE
-	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
+	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_typing_overlay(active_typing_indicator)
 
 /mob/remove_typing_indicator()

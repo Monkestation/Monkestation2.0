@@ -388,14 +388,8 @@
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
-/*
-/mob/camera/imaginary_friend/add_typing_overlay(image)
-	add_image_to_clients(image, group_clients())
-
-/mob/camera/imaginary_friend/remove_typing_overlay(image)
-	remove_image_from_clients(image, group_clients())
-*/
-
+// monkestation edit start
+/* original
 /mob/camera/imaginary_friend/create_thinking_indicator(channel)
 	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
 
@@ -428,6 +422,13 @@
 	thinking_IC = FALSE
 	remove_thinking_indicator()
 	remove_typing_indicator()
+*/
+/mob/camera/imaginary_friend/add_typing_overlay(image)
+	add_image_to_clients(image, group_clients())
+
+/mob/camera/imaginary_friend/remove_typing_overlay(image)
+	remove_image_from_clients(image, group_clients())
+// monkestation edit end
 
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
