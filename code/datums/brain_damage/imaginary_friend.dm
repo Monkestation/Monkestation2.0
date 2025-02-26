@@ -77,7 +77,7 @@
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
-	// MONKESTATION REMOVAL var/bubble_icon = "default"
+	//var/bubble_icon = "default" // MONKESTATION REMOVAL
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
