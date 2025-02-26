@@ -232,11 +232,12 @@
 
 	if((user.istate & ISTATE_SECONDARY)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
-		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user] disarmed [src]!"), \
-							span_userdanger("[user] disarmed you!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You disarm [src]!"))
+		if(!user.client || prob(MONKEY_ATTACK_DISARM_PROB)) // MONKESTATION ADDITION, not even natural monkeys get a 100% disarm
+			if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
+				playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
+				visible_message(span_danger("[user] disarmed [src]!"), \
+								span_userdanger("[user] disarmed you!"), span_hear("You hear aggressive shuffling!"), null, user)
+				to_chat(user, span_danger("You disarm [src]!"))
 		else if(!user.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if (src.IsKnockdown() && !src.IsParalyzed())
