@@ -606,3 +606,113 @@
   Ziiro:
   - bugfix: IPC Cyberkinetics Chassis (Greyscale) now accepts Mutant colors
   - rscadd: IPC Antenna options now accept Secondary Mutant colors
+2025-02-23:
+  Absolucy:
+  - bugfix: The balloon alerts when building on a window sill will now actually say
+      what you're doing, instead of just your name and nothing else.
+  - bugfix: Revenge Vassals can now properly bring ex-Vassals back into the fold with
+      the "Help Vassal" ability.
+  - bugfix: Fixed some various minor errors.
+  BebeYoshi:
+  - bugfix: Reality Dissociation Syndrome properly works now.
+  Shoddd:
+  - bugfix: tundra moth limbs have proper names
+  - bugfix: heliostation has a egg incubator now
+  Snack-Max:
+  - rscadd: Two New Hairstyles, Long Undercut and Alpaca
+  - bugfix: Updated Long Sidecut
+2025-02-24:
+  MissClassyPineapple:
+  - rscadd: Adds the Caffeine dependence quirk. Get to drinking that coffee.
+  - rscadd: Makes coffee mildly addictive.
+  - rscadd: Coffee addiction.
+  Sorenon:
+  - qol: Boxed roundstart / latejoin job information.
+  - qol: Captain gets a little bit more information about how their radio works roundstart.
+  - bugfix: Fixed roundstart players not getting radio information.
+  - rscadd: Added Alcoholic as a negative quirk.
+  - rscadd: Added a toggle to the DRG Miner Training quirk skillchip and some checks
+      to see which (if any) radio channel should be used
+  - rscadd: added large scarves to the loadout store
+  - qol: shrunk the choice beacon item to be pocket sized
+  - bugfix: fixed the top few pixels of anime implant ears getting trimmed for tallest
+      humans
+  - bugfix: fixed QMs showing up on lifeline's blueshield mode
+  - bugfix: fixed missing / disabled legs slowing down flying players
+  - bugfix: fixed the number displayed number of bullets in fingerguns not decreasing
+  - bugfix: fixed the speen emote not making sound
+  - bugfix: fixed latejoin borgs with an AI connection being told they were unlinked
+  - bugfix: fixed the muzzle preventing custom emotes
+  - bugfix: fixed players being unable to resist to get out of vents/scrubbers while
+      ventcrawling
+  - bugfix: fixed seclights being unattachable to the lawbringer
+  - balance: 'Honorbound no longer cares about innocence when it comes to
+
+      lesser creatures. They can still be considered unready in some cases.'
+  - balance: 'Attacking a cultist with a halo or a nuclear operative first
+
+      instantly makes THEM guilty, allowing further attacks.'
+  - balance: More favor for converting someone to the honorbound rules
+  - rscadd: 'Fundamentally Evil quirk. You might act normal, but you know deep
+
+      down that you totally don''t give a shit about anyone but yourself.
+
+      Empaths better watch out.'
+  - rscadd: 'Players who choose to be evil via the quirk menu will be reminded
+
+      at roundstart that this doesn''t exempt them from server rules.'
+2025-02-25:
+  Absolucy:
+  - balance: Bluespace artillery cannons can no longer target oozeling cores.
+  Absolucy, LemonInTheDark:
+  - map: added a map specific changelog entry
+  DexeeXI:
+  - balance: 'Blueshift: all prison ''exterior'' walls are now properly rwalls.'
+  - balance: 'Blueshift: Removed several items that were comically easy to get and
+      ruin the balance of the map.'
+  - balance: 'Blueshift: added two additional chargers to sec''s meeting room as there
+      is a comically short number of available chargers outside of the armory for
+      officers to use while in the brig.'
+  Gw0sty:
+  - qol: Gave ranching its own unique room subtype
+  - bugfix: Heliostation pathology should have functional Airlocks.
+  - bugfix: Theseus has a increased request console network
+  MissClassyPineapple:
+  - balance: Completely rebalanced the temperature guns.
+  - rscadd: new firemode on the temperature guns
+  - bugfix: Plastic panels no longer allows for easy material duplication.
+  - bugfix: Scream for Me now works. It creates a number of severely bleeding wounds
+      and pain.
+  - bugfix: Syndicate EMP kits now contain EMP grenades and the EMP implanter again.
+  - rscadd: Added a reminder to the victim of a bloodsucker feeding, that they won't
+      remember this happening.
+  - bugfix: No more pixelshift dancing exploits.
+  - bugfix: Memento Mori will now dust you if you would otherwise die as a bloodsucker.
+      It does not appreciate being tricked.
+  - rscadd: CMOs now get an autosurgeon for an NT 1.0 cyberlink in their locker so
+      their medical hud implants will have full functionality once more.
+  - bugfix: Secrets on Blueshift
+  - rscadd: Roosters added to ranching on Heliostation.
+  - bugfix: Unlocked the fridges in perma on Heliostation.
+  Mqiib:
+  - balance: Flashbangs only get a guaranteed stun on the same tile, not adjacent
+      tiles.
+  RikuTheKiller:
+  - bugfix: Liquids should run much faster now.
+  Shoddd:
+  - balance: ethereal blood immobilizes instead of knockdown stuns
+  - bugfix: plates breaking inside of walls
+  Sorenon:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
+  - rscadd: Added Goblin Noses
+  - bugfix: You can no longer manipulate "None" organs
+  - rscadd: Added the ability to attach HUD glasses to security helmets, with security
+      hardsuit helmets having an unremovable sec HUD.
+  - rscadd: Most prebuilt modsuits now start with their department's relevant HUD
+      module
+  - qol: The Warden's locker now has a garment bag
+  - rscadd: Adds Food Allergies as a -2 quirk. You can select which food you're allergic
+      to or rock a random option.
+  flleeppyy:
+  - admin: added "Reload Mentors" verb.
