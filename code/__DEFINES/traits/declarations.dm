@@ -829,7 +829,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
 /* #define TRAIT_ANOSMIA "anosmia" */
-/* #define TRAIT_HEAVY_DRINKER "heavy_drinker" */
+#define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
 #define TRAIT_NIGHT_VISION "night_vision"
@@ -848,6 +848,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
@@ -861,6 +862,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
+#define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
 
 /// This mob always lands on their feet when they fall, for better or for worse.
