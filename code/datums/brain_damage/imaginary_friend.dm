@@ -77,7 +77,7 @@
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
-	var/bubble_icon = "default"
+	bubble_icon = "default"
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
@@ -388,7 +388,17 @@
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
-/mob/camera/imaginary_friend/create_thinking_indicator()
+/*
+/mob/camera/imaginary_friend/add_typing_overlay(image)
+	add_image_to_clients(image, group_clients())
+
+/mob/camera/imaginary_friend/remove_typing_overlay(image)
+	remove_image_from_clients(image, group_clients())
+*/
+
+/mob/camera/imaginary_friend/create_thinking_indicator(channel)
+	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
+
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
@@ -400,7 +410,9 @@
 	remove_image_from_clients(active_thinking_indicator, group_clients())
 	active_thinking_indicator = null
 
-/mob/camera/imaginary_friend/create_typing_indicator()
+/mob/camera/imaginary_friend/create_typing_indicator(channel)
+	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon
+
 	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
