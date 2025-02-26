@@ -18,7 +18,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/satyr
 	mutantliver = /obj/item/organ/internal/liver/satyr
 	maxhealthmod = 1
-	stunmod = 1.1
+	stunmod = 1.2
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/satyr,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/satyr,
@@ -99,14 +99,14 @@
 	var/datum/component/living_drunk/drunk = organ_owner.GetComponent(/datum/component/living_drunk)
 	qdel(drunk)
 
-/datum/species/floran/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/satyr/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(chem.type == (/datum/reagent/silver)) //
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	if(chem.type == /datum/reagent/medicine/antihol) //Cures alchol, which they need, to live.
 		to_chat(H, span_danger("You feel your viens constrict as your heads spin"))
-		H.adjustOxyLoss(3 * REM * seconds_per_tick)
+		H.adjustOxyLoss(4 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	return ..()
