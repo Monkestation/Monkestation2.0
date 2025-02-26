@@ -24,7 +24,7 @@
 /obj/machinery/computer/vitals_reader
 	name = "vitals display"
 	desc = "A small screen that displays the vitals of a patient."
-	icon = 'monkestation/code/modules/blood_datum/icons/status_display.dmi'
+	icon = 'monkestation/icons/obj/machines/status_display.dmi'
 	icon_state = "frame"
 	verb_say = "beeps"
 	verb_ask = "beeps"

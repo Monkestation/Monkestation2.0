@@ -5,7 +5,7 @@
 /datum/status_effect/tased
 	id = "being_tased"
 	status_type = STATUS_EFFECT_MULTIPLE
-	alert_type = /atom/movable/screen/alert/status_effect/tazed
+	alert_type = /atom/movable/screen/alert/status_effect/tased
 	tick_interval = 0.25 SECONDS
 	on_remove_on_mob_delete = TRUE
 	/// What atom is tasing us?
@@ -19,9 +19,6 @@
 	if(isnull(fired_from) || isnull(firer) || !can_tase_with(fired_from))
 		qdel(src)
 		return
-
-	if(new_owner.has_status_effect(type) != src)
-		alert_type = null
 
 	. = ..()
 	if(!.)
@@ -60,7 +57,7 @@
 		var/obj/machinery/taser_machine = taser
 		if(!taser_machine.is_operational)
 			return FALSE
-		// We can't measure the output of this but if we use too much power the area will depower -> depower the machine -> stop taze next tick
+		// We can't measure the output of this but if we use too much power the area will depower -> depower the machine -> stop tase next tick
 		taser_machine.use_power(60 * seconds_between_ticks)
 		return TRUE
 
@@ -168,7 +165,7 @@
 
 	tase_line = firer.Beam(
 		BeamTarget = owner,
-		icon = 'monkestation/code/modules/blood_datum/icons/beam.dmi',
+		icon = 'monkestation/icons/effects/beam.dmi',
 		icon_state = "electrodes",
 		maxdistance = 6,
 		beam_type = /obj/effect/ebeam/react_to_entry/electrodes,
@@ -210,7 +207,7 @@
 		span_notice("You try to remove the electrodes!"),
 	)
 	// If embedding was less... difficult to work with, I would make tasers rely on an embedded object to handle this
-	if(!do_after(owner, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(try_remove_taser_checks)), interaction_key = "tazed"))
+	if(!do_after(owner, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(try_remove_taser_checks)), interaction_key = "tased"))
 		return
 	owner.visible_message(
 		span_warning("[owner] removes the electrodes from [owner.p_their()] body!"),
@@ -241,12 +238,12 @@
 	qdel(src)
 
 /// Screen alert for being tased, clicking does a resist (like being on fire or w/e)
-/atom/movable/screen/alert/status_effect/tazed
+/atom/movable/screen/alert/status_effect/tased
 	name = "Tased!"
 	desc = "Taser electrodes are shocking you! You can resist to try to remove them."
 	icon_state = "stun"
 
-/atom/movable/screen/alert/status_effect/tazed/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/tased/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return

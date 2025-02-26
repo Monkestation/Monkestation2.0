@@ -1,7 +1,3 @@
-/datum/physiology
-	///our temp stamina mod
-	var/temp_stamina_mod = 1
-
 /datum/status_effect/stacking/debilitated
 	id = "debilitated"
 	stacks = 0

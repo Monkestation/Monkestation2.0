@@ -93,6 +93,44 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/vitals_display
+	name = "Vitals Display"
+	desc = "A wall mounted computer that displays the vitals of a patient nearby. \
+		Links to stasis beds, operating tables, and other machines that can hold patients \
+		such as cryo cells, sleepers, and more."
+	id = "vitals_display"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/wallframe/status_display/vitals
+	category = list(RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/vitals_display/advanced
+	name = "Advanced Vitals Display"
+	desc = "An updated vitals display which performs a more detailed scan of the patient than the basic display."
+	id = "vitals_display_advanced"
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/wallframe/status_display/vitals/advanced
+
+/datum/design/board/vital_floor_scanner
+	name = "Vitals Scanning Pad"
+	desc = "The circuit board for a vitals scanning pad."
+	id = "scanning_pad"
+	build_path = /obj/item/circuitboard/machine/vital_floor_scanner
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/pathology_goggles
 	name = "Viral Analyzer Goggles"
 	desc = "A pair of goggles fitted with an analyzer for viral particles and reagents."

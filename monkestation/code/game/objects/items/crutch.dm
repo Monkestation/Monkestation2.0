@@ -1,11 +1,11 @@
 /obj/item/cane/crutch
 	name = "medical crutch"
 	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
-	icon = 'monkestation/code/modules/blood_datum/icons/staff.dmi'
+	icon = 'monkestation/icons/obj/items/crutch.dmi'
 	icon_state = "crutch_med"
 	inhand_icon_state = "crutch_med"
-	lefthand_file = 'monkestation/code/modules/blood_datum/icons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blood_datum/icons/melee_righthand.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/crutch_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/crutch_righthand.dmi'
 	force = 12
 	throwforce = 8
 	w_class = WEIGHT_CLASS_BULKY
