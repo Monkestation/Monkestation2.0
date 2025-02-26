@@ -183,8 +183,6 @@
 		if(!panel_open && capacity > 0)
 			dump_seeds(capacity)
 
-		// Determine appropriate icon state for when the panel is closed
-
 		return default_deconstruction_screwdriver(user, "genesis_chamber_open", "genesis_chamber_off", tool)
 
 /obj/machinery/genesis_chamber/crowbar_act(mob/living/user, obj/item/tool)
