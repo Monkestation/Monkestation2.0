@@ -1,5 +1,3 @@
-/datum/ai_behavior/find_potential_targets/without_trait
-
 /datum/targeting_strategy/basic/lacking_trait
 	var/target_trait_key = BB_BASIC_MOB_TARGETED_TRAIT
 	/// Only select from targets that are equal or smaller in size to us. This only has an effect
@@ -7,6 +5,7 @@
 	var/checks_size = FALSE
 
 /datum/targeting_strategy/basic/lacking_trait/can_attack(mob/living/living_mob, atom/target, vision_range)
+	var/datum/ai_controller/controller = living_mob.ai_controller
 	var/targeted_trait = controller.blackboard[target_trait_key]
 
 	if (targeted_trait == null)

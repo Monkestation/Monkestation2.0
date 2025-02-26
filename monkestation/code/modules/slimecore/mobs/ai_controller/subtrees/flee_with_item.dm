@@ -5,5 +5,5 @@
 	. = ..()
 	if(controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
-	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/with_item, BB_BASIC_MOB_CURRENT_TARGET, BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/find_potential_targets, BB_BASIC_MOB_CURRENT_TARGET, BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
