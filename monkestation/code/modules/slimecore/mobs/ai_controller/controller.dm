@@ -7,6 +7,7 @@
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_WONT_TARGET_CLIENTS = FALSE, //specifically to stop targetting clients
 		BB_BASIC_MOB_TARGETED_TRAIT = TRAIT_LATCH_FEEDERED,
+		BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object/scared_item,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

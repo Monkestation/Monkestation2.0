@@ -17,3 +17,6 @@
 #define BB_GARY_BARTER_ITEM "BB_gary_barter_item"
 #define BB_GARY_BARTER_STEP "BB_gary_barter_step"
 #define BB_GARY_WANDER_COOLDOWN "BB_gary_wander_cooldown"
+
+// slime defines
+#define BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY "BB_slime_scared_item_targeting_strategy"
