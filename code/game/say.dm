@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
 		hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range)
-	send_bark(message, hearers)
+	send_bark(message, hearers, range, FALSE)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE, visible_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.

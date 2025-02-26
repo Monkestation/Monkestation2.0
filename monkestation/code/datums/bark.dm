@@ -1,3 +1,6 @@
+GLOBAL_LIST_EMPTY(bark_list)
+GLOBAL_LIST_EMPTY(bark_random_list)
+
 //Datums for barks and bark accessories
 
 /datum/bark
@@ -21,7 +24,12 @@
 	var/ignore = FALSE //Controls whether or not this can be chosen in chargen
 	var/allow_random = FALSE //Allows chargen randomization to use this. This is mainly to restrict the pool to sounds that fit well for most characters
 
+/datum/bark_voice
+	var/talk
+	var/ask
+	var/exclaim
 
+/*
 // So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
 // Short instrument samples tend to sound surprisingly nice for barks, being able to be played in rapid succession without being outright obnoxious.
 // It isn't just instruments that work well here, however. Anything that works well as a stab? Short attack, no sustain, a decent amount of release? Also works extremely well for barks.
@@ -148,3 +156,4 @@
 	id = "honk"
 	soundpath = 'sound/creatures/goose1.ogg'
 	ignore = TRUE
+*/
