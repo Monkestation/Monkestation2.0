@@ -2647,6 +2647,7 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/hos)
 "aOA" = (
@@ -59159,6 +59160,7 @@
 /obj/item/grenade/barrier{
 	pixel_x = 4
 	},
+/obj/item/dragnet_beacon,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
