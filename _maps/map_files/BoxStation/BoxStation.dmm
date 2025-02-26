@@ -53049,7 +53049,7 @@
 	c_tag = "Command - Blueshield's Quarters";
 	name = "command camera"
 	},
-/obj/machinery/suit_storage_unit/security,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "rhO" = (
