@@ -40,18 +40,13 @@
 			id = pick(GLOB.approved_ids)
 
 	var/loaded_successfully = load_current_id()
-
-	// randomized cassettes get three chances to load different IDs. non-randomized cassettes only
-	// get one chance
-	if(!loaded_successfully && random)
-		// replace it with another random cassette - hopefully this one won't fail
-		id = pick(GLOB.approved_ids)
-		loaded_successfully = load_current_id()
-
-	if(!loaded_successfully && random)
-		// again?
-		id = pick(GLOB.approved_ids)
-		loaded_successfully = load_current_id()
+	if(random && !loaded_successfully)
+		var/list/approved_ids = GLOB.approved_ids.Copy()
+		var/attempts_left = 2
+		while(!loaded_successfully && length(approved_ids) && attempts_left > 0)
+			id = pick_n_take(approved_ids)
+			loaded_successfully = load_current_id()
+			attempts_left--
 
 	if(!loaded_successfully)
 		// this isn't working
