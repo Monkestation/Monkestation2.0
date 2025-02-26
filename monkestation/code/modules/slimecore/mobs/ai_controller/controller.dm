@@ -7,8 +7,8 @@
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_WONT_TARGET_CLIENTS = FALSE, //specifically to stop targetting clients
 		BB_BASIC_MOB_TARGETED_TRAIT = TRAIT_LATCH_FEEDERED,
-		BB_SLIME_NON_LATCHED_TARGETING_STRATEGY = /datum/targeting_strategy/basic/lacking_trait,
-		BB_SLIME_NON_LATCHED_AND_SMALLER_TARGETING_STRATEGY = /datum/targeting_strategy/basic/lacking_trait/smaller,
+		BB_SLIME_NON_LATCHED_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mob_lacking_trait,
+		BB_SLIME_NON_LATCHED_AND_SMALLER_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mob_lacking_trait/smaller,
 		BB_SLIME_SCARED_ITEM_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object/scared_item,
 	)
 

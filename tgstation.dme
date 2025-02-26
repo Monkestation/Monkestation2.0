@@ -8167,7 +8167,7 @@
 #include "monkestation\code\modules\slimecore\mobs\ai_controller\subtrees\find_target_slime.dm"
 #include "monkestation\code\modules\slimecore\mobs\ai_controller\subtrees\flee_with_item.dm"
 #include "monkestation\code\modules\slimecore\mobs\ai_controller\targeting_strategies\holding_scary_item.dm"
-#include "monkestation\code\modules\slimecore\mobs\ai_controller\targeting_strategies\lacking_trait.dm"
+#include "monkestation\code\modules\slimecore\mobs\ai_controller\targeting_strategies\mob_lacking_trait.dm"
 #include "monkestation\code\modules\slimecore\mobs\pet_commands\latch_feed.dm"
 #include "monkestation\code\modules\slimecore\mobs\pet_commands\stop_feeding.dm"
 #include "monkestation\code\modules\slimecore\reagents\_base_reagent.dm"
