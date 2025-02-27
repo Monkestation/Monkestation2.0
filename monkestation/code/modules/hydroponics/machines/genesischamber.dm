@@ -71,8 +71,6 @@
 		return
 
 	for (var/i in 1 to capacity)
-		if(capacity <= 0)
-			break
 		new /obj/item/seeds/random(drop_location())
 
 	to_chat(user, span_notice("You collect [capacity] strange seeds from the chamber."))
@@ -221,28 +219,6 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/genesis_chamber/proc/start_shaking(intensity = 1)
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1 * intensity, 0)
-		M2.Translate(0, 1 * intensity)
-		M3.Translate(1 * intensity, 0)
-		M4.Translate(0, -1 * intensity)
-		transforms = list(M1, M2, M3, M4)
-
-	animate(src, transform=transforms[1], time=0.4, loop=-1)
-	animate(transform=transforms[2], time=0.2)
-	animate(transform=transforms[3], time=0.4)
-	animate(transform=transforms[4], time=0.6)
-
-/obj/machinery/genesis_chamber/proc/stop_shaking()
-	update_appearance()
-	animate(src, transform = matrix())
-
 /obj/machinery/genesis_chamber/proc/dump_seeds(amount = capacity)
 	var/turf/drop_loc = get_turf(src)
 	for(var/i in 1 to min(amount, capacity))
@@ -263,7 +239,7 @@
 		return FALSE
 
 	if (panel_open == TRUE)
-		to_chat(user, span_warning("You can't emag the [src] while the maintenance panel is open!"))
+		to_chat(user, span_warning("You can't emag \the [src] while the maintenance panel is open!"))
 		return FALSE
 
 	obj_flags |= EMAGGED
@@ -276,7 +252,7 @@
 	dump_seeds(capacity)
 
 	// Start aggressive shaking
-	start_shaking(3)
+	Shake(3, 3, 6 SECONDS)
 
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 	say("CRITICAL ERROR: Safeties disabled! Maximum production in effect. Containment failure imminent!")
