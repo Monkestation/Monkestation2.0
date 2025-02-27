@@ -197,7 +197,7 @@
 
 	// Check if emagged first - if so, immediately explode when screwdriver is used
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_danger("The [src] makes a concerning noise as you open the maintenance panel!"))
+		to_chat(user, span_danger("\The [src] makes a concerning noise as you open the maintenance panel!"))
 		say("CRITICAL ERROR: Containment breach detected!")
 		overload_explosion()
 		return TRUE
