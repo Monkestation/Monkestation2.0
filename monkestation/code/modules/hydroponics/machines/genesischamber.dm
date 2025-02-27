@@ -184,13 +184,11 @@
 	. += "It can currently hold <b>[max_capacity] seed\s</b> and produces <b>[seeds_per_cycle] seed\s</b> every <b>[DisplayTimeText(max_cooldown)]</b>."
 
 /obj/machinery/genesis_chamber/update_icon_state()
-	. = ..()
 	if (capacity >= 1)
 		icon_state = "genesis_chamber_seed_[on ? "on" : "off"]"
-		return
-	icon_state = "genesis_chamber_[on ? "on" : "off"]"
-
-	return
+	else
+		icon_state = "genesis_chamber_[on ? "on" : "off"]"
+	return ..()
 
 /obj/machinery/genesis_chamber/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
