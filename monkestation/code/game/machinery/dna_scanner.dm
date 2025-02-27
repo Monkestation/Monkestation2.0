@@ -19,7 +19,7 @@
 /obj/item/disk/data/random/Initialize(mapload)
 	. = ..()
 	if(isnull(mutation_weights))
-		initialize_mutation_weights()
+		mutation_weights = initialize_mutation_weights()
 
 	var/mutation_type = pick_weight_recursive(mutation_weights)
 	var/datum/mutation/human/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
@@ -38,12 +38,13 @@
 	if(chromosome_type)
 		return new chromosome_type
 
-/// Initializes the static mutation_weights list.
-/obj/item/disk/data/random/proc/initialize_mutation_weights()
-	mutation_weights = list()
-	mutation_weights[get_non_random_locked_mutations(GLOB.good_mutations)] = POSITIVE_WEIGHT
-	mutation_weights[get_non_random_locked_mutations(GLOB.not_good_mutations)] = NEUTRAL_WEIGHT
-	mutation_weights[get_non_random_locked_mutations(GLOB.bad_mutations)] = NEGATIVE_WEIGHT
+/// Returns a (recursive) weighted list of mutations.
+/obj/item/disk/data/random/proc/initialize_mutation_weights() as /list
+	RETURN_TYPE(/list)
+	. = list()
+	.[get_non_random_locked_mutations(GLOB.good_mutations)] = POSITIVE_WEIGHT
+	.[get_non_random_locked_mutations(GLOB.not_good_mutations)] = NEUTRAL_WEIGHT
+	.[get_non_random_locked_mutations(GLOB.bad_mutations)] = NEGATIVE_WEIGHT
 
 /// Returns a list of the typepaths of mutations in the given list without the random_locked var enabled.
 /obj/item/disk/data/random/proc/get_non_random_locked_mutations(list/mutations) as /list
