@@ -176,9 +176,9 @@
 	if(!has_core)
 		. += "It is missing a <b>vortex anomaly core</b>."
 	else if(!on)
-		. += "It is currently <b>Deactivated</b> and has <b>[capacity]</b> strange seeds stored."
+		. += "It is currently <b>deactivated</b> and has <b>[capacity]</b> strange seeds stored."
 	else
-		. += "It is currently <b>Activated</b> and has <b>[capacity]</b> strange seeds stored."
+		. += "It is currently <b>activated</b> and has <b>[capacity]</b> strange seeds stored."
 		calculate_time_remaining()
 		. += "It'll take <b>[DisplayTimeText(time_remaining)]</b> until more seeds are created."
 	. += "It can currently hold <b>[max_capacity] seed\s</b> and produces <b>[seeds_per_cycle] seed\s</b> every <b>[DisplayTimeText(max_cooldown)]</b>."
