@@ -6,9 +6,9 @@
 	worn_icon = 'monkestation/icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
 	inhand_icon_state = "that"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION
 	dog_fashion = null
 	worn_y_offset = 5
-	clothing_flags = SNUG_FIT
 	throw_range = 0
 	var/id = "syndicate_tophat"
 	var/primed = FALSE
@@ -40,10 +40,13 @@
 /obj/item/clothing/head/hats/tophat/syndicate/proc/speak(mob/living/carbon/human/user)
 	sleep(2 SECOND)
 	to_chat(user,  span_boldwarning("Time!"))
+	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/time.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
-	to_chat(user,  span_boldwarning("FOR!"))
+	to_chat(user,  span_boldwarning("For!"))
+	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/for.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 	to_chat(user,  span_boldwarning("CRIME!!"))
+	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 
 /obj/item/clothing/head/hats/tophat/syndicate/process(seconds_per_tick)
@@ -73,7 +76,7 @@
 	if(primed)
 		STOP_PROCESSING(SSobj, src)
 		user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_STUNIMMUNE, TRAIT_FEARLESS), id)
-		addtimer(CALLBACK(src, PROC_REF(explode), user), 1 SECOND)
+		addtimer(CALLBACK(src, PROC_REF(explode), user), 0.5 SECOND)
 
 /obj/item/clothing/head/hats/tophat/syndicate/proc/explode(mob/living/carbon/human/user)
 	user.remove_filter(id)
@@ -118,8 +121,21 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/item/clothing/neck/cloak/syndicate/dropped(mob/living/carbon/human/user)
-	. = ..()
 	if(has_been_worn)
 		do_sparks()
 		user.visible_message("The cloak vanishes into thin air!")
 		qdel(src)
+		return
+	return ..()
+
+/obj/item/storage/briefcase/evilbundle
+	desc = "It has a small golden engraving reading \"Syndicate\", but suspiciously has no other tags or branding. Smells like rusted metal."
+	force = 10
+
+/obj/item/storage/briefcase/evilbundle/PopulateContents()
+	..()
+	new /obj/item/clothing/head/hats/tophat/syndicate(src)
+	new /obj/item/clothing/neck/cloak/syndicate(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/under/syndicate/sniper(src)
+	new /obj/item/clothing/shoes/laceup(src)
