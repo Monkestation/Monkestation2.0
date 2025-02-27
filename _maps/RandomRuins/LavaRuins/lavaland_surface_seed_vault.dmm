@@ -698,6 +698,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
+"Mq" = (
+/obj/structure/table/wood,
+/obj/item/lighter,
+/obj/item/lighter,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/assembly/signaler/anomaly/vortex,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/seedvault)
 "PH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -987,7 +998,7 @@ aw
 vK
 PH
 ah
-aF
+Mq
 ac
 ac
 ac

@@ -109,6 +109,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/manipulator = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/ore/bluespace_crystal = 1,
 	)

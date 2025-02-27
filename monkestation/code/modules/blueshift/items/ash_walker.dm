@@ -64,7 +64,7 @@
 		/obj/item/seeds/gatfruit,
 		/obj/item/seeds/tree/money,
 		/obj/item/seeds/random,
-		/obj/item/seeds/seedling,
+		/obj/item/seeds/seedling/evil,
 	)
 
 /obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)

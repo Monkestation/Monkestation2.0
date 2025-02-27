@@ -1,6 +1,6 @@
 /obj/machinery/genesis_chamber
 	name = "G.E.N.E.S.I.S Chamber"
-	desc = "A piece of advanced technology that once turned on, will begin to produce strange seeds."
+	desc = "A piece of advanced technology that once turned on, will begin to produce strange seeds. The internal vortex core creates an anomalous environment for seed mutation."
 	icon = 'monkestation/icons/obj/machines/genesis_chamber.dmi'
 	icon_state = "genesis_chamber_off"
 	density = TRUE
@@ -10,16 +10,15 @@
 	/// The current capacity of seeds inside of the chamber
 	var/capacity = 0
 	/// The maximum capacity the chamber can hold at T1
-	var/max_capacity = 5
+	var/max_capacity = 10
 	/// Seconds it takes to create each seed at T1
 	var/max_cooldown = 5 MINUTES
-	/// Timer ID for the seed generation process
-	var/seed_timer_id = null
-	/// Time when the current seed generation started
-	var/generation_start_time = 0
+	/// Has a vortex core been inserted
+	var/has_core = FALSE
+	/// Number of seeds produced per cycle
+	var/seeds_per_cycle = 1
 	/// Time remaining until next seed is generated
 	var/time_remaining = 0
-
 
 /obj/machinery/genesis_chamber/Initialize(mapload)
 	. = ..()
@@ -36,12 +35,15 @@
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		max_cooldown -= max((laser.tier - 1) * (1 MINUTES), 0 MINUTES)
 
-	// Reset the timer if the machine is active
-	if(on)
-		if(seed_timer_id)
-			deltimer(seed_timer_id) // Stop the old timer
-		generation_start_time = world.time // Reset the start time
-		seed_timer_id = addtimer(CALLBACK(src, PROC_REF(generate_seed)), max_cooldown, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_DELETE_ME)
+	seeds_per_cycle = initial(seeds_per_cycle)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		seeds_per_cycle += manipulator.tier - 1
+
+	// Reset the cooldown if the machine is active
+	if(on && has_core)
+		if(TIMER_COOLDOWN_CHECK(src, "seed_generation"))
+			S_TIMER_COOLDOWN_RESET(src, "seed_generation")
+		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
 
 /obj/machinery/genesis_chamber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -56,9 +58,13 @@
 		to_chat(user, span_warning("You can't use the [src] while the maintenance panel is open!"))
 		return
 
+	if(!has_core)
+		to_chat(user, span_warning("The [src] needs a vortex anomaly core to function!"))
+		return
+
 	if(capacity < 1)
 		calculate_time_remaining()
-		to_chat(user, span_warning("You need to wait [DisplayTimeText(time_remaining)] until at least one seed is produced."))
+		to_chat(user, span_warning("You need to wait [DisplayTimeText(time_remaining)] until [seeds_per_cycle] seed[seeds_per_cycle == 1 ? " is" : "s are"] produced."))
 		return
 
 	if(QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
@@ -74,12 +80,24 @@
 	update_appearance()
 
 /obj/machinery/genesis_chamber/proc/calculate_time_remaining()
-	if(!on || !seed_timer_id)
+	if(!on || !has_core || !TIMER_COOLDOWN_CHECK(src, "seed_generation"))
 		time_remaining = max_cooldown
 		return
 
-	var/elapsed_time = world.time - generation_start_time
-	time_remaining = max(0, max_cooldown - elapsed_time)
+	time_remaining = S_TIMER_COOLDOWN_TIMELEFT(src, "seed_generation")
+
+/obj/machinery/genesis_chamber/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/assembly/signaler/anomaly/vortex))
+		if(has_core)
+			to_chat(user, span_warning("The [src] already has a vortex anomaly core!"))
+			return
+		if(!user.transferItemToLoc(W, src))
+			return
+		has_core = TRUE
+		to_chat(user, span_notice("You insert the vortex anomaly core into [src]."))
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		return
+	return ..()
 
 /obj/machinery/genesis_chamber/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
@@ -92,33 +110,33 @@
 	if(panel_open)
 		return
 
+	if(!has_core)
+		to_chat(user, span_warning("The [src] needs a vortex anomaly core to function!"))
+		return
+
 	on = !on
 
 	if(on)
 		to_chat(user, span_notice("You turn on [src]."))
 		playsound(loc, 'sound/machines/chime.ogg', 40, TRUE)
 		say("Activating... Seeds will be produced in [DisplayTimeText(max_cooldown)].")
+		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
 		START_PROCESSING(SSprocessing, src)
-		generation_start_time = world.time
-		seed_timer_id = addtimer(CALLBACK(src, PROC_REF(generate_seed)), max_cooldown, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_DELETE_ME)
 	else
 		to_chat(user, span_notice("You turn off [src]."))
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		say("Deactivating...")
 		STOP_PROCESSING(SSprocessing, src)
-		if(seed_timer_id)
-			deltimer(seed_timer_id)
-			seed_timer_id = null
+		if(TIMER_COOLDOWN_CHECK(src, "seed_generation"))
+			TIMER_COOLDOWN_END(src, "seed_generation")
 		time_remaining = max_cooldown
 
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/genesis_chamber/process()
-	if(!on)
+	if(!on || !has_core)
 		return PROCESS_KILL
-
-	calculate_time_remaining()
 
 	if(capacity >= max_capacity)
 		on = FALSE
@@ -127,68 +145,81 @@
 		update_appearance()
 		return PROCESS_KILL
 
+	if(!TIMER_COOLDOWN_CHECK(src, "seed_generation"))
+		generate_seed()
+		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
+
 	return TRUE
 
 /obj/machinery/genesis_chamber/proc/generate_seed()
-	if(!on || capacity >= max_capacity)
-		seed_timer_id = null
+	if(!on || !has_core || capacity >= max_capacity)
 		return
 
-	capacity++
-	say("Seed generated. Current capacity: [capacity]/[max_capacity]")
+	// Calculate how many seeds to produce this cycle
+	var/seeds_to_produce = min(seeds_per_cycle, max_capacity - capacity)
+
+	if(seeds_to_produce <= 0)
+		return
+
+	capacity += seeds_to_produce
+
+	if(seeds_to_produce == 1)
+		say("Seed generated. Current capacity: [capacity]/[max_capacity]")
+	else
+		say("[seeds_to_produce] seeds generated. Current capacity: [capacity]/[max_capacity]")
+
 	playsound(src, 'sound/machines/synth_yes.ogg', 30, TRUE)
-
-	seed_timer_id = null
-	if(on && capacity < max_capacity)
-		generation_start_time = world.time
-		seed_timer_id = addtimer(CALLBACK(src, PROC_REF(generate_seed)), max_cooldown, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_DELETE_ME)
-
 	update_appearance()
 
 /obj/machinery/genesis_chamber/examine(mob/user)
 	. = ..()
-	if(!on)
+	if(!has_core)
+		. += "It is missing a <b>vortex anomaly core</b>."
+	else if(!on)
 		. += "It is currently <b>Deactivated</b> and has <b>[capacity]</b> strange seeds stored."
 	else
 		. += "It is currently <b>Activated</b> and has <b>[capacity]</b> strange seeds stored."
 		calculate_time_remaining()
-		. += "It'll take <b>[DisplayTimeText(time_remaining)]</b> until another seed is created."
-	. += "The [src] can currently hold <b>[max_capacity] seeds</b> and produces each one every <b>[DisplayTimeText(max_cooldown)]</b>."
+		. += "It'll take <b>[DisplayTimeText(time_remaining)]</b> until more seeds are created."
+	. += "The [src] can currently hold <b>[max_capacity] seeds</b> and produces <b>[seeds_per_cycle] seed[seeds_per_cycle == 1 ? "" : "s"]</b> every <b>[DisplayTimeText(max_cooldown)]</b>."
 
-/obj/machinery/genesis_chamber/update_overlays()
+/obj/machinery/genesis_chamber/update_icon_state()
 	. = ..()
 	if (capacity >= 1)
 		icon_state = "genesis_chamber_seed_[on ? "on" : "off"]"
-		return ..()
+		return
 	icon_state = "genesis_chamber_[on ? "on" : "off"]"
 
-	return ..()
+	return
 
 /obj/machinery/genesis_chamber/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(!.)
-		// Check if emagged first - if so, immediately explode when screwdriver is used
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_danger("The [src] makes a concerning noise as you open the maintenance panel!"))
-			say("CRITICAL ERROR: Containment breach detected!")
-			overload_explosion()
-			return TRUE
+	if(.)
+		return
 
-		// Check if machine is on - prevent opening if it is
-		if(on)
-			to_chat(user, span_warning("You can't open the maintenance panel while the [src] is running!"))
-			return TRUE
+	// Check if emagged first - if so, immediately explode when screwdriver is used
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_danger("The [src] makes a concerning noise as you open the maintenance panel!"))
+		say("CRITICAL ERROR: Containment breach detected!")
+		overload_explosion()
+		return TRUE
 
-		// Dump seeds when opening the panel
-		if(!panel_open && capacity > 0)
-			dump_seeds(capacity)
+	// Check if machine is on - prevent opening if it is
+	if(on)
+		to_chat(user, span_warning("You can't open the maintenance panel while the [src] is running!"))
+		return TRUE
 
-		// Determine appropriate icon state for when the panel is closed
+	// Dump seeds when opening the panel
+	if(!panel_open && capacity > 0)
+		dump_seeds(capacity)
 
-		return default_deconstruction_screwdriver(user, "genesis_chamber_open", "genesis_chamber_off", tool)
+	return default_deconstruction_screwdriver(user, "genesis_chamber_open", "genesis_chamber_off", tool)
 
 /obj/machinery/genesis_chamber/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
+		// Drop the vortex core if present when deconstructed
+		if(has_core)
+			new /obj/item/assembly/signaler/anomaly/vortex(drop_location())
 		return TRUE
 	return FALSE
 
