@@ -12,9 +12,11 @@
 	strength = 100
 
 	infectionchance = 75
-	infectionchance_base = 0
-	stage_variance = 0
+	infectionchance_base = 75
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	required_organs = list(/obj/item/organ/internal/lungs)
+	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 /datum/disease/acute/premade/fungal_tb/after_add()
 	. = ..()
@@ -25,7 +27,7 @@
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, 1))
 		if(mob.has_reagent(/datum/reagent/medicine/c2/convermol, 1))
-			if(prob(2.5))
+			if(prob(7.5))
 				cure()
 
 

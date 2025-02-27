@@ -284,7 +284,7 @@
 /obj/item/reagent_containers/cup/bottle/tuberculosis
 	name = "Fungal Tuberculosis culture bottle"
 	desc = "A small bottle. Contains a sample of Fungal Tubercle bacillus."
-	spawned_disease = /datum/disease/acute/premade/fungal_tb
+	spawned_disease = /datum/disease/acute/premade/fungal_tb //monkestation edit: Pathology TB
 
 /obj/item/reagent_containers/cup/bottle/tuberculosiscure
 	name = "BVAK bottle"
