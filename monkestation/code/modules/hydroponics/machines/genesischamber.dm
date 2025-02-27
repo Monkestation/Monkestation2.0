@@ -204,7 +204,7 @@
 
 	// Check if machine is on - prevent opening if it is
 	if(on)
-		to_chat(user, span_warning("You can't open the maintenance panel while the [src] is running!"))
+		to_chat(user, span_warning("You can't open the maintenance panel while \the [src] is running!"))
 		return TRUE
 
 	// Dump seeds when opening the panel
