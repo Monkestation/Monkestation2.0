@@ -110,17 +110,18 @@
 
 /datum/symptom/fungal_tb
 	name = "Fungal tuberculosis"
-	desc = "Rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
+	desc = "Rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue. Cure: Convermol and Spaceallin"
 	restricted = TRUE
 	max_multiplier = 5
 	stage = 4
 	badness = EFFECT_DANGER_DEADLY
-	badness = 6
-
+	severity = 6
+	max_chance = 75
+	chance = 50
 /datum/symptom/fungal_tb/activate(mob/living/affected_mob)
 	if(prob(10))
-		multiplier++
-	switch(multiplier)
+		multiplier_tweak(0.1)
+	switch(round(multiplier))
 		if(2)
 			if(prob(1))
 				affected_mob.emote("cough")
@@ -163,3 +164,4 @@
 			if(prob(7.5))
 				to_chat(affected_mob, span_danger("[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit...", "You feel like taking off some clothes...")]"))
 				affected_mob.adjust_bodytemperature(40)
+
