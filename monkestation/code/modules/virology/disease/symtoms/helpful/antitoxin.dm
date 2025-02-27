@@ -8,7 +8,7 @@
 	max_chance = 10
 
 /datum/symptom/antitox/activate(mob/living/mob)
-	if(prob(2.5))
+	if(prob(5))
 		to_chat(mob, span_notice("You feel your toxins being purged!"))
 	mob?.adjustToxLoss(-2 * multiplier)
 
