@@ -107,6 +107,10 @@
 			continue
 		if(HAS_TRAIT(living_mob, TRAIT_DEAF)) //Deaf people can't hear sounds so no sound indicators
 			continue
+		// monkestation edit start
+		if (HAS_TRAIT(living_mob, TRAIT_HARD_OF_HEARING))
+			continue
+		// monkestation edit end
 		if(living_mob.in_fov(center, ignore_self))
 			continue
 		if(!fov_image) //Make the image once we found one recipient to receive it

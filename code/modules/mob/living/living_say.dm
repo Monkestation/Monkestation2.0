@@ -303,6 +303,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
 	var/is_speaker_whispering = message_mods[WHISPER_MODE]
 	var/can_hear_whisper = get_dist(speaker, src) <= message_range
+	// monkestation edit start
+	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		is_speaker_whispering = TRUE
+		can_hear_whisper = get_dist(speaker, src) <= 1
+		spans = spans.Copy()
+		spans |= SPAN_ITALICS
+	// monkestation edit end
 	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
 
