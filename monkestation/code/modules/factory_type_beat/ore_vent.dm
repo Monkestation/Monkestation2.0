@@ -76,6 +76,7 @@
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
 		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, ABOVE_MOB_LAYER))
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_NO_TERRAFORM)))
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
@@ -301,12 +302,97 @@
 			name = initial(name)
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
+	icon_state = "ore_vent_ice"
+	icon_state_tapped = "ore_vent_ice_active"
+	defending_mobs = list(
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/legion/snow/spawner_made,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/wolf,
+	)
+	ore_vent_options = list(
+		SMALL_VENT_TYPE = 1,
+	)
 
 /obj/structure/ore_vent/random/icebox/lower
+	defending_mobs = list(
+		/mob/living/basic/mining/ice_whelp,
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/legion/snow/spawner_made,
+		/mob/living/basic/mining/ice_demon,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/wolf,
+	)
+	ore_vent_options = list(
+		SMALL_VENT_TYPE = 3,
+		MEDIUM_VENT_TYPE = 5,
+		LARGE_VENT_TYPE = 7,
+	)
 
 /obj/structure/ore_vent/boss
+	name = "menacing ore vent"
+	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
+	unique_vent = TRUE
+	boulder_size = BOULDER_SIZE_LARGE
+	mineral_breakdown = list( // All the riches of the world, eeny meeny boulder room.
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 1,
+		/datum/material/titanium = 1,
+		/datum/material/silver = 1,
+		/datum/material/gold = 1,
+		/datum/material/diamond = 1,
+		/datum/material/uranium = 1,
+		/datum/material/bluespace = 1,
+		/datum/material/plastic = 1,
+	)
+	defending_mobs = list(
+		/mob/living/simple_animal/hostile/megafauna/bubblegum,
+		/mob/living/simple_animal/hostile/megafauna/dragon,
+		/mob/living/simple_animal/hostile/megafauna/colossus,
+	)
+	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent?"
+	///What boss do we want to spawn?
+	var/summoned_boss = null
+
+/obj/structure/ore_vent/boss/Initialize(mapload)
+	. = ..()
+	summoned_boss = pick(defending_mobs)
+
+/obj/structure/ore_vent/boss/examine(mob/user)
+	. = ..()
+	var/boss_string = ""
+	switch(summoned_boss)
+		if(/mob/living/simple_animal/hostile/megafauna/bubblegum)
+			boss_string = "A giant fleshbound beast"
+		if(/mob/living/simple_animal/hostile/megafauna/dragon)
+			boss_string = "Sharp teeth and scales"
+		if(/mob/living/simple_animal/hostile/megafauna/colossus)
+			boss_string = "A giant, armored behemoth"
+		if(/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner)
+			boss_string = "A bloody drillmark"
+		if(/mob/living/simple_animal/hostile/megafauna/wendigo)
+			boss_string = "A chilling skull"
+	. += span_notice("[boss_string] is etched onto the side of the vent.")
+
+/obj/structure/ore_vent/boss/start_wave_defense()
+	// Completely override the normal wave defense, and just spawn the boss.
+	var/mob/living/simple_animal/hostile/megafauna/boss = new summoned_boss(loc)
+	if(istype(boss, /mob/living/simple_animal/hostile/megafauna/wendigo)) //MONKESTATION EDIT
+		var/mob/living/simple_animal/hostile/megafauna/wendigo/noportal = boss
+		noportal.make_portal = FALSE
+	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
+	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
+	//boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/icebox
+	icon_state = "ore_vent_ice"
+	icon_state_tapped = "ore_vent_ice_active"
+	defending_mobs = list(
+		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
+		/mob/living/simple_animal/hostile/megafauna/wendigo,
+		/mob/living/simple_animal/hostile/megafauna/colossus,
+	)
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
