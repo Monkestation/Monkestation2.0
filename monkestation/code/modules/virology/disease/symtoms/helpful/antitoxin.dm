@@ -4,7 +4,11 @@
 	stage = 2
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
+	max_multiplier = 5
+	max_chance = 10
 
 /datum/symptom/antitox/activate(mob/living/mob)
-	to_chat(mob, span_notice("You feel your toxins being purged!"))
-	mob?.adjustToxLoss(-4)
+	if(prob(2.5))
+		to_chat(mob, span_notice("You feel your toxins being purged!"))
+	mob?.adjustToxLoss(-2 * multiplier)
+
