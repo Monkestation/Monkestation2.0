@@ -6138,7 +6138,7 @@
 #include "monkestation\code\game\objects\items\stickers.dm"
 #include "monkestation\code\game\objects\items\superglue.dm"
 #include "monkestation\code\game\objects\items\tactical_shields.dm"
-#include "monkestation\code\game\objects\items\translation_hat.dm"
+#include "monkestation\code\game\objects\items\translator.dm"
 #include "monkestation\code\game\objects\items\trash.dm"
 #include "monkestation\code\game\objects\items\turf_demolisher.dm"
 #include "monkestation\code\game\objects\items\venom_knife.dm"

@@ -62,31 +62,6 @@ Key procs
 		if(M.current)
 			update_atom_languages(M.current)
 
-	// monkestation edit start
-	var/mob/living/carbon/carbon_owner = owner
-	if (istype(carbon_owner))
-		var/uncommon = carbon_owner.has_quirk(/datum/quirk/language_holder/uncommon)
-		var/outsider = carbon_owner.has_quirk(/datum/quirk/language_holder/outsider)
-		var/is_human = istype(carbon_owner.dna.species, /datum/species/human)
-		var/outsider_human = outsider && is_human
-		if (uncommon || outsider_human)
-			remove_language(/datum/language/common, TRUE, TRUE, LANGUAGE_ATOM)
-			add_blocked_language(/datum/language/common, LANGUAGE_QUIRK)
-		if (outsider)
-			for (var/language in understood_languages)
-				if (language != /datum/language/common)
-					remove_language(language, TRUE, FALSE, LANGUAGE_ATOM)
-			for (var/language in spoken_languages)
-				if (language != /datum/language/common)
-					remove_language(language, FALSE, TRUE, LANGUAGE_ATOM)
-		if (uncommon)
-			grant_language(/datum/language/uncommon, TRUE, TRUE, LANGUAGE_QUIRK)
-		if (outsider_human)
-			grant_language(pick(GLOB.roundstart_languages), TRUE, TRUE, LANGUAGE_QUIRK)
-		if (carbon_owner.has_quirk(/datum/quirk/language_holder/listener))
-			remove_language(/datum/language/common, FALSE, TRUE, LANGUAGE_ATOM)
-	// monkestation edit end
-
 	// If we have an owner, we'll set a default selected language
 	if(owner)
 		get_selected_language()
