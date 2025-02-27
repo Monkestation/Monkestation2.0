@@ -181,7 +181,7 @@
 		. += "It is currently <b>Activated</b> and has <b>[capacity]</b> strange seeds stored."
 		calculate_time_remaining()
 		. += "It'll take <b>[DisplayTimeText(time_remaining)]</b> until more seeds are created."
-	. += "The [src] can currently hold <b>[max_capacity] seeds</b> and produces <b>[seeds_per_cycle] seed[seeds_per_cycle == 1 ? "" : "s"]</b> every <b>[DisplayTimeText(max_cooldown)]</b>."
+	. += "It can currently hold <b>[max_capacity] seed\s</b> and produces <b>[seeds_per_cycle] seed\s</b> every <b>[DisplayTimeText(max_cooldown)]</b>."
 
 /obj/machinery/genesis_chamber/update_icon_state()
 	. = ..()
