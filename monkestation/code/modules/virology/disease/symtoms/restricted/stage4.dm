@@ -118,6 +118,7 @@
 	severity = 6
 	max_chance = 75
 	chance = 50
+
 /datum/symptom/fungal_tb/activate(mob/living/affected_mob)
 	if(prob(10))
 		multiplier_tweak(0.1)

@@ -8,10 +8,12 @@
 		new /datum/symptom/fungal_tb
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD|DISEASE_SPREAD_CONTACT_FLUIDS|DISEASE_SPREAD_CONTACT_SKIN|DISEASE_SPREAD_AIRBORNE
-	robustness = 75
+	robustness = 100
 	strength = 100
 
 	infectionchance = 75
+	infectionchance_base = 0
+	stage_variance = 0
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/acute/premade/fungal_tb/after_add()
@@ -28,3 +30,19 @@
 
 
 
+/datum/disease/acute/premade/death_sandwich_poisoning
+	name = "Death Sandwich Poisoning"
+	form = "Condition"
+	origin = "Death Sandwich"
+	category = DISEASE_SANDWICH
+
+	symptoms = list(
+		new /datum/symptom/death_sandwich
+	)
+	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	robustness = 100
+	strength = 100
+
+	infectionchance = 0
+	infectionchance_base = 0
+	stage_variance = 0
