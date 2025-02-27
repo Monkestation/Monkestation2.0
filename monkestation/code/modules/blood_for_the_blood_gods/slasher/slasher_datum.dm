@@ -83,7 +83,7 @@
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(item_pickup))
-	RegisterSignal(current_mob, COMSIG_MOB_DROPPING_ITEM, PROC_REF(item_drop))
+	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	for(var/datum/quirk/quirk as anything in current_mob.quirks)
@@ -322,7 +322,7 @@
 /datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
 	RegisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER, PROC_REF(damage_multiplier))
 
-/datum/antagonist/slasher/proc/item_drop(datum/input_source, obj/item/source)
+/datum/antagonist/slasher/proc/item_unequipped(datum/input_source, obj/item/source)
 	UnregisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER)
 
 /obj/item/var/last_multi = 1
