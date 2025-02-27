@@ -8,10 +8,7 @@
 	hardcore_value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
-	process_update_signals = list(
-		SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM),
-		SIGNAL_REMOVETRAIT(TRAIT_LIVERLESS_METABOLISM),
-	)
+	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/painkiller/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -86,9 +83,6 @@
 		for(var/addiction in reagent_instance.addiction_types)
 			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
-/datum/quirk/item_quirk/junkie/should_process()
-	return ..() && HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM)
-
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
@@ -148,7 +142,7 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
-/* /datum/quirk/item_quirk/junkie/alcoholic - monkestation disabled for now
+/datum/quirk/item_quirk/junkie/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
@@ -197,7 +191,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
 	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
+	if(alcohol_liver && !(alcohol_liver.organ_flags & ORGAN_SYNTHETIC)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
@@ -215,4 +209,25 @@
 		quirk_holder.clear_mood_event("wrong_alcohol")
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
- */
+
+/datum/quirk/item_quirk/junkie/caffeinedependence
+	name = "Caffeine Dependence"
+	desc = "You are just not the same without a cup of coffee"
+	icon = FA_ICON_COFFEE
+	value = -2
+	gain_text = span_danger("You'd really like a cup of coffee")
+	lose_text = span_notice("Coffee just doesn't seem as appealing anymore")
+	medical_record_text = "Patient is highly dependent on caffeine"
+	reagent_type = /datum/reagent/consumable/coffee
+	drug_container_type = /obj/item/reagent_containers/cup/glass/coffee
+	mob_trait = TRAIT_CAFFEINE_DEPENDENCE
+	hardcore_value = 0
+	drug_flavour_text = "Better make good friends with the coffee machine"
+	mail_goodies = list(
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/icecoffee,
+		/datum/reagent/consumable/hot_ice_coffee,
+		/datum/reagent/consumable/soy_latte,
+		/datum/reagent/consumable/cafe_latte,
+		/datum/reagent/consumable/pumpkin_latte,
+	)

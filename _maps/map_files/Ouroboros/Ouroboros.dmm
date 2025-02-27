@@ -4644,13 +4644,16 @@
 /area/station/medical/pharmacy)
 "brT" = (
 /obj/effect/turf_decal/tile/dark_red/half,
-/mob/living/basic/pet/dog/corgi,
 /obj/structure/bed/dogbed{
 	anchored = 1;
 	name = "E-N's bed"
 	},
 /obj/machinery/posialert/directional/south,
 /obj/machinery/light/cold/directional/south,
+/mob/living/basic/pet/dog/corgi{
+	name = "Dirk";
+	real_name = "Dirk"
+	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/science/robotics/lab)
 "brW" = (
@@ -4899,8 +4902,8 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "buK" = (
-/obj/structure/table/wood,
 /obj/machinery/light_switch/directional/north,
+/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "buM" = (
@@ -5772,7 +5775,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/brig/entrance)
 "bJn" = (
-/mob/living/basic/pet/cat,
+/mob/living/simple_animal/pet/cat,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "bJq" = (
@@ -8521,6 +8524,10 @@
 	},
 /obj/structure/closet/crate/engineering,
 /obj/item/gps/engineering,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "cBM" = (
@@ -8644,7 +8651,7 @@
 "cDu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "High-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/harmful,
@@ -18657,7 +18664,7 @@
 	anchored = 1;
 	name = "Walter's bed"
 	},
-/mob/living/basic/pet/dog/dobermann/walter,
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "fAx" = (
@@ -21098,7 +21105,7 @@
 /turf/open/floor/engine,
 /area/station/security/corrections_officer)
 "gnC" = (
-/mob/living/basic/pet/cat,
+/mob/living/simple_animal/pet/cat,
 /turf/open/floor/plating,
 /area/station/service/salon)
 "gnX" = (
@@ -23763,7 +23770,7 @@
 "het" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("captain");
+	req_access = list("rd");
 	name = "Low-Risk Modules"
 	},
 /obj/effect/spawner/random/aimodule/neutral,
@@ -24313,7 +24320,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/glasses/science{
+/obj/item/clothing/glasses/pathology{
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/hud/health,
@@ -31754,10 +31761,10 @@
 "jux" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/lobby)
 "juy" = (
@@ -34584,6 +34591,11 @@
 	dir = 8
 	},
 /area/station/engineering/gravity_generator)
+"kkE" = (
+/obj/structure/table,
+/obj/effect/mob_spawn/ghost_role/drone/bar,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
 "kkR" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 6
@@ -47783,6 +47795,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"nYE" = (
+/obj/machinery/egg_incubator,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/upper)
 "nYH" = (
 /obj/structure/railing{
 	dir = 1
@@ -57648,6 +57664,10 @@
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
+"qZh" = (
+/obj/machinery/composters,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "qZi" = (
 /obj/structure/sign/flag/mothic/directional/north,
 /obj/effect/spawner/random/engineering/tank,
@@ -64306,6 +64326,7 @@
 "sXX" = (
 /obj/machinery/growing/soil,
 /obj/machinery/light/warm/directional/north,
+/obj/machinery/vending/hydroseeds/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "sYb" = (
@@ -65300,6 +65321,7 @@
 /obj/machinery/growing/soil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/vending/hydronutrients/wall/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tne" = (
@@ -76876,12 +76898,12 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/suit_storage_unit/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/blueshield)
 "wFN" = (
@@ -77778,7 +77800,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/mob/living/basic/pet/cat/jerry,
+/mob/living/simple_animal/pet/cat/jerry,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "wSK" = (
@@ -79718,7 +79740,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/basic/pet/cat/runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
@@ -117194,7 +117216,7 @@ lNk
 iVj
 nKb
 mkO
-oED
+kkE
 xHt
 mwA
 lNk
@@ -171680,7 +171702,7 @@ vtq
 vtq
 vtq
 pxM
-xtO
+nYE
 xtO
 xtO
 tag
@@ -185336,7 +185358,7 @@ dEd
 lxY
 inH
 uvP
-dHo
+qZh
 odH
 sYM
 jgK

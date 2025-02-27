@@ -38,6 +38,15 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+
+		if(SSticker.reboot_timer)
+			var/reboot_time = timeleft(SSticker.reboot_timer)
+			if(reboot_time)
+				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
+		// admin must have delayed round end
+		else if(SSticker.ready_for_reboot)
+			global_data += "Reboot: DELAYED"
+
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
@@ -99,7 +108,14 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
-	var/static/list/beta_notice = list("", "You are on the BYOND 516 beta, various UIs and such may be broken!", "Please report issues, and switch back to BYOND 515 if things are causing too many issues for you.")
+	// monkestation start: add notice regarding music player
+	var/static/list/beta_notice = list(
+		"",
+		"You are on the BYOND 516 beta, various UIs and such may be broken!",
+		"Please report issues, and switch back to BYOND 515 if things are causing too many issues for you.",
+		"Music playback currently does NOT work on BYOND 516."
+	)
+	// monkestation end
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
 

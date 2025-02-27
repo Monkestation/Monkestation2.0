@@ -46,7 +46,7 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 2)
 		new extra_to_spawn (src)
-	new /obj/item/ammo_box/a40mm (src)
+	new /obj/item/storage/fancy/a40mm_box (src)
 
 /obj/item/storage/toolbox/guncase/rocketlauncher
 	name = "rocket launcher gun case"
@@ -216,9 +216,10 @@
 
 	generate_items_inside(list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magless = 1,
-		/obj/item/ammo_box/c980grenade = 2,
+		/obj/item/ammo_box/c980grenade/shrapnel = 2, //monke edit, practice to shrapnel
 		/obj/item/ammo_box/c980grenade/smoke = 1,
 		/obj/item/ammo_box/c980grenade/riot = 1,
+		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil

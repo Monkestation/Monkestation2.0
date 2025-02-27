@@ -203,7 +203,10 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-		SSdemo.mark_new(src) //Monkestation edit: Replays
+		// monkestation start: replays
+		if(!(flags_1 & DEMO_IGNORE_1))
+			SSdemo.mark_new(src)
+		// monkestation end
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -334,11 +337,13 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+#ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	DREAMLUAU_CLEAR_REF_USERDATA(contents)
 	DREAMLUAU_CLEAR_REF_USERDATA(filters)
 	DREAMLUAU_CLEAR_REF_USERDATA(overlays)
 	DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+#endif
 
 	if(material_stats)
 		QDEL_NULL(material_stats)
@@ -1376,7 +1381,7 @@
 	if(!ismovable(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
-			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
+			. += "<option value='byond://?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
 	VV_DROPDOWN_OPTION(VV_HK_SPIN_ANIMATION, "SpinAnimation")
 	VV_DROPDOWN_OPTION(VV_HK_STOP_ALL_ANIMATIONS, "Stop All Animations")
@@ -1562,7 +1567,7 @@
 	. = ..()
 	var/refid = REF(src)
 	. += "[VV_HREF_TARGETREF(refid, VV_HK_AUTO_RENAME, "<b id='name'>[src]</b>")]"
-	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	. += "<br><font size='1'><a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='byond://?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()

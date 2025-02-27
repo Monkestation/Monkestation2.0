@@ -213,7 +213,7 @@
 		disk_pinpointers.switch_mode_to(TRACK_GOLDENEYE) //Pinpointer will track the newly created goldeneye key.
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/delaytime = 3 MINUTES
+		var/delaytime = 5 MINUTES
 		var/timer = SSshuttle.emergency.timeLeft(1) + delaytime
 		var/surplus = timer - (SSshuttle.emergency_call_time)
 		SSshuttle.emergency.setTimer(timer)
@@ -257,7 +257,7 @@
 
 ///This proc attempts to return the head of staff back to the station after the interrogator finishes
 /obj/machinery/interrogator/proc/return_victim()
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)

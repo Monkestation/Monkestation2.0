@@ -62,6 +62,7 @@
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1

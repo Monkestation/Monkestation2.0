@@ -493,11 +493,13 @@
 					return FALSE
 			return TRUE
 		return FALSE
+	if(istype(O, /obj/item/weapon/virusdish) && is_type_in_typecache(O, chemfridge_typecache))
+		return TRUE
 	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE
-	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
+	if(!O.reagents || !length(O.reagents.reagent_list)) // other empty containers not accepted
 		return FALSE
 	if(is_type_in_typecache(O, chemfridge_typecache))
 		return TRUE
@@ -521,8 +523,8 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
 		/obj/item/reagent_containers/syringe/antiviral = 4,
-		/obj/item/reagent_containers/cup/bottle/cold = 1,
-		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,
+		// /obj/item/reagent_containers/cup/bottle/cold = 1,
+		// /obj/item/reagent_containers/cup/bottle/flu_virion = 1, Monkestation removal, Old viro code
 		/obj/item/reagent_containers/cup/bottle/mutagen = 1,
 		/obj/item/reagent_containers/cup/bottle/sugar = 1,
 		/obj/item/reagent_containers/cup/bottle/plasma = 1,

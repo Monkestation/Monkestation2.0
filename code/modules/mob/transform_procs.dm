@@ -289,7 +289,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(TRUE)
+	var/Itemlist = get_equipped_items(include_pockets = TRUE)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
@@ -375,7 +375,7 @@
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!
-	if(ispath(MP, /mob/living/basic/pet/cat))
+	if(ispath(MP, /mob/living/simple_animal/pet/cat))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE

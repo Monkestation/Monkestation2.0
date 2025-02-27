@@ -70,7 +70,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "heart",
 			SPECIES_PERK_NAME = "Ape Not Kill Ape",
-			SPECIES_PERK_DESC = "Monkeys like you more.",
+			SPECIES_PERK_DESC = "Monkeys like you more and won't attack you. Gorillas will though.",
 		),
 	)
 
@@ -78,7 +78,7 @@
 
 /datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	human_who_gained_species.gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+	human_who_gained_species.gain_trauma(/datum/brain_trauma/severe/kleptomaniac, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/species/monkey/simian/random_name(gender,unique,lastname)
 	if(unique)

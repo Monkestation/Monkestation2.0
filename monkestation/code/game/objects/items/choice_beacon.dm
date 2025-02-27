@@ -1,3 +1,6 @@
+/obj/item/choice_beacon
+	w_class = WEIGHT_CLASS_SMALL
+
 // Pet Beacon for Monkecoin shop
 
 /obj/item/choice_beacon/pet
@@ -31,8 +34,8 @@
 			/mob/living/basic/crab,
 			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
-			/mob/living/basic/pet/cat,
-			/mob/living/basic/pet/cat/kitten,
+			/mob/living/simple_animal/pet/cat,
+			/mob/living/simple_animal/pet/cat/kitten,
 			/mob/living/basic/pet/dog/corgi,
 			/mob/living/basic/pet/dog/pug,
 			/mob/living/basic/pet/dog/bullterrier,

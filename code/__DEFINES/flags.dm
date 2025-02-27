@@ -70,8 +70,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
-/// Used for items that cannot be used directly to harm people with, ex. loafs
-#define CANNOT_ATTACK_WITH (1<<21)
+/// This atom should never be marked in demos/replays. (monkestation addition)
+#define DEMO_IGNORE_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -187,8 +187,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLOATING (1<<3)
 /// When moving, will Cross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
-/// The mob is walking on the ceiling. Or is generally just, upside down.
-#define UPSIDE_DOWN (1<<5)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF (1<<0)
@@ -227,6 +225,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
 
 //Mob mobility var flags
 /// can move

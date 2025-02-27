@@ -73,9 +73,9 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 
 // monkestation addition: just trash_loot with a chance of banana peels
 GLOBAL_LIST_INIT(trash_pile_loot, list(
-	GLOB.trash_loot = 150,
-	/obj/item/grown/bananapeel = 20,
-	/obj/item/grown/bananapeel/bluespace = 1, // I am SO going to regret this later ~Lucy
+	GLOB.trash_loot = 500,
+	/obj/item/grown/bananapeel = 10,
+	/obj/item/grown/bananapeel/bluespace = 0.1, // I am SO going to regret this later ~Lucy
 ))
 // monkestation end
 
@@ -136,7 +136,9 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/grenade/chem_grenade/cleaner = 1,
 		/obj/item/lead_pipe = 1,
 		/obj/item/reagent_containers/cup/beaker = 1,
+/* monkestation removal: we don't use ph or purity
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
+monkestation end */
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,

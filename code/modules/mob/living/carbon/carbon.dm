@@ -192,7 +192,7 @@
 	if (!bulky && prob(50))
 		return
 	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
-		span_danger("You loose your balance."))
+		span_danger("You lose your balance."))
 	Knockdown(2 SECONDS)
 
 	//MONKESTATION EDIT END
@@ -549,7 +549,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -869,7 +869,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -1383,7 +1383,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1399,17 +1398,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
