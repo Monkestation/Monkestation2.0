@@ -25,7 +25,7 @@
 	speak(user)
 	user.remove_filter(id)
 	START_PROCESSING(SSobj, src)
-	user.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_STUNIMMUNE, TRAIT_FEARLESS), id)
+	user.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_FEARLESS), id)
 	user.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 1, offset = 1.5, color = "#ff0000"))
 	primed = TRUE
 	to_chat(user,  span_boldwarning("You hear a faint click inside the hat... you get the feeling you shouldn't take it off."))
@@ -75,7 +75,7 @@
 	. = ..()
 	if(primed)
 		STOP_PROCESSING(SSobj, src)
-		user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_STUNIMMUNE, TRAIT_FEARLESS), id)
+		user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_FEARLESS), id)
 		addtimer(CALLBACK(src, PROC_REF(explode), user), 0.5 SECOND)
 
 /obj/item/clothing/head/hats/tophat/syndicate/proc/explode(mob/living/carbon/human/user)
