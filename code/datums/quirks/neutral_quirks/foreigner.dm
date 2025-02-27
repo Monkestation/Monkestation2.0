@@ -3,7 +3,7 @@
 	// monkestation edit original: desc = "You're not from around here. You don't know Galactic Common!"
 	desc = "You don't understand Galactic Common. If you are human you have learned Galactic Uncommon instead."
 	icon = FA_ICON_LANGUAGE
-	value = QUIRK_COST_UNCOMMON //Monkestation change 0->QUIRK_COST_UNCOMMON
+	value = QUIRK_COST_FOREIGNER //Monkestation change 0->QUIRK_COST_FOREIGNER
 	gain_text = span_notice("The words being spoken around you don't make any sense.")
 	lose_text = span_notice("You've developed fluency in Galactic Common.")
 	// monkestation edit original: medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
