@@ -29,22 +29,3 @@
 		if(mob.has_reagent(/datum/reagent/medicine/c2/convermol, 1))
 			if(prob(5))
 				cure()
-
-
-
-/datum/disease/acute/premade/death_sandwich_poisoning
-	name = "Death Sandwich Poisoning"
-	form = "Condition"
-	origin = "Death Sandwich"
-	category = DISEASE_SANDWICH
-
-	symptoms = list(
-		new /datum/symptom/death_sandwich
-	)
-	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	robustness = 100
-	strength = 100
-
-	infectionchance = 0
-	infectionchance_base = 0
-	stage_variance = 0
