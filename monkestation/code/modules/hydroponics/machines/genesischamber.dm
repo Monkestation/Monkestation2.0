@@ -254,7 +254,7 @@
 	update_appearance()
 
 /obj/machinery/genesis_chamber/proc/overload_explosion()
-	visible_message(span_danger("The [src] violently explodes!"))
+	visible_message(span_danger("\The [src] violently explodes!"))
 	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 5, flame_range = 7, flash_range = 4)
 	qdel(src)
 
