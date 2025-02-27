@@ -29,10 +29,10 @@
 	cost = 2
 
 /datum/uplink_item/device_tools/plasma_license
-	name = "License to Plasmaflood"
-	desc = "A contract abusing a loophole founud by plasmamen to invade halls with harmful gases \
-			without repricution or warning, garnering no attention from any higher powers. \
-			Has to be signed by purchaser to be consider valid."
+	name = "License to Murderbone"
+	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
+			without repercussion or warning, garnering no attention from any higher powers. \
+			Has to be signed by purchaser to be considered valid."
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/card/plasma_license
 	cost = 20
@@ -48,3 +48,21 @@
 	cost = 16 // double the price of stealth implant
 	surplus = 5
 	limited_stock = 1
+
+/datum/uplink_item/device_tools/magboots
+	name = "Blood-Red Magboots"
+	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
+			during gravitational generator failures. These reverse-engineered knockoffs \
+			don't slow you down in simulated-gravity environments much like Nanotrasen's 'Advanced Magboots' design."
+	item = /obj/item/clothing/shoes/magboots/syndie
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/jetpack_harness
+	name = "Jet Harness"
+	desc = "A lightweight tactical jetpack harness, used by those who don't want to be weighed down by traditional jetpacks."
+	item = /obj/item/tank/jetpack/harness
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+

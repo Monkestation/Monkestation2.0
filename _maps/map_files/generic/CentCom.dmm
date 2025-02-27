@@ -8059,7 +8059,7 @@
 	pixel_y = 3
 	},
 /obj/item/plant_analyzer,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/pathology,
 /obj/item/reagent_containers/spray/chemsprayer/bioterror{
 	pixel_x = -6;
 	pixel_y = 10
@@ -15063,7 +15063,7 @@
 /area/centcom/central_command_areas/hall)
 "aOC" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Escapes-on-Pods"
 	},
 /turf/open/floor/iron/smooth_large,
@@ -22643,7 +22643,7 @@
 /area/centcom/central_command_areas/evacuation)
 "iiK" = (
 /obj/structure/table/reinforced,
-/obj/item/tank/jetpack/oxygen/harness{
+/obj/item/tank/jetpack/harness{
 	pixel_y = 10;
 	pixel_x = -2
 	},

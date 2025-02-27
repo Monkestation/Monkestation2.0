@@ -162,21 +162,25 @@
 
 	return 1
 
-/mob/var/disease_view = FALSE
 /client/proc/disease_view()
 	set category = "Admin.Debug"
 	set name = "Disease View"
-	set desc = "See viro Overlay"
+	set desc = "See disease visuals"
 
 	if(!holder)
 		return
 	if(!mob)
 		return
-	if(mob.disease_view)
-		mob.stopvirusView()
+	if(isobserver(mob))
+		var/mob/dead/observer/observer = mob
+		observer.toggle_disease_view() // The trait doesn't work if you're an observer, so this redirects the call to the observer verb.
+		return
+	if(HAS_TRAIT_FROM(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT))
+		REMOVE_TRAIT(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(mob, span_notice("Admin disease view disabled."))
 	else
-		mob.virusView()
-	mob.disease_view = !mob.disease_view
+		ADD_TRAIT(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(mob, span_notice("Admin disease view enabled."))
 
 /client/proc/diseases_panel()
 	set category = "Admin.Logging"
@@ -258,12 +262,12 @@
 
 		var/datum/disease/acute/D = GLOB.inspectable_diseases[ID]
 		dat += {"<tr>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
 			<td>[D.origin]</td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_toggledb=\ref[D]'>[(ID in GLOB.virusDB) ? "Yes" : "No"]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infectedmobs=\ref[D]'>[infctd_mobs][infctd_mobs_dead ? " (including [infctd_mobs_dead] dead)" : "" ]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infecteditems=\ref[D]'>[infctd_items]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_dishes=\ref[D]'>[dishes]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_toggledb=\ref[D]'>[(ID in GLOB.virusDB) ? "Yes" : "No"]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infectedmobs=\ref[D]'>[infctd_mobs][infctd_mobs_dead ? " (including [infctd_mobs_dead] dead)" : "" ]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infecteditems=\ref[D]'>[infctd_items]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_dishes=\ref[D]'>[dishes]</a></td>
 			</tr>
 			"}
 

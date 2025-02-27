@@ -151,7 +151,7 @@
 		if(body_part.current_gauze)
 			var/gauze_href = body_part.current_gauze.name
 			if(adjacent && isliving(user)) // only shows the href if we're adjacent
-				gauze_href = "<a href='?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+				gauze_href = "<a href='byond://?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
 			msg += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
 
 		for(var/i in body_part.wounds)
@@ -251,6 +251,10 @@
 	var/apparent_blood_volume = blood_volume
 	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && (skin_tone == "albino"))
 		apparent_blood_volume -= 150 // enough to knock you down one tier
+	// MONKESTATION EDIT START
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		apparent_blood_volume = BLOOD_VOLUME_NORMAL // Duh.
+	// MONKESTATION EDIT END
 	if(isethereal(src))//Monkestation Changes Start:
 		if(appears_dead)
 			if(blood_volume < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
@@ -345,6 +349,17 @@
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)
 					msg += "[t_He] [t_is] shivering.\n"
+				if(HAS_TRAIT(src, TRAIT_EVIL))
+					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
+					// monkestation edit start
+					/* original
+					living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+					living_user.set_jitter_if_lower(15 SECONDS)
+					*/
+					if(!HAS_TRAIT(user, TRAIT_EVIL))
+						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+						living_user.set_jitter_if_lower(15 SECONDS)
+					// monkestation edit end
 
 			msg += "</span>"
 
