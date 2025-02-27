@@ -103,7 +103,7 @@
 	)
 
 /obj/item/circuitboard/machine/genesis_chamber
-	name = "G.E.N.E.S.I.S Chamber (Machine Board)"
+	name = "Genesis Chamber (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/genesis_chamber
 	req_components = list(

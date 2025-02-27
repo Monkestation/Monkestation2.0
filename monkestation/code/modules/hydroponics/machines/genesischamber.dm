@@ -1,5 +1,5 @@
 /obj/machinery/genesis_chamber
-	name = "G.E.N.E.S.I.S Chamber"
+	name = "Genesis Chamber"
 	desc = "A piece of advanced technology that once turned on, will begin to produce strange seeds. The internal vortex core creates an anomalous environment for seed mutation."
 	icon = 'monkestation/icons/obj/machines/genesis_chamber.dmi'
 	icon_state = "genesis_chamber_off"
