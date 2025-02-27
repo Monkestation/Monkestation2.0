@@ -7327,6 +7327,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "bjR" = (
@@ -7643,6 +7644,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
+"bqr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/stone,
+/area/station/science/xenobiology)
 "bqu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -16395,6 +16401,7 @@
 /area/station/maintenance/department/cargo)
 "ebs" = (
 /obj/structure/cable,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "ebw" = (
@@ -21990,6 +21997,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
+"fOg" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/duct,
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/stone,
+/area/station/science/xenobiology)
 "fOs" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -38025,7 +38038,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "kPT" = (
@@ -48728,6 +48740,7 @@
 	c_tag = "Science - Break Room";
 	network = list("ss13","rd")
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "okn" = (
@@ -60394,6 +60407,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "rQt" = (
@@ -67375,6 +67389,7 @@
 	id = "cytologysecure1";
 	name = "Secure Pen Lockdown"
 	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "uac" = (
@@ -71620,6 +71635,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "vml" = (
@@ -125752,7 +125768,7 @@ uyb
 xuI
 qYk
 qYk
-qYk
+bqr
 qYk
 njf
 bfH
@@ -126777,7 +126793,7 @@ uqB
 rdU
 uon
 whd
-dtN
+fOg
 keT
 whn
 fof
