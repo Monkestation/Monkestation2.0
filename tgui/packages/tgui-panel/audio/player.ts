@@ -34,6 +34,10 @@ export class AudioPlayer {
   }
 
   play(url: string, options: AudioOptions = {}) {
+    if (this.element) {
+      this.stop();
+    }
+
     this.options = options;
 
     const audio = (this.element = new Audio(url));
@@ -87,11 +91,11 @@ export class AudioPlayer {
     this.element.volume = volume;
   }
 
-  onPlay(subscriber: () => {}): void {
+  onPlay(subscriber: () => void): void {
     this.onPlaySubscribers.push(subscriber);
   }
 
-  onStop(subscriber: () => {}): void {
+  onStop(subscriber: () => void): void {
     this.onStopSubscribers.push(subscriber);
   }
 }
