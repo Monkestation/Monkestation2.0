@@ -43,3 +43,8 @@
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/disease_debug(src)
+
+/obj/item/reagent_containers/cup/bottle/disease_debug
+	name = "Disease Debug culture bottle"
+	desc = "A small bottle, contains a uncurable disease with whatever symtomp the debuggers are feelings at the time."
+	spawned_disease = /datum/disease/acute/premade/disease_debug
