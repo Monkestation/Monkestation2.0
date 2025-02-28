@@ -58,10 +58,7 @@
 	if(!blocks_air)
 		air = create_gas_mixture()
 		if(planetary_atmos)
-			if(!SSair.planetary[initial_gas_mix])
-				var/datum/gas_mixture/immutable/planetary/mix = new
-				mix.parse_string_immutable(initial_gas_mix)
-				SSair.planetary[initial_gas_mix] = mix
+			CACHE_PLANETARY_ATMOS(initial_gas_mix)
 	. = ..()
 
 /turf/open/Destroy()
@@ -271,7 +268,8 @@
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
-		if(!isopenturf(enemy_tile))
+		if(!istype(enemy_tile))
+			stack_trace("closed turf inside of adjacent turfs")
 			continue
 		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
 		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s

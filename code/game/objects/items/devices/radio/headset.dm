@@ -12,7 +12,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_SERVICE = RADIO_TOKEN_SERVICE,
 	MODE_BINARY = MODE_TOKEN_BINARY,
 	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE,
-	RADIO_CHANNEL_RADIO = RADIO_KEY_RADIO
+	RADIO_CHANNEL_ENTERTAINMENT = RADIO_TOKEN_ENTERTAINMENT,
+	RADIO_CHANNEL_RADIO = RADIO_KEY_RADIO,
 ))
 
 /obj/item/radio/headset
@@ -69,6 +70,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(ispath(keyslot2))
 		keyslot2 = new keyslot2()
 	set_listening(TRUE)
+	set_broadcasting(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()
 
@@ -113,6 +115,22 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	for(var/language in language_list)
 		user.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+
+// Headsets do not become hearing sensitive as broadcasting instead controls their talk_into capabilities
+/obj/item/radio/headset/set_broadcasting(new_broadcasting, actual_setting = TRUE)
+	broadcasting = new_broadcasting
+	if(actual_setting)
+		should_be_broadcasting = broadcasting
+
+	if (perform_update_icon && !isnull(overlay_mic_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
+
+/obj/item/radio/headset/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
+	if (!broadcasting)
+		return
+	return ..()
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -217,6 +235,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "med_headset"
 	worn_icon_state = "med_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvmed
+
+/obj/item/radio/headset/headset_srvent
+	name = "press headset"
+	desc = "A headset allowing the wearer to communicate with service and broadcast to entertainment channel."
+	icon_state = "srvent_headset"
+	worn_icon_state = "srv_headset"
+	keyslot = /obj/item/encryptionkey/headset_srvent
 
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
@@ -342,6 +367,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "cent_headset_alt"
 	worn_icon_state = "cent_headset_alt"
 	keyslot2 = null
+
+//monkestation addition start:
+/obj/item/radio/headset/headset_cent/representative
+	name = "\improper Representative headset"
+	desc = "A headset used by the lower ranking members of Central Command."
+	keyslot = /obj/item/encryptionkey/headset_com
+	keyslot2 = null
+//monkestation addition end
 
 /obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()

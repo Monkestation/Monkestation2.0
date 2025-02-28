@@ -23,9 +23,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
 //bidlink
-
 /datum/loadout_item/suit/cirno_outfit
 	name = "Cirno Outfit"
 	item_path = /obj/item/clothing/suit/costume/cirno
@@ -82,7 +80,6 @@
 	requires_purchase = FALSE
 
 //spinnermaster
-
 /datum/loadout_item/pocket_items/donator/void_mothroach
 	name = "Pet Delivery Beacon - Void Mothroach"
 	item_path = /obj/item/choice_beacon/pet/donator/void_mothroach
@@ -95,7 +92,6 @@
 	name = "Void Mothroach Transformation"
 	item_path = /obj/item/effect_granter/donator/void_mothroach
 	requires_purchase = FALSE
-
 
 /datum/loadout_item/suit/shark_costume
 	name = "Blahaj Costume"
@@ -110,7 +106,6 @@
 	requires_purchase = FALSE
 
 //ruby_flamewing
-
 /datum/loadout_item/pocket_items/donator/blahaj
 	name = "Pet Delivery Beacon - Blahaj"
 	item_path = /obj/item/choice_beacon/pet/donator/blahaj
@@ -136,7 +131,6 @@
 	item_path = /obj/item/clothing/mask/zoro
 	donator_only = TRUE
 	requires_purchase = FALSE
-
 
 /datum/loadout_item/under/miscellaneous/navy_uniform
 	name = "Naval Officer Uniform"
@@ -190,15 +184,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
 //ADHDBirb
-
 /datum/loadout_item/suit/lemon_bomber
 	name = "Lemon Assault Vest"
 	item_path = /obj/item/clothing/suit/jacket/bomber/lemon
 	donator_only = TRUE
 	requires_purchase = FALSE
-
 
 //Random
 /datum/loadout_item/plushies/spider_plush
@@ -312,7 +303,6 @@
 	requires_purchase = FALSE
 
 //tonymcp
-
 /datum/loadout_item/mask/igor
 	name = "Igor Mask"
 	item_path = /obj/item/clothing/mask/igor
@@ -343,7 +333,6 @@
 	name = "Void Butterfly Transformation"
 	item_path = /obj/item/effect_granter/donator/void_butterfly
 	requires_purchase = FALSE
-
 
 //Django
 /datum/loadout_item/suit/lambcloak
@@ -416,7 +405,6 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 	restricted_roles = list(JOB_SECURITY_OFFICER,JOB_SECURITY_ASSISTANT,JOB_HEAD_OF_SECURITY,JOB_WARDEN)
-
 
 //elliethedarksun
 /datum/loadout_item/pocket_items/donator/gumball_goblin
@@ -566,7 +554,6 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
 //CaptainShiba
 /datum/loadout_item/effects/darkscug
     ckeywhitelist = list("CaptainShiba")
@@ -632,6 +619,31 @@
 	item_path = /obj/item/clothing/suit/hooded/mothysmantle
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/syndicatepajamas
+	name = "Syndicate Pajamas"
+	item_path = /obj/item/clothing/under/costume/syndicatepajamas
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/bubblesmothy
+	name = "Bubbles Mothy"
+	item_path = /obj/item/toy/plush/bubblesmothy
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/hypnotoad
+	name = "Pet Delivery Beacon - Fluffy"
+	item_path = /obj/item/choice_beacon/pet/donator/fluffydonator
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Jason Farqiour")
+
+/datum/loadout_item/effects/hypnotoad
+	name = "Fluffy Transformation"
+	item_path = /obj/item/effect_granter/donator/fluffydonator
+	requires_purchase = FALSE
+	ckeywhitelist = list("Jason Farqiour")
 
 //wisemonster
 /datum/loadout_item/head/purple_gold_tophat_kid
@@ -743,12 +755,5 @@
 /datum/loadout_item/suit/elchorico_big_labcoat
 	name = "Huge Labcoat"
 	item_path = /obj/item/clothing/suit/toggle/labcoat/elchorico_big_labcoat
-	donator_only = TRUE
-	requires_purchase = FALSE
-
-//QuarianCommando
-/datum/loadout_item/suit/formal_overcoat
-	name = "Formal Overcoat"
-	item_path = /obj/item/clothing/suit/formal_overcoat
 	donator_only = TRUE
 	requires_purchase = FALSE

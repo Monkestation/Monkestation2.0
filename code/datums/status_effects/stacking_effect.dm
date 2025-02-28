@@ -1,8 +1,8 @@
 
 /// Status effects that can stack.
 /datum/status_effect/stacking
-	id = "stacking_base"
-	duration = -1 // Only removed under specific conditions.
+	id = STATUS_EFFECT_ID_ABSTRACT
+	duration = STATUS_EFFECT_PERMANENT // Only removed under specific conditions.
 	tick_interval = 1 SECONDS // Deciseconds between decays, once decay starts
 	alert_type = null
 	/// How many stacks are currently accumulated.
@@ -128,8 +128,7 @@
 		if(underlay_file)
 			status_underlay = mutable_appearance(underlay_file, "[underlay_state][stacks]")
 
-		var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
-		var/icon_height = I.Height()
+		var/icon_height = owner.get_cached_height()
 
 		if(status_overlay)
 			status_overlay.pixel_x = -owner.pixel_x

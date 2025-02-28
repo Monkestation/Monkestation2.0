@@ -334,6 +334,14 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "A scoped weapon with low armor penetration, but devestating against flesh. Features instruction manual for making specialty ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
@@ -407,11 +415,16 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
+//MONKESTATION EDIT START: return to the classic red suit
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
-	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
-	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
-	new spess_helmet(src) // 4 TC for the space gear
+	// var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets) //leaving this here for now
+	// new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	// var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	// new spess_helmet(src) // 4 TC for the space gear
+	new /obj/item/clothing/suit/space/syndicate(src)
+	new /obj/item/clothing/head/helmet/space/syndicate(src)
+	new /obj/item/tank/jetpack/oxygen(src)
+//MONKESTATION EDIT STOP
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -529,21 +542,21 @@
 		new /obj/item/food/croissant/throwing(src)
 	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
 
-/obj/item/storage/box/syndie_kit/laser_arm/PopulateContents()
-	new /obj/item/autosurgeon/organ/cyberlink_syndicate(src)
+/obj/item/storage/box/syndie_kit/laser_arm/PopulateContents()  // monkestation edit begin: Syndicate implants
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/laser_arm (src)
 
 /obj/item/storage/box/syndie_kit/nodrop/PopulateContents()
-	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/nodrop(src)
 
 /obj/item/storage/box/syndie_kit/anti_stun/PopulateContents()
-	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/anti_stun(src)
 
 /obj/item/storage/box/syndie_kit/reviver/PopulateContents()
-	new /obj/item/autosurgeon/organ/cyberlink_nt_high(src)
-	new /obj/item/autosurgeon/syndicate/reviver(src)
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/syndicate/reviver(src) //monkestation edit end: Syndicate implants
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
@@ -672,7 +685,7 @@
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
 	new spess_helmet(src) // 4 TC for the space gear
-	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	new /obj/item/tank/jetpack/harness(src) // They kinda need this to fly to the cruiser. //monkestation edit
 	// Tacticool gear
 	new /obj/item/clothing/shoes/combat(src)
 	new /obj/item/clothing/under/syndicate(src)

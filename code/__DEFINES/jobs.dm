@@ -134,6 +134,7 @@
 #define JOB_DISPLAY_ORDER_LAWYER 11
 #define JOB_DISPLAY_ORDER_CHAPLAIN 12
 #define JOB_DISPLAY_ORDER_PSYCHOLOGIST 13
+#define JOB_DISPLAY_ORDER_BARBER 13.5 //monkestation edit: Barber
 #define JOB_DISPLAY_ORDER_AI 14
 #define JOB_DISPLAY_ORDER_CYBORG 15
 #define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
@@ -192,7 +193,7 @@
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
 #define DEPARTMENT_BITFLAG_LATE (1<<12)
-#define DEPARTMENT_LATE "Late Join"
+#define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.

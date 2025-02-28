@@ -30,7 +30,7 @@
 	if(!istype(mannequin))
 		return
 
-	for(var/I in mannequin.get_equipped_items(TRUE))
+	for(var/I in mannequin.get_equipped_items(include_pockets = TRUE))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
@@ -141,7 +141,7 @@
 		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		var/index = 0
 
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", check_jobban = "deathsquad", alert_pic = /obj/item/card/id/advanced/centcom/ert, role_name_text = "emergency response team")
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", check_jobban = "deathsquad", alert_pic = ertemplate.poll_icon, role_name_text = "[ertemplate.poll_title]") //monkestation edit: adds custom poll titles
 		var/teamSpawned = FALSE
 
 		// This list will take priority over spawnpoints if not empty

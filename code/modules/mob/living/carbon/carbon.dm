@@ -146,6 +146,12 @@
 		var/turf/end_T = get_turf(target)
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+	//MONKESTATION EDIT START
+	var/feeble = HAS_TRAIT(src, TRAIT_FEEBLE)
+	var/leg_aid = HAS_TRAIT(src, TRAIT_NO_LEG_AID)
+	if (feeble && !leg_aid && prob(buckled ? 45 : 15))
+		return fumble_throw_item(target, thrown_thing)
+	//MONKESTATION EDIT START
 	var/power_throw = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
@@ -155,6 +161,10 @@
 		power_throw++
 	if(neckgrab_throw)
 		power_throw++
+	//MONKESTATION EDIT START
+	if (feeble)
+		power_throw = 0
+	//MONKESTATION EDIT END
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
 		if(thrown_item.throw_verb)
@@ -164,7 +174,28 @@
 	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
-	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
+	//MONKESTATION EDIT START
+	var/total_throw_range = thrown_thing.throw_range + extra_throw_range
+	if (feeble)
+		total_throw_range = ceil(total_throw_range / (buckled ? 3 : 2))
+	// thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force) - MONKESTATION EDIT ORIGINAL
+	thrown_thing.safe_throw_at(target, total_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
+	if (!feeble || body_position == LYING_DOWN || buckled)
+		return
+	var/bulky = FALSE
+	var/obj/item/I = thrown_thing
+	if (istype(I))
+		if (I.w_class > WEIGHT_CLASS_NORMAL || (thrown_thing.throwforce && !leg_aid))
+			bulky = I.w_class > WEIGHT_CLASS_NORMAL
+		else
+			return
+	if (!bulky && prob(50))
+		return
+	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
+		span_danger("You lose your balance."))
+	Knockdown(2 SECONDS)
+
+	//MONKESTATION EDIT END
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -518,7 +549,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -838,7 +869,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -1352,7 +1383,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1368,17 +1398,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER

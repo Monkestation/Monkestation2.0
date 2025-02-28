@@ -1,7 +1,9 @@
 // Monster Hunter stuff
 #define upgraded_val(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
-#define WEAPON_UPGRADE "weapon_upgrade"
+
+///Whether a mob is a Monster Hunter
+#define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))
 
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \
@@ -53,3 +55,6 @@
 #define BORER_HIDING (1<<3)
 /// If the borer can produce eggs without a host
 #define BORER_ALONE_PRODUCTION (1<<4)
+
+/// How much heretic Mark of Rust mark does to items
+#define RUST_MARK_DAMAGE	50

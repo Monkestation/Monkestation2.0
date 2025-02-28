@@ -47,6 +47,8 @@ On **2021-01-04** we changed the way to compile the codebase.
 
 [Interested in some starting lore?](https://github.com/tgstation/common_core)
 
+[Coding guidelines](https://hackmd.io/@MonkestationPooba/code_guidelines) - How and how not to code for Monkestation
+
 ## LICENSE
 
 [![license-badge](https://www.gnu.org/graphics/agplv3-155x51.png)](https://www.gnu.org/licenses/agpl-3.0.html)

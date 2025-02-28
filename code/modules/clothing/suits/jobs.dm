@@ -161,8 +161,11 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/t_scanner,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 		/obj/item/tank/internals/oxygen, //monkestation edit
+		/obj/item/storage/bag/rebar_quiver,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
@@ -171,6 +174,11 @@
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
+	name = "press hazard vest"
+	desc = "A blue high-visibility vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "hazard_press"
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer

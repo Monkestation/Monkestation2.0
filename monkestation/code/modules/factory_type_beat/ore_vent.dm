@@ -238,7 +238,7 @@
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
 	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
 	COOLDOWN_RESET(src, wave_cooldown)
-	particles = null
+	remove_shared_particles(/particles/smoke/ash)
 	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
@@ -288,12 +288,11 @@
 		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
-		generate_description(user)
-		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
-		if(isnull(user_id_card))
-			return
-		user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-		user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
+			if(!isnull(user_id_card))
+				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
+				user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			generate_description(user)
 		return
 
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
@@ -305,7 +304,7 @@
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
 	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
-	particles = new /particles/smoke/ash()
+	add_shared_particles(/particles/smoke/ash)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
@@ -330,6 +329,8 @@
 			ore_string += "and " + span_bold(initial(resource.name)) + "."
 		else
 			ore_string += span_bold(initial(resource.name)) + ", "
+	if(!length(ore_string))
+		ore_string += "random ores."
 	if(user)
 		ore_string += "\nThis vent was first discovered by [user]."
 /**

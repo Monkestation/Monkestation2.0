@@ -31,6 +31,7 @@ export const COLORS = {
     service: '#7cc46a',
     centcom: '#00c100',
     other: '#c38312',
+    prisoner: '#FFC2C2', // MONKESTATION EDIT ADDITION
   },
   // Damage type colors
   damageType: {
@@ -149,6 +150,11 @@ export const RADIO_CHANNELS = [
     name: 'Radio',
     freq: 1361,
     color: '#FFC0CB',
+  },
+  {
+    name: 'Uncommon',
+    freq: 1363,
+    color: '#78a1b1',
   },
 ] as const;
 

@@ -87,7 +87,7 @@
 	trim_state = "trim_signaltech"
 	department_color = COLOR_ENGINEERING_ORANGE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
-	sechud_icon_state = SECHUD_STATION_ENGINEER
+	sechud_icon_state = SECHUD_SIGNAL_TECHINICAN
 	minimal_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
@@ -101,6 +101,7 @@
 		ACCESS_TCOMMS,
 		ACCESS_TCOMMS_ADMIN,
 		ACCESS_TECH_STORAGE,
+		ACCESS_RC_ANNOUNCE,
 	)
 	extra_access = list(
 		ACCESS_ATMOSPHERICS,

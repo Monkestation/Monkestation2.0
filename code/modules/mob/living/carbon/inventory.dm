@@ -49,9 +49,9 @@
 		legcuffed,
 	)
 
-/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
+/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1, move_equipped = FALSE) //MONKESTATION EDIT - Added 'move_equipped = FALSE'
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE, move_equipped = move_equipped)) //MONKESTATION EDIT - Added 'move_equipped = move_equipped'
 			return slot
 	if(qdel_on_fail)
 		qdel(I)
@@ -422,7 +422,7 @@
  * * I - The item being given by the offerer
  */
 /mob/living/proc/take(mob/living/carbon/offerer, obj/item/I, visible_message = TRUE)
-	clear_alert("[offerer]")
+	clear_alert("[REF(offerer)]_offer")
 	if(IS_DEAD_OR_INCAP(src))
 		to_chat(src, span_warning("You're unable to take anything in your current state!"))
 		return

@@ -18,10 +18,11 @@
 	if(climb_stun)
 		src.climb_stun = climb_stun
 
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
+	// remove the `override = TRUE` whenever we actually fix this shit
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine), override = TRUE)
+	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun), override = TRUE)
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -67,16 +68,18 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
-	//monkestation edit - CYBERNETICS
+	//MONKESTATION EDIT START
+	if(HAS_TRAIT(user, TRAIT_FEEBLE)) //do you have any idea how slow I am???
+		adjusted_climb_time *= 1.25
 	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
 		adjusted_climb_time *= 0.3
-	//monkestation edit - CYBERNETICS
+	//MONKESTATION EDIT END
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
 	if(do_after(user, adjusted_climb_time, climbed_thing, interaction_key = DOAFTER_SOURCE_CLIMBING)) // monkestation edit: add an interaction key
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
-		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN)//monkestation edit: simians can fling themselves off climbable structures
+		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN || HAS_TRAIT(user, TRAIT_VAULTING) &&user.m_intent == MOVE_INTENT_SPRINT)//monkestation edit: simians can fling themselves off climbable structures
 			vault_over_object(user, climbed_thing)
 			if(climb_stun)
 				user.Immobilize(climb_stun)

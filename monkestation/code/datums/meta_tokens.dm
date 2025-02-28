@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/antag_timeout
 	/// The timer for the event token timeout
 	var/event_timeout
+	/// The month we last used a donator token on
+	var/token_month = 0
 
 /datum/meta_token_holder/New(client/creator)
 	. = ..()
@@ -59,12 +61,20 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder/proc/convert_list_to_tokens(list/saved_tokens)
 	if(!length(saved_tokens))
 		return
+	for(var/token in saved_tokens)
+		if(isnull(saved_tokens[token]))
+			saved_tokens[token] = 0
+		if(!("donator" in saved_tokens))
+			saved_tokens |= "donator"
+			saved_tokens["donator"] = 0
+
 	total_low_threat_tokens = saved_tokens["low_threat"]
 	total_medium_threat_tokens = saved_tokens["medium_threat"]
 	total_high_threat_tokens = saved_tokens["high_threat"]
 	event_tokens = saved_tokens["event_tokens"]
 	event_token_month = saved_tokens["event_token_month"]
 	donator_token = saved_tokens["donator"]
+	token_month = saved_tokens["donator_token_month"]
 
 	total_antag_tokens = total_low_threat_tokens + total_medium_threat_tokens + total_high_threat_tokens
 
@@ -83,34 +93,39 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		"event_tokens" = event_tokens,
 		"event_token_month" = event_token_month,
 		"donator" = donator_token,
+		"donator_token_month" = token_month,
 	)
 	backup_tokens()
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()
-	if(!owner.patreon)
+	var/datum/patreon_data/patreon = owner?.player_details?.patreon
+
+	if(!patreon?.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
-	if(!owner.patreon.has_access(ACCESS_COMMAND_RANK))
-		return
+
 	var/month_number = text2num(time2text(world.time, "MM"))
-	owner.prefs.token_month = month_number
-	if(owner.prefs.token_month != month_number)
-		owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
-	if(!owner.patreon.has_access(ACCESS_TRAITOR_RANK))
-		owner.prefs.save_preferences()
+
+	if(token_month != month_number)
+		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
+			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
+
+		donator_token++
+		token_month = month_number  ///update per-person month counter
+		convert_tokens_to_list()
+		return TRUE
+
+	else
+		token_month = month_number
+		convert_tokens_to_list()
 		return FALSE
-	if(owner.prefs.token_month == month_number)
-		return FALSE
-	donator_token++
-	owner.prefs.token_month = month_number
-	convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
 		if(donator_token)
 			donator_token--
-			logger.Log(LOG_CATEGORY_META, "[owner], used donator token on [owner.prefs.token_month].")
-			owner.prefs.save_preferences()
+			logger.Log(LOG_CATEGORY_META, "[owner], used donator token on [token_month].")
+			convert_tokens_to_list()
 			return
 
 	switch(tier)
@@ -193,7 +208,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 	if(event_token_month != month_number)
 		event_token_month = month_number
-		event_tokens = GLOB.patreon_etoken_values[checked_client.patreon.owned_rank]
+		event_tokens = GLOB.patreon_etoken_values[checked_client.player_details.patreon.owned_rank]
 		convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/approve_token_event()

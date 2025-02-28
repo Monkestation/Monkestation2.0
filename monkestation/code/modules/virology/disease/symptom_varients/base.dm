@@ -2,7 +2,7 @@
 	var/name = "Generic Varient"
 	var/desc = "An amalgamation of genes."
 
-	var/weight = 10
+	var/weight = 0 // Set to 0 to be unobtainable till someone balances, still in code commented as heavily tied into extrapolator and easier to readd in future
 
 	var/datum/symptom/host_symptom
 	var/datum/disease/host_disease
@@ -51,6 +51,7 @@
 		return FALSE
 	host_symptom.run_effect(host_disease.affected_mob, host_disease)
 	COOLDOWN_START(src, host_cooldown, cooldown_time)
+	return TRUE
 
 /datum/symptom_varient/proc/Copy(datum/symptom/new_symp)
 	return new type(new_symp)

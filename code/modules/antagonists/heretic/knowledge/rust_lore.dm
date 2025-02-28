@@ -111,9 +111,8 @@
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-		return
-
-	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
+	else
+		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -129,16 +128,20 @@
 		return
 
 	// Heals all damage + Stamina
-	source.adjustBruteLoss(-2, FALSE)
-	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
-	source.stamina.adjust(2)
+	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
+	needs_update += source.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
+	needs_update += source.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
+	needs_update += source.adjustToxLoss(-2 * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	needs_update += source.adjustOxyLoss(-0.5 * delta_time, updating_health = FALSE)
+	if(needs_update)
+		source.updatehealth()
+	source.stamina.adjust(2 * delta_time)
 	// Reduces duration of stuns/etc
-	source.AdjustAllImmobility(-0.5 SECONDS)
+	source.AdjustAllImmobility(-0.5 SECONDS * delta_time)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * seconds_per_tick
+		source.blood_volume += 2.5 * delta_time
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -222,6 +225,9 @@
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
+	ascension_achievement = /datum/award/achievement/misc/rust_ascension
+	announcement_text = "%SPOOKY% Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion! %SPOOKY%"
+	announcement_sound = 'sound/ambience/antag/heretic/ascend_rust.ogg'
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
@@ -241,6 +247,12 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
+		// monkestation addition: pain system
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// monkestation end
 	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
@@ -261,12 +273,6 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_rust.ogg',
-		color_override = "pink",
-	)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -305,11 +311,15 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
-	source.stamina.adjust(20)
+	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/needs_update = FALSE
+	needs_update += source.adjustBruteLoss(-4 * delta_time, updating_health = FALSE)
+	needs_update += source.adjustFireLoss(-4 * delta_time, updating_health = FALSE)
+	needs_update += source.adjustToxLoss(-4 * delta_time, updating_health = FALSE, forced = TRUE)
+	needs_update += source.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
+	if(needs_update)
+		source.updatehealth()
+	source.stamina.adjust(20 * delta_time)
 
 /**
  * #Rust spread datum

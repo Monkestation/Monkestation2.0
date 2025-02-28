@@ -16,6 +16,11 @@
 	e_cost = 62.5
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/carbine
+	projectile_type = /obj/projectile/beam/laser/carbine
+	e_cost = 25 // 40 shots
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 200
@@ -30,6 +35,8 @@
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
+	pellets = 3
+	variance = 10
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
@@ -106,7 +113,7 @@
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"

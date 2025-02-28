@@ -50,7 +50,7 @@
 	l_pocket = /obj/item/switchblade
 	additional_radio = /obj/item/encryptionkey/heads/captain
 
-/datum/outfit/centcom/ert/commander/alert
+/datum/outfit/centcom/ert/commander/red
 	name = "ERT Commander - High Alert"
 
 	backpack_contents = list(
@@ -76,7 +76,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	additional_radio = /obj/item/encryptionkey/heads/hos
 
-/datum/outfit/centcom/ert/security/alert
+/datum/outfit/centcom/ert/security/red
 	name = "ERT Security - High Alert"
 
 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
@@ -104,7 +104,7 @@
 	l_pocket = /obj/item/healthanalyzer/advanced
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
-/datum/outfit/centcom/ert/medic/alert
+/datum/outfit/centcom/ert/medic/red
 	name = "ERT Medic - High Alert"
 
 	backpack_contents = list(
@@ -133,7 +133,7 @@
 	l_pocket = /obj/item/rcd_ammo/large
 	additional_radio = /obj/item/encryptionkey/heads/ce
 
-/datum/outfit/centcom/ert/engineer/alert
+/datum/outfit/centcom/ert/engineer/red
 	name = "ERT Engineer - High Alert"
 
 	backpack_contents = list(
@@ -283,7 +283,7 @@
 	..()
 	if(visualsOnly)
 		return
-	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
+	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE

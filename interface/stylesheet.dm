@@ -52,6 +52,7 @@ em						{font-style: normal;	font-weight: bold;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
+.enteradio				{color: #00ff99;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
 .greenteamradio			{color: #00ff00;}
@@ -237,5 +238,6 @@ h1.alert, h2.alert		{color: #000000;}
 .orange 				{color: #b8761a;}
 .yellow					{color: #c7b72c;}
 .cyan					{color: #0ea1e6;}
+.uncommonradio			{color: #78a1b1;}
 // MONKESTATION ADDITION END
 </style>"}
