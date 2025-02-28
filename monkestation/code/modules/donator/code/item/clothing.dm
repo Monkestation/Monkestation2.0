@@ -578,3 +578,11 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "linen_tombstone_shroud"
 	worn_icon_state = "linen_tombstone_shroud"
+
+/obj/item/clothing/suit/jacket/formal_overcoat
+	name = "Formal Overcoat"
+	desc = "A snazzy black suit jacket with 6 shiny gold buttons."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "Formal_Overcoat"
+	worn_icon_state = "formal_overcoat"
