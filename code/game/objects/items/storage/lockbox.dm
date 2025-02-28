@@ -247,6 +247,9 @@
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
+	if(istype(buyer_account, /datum/bank_account/department))
+		department_purchase = TRUE
+		department_account = buyer_account
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
@@ -254,7 +257,7 @@
 	if(!id_card)
 		return ..()
 
-	if(id_card.registered_account != buyer_account && (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
+	if(id_card.registered_account != buyer_account && (id_card.registered_account?.account_job?.paycheck_department) != (department_account.department_id))
 		balloon_alert(user, "incorrect bank account!")
 		return FALSE
 
