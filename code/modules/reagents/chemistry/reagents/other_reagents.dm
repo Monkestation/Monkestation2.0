@@ -1500,11 +1500,13 @@
 	color = "#92D17D" // rgb: 146, 209, 125
 	taste_description = "slime"
 	penetrates_skin = NONE
+	ph = 11
+	restricted = TRUE //so they cant roll on maint pills, if this has other sides effects then this can be reworked to a global blacklist
 
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.infect_disease_predefined(DISEASE_FUNGUS, TRUE, "[ROUND_TIME()] Tubercle Bacillus Cosmosis Microbes Infections [key_name(exposed_mob)]")  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_FUNGUS, TRUE, "[ROUND_TIME()] Tubercle Bacillus Cosmosis Microbes Infections [key_name(exposed_mob)]")  //Monkestation Edit: TB Patho
 
 /datum/reagent/snail
 	name = "Agent-S"

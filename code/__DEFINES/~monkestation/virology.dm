@@ -49,6 +49,7 @@
 #define DISEASE_ANXIETY "anxiety"
 #define DISEASE_SHOCK "shock"
 #define DISEASE_FUNGUS "fungal_spores"
+#define DISEASE_DEBUG "debug"
 
 #define DISEASE_DORMANT (1 << 3)
 #define DISEASE_COPYSTAGE (1<<4)

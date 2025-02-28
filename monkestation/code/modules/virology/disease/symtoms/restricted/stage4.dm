@@ -120,6 +120,8 @@
 	chance = 50
 
 /datum/symptom/fungal_tb/activate(mob/living/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
+		return
 	if(prob(10))
 		multiplier_tweak(0.1)
 	switch(round(multiplier))
