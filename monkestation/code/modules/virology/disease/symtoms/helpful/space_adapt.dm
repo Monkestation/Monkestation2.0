@@ -20,3 +20,4 @@
 	if(spaceproof)
 		spaceproof = FALSE
 		to_chat(mob, span_notice("You feel the chill of the air once more."))
+		mob.emote("shiver")
