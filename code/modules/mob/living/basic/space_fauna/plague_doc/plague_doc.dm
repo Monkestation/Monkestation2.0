@@ -11,6 +11,8 @@
 	response_disarm_continuous = "pushes"
 	response_disarm_simple = "push"
 
+	speed = 0.5
+
 	basic_mob_flags = DEL_ON_DEATH
 	maxHealth = 1000
 	health = 1000
@@ -39,6 +41,9 @@
 /datum/ai_controller/basic_controller/plague_doc
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+	)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/attack_obstacle_in_path
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

@@ -701,28 +701,28 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
-  
+
 // Abandoned SCP Site Ruins
 /area/ruin/space/has_grav/abandonedscpsite
 	name = "Abandoned Site Maintenance"
 
 /area/ruin/space/has_grav/abandonedscpsite/enterance
-	name = "Enterance"
+	name = "Containment Site Enterance"
 
 /area/ruin/space/has_grav/abandonedscpsite/ezhall
-	name = "Enterance Zone Hallway"
+	name = "Containment Site Enterance Zone Hallway"
 
 /area/ruin/space/has_grav/abandonedscpsite/engineering
 	name = "Containment Site Engineering"
 
 /area/ruin/space/has_grav/abandonedscpsite/office1
-	name = "General Office"
+	name = "Containment Site General Office"
 
 /area/ruin/space/has_grav/abandonedscpsite/cafeteria
-	name = "Cafeteria"
+	name = "Containment Site Cafeteria"
 
 /area/ruin/space/has_grav/abandonedscpsite/moffice
-	name = "Managers Office"
+	name = "Containment Site Managers Office"
 
 /area/ruin/space/has_grav/abandonedscpsite/hcz1
 	name = "HCZ Checkpoint 1"
@@ -749,7 +749,7 @@
 	name = "Containment Site Medbay"
 
 /area/ruin/space/has_grav/abandonedscpsite/lounge
-	name = "Break Room"
+	name = "Containment Site Break Room"
 
 /area/ruin/space/has_grav/abandonedscpsite/lczhall
 	name = "LCZ Hall"
@@ -761,17 +761,17 @@
 	name = "Containment Site Prison"
 
 /area/ruin/space/has_grav/abandonedscpsite/prisoncafe
-	name = "Prison Cafeteria"
+	name = "Containment Site Prison Cafeteria"
 
 /area/ruin/space/has_grav/abandonedscpsite/prisonlibrary
-	name = "Prison Library"
+	name = "Containment Site Prison Library"
 
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance
-	name = "Maintenance"
+	name = "Containment Site Maintenance"
 
 /area/ruin/space/has_grav/abandonedscpsite/prisonguard
-	name = "Prison Watchpoint"
-  
+	name = "Containment Site Prison Watchpoint"
+
 //Infested Flotilla
 /area/ruin/space/has_grav/infested_flotilla
 	name = "Infested Flotilla"

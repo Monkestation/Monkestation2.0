@@ -328,8 +328,8 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombielguard,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/ezhall)
 "bs" = (
@@ -518,6 +518,12 @@
 "cc" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/abandonedscpsite/containment2)
+"cd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "ce" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -1305,6 +1311,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment1)
+"fd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiehguard,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "fe" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/broken_floor,
@@ -1436,6 +1450,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
 /obj/structure/cable,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "fD" = (
@@ -2781,6 +2796,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/hcz1)
+"kr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "ks" = (
 /obj/structure/table/glass,
 /obj/item/defibrillator/loaded{
@@ -3587,6 +3611,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment1)
+"nz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/scpscientist,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "nB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -3620,6 +3651,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/broken/directional/west,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
 "nJ" = (
@@ -3855,6 +3887,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/prisonguard)
+"oC" = (
+/obj/effect/spawner/random/trash/garbage,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiehguard,
@@ -3889,6 +3926,9 @@
 /obj/structure/closet/l3closet/janitor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
+"oP" = (
+/turf/closed/indestructible/riveted,
+/area/ruin/space/has_grav/abandonedscpsite/moffice)
 "oQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -4502,6 +4542,7 @@
 /obj/effect/decal/cleanable/rubble,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombielguard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/ezhall)
 "qV" = (
@@ -4885,7 +4926,6 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m556,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -4931,6 +4971,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
+"so" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/abandonedscpsite/hcz1)
 "sp" = (
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -5337,6 +5382,7 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment1)
 "uc" = (
@@ -5581,14 +5627,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/hcz2)
-"uN" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/automatic/m90/unrestricted,
-/obj/effect/turf_decal/trimline/red/real_red/filled/line,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/czbrig)
 "uO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7096,6 +7134,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
 "At" = (
@@ -7393,6 +7432,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/containment2)
+"BL" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandonedscpsite/ezhall)
 "BM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -8500,10 +8546,6 @@
 /area/ruin/space/has_grav/abandonedscpsite/office2)
 "Gn" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/ammo_box/magazine/m50{
-	pixel_y = -3;
-	pixel_x = 12
-	},
 /obj/item/clothing/glasses/thermal/monocle,
 /obj/item/clothing/head/fedora,
 /obj/effect/decal/cleanable/dirt,
@@ -9410,7 +9452,7 @@
 /obj/structure/flora/rock/pile,
 /obj/effect/mob_spawn/corpse/human/dclass{
 	brute_damage = 1000;
-	desc = "not a baller"
+	desc = "got his ankles broken"
 	},
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/effect/decal/cleanable/blood/gibs/core{
@@ -11231,6 +11273,11 @@
 /obj/machinery/light/red/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/ezhall)
+"Qz" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "QB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
@@ -11732,10 +11779,6 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/gun/ballistic/automatic/pistol/deagle,
-/obj/item/ammo_box/magazine/m50{
-	pixel_y = -3;
-	pixel_x = 12
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/abandonedscpsite/moffice)
@@ -11940,6 +11983,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/red/dim/directional/east,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment2)
 "SQ" = (
@@ -12394,6 +12438,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombielguard,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/lczhall)
 "Uw" = (
@@ -12586,6 +12631,7 @@
 "Vm" = (
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "Vp" = (
@@ -12752,6 +12798,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/space_fauna/plague_doc/minion_zombies/zombiescientist,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/lcz1)
 "Wb" = (
@@ -13091,6 +13138,7 @@
 	icon_state = "gibbl2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/grenade/firecracker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/ezhall)
 "Xo" = (
@@ -13224,8 +13272,8 @@
 "XL" = (
 /obj/structure/table/reinforced,
 /obj/item/food/donut/caramel{
-	pixel_x = -14;
-	pixel_y = 7
+	pixel_x = -7;
+	pixel_y = 11
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door{
@@ -13481,7 +13529,6 @@
 /area/ruin/space/has_grav/abandonedscpsite/office1)
 "YF" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m556,
 /obj/effect/turf_decal/trimline/red/real_red/filled/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -13709,6 +13756,7 @@
 /obj/item/folder/red,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/cans/sixbeer,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment2)
 "Zy" = (
@@ -15551,7 +15599,7 @@ gH
 AB
 Or
 jY
-Kl
+nz
 xn
 GF
 Sj
@@ -15604,7 +15652,7 @@ Ef
 oQ
 un
 wc
-Pw
+Qz
 MW
 fj
 qq
@@ -15623,7 +15671,7 @@ Sc
 em
 Ce
 jY
-cK
+cd
 xn
 Oo
 GO
@@ -16244,11 +16292,11 @@ ll
 El
 Qu
 ll
-ll
+kr
 ls
 ll
 Hh
-aW
+fd
 aW
 XB
 RP
@@ -16341,7 +16389,7 @@ NG
 DF
 FS
 ev
-zd
+BL
 ld
 uZ
 dr
@@ -16399,7 +16447,7 @@ RP
 uE
 ke
 Hi
-an
+so
 cm
 RP
 ik
@@ -16678,7 +16726,7 @@ ym
 bK
 Ou
 mV
-ll
+kr
 Kz
 Lw
 Pn
@@ -16689,7 +16737,7 @@ tz
 gi
 Lz
 Be
-uN
+YF
 fD
 Cj
 Jb
@@ -16854,7 +16902,7 @@ Xo
 XU
 cx
 bZ
-FZ
+oC
 ld
 BZ
 Tt
@@ -17778,7 +17826,7 @@ KU
 zE
 FL
 jE
-CR
+oP
 BZ
 BZ
 BZ
@@ -17850,7 +17898,7 @@ oE
 SL
 Yf
 Cf
-CR
+oP
 BZ
 BZ
 BZ
@@ -17922,7 +17970,7 @@ QP
 Ie
 Wl
 Cf
-CR
+oP
 BZ
 BZ
 BZ
@@ -17994,7 +18042,7 @@ Sf
 Nx
 fZ
 Xq
-CR
+oP
 BZ
 BZ
 BZ
@@ -18066,7 +18114,7 @@ gc
 Fd
 jd
 FN
-CR
+oP
 BZ
 BZ
 BZ
@@ -18130,15 +18178,15 @@ mW
 mW
 mW
 mW
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
 BZ
 BZ
 BZ
