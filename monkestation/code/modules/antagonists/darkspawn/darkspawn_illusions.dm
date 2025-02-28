@@ -13,7 +13,7 @@
 	ventcrawler = TRUE
 
 	attack_sound = 'sound/magic/voidblink.ogg'
-	deathsound = 'yogstation/sound/magic/devour_will_victim.ogg'
+	deathsound = 'monkestation/sound/magic/devour_will_victim.ogg'
 	attacktext = "gores"
 	bubble_icon = BUBBLE_DARKSPAWN
 
@@ -22,7 +22,7 @@
 	lighting_cutoff_blue = 50
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	faction = list(ROLE_DARKSPAWN)
-	
+
 /mob/living/simple_animal/hostile/illusion/darkspawn/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/light_eater)

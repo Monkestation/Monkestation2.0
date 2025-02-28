@@ -6472,6 +6472,7 @@
 #include "monkestation\code\modules\antagonists\darkspawn\darkspawn_thrall.dm"
 #include "monkestation\code\modules\antagonists\darkspawn\shadowlands_component.dm"
 #include "monkestation\code\modules\antagonists\darkspawn\darkspawn_abilities\_divulge.dm"
+#include "monkestation\code\modules\antagonists\darkspawn\darkspawn_classes\_class.dm"
 #include "monkestation\code\modules\antagonists\darkspawn\darkspawn_objects\crawling_shadows.dm"
 #include "monkestation\code\modules\antagonists\darkspawn\darkspawn_objects\darkspawn_chems.dm"
 #include "monkestation\code\modules\antagonists\darkspawn\darkspawn_objects\goliath_tendril.dm"

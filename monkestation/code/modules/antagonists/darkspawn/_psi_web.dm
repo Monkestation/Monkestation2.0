@@ -7,7 +7,7 @@
 	///Fancy description about the effect
 	var/lore_description = ""
 	///Icon file used for the tgui menu
-	var/icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	var/icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	///Specific icon used for the tgui menu
 	var/icon_state = null
 	///Cost of to learn this
@@ -72,7 +72,7 @@
 
 	if(refund && darkspawn)
 		darkspawn.willpower += willpower_cost
-	
+
 	return QDEL_HINT_QUEUE
 
 /datum/psi_web/Destroy(force, ...)

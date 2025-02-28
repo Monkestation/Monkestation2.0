@@ -3,7 +3,7 @@
 	desc = "..."
 
 	//icons
-	icon = 'yogstation/icons/mob/darkspawn_progenitor.dmi'
+	icon = 'monkestation/icons/mob/darkspawn_progenitor.dmi'
 	icon_state = "darkspawn_progenitor"
 	icon_living = "darkspawn_progenitor"
 	health_doll_icon = "smolgenitor"
@@ -40,7 +40,7 @@
 	sight = SEE_MOBS | SEE_TURFS | SEE_OBJS
 
 	//flavour
-	attack_sound = 'yogstation/sound/creatures/progenitor_attack.ogg'
+	attack_sound = 'monkestation/sound/creatures/progenitor_attack.ogg'
 	attacktext = "rends"
 	friendly = "stares down"
 	speak_emote = list("roars")
@@ -108,7 +108,7 @@
 	//have them fade into existence and play a sound cry when they finish fading in
 	alpha = 0
 	animate(src, alpha = 255, time = 4 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sound_to_playing_players), 'yogstation/sound/magic/sacrament_complete.ogg', 50), 4 SECONDS, TIMER_UNIQUE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sound_to_playing_players), 'monkestation/sound/magic/sacrament_complete.ogg', 50), 4 SECONDS, TIMER_UNIQUE)
 	time_to_next_roar = world.time + roar_cooldown //prevent immediate roaring causing sound overlap
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -118,7 +118,7 @@
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget()
 	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
-		playsound(target, 'yogstation/sound/magic/pass_smash_door.ogg', 100, FALSE)
+		playsound(target, 'monkestation/sound/magic/pass_smash_door.ogg', 100, FALSE)
 	. = ..()
 
 //////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@
 //////////////////////////////////////////////////////////////////////////
 /mob/living/simple_animal/hostile/darkspawn_progenitor/Login()
 	..()
-	var/image/I = image(icon = 'yogstation/icons/mob/darkspawn.dmi' , icon_state = "smol_progenitor", loc = src)
+	var/image/I = image(icon = 'monkestation/icons/mob/darkspawn.dmi' , icon_state = "smol_progenitor", loc = src)
 	I.override = 1
 	I.pixel_x -= pixel_x
 	I.pixel_y -= pixel_y
@@ -147,10 +147,10 @@
 		roar()
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/proc/roar()
-	playsound(src, 'yogstation/sound/creatures/progenitor_roar.ogg', 70, TRUE)
+	playsound(src, 'monkestation/sound/creatures/progenitor_roar.ogg', 70, TRUE)
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
-			M.playsound_local(src, 'yogstation/sound/creatures/progenitor_distant.ogg', 35, FALSE, falloff_exponent = 5)
+			M.playsound_local(src, 'monkestation/sound/creatures/progenitor_distant.ogg', 35, FALSE, falloff_exponent = 5)
 		else if(is_team_darkspawn(M) || M==src) //the progenitor is PROBABLY a darkspawn, but just in case
 			continue
 		else if(isliving(M))
@@ -189,7 +189,7 @@
 /datum/action/cooldown/spell/pointed/progenitor_curse
 	name = "Viscerate Mind"
 	desc = "Unleash a powerful psionic barrage into the mind of the target."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "sacrament(old)"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"

@@ -13,9 +13,9 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	//team used for all the darkspawns, thralls, and the objective
 	var/datum/team/darkspawn/team
 	///name of the player character before the divulge
-	var/disguise_name 
+	var/disguise_name
 	///name of the player character after the divulge
-	var/darkspawn_name 
+	var/darkspawn_name
 	///keeps track of where the darkspawn player is in progression
 	var/darkspawn_state = DARKSPAWN_MUNDANE //0 for normal crew, 1 for divulged, and 2 for progenitor
 	///Component that keeps track of all the spells a darkspawn can learn
@@ -24,18 +24,18 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	//Psi variables
 	//Psi is the resource used for darkspawn powers
 	///Currently available psi
-	var/psi = 100 
+	var/psi = 100
 	///Maximum amount of psi
-	var/psi_cap = 100 
+	var/psi_cap = 100
 	///How long before psi starts regenerating
-	var/psi_regen_delay = 9 SECONDS 
+	var/psi_regen_delay = 9 SECONDS
 	///how much psi is regenerated per second once it does start regenerating
-	var/psi_per_second = 20 
+	var/psi_per_second = 20
 	///When this finishes it's cooldown, regenerate Psi and restart
 	COOLDOWN_DECLARE(psi_cooldown)
 	///Used to prevent duplicate regen proc calls
-	var/psi_regenerating = FALSE 
- 
+	var/psi_regenerating = FALSE
+
  	///Willpower is used to buy abilities and is gained by using Devour Will
 	var/willpower = 6
 
@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	var/dark_healing = 8
 	///Default amount of damage taken in light
 	var/light_burning = 7
-	///These three variables 
+	///These three variables
 	///multiplies brute damage taken
 	var/brute_mod = 1
 	///multiplies burn damage taken
@@ -148,8 +148,8 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	var/mob/user = owner.current
 	if(!user) //sanity check
 		return
-		
-	user.playsound_local(get_turf(user), 'yogstation/sound/ambience/antag/darkspawn.ogg', 50, FALSE)
+
+	user.playsound_local(get_turf(user), 'monkestation/sound/ambience/antag/darkspawn.ogg', 50, FALSE)
 
 	var/list/report = list()
 	report += span_progenitor("You are a darkspawn!")
@@ -217,7 +217,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 					knowledge_data["icon"] = icon2base64(icon(initial(knowledge.icon), initial(knowledge.icon_state)))
 
 				paths += list(knowledge_data)
-		
+
 		category_data["knowledgeData"] = paths
 		data["categories"] += list(category_data)
 
@@ -225,7 +225,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 /datum/antagonist/darkspawn/ui_static_data(mob/user)
 	var/list/data = list()
-	
+
 	data["antag_name"] = name
 
 	for(var/datum/component/darkspawn_class/class as anything in subtypesof(/datum/component/darkspawn_class))
@@ -269,7 +269,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(user.stat == DEAD)
 		return UI_CLOSE
 	return ..()
-	
+
 ////////////////////////////////////////////////////////////////////////////////////
 //---------------------------------Process proc-----------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
@@ -300,7 +300,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 				deadguy.revive(TRUE)
 				revive_notice = FALSE
 				deadguy.visible_message(span_progenitor("[deadguy]'s sigils flare brightly as they are once again in the realm of the living!"), span_progenitor("You rise once more!"))
-				playsound(deadguy, 'yogstation/sound/magic/demented_outburst_scream.ogg', 40, FALSE)
+				playsound(deadguy, 'monkestation/sound/magic/demented_outburst_scream.ogg', 40, FALSE)
 		else if(revive_notice)
 			revive_notice = FALSE
 			deadguy.visible_message(span_notice("[deadguy]'s body stills."), span_velvet("Your body stills once more."))
@@ -338,7 +338,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
 	set waitfor = FALSE
-	psi_regenerating = TRUE 
+	psi_regenerating = TRUE
 	var/regen_amount = max(1, (psi_per_second/20))//max speed is 20 ticks per second, regenerate extra per tick if regen speed is over 20 (only encountered when admemes mess with numbers)
 	psi = min(psi + regen_amount, psi_cap)
 	psi = round(psi, 0.1) //keep it at reasonable numbers rather than ridiculous decimals
@@ -375,7 +375,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 /datum/antagonist/darkspawn/proc/divulge(forced = FALSE)
 	if(darkspawn_state >= DARKSPAWN_DIVULGED)
 		return FALSE
-		
+
 	var/mob/living/carbon/human/user = owner.current
 
 	if(!user || !istype(user))//sanity check
@@ -390,12 +390,12 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		var/chosen = pick(classes)
 
 		picked_class = owner.AddComponent(chosen)
-	
+
 	owner.assigned_role = picked_class.name //they stop being whatever job they were the moment they divulge
 
 	if(forced)
 		owner.current.visible_message(
-			span_boldwarning("[owner.current]'s skin sloughs off, revealing warping black flesh covered in symbols!"), 
+			span_boldwarning("[owner.current]'s skin sloughs off, revealing warping black flesh covered in symbols!"),
 			span_userdanger("You have forcefully divulged!"))
 
 	for(var/datum/action/cooldown/spell/spells in user.actions) //remove the ability that triggers this
@@ -433,7 +433,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(owner.current.stat == DEAD)
 		return
 	to_chat(owner.current, span_userdanger("You feel the skin you're wearing crackling like paper - you will forcefully divulge soon! Get somewhere hidden and dark!"))
-	owner.current.playsound_local(owner.current, 'yogstation/sound/magic/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(owner.current, 'monkestation/sound/magic/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, PROC_REF(force_divulge), 5 MINUTES))
 
 /datum/antagonist/darkspawn/proc/force_divulge()
@@ -449,7 +449,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		owner.current.gib(TRUE)
 	H.visible_message(span_boldwarning("[H]'s skin begins to slough off in sheets!"), \
 	span_userdanger("You can't maintain your disguise any more! It begins sloughing off!"))
-	playsound(H, 'yogstation/sound/creatures/darkspawn_force_divulge.ogg', 50, FALSE)
+	playsound(H, 'monkestation/sound/creatures/darkspawn_force_divulge.ogg', 50, FALSE)
 	H.do_jitter_animation(1000)
 	var/processed_message = span_progenitor("\[Mindlink\] [H.real_name] has not divulged in time and is now forcefully divulging.")
 	for(var/mob/M in GLOB.player_list)
@@ -490,7 +490,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	var/datum/component/darkspawn_class/class = user.GetComponent(/datum/component/darkspawn_class)
 	if(class && istype(class) && class.class_color)
 		class_color = class.class_color //this line actually kinda hurts me
-		
+
 	// Spawn the progenitor
 	var/mob/living/simple_animal/hostile/darkspawn_progenitor/progenitor = new(get_turf(user), user.real_name, class_color)
 	user.mind.transfer_to(progenitor)
@@ -558,9 +558,9 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(picked_class) //should bring back all powers, might be something i'm overlooking
 		picked_class.refresh_powers()
 
-	playsound(returner, 'yogstation/sound/magic/divulge_end.ogg', 50, 0)
-	playsound(returner, 'yogstation/sound/creatures/darkspawn_death.ogg', 50, 0)
-	
+	playsound(returner, 'monkestation/sound/magic/divulge_end.ogg', 50, 0)
+	playsound(returner, 'monkestation/sound/creatures/darkspawn_death.ogg', 50, 0)
+
 	var/processed_message = span_progenitor("<b>\[Mindlink\] [returner] has reformed their body.</b>")
 	for(var/T in GLOB.alive_mob_list)
 		var/mob/M = T
@@ -601,17 +601,17 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		if(3)
 			class_color = COLOR_STRONG_VIOLET
 			class_icon = "warlock_sigils"
-		
-	var/icon/eyes = icon('yogstation/icons/mob/darkspawn.dmi', "eyes")
+
+	var/icon/eyes = icon('monkestation/icons/mob/darkspawn.dmi', "eyes")
 	eyes.Blend(class_color, ICON_MULTIPLY)
 	darkspawn_icon.Blend(eyes, ICON_OVERLAY)
 
-	var/icon/sigil = icon('yogstation/icons/mob/darkspawn.dmi', class_icon)
+	var/icon/sigil = icon('monkestation/icons/mob/darkspawn.dmi', class_icon)
 	sigil.Blend(class_color, ICON_MULTIPLY)
 	darkspawn_icon.Blend(sigil, ICON_OVERLAY)
 
 	return finish_preview_icon(darkspawn_icon)
-	
+
 ////////////////////////////////////////////////////////////////////////////////////
 //------------------------------Admin panel stuff---------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
@@ -661,7 +661,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	for(var/datum/psi_web/ability as anything in picked_class.learned_abilities)
 		if(initial(ability.willpower_cost)) //if there's even a cost to refund
 			abilities |= ability
-		
+
 	if(!LAZYLEN(abilities))
 		to_chat(admin, span_warning("There are no abilities to refund"))
 		return
@@ -669,7 +669,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	var/datum/psi_web/picked_ability = tgui_input_list(admin, "Select which ability to refund.", "Select Ability", abilities)
 	if(!picked_ability || !istype(picked_ability, /datum/psi_web))
 		return
-	
+
 	if(QDELETED(src) || QDELETED(owner.current) || QDELETED(picked_class))
 		return
 
@@ -682,11 +682,11 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			classes |= class
 	classes |= "vvv Not regularly selectible vvv"
 	classes |= subtypesof(/datum/component/darkspawn_class)
-		
+
 	var/chosen = tgui_input_list(admin, "Select which class to force on the target.", "Select Class", classes)
 	if(!chosen || !ispath(chosen, /datum/component/darkspawn_class))
 		return
-	
+
 	if(QDELETED(src) || QDELETED(owner.current))
 		return
 
@@ -714,7 +714,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 ////////////////////////////////////////////////////////////////////////////////////
 /mob/living/proc/add_darkspawn()
 	if(!istype(mind))
-		return FALSE		
+		return FALSE
 	return mind.add_antag_datum(/datum/antagonist/darkspawn)
 
 /mob/living/proc/remove_darkspawn()

@@ -3,7 +3,7 @@
 	name = "Sacrament"
 	desc = "Ascends into a progenitor. You must have drained lucidity from a certain number of different people for this to work."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -54,7 +54,7 @@
 	in_use = TRUE
 
 	user.visible_message(span_warning("[user]'s sigils flare as energy swirls around them..."), span_velvet("You begin creating a psychic barrier around yourself..."))
-	sound_to_playing_players('yogstation/sound/magic/sacrament_begin.ogg', 50, FALSE, pressure_affected = FALSE)
+	sound_to_playing_players('monkestation/sound/magic/sacrament_begin.ogg', 50, FALSE, pressure_affected = FALSE)
 	if(!do_after(user, 3 SECONDS, user))
 		in_use = FALSE
 		return
@@ -64,8 +64,8 @@
 			continue
 		new/obj/structure/psionic_barrier(T, 340)
 
-	var/image/alert_overlay = image('yogstation/icons/mob/actions/actions_darkspawn.dmi', "sacrament")
-	notify_ghosts("Darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ", source = user, ghost_sound = 'yogstation/sound/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
+	var/image/alert_overlay = image('monkestation/icons/mob/actions/actions_darkspawn.dmi', "sacrament")
+	notify_ghosts("Darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ", source = user, ghost_sound = 'monkestation/sound/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
 	soundloop = new(GLOB.player_list, TRUE, TRUE)
 
 	user.visible_message(span_danger("[user] suddenly jolts into the air, pulsing with screaming violet light."), span_progenitor("You begin the Sacrament."))
@@ -76,7 +76,7 @@
 			if(1)
 				user.visible_message(span_userdanger("[user]'s sigils howl out light. Their limbs twist and move, glowing cracks forming across their chitin."), \
 									span_velvet("Power... <i>power...</i> flooding through you, the dreams and thoughts of the wills you've devoured whispering in your ears..."))
-				sound_to_playing_players('yogstation/sound/magic/sacrament_01.ogg', 20, FALSE, pressure_affected = FALSE)
+				sound_to_playing_players('monkestation/sound/magic/sacrament_01.ogg', 20, FALSE, pressure_affected = FALSE)
 			if(2)
 				for(var/turf/T in range(10, owner)) //add spooky visuals to the mounting power
 					if(prob(10))
@@ -84,7 +84,7 @@
 
 				animate(user, transform = matrix() * 2, time = 15 SECONDS)
 				user.visible_message(span_userdanger("[user] begins to... <i>grow.</i>."), span_progenitor("Your mortal shell begins to fracture as power swells within it!"))
-				sound_to_playing_players('yogstation/sound/magic/sacrament_02.ogg', 20, FALSE, pressure_affected = FALSE)
+				sound_to_playing_players('monkestation/sound/magic/sacrament_02.ogg', 20, FALSE, pressure_affected = FALSE)
 
 		//if you somehow get interrupted
 		if(!do_after(user, 15 SECONDS, user))
@@ -97,7 +97,7 @@
 
 	soundloop.stage = 3
 	animate(user, pixel_y = user.pixel_y + 20, time = 4 SECONDS)
-	user.visible_message(span_userdanger("[user] rises into the air, crackling with power!"))	
+	user.visible_message(span_userdanger("[user] rises into the air, crackling with power!"))
 
 	for(var/turf/T in range(10, owner))
 		if(prob(35))
@@ -107,12 +107,12 @@
 
 /datum/action/cooldown/spell/sacrament/proc/finalize(mob/living/carbon/human/user)
 	to_chat(user, span_progenitor("AND THE WEAK WILL KNOW <i>FEAR--</i>"))
-	sound_to_playing_players('yogstation/sound/magic/sacrament_ending.ogg', 75, FALSE, pressure_affected = FALSE)
+	sound_to_playing_players('monkestation/sound/magic/sacrament_ending.ogg', 75, FALSE, pressure_affected = FALSE)
 	QDEL_IN(soundloop, 1 SECONDS)
 	addtimer(CALLBACK(darkspawn, TYPE_PROC_REF(/datum/antagonist/darkspawn, sacrament)), 1 SECONDS)
 
 /datum/action/cooldown/spell/sacrament/proc/unleashed_psi(turf/T)
 	if(!in_use)
 		return
-	playsound(T, 'yogstation/sound/magic/divulge_end.ogg', 25, FALSE)
+	playsound(T, 'monkestation/sound/magic/divulge_end.ogg', 25, FALSE)
 	new/obj/effect/temp_visual/revenant/cracks/glow(T)

@@ -10,7 +10,7 @@
 /obj/item/melee/touch_attack/devour_will
 	name = "Psionic hand"
 	desc = "Concentrated psionic power, primed to toy with mortal minds."
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "dark_bead"
 	item_state = "hivemind"
 //////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@
 	desc = "Creates a dark bead that can be used on a human to begin draining the lucidity and willpower from a living target, knocking them unconscious for a time.\
 			<br>Being interrupted will knock you down for a time."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	sound = null
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -44,7 +44,7 @@
 
 /datum/action/cooldown/spell/touch/devour_will/cast(mob/living/carbon/cast_on)
 	. = ..()
-	playsound(owner, 'yogstation/sound/magic/devour_will_form.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/devour_will_form.ogg', 50, 1)
 
 /datum/action/cooldown/spell/touch/devour_will/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/target, mob/living/carbon/caster)
 	var/datum/antagonist/darkspawn/darkspawn = isdarkspawn(caster)
@@ -78,7 +78,7 @@
 	to_chat(caster, span_velvet("You begin siphoning [target]'s will..."))
 	target.emote("scream")
 	target.visible_message(span_danger("<i>[target] suddenly howls and clutches their face as violet light screams from their eyes!</i>"), span_userdanger("<i>AAAAAAAAAAAAAAA-</i>"))
-	playsound(target, 'yogstation/sound/magic/devour_will_long.ogg', 65, FALSE)
+	playsound(target, 'monkestation/sound/magic/devour_will_long.ogg', 65, FALSE)
 
 	eating = TRUE
 	if(!do_after(caster, 5 SECONDS, target))
@@ -94,15 +94,15 @@
 	if(get_shadow_tumor(target))
 		to_chat(owner, span_danger("[target] already has a dark bead lodged within their psyche."))
 		return FALSE
-		
+
 	//put the victim to sleep before the visible_message proc so the victim doesn't see it
 	to_chat(target, span_progenitor("You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber..."))
-	playsound(target, 'yogstation/sound/magic/devour_will_end.ogg', 75, FALSE)
-	target.playsound_local(target, 'yogstation/sound/magic/devour_will_victim.ogg', 50, FALSE)
+	playsound(target, 'monkestation/sound/magic/devour_will_end.ogg', 75, FALSE)
+	target.playsound_local(target, 'monkestation/sound/magic/devour_will_victim.ogg', 50, FALSE)
 
 	//format the text output to the darkspawn
-	var/list/self_text = list() 
-	
+	var/list/self_text = list()
+
 	caster.balloon_alert(caster, "...akkraup'dej")
 
 	var/obj/item/organ/shadowtumor/bead = target.getorganslot(ORGAN_SLOT_BRAIN_TUMOR)
@@ -159,17 +159,17 @@
 
 /datum/action/cooldown/spell/touch/silver_tongue/is_valid_target(atom/cast_on)
 	return istype(cast_on, /obj/machinery/computer/communications)
-	
+
 /datum/action/cooldown/spell/touch/silver_tongue/cast_on_hand_hit(obj/item/melee/touch_attack/hand, obj/machinery/computer/communications/target, mob/living/carbon/caster)
 	if(in_use)
 		return
 	if(target.stat)
 		to_chat(owner, span_warning("[target] is depowered."))
 		return FALSE
-		
+
 	caster.balloon_alert(caster, "[pick("Pda ykw'lpwe skwo h'kccaz ej.", "Pda aiank'cajyu eo kran.", "Oknnu, bkn swop'ejc ukqn pkza.", "Wke swo kxn'znaz xu hws psk.")]")
 	owner.visible_message(span_warning("[owner] briefly touches [target]'s screen, and the keys begin to move by themselves!"), span_velvet("You begin transmitting a recall message to Central Command..."))
-	in_use = TRUE	
+	in_use = TRUE
 	play_recall_sounds(target, (duration/10)-1)
 	if(!do_after(owner, duration, target))
 		in_use = FALSE
@@ -192,7 +192,7 @@
 	if(prob(25))
 		playsound(C, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		do_sparks(5, TRUE, get_turf(C))
-	
+
 	if(iterations <= 0)
 		addtimer(CALLBACK(src, PROC_REF(end_recall_sounds), C), 0.4 SECONDS)
 	else
@@ -262,7 +262,7 @@
 			casting = FALSE
 			return . | SPELL_CANCEL_CAST
 		casting = FALSE
-	
+
 /datum/action/cooldown/spell/pointed/darkspawn_build/cast(atom/cast_on)
 	. = ..()
 	if(!object_type) //sanity check
@@ -286,7 +286,7 @@
 	button_icon_state = "sacrament(old)"
 	antimagic_flags = NONE
 	spell_requirements = SPELL_CASTABLE_AS_BRAIN
-	
+
 /datum/action/cooldown/spell/reform_body/cast(atom/cast_on)
 	. = ..()
 	if(isdarkspawn(owner))
