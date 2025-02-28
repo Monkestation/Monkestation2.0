@@ -761,6 +761,6 @@
 //QuarianCommando
 /datum/loadout_item/suit/jacket/formal_overcoat
 	name = "Formal Overcoat"
-	item_path = /obj/item/clothing/suit/formal_overcoat
+	item_path = /obj/item/clothing/suit/jacket/formal_overcoat
 	donator_only = TRUE
 	requires_purchase = FALSE
