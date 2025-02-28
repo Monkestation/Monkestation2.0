@@ -129,4 +129,10 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
-
+/obj/item/clothing/suit/jacket/gown
+	name = "perfumed dress cover"
+	desc = "An elegant article of clothing designed to be worn over dresses. Pairs well with haughty aristocracy."
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	icon_state = "flowerygown"
+	inhand_icon_state = "flowerygown"

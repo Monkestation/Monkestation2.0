@@ -354,11 +354,11 @@
 /obj/item/storage/backpack/satchel/fireproof
 	resistance_flags = FIRE_PROOF
 
-/obj/item/storage/backpack/satchel/velvet
-	name = "leather satchel"
+/obj/item/storage/backpack/satchel/flowery
+	name = "perfume scented satchel"
 	desc = "It's a very fancy satchel made with fine leather."
-	icon_state = "satchel-leather"
-	inhand_icon_state = "satchel"
+	icon_state = "flowerybag"
+	inhand_icon_state = "flowerybag"
 
 /obj/item/storage/backpack/satchel/wing
 	name = "angel wing satchel"

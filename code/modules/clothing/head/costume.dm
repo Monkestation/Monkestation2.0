@@ -210,3 +210,15 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/flowery
+	name = "perfumed bow"
+	desc = "A dainty bow worn on the back of the head, this one has a convinent clip on attachment for easy use."
+	icon_state = "flowerybow"
+	inhand_icon_state = "flowerybow"
+
+/obj/item/clothing/head/costume/starry
+	name = "star speckled bow"
+	desc = "A dainty bow that shimmers in the light, almost as if tiny stars decorated the bow."
+	icon_state = "starbow"
+	inhand_icon_state = "starbow"

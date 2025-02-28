@@ -137,3 +137,18 @@
 	icon_state = "devildress"
 	inhand_icon_state = "devildress"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/dress/flowery
+	name = "perfumed light dress"
+	desc = "A delicate dress that's vastly worth more than it's weight in fabric. On top of that it smells great!"
+	icon_state = "flowerydress"
+	inhand_icon_state = "flowerydress"
+	can_adjust = FALSE
+	flags_inv = HIDESHOES
+
+/obj/item/clothing/under/dress/starry
+	name = "starry dress"
+	desc = "A modest dress "
+	icon_state = "stardress"
+	inhand_icon_state = "stardress"
+	can_adjust = FALSE
