@@ -759,7 +759,7 @@
 	requires_purchase = FALSE
 
 //QuarianCommando
-/datum/loadout_item/suit/formal_overcoat
+/datum/loadout_item/suit/jacket/formal_overcoat
 	name = "Formal Overcoat"
 	item_path = /obj/item/clothing/suit/formal_overcoat
 	donator_only = TRUE
