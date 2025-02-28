@@ -17,6 +17,7 @@
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+#define ROLE_DARKSPAWN "Darkspawn" // monkestation edit
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 
@@ -127,6 +128,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CHANGELING = 0,
 	ROLE_CLOWN_OPERATIVE = 14,
 	ROLE_CULTIST = 14,
+	ROLE_DARKSPAWN = 14,
 	ROLE_HERETIC = 0,
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,

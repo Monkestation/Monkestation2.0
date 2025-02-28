@@ -73,7 +73,7 @@
 
 /datum/psi_web/stamina_res/on_loss()
 	darkspawn.stam_mod /= 0.5
-	
+
 //Increases healing in darkness.
 /datum/psi_web/dark_healing
 	name = "Mending Sigil"
@@ -106,7 +106,7 @@
 
 /datum/psi_web/low_light_resistance/on_loss()
 	REMOVE_TRAIT(darkspawn, TRAIT_DARKSPAWN_LIGHTRES, src)
-	
+
 /datum/psi_web/noslip
 	name = "Stability Sigil"
 	desc = "Unlocking this sigil prevents loss of footing."
@@ -117,10 +117,10 @@
 	shadow_flags = DARKSPAWN_FIGHTER | DARKSPAWN_SCOUT
 
 /datum/psi_web/noslip/on_gain()
-	ADD_TRAIT(shadowhuman, TRAIT_NOSLIPALL, type)
+	ADD_TRAIT(shadowhuman, TRAIT_NO_SLIP_ALL, type)
 
 /datum/psi_web/noslip/on_loss()
-	REMOVE_TRAIT(shadowhuman, TRAIT_NOSLIPALL, type)
+	REMOVE_TRAIT(shadowhuman, TRAIT_NO_SLIP_ALL, type)
 
 //reduces spell cooldowns
 /datum/psi_web/fast_cooldown
@@ -155,7 +155,7 @@
 
 /datum/psi_web/sunglasses/on_loss()
 	REMOVE_TRAIT(shadowhuman, TRAIT_NOFLASH, type)
-		
+
 //Halves lightburn damage.
 /datum/psi_web/light_resistance
 	name = "Shadowskin Sigil"

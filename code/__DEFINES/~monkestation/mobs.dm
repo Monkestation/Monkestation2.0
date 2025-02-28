@@ -26,5 +26,8 @@ GLOBAL_REAL_VAR(list/voice_type2sound = list(
 	),
 ))
 
+#define SHADOW_SPECIES_DIM_LIGHT 0.2 //light of this intensity suppresses healing and causes very slow burn damage
+#define SHADOW_SPECIES_BRIGHT_LIGHT 0.6 //light of this intensity causes rapid burn damage (high number because movable lights are always 0.5 regardless of distance)
+
 ///Managed global that is a reference to the real global
 GLOBAL_LIST_INIT(voice_type2sound_ref, voice_type2sound)

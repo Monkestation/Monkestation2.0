@@ -1,4 +1,9 @@
+//worst 6 hours of my life i spent trying to figure out how to best split a cameranet, this is what i've settled on
+/datum/cameranet/darkspawn
+	networks = list(ROLE_DARKSPAWN)
+
 GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
+
 //////////////////////////////////////////////////////////////////////////
 //-------------------------Access the veilnet---------------------------//
 //////////////////////////////////////////////////////////////////////////
