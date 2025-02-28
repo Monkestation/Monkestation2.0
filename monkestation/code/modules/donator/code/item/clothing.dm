@@ -660,5 +660,5 @@
 	desc = "A snazzy black suit jacket with 6 shiny gold buttons."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "Formal_Overcoat"
+	icon_state = "formal_overcoat"
 	worn_icon_state = "formal_overcoat"
