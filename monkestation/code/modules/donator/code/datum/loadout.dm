@@ -686,6 +686,66 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+//DevinXoptoh
+/datum/loadout_item/head/samuraihelmetmask
+	name = "Samurai Helmet"
+	item_path = /obj/item/clothing/head/costume/samuraihelmetmask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//flleeppyy
+/datum/loadout_item/suit/flleeppyy_dreamers
+	name = "Dreamers Trenchcoat"
+	item_path = /obj/item/clothing/suit/flleeppyy_dreamers
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/flleeppyy_lesbian
+	name = "Lesbian Trenchcoat"
+	item_path = /obj/item/clothing/suit/flleeppyy_lesbian
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//TheSpecialSnowflake
+/datum/loadout_item/under/miscellaneous/turtleneck
+	name = "Colorable Turtleneck"
+	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/donator_xsi
+	name = "XSI Plush"
+	item_path = /obj/item/toy/plush/donator_xsi
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/robottoything
+	name = "Pet Delivery Beacon - Robot Toy"
+	item_path = /obj/item/choice_beacon/pet/donator/robottoything
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("TheSpecialSnowflake")
+
+/datum/loadout_item/effects/robottoything
+	ckeywhitelist = list("TheSpecialSnowflake")
+	name = "Robot Toy Transformation"
+	item_path = /obj/item/effect_granter/donator/robottoything
+	requires_purchase = FALSE
+
+//piecake
+/datum/loadout_item/neck/donatorwhitefurshawl
+	name = "White Fur Shawl"
+	item_path = /obj/item/clothing/neck/donatorwhitefurshawl
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//elchorico
+/datum/loadout_item/suit/elchorico_big_labcoat
+	name = "Huge Labcoat"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/elchorico_big_labcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //QuarianCommando
 /datum/loadout_item/suit/formal_overcoat
 	name = "Formal Overcoat"
