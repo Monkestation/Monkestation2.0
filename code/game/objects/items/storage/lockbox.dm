@@ -254,7 +254,7 @@
 	if(!id_card)
 		return ..()
 
-	if(id_card.registered_account != buyer_account)
+	if(id_card.registered_account != buyer_account && (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
 		balloon_alert(user, "incorrect bank account!")
 		return FALSE
 
