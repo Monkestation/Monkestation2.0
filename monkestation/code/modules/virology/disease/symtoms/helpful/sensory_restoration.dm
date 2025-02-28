@@ -5,7 +5,7 @@
 	max_multiplier = 3
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
-	max_chance = 10
+	max_chance = 12
 	var/squinting = TRUE
 	var/darkness = FALSE
 
