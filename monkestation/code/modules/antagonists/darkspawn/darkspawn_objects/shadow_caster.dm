@@ -1,11 +1,11 @@
 /obj/item/gun/ballistic/bow/energy/shadow_caster
 	name = "shadow caster"
 	desc = "A bow made of solid darkness. The arrows it shoots seem to suck light out of the surroundings."
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "shadow_caster"
 	item_state = "shadow_caster"
-	lefthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
-	righthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow/shadow
 	no_pin_required = TRUE
 	recharge_time = 2 SECONDS
@@ -23,7 +23,7 @@
 /obj/item/ammo_casing/reusable/arrow/shadow
 	name = "shadow arrow"
 	desc = "it seem to suck light out of the surroundings."
-	icon = 'yogstation/icons/obj/darkspawn_projectiles.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_projectiles.dmi'
 	icon_state = "caster_arrow"
 	item_state = "caster_arrow"
 	light_system = MOVABLE_LIGHT
@@ -49,7 +49,7 @@
 //the projectile being shot from the bow
 /obj/projectile/bullet/reusable/arrow/shadow
 	name = "shadow arrow"
-	icon = 'yogstation/icons/obj/darkspawn_projectiles.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_projectiles.dmi'
 	icon_state = "caster_arrow"
 	damage = 25 //reduced damage per arrow compared to regular ones
 	light_system = MOVABLE_LIGHT

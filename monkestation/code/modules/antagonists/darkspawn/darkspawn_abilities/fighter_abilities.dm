@@ -5,7 +5,7 @@
 	name = "Umbral Tendril"
 	desc = "Twists an active arm into a mass of tendrils with many uses."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -20,7 +20,7 @@
 	if(istype(target, /datum/mind))
 		RegisterSignal(target, COMSIG_DARKSPAWN_UPGRADE_ABILITY, PROC_REF(handle_upgrade))
 		RegisterSignal(target, COMSIG_DARKSPAWN_DOWNGRADE_ABILITY, PROC_REF(handle_downgrade))
-	
+
 /datum/action/cooldown/spell/toggle/shadow_tendril/proc/handle_upgrade(atom/source, flag)
 	ability_flags |= flag
 	if(flag & TENDRIL_UPGRADE_TWIN)
@@ -54,7 +54,7 @@
 	owner.visible_message(span_warning("[owner]'s arm[num_tendrils > 1 ? "s" : ""] contort into tentacles!"), \
 		span_velvet("You transform your arm[num_tendrils > 1 ? "s" : ""] into umbral tendrils. Examine them to see possible uses."))
 	owner.balloon_alert(owner, "Ikna")
-	playsound(owner, 'yogstation/sound/magic/pass_create.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/pass_create.ogg', 50, TRUE)
 
 	if(num_tendrils > 1) //add an additional sound and balloon alert for the extra tendril
 		addtimer(CALLBACK(src, PROC_REF(echo)), 1)
@@ -67,12 +67,12 @@
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/proc/echo()
 	owner.balloon_alert(owner, "Ikna")
-	playsound(owner, 'yogstation/sound/magic/pass_create.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/pass_create.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/Disable()
 	owner.balloon_alert(owner, "Haoo")
 	owner.visible_message(span_warning("[owner]'s tentacles transform back!"), span_notice("You dispel the tendrils."))
-	playsound(owner, 'yogstation/sound/magic/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_dispel.ogg', 50, 1)
 	for(var/obj/item/umbral_tendrils/T in owner)
 		QDEL_NULL(T)
 
@@ -82,7 +82,7 @@
 /datum/action/cooldown/spell/aoe/deluge
 	name = "Deluge"
 	desc = "Calls upon the endless depths to douse all with the beyond."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -123,7 +123,7 @@
 /datum/action/cooldown/spell/pointed/shadow_crash
 	name = "Shadow crash"
 	desc = "Charge in a direction."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -140,12 +140,12 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IMPACTIMMUNE, type)
 	RegisterSignal(owner, COMSIG_MOVABLE_IMPACT, PROC_REF(impact))
-	
+
 /datum/action/cooldown/spell/pointed/shadow_crash/Remove(mob/living/remove_from)
 	UnregisterSignal(owner, COMSIG_MOVABLE_IMPACT)
 	REMOVE_TRAIT(owner, TRAIT_IMPACTIMMUNE, type)
 	return ..()
-	
+
 /datum/action/cooldown/spell/pointed/shadow_crash/cast(atom/cast_on)
 	. = ..()
 	if(!isliving(owner))
@@ -163,7 +163,7 @@
 /datum/action/cooldown/spell/pointed/shadow_crash/proc/impact(atom/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return
-	
+
 	if(isturf(hit_atom))
 		return
 
@@ -181,7 +181,7 @@
 		var/mob/living/carbon/human/H = target
 		if(H.check_shields(src, 0, "[source]", attack_type = LEAP_ATTACK))
 			blocked = TRUE
-	
+
 	var/destination = get_ranged_target_turf(get_turf(target), throwingdatum.init_dir, 5)
 	if(blocked)
 		target.throw_at(destination, 3, 2)
@@ -194,7 +194,7 @@
 /datum/action/cooldown/spell/time_dilation
 	name = "Time Dilation"
 	desc = "Greatly increases reaction times and action speed, and provides immunity to slowdown. This lasts for 1 minute. Costs 75 Psi."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -203,7 +203,7 @@
 	panel = "Darkspawn"
 	antimagic_flags = NONE
 	spell_requirements = SPELL_REQUIRES_HUMAN
-	sound = 'yogstation/sound/creatures/darkspawn_howl.ogg'
+	sound = 'monkestation/sound/creatures/darkspawn_howl.ogg'
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 75)
 
 /datum/action/cooldown/spell/time_dilation/can_cast_spell(feedback)
@@ -226,7 +226,7 @@
 /datum/action/cooldown/spell/aoe/demented_outburst
 	name = "Demented Outburst"
 	desc = "Deafens and confuses listeners after a five-second charge period, knocking away everyone nearby. Costs 50 Psi."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -257,7 +257,7 @@
 	casting = TRUE
 	owner.balloon_alert(owner, "Kap...")
 	owner.visible_message(span_boldwarning("[owner] begins to growl as their chitin hardens..."), span_velvet("You begin focusing your power..."))
-	playsound(owner, 'yogstation/sound/magic/demented_outburst_charge.ogg', 50, 0)
+	playsound(owner, 'monkestation/sound/magic/demented_outburst_charge.ogg', 50, 0)
 	if(!do_after(owner, cast_time, cast_on))
 		casting = FALSE
 		return . | SPELL_CANCEL_CAST
@@ -267,7 +267,7 @@
 	. = ..()
 	owner.balloon_alert(owner, "...WXSU!")
 	owner.visible_message(span_userdanger("[owner] lets out a deafening scream!"), span_velvet("You let out a deafening outburst!"))
-	playsound(owner, 'yogstation/sound/magic/demented_outburst_scream.ogg', 75, 0)
+	playsound(owner, 'monkestation/sound/magic/demented_outburst_scream.ogg', 75, 0)
 
 /datum/action/cooldown/spell/aoe/demented_outburst/cast_on_thing_in_aoe(atom/movable/victim, atom/caster)
 	if(!can_see(victim, caster, aoe_radius))
@@ -301,7 +301,7 @@
 		R.visible_message(span_warning("The blast sends [R] flying!"), span_userdanger("The force sends you flying!"))
 		R.Paralyze(10 SECONDS) //fuck borgs
 		R.soundbang_act(1, 5, 15, 5)
-		
+
 //////////////////////////////////////////////////////////////////////////
 //----------------Complete Protection from light at a cost--------------//
 //////////////////////////////////////////////////////////////////////////
@@ -309,7 +309,7 @@
 /datum/action/cooldown/spell/toggle/creep
 	name = "Encroach"
 	desc = "Grants immunity to lightburn while active. Can be toggled on and off. Drains 5 Psi per second."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -319,7 +319,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 1)
-		
+
 /datum/action/cooldown/spell/toggle/creep/process()
 	if(active)
 		if(!SEND_SIGNAL(owner.mind, COMSIG_MIND_CHECK_ANTAG_RESOURCE, ANTAG_RESOURCE_DARKSPAWN, resource_costs[ANTAG_RESOURCE_DARKSPAWN]))
@@ -331,7 +331,7 @@
 /datum/action/cooldown/spell/toggle/creep/Enable()
 	owner.balloon_alert(owner, "Odeahz")
 	owner.visible_message(span_warning("Velvety shadows coalesce around [owner]!"), span_velvet("You begin using Psi to shield yourself from lightburn."))
-	playsound(owner, 'yogstation/sound/magic/devour_will_victim.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/devour_will_victim.ogg', 50, TRUE)
 	var/datum/antagonist/darkspawn/dude = isdarkspawn(owner)
 	if(dude)
 		ADD_TRAIT(dude, TRAIT_DARKSPAWN_CREEP, type)
@@ -339,7 +339,7 @@
 /datum/action/cooldown/spell/toggle/creep/Disable()
 	owner.balloon_alert(owner, "Phwo")
 	to_chat(owner, span_velvet("You release your grip on the shadows."))
-	playsound(owner, 'yogstation/sound/magic/devour_will_end.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/devour_will_end.ogg', 50, TRUE)
 	var/datum/antagonist/darkspawn/dude = isdarkspawn(owner)
 	if(dude)
 		REMOVE_TRAIT(dude, TRAIT_DARKSPAWN_CREEP, type)
@@ -350,7 +350,7 @@
 /datum/action/cooldown/spell/toggle/indomitable
 	name = "Indomitable"
 	desc = "Grants immunity to all CC effects, but locks the user into walking."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -365,7 +365,7 @@
 	var/was_running
 	///List of traits applied during the effect
 	var/list/traits = list(TRAIT_STUNIMMUNE, TRAIT_PUSHIMMUNE, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_NODEATH, TRAIT_IGNOREDAMAGESLOWDOWN)
-		
+
 /datum/action/cooldown/spell/toggle/indomitable/process()
 	if(active)
 		if(!SEND_SIGNAL(owner.mind, COMSIG_MIND_CHECK_ANTAG_RESOURCE, ANTAG_RESOURCE_DARKSPAWN, resource_costs[ANTAG_RESOURCE_DARKSPAWN]))
@@ -379,7 +379,7 @@
 /datum/action/cooldown/spell/toggle/indomitable/Enable()
 	owner.balloon_alert(owner, "Zhaedo")
 	owner.visible_message(span_warning("Shadows stitch [owner]'s legs to the ground!"), span_velvet("You begin using Psi to defend yourself from disruption."))
-	playsound(owner, 'yogstation/sound/magic/devour_will_form.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/devour_will_form.ogg', 50, TRUE)
 	owner.add_traits(traits, type)
 	owner.move_resist = INFINITY
 	was_running = (owner.m_intent == MOVE_INTENT_RUN)
@@ -389,7 +389,7 @@
 /datum/action/cooldown/spell/toggle/indomitable/Disable()
 	owner.balloon_alert(owner, "Phwo")
 	to_chat(owner, span_velvet("You release your grip on the shadows."))
-	playsound(owner, 'yogstation/sound/magic/devour_will_end.ogg', 50, TRUE)
+	playsound(owner, 'monkestation/sound/magic/devour_will_end.ogg', 50, TRUE)
 	owner.remove_traits(traits, type)
 	owner.move_resist = initial(owner.move_resist)
 	if(was_running && owner.m_intent == MOVE_INTENT_WALK)
@@ -401,12 +401,12 @@
 /datum/action/cooldown/spell/aoe/taunt
 	name = "Incite"
 	desc = "Force everyone nearby to walk towards you, but disables your ability to attack for a time."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
 	button_icon_state = "incite"
-	sound = 'yogstation/sound/ambience/antag/veil_mind_scream.ogg'
+	sound = 'monkestation/sound/ambience/antag/veil_mind_scream.ogg'
 	panel = "Darkspawn"
 	antimagic_flags = NONE
 	check_flags = AB_CHECK_CONSCIOUS

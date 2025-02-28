@@ -4,7 +4,7 @@
 /datum/action/cooldown/spell/touch/thrall_mind
 	name = "Thrall mind"
 	desc = "Consume 1 willpower to thrall a target's mind.<br>To be eligible, they must be alive and recently drained by Devour Will.<br>Can also be used to revive deceased thralls.<br>Right-click to release thralls from your control."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -60,7 +60,7 @@
 
 	owner.balloon_alert(owner, "Krx'lna tyhx graha...")
 	to_chat(owner, span_velvet("You begin to channel your psionic powers through [target]'s mind."))
-	playsound(owner, 'yogstation/sound/magic/devour_will_victim.ogg', 50)
+	playsound(owner, 'monkestation/sound/magic/devour_will_victim.ogg', 50)
 	if(!do_after(owner, 2 SECONDS, target))
 		return FALSE
 
@@ -91,12 +91,12 @@
 			for(var/obj/item/implant/mindshield/L in target)
 				qdel(L)
 
-	playsound(owner, 'yogstation/sound/ambience/antag/veil_mind_gasp.ogg', 25)
+	playsound(owner, 'monkestation/sound/ambience/antag/veil_mind_gasp.ogg', 25)
 
 	if(!do_after(owner, 2 SECONDS, target))
 		return FALSE
 
-	playsound(owner, 'yogstation/sound/ambience/antag/veil_mind_scream.ogg', 100)
+	playsound(owner, 'monkestation/sound/ambience/antag/veil_mind_scream.ogg', 100)
 	if(isthrall(target))
 		owner.balloon_alert(owner, "...tia")
 		to_chat(owner, span_velvet("You revitalize your thrall [target.real_name]."))
@@ -167,7 +167,7 @@
 /datum/action/cooldown/spell/pointed/mindblast
 	name = "Mind blast"
 	desc = "Focus your psionic energy into a blast that deals physical damage. Can also be projected from the minds of allies."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "mind_blast"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -184,7 +184,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/visor_reticule.dmi'
 
 	///how far the projectile can shoot from a body
-	var/body_range = 9 
+	var/body_range = 9
 	///mob to shoot the projectile from
 	var/mob/shoot_from
 
@@ -234,7 +234,7 @@
 
 /obj/projectile/magic/mindblast
 	name ="mindbolt"
-	icon = 'yogstation/icons/obj/darkspawn_projectiles.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_projectiles.dmi'
 	icon_state = "mind_blast"
 	damage = 35
 	armour_penetration = 100
@@ -266,7 +266,7 @@
 	name = "Empower thrall"
 	desc = "buffs all thralls within a certain range of the target with some sort of effect."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -310,7 +310,7 @@
 		empower(target)
 		if(outline_colour)
 			add_outline(target)
-	
+
 /datum/action/cooldown/spell/pointed/thrallbuff/proc/add_outline(mob/living/carbon/target)
 	target.add_filter(name, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
 	var/filter = target.get_filter(name)
@@ -362,7 +362,7 @@
 	name = "Elucidate"
 	desc = "Channel significant power through an ally, greatly healing them, cleansing all CC and providing a speed boost. Able to revive any ally in close range."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	ranged_mousepointer = 'icons/effects/mouse_pointers/visor_reticule.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -405,11 +405,11 @@
 	if(target.handcuffed || target.legcuffed)
 		target.clear_cuffs(cuffs, TRUE, TRUE)
 		target.clear_cuffs(legcuffs, TRUE, TRUE)
-	playsound(get_turf(target),'yogstation/sound/creatures/darkspawn_death.ogg', 80, 1)
+	playsound(get_turf(target),'monkestation/sound/creatures/darkspawn_death.ogg', 80, 1)
 	var/datum/antagonist/darkspawn/darkspawn = isdarkspawn(owner)
 	if(darkspawn)
 		darkspawn.block_psi(1 MINUTES, type)
-	
+
 //////////////////////////////////////////////////////////////////////////
 //--------------------Places a camera for panopticon use----------------//
 //////////////////////////////////////////////////////////////////////////
@@ -433,7 +433,7 @@
 	name = "Nightvision"
 	desc = "Grants sight in the dark."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions.dmi'
+	button_icon = 'monkestation/icons/mob/actions.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"

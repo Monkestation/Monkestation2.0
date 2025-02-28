@@ -136,7 +136,7 @@
 	name = "Silver Tongue"
 	desc = "When used near a communications console, allows you to forcefully transmit a message to Central Command, initiating a shuttle recall. Only usable if the shuttle is inbound. Costs 60 Psi."
 	button_icon_state = "silver_tongue"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -215,7 +215,7 @@
 	name = "Darkspawn building thing"
 	desc = "You shouldn't be able to see this."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -257,7 +257,7 @@
 	if(cast_time)
 		casting = TRUE
 		owner.balloon_alert(owner, "Xkla'thra...")
-		playsound(get_turf(owner), 'yogstation/sound/magic/devour_will_begin.ogg', 50, TRUE)
+		playsound(get_turf(owner), 'monkestation/sound/magic/devour_will_begin.ogg', 50, TRUE)
 		if(!do_after(owner, cast_time, cast_on))
 			casting = FALSE
 			return . | SPELL_CANCEL_CAST
@@ -267,7 +267,7 @@
 	. = ..()
 	if(!object_type) //sanity check
 		return
-	playsound(get_turf(cast_on), 'yogstation/sound/magic/devour_will_end.ogg', 50, TRUE)
+	playsound(get_turf(cast_on), 'monkestation/sound/magic/devour_will_end.ogg', 50, TRUE)
 	var/obj/thing = new object_type(get_turf(cast_on))
 	owner.balloon_alert(owner, "...[language_final]")
 	owner.visible_message(span_warning("[owner] knits shadows together into [thing]!"), span_velvet("You create [thing]"))
@@ -279,7 +279,7 @@
 	name = "Reform body"
 	desc = "You may have lost your body, but it matters not."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"

@@ -4,12 +4,12 @@
 /obj/item/gun/magic/darkspawn
 	name = "channeling staff"
 	desc = "A staff made from pure darkness."
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "shadow_staff"
 	item_state = "shadow_staff0"
 	base_icon_state = "shadow_staff"
-	lefthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
-	righthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
 
 	fire_sound = 'sound/weapons/emitter2.ogg'
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -104,15 +104,15 @@
 /obj/item/gun/magic/darkspawn/process_chamber()
 	. = ..()
 	charges = max_charges //infinite charges
-	
+
 ////////////////////////OTHER STUFF//////////////////////////
 /obj/item/ammo_casing/magic/darkspawn
-	projectile_type = /obj/projectile/magic/darkspawn	
+	projectile_type = /obj/projectile/magic/darkspawn
 	firing_effect_type = null
 
 /obj/projectile/magic/darkspawn
 	name = "bolt of nothingness"
-	icon = 'yogstation/icons/obj/darkspawn_projectiles.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_projectiles.dmi'
 	icon_state = "staff_blast"
 	damage = 0
 	pass_flags = PASSTABLE | PASSMACHINES | PASSCOMPUTER

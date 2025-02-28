@@ -5,7 +5,7 @@
 	name = "Channeling Staff"
 	desc = "Pull darkness from the void, knitting it into a staff."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -22,7 +22,7 @@
 	if(istype(target, /datum/mind))
 		RegisterSignal(target, COMSIG_DARKSPAWN_UPGRADE_ABILITY, PROC_REF(handle_upgrade))
 		RegisterSignal(target, COMSIG_DARKSPAWN_DOWNGRADE_ABILITY, PROC_REF(handle_downgrade))
-	
+
 /datum/action/cooldown/spell/toggle/dark_staff/proc/handle_upgrade(atom/source, flag)
 	effect_flags |= flag
 	if(staff)
@@ -51,7 +51,7 @@
 /datum/action/cooldown/spell/toggle/dark_staff/Enable()
 	owner.balloon_alert(owner, "Shhouna")
 	owner.visible_message(span_warning("[owner] knits shadows together into a staff!"), span_velvet("You summon your staff. Examine it to see what it does."))
-	playsound(owner, 'yogstation/sound/magic/pass_create.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_create.ogg', 50, 1)
 	if(!staff)
 		staff = new (owner)
 	if(effect_flags & STAFF_UPGRADE_LIGHTEATER)
@@ -62,7 +62,7 @@
 /datum/action/cooldown/spell/toggle/dark_staff/Disable()
 	owner.balloon_alert(owner, "Haoo")
 	owner.visible_message(span_warning("[owner]'s staff dissipates!"), span_velvet("You dispel the staff."))
-	playsound(owner, 'yogstation/sound/magic/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_dispel.ogg', 50, 1)
 	staff.moveToNullspace()
 
 //////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@
 /datum/action/cooldown/spell/aoe/extinguish
 	name = "Extinguish"
 	desc = "Extinguish all light around you."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "extinguish"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -82,7 +82,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 60)
 	cooldown_time = 30 SECONDS
-	sound = 'yogstation/sound/ambience/antag/veil_mind_gasp.ogg'
+	sound = 'monkestation/sound/ambience/antag/veil_mind_gasp.ogg'
 	aoe_radius = 6
 	///Secret item stored in the ability to hit things with to trigger light eater
 	var/obj/item/darkspawn_extinguish/bopper
@@ -92,7 +92,7 @@
 /datum/action/cooldown/spell/aoe/extinguish/Grant(mob/grant_to)
 	. = ..()
 	bopper = new(src)
-	
+
 /datum/action/cooldown/spell/aoe/extinguish/Remove(mob/living/remove_from)
 	QDEL_NULL(bopper)
 	return ..()
@@ -134,7 +134,7 @@
 /datum/action/cooldown/spell/touch/null_charge
 	name = "Null Charge"
 	desc = "Meddle with the powergrid via a functioning APC, causing a temporary stationwide power outage. Breaks the APC in the process."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -156,7 +156,7 @@
 	if(target.stat & BROKEN)
 		to_chat(owner, span_danger("This [target] no longer functions enough for access to the power grid."))
 		return FALSE
-	return TRUE	
+	return TRUE
 
 /datum/action/cooldown/spell/touch/null_charge/cast_on_hand_hit(obj/item/melee/touch_attack/hand, obj/machinery/power/apc/target, mob/living/carbon/human/caster)
 	if(!target || !istype(target))//sanity check
@@ -189,14 +189,14 @@
 	to_chat(caster, span_velvet("You return the APC's power to the void, destroying it and disabling all others."))
 	target.set_broken()
 	return TRUE
-		
+
 //////////////////////////////////////////////////////////////////////////
 //-----------------------Drain enemy, heal ally-------------------------//
 //////////////////////////////////////////////////////////////////////////
 /datum/action/cooldown/spell/pointed/extract
 	name = "Extract"
 	desc = "Drain a target's life force or bestow it to an ally."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "extract"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -281,17 +281,17 @@
 	if(cancel())
 		return FALSE
 	. = ..()
-	
+
 /obj/effect/ebeam/darkspawn
 	name = "void beam"
 
 /datum/action/cooldown/spell/pointed/extract/cast(mob/living/cast_on)
 	. = ..()
 	owner.balloon_alert(owner, "Qokxlez")
-	visual = owner.Beam(cast_on, "slingbeam", 'yogstation/icons/mob/darkspawn.dmi' , INFINITY, cast_range)
+	visual = owner.Beam(cast_on, "slingbeam", 'monkestation/icons/mob/darkspawn.dmi' , INFINITY, cast_range)
 	channeled = cast_on
 	healing = is_team_darkspawn(channeled)
-	
+
 /datum/action/cooldown/spell/pointed/extract/proc/cancel()
 	balloon_counter = 0
 	if(visual)
@@ -323,7 +323,7 @@
 /datum/action/cooldown/spell/aoe/mass_hallucination
 	name = "Mass Hallucination"
 	desc = "Forces brief delirium on all nearby enemies."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "mass_hallucination"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -334,7 +334,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 30)
 	cooldown_time = 30 SECONDS
-	sound = 'yogstation/sound/ambience/antag/veil_mind_scream.ogg'
+	sound = 'monkestation/sound/ambience/antag/veil_mind_scream.ogg'
 	aoe_radius = 7
 	///how many times it hallucinates (1 per second)
 	var/hallucination_triggers = 3
@@ -368,7 +368,7 @@
 	desc = "Restrain a target's mental faculties, preventing speech and actions of any kind for a moderate duration."
 	panel = "Darkspawn"
 	button_icon_state = "seize"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -409,7 +409,7 @@
 	var/mob/living/target = cast_on
 	if(target.can_block_magic(antimagic_flags, charge_cost = 1))
 		return
-		
+
 	var/distance = get_dist(target, owner)
 	if (distance <= 2)
 		target.visible_message(span_danger("[target] suddenly collapses..."))
@@ -430,7 +430,7 @@
 /datum/action/cooldown/spell/erase_time/darkspawn
 	name = "Quantum disruption"
 	desc = "Disrupt the flow of possibilities, where you are, where you could be."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -457,7 +457,7 @@
 /datum/action/cooldown/spell/pointed/shadow_beam
 	name = "Void beam"
 	desc = "After a short delay, fire a huge beam of void terrain across the entire station."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "shadow_beam"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -489,7 +489,7 @@
 	. = ..()
 	if(charging)
 		return
-	
+
 	targets_from = get_turf(owner)
 	targets_to = get_turf(cast_on)
 
@@ -513,7 +513,7 @@
 	var/power = charge_ticks - times //grow in sound volume and added sound range as it charges
 	var/volume = min(10 + (power * 20), 60)
 	playsound(user, 'sound/effects/magic.ogg', volume, TRUE, power)
-	playsound(user, 'yogstation/sound/magic/devour_will_begin.ogg', volume, TRUE, power)
+	playsound(user, 'monkestation/sound/magic/devour_will_begin.ogg', volume, TRUE, power)
 	if(first)
 		new /obj/effect/temp_visual/cult/rune_spawn/rune1(user.loc, 2 SECONDS, "#21007F")
 	else
@@ -531,7 +531,7 @@
 		var/datum/antagonist/darkspawn/darkspawn = isdarkspawn(user)
 		darkspawn.block_psi(30 SECONDS, type)
 
-	playsound(user, 'yogstation/sound/magic/devour_will_end.ogg', 100, FALSE, 30)
+	playsound(user, 'monkestation/sound/magic/devour_will_end.ogg', 100, FALSE, 30)
 	//split in two so the targeted tile is always in the center of the beam
 	for(var/turf/step_target in getline(targets_from, targets_to))
 		spawn_ground(step_target)
@@ -550,7 +550,7 @@
 
 /obj/effect/temp_visual/darkspawn
 	name = "echoing void"
-	icon = 'yogstation/icons/effects/effects.dmi'
+	icon = 'monkestation/icons/effects/effects.dmi'
 	icon_state = "nothing"
 	anchored = TRUE
 	move_resist = INFINITY
@@ -595,14 +595,14 @@
 			victim.take_overall_damage(10, 50, 200) //skill issue if you don't dodge it (won't crit if you're full hp)
 			victim.emote("scream")
 	return ..()
-	
+
 //////////////////////////////////////////////////////////////////////////
 //-------------------I stole heirophant's burst ability-----------------//
 //////////////////////////////////////////////////////////////////////////
 /datum/action/cooldown/spell/pointed/null_burst
 	name = "Null Burst"
 	desc = "After a short delay, create an explosion of void terrain at the targeted location."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "null_burst"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -639,7 +639,7 @@
 	. = ..()
 	if(charging)
 		return
-	
+
 	targets_to = get_turf(cast_on)
 
 	owner.balloon_alert(owner, "Qwo...")
@@ -662,7 +662,7 @@
 	var/power = charge_ticks - times //grow in sound volume and added sound range as it charges
 	var/volume = min(10 + (power * 20), 60)
 	playsound(user, 'sound/effects/magic.ogg', volume, TRUE, power)
-	playsound(user, 'yogstation/sound/magic/devour_will_begin.ogg', volume, TRUE, power)
+	playsound(user, 'monkestation/sound/magic/devour_will_begin.ogg', volume, TRUE, power)
 	if(first)
 		new /obj/effect/temp_visual/cult/rune_spawn/rune1(user.loc, 2 SECONDS, "#21007F")
 	else
@@ -678,8 +678,8 @@
 		var/datum/antagonist/darkspawn/darkspawn = isdarkspawn(user)
 		darkspawn.block_psi(30 SECONDS, type)
 
-	playsound(user, 'yogstation/sound/magic/devour_will_end.ogg', 100, FALSE, 30)
-	playsound(targets_to,'yogstation/sound/magic/divulge_end.ogg', 70, TRUE, burst_range)
+	playsound(user, 'monkestation/sound/magic/devour_will_end.ogg', 100, FALSE, 30)
+	playsound(targets_to,'monkestation/sound/magic/divulge_end.ogg', 70, TRUE, burst_range)
 
 	var/last_dist = 0
 	var/real_delay = 0
@@ -702,7 +702,7 @@
 /datum/action/cooldown/spell/cone/staggered/shadowflame
 	name = "Shadowflame Gout"
 	desc = "Release a burst of shadowflame, rapidly sapping the heat of any individual."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"

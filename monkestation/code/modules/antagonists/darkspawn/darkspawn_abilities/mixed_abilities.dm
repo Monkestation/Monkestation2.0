@@ -7,7 +7,7 @@
 /datum/action/cooldown/spell/touch/umbral_trespass
 	name = "Umbral trespass"
 	desc = "Melds with a target's shadow, causing you to invisibly follow them. Only works in lit areas, and you will be forced out if you hold any items. Costs 30 Psi."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -32,7 +32,7 @@
 		if(possessing)
 			return //only return if the user is actually still hiding
 	return ..()
-	
+
 /datum/action/cooldown/spell/touch/umbral_trespass/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/target, mob/living/carbon/human/caster)
 	tagalong = caster.apply_status_effect(STATUS_EFFECT_TAGALONG, target)
 	caster.balloon_alert(caster, "Iahz")
@@ -46,7 +46,7 @@
 /datum/action/cooldown/spell/aoe/icyveins //Stuns and freezes nearby people - a bit more effective than a changeling's cryosting
 	name = "Icy Veins"
 	desc = "Instantly freezes the blood of nearby people, slowing them and rapidly chilling their body."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "icy_veins"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -88,7 +88,7 @@
 /datum/action/cooldown/spell/shapeshift/crawling_shadows
 	name = "Crawling Shadows"
 	desc = "Assumes a shadowy form that can crawl through vents and squeeze through the cracks in doors."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -102,7 +102,7 @@
 	die_with_shapeshifted_form = FALSE
 	convert_damage = TRUE
 	convert_damage_type = STAMINA
-	sound = 'yogstation/sound/magic/devour_will_end.ogg'
+	sound = 'monkestation/sound/magic/devour_will_end.ogg'
 	possible_shapes = list(/mob/living/simple_animal/hostile/crawling_shadows)
 
 /datum/action/cooldown/spell/shapeshift/crawling_shadows/do_shapeshift(mob/living/caster)
@@ -127,14 +127,14 @@
 			to_chat(owner, span_warning("There isn't enough room to release your transformation"))
 		return FALSE
 	return ..()
-	
+
 //////////////////////////////////////////////////////////////////////////
 //------------------------Summon a distraction--------------------------//
 //////////////////////////////////////////////////////////////////////////
 /datum/action/cooldown/spell/simulacrum
 	name = "Simulacrum"
 	desc = "Creates an illusion that closely resembles you. The illusion will fight nearby enemies in your stead for 10 seconds. Costs 40 Psi."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -154,19 +154,19 @@
 	var/mob/living/L = owner
 	L.balloon_alert(L, "Zkxa'ya")
 	L.visible_message(span_warning("[L] breaks away from [L]'s shadow!"), span_velvet("You create an illusion of yourself."))
-	playsound(L, 'yogstation/sound/magic/devour_will_form.ogg', 50, 1)
+	playsound(L, 'monkestation/sound/magic/devour_will_form.ogg', 50, 1)
 
 	var/mob/living/simple_animal/hostile/illusion/darkspawn/M = new(get_turf(L))
 	M.Copy_Parent(L, duration, 100, 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
 	M.move_to_delay = L.movement_delay()
-	
+
 //////////////////////////////////////////////////////////////////////////
 //--------------------Summon a sentient distraction---------------------//
 //////////////////////////////////////////////////////////////////////////
 /datum/action/cooldown/spell/fray_self
 	name = "Fray self"
 	desc = "Attemps to split a piece of your psyche into a sentient copy of yourself that lasts until destroyed. Costs 80 Psi."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -206,7 +206,7 @@
 ///Attempt to spawn the sentient ghost mob
 /datum/action/cooldown/spell/fray_self/proc/fray()
 	var/mob/living/caster = owner
-	
+
 	to_chat(caster, span_velvet("You attempt to split a piece of your psyche."))
 	searching = TRUE
 	var/mob/dead/observer/chosen_ghost
@@ -220,7 +220,7 @@
 
 	caster.balloon_alert(caster, "Zkxa'yaera Hohef'era!")
 	caster.visible_message(span_warning("[caster] breaks away from [caster]'s shadow!"), span_velvet("The piece of your psyche creates a form for itself."))
-	playsound(caster, 'yogstation/sound/magic/devour_will_form.ogg', 50, 1)
+	playsound(caster, 'monkestation/sound/magic/devour_will_form.ogg', 50, 1)
 
 	if(!dude)
 		dude = new(get_turf(caster))

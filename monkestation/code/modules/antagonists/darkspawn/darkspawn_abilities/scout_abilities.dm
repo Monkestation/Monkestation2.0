@@ -5,7 +5,7 @@
 	name = "Light Eater"
 	desc = "Twists an active arm into a blade of all-consuming shadow."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -29,7 +29,7 @@
 /datum/action/cooldown/spell/toggle/light_eater/Enable()
 	owner.balloon_alert(owner, "Akna")
 	owner.visible_message(span_warning("[owner]'s arm contorts into a blade!"), span_velvet("You transform your arm into a blade."))
-	playsound(owner, 'yogstation/sound/magic/pass_create.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_create.ogg', 50, 1)
 	if(!armblade)
 		armblade = new(owner)
 	owner.put_in_hands(armblade)
@@ -37,7 +37,7 @@
 /datum/action/cooldown/spell/toggle/light_eater/Disable()
 	owner.balloon_alert(owner, "Haoo")
 	owner.visible_message(span_warning("[owner]'s blade transforms back!"), span_velvet("You dispel the blade."))
-	playsound(owner, 'yogstation/sound/magic/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_dispel.ogg', 50, 1)
 	if(armblade)
 		armblade.moveToNullspace()
 
@@ -48,7 +48,7 @@
 	name = "Shadow caster"
 	desc = "Twists an active arm into a bow that shoots arrows made of solid darkness."
 	panel = "Darkspawn"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -72,7 +72,7 @@
 /datum/action/cooldown/spell/toggle/shadow_caster/Enable()
 	owner.balloon_alert(owner, "Crxkna")
 	owner.visible_message(span_warning("[owner]'s arm contorts into a bow!"), span_velvet("You transform your arm into a bow."))
-	playsound(owner, 'yogstation/sound/magic/pass_create.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_create.ogg', 50, 1)
 	if(!bow)
 		bow = new (owner)
 	owner.put_in_hands(bow)
@@ -80,7 +80,7 @@
 /datum/action/cooldown/spell/toggle/shadow_caster/Disable()
 	owner.balloon_alert(owner, "Haoo")
 	owner.visible_message(span_warning("[owner]'s bow transforms back!"), span_velvet("You dispel the bow."))
-	playsound(owner, 'yogstation/sound/magic/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'monkestation/sound/magic/pass_dispel.ogg', 50, 1)
 	if(bow)
 		bow.moveToNullspace()
 
@@ -92,7 +92,7 @@
 	desc = "Spews a cloud of smoke which will blind enemies and provide cover from light."
 	panel = "Darkspawn"
 	button_icon_state = "blinding_miasma"
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -179,7 +179,7 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/void_jaunt
 	name = "Void Jaunt"
 	desc = "Move through the veil for a time, avoiding mortal eyes and lights."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -193,7 +193,7 @@
 	cooldown_time = 90 SECONDS
 
 	sound = 'sound/effects/bamf.ogg'
-	exit_jaunt_sound = 'yogstation/sound/magic/devour_will_begin.ogg'
+	exit_jaunt_sound = 'monkestation/sound/magic/devour_will_begin.ogg'
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ninja/cloak
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ninja
 
@@ -210,7 +210,7 @@
 /datum/action/cooldown/spell/pointed/phase_jump/void_jump
 	name = "Void jump"
 	desc = "A short range targeted teleport."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
@@ -239,7 +239,7 @@
 /datum/action/cooldown/spell/aoe/permafrost
 	name = "Permafrost"
 	desc = "Banish heat from the surrounding terrain, freezing it instantly."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'monkestation/icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "permafrost"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -250,7 +250,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 65)
 	cooldown_time = 60 SECONDS
-	sound = 'yogstation/sound/ambience/antag/veil_mind_scream.ogg'
+	sound = 'monkestation/sound/ambience/antag/veil_mind_scream.ogg'
 	aoe_radius = 3
 
 /datum/action/cooldown/spell/aoe/permafrost/cast(atom/cast_on)
@@ -274,7 +274,7 @@
 	desc = "Restrain a target's mental faculties, preventing speech and actions of any kind for a moderate duration."
 	panel = "Darkspawn"
 	button_icon_state = "glare"
-	button_icon = 'yogstation/icons/mob/actions.dmi'
+	button_icon = 'monkestation/icons/mob/actions.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"

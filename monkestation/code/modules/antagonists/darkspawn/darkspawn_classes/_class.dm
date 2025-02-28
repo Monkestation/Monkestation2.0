@@ -19,8 +19,8 @@
 	var/list/datum/psi_web/learned_abilities = list()
 	///The color of their aura outline
 	var/class_color = COLOR_SILVER
-	
-	var/icon_file = 'yogstation/icons/mob/darkspawn.dmi'
+
+	var/icon_file = 'monkestation/icons/mob/darkspawn.dmi'
 	var/eye_icon = "eyes"
 	var/class_icon = "classless"
 
@@ -30,7 +30,7 @@
 	owner = parent
 	if(!owner.has_antag_datum(/datum/antagonist/darkspawn))
 		return COMPONENT_INCOMPATIBLE
-	
+
 /datum/component/darkspawn_class/Destroy()
 	. = ..()
 	owner = null
@@ -47,7 +47,7 @@
 
 	for(var/datum/psi_web/power as anything in starting_abilities)
 		gain_power(power_typepath = power)
-	
+
 /datum/component/darkspawn_class/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_DARKSPAWN_PURCHASE_POWER)
 	UnregisterSignal(parent, COMSIG_MIND_TRANSFERRED)
@@ -57,7 +57,7 @@
 			var/mob/living/thinkmob = thinker.current
 			UnregisterSignal(thinkmob, COMSIG_ATOM_UPDATE_OVERLAYS)
 			thinkmob.update_appearance(UPDATE_OVERLAYS)
-	
+
 	for(var/datum/psi_web/power in learned_abilities)
 		lose_power(power, TRUE) //if the component is removed, refund them
 
@@ -87,7 +87,7 @@
 	overlays += eyes
 
 	overlays += emissive_appearance(icon_file, eye_icon, source) //the emissive overlay for the eyes
-	
+
 	var/mutable_appearance/class_sigil = mutable_appearance(icon_file, class_icon, -HANDCUFF_LAYER)
 	class_sigil.color = class_color
 	overlays += class_sigil
@@ -124,7 +124,7 @@
 /datum/component/darkspawn_class/proc/lose_power(datum/psi_web/power, refund = FALSE)
 	if(!locate(power) in learned_abilities)
 		CRASH("[owner] tried to lose [power] which they haven't learned")
-	
+
 	learned_abilities -= power
 	power.remove(refund)
 

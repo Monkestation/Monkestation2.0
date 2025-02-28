@@ -5,7 +5,7 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 /obj/machinery/computer/camera_advanced/darkspawn
 	name = "dark orb"
 	desc = "An unsettling swirling mass of darkness. Gazing into it seems to reveal forbidden knowledge."
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "panopticon"
 	special_appearance = TRUE
 	use_power = NO_POWER_USE
@@ -83,7 +83,7 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	use_power = NO_POWER_USE
 	max_integrity = 20
 	integrity_failure = 20
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "camera"
 	special_camera = TRUE
 	internal_light = FALSE

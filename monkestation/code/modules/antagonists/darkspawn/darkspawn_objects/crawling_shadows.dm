@@ -2,7 +2,7 @@
 	//appearance variables
 	name = "crawling shadows"
 	desc = "A formless mass of nothingness with piercing white eyes."
-	icon = 'yogstation/icons/mob/darkspawn.dmi' //Placeholder sprite
+	icon = 'monkestation/icons/mob/darkspawn.dmi' //Placeholder sprite
 	icon_state = "crawling_shadows"
 	icon_living = "crawling_shadows"
 
@@ -34,7 +34,7 @@
 	//death variables
 	del_on_death = TRUE
 	deathmessage = "trembles, form rapidly dispersing."
-	deathsound = 'yogstation/sound/magic/devour_will_victim.ogg'
+	deathsound = 'monkestation/sound/magic/devour_will_victim.ogg'
 
 	//attack flavour
 	speak_emote = list("whispers")

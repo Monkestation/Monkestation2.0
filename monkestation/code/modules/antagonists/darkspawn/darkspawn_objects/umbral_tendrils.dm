@@ -2,12 +2,12 @@
 /obj/item/umbral_tendrils
 	name = "umbral tendrils"
 	desc = "A mass of pulsing, chitonous tendrils with exposed violet flesh."
-	icon = 'yogstation/icons/obj/darkspawn_items.dmi'
+	icon = 'monkestation/icons/obj/darkspawn_items.dmi'
 	icon_state = "umbral_tendrils"
 	item_state = "umbral_tendrils"
-	lefthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
-	righthand_file = 'yogstation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
-	hitsound = 'yogstation/sound/magic/pass_attack.ogg'
+	lefthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/antag/darkspawn_righthand.dmi'
+	hitsound = 'monkestation/sound/magic/pass_attack.ogg'
 	attack_verb = list("impaled", "tentacled", "torn")
 	item_flags = ABSTRACT | DROPDEL
 	sharpness = SHARP_EDGED
@@ -87,7 +87,7 @@
 /obj/projectile/umbral_tendrils
 	name = "umbral tendrils"
 	icon_state = "cursehand0"
-	hitsound = 'yogstation/sound/magic/pass_attack.ogg'
+	hitsound = 'monkestation/sound/magic/pass_attack.ogg'
 	layer = LARGE_MOB_LAYER
 	damage = 0
 	nodamage = TRUE
@@ -113,7 +113,7 @@
 		if(is_team_darkspawn(L))
 			return BULLET_ACT_FORCE_PIERCE //ignore allies
 		if(iscarbon(target))
-			playsound(target, 'yogstation/sound/magic/pass_attack.ogg', 50, TRUE)
+			playsound(target, 'monkestation/sound/magic/pass_attack.ogg', 50, TRUE)
 			L.Knockdown(6 SECONDS)
 			if(!twinned)
 				target.visible_message(span_warning("[firer]'s [name] slam into [target], knocking them off their feet!"), \
@@ -123,7 +123,7 @@
 				target.throw_at(get_step_towards(firer, target), 7, 2) //pull them towards us!
 				target.visible_message(span_warning("[firer]'s [name] slam into [target] and drag them across the ground!"), \
 				span_userdanger("You're suddenly dragged across the floor!"))
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), target, 'yogstation/sound/magic/pass_attack.ogg', 50, TRUE), 1)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), target, 'monkestation/sound/magic/pass_attack.ogg', 50, TRUE), 1)
 		else if(issilicon(target))
 			var/mob/living/silicon/robot/R = target
 			target.visible_message(span_warning("[firer]'s [name] smashes into [target]'s chassis!"), \
