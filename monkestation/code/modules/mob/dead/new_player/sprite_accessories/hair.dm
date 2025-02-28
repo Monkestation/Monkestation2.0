@@ -136,7 +136,6 @@
 	name = "Elegant Bun"
 	icon_state = "hair_elegantbun"
 
-
 /datum/sprite_accessory/hair/royalcurl
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Royal Curls"

@@ -117,3 +117,10 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDESHOES
 
+/obj/item/clothing/under/dress/sparkle
+	name = "sparkly ribbon dress"
+	desc = "A fancy dress that sparkles gently in the light, and it comes with removeable sleeves!"
+	icon_state = "sparkledress"
+	inhand_icon_state = "sparkledress"
+	can_adjust = TRUE
+
