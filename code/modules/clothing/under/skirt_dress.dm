@@ -124,3 +124,16 @@
 	inhand_icon_state = "sparkledress"
 	can_adjust = TRUE
 
+/obj/item/clothing/under/dress/angel
+	name = "lace angel dress"
+	desc = "I can be your angle or your debil."
+	icon_state = "angeldress"
+	inhand_icon_state = "angeldress"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/dress/angel/alt
+	name = "lace devil dress"
+	desc = "I can be your angle or your debil."
+	icon_state = "devildress"
+	inhand_icon_state = "devildress"
+	can_adjust = FALSE
