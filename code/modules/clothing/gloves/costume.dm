@@ -22,3 +22,9 @@
 	desc = "Fake leather gloves that fit you like a glove, literally in this case."
 	icon_state = "stargloves"
 	inhand_icon_state = "stargloves"
+
+/obj/item/clothing/gloves/wristlets
+	name = "gold wristlets"
+	desc = "Gold wristlets that daintly sit on the...wrist! Pretty!"
+	icon_state = "wristlets"
+	inhand_icon_state = "wristlets"

@@ -222,3 +222,9 @@
 	desc = "A dainty bow that shimmers in the light, almost as if tiny stars decorated the bow."
 	icon_state = "starbow"
 	inhand_icon_state = "starbow"
+
+/obj/item/clothing/head/costume/tiara
+	name = "elegant tiara"
+	desc = "A stunning tiara that still looks good even with its questionable authenticity."
+	icon_state = "tiara"
+	inhand_icon_state = "tiara"

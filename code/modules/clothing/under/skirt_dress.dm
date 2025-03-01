@@ -124,6 +124,13 @@
 	inhand_icon_state = "sparkledress"
 	can_adjust = TRUE
 
+/obj/item/clothing/under/dress/white
+	name = "white dress"
+	desc = "A simple easy to wear dress for when you're in a rush but still want to look good."
+	icon_state = "whitedress"
+	inhand_icon_state = "whitedress"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/dress/angel
 	name = "lace angel dress"
 	desc = "I can be your angle or your debil."
@@ -152,3 +159,11 @@
 	icon_state = "stardress"
 	inhand_icon_state = "stardress"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/dress/gown //Miss me with subtypes I dont wanna fuck with it
+	name = "regal ball gown"
+	desc = "A delicate dress that's vastly worth more than it's weight in fabric. On top of that it smells great!"
+	icon_state = "rballgown"
+	inhand_icon_state = "rballgown"
+	can_adjust = TRUE
+	flags_inv = HIDESHOES
