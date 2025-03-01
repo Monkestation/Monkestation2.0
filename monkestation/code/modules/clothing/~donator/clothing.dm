@@ -420,6 +420,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	worn_icon_state = "darksheath"
+	inhand_icon_state = "darksheath"
 
 /obj/item/storage/belt/sabre/darksabre/Initialize(mapload)
 	. = ..()
