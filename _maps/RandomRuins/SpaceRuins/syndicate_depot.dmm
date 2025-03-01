@@ -658,7 +658,7 @@
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "hd" = (
 /turf/template_noop,
-/area/ruin/space/has_grav/syndicate_depot/shipbreaking)
+/area/shipbreak/syndicate_depot)
 "hl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -907,6 +907,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
+"jP" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/template_noop)
 "jR" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/turf_decal/sand/plating,
@@ -3130,9 +3135,9 @@
 "JG" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/syndicate/shipbreaking,
-/obj/item/melee/sledgehammer/syndicate_depot,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pushbroom,
+/obj/item/melee/sledgehammer,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "JN" = (
@@ -3238,12 +3243,12 @@
 	},
 /obj/structure/rack,
 /obj/item/storage/toolbox/syndicate/shipbreaking,
-/obj/item/melee/sledgehammer/syndicate_depot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/item/pushbroom,
+/obj/item/melee/sledgehammer,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "KL" = (
@@ -4660,9 +4665,10 @@ Je
 Je
 Je
 Je
-Je
-Je
-Je
+BF
+BF
+BF
+BF
 BF
 BF
 BF
@@ -4708,40 +4714,41 @@ Je
 Je
 "}
 (2,1,1) = {"
+bp
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+bp
 Je
 Je
 Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
+BF
+BF
+BF
+BF
+BF
 BF
 BF
 BF
@@ -4788,7 +4795,7 @@ Je
 Je
 "}
 (3,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -4814,12 +4821,13 @@ hd
 hd
 hd
 hd
-Je
-Je
-Je
+bp
 Je
 Je
-Je
+BF
+BF
+BF
+BF
 BF
 BF
 BF
@@ -4868,7 +4876,7 @@ Je
 Je
 "}
 (4,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -4894,11 +4902,12 @@ hd
 hd
 hd
 hd
-Je
-Je
-Je
-Je
-Je
+jP
+bp
+bp
+tr
+BF
+BF
 BF
 BF
 BF
@@ -4948,36 +4957,37 @@ Je
 Je
 "}
 (5,1,1) = {"
+jP
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+jP
 Je
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
 Je
-Je
-Je
-Je
+BF
+BF
 BF
 BF
 BF
@@ -5028,35 +5038,36 @@ Je
 Je
 "}
 (6,1,1) = {"
+jP
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+hd
+jP
 Je
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
-hd
 Je
-Je
-Je
+BF
 BF
 BF
 BF
@@ -5108,7 +5119,7 @@ Je
 Je
 "}
 (7,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -5134,6 +5145,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -5188,7 +5200,7 @@ Je
 Je
 "}
 (8,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5214,6 +5226,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -5268,7 +5281,7 @@ Je
 Je
 "}
 (9,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5294,6 +5307,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -5348,7 +5362,7 @@ Je
 Je
 "}
 (10,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5374,6 +5388,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 BF
 BF
@@ -5428,7 +5443,7 @@ Je
 Je
 "}
 (11,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -5454,6 +5469,7 @@ hd
 hd
 hd
 hd
+bp
 BF
 BF
 BF
@@ -5508,7 +5524,7 @@ Je
 Je
 "}
 (12,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5534,6 +5550,7 @@ hd
 hd
 hd
 hd
+bp
 BF
 BF
 BF
@@ -5588,7 +5605,7 @@ Je
 Je
 "}
 (13,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5614,6 +5631,7 @@ hd
 hd
 hd
 hd
+bp
 PN
 et
 et
@@ -5668,7 +5686,7 @@ Je
 Je
 "}
 (14,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5694,6 +5712,7 @@ hd
 hd
 hd
 hd
+bp
 PN
 et
 et
@@ -5748,7 +5767,7 @@ Je
 Je
 "}
 (15,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -5774,6 +5793,7 @@ hd
 hd
 hd
 hd
+bp
 PN
 et
 BF
@@ -5828,7 +5848,7 @@ Je
 Je
 "}
 (16,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5854,6 +5874,7 @@ hd
 hd
 hd
 hd
+bp
 BF
 BF
 BF
@@ -5908,7 +5929,7 @@ Je
 Je
 "}
 (17,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -5934,6 +5955,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 BF
 BF
@@ -5988,7 +6010,7 @@ Je
 Je
 "}
 (18,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6014,6 +6036,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 BF
 BF
@@ -6068,7 +6091,7 @@ Je
 Je
 "}
 (19,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -6094,6 +6117,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 BF
 BF
@@ -6148,7 +6172,7 @@ BF
 Je
 "}
 (20,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6174,6 +6198,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 BF
 BF
@@ -6228,7 +6253,7 @@ BF
 Je
 "}
 (21,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6254,6 +6279,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -6308,7 +6334,7 @@ BF
 Je
 "}
 (22,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6334,6 +6360,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -6388,7 +6415,7 @@ BF
 BF
 "}
 (23,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -6414,6 +6441,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -6468,7 +6496,7 @@ BF
 BF
 "}
 (24,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6494,6 +6522,7 @@ hd
 hd
 hd
 hd
+jP
 Je
 Je
 BF
@@ -6548,7 +6577,7 @@ BF
 BF
 "}
 (25,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6574,6 +6603,7 @@ hd
 hd
 hd
 hd
+jP
 Je
 Je
 BF
@@ -6628,7 +6658,7 @@ BF
 Je
 "}
 (26,1,1) = {"
-Je
+jP
 hd
 hd
 hd
@@ -6654,9 +6684,10 @@ hd
 hd
 hd
 hd
-Je
-Je
-BF
+jP
+bp
+bp
+tr
 BF
 BF
 BF
@@ -6708,7 +6739,7 @@ BF
 Je
 "}
 (27,1,1) = {"
-Je
+bp
 hd
 hd
 hd
@@ -6734,6 +6765,7 @@ hd
 hd
 hd
 hd
+bp
 Je
 Je
 BF
@@ -6788,32 +6820,33 @@ BF
 Je
 "}
 (28,1,1) = {"
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
-Je
+bp
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+jP
+jP
+jP
+bp
+bp
 Je
 Je
 BF
@@ -6868,6 +6901,7 @@ BF
 Je
 "}
 (29,1,1) = {"
+Je
 Je
 Je
 Je
@@ -6977,6 +7011,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -7028,6 +7063,7 @@ BF
 Je
 "}
 (31,1,1) = {"
+Je
 Je
 Je
 Je
@@ -7137,6 +7173,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -7188,6 +7225,7 @@ BF
 Je
 "}
 (33,1,1) = {"
+Je
 Je
 Je
 Je
@@ -7298,6 +7336,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -7348,6 +7387,7 @@ BF
 BF
 "}
 (35,1,1) = {"
+Je
 Je
 Je
 Je
@@ -7457,6 +7497,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 et
@@ -7537,6 +7578,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 et
@@ -7588,6 +7630,7 @@ BF
 BF
 "}
 (38,1,1) = {"
+Je
 Je
 Je
 Je
@@ -7697,6 +7740,7 @@ Je
 Je
 Je
 Je
+Je
 et
 et
 et
@@ -7748,6 +7792,7 @@ BF
 BF
 "}
 (40,1,1) = {"
+Je
 Je
 Je
 Je
@@ -7858,6 +7903,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -7908,6 +7954,7 @@ BF
 BF
 "}
 (42,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8017,6 +8064,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8068,6 +8116,7 @@ BF
 Je
 "}
 (44,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8176,6 +8225,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8228,6 +8278,7 @@ BF
 BF
 "}
 (46,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8337,6 +8388,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8388,6 +8440,7 @@ BF
 Je
 "}
 (48,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8499,6 +8552,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8548,6 +8602,7 @@ BF
 Je
 "}
 (50,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8660,6 +8715,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8740,6 +8796,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8788,6 +8845,7 @@ Je
 Je
 "}
 (53,1,1) = {"
+Je
 Je
 Je
 Je
@@ -8901,6 +8959,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -8948,6 +9007,7 @@ Je
 Je
 "}
 (55,1,1) = {"
+Je
 Je
 Je
 Je
@@ -9061,6 +9121,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -9141,6 +9202,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -9188,6 +9250,7 @@ Je
 Je
 "}
 (58,1,1) = {"
+Je
 Je
 Je
 Je
@@ -9304,6 +9367,7 @@ Je
 Je
 Je
 Je
+Je
 BF
 BF
 BF
@@ -9348,6 +9412,7 @@ Je
 Je
 "}
 (60,1,1) = {"
+Je
 Je
 Je
 Je
