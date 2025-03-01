@@ -141,6 +141,11 @@
 	name = "Royal Curls"
 	icon_state = "hair_royalcurl"
 
+/datum/sprite_accessory/hair/mermaid
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Mermaid"
+	icon_state = "hair_mermaid"
+
 /datum/sprite_accessory/hair/styledponytail
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Styled Ponytail"
