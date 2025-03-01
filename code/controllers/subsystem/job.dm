@@ -139,8 +139,11 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
 			log_job_debug("Removed [job.title] due to map config")
 			continue
-		if(!CONFIG_GET(flag/spooktober_enabled) && job.job_flags & JOB_SPOOKTOBER) //if spooktober's not enabled, don't load spooktober jobs
-			continue
+
+		if(length(job.job_holiday_flags)) // Check if this job is part of a holiday. Skip holiday checks if it isnt. //MONKESTATION EDIT
+			if(!check_holidays(job.job_holiday_flags) || !job.special_config_check())
+				continue
+
 		new_all_occupations += job
 		name_occupations[job.title] = job
 		type_occupations[job_type] = job
@@ -1116,6 +1119,13 @@ SUBSYSTEM_DEF(job)
 	if(required_playtime_remaining)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
+
+	// Job is for donators of a specific level and fail if they did not meet the requirements.
+	if(!isnull(possible_job.job_req_donar) && (!is_admin(player.client) && !player.client?.is_mentor())) //MONKESTATION EDIT
+		var/donator_rank = get_player_details(player)?.patreon?.is_donator()
+		if(isnull(donator_rank) || donator_rank < possible_job.job_req_donar)
+			JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONAR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+			return JOB_UNAVAILABLE_DONAR_RANK
 
 	// Run the banned check last since it should be the rarest check to fail and can access the database.
 	if(is_banned_from(player.ckey, possible_job.title))
