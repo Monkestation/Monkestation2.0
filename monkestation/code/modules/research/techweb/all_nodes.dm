@@ -225,7 +225,15 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-
+/datum/techweb_node/genesis_chamber
+	id = "genesis_chamber"
+	display_name = "Experimental Botanical Technology"
+	description = "Through advances in bio-splicing and controlled mutation, we have devised a method to create strange seeds. The potential applications are limitless"
+	prereq_ids = list("botany")
+	design_ids = list(
+		"genesis_chamber",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"
