@@ -58,5 +58,5 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/a357
 	cost = 4
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 	illegal_tech = FALSE

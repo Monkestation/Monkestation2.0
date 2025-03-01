@@ -20,7 +20,17 @@
 
 /obj/item/implant/uplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()
-	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = target?.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
+//monkestation removal on next line to make edits easier
+//	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = target?.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
+//monkestation edit start
+	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, \
+														owner = target?.key, \
+														lockable = TRUE, \
+														enabled = FALSE, \
+														uplink_flag = uplink_flag, \
+														uplink_handler_override = uplink_handler, \
+														starting_tc = starting_tc)
+//monkestation edit end
 	new_uplink.unlock_text = "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
 	if(!uplink_handler)
 		new_uplink.uplink_handler.owner = target.mind
