@@ -222,8 +222,6 @@
 /obj/machinery/genesis_chamber/proc/dump_seeds(amount = capacity)
 	var/turf/drop_loc = get_turf(src)
 	for(var/i in 1 to min(amount, capacity))
-		if(capacity <= 0)
-			break
 		var/obj/item/seeds/random/seed = new(drop_loc)
 		capacity--
 		step(seed, pick(GLOB.alldirs))
