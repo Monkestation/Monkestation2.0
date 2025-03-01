@@ -52,7 +52,7 @@
 	. = list()
 	for(var/datum/mutation/human/mutation as anything in mutations)
 		if(!mutation.random_locked)
-			. |= mutation.type
+			.[mutation.type] = isnull(mutation.species_allowed) ? 2 : 3
 
 #undef STABILIZER_PROB
 #undef CHROMOSOME_PROB
