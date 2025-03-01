@@ -41,12 +41,19 @@
 
 /obj/item/organ/internal/ears/show_on_condensed_scans()
 	// Always show if we have an appendix
+	// monkestation edit start
+	/* original
 	return ..() || (owner.stat != DEAD && HAS_TRAIT(owner, TRAIT_DEAF))
+	*/
+	return ..() || (owner.stat != DEAD && deaf)
+	// monkestation edit end
 
 /obj/item/organ/internal/ears/on_life(seconds_per_tick, times_fired)
+	/* monkestation removal
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
 		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
+	*/
 
 	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
@@ -61,16 +68,33 @@
 			adjustEarDamage(0, 4)
 			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
 
+	// monkestation edit start
+	/* original
 	if(deaf)
 		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 	else
 		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+	*/
+	update_hearing_loss()
+	// monkestation edit end
 
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
+	// monkestation edit start
+	// if we are already hard of hearing, don't accumulate the duration
+	// instead adjust the amount of damage (so we might escalate to deafness) and reset the duration if appropriate
+	if (ddeaf > 0 && HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
+		deaf = max(deaf, ddeaf*damage_multiplier)
+		update_hearing_loss()
+		return
+	// monkestation edit end
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	// monkestation edit start
+	update_hearing_loss()
+	// monkestation edit end
 
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0

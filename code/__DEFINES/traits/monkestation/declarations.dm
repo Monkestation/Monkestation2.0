@@ -57,6 +57,8 @@
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
 /// For when a mob has been consumed by a zombie
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
+/// Caused by temporary deafness, makes everyone sounds like they are whispering
+#define TRAIT_HARD_OF_HEARING "hard_of_hearing"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
