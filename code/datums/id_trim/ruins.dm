@@ -70,12 +70,13 @@
 	assignment = "Charlie Station Engineer"
 
 /// Trim for the oldstation ruin/Charlie station to access APCs and other equipment
-/datum/id_trim/job/away/old/apc
+/datum/id_trim/job/away/old/equipment
 	minimal_access = list(
+		ACCESS_AWAY_ENGINEERING,
 		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP
 	)
-	assignment = "Engineering Equipment Access"
+	assignment = "Engine Equipment Access"
 
 /// Trim for the oldstation ruin/Charlie station to access robots, and downloading of paper publishing software for experiments
 /datum/id_trim/job/away/old/robo
@@ -214,3 +215,19 @@
 /datum/id_trim/away/the_outlet/mad_manager
 	assignment = "The Mad Manager"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL, ACCESS_AWAY_SEC)
+
+/// Trim for the SCP site ruins.
+/datum/id_trim/away/scp1
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINEERING, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_GENERIC1, ACCESS_AWAY_SCIENCE)
+
+/// Trim for the SCP site ruins.
+/datum/id_trim/away/scp2
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_ENGINEERING)
+
+/// Trim for the SCP site ruins.
+/datum/id_trim/away/scp3
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_SEC, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERIC1, ACCESS_AWAY_GENERIC2, ACCESS_AWAY_ENGINEERING)
+
+/// Trim for the SCP site ruins.
+/datum/id_trim/away/scp4
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_SEC, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERIC1, ACCESS_AWAY_GENERIC2, ACCESS_AWAY_COMMAND, ACCESS_AWAY_GENERIC3, ACCESS_AWAY_GENERIC4, ACCESS_AWAY_ENGINEERING)
