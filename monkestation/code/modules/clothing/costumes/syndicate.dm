@@ -24,11 +24,12 @@
 	user.SetSleeping(8 SECONDS)
 	speak(user)
 	user.remove_filter(id)
-	START_PROCESSING(SSobj, src)
-	user.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_FEARLESS), id)
-	user.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 1, offset = 1.5, color = "#ff0000"))
+	user.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_FEARLESS), id)
+	user.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 0.5, offset = 1, color = "#ff0000"))
 	primed = TRUE
 	to_chat(user,  span_boldwarning("You hear a faint click inside the hat... you get the feeling you shouldn't take it off."))
+	message_admins("A top-hat of EVIL has been worn by [user.mind].")
+	log_admin("A top-hat of EVIL has been worn by [key_name(user)]")
 	notify_ghosts(
 		"[user.name] has donned a hat of EVIL!",
 		source = user,
@@ -49,15 +50,6 @@
 	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 
-/obj/item/clothing/head/hats/tophat/syndicate/process(seconds_per_tick)
-	if(!ishuman(loc))
-		return
-	var/mob/living/carbon/human/evil_person = loc
-	evil_person.adjustToxLoss(-2.5)
-	evil_person.adjustOxyLoss(-2.5)
-	evil_person.adjustBruteLoss(-2.5)
-	evil_person.adjustFireLoss(-2.5)
-
 /obj/item/clothing/head/hats/tophat/syndicate/MouseDrop(atom/over_object)
 	if(primed)
 		to_chat(usr, span_userdanger("You hesitate remembering the faint click you heard..."))
@@ -74,8 +66,7 @@
 /obj/item/clothing/head/hats/tophat/syndicate/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(primed)
-		STOP_PROCESSING(SSobj, src)
-		user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_HARDLY_WOUNDED, TRAIT_FEARLESS), id)
+		user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_PAIN_EFFECTS, TRAIT_FEARLESS), id)
 		addtimer(CALLBACK(src, PROC_REF(explode), user), 0.5 SECOND)
 
 /obj/item/clothing/head/hats/tophat/syndicate/proc/explode(mob/living/carbon/human/user)
@@ -103,8 +94,7 @@
 		return
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	to_chat(user, span_notice("You feel it's time for a good bloodbath."))
-	var/owner = user.mind
-	message_admins("A cloak of EVIL has been worn by [owner].")
+	message_admins("A cloak of EVIL has been worn by [user.mind].")
 	log_admin("A cloak of EVIL has been worn by [key_name(user)]")
 	notify_ghosts(
 		"[user.name] has donned a cloak of EVIL!",
@@ -139,3 +129,4 @@
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/mask/fakemoustache(src)
