@@ -28,3 +28,9 @@
 	desc = "Gold wristlets that daintly sit on the...wrist! Pretty!"
 	icon_state = "wristlets"
 	inhand_icon_state = "wristlets"
+
+/obj/item/clothing/gloves/butler
+	name = "butler gloves"
+	desc = "Well crafted white gloves, all the better to serve tea with."
+	icon_state = "butlergloves"
+	inhand_icon_state = "butlergloves"
