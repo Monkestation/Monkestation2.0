@@ -164,10 +164,12 @@
 	if(!(source.istate & ISTATE_HARM))
 		return
 	to_chat(source, span_warning("You shoot with your laser eyes!"))
-	source.changeNext_move(CLICK_CD_RANGE)
+//	source.changeNext_move(CLICK_CD_RANGE) // MONKESTATION EDIT OLD
+	source.changeNext_move(CLICK_CD_RANGE * GET_MUTATION_ENERGY(src)) // MONKESTATION EDIT NEW
 	source.newtonian_move(get_dir(target, source))
 	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)
 	LE.firer = source
+	LE.damage *= GET_MUTATION_POWER(src) // MONKESTATION ADDITION
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
