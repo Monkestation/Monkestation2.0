@@ -474,6 +474,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/species_organs = mutant_organs + external_organs
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
+		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
+			if(!isnull(current_organ) && replace_current)
+				// if we have an organ here and we're replacing organs, remove it
+				current_organ.Remove(organ_holder)
+				QDEL_NULL(current_organ)
+			continue
+
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
@@ -542,6 +549,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			if(!should_external_organ_apply_to(organ_path, human))
+				continue
+
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
@@ -750,6 +760,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
+// MONKESTATION ADDITION START
+	if(mutant_bodyparts["ipc_screen"]) 
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || source.head && (source.head.flags_inv & HIDEFACE) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin) 
+			bodyparts_to_add -= "ipc_screen"
+// MONKESTATION ADDITION END
+
 	if(!bodyparts_to_add)
 		return
 
@@ -769,7 +785,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
-				if("ipc_screen")
+				if("ipc_screen") // Monkestation Addition
 					accessory = GLOB.ipc_screens_list[source.dna.features["ipc_screen"]]
 
 			if(!accessory || accessory.icon_state == "none")
