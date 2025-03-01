@@ -19,7 +19,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(0, 1)
+	telecrystal_reward = list(2, 3) //MONKESTATION EDIT ORG: 0, 1
 
 	/// Min attacks required to pass the objective. Picked at random between this and max.
 	var/min_attacks_required = 2

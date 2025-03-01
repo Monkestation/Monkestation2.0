@@ -13,7 +13,8 @@
 	description = "The %DEPARTMENT HEAD% has particularly annoyed us by sending us spam emails and we want their %PET% dead to show them what happens when they cross us. "
 
 	progression_minimum = 0 MINUTES
-	telecrystal_reward = list(1, 2)
+	//progression_maximum = 20 MINUTES //MONKESTATION ADDITION 4 later
+	telecrystal_reward = list(0, 1) //MONKESTATION EDIT ORG: 1, 2
 	progression_reward = list(3 MINUTES, 6 MINUTES)
 
 	/// Possible heads mapped to their pet type. Can be a list of possible pets
