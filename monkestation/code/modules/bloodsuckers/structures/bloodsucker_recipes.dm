@@ -85,6 +85,19 @@
 	category = CAT_STRUCTURE
 	always_available = FALSE
 
+/datum/crafting_recipe/blood_mirror
+	name = "blood mirror frame"
+	result = /obj/item/wallframe/blood_mirror
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_CROWBAR)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/silver = 2,
+		/obj/item/stack/sheet/glass = 5,
+		/datum/reagent/blood = 100,
+	)
+	time = 15 SECONDS
+	category = CAT_STRUCTURE
+	always_available = FALSE
+
 /datum/crafting_recipe/stake
 	name = "Stake"
 	result = /obj/item/stake

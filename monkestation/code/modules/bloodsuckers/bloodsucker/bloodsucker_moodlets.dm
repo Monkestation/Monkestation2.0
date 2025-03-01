@@ -38,3 +38,9 @@
 	description = span_boldwarning("Something is making your mind feel... loose.")
 	mood_change = -15
 	timeout = 5 MINUTES
+
+//Blood mirror's mood event to non-bloodsuckers/vassals that attempt to use it and get randomly warped.
+/datum/mood_event/bloodmirror
+	description = span_boldwarning("A PROPHECY OF BLOOD HAS SPREAD ITS SPLATTERED STAINS UPON MY PSYCHE.")
+	mood_change = -30
+	timeout = 7 MINUTES
