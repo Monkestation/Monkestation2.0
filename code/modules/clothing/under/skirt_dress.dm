@@ -172,4 +172,4 @@
 	name = "moonlit gown"
 	desc = "A luxurious gown for VERY special occasions, this gown glitters with silver sewn into the very fabric itself."
 	icon_state = "stargown"
-	inhand_icon_state = "stargown"
+	inhand_icon_state = NULL
