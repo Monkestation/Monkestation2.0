@@ -41,20 +41,17 @@
 	action_cooldown = 2 MINUTES
 
 /datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(target) || is_station_level(target.z))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/turf/target_turf = get_turf(target)
 	var/obj/item/implant/radio/radio_implant = locate(/obj/item/implant/radio) in living_pawn.contents
 	if(!radio_implant)
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/message = "ALERT, [target] in need of help at coordinates: [target_turf.x], [target_turf.y], [target_turf.z]!"
 	radio_implant.radio.talk_into(living_pawn, message, RADIO_CHANNEL_SUPPLY)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/send_sos_message/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -65,15 +62,49 @@
 	operational_datums = null
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/minebot
 
-/datum/ai_behavior/basic_ranged_attack/minebot
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	avoid_friendly_fire = TRUE
-
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
-	if(!(living_pawn.istate & ISTATE_HARM)) //we are not on attack mode
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(QDELETED(target))
 		return
+	var/mob/living/living_pawn = controller.pawn
+	if(!living_pawn.combat_mode) //we are not on attack mode
+		return
+	controller.queue_behavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/minebot_maintain_distance/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(QDELETED(target))
+		return
+	var/mob/living/living_pawn = controller.pawn
+	if(get_dist(living_pawn, target) <= controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE])
+		controller.queue_behavior(/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot, BB_BASIC_MOB_CURRENT_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot
+
+/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+	if(!controller.blackboard[BB_MINEBOT_PLANT_MINES])
+		return ..()
+	var/datum/action/cooldown/mine_ability = controller.blackboard[BB_MINEBOT_LANDMINE_ABILITY]
+	mine_ability?.Trigger()
 	return ..()
+
+/datum/ai_behavior/basic_ranged_attack/minebot
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	avoid_friendly_fire = TRUE
+	///if our target is closer than this distance, finish action
+	var/minimum_distance = 3
+
+/datum/ai_behavior/basic_ranged_attack/minebot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+	. = ..()
+	minimum_distance = controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] ?  controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] : initial(minimum_distance)
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/mob/living/living_pawn = controller.pawn
+	if(get_dist(living_pawn, target) <= minimum_distance)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///mine walls if we are on automated mining mode
 /datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -107,24 +138,20 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/minebot_mine_turf/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(check_obstacles_in_path(controller, target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(!(living_pawn.istate & ISTATE_HARM))
 		living_pawn.set_combat_mode(TRUE)
 
 	living_pawn.RangedAttack(target)
-	finish_action(controller, TRUE, target_key)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/minebot_mine_turf/proc/check_obstacles_in_path(datum/ai_controller/controller, turf/target)
 	var/mob/living/source = controller.pawn
