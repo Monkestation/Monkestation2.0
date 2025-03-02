@@ -1413,10 +1413,11 @@
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
+		"ci-meson", //monkestation addition
 		"ci-nutriment",
+		"ci-pathohud", //monkestation addition
 		"ci-sechud",
 		"ci-welding",
-		"ci-meson", //monkestation addition
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

@@ -243,15 +243,15 @@
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector, // monkestation edit: cybernetics overhaul (useful job stuff)
-		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
+		/datum/job/scientist = /obj/item/organ/internal/cyberimp/eyes/fakehud/science, // monkestation edit: Science hud for the science lads.
 		/datum/job/security_assistant = /obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l, // monkestation edit: cybernetics for recently added job
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/signal_technician = /obj/item/organ/internal/cyberimp/arm/heater, // monkestation edit: Tcomms is cold
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
-		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
+		/datum/job/virologist = /obj/item/organ/internal/cyberimp/eyes/hud/pathology, // Monkestation edit: We made a hud! Get em to use it.
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
-		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: double trouble
+		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation addition: double trouble
 	)
 
 /datum/station_trait/cybernetic_revolution/New()

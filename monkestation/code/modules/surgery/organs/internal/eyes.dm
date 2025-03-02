@@ -110,4 +110,4 @@
 	eye_color_right = "0c4"
 	color_cutoffs = list(5, 15, 5)
 	sight_flags = SEE_TURFS
-	lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM

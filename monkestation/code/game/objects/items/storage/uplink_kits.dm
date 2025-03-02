@@ -227,7 +227,7 @@
 
 /obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
 	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
-	new /obj/item/autosurgeon/organ/syndicate/razorwire(src)
+	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
 
 /obj/item/storage/box/syndie_kit/esword/PopulateContents()
 	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
