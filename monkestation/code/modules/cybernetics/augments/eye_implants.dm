@@ -29,11 +29,13 @@
 			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 			hud.hide_from(eye_owner)
 		toggled_on = FALSE
+		to_chat(eye_owner, "You blink twice, toggling your [name] off.")
 	else
 		if(HUD_type)
 			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 			hud.show_to(eye_owner)
 		toggled_on = TRUE
+		to_chat(eye_owner, "You blink twice, toggling your [name] on.")
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
