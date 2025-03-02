@@ -469,11 +469,12 @@
 		"limbgrower",
 		"meta_beaker",
 		"ph_meter",
+		"medicalbed_emergency",
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
-		"surgical_gloves", //Monkestation Edit
+		"surgical_gloves", //Monkestation Addition
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
@@ -793,7 +794,6 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
-		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
