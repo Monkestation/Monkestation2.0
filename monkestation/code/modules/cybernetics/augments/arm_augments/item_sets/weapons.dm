@@ -98,7 +98,6 @@
 	name = "S.A.Y.A. arm defense system implants"
 	desc = "Shield blade implants that allow user to block upcoming attacks at the cost of mobility and offense."
 	items_to_create = list(/obj/item/mantis_blade/shield)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield/l
 	zone = BODY_ZONE_L_ARM
