@@ -19,6 +19,8 @@
 	var/seeds_per_cycle = 1
 	/// Time remaining until next seed is generated
 	var/time_remaining = 0
+	/// Timer ID for seed generation
+	var/generation_timer_id = null
 
 /obj/machinery/genesis_chamber/Initialize(mapload)
 	. = ..()
@@ -39,11 +41,9 @@
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		seeds_per_cycle += manipulator.tier - 1
 
-	// Reset the cooldown if the machine is active
+	// Reset the timer if the machine is active
 	if(on && has_core)
-		if(TIMER_COOLDOWN_CHECK(src, "seed_generation"))
-			S_TIMER_COOLDOWN_RESET(src, "seed_generation")
-		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
+		reset_generation_timer()
 
 /obj/machinery/genesis_chamber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -78,11 +78,17 @@
 	update_appearance()
 
 /obj/machinery/genesis_chamber/proc/calculate_time_remaining()
-	if(!on || !has_core || !TIMER_COOLDOWN_CHECK(src, "seed_generation"))
+	if(!on || !has_core || !generation_timer_id)
 		time_remaining = max_cooldown
 		return
 
-	time_remaining = S_TIMER_COOLDOWN_TIMELEFT(src, "seed_generation")
+	time_remaining = timeleft(generation_timer_id)
+
+/obj/machinery/genesis_chamber/proc/reset_generation_timer()
+	if(generation_timer_id)
+		deltimer(generation_timer_id)
+
+	generation_timer_id = addtimer(CALLBACK(src, PROC_REF(generate_seed)), max_cooldown, TIMER_STOPPABLE)
 
 /obj/machinery/genesis_chamber/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/assembly/signaler/anomaly/vortex))
@@ -118,36 +124,18 @@
 		to_chat(user, span_notice("You turn on [src]."))
 		playsound(loc, 'sound/machines/chime.ogg', 40, TRUE)
 		say("Activating... Seeds will be produced in [DisplayTimeText(max_cooldown)].")
-		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
-		START_PROCESSING(SSprocessing, src)
+		reset_generation_timer()
 	else
 		to_chat(user, span_notice("You turn off [src]."))
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		say("Deactivating...")
-		STOP_PROCESSING(SSprocessing, src)
-		if(TIMER_COOLDOWN_CHECK(src, "seed_generation"))
-			TIMER_COOLDOWN_END(src, "seed_generation")
+		if(generation_timer_id)
+			deltimer(generation_timer_id)
+			generation_timer_id = null
 		time_remaining = max_cooldown
 
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/genesis_chamber/process()
-	if(!on || !has_core)
-		return PROCESS_KILL
-
-	if(capacity >= max_capacity)
-		on = FALSE
-		say("Maximum capacity reached. Shutting down.")
-		playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
-		update_appearance()
-		return PROCESS_KILL
-
-	if(!TIMER_COOLDOWN_CHECK(src, "seed_generation"))
-		generate_seed()
-		S_TIMER_COOLDOWN_START(src, "seed_generation", max_cooldown)
-
-	return TRUE
 
 /obj/machinery/genesis_chamber/proc/generate_seed()
 	if(!on || !has_core || capacity >= max_capacity)
@@ -168,6 +156,9 @@
 
 	playsound(src, 'sound/machines/synth_yes.ogg', 30, TRUE)
 	update_appearance()
+
+	if(on && has_core && capacity < max_capacity)
+		reset_generation_timer()
 
 /obj/machinery/genesis_chamber/examine(mob/user)
 	. = ..()
@@ -218,6 +209,11 @@
 			new /obj/item/assembly/signaler/anomaly/vortex(drop_location())
 		return TRUE
 	return FALSE
+
+/obj/machinery/genesis_chamber/Destroy()
+	if(generation_timer_id)
+		deltimer(generation_timer_id)
+	return ..()
 
 /obj/machinery/genesis_chamber/proc/dump_seeds(amount = capacity)
 	var/turf/drop_loc = get_turf(src)
