@@ -164,7 +164,7 @@
 	name = "regal ball gown"
 	desc = "A delicate dress that's vastly worth more than it's weight in fabric. On top of that it smells great!"
 	icon_state = "rballgown"
-	inhand_icon_state = "rballgown"
+	inhand_icon_state = null
 	can_adjust = TRUE
 	flags_inv = HIDESHOES
 
