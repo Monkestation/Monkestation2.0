@@ -250,7 +250,8 @@
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	user.do_attack_animation(target_mob, used_item = src) // MONKESTATION EDIT: Okay so why the FUCK was an attack proc on *item* not passing the fucking *item* to this? WHY?!
-	target_mob.attacked_by(src, user)
+	if(!target_mob.attacked_by(src, user))
+		return TRUE
 
 	log_combat(user, target_mob, "attacked", src.name, "(ISTATE: [user.log_istate()]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
