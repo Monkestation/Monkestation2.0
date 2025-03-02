@@ -133,6 +133,16 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	item_path = /obj/item/clothing/shoes/sandal/gilded
 	item_cost = 5000
 
+/datum/store_item/shoes/angel
+	name = "Angel Boots"
+	item_path = /obj/item/clothing/shoes/angel
+	item_cost = 5000
+
+/datum/store_item/shoes/devil
+	name = "Devil Boots"
+	item_path = /obj/item/clothing/shoes/devil
+	item_cost = 5000
+
 /*
 *	JOB-RESTRICTED
 */
