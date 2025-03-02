@@ -323,7 +323,7 @@
 		rand_items += list(list("item" = i))
 
 
-/obj/item/toy/crayon/ui_data()
+/obj/item/toy/crayon/ui_data(mob/user) //monkestation "edit": makes the user arg be passed
 	var/static/list/crayon_drawables
 
 	if (!crayon_drawables)

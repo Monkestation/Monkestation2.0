@@ -171,7 +171,7 @@
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
 	item = /obj/item/gun/ballistic/automatic/plastikov
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, might need to make a version for gangs that costs more
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -179,7 +179,7 @@
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 70 //monkestation edit: from 0 to 70
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/foammachinegun
 	name = "Toy Machine Gun"
@@ -188,7 +188,7 @@
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 70 //monkestation edit: from 0 to 70
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
@@ -423,7 +423,7 @@
 	desc = "A cylindrical magazine designed for the PP-95 SMG."
 	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 1
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/mech/bag
@@ -519,7 +519,7 @@
 	item = /obj/item/grenade/spawnergrenade/manhacks
 	cost = 5
 	surplus = 35
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, make a gang variant
 
 /datum/uplink_item/dangerous/syndicat
 	name = "Syndie cat grenade"
@@ -669,7 +669,7 @@
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"
@@ -694,7 +694,7 @@
 			operatives in the fight, even while under fire. Don't cross the streams!"
 	item = /obj/item/gun/medbeam
 	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -703,7 +703,7 @@
 			for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, this is the cheap version so it should be ok
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -783,7 +783,7 @@
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
 	cost = 4
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/badass/costumes
 	surplus = 0
