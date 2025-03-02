@@ -25975,7 +25975,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cUl" = (
@@ -34364,6 +34363,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/breakroom)
 "gjk" = (
@@ -36605,7 +36605,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/breakroom)
 "hdW" = (
@@ -39340,6 +39339,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /turf/open/floor/iron/textured_half,
 /area/station/science/xenobiology)
 "idQ" = (
@@ -53069,6 +53069,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "nrS" = (
@@ -54338,7 +54339,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/breakroom)
 "nQw" = (
@@ -69835,6 +69835,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/breakroom)
 "tMf" = (
@@ -69954,6 +69955,7 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/breakroom)
 "tNV" = (
@@ -70334,6 +70336,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tXp" = (
@@ -71715,8 +71718,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "uBf" = (
-/obj/effect/landmark/start/scientist,
-/turf/open/floor/iron/white/textured,
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 1
+	},
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "uBg" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -74019,6 +74025,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/breakroom)
 "vxb" = (
@@ -123987,9 +123994,9 @@ dEX
 msK
 cnz
 kay
-lHY
-sin
 uBf
+sin
+xIW
 wzb
 cnz
 tqG

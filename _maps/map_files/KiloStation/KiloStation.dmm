@@ -9477,7 +9477,6 @@
 	name = "Xenobiology Lab"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
-/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
@@ -24329,8 +24328,9 @@
 /obj/machinery/button/door{
 	id = "Xenolab";
 	name = "Containment Chamber Toggle";
-	pixel_y = 4;
-	req_access = list("xenobiology")
+	pixel_y = 0;
+	req_access = list("xenobiology");
+	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/cable,
@@ -24339,6 +24339,11 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/button/ignition{
+	id = "Xenobio";
+	pixel_x = -6;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
@@ -25399,20 +25404,19 @@
 /turf/closed/wall,
 /area/station/medical/abandoned)
 "hRv" = (
-/obj/structure/table/reinforced/plasmarglass,
 /obj/machinery/camera/directional/west{
 	c_tag = "Xenobiology Cell 2";
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno");
 	dir = 1
 	},
-/obj/item/toy/plush/lizard_plushie,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "hRB" = (
@@ -43954,6 +43958,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"nHi" = (
+/obj/machinery/sparker/directional/north{
+	id = "Xenobio"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "nHv" = (
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/closed/wall/r_wall,
@@ -50585,7 +50595,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "pQh" = (
@@ -53270,6 +53279,13 @@
 "qIE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
+/area/station/science/xenobiology)
+"qIG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "qIR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -62252,7 +62268,7 @@
 /area/station/maintenance/abandon_wrestle)
 "tyx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "tyI" = (
@@ -62481,8 +62497,8 @@
 /area/station/maintenance/department/cargo)
 "tCH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/scientist,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "tCQ" = (
@@ -71487,7 +71503,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "wpM" = (
@@ -71702,6 +71718,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "wsX" = (
@@ -76277,12 +76294,13 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "xTF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/scientist,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/carpet/neon/simple/green,
 /area/station/science/xenobiology)
 "xTG" = (
 /turf/closed/wall,
@@ -113953,7 +113971,7 @@ vJc
 yal
 xHA
 bwn
-nTK
+qIG
 rhE
 mrL
 qmW
@@ -114210,7 +114228,7 @@ vJc
 ixb
 xHA
 bwn
-xTF
+nJj
 rhE
 mrL
 qmW
@@ -115744,7 +115762,7 @@ aeU
 aeu
 aeu
 vJc
-qmW
+nHi
 oQl
 qmW
 vJc
@@ -116284,7 +116302,7 @@ xHa
 oYp
 qmW
 qmW
-ccu
+xTF
 paV
 wuc
 jOZ
