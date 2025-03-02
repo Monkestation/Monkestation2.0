@@ -154,6 +154,11 @@
 	additional_radio = /obj/item/encryptionkey/headset_med
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
+/datum/outfit/centcom/ert/generic/medical/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/serverlink = new()
+	serverlink.Insert(H, drop_if_replaced = FALSE)
+
 /datum/antagonist/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
 	outfit = /datum/outfit/centcom/ert/generic/medical
@@ -207,7 +212,7 @@
 	surgery_toolset.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/eyes/hud/medical/med_hud = new()
 	med_hud.Insert(H, drop_if_replaced = FALSE)
-	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/serverlink = new()
+	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt/serverlink = new()
 	serverlink.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/security
