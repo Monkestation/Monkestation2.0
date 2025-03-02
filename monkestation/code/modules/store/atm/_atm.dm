@@ -22,6 +22,7 @@
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 
 /obj/machinery/atm/Initialize(mapload)
+	return INITIALIZE_HINT_QDEL
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!lottery_running)
@@ -147,6 +148,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 		say("Item successfully purchased.")
 
 /obj/machinery/atm/proc/attempt_withdraw()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	var/mob/living/living_user = usr
 	if(!living_user)
 		return
@@ -188,6 +191,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 
 /obj/machinery/atm/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	if(do_after(user, 1 SECONDS, src))
 		if(istype(attacking_item, /obj/item/stack/monkecoin))
 			var/obj/item/stack/monkecoin/attacked_coins = attacking_item

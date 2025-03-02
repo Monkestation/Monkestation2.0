@@ -1,5 +1,7 @@
 /client/var/lootbox_prompt = FALSE
 /client/proc/try_open_or_buy_lootbox()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	if(!prefs)
 		return
 	if(lootbox_prompt)
@@ -11,6 +13,8 @@
 		open_lootbox()
 
 /client/proc/buy_lootbox()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	if(!prefs)
 		lootbox_prompt = FALSE
 		return
@@ -27,6 +31,8 @@
 			return
 
 /client/proc/attempt_lootbox_buy()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	if(!prefs.has_coins(LOOTBOX_COST))
 		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
 		lootbox_prompt = FALSE
@@ -37,6 +43,8 @@
 	prefs.save_preferences()
 
 /client/proc/open_lootbox()
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	message_admins("[ckey] opened a lootbox!")
 	logger.Log(LOG_CATEGORY_META, "[src] has opened a lootbox!", list("currency_left" = prefs.metacoins))
 	log_game("[ckey] opened a lootbox!")

@@ -140,6 +140,8 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 ///adjusts the users tokens, yes they can be in antag token debt
 /datum/meta_token_holder/proc/adjust_antag_tokens(tier, amount)
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	var/list/old_token_values = list(HIGH_THREAT = total_high_threat_tokens, MEDIUM_THREAT = total_medium_threat_tokens, LOW_THREAT = total_low_threat_tokens)
 	switch(tier)
 		if(HIGH_THREAT)

@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 
 
 /proc/attempt_redeem(code)
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
 	if(code in GLOB.redeemed_codes)
 		tgui_alert(usr, "Sorry the code you've tried to redeem has already been redeemed", "Code Redemption", list("Close"))
 	if(!(code in GLOB.stored_codes))

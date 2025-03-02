@@ -120,6 +120,10 @@
 	icon = 'goon/icons/obj/large_storage.dmi'
 	icon_state = "attachecase-old"
 
+/obj/item/lootbox/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/lootbox/attack_self(mob/user, modifiers)
 	. = ..()
 	user.trigger_lootbox_on_self()
