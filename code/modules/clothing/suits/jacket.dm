@@ -151,3 +151,4 @@
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	icon_state = "starjacket"
+	inhand_icon_state = null

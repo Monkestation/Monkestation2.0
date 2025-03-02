@@ -159,6 +159,7 @@
 	icon_state = "butleruni"
 	inhand_icon_state = "butleruni"
 	can_adjust = TRUE
+	inhand_icon_state = null
 
 /obj/item/clothing/under/suit/fancysuit
 	name = "black silk suit"
