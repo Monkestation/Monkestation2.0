@@ -75,3 +75,6 @@
 					RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/obj/item/organ/internal/cyberimp/arm/item_set/gun/taser
+/obj/item/organ/internal/cyberimp/arm/item_set/flash

@@ -105,6 +105,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/detective
 	name = "detective's toolset implant"
 	desc = "A set of detective tools hidden behind a concealed panel on the user's arm."
+	icon_state = "toolkit_detective"
 	items_to_create = list(
 		/obj/item/evidencebag,
 		/obj/item/evidencebag,
@@ -128,7 +129,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/paramedic
 	name = "paramedic toolset implant"
 	desc = "A set of rescue tools hidden behind a concealed panel on the user's arm."
-	icon_state = "toolkit_surgical"
+	icon_state = "toolkit_paramedic"
 	items_to_create = list(
 		/obj/item/emergency_bed/silicon,
 		/obj/item/sensor_device,
@@ -139,7 +140,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
 	desc = "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
-	icon_state = "toolkit_engineering"
+	icon_state = "toolkit_atmosph"
 	items_to_create = list(
 		/obj/item/extinguisher,
 		/obj/item/analyzer,
@@ -151,6 +152,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/combat
 	name = "officer toolset implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
+	icon_state = "toolkit_security"
 	items_to_create = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/melee/baton,
