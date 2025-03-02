@@ -109,15 +109,17 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(islist(soundin))
 		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
 
-	var/turf/turf_source = get_turf(source)
-
-	if (!turf_source || !soundin || !vol)
-		return
+	if(!soundin)
+		CRASH("playsound(): no soundin passed")
 
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
 
 	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		CRASH("playsound(): volume below SOUND_AUDIBLE_VOLUME_MIN. [vol] < [SOUND_AUDIBLE_VOLUME_MIN]")
+
+	var/turf/turf_source = get_turf(source)
+	if (!turf_source)
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
