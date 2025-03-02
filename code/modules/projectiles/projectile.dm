@@ -215,6 +215,10 @@
 	var/debilitating = FALSE
 	/// How many stacks the projectile applies per hit. Default is 1, each stack adds 0.05, it stacks up to 2x stamina damage
 	var/debilitate_mult = 1
+	/// If true, can damage walls
+	var/can_hit_walls = FALSE //monkestation edit
+	/// damage modifier on wall hits
+	var/wall_mod = 1 //monkestation edit
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -294,11 +298,19 @@
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
-		if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
+
+		//monkestation edit start
+		if(iswallturf(target_turf))
 			var/turf/closed/wall/target_wall = target_turf
-			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
+			if(can_hit_walls == TRUE)
+				target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
+				target_wall.damage_wall(damage * wall_mod)
+				return BULLET_ACT_HIT
+			if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && prob(75))
+				target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 
 		return BULLET_ACT_HIT
+		//monkestation edit end
 
 	var/mob/living/living_target = target
 
