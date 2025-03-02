@@ -1416,6 +1416,7 @@
 		"ci-nutriment",
 		"ci-sechud",
 		"ci-welding",
+		"ci-meson", //monkestation addition
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

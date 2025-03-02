@@ -102,3 +102,11 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+
+/obj/item/organ/internal/eyes/robotic/meson
+	name = "thermal eyes"
+	desc = "These cybernetic eye implants allow you to see the structural layout of your surroundings."
+	eye_color_left = "0c4"
+	eye_color_right = "0c4"
+	color_cutoffs = list(5, 15, 5)
+	sight_flags = SEE_TURFS

@@ -119,3 +119,16 @@
 	id = "surgery_dna_recovery"
 	surgery = /datum/surgery/advanced/dna_recovery
 	research_icon_state = "surgery_head"
+
+/datum/design/cyberimp_meson
+	name = "Meson Eyes"
+	desc = "These cybernetic eyes will give you meson vision. Never wonder where the kitchen is again."
+	id = "ci-meson"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
+	build_path = /obj/item/organ/internal/eyes/robotic/meson
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
