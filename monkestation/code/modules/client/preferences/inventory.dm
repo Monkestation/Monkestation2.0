@@ -31,6 +31,7 @@
 
 
 /datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces = TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
+	return FALSE
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 

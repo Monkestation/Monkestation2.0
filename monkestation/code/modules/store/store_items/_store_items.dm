@@ -16,6 +16,9 @@
 
 
 /datum/store_item/proc/attempt_purchase(client/buyer)
+	to_chat(src, span_alertwarning("All economy related features are disabled"))
+	return
+
 	var/datum/preferences/buyers_preferences = buyer.prefs
 
 	if(item_path in buyers_preferences.inventory)
