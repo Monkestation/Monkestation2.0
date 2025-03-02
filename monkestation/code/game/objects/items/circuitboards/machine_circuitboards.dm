@@ -102,6 +102,19 @@
 		/datum/stock_part/manipulator = 1,
 	)
 
+/obj/item/circuitboard/machine/genesis_chamber
+	name = "Genesis Chamber (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/genesis_chamber
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/manipulator = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+	)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+
 /obj/item/circuitboard/machine/splicer
 	name = "Splicer (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
