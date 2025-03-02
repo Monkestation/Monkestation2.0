@@ -125,7 +125,7 @@
 	can_adjust = TRUE
 
 /obj/item/clothing/under/dress/white
-	name = "white dress"
+	name = "gaudy white dress"
 	desc = "A simple easy to wear dress for when you're in a rush but still want to look good."
 	icon_state = "whitedress"
 	inhand_icon_state = "whitedress"
