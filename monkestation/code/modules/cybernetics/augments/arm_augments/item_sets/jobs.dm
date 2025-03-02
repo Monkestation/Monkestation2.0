@@ -50,9 +50,11 @@
 	balloon_alert(user, "integrated knife unlocked")
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
+
 /obj/item/organ/internal/cyberimp/arm/item_set/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 	items_to_create = list(
 		/obj/item/retractor/augment,
 		/obj/item/hemostat/augment,
