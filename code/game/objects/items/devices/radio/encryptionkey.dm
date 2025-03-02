@@ -198,7 +198,7 @@
 /obj/item/encryptionkey/headset_cent/crew
 	desc = "An encryption key for a radio headset. It looks like there is a bluespace chip attached to it."
 
-/obj/item/encryptionkey/headset_cent/crew/Initialize()
+/obj/item/encryptionkey/headset_cent/crew/Initialize(mapload)
 	. = ..()
 	GLOB.crew_cc_keys += src
 
