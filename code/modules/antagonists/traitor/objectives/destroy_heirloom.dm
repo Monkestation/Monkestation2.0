@@ -37,7 +37,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(3, 4) //MONKESTATION EDIT ORG: 1, 2
 	target_jobs = list(
 		// Medical
 		/datum/job/doctor,
@@ -73,7 +73,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(4, 5) //MONKESTATION EDIT ORG: 1, 2
 	target_jobs = list(
 		// Cargo
 		/datum/job/quartermaster,
@@ -92,7 +92,7 @@
 	/// 60 minutes in, syndicate won't care about rare heirlooms anymore
 	progression_maximum = 60 MINUTES
 	progression_reward = list(10 MINUTES, 14 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(5, 6) //MONKESTATION EDIT ORG: 2, 3
 	target_jobs = list(
 		// Security
 		/datum/job/security_officer,
@@ -107,7 +107,7 @@
 /datum/traitor_objective/destroy_heirloom/captain
 	progression_minimum = 30 MINUTES
 	progression_reward = list(10 MINUTES, 14 MINUTES)
-	telecrystal_reward = 4
+	telecrystal_reward = list(6, 7) //MONKESTATION EDIT ORG: 4
 	target_jobs = list(
 		/datum/job/head_of_security,
 		/datum/job/captain

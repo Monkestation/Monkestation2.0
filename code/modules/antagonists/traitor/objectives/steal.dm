@@ -68,7 +68,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	/// The current target item that we are stealing.
 	var/datum/objective_item/steal/target_item
 	/// A list of 2 elements, which contain the range that the time will be in. Represented in minutes.
-	var/hold_time_required = list(5, 15)
+	var/hold_time_required = list(5, 10) //MONKESTATION EDIT ORG: 5, 15
 	/// The current time fulfilled around the item
 	var/time_fulfilled = 0
 	/// The maximum distance between the bug and the objective taker for time to count as fulfilled
@@ -91,11 +91,11 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	progression_minimum = 10 MINUTES
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 0
+	telecrystal_reward = 1 //MONKESTATION EDIT ORG: 0
 	minutes_per_telecrystal = 6
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/cargo_budget,
+		//datum/objective_item/steal/traitor/cargo_budget, MONKESTATION EDIT MOVED TO SOMEWHAT RISKY
 		/datum/objective_item/steal/traitor/clown_shoes,
 		/datum/objective_item/steal/traitor/lawyers_badge,
 		/datum/objective_item/steal/traitor/chef_moustache,
@@ -109,7 +109,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	telecrystal_reward = 2
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/chief_engineer_belt
+		/datum/objective_item/steal/traitor/chief_engineer_belt,
+		/datum/objective_item/steal/traitor/cargo_budget, //MONKESTATION ADDITION
 	)
 
 /datum/traitor_objective/steal_item/very_risky
