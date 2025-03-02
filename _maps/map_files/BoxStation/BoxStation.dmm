@@ -54772,10 +54772,8 @@
 	dir = 10
 	},
 /obj/machinery/newscaster/directional/west,
-/obj/structure/chair/sofa/corp/right{
-	dir = 4
-	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rQA" = (
@@ -57908,10 +57906,7 @@
 	},
 /obj/machinery/light/small/directional/west,
 /obj/item/radio/intercom/directional/west,
-/obj/structure/chair/sofa/corp{
-	dir = 4
-	},
-/obj/effect/landmark/start/assistant,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "sUK" = (
@@ -69803,10 +69798,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/chair/sofa/corp/left{
-	dir = 4
-	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "wDy" = (
