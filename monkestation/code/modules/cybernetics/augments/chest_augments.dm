@@ -654,3 +654,67 @@
 		)
 		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
+
+/obj/item/organ/internal/cyberimp/chest/immobilization
+	name = "Immobilization implant"
+	desc = "Implant inserted into one's spine to prevent them leaving certain space, and will permamently immobilize them if they do. Do not attempt removal."
+	encode_info = AUGMENT_NO_REQ
+	///starting z of when it was inserted, also counts as a zlvl that a person can't leave
+	var/z_restriction = null
+	///our timer
+	var/activation_timer = 15
+	///determines if the implant is set off
+	var/set_off = FALSE
+	//ticking of timer
+	var/ticking = FALSE
+
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_insert(mob/living/carbon/owner)
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	z_restriction = owner_turf.z
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(z_check))
+
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_remove(mob/living/carbon/owner)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(z_check))
+	//so deleting the implant doesn't actually explode the owner
+	if(QDELETED(src))
+		//if the target was paralyzed, remove it
+		if(set_off)
+			owner.remove_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
+		return
+	//no removing implant!
+	playsound(owner, 'sound/machines/beep.ogg', 50, FALSE)
+	explosion(owner, 1, 2, 4, 2, explosion_cause = src)
+
+/obj/item/organ/internal/cyberimp/chest/immobilization/emp_act(severity)
+	return
+
+/obj/item/organ/internal/cyberimp/chest/immobilization/on_life()
+	. = ..()
+	if (set_off || !ticking)
+		return
+	if (activation_timer != 0)
+		to_chat(owner, span_warning("Implant will immobilize you in [activation_timer] seconds. Please, return to the bounds."))
+		activation_timer -= 1
+		playsound(owner, 'sound/items/timer.ogg', 50, FALSE)
+	else
+		to_chat(owner, span_userdanger("FUCK!!!!!"))
+		playsound(owner, 'sound/effects/snap.ogg', 75)
+		playsound(owner, 'sound/effects/splat.ogg', 50)
+		owner.emote("scream")
+		owner.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
+		owner.cause_pain(list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), 60, BRUTE)
+		set_off = TRUE
+
+/obj/item/organ/internal/cyberimp/chest/immobilization/proc/z_check()
+	SIGNAL_HANDLER
+	var/turf/owner_turf = get_turf(owner)
+	if (z_restriction == owner_turf.z)
+		//reset the timer if it started ticking
+		if (activation_timer != initial(activation_timer))
+			activation_timer = initial(activation_timer)
+			ticking = FALSE
+		return
+	else
+		ticking = TRUE
