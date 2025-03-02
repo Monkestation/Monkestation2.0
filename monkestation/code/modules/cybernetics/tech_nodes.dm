@@ -28,6 +28,7 @@
 		"ci-set-atmospherics",
 		"ci-set-botany",
 		"ci-set-mining",
+		"ci-set-barber",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
