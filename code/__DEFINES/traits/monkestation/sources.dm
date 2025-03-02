@@ -34,3 +34,5 @@
 #define TRAIT_SLASHER "slasher_trait"
 /// Source trait for zombies
 #define ZOMBIE_TRAIT "zombie_trait"
+/// Traits inhierited by cybernetics
+#define CYBERNETIC_TRAIT "cybernetic_trait"
