@@ -1,6 +1,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 	name = "Power Cord Implant"
 	desc = "An internal power cord hooked up to a battery. Useful if you run on volts."
+	icon_state = "toolkit_ipc"
 	contents = newlist(/obj/item/apc_powercord)
 	zone = "l_arm"
 	encode_info = AUGMENT_NT_LOWLEVEL

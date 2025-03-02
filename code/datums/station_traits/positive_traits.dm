@@ -209,6 +209,7 @@
 	var/static/list/job_to_cybernetic = list(
 		/datum/job/assistant = /obj/item/organ/internal/cyberimp/leg/table_glider, /obj/item/organ/internal/cyberimp/leg/table_glider/l,// monkestation edit: The greytide begins...
 		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics, // monkestation edit: cybernetics overhaul (useful job stuff)
+		/datum/job/barber = /obj/item/organ/internal/cyberimp/arm/item_set/barber, // Monkestation addition:
 		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
 		/datum/job/blueshield = /obj/item/organ/internal/cyberimp/arm/ammo_counter, // monkestation edit: cybernetics for recently added job
@@ -225,6 +226,7 @@
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook, // monkestatoin edit: Give the toolarm some use, plus they should be cooking evenways!
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
+		/datum/job/explorer = /obj/item/organ/internal/eyes/robotic/meson, //Monkestation addition:
 		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun, //monkestation edit: Hard to keep gozilla down.
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.

@@ -169,3 +169,8 @@
 /obj/item/autosurgeon/organ/chemvat
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/chemvat
 
+/obj/item/autosurgeon/organ/syndicate/deepvien
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs
+
+/obj/item/autosurgeon/organ/syndicate/deepvien/l
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs/l

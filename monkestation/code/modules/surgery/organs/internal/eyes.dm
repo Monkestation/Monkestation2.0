@@ -104,7 +104,7 @@
 
 
 /obj/item/organ/internal/eyes/robotic/meson
-	name = "thermal eyes"
+	name = "meson eyes"
 	desc = "These cybernetic eye implants allow you to see the structural layout of your surroundings."
 	eye_color_left = "0c4"
 	eye_color_right = "0c4"

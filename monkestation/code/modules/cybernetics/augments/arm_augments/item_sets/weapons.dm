@@ -46,12 +46,14 @@
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
+	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	items_to_create = list(/obj/item/gun/medbeam)
 	encode_info = AUGMENT_TG_LEVEL
+	icon_state = "toolkit_surgical"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/flash
 	name = "integrated high-intensity photon projector" //Why not
@@ -108,6 +110,7 @@
 	items_to_create = list(/obj/item/mantis_blade/syndicate)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
+	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
 	zone = BODY_ZONE_L_ARM

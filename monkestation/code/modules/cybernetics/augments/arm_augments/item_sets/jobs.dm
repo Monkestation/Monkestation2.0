@@ -79,6 +79,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/janitor
 	name = "janitorial toolset implant"
 	desc = "A set of janitorial tools hidden behind a concealed panel on the user's arm."
+	icon_state = "toolkit_janitor"
 	items_to_create = list(
 		/obj/item/lightreplacer,
 		/obj/item/holosign_creator,
@@ -127,6 +128,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/paramedic
 	name = "paramedic toolset implant"
 	desc = "A set of rescue tools hidden behind a concealed panel on the user's arm."
+	icon_state = "toolkit_surgical"
 	items_to_create = list(
 		/obj/item/emergency_bed/silicon,
 		/obj/item/sensor_device,
@@ -137,6 +139,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
 	desc = "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
+	icon_state = "toolkit_engineering"
 	items_to_create = list(
 		/obj/item/extinguisher,
 		/obj/item/analyzer,
@@ -177,6 +180,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/botany
 	name = "botany arm implant"
 	desc = "A rather simple arm implant containing tools used in gardening and botanical research."
+	icon_state = "toolkit_hydro"
 	items_to_create = list(
 		/obj/item/cultivator,
 		/obj/item/shovel/spade,
@@ -189,3 +193,15 @@
 	)
 	encode_info = AUGMENT_NT_LOWLEVEL
 
+/obj/item/organ/internal/cyberimp/arm/item_set/barber
+	name = "barber toolset implant"
+	desc = "A set of barber tools hidden behind a concealed panel on the user's arm."
+	items_to_create = list(
+		/obj/item/razor,
+		/obj/item/hairbrush/comb,
+		/obj/item/scissors,
+		/obj/item/reagent_containers/spray/quantum_hair_dye,
+		/obj/item/fur_dyer,
+		/obj/item/dyespray,
+	)
+	encode_info = AUGMENT_NT_LOWLEVEL
