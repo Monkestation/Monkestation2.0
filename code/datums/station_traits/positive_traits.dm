@@ -225,7 +225,7 @@
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook, // monkestatoin edit: Give the toolarm some use, plus they should be cooking evenways!
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
-		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
+		/datum/job/detective = /obj/item/organ/internal/cyberimp/arm/item_set/detective, // Monkestation Edit: Dectives toolset.
 		/datum/job/explorer = /obj/item/organ/internal/eyes/robotic/meson, //Monkestation addition:
 		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun, //monkestation edit: Hard to keep gozilla down.
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,

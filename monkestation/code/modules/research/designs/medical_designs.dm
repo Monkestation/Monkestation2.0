@@ -149,7 +149,7 @@
 /datum/design/cyberimp_science_hud
 	name = "Science HUD Implant"
 	desc = "These cybernetic eyes will reveal the molecular makeup of items upon inspection."
-	id = "ci-diaghud"
+	id = "ci-scihud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)

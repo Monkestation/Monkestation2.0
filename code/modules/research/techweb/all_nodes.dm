@@ -1416,6 +1416,7 @@
 		"ci-meson", //monkestation addition
 		"ci-nutriment",
 		"ci-pathohud", //monkestation addition
+		"ci-scihud",
 		"ci-sechud",
 		"ci-welding",
 	)
