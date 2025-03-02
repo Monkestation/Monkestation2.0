@@ -166,5 +166,4 @@
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	icon_state = "starsuit"
-	inhand_icon_state = NULL
 	can_adjust = FALSE
