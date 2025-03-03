@@ -61,10 +61,10 @@
 		if (speak_sound == null)
 			speak_sound = vocal_bark.talk
 		for(var/mob/M in short_hearers)
-			M.playsound_local(src, speak_sound, 300, 1, sound_range, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(range), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			M.playsound_local(src, speak_sound, 300, FALSE, 1, sound_range, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(range), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
 	// long
-	if (hearers.len)
+	if (long_hearers.len)
 		long_bark(long_hearers, sound_range, volume, is_yell, LAZYLEN(message))
 
 /atom/movable/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len)
@@ -86,4 +86,6 @@
 	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
+		M.playsound_local(T, soundin=talk_sound)
+		// M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
+	// playsound(src, talk_sound, 50, FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)

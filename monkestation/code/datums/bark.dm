@@ -8,6 +8,30 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 
 		bark_list[bark.name] = bark
 
+	var/goon_sounds = list(
+		"bulb",
+		"buwoo",
+		"cow",
+		"cyborg",
+		"lizard",
+		"pug",
+		"pugg",
+		"roach",
+		"skelly",
+		"speak_1",
+		"speak_2",
+		"speak_3",
+		"speak_4",
+	)
+
+	for (var/name in goon_sounds)
+		var/datum/bark_voice/bark = new
+		bark.name = name
+		bark.talk = "goon/sounds/misc/talk/" + name + ".ogg"
+		bark.ask_beep = "goon/sounds/misc/talk/" + name + "_ask.ogg"
+		bark.exclaim_beep = "goon/sounds/misc/talk/" + name + "_exclaim.ogg"
+		bark_list["goon/" + bark.name] = bark
+
 	return bark_list
 
 //Datums for barks and bark accessories
@@ -40,29 +64,29 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 	var/sound/ask_beep = null
 	var/sound/exclaim_beep = null
 
-/datum/bark_voice/talk_1
-	name = "Talk 1"
-	talk = sound('goon/sounds/misc/talk/speak_1.ogg')
-	ask_beep = sound('goon/sounds/misc/talk/speak_1_ask.ogg')
-	exclaim_beep = sound('goon/sounds/misc/talk/speak_1_exclaim.ogg')
+// /datum/bark_voice/talk_1
+// 	name = "Talk 1"
+// 	talk = sound('goon/sounds/misc/talk/speak_1.ogg')
+// 	ask_beep = sound('goon/sounds/misc/talk/speak_1_ask.ogg')
+// 	exclaim_beep = sound('goon/sounds/misc/talk/speak_1_exclaim.ogg')
 
-/datum/bark_voice/talk_2
-	name = "Talk 2"
-	talk = sound('goon/sounds/misc/talk/speak_2.ogg')
-	ask_beep = sound('goon/sounds/misc/talk/speak_2_ask.ogg')
-	exclaim_beep = sound('goon/sounds/misc/talk/speak_2_exclaim.ogg')
+// /datum/bark_voice/talk_2
+// 	name = "Talk 2"
+// 	talk = sound('goon/sounds/misc/talk/speak_2.ogg')
+// 	ask_beep = sound('goon/sounds/misc/talk/speak_2_ask.ogg')
+// 	exclaim_beep = sound('goon/sounds/misc/talk/speak_2_exclaim.ogg')
 
-/datum/bark_voice/talk_3
-	name = "Talk 3"
-	talk = sound('goon/sounds/misc/talk/speak_3.ogg')
-	ask_beep = sound('goon/sounds/misc/talk/speak_3_ask.ogg')
-	exclaim_beep = sound('goon/sounds/misc/talk/speak_3_exclaim.ogg')
+// /datum/bark_voice/talk_3
+// 	name = "Talk 3"
+// 	talk = sound('goon/sounds/misc/talk/speak_3.ogg')
+// 	ask_beep = sound('goon/sounds/misc/talk/speak_3_ask.ogg')
+// 	exclaim_beep = sound('goon/sounds/misc/talk/speak_3_exclaim.ogg')
 
-/datum/bark_voice/talk_4
-	name = "Talk 4"
-	talk = sound('goon/sounds/misc/talk/speak_4.ogg')
-	ask_beep = sound('goon/sounds/misc/talk/speak_4_ask.ogg')
-	exclaim_beep = sound('goon/sounds/misc/talk/speak_4_exclaim.ogg')
+// /datum/bark_voice/talk_4
+// 	name = "Talk 4"
+// 	talk = sound('goon/sounds/misc/talk/speak_4.ogg')
+// 	ask_beep = sound('goon/sounds/misc/talk/speak_4_ask.ogg')
+// 	exclaim_beep = sound('goon/sounds/misc/talk/speak_4_exclaim.ogg')
 
 /*
 // So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
