@@ -18,6 +18,16 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
+	//MONKESTATION EDIT START
+	/// Time unsecured (seconds).
+	var/unsecured_time = 0
+	/// Can junior OPs trigger from the disk being unsecure?
+	var/can_trigger_junior_operative = FALSE
+	/// Unsecured time for ghosts
+	var/obj/effect/countdown/nukedisk/unsecured_timer
+	/// Junior Operative Trigger Time
+	var/junior_lone_operative_trigger_time
+	//MONKESTATION EDIT STOP
 
 /datum/armor/disk_nuclear
 	bomb = 30
@@ -32,24 +42,39 @@
 	if(!fake)
 		AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)), CALLBACK(src, PROC_REF(unsecured_process)))
 		SSpoints_of_interest.make_point_of_interest(src)
+		//MONKESTATION EDIT START
+		unsecured_timer = new(src)
+		unsecured_timer.start()
+		junior_lone_operative_trigger_time = (15 + rand(-5, 5)) * 60 //15 minutes + -5 to 5 minutes
+		can_trigger_junior_operative = TRUE
+		GLOB.nuke_disk_list += src
+		//MONKESTATION EDIT STOP
 	else
 		AddComponent(/datum/component/keep_me_secure)
 
 /obj/item/disk/nuclear/proc/secured_process(last_move)
 	var/turf/new_turf = get_turf(src)
 	var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
-	if(istype(loneop) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
+	var/datum/round_event_control/operative/loneopmode = locate(/datum/round_event_control/operative) in SSgamemode.control
+	if((istype(loneop) && istype(loneopmode)) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
 		loneop.weight = max(loneop.weight - 1, 1) //monkestation edit: increased minimum to 1
-		loneop.checks_antag_cap = (loneop.weight < 3)
+		loneopmode.checks_antag_cap = (loneop.weight < 3)
 		if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 			message_admins("[src] is secured (currently in [ADMIN_VERBOSEJMP(new_turf)]). The weight of Lone Operative is now [loneop.weight].")
 		log_game("[src] being secured has reduced the weight of the Lone Operative event to [loneop.weight].")
+	//MONKESTATION EDIT START
+	unsecured_time = 0
+	//MONKESTATION EDIT STOP
 
 /obj/item/disk/nuclear/proc/unsecured_process(last_move)
 	var/turf/new_turf = get_turf(src)
 	/// How comfy is our disk?
 	var/disk_comfort_level = 0
-
+	//MONKESTATION EDIT START
+	unsecured_time += 1
+	if(unsecured_time == junior_lone_operative_trigger_time && can_trigger_junior_operative)
+		spawn_op()
+	//MONKESTATION EDIT STOP
 	//Go through and check for items that make disk comfy
 	for(var/obj/comfort_item in loc)
 		if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
@@ -57,8 +82,9 @@
 
 	if(last_move < world.time - 300 SECONDS && prob((world.time - 300 SECONDS - last_move)*0.0001)) //monkestation edit: weight will start increasing at 5 minutes unsecure, rather than 8.3
 		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
-		if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
-			loneop.checks_antag_cap = (loneop.weight < 3)
+		var/datum/round_event_control/operative/loneopmode = locate(/datum/round_event_control/operative) in SSgamemode.control
+		if((istype(loneop) && istype(loneopmode)) && loneop.occurrences < loneop.max_occurrences)
+			loneopmode.checks_antag_cap = (loneop.weight < 3)
 			loneop.weight += 1
 			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 				if(disk_comfort_level >= 2)
@@ -116,6 +142,16 @@
 	user.visible_message(span_suicide("[user] is destroyed by the nuclear blast!"))
 	user.adjustOxyLoss(200)
 	user.death(FALSE)
+
+//MONKESTATION EDIT START
+/obj/item/disk/nuclear/Destroy()
+	QDEL_NULL(unsecured_timer)
+	if(src in GLOB.nuke_disk_list)
+		GLOB.nuke_disk_list -= src
+	return ..()
+/obj/item/disk/nuclear/proc/spawn_op()
+	force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
+//MONKESTATION EDIT STOP
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE
