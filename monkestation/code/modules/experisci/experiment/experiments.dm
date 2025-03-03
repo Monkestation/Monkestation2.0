@@ -23,7 +23,7 @@
 /datum/experiment/scanning/random/bot_scan
 	name = "Bot Scan Analysis"
 	description = "Central is curious at the potential of replacing the workforce with robots. Create a few and begin the replacement of your coworkers."
-	total_requirement = 3
+	total_requirement = 2
 	possible_types = list(/mob/living/simple_animal/bot/vibebot, /mob/living/basic/bot/hygienebot, /mob/living/basic/bot/cleanbot/medbay/jr, /mob/living/simple_animal/bot/firebot,)
 
 /datum/experiment/scanning/random/money
@@ -38,7 +38,8 @@
 	name = "Modular Suit Analysis"
 	description = "We're interested in promoting modular suit efforts in the sector. Run stresstests on the creations and we'll provide a research grant."
 	required_points = 6
-	required_atoms = list(/obj/item/mod/control/pre_equipped/cosmohonk = 2, //One's that can be created but also show roundstart are worth less.
+	required_atoms = list(
+		/obj/item/mod/control/pre_equipped/cosmohonk = 2, //One's that can be created but also show roundstart are worth less.
 		/obj/item/mod/control/pre_equipped/standard = 2,
 		/obj/item/mod/control/pre_equipped/security = 1,
 		/obj/item/mod/control/pre_equipped/engineering = 1,

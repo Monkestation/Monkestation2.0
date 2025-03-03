@@ -379,6 +379,9 @@
 /datum/techweb_node/explosive_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = 1500)
 
+/datum/techweb_node/ai_basic
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 500)
+
 /datum/techweb_node/ai_adv
 	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 2000)
 
