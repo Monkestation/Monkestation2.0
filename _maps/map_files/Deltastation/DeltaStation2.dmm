@@ -849,7 +849,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/station/engineering/shipbreaker_hut)
 "ajG" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -9858,9 +9858,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"ckI" = (
-/turf/closed/wall,
-/area/space)
 "ckP" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -12071,9 +12068,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/station/service/theater)
-"cMz" = (
-/turf/open/floor/iron,
-/area/space)
 "cMA" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
@@ -43308,7 +43302,7 @@
 	id = "shitbreaker"
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/station/engineering/shipbreaker_hut)
 "kff" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -63666,7 +63660,7 @@
 	},
 /obj/machinery/shipbreaker,
 /turf/open/floor/iron,
-/area/space)
+/area/station/engineering/shipbreaker_hut)
 "pdl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -65467,10 +65461,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/aft)
-"pzq" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/iron,
-/area/space)
 "pzr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -87631,10 +87621,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"uNL" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating/airless,
-/area/space)
 "uNQ" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -94707,7 +94693,7 @@
 	id = "shitbreaker"
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/station/engineering/shipbreaker_hut)
 "wuZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -115419,12 +115405,12 @@ qYo
 aaa
 aaa
 aaa
-ckI
-ckI
-ckI
-ckI
-pzq
-ckI
+lxy
+lxy
+lxy
+lxy
+onz
+lxy
 aaa
 efQ
 qYo
@@ -115680,9 +115666,9 @@ hNL
 nBA
 nBA
 nBA
-cMz
-ckI
-ckI
+cSQ
+lxy
+lxy
 efQ
 aaa
 efQ
@@ -115937,9 +115923,9 @@ iyd
 cSQ
 cSQ
 cSQ
-cMz
+cSQ
 ajt
-ckI
+lxy
 efQ
 aaa
 qYo
@@ -116196,7 +116182,7 @@ cSQ
 cSQ
 wuH
 pdk
-ckI
+lxy
 qYo
 aaa
 efQ
@@ -116451,9 +116437,9 @@ wij
 cSQ
 cSQ
 cSQ
-cMz
+cSQ
 kfc
-ckI
+lxy
 efQ
 qYo
 efQ
@@ -116708,9 +116694,9 @@ oeZ
 lxy
 lxy
 onz
-uNL
-ckI
-ckI
+hcH
+lxy
+lxy
 efQ
 aaa
 efQ
