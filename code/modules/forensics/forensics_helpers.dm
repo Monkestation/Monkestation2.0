@@ -73,7 +73,7 @@
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 	else
 		forensics = new(src, blood_DNA = blood_DNA_to_add)
-	cached_blood_dna_color = null
+	forensics?.cached_blood_dna_color = null
 	update_appearance()
 	return TRUE
 
@@ -112,7 +112,7 @@
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 		blood_in_hands = rand(2, 4)
-	cached_blood_dna_color = null
+	forensics?.cached_blood_dna_color = null
 	update_worn_gloves()
 	return TRUE
 
