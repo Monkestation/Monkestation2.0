@@ -5060,7 +5060,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "anB" = (
-/turf/open/space/basic,
+/turf/cordon,
 /area/misc/cordon)
 "anD" = (
 /obj/structure/flora/grass/both/style_random,
