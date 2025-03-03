@@ -492,8 +492,8 @@
 			key.toggle_on()
 		if(toggle == "Off")
 			key.toggle_off()
-		log_admin("[key_name(usr)] toggled crew CC comms [toggle].")
-		message_admins("[ADMIN_LOOKUPFLW(usr)] toggled crew CC comms [toggle].")
-		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Crew CC Comms", "[toggle]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] toggled crew CC comms [toggle].")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] toggled crew CC comms [toggle].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Crew CC Comms", "[toggle]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 //MONKESTATION EDIT STOP
 
