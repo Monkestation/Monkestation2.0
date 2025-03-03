@@ -8,7 +8,7 @@ export BYOND_MAJOR=515
 export BYOND_MINOR=1647
 
 #rust_g git tag
-export RUST_G_VERSION=3.5.1
+export RUST_G_VERSION=3.6.0
 
 #aneri git repo
 export ANERI_REPO=Absolucy/aneri
