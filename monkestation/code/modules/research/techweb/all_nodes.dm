@@ -378,3 +378,33 @@
 
 /datum/techweb_node/explosive_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = 1500)
+
+/datum/techweb_node/ai_adv
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 2000)
+
+/datum/techweb_node/robotics
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+
+/datum/techweb_node/adv_bots
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+
+/datum/techweb_node/datatheory
+	discount_experiments = list(/datum/experiment/scanning/random/money = 1500)
+
+/datum/techweb_node/comptech
+	discount_experiments = list(/datum/experiment/scanning/random/money = 1000)
+
+/datum/techweb_node/mod_advanced
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_engineering
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_medical
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_security
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_entertainment
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
