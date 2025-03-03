@@ -375,3 +375,6 @@
 		"surgery_heal_robot_upgrade_femto",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1300) // less expensive than the organic surgery research equivalent since its JUST tend wounds
+
+/datum/techweb_node/explosive_weapons
+	discount_experiments = list(/datum/experiment/scanning/random/casing = 1500)
