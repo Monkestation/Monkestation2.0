@@ -166,7 +166,14 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
-#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
+	/mob/living/simple_animal/pet/cat,
+	/mob/living/simple_animal/hostile/syndicat,
+	/mob/living/simple_animal/hostile/feral,
+	/mob/living/simple_animal/hostile/feraltabby,
+)))
+
+#define iscat(A) (is_type_in_typecache(A, GLOB.cat_typecache))
 
 #define isdog(A) (istype(A, /mob/living/basic/pet/dog))
 
@@ -254,6 +261,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
+//MONKESTATION EDIT: used to block cargo teleporters from escaping with syndicate blackbox
+#define issyndicateblackbox(O) (istype(O, /obj/item/syndicate_blackbox))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))

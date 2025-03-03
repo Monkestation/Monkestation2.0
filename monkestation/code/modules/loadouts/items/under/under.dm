@@ -383,6 +383,10 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Red Evening Gown"
 	item_path = /obj/item/clothing/under/dress/redeveninggown
 
+/datum/loadout_item/under/formal/ribbondress
+	name = "Ribboned Gown"
+	item_path = /obj/item/clothing/under/dress/ribbondress
+
 /datum/loadout_item/under/formal/sailor
 	name = "Sailor Suit"
 	item_path = /obj/item/clothing/under/costume/sailor

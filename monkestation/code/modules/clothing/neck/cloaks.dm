@@ -170,11 +170,11 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
-		. += span_warning("Well you can still feel the displeasure from the cloak it feels like \
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
+		. += span_warning("While you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
 	if(!user.client?.is_mentor())
-		. += span_warning("You can feel this cloak dispises you for lacking a high enough level of knowledge")
+		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge")
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()

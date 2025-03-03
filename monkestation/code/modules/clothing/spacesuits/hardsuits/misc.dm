@@ -104,7 +104,7 @@
 	armor_type = /datum/armor/hardsuit/sec
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/sec
 	allowed = list(
-		/obj/item/tank/jetpack/oxygen/security,
+		/obj/item/tank/jetpack/security,
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
 		/obj/item/tank/jetpack/oxygen/captain,
@@ -129,3 +129,7 @@
 	icon_state = "hardsuit0-sec"
 	armor_type = /datum/armor/hardsuit/sec
 	hardsuit_type = "sec"
+
+/obj/item/clothing/head/helmet/space/hardsuit/sec/New(loc, ...)
+	. = ..()
+	hud_glasses = new /obj/item/clothing/glasses/hud/security(src)

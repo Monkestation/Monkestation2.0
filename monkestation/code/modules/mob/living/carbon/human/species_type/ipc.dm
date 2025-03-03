@@ -9,7 +9,7 @@
 	name = "\improper Integrated Positronic Chassis"
 	id = SPECIES_IPC
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
-	sexes = FALSE
+	sexes = TRUE
 	inherent_traits = list(
 		TRAIT_ROBOT_CAN_BLEED,
 		TRAIT_CAN_STRIP,
@@ -22,6 +22,8 @@
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
 
 	)
@@ -176,12 +178,16 @@
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = tgui_input_list(usr, "Which screen do you want to use?", "Screen Change", GLOB.ipc_screens_list)
+	var/color_choice = tgui_color_picker(usr, "Which color do you want your screen to be", "Color Change")
 	if(!screen_choice)
+		return
+	if(!color_choice)
 		return
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
 	H.dna.features["ipc_screen"] = screen_choice
+	H.eye_color_left = sanitize_hexcolor(color_choice)
 	H.update_body()
 
 /datum/species/ipc/spec_revival(mob/living/carbon/human/H)
@@ -222,7 +228,7 @@
 		BP.limb_id = chassis_of_choice.icon_state
 		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
 		BP.update_limb()
-		if(chassis_of_choice.color_src == MUTANT_COLOR)
+		if(chassis_of_choice.palette_key == MUTANT_COLOR)
 			BP.should_draw_greyscale = TRUE
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
