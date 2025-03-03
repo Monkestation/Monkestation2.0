@@ -28,23 +28,23 @@
 
 /datum/supply_pack/security/pacoammo
 	name = "FS HG .35 Auto \"Paco\" non-lethal ammo crate"
-	desc = "Short on ammo? No worries, this crate contains three .35 Auto rubber magazines, and two of the respective ammunition packet."
+	desc = "Short on ammo? No worries, this crate contains three .35 Auto rubber magazines, and the respective ammunition packet."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_SECURITY
 	contains = list(
 		/obj/item/ammo_box/magazine/m35/rubber = 3,
-		/obj/item/ammo_box/c35/rubber = 2,
+		/obj/item/ammo_box/c35/rubber = 1,
 		)
 	crate_name = ".35 Auto Non-Lethal Ammo crate"
 
 /datum/supply_pack/security/armory/pacoammo
 	name = "FS HG .35 Auto \"Paco\" lethal ammo crate"
-	desc = "Short on ammo? No worries, this crate contains three lethally loaded .35 Auto magazines, and two of the respective ammunition packet."
+	desc = "Short on ammo? No worries, this crate contains three lethally loaded .35 Auto magazines, and the respective ammunition packet."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_SECURITY
 	contains = list(
 		/obj/item/ammo_box/magazine/m35 = 3,
-		/obj/item/ammo_box/c35 = 2,
+		/obj/item/ammo_box/c35 = 1,
 		)
 	crate_name = ".35 Auto Lethal Ammo crate"
 
