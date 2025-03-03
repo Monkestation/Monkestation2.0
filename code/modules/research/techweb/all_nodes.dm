@@ -800,6 +800,7 @@
 		"triphasic_scanning",
 		"wormholeprojector",
 		"advanced_gps", // monkestation edit: advanced gps
+		"cargotele", // monkestation addition: Cargo tele shift
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
