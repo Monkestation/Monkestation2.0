@@ -29,10 +29,3 @@
 	if(QDELETED(player) || !istype(get_area(player), /area/shuttle/arrival))
 		return FALSE
 	return TRUE
-
-/proc/isipc(target) // for dissections
-	if (!ishuman(target))
-		return FALSE
-
-	var/mob/living/carbon/human/human_target = target
-	return human_target.dna?.species?.type == /datum/species/ipc
