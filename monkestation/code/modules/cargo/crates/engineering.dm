@@ -155,3 +155,17 @@
 					/obj/item/pipe_dispenser)
 	crate_name = "Thermoelectric Generator Crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
+
+/datum/supply_pack/engineering/genesischamber
+	name = "Genesis Chamber Construction Kit"
+	desc = "Contains most of the machine parts in order to construct the Genesis Chamber for Botany. Bluespace Crystals sold separately."
+	cost = CARGO_CRATE_VALUE * 25
+	contains = list(/obj/item/circuitboard/machine/genesis_chamber,
+					/obj/item/stock_parts/matter_bin = 1,
+					/obj/item/stock_parts/manipulator = 1,
+					/obj/item/stock_parts/micro_laser = 1,
+					/obj/item/stack/sheet/iron/five,
+					/obj/item/stack/cable_coil,
+					)
+	crate_name = "Genesis Chamber Construction Kit Crate"
+	crate_type = /obj/structure/closet/crate/hydroponics

@@ -1,6 +1,6 @@
 /obj/machinery/genesis_chamber
 	name = "Genesis Chamber"
-	desc = "A piece of advanced technology that once turned on, will begin to produce strange seeds. The internal vortex core creates an anomalous environment for seed mutation."
+	desc = "A piece of advanced technology that once turned on, will begin to produce strange seeds."
 	icon = 'monkestation/icons/obj/machines/genesis_chamber.dmi'
 	icon_state = "genesis_chamber_off"
 	density = TRUE
@@ -13,8 +13,6 @@
 	var/max_capacity = 10
 	/// Seconds it takes to create each seed at T1
 	var/max_cooldown = 5 MINUTES
-	/// Has a vortex core been inserted
-	var/has_core = FALSE
 	/// Number of seeds produced per cycle
 	var/seeds_per_cycle = 1
 	/// Time remaining until next seed is generated
@@ -42,7 +40,7 @@
 		seeds_per_cycle += manipulator.tier - 1
 
 	// Reset the timer if the machine is active
-	if(on && has_core)
+	if(on)
 		reset_generation_timer()
 
 /obj/machinery/genesis_chamber/attack_paw(mob/user, list/modifiers)
@@ -56,10 +54,6 @@
 
 	if(panel_open)
 		to_chat(user, span_warning("You can't use the [src] while the maintenance panel is open!"))
-		return
-
-	if(!has_core)
-		to_chat(user, span_warning("The [src] needs a vortex anomaly core to function!"))
 		return
 
 	if(capacity < 1)
@@ -78,7 +72,7 @@
 	update_appearance()
 
 /obj/machinery/genesis_chamber/proc/calculate_time_remaining()
-	if(!on || !has_core || !generation_timer_id)
+	if(!on || !generation_timer_id)
 		time_remaining = max_cooldown
 		return
 
@@ -90,19 +84,6 @@
 
 	generation_timer_id = addtimer(CALLBACK(src, PROC_REF(generate_seed)), max_cooldown, TIMER_STOPPABLE)
 
-/obj/machinery/genesis_chamber/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/assembly/signaler/anomaly/vortex))
-		if(has_core)
-			to_chat(user, span_warning("The [src] already has a vortex anomaly core!"))
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		has_core = TRUE
-		to_chat(user, span_notice("You insert the vortex anomaly core into [src]."))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		return
-	return ..()
-
 /obj/machinery/genesis_chamber/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -112,10 +93,6 @@
 		return
 
 	if(panel_open)
-		return
-
-	if(!has_core)
-		to_chat(user, span_warning("The [src] needs a vortex anomaly core to function!"))
 		return
 
 	on = !on
@@ -138,7 +115,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/genesis_chamber/proc/generate_seed()
-	if(!on || !has_core || capacity >= max_capacity)
+	if(!on || capacity >= max_capacity)
 		return
 
 	// Calculate how many seeds to produce this cycle
@@ -157,14 +134,12 @@
 	playsound(src, 'sound/machines/synth_yes.ogg', 30, TRUE)
 	update_appearance()
 
-	if(on && has_core && capacity < max_capacity)
+	if(on && capacity < max_capacity)
 		reset_generation_timer()
 
 /obj/machinery/genesis_chamber/examine(mob/user)
 	. = ..()
-	if(!has_core)
-		. += "It is missing a <b>vortex anomaly core</b>."
-	else if(!on)
+	if(!on)
 		. += "It is currently <b>deactivated</b> and has <b>[capacity]</b> strange seeds stored."
 	else
 		. += "It is currently <b>activated</b> and has <b>[capacity]</b> strange seeds stored."
@@ -204,9 +179,6 @@
 
 /obj/machinery/genesis_chamber/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
-		// Drop the vortex core if present when deconstructed
-		if(has_core)
-			new /obj/item/assembly/signaler/anomaly/vortex(drop_location())
 		return TRUE
 	return FALSE
 
