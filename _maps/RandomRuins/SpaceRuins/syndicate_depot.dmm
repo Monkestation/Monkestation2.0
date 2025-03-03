@@ -2149,6 +2149,8 @@
 /obj/item/clothing/under/syndicate/nova/interdyne,
 /obj/item/clothing/under/syndicate/nova/tactical,
 /obj/item/clothing/under/syndicate/nova/tactical,
+/obj/item/storage/backpack/duffelbag/syndie,
+/obj/item/storage/backpack/duffelbag/syndie,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "xu" = (
