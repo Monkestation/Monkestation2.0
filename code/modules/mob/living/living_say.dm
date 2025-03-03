@@ -349,7 +349,27 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
 
-	send_bark(message_raw, listening, message_range, FALSE)
+	var/talk_icon_state = say_test(message_raw)
+
+	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		start_barking(message_raw, listening, message_range, talk_icon_state)
+	else
+		var/sound = pick(
+			'sound/misc/fingersnap1.ogg',
+			'sound/misc/fingersnap2.ogg')
+
+		playsound(src, sound, 300, 1, message_range, falloff_exponent = 0, vary = FALSE, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+
+	/*
+		var/tmp_sound = get_sound(user)
+	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+		TIMER_COOLDOWN_START(user, type, audio_cooldown)
+		//MONKESTATION EDIT START - Allows sounds to vary based on their calling conditions.
+		//playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS) //MONKESTATION EDIT ORIGINAL
+		var/tmp_vary = should_vary(user)
+		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = get_mixer_channel(user, params, type_override, intentional))
+		//MONKESTATION EDIT END
+	*/
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
@@ -381,7 +401,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
-	var/talk_icon_state = say_test(message_raw)
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)

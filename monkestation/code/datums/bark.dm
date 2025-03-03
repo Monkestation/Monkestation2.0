@@ -1,33 +1,68 @@
-GLOBAL_LIST_EMPTY(bark_list)
-GLOBAL_LIST_EMPTY(bark_random_list)
+GLOBAL_LIST_INIT(bark_list, gen_barks())
+
+/proc/gen_barks()
+	var/list/bark_list = list()
+
+	for(var/path in subtypesof(/datum/bark_voice))
+		var/datum/bark_voice/bark = new path()
+
+		bark_list[bark.name] = bark
+
+	return bark_list
 
 //Datums for barks and bark accessories
 
-/datum/bark
-	var/name = "Default"
-	var/id = "Default"
-	var/soundpath //Path for the actual sound file used for the bark
+// /datum/bark
+// 	var/name = "Default"
+// 	var/id = "Default"
+// 	var/soundpath //Path for the actual sound file used for the bark
 
-	// Pitch vars. The actual range for a bark is [(pitch - (maxvariance*0.5)) to (pitch + (maxvariance*0.5))]
-	// Make absolutely sure to take variance into account when curating a sound for bark purposes.
-	var/minpitch = BARK_DEFAULT_MINPITCH
-	var/maxpitch = BARK_DEFAULT_MAXPITCH
-	var/minvariance = BARK_DEFAULT_MINVARY
-	var/maxvariance = BARK_DEFAULT_MAXVARY
+// 	// Pitch vars. The actual range for a bark is [(pitch - (maxvariance*0.5)) to (pitch + (maxvariance*0.5))]
+// 	// Make absolutely sure to take variance into account when curating a sound for bark purposes.
+// 	var/minpitch = BARK_DEFAULT_MINPITCH
+// 	var/maxpitch = BARK_DEFAULT_MAXPITCH
+// 	var/minvariance = BARK_DEFAULT_MINVARY
+// 	var/maxvariance = BARK_DEFAULT_MAXVARY
 
-	// Speed vars. Speed determines the number of characters required for each bark, with lower speeds being faster with higher bark density
-	var/minspeed = BARK_DEFAULT_MINSPEED
-	var/maxspeed = BARK_DEFAULT_MAXSPEED
+// 	// Speed vars. Speed determines the number of characters required for each bark, with lower speeds being faster with higher bark density
+// 	var/minspeed = BARK_DEFAULT_MINSPEED
+// 	var/maxspeed = BARK_DEFAULT_MAXSPEED
 
-	// Visibility vars. Regardless of what's set below, these can still be obtained via adminbus and genetics. Rule of fun.
-	var/list/ckeys_allowed
-	var/ignore = FALSE //Controls whether or not this can be chosen in chargen
-	var/allow_random = FALSE //Allows chargen randomization to use this. This is mainly to restrict the pool to sounds that fit well for most characters
+// 	// Visibility vars. Regardless of what's set below, these can still be obtained via adminbus and genetics. Rule of fun.
+// 	var/list/ckeys_allowed
+// 	var/ignore = FALSE //Controls whether or not this can be chosen in chargen
+// 	var/allow_random = FALSE //Allows chargen randomization to use this. This is mainly to restrict the pool to sounds that fit well for most characters
 
 /datum/bark_voice
-	var/talk
-	var/ask
-	var/exclaim
+	var/name
+
+	var/sound/talk
+	var/sound/ask_beep = null
+	var/sound/exclaim_beep = null
+
+/datum/bark_voice/talk_1
+	name = "Talk 1"
+	talk = sound('goon/sounds/misc/talk/speak_1.ogg')
+	ask_beep = sound('goon/sounds/misc/talk/speak_1_ask.ogg')
+	exclaim_beep = sound('goon/sounds/misc/talk/speak_1_exclaim.ogg')
+
+/datum/bark_voice/talk_2
+	name = "Talk 2"
+	talk = sound('goon/sounds/misc/talk/speak_2.ogg')
+	ask_beep = sound('goon/sounds/misc/talk/speak_2_ask.ogg')
+	exclaim_beep = sound('goon/sounds/misc/talk/speak_2_exclaim.ogg')
+
+/datum/bark_voice/talk_3
+	name = "Talk 3"
+	talk = sound('goon/sounds/misc/talk/speak_3.ogg')
+	ask_beep = sound('goon/sounds/misc/talk/speak_3_ask.ogg')
+	exclaim_beep = sound('goon/sounds/misc/talk/speak_3_exclaim.ogg')
+
+/datum/bark_voice/talk_4
+	name = "Talk 4"
+	talk = sound('goon/sounds/misc/talk/speak_4.ogg')
+	ask_beep = sound('goon/sounds/misc/talk/speak_4_ask.ogg')
+	exclaim_beep = sound('goon/sounds/misc/talk/speak_4_exclaim.ogg')
 
 /*
 // So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
