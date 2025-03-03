@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 		bark_list[bark.name] = bark
 
 	var/goon_sounds = list(
-		"bulb",
+		"blub",
 		"buwoo",
 		"cow",
 		"cyborg",
@@ -27,9 +27,9 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 	for (var/name in goon_sounds)
 		var/datum/bark_voice/bark = new
 		bark.name = name
-		bark.talk = "goon/sounds/misc/talk/" + name + ".ogg"
-		bark.ask_beep = "goon/sounds/misc/talk/" + name + "_ask.ogg"
-		bark.exclaim_beep = "goon/sounds/misc/talk/" + name + "_exclaim.ogg"
+		bark.talk = sound("goon/sounds/misc/talk/" + name + ".ogg")
+		bark.ask_beep = sound("goon/sounds/misc/talk/" + name + "_ask.ogg")
+		bark.exclaim_beep = sound("goon/sounds/misc/talk/" + name + "_exclaim.ogg")
 		bark_list["goon/" + bark.name] = bark
 
 	return bark_list

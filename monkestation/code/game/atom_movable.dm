@@ -1,10 +1,10 @@
 /atom/movable
 	// Text-to-bark sounds
-	var/vocal_bark_id = "Talk 1"
+	var/vocal_bark_id = "goon/speak_1"
 	var/datum/bark_voice/vocal_bark = null
 	var/vocal_pitch = 1
 	var/vocal_pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
-	var/vocal_volume = 70 //Baseline. This gets modified by yelling and other factors
+	var/vocal_volume = 250 //Baseline. This gets modified by yelling and other factors
 	var/vocal_speed = 4 //Lower values are faster, higher values are slower
 
 	var/vocal_current_bark = -1 //When barks are queued, this gets passed to the bark proc. If vocal_current_bark doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
@@ -79,13 +79,11 @@
 		total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 	return total_delay
 
-/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, talk_sound)
+/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, sound/talk_sound)
 	if(queue_time && vocal_current_bark != queue_time)
 		return
 
 	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		M.playsound_local(T, soundin=talk_sound)
-		// M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
-	// playsound(src, talk_sound, 50, FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)

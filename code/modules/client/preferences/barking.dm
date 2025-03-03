@@ -31,7 +31,7 @@
 	blooperbox.vocal_pitch = preferences.read_preference(/datum/preference/numeric/blooper_speech_pitch)
 	blooperbox.vocal_speed = preferences.read_preference(/datum/preference/numeric/blooper_speech_speed)
 	blooperbox.vocal_pitch_range = preferences.read_preference(/datum/preference/numeric/blooper_pitch_range)
-	var/total_delay = blooperbox.long_bark(list(user), 7, 10, FALSE, 32)
+	var/total_delay = blooperbox.long_bark(list(user), 7, 300, FALSE, 32)
 	QDEL_IN(blooperbox, total_delay)
 	COOLDOWN_START(src, blooper_cooldown, 2 SECONDS)
 	return TRUE
