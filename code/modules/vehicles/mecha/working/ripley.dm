@@ -34,10 +34,6 @@
 	)
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
-	/// List of all things in Ripley's Cargo Compartment
-	var/list/cargo
-	/// How much things Ripley can carry in their Cargo Compartment
-	var/cargo_capacity = 15
 	/// How fast the mech is in low pressure
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
