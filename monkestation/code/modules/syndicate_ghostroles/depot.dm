@@ -22,8 +22,8 @@
 	name = "Syndicate Depot Guard"
 	prompt_name = "a syndicate depot guard"
 	you_are_text = "You are a security guard, employed at a Syndicate depot."
-	flavour_text = "Protect the depot from enemy forces and prevent its destruction at all costs."
-	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You are here to protect it, and cannot perform deliveries."
+	flavour_text = "Protect the depot from enemy forces and prevent its destruction at all costs. Keep your experimental submachinegun safe and away from enemy hands."
+	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You are here to protect the depot, and cannot perform deliveries."
 	outfit = /datum/outfit/syndicate_empty/depot/guard
 
 /datum/outfit/syndicate_empty/depot/guard
@@ -34,7 +34,7 @@
 	mask = /obj/item/clothing/mask/gas
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/flashlight/seclite
-	suit_store = /obj/item/gun/ballistic/shotgun/riot/sol/evil //silly evil gun
+	suit_store = /obj/item/gun/ballistic/automatic/c20r/homing
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate/quartermaster
 	name = "Syndicate Depot Quartermaster"
@@ -60,6 +60,62 @@
 	r_pocket = /obj/item/flashlight/lantern/syndicate
 	mask = /obj/item/clothing/mask/chameleon //under ANY OTHER CIRCUMSTANCE i'd make it a gps one, but this place is also the safe evacuation zone for any surviving space outpost operatives after a self-destruct event
 	l_hand = /obj/item/gun/ballistic/automatic/pistol/aps
+
+//depot guard SMG: a prototype from cybersun industries that converts a standard C-20r into a capable smartgun, issued to the depot to defend against jetpacking space fucks.
+
+/obj/item/gun/ballistic/automatic/c20r/homing
+	name = "h-20r homing submachinegun"
+	desc = "A modified C-20r submachinegun bearing the insignia of Cybersun's Special Projects division, chambered in .45 Homing. Designed to combat Nanotrasen explorers who happen to be a bit too evasive. Nicknamed the 'homergun' by some security forces. Not recommended for use with standard .45 ammunition. WARNING: Does not come with Identification Friend-Foe technology."
+	icon_state = "h20r"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45/homergun
+
+/obj/item/gun/ballistic/automatic/c20r/homing/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CYBERSUN)
+
+/obj/item/ammo_box/magazine/smgm45/homergun
+	name = "SMG magazine (.45 Homing)"
+	desc = "A .45-caliber magazine. Holds 42 rounds when full. You can see a computer chip at the base of the magazine."
+	icon_state = "c20r45-24"
+	base_icon_state = "c20r45"
+	ammo_type = /obj/item/ammo_casing/c45/smart
+	caliber = CALIBER_45_HOMER //not compatible with non-homergun ammo
+	max_ammo = 42  ///monke edit 24 -> 42
+
+//Stolen from /tg/'s nukie smartgun, but rechambered in 45. Move some of this code later.
+
+/obj/item/ammo_casing/c45/smart
+	name = ".45 smart bullet casing"
+	desc = "A .45 caliber smart-bullet that, while slightly less effective at killing people, is capable of tracking targets."
+	projectile_type = /obj/projectile/bullet/c45/smart
+	caliber = CALIBER_45_HOMER //not compatible with non-homerguns
+	/// How many tiles away should we check for smart auto-locking
+	var/auto_lock_range = 2
+
+/obj/projectile/bullet/c45/smart
+	name = ".45 homing bullet"
+	damage = 25
+	wound_bonus = 20 ///monke -10 -> 20
+	wound_falloff_tile = -10
+	armour_penetration = 35
+
+/obj/item/ammo_casing/c45/smart/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	. = ..()
+	if(!isturf(target))
+		loaded_projectile.set_homing_target(target)
+		new /obj/effect/temp_visual/smartgun_target(get_turf(target))
+	else
+		var/atom/aimbot_target = locate(/mob/living) in range(auto_lock_range, target)
+		if(aimbot_target)
+			loaded_projectile.set_homing_target(aimbot_target)
+			new /obj/effect/temp_visual/smartgun_target(get_turf(aimbot_target))
+
+
+/obj/effect/temp_visual/smartgun_target
+	name = "smart bullet target reticle"
+	desc = "A holographic crosshair used by smartguns to guide their bullets to targets. You should probably start moving."
+	icon_state = "launchpad_pull"
+	duration = 0.25 SECONDS
 
 //ruin areas
 

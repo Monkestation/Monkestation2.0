@@ -1638,14 +1638,15 @@
 "sv" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/general/hidden,
 /obj/structure/closet/syndicate,
-/obj/item/ammo_box/advanced/s12gauge/rubber,
-/obj/item/ammo_box/advanced/s12gauge/magnum,
-/obj/item/ammo_box/advanced/s12gauge/buckshot,
-/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/machinery/light_switch/directional/east,
 /obj/effect/turf_decal/stripes/corner,
 /obj/item/melee/baton,
 /obj/item/holosign_creator/security,
+/obj/item/storage/belt/military/assault,
+/obj/item/ammo_box/magazine/smgm45/homergun,
+/obj/item/ammo_box/magazine/smgm45/homergun,
+/obj/item/ammo_box/magazine/smgm45/homergun,
+/obj/item/ammo_box/magazine/smgm45/homergun,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_depot/security)
 "sA" = (
