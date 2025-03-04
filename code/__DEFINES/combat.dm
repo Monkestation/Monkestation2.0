@@ -158,6 +158,9 @@ DEFINE_BITFIELD(status_flags, list(
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
+#define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
+#define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))

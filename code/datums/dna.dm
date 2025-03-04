@@ -234,10 +234,22 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_dna_blocks()
+/* MONKESTATION EDIT OLD
 	var/bonus
 	if(species?.inert_mutation)
 		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
+*/
+	// MONKESTATION EDIT NEW START
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
+	if(species?.inert_mutation)
+		if(islist(species.inert_mutation))
+			var/list/inert_mutations = species.inert_mutation
+			for(var/mutation as anything in inert_mutations)
+				mutations_temp += GET_INITIALIZED_MUTATION(mutation)
+		else
+			mutations_temp += GET_INITIALIZED_MUTATION(species.inert_mutation)
+	// MONKESTATION EDIT NEW END
 	if(!LAZYLEN(mutations_temp))
 		return
 	mutation_index.Cut()
