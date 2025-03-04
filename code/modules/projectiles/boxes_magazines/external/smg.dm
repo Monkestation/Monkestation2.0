@@ -6,8 +6,10 @@
 	caliber = CALIBER_46X30MM
 	max_ammo = 20
 
+//MONKESTATION ADDITION START
 /obj/item/ammo_box/magazine/wt550m9/starts_empty
 	start_empty = TRUE
+//MONKESTATION ADDITION END
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon_state()
 	. = ..()
