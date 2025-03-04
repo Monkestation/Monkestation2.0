@@ -9,7 +9,7 @@
 	. = ..()
 	atom_storage?.open_storage(imp_in)
 
-/obj/item/implant/storage/removed(source, silent = FALSE, special = FALSE)
+/obj/item/implant/storage/removed(source, silent = FALSE, special = FALSE, forced = FALSE) //monkestation edit: adds forced
 	if(special)
 		return ..()
 
