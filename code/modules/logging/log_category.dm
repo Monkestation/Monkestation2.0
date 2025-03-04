@@ -34,7 +34,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 /datum/log_category/proc/create_entry(message, list/data, list/semver_store, severity)
 	var/datum/log_entry/entry = new(
 		// world state contains raw timestamp
-		timestamp = logger.human_readable_timestamp(),
+		timestamp = human_readable_timestamp(), // monkestation edit: replaced with human_readable_timestamp() define
 		category = category,
 		message = message,
 		data = data,
