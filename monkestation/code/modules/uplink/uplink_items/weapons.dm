@@ -93,3 +93,12 @@
 	desc = "A single surplus Plastikov SMG and two extra magazines. A terrible weapon, perfect for henchmen."
 	item = /obj/item/storage/box/syndie_kit/shit_smg_bundle
 	cost = 4
+
+/datum/uplink_item/dangerous/fss_disk
+	name = "FSS-550 disk"
+	desc = "A disk that allows an autolathe to print the FSS-550 and associated ammo. \
+	The FSS-550 is a modified version of the WT-550 autorifle, it's good for arming a large group, but is weaker compared to 'proper' guns."
+	item = /obj/item/disk/design_disk/fss
+	progression_minimum = 15 MINUTES
+	cost = 5
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Because I don't think they get an autolathe or the resources to use the disk.
