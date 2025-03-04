@@ -1791,15 +1791,6 @@
 /obj/machinery/space_heater,
 /turf/open/floor/wood,
 /area/station/maintenance/department/science/xenobiology)
-"azq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "azr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 1
@@ -2862,11 +2853,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
-"aOA" = (
-/obj/structure/table/reinforced,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
-/turf/open/floor/carpet/purple,
-/area/station/common/night_club)
 "aOI" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -3316,6 +3302,12 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/command/storage/eva)
+"aVG" = (
+/mob/living/basic/chicken{
+	forced_gender = "female"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "aVN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3471,12 +3463,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/pod/dark,
 /area/station/service/chapel)
-"aWR" = (
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "aWS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/hobo_squat,
@@ -5570,6 +5556,17 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/greater)
+"bDT" = (
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/suit_storage_unit/blueshield,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/command/heads_quarters/blueshield)
 "bDW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7837,10 +7834,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/large,
 /area/station/commons/dorms/laundry)
-"cqI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
 "cqJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9941,6 +9934,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/station/maintenance/aft/upper)
+"cXH" = (
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "cXP" = (
 /obj/machinery/corral_corner{
 	mapping_id = "3"
@@ -10027,22 +10024,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"cYI" = (
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/warm/directional/east,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/obj/item/radio/radio_mic{
-	pixel_y = 7
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = -6;
-	pixel_x = -8
-	},
-/turf/open/floor/cult,
-/area/station/service/library)
 "cYN" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8;
@@ -12832,14 +12813,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
-"dLi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
-/obj/structure/railing{
-	pixel_y = -5
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "dLk" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Garden Maintenance"
@@ -14063,10 +14036,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/pod,
 /area/station/service/chapel/funeral)
-"ebv" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "ebz" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -14091,11 +14060,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/atmos)
-"ecj" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "ecl" = (
 /obj/structure/table,
 /obj/machinery/requests_console/directional/west{
@@ -16556,9 +16520,6 @@
 	dir = 1
 	},
 /area/station/medical/office)
-"eKx" = (
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "eKU" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/lavendergrass,
@@ -16951,12 +16912,6 @@
 	dir = 4
 	},
 /area/station/engineering/power_room)
-"eQw" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "eQx" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -18451,9 +18406,6 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
-"fop" = (
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "for" = (
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -18793,13 +18745,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/disposal/incinerator)
-"fth" = (
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Petting Zoo Staff Entry"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "ftr" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line{
@@ -19207,6 +19152,16 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/herringbone,
 /area/station/service/theater)
+"fzC" = (
+/obj/structure/table,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "fzP" = (
 /turf/closed/wall,
 /area/station/medical/surgery)
@@ -20253,6 +20208,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
+"fSM" = (
+/obj/machinery/chicken_grinder,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "fSS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -20680,11 +20639,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics)
-"fYs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/botanist,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "fYF" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
@@ -21881,6 +21835,17 @@
 	dir = 1
 	},
 /area/station/hallway/primary/aft)
+"gpN" = (
+/obj/structure/table,
+/obj/machinery/feed_machine{
+	pixel_y = 4
+	},
+/obj/item/chicken_feed{
+	pixel_y = 10;
+	pixel_x = -5
+	},
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "gpO" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
@@ -22719,6 +22684,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay/central)
+"gBm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/botanist,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "gBB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23899,10 +23869,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
-"gSF" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "gSI" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/cable,
@@ -24825,6 +24791,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
+"heo" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "heq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27345,6 +27316,11 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
+"hQD" = (
+/obj/structure/table/reinforced,
+/obj/effect/mob_spawn/ghost_role/drone/bar,
+/turf/open/floor/carpet/purple,
+/area/station/common/night_club)
 "hQF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28559,10 +28535,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"iju" = (
-/obj/structure/bookcase/manuals/botany,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "ijw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28675,16 +28647,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white/textured_edge,
 /area/station/medical/storage)
-"ikN" = (
-/obj/structure/railing{
-	pixel_y = -5
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/nestbox,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "ila" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -28805,25 +28767,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/engine,
 /area/station/science/explab)
-"imz" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 8
-	},
-/obj/item/book/manual/wiki/robotics_cyborgs,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/mob/living/basic/pet/dog/corgi{
-	name = "Dirk";
-	real_name = "Dirk"
-	},
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 8
-	},
-/area/station/science/robotics/lab)
 "imR" = (
 /turf/closed/wall,
 /area/station/commons/vacant_room)
@@ -30004,12 +29947,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
-"iAj" = (
-/mob/living/basic/chicken{
-	forced_gender = "female"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "iAk" = (
 /obj/structure/table,
 /obj/item/healthanalyzer,
@@ -32899,9 +32836,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
-"jpR" = (
-/turf/closed/wall,
-/area/station/service/hydroponics/chicken)
 "jpW" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -34573,6 +34507,10 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/research)
+"jLE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/service/hydroponics/chicken)
 "jLL" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding/wood{
@@ -34714,6 +34652,9 @@
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/engine)
+"jNf" = (
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "jNy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35244,21 +35185,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
-"jWW" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Walter's bed"
-	},
-/mob/living/basic/pet/dog/bullterrier/walter,
-/turf/open/floor/wood/large,
-/area/station/command/heads_quarters/blueshield)
 "jXc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -36449,6 +36375,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/large,
 /area/station/security/office)
+"kox" = (
+/turf/closed/wall,
+/area/station/service/hydroponics/chicken)
 "koP" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/petridish{
@@ -36954,11 +36883,6 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/pod/dark,
 /area/station/service/chapel/office)
-"kwK" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "kwX" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -38200,6 +38124,12 @@
 "kLz" = (
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
+"kLC" = (
+/obj/structure/railing{
+	pixel_y = -5
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "kLG" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
@@ -38834,12 +38764,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/science/ordnance/storage)
-"kVo" = (
-/obj/structure/railing{
-	pixel_y = -5
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "kVs" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/closet/toolcloset,
@@ -39804,10 +39728,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/auxlab/firing_range)
-"lhZ" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "lig" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/atmos/glass{
@@ -40582,6 +40502,19 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"ltD" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Blueshield's Gear Room";
+	name = "command camera"
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/tac,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/command/heads_quarters/blueshield)
 "ltH" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -41293,12 +41226,6 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/grass,
 /area/station/common/cryopods)
-"lDK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/station/science/robotics/lab)
 "lDP" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt,
@@ -41738,6 +41665,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/textured,
 /area/station/engineering/power_room)
+"lJF" = (
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "lJI" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Science - Ordnance Launch Site";
@@ -42767,6 +42697,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/commons/dorms)
+"lWO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "lWP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hangar Maintenance"
@@ -42983,6 +42917,11 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/textured_edge,
 /area/station/science/ordnance/testlab)
+"maa" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "mab" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43833,6 +43772,13 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/port/greater)
+"mnA" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "mnF" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -44005,16 +43951,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/commons/fitness/recreation/entertainment)
-"mpV" = (
-/obj/structure/table,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/obj/item/storage/bag/egg,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "mqd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/closet_empty,
@@ -44223,11 +44159,6 @@
 	dir = 8
 	},
 /area/station/cargo/storage)
-"muX" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "muZ" = (
 /obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -44955,13 +44886,6 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
-"mFR" = (
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "mGv" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -46359,19 +46283,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/commons/dorms)
-"mYF" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Command - Blueshield's Gear Room";
-	name = "command camera"
-	},
-/obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/tac,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/command/heads_quarters/blueshield)
 "mYL" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
@@ -46879,6 +46790,13 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/command)
+"ngV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "ngZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -47541,6 +47459,12 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/command)
+"npz" = (
+/mob/living/basic/chicken/brown{
+	forced_gender = "female"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "npI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47659,6 +47583,25 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/wood/large,
 /area/station/security/courtroom)
+"nrk" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/robotics_cyborgs,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/mob/living/basic/pet/dog/corgi{
+	name = "Dirk";
+	real_name = "Dirk"
+	},
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 8
+	},
+/area/station/science/robotics/lab)
 "nru" = (
 /obj/structure/closet/firecloset/wall{
 	pixel_y = -32
@@ -48259,10 +48202,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/textured_edge,
 /area/station/engineering/atmos)
-"nzw" = (
-/obj/machinery/chicken_grinder,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "nzC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48297,6 +48236,16 @@
 	dir = 4
 	},
 /area/station/ai_monitored/security/armory)
+"nzN" = (
+/obj/structure/railing{
+	pixel_y = -5
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "nzP" = (
 /obj/effect/turf_decal/vg_decals/department/med,
 /obj/effect/landmark/event_spawn,
@@ -48697,12 +48646,6 @@
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/science/research/abandoned)
-"nGX" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "nGY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49124,6 +49067,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/drone_bay)
+"nNF" = (
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Petting Zoo Staff Entry"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "nOq" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
@@ -50880,19 +50830,6 @@
 	},
 /turf/open/floor/iron/corner,
 /area/station/hallway/primary/central)
-"omI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Ranch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/station/service/hydroponics/chicken)
 "omT" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Mining Maintenance"
@@ -52604,6 +52541,21 @@
 /obj/effect/turf_decal/box/blue,
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/pathology)
+"oLO" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Walter's bed"
+	},
+/mob/living/basic/pet/dog/bullterrier/walter,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/blueshield)
 "oLS" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53940,15 +53892,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/command)
-"pdg" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/mob/living/basic/chicken{
-	forced_gender = "female"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "pdh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -55782,17 +55725,6 @@
 	dir = 1
 	},
 /area/station/commons/fitness/recreation)
-"pCy" = (
-/obj/structure/window/spawner/directional/west{
-	pixel_x = -4
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/suit_storage_unit/blueshield,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/command/heads_quarters/blueshield)
 "pCA" = (
 /obj/structure/fans/tiny/forcefield{
 	dir = 4
@@ -61184,6 +61116,15 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/starboard/aft)
+"qXM" = (
+/obj/structure/railing{
+	pixel_y = -5
+	},
+/mob/living/basic/chicken/brown{
+	forced_gender = "male"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "qXO" = (
 /obj/structure/chair/sofa/bench,
 /obj/effect/turf_decal/siding/wood{
@@ -65746,15 +65687,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
-"sqd" = (
-/obj/structure/railing{
-	pixel_y = -5
-	},
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "sqo" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -65964,6 +65896,12 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/iron/large,
 /area/station/science/lab)
+"stC" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "stJ" = (
 /obj/machinery/door/airlock/wood{
 	name = "Closet"
@@ -66137,6 +66075,12 @@
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/station/medical/treatment_center)
+"swr" = (
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "swu" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68357,6 +68301,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
+"sXA" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "sXF" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -68798,6 +68746,11 @@
 "tdv" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/testlab)
+"tdz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/station/service/hydroponics/chicken)
 "tdB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -71500,6 +71453,11 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/security/execution/transfer)
+"tOw" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "tOA" = (
 /turf/closed/wall,
 /area/station/commons/lounge)
@@ -71831,6 +71789,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/port/fore)
+"tTR" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "tTU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72376,6 +72340,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningdock)
+"ucO" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/mob/living/basic/chicken{
+	forced_gender = "female"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "ucR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -72757,6 +72730,19 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningoffice)
+"uin" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Ranch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/station/service/hydroponics/chicken)
 "uio" = (
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -6;
@@ -72809,6 +72795,12 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/solars/starboard/fore)
+"ujn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/science/robotics/lab)
 "ujo" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/reagent_containers/pill/patch/libital{
@@ -73800,6 +73792,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"uuv" = (
+/obj/structure/bookcase/manuals/botany,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "uuC" = (
 /obj/structure/chair{
 	dir = 4
@@ -74761,6 +74757,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/command/gateway)
+"uHk" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/chicken)
 "uHn" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/turf_decal/bot,
@@ -77354,6 +77354,14 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"vvu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/structure/railing{
+	pixel_y = -5
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "vvx" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/freezer,
@@ -77560,10 +77568,6 @@
 /mob/living/basic/butterfly,
 /turf/closed/wall/mineral/iron,
 /area/station/service/chapel)
-"vxA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "vxF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 1
@@ -79929,6 +79933,15 @@
 	dir = 4
 	},
 /area/station/medical/treatment_center)
+"wgn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "wgo" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line,
@@ -80176,10 +80189,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"wkm" = (
-/obj/structure/nestbox,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "wkK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/status_display/ai/directional/south,
@@ -80727,17 +80736,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft/lesser)
-"wse" = (
-/obj/structure/table,
-/obj/machinery/feed_machine{
-	pixel_y = 4
-	},
-/obj/item/chicken_feed{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "wsg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -81414,6 +81412,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
+"wAx" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "wAA" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -81872,13 +81874,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/commons/dorms)
-"wGI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/chicken)
 "wGQ" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -83469,12 +83464,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port)
-"xiF" = (
-/mob/living/basic/chicken/brown{
-	forced_gender = "female"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
 "xiI" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -85132,6 +85121,22 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
+"xFN" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/obj/item/cassette_tape/friday{
+	pixel_y = -6;
+	pixel_x = -8
+	},
+/turf/open/floor/cult,
+/area/station/service/library)
 "xFQ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -87136,11 +87141,6 @@
 /mob/living/basic/sheep,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
-"ykh" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/curtain/cloth/fancy,
-/turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
 "yki" = (
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 1
@@ -117656,7 +117656,7 @@ xWo
 cmH
 cpN
 bRn
-jWW
+oLO
 kAm
 lrc
 xfl
@@ -117946,7 +117946,7 @@ nEm
 swP
 qpy
 ajz
-lDK
+ujn
 kJi
 lTr
 jbi
@@ -118719,7 +118719,7 @@ qlN
 aMf
 ybV
 vOI
-imz
+nrk
 oqe
 kAy
 tjC
@@ -118943,7 +118943,7 @@ dIf
 cmH
 fwV
 mNY
-mYF
+ltD
 cmH
 dWs
 xMq
@@ -119200,7 +119200,7 @@ oSL
 cmH
 iYy
 jEm
-pCy
+bDT
 cmH
 skL
 tvm
@@ -125174,7 +125174,7 @@ jzQ
 nQl
 fLp
 dWg
-cYI
+xFN
 vZM
 uuO
 rCr
@@ -125941,12 +125941,12 @@ sEQ
 vLe
 clP
 qGT
-jpR
-jpR
-jpR
-omI
-jpR
-jpR
+kox
+kox
+kox
+uin
+kox
+kox
 iNV
 iNV
 iNV
@@ -126198,12 +126198,12 @@ akR
 vLe
 tGn
 qwV
-jpR
-kwK
-dLi
-wGI
-ebv
-jpR
+kox
+tOw
+vvu
+ngV
+uHk
+kox
 ykd
 jlf
 eui
@@ -126455,12 +126455,12 @@ bUQ
 fzg
 pzh
 tir
-cqI
-fop
-sqd
-vxA
-eKx
-fth
+jLE
+jNf
+qXM
+lWO
+lJF
+nNF
 qSF
 dBK
 oZF
@@ -126712,12 +126712,12 @@ vLe
 vLe
 vYT
 qwV
-cqI
-xiF
-kVo
-fYs
-iju
-jpR
+jLE
+npz
+kLC
+gBm
+uuv
+kox
 uKN
 kAB
 oZW
@@ -126969,12 +126969,12 @@ bUl
 vzj
 mLy
 qGT
-cqI
-nGX
-ikN
-vxA
-wse
-ykh
+jLE
+stC
+nzN
+lWO
+gpN
+tdz
 aqi
 dGw
 qAc
@@ -127226,12 +127226,12 @@ aXl
 aXl
 nRG
 uEF
-jpR
-ecj
-eKx
-vxA
-nzw
-ykh
+kox
+maa
+lJF
+lWO
+fSM
+tdz
 xcf
 fJT
 kJm
@@ -127482,13 +127482,13 @@ hGr
 hGr
 hGr
 pzh
-jpR
-jpR
-muX
-eKx
-vxA
-mpV
-ykh
+kox
+kox
+heo
+lJF
+lWO
+fzC
+tdz
 aqi
 yep
 uSw
@@ -127739,13 +127739,13 @@ jyT
 oFZ
 kvb
 pzh
-jpR
-fop
-pdg
-mFR
-azq
-eQw
-jpR
+kox
+jNf
+ucO
+mnA
+wgn
+tTR
+kox
 qSF
 oCo
 oZW
@@ -127996,13 +127996,13 @@ szi
 qWo
 nuL
 vRf
-jpR
-aWR
-wkm
-mFR
-fop
-iAj
-jpR
+kox
+swr
+cXH
+mnA
+jNf
+aVG
+kox
 wtQ
 yep
 oZW
@@ -128253,13 +128253,13 @@ hGr
 hGr
 hGr
 pzh
-jpR
-lhZ
-fop
-mFR
-wkm
-aWR
-jpR
+kox
+wAx
+jNf
+mnA
+cXH
+swr
+kox
 aqi
 jlf
 oZF
@@ -128510,13 +128510,13 @@ pzh
 vRf
 pzh
 mLy
-jpR
-fop
-fop
-mFR
-fop
-gSF
-jpR
+kox
+jNf
+jNf
+mnA
+jNf
+sXA
+kox
 uKN
 bQf
 oNu
@@ -128767,13 +128767,13 @@ ePH
 ePH
 wqd
 mLy
-jpR
-jpR
-jpR
-jpR
-jpR
-jpR
-jpR
+kox
+kox
+kox
+kox
+kox
+kox
+kox
 tuq
 tuq
 tuq
@@ -130409,7 +130409,7 @@ kLc
 unI
 poE
 mRm
-aOA
+hQD
 rgt
 unI
 unI

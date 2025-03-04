@@ -26,6 +26,8 @@
 	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
 	overlay_mic_active = null
 
+	/// The proximity monitor used to allow people to hear DJ music while in hearing range.
+	var/datum/proximity_monitor/advanced/dj_music/music_field
 
 /obj/item/radio/radio_mic/Initialize(mapload)
 	. = ..()
@@ -39,6 +41,12 @@
 	should_update_icon = FALSE
 
 	set_broadcasting(TRUE)
+
+	music_field = new(src, isnull(listening_range) ? canhear_range : listening_range)
+
+/obj/item/radio/radio_mic/Destroy()
+	QDEL_NULL(music_field)
+	return ..()
 
 /obj/item/radio/radio_mic/ui_interact(mob/user, datum/tgui/ui, datum/ui_state/state)
 	return
