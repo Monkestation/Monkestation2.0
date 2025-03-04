@@ -63,7 +63,7 @@ export const MESSAGE_TYPES = [
     description: 'All departments of radio messages',
     selector:
       //      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .enteradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster, .resonate, .abductor, .alien, .changeling', MONKESTATION EDIT CHANGE OLD
-      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling, .radioradio .uncommonradio', // MONKESTATION EDIT CHANGE NEW
+      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling, .radioradio, .uncommonradio', // MONKESTATION EDIT CHANGE NEW
   },
   {
     type: MESSAGE_TYPE_ENTERTAINMENT,
