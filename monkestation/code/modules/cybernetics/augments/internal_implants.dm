@@ -199,7 +199,13 @@
 		/obj/item/autosurgeon/syndicate/thermal_eyes,
 		/obj/item/autosurgeon/syndicate/xray_eyes,
 		/obj/item/storage/box/syndie_kit/anti_stun,
-		/obj/item/storage/box/syndie_kit/reviver)
+		/obj/item/storage/box/syndie_kit/reviver,
+		/obj/item/storage/box/syndie_kit/razorwire,
+		/obj/item/storage/box/syndie_kit/esword,
+		/obj/item/storage/box/syndie_kit/mantis,
+		/obj/item/storage/box/syndie_kit/laser_arm,
+		/obj/item/storage/box/syndie_kit/deepvien,
+		)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()
