@@ -168,4 +168,4 @@
 					/obj/item/stack/cable_coil,
 					)
 	crate_name = "Genesis Chamber Construction Kit Crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
+	crate_type = /obj/structure/closet/crate/secure/hydroponics
