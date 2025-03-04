@@ -26,8 +26,6 @@
 #define CALIBER_77 ".77"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
-/// MONKE EDIT: The caliber used by the H-20r, or the Homergun if you're cool
-#define CALIBER_45_HOMER ".45 Homing"
 /// The caliber used by sniper rifles and the desert eagle.
 #define CALIBER_50 ".50"
 /// The caliber used by the gyrojet pistol.
