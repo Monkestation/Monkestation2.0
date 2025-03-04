@@ -40,6 +40,8 @@ import {
   selectHighlightSettings,
   selectHighlightSettingById,
 } from './selectors';
+import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
+import { chatRenderer } from '../chat/renderer';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -71,6 +73,7 @@ export const SettingsPanel = (props, context) => {
         {activeTab === 'general' && <SettingsGeneral />}
         {activeTab === 'chatPage' && <ChatPageSettings />}
         {activeTab === 'textHighlight' && <TextHighlightSettings />}
+        {activeTab === 'experimental' && <ExperimentalSettings />}
       </Stack.Item>
     </Stack>
   );
@@ -391,5 +394,93 @@ const TextHighlightSetting = (props, context) => {
         }
       />
     </Stack.Item>
+  );
+};
+
+const ExperimentalSettings = (props, context) => {
+  const { websocketEnabled, websocketServer } = useSelector(
+    context,
+    selectSettings,
+  );
+  const dispatch = useDispatch(context);
+
+  return (
+    <Section>
+      <Stack vertical>
+        <Stack.Item>
+          <LabeledList>
+            <LabeledList.Item label="Websocket Client">
+              <Button.Checkbox
+                content={'Enabled'}
+                checked={websocketEnabled}
+                color="transparent"
+                onClick={() =>
+                  dispatch(
+                    updateSettings({
+                      websocketEnabled: !websocketEnabled,
+                    }),
+                  )
+                }
+              />
+              <Button
+                icon={'question'}
+                onClick={() => {
+                  chatRenderer.processBatch([
+                    {
+                      html:
+                        '<div class="boxed_message"><b>Websocket Information</b><br><span class="notice">' +
+                        'Quick rundown. This connects to the specified websocket server, and ' +
+                        'forwards all data/payloads from the server, to the websocket. Allowing ' +
+                        'you to have in-game actions reflect in other services, or the real ' +
+                        'world, (ex. Reactive RGB, haptics, play effects/animations in vtubing ' +
+                        'software, etc). You can find more information ' +
+                        '<a href="https://github.com/Monkestation/Monkestation2.0/pull/5744">here in the pull request.</a></span></div>',
+                    },
+                  ]);
+                }}
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Websocket Server">
+              <Stack.Item>
+                <Stack>
+                  <Input
+                    width={'100%'}
+                    value={websocketServer}
+                    placeholder="localhost:1990"
+                    onChange={(e, value) =>
+                      dispatch(
+                        updateSettings({
+                          websocketServer: value,
+                        }),
+                      )
+                    }
+                  />
+                </Stack>
+              </Stack.Item>
+            </LabeledList.Item>
+            <LabeledList.Item label="Websocket Controls">
+              <Button
+                ml={0.5}
+                content="Force Reconnect"
+                icon={'globe'}
+                color={'good'}
+                onClick={() => {
+                  dispatch(reconnectWebsocket());
+                }}
+              />
+              <Button
+                ml={0.5}
+                content="Force Disconnect"
+                icon={'globe'}
+                color={'bad'}
+                onClick={() => {
+                  dispatch(disconnectWebsocket());
+                }}
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };

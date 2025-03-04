@@ -23,6 +23,7 @@ import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 import { setGlobalStore } from 'tgui/backend';
+import { websocketMiddleware } from './websocket';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -37,6 +38,7 @@ const store = configureStore({
   }),
   middleware: {
     pre: [
+      websocketMiddleware,
       chatMiddleware,
       pingMiddleware,
       telemetryMiddleware,
