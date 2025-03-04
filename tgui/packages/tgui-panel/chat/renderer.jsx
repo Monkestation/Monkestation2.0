@@ -258,7 +258,7 @@ class ChatRenderer {
           highlightRegex = new RegExp('(' + regexStr + ')', flags);
         } else {
           const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
-            '|'
+            '|',
           )})${matchWord ? '\\b' : ''}`;
           highlightRegex = new RegExp(pattern, flags);
         }
