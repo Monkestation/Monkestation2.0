@@ -6,3 +6,6 @@
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'monkestation/code/modules/factory_type_beat/icons/ore.dmi'
+
+
+/obj/item/boulder/artifact

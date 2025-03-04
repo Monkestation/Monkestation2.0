@@ -175,7 +175,7 @@
 	remove_shared_particles(/particles/smoke/ash)
 	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
-		//SSore_generation.processed_vents += src
+		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
@@ -273,6 +273,22 @@
 	for(var/datum/material/selected_mat as anything in mineral_breakdown)
 		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
 		new_mat.icon_state = selected_mat.name
+
+/**
+ * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
+ * Returns the boulder produced.
+ * @params apply_cooldown Should we apply a cooldown to producing boulders? Default's false, used by manual boulder production (goldgrubs, golems, etc).
+ */
+/obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
+	RETURN_TYPE(/obj/item/boulder)
+
+	var/obj/item/boulder/new_rock
+	if(prob(artifact_chance))
+		new_rock = new /obj/item/boulder/artifact(loc)
+	else
+		new_rock = new /obj/item/boulder(loc)
+
+	return new_rock
 
 /obj/structure/ore_vent/random
 

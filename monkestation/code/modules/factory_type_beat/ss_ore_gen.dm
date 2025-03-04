@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/obj/structure/ore_vent/processed_vents = list()
 	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
 	var/list/obj/structure/ore_vent/possible_vents = list()
+	/// All the boulders that have been produced by ore vents to be pulled by BRM machines.
+	var/list/obj/item/boulder/available_boulders = list()
 	/**
 	 * A list of all the minerals that are being mined by ore vents. We reset this list every time cave generation is done.
 	 * Generally Should be empty by the time initialize ends on lavaland.
@@ -44,4 +46,15 @@ SUBSYSTEM_DEF(ore_generation)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
-	to_chat(world, "Whoa oregen fired")
+	available_boulders.Cut() // reset upon new fire.
+	for(var/obj/structure/ore_vent/current_vent as anything in processed_vents)
+
+		var/local_vent_count = 0
+		for(var/obj/item/boulder/old_rock in current_vent.loc)
+			available_boulders += old_rock
+			local_vent_count++
+
+		if(local_vent_count >= MAX_BOULDERS_PER_VENT)
+			continue //We don't want to be accountable for literally hundreds of unprocessed boulders for no reason.
+
+		available_boulders += current_vent.produce_boulder()
