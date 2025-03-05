@@ -130,5 +130,5 @@
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
-			target_bodypart.adjustBleedStacks(-10)
+			target_bodypart.adjustBleedStacks(-7)
 	return ..()
