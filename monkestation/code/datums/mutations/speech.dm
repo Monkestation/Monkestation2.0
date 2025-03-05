@@ -36,21 +36,13 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	owner.AddComponentFrom(GENETIC_MUTATION, /datum/component/fluffy_tongue)
 
 /datum/mutation/human/uwuspeak/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/uwuspeak/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = uwuify_text(message)
-		speech_args[SPEECH_MESSAGE] = message
+	owner.RemoveComponentSource(GENETIC_MUTATION, /datum/component/fluffy_tongue)
 
 /datum/mutation/human/loud
 	name = "Loud"
