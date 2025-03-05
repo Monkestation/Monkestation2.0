@@ -1000,6 +1000,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/bloodsucker/mirror/broken, 28)
 		// They might be able to escape it by going to Wonderland...
 		to_chat(user, span_userdanger("MOVE— MAYBE WONDERLAND— NOW!"))
 		user.balloon_alert(user, "MOVE— MAYBE WONDERLAND— NOW!")
+		// reset cooldown on their actions to give them a chance
+		var/datum/action/cooldown/action = locate(/datum/action/cooldown/wonderland_drop) in user.actions
+		action?.finish_cooldown_now()
+		action = locate(/datum/action/cooldown/paradox) in user.actions
+		action?.finish_cooldown_now()
 
 	if(mirror_will_not_forget_this)
 		katabasis(user, TRUE)

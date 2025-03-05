@@ -5966,6 +5966,7 @@
 #include "monkestation\code\datums\stamina_container.dm"
 #include "monkestation\code\datums\twitch_data.dm"
 #include "monkestation\code\datums\achievements\misc_achievements.dm"
+#include "monkestation\code\datums\actions\cooldown_action.dm"
 #include "monkestation\code\datums\actions\items\toggles.dm"
 #include "monkestation\code\datums\actions\mobs\assume_form.dm"
 #include "monkestation\code\datums\ai\idle_behaviors\idle_dukeman.dm"
