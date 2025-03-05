@@ -25,6 +25,33 @@
 		message = replacetext(message,"s","th")
 		speech_args[SPEECH_MESSAGE] = message
 
+/datum/mutation/human/uwuspeak
+	name = "Neko Speak"
+	desc = "Makes the subject speak in horrific combinations of words."
+	quality = NEGATIVE
+	text_gain_indication = span_warning("Something feels very wrong.")
+	text_lose_indication = span_notice("You no longer feel like vomiting up your tongue.")
+
+/datum/mutation/human/uwuspeak/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/mutation/human/uwuspeak/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/uwuspeak/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = uwuify_text(message)
+		speech_args[SPEECH_MESSAGE] = message
+
 /datum/mutation/human/loud
 	name = "Loud"
 	desc = "Forces the speaking centre of the subjects brain to yell every sentence."
