@@ -41,6 +41,12 @@
 	if(!H.can_mutate() || HAS_TRAIT(H, TRAIT_GODMODE))
 		return
 
+	// MONKESTATION ADDITION START
+	if(HAS_TRAIT(H, TRAIT_RADHEALING))
+		H.adjustBruteLoss(-5)
+		H.adjustFireLoss(-5)
+	// MONKESTATION ADDITION END
+
 	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
 		return
 
