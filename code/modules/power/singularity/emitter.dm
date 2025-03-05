@@ -57,6 +57,14 @@
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
 
+	//monkestation edit start
+	//Basic Emitters projectile characteristics
+	///damage modifier on walls
+	var/wall_dem_mod = 1
+	///can projectile hit walls
+	var/is_proj_hit_walls = FALSE
+	//monkestation edit end
+
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
@@ -87,10 +95,20 @@
 	var/fire_shoot_delay = 12 SECONDS
 	var/min_fire_delay = 2.4 SECONDS
 	var/power_usage = 350
+	//monkestation edit start
+	var/list/wall_mod_table = list(1, 1.5, 3, 6, 10) //infinite, 20, 10, 5, 3 hits respectively to destroy a normal wall, last two tiers, 20~, 10 shots for r-walls
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		max_fire_delay -= 2 SECONDS * laser.tier
 		min_fire_delay -= 0.4 SECONDS * laser.tier
 		fire_shoot_delay -= 2 SECONDS * laser.tier
+		var/parts_tier = laser.tier
+		if(obj_flags & EMAGGED)
+			parts_tier += 1
+		if(parts_tier >= 2)
+			is_proj_hit_walls = TRUE
+		wall_dem_mod = wall_mod_table[clamp(parts_tier, 0, LAZYLEN(wall_mod_table))]
+	//monkestation edit end
+
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
 	fire_delay = fire_shoot_delay
@@ -220,6 +238,15 @@
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
 	var/obj/projectile/projectile = new projectile_type(get_turf(src))
 	playsound(src, projectile_sound, 50, TRUE)
+	//monkestation edit start
+	if(istype(projectile, /obj/projectile/beam/emitter/hitscan)) //TODO: LESS SNOWFLAKE CHECK
+		projectile.wall_mod = wall_dem_mod
+		projectile.can_hit_walls = is_proj_hit_walls
+		if(obj_flags & EMAGGED)
+			take_damage((round(max_integrity/100 * 5)))
+			visible_message(span_warning("The [src] visibly buckles under overloaded pressure!"))
+
+	//monkestation edit end
 	if(prob(35))
 		sparks.start()
 	projectile.firer = user ? user : src
@@ -373,7 +400,8 @@
 		return FALSE
 	locked = FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "id lock shorted out")
+	balloon_alert(user, "id lock shorted out and lasers overloaded") //monkestation edit
+	RefreshParts() //monkestation edit
 	return TRUE
 
 

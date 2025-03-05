@@ -18,6 +18,10 @@
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
 
+	//monkestation edit start
+	wall_integrity =  3000
+	minimum_damage = 180
+	//monkestation edit end
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
