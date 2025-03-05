@@ -1,3 +1,12 @@
+/obj/item/radio/headset/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot_flags & slot)
+		ADD_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
+
+/obj/item/radio/headset/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
+
 /obj/item/radio/headset/headset_secmed
 	name = "brig physician radio headset"
 	desc = "This is used by your secure doctor."
