@@ -208,6 +208,12 @@
 	design_ids = list("linked_surgery")
 	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/scanning/random/serverlink = 7500)
+
+/datum/techweb_node/linked_surgery/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/ipc_parts
 	id = "ipc_parts"
@@ -369,3 +375,39 @@
 		"surgery_heal_robot_upgrade_femto",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1300) // less expensive than the organic surgery research equivalent since its JUST tend wounds
+
+/datum/techweb_node/explosive_weapons
+	discount_experiments = list(/datum/experiment/scanning/random/casing = 1500)
+
+/datum/techweb_node/ai_basic
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 500)
+
+/datum/techweb_node/ai_adv
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 2000)
+
+/datum/techweb_node/robotics
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+
+/datum/techweb_node/adv_bots
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+
+/datum/techweb_node/datatheory
+	discount_experiments = list(/datum/experiment/scanning/random/money = 1500)
+
+/datum/techweb_node/comptech
+	discount_experiments = list(/datum/experiment/scanning/random/money = 1000)
+
+/datum/techweb_node/mod_advanced
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_engineering
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_medical
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_security
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+
+/datum/techweb_node/mod_entertainment
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
