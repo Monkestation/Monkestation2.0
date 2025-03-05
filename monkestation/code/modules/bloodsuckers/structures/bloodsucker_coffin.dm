@@ -25,6 +25,7 @@
 			/datum/crafting_recipe/vassalrack,
 			/datum/crafting_recipe/candelabrum,
 			/datum/crafting_recipe/bloodthrone,
+			/datum/crafting_recipe/blood_mirror,
 			/datum/crafting_recipe/meatcoffin,
 		))
 		owner.current.balloon_alert(owner.current, "new recipes learned!")
