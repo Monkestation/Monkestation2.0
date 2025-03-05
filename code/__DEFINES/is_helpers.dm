@@ -22,7 +22,6 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isgenerator(A) (istype(A, /generator))
 
-#define isimage(A) (istype(A, /image))
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
