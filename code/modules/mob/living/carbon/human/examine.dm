@@ -81,8 +81,13 @@
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
+	// monkestation edit start PR #5133
+	if(!(obscured & ITEM_SLOT_MASK))
+		if(wear_mask && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
+			. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
+		if(HAS_TRAIT(src, TRAIT_CORRUPTED_MONITOR))
+			. += span_boldwarning("[t_His] monitor is weirdly corrupted!")
+	// monkestation edit end PR #5133
 
 	if(wear_neck && !(obscured & ITEM_SLOT_NECK)  && !HAS_TRAIT(wear_neck, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
@@ -151,7 +156,7 @@
 		if(body_part.current_gauze)
 			var/gauze_href = body_part.current_gauze.name
 			if(adjacent && isliving(user)) // only shows the href if we're adjacent
-				gauze_href = "<a href='?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+				gauze_href = "<a href='byond://?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
 			msg += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
 
 		for(var/i in body_part.wounds)
