@@ -61,7 +61,7 @@
 
 /datum/surgery_step/splenorrhaphy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/human_target = target
-	human_target.adjustOrganLoss(ORGAN_SLOT_spleen, 15)
+	human_target.adjustOrganLoss(ORGAN_SLOT_SPLEEN, 15)
 	display_results(
 		user,
 		target,
