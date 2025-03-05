@@ -1,4 +1,5 @@
 /datum/mutation/human/laser_eyes
+	conflicts = list(/datum/mutation/human/laser_eyes/unstable, /datum/mutation/human/laser_eyes/unstable/syndicate)
 	power_coeff = 1
 	energy_coeff = 1
 
@@ -7,6 +8,7 @@
 	name = "Unstable Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes, however this mutation is very unstable and causes damage to the user."
 	instability = 60
+	conflicts = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/laser_eyes/unstable/syndicate)
 	synchronizer_coeff = 1
 	var/shots_left = 4
 	var/cooldown
@@ -68,6 +70,7 @@
 /datum/mutation/human/laser_eyes/unstable/syndicate
 	name = "Stabilized Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes, this strain of the mutation is high-quality, yet still causes the user to take damage on use."
+	conflicts = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/laser_eyes/unstable)
 	instability = 40
 
 /datum/mutation/human/meson_vision
@@ -185,12 +188,16 @@
 
 	eyes.flash_protect = initial(eyes.flash_protect)
 
+/datum/mutation/human/xray
+	conflicts = list(/datum/mutation/human/weaker_xray, /datum/mutation/human/weaker_xray/syndicate)
+
 /datum/mutation/human/weaker_xray
 	name = "X-Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls at the cost of their eye health."
 	locked = TRUE
 	power_path = /datum/action/cooldown/toggle_xray
 	instability = 60
+	conflicts = list(/datum/mutation/human/xray, /datum/mutation/human/weaker_xray/syndicate)
 	synchronizer_coeff = 1
 
 /datum/mutation/human/weaker_xray/modify()
@@ -313,6 +320,7 @@
 	name = "Refined X-Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls at the cost of their eye health. This one seems to be high-quality making it more stable."
 	instability = 40
+	conflicts = list(/datum/mutation/human/xray, /datum/mutation/human/weaker_xray)
 
 // Colorblindness stuff begins
 

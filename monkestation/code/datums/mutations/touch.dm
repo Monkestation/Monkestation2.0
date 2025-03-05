@@ -40,6 +40,9 @@
 		return
 	return ..(target, user, TRUE, click_parameters) //call the parent, forcing proximity = TRUE so even distant things are considered nearby
 
+/datum/mutation/human/lay_on_hands
+	conflicts = list(/datum/mutation/human/lay_on_hands/syndicate)
+
 /datum/mutation/human/lay_on_hands/syndicate
 	name = "Corrupted Mending Touch"
 	desc = "A genetic sequence thats highly corrupted sharing some nucleotides with mending touch, use is not advised."
@@ -48,6 +51,7 @@
 	text_gain_indication = span_notice("Your hand feels strange.")
 	text_lose_indication = span_notice("Your hand feels secular once more.")
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands/syndicate
+	conflicts = list(/datum/mutation/human/lay_on_hands)
 	instability = 50
 
 /datum/action/cooldown/spell/touch/lay_on_hands/syndicate

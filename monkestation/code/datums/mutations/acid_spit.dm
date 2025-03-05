@@ -8,6 +8,7 @@
 	power_path = /datum/action/cooldown/spell/pointed/projectile/acid_spit
 	instability = 20
 	difficulty = 12
+	conflicts = list(/datum/mutation/human/acid_spit/unstable)
 	power_coeff = 1
 	energy_coeff = 1
 
@@ -166,3 +167,4 @@
 	name = "Unstable Acid Spit"
 	desc = "An ancient mutation from xenomorphs that changes the salivary glands to produce acid, this is a highly unstable strain."
 	instability = 70
+	conflicts = list(/datum/mutation/human/acid_spit)

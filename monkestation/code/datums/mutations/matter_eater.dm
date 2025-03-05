@@ -13,6 +13,7 @@
 	instability = 40
 	difficulty = 12
 	power_path = /datum/action/cooldown/spell/pointed/consumption
+	conflicts = list(/datum/mutation/human/consumption/syndicate)
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
@@ -421,6 +422,7 @@
 	desc = "Allows the subject to eat just about anything without harm. This seems to be a strain that was marked as too dangerous by Nanotrasen and thus is outlawed."
 	locked = TRUE
 	instability = 20
+	conflicts = list(/datum/mutation/human/consumption)
 
 #undef EAT_FAILED
 #undef EAT_SUCCESS

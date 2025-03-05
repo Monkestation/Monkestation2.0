@@ -8,7 +8,7 @@
 	text_lose_indication = span_notice("The energy in your hands subsides.")
 	power_path = /datum/action/cooldown/spell/touch/acid
 	instability = 30
-
+	conflicts = list(/datum/mutation/human/acid_touch/unstable)
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
@@ -111,3 +111,4 @@
 	name = "Unstable Acidic Hands"
 	desc = "Allows a host to metabolize some of their blood into acid, concentrated on their hands. This strain is more unstable than the one found on oozelings."
 	instability = 50
+	conflicts = list(/datum/mutation/human/acid_touch)
