@@ -4,13 +4,14 @@
 #define MAX_EMOTE_COOLDOWN		(45 SECONDS)
 /// How many seconds are shaved off each tick while holy water is in the victim's system.
 #define HOLY_WATER_CURE_RATE	(5 SECONDS)
+#define CURE_PROTECTION_TIME (1 MINUTE) // Cure protection time limit.
 #define MAX_BLIGHT_STAGES 5 // Max stage blight can reach, each stage increases severity of effects.
 #define CHANCE_TO_WORSEN 5 // Chance the blight increases stage
 
 /datum/status_effect/revenant_blight
 	id = "revenant_blight"
 	duration = 5 MINUTES
-	tick_interval = 1 SECONDS // Simulate disease activation(2sec) while making it fire 2x more.
+	tick_interval = 1 SECOND // Simulate disease activation(2sec) while making it fire 2x more.
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	remove_on_fullheal = TRUE
@@ -31,6 +32,12 @@
 
 // Should only be called once if they still have the status effect.
 /datum/status_effect/revenant_blight/on_apply()
+	if(istype(owner) && istype(ghostie))
+		if(owner.has_status_effect(/datum/status_effect/revenant_blight_protection))
+			to_chat(owner, span_revenminor("Your body is tingling, you feel a cold sensation envelope you before passing."))
+			to_chat(ghostie, span_warning("[owner.name] seems to have holy energy still flowing through them."))
+			return FALSE
+
 	misfortune = owner.AddComponent(/datum/component/omen/revenant_blight)
 	owner.set_haircolor(COLOR_REVENANT, override = TRUE)
 	adjust_stage() // Blight should be applied first time here so increase the stage usually starts at 0.
@@ -118,6 +125,15 @@
 		owner.visible_message(span_warning("Dark energy evaporates off of [owner]."), span_revennotice("The dark energy plaguing you has suddenly disappated."))
 	qdel(src)
 
+// Applied when blight is cured. Prevents getting blight again for a period of time.
+/datum/status_effect/revenant_blight_protection
+	id = "revenant_blight_protection"
+	duration = CURE_PROTECTION_TIME
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	remove_on_fullheal = TRUE
+
 /datum/component/omen/revenant_blight
 	incidents_left = INFINITY
 	luck_mod = 0.6 // 60% chance of bad things happening
@@ -128,3 +144,4 @@
 #undef HOLY_WATER_CURE_RATE
 #undef MAX_BLIGHT_STAGES
 #undef CHANCE_TO_WORSEN
+#undef CURE_PROTECTION_TIME
