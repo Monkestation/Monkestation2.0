@@ -19777,6 +19777,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"bUs" = (
+/turf/open/floor/fakespace,
+/area/centcom/central_command_areas/adminroom)
 "bUC" = (
 /obj/structure/rack,
 /obj/item/highfrequencyblade/wizard,
@@ -21962,7 +21965,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/feed_machine,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "gCO" = (
@@ -23197,6 +23200,7 @@
 /obj/structure/table/reinforced{
 	color = "#363737"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "iIV" = (
@@ -24491,6 +24495,7 @@
 	pixel_x = -32
 	},
 /obj/structure/bookcase/random,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "lwC" = (
@@ -24784,6 +24789,7 @@
 	pixel_x = 32
 	},
 /obj/structure/fermenting_barrel,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "mvd" = (
@@ -25166,6 +25172,7 @@
 /obj/structure/table/reinforced{
 	color = "#363737"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "nvZ" = (
@@ -25413,7 +25420,7 @@
 	pixel_x = -7;
 	pixel_y = -8
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "nVx" = (
@@ -25553,6 +25560,7 @@
 /obj/structure/table/reinforced{
 	color = "#363737"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "ojs" = (
@@ -26454,7 +26462,7 @@
 /mob/living/basic/chicken/wiznerd,
 /obj/structure/chair/sofa/right{
 	dir = 2;
-	color = "7c5295";
+	color = "#7c5295";
 	name = "chicken petting zone"
 	},
 /turf/open/floor/carpet/purple,
@@ -26986,6 +26994,12 @@
 /obj/structure/railing/wood,
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
+"rxn" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/centcom/central_command_areas/adminroom)
 "rxE" = (
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/grass,
@@ -27986,12 +28000,6 @@
 	},
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
-"tDr" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
-/turf/open/floor/fakespace,
-/area/centcom/central_command_areas/adminroom)
 "tEv" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
@@ -28997,9 +29005,6 @@
 	},
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
-"vVj" = (
-/turf/open/floor/fakespace,
-/area/centcom/central_command_areas/adminroom)
 "vWu" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt{
@@ -29658,6 +29663,7 @@
 	dir = 1;
 	color = "#7c5295"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "xno" = (
@@ -55203,11 +55209,11 @@ kpH
 qmo
 mEJ
 sZI
-vVj
+bUs
 gON
 qLQ
 mMx
-tDr
+rxn
 inN
 nva
 dfU
@@ -55464,7 +55470,7 @@ xdB
 kpH
 kFG
 fZY
-tDr
+rxn
 fZZ
 wwh
 qdq
@@ -55722,7 +55728,7 @@ kpH
 sHQ
 dDR
 hhM
-vVj
+bUs
 ccu
 fEU
 sUG
