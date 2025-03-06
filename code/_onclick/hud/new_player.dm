@@ -13,9 +13,8 @@
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
 		if(button_type::abstract_type == button_type)
 			continue
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
-		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
@@ -29,6 +28,10 @@
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
 
+///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
+/atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
+	set_new_hud(our_hud)
+	return ..()
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
