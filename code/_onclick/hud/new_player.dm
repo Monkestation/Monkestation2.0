@@ -471,11 +471,9 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
-
 //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
 // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
-/atom/movable/screen/lobby/youarehere/Initialize(mapload)
+/atom/movable/screen/lobby/youarehere/SlowInit(mapload)
 	. = ..()
 	var/port = world.port
 	switch(port)
@@ -499,9 +497,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
 	/// The port of this server.
 	var/server_port
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
-
-/atom/movable/screen/lobby/button/server/Initialize(mapload)
+/atom/movable/screen/lobby/button/server/SlowInit(mapload)
 	. = ..()
 	set_button_status(is_available())
 	update_appearance(UPDATE_ICON_STATE)
