@@ -5,25 +5,23 @@
 /// How many seconds are shaved off each tick while holy water is in the victim's system.
 #define HOLY_WATER_CURE_RATE	(5 SECONDS)
 #define MAX_BLIGHT_STAGES 5 // Max stage blight can reach, each stage increases severity of effects.
+#define CHANCE_TO_WORSEN 5 // Chance the blight increases stage
 
 /datum/status_effect/revenant_blight
 	id = "revenant_blight"
 	duration = 5 MINUTES
-	tick_interval = 1 SECONDS // Simulate disease activation while making it fire 2x more.
+	tick_interval = 1 SECONDS // Simulate disease activation(2sec) while making it fire 2x more.
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	remove_on_fullheal = TRUE
 	var/max_stages = MAX_BLIGHT_STAGES
 	var/stage = 0 //Current blight stage.
-	//stage_prob = 5
-	//var/stagedamage = 0 //Highest stage reached.
-	//var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
+	var/stagedamage = 0 //Highest stage reached.
+	var/finalstage = FALSE //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
 	/// The omen/cursed component applied to the victim.
 	var/datum/component/omen/revenant_blight/misfortune
 	/// The revenant that cast this blight.
 	var/mob/living/basic/revenant/ghostie
-	/// Cooldown var for when the status effect can emote again.
-	COOLDOWN_DECLARE(next_emote)
 
 /datum/status_effect/revenant_blight/on_creation(mob/living/new_owner, mob/living/basic/revenant/reve_ghostie)
 	. = ..()
@@ -35,6 +33,7 @@
 /datum/status_effect/revenant_blight/on_apply()
 	misfortune = owner.AddComponent(/datum/component/omen/revenant_blight)
 	owner.set_haircolor(COLOR_REVENANT, override = TRUE)
+	adjust_stage() // Blight should be applied first time here so increase the stage usually starts at 0.
 	to_chat(owner, span_revenminor("You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")]."))
 
 	return ..()
@@ -56,25 +55,67 @@
 
 /datum/status_effect/revenant_blight/on_remove()
 	QDEL_NULL(misfortune)
-	owner.set_haircolor(null, override = TRUE)
+	if(owner)
+		owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_REVENANT)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/human = owner
+			if(human.dna && human.dna.species)
+				human.dna.species.handle_mutant_bodyparts(human)
+				human.set_haircolor(null, override = TRUE)
+			to_chat(owner, span_notice("You feel better."))
 	if(ghostie)
 		UnregisterSignal(ghostie, COMSIG_QDELETING)
 		ghostie = null
-	to_chat(owner, span_notice("You feel better."))
 
 /datum/status_effect/revenant_blight/tick(seconds_per_tick, times_fired)
-
-/*
 	var/delta_time = DELTA_WORLD_TIME(SSfastprocess)
-	if(owner.stat == CONSCIOUS && COOLDOWN_FINISHED(src, next_emote) && SPT_PROB(5, delta_time))
-		owner.emote(pick("pale", "shiver", "cries"))
-		COOLDOWN_START(src, next_emote, rand(MIN_EMOTE_COOLDOWN, MAX_EMOTE_COOLDOWN))
 	if(owner.reagents?.has_reagent(/datum/reagent/water/holywater))
 		remove_duration(HOLY_WATER_CURE_RATE * delta_time)
-*/
+	if(!finalstage)
+		if(owner.body_position == LYING_DOWN && owner.IsSleeping() && SPT_PROB(3 * stage, delta_time)) // Make sure they are sleeping laying down.
+			owner.remove_status_effect(src) // Cure the Status effect.
+			return FALSE
+		if(SPT_PROB(1.5 * stage, delta_time))
+			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
+			owner.adjust_confusion(4 SECONDS)
+			owner.stamina.adjust(-10, FALSE)
+			new /obj/effect/temp_visual/revenant(owner.loc)
+		if(stagedamage < stage)
+			stagedamage++
+			owner.adjustToxLoss(1 * stage * delta_time, FALSE) //should, normally, do about 30 toxin damage.
+			new /obj/effect/temp_visual/revenant(owner.loc)
+		if(SPT_PROB(25, delta_time))
+			owner.stamina.adjust(-stage, FALSE)
+
+	switch(stage)
+		if(2)
+			if(owner.stat == CONSCIOUS && SPT_PROB(2.5, delta_time))
+				owner.emote("pale")
+		if(3)
+			if(owner.stat == CONSCIOUS && SPT_PROB(5, delta_time))
+				owner.emote(pick("pale","shiver"))
+		if(4)
+			if(owner.stat == CONSCIOUS && SPT_PROB(7.5, delta_time))
+				owner.emote(pick("pale","shiver","cries"))
+		if(5)
+			if(!finalstage)
+				finalstage = TRUE
+				to_chat(owner, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
+				owner.stamina.adjust(-22.5 * delta_time, FALSE)
+				new /obj/effect/temp_visual/revenant(owner.loc)
+				if(ishuman(owner))
+					var/mob/living/carbon/human/human = owner
+					if(human.dna && human.dna.species)
+						human.dna.species.handle_mutant_bodyparts(human, COLOR_REVENANT)
+						owner.set_haircolor(COLOR_REVENANT, override = TRUE)
+				owner.visible_message(span_warning("[owner] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
+				owner.add_atom_colour(COLOR_REVENANT, TEMPORARY_COLOUR_PRIORITY)
+				addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, remove_status_effect), src), 10 SECONDS) // Automatically call remove status on timer.
 
 /datum/status_effect/revenant_blight/proc/remove_when_ghost_dies(datum/source)
 	SIGNAL_HANDLER
+	if(owner && ishuman(owner))
+		owner.visible_message(span_warning("Dark energy evaporates off of [owner]."), span_revennotice("The dark energy plaguing you has suddenly disappated."))
 	qdel(src)
 
 /datum/component/omen/revenant_blight
@@ -86,3 +127,4 @@
 #undef MAX_EMOTE_COOLDOWN
 #undef HOLY_WATER_CURE_RATE
 #undef MAX_BLIGHT_STAGES
+#undef CHANCE_TO_WORSEN
