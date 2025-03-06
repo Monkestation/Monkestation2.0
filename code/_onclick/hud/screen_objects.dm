@@ -18,7 +18,14 @@
 	/// A reference to the object in the slot. Grabs or items, generally.
 	var/obj/master = null
 	/// A reference to the owner HUD, if any.
+	// MONKESTATION EDIT START: There are a couple uses of this variable in
+	// `code\datums\interactions\interaction_mode.dm` that I'm unsure how to remove - so this can't
+	// be private at the moment.
+	/* //MONKESTATION EDIT ORIGINAL
 	VAR_PRIVATE/datum/hud/hud = null
+	*/
+	var/datum/hud/hud = null
+	//MONKESTATION EDIT END
 	/**
 	 * Map name assigned to this object.
 	 * Automatically set by /client/proc/add_obj_to_map.
@@ -314,8 +321,9 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/interaction_mode/combat_mode/combat_mode
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, datum/interaction_mode/combat_mode/combat_mode_owner)
 	. = ..()
+	combat_mode = combat_mode_owner
 	update_appearance()
 
 /atom/movable/screen/combattoggle/Destroy()

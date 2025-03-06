@@ -24,6 +24,7 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Redeem Code",
 			/* offset = */ 2,
@@ -33,6 +34,7 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Open Lootbox",
 			/* offset = */ 3,
@@ -43,6 +45,7 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Open Map",
 			/* offset = */ 4,

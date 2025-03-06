@@ -192,7 +192,7 @@
 	using.screen_loc = ui_inventory
 	static_inventory += using
 
-	using = new /atom/movable/screen/human/equip()
+	using = new /atom/movable/screen/human/equip(null, src)
 	using.icon = ui_style
 	using.screen_loc = ui_equip_position(mymob)
 	static_inventory += using
