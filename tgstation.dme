@@ -7943,6 +7943,7 @@
 #include "monkestation\code\modules\projectiles\ammunition\_ammunition.dm"
 #include "monkestation\code\modules\projectiles\ammunition\ballistic\machine_guns.dm"
 #include "monkestation\code\modules\projectiles\ammunition\ballistic\shotgun.dm"
+#include "monkestation\code\modules\projectiles\guns\ballistic\fss.dm"
 #include "monkestation\code\modules\projectiles\guns\ballistic\machine_guns.dm"
 #include "monkestation\code\modules\projectiles\guns\ballistic\revolver.dm"
 #include "monkestation\code\modules\projectiles\guns\ballistic\ryanecorp_whispering_jester.dm"
