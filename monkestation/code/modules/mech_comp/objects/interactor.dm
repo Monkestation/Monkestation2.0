@@ -29,6 +29,7 @@
 
 /obj/item/mcobject/interactor/Initialize(mapload)
 	. = ..()
+	qdel(src)
 	MC_ADD_CONFIG("Swap Click", swap_click)
 	MC_ADD_CONFIG("Swap Range", set_range)
 	MC_ADD_CONFIG("Change Direction", change_dir)
