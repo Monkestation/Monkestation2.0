@@ -119,6 +119,9 @@
 				owner.add_atom_colour(COLOR_REVENANT, TEMPORARY_COLOUR_PRIORITY)
 				addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, remove_status_effect), src), 10 SECONDS) // Automatically call remove status on timer.
 
+	if(SPT_PROB(CHANCE_TO_WORSEN, delta_time)) // Finally check if we should increase the stage.
+		adjust_stage()
+
 /datum/status_effect/revenant_blight/proc/remove_when_ghost_dies(datum/source)
 	SIGNAL_HANDLER
 	if(owner && ishuman(owner))
