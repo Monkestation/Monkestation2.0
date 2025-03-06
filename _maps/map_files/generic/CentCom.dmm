@@ -27987,6 +27987,7 @@
 	pixel_y = -32;
 	layer = 2.8
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/dirt/dark/station,
 /area/centcom/central_command_areas/adminroom)
 "tDe" = (
@@ -29699,6 +29700,7 @@
 	},
 /obj/machinery/growing,
 /obj/item/seeds/sugarcane,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/dirt/dark/station,
 /area/centcom/central_command_areas/adminroom)
 "xoZ" = (
