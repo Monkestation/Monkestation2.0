@@ -31,9 +31,9 @@
 
 /datum/quirk/listener/add_unique(client/client_source)
 	quirk_holder.remove_language(/datum/language/common, FALSE, TRUE, LANGUAGE_ATOM)
+	if (!iscarbon(quirk_holder))
+		return
 	var/mob/living/carbon/carbon_holder = quirk_holder
-	if (istype(carbon_holder))
-		for (var/item in carbon_holder.get_all_gear())
-			if (istype(item, /obj/item/clothing/mask/translator))
-				carbon_holder.dropItemToGround(item, force = TRUE, silent = TRUE, invdrop = FALSE)
-				qdel(item)
+	for (var/obj/item/clothing/mask/translator/translator in carbon_holder.get_all_gear())
+		carbon_holder.temporarilyRemoveItemFromInventory(translator, force = TRUE, idrop = FALSE)
+		qdel(translator)
