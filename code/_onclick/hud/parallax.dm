@@ -325,7 +325,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	speed = 0.5
 	layer = 1
 
-/atom/movable/screen/parallax_layer/layer_1/Initialize(mapload, mob/owner)
+/atom/movable/screen/parallax_layer/layer_1/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	src.add_atom_colour(GLOB.starlight_color, ADMIN_COLOUR_PRIORITY)
 

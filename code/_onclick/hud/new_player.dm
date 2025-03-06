@@ -54,7 +54,7 @@
 	var/owner
 	var/area/misc/start/lobbyarea
 
-/atom/movable/screen/lobby/button/Initialize(mapload)
+/atom/movable/screen/lobby/button/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	lobbyarea = GLOB.areas_by_type[/area/misc/start]
 
@@ -590,7 +590,7 @@
 	var/static/disabled = FALSE
 	var/static/mutable_appearance/job_overlay
 
-/atom/movable/screen/lobby/overflow_alert/Initialize(mapload)
+/atom/movable/screen/lobby/overflow_alert/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(initial_setup))
