@@ -8,8 +8,9 @@
 
 SUBSYSTEM_DEF(elastic)
 	name = "Elastic Middleware"
+	init_order = INIT_ORDER_ELASTIC
 	wait = 30 SECONDS
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	flags = SS_KEEP_TIMING // This needs to ingest every 30 IRL seconds, not ingame seconds.
 	///this is set in Genesis
 	var/world_init_time = 0
@@ -52,9 +53,10 @@ SUBSYSTEM_DEF(elastic)
 
 /datum/controller/subsystem/elastic/proc/get_compiled_data(all_data)
 	var/list/compiled = list()
-	//DON'T CHANGE THIS EVER OR THIS WILL ALL BREAK
+	//DON'T CHANGE THE TIMESTAMP EVER OR THIS WILL ALL BREAK
 	compiled["@timestamp"] = time2text(world.timeofday, "YYYY-MM-DDThh:mm:ss")
 	compiled["cpu"] = world.cpu
+	compiled["maptick"] = world.map_cpu
 	compiled["elapsed_process_time"] = world.time
 	compiled["elapsed_real_time"] = (REALTIMEOFDAY - world_init_time)
 	compiled["client_count"] = length(GLOB.clients)
@@ -62,7 +64,6 @@ SUBSYSTEM_DEF(elastic)
 	///you see why this needs to be an assoc list now?
 	compiled |= assoc_list_data
 
-	///down here is specific to vanderlin so if you are porting this you can take this out
 	compiled["round_data"] = get_round_data()
 	assoc_list_data = list()
 	return json_encode(compiled)
