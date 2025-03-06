@@ -19728,7 +19728,7 @@
 	},
 /obj/structure/chair/sofa/left{
 	dir = 2;
-	color = "7c5295";
+	color = "#7c5295";
 	name = "chicken petting zone"
 	},
 /turf/open/floor/carpet/purple,
@@ -20607,7 +20607,7 @@
 "dDR" = (
 /obj/structure/chair/sofa/left{
 	dir = 1;
-	color = "7c5295"
+	color = "#7c5295"
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
@@ -21633,10 +21633,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "fZZ" = (
-/obj/structure/chair/sofa/left{
-	dir = 2;
-	color = "7c5295"
-	},
+/obj/structure/chair/sofa/fancy/left,
 /obj/item/taperecorder,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/adminroom)
@@ -22134,7 +22131,7 @@
 	dir = 1
 	},
 /obj/structure/curtain/cloth{
-	color = "7c5295"
+	color = "#7c5295"
 	},
 /turf/open/misc/dirt/dark/station,
 /area/centcom/central_command_areas/adminroom)
@@ -23011,10 +23008,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/adminroom)
 "inN" = (
-/obj/structure/chair/sofa/right{
-	dir = 2;
-	color = "7c5295"
-	},
+/obj/structure/chair/sofa/fancy/right,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/adminroom)
 "iow" = (
@@ -26436,7 +26430,7 @@
 /mob/living/basic/chicken/wiznerd,
 /obj/structure/chair/sofa/middle{
 	name = "chicken petting zone";
-	color = "7c5295"
+	color = "#7c5295"
 	},
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
@@ -28915,6 +28909,14 @@
 	desc = "Effectively impervious to conventional methods of destruction.";
 	pixel_x = 32
 	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-10";
+	pixel_y = 32;
+	layer = 2.8;
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/adminroom)
 "vRz" = (
@@ -29623,7 +29625,7 @@
 	},
 /obj/structure/chair/sofa/right{
 	dir = 1;
-	color = "7c5295"
+	color = "#7c5295"
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
@@ -56451,7 +56453,7 @@ aaa
 aaa
 aaa
 aaa
-aiF
+kpH
 kpH
 agn
 aoB
