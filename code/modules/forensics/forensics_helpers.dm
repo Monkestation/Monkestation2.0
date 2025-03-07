@@ -112,7 +112,7 @@
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 		blood_in_hands = rand(2, 4)
-	forensics?.cached_blood_dna_color = null
+	forensics?.cached_blood_dna_color = null //MONKESTATION ADDITION: Keep track of the blood dna color
 	update_worn_gloves()
 	return TRUE
 
