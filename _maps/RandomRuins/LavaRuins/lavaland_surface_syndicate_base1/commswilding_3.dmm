@@ -39,7 +39,6 @@
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/tile/iron/grimy,
 /obj/machinery/computer/records/medical/syndie{
 	dir = 2;
 	req_access = list("syndicate")
