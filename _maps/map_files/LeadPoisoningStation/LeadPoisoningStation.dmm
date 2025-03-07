@@ -410,10 +410,8 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms)
 "alX" = (
-/obj/structure/cable,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
+/turf/open/floor/glass,
+/area/station/hallway/primary/central)
 "amF" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -16015,8 +16013,8 @@
 /turf/open/floor/iron/stairs/left,
 /area/station/hallway/floor2/fore)
 "iII" = (
-/obj/item/banner/security,
 /obj/structure/window/spawner/directional/south,
+/obj/item/banner/security/mundane,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "iIU" = (
@@ -28703,9 +28701,9 @@
 /turf/open/floor/plating,
 /area/station/security/warden)
 "pvQ" = (
-/obj/item/banner/medical,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
+/obj/item/banner/medical/mundane,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "pvU" = (
@@ -30192,9 +30190,9 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
 "qmZ" = (
-/obj/item/banner/command,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
+/obj/item/banner/command/mundane,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "qnJ" = (
@@ -30672,10 +30670,10 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
 "qyG" = (
-/obj/item/banner/engineering,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/light/small/directional/south,
+/obj/item/banner/engineering/mundane,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "qzj" = (
@@ -33035,10 +33033,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/station/hallway/floor2/fore)
-"rLc" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/turf/closed/wall/r_wall,
-/area/station/hallway/primary/central/aft)
 "rLh" = (
 /turf/closed/wall,
 /area/station/engineering/break_room)
@@ -40313,8 +40307,8 @@
 /turf/open/floor/grass,
 /area/station/hallway/floor2/aft)
 "vEd" = (
-/obj/item/banner/cargo,
 /obj/structure/window/spawner/directional/north,
+/obj/item/banner/cargo/mundane,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vEf" = (
@@ -60103,7 +60097,7 @@ iWU
 tfB
 eQc
 poi
-alX
+riQ
 jZA
 nDy
 gdX
@@ -82514,7 +82508,7 @@ vzZ
 oLL
 sPZ
 sPZ
-reG
+nxH
 tfU
 lRX
 lva
@@ -82771,7 +82765,7 @@ oNn
 nVp
 ntj
 xjY
-rLc
+reG
 iGY
 iGY
 iGY
@@ -132859,7 +132853,7 @@ fWB
 jGG
 jGG
 jGG
-jGG
+alX
 erH
 qCu
 qCu
@@ -133116,7 +133110,7 @@ fWB
 jGG
 jGG
 jGG
-jGG
+alX
 erH
 erH
 aHu
@@ -133885,7 +133879,7 @@ qCu
 qCu
 qCu
 erH
-wbc
+alX
 wbc
 rkG
 wbc
@@ -146502,7 +146496,7 @@ qCu
 qCu
 qCu
 erH
-jGG
+alX
 jGG
 jGG
 jGG
@@ -146759,7 +146753,7 @@ qCu
 qCu
 qCu
 erH
-jGG
+alX
 jGG
 jGG
 jGG
@@ -147016,7 +147010,7 @@ qYl
 xYl
 xYl
 erH
-jGG
+alX
 jGG
 jGG
 jGG
