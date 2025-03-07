@@ -16,6 +16,10 @@
 		if(mob.can_block_magic(antimagic_flags))
 			to_chat(caster, span_warning("The spell had no effect on [mob]!"))
 			continue
+		if(mob.has_status_effect(/datum/status_effect/revenant_blight_protection))
+			to_chat(mob, span_revenminor("Your body is tingling, you feel a cold sensation envelope you before passing."))
+			to_chat(caster, span_warning("[mob.name] seems to have holy energy still flowing through them."))
+			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))

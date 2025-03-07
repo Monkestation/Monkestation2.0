@@ -32,12 +32,6 @@
 
 // Should only be called once if they still have the status effect.
 /datum/status_effect/revenant_blight/on_apply()
-	if(istype(owner) && istype(ghostie))
-		if(owner.has_status_effect(/datum/status_effect/revenant_blight_protection))
-			to_chat(owner, span_revenminor("Your body is tingling, you feel a cold sensation envelope you before passing."))
-			to_chat(ghostie, span_warning("[owner.name] seems to have holy energy still flowing through them."))
-			return FALSE
-
 	misfortune = owner.AddComponent(/datum/component/omen/revenant_blight)
 	owner.set_haircolor(COLOR_REVENANT, override = TRUE)
 	adjust_stage() // Blight should be applied first time here so increase the stage usually starts at 0.
