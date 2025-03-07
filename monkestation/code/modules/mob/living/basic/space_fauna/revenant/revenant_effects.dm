@@ -70,12 +70,14 @@
 				human.dna.species.handle_mutant_bodyparts(human)
 				human.set_haircolor(null, override = TRUE)
 			to_chat(owner, span_notice("You feel better."))
+			owner.apply_status_effect(/datum/status_effect/revenant_blight_protection)
 	if(ghostie)
 		UnregisterSignal(ghostie, COMSIG_QDELETING)
 		ghostie = null
 
 /datum/status_effect/revenant_blight/tick(seconds_per_tick, times_fired)
 	var/delta_time = DELTA_WORLD_TIME(SSfastprocess)
+	var/updating_health = FALSE
 	if(owner.reagents?.has_reagent(/datum/reagent/water/holywater))
 		remove_duration(HOLY_WATER_CURE_RATE * delta_time)
 	if(!finalstage)
@@ -85,14 +87,16 @@
 		if(SPT_PROB(1.5 * stage, delta_time))
 			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
 			owner.adjust_confusion(4 SECONDS)
-			owner.stamina.adjust(-10, FALSE)
+			updating_health = -owner.stamina.adjust(-21, FALSE)
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(stagedamage < stage)
 			stagedamage++
-			owner.adjustToxLoss(1 * stage * delta_time, FALSE) //should, normally, do about 30 toxin damage.
+			updating_health = -owner.adjustToxLoss(1 * stage * delta_time, FALSE) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(SPT_PROB(25, delta_time))
-			owner.stamina.adjust(-stage, FALSE)
+			updating_health = -owner.stamina.adjust(-(stage * 2), FALSE)
+		if(updating_health)
+			owner.updatehealth()
 
 	switch(stage)
 		if(2)
