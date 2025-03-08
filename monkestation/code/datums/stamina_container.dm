@@ -51,6 +51,7 @@
 	return ..()
 
 /datum/stamina_container/proc/update(seconds_per_tick = 1)
+	var/last_current = current
 	if(process_stamina == TRUE)
 		if(!is_regenerating)
 			if(!COOLDOWN_FINISHED(src, paused_stamina))
@@ -69,7 +70,8 @@
 	else if(!(current == maximum))
 		process_stamina = TRUE
 
-	parent.on_stamina_update()
+	if(current != last_current)
+		parent.on_stamina_update()
 
 ///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
 /datum/stamina_container/proc/pause(time)
