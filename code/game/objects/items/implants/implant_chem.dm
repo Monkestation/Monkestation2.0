@@ -34,7 +34,7 @@
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE) //monkestation edit: adds forced
 	. = ..()
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)
