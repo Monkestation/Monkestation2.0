@@ -178,7 +178,8 @@
 
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
-	select_cloak_appearance.Grant(user)
+	if(slot & ITEM_SLOT_NECK)
+		select_cloak_appearance.Grant(user)
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
