@@ -29,13 +29,12 @@ export const MalfAiModules = (props) => {
         category: category.name,
         cost: `${item.cost} PT`,
         desc: item.desc,
-        disabled: processingTime < item.cost,
+        disabled: !!item.cost && processingTime < item.cost,
         icon_state: item.icon_state,
         icon: item.icon,
         id: item.name,
         name: item.name,
-        population_tooltip: '',
-        insufficient_population: false,
+        is_locked: false,
       });
     }
   }
