@@ -221,6 +221,11 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
 
+	// monkestation edit: distribute monkecoin rewards
+	distribute_rewards()
+	CHECK_TICK
+	// monkestation end
+
 	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
 		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
@@ -302,7 +307,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
 	refund_cassette()
-	distribute_rewards()
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
