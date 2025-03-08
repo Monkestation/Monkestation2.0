@@ -17,6 +17,8 @@
 	var/is_regenerating = TRUE
 	//unga bunga
 	var/process_stamina = TRUE
+	/// Used to determine when the stamina changes, to properly run on_stamina_update on the parent.
+	VAR_PRIVATE/should_notify_parent = FALSE
 
 	///cooldowns
 	///how long until we can lose stamina again
@@ -62,8 +64,10 @@
 
 		if(seconds_per_tick)
 			current = min(current + (regen_rate*seconds_per_tick), maximum)
-		if(seconds_per_tick && decrement)
-			current = max(current + (-decrement*seconds_per_tick), 0)
+			if(decrement)
+				current = max(current + (-decrement*seconds_per_tick), 0)
+		if(current != last_current)
+			should_notify_parent = TRUE
 		loss = maximum - current
 		loss_as_percent = loss ? (loss == maximum ? 0 : loss / maximum * 100) : 0
 
@@ -72,8 +76,9 @@
 	else if(!(current == maximum))
 		process_stamina = TRUE
 
-	if(current != last_current)
+	if(should_notify_parent)
 		parent.on_stamina_update()
+		should_notify_parent = FALSE
 
 ///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
 /datum/stamina_container/proc/pause(time)
@@ -100,7 +105,10 @@
 	var/modify = parent.pre_stamina_change(amt, forced)
 	if(base_modify)
 		modify = amt
+	var/old_current = current
 	current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
+	if(current != old_current)
+		should_notify_parent = TRUE
 	update()
 	if((amt < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
@@ -118,7 +126,10 @@
 	if(stamina_after_loss < lowest_stamina_value)
 		amount = current - lowest_stamina_value
 
+	var/old_current = current
 	current = round(clamp(current + amount, 0, maximum), DAMAGE_PRECISION)
+	if(current != old_current)
+		should_notify_parent = TRUE
 	update()
 	if((amount < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
