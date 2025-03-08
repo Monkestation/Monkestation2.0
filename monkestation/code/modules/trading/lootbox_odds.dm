@@ -49,7 +49,7 @@
 			var/datum/loadout_item/picked = pick(viable_types)
 			temp = new picked.item_path
 			if(picked.item_path in user.client.prefs.inventory)
-				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multipler = FALSE)
+				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multiplier = FALSE)
 				temp.color = COLOR_GRAY
 				temp.name = "Loadout Item [temp.name] (Duplicate)"
 				user.overlay_fullscreen("lb_duplicate", /atom/movable/screen/fullscreen/lootbox_overlay/duplicate)
