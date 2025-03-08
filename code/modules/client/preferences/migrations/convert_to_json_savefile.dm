@@ -1,5 +1,4 @@
 /datum/preferences/proc/try_savefile_type_migration()
-	var/parent_ckey = ckey(parent_key)
 	load_path(parent_ckey, "preferences.sav") // old save file
 	var/old_path = path
 	load_path(parent_ckey)
