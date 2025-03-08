@@ -8,6 +8,8 @@
 	power_path = /datum/action/cooldown/spell/olfaction
 	instability = 30
 	synchronizer_coeff = 1
+	energy_coeff = 1 // MONKESTATION ADDITION
+	power_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/olfaction/modify()
 	. = ..()
@@ -16,6 +18,7 @@
 		return
 
 	to_modify.sensitivity = GET_MUTATION_SYNCHRONIZER(src)
+	to_modify.show_distance = GET_MUTATION_POWER(src) // MONKESTATION ADDITION
 
 /datum/action/cooldown/spell/olfaction
 	name = "Remember the Scent"
@@ -30,6 +33,8 @@
 	var/datum/weakref/tracking_ref
 	/// Our nose's sensitivity
 	var/sensitivity = 1
+
+	var/show_distance = 1 // MONKESTATION ADDITION -- if above 1 will show the approximate distance to the target, variation reduced by itself
 
 /datum/action/cooldown/spell/olfaction/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -137,3 +142,13 @@
 	var/direction_text = span_bold("[dir2text(get_dir(caster, current_target))]")
 	if(direction_text)
 		to_chat(caster, span_notice("You consider [current_target]'s scent. The trail leads [direction_text]."))
+
+	// MONKESTATION ADDITION START
+	if(show_distance <= 1)
+		return
+
+	var/distance = get_dist(caster, current_target)
+	var/variation = floor((distance / 2) / show_distance)
+	distance += rand(0, variation) - (variation / 2)
+	to_chat(caster, span_notice("From the smell you estimate your target is about... [distance] meters away"))
+	// MONKESTATION ADDITION END

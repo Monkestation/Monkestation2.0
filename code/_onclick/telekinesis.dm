@@ -52,10 +52,8 @@
 	add_hiddenprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-
 /mob/attack_tk(mob/user)
 	return
-
 
 /**
  * Telekinesis item attack_self act.
