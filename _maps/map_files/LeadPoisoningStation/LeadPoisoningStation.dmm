@@ -35884,6 +35884,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "sPZ" = (
@@ -44004,6 +44005,10 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/carpet/lone/star,
 /area/station/commons/dorms)
+"xeV" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/hallway/primary/central/aft)
 "xfe" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -44176,6 +44181,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "xjq" = (
@@ -83468,7 +83474,7 @@ oNn
 nVp
 ntj
 xjY
-reG
+xeV
 iGY
 iGY
 iGY
