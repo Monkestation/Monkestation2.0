@@ -40,12 +40,14 @@
 	src.regen_rate = regen_rate
 	src.current = maximum
 	RegisterSignals(parent, update_on_signals, PROC_REF(update_process))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(nullspace_move_check))
 	update_process()
 
 /datum/stamina_container/Destroy()
 	if(!isnull(parent))
 		parent.stamina = null
 		UnregisterSignal(parent, update_on_signals)
+		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	parent = null
 	STOP_PROCESSING(SSstamina, src)
 	return ..()
@@ -121,6 +123,12 @@
 	if((amount < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
 	return amount
+
+/// Signal handler for COMSIG_MOVABLE_MOVED to ensure that update_process() gets called whenever moving to/from nullspace.
+/datum/stamina_container/proc/nullspace_move_check(atom/movable/mover, atom/old_loc, dir, force)
+	SIGNAL_HANDLER
+	if(isnull(old_loc) || isnull(mover.loc))
+		update_process()
 
 /// Returns if the container should currently be processing or not.
 /datum/stamina_container/proc/should_process()
