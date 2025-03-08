@@ -24,6 +24,13 @@
 	///how long stamina is paused for
 	COOLDOWN_DECLARE(paused_stamina)
 
+	/// Signals which we react in order to re-check if we should be processing or not.
+	var/static/list/update_on_signals = list(
+		COMSIG_MOB_STATCHANGE,
+		SIGNAL_ADDTRAIT(TRAIT_NO_TRANSFORM),
+		SIGNAL_REMOVETRAIT(TRAIT_NO_TRANSFORM),
+	)
+
 /datum/stamina_container/New(parent, maximum = STAMINA_MAX, regen_rate = STAMINA_REGEN)
 	if(maximum <= 0)
 		stack_trace("Attempted to initialize stamina container with an invalid maximum limit of [maximum], defaulting to [STAMINA_MAX]")
@@ -32,10 +39,13 @@
 	src.maximum = maximum
 	src.regen_rate = regen_rate
 	src.current = maximum
-	START_PROCESSING(SSstamina, src)
+	RegisterSignals(parent, update_on_signals, PROC_REF(update_process))
+	update_process()
 
 /datum/stamina_container/Destroy()
-	parent?.stamina = null
+	if(!isnull(parent))
+		parent.stamina = null
+		UnregisterSignal(parent, update_on_signals)
 	parent = null
 	STOP_PROCESSING(SSstamina, src)
 	return ..()
@@ -110,6 +120,27 @@
 		pause(STAMINA_REGEN_TIME)
 	return amount
 
+/// Returns if the container should currently be processing or not.
+/datum/stamina_container/proc/should_process()
+	SHOULD_BE_PURE(TRUE)
+	if(QDELETED(parent) || isnull(parent.loc))
+		return FALSE
+	if(!parent.uses_stamina)
+		return FALSE
+	if(parent.stat == DEAD)
+		return FALSE
+	if(HAS_TRAIT(parent, TRAIT_NO_TRANSFORM))
+		return FALSE
+	return TRUE
+
+/// Checks to see if the container should be processing, and starts/stops it.
+/datum/stamina_container/proc/update_process()
+	SIGNAL_HANDLER
+	if(should_process())
+		START_PROCESSING(SSstamina, src)
+	else
+		STOP_PROCESSING(SSstamina, src)
+
 /// Sets the maximum amount of stamina.
 /// Always use this instead of directly setting the stamina var, as this has sanity checks, and immediately updates afterwards.
 /datum/stamina_container/proc/set_maximum(value = STAMINA_MAX)
@@ -122,3 +153,15 @@
 	maximum = value
 	update()
 	return TRUE
+
+/mob/living/carbon
+	uses_stamina = TRUE
+
+/mob/living/carbon/alien
+	uses_stamina = FALSE
+
+/mob/living/basic
+	uses_stamina = TRUE
+
+/mob/living/simple_animal
+	uses_stamina = TRUE
