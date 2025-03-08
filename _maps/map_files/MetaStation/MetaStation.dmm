@@ -13726,15 +13726,20 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "eXA" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/effect/landmark/start/hangover,
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
+/obj/structure/railing/wooden_fencing/gate{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/station/service/library)
+"eXC" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/obj/item/toy/plush/knightplush,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
 "eXD" = (
@@ -47555,8 +47560,10 @@
 /area/station/hallway/primary/port)
 "qtc" = (
 /obj/structure/cable,
-/obj/structure/railing/wooden_fencing/gate{
-	dir = 4
+/obj/structure/railing/wooden_fencing{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/carpet/green,
 /area/station/service/library)
@@ -53025,13 +53032,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
-"sjO" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 1
-	},
-/obj/item/toy/plush/knightplush,
-/turf/open/floor/carpet/green,
-/area/station/service/library)
 "sjP" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/safe)
@@ -89420,7 +89420,7 @@ jIY
 sXE
 mjr
 rLm
-sjO
+eXC
 bpD
 sVY
 ivM
