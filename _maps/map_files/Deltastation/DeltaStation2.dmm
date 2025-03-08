@@ -67995,6 +67995,17 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
+"qba" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
+/turf/open/floor/wood/tile,
+/area/station/service/library/artgallery)
 "qbg" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment{
@@ -94906,11 +94917,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 9
-	},
-/mob/living/basic/rabbit/daisy,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
@@ -148384,7 +148390,7 @@ aGm
 oQm
 olB
 qzn
-uNf
+qba
 qMf
 oci
 aNM
