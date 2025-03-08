@@ -176,6 +176,11 @@
 	if(!user.client?.is_mentor())
 		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge")
 
+/obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_NECK)
+		select_cloak_appearance.Grant(user)
+
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
