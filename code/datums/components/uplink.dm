@@ -237,9 +237,12 @@
 		if(item in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[item]
 			stock_list -= item
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
@@ -292,7 +295,7 @@
 
 /datum/component/uplink/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/json/uplink)
+		get_asset_datum(/datum/asset/json/uplink),
 	)
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -314,6 +317,13 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+		if("buy_raw_tc")
+			if (uplink_handler.telecrystals <= 0)
+				return
+			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			if(!desired_amount || desired_amount < 1)
+				return
+			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
