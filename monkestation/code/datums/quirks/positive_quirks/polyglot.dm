@@ -1,7 +1,7 @@
 /datum/quirk/polyglot
 	name = "Polyglot"
 	desc = "Over the years you've picked up most of the common languages!"
-	icon = FA_ICON_GLOBE
+	icon = FA_ICON_EARTH
 	value = 8
 	gain_text = span_notice("You've studied extremely hard, you can recall several languages.")
 	lose_text = span_notice("You feel like you've forgotten some languages.")
