@@ -489,7 +489,7 @@
 	icon_state = "mecha_weapon_bay"
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
-	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
+	if(M.mech_type & EXOSUIT_MODULE_MELEE)	//Monkestation edit - mech melee
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
 		return
 	return ..()
