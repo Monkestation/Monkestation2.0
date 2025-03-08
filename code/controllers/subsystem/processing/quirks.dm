@@ -39,9 +39,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Outsider", "Uncommon"),
 		list("Listener", "Mute"),
 		list("Listener", "Deaf"),
-		list("Polyglot", "Foreigner"),
 		list("Polyglot", "Listener"),
-		list("Polyglot", "Outsider"),
 		list("Polyglot", "Bilingual"),
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
