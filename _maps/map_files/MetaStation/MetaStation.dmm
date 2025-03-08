@@ -4028,10 +4028,14 @@
 /area/station/science/lab)
 "bpD" = (
 /obj/machinery/light/small/directional/south,
-/obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
-/turf/open/floor/wood,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
+/turf/open/floor/carpet/green,
 /area/station/service/library)
 "bpG" = (
 /obj/machinery/firealarm/directional/east,
@@ -13722,8 +13726,16 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "eXA" = (
-/obj/structure/bookcase/random/adult,
-/turf/open/floor/wood,
+/obj/structure/railing/wooden_fencing{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/effect/landmark/start/hangover,
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
 /area/station/service/library)
 "eXD" = (
 /obj/item/crowbar,
@@ -20660,11 +20672,6 @@
 /area/station/tcommsat/server)
 "hqF" = (
 /obj/machinery/newscaster/directional/east,
-/mob/living/basic/rabbit/daisy,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
-	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/private)
 "hqL" = (
@@ -47546,6 +47553,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"qtc" = (
+/obj/structure/cable,
+/obj/structure/railing/wooden_fencing/gate{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/station/service/library)
 "qtd" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/spawner/random/entertainment/cigarette{
@@ -52515,6 +52529,9 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "saN" = (
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -53008,6 +53025,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
+"sjO" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/obj/item/toy/plush/knightplush,
+/turf/open/floor/carpet/green,
+/area/station/service/library)
 "sjP" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/safe)
@@ -61213,6 +61237,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"vgJ" = (
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/wood,
+/area/station/service/library)
 "vgZ" = (
 /obj/structure/table/glass,
 /obj/structure/cable,
@@ -89389,7 +89420,7 @@ jIY
 sXE
 mjr
 rLm
-saN
+sjO
 bpD
 sVY
 ivM
@@ -89647,7 +89678,7 @@ sXE
 mjr
 fZa
 eXA
-sXE
+qtc
 sVY
 lkr
 kUZ
@@ -91179,7 +91210,7 @@ unj
 ivB
 iOc
 sVY
-hlu
+saN
 ouM
 sVY
 luL
@@ -91436,7 +91467,7 @@ nQw
 tEr
 iOc
 sVY
-hlu
+vgJ
 ouM
 sVY
 gcc
