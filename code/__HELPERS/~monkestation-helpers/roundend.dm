@@ -11,9 +11,7 @@
 /datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(client/client, added_xp)
 	if(!istype(client) || QDELING(client))
 		return
-
 	var/datum/player_details/details = get_player_details(client)
-
 	if(!QDELETED(client?.prefs))
 		var/round_end_bonus = 75
 		
@@ -29,32 +27,23 @@
 
 		if(world.port == MRP2_PORT)
 			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Monkey 2 Seeding Subsidies")
-
 		var/special_bonus = details?.roundend_monkecoin_bonus
-	
 		if(special_bonus)
 			client?.prefs?.adjust_metacoins(client?.ckey, special_bonus, "Special Bonus")
-
 		// WHYYYYYY
 		if(QDELETED(client))
 			return
-
 		if(client?.is_mentor())
 			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
-
 		// WHYYYYYYYYYYYYYYYY
 		if(QDELETED(client))
 			return
-
 		if(client?.mob?.mind?.assigned_role)
 			add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
 
 	if(QDELETED(client))
 		return
-
 	var/list/applied_challenges = details?.applied_challenges
-
-	// Refactor (collapse) these?
 	if(LAZYLEN(applied_challenges))
 		var/mob/living/client_mob = client?.mob
 		if(!istype(client_mob) || QDELING(client_mob) || client_mob?.stat == DEAD)
