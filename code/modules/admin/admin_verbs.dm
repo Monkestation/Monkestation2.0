@@ -17,6 +17,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/mark_datum_mapview,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/reload_admins,
+	/client/proc/reload_mentors, /*monkestation addition Reload mentors*/
 	/client/proc/requests,
 	/client/proc/secrets,
 	/client/proc/review_cassettes, /*monkestation addition Opens the Cassette Review menu*/
@@ -164,7 +165,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition
 	/client/proc/toggle_nuke,
+	/client/proc/toggle_junior_op, //monkestation addition
 	/client/proc/toggle_random_events,
+	/client/proc/toggle_crew_cc_comms, //monkestation addition
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape,)) //Monkestation Addition: mixtape spawner

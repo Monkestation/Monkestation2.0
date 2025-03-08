@@ -55,9 +55,13 @@
 	attack_verb_continuous = list("beeps", "boops")
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
+	liked_foodtypes = NONE
+	disliked_foodtypes = NONE
+	toxic_foodtypes = NONE
 	taste_sensitivity = 25 // not as good as an organic tongue
 	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	maxHealth = 100 //RoboTongue!
+	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 
@@ -65,11 +69,27 @@
 	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
 
 /obj/item/organ/internal/tongue/synth/get_laugh_sound()
-	return pick(
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
-	)
+	if(owner.gender == FEMALE)
+		return pick(
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+		)		
+	if(owner.gender == MALE)
+		return pick(
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+		)
+	else
+		return pick(
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+		)
 
 /obj/item/organ/internal/tongue/synth/can_speak_language(language)
 	return TRUE
@@ -89,6 +109,6 @@
 	)
 	build_path = /obj/item/organ/internal/tongue/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

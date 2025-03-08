@@ -33,6 +33,7 @@
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
+	var/list/connected_ipcs = list () // monkestation edit PR #5133 from infected IPCs
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
@@ -318,6 +319,19 @@
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
 		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
 		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
+
+	// monkestation edit start PR #5133
+	var/connected_ipc_amt = length(connected_ipcs)
+	if(connected_ipc_amt)
+		. += "Connected IPCs: [connected_ipc_amt]"
+		for(var/mob/living/carbon/human/connected_ipc as anything in connected_ipcs)
+			var/robot_status = "Nominal"
+			if(connected_ipc.stat != CONSCIOUS || !connected_ipc.client)
+				robot_status = "OFFLINE"
+			//Name. Area, and Status! Everything an AI wants to know about its TV-heads!
+			. += "[connected_ipc.name] | S.Integrity: [connected_ipc.health]% | Loc: [get_area_name(connected_ipc, TRUE)] | Status: [robot_status]"
+	// monkestation edit end PR #5133
+
 	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
@@ -425,6 +439,8 @@
 	return TRUE
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
+	// monkestation edit start
+	/* original
 	var/mmi_type
 	if(posibrain_inside)
 		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
@@ -441,10 +457,22 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
+	*/
+	if (!the_mmi)
+		the_mmi = make_mmi(posibrain_inside)
+	if (hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
+	// monkestation edit end
 
 	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
 	the_mmi.brainmob.set_suicide(has_suicided_trait)
+	// monkestation edit start
+	/* original
 	the_mmi.brain.suicided = has_suicided_trait
+	*/
+	if (the_mmi.brain)
+		the_mmi.brain.suicided = has_suicided_trait
+	// monkestation edit end
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.core_mmi = the_mmi
@@ -599,12 +627,12 @@
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
 		if (cam.can_use())
-			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF='byond://?src=[REF(src)];switchcamera=[REF(cam)]'>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
-				dat2 += "[(!first_run) ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
+				dat2 += "[(!first_run) ? "" : " | "]<A HREF='byond://?src=[REF(src)];switchcamera=[REF(camera)]'>[camera.c_tag]</A>"
 				first_run = TRUE
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! ([dat2])", alarm_type)
 	else
