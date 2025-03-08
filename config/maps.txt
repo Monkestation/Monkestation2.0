@@ -74,5 +74,9 @@ map ouroboros
 	votable
 endmap
 
+
 map graveyard
+
+map crater
+	votable
 endmap
