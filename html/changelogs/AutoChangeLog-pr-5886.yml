@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "cargo sabre damage is now 18 from 15"
+  - balance: "bowie and combat knives damage are now 17 from 20"
