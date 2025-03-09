@@ -10,9 +10,11 @@
 		return ELEMENT_INCOMPATIBLE // Incompatible with the carbon typepath because that already has its own hand handling and doesn't need hand holding
 
 	var/mob/living/mob_parent = target
+	//MONKESTATION ADDITION START: Basic mobs keep track of whether they're dexterous
 	if(isbasicmob(mob_parent))
 		var/mob/living/basic/basic = target
 		basic.dexterous = TRUE
+	//MONKESTATION ADDITION END
 
 	set_available_hands(mob_parent, hands_count)
 	mob_parent.hud_type = hud_type
@@ -27,9 +29,11 @@
 /datum/element/dextrous/Detach(datum/source)
 	. = ..()
 	var/mob/living/mob_parent = source
+	//MONKESTATION ADDITION START: Basic mobs keep track of whether they're dexterous
 	if(isbasicmob(mob_parent))
 		var/mob/living/basic/basic = mob_parent
 		basic.dexterous = FALSE
+	//MONKESTATION ADDITION END
 
 	set_available_hands(mob_parent, initial(mob_parent.default_num_hands))
 	var/initial_hud = initial(mob_parent.hud_type)
