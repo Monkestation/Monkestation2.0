@@ -73,8 +73,8 @@
 
 	for(var/body_part as anything in affected_limbs)
 		var/obj/item/bodypart/limb = affected_limbs[body_part]
-		limb.unarmed_damage_low += ((4 * GET_MUTATION_POWER(src)) - 4) // Bit cursed? Yep. Works with any mutation power? Yep.
-		limb.unarmed_damage_high += ((4 * GET_MUTATION_POWER(src)) - 4)
+		limb.unarmed_damage_low += ((2 * GET_MUTATION_POWER(src)) - 2) // Bit cursed? Yep. Works with any mutation power? Yep.
+		limb.unarmed_damage_high += ((2 * GET_MUTATION_POWER(src)) - 2)
 
 /datum/mutation/human/strong/proc/register_limb(mob/living/carbon/human/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
 	SIGNAL_HANDLER
@@ -84,12 +84,12 @@
 	affected_limbs[new_limb.body_zone] = new_limb
 	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 	if(initial)
-		new_limb.unarmed_damage_low += 4
-		new_limb.unarmed_damage_high += 4
+		new_limb.unarmed_damage_low += 2
+		new_limb.unarmed_damage_high += 2
 		return
 
-	new_limb.unarmed_damage_low += (4 * GET_MUTATION_POWER(src))
-	new_limb.unarmed_damage_high += (4 * GET_MUTATION_POWER(src))
+	new_limb.unarmed_damage_low += (2 * GET_MUTATION_POWER(src))
+	new_limb.unarmed_damage_high += (2 * GET_MUTATION_POWER(src))
 
 /datum/mutation/human/strong/proc/unregister_limb(mob/living/carbon/human/owner, obj/item/bodypart/lost_limb, special)
 	SIGNAL_HANDLER
@@ -98,8 +98,8 @@
 
 	affected_limbs[lost_limb.body_zone] = null
 	UnregisterSignal(lost_limb, COMSIG_QDELETING)
-	lost_limb.unarmed_damage_low -= (4 * GET_MUTATION_POWER(src))
-	lost_limb.unarmed_damage_high -= (4 * GET_MUTATION_POWER(src))
+	lost_limb.unarmed_damage_low -= (2 * GET_MUTATION_POWER(src))
+	lost_limb.unarmed_damage_high -= (2 * GET_MUTATION_POWER(src))
 
 /datum/mutation/human/strong/proc/limb_gone(obj/item/bodypart/deleted_limb)
 	SIGNAL_HANDLER
