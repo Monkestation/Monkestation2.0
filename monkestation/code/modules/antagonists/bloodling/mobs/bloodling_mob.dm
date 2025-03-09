@@ -13,7 +13,6 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	speed = 2.8
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_biotypes = MOB_ORGANIC
 	speak_emote = list("spews")
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
@@ -117,7 +116,7 @@
 	if(biomass <= 0)
 		gib()
 	// Damage is based on biomass, and handled here
-	obj_damage = biomass * 0.2
+	obj_damage = biomass * 0.5
 	// less than 5 damage would be very bad
 	if(biomass > 50)
 		melee_damage_lower = biomass * 0.1
