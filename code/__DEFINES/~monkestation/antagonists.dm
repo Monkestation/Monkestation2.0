@@ -61,3 +61,12 @@
 
 /// How much heretic Mark of Rust mark does to items
 #define RUST_MARK_DAMAGE	50
+
+// Gang member
+#define IS_GANGMEMBER(mob) mob?.mind?.has_antag_datum(/datum/antagonist/gang_member)
+///Checks if a gangmember antag datum's rank is >= the input gang rank level
+#define MEETS_GANG_RANK(antag_datum, rank_to_meet) antag_datum?.rank >= rank_to_meet
+///Return the gang a mob is in or FALSE otherwise
+//#define GET_MOB_GANG(mob)
+///Check if a mob is in the specified gang
+#define IS_IN_GANG(mob, gang) mob?.mind in gang?.members
