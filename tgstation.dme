@@ -8111,6 +8111,7 @@
 #include "monkestation\code\modules\research\nanites\nanite_programs\utility.dm"
 #include "monkestation\code\modules\research\nanites\nanite_programs\weapon.dm"
 #include "monkestation\code\modules\research\techweb\all_nodes.dm"
+#include "monkestation\code\modules\research\techweb\cyborg_node.dm"
 #include "monkestation\code\modules\security\code\citationinator.dm"
 #include "monkestation\code\modules\security\code\holographic_handcuffs.dm"
 #include "monkestation\code\modules\security\code\weapons\lawbringer.dm"

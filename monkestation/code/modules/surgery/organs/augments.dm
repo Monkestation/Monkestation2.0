@@ -1,6 +1,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 	name = "Power Cord Implant"
 	desc = "An internal power cord hooked up to a battery. Useful if you run on volts."
+	icon_state = "toolkit_ipc"
 	contents = newlist(/obj/item/apc_powercord)
 	zone = "l_arm"
 	encode_info = AUGMENT_NT_LOWLEVEL
@@ -12,6 +13,7 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	var/list/loaded_surgeries = list()
 	var/static/datum/techweb/linked_techweb
+	implant_color = "#0084ff"
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/Initialize()
 	. = ..()
@@ -110,6 +112,7 @@
 	organ_flags = ORGAN_SYNTHETIC | ORGAN_HIDDEN
 	organ_traits = list(TRAIT_PERFECT_SURGEON)
 	actions_types = null
+	implant_color = "#7a0875"
 	var/list/blocked_surgeries = list(
 		/datum/surgery/advanced/brainwashing_sleeper, // this one has special handling
 		/datum/surgery/advanced/necrotic_revival,
@@ -144,3 +147,4 @@
 	name = "advanced surgical serverlink brain implant"
 	desc = "A brain implant with a bluespace technology that lets you perform any advanced surgery through private access too Nanotrasen servers."
 	organ_flags = parent_type::organ_flags & ~ORGAN_HIDDEN
+	implant_color = "#00eeff"

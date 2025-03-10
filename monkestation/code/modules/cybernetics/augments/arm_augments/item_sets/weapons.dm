@@ -36,6 +36,7 @@
 	icon_state = "arm_taser"
 	items_to_create = list(/obj/item/gun/energy/e_gun/advtaser/mounted)
 	encode_info = AUGMENT_TG_LEVEL
+	icon_state = "toolkit_security"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/gun/taser/l
 	zone = BODY_ZONE_L_ARM
@@ -46,18 +47,21 @@
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
+	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	items_to_create = list(/obj/item/gun/medbeam)
 	encode_info = AUGMENT_TG_LEVEL
+	icon_state = "toolkit_paramedic"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
 	encode_info = AUGMENT_NT_HIGHLEVEL
+	icon_state = "toolkit_security"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/flash/Initialize(mapload)
 	. = ..()
@@ -87,6 +91,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis
 	name = "C.H.R.O.M.A.T.A. mantis blade implants"
 	desc = "High tech mantis blade implants, easily portable weapon, that has a high wound potential."
+	icon_state = "toolkit_security"
 	items_to_create = list(/obj/item/mantis_blade)
 	encode_info = AUGMENT_TG_LEVEL
 
@@ -98,7 +103,6 @@
 	name = "S.A.Y.A. arm defense system implants"
 	desc = "Shield blade implants that allow user to block upcoming attacks at the cost of mobility and offense."
 	items_to_create = list(/obj/item/mantis_blade/shield)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis/shield/l
 	zone = BODY_ZONE_L_ARM
@@ -109,6 +113,7 @@
 	items_to_create = list(/obj/item/mantis_blade/syndicate)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
+	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
 	zone = BODY_ZONE_L_ARM
