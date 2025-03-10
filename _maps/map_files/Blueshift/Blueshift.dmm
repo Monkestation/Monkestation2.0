@@ -2055,10 +2055,10 @@
 /area/station/service/bar/backroom)
 "avy" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "avB" = (
@@ -6657,10 +6657,10 @@
 /area/station/engineering/storage/tcomms)
 "bpj" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/defibrillator_mount/directional/south,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "bpn" = (
@@ -15549,8 +15549,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "cUY" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white{
 	name = "Padded tile"
@@ -17120,9 +17120,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "dlc" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -17130,6 +17127,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -18993,15 +18993,15 @@
 /turf/open/floor/iron,
 /area/station/medical/break_room)
 "dFL" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/effect/spawner/random/trash/mopbucket,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/security/checkpoint/medical)
 "dFP" = (
@@ -21086,11 +21086,11 @@
 /area/station/science/xenobiology)
 "eaD" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "eaO" = (
@@ -45670,11 +45670,11 @@
 /area/station/medical/medbay/lobby)
 "iRZ" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/defibrillator_mount/directional/north,
 /obj/item/radio/intercom/directional/east,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "iSa" = (
@@ -47850,8 +47850,10 @@
 "jnG" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/iv_drip,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "jnJ" = (
@@ -49578,15 +49580,15 @@
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "jEJ" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "jEP" = (
@@ -58445,15 +58447,15 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "lnD" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
@@ -74297,12 +74299,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/cult_chapel_maint)
 "otH" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
@@ -86451,10 +86453,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/structure/sign/clock/directional/south,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/exam_room)
 "qMv" = (
@@ -87261,11 +87263,11 @@
 	},
 /area/station/command/heads_quarters/nt_rep)
 "qUO" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/iv_drip,
 /obj/machinery/vending/wallmed/directional/west,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "qUP" = (
@@ -91928,10 +91930,10 @@
 /area/station/hallway/primary/port)
 "rNG" = (
 /obj/item/radio/intercom/directional/east,
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rNT" = (
@@ -92692,10 +92694,12 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "rXe" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/east,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/abandon_exam/cat)
 "rXg" = (
@@ -99689,10 +99693,12 @@
 /turf/closed/wall,
 /area/station/security/prison/shower)
 "tnz" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/bot,
 /obj/machinery/anesthetic_machine,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "tnI" = (
@@ -106188,10 +106194,10 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "uzm" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "uzo" = (
@@ -108290,9 +108296,9 @@
 	},
 /area/station/service/theater)
 "uUl" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "uUq" = (
@@ -111407,13 +111413,13 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "vyF" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/security/checkpoint/medical)
@@ -113121,10 +113127,8 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "vOB" = (
-/obj/structure/bed/medical/emergency{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "vOJ" = (

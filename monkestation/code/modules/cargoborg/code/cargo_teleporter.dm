@@ -80,16 +80,6 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	category = list(RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
-/datum/techweb_node/cargo_teleporter
-	id = "cargoteleporter"
-	display_name = "Cargo Teleporter"
-	description = "We can teleport items across long distances, as long as they are not blocked."
-	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list(
-		"cargotele",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-
 /obj/effect/decal/cleanable/cargo_mark
 	name = "cargo mark"
 	desc = "A mark left behind by a cargo teleporter, which allows targeted teleportation. Can be removed by the cargo teleporter."
