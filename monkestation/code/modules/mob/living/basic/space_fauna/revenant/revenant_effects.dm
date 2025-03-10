@@ -24,11 +24,11 @@
 	/// The revenant that cast this blight.
 	var/mob/living/basic/revenant/ghostie
 
-/datum/status_effect/revenant_blight/on_creation(mob/living/new_owner, mob/living/basic/revenant/reve_ghostie)
+/datum/status_effect/revenant_blight/on_creation(mob/living/new_owner, mob/living/basic/revenant/ghostie)
 	. = ..()
-	if(. && istype(reve_ghostie))
-		src.ghostie = reve_ghostie
-		RegisterSignal(reve_ghostie, COMSIG_QDELETING, PROC_REF(remove_when_ghost_dies))
+	if(. && istype(ghostie))
+		src.ghostie = ghostie
+		RegisterSignal(ghostie, COMSIG_QDELETING, PROC_REF(remove_when_ghost_dies))
 
 // Should only be called once if they still have the status effect.
 /datum/status_effect/revenant_blight/on_apply()
@@ -60,7 +60,7 @@
 		owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_REVENANT)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human = owner
-			if(human.dna && human.dna.species)
+			if(human.dna?.species)
 				human.dna.species.handle_mutant_bodyparts(human)
 				human.set_haircolor(null, override = TRUE)
 			to_chat(owner, span_notice("You feel better."))
@@ -76,7 +76,7 @@
 		remove_duration(HOLY_WATER_CURE_RATE * delta_time)
 	if(!finalstage)
 		if(owner.body_position == LYING_DOWN && owner.IsSleeping() && SPT_PROB(3 * stage, delta_time)) // Make sure they are sleeping laying down.
-			owner.remove_status_effect(src) // Cure the Status effect.
+			qdel(src) // Cure the Status effect.
 			return FALSE
 		if(SPT_PROB(1.5 * stage, delta_time))
 			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
@@ -110,7 +110,7 @@
 				new /obj/effect/temp_visual/revenant(owner.loc)
 				if(ishuman(owner))
 					var/mob/living/carbon/human/human = owner
-					if(human.dna && human.dna.species)
+					if(human.dna?.species)
 						human.dna.species.handle_mutant_bodyparts(human, COLOR_REVENANT)
 						owner.set_haircolor(COLOR_REVENANT, override = TRUE)
 				owner.visible_message(span_warning("[owner] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
@@ -122,8 +122,8 @@
 
 /datum/status_effect/revenant_blight/proc/remove_when_ghost_dies(datum/source)
 	SIGNAL_HANDLER
-	if(owner && ishuman(owner))
-		owner.visible_message(span_warning("Dark energy evaporates off of [owner]."), span_revennotice("The dark energy plaguing you has suddenly disappated."))
+	if(ishuman(owner))
+		owner.visible_message(span_warning("Dark energy evaporates off of [owner]."), span_revennotice("The dark energy plaguing you has suddenly dissipated."))
 	qdel(src)
 
 // Applied when blight is cured. Prevents getting blight again for a period of time.
