@@ -350,6 +350,13 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
+				// monkestation edit start
+				else if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING))
+					if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises.\n"
+					else
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> voices.\n"
+				// monkestation edit end
 				if (bodytemperature > bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)
