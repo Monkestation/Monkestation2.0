@@ -6063,6 +6063,7 @@
 #include "monkestation\code\datums\quirks\positive_quirks\hardened_soles.dm"
 #include "monkestation\code\datums\quirks\positive_quirks\hosed.dm"
 #include "monkestation\code\datums\quirks\positive_quirks\neuralink.dm"
+#include "monkestation\code\datums\quirks\positive_quirks\polyglot.dm"
 #include "monkestation\code\datums\records\record.dm"
 #include "monkestation\code\datums\station_traits\negative_traits.dm"
 #include "monkestation\code\datums\station_traits\neutral_traits.dm"
