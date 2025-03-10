@@ -44,6 +44,8 @@
 		if(total_payout)
 			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards.")
 
+#warn TODO: cassette refunds
+/*
 /datum/controller/subsystem/ticker/proc/refund_cassette()
 	if(!length(GLOB.cassette_reviews))
 		return
@@ -69,3 +71,4 @@
 				message_admins("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
 				log_admin("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
 			qdel(review)
+*/

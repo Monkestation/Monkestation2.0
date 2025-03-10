@@ -1,3 +1,4 @@
+#warn TODO: cassette submission postbox
 /obj/machinery/cassette/mailbox
 	name = "Space Board of Music Postbox"
 	desc = "Has a slit specifically to fit cassettes into it."
@@ -14,12 +15,12 @@
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 
-
+/*
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/device/cassette_tape) || !user.client)
+	if(!istype(weapon, /obj/item/cassette_tape) || !user.client)
 		return
 
-	var/obj/item/device/cassette_tape/attacked_tape = weapon
+	var/obj/item/cassette_tape/attacked_tape = weapon
 
 	var/list/admin_count = get_admin_counts(R_FUN)
 	if(!length(admin_count["present"]))
@@ -58,3 +59,4 @@
 	attacked_tape.moveToNullspace()
 	submit_cassette_for_review(attacked_tape, user)
 	return TRUE
+*/
