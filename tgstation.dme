@@ -5400,6 +5400,7 @@
 #include "code\modules\research\techweb\_techweb_node.dm"
 #include "code\modules\research\techweb\all_nodes.dm"
 #include "code\modules\research\techweb\techweb_types.dm"
+#include "code\modules\research\techweb\nodes\cyborg_nodes.dm"
 #include "code\modules\research\xenobiology\xenobiology.dm"
 #include "code\modules\research\xenobiology\crossbreeding\__corecross.dm"
 #include "code\modules\research\xenobiology\crossbreeding\_clothing.dm"
