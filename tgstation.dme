@@ -448,6 +448,7 @@
 #include "code\__DEFINES\~monkestation\materials.dm"
 #include "code\__DEFINES\~monkestation\maths.dm"
 #include "code\__DEFINES\~monkestation\mecha.dm"
+#include "code\__DEFINES\~monkestation\metacoins.dm"
 #include "code\__DEFINES\~monkestation\microfusion.dm"
 #include "code\__DEFINES\~monkestation\misc.dm"
 #include "code\__DEFINES\~monkestation\mobs.dm"
