@@ -140,6 +140,7 @@ GLOBAL_PROTECT(tracy_init_reason)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+	aneri_cleanup() // monkestation edit: aneri
 	log_world("World loaded at [time_stamp()]!")
 
 	// From a really fucking old commit (91d7150)
@@ -213,12 +214,12 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 /// Returns a list of data about the world state, don't clutter
 /world/proc/get_world_state_for_logging()
-	var/data = list()
-	data["tick_usage"] = world.tick_usage
-	data["tick_lag"] = world.tick_lag
-	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
-	return data
+	return list(
+		"tick_usage" = world.tick_usage,
+		"tick_lag" = world.tick_lag,
+		"time" = world.time,
+		"timestamp" = aneri_unix_timestamp(),
+	)
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -263,6 +264,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 	// but those are both private, so let's put the commit info in the runtime
 	// log which is ultimately public.
 	log_runtime(GLOB.revdata.get_log_message())
+
+	// monke edit: set aneri panic output folder
+	ANERI_CALL(set_panic_output_folder, "[GLOB.log_directory || "./data"]/aneri")
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")
@@ -368,6 +372,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 			shutdown_logging() // See comment below.
 			shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 			auxcleanup()
+			aneri_cleanup() // monkestation edit: aneri
 			TgsEndProcess()
 			return ..()
 
@@ -376,6 +381,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 	auxcleanup()
+	aneri_cleanup() // monkestation edit: aneri
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
@@ -389,6 +395,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 /world/Del()
 	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
 	auxcleanup()
+	aneri_cleanup() // monkestation edit: aneri
 	. = ..()
 
 /world/proc/update_status()
