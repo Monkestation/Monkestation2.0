@@ -229,6 +229,7 @@
 		cyborg.spark_system.start()
 		cyborg.emp_act(EMP_HEAVY)
 
+/* monkestation removal: reimplemented in [monkestation\code\modules\mob\living\basic\space_fauna\revenant\revenant_abilities.dm]
 //Blight: Infects nearby humans and in general messes living stuff up.
 /datum/action/cooldown/spell/aoe/revenant/blight
 	name = "Blight"
@@ -281,6 +282,7 @@
 		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_TOXIN, rand(45, 55))
 		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_PEST, rand(8, 10))
 		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_WEED, rand(8, 10))
+monkestation end */
 
 /datum/action/cooldown/spell/aoe/revenant/haunt_object
 	name = "Haunt Object"

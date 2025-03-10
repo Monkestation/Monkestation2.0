@@ -1,3 +1,5 @@
+
+/* monkestation removal: reimplemented in [monkestation\code\modules\mob\living\basic\space_fauna\revenant\revenant_effects.dm]
 /datum/disease/revblight
 	name = "Unnatural Wasting"
 	max_stages = 5
@@ -72,3 +74,4 @@
 				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				addtimer(CALLBACK(src, PROC_REF(cure)), 10 SECONDS)
+*/
