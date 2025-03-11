@@ -115,7 +115,7 @@
 						owner.set_haircolor(COLOR_REVENANT, override = TRUE)
 				owner.visible_message(span_warning("[owner] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				owner.add_atom_colour(COLOR_REVENANT, TEMPORARY_COLOUR_PRIORITY)
-				addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, remove_status_effect), src), 10 SECONDS) // Automatically call remove status on timer.
+				QDEL_IN(src, 10 SECONDS) // Automatically call qdel and removing status on timer.
 
 	if(SPT_PROB(CHANCE_TO_WORSEN, delta_time)) // Finally check if we should increase the stage.
 		adjust_stage()
