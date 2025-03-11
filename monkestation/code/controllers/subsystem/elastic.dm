@@ -61,6 +61,10 @@ SUBSYSTEM_DEF(elastic)
 	compiled["elapsed_real_time"] = (REALTIMEOFDAY - world_init_time)
 	compiled["client_count"] = length(GLOB.clients)
 	compiled["round_id"] = text2num(GLOB.round_id)
+	compiled["time_dilation_current"] = SStime_track.time_dilation_current
+	compiled["time_dilation_avg"] = SStime_track.time_dilation_avg
+	compiled["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
+	compiled["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
 	///you see why this needs to be an assoc list now?
 	compiled |= assoc_list_data
 
