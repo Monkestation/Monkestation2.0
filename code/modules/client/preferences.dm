@@ -214,13 +214,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
+		// monkestation start: please get rid of this asap
 		if ("update_body")
-			// monkestation start: janky bugfixing for runtimes
-			if(!QDELETED(character_preview_view))
-				character_preview_view.update_body()
-			else
-				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
-			// monkestation end
+			character_preview_view?.update_body()
+		// monkestation end
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -234,12 +231,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.on_new_character(usr)
 
-			// monkestation start: janky bugfixing for runtimes
-			if(!QDELETED(character_preview_view))
-				character_preview_view.update_body()
-			else
-				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
-			// monkestation end
+			character_preview_view?.update_body()
 
 			return TRUE
 		if ("rotate")
