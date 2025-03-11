@@ -7152,6 +7152,11 @@
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
+"dVA" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "dVR" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
@@ -8239,7 +8244,6 @@
 /area/station/medical/office)
 "exC" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "exM" = (
@@ -145763,7 +145767,7 @@ vBR
 vBR
 xtK
 jjz
-bXP
+dVA
 nkO
 emo
 xtK
