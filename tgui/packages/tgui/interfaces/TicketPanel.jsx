@@ -105,35 +105,42 @@ export const TicketPanel = (props, context) => {
         title="Ticket Viewer"
         width={700}
         height={700}
-        resizable>
+        resizable
+      >
         <Window.Content scrollable>
-          <Section
-            title={data.initiator_key_name + ': ' + data.name}>
-            <span class="Section__titleText" style={{ 'font-weight': 'normal' }}>
-              Assigned Admin: <b>{data.admin || 'Unassigned'}</b><br />
+          <Section title={data.initiator_key_name + ': ' + data.name}>
+            <span
+              class="Section__titleText"
+              style={{ 'font-weight': 'normal' }}
+            >
+              Assigned Admin: <b>{data.admin || 'Unassigned'}</b>
+              <br />
               <span class={data.is_resolved ? 'color-good' : 'color-bad'}>
                 Is{data.is_resolved ? '' : ' not'} resolved
               </span>
             </span>
-            <Section
-              level="2"
-              m="-5px">
+            <Section level="2" m="-5px">
               Job: <b>{data.role}</b> <br />
-              Antag: <b>{data.antag || 'No'}</b><br />
+              Antag: <b>{data.antag || 'No'}</b>
+              <br />
               Location: <b>{data.location}</b>
             </Section>
-            <Section
-              m="-5px"
-              level="2">
+            <Section m="-5px" level="2">
               {buttons.map((button_row, i) => (
                 <Flex key={i} direction="row">
-                  {button_row.map(button => (
+                  {button_row.map((button) => (
                     <Flex.Item key={button.act} grow={1}>
-                      <Button fluid m="2.5px"
+                      <Button
+                        fluid
+                        m="2.5px"
                         icon={button.icon}
                         disabled={button.disabled}
                         selected={button.selected}
-                        onClick={(val => () => act(val))(button.act)}>
+                        onClick={(
+                          (val) => () =>
+                            act(val)
+                        )(button.act)}
+                      >
                         {button.name}
                       </Button>
                     </Flex.Item>
@@ -142,47 +149,36 @@ export const TicketPanel = (props, context) => {
               ))}
             </Section>
           </Section>
-          <TicketMessages
-            ticket={data}
-            title="Messages" />
+          <TicketMessages ticket={data} title="Messages" />
         </Window.Content>
       </Window>
     );
   }
   return (
-    <Window
-      title="Ticket Viewer"
-      width={700}
-      height={700}
-      resizable>
+    <Window title="Ticket Viewer" width={700} height={700} resizable>
       <Window.Content scrollable>
-        <TicketMessages
-          title={data.name}
-          ticket={data} />
+        <TicketMessages title={data.name} ticket={data} />
       </Window.Content>
     </Window>
   );
-
 };
 
 export const TicketMessages = (props, context) => {
   const { ticket, title } = props;
   const { act } = useBackend(context);
 
-  const [
-    message,
-    setMessage,
-  ] = useLocalState(context, '');
+  const [message, setMessage] = useLocalState(context, '');
 
   return (
-    <Section
-      lineHeight={1.25}
-      title={title}>
-      {ticket.log.map(entry => (
-        <Box key={entry.time} m="2px">
-          {entry.time} - <b>{entry.ckey}</b> - {entry.text}
-        </Box>
-      ) || '')}
+    <Section lineHeight={1.25} title={title}>
+      {ticket.log.map(
+        (entry) =>
+          (
+            <Box key={entry.time} m="2px">
+              {entry.time} - <b>{entry.ckey}</b> - {entry.text}
+            </Box>
+          ) || '',
+      )}
       <Input
         fluid
         placeholder="Message to send"
@@ -193,20 +189,21 @@ export const TicketMessages = (props, context) => {
           if (e.keyCode === KEY_ENTER) {
             setMessage('');
             e.target.value = message;
-            act('send_message', { 'message': value });
+            act('send_message', { message: value });
           } else {
             setMessage(value);
           }
-        }} />
+        }}
+      />
       <Button
         mt="5px"
         onClick={() => {
-          act('send_message', { 'message': message });
+          act('send_message', { message: message });
           setMessage('');
-        }}>
+        }}
+      >
         Send Message
       </Button>
     </Section>
   );
-
 };
