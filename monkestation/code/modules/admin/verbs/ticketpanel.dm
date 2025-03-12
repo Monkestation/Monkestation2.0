@@ -175,20 +175,20 @@
 			ticket.Reopen()
 			return
 		if("Resolve")
-			SSplexora.aticket_closed(src, usr.ckey, AHELP_CLOSETYPE_RESOLVE)
+			SSplexora.aticket_closed(ticket, usr.ckey, AHELP_CLOSETYPE_RESOLVE)
 			ticket.Resolve()
 			return
 		if("Reject")
-			SSplexora.aticket_closed(src, usr.ckey, AHELP_CLOSETYPE_REJECT)
+			SSplexora.aticket_closed(ticket, usr.ckey, AHELP_CLOSETYPE_REJECT)
 			ticket.Reject()
 			return
 		if("Close")
-			SSplexora.aticket_closed(src, usr.ckey, AHELP_CLOSETYPE_CLOSE)
+			SSplexora.aticket_closed(ticket, usr.ckey, AHELP_CLOSETYPE_CLOSE)
 			ticket.Close()
 			return
 		if("IC")
 			ticket.ICIssue()
-			SSplexora.aticket_closed(src, usr.ckey, AHELP_CLOSETYPE_RESOLVE, AHELP_CLOSEREASON_IC)
+			SSplexora.aticket_closed(ticket, usr.ckey, AHELP_CLOSETYPE_RESOLVE, AHELP_CLOSEREASON_IC)
 			return
 		if("MHelp")
 			ticket.MHelpThis()
