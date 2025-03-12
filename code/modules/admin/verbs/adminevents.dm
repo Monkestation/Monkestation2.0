@@ -21,10 +21,11 @@
 				M.balloon_alert(M, "you hear a voice")
 				to_chat(M, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
+	var/log_message = "SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]"
+	log_admin(log_message)
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_message)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_headset_message(mob/M in GLOB.mob_list)
@@ -129,10 +130,11 @@
 		return
 
 	to_chat(M, msg, confidential = TRUE)
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
+	var/log_msg = "DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]"
+	log_admin(log_msg)
 	msg = span_adminnotice("<b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR>")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_add_freeform_ai_law()

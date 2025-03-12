@@ -976,7 +976,7 @@ SUBSYSTEM_DEF(plexora)
 		confidential = TRUE)
 
 
-	admin_ticket_log(recipient, "<font color='purple'>PM From [adminname]: [message]</font>", log_in_blackbox = FALSE)
+	admin_ticket_log(recipient, message, for_admins = FALSE, log_in_blackbox = FALSE)
 
 	window_flash(recipient, ignorepref = TRUE)
 	// Nullcheck because we run a winset in window flash and I do not trust byond
