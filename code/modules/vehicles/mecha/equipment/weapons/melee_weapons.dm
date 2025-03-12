@@ -57,6 +57,8 @@
 		return 0
 	if (targloc == curloc)
 		return 0
+	if(!action_checks(target))
+		return 0
 	if(target == targloc  && cleave)	//If we are targetting a location and not an object or mob
 		var/attack_dir = NONE
 		if(chassis.mecha_flags & OMNIDIRECTIONAL_ATTACKS)
@@ -608,10 +610,19 @@
 	weapon_damage = 0 // no damage
 	structure_damage_mult = 0 // don't break stuff while trying to clean
 	var/auto_sweep = TRUE
+	var/mop_action = /datum/action/innate/mecha/equipment/sweeping
 
 /datum/action/innate/mecha/equipment/sweeping
 	name = "Toggle Auto-Mop"
 	button_icon_state = "sweep_on"
+
+/obj/item/mecha_parts/mecha_equipment/melee_weapon/mop/Initialize(mapload)
+	. = ..()
+	var/action_type = mop_action	//Take the schematics
+	mop_action = null				//Clean out the box
+	var/datum/action/new_action = new action_type	//Make the thingy based on the schematics
+	mop_action = new_action		//Put the thingy back in the box
+
 
 /datum/action/innate/mecha/equipment/sweeping/Activate()
 	var/obj/vehicle/sealed/mecha/chassis = owner.loc	//This will definitely work
@@ -624,12 +635,12 @@
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/mop/attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
-	chassis.initialize_controller_action_type(/datum/action/innate/mecha/equipment/sweeping, VEHICLE_CONTROL_EQUIPMENT)
+	chassis.initialize_controller_action_type(mop_action, VEHICLE_CONTROL_EQUIPMENT)
 	RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_pre_move))
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/mop/detach(atom/moveto)
 	UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
-	chassis.destroy_controller_action_type(/datum/action/innate/mecha/equipment/sweeping, VEHICLE_CONTROL_EQUIPMENT)
+	chassis.destroy_controller_action_type(mop_action, VEHICLE_CONTROL_EQUIPMENT)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/mop/proc/on_pre_move(obj/vehicle/sealed/mecha/mech, atom/newloc)
