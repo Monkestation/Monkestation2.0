@@ -9,3 +9,15 @@
 			return string
 	else
 		return "[copytext_char(string, 1, len - 3)]..."
+
+/proc/get_fancy_key(mob/user)
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.key
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
+		return temp.key
+	return "* Unknown *"
