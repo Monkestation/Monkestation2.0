@@ -1804,6 +1804,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 10
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "aZC" = (
@@ -22786,6 +22787,28 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
+/obj/item/stack/biomass,
 /turf/open/floor/iron/dark/corner,
 /area/station/science/xenobiology)
 "lWR" = (
@@ -25518,6 +25541,7 @@
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 6
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "npI" = (
@@ -25962,6 +25986,7 @@
 /obj/structure/table/wood,
 /obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
+/obj/machinery/keycard_auth/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "nAz" = (
@@ -25983,6 +26008,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
+"nBc" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/machinery/keycard_auth,
+/turf/open/floor/iron/diagonal,
+/area/station/command/bridge)
 "nBf" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/steam_vent,
@@ -29848,6 +29881,7 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 9
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "pHv" = (
@@ -37120,6 +37154,7 @@
 	name = "Chief Medical Officer's Fax Machine"
 	},
 /obj/structure/table,
+/obj/machinery/keycard_auth/directional/west,
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
@@ -39232,6 +39267,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/keycard_auth/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "uwn" = (
@@ -45842,6 +45878,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 10
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "xWk" = (
@@ -153154,7 +153191,7 @@ pOl
 ftt
 viQ
 viQ
-cYb
+nBc
 mhK
 lLW
 eGJ
