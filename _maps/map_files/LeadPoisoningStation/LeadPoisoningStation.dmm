@@ -9655,6 +9655,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/airless,
 /area/station/cargo/miningdock)
 "ffn" = (
@@ -43960,7 +43961,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "wVB" = (
 /obj/effect/turf_decal/tile/blue{
