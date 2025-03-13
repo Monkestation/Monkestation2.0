@@ -248,11 +248,23 @@
   - bugfix: Fixed some performance issues related to character customization.
   - bugfix: Changing the IPC chassis in preferences now properly updates the preview.
   - qol: Unopened goody cases can no longer be sent back on the cargo shuttle.
+  - code_imp: Spawning the box of materials will no longer try to do ~400 stack merges.
+  Absolucy, Kashargul:
+  - bugfix: Fixed some UIs broken on BYOND 516.
   Absolucy, imedial:
   - bugfix: Fixed nested radios with encryption keys giving free comms.
+  Addust:
+  - bugfix: Depot shipbreaking should work more like normal shipbreaking now
   KnigTheThrasher, McRamon, Alecksohs:
   - rscadd: New smes sprite
   - rscdel: Removed old shitty grimy floor and replaced it with a sick carpet
+  MichiRecRoom:
+  - bugfix: (Ghommie) Taking items from your inventory while flying over lava or a
+      chasm will NOT set them on fire or drop them into chasms ANYMORE
+  - refactor: The code behind many HUD systems has been refactored slightly. Due to
+      the massive amount of HUD types we have, I only tested monkestation-specific
+      HUDs - so please let me know if you see any broken HUDs!
+  - refactor: (JohnFulpWillard) Huds now have their hud owner set in Initialize
   Shoddd:
   - bugfix: fixes some heliostation issues
   - rscdel: mentor cloak no longer cares if you are a mentor
@@ -264,3 +276,68 @@
       ammo as an armoury locked order. added another Paco to the Paco weapon crate.
   TTNT789:
   - qol: Prokinetic Crushers can be used as pickaxes now
+2025-03-09:
+  CannibalHunter:
+  - rscadd: Added several (6) new clothing items to the security clothing vendor!
+2025-03-10:
+  CannibalHunter:
+  - image: security_rigvest on mob sprite does not cover the hands anymore.
+  MichiRecRoom:
+  - bugfix: The experimental destructive scanner's UI should now show a scrollbar
+      on 516. (Please let me know if any other UIs that show a list of experiments
+      are broken.)
+  Shoddd:
+  - bugfix: mentor cloak can be changed again
+  - balance: cargo sabre damage is now 18 from 15
+  - balance: bowie and combat knives damage are now 17 from 20
+  michaelyoungin:
+  - admin: (del) Removes negative value check for adjusting monkecoins
+2025-03-11:
+  Absolucy:
+  - refactor: The Stamina subsystem no longer wastes time trying to process stamina
+      on dead mobs, or mobs that don't even care about stamina in the first place.
+  MichiRecRoom:
+  - bugfix: pAIs now ACTUALLY have maints access, as compared to before where the
+      doors just said "no" no matter what.
+  - bugfix: (Ported from tgstation - Absolucy) Fixed graphics getting screwed up when
+      reconnecting with BYOND 515 after playing on BYOND 516.
+  - rscadd: (Ported from tgstation - ZeWaka) TGUI Stack elements can now be zebra-styled
+      (alternating colors for contrast)
+  MichiRecRoom, vinylspiders, Ben10Omintrix:
+  - bugfix: (Ben10Omintrix) stationary medbots will no longer ignore u for a while
+      if u move out of their way while healing
+  - bugfix: (Ben10Omintrix) fixes a runtime that sometimes happens in ai controllers
+  - refactor: (MichiRecRoom) Some cleaning slime behaviors have been refactored to
+      use similar behaviors as cleanbots.
+  - bugfix: (MichiRecRoom) Cleaner slimes should now temporarily ignore things that
+      they can't reach.
+  - bugfix: (MichiRecRoom) Player-controlled cleaner slimes should now be able to
+      clean cleanables.
+  ThePooba:
+  - rscadd: add broom
+  - rscadd: added bird delamination
+  - rscadd: eternal damnation
+  - bugfix: no more syndicate nanites in strange seeds good lord
+  - bugfix: slasher damage fix
+2025-03-12:
+  Absolucy, StrangeWeirdKitten:
+  - bugfix: Character creator preview being miniature
+  Kmla2:
+  - spellcheck: changes pathology "Sesnory Restoration" symptom into "Sensory Restoration"
+  leaKsi:
+  - admin: Controlling events now requires basic admin permissions.
+2025-03-13:
+  SirNightKnight:
+  - rscadd: Added  the Corporate Sponsorship for Evil bundle to the uplink. 20 TC
+      purchase for traitors as a pass to murderbone
+  - rscdel: Reverted the License to Murderbone to License to Plasmaflood
+  - bugfix: adjusted the fake mustache sprite to look better
+  Siro, Lucy:
+  - rscadd: Blight Protection status effect applied after being cured of Blight.
+  - qol: Blight cure now checks for active sleeping instead of just laying down. Gives
+      chance for essence absorption.
+  - bugfix: Blight now applies its debuffs again.
+  - code_imp: Blight debuff effects converted from a disease to a refreshing status
+      effect.
+  SmArtKar:
+  - bugfix: (SmArtKar) Fixes black vision for dextrous mobs using 516 version of BYOND

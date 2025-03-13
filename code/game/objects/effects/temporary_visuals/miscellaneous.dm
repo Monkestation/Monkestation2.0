@@ -85,6 +85,15 @@
 	duration = 10
 	randomdir = 0
 
+
+/obj/effect/temp_visual/dir_setting/magicbroom_trail //monkestation addition
+	name = "magic trails"
+	icon_state = "ion_fade"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 10
+	randomdir = 0
+
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
