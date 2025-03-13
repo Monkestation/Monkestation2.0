@@ -1,4 +1,3 @@
-////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
 	id = "alientech"
 	display_name = "Alien Technology"
@@ -102,23 +101,3 @@
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
-
-/datum/techweb_node/adv_cyber_implants
-	id = "adv_cyber_implants"
-	display_name = "Advanced Cybernetic Implants"
-	description = "Upgraded and more powerful cybernetic implants."
-	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
-	design_ids = list(
-		"ci-nutrimentplus",
-		"ci-reviver",
-		"ci-surgery",
-		"ci-toolset",
-		"ci-sprinter", //monkestation addition:
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/adv_cyber_implants/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-

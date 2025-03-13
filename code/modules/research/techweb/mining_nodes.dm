@@ -28,6 +28,19 @@
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/bitrunning
+	id = "bitrunning"
+	display_name = "Bitrunning Technology"
+	description = "Bluespace technology has led to the development of quantum-scale computing, which unlocks the means to materialize atomic structures while executing advanced programs."
+	prereq_ids = list("practical_bluespace")
+	design_ids = list(
+		"byteforge",
+		"quantum_console",
+		"netpod",
+		"bitrunning_order", //MONKESTATION ADDITION
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/adv_mining
 	id = "adv_mining"
 	display_name = "Advanced Mining Technology"
@@ -41,4 +54,3 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
-

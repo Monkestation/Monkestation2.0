@@ -1,3 +1,15 @@
+/datum/techweb_node/data_disks
+	id = "computer_data_disks"
+	display_name = "Computer Data Disks"
+	description = "Data disks used for storing modular computer stuff."
+	prereq_ids = list("comptech")
+	design_ids = list(
+		"portadrive_advanced",
+		"portadrive_basic",
+		"portadrive_super",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
 	display_name = "Basic Bluespace Theory"
@@ -9,6 +21,25 @@
 		"telesci_gps",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/practical_bluespace
+	id = "practical_bluespace"
+	display_name = "Applied Bluespace Research"
+	description = "Using bluespace to make things faster and better."
+	prereq_ids = list("bluespace_basic", "engineering")
+	design_ids = list(
+		"bluespacebeaker",
+		"bluespacesyringe",
+		"bluespace_coffeepot",
+		"bs_rped",
+		"minerbag_holding",
+		"ore_silo",
+		"phasic_scanning",
+		"plumbing_receiver",
+		"roastingstick",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)
 
 /datum/techweb_node/bluespace_travel
 	id = "bluespace_travel"
@@ -46,35 +77,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
 		/* /datum/experiment/exploration_scan/random/condition) this should have a point cost but im not even sure the experiment works properly lmao*/
-
-/datum/techweb_node/advanced_bluespace
-	id = "bluespace_storage"
-	display_name = "Advanced Bluespace Storage"
-	description = "With the use of bluespace we can create even more advanced storage devices than we could have ever done"
-	prereq_ids = list("micro_bluespace", "janitor")
-	design_ids = list(
-		"bag_holding",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-
-/datum/techweb_node/practical_bluespace
-	id = "practical_bluespace"
-	display_name = "Applied Bluespace Research"
-	description = "Using bluespace to make things faster and better."
-	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list(
-		"bluespacebeaker",
-		"bluespacesyringe",
-		"bluespace_coffeepot",
-		"bs_rped",
-		"minerbag_holding",
-		"ore_silo",
-		"phasic_scanning",
-		"plumbing_receiver",
-		"roastingstick",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)
 
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
@@ -136,14 +138,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/data_disks
-	id = "computer_data_disks"
-	display_name = "Computer Data Disks"
-	description = "Data disks used for storing modular computer stuff."
-	prereq_ids = list("comptech")
+/datum/techweb_node/advanced_bluespace
+	id = "bluespace_storage"
+	display_name = "Advanced Bluespace Storage"
+	description = "With the use of bluespace we can create even more advanced storage devices than we could have ever done"
+	prereq_ids = list("micro_bluespace", "janitor")
 	design_ids = list(
-		"portadrive_advanced",
-		"portadrive_basic",
-		"portadrive_super",
+		"bag_holding",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)

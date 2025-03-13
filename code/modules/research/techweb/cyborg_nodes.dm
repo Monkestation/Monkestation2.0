@@ -20,29 +20,6 @@
 		"sflash",
 	)
 
-
-/datum/techweb_node/cyborg_upg_util
-	id = "cyborg_upg_util"
-	display_name = "Cyborg Upgrades: Utility"
-	description = "Utility upgrades for cyborgs."
-	prereq_ids = list("adv_robotics")
-	design_ids = list(
-		"borg_upgrade_advancedmop",
-		"borg_upgrade_broomer",
-		"borg_upgrade_expand",
-		"borg_upgrade_prt",
-		"borg_upgrade_selfrepair",
-		"borg_upgrade_thrusters",
-		"borg_upgrade_trashofholding",
-		"borg_upgrade_clamp", //monkestation edit
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
-
-/datum/techweb_node/cyborg_upg_util/New()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_secborg))
-		design_ids += "borg_upgrade_disablercooler"
-
 /datum/techweb_node/cyborg_upg_engiminer
 	id = "cyborg_upg_engiminer"
 	display_name = "Cyborg Upgrades: Engineering & Mining"
@@ -73,6 +50,29 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
+/datum/techweb_node/cyborg_upg_util
+	id = "cyborg_upg_util"
+	display_name = "Cyborg Upgrades: Utility"
+	description = "Utility upgrades for cyborgs."
+	prereq_ids = list("adv_robotics")
+	design_ids = list(
+		"borg_upgrade_advancedmop",
+		"borg_upgrade_broomer",
+		"borg_upgrade_expand",
+		"borg_upgrade_prt",
+		"borg_upgrade_selfrepair",
+		"borg_upgrade_thrusters",
+		"borg_upgrade_trashofholding",
+		"borg_upgrade_clamp", //monkestation edit
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+
+/datum/techweb_node/cyborg_upg_util/New()
+	. = ..()
+	if(!CONFIG_GET(flag/disable_secborg))
+		design_ids += "borg_upgrade_disablercooler"
+
+// Implants root node
 /datum/techweb_node/subdermal_implants
 	id = "subdermal_implants"
 	display_name = "Subdermal Implants"
@@ -128,6 +128,24 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
+/datum/techweb_node/adv_cyber_implants
+	id = "adv_cyber_implants"
+	display_name = "Advanced Cybernetic Implants"
+	description = "Upgraded and more powerful cybernetic implants."
+	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
+	design_ids = list(
+		"ci-nutrimentplus",
+		"ci-reviver",
+		"ci-surgery",
+		"ci-toolset",
+		"ci-sprinter", //monkestation addition:
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/adv_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/cyber_organs
 	id = "cyber_organs"
@@ -169,4 +187,3 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-

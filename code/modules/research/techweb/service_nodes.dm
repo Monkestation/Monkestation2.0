@@ -18,97 +18,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 3000) //75% discount for scanning some trash, seems fair right?
 
-/datum/techweb_node/botany
-	id = "botany"
-	display_name = "Botanical Engineering"
-	description = "Botanical tools"
-	prereq_ids = list("biotech")
-	design_ids = list(
-		/* "diskplantgene", */ // monkestation edit: move to roundstart tech
-		"biogenerator",
-		"flora_gun",
-		"gene_shears",
-		"hydro_tray",
-		"portaseeder",
-		"seed_extractor",
-		"adv_watering_can",
-		"plantgenes",
-		// monkestation edit: our hydroponics stuff
-		"composters",
-		"splicer",
-		// monkestation end
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
-								/datum/experiment/scanning/random/plants/wild = 2000)
-
-/datum/techweb_node/fishing
-	id = "fishing"
-	display_name = "Fishing Technology"
-	description = "Cutting edge fishing advancements."
-	prereq_ids = list("base")
-	design_ids = list(
-		"fishing_rod_tech",
-		"stabilized_hook",
-		"fish_analyzer",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
-	required_experiments = list(/datum/experiment/scanning/fish)
-
-/datum/techweb_node/fishing
-	id = "fishing"
-	display_name = "Fishing Technology"
-	description = "Cutting edge fishing advancements."
-	prereq_ids = list("base")
-	design_ids = list(
-		"fishing_rod_tech",
-		"stabilized_hook",
-		"fish_analyzer",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
-	required_experiments = list(/datum/experiment/scanning/fish)
-
-
-/datum/techweb_node/datatheory //Computer science
-	id = "datatheory"
-	display_name = "Data Theory"
-	description = "Big Data, in space!"
-	prereq_ids = list("base")
-	design_ids = list(
-		"bounty_pad",
-		"bounty_pad_control",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-
-/datum/techweb_node/computer_board_gaming
-	id = "computer_board_gaming"
-	display_name = "Arcade Games"
-	description = "For the slackers on the station."
-	prereq_ids = list("comptech")
-	design_ids = list(
-		"arcade_battle",
-		"arcade_orion",
-		"slotmachine",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250)
-	discount_experiments = list(/datum/experiment/physical/arcade_winner = 3000)
-
-/datum/techweb_node/comp_recordkeeping
-	id = "comp_recordkeeping"
-	display_name = "Computerized Recordkeeping"
-	description = "Organized record databases and how they're used."
-	prereq_ids = list("comptech")
-	design_ids = list(
-		"account_console",
-		"automated_announcement",
-		"med_data",
-		"prisonmanage",
-		"secdata",
-		"vendor",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-
 /datum/techweb_node/comptech
 	id = "comptech"
 	display_name = "Computer Consoles"
@@ -128,3 +37,86 @@
 		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+
+/datum/techweb_node/datatheory //Computer science
+	id = "datatheory"
+	display_name = "Data Theory"
+	description = "Big Data, in space!"
+	prereq_ids = list("base")
+	design_ids = list(
+		"bounty_pad",
+		"bounty_pad_control",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/comp_recordkeeping
+	id = "comp_recordkeeping"
+	display_name = "Computerized Recordkeeping"
+	description = "Organized record databases and how they're used."
+	prereq_ids = list("comptech")
+	design_ids = list(
+		"account_console",
+		"automated_announcement",
+		"med_data",
+		"prisonmanage",
+		"secdata",
+		"vendor",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
+/datum/techweb_node/computer_board_gaming
+	id = "computer_board_gaming"
+	display_name = "Arcade Games"
+	description = "For the slackers on the station."
+	prereq_ids = list("comptech")
+	design_ids = list(
+		"arcade_battle",
+		"arcade_orion",
+		"slotmachine",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250)
+	discount_experiments = list(/datum/experiment/physical/arcade_winner = 3000)
+
+// Kitchen root node
+/datum/techweb_node/bio_process
+	id = "bio_process"
+	display_name = "Biological Processing"
+	description = "From slimes to kitchens."
+	prereq_ids = list("biotech")
+	design_ids = list(
+		"deepfryer",
+		"dish_drive",
+		"fat_sucker",
+		"gibber",
+		"griddle",
+		"microwave",
+		"oven",
+		"processor",
+		"range", // should be in a further node, probably
+		"reagentgrinder",
+		"smartfridge",
+		"stove",
+		"biomass_recycler",
+		"corral_corner",
+		"slime_extract_requestor",
+		"slime_market_pad",
+		"slime_market",
+		"slimevac",
+
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
+
+// Fishing root node
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	required_experiments = list(/datum/experiment/scanning/fish)

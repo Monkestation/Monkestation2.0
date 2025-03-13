@@ -42,6 +42,30 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
 
+/datum/techweb_node/explosive_weapons
+	id = "explosive_weapons"
+	display_name = "Explosive & Pyrotechnical Weaponry"
+	description = "If the light stuff just won't do it."
+	prereq_ids = list("adv_weaponry")
+	design_ids = list(
+		"adv_grenade",
+		"large_grenade",
+		"pyro_grenade",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/exotic_ammo
+	id = "exotic_ammo"
+	display_name = "Exotic Ammunition"
+	description = "They won't know what hit em."
+	prereq_ids = list("weaponry")
+	design_ids = list(
+		"c38_hotshot",
+		"c38_iceblox",
+		"techshotshell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
 	display_name = "Electric Weapons"
@@ -50,16 +74,6 @@
 	design_ids = list(
 		"ioncarbine",
 		"stunrevolver",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/radioactive_weapons
-	id = "radioactive_weapons"
-	display_name = "Radioactive Weaponry"
-	description = "Weapons using radioactive technology."
-	prereq_ids = list("adv_engi", "adv_weaponry")
-	design_ids = list(
-		"nuclear_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -84,26 +98,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/explosive_weapons
-	id = "explosive_weapons"
-	display_name = "Explosive & Pyrotechnical Weaponry"
-	description = "If the light stuff just won't do it."
-	prereq_ids = list("adv_weaponry")
+/datum/techweb_node/radioactive_weapons
+	id = "radioactive_weapons"
+	display_name = "Radioactive Weaponry"
+	description = "Weapons using radioactive technology."
+	prereq_ids = list("adv_engi", "adv_weaponry")
 	design_ids = list(
-		"adv_grenade",
-		"large_grenade",
-		"pyro_grenade",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/exotic_ammo
-	id = "exotic_ammo"
-	display_name = "Exotic Ammunition"
-	description = "They won't know what hit em."
-	prereq_ids = list("weaponry")
-	design_ids = list(
-		"c38_hotshot",
-		"c38_iceblox",
-		"techshotshell",
+		"nuclear_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

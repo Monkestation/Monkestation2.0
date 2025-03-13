@@ -20,6 +20,22 @@
 		"mod_plasma",
 		"mod_sign_radio",
 	)
+
+/datum/techweb_node/mod_advanced
+	id = "mod_advanced"
+	display_name = "Advanced Modular Suits"
+	description = "More advanced modules, to improve modular suits."
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"mod_visor_diaghud",
+		"mod_gps",
+		"mod_reagent_scanner",
+		"mod_clamp",
+		"mod_drill",
+		"mod_orebag",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/mod_entertainment
 	id = "mod_entertainment"
 	display_name = "Entertainment Modular Suits"
@@ -51,21 +67,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/mod_advanced
-	id = "mod_advanced"
-	display_name = "Advanced Modular Suits"
-	description = "More advanced modules, to improve modular suits."
-	prereq_ids = list("robotics")
-	design_ids = list(
-		"mod_visor_diaghud",
-		"mod_gps",
-		"mod_reagent_scanner",
-		"mod_clamp",
-		"mod_drill",
-		"mod_orebag",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/mod_engineering
 	id = "mod_engineering"
 	display_name = "Engineering Modular Suits"
@@ -79,6 +80,25 @@
 		"mod_tether",
 		"mod_constructor",
 		"mod_mister_atmos",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_security
+	id = "mod_security"
+	display_name = "Security Modular Suits"
+	description = "Security suits for space crime handling."
+	prereq_ids = list("mod_advanced", "sec_basic")
+	design_ids = list(
+		"mod_plating_security",
+		"mod_visor_sechud",
+		"mod_stealth",
+		"mod_mag_harness",
+		"mod_pathfinder",
+		"mod_holster",
+		"mod_sonar",
+		"mod_projectile_dampener",
+		"mod_criminalcapture",
+		"mod_mirage_grenade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -108,26 +128,6 @@
 		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
-
-/datum/techweb_node/mod_security
-	id = "mod_security"
-	display_name = "Security Modular Suits"
-	description = "Security suits for space crime handling."
-	prereq_ids = list("mod_advanced", "sec_basic")
-	design_ids = list(
-		"mod_plating_security",
-		"mod_visor_sechud",
-		"mod_stealth",
-		"mod_mag_harness",
-		"mod_pathfinder",
-		"mod_holster",
-		"mod_sonar",
-		"mod_projectile_dampener",
-		"mod_criminalcapture",
-		"mod_mirage_grenade",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 
 /datum/techweb_node/mod_anomaly
 	id = "mod_anomaly"

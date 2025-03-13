@@ -1,5 +1,5 @@
+//Nodes that are found inside Bepis Disks.
 
-////////////////////////B.E.P.I.S. Locked Techs////////////////////////
 /datum/techweb_node/light_apps
 	id = "light_apps"
 	display_name = "Illumination Applications"

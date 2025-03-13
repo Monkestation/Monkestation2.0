@@ -1,32 +1,3 @@
-/datum/techweb_node/bio_process
-	id = "bio_process"
-	display_name = "Biological Processing"
-	description = "From slimes to kitchens."
-	prereq_ids = list("biotech")
-	design_ids = list(
-		"deepfryer",
-		"dish_drive",
-		"fat_sucker",
-		"gibber",
-		"griddle",
-		"microwave",
-		"oven",
-		"processor",
-		"range", // should be in a further node, probably
-		"reagentgrinder",
-		"smartfridge",
-		"stove",
-		"biomass_recycler",
-		"corral_corner",
-		"slime_extract_requestor",
-		"slime_market_pad",
-		"slime_market",
-		"slimevac",
-
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
-
 /datum/techweb_node/genetics
 	id = "genetics"
 	display_name = "Genetic Engineering"
@@ -40,3 +11,28 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+// Botany root node
+
+/datum/techweb_node/botany
+	id = "botany"
+	display_name = "Botanical Engineering"
+	description = "Botanical tools"
+	prereq_ids = list("biotech")
+	design_ids = list(
+		/* "diskplantgene", */ // monkestation edit: move to roundstart tech
+		"biogenerator",
+		"flora_gun",
+		"gene_shears",
+		"hydro_tray",
+		"portaseeder",
+		"seed_extractor",
+		"adv_watering_can",
+		"plantgenes",
+		// monkestation edit: our hydroponics stuff
+		"composters",
+		"splicer",
+		// monkestation end
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
+								/datum/experiment/scanning/random/plants/wild = 2000)

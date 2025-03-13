@@ -94,6 +94,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/adv_mecha
+	id = "adv_mecha"
+	display_name = "Advanced Exosuits"
+	description = "For when you just aren't Gundam enough."
+	prereq_ids = list("adv_robotics")
+	design_ids = list(
+		"mech_repair_droid",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
+
 /datum/techweb_node/gygax
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
@@ -177,6 +188,26 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3000)
+
+/datum/techweb_node/basic_plasma
+	id = "basic_plasma"
+	display_name = "Basic Plasma Research"
+	description = "Research into the mysterious and dangerous substance, plasma."
+	prereq_ids = list("engineering")
+	design_ids = list(
+		"mech_generator",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/adv_plasma
+	id = "adv_plasma"
+	display_name = "Advanced Plasma Research"
+	description = "Research on how to fully exploit the power of plasma."
+	prereq_ids = list("basic_plasma")
+	design_ids = list(
+		"mech_plasma_cutter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
@@ -359,35 +390,4 @@
 		"mech_diamond_drill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/basic_plasma
-	id = "basic_plasma"
-	display_name = "Basic Plasma Research"
-	description = "Research into the mysterious and dangerous substance, plasma."
-	prereq_ids = list("engineering")
-	design_ids = list(
-		"mech_generator",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/adv_plasma
-	id = "adv_plasma"
-	display_name = "Advanced Plasma Research"
-	description = "Research on how to fully exploit the power of plasma."
-	prereq_ids = list("basic_plasma")
-	design_ids = list(
-		"mech_plasma_cutter",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/adv_mecha
-	id = "adv_mecha"
-	display_name = "Advanced Exosuits"
-	description = "For when you just aren't Gundam enough."
-	prereq_ids = list("adv_robotics")
-	design_ids = list(
-		"mech_repair_droid",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
 
