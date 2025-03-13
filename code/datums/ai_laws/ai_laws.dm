@@ -52,9 +52,9 @@ GLOBAL_VAR(round_default_lawset)
 				specified_laws += laws
 			var/datum/ai_laws/lawtype
 			if(specified_laws.len)
-				lawtype = pick(specified_laws)
+				lawtype = aneri_rand_pick(specified_laws) // monkestation edit: pick -> aneri_rand_pick
 			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
+				lawtype = aneri_rand_pick(subtypesof(/datum/ai_laws/default)) // monkestation edit: pick -> aneri_rand_pick
 
 			return lawtype
 		if(CONFIG_CUSTOM)
@@ -67,9 +67,9 @@ GLOBAL_VAR(round_default_lawset)
 					randlaws += lpath
 			var/datum/ai_laws/lawtype
 			if(randlaws.len)
-				lawtype = pick(randlaws)
+				lawtype = aneri_rand_pick(randlaws) // monkestation edit: pick -> aneri_rand_pick
 			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
+				lawtype = aneri_rand_pick(subtypesof(/datum/ai_laws/default)) // monkestation edit: pick -> aneri_rand_pick
 
 			return lawtype
 		if(CONFIG_WEIGHTED)
@@ -82,7 +82,7 @@ GLOBAL_VAR(round_default_lawset)
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
-		var/possible_id = pick_weight(law_weights)
+		var/possible_id = aneri_rand_pick_weighted(law_weights) // monkestation edit: pick_weight -> aneri_rand_pick_weighted
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id
