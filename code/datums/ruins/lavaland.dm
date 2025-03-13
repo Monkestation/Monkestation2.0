@@ -29,8 +29,7 @@
 	id = "biodome-clown"
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
-*/______qdel_list_wrapper(list/L)
-	. = ..()
+*/
 
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
