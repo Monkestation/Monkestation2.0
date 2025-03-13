@@ -499,7 +499,14 @@ const TechNodeDetail = (props) => {
 
 const TechNode = (props) => {
   const { act, data } = useRemappedBackend();
-  const { node_cache, design_cache, experiments, points, nodes, queue_nodes = [] } = data;
+  const {
+    node_cache,
+    design_cache,
+    experiments,
+    points,
+    nodes,
+    queue_nodes = [],
+  } = data;
   const { node, nodetails, nocontrols } = props;
   const {
     id,
@@ -568,7 +575,7 @@ const TechNode = (props) => {
       buttons={
         !nocontrols && (
           <>
-           {tier > 0 &&
+            {tier > 0 &&
               (!!can_unlock && (is_free || queue_nodes.length === 0) ? (
                 <Button
                   icon="lightbulb"
