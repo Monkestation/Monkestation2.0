@@ -17,7 +17,7 @@
 	var/attack_sound = 'monkestation/sound/weapons/mechasword.ogg'
 	//Attack types - Note that at least one of these must be true otherwise it'll only have passive effects (if any)
 	//By default we assume we're using a small weapon with only a special single-target attack
-    ///	If the weapon has an AOE attack
+	///	If the weapon has an AOE attack
 	var/cleave = FALSE
 	///	If the weapon has a single-target strike
 	var/precise_attacks = TRUE
