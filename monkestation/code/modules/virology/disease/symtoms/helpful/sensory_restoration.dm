@@ -1,5 +1,5 @@
 /datum/symptom/sensory_restoration
-	name = "Sesnory Restoration"
+	name = "Sensory Restoration"
 	desc = "The virus adjusts how light is absorbed in the eyes, leading to enhanced vision at high strength."
 	stage = 3
 	max_multiplier = 3

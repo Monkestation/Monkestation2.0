@@ -1,8 +1,0 @@
-author: "ThePooba"
-delete-after: True
-changes:
-  - rscadd: "add broom"
-  - rscadd: "added bird delamination"
-  - rscadd: "eternal damnation"
-  - bugfix: "no more syndicate nanites in strange seeds good lord"
-  - bugfix: "slasher damage fix"

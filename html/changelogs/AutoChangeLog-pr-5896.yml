@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "pAIs now ACTUALLY have maints access, as compared to before where the doors just said \"no\" no matter what."
