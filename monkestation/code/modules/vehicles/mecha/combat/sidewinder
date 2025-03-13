@@ -1,0 +1,96 @@
+/obj/vehicle/sealed/mecha/combat/sidewinder
+	desc = "A squat, nimble, and rather confining exosuit taking advantage of advanced synthetic muscles to move around. Originally used for entertainment in mech \"sports\", many have found it to be well-suited for more practical applications."
+	name = "\improper Sidewinder"
+	icon_state = "sidewinder"
+	step_in = 2.5	//Faster than a gygax
+	dir_in = 1		//Facing North.
+	force = 20
+	max_integrity = 225
+	deflect_chance = 5		//Small chance to evade attacks, turning them into glancing blows
+	super_deflects = TRUE	//Plastitanium plating baby!
+	armor_type = /datum/armor/mecha_sidewinder
+	max_temperature = 25000
+	infra_luminosity = 6
+	internal_damage_threshold = 25	//Reinforced internal components
+	max_equip_by_category = list(
+		MECHA_UTILITY = 1,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 2,
+	)
+	guns_allowed = FALSE			//Melee only
+	omnidirectional_attacks = TRUE	//Thus the name
+	melee_cooldown = 6
+	encumbrance_gap = 1.2			//Light combat mech, be smart with what you put on it
+	turnsound = 'sound/mecha/mechmove01.ogg'
+
+/datum/armor/mecha_sidewinder
+	melee = 40
+	bullet = 20
+	laser = 20
+	bomb = 40
+	energy = 15
+	fire = 100
+	acid = 100
+
+//We have to check basically all of this AGAIN because we don't want to always turn
+/obj/vehicle/sealed/mecha/combat/sidewinder/on_mouseclick(mob/user, atom/target, mob/user,params)
+		SIGNAL_HANDLER
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		set_safety(user)
+		return COMSIG_MOB_CANCEL_CLICKON
+	if(weapons_safety)
+		return
+	if(isAI(user)) 								//For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
+		. = COMSIG_MOB_CANCEL_CLICKON
+	if(modifiers[SHIFT_CLICK]) 					//Allows things to be examined.
+		return
+	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
+		return
+	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
+		return
+	if(phasing)
+		balloon_alert(user, "not while [phasing]!")
+		return
+	if(user.incapacitated())
+		return
+	if(construction_state)
+		balloon_alert(user, "end maintenance first!")
+		return
+	if(!get_charge())
+		return
+	if(src == target)
+		return
+	if(!equipment_disabled)								//EMP will disable the turning temporarily
+		var/initial_direction = dir
+		face_atom(target)
+		var/new_direction = dir
+		if(initial_direction != new_direction)			//Make sure we actually turned
+			playsound(src,'sound/mecha/mechmove01.ogg',40,1)
+	return ..()
+
+/obj/vehicle/sealed/mecha/combat/sidewinder/mamba
+	desc = "Otherwise nearly identical to the original sidewinder chassis in form, this one has been heavily modified for stealthier, longer-range combat engagements. The fangs are purely aesthetic, though."
+	name = "\improper Black Mamba"
+	icon_state = "mamba"
+	infra_luminosity = 0	//Cold-blooded
+	guns_allowed = TRUE		//Syndicate bullshit
+	operation_req_access = list(ACCESS_SYNDICATE)
+	internals_req_access = list(ACCESS_SYNDICATE)
+	stepsound = null
+	turnsound = null
+
+/obj/mecha/combat/sidewinder/mamba/Initialize(mapload)
+	. = ..()
+	if(internal_tank)
+		internal_tank.set_light_on(FALSE) //remove the light that is granted by the internal canister
+		internal_tank.set_light_range_power_color(0, 0, COLOR_BLACK) //just turning it off isn't enough apparently
+
+/obj/mecha/combat/sidewinder/mamba/loaded/Initialize(mapload)
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/venom
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/melee_weapon/sword/rapier/razerfang	//Not a snake without fangs right?
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
+	ME.attach(src)
+	max_ammo()

@@ -3,12 +3,12 @@
 	name = "mecha melee weapon"
 	icon = 'monkestation/icons/mecha/mecha_melee.dmi'
 	icon_state = "mecha_generic_melee"
-	range = MECHA_MELEE|MECHA_RANGED	//so we can do stuff at range and in melee
-	destroy_sound = 'sound/mecha/weapdestr.ogg'
+	range = MECHA_MELEE|MECHA_RANGED	//so we can do stuff more than one tile away on click
+	destroy_sound = 'sound/mecha/critdestr.ogg'
 	mech_flags = EXOSUIT_MODULE_MELEE
 	equipment_flags = MELEE_OVERRIDE
 	obj_flags = UNIQUE_RENAME // because it's COOL
-	var/restricted = TRUE //for our special hugbox exofabs
+	movedelay = 0.2	//They tend to be big chunks of metal in some weapon-ey shape
 	///	If we have a longer range weapon, such as a spear or whatever capable of hitting people further away, this is how much extra range it has
 	var/extended_range = 0
 	///	Attack speed modifier for a weapon. Big weapons will have a longer delay between attacks, while smaller ones will be faster
@@ -34,6 +34,8 @@
 	var/minimum_damage = 0
 	///	Bonus deflection chance for using a melee weapon capable of blocking attacks
 	var/deflect_bonus = 0
+	///	Gives superior deflection when equipped
+	var/deflect_superior = 0
 	///	Base armor piercing value of the weapon. This value is doubled for precise attacks
 	var/base_armor_piercing = 0
 	///	Fauna bonus damage, if any
@@ -50,7 +52,7 @@
 	///	Effect of the cleave attack
 	var/cleave_effect = /obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack
 
-//Melee weapon attacks are a little different in that they'll override the standard melee attack
+//Melee weapon attacks are a little different (and complicated, it turns out)
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/action(mob/source, atom/target, list/modifiers)
 	var/turf/curloc = get_turf(chassis)
 	var/turf/targloc = get_turf(target)
@@ -80,8 +82,6 @@
 	else	//Failure to sword
 		return 0
 	chassis.log_message("Attacked with [src.name], targeting [target].", LOG_MECHA)
-	to_chat(world, span_warning("Timer set from [world.time] with duration [chassis.melee_cooldown * attack_speed_modifier]"))
-	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_MELEE_ATTACK, chassis.melee_cooldown * attack_speed_modifier)//Cooldown is on the MECH so people dont bypass it by switching equipment
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), chassis.melee_cooldown * attack_speed_modifier)
 	SEND_SIGNAL(source, COMSIG_MOB_USED_MECH_EQUIPMENT, chassis)
 	chassis.use_power(energy_drain)
@@ -174,7 +174,7 @@
 	weapon_damage = 10
 	precise_weapon_damage = 15
 	fauna_damage_bonus = 30		//because why not
-	deflect_bonus = 15
+	deflect_bonus = 25
 	base_armor_piercing = 15
 	structure_damage_mult = 2.5	//Sword is not as smashy
 	minimum_damage = 25
@@ -259,7 +259,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/sword/energy_axe
 	name = "\improper SH-NT \"Killerhurtz\" Energy Axe"
-	desc = "An oversized, destructive-looking axe with a powered edge. While far too big for use by an individual, an exosuit might be able to wield it."
+	desc = "An oversized, destructive-looking axe with a powered edge. While far too big for use by an individual, an suitably large exosuit might be able to wield it."
 	icon_state = "mecha_energy_axe"
 	precise_attacks = FALSE		//This is not a weapon of precision, it is a weapon of destruction
 	energy_drain = 4
@@ -267,7 +267,7 @@
 	fauna_damage_bonus = 30		//If you're fighting fauna with this thing, why? I mean it works, I guess.
 	base_armor_piercing = 40
 	structure_damage_mult = 4	//Think obi-wan cutting through a bulkhead with his lightsaber but he's a giant mech with a huge terrifying axe
-	mech_damage_multiplier = 0.75	//Your puny exosuit will not save you
+	mech_damage_multiplier = 1	//Your puny exosuit will not save you
 	minimum_damage = 40
 	attack_speed_modifier = 1.5 //Kinda chunky
 	mob_strike_sound = 'sound/weapons/blade1.ogg'
@@ -297,7 +297,8 @@
 	precise_weapon_damage = 10
 	attack_speed_modifier = 0.7	//live out your anime dreams in a mech
 	fauna_damage_bonus = 20		//because why not
-	deflect_bonus = 20			//ANIME REASONS
+	deflect_bonus = 30			//ANIME REASONS
+	deflect_superior = TRUE		//MORE ANIME REASONS
 	base_armor_piercing = 20	//40 on the precise attacks, something about being folded 10 gorillion times or whatever
 	structure_damage_mult = 2	//katana is less smashy than other swords
 	minimum_damage = 20
@@ -353,7 +354,7 @@
 	base_armor_piercing = 15
 	structure_damage_mult = 3.5	//It melts AND cuts!
 	sword_wound_bonus = -30		//We're here for the fire damage thank you
-	var/burninating = 10		//BURNINATING THE COUNTRYSIDE
+	var/burninating = 15		//BURNINATING THE COUNTRYSIDE
 	mob_strike_sound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/sword/trogdor/special_hit(atom/A)
@@ -378,6 +379,7 @@
 	weapon_damage = 25			//Very smashy
 	precise_weapon_damage = 30
 	attack_speed_modifier = 2.5	//Very slow
+	movedelay = 0.4				//Very heavy
 	fauna_damage_bonus = 40
 	structure_damage_mult = 4	//Good for stationary objects
 	attack_sharpness = 0
@@ -398,8 +400,10 @@
 	icon_state = "mecha_rapier"
 	energy_drain = 4
 	cleave = FALSE
+	movedelay = 0				//This is a high-speed nukie weapon
 	base_armor_piercing = 25	//50 on precise attack
-	deflect_bonus = 15			//Mech fencing but it parries bullets too because robot reaction time or something
+	deflect_bonus = 30			//Mech fencing but it parries bullets too because robot reaction time or something
+	deflect_superior = TRUE
 	structure_damage_mult = 2	//Ever try to shank an engine block?
 	mech_damage_multiplier = 0.75	//Notably better against mechs
 	attack_sharpness = SHARP_POINTY
@@ -475,10 +479,10 @@
 	energy_drain = 4
 	cleave = FALSE
 	base_armor_piercing = 40	//80 on precise attack
-	deflect_bonus = 5			//Helps, but is a bit to small to be particularly good at it
+	deflect_bonus = 15			//Helps, but is a bit to small to be particularly good at it
 	attack_sharpness = SHARP_POINTY
 	attack_speed_modifier = 2	//Strike and fall back, let the venom do the work
-	precise_weapon_damage = -25	//Tiny dagger
+	precise_weapon_damage = -25	//Tiny daggers
 	minimum_damage = 10			//So we don't do negative damage
 	extended_range = 1			//So we can jump at people
 	attack_sound = 'monkestation/sound/weapons/sword2.ogg'
@@ -525,7 +529,8 @@
 	name = "\improper RS-77 \"Atom Smasher\" Rocket Fist"
 	desc = "A large metal fist fitted to the arm of an exosuit, it uses repurposed maneuvering thrusters from a Raven battlecruiser to give a little more oomph to every punch. Also helps increase the speed at which the mech is able to return to a ready stance after each swing."
 	icon_state = "mecha_rocket_fist"
-	weapon_damage = 20 // PUNCH HARDER
+	weapon_damage = 20 	//PUNCH HARDER
+	movedelay = 0		//SPEEEED
 
 /obj/item/mecha_parts/mecha_equipment/melee_weapon/rocket_fist/precise_attack(atom/target)
 	target.mech_melee_attack(chassis, chassis.force + weapon_damage, FALSE)	//DONT SET THIS TO TRUE
