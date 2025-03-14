@@ -21,3 +21,12 @@
 			Comes with 5 charges."
 	item = /obj/item/compression_kit
 	cost = 4
+
+/datum/uplink_item/device_tools/polyglot_voicebox
+	name = "Syndicate Polyglot Voicebox"
+	desc = "A polyglot voicebox which, after replacing the user's tongue will allow them to emulate \
+			the tongue of any species. \
+			WARNING: The polyglot voicebox does not allow you to speak additional languages"
+	cost = 2
+	item = /obj/item/autosurgeon/syndicate/polyglot_voicebox
+	surplus = 25

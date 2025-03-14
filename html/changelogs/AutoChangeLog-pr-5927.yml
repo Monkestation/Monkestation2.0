@@ -1,0 +1,6 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - bugfix: "you can now hit borgs with crowbars"
+  - map: "barber vender on heliostation"
+  - bugfix: "ion laws no longer almost always purge"

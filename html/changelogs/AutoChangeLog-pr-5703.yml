@@ -1,0 +1,7 @@
+author: "Siro"
+delete-after: True
+changes:
+  - rscadd: "Documentation for setting jobs to use the new checks."
+  - code_imp: "Creates checks for job overrides. Flags for donator specific jobs and flags to override holiday tied jobs."
+  - code_imp: "Ties jobs to the holiday system so they can be loaded but only accessible if its the season or if the donator rank meets the requirements."
+  - code_imp: "All admins and mentors can bypass these checks."

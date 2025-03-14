@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Plates now respect the weight class of items on top."
+  - bugfix: "Tongs can no longer hold fried weapons"
+  - bugfix: "things frying instantly"
