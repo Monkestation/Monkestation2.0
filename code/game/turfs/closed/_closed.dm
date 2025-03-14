@@ -9,6 +9,18 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
 
+/turf/closed/examine(mob/user)
+	. = ..()
+	if(uses_integrity && atom_integrity < max_integrity)
+		var/healthpercent = (atom_integrity/max_integrity) * 100
+		switch(healthpercent)
+			if(50 to 99)
+				. +=  "It looks slightly damaged."
+			if(25 to 50)
+				. +=  "It appears heavily damaged."
+			if(0 to 25)
+				. += span_warning("It's falling apart!")
+
 /turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
