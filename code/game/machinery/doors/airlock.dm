@@ -999,14 +999,17 @@
 		if(isElectrified() && (C.flags_1 & CONDUCT_1) && shock(user, 75))
 			return
 	add_fingerprint(user)
-
+	if(istype(C, /obj/item/slasher_machette))
+		attack_slasher_machete(src, user)
+		return COMPONENT_NO_AFTERATTACK
 	if(is_wire_tool(C))
 		if(panel_open)
 			attempt_wire_interaction(user)
 			return
-		else
+/*		else
 			attempt_hacking_interaction(user)
 			return
+*/
 
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))

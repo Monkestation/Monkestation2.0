@@ -1422,7 +1422,9 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+		var/datum/browser/browser = new(usr, "related_[C]", "[C.ckey] Related Accounts", 420, 300)
+		browser.set_content(dat.Join("<br>"))
+		browser.open()
 
 	else if(href_list["centcomlookup"])
 		if(!check_rights(R_ADMIN))
@@ -1790,9 +1792,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.in_queue)
 			return
-		token_holder.approve_antag_token()
 		message_admins("[key_name_admin(owner)] approved a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.in_queue] token has been approved by [owner].")
+		token_holder.approve_antag_token()
 
 	else if(href_list["reject_antag_token"])
 		if(!check_rights(R_ADMIN))
@@ -1804,9 +1806,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.in_queue)
 			return
-		token_holder.reject_antag_token()
 		message_admins("[key_name_admin(owner)] rejected a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
+		token_holder.reject_antag_token()
 
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))

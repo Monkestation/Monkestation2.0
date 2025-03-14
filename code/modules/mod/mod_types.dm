@@ -4,7 +4,7 @@
 	/// The MOD core we apply to the suit.
 	var/applied_core = /obj/item/mod/core/standard
 	/// The cell we apply to the core. Only applies to standard core suits.
-	var/applied_cell = /obj/item/stock_parts/cell/high
+	var/applied_cell = /obj/item/stock_parts/cell/super
 	/// List of modules we spawn with.
 	var/list/applied_modules = list()
 	/// Modules that we pin when the suit is installed for the first time, for convenience, can be applied or theme inbuilt modules.
@@ -52,10 +52,14 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether,
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/visor/meson, //monkestation edit
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/atmospheric
@@ -65,8 +69,15 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/t_ray,
+		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/tether, //monkestation edit
 	)
+	default_pins = list(
+		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether, //monkestation edit
+	)
+
 
 /obj/item/mod/control/pre_equipped/advanced
 	theme = /datum/mod_theme/advanced
@@ -77,6 +88,7 @@
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/visor/meson, // monkestation addition
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,
@@ -107,6 +119,7 @@
 		/obj/item/mod/module/clamp,
 		/obj/item/mod/module/drill,
 		/obj/item/mod/module/mouthhole,
+		/obj/item/mod/module/visor/meson, // monkestation addition
 	)
 	default_pins = list(
 		/obj/item/mod/module/gps,
@@ -121,6 +134,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/quick_carry,
+		/obj/item/mod/module/visor/medhud, // monkestation addition
 	)
 
 /obj/item/mod/control/pre_equipped/rescue
@@ -131,6 +145,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
+		/obj/item/mod/module/visor/medhud, // monkestation addition
 	)
 
 /obj/item/mod/control/pre_equipped/research
@@ -142,6 +157,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/circuit,
 		/obj/item/mod/module/t_ray,
+		/obj/item/mod/module/visor/diaghud,  // monkestation addition
 	)
 
 /obj/item/mod/control/pre_equipped/security
@@ -150,9 +166,10 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/criminalcapture,
-		/obj/item/mod/module/dispenser/mirage,
+		/obj/item/mod/module/visor/sechud, // monkestation addition
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -166,6 +183,7 @@
 		/obj/item/mod/module/megaphone,
 		/obj/item/mod/module/projectile_dampener,
 		/obj/item/mod/module/pepper_shoulders,
+		/obj/item/mod/module/visor/sechud, // monkestation addition
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,

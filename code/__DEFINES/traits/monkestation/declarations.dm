@@ -11,6 +11,8 @@
 #define TRAIT_DISORIENTED "disoriented"
 /// User cannot sprint.
 #define TRAIT_NO_SPRINT "no_sprint"
+/// Their monitors are corrupted (this should be IPC exclusive trait). Currently used to set special examine text on IPCs. Examine text is overridden by TRAIT_CORRUPTED_MONITOR.
+#define TRAIT_CORRUPTED_MONITOR "corrupted_monitor"
 /// One can breath under water, you get me?
 #define TRAIT_WATER_BREATHING "water_breathing"
 /// Does not take damage from bloodloss (or any blood shenanigans)
@@ -123,7 +125,10 @@
 #define TRAIT_TRASH_ITEM			"trash_item"
 /// This item came from a gift.
 #define TRAIT_GIFT_ITEM				"gift_item"
-
+/// The mob can see pathogen clouds and such.
+#define TRAIT_VIRUS_SCANNER "virus_scanner"
+///This item always renders. (only used for stupid magboots rn)
+#define TRAIT_ALWAYS_RENDER			"always_render"
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.
 #define TRAIT_GOES_THROUGH_WOODEN_BARRICADES	"goes_through_wooden_barricades"

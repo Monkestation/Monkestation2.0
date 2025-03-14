@@ -300,6 +300,18 @@
 			wearer.alternative_laughs.Add(alternative_laughs)
 		//MonkeStation Edit End
 
+// If the item is a piece of clothing and is being worn, make sure it updates on the player
+/obj/item/clothing/update_greyscale()
+	. = ..()
+
+	var/mob/living/carbon/human/wearer = loc
+
+	if(!istype(wearer))
+		return
+
+	wearer.update_clothing(slot_flags)
+
+
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list
  *
@@ -445,7 +457,7 @@
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
 		var/mob/living/M = loc
-		if(src in M.get_equipped_items(FALSE))
+		if(src in M.get_equipped_items())
 			to_chat(M, span_warning("Your [name] start[p_s()] to fall apart!"))
 		else
 			to_chat(M, span_warning("[src] start[p_s()] to fall apart!"))
@@ -493,9 +505,17 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index, t_color, icon, type)
+/proc/generate_female_clothing(index, t_color, icon, type, flat = FALSE)	//MONKESTATION EDIT - Dimorphic lizards
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
-	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+	var/female_icon_state = "female"
+
+	if(type & FEMALE_UNIFORM_FULL)	//MONKESTATION EDIT - Dimorphic lizards and splitting up a crazy long single line to be able to read it
+		female_icon_state += "_full"
+	else if((!type || (type & FEMALE_UNIFORM_TOP_ONLY)))
+		female_icon_state += "_top"
+	if(type & FEMALE_UNIFORM_NO_BREASTS || flat)
+		female_icon_state += "_no_breasts"
+
 	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
 	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
@@ -567,7 +587,7 @@ BLIND     // can't see anything
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(isliving(loc))
 			var/mob/living/M = loc
-			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands
+			if(src in M.get_equipped_items()) //make sure they were wearing it and not attacking the item in their hands
 				M.visible_message(span_danger("[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!"), span_warning("<b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b>"), vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
 			else
