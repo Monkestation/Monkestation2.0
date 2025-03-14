@@ -1492,14 +1492,13 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
-/* commented out until i figure out why this is borked
-		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+		var/file_string = "[file]"
+		if(length(file_string)) // ensure that it's actually a file, and not a runtime icon
 			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
 				icon_states_cache[file][istate] = TRUE
 		else // Otherwise, we have to use the slower BYOND proc
-*/
-		for(var/istate in icon_states(file))
-			icon_states_cache[file][istate] = TRUE
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
