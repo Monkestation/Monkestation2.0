@@ -13,5 +13,10 @@
 			back = /obj/item/storage/backpack/duffelbag
 		if(LSATCHEL)
 			back = /obj/item/storage/backpack/satchel/leather
+		if(BSATCHEL)
+			back = /obj/item/storage/backpack/satchel/blackleather
+		if(RSATCHEL)
+			back = /obj/item/storage/backpack/satchel/retro
+		
 		else
 			back = /obj/item/storage/backpack
