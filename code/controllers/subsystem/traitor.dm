@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(traitor)
 
 	current_global_progression += progression_scaling_delta
 	for(var/datum/uplink_handler/handler in uplink_handlers)
-		if(!handler.has_progression || QDELETED(handler))
+		if(!handler.has_progression || QDELETED(handler) || istype(handler, /datum/uplink_handler/gang)) //monkestation edit: adds the gang handler check
 			uplink_handlers -= handler
 		var/deviance = (previous_global_progression - handler.progression_points) / progression_scaling_deviance
 		if(abs(deviance) < 0.01)
@@ -85,9 +85,11 @@ SUBSYSTEM_DEF(traitor)
 			handler.progression_points += amount_to_give
 		handler.update_objectives()
 		handler.on_update()
+	if(length(GLOB.gang_controlled_areas)) //monkestation edit
+		handle_gangs() //monkestation edit
 
 /datum/controller/subsystem/traitor/proc/register_uplink_handler(datum/uplink_handler/uplink_handler)
-	if(!uplink_handler.has_progression)
+	if(!uplink_handler.has_progression || istype(uplink_handler, /datum/uplink_handler/gang)) //monkestation edit: adds the gang handler check
 		return
 	uplink_handlers |= uplink_handler
 	// An uplink handler can be registered multiple times if they get assigned to new uplinks, so
