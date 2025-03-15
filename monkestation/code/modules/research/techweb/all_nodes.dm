@@ -225,8 +225,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-
-
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"
 	display_name = "Bomb Actualization Technology"
