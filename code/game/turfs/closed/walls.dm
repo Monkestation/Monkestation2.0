@@ -36,7 +36,7 @@
 	var/list/dent_decals
 
 	max_integrity = 300
-	damage_deflection = 25 // big chunk of solid metal
+	damage_deflection = 22 // big chunk of solid metal
 	uses_integrity = TRUE
 	armor_type = /datum/armor/wall
 
