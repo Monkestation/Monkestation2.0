@@ -9,6 +9,7 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
 
+//Monkestation edit start
 /turf/closed/examine(mob/user)
 	. = ..()
 	if(uses_integrity && atom_integrity < max_integrity)
@@ -20,6 +21,7 @@
 				. +=  "It appears heavily damaged."
 			if(0 to 25)
 				. += span_warning("It's falling apart!")
+//Monkestation edit end
 
 /turf/closed/AfterChange()
 	. = ..()
