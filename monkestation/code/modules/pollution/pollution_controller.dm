@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(pollution)
 	name = "Pollution"
 	init_order = INIT_ORDER_POLLUTION //Before atoms, because the emitters may need to know the singletons
+	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 0.5 SECONDS //2 SECONDS -> 0.5 SECONDS
 	/// Currently active pollution
