@@ -300,3 +300,6 @@
 	if(!filter_index || filter_index < 1 || filter_index > length(target.filters))
 		return
 	animate(target.filters[filter_index], appearance = set_vars, time, loop, easing, flags)
+
+/proc/_unix_timestamp()
+	return aneri_unix_timestamp()
