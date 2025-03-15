@@ -150,7 +150,7 @@
 		message_admins("[key_name(user)] stopped web sounds.")
 		web_sound_url = null
 		stop_web_sounds = TRUE
-	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+	if(web_sound_url && !is_http_protocol(web_sound_url))
 		tgui_alert(user, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
 		to_chat(user, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
 
@@ -183,7 +183,7 @@
 
 	if(length(web_sound_input))
 		web_sound_input = trim(web_sound_input)
-		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
+		if(findtext(web_sound_input, ":") && !is_http_protocol(web_sound_input))
 			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
