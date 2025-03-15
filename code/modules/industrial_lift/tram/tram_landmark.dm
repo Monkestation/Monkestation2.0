@@ -45,3 +45,4 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 
 	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
 	var/specific_lift_id = MAIN_STATION_TRAM
+
