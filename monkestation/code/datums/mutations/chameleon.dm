@@ -1,11 +1,13 @@
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack_item))
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
 	STOP_PROCESSING(SSfastprocess, src)
