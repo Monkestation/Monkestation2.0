@@ -118,6 +118,13 @@ SUBSYSTEM_DEF(research)
 
 		techweb_list.last_income = world.time
 
+		if(techweb_list.research_queue_nodes.len)
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
+
+			for(var/datum/techweb_node/node as anything in techweb_list.research_queue_nodes)
+				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
+					techweb_list.research_node(node)
+
 	for(var/core_type in slime_core_prices)
 		var/obj/item/slime_extract/core = core_type
 		var/price_mod = rand(SLIME_RANDOM_MODIFIER_MIN * 1000000, SLIME_RANDOM_MODIFIER_MAX * 1000000) / 1000000
