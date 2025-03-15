@@ -52,7 +52,7 @@
 		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
 		return
 
-	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -5000, donator_multipler = FALSE, reason = "Submitted a mixtape"))
+	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -5000, "Submitted a mixtape", donator_multiplier = FALSE))
 		return
 	/// this is where it ends
 	attacked_tape.moveToNullspace()
