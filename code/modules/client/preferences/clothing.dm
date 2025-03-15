@@ -38,6 +38,8 @@
 	values[GBACKPACK] = /obj/item/storage/backpack
 	values[GSATCHEL] = /obj/item/storage/backpack/satchel
 	values[LSATCHEL] = /obj/item/storage/backpack/satchel/leather
+	values[BSATCHEL] = /obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+	values[RSATCHEL] = /obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
 	values[GDUFFELBAG] = /obj/item/storage/backpack/duffelbag
 
 	// In a perfect world, these would be your department's backpack.
