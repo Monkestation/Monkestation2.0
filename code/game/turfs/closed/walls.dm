@@ -349,6 +349,17 @@
 		take_damage(150, armour_penetration=100)
 	//monkestation edit end
 
+/* //MONKESTATION REMOVAL: Deprecated, obselete old code proc
+/turf/closed/wall/proc/wall_singularity_pull(current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(50))
+			dismantle_wall()
+		return
+	if(current_size == STAGE_FOUR)
+		if(prob(30))
+			dismantle_wall()
+*/
+
 /turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
 	if(.)
