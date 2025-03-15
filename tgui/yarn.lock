@@ -2500,6 +2500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/wicg-file-system-access@npm:^2023.10.5":
+  version: 2023.10.5
+  resolution: "@types/wicg-file-system-access@npm:2023.10.5"
+  checksum: 10c0/3c6099320a2517ab405bd65712eb19ba2c1f7f0c30f952744102b76809ed9ad5205f881c79ebe6f92ac7af7a13667df8c23dd59b0a5182119c74afa17335bfd3
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 20.2.0
   resolution: "@types/yargs-parser@npm:20.2.0"
@@ -10364,6 +10371,7 @@ __metadata:
     "@types/node": "npm:14.x"
     "@types/webpack": "npm:^5.28.5"
     "@types/webpack-env": "npm:^1.18.4"
+    "@types/wicg-file-system-access": "npm:^2023.10.5"
     "@typescript-eslint/parser": "npm:^5.62.0"
     babel-jest: "npm:^29.7.0"
     babel-loader: "npm:^8.3.0"
