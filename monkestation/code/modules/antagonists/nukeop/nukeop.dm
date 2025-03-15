@@ -8,6 +8,8 @@
 	category = EVENT_CATEGORY_INVASION
 	description = "A junior nuclear operative infiltrates the station."
 	weight = 1
+	max_occurrences = 5
+	track = EVENT_TRACK_MAJOR
 
 /datum/round_event/ghost_role/junior_operative
 	minimum_required = 1
