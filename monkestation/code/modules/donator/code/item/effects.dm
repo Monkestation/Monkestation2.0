@@ -145,4 +145,4 @@
 	name = "tall baby pukeko"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
 	icon_state = "tallbabypukeko"
-	animal_transformation = /mob/living/basic/pet/babypukeko
+	animal_transformation = /mob/living/basic/pet/babypukeko/tall
