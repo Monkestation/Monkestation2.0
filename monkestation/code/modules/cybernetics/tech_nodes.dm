@@ -28,6 +28,8 @@
 		"ci-set-atmospherics",
 		"ci-set-botany",
 		"ci-set-mining",
+		"ci-set-barber",
+		"ci-set-flash",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -39,5 +41,6 @@
 	design_ids = list(
 		"ci-set-mantis",
 		"ci-set-combat",
+		"ci-set-taser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
