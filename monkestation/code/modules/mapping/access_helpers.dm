@@ -50,3 +50,8 @@
 	var/list/access_list = ..()
 	access_list += ACCESS_NT_REPRESENTATVE
 	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/science/circuitry/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CIRCUITRY
+	return access_list
