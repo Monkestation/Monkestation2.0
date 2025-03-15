@@ -1132,18 +1132,18 @@ SUBSYSTEM_DEF(job)
 
 	//MONKESTATION EDIT START
 	// Job is for donators of a specific level and fail if they did not meet the requirements.
-	if(((possible_job in holiday_restricted) || !isnull(possible_job.job_req_donar)) && (!is_admin(player.client) || !player.client?.is_mentor()))
+	if(((possible_job in holiday_restricted) || !isnull(possible_job.job_req_donor)) && (!is_admin(player.client) || !player.client?.is_mentor()))
 		if(get_player_details(player)?.patreon?.is_donator()) // They are a donator so we can check if they can bypass the restrictions.
-			if(!isnull(possible_job.job_req_donar) && !get_player_details(player)?.patreon?.has_access(possible_job.job_req_donar))
-				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONAR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-				return JOB_UNAVAILABLE_DONAR_RANK
+			if(!isnull(possible_job.job_req_donOr) && !get_player_details(player)?.patreon?.has_access(possible_job.job_req_donor))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
 
-			if(!isnull(possible_job.job_donar_bypass) && !get_player_details(player)?.patreon?.has_access(possible_job.job_donar_bypass))
-				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONAR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-				return JOB_UNAVAILABLE_DONAR_RANK
+			if(!isnull(possible_job.job_donor_bypass) && !get_player_details(player)?.patreon?.has_access(possible_job.job_donor_bypass))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
 		else
-			JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONAR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-			return JOB_UNAVAILABLE_DONAR_RANK
+			JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+			return JOB_UNAVAILABLE_DONOR_RANK
 	//MONKESTATION EDIT END
 
 	// Run the banned check last since it should be the rarest check to fail and can access the database.
