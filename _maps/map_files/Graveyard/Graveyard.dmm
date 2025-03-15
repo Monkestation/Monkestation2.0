@@ -6024,6 +6024,7 @@
 /obj/structure/sign/painting/large/library{
 	dir = 1
 	},
+/obj/machinery/bookbinder,
 /turf/open/floor/wood,
 /area/station/service/library)
 "cnY" = (
@@ -11960,7 +11961,11 @@
 /turf/open/floor/stone,
 /area/graveyard/surface)
 "eFq" = (
-/obj/machinery/bookbinder,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
 /turf/open/floor/wood,
 /area/station/service/library)
 "eFD" = (
@@ -43255,11 +43260,6 @@
 /obj/machinery/button/door/directional/south{
 	id = "radiostudio";
 	name = "Privacy Shutters control"
-	},
-/mob/living/basic/rabbit/daisy,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
 	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)

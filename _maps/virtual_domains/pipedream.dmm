@@ -816,7 +816,8 @@
 /area/space)
 "Bd" = (
 /obj/structure/closet/secure_closet/tac{
-	req_access = null
+	req_access = null;
+	req_one_access = null
 	},
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/item/ammo_casing/shotgun/buckshot,
