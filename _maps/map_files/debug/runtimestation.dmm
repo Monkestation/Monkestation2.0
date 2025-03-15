@@ -398,6 +398,10 @@
 /obj/machinery/door/poddoor,
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"bP" = (
+/obj/item/storage/part_replacer/bluespace/tier3,
+/turf/open/floor/plating,
+/area/station/construction)
 "bQ" = (
 /obj/machinery/chem_master,
 /turf/open/floor/iron/dark,
@@ -1485,6 +1489,7 @@
 	pixel_x = 32;
 	pixel_y = -7
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "fN" = (
@@ -1597,6 +1602,11 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"gj" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/debug,
+/turf/open/floor/plating,
+/area/station/construction)
 "gk" = (
 /obj/structure/sign/departments/evac,
 /turf/closed/wall/r_wall,
@@ -1964,6 +1974,10 @@
 "qQ" = (
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"rj" = (
+/obj/item/storage/part_replacer/bluespace/tier2,
+/turf/open/floor/plating,
+/area/station/construction)
 "rn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2010,6 +2024,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"ti" = (
+/obj/item/storage/part_replacer/bluespace/tier1,
+/turf/open/floor/plating,
+/area/station/construction)
 "tB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
@@ -2253,6 +2271,11 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
+"Ej" = (
+/obj/machinery/power/emitter/welded,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/construction)
 "Em" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2316,6 +2339,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
+"Ia" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/construction)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2341,6 +2368,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"Jg" = (
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/plating,
+/area/station/construction)
 "Jn" = (
 /obj/machinery/camera/directional/east,
 /turf/open/floor/iron/dark,
@@ -2410,6 +2441,9 @@
 /obj/machinery/chem_recipe_debug,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"Np" = (
+/turf/closed/wall,
+/area/station/construction)
 "Ns" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -2671,6 +2705,12 @@
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"ZJ" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/cable,
+/obj/item/card/emag,
+/turf/open/floor/plating,
+/area/station/construction)
 "ZP" = (
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
@@ -6295,13 +6335,13 @@ bE
 ef
 EA
 dn
+gj
+ti
+dn
+Ej
 dn
 dn
-dn
-dn
-dn
-dn
-dn
+Np
 dn
 dn
 dL
@@ -6387,10 +6427,10 @@ bE
 cN
 BW
 dn
+gj
+rj
 dn
-dn
-dn
-dn
+Ia
 dn
 dn
 dn
@@ -6479,10 +6519,10 @@ bE
 cN
 EA
 dn
-dn
-XE
-dn
-dn
+Ia
+ZJ
+Ia
+Ia
 dn
 dn
 XE
@@ -6571,10 +6611,10 @@ bE
 cN
 cY
 dn
+gj
+bP
 dn
-dn
-dn
-dn
+Ia
 dn
 dn
 dn
@@ -6663,13 +6703,13 @@ bE
 cN
 cY
 dn
+gj
+Jg
+dn
+Ej
 dn
 dn
-dn
-dn
-dn
-dn
-dn
+cN
 dn
 dn
 dL

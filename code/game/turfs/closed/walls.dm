@@ -50,6 +50,12 @@
 	acid = 50
 	wound = 0
 
+///type paths of projectiles explicitely whitelisted to damage walls
+	var/list/projectile_whitelist = list(
+		/obj/projectile/beam/emitter/hitscan
+	)
+
+
 /turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
 	..()
 	if(carbon_mob != user)

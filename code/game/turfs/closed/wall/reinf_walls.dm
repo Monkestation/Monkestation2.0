@@ -8,12 +8,11 @@
 	density = TRUE
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
-	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
-	max_integrity = 400
+	max_integrity = 600
 	damage_deflection = 75 // can't be damaged with most conventional weapons or tools
 	rad_insulation = RAD_HEAVY_INSULATION
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
