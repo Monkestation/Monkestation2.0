@@ -13,6 +13,8 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
+	max_integrity = 600 //Monkestation edit
+	damage_deflection = 75 // can't be damaged with most conventional weapons or tools Monkestation edit
 	rad_insulation = RAD_HEAVY_INSULATION
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
@@ -205,7 +207,7 @@
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
-/turf/closed/wall/r_wall/wall_singularity_pull(current_size)
+/turf/closed/wall/r_wall/singularity_pull(current_size) //Monkestation edit
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
