@@ -362,7 +362,7 @@
 /datum/voucher_set/security/brig_physician/monitor
 	name = "Officers monitor"
 	description = "A dead officer ? Not on your watch."
-	icon = "icons/obj/device.dmi"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
 	set_items = list(
 		/obj/item/sensor_device/brigdoc

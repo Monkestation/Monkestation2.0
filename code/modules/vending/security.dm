@@ -84,7 +84,7 @@
 
 /obj/item/security_voucher/brig_physician
 	name = "security brig physician voucher"
-	icon_state = "security_voucher_brig_physician"
+	icon_state = "security_voucher_brig_phyisician"
 
 /obj/machinery/vending/security/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/security_voucher))
