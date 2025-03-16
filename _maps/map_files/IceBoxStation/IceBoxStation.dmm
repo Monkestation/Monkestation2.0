@@ -14603,43 +14603,43 @@
 /turf/open/floor/plating,
 /area/station/medical/pathology)
 "ezF" = (
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
 /obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
 /turf/open/floor/glass,
 /area/station/service/library)
 "ezJ" = (
@@ -24803,6 +24803,7 @@
 "hUe" = (
 /obj/effect/landmark/start/hangover,
 /obj/machinery/status_display/evac/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/service/library)
 "hUi" = (
@@ -25955,10 +25956,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "inm" = (
-/obj/structure/table/wood,
 /obj/structure/cassette_rack/prefilled{
 	pixel_y = 8
 	},
+/obj/structure/table/wood,
 /turf/open/floor/glass,
 /area/station/service/library)
 "inw" = (
@@ -53565,8 +53566,8 @@
 "qWd" = (
 /obj/structure/table/wood,
 /obj/item/radio/radio_mic{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_y = 8;
+	pixel_x = -3
 	},
 /turf/open/floor/glass,
 /area/station/service/library)
@@ -55799,7 +55800,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "rGn" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/structure/railing/wooden_fencing{
 	dir = 8
 	},
@@ -253519,9 +253519,9 @@ hUD
 hUD
 hUD
 hUD
-qWd
-ezF
 wgh
+ezF
+qWd
 hUD
 gEE
 gEE
