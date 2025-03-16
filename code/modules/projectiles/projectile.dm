@@ -306,7 +306,7 @@
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 			//monkestation edit start
 			if(damage_walls)
-				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag)
+				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = 100)
 			//monkestation edit end
 
 		return BULLET_ACT_HIT
