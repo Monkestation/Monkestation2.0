@@ -97,7 +97,7 @@
 	// The ticket our recipient is using
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
-	var/datum/admin_help/recipient_interactions = recipient_ticket?._interactions
+	var/datum/admin_help/recipient_interactions = recipient_ticket?._interactions // MONKESTATION EDIT - tgui tickets
 	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
@@ -153,7 +153,7 @@
 				html = "[span_danger("<b>Message not sent:</b>")]<br>[message]",
 				confidential = TRUE)
 			if(recipient_ticket)
-				recipient_ticket.AddInteraction("No client found, message not sent: [message]")
+				recipient_ticket.AddInteraction("No client found, message not sent: [message]") // MONKESTATION EDIT - tgui tickets
 			return
 	cmd_admin_pm(whom, message)
 
@@ -293,7 +293,7 @@
 			html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 			confidential = TRUE)
 		if(recipient_ticket)
-			recipient_ticket.AddInteraction("No client found, message not sent: [msg]")
+			recipient_ticket.AddInteraction("No client found, message not sent: [msg]") // MONKESTATION EDIT - tgui tickets
 		return null
 	if(our_ticket)
 		our_ticket.MessageNoRecipient(msg)
@@ -429,7 +429,7 @@
 		admin_ticket_log(recipient,
 			send_message,
 			for_admins = FALSE,
-			log_in_blackbox = FALSE)
+			log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 
 		if(!already_logged) //Reply to an existing ticket
 			SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
@@ -490,6 +490,7 @@
 			confidential = TRUE)
 
 		//omg this is dumb, just fill in both their logs
+		// MONKESTATION EDIT START - tgui tickets
 		admin_ticket_log(src,
 			send_message,
 			for_admins = FALSE,
@@ -499,6 +500,7 @@
 				send_message,
 				for_admins = FALSE,
 				log_in_blackbox = FALSE)
+		// MONKESTATION EDIT END
 
 		if (ticket || recipient_ticket) SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
 
@@ -510,7 +512,7 @@
 	admin_ticket_log(src,
 		send_message,
 		for_admins = FALSE,
-		log_in_blackbox = FALSE)
+		log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_danger("[replymsg]"),
