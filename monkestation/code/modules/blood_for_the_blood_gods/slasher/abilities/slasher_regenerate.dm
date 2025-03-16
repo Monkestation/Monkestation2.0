@@ -26,7 +26,11 @@
 
 /datum/status_effect/bloody_heal/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_CANT_STAMCRIT, "bloody")
+	ADD_TRAIT(owner, TRAIT_CANT_STAMCRIT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/bloody_heal/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CANT_STAMCRIT, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 /datum/status_effect/bloody_heal/tick(seconds_per_tick, times_fired)
 	. = ..()
@@ -40,12 +44,17 @@
 	human_owner.adjustOxyLoss(-20)
 	human_owner.adjustToxLoss(-20)
 	human_owner.adjustCloneLoss(-20)
+	human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20)
 	human_owner.blood_volume = BLOOD_VOLUME_NORMAL
+
+	if(human_owner.all_wounds)
+		var/datum/wound/picked_wound = pick(human_owner.all_wounds)
+		picked_wound.remove_wound(replaced = TRUE)
+		if(human_owner.all_wounds)
+			var/datum/wound/picked_wound_2 = pick(human_owner.all_wounds)
+			picked_wound_2.remove_wound(replaced = TRUE)
+
 
 	for(var/i in human_owner.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(4 * REM * seconds_per_tick) // plasmamen use plasma to reform their bones or whatever
-
-/datum/status_effect/bloody_heal/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_CANT_STAMCRIT, "bloody")
-	. = ..()

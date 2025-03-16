@@ -5,8 +5,10 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxHealth = 25
+	// monkestation edit: slightly raise beepsky's health (25 -> 35)
+	health = 35
+	maxHealth = 35
+	// monkestation end
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	istate = ISTATE_HARM|ISTATE_BLOCKING
@@ -99,19 +101,6 @@
 	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	bot_mode_flags = BOT_MODE_ON
 	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
-
-//monkestation edit begin
-/mob/living/simple_animal/bot/secbot/beepsky/big
-	name = "Officer Bigsky"
-	desc = "It's Commander Beep O'sky's massive, just-as aggressive cousin, Bigsky."
-	health = 150
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
-	commissioned = FALSE
-
-/mob/living/simple_animal/bot/secbot/beepsky/big/Initialize(mapload)
-	. = ..()
-	update_transform(1.3)
-//monkestation edit end
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()

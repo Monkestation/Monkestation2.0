@@ -654,3 +654,29 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "elchorico_big_labcoat"
+
+/obj/item/clothing/suit/jacket/formal_overcoat
+	name = "Formal Overcoat"
+	desc = "A snazzy black suit jacket with 6 shiny gold buttons."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "formal_overcoat"
+	worn_icon_state = "formal_overcoat"
+
+/obj/item/clothing/head/costume/traumatic_veteran_cap
+	name = "traumatic veteran cap"
+	desc = "An old war veteran's cap. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_cap"
+	worn_icon_state = "traumatic_veteran_cap"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/traumatic_veteran_jacket
+	name = "traumatic veteran jacket"
+	desc = "An old war veteran's coat. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_jacket"
+	worn_icon_state = "traumatic_veteran_jacket"
+	toggle_noun = "zipper"

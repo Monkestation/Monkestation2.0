@@ -156,6 +156,9 @@
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
 
+	if(!listening)
+		remove_radio_all(src)
+
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	channels = list()
@@ -285,7 +288,10 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-
+	//MONKESTATION EDIT START
+	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
+		return
+	//MONKESTATION EDIT STOP
 	if(channel == FREQ_RADIO && !radio_host)
 		return
 
@@ -627,6 +633,9 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
 
 /obj/item/radio/entertainment/speakers/Initialize(mapload)
 	. = ..()

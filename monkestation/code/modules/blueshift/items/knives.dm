@@ -10,7 +10,7 @@
 	lefthand_file = 'monkestation/code/modules/blueshift/icons/bowie_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/icons/bowie_righthand.dmi'
 	worn_icon_state = "knife"
-	force = 20 // Zoowee Momma!
+	force = 17
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 15
 	wound_bonus = 10 //scalpel tier

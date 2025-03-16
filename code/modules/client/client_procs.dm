@@ -339,16 +339,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.player_details[ckey])
 		reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
-		var/old_version = player_details.byond_version
 		player_details.byond_version = byond_version
 		player_details.byond_build = byond_build
-
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-		if(old_version != byond_version)
-			rebuild_plane_masters = TRUE
-
 	else
 		player_details = new(ckey)
 		player_details.byond_version = byond_version
@@ -434,7 +426,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version].[byond_build]<br>"
 			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
