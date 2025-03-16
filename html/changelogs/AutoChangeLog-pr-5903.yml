@@ -1,4 +1,0 @@
-author: "leaKsi"
-delete-after: True
-changes:
-  - admin: "Controlling events now requires basic admin permissions."

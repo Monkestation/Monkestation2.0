@@ -34521,12 +34521,8 @@
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/captain)
 "gni" = (
-/obj/structure/rack,
-/obj/item/storage/bag/plants,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/item/hatchet,
 /obj/machinery/firealarm/directional/west,
-/obj/effect/spawner/random/food_or_drink/cups,
+/obj/machinery/vending/barbervend,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "gnj" = (

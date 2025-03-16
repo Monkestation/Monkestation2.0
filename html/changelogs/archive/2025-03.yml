@@ -319,3 +319,69 @@
   - rscadd: eternal damnation
   - bugfix: no more syndicate nanites in strange seeds good lord
   - bugfix: slasher damage fix
+2025-03-12:
+  Absolucy, StrangeWeirdKitten:
+  - bugfix: Character creator preview being miniature
+  Kmla2:
+  - spellcheck: changes pathology "Sesnory Restoration" symptom into "Sensory Restoration"
+  leaKsi:
+  - admin: Controlling events now requires basic admin permissions.
+2025-03-13:
+  SirNightKnight:
+  - rscadd: Added  the Corporate Sponsorship for Evil bundle to the uplink. 20 TC
+      purchase for traitors as a pass to murderbone
+  - rscdel: Reverted the License to Murderbone to License to Plasmaflood
+  - bugfix: adjusted the fake mustache sprite to look better
+  Siro, Lucy:
+  - rscadd: Blight Protection status effect applied after being cured of Blight.
+  - qol: Blight cure now checks for active sleeping instead of just laying down. Gives
+      chance for essence absorption.
+  - bugfix: Blight now applies its debuffs again.
+  - code_imp: Blight debuff effects converted from a disease to a refreshing status
+      effect.
+  SmArtKar:
+  - bugfix: (SmArtKar) Fixes black vision for dextrous mobs using 516 version of BYOND
+2025-03-14:
+  Absolucy:
+  - qol: The malf AI's module picker now shows icons for modules.
+  - bugfix: Fixed some potential blurry icons in UIs on BYOND 516.
+  - bugfix: Fixed bidding in a Black Market Uplink bluescreening the UI.
+  - qol: (MTandi) New syndicate uplink UI!
+  - qol: (MTandi) Made it possible to buy a custom amount of TC, instead of bundles
+      with fixed amounts.
+  - bugfix: (JohnFulpWillard) Fixed not being able to scroll in the malf AI's module
+      picker on BYOND 516.
+  Melbert:
+  - bugfix: Plates now respect the weight class of items on top.
+  - bugfix: Tongs can no longer hold fried weapons
+  - bugfix: things frying instantly
+  RandomDudeFromTheRim:
+  - bugfix: Nooatrium can no longer revive suicided mobs
+  - bugfix: Updated the description of insulated gloves to reflect their lack of chunky
+      fingers.
+  Shoddd:
+  - bugfix: you can now hit borgs with crowbars
+  - map: barber vender on heliostation
+  - bugfix: ion laws no longer almost always purge
+  - bugfix: moon mansus hand no longer pacifies people forever
+  Siro:
+  - rscadd: Documentation for setting jobs to use the new checks.
+  - code_imp: Creates checks for job overrides. Flags for donator specific jobs and
+      flags to override holiday tied jobs.
+  - code_imp: Ties jobs to the holiday system so they can be loaded but only accessible
+      if its the season or if the donator rank meets the requirements.
+  - code_imp: All admins and mentors can bypass these checks.
+  Wisemonster:
+  - bugfix: Lone op weight will be affected by leaving the disk unsecure.
+  - rscadd: Added a henchmen lawset
+  ancient-engineer:
+  - rscadd: Added a 2 TC traitor item called the polyglot tongue that replaces the
+      user's tongue and allows them to emulate other species manners of speech
+2025-03-15:
+  CannibalHunter:
+  - rscadd: Add's Cobalt Velvet 235's donator items
+2025-03-16:
+  CannibalHunter:
+  - bugfix: Tall Baby Pukeko effect granter is fixed to give the propper tall one.
+  Shoddd:
+  - rscadd: Polyglot quirk
