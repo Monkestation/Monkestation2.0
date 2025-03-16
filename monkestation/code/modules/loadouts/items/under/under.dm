@@ -147,6 +147,31 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Recolorable Plaid Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/plaid
 
+// So, story time - which should hopefully explain the weird name and why this isn't just called
+// `/datum/loadout_item/under/miscellaneous/turtleneck` like the original.
+//
+// The recolorable turtleneck item used to be a donator exclusive loadout item, granted to
+// TheSpecialSnowflake. However, with TheSpecialSnowflake's permission, this was changed, and the
+// recolorable turtleneck was made available to all.
+//
+// Unfortunately, due to how our loadout system works, there is no way to add an previously donator-
+// -exclusive item to the store, without some donators losing the item in the process.
+//
+// Per CannibalHunter, the choice was made to simply make the nondonator turtleneck a separate
+// loadout item datum, which should hopefully resolve any conflicts.
+/datum/loadout_item/under/miscellaneous/nondonatorturtleneck
+	name = "Recolorable Turtleneck"
+	// This item path is deliberately slightly different from the original. This is because, when
+	// the list of loadout item datums is generated, it uses `item_path` as the key - which means
+	// using the same key as the original would cause a conflict.
+	//
+	// Such a conflict could cause, among other things, the inability for a user to use a
+	// non-donator item (if one of the loadout item datums marks it as donator-only).
+	//
+	// By adding a subtype, the same exact item can have two different loadout item datums, and the
+	// issue is resolved.
+	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+
 /datum/loadout_item/under/miscellaneous/skirt_turtleneck
 	name = "Recolorable Turtleneck Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/turtleskirt

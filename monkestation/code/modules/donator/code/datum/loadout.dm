@@ -720,7 +720,7 @@
 
 //TheSpecialSnowflake
 /datum/loadout_item/under/miscellaneous/turtleneck
-	name = "Colorable Turtleneck"
+	name = "Recolorable Turtleneck (Donator)"
 	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck
 	donator_only = TRUE
 	requires_purchase = FALSE

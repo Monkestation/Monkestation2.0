@@ -639,6 +639,7 @@
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
 	expected_colors = 2
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
 
 /obj/item/clothing/neck/donatorwhitefurshawl
 	name = "white fur shawl"
