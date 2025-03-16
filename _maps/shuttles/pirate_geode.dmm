@@ -105,7 +105,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "im" = (
@@ -377,7 +377,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "uH" = (
@@ -532,7 +532,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "BA" = (
@@ -621,7 +621,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Gj" = (

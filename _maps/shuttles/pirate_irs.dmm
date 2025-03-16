@@ -414,7 +414,6 @@
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "lf" = (
@@ -517,7 +516,6 @@
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "nE" = (
@@ -1357,7 +1355,6 @@
 	name = "Pirate Ship";
 	port_direction = 2
 	},
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "KI" = (
@@ -1541,7 +1538,6 @@
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ot" = (

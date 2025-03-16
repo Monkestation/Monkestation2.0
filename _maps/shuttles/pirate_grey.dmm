@@ -345,7 +345,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "os" = (
@@ -866,7 +866,7 @@
 	dir = 4
 	},
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Bu" = (
