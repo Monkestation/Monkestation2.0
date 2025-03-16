@@ -85,6 +85,8 @@
 
 /datum/voucher_set/security/utility
 
+/datum/voucher_set/security/brig_physician
+
 /datum/voucher_set/security/assistant //don't know a better name
 
 /datum/voucher_set/security/primary/disabler
