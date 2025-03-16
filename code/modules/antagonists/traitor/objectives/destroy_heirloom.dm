@@ -51,6 +51,7 @@
 		/datum/job/janitor,
 		/datum/job/mime,
 		/datum/job/lawyer,
+		/datum/job/barber,
 		// Cargo
 		/datum/job/cargo_technician,
 		// Science
@@ -60,6 +61,14 @@
 		// Engineering
 		/datum/job/station_engineer,
 		/datum/job/atmospheric_technician,
+		// Spooktober
+		/datum/job/yellowclown,
+		/datum/job/skeleton,
+		/datum/job/candysalesman,
+		/datum/job/dietwizard,
+		/datum/job/ghost,
+		/datum/job/godzilla,
+		/datum/job/gorilla,
 	)
 
 /// This is only for assistants, because the syndies are a lot less likely to give a shit about what an assistant does, so they're a lot less likely to appear
@@ -83,8 +92,12 @@
 		/datum/job/bartender,
 		/datum/job/cook,
 		/datum/job/curator,
-		// Monkestation edit: security assistants
+		// Science
+		/datum/job/xenobiologist,
+		// Security
 		/datum/job/security_assistant,
+		// Engineering
+		/datum/job/signal_technician,
 	)
 
 /datum/traitor_objective/destroy_heirloom/rare
@@ -98,6 +111,7 @@
 		/datum/job/security_officer,
 		/datum/job/warden,
 		/datum/job/detective,
+		/datum/job/brig_physician,
 		// Heads of staff
 		/datum/job/head_of_personnel,
 		/datum/job/chief_medical_officer,
@@ -110,7 +124,8 @@
 	telecrystal_reward = 4
 	target_jobs = list(
 		/datum/job/head_of_security,
-		/datum/job/captain
+		/datum/job/captain,
+		/datum/job/blueshield,
 	)
 
 /datum/traitor_objective/destroy_heirloom/New(datum/uplink_handler/handler)

@@ -10,3 +10,6 @@
 
 /// Access to the NTSL console. It's important because only the signal technician and CE should have it.
 #define ACCESS_TCOMMS_ADMIN "tcomms_admin"
+
+/// Access to circuits/nanites related technology/areas.
+#define ACCESS_CIRCUITRY "circuitry"
