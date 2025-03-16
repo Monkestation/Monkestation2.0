@@ -1,7 +1,7 @@
 /client/verb/show_tickets()
 	set name = "tickets"
 	set desc = "Show list of tickets"
-	set hidden = TRUE
+	set category = "Admin"
 
 	if(holder)
 		GLOB.ahelp_tickets.ui_interact(usr)
