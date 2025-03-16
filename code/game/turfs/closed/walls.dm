@@ -288,7 +288,7 @@
 	return ..() || (attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
-	if(((user.istate & ISTATE_HARM)))
+	if(!(user.istate & ISTATE_HARM)) //monkestation edit
 		return FALSE
 
 	//monkestation edit start
