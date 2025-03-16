@@ -2821,6 +2821,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Docks - Entrance"
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bCV" = (
@@ -5003,6 +5004,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"cNu" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "cNz" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
@@ -13116,6 +13121,10 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pharmacy)
+"gSM" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "gSW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -14444,6 +14453,7 @@
 "hCx" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/spawner/random/food_or_drink/soup,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "hCN" = (
@@ -15516,7 +15526,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ibw" = (
@@ -16020,6 +16029,11 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"ipR" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "iqb" = (
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark,
@@ -19424,6 +19438,7 @@
 	dir = 1;
 	pixel_y = 27
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "kcm" = (
@@ -21612,6 +21627,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/botanical_waste,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "lmj" = (
@@ -22544,6 +22560,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/window/spawner/directional/east,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lJA" = (
@@ -22809,7 +22826,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
 "lRd" = (
@@ -25302,6 +25318,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/glass,
 /area/station/security/warden)
+"nec" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central)
 "nej" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -30674,6 +30695,11 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"pWp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "pWW" = (
 /obj/effect/spawner/random/structure/closet_private,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38611,6 +38637,7 @@
 "tZH" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "tZQ" = (
@@ -41211,7 +41238,6 @@
 /obj/machinery/door/airlock/external{
 	name = "External Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "vsg" = (
@@ -76256,7 +76282,7 @@ eMT
 jUP
 moU
 fte
-oNn
+cNu
 erH
 erH
 kcl
@@ -76511,7 +76537,7 @@ aHu
 fPT
 aHu
 erH
-cgQ
+nec
 oNn
 oNn
 rvq
@@ -77025,7 +77051,7 @@ aHu
 mno
 aHu
 erH
-cgQ
+nec
 oNn
 oNn
 rdl
@@ -77284,7 +77310,7 @@ mEy
 jUP
 uQA
 aEo
-oNn
+cNu
 rdl
 erH
 erH
@@ -78061,7 +78087,7 @@ erH
 aHu
 aHu
 kpB
-ahU
+ipR
 fKG
 fKG
 ahU
@@ -81620,9 +81646,9 @@ stN
 kAe
 kAe
 puk
-hvT
-hvT
-puk
+rfE
+rfE
+pWp
 fNs
 aHu
 aHu
@@ -90615,13 +90641,13 @@ aHu
 aHu
 aHu
 jHB
-hHZ
+gSM
 baD
-hHZ
+gSM
 wYI
-hHZ
+gSM
 kst
-hHZ
+gSM
 jHB
 aHu
 aHu
@@ -91905,7 +91931,7 @@ hHZ
 saK
 hHZ
 hHZ
-hHZ
+gSM
 jHB
 jHB
 jHB
