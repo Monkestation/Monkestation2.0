@@ -725,7 +725,9 @@
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		usr.client.VUAP_selected_mob = M
+		usr.client.selectedPlayerCkey = M.ckey
+		usr.client.holder.vuap_open()
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -740,7 +742,9 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		show_player_panel(target_mob)
+		usr.client.VUAP_selected_mob = target_mob
+		usr.client.selectedPlayerCkey = target_mob.ckey
+		usr.client.holder.vuap_open()
 
 	else if(href_list["adminopendemo"])
 		usr.client << link("http://viewer.monkestation.com/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]#[world.time]") //opens current round at current time
@@ -1418,7 +1422,9 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+		var/datum/browser/browser = new(usr, "related_[C]", "[C.ckey] Related Accounts", 420, 300)
+		browser.set_content(dat.Join("<br>"))
+		browser.open()
 
 	else if(href_list["centcomlookup"])
 		if(!check_rights(R_ADMIN))
@@ -1739,6 +1745,7 @@
 			return
 		return usr.client?.mark_datum(datum_to_mark)
 
+#ifndef DISABLE_DREAMLUAU
 	else if(href_list["lua_state"])
 		if(!check_rights(R_DEBUG))
 			return
@@ -1755,6 +1762,7 @@
 				editor.force_view_chunk = log_entry["chunk"]
 				editor.force_modal = "viewChunk"
 		editor.ui_interact(usr)
+#endif
 
 	else if(href_list["show_paper"])
 		if(!check_rights(R_ADMIN))
@@ -1784,9 +1792,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.in_queue)
 			return
-		token_holder.approve_antag_token()
 		message_admins("[key_name_admin(owner)] approved a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.in_queue] token has been approved by [owner].")
+		token_holder.approve_antag_token()
 
 	else if(href_list["reject_antag_token"])
 		if(!check_rights(R_ADMIN))
@@ -1798,9 +1806,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.in_queue)
 			return
-		token_holder.reject_antag_token()
 		message_admins("[key_name_admin(owner)] rejected a [token_holder.in_queue] token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
+		token_holder.reject_antag_token()
 
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))

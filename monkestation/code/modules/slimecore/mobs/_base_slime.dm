@@ -189,8 +189,8 @@
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
-		AddComponent(/datum/component/latch_feeding, target, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
+	else if(isliving(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
 		return
 	. = ..()
 
@@ -232,6 +232,7 @@
 
 	if(slime_flags & CLEANER_SLIME)
 		ai_controller.clear_blackboard_key(BB_CLEAN_TARGET)
+		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/manage_unreachable_list)
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
@@ -508,5 +509,5 @@
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
 		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom))
-			AddComponent(/datum/component/latch_feeding, hit_atom, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
+			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))

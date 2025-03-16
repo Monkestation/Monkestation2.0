@@ -3,15 +3,15 @@
 
 /datum/round_event_control/antagonist/solo/from_ghosts/cortical_borer
 	name = "Cortical Borer Infestation"
-	tags = list(TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
+	tags = list(TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	typepath = /datum/round_event/ghost_role/cortical_borer
 	antag_flag = ROLE_CORTICAL_BORER
 	track = EVENT_TRACK_MAJOR
 	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_MEDICAL_DOCTOR,
+		JOB_CHEMIST,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 2
 	weight = 5 // as rare as a natural blob

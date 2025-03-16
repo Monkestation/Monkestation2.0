@@ -551,7 +551,7 @@
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
-		"surgery_filter_upgrade_femto", // monke edit: advanced blood filter surgery
+		"surgery_filter_upgrade_femto", // monkestation edit: advanced blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
@@ -572,6 +572,7 @@
 		"surgery_pacify",
 		"surgery_vein_thread",
 		"surgery_viral_bond",
+		"surgery_dna_recovery", // monkestation edit: dna recovery surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 4500)
@@ -635,6 +636,7 @@
 		"high_micro_laser",
 		"mesons",
 		"nano_mani",
+		"airlock_board_offstation", //MONKESTATION ADDITION - old airlock board for charlie station
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -684,6 +686,7 @@
 		"sheetifier",
 		"weldingmask",
 		"bolter_wrench",
+		"multi_cell_charger", //Monkestation addition
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	discount_experiments = list(
@@ -1295,6 +1298,7 @@
 		"diagnostic_hud",
 		"health_hud",
 		"scigoggles",
+		"pathology_goggles", // monkestation edit
 		"security_hud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
@@ -1310,6 +1314,7 @@
 		"night_visision_goggles",
 		"nvgmesons",
 		"nv_scigoggles",
+		"nv_pathology_goggles", // monkestation edit
 		"security_hud_night",
 		"mech_light_amplification",
 	)
@@ -1644,7 +1649,6 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
-		"lethal_c35", //monkestation edit: paco sec
 		"mag_autorifle_rub", //monkestation edit: autorifles
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
@@ -1657,6 +1661,7 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
 		"pin_loyalty",
+		"lethal_c35", //monkestation edit: paco sec
 		"mag_autorifle", //monkestation edit: autorifles
 		"mag_autorifle_salt", //monkestation edit: autorifles
 	)
@@ -2235,19 +2240,21 @@
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
 		/obj/item/circular_saw/alien,
-		/obj/item/crowbar/abductor,
+		// Monkestation edit start: Removing Alien tools from biotech
+		// /obj/item/crowbar/abductor,
 		/obj/item/gun/energy/alien,
 		/obj/item/gun/energy/shrink_ray,
 		/obj/item/hemostat/alien,
 		/obj/item/melee/baton/abductor,
-		/obj/item/multitool/abductor,
+		// /obj/item/multitool/abductor,
 		/obj/item/retractor/alien,
 		/obj/item/scalpel/alien,
-		/obj/item/screwdriver/abductor,
+		// /obj/item/screwdriver/abductor,
 		/obj/item/surgicaldrill/alien,
-		/obj/item/weldingtool/abductor,
+		/* /obj/item/weldingtool/abductor,
 		/obj/item/wirecutters/abductor,
-		/obj/item/wrench/abductor,
+		/obj/item/wrench/abductor,*/
+		// Monkestation edit End: Removing Alien tools from biotech
 	)
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
