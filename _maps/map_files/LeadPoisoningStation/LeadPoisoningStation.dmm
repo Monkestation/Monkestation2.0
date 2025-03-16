@@ -17976,7 +17976,6 @@
 /area/station/maintenance/starboard/lesser)
 "iYY" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/cable/multilayer/multiz,
 /turf/open/space/openspace,
 /area/space/nearstation)
 "iZa" = (
