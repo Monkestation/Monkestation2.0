@@ -192,7 +192,7 @@
 	if (!bulky && prob(50))
 		return
 	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
-		span_danger("You loose your balance."))
+		span_danger("You lose your balance."))
 	Knockdown(2 SECONDS)
 
 	//MONKESTATION EDIT END
@@ -549,7 +549,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -820,33 +820,30 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
+/mob/living/carbon/update_stamina_hud() //monkestation edit
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = maxHealth - crit_threshold
+	//MONKESTATION EDIT START
+	var/current_stamina = stamina.current
 
-	if(stat == DEAD)
+	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
 		hud_used.stamina.icon_state = "stamina_dead"
+	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+		hud_used.stamina.icon_state = "stamina_crit"
+	else if(current_stamina <= (0.40 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_5"
+	else if(current_stamina <= (0.60 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_4"
+	else if(current_stamina <= (0.70 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_3"
+	else if(current_stamina <= (0.80 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_2"
+	else if(current_stamina <= (0.90 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_1"
 	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = stamina.loss
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
+		hud_used.stamina.icon_state = "stamina_full"
+	//MONKESTATION EDIT STOP
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
@@ -869,7 +866,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -1383,7 +1380,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1399,17 +1395,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER

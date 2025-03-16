@@ -189,12 +189,17 @@
 	if(COOLDOWN_FINISHED(src, trash_cooldown))
 		COOLDOWN_START(src, trash_cooldown, trash_delay * 0.5 + rand() * trash_delay) // x0.5 to x1.5
 		remaining_trash_throws[ckey]--
-		var/item_to_spawn = prob(0.1) ? pick(GLOB.oddity_loot) : pick_weight_recursive(GLOB.trash_pile_loot)
+		var/item_to_spawn
+		if(prob(0.1))
+			item_to_spawn = pick(GLOB.oddity_loot - typesof(/obj/item/dice/d20/fate)) // die of fate are blacklisted bc it will be automatically rolled due to the throw, likely insta-RRing the user without any counter
+		else
+			item_to_spawn = pick_weight_recursive(GLOB.trash_pile_loot)
 		var/obj/item/spawned_item = new item_to_spawn(drop_location())
-		var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
-		// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
-		if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
-			playsound(src, 'sound/weapons/punchmiss.ogg', 10)
+		if(!QDELETED(spawned_item))
+			var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
+			// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
+			if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
+				playsound(src, 'sound/weapons/punchmiss.ogg', 10)
 
 	if(COOLDOWN_FINISHED(src, funny_sound_cooldown))
 		COOLDOWN_START(src, funny_sound_cooldown, funny_sound_delay * 0.5 + rand() * funny_sound_delay) // x0.5 to x1.5

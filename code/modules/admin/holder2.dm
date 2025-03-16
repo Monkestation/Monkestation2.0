@@ -75,7 +75,6 @@ GLOBAL_PROTECT(href_token)
 		activate()
 	else
 		deactivate()
-	plane_debug = new(src)
 
 /datum/admins/Destroy()
 	if(IsAdminAdvancedProcCall())
@@ -96,7 +95,7 @@ GLOBAL_PROTECT(href_token)
 	deadmined = FALSE
 	if(owner)
 		rementor(owner)
-	QDEL_NULL(plane_debug)
+	plane_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
@@ -109,9 +108,11 @@ GLOBAL_PROTECT(href_token)
 		return
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
+	QDEL_NULL(plane_debug)
 
-	if(owner)
-		dementor(owner)
+	// MONKESTATION REMOVAL
+	//if(owner)
+	//	dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -197,7 +198,10 @@ GLOBAL_PROTECT(href_token)
 	if (!SSdbcore.IsConnected())
 		return null
 
-	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery(
+		"SELECT feedback FROM [format_table_name("admin")] WHERE ckey = :ckey",
+		list("ckey" = owner.ckey)
+	)
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
