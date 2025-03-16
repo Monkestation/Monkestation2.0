@@ -394,3 +394,12 @@
 	set_items = list(
 		/obj/structure/closet/body_bag/environmental/prisoner = 4
 	)
+
+/datum/voucher_set/security/brig_physician/defib_belt
+	name = "Compact Defibrilator"
+	description = "Combat medic ? Trauma team ? Small players, this one got it all."
+	icon = 'icons/obj/medical/defib.dmi'
+	icon_state = "defibcompact"
+	set_items = list(
+		/obj/item/defibrillator/compact
+	)
