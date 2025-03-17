@@ -234,3 +234,193 @@
       Bilingual quirk
   - rscadd: Added the Outsider quirk which remove's the player's species' language
   - rscadd: Added the Listener quirk which removes the player's ability to speak common
+2025-03-08:
+  Absolucy:
+  - balance: Doomsday Device no longer affects non-organic life, consistent with its
+      description.
+  - refactor: Removed some unused code and rearranged some other code to hopefully
+      reduce server-side memory usage.
+  - bugfix: Fixed some hearing sensitive objects hearing the same thing multiple times,
+      such as the broadcast camera sending everything to the entertainment channel
+      twice.
+  - bugfix: NPC cats will no longer have kittens with player-controlled cats.
+  - bugfix: '"Fixed" some further bloodsucker jank caused by mindswapping.'
+  - bugfix: Fixed some performance issues related to character customization.
+  - bugfix: Changing the IPC chassis in preferences now properly updates the preview.
+  - qol: Unopened goody cases can no longer be sent back on the cargo shuttle.
+  - code_imp: Spawning the box of materials will no longer try to do ~400 stack merges.
+  Absolucy, Kashargul:
+  - bugfix: Fixed some UIs broken on BYOND 516.
+  Absolucy, imedial:
+  - bugfix: Fixed nested radios with encryption keys giving free comms.
+  Addust:
+  - bugfix: Depot shipbreaking should work more like normal shipbreaking now
+  KnigTheThrasher, McRamon, Alecksohs:
+  - rscadd: New smes sprite
+  - rscdel: Removed old shitty grimy floor and replaced it with a sick carpet
+  MichiRecRoom:
+  - bugfix: (Ghommie) Taking items from your inventory while flying over lava or a
+      chasm will NOT set them on fire or drop them into chasms ANYMORE
+  - refactor: The code behind many HUD systems has been refactored slightly. Due to
+      the massive amount of HUD types we have, I only tested monkestation-specific
+      HUDs - so please let me know if you see any broken HUDs!
+  - refactor: (JohnFulpWillard) Huds now have their hud owner set in Initialize
+  Shoddd:
+  - bugfix: fixes some heliostation issues
+  - rscdel: mentor cloak no longer cares if you are a mentor
+  - balance: disabler smgs now have a 0.5 debili mod instead of a 1.5
+  SirNightKnight:
+  - balance: Paco mags are small again.
+  - balance: locked lethal Paco ammo behind the "Advanced Weaponry" tech node.
+  - balance: split Paco ammo between non-lethal ammo as a security order and lethal
+      ammo as an armoury locked order. added another Paco to the Paco weapon crate.
+  TTNT789:
+  - qol: Prokinetic Crushers can be used as pickaxes now
+2025-03-09:
+  CannibalHunter:
+  - rscadd: Added several (6) new clothing items to the security clothing vendor!
+2025-03-10:
+  CannibalHunter:
+  - image: security_rigvest on mob sprite does not cover the hands anymore.
+  MichiRecRoom:
+  - bugfix: The experimental destructive scanner's UI should now show a scrollbar
+      on 516. (Please let me know if any other UIs that show a list of experiments
+      are broken.)
+  Shoddd:
+  - bugfix: mentor cloak can be changed again
+  - balance: cargo sabre damage is now 18 from 15
+  - balance: bowie and combat knives damage are now 17 from 20
+  michaelyoungin:
+  - admin: (del) Removes negative value check for adjusting monkecoins
+2025-03-11:
+  Absolucy:
+  - refactor: The Stamina subsystem no longer wastes time trying to process stamina
+      on dead mobs, or mobs that don't even care about stamina in the first place.
+  MichiRecRoom:
+  - bugfix: pAIs now ACTUALLY have maints access, as compared to before where the
+      doors just said "no" no matter what.
+  - bugfix: (Ported from tgstation - Absolucy) Fixed graphics getting screwed up when
+      reconnecting with BYOND 515 after playing on BYOND 516.
+  - rscadd: (Ported from tgstation - ZeWaka) TGUI Stack elements can now be zebra-styled
+      (alternating colors for contrast)
+  MichiRecRoom, vinylspiders, Ben10Omintrix:
+  - bugfix: (Ben10Omintrix) stationary medbots will no longer ignore u for a while
+      if u move out of their way while healing
+  - bugfix: (Ben10Omintrix) fixes a runtime that sometimes happens in ai controllers
+  - refactor: (MichiRecRoom) Some cleaning slime behaviors have been refactored to
+      use similar behaviors as cleanbots.
+  - bugfix: (MichiRecRoom) Cleaner slimes should now temporarily ignore things that
+      they can't reach.
+  - bugfix: (MichiRecRoom) Player-controlled cleaner slimes should now be able to
+      clean cleanables.
+  ThePooba:
+  - rscadd: add broom
+  - rscadd: added bird delamination
+  - rscadd: eternal damnation
+  - bugfix: no more syndicate nanites in strange seeds good lord
+  - bugfix: slasher damage fix
+2025-03-12:
+  Absolucy, StrangeWeirdKitten:
+  - bugfix: Character creator preview being miniature
+  Kmla2:
+  - spellcheck: changes pathology "Sesnory Restoration" symptom into "Sensory Restoration"
+  leaKsi:
+  - admin: Controlling events now requires basic admin permissions.
+2025-03-13:
+  SirNightKnight:
+  - rscadd: Added  the Corporate Sponsorship for Evil bundle to the uplink. 20 TC
+      purchase for traitors as a pass to murderbone
+  - rscdel: Reverted the License to Murderbone to License to Plasmaflood
+  - bugfix: adjusted the fake mustache sprite to look better
+  Siro, Lucy:
+  - rscadd: Blight Protection status effect applied after being cured of Blight.
+  - qol: Blight cure now checks for active sleeping instead of just laying down. Gives
+      chance for essence absorption.
+  - bugfix: Blight now applies its debuffs again.
+  - code_imp: Blight debuff effects converted from a disease to a refreshing status
+      effect.
+  SmArtKar:
+  - bugfix: (SmArtKar) Fixes black vision for dextrous mobs using 516 version of BYOND
+2025-03-14:
+  Absolucy:
+  - qol: The malf AI's module picker now shows icons for modules.
+  - bugfix: Fixed some potential blurry icons in UIs on BYOND 516.
+  - bugfix: Fixed bidding in a Black Market Uplink bluescreening the UI.
+  - qol: (MTandi) New syndicate uplink UI!
+  - qol: (MTandi) Made it possible to buy a custom amount of TC, instead of bundles
+      with fixed amounts.
+  - bugfix: (JohnFulpWillard) Fixed not being able to scroll in the malf AI's module
+      picker on BYOND 516.
+  Melbert:
+  - bugfix: Plates now respect the weight class of items on top.
+  - bugfix: Tongs can no longer hold fried weapons
+  - bugfix: things frying instantly
+  RandomDudeFromTheRim:
+  - bugfix: Nooatrium can no longer revive suicided mobs
+  - bugfix: Updated the description of insulated gloves to reflect their lack of chunky
+      fingers.
+  Shoddd:
+  - bugfix: you can now hit borgs with crowbars
+  - map: barber vender on heliostation
+  - bugfix: ion laws no longer almost always purge
+  - bugfix: moon mansus hand no longer pacifies people forever
+  Siro:
+  - rscadd: Documentation for setting jobs to use the new checks.
+  - code_imp: Creates checks for job overrides. Flags for donator specific jobs and
+      flags to override holiday tied jobs.
+  - code_imp: Ties jobs to the holiday system so they can be loaded but only accessible
+      if its the season or if the donator rank meets the requirements.
+  - code_imp: All admins and mentors can bypass these checks.
+  Wisemonster:
+  - bugfix: Lone op weight will be affected by leaving the disk unsecure.
+  - rscadd: Added a henchmen lawset
+  ancient-engineer:
+  - rscadd: Added a 2 TC traitor item called the polyglot tongue that replaces the
+      user's tongue and allows them to emulate other species manners of speech
+2025-03-15:
+  CannibalHunter:
+  - rscadd: Add's Cobalt Velvet 235's donator items
+2025-03-16:
+  CannibalHunter:
+  - bugfix: Tall Baby Pukeko effect granter is fixed to give the propper tall one.
+  Gw0sty:
+  - rscdel: Removed Clown planet from appearing in mining and bitrunning until critical
+      slipping issue is fixed
+  - rscdel: Deleted copy of Bunhead 3 hair style
+  - qol: Added cut AI cut wires to CC Grief zone.
+  - qol: moved daisy away from the radio booth some.
+  - bugfix: Pipedream Tac locker should no longer be locked.
+  - bugfix: Listening post Infirmary APC is now accessible.
+  Marabout2:
+  - rscadd: Added a new station goal, the cargo budget one.
+  - code_imp: Added budget.dm, a new station goal
+  MichiRecRoom:
+  - rscadd: The Recolorable Turtleneck loadout item is now available to all! You can
+      find it in the "Misc. Under" section of the store for 3000 Monkecoin. Donators
+      are unaffected by this change and still receive a Recolorable Turtleneck for
+      free (though you can purchase the item anyways if you want two Recolorable Turtlenecks
+      in your inventory).
+  RandomDudeFromTheRim:
+  - bugfix: fixed refined anomaly cores getting recycled into iron and glass
+  Shoddd:
+  - rscadd: Polyglot quirk
+  ThePooba:
+  - qol: removed thief quirk from simians before the quirk rework
+  Uristthedorf:
+  - rscadd: Adds the FSS-550 3D printed gun from the autolathe. It requires a special
+      design disk to make.
+  Wisemonster:
+  - balance: Junior operative max occurrences lowered from 20 to 5
+  - balance: Junior operative event category changed from moderate to major
+  flleeppyy:
+  - rscadd: Chatbox websocket feature
+  leaKsi:
+  - bugfix: Suiciding or using "Return to Ghost" verb during a duel now properly rewards
+      the winner.
+  - bugfix: Duel participants will now get their coins reimbursed if their opponent
+      decides to ghost or close the game, after accepting the duel.
+  - bugfix: Round-end bonus for supporters now properly applies only on round-end.
+2025-03-17:
+  Vitzenhauzer:
+  - rscadd: Black leather and retro satchels available in character creation menu
+      or through crafting with leather
