@@ -29053,7 +29053,6 @@
 "oDU" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 8
 	},
