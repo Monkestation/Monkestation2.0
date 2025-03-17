@@ -31,6 +31,9 @@
 	/// Does this charge the user's ID on fabrication?
 	var/charges_tax = TRUE
 
+	/// Made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update.
+	var/techweb_updating = FALSE
+
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
 
@@ -75,12 +78,14 @@
 /obj/machinery/rnd/production/proc/on_techweb_update()
 	SIGNAL_HANDLER
 
-	// We're probably going to get more than one update (design) at a time, so batch
-	// them together.
-	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(!techweb_updating) //so we batch these updates together
+		techweb_updating = TRUE
+		addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS)
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	PROTECTED_PROC(TRUE)
+	techweb_updating = FALSE
 	var/previous_design_count = cached_designs.len
 
 	cached_designs.Cut()
