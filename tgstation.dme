@@ -6003,6 +6003,7 @@
 #include "monkestation\code\datums\components\multi_hit.dm"
 #include "monkestation\code\datums\components\pathology_glasses.dm"
 #include "monkestation\code\datums\components\pixel_shift.dm"
+#include "monkestation\code\datums\components\regenerator.dm"
 #include "monkestation\code\datums\components\shoesteps.dm"
 #include "monkestation\code\datums\components\throw_bounce.dm"
 #include "monkestation\code\datums\components\turf_checker_complex.dm"
