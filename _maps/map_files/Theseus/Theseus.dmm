@@ -1251,7 +1251,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "atl" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
@@ -6545,7 +6545,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port/lesser)
 "bXM" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/spawner/random/food_or_drink/seed,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
@@ -15417,7 +15417,7 @@
 /turf/open/floor/iron,
 /area/station/security/range)
 "eAI" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -25477,7 +25477,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "hEc" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/effect/spawner/random/food_or_drink/seed,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -36473,7 +36473,7 @@
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/plating,
 /area/station/service/kitchen/kitchen_backroom)
 "kPp" = (
@@ -37655,7 +37655,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "leG" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/effect/spawner/random/food_or_drink/seed,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
@@ -40275,7 +40275,7 @@
 /turf/closed/wall,
 /area/station/medical/pathology)
 "lPv" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/spawner/random/food_or_drink/seed,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/upper)
@@ -47496,7 +47496,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "oae" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/botanical_waste,
@@ -66758,7 +66758,7 @@
 "tEI" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/spawner/random/contraband/cannabis,
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 9
