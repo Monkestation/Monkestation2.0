@@ -5402,6 +5402,7 @@
 "cRW" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "cSc" = (
@@ -6015,7 +6016,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/hop)
 "dgn" = (
 /obj/structure/rack,
@@ -8876,6 +8877,16 @@
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
+"eDE" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/diagonal,
+/area/station/medical/medbay/central)
 "eDP" = (
 /obj/structure/cable,
 /obj/item/clothing/head/helmet/old,
@@ -12288,6 +12299,7 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/fire/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/science/lower)
 "gkD" = (
@@ -14505,6 +14517,13 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/toilet)
+"hrO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "hrX" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
@@ -20605,7 +20624,7 @@
 /area/station/maintenance/port/greater)
 "kpY" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/window/spawner/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/station/science/lower)
 "kqe" = (
@@ -39737,6 +39756,7 @@
 "tYJ" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/effect/landmark/start/head_of_personnel,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "tYX" = (
@@ -46056,6 +46076,7 @@
 /obj/structure/ladder,
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "xdV" = (
@@ -69421,7 +69442,7 @@ bks
 bks
 bks
 kGe
-lTk
+hrO
 uHC
 cWu
 vRs
@@ -87476,7 +87497,7 @@ xUt
 wSe
 uyG
 vGq
-qiM
+eDE
 okZ
 jlO
 dPe
@@ -150160,7 +150181,7 @@ oJm
 rRY
 adZ
 dgl
-dbj
+adZ
 adZ
 qiR
 xyv
