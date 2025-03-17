@@ -49,7 +49,7 @@
 		owner.adjust_bodytemperature(-3 KELVIN * stacks * seconds_per_ticks)
 		if(!COOLDOWN_FINISHED(src, chill_purge))
 			return FALSE
-		COOLDOWN_START(src, chill_purge, 2 SECONDS)
+		COOLDOWN_START(src, chill_purge, 3 SECONDS)
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
 	else
@@ -120,8 +120,6 @@
 	var/datum/status_effect/void_chill/chill_effect = attached_effect
 	if(chill_effect.stacks >= 5)
 		icon_state = "void_chill_oh_fuck"
-	else if (icon_state != initial(icon_state))
-		icon_state = initial(icon_state)
 
 /atom/movable/screen/alert/status_effect/void_chill/update_desc(updates)
 	. = ..()
@@ -130,5 +128,3 @@
 	var/datum/status_effect/void_chill/chill_effect = attached_effect
 	if(chill_effect.stacks >= 5)
 		desc = "You had your chance to run, now it's too late. You may never feel warmth again..."
-	else if (desc != initial(desc))
-		desc = initial(desc)
