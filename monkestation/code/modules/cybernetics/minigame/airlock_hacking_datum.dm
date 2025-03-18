@@ -1,7 +1,3 @@
-// This isn't even used at the moment.
-// Refactor this to a component if it's ever brought back.
-// ~Absolucy
-/*
 /datum/wires
 	var/revealed_wires = FALSE
 
@@ -49,4 +45,3 @@
  */
 /obj/machinery/door/airlock/proc/set_hacking()
 	//return new /datum/hacking/airlock(src)
-*/

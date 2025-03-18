@@ -3,7 +3,7 @@
 	build_path = /obj/machinery/computer/telecomms/traffic
 
 /datum/design/board/traffic
-	name = "Traffic Console"
+	name = "Computer Design (Traffic Console)"
 	desc = "Allows for the construction of Traffic Control Console."
 	id = "s_traffic"
 	build_path = /obj/item/circuitboard/computer/comm_traffic

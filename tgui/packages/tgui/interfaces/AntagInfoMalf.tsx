@@ -1,9 +1,8 @@
 import { useBackend, useLocalState } from '../backend';
-import { Item } from './Uplink/GenericUplink';
-import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
-import { MalfAiModules } from './common/MalfAiModules';
-import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+import { GenericUplink, Item } from './Uplink/GenericUplink';
+import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
+import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 import {
   ObjectivePrintout,
@@ -12,26 +11,21 @@ import {
 } from './common/Objectives';
 
 const allystyle = {
+  fontWeight: 'bold',
   color: 'yellow',
-  'font-weight': 'bold',
 };
 
 const badstyle = {
   color: 'red',
-  'font-weight': 'bold',
+  fontWeight: 'bold',
 };
 
 const goalstyle = {
   color: 'lightgreen',
-  'font-weight': 'bold',
+  fontWeight: 'bold',
 };
 
-type Category = {
-  name: string;
-  items: Item[];
-};
-
-type Data = {
+type Info = {
   has_codewords: BooleanLike;
   phrases: string;
   responses: string;
@@ -41,14 +35,13 @@ type Data = {
   intro: string;
   processingTime: string;
   objectives: Objective[];
-  categories: Category[];
+  categories: any[];
   can_change_objective: BooleanLike;
 };
 
 const IntroductionSection = (props) => {
-  const { data } = useBackend<Data>();
+  const { act, data } = useBackend<Info>();
   const { intro, objectives, can_change_objective } = data;
-
   return (
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
@@ -56,13 +49,13 @@ const IntroductionSection = (props) => {
         <Stack.Item grow>
           <ObjectivePrintout
             objectives={objectives}
-            titleMessage="Your prime objectives"
-            objectivePrefix="≥"
+            titleMessage="Your prime objectives:"
+            objectivePrefix="&#8805-"
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title="Overwrite Objectives Data"
-                button_colour="green"
+                button_title={'Overwrite Objectives Data'}
+                button_colour={'green'}
               />
             }
           />
@@ -73,9 +66,8 @@ const IntroductionSection = (props) => {
 };
 
 const FlavorSection = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useBackend<Info>();
   const { allies, goal } = data;
-
   return (
     <Section
       fill
@@ -131,19 +123,18 @@ const FlavorSection = (props) => {
 };
 
 const CodewordsSection = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useBackend<Info>();
   const { has_codewords, phrases, responses } = data;
-
   return (
     <Section title="Codewords" mb={!has_codewords && -1}>
       <Stack fill>
-        {!has_codewords ? (
+        {(!has_codewords && (
           <BlockQuote>
             You have not been supplied the Syndicate codewords. You will have to
             use alternative methods to find potential allies. Proceed with
             caution, however, as everyone is a potential foe.
           </BlockQuote>
-        ) : (
+        )) || (
           <>
             <Stack.Item grow basis={0}>
               <BlockQuote>
@@ -177,22 +168,33 @@ const CodewordsSection = (props) => {
   );
 };
 
-enum Screen {
-  Intro,
-  Modules,
-}
-
 export const AntagInfoMalf = (props) => {
-  const [antagInfoTab, setAntagInfoTab] = useLocalState<Screen>(
-    'antagInfoTab',
-    Screen.Intro,
-  );
-
+  const { act, data } = useBackend<Info>();
+  const { processingTime, categories } = data;
+  const [antagInfoTab, setAntagInfoTab] = useLocalState('antagInfoTab', 0);
+  const categoriesList: string[] = [];
+  const items: Item[] = [];
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    categoriesList.push(category.name);
+    for (let itemIndex = 0; itemIndex < category.items.length; itemIndex++) {
+      const item = category.items[itemIndex];
+      items.push({
+        id: item.name,
+        name: item.name,
+        category: category.name,
+        cost: `${item.cost} PT`,
+        desc: item.desc,
+        disabled: processingTime < item.cost,
+        is_locked: null,
+      });
+    }
+  }
   return (
     <Window
       width={660}
       height={530}
-      theme={antagInfoTab === Screen.Intro ? 'hackerman' : 'malfunction'}
+      theme={(antagInfoTab === 0 && 'hackerman') || 'malfunction'}
     >
       <Window.Content style={{ 'font-family': 'Consolas, monospace' }}>
         <Stack vertical fill>
@@ -200,21 +202,21 @@ export const AntagInfoMalf = (props) => {
             <Tabs fluid>
               <Tabs.Tab
                 icon="info"
-                selected={antagInfoTab === Screen.Intro}
-                onClick={() => setAntagInfoTab(Screen.Intro)}
+                selected={antagInfoTab === 0}
+                onClick={() => setAntagInfoTab(0)}
               >
                 Information
               </Tabs.Tab>
               <Tabs.Tab
                 icon="code"
-                selected={antagInfoTab === Screen.Modules}
-                onClick={() => setAntagInfoTab(Screen.Modules)}
+                selected={antagInfoTab === 1}
+                onClick={() => setAntagInfoTab(1)}
               >
                 Malfunction Modules
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
-          {antagInfoTab === Screen.Intro ? (
+          {(antagInfoTab === 0 && (
             <>
               <Stack.Item grow>
                 <Stack fill>
@@ -230,10 +232,15 @@ export const AntagInfoMalf = (props) => {
                 <CodewordsSection />
               </Stack.Item>
             </>
-          ) : (
-            <Stack.Item grow>
-              <Section fill>
-                <MalfAiModules />
+          )) || (
+            <Stack.Item>
+              <Section>
+                <GenericUplink
+                  categories={categoriesList}
+                  items={items}
+                  currency={`${processingTime} PT`}
+                  handleBuy={(item) => act('buy', { name: item.name })}
+                />
               </Section>
             </Stack.Item>
           )}

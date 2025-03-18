@@ -105,10 +105,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/list/team_finder_arrows = list()
 
-	/// The BYOND version of the client that was last logged into this mob.
-	/// Currently used to rebuild all plane master groups when going between 515<->516.
-	var/last_byond_version
-
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -150,18 +146,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	var/client/client = mymob.canon_client
-	var/new_byond_version = client.byond_version
-#if MIN_COMPILER_VERSION > 515
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-	if(!isnull(last_byond_version) && new_byond_version != last_byond_version)
-		var/new_relay_loc = (new_byond_version > 515) ? "1,1" : "CENTER"
+	var/client/client = mymob.client
+	if(client.rebuild_plane_masters)
+		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
 		for(var/group_key as anything in master_groups)
 			var/datum/plane_master_group/group = master_groups[group_key]
 			group.relay_loc = new_relay_loc
 			group.rebuild_hud()
-	last_byond_version = new_byond_version
+		client.rebuild_plane_masters = FALSE
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
 
@@ -209,7 +201,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
-	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
 		return
@@ -480,13 +471,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
 	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /atom/movable/screen/inventory/hand(null, src)
+		hand_box = new /atom/movable/screen/inventory/hand()
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
+		hand_box.hud = src
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
@@ -540,7 +532,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			palette_actions.insert_action(button, palette_actions.index_of(relative_to))
 		if(SCRN_OBJ_FLOATING) // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
-			var/client/our_client = mymob.canon_client
+			var/client/our_client = mymob.client
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
@@ -581,7 +573,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Ensures all of our buttons are properly within the bounds of our client's view, moves them if they're not
 /datum/hud/proc/view_audit_buttons()
-	var/our_view = mymob?.canon_client?.view
+	var/our_view = mymob?.client?.view
 	if(!our_view)
 		return
 	listed_actions.check_against_view()
@@ -699,7 +691,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
 
 /datum/action_group/proc/check_against_view()
-	var/owner_view = owner?.mymob?.canon_client?.view
+	var/owner_view = owner?.mymob?.client?.view
 	if(!owner_view)
 		return
 	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down

@@ -1,10 +1,10 @@
-/datum/forensics
+/atom
 	/// Cached mixed color of all blood DNA on us
-	var/cached_blood_dna_color
+	VAR_PROTECTED/cached_blood_dna_color
 
 /atom/proc/get_blood_dna_color()
-	if(forensics?.cached_blood_dna_color)
-		return forensics.cached_blood_dna_color
+	if(cached_blood_dna_color)
+		return cached_blood_dna_color
 
 	var/list/colors = list()
 	var/list/all_dna = GET_ATOM_BLOOD_DNA(src)
@@ -16,7 +16,7 @@
 		final_color = pop(colors)
 		for(var/color in colors)
 			final_color = BlendRGB(final_color, color, 0.5)
-	forensics?.cached_blood_dna_color = final_color
+	cached_blood_dna_color = final_color
 	return final_color
 
 /obj/effect/decal/cleanable/blood/get_blood_dna_color()

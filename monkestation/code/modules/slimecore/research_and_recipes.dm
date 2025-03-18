@@ -26,7 +26,7 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/computer/slime_market
-	name = "Slime Market Board"
+	name = "Slime Market (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/slime_market
 

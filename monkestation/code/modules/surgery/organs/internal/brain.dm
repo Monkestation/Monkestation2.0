@@ -421,7 +421,7 @@
 	name = "compact positronic brain"
 	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the chest of synthetic crewmembers."
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
@@ -438,7 +438,11 @@
 	var/mob/living/carbon/human/user_human = brain_owner
 	if(HAS_TRAIT(user_human, TRAIT_REVIVES_BY_HEALING) && user_human.health > SYNTH_BRAIN_WAKE_THRESHOLD)
 		if(!HAS_TRAIT(user_human, TRAIT_DEFIB_BLACKLISTED))
-			user_human.revive(FALSE)
+			user_human.visible_message(span_warning("[user_human]'s 'POSITRONIC REBOOT REQUIRED' indicator begins blinking green."))
+			playsound(user_human.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		else
+			user_human.visible_message(span_warning("[user_human]'s 'PERSONAL MATRIX CORRUPTED' indicator turns on and remains a steady red..."))
+			playsound(user_human.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 
 /obj/item/organ/internal/brain/synth/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
 	. = ..()

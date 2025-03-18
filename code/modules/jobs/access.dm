@@ -15,11 +15,7 @@
 		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
-			//MONKESTATION EDIT START: pAI has inherent maintenance access
-			// return FALSE //MONKESTATION EDIT ORIGINAL
-			var/mob/living/silicon/pai/pai = accessor
-			return check_access_list(pai.get_access())
-			//MONKESTATION EDIT END
+			return FALSE
 		if(!(ROLE_SYNDICATE in accessor.faction))
 			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 				return FALSE

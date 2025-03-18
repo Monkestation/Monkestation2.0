@@ -18,10 +18,9 @@ SUBSYSTEM_DEF(stamina)
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
 
-	var/seconds_per_tick = world.tick_lag * wait * 0.1
 	while(length(current_run))
 		var/datum/stamina_container/thing = current_run[length(current_run)]
 		current_run.len--
-		thing.update(seconds_per_tick)
+		thing.update(world.tick_lag * wait * 0.1)
 		if (MC_TICK_CHECK)
 			return

@@ -7,5 +7,3 @@
 	///The talk chime set to use when speaking.
 	var/voice_type
 
-	/// If TRUE, then this mob has a stamina container initialized, and will use stamina.
-	var/uses_stamina = FALSE

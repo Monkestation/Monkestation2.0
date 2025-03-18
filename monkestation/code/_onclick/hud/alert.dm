@@ -6,7 +6,7 @@
 	icon_state = "clockinfo"
 //	alerttooltipstyle = "clockwork" //clockwork tooltips are currently broken, this is a known issue on TG
 
-/atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 

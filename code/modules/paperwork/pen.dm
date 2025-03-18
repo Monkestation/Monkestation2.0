@@ -185,8 +185,7 @@
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				// monkestation removal ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
+				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
@@ -198,8 +197,7 @@
 			else
 				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				// monkestation removal ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
+				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.can_perform_action(O))
@@ -214,8 +212,7 @@
 				label.apply_label()
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			// monkestation removal REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			O.update_appearance(UPDATE_ICON)
+			O.renamedByPlayer = FALSE
 
 /obj/item/pen/get_writing_implement_details()
 	return list(

@@ -141,11 +141,3 @@
 /obj/item/clothing/head/wizard/marisa/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
-
-/obj/item/clothing/head/costume/minicrown/lootbox/Initialize(mapload)
-	. = ..()
-	set_armor(/datum/armor/lootbox_clothing)
-
-/obj/item/clothing/head/costume/tiara/lootbox/Initialize(mapload)
-	. = ..()
-	set_armor(/datum/armor/lootbox_clothing)

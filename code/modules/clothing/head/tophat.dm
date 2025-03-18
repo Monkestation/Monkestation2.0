@@ -9,7 +9,6 @@
 	throwforce = 1
 	/// Cooldown for how often we can pull rabbits out of here
 	COOLDOWN_DECLARE(rabbit_cooldown)
-	var/bee_chance = 10 //monkestation addition
 
 /obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, params)
 	. = ..()
@@ -25,7 +24,7 @@
 	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
 	do_smoke(amount = DIAMOND_AREA(1), holder = src, location = src, smoke_type=/obj/effect/particle_effect/fluid/smoke/quick)
 
-	if(prob(bee_chance)) //monkestation edit
+	if(prob(10))
 		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)

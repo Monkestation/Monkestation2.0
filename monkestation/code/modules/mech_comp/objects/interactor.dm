@@ -25,8 +25,6 @@
 		/obj/item/stack/spacecash,
 		/obj/item/stack/monkecoin,
 		/obj/item/holochip,
-		/obj/item/plate,
-		/obj/item/bodybag,
 	))
 
 /obj/item/mcobject/interactor/Initialize(mapload)

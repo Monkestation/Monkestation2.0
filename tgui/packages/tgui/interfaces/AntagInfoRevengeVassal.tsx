@@ -1,8 +1,17 @@
 import { resolveAsset } from '../assets';
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Divider, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+
+type Objective = {
+  count: number;
+  name: string;
+  explanation: string;
+  complete: BooleanLike;
+  was_uncompleted: BooleanLike;
+  reward: number;
+};
 
 type BloodsuckerInformation = {
   power: PowerInfo[];
@@ -18,6 +27,24 @@ type Info = {
   objectives: Objective[];
 };
 
+const ObjectivePrintout = (props: any) => {
+  const { data } = useBackend<Info>();
+  const { objectives } = data;
+  return (
+    <Stack vertical>
+      <Stack.Item bold>Your current objectives:</Stack.Item>
+      <Stack.Item>
+        {(!objectives && 'None!') ||
+          objectives.map((objective) => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export const AntagInfoRevengeVassal = (props: any) => {
   return (
     <Window width={620} height={300}>
@@ -29,9 +56,6 @@ export const AntagInfoRevengeVassal = (props: any) => {
 };
 
 const VassalInfo = () => {
-  const {
-    data: { objectives },
-  } = useBackend<Info>();
   return (
     <Stack vertical fill>
       <Stack.Item minHeight="20rem">
@@ -42,7 +66,7 @@ const VassalInfo = () => {
               Master!
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout objectives={objectives} />
+              <ObjectivePrintout />
             </Stack.Item>
           </Stack>
         </Section>

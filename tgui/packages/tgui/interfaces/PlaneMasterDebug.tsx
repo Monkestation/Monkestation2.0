@@ -663,7 +663,7 @@ const DrawAbovePlane = (props) => {
           <MobResetButton />
           <ToggleMirror />
           <VVButton />
-          <RebuildButton />
+          <RefreshButton />
         </>
       )}
       {!!enable_group_view && <GroupDropdown />}
@@ -700,7 +700,7 @@ const PlaneWindow = (props) => {
           <MobResetButton no_position />
           <ToggleMirror no_position />
           <VVButton no_position />
-          <RebuildButton no_position />
+          <RefreshButton no_position />
         </>
       }
     >
@@ -912,7 +912,7 @@ const GroupDropdown = (props) => {
   );
 };
 
-const RebuildButton = (props) => {
+const RefreshButton = (props) => {
   const { act } = useBackend();
   const { no_position } = props;
 
@@ -922,8 +922,8 @@ const RebuildButton = (props) => {
       right={no_position ? '' : '6px'}
       position={no_position ? '' : 'absolute'}
       icon="recycle"
-      onClick={() => act('Rebuild')}
-      tooltip="Rebuilds ALL plane masters. Kinda laggy, but useful"
+      onClick={() => act('refresh')}
+      tooltip="Refreshes ALL plane masters. Kinda laggy, but useful"
     />
   );
 };

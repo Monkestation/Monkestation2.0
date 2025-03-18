@@ -42,7 +42,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500, /datum/material/silver = 20000, /datum/material/gold = 1500)
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -65,6 +65,20 @@
 	desc = "A surgical procedure that quickly provides highly effective repairs and maintenance to robotic limbs. Is moderately more efficient when the patient is severely damaged."
 	surgery = /datum/surgery/robot_healing/experimental
 	id = "surgery_heal_robot_upgrade_femto"
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/robot_toxheal
+	name = "Clear Corrosive Buildup(Toxin Damage)"
+	desc = "A procedure that removes corrosion and chemical buildup on mechanical components inside of a deactivated synthetic chassis."
+	surgery = /datum/surgery/robot_tox_clean
+	id = "surgery_heal_robot_toxin"
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/robot_oxyheal
+	name = "Clean Components of Debris(Oxy Damage)"
+	desc = "A procedure that clears the debris from ventilation and temperature regulation systems in a mechanical chassis."
+	surgery = /datum/surgery/robot_oxy_clean
+	id = "surgery_heal_robot_oxy"
 	research_icon_state = "surgery_chest"
 
 /datum/design/cyberimp_sprinter

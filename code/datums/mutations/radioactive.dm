@@ -24,8 +24,7 @@
 
 /datum/mutation/human/radioactive/modify()
 	. = ..()
-	if(!QDELETED(owner))
-		make_radioactive(owner)
+	make_radioactive(owner)
 
 /**
  * Makes the passed mob radioactive, or if they're already radioactive,

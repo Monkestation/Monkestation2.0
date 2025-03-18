@@ -1,4 +1,6 @@
 // THIS IS A SKYRAT UI FILE
+import { BooleanLike } from 'common/react';
+
 import { useBackend, useSharedState } from '../backend';
 import {
   Box,
@@ -11,7 +13,13 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+
+type Objectives = {
+  count: number;
+  name: string;
+  explanation: string;
+  complete: BooleanLike;
+};
 
 type AvailableTargets = {
   name: string;
@@ -36,7 +44,7 @@ type Info = {
   equipped: number;
   required_keys: number;
   uploaded_keys: number;
-  objectives: Objective[];
+  objectives: Objectives[];
   available_targets: AvailableTargets[];
   extracted_targets: ExtractedTargets[];
   goldeneye_keys: GoldeneyeKeys[];
@@ -44,10 +52,8 @@ type Info = {
 
 export const AntagInfoAssaultops = (props) => {
   const [tab, setTab] = useSharedState('tab', 1);
-  const {
-    data: { required_keys, uploaded_keys, objectives },
-  } = useBackend<Info>();
-
+  const { data } = useBackend<Info>();
+  const { required_keys, uploaded_keys, objectives } = data;
   return (
     <Window theme="hackerman" width={650} height={650}>
       <Window.Content>
@@ -88,7 +94,17 @@ export const AntagInfoAssaultops = (props) => {
               </Section>
             </Section>
             <Section title="Objectives">
-              <ObjectivePrintout objectives={objectives} />
+              <LabeledList>
+                {objectives.map((objective) => (
+                  <LabeledList.Item
+                    key={objective.count}
+                    label={objective.name}
+                    color={objective.complete ? 'good' : 'bad'}
+                  >
+                    {objective.explanation}
+                  </LabeledList.Item>
+                ))}
+              </LabeledList>
             </Section>
           </Stack.Item>
           <Stack.Item>
@@ -122,9 +138,8 @@ export const AntagInfoAssaultops = (props) => {
 };
 
 const TargetPrintout = (props) => {
-  const {
-    data: { available_targets, extracted_targets },
-  } = useBackend<Info>();
+  const { data } = useBackend<Info>();
+  const { available_targets, extracted_targets } = data;
   return (
     <Section>
       <Box textColor="red" fontSize="20px" mb={1}>

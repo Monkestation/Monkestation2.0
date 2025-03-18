@@ -1,5 +1,4 @@
 /client/var/lootbox_prompt = FALSE
-
 /client/proc/try_open_or_buy_lootbox()
 	if(!prefs)
 		return
@@ -32,7 +31,7 @@
 		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
 		lootbox_prompt = FALSE
 		return
-	if(!prefs.adjust_metacoins(ckey, -LOOTBOX_COST, "Bought a lootbox"))
+	if(!prefs.adjust_metacoins(ckey, -LOOTBOX_COST, donator_multipler = FALSE))
 		return
 	prefs.lootboxes_owned++
 	prefs.save_preferences()

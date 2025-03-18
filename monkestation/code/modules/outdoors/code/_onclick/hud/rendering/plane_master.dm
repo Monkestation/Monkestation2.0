@@ -28,7 +28,7 @@
 	critical = PLANE_CRITICAL_DISPLAY
 	var/z_type = "Default"
 
-/atom/movable/screen/plane_master/weather_effect/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/plane_master/weather_effect/Initialize()
 	. = ..()
 	//filters += filter(type="alpha", render_source=WEATHER_RENDER_TARGET)
 	if(SSoutdoor_effects.enabled)

@@ -1,16 +1,15 @@
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
-
 import {
-  Box,
-  Button,
-  Dimmer,
-  Flex,
-  Icon,
-  NoticeBox,
   Section,
   Stack,
+  Box,
+  Button,
+  Flex,
   Tooltip,
+  NoticeBox,
+  Dimmer,
+  Icon,
 } from '../../components';
 import {
   calculateProgression,
@@ -245,7 +244,17 @@ export class ObjectiveMenu extends Component<
                   </Dimmer>
                 )) ||
                   (potentialObjectives.length < maximumPotentialObjectives && (
-                    <Flex.Item basis="100%" mb={1} mx="0.5%" minHeight="100px">
+                    <Flex.Item
+                      basis="100%"
+                      style={
+                        {
+                          // "background-color": "rgba(0, 0, 0, 0.5)",
+                        }
+                      }
+                      mb={1}
+                      mx="0.5%"
+                      minHeight="100px"
+                    >
                       <Stack
                         align="center"
                         height="100%"
@@ -447,7 +456,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
             </Box>
           )}
           {finalObjective && objectiveState === ObjectiveState.Inactive && (
-            <NoticeBox mt={1}>
+            <NoticeBox warning mt={1}>
               Taking this objective will lock you out of getting anymore
               objectives! Furthermore, you will be unable to abort this
               objective.

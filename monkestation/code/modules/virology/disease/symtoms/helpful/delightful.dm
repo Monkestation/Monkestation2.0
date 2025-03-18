@@ -12,4 +12,3 @@
 
 /datum/symptom/delightful/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
 	mob?.clear_mood_event(REF(src))
-	to_chat("You aren't quite sure what you were so happy about.")

@@ -3,7 +3,7 @@
 	greyscale_colors = null
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock."
+	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
@@ -108,7 +108,7 @@
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
 /obj/item/clothing/gloves/chief_engineer
-	desc = "These gloves provide excellent heat and electric insulation."
+	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = null

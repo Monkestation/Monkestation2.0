@@ -54,23 +54,19 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
-			var/dat
+			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
 			for(var/l in GLOB.admin_activities)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_activities.len)
 				dat += "No-one has done anything this round!"
-			var/datum/browser/browser = new(holder, "admin_log", "Admin Logs", 600, 500)
-			browser.set_content(dat)
-			browser.open()
+			holder << browse(dat, "window=admin_log")
 		if("show_admins")
-			var/dat
+			var/dat = "<meta charset='UTF-8'><B>Current admins:</B><HR>"
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank_names()]<br>"
-				var/datum/browser/browser = new(holder, "showadmins", "Current admins", 600, 500)
-				browser.set_content(dat)
-				browser.open()
+				holder << browse(dat, "window=showadmins;size=600x500")
 		//Buttons for debug.
 		if("maint_access_engiebrig")
 			if(!is_debugger)

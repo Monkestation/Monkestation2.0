@@ -15,11 +15,11 @@
 			to_chat(mob, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
 		if(breathing)
 			breathing = FALSE
-			ADD_TRAIT(mob, TRAIT_NOBREATH, DISEASE_TRAIT)
+			ADD_TRAIT(mob, TRAIT_NOBREATH, type)
 
 /datum/symptom/oxygen/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
 	if(!breathing)
 		breathing = TRUE
-		REMOVE_TRAIT(mob, TRAIT_NOBREATH, DISEASE_TRAIT)
+		REMOVE_TRAIT(mob, TRAIT_NOBREATH, type)
 		mob.emote("gasp")
 		to_chat(mob, span_notice("You feel the need to breathe again."))

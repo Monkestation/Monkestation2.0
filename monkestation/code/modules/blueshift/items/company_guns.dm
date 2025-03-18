@@ -36,7 +36,7 @@
 	suppressor_x_offset = 12
 
 	burst_size = 1
-	fire_delay = 0.4 SECONDS
+	fire_delay = 0.45 SECONDS
 	actions_types = list()
 
 	spread = 7.5
@@ -87,11 +87,11 @@
 
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle
 
-	fire_delay = 0.8 SECONDS
+	fire_delay = 0.75 SECONDS
 
 	spread = 0
-	projectile_damage_multiplier = 1.75
-	projectile_wound_bonus = 0
+	projectile_damage_multiplier = 1.2
+	projectile_wound_bonus = 10
 
 /obj/item/gun/ballistic/automatic/sol_rifle/marksman/Initialize(mapload)
 	. = ..()
@@ -332,7 +332,7 @@
 	worn_icon_state = "kiboko_evil"
 	inhand_icon_state = "kiboko_evil"
 	projectile_wound_bonus = 5
-	fire_delay = 0.3 SECONDS
+	fire_delay = 0.30 SECONDS
 	pin = /obj/item/firing_pin/implant/pindicate
 
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
@@ -1061,7 +1061,6 @@
 	inhand_icon_state = "sindano_evil"
 	spread = 5
 	projectile_wound_bonus = 5
-	projectile_damage_multiplier = 1.25
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag

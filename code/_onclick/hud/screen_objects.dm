@@ -18,14 +18,7 @@
 	/// A reference to the object in the slot. Grabs or items, generally.
 	var/obj/master = null
 	/// A reference to the owner HUD, if any.
-	// MONKESTATION EDIT START: There are a couple uses of this variable in
-	// `code\datums\interactions\interaction_mode.dm` that I'm unsure how to remove - so this can't
-	// be private at the moment.
-	/* //MONKESTATION EDIT ORIGINAL
-	VAR_PRIVATE/datum/hud/hud = null
-	*/
 	var/datum/hud/hud = null
-	//MONKESTATION EDIT END
 	/**
 	 * Map name assigned to this object.
 	 * Automatically set by /client/proc/add_obj_to_map.
@@ -49,12 +42,6 @@
 	/// or trying to point your gun at your screen.
 	var/default_click = FALSE
 
-/atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	if(isnull(hud_owner)) //some screens set their hud owners on /new, this prevents overriding them with null post atoms init
-		return
-	set_new_hud(hud_owner)
-
 /atom/movable/screen/Destroy()
 	master = null
 	hud = null
@@ -74,25 +61,6 @@
 
 /atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
-
-///setter used to set our new hud
-/atom/movable/screen/proc/set_new_hud(datum/hud/hud_owner)
-	if(hud)
-		UnregisterSignal(hud, COMSIG_QDELETING)
-	if(isnull(hud_owner))
-		hud = null
-		return
-	hud = hud_owner
-	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
-
-/// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
-	return hud?.mymob
-
-/atom/movable/screen/proc/on_hud_delete(datum/source)
-	SIGNAL_HANDLER
-
-	set_new_hud(hud_owner = null)
 
 /atom/movable/screen/text
 	icon = null
@@ -293,7 +261,7 @@
 	icon_state = "backpack_close"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
+/atom/movable/screen/close/Initialize(mapload, new_master)
 	. = ..()
 	master = new_master
 
@@ -321,9 +289,8 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/interaction_mode/combat_mode/combat_mode
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, datum/interaction_mode/combat_mode/combat_mode_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload)
 	. = ..()
-	combat_mode = combat_mode_owner
 	update_appearance()
 
 /atom/movable/screen/combattoggle/Destroy()
@@ -474,7 +441,7 @@
 	screen_loc = "7,7 to 10,8"
 	plane = HUD_PLANE
 
-/atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
+/atom/movable/screen/storage/Initialize(mapload, new_master)
 	. = ..()
 	master = new_master
 
@@ -716,7 +683,7 @@
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
-/atom/movable/screen/splash/Initialize(mapload, datum/hud/hud_owner, client/C, visible, use_previous_title)
+/atom/movable/screen/splash/Initialize(mapload, client/C, visible, use_previous_title)
 	. = ..()
 	if(!istype(C))
 		return

@@ -171,7 +171,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/acute/premade/fungal_tb]"
+	cached_data |= "[/datum/disease/tuberculosis]"
 	src.data = cached_data
 
 /datum/reagent/water
@@ -1506,7 +1506,8 @@
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.infect_disease_predefined(DISEASE_FUNGUS, TRUE, "[ROUND_TIME()] Tubercle Bacillus Cosmosis Microbes Infections [key_name(exposed_mob)]")  //Monkestation Edit: TB Patho
+		return
+		//exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
 /datum/reagent/snail
 	name = "Agent-S"

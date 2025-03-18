@@ -1,7 +1,3 @@
-// This isn't even used at the moment.
-// Refactor this to a component if it's ever brought back.
-// ~Absolucy
-/*
 PROCESSING_SUBSYSTEM_DEF(hacking)
 	name = "Hacking"
 	wait = 1 SECONDS
@@ -362,4 +358,3 @@ PROCESSING_SUBSYSTEM_DEF(hacking)
 	var/botnets = rand(1, 100)
 	. += span_info("[src] reports...")
 	. += span_big(span_alert("[botnets] BOTNET[botnets == 1 ? "" : "S"] ONLINE"))
-*/

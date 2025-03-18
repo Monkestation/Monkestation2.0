@@ -29,18 +29,14 @@ SUBSYSTEM_DEF(demo)
 	//var/last_queued = 0
 	//var/last_completed = 0
 
-/datum/controller/subsystem/demo/OnConfigLoad()
-	. = ..()
+/datum/controller/subsystem/demo/Initialize()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
-	disable()
-#else
+	CONFIG_SET(flag/demos_enabled, FALSE)
+#endif
 	if(!CONFIG_GET(flag/demos_enabled))
 		disable()
-#endif
-
-/datum/controller/subsystem/demo/Initialize()
-	if(disabled)
 		return SS_INIT_NO_NEED
+
 	rustg_file_write("[GLOB.round_id]", "[GLOB.demo_directory]/round_number_[world.port].txt")
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
@@ -255,7 +251,7 @@ SUBSYSTEM_DEF(demo)
 	return ..()
 
 /datum/controller/subsystem/demo/proc/disable()
-	flags |= SS_NO_INIT|SS_NO_FIRE
+	flags |= SS_NO_FIRE
 	can_fire = FALSE
 	disabled = TRUE
 	pre_init_lines = null

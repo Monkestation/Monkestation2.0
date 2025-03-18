@@ -66,7 +66,4 @@
 	if(!fexists(F))
 		to_chat(src, span_danger("No [selected] logfile was found."), confidential = TRUE)
 		return
-
-	var/datum/browser/browser = new(usr, "investigate[selected]", "Investigation of [selected]", 800, 300)
-	browser.set_content(file2text(F))
-	browser.open()
+	src << browse(F,"window=investigate[selected];size=800x300")

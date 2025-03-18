@@ -6,7 +6,7 @@
 	///the stored patreon rank collected from the server
 	var/owned_rank = NO_RANK
 	///access rank in numbers
-	var/access_rank = ACCESS_NO_RANK
+	var/access_rank = 0
 
 
 /datum/patreon_data/New(datum/player_details/owner)
@@ -53,8 +53,6 @@
 			. =  ACCESS_TRAITOR_RANK
 		if(NUKIE_RANK, OLD_NUKIE_RANK, NUKIE_PREMIUM_RANK, ANOTHER_PREMIUM_RANK)
 			. =  ACCESS_NUKIE_RANK
-		else
-			. = ACCESS_NO_RANK // Silly but some still have null returns so default to no access.
 
 /proc/get_patreon_rank(ckey, raw = FALSE)
 	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))

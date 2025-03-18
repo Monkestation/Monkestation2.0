@@ -77,7 +77,8 @@
 
 /datum/component/ice_cream_holder/proc/on_update_name(atom/source, updates)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
+	var/obj/obj = source
+	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)
@@ -92,7 +93,8 @@
 
 /datum/component/ice_cream_holder/proc/on_update_desc(atom/source, updates)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
+	var/obj/obj = source
+	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)

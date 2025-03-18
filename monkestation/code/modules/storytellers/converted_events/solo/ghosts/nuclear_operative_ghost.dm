@@ -51,7 +51,10 @@
 	if(most_experienced == antag_mind)
 		return
 	var/mob/living/current_mob = antag_mind.current
-	current_mob.clear_inventory()
+	var/list/items = current_mob.get_equipped_items(TRUE)
+	current_mob.unequip_everything()
+	for(var/obj/item/item as anything in items)
+		qdel(item)
 
 	if(!most_experienced)
 		most_experienced = get_most_experienced(setup_minds, required_role)

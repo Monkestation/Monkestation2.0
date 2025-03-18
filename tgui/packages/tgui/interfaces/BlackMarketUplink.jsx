@@ -250,7 +250,7 @@ const AuctionMarket = (props) => {
                       name="Bid Amount"
                       position="relative"
                       height="100%"
-                      format={(value) => 'Bid Amount: ' + round(value) + ' cr'}
+                      format={(value) => 'Bid Amount: ' + round(value)}
                       step={1}
                       value={
                         current_item.cost
@@ -281,10 +281,9 @@ const AuctionMarket = (props) => {
                   width="100%"
                   height="100%"
                   content="Bid"
-                  disabled={!current_item || current_item.cost > money}
                   onClick={() =>
                     act('bid', {
-                      item: current_item.id,
+                      item: item.id,
                     })
                   }
                 />

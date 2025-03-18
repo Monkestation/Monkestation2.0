@@ -5,7 +5,16 @@
 	icon = FA_ICON_CAT
 
 /datum/quirk/fluffy_tongue/add()
-	quirk_holder.AddComponentFrom(QUIRK_TRAIT, /datum/component/fluffy_tongue)
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/quirk/fluffy_tongue/remove()
-	quirk_holder.RemoveComponentSource(QUIRK_TRAIT, /datum/component/fluffy_tongue)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_SAY)
+
+/datum/quirk/fluffy_tongue/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG))
+		return
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = uwuify_text(message) || message
+	speech_args[SPEECH_MESSAGE] = message

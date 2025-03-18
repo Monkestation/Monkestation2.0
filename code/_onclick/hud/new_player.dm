@@ -13,8 +13,9 @@
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
 		if(button_type::abstract_type == button_type)
 			continue
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type
 		lobbyscreen.SlowInit()
+		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
@@ -28,10 +29,6 @@
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
 
-///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
-/atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
-	set_new_hud(our_hud)
-	return ..()
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -54,7 +51,7 @@
 	var/owner
 	var/area/misc/start/lobbyarea
 
-/atom/movable/screen/lobby/button/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/lobby/button/Initialize(mapload)
 	. = ..()
 	lobbyarea = GLOB.areas_by_type[/area/misc/start]
 
@@ -124,7 +121,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
+	var/datum/preferences/preferences = hud.mymob.client.prefs
 	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
@@ -137,7 +134,7 @@
 	base_icon_state = "not_ready"
 	var/ready = FALSE
 
-/atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/lobby/button/ready/Initialize(mapload)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -191,7 +188,7 @@
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
 
-/atom/movable/screen/lobby/button/join/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/lobby/button/join/Initialize(mapload)
 	. = ..()
 	set_button_status(FALSE)
 	switch(SSticker.current_state)
@@ -270,7 +267,7 @@
 	base_icon_state = "observe"
 	enabled = FALSE
 
-/atom/movable/screen/lobby/button/observe/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/lobby/button/observe/Initialize(mapload)
 	. = ..()
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
@@ -354,7 +351,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
+	var/datum/preferences/preferences = hud.mymob.client.prefs
 	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
@@ -471,9 +468,11 @@
 	icon_state = "you_are_here"
 	screen_loc = "TOP,CENTER:-61"
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/youarehere)
+
 //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
 // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
-/atom/movable/screen/lobby/youarehere/SlowInit(mapload)
+/atom/movable/screen/lobby/youarehere/Initialize(mapload)
 	. = ..()
 	var/port = world.port
 	switch(port)
@@ -497,7 +496,9 @@
 	/// The port of this server.
 	var/server_port
 
-/atom/movable/screen/lobby/button/server/SlowInit(mapload)
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby/button/server)
+
+/atom/movable/screen/lobby/button/server/Initialize(mapload)
 	. = ..()
 	set_button_status(is_available())
 	update_appearance(UPDATE_ICON_STATE)
@@ -590,7 +591,7 @@
 	var/static/disabled = FALSE
 	var/static/mutable_appearance/job_overlay
 
-/atom/movable/screen/lobby/overflow_alert/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/lobby/overflow_alert/Initialize(mapload)
 	. = ..()
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(initial_setup))

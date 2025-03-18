@@ -73,10 +73,8 @@
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 	else
 		forensics = new(src, blood_DNA = blood_DNA_to_add)
-	//MONKESTATION ADDITION START: Keep track of the blood dna color
-	forensics?.cached_blood_dna_color = null
+	cached_blood_dna_color = null
 	update_appearance()
-	//MONKESTATION ADDITION END
 	return TRUE
 
 /obj/item/add_blood_DNA(list/blood_DNA_to_add)
@@ -114,7 +112,7 @@
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 		blood_in_hands = rand(2, 4)
-	forensics?.cached_blood_dna_color = null //MONKESTATION ADDITION: Keep track of the blood dna color
+	cached_blood_dna_color = null
 	update_worn_gloves()
 	return TRUE
 

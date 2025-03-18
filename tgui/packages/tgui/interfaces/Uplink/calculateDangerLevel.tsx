@@ -70,6 +70,8 @@ export const ranks: Rank[] = [
   },
 ];
 
+export const dangerDefault = 50 * 600;
+
 let lastMinutesThan = -1;
 export const dangerLevelsTooltip = (
   <Box preserveWhitespace>
@@ -88,7 +90,7 @@ export const dangerLevelsTooltip = (
               color="white"
               className={value.gradient}
               style={{
-                'border-radius': '2px',
+                'border-radius': '5px',
                 display: 'inline-block',
               }}
               px={0.8}
@@ -135,12 +137,11 @@ export const calculateDangerLevel = (
       color="white"
       className={dangerLevel.gradient}
       style={{
-        'border-radius': '2px',
+        'border-radius': '5px',
         display: 'inline-block',
       }}
       px={0.8}
       py={0.6}
-      textAlign="center"
     >
       {dangerLevel.title} ({displayedProgression})
     </Box>

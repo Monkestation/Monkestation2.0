@@ -5,6 +5,7 @@ Arche
 Aten
 Atlas
 Auriga
+Aurora
 Berenices
 Canes
 Canis

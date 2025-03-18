@@ -50,11 +50,11 @@ export class Image extends Component<Props> {
       ...rest
     } = this.props;
 
-    /* Remove -ms-interpolation-mode with Byond 516. */
+    /* Remove -ms-interpolation-mode with Byond 516. -webkit-optimize-contrast is better than pixelated */
     const computedProps = computeBoxProps({
       style: {
-        '-ms-interpolation-mode': fixBlur ? 'nearest-neighbor' : 'auto',
-        'image-rendering': fixBlur ? 'pixelated' : 'auto',
+        '-ms-interpolation-mode': `${fixBlur ? 'nearest-neighbor' : 'auto'}`,
+        'image-rendering': `${fixBlur ? '-webkit-optimize-contrast' : 'auto'}`,
         'object-fit': `${objectFit}`,
       },
       ...rest,

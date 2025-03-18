@@ -28,10 +28,12 @@
 
 	if(!one_time_buy)
 		if(finalize_purchase(buyer))
-			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
+			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
+		logger.Log(LOG_CATEGORY_META, "[buyer] bought a [name] for [item_cost]", list("currency_left" = buyer.prefs.metacoins))
 		return
 	else
-		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
+		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
+	logger.Log(LOG_CATEGORY_META, "[buyer] bought a [name] for [item_cost]", list("currency_left" = buyer.prefs.metacoins))
 	attempt_spawn(buyer)
 
 
@@ -71,7 +73,7 @@
 	var/mob/buyer_mob = get_mob_by_ckey(buyer.ckey)
 
 	if(!isliving(buyer_mob))
-		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", donator_multiplier = FALSE)
+		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", TRUE, FALSE)
 		return
 
 	var/obj/item/created_item = new item_path

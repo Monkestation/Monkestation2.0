@@ -314,7 +314,7 @@
 			balloon_alert(user, "someone else's vassal!")
 			return FALSE
 
-	if(!iscarbon(target))
+	if(!ishuman(target))
 		balloon_alert(user, "you can't torture an animal or basic mob!")
 		return FALSE
 	if(disloyalty_offered)

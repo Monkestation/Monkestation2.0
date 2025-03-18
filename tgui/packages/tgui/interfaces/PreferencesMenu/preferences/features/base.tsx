@@ -15,6 +15,7 @@ import {
 } from '../../../../components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
+import { DropdownOptionalProps } from 'tgui/components/Dropdown';
 import features from '.';
 
 export const sortChoices = sortBy<[string, InfernoNode]>(([name]) => name);
@@ -135,7 +136,7 @@ export const CheckboxInputInverse = (
 export const createDropdownInput = <T extends string | number = string>(
   // Map of value to display texts
   choices: Record<T, InfernoNode>,
-  dropdownProps?: Record<T, unknown>,
+  dropdownProps?: DropdownOptionalProps,
 ): FeatureValue<T> => {
   return (props: FeatureValueProps<T>) => {
     return (

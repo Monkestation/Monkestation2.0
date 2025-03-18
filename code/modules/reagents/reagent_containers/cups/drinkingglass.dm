@@ -30,13 +30,11 @@
 		CALLBACK(src, PROC_REF(on_cup_reset)), \
 		base_container_type = base_container_type, \
 	)
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		qdel(GetComponent(/datum/component/rename))
-		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT) //so new drinks can rename the glass
+		renamedByPlayer = FALSE //so new drinks can rename the glass
 
 // Having our icon state change removes fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
@@ -47,22 +45,6 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
 	. = ..()
 	fill_icon_thresholds ||= list(0)
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/examine(mob/user)
-	. = ..()
-	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		. += span_notice("This glass has been given a custom name. It can be removed by washing it.")
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
-	SIGNAL_HANDLER
-	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		return
-
-	qdel(GetComponent(/datum/component/rename))
-	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
-	name = initial(name)
-	desc = initial(desc)
-	update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -87,13 +69,13 @@
 	var/inject_flags = NONE // Pay no mind that I (Brad) put this variable here for ONE gun.
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)
-	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
+	if(renamedByPlayer)
 		return
 	. = ..()
 	name = "[length(reagents.reagent_list) ? "filled " : ""]shot glass"
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_desc(updates)
-	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
+	if(renamedByPlayer)
 		return
 	. = ..()
 	if(length(reagents.reagent_list))

@@ -9,9 +9,8 @@
 ///Returns something the target might be hiding inside of
 /datum/targeting_strategy/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
 	var/atom/target_hiding_location
-	var/atom/target_loc = target.loc
-	if(istype(target_loc, /obj/structure/closet) || istype(target_loc, /obj/machinery/disposal) || istype(target_loc, /obj/machinery/sleeper))
-		target_hiding_location = target_loc
+	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
+		target_hiding_location = target.loc
 	return target_hiding_location
 
 /datum/targeting_strategy/basic
@@ -33,31 +32,22 @@
 	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
 		return FALSE
 
-	var/atom/target_loc = the_target.loc
-	var/atom/mob_loc = living_mob.loc
-
-	if(QDELETED(target_loc) || QDELETED(mob_loc))
-		return FALSE // I don't know how you'd end up in this situation, but let's just... not.
-
-	if(HAS_TRAIT(target_loc, TRAIT_SECLUDED_LOCATION))
-		return FALSE // don't attack people in an out-of-bounds location (aka if they're using a desynchronizer)
-
-	if(isobj(target_loc))
-		var/obj/container = target_loc
+	if(isobj(the_target.loc))
+		var/obj/container = the_target.loc
 		if(container.resistance_flags & INDESTRUCTIBLE)
 			return FALSE
-		if(isstructure(the_target))
-			return HAS_TRAIT(the_target, TRAIT_MOB_DESTROYABLE)
 
-	if(ismob(the_target))
-		if(mob_loc == the_target)
+	if(isstructure(the_target))
+		if(!HAS_TRAIT(the_target, TRAIT_MOB_DESTROYABLE))
+			return FALSE
+		return TRUE
+
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		if(living_mob.loc == the_target)
 			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive
-		if(HAS_TRAIT(the_target, TRAIT_MOVE_VENTCRAWLING))
-			return FALSE // you can't bite people inside of vents
-		if(HAS_TRAIT(the_target, TRAIT_MAGICALLY_PHASED))
-			return FALSE // you can't bite anything that's incorporeal
-		if(HAS_TRAIT(the_target, TRAIT_GODMODE))
-			return FALSE // target is in godmode, ignore it
+		var/mob/M = the_target
+		if(HAS_TRAIT(M, TRAIT_GODMODE))
+			return FALSE
 
 	if(!ignore_sight && !can_see(living_mob, the_target, vision_range)) //Target has moved behind cover and we have lost line of sight to it
 		return FALSE
@@ -65,10 +55,7 @@
 	if(living_mob.see_invisible < the_target.invisibility) //Target's invisible to us, forget it
 		return FALSE
 
-	if(!isturf(mob_loc))
-		return FALSE
-
-	if(isturf(target_loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
+	if(isturf(living_mob.loc) && isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs

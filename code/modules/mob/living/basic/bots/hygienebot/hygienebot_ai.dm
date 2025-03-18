@@ -1,5 +1,4 @@
 #define BOT_FRUSTRATION_LIMIT 8
-#define BOT_ANGER_THRESHOLD 5
 
 /datum/ai_controller/basic_controller/bot/hygienebot
 	blackboard = list(
@@ -129,7 +128,7 @@
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 
 	if(succeeded)
-		if(controller.blackboard[BB_WASH_FRUSTRATION] > BOT_ANGER_THRESHOLD)
+		if(controller.blackboard[BB_WASH_FRUSTRATION] > 0)
 			announcement.announce(pick(controller.blackboard[BB_WASH_DONE]))
 		controller.clear_blackboard_key(target_key)
 		return
@@ -140,5 +139,4 @@
 	announcement.announce(pick(controller.blackboard[BB_WASH_THREATS]))
 	controller.set_blackboard_key(BB_WASH_FRUSTRATION, 0)
 
-#undef BOT_ANGER_THRESHOLD
 #undef BOT_FRUSTRATION_LIMIT
