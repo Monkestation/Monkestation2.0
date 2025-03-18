@@ -1,10 +1,10 @@
 //detective spyglasses. meant to be an example for map_popups.dm
-/obj/item/clothing/glasses/sunglasses/spy
+/obj/item/clothing/glasses/hud/security/sunglasses/spy
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
 	var/obj/item/clothing/accessory/spy_bug/linked_bug
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
 	var/client/cool_guy = user?.client
 	if(!cool_guy)
 		return
@@ -18,27 +18,27 @@
 
 	linked_bug.update_view()
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
 	linked_bug.cam_screen.hide_from(source.mob)
 
-/obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
 		user.client?.close_popup("spypopup")
 
-/obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/dropped(mob/user)
 	. = ..()
 	user.client?.close_popup("spypopup")
 
-/obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
 
-/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
 		return TRUE
 
-/obj/item/clothing/glasses/sunglasses/spy/Destroy()
+/obj/item/clothing/glasses/hud/security/sunglasses/spy/Destroy()
 	if(linked_bug)
 		linked_bug.linked_glasses = null
 	. = ..()
