@@ -35,7 +35,5 @@
 	name = "arrival shuttle (North Star)"
 
 /datum/map_template/shuttle/arrival/premiumleaded
-	suffix = "leaded"
+	suffix = "premiumleaded"
 	name = "arrival shuttle (premiumlead)"
-
-
