@@ -29,7 +29,6 @@
 		)
 	time = 50
 	preop_sound = 'sound/items/unsheath.ogg'
-	success_sound = 'sound/items/unsheath.ogg'
 
 /datum/surgery_step/clean_corrosion/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
