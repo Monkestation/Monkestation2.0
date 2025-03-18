@@ -39,20 +39,8 @@
 	add_item_action(chameleon_card_action)
 	register_item_context()
 
-/obj/item/card/id/advanced/undercover/Destroy()
-	theft_target = null
-	. = ..()
 
-/obj/item/card/id/advanced/undercover/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
 
-	if(isidcard(target))
-		theft_target = WEAKREF(target)
-		ui_interact(user)
-		return AFTERATTACK_PROCESSED_ITEM
-
-	return ..()
 
 /obj/item/card/id/advanced/undercover/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -66,27 +54,6 @@
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
 	data["accessFlags"] = SSid_access.flags_by_access
 	return data
-
-
-/obj/item/card/id/advanced/undercover/ui_state(mob/user)
-	return GLOB.always_state
-
-	if(!target)
-		return UI_CLOSE
-
-	var/status = min(
-		ui_status_user_strictly_adjacent(user, target),
-		ui_status_user_is_advanced_tool_user(user),
-		max(
-			ui_status_user_is_conscious_and_lying_down(user),
-			ui_status_user_is_abled(user, target),
-		),
-	)
-
-	if(status < UI_INTERACTIVE)
-		return UI_CLOSE
-
-	return status
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	// MONKESTATION ADDITION START
