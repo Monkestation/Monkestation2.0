@@ -190,11 +190,18 @@
 				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
 			for(var/module in malf_ai.malf_picker.possible_modules[category])
 				var/datum/ai_module/mod = malf_ai.malf_picker.possible_modules[category][module]
-				cat["items"] += list(list(
+				// monkestation start: add icons
+				var/list/item_data = list(
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
-				))
+				)
+				if(!mod.upgrade)
+					var/datum/action/power_type = mod.power_type
+					item_data["icon"] = power_type::button_icon
+					item_data["icon_state"] = power_type::button_icon_state
+				cat["items"] += list(item_data)
+				// monkestation end
 			data["categories"] += list(cat)
 
 	return data
@@ -250,6 +257,18 @@
 	else
 		result += span_redtext("The [special_role_text] has failed!")
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+
+	// monkestation edit start PR #5133
+	if(istype(owner?.current, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/master_ai = owner.current
+		var/list/ipc_results = list()
+		var/connected_ipc_amt = length(master_ai.connected_ipcs)
+		if(connected_ipc_amt)
+			ipc_results += span_header("The Malfunctioning AI had [connected_ipc_amt] infected IPC('s) under their command: ")
+			for(var/mob/living/carbon/human/connected_ipc as anything in master_ai.connected_ipcs)
+				ipc_results += connected_ipc.name
+		result += ipc_results
+	// monkestation edit end PR #5133
 
 	return result.Join("<br>")
 

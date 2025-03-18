@@ -126,6 +126,10 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Recolorable Plaid Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/plaid
 
+/datum/store_item/under/miscellaneous/turtleneck
+	name = "Recolorable Turtleneck"
+	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+
 /datum/store_item/under/miscellaneous/skirt_turtleneck
 	name = "Recolorable Turtleneck Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/turtleskirt
@@ -399,7 +403,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Butler Uniform"
 	item_path = /obj/item/clothing/under/suit/butler
 
-/datum/store_item/under/formal/butler
+/datum/store_item/under/formal/silk_suit
 	name = "Black Silk Suit"
 	item_path = /obj/item/clothing/under/suit/fancysuit
 

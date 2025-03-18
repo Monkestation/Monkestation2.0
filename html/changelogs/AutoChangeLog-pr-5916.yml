@@ -1,0 +1,4 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - code_imp: "Research Tech Tree was split amongst several files instead of one very long one."
