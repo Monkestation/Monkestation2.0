@@ -173,6 +173,14 @@
 	credit_cost = CARGO_CRATE_VALUE * 5
 	occupancy_limit = "60"
 
+/datum/map_template/shuttle/emergency/doubleleaded
+	suffix = "doubleleaded"
+	name = "Doubled Leaded Emergency Shuttle"
+	description = "A shuttle created after the engineers were given multiple doses of lead, hence the name of the shuttle."
+	admin_notes = "It is set to purposfully crash into the station, it also has execution equipment and entrapped plasma."
+	credit_cost = CARGO_CRATE_VALUE * 5
+	occupancy_limit = "9999"
+
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
 	name = "Snappop(tm)!"
