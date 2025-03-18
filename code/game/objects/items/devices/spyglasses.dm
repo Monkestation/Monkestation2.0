@@ -52,7 +52,7 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
-	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
+	var/obj/item/clothing/glasses/hud/security/sunglasses/spy/linked_glasses
 	var/atom/movable/screen/map_view/cam_screen
 	// Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
@@ -98,7 +98,7 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
+	var/obj/item/clothing/glasses/hud/security/sunglasses/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
 	new /obj/item/paper/fluff/nerddocs(src)
