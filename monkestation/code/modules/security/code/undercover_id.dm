@@ -54,7 +54,7 @@
 	data["accessFlags"] = SSid_access.flags_by_access
 	return data
 
-/obj/item/card/id/advanced/chameleon/attack_self(mob/user)
+/obj/item/card/id/advanced/undercover/attack_self(mob/user)
 	// MONKESTATION ADDITION START
 	if(chameleon_card_action.hidden)
 		return ..()
