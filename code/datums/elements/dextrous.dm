@@ -10,13 +10,17 @@
 		return ELEMENT_INCOMPATIBLE // Incompatible with the carbon typepath because that already has its own hand handling and doesn't need hand holding
 
 	var/mob/living/mob_parent = target
+	//MONKESTATION ADDITION START: Basic mobs keep track of whether they're dexterous
 	if(isbasicmob(mob_parent))
 		var/mob/living/basic/basic = target
 		basic.dexterous = TRUE
+	//MONKESTATION ADDITION END
 
 	set_available_hands(mob_parent, hands_count)
-	mob_parent.set_hud_used(new hud_type(target))
-	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
+	mob_parent.hud_type = hud_type
+	if (mob_parent.hud_used)
+		mob_parent.set_hud_used(new hud_type(target))
+		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	ADD_TRAIT(target, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_hand_clicked))
@@ -25,14 +29,18 @@
 /datum/element/dextrous/Detach(datum/source)
 	. = ..()
 	var/mob/living/mob_parent = source
+	//MONKESTATION ADDITION START: Basic mobs keep track of whether they're dexterous
 	if(isbasicmob(mob_parent))
 		var/mob/living/basic/basic = mob_parent
 		basic.dexterous = FALSE
+	//MONKESTATION ADDITION END
 
 	set_available_hands(mob_parent, initial(mob_parent.default_num_hands))
 	var/initial_hud = initial(mob_parent.hud_type)
-	mob_parent.set_hud_used(new initial_hud(source))
-	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
+	mob_parent.hud_type = initial_hud
+	if (mob_parent.hud_used)
+		mob_parent.set_hud_used(new initial_hud(source))
+		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	REMOVE_TRAIT(source, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_EXAMINE,

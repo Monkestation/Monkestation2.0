@@ -133,3 +133,16 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "robottoything"
 	animal_transformation = /mob/living/basic/pet/robottoything
+
+//Cobalt Velvet 235
+/obj/item/effect_granter/donator/babypukeko
+	name = "baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko
+
+/obj/item/effect_granter/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko/tall

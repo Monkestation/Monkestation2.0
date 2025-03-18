@@ -38,12 +38,13 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	created_ability.Grant(src)
 
 /mob/living/carbon/human/ghost/Destroy()
-	if(dueling && linked_button)
-		addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
-
 	if(linked_button)
-		linked_button.remove_user(src)
-		linked_button = null
+		if(dueling)
+			addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
+		else
+			linked_button.remove_user(src)
+			linked_button = null
+
 	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)

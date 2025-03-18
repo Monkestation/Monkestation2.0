@@ -106,6 +106,10 @@
 	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS)
 	var/job_flags = NONE
 
+	/// Holidays this job should only appear on. Leave null for it to always show. Supports multiple holidays.
+	//base defines in [code\__DEFINES\time.dm]
+	var/list/job_holiday_flags //MONKESTATION EDIT
+
 	/// Multiplier for general usage of the voice of god.
 	var/voice_of_god_power = 1
 	/// Multiplier for the silence command of the voice of god.
@@ -127,6 +131,11 @@
 	/// custom ringtone for this job
 	var/job_tone
 
+	/// Donar rank required for this job. Leave null for no requirement.
+	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
+	var/job_req_donar = null //MONKESTATION EDIT
+	//donator bypass for holidays
+	var/job_donar_bypass = null //MONKESTATION EDIT
 
 /datum/job/New()
 	. = ..()
@@ -209,6 +218,10 @@
 /datum/job/proc/special_check_latejoin(client/latejoin)
 	return TRUE
 
+//Used to check if the config or special setting for this job is enabled.
+//Override where appropriate. Be aware of parent procs. Defaults to false.
+/datum/job/proc/special_config_check()
+	return FALSE
 
 /mob/living/proc/on_job_equipping(datum/job/equipping)
 	return
@@ -383,6 +396,10 @@
 				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 			if(LSATCHEL)
 				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+			if(BSATCHEL)
+				back = /obj/item/storage/backpack/satchel/blackleather //Black Leather Satchel MONKESTATION
+			if(RSATCHEL)
+				back = /obj/item/storage/backpack/satchel/retro //Retro Satchel MONKESTATION
 			if(DSATCHEL)
 				back = satchel //Department satchel
 			if(DDUFFELBAG)
@@ -629,12 +646,19 @@
 				return // Disconnected while checking the appearance ban.
 			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
+		// monkestation edit start
+		/* original
 		mmi.name = "[initial(mmi.name)]: [organic_name]"
 		if(mmi.brain)
 			mmi.brain.name = "[organic_name]'s brain"
 		if(mmi.brainmob)
 			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
 			mmi.brainmob.name = organic_name
+		*/
+		qdel(mmi)
+		mmi = make_mmi(positronic=(player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic"), organic_name=organic_name)
+		// monkestation edit end
+
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		apply_pref_name(/datum/preference/name/cyborg, player_client)

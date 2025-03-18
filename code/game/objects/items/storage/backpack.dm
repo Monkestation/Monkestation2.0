@@ -372,7 +372,18 @@
 	icon_state = "devilwing"
 	inhand_icon_state = "devilwing"
 
+/obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+	name = "black leather satchel"
+	desc = "It's a fancy satchel made with plastic imitation leather."
+	icon_state = "satchel-blackleather"
+	inhand_icon_state = "satchel-blackleather"
 
+/obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
+	name = "retro satchel"
+	desc = "A satchel commonly worn during planetary surveys."
+	icon_state = "satchel-retro"
+	inhand_icon_state = "satchel-retro"
+	
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."

@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
-		/obj/item/disk/data = 1,
+		/obj/item/disk/data/random = 1, // monkestation edit: use random dna data disks
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/paper = 1,
@@ -371,6 +371,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
 		/obj/item/seeds/tree/money = 1, //monkestation edit
+		/obj/item/disk/design_disk/fss = 1, //monkestation edit
 		) = 1,
 
 ))
