@@ -188,7 +188,7 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
-/obj/item/clothing/glasses/hud/security/sunglasses/normal
+/obj/item/clothing/glasses/hud/security/sunglasses/normal /// Monkestation edit : Adding some substance to the detective role
 	name = "sunglasses"
 	desc = "N/A"
 	icon_state = "sun"
