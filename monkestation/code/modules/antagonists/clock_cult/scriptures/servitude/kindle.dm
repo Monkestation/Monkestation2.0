@@ -124,19 +124,12 @@
 		dodge = TRUE
 	if(counter)
 		target.visible_message(
-			span_danger("[target] twists [user]'s arm, sending [user.p_their()] [invoking_slab] flying!"),
-			span_userdanger("Making sure to avoid [user]'s [name], you twist [user.p_their()] arm, sending [user.p_their()] [invoking_slab] flying!"),
+			span_danger("[target] twists [user]'s arm, forcing [user.p_them()] to drop [user.p_their()] [invoking_slab]!"),
+			span_userdanger("Making sure to avoid [user]'s [name], you twist [user.p_their()] arm, forcing [user.p_them()] to drop [user.p_their()] [invoking_slab]!"),
 			ignored_mobs = list(user)
 		)
-		to_chat(user, span_userdanger("As you attempt to stun [target] with the spell, [target.p_they()] twist[target.p_s()] your arm and send[target.p_s()] your [invoking_slab] flying!"), type = MESSAGE_TYPE_COMBAT)
+		to_chat(user, span_userdanger("As you attempt to stun [target] with the spell, [target.p_they()] twist[target.p_s()] your arm, forcing you to drop your [invoking_slab]!"), type = MESSAGE_TYPE_COMBAT)
 		user.dropItemToGround(invoking_slab, force = TRUE, silent = TRUE)
-		invoking_slab.launch_item(
-			user.drop_location(),
-			fly_angle = get_angle(user, target) + rand(-25, 25),
-			horizontal_multiplier = 5,
-			vertical_multiplier = 5,
-		)
-		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 		return TRUE
 	else if(dodge)
 		target.visible_message(
