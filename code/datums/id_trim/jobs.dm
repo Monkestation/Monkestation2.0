@@ -478,6 +478,22 @@
 	// Config check for if sec has maint access.
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
+/// Detective undercover I.D
+/datum/id_trim/undercover
+	assignment = "Unknown"
+	access = list(ACCESS_BRIG_ENTRANCE,
+		ACCESS_COURT,
+		ACCESS_DETECTIVE,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MECH_SECURITY,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_SECURITY,
+		ACCESS_WEAPONS,
+		)
+
+
+
 
 /datum/id_trim/job/geneticist
 	assignment = "Geneticist"
