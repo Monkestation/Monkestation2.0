@@ -30,6 +30,7 @@
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
 		/obj/item/ammo_box/c38 = 25,
+		/obj/item/ammo_box/magazine/m45 = 15,
 		/obj/item/ammo_box/c38/dumdum = 5,
 		/obj/item/ammo_box/c38/hotshot = 5,
 		/obj/item/ammo_box/c38/iceblox = 5,
