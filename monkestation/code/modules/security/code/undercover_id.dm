@@ -1,3 +1,5 @@
+/// Copypaste of the chamelon I.D without the code for copying access.
+
 /obj/item/card/id/advanced/undercover
 	name = "Undercover I.D"
 	desc = "Nanotrasen finest detective's wet dream, an undercover I.D."

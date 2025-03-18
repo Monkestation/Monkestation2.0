@@ -73,7 +73,7 @@
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		)
 	implants = list(/obj/item/implant/mindshield)
-	accessory = /obj/item/clothing/accessory/badge/holo/detective
+	accessory = /obj/item/clothing/accessory/badge/holo/detective /// Monkestation edit : Adding some substance to the detective role
 
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visualsOnly = FALSE)
 	. = ..()

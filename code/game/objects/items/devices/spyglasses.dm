@@ -1,5 +1,5 @@
 //detective spyglasses. meant to be an example for map_popups.dm
-/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy /// Monkestation edit : Adding some substance to the detective role. A special sunglass with security HUD
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
 	var/obj/item/clothing/accessory/spy_bug/linked_bug
