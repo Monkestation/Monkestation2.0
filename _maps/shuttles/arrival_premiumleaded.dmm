@@ -1,0 +1,198 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/transit_tube/horizontal,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"d" = (
+/obj/structure/transit_tube/horizontal,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"f" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"g" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"i" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"u" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"E" = (
+/obj/structure/transit_tube/station/dispenser/reverse/flipped{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"G" = (
+/obj/structure/transit_tube/station/dispenser/reverse{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"M" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"T" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"V" = (
+/obj/docking_port/mobile/arrivals,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"W" = (
+/obj/structure/transit_tube/station/dispenser/flipped,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"Z" = (
+/obj/structure/transit_tube/station/dispenser,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+T
+T
+T
+T
+T
+"}
+(2,1,1) = {"
+f
+f
+f
+f
+f
+"}
+(3,1,1) = {"
+M
+E
+u
+G
+M
+"}
+(4,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(5,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(6,1,1) = {"
+M
+Z
+g
+W
+M
+"}
+(7,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(8,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(9,1,1) = {"
+M
+Z
+g
+W
+M
+"}
+(10,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(11,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(12,1,1) = {"
+M
+Z
+g
+W
+M
+"}
+(13,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(14,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(15,1,1) = {"
+M
+Z
+g
+W
+M
+"}
+(16,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(17,1,1) = {"
+M
+a
+i
+a
+M
+"}
+(18,1,1) = {"
+M
+d
+M
+d
+M
+"}
+(19,1,1) = {"
+M
+a
+V
+a
+M
+"}
