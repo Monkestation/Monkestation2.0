@@ -7,7 +7,7 @@
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
-	var/anyone = FALSE
+	var/anyone = TRUE
 
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
 
@@ -38,7 +38,6 @@
 	chameleon_card_action.initialize_disguises()
 	add_item_action(chameleon_card_action)
 	register_item_context()
-
 
 
 

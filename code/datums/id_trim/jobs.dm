@@ -492,9 +492,6 @@
 		ACCESS_WEAPONS,
 		)
 
-
-
-
 /datum/id_trim/job/geneticist
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
