@@ -147,3 +147,16 @@
 			set_new_account(user)
 			return
 	return ..()
+
+/datum/id_trim/undercover
+	assignment = "Unknown"
+	access = list(ACCESS_BRIG_ENTRANCE,
+		ACCESS_COURT,
+		ACCESS_DETECTIVE,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MECH_SECURITY,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_SECURITY,
+		ACCESS_WEAPONS,
+		)
