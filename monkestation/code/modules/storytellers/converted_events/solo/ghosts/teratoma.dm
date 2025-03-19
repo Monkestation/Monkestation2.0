@@ -1,0 +1,58 @@
+/// The maximum amount of teratomas for a single roll to shove into a pod.
+#define MAX_TERATOMAS_TO_SPAWN 5
+
+/datum/round_event_control/teratoma
+	name = "Teratoma Crash"
+	typepath = /datum/round_event/ghost_role/teratoma
+	track = EVENT_TRACK_MAJOR
+	weight = parent_type::weight / 2 // half of the default weight because teratomas can be incredibly destructive
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_OUTSIDER_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
+	checks_antag_cap = TRUE
+
+/datum/round_event/ghost_role/teratoma
+	minimum_required = 1
+	role_name = "teratoma crash"
+	fakeable = FALSE //Nothing to fake here
+
+/datum/round_event/ghost_role/teratoma/spawn_role()
+	var/list/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to be part of a group of teratomas crashing into the station?",
+		ignore_category = POLL_IGNORE_TERATOMA,
+		alert_pic = /datum/antagonist/teratoma,
+		role_name_text = "teratoma crash",
+	)
+
+	if(length(candidates) < 1)
+		return NOT_ENOUGH_PLAYERS
+
+	var/turf/maint_spawn = find_maintenance_spawn(atmos_sensitive = TRUE)
+	if(!maint_spawn) // this shouldn't happen
+		maint_spawn = get_safe_random_station_turf_equal_weight()
+		if(!maint_spawn) // this REALLY shouldn't happen
+			return MAP_ERROR
+
+	var/pod_type = pick(/obj/structure/closet/supplypod/car_pod, /obj/structure/closet/supplypod/washer_pod)
+	var/obj/structure/closet/supplypod/pod = new pod_type
+	pod.stay_after_drop = TRUE
+	while(length(candidates) > 0 && length(spawned_mobs) < MAX_TERATOMAS_TO_SPAWN)
+		var/mob/dead/selected = pick_n_take(candidates)
+		if(QDELETED(selected) || !selected.client)
+			continue
+		var/datum/mind/player_mind = new /datum/mind(selected.key)
+		player_mind.active = TRUE
+		player_mind.special_role = "Teratoma"
+
+		var/mob/living/carbon/human/species/teratoma/goober = new(pod)
+		player_mind.transfer_to(goober)
+		player_mind.add_antag_datum(/datum/antagonist/teratoma)
+		if(prob(20))
+			goober.adjust_drunk_effect(rand(15, 25))
+		// bomb immunity for just long enough for the pod to land
+		ADD_TRAIT(goober, TRAIT_BOMBIMMUNE, type)
+		addtimer(TRAIT_CALLBACK_REMOVE(goober, TRAIT_BOMBIMMUNE, type), 5 SECONDS)
+		spawned_mobs += goober
+	new /obj/effect/pod_landingzone(maint_spawn, pod)
+
+	return SUCCESSFUL_SPAWN
+
+#undef MAX_TERATOMAS_TO_SPAWN
