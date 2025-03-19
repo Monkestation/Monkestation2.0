@@ -377,15 +377,6 @@
 		/obj/item/pinpointer/crew
 	)
 
-/datum/voucher_set/security/brig_physician/pax
-	name = "Pax pills"
-	description = "Lethals ? Nuh huh."
-	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "pill"
-	set_items = list(
-		/obj/item/storage/pill_bottle/paxpsych = 2
-	)
-
 /datum/voucher_set/security/brig_physician/bodybags
 	name = "Prisoners bodybags"
 	description = "Carrying a prisoner has never been easier."
