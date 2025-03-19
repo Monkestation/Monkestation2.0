@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/transit_tube/horizontal,
-/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall,
 /area/shuttle/arrival)
 "d" = (
-/obj/structure/transit_tube/horizontal,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "f" = (
@@ -21,6 +21,18 @@
 "i" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
+"r" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/tank_dispenser/oxygen{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"s" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "u" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/floor/has_bulb,
@@ -28,21 +40,42 @@
 /area/shuttle/arrival)
 "E" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/transit_tube/station/dispenser/reverse/flipped{
-	dir = 1
-	},
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "G" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/transit_tube/station/dispenser/reverse{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"J" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/table,
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
+	},
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
+	},
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
+	},
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
+	},
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
+	},
+/obj/item/paper{
+	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "M" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "T" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -50,10 +83,24 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"V" = (
-/obj/docking_port/mobile/arrivals,
-/obj/effect/spawner/structure/window/reinforced,
+"U" = (
+/obj/machinery/disposal/delivery_chute{
+	dir = 8;
+	name = ""Not" Corpse Chute"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"V" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile/arrivals,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/plating,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
@@ -79,113 +126,50 @@ M
 "}
 (4,1,1) = {"
 M
-a
+s
 i
-a
+d
 M
 "}
 (5,1,1) = {"
 M
-a
+s
 i
-a
+d
 M
 "}
 (6,1,1) = {"
 M
-a
+s
 g
-a
+d
 M
 "}
 (7,1,1) = {"
 M
-a
+s
 i
-a
+d
 M
 "}
 (8,1,1) = {"
 M
-a
 i
-a
+i
+i
 M
 "}
 (9,1,1) = {"
 M
-a
-g
-a
+J
+U
+r
 M
 "}
 (10,1,1) = {"
 M
 a
-i
-a
-M
-"}
-(11,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(12,1,1) = {"
-M
-a
-g
-a
-M
-"}
-(13,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(14,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(15,1,1) = {"
-M
-a
-g
-a
-M
-"}
-(16,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(17,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(18,1,1) = {"
-M
-a
-i
-a
-M
-"}
-(19,1,1) = {"
-M
-d
 V
-d
+a
 M
 "}
