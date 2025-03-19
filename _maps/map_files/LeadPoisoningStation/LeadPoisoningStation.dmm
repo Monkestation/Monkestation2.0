@@ -6036,12 +6036,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/maintenance/department/crew_quarters/bar)
-"dgD" = (
-/obj/structure/transit_tube/curved{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "dgN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -7030,7 +7024,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
 "dFq" = (
@@ -7595,13 +7592,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
-"dXZ" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube/curved{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "dYb" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/diagonal_edge,
@@ -10513,7 +10503,10 @@
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "frU" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/closed/wall,
 /area/station/medical/morgue)
 "fsh" = (
@@ -13213,17 +13206,6 @@
 /obj/structure/closet/secure_closet/brig,
 /turf/open/floor/iron/diagonal,
 /area/station/security/execution/transfer)
-"gKU" = (
-/obj/docking_port/stationary{
-	dwidth = 2;
-	height = 19;
-	name = "arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/premiumleaded;
-	shuttle_id = "arrival_stationary";
-	width = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "gLa" = (
 /obj/structure/table/glass,
 /obj/item/flashlight/lamp,
@@ -14032,13 +14014,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
-"heG" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube/diagonal{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "heH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -14874,14 +14849,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"hAv" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube,
-/obj/structure/transit_tube/curved/flipped{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "hAW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15889,10 +15856,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
-"hXd" = (
-/obj/effect/landmark/navigate_destination/dockarrival,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
 "hXm" = (
 /obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating,
@@ -15943,7 +15906,10 @@
 	dir = 6
 	},
 /obj/machinery/iv_drip,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
 "hYn" = (
@@ -16721,10 +16687,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
-"irN" = (
-/obj/structure/transit_tube/curved,
-/turf/open/space/basic,
-/area/space)
 "isj" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/airalarm/directional/east,
@@ -18907,12 +18869,6 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"jrL" = (
-/obj/structure/transit_tube/curved/flipped{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space)
 "jrO" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -19028,11 +18984,16 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
 "juy" = (
-/obj/structure/transit_tube{
-	dir = 4
+/obj/docking_port/stationary{
+	dwidth = 3;
+	height = 15;
+	name = "arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	shuttle_id = "arrival_stationary";
+	width = 7
 	},
-/turf/closed/wall,
-/area/station/hallway/secondary/exit/departure_lounge)
+/turf/open/space/basic,
+/area/space)
 "juz" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/west,
@@ -20072,12 +20033,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
-"jZR" = (
-/obj/structure/transit_tube/curved{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "jZT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -22603,7 +22558,10 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/sign/poster/official/random/directional/south,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
 "lrg" = (
@@ -24914,12 +24872,15 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "mAR" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube/curved/flipped{
-	dir = 1
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock";
+	space_dir = 2
 	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "mBi" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 5
@@ -26322,11 +26283,11 @@
 "ngy" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 5;
-	height = 30;
-	name = "LeadPoisoningstation emergency evac bay";
-	shuttle_id = "emergency_doubleleaded";
-	width = 11
+	dwidth = 9;
+	height = 25;
+	name = "MetaStation emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 29
 	},
 /turf/open/space/basic,
 /area/space)
@@ -26949,13 +26910,6 @@
 /obj/structure/table,
 /turf/open/floor/engine,
 /area/station/maintenance/starboard/greater)
-"nuw" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube/curved/flipped{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "nuz" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/welded,
@@ -29456,8 +29410,8 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/science/xenobiology)
 "oNG" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube/curved,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/olive,
 /turf/open/space/basic,
 /area/space/nearstation)
 "oOo" = (
@@ -29554,9 +29508,15 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "oQp" = (
-/obj/structure/transit_tube,
-/turf/open/space/basic,
-/area/space)
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock";
+	space_dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "oQz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/random/directional/east,
@@ -31757,12 +31717,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"pYR" = (
-/obj/structure/transit_tube/curved/flipped{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/hallway/secondary/exit/departure_lounge)
 "pZk" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
@@ -34898,7 +34852,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/corner,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
 "rAY" = (
@@ -39141,12 +39098,16 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "tFL" = (
-/obj/structure/transit_tube/curved{
-	dir = 1
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock";
+	space_dir = 2
 	},
-/obj/structure/transit_tube/curved/flipped,
-/turf/open/space/basic,
-/area/space)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/landmark/navigate_destination/dockarrival,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "tFZ" = (
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
@@ -41794,10 +41755,6 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/science/xenobiology)
-"uWi" = (
-/obj/structure/transit_tube/horizontal,
-/turf/open/space/basic,
-/area/space)
 "uWm" = (
 /obj/item/seeds/potato,
 /turf/open/floor/grass,
@@ -46373,10 +46330,6 @@
 /obj/effect/turf_decal/trimline/red/warning,
 /turf/open/floor/iron/shuttle/arrivals/airless,
 /area/space/nearstation)
-"xjv" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "xjw" = (
 /obj/structure/bed{
 	pixel_y = 2;
@@ -47573,12 +47526,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/library)
-"xQS" = (
-/obj/structure/transit_tube{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
 "xRa" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -92094,18 +92041,18 @@ pUB
 aHu
 aHu
 aHu
+uge
+wlS
+wlS
+wlS
 aHu
 aHu
+uge
 aHu
-aHu
-pUB
-aHu
-aHu
-pUB
-aHu
-aHu
-pUB
-aHu
+wlS
+wlS
+wlS
+uge
 aHu
 jHB
 hrX
@@ -92355,13 +92302,13 @@ aHu
 aHu
 aHu
 aHu
-pUB
 aHu
 aHu
-pUB
 aHu
 aHu
-pUB
+aHu
+aHu
+aHu
 aHu
 aHu
 jHB
@@ -92610,17 +92557,17 @@ aHu
 aHu
 aHu
 aHu
-pUB
-pUB
-wlS
-pUB
-pUB
-wlS
-pUB
-pUB
-wlS
-pUB
-pUB
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
+aHu
 jHB
 jHB
 jHB
@@ -93133,10 +93080,10 @@ aHu
 aHu
 aHu
 aHu
+juy
 aHu
 aHu
-nuw
-xjv
+aHu
 eRa
 wLV
 lJz
@@ -93391,9 +93338,9 @@ aHu
 aHu
 aHu
 aHu
-gKU
 aHu
-heG
+aHu
+aHu
 aHu
 jHB
 xRY
@@ -93649,9 +93596,9 @@ aHu
 aHu
 aHu
 aHu
-nuw
-xjv
-dXZ
+wlS
+pUB
+pUB
 jHB
 xRY
 hHZ
@@ -93907,8 +93854,8 @@ aHu
 aHu
 aHu
 aHu
-jZR
-uWi
+aHu
+aHu
 jHB
 vup
 hHZ
@@ -94150,22 +94097,22 @@ pUB
 aHu
 aHu
 aHu
-aHu
-aHu
-pUB
-pUB
-wlS
-pUB
-pUB
-wlS
-pUB
-pUB
-wlS
 oNG
-mAR
+jHB
+oQp
+jHB
 aHu
-jrL
-jrL
+aHu
+oNG
+aHu
+jHB
+oQp
+jHB
+oNG
+aHu
+aHu
+aHu
+aHu
 jHB
 vup
 hHZ
@@ -94408,20 +94355,20 @@ aHu
 aHu
 aHu
 aHu
-aHu
+dVi
+hlu
+dVi
 aHu
 aHu
 pUB
 aHu
+dVi
+hlu
+dVi
 aHu
-pUB
 aHu
-irN
-hAv
-oQp
-oQp
-tFL
-dgD
+aHu
+aHu
 aHu
 jHB
 oGX
@@ -94666,15 +94613,15 @@ pUB
 pUB
 jHB
 jHB
-jHB
+mAR
 jHB
 jHB
 dVi
 dVi
 jHB
-pYR
 jHB
-juy
+tFL
+jHB
 jHB
 dVi
 dVi
@@ -94929,9 +94876,9 @@ gks
 sDj
 sDj
 wPY
-xQS
 hHZ
-xQS
+hHZ
+hHZ
 cVb
 sDj
 sDj
@@ -95187,7 +95134,7 @@ hHZ
 hHZ
 hHZ
 hHZ
-hXd
+hHZ
 hHZ
 hHZ
 hHZ
