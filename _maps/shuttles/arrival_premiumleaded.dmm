@@ -56,21 +56,6 @@
 /obj/item/paper{
 	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
 	},
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "M" = (
@@ -94,13 +79,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "V" = (
-/obj/structure/fans/tiny,
 /obj/docking_port/mobile/arrivals,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
