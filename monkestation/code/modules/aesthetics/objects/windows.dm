@@ -57,9 +57,19 @@
 
 /obj/structure/grille/window_sill/atom_break()
 	. = ..()
-	qdel(src)
+	Destroy()
 
 /obj/structure/grille/update_overlays(updates=ALL)
 	. = ..()
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
+
+//windows that shouldnt be colored, whoever added this originally forgot to do this
+/obj/structure/window/reinforced/plasma/plastitanium
+	uses_color = FALSE
+
+/obj/structure/window/reinforced/shuttle
+	uses_color = FALSE
+
+/obj/structure/window/fulltile/colony_fabricator
+	uses_color = FALSE
