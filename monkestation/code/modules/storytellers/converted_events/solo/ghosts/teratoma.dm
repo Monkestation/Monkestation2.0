@@ -16,10 +16,12 @@
 
 /datum/round_event/ghost_role/teratoma/spawn_role()
 	var/list/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to be part of a group of teratomas crashing into the station?",
+		question = "Do you want to be part of a group of teratomas crashing into the station?",
+		role = ROLE_TERATOMA,
 		ignore_category = POLL_IGNORE_TERATOMA,
 		alert_pic = /datum/antagonist/teratoma,
 		role_name_text = "teratoma crash",
+		chat_text_border_icon = /datum/antagonist/teratoma,
 	)
 
 	if(length(candidates) < 1)
@@ -40,7 +42,6 @@
 			continue
 		var/datum/mind/player_mind = new /datum/mind(selected.key)
 		player_mind.active = TRUE
-		player_mind.special_role = "Teratoma"
 
 		var/mob/living/carbon/human/species/teratoma/goober = new(pod)
 		player_mind.transfer_to(goober)

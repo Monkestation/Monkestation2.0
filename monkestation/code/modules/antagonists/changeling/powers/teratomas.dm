@@ -23,7 +23,8 @@
 		return FALSE
 	ling.adjust_chemicals(-chemical_cost)
 	var/list/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as a living teratoma?",
+		question = "Do you want to play as a living teratoma?",
+		role = ROLE_TERATOMA,
 		poll_time = 7.5 SECONDS,
 		ignore_category = POLL_IGNORE_TERATOMA,
 		alert_pic = /datum/antagonist/teratoma,
