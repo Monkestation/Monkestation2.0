@@ -27,17 +27,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "E" = (
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/transit_tube/station/dispenser/reverse/flipped{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "G" = (
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "M" = (
@@ -52,14 +52,7 @@
 /area/shuttle/arrival)
 "V" = (
 /obj/docking_port/mobile/arrivals,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"W" = (
-/obj/structure/transit_tube/station/dispenser/flipped,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"Z" = (
-/obj/structure/transit_tube/station/dispenser,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 
@@ -100,9 +93,9 @@ M
 "}
 (6,1,1) = {"
 M
-Z
+a
 g
-W
+a
 M
 "}
 (7,1,1) = {"
@@ -121,9 +114,9 @@ M
 "}
 (9,1,1) = {"
 M
-Z
+a
 g
-W
+a
 M
 "}
 (10,1,1) = {"
@@ -142,9 +135,9 @@ M
 "}
 (12,1,1) = {"
 M
-Z
+a
 g
-W
+a
 M
 "}
 (13,1,1) = {"
@@ -163,9 +156,9 @@ M
 "}
 (15,1,1) = {"
 M
-Z
+a
 g
-W
+a
 M
 "}
 (16,1,1) = {"
@@ -184,15 +177,15 @@ M
 "}
 (18,1,1) = {"
 M
-d
-M
-d
+a
+i
+a
 M
 "}
 (19,1,1) = {"
 M
-a
+d
 V
-a
+d
 M
 "}
