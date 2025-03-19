@@ -40,12 +40,12 @@
 		var/mob/dead/selected = pick_n_take(candidates)
 		if(QDELETED(selected) || !selected.client)
 			continue
-		var/datum/mind/player_mind = new /datum/mind(selected.key)
-		player_mind.active = TRUE
+		var/datum/mind/goober_mind = new(selected.key)
+		goober_mind.active = TRUE
 
 		var/mob/living/carbon/human/species/teratoma/goober = new(pod)
-		player_mind.transfer_to(goober)
-		player_mind.add_antag_datum(/datum/antagonist/teratoma)
+		goober_mind.transfer_to(goober)
+		goober_mind.add_antag_datum(/datum/antagonist/teratoma)
 		if(prob(20))
 			goober.adjust_drunk_effect(rand(15, 25))
 		// bomb immunity for just long enough for the pod to land
