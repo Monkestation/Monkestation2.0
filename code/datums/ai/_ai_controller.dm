@@ -243,7 +243,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(new_turf)
 		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
+		var/new_level_clients = length(SSmobs.clients_by_zlevel[new_turf.z]) // monkestation edit: x.len -> length(x)
 		if(new_level_clients)
 			set_ai_status(AI_STATUS_IDLE)
 		else
