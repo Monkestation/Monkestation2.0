@@ -4,8 +4,9 @@
 /datum/round_event_control/teratoma
 	name = "Teratoma Crash"
 	typepath = /datum/round_event/ghost_role/teratoma
-	track = EVENT_TRACK_ROLESET
-	weight = parent_type::weight / 2 // half of the default weight because teratomas can be incredibly destructive
+	track = EVENT_TRACK_MAJOR
+	// UNCOMMENT THIS BEFORE MERGING!!!!
+	//weight = parent_type::weight / 2 // half of the default weight because teratomas can be incredibly destructive
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_OUTSIDER_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
