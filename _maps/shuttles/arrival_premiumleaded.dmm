@@ -71,7 +71,7 @@
 "U" = (
 /obj/machinery/disposal/delivery_chute{
 	dir = 8;
-	name = ""Not" Corpse Chute"
+	name = "Not Corpse Chute"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
