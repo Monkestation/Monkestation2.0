@@ -73,3 +73,6 @@
 
 /obj/structure/window/fulltile/colony_fabricator
 	uses_color = FALSE
+
+/obj/structure/window/reinforced/fulltile/ice
+	uses_color = FALSE
