@@ -383,5 +383,56 @@
 2025-03-16:
   CannibalHunter:
   - bugfix: Tall Baby Pukeko effect granter is fixed to give the propper tall one.
+  Gw0sty:
+  - rscdel: Removed Clown planet from appearing in mining and bitrunning until critical
+      slipping issue is fixed
+  - rscdel: Deleted copy of Bunhead 3 hair style
+  - qol: Added cut AI cut wires to CC Grief zone.
+  - qol: moved daisy away from the radio booth some.
+  - bugfix: Pipedream Tac locker should no longer be locked.
+  - bugfix: Listening post Infirmary APC is now accessible.
+  Marabout2:
+  - rscadd: Added a new station goal, the cargo budget one.
+  - code_imp: Added budget.dm, a new station goal
+  MichiRecRoom:
+  - rscadd: The Recolorable Turtleneck loadout item is now available to all! You can
+      find it in the "Misc. Under" section of the store for 3000 Monkecoin. Donators
+      are unaffected by this change and still receive a Recolorable Turtleneck for
+      free (though you can purchase the item anyways if you want two Recolorable Turtlenecks
+      in your inventory).
+  RandomDudeFromTheRim:
+  - bugfix: fixed refined anomaly cores getting recycled into iron and glass
   Shoddd:
   - rscadd: Polyglot quirk
+  ThePooba:
+  - qol: removed thief quirk from simians before the quirk rework
+  Uristthedorf:
+  - rscadd: Adds the FSS-550 3D printed gun from the autolathe. It requires a special
+      design disk to make.
+  Wisemonster:
+  - balance: Junior operative max occurrences lowered from 20 to 5
+  - balance: Junior operative event category changed from moderate to major
+  flleeppyy:
+  - rscadd: Chatbox websocket feature
+  leaKsi:
+  - bugfix: Suiciding or using "Return to Ghost" verb during a duel now properly rewards
+      the winner.
+  - bugfix: Duel participants will now get their coins reimbursed if their opponent
+      decides to ghost or close the game, after accepting the duel.
+  - bugfix: Round-end bonus for supporters now properly applies only on round-end.
+2025-03-17:
+  Vitzenhauzer:
+  - rscadd: Black leather and retro satchels available in character creation menu
+      or through crafting with leather
+2025-03-18:
+  Absolucy:
+  - code_imp: (nikothedude) TGUI input datums can now accept custom ui_states.
+  - bugfix: (Ghommie) Fixed the tgui text input trimming the last character of the
+      input if it hits the maximum length.
+  - bugfix: (itsmeow) Fixed TGUI assets and icons sometimes not showing up until you
+      refreshed the page on 516 clients.
+  - bugfix: (Aylong) Fixed TGUI text inputs that allows only 1 symbol instead infinity.
+  - map: Fixed some instances of old /tg/ hydroponics tray and soil in a few maps,
+      replacing them with the proper Monke variants.
+  TheMrGlasses:
+  - rscadd: Adds Harebells and Lilys to the MegaSeed Servitor

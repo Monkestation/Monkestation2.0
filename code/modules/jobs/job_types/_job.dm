@@ -396,6 +396,10 @@
 				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 			if(LSATCHEL)
 				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+			if(BSATCHEL)
+				back = /obj/item/storage/backpack/satchel/blackleather //Black Leather Satchel MONKESTATION
+			if(RSATCHEL)
+				back = /obj/item/storage/backpack/satchel/retro //Retro Satchel MONKESTATION
 			if(DSATCHEL)
 				back = satchel //Department satchel
 			if(DDUFFELBAG)

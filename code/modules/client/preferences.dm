@@ -4,6 +4,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	/// The key of the parent client.
 	var/parent_key
+	/// The ckey of the parent client.
+	var/parent_ckey
 	/// The path to the general savefile for this datum
 	var/path
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
@@ -101,13 +103,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/New(client/parent)
 	src.parent = parent
 	src.parent_key = parent?.key
+	src.parent_ckey = parent?.ckey
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
 
 	if(IS_CLIENT_OR_MOCK(parent))
 		load_and_save = !is_guest_key(parent_key)
-		load_path(ckey(parent_key))
+		load_path(parent_ckey)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
 		unlock_content = !!parent.IsByondMember()
