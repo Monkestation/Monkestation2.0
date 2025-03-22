@@ -229,7 +229,7 @@
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c45
 	category = list(
-		RND_CATEGORY_INITIAL, /// Monkestation edit : Adding some substance to the detective role
+		RND_CATEGORY_HACKED
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
@@ -243,7 +243,7 @@
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c45/rubber
 	category = list(
-		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY

@@ -120,8 +120,8 @@
 
 /obj/item/storage/belt/holster/detectivebis/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
-		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/gun/ballistic/revolver/c38 = 1,
+		/obj/item/ammo_box/c38 = 2,
 	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
