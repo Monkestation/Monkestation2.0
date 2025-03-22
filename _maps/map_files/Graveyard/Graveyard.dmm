@@ -3421,10 +3421,10 @@
 /area/station/maintenance/port)
 "bnp" = (
 /obj/machinery/light/directional/west,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron,
 /area/graveyard/bunker/medical)
 "bnr" = (
@@ -30821,10 +30821,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "lXr" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron,
 /area/graveyard/bunker/medical)
 "lXt" = (
@@ -33427,13 +33427,11 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "mVL" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "mVN" = (
@@ -34426,13 +34424,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "nnd" = (
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "nnK" = (
@@ -61425,8 +61421,8 @@
 /area/station/ai_monitored/security/armory)
 "xRA" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/bed/medical/emergency,
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "xSa" = (
