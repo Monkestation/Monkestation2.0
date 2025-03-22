@@ -55,6 +55,8 @@
 	head = /obj/item/clothing/head/utility/surgerycap/sec
 	shoes = /obj/item/clothing/shoes/sneakers/secred
 	l_hand = /obj/item/storage/medkit/surgery
+	r_hand = /obj/item/security_voucher/brig_physician
+
 
 	backpack = /obj/item/storage/backpack/brig_physician
 	satchel = /obj/item/storage/backpack/satchel/brig_physician
