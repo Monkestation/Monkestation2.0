@@ -64,18 +64,21 @@
 
 /obj/item/chromosome/synchronizer
 	name = "synchronizer chromosome"
-	desc = "A chromosome that reduces mutation knockback and downsides by 50%."
+//	desc = "A chromosome that reduces mutation knockback and downsides by 50%." // MONKESTATION EDIT OLD
+	desc = "A chromosome that reduces downsides of negative effects on mutations by 50% or hides visual effects of certain mutations." // MONKESTATION EDIT NEW
 	icon_state = "synchronizer"
 	synchronizer_coeff = 0.5
 
 /obj/item/chromosome/power
 	name = "power chromosome"
-	desc = "A chromosome that increases mutation power by 50%."
+//	desc = "A chromosome that increases mutation power by 50%." // MONKESTATION EDIT OLD
+	desc = "A chromosome that increases mutation power by 50% or unlocks more powerful effects for specific mutations." // MONKESTATION EDIT NEW
 	icon_state = "power"
 	power_coeff = 1.5
 
 /obj/item/chromosome/energy
 	name = "energetic chromosome"
-	desc = "A chromosome that reduces action based mutation cooldowns by by 50%."
+//	desc = "A chromosome that reduces action based mutation cooldowns by by 50%." // MONKESTATION EDIT OLD
+	desc = "A chromosome that reduces action mutation cooldowns by 50% or increases chances of random mutation effects." // MONKESTATION EDIT NEW
 	icon_state = "energy"
 	energy_coeff = 0.5
