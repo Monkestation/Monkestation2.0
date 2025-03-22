@@ -149,6 +149,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aq" = (
@@ -201,6 +202,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "av" = (
@@ -210,6 +212,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aw" = (
@@ -270,6 +273,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aG" = (
@@ -302,6 +306,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aK" = (
@@ -611,6 +616,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bO" = (
@@ -668,6 +674,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "df" = (
@@ -812,6 +819,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "np" = (
@@ -860,6 +868,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/pirate)
 "wR" = (
@@ -878,6 +887,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "zw" = (
@@ -887,6 +897,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "ED" = (
@@ -984,6 +995,7 @@
 	width = 17
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Ur" = (

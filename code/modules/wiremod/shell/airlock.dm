@@ -27,8 +27,9 @@
 /obj/machinery/door/airlock/shell/canAIControl(mob/user)
 	return FALSE
 
-/obj/machinery/door/airlock/shell/canAIHack(mob/user)
-	return FALSE
+// MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
+///obj/machinery/door/airlock/shell/canAIHack(mob/user)
+//	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_OBJ_ALLOW)

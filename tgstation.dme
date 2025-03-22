@@ -6319,6 +6319,7 @@
 #include "monkestation\code\modules\aesthetics\objects\windows.dm"
 #include "monkestation\code\modules\aesthetics\subsystem\coloring.dm"
 #include "monkestation\code\modules\aesthetics\walls\iron.dm"
+#include "monkestation\code\modules\aesthetics\walls\mineral_walls.dm"
 #include "monkestation\code\modules\and_roll_credits\_credits.dm"
 #include "monkestation\code\modules\and_roll_credits\credits_subsystem.dm"
 #include "monkestation\code\modules\and_roll_credits\episode_names.dm"
