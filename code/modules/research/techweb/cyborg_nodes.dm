@@ -98,7 +98,10 @@
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
+		"ci-meson", // monkestation addition
 		"ci-nutriment",
+		"ci-pathohud", // monkestation addition
+		"ci-scihud", // monkestastion addition
 		"ci-sechud",
 		"ci-welding",
 	)
