@@ -672,12 +672,12 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
-		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
-		/obj/item/hemostat/augment,
-		/obj/item/cautery/augment,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/borg,
-		/obj/item/circular_saw/augment, //monkestation edit end: Augmented tools
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/surgicaldrill,
+		/obj/item/scalpel,
+		/obj/item/circular_saw,
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
@@ -759,8 +759,6 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
-
-asdasdasd
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
