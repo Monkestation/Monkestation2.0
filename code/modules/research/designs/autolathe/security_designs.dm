@@ -229,7 +229,7 @@
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c45
 	category = list(
-		RND_CATEGORY_HACKED
+		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
