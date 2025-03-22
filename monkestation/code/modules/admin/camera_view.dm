@@ -1,7 +1,7 @@
 /client
 	var/atom/movable/screen/map_view/cam_screen
 
-/client/proc/view_player_camera()
+/client/proc/view_player_camera() //TODO convert to AVD
 	set category = "Admin"
 
 	set name = "Show Player Camera"

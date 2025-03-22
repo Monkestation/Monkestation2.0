@@ -500,17 +500,14 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceEvent(usr)
+ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceEvent()
+
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-/client/proc/forceGamemode()
+/client/proc/forceGamemode() //TODO convert to AVD
 	set name = "Open Gamemode Panel"
 	set category = "Admin.Events"
 	if(!holder ||!check_rights(R_FUN))

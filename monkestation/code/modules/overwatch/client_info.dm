@@ -11,7 +11,7 @@
 /client
 	var/datum/ip_info/ip_info = new
 
-/client/proc/Overwatch_ASN_panel()
+/client/proc/Overwatch_ASN_panel() //TODO convert to AVD
 	set category = "Server"
 	set name = "Overwatch ASN Panel"
 
@@ -25,8 +25,7 @@
 	new /datum/overwatch_asn_panel(src)
 
 
-/client/proc/Overwatch_WhitelistPanel()
-	set category = "Server"
+/client/proc/Overwatch_WhitelistPanel() //TODO convert to AVD
 	set name = "Overwatch WL Panel"
 
 	if(!SSdbcore.Connect())

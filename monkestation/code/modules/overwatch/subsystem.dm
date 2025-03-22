@@ -441,7 +441,7 @@ SUBSYSTEM_DEF(overwatch)
 		return TRUE
 	return FALSE
 
-/client/proc/Overwatch_toggle()
+/client/proc/Overwatch_toggle() //TODO convert to AVD
 	set category = "Server"
 	set name = "Toggle Overwatch"
 

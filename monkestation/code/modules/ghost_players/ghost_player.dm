@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
-/client/proc/flip_ghost_spawn()
+/client/proc/flip_ghost_spawn() //TODO convert to AVD
 	set category = "Admin.Fun"
 	set name = "Toggle Centcomm Spawning"
 	set desc= "Toggles whether dead players can respawn in the centcomm area"

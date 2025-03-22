@@ -162,7 +162,7 @@
 
 	return 1
 
-/client/proc/disease_view()
+/client/proc/disease_view() //TODO convert to AVD
 	set category = "Admin.Debug"
 	set name = "Disease View"
 	set desc = "See disease visuals"

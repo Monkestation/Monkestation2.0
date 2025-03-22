@@ -34,7 +34,7 @@
 	if(mentor_datum)
 		GLOB.mentors |= src
 		mentor_datum.owner = src
-		add_mentor_verbs()
+		//add_mentor_verbs()
 		var/list/cdatums = list()
 		for(var/coder in world.file2list("[global.config.directory]/contributors.txt"))
 			cdatums += ckey(coder)

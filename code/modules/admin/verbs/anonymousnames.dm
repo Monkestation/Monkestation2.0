@@ -6,7 +6,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	contains both the anon names proc and the datums for each.
 
 	this is the setup, it handles announcing crew and other settings for the mode and then creating the datum singleton
-*/
+*/ // TODO Convert to AVD
 /client/proc/anon_names()
 	set category = "Admin.Events"
 	set name = "Setup Anonymous Names"

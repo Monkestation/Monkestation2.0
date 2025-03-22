@@ -1,4 +1,4 @@
-/client/proc/reload_mentors()
+/client/proc/reload_mentors() //TODO convert to AVD or merge with admins system
 	set name = "Reload Mentors"
 	set category = "Admin"
 

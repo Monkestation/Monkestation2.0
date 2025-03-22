@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(liquids)
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
 
 
-/client/proc/toggle_liquid_debug()
+/client/proc/toggle_liquid_debug() //TODO convert to AVD
 	set category = "Debug"
 	set name = "Liquid Groups Color Debug"
 	set desc = "Liquid Groups Color Debug."

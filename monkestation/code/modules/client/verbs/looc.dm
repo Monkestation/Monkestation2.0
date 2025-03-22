@@ -109,14 +109,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		GLOB.looc_allowed = !GLOB.looc_allowed
 	to_chat(world, "<span class='oocplain bold'>LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</span>")
 
-/datum/admins/proc/togglelooc()
-	set category = "Server"
-	set name = "Toggle LOOC"
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(togglelooc, R_ADMIN, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
 	toggle_looc()
-	log_admin("[key_name(usr)] toggled LOOC.")
-	message_admins("[key_name_admin(usr)] toggled LOOC.")
+	log_admin("[key_name(user)] toggled LOOC.")
+	message_admins("[key_name_admin(user)] toggled LOOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle LOOC", "[GLOB.looc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/is_admin_looc_omnipotent(client/admin)

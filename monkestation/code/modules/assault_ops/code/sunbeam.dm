@@ -122,7 +122,7 @@
 	volume = 100
 	extra_range = 25
 
-/client/proc/spawn_sunbeam()
+/client/proc/spawn_sunbeam() //TODO convert to AVD
 	set category = "Admin.Fun"
 	set name = "Spawn Sunbeam"
 	set desc = "Spawns an ICARUS sunbeam at your location and sends it towards a target."

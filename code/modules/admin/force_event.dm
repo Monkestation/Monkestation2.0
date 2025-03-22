@@ -1,5 +1,5 @@
 ///Allows an admin to force an event
-/*
+/*Redefined in monkestation\code\modules\storytellers\gamemode_subsystem.dm
 /client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Admin.Events"

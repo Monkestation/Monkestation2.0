@@ -1,7 +1,7 @@
 /datum/artifactpanel
 	var/user
 
-/datum/admins/proc/open_artifactpanel()
+/datum/admins/proc/open_artifactpanel() //TODO Convert to AVD
 	set category = "Admin.Game"
 	set name = "Artifact Panel"
 	set desc = "Artifact panel"

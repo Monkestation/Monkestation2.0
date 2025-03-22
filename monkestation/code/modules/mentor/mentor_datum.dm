@@ -29,7 +29,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	owner = GLOB.directory[ckey]
 	if(owner)
 		owner.mentor_datum = src
-		owner.add_mentor_verbs()
+		//owner.add_mentor_verbs()
 		GLOB.mentors += owner
 
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
@@ -64,7 +64,7 @@ GLOBAL_PROTECT(mentor_href_token)
 /proc/load_mentors()
 	GLOB.mentor_datums.Cut()
 	for(var/client/mentor_clients in GLOB.mentors)
-		mentor_clients.remove_mentor_verbs()
+		//mentor_clients.remove_mentor_verbs()
 		mentor_clients.mentor_datum = null
 	GLOB.mentors.Cut()
 	var/list/lines = world.file2list("[global.config.directory]/mentors.txt")

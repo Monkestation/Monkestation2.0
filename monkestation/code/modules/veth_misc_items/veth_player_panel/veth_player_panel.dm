@@ -1,7 +1,7 @@
 /datum/player_panel_veth/ //required for tgui component
 	var/title = "Veth's Ultimate Player Panel"
 
-/datum/admins/proc/player_panel_veth() //proc for verb in game tab
+/datum/admins/proc/player_panel_veth() //proc for verb in game tab TODO convert to AVD
 
 	set name = "Player Panel Veth"
 	set category = "Admin.Game"
@@ -62,39 +62,39 @@
 			ui.send_update()
 			return
 		if("oldPP")
-			usr.client.holder.player_panel_new()
-			SSblackbox.record_feedback("tally", "VUAP", 1, "OldPP")
+			//usr.client.holder.player_panel_new()
+			//SSblackbox.record_feedback("tally", "VUAP", 1, "OldPP")
 			return
 		if("checkPlayers")
-			usr.client.check_players() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_players) //logs/rightscheck inside the proc
 			return
 		if("checkAntags")
-			usr.client.check_antagonists() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists) //logs/rightscheck inside the proc
 			return
 		if("faxPanel")
-			usr.client.fax_panel() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/fax_panel) //logs/rightscheck inside the proc TODO double check args
 			return
 		if("gamePanel")
-			usr.client.game_panel() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/game_panel) //logs/rightscheck inside the proc
 			return
 		if("comboHUD")
-			usr.client.toggle_combo_hud() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/combo_hud) //logs/rightscheck inside the proc
 			return
 		if("adminVOX")
-			usr.client.AdminVOX() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/AdminVOX)  //logs/rightscheck inside the proc
 			return
 		if("generateCode")
-			usr.client.generate_code() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/generate_code) //logs/rightscheck inside the proc
 			return
 		if("viewOpfors")
-			usr.client.view_opfors() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/view_opfors)  //logs/rightscheck inside the proc
 			return
 		if("openAdditionalPanel") //logs/rightscheck inside the proc
 			usr.client.selectedPlayerCkey = params["selectedPlayerCkey"]
 			usr.client.holder.vuap_open()
 			return
 		if("createCommandReport")
-			usr.client.cmd_admin_create_centcom_report() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/create_command_report) //logs/rightscheck inside the proc
 			return
 		if("logs")
 			usr.client.holder.Topic(null, list(
@@ -117,7 +117,7 @@
 			))
 			return
 		if("adminaiinteract") //loggin inside the proc
-			usr.client.toggle_AI_interact()
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/toggle_ai_interact)
 
 /datum/player_panel_veth/ui_interact(mob/user, datum/tgui/ui)
 
@@ -317,7 +317,7 @@ love, veth
 		if("ban")
 			if(!check_rights(R_BAN))
 				return
-			usr.client.ban_panel()
+			//usr.client.ban_panel()
 			SSblackbox.record_feedback("tally", "VUAP", 1, "Ban")
 			return
 		if("prison")
@@ -491,7 +491,7 @@ love, veth
 		if("giveDisease")
 			if(!check_rights(NONE))
 				return
-			usr.client.give_disease(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, selected_mob)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "GiveDisease")
 			return
 		if("cureAllDiseases")
@@ -611,7 +611,7 @@ love, veth
 /datum/vuap_personal/ui_state(mob/user)
 	return GLOB.admin_state
 
-/datum/admins/proc/vuap_open()
+/datum/admins/proc/vuap_open() // TODO convert to AVD
 	if (!check_rights(NONE))
 		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
 		return

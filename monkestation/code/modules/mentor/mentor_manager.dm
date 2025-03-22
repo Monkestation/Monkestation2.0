@@ -2,14 +2,15 @@
 #define REQUEST_MENTORHELP "request_mentorhelp"
 
 /// Verb for opening the requests manager panel
-/client/proc/mentor_requests()
+/*
+/client/proc/mentor_requests() //TODO convert to AVD or merge with admins system
 	set name = "Mentor Manager"
 	set desc = "Open the mentor manager panel to view all requests during this round"
 	set category = "Mentor"
 
 	SSblackbox.record_feedback("tally", "mentor_verb", 1, "Mentor Manager") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	GLOB.mentor_requests.ui_interact(usr)
-
+*/
 GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 /datum/request_manager/mentor/ui_state(mob/user)

@@ -1,4 +1,4 @@
-/client/proc/mentor_follow(mob/living/followed_guy)
+/client/proc/mentor_follow(mob/living/followed_guy) //TODO convert to AVD or merge with admins system
 	if(!is_mentor())
 		return
 	if(isnull(followed_guy))
@@ -12,7 +12,7 @@
 	to_chat(src, span_info("Click the \"Stop Following\" button in the Mentor tab to stop following [key_name(followed_guy)]."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 	log_mentor("[key_name(usr)] began following [key_name(followed_guy)]")
 
-/client/proc/mentor_unfollow()
+/client/proc/mentor_unfollow() //TODO convert to AVD or merge with admins system
 	set category = "Mentor"
 	set name = "Stop Following"
 	set desc = "Stop following the followed."
