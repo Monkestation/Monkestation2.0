@@ -12,9 +12,11 @@ import {
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
+  exportSettings,
 } from './actions';
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
+import { exportChatSettings } from './settingsImExport';
 
 const setGlobalFontSize = (fontSize) => {
   document.documentElement.style.setProperty('font-size', fontSize + 'px');
@@ -37,6 +39,12 @@ export const settingsMiddleware = (store) => {
       storage.get('panel-settings').then((settings) => {
         store.dispatch(loadSettings(settings));
       });
+    }
+    if (type === exportSettings.type) {
+      const state = store.getState();
+      const settings = selectSettings(state);
+      exportChatSettings(settings, state.chat.pageById);
+      return;
     }
     if (
       type === updateSettings.type ||

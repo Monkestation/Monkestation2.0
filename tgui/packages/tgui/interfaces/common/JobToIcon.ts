@@ -116,6 +116,7 @@ const ALTTITLES = {
   'Commanding Officer': BASEICONS['Captain'],
   'Site Manager': BASEICONS['Captain'],
   'Criminally Underpaid Babysitter': BASEICONS['Captain'],
+  'Head of Command': BASEICONS['Captain'],
   Princess: BASEICONS['Captain'],
   // Cargo Technician - box
   'Warehouse Technician': BASEICONS['Cargo Technician'],
@@ -242,6 +243,7 @@ const ALTTITLES = {
   'Research Supervisor': BASEICONS['Research Director'],
   'Chief Science Officer': BASEICONS['Research Director'],
   'Chief Artificer': BASEICONS['Research Director'],
+  'Head of Science': BASEICONS['Research Director'],
   // Roboticist - battery-half
   'Biomechanical Engineer': BASEICONS['Roboticist'],
   'Mechatronic Engineer': BASEICONS['Roboticist'],
