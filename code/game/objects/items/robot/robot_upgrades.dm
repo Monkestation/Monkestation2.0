@@ -423,7 +423,7 @@
 			R.model.basic_modules += hemostat
 			R.model.add_module(hemostat, FALSE, TRUE)
 
-/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/surgery/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 		for(var/advsurgtool in adv_surgical_tools)
