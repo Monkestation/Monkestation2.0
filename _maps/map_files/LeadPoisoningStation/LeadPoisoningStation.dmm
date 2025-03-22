@@ -31161,6 +31161,17 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/stamp/granted{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "pHg" = (
@@ -33522,18 +33533,8 @@
 /area/station/service/library)
 "qUF" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp/denied{
-	pixel_x = 8
-	},
-/obj/item/stamp/granted{
-	pixel_y = 10;
-	pixel_x = 8
-	},
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = 7
-	},
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/machinery/photocopier,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "qUI" = (
@@ -38629,6 +38630,15 @@
 /obj/machinery/fax{
 	fax_name = "Head of Personnel's Office";
 	name = "Head of Personnel's Fax Machine"
+	},
+/obj/machinery/requests_console/directional/north{
+	department = "Head of Personnel's Desk";
+	name = "Head of Personnel's Requests Console";
+	assistance_requestable = 1;
+	anon_tips_receiver = 1;
+	can_send_announcements = 1;
+	pixel_y = 0;
+	pixel_x = -31
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
