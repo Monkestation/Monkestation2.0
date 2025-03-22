@@ -435,3 +435,6 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+/mob/living/silicon/pai/get_access()
+	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs

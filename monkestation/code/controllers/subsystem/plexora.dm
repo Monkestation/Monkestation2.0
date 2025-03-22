@@ -708,7 +708,7 @@ SUBSYSTEM_DEF(plexora)
 	else
 		prefs = userclient.prefs
 
-	prefs.adjust_metacoins(ckey, amount, reason, donator_multipler = FALSE, respects_roundcap = FALSE, announces = FALSE)
+	prefs.adjust_metacoins(ckey, amount, reason, donator_multiplier = FALSE, respects_roundcap = FALSE, announces = FALSE)
 
 	return list("totalcoins" = prefs.metacoins)
 
@@ -931,7 +931,7 @@ SUBSYSTEM_DEF(plexora)
 		confidential = TRUE)
 
 	recipient.receive_ahelp(
-		"<a href='?priv_msg=[stealthkey]'>[adminname]</a>",
+		"<a href='byond://?priv_msg=[stealthkey]'>[adminname]</a>",
 		message,
 	)
 

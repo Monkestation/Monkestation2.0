@@ -339,16 +339,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.player_details[ckey])
 		reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
-		var/old_version = player_details.byond_version
 		player_details.byond_version = byond_version
 		player_details.byond_build = byond_build
-
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-		if(old_version != byond_version)
-			rebuild_plane_masters = TRUE
-
 	else
 		player_details = new(ckey)
 		player_details.byond_version = byond_version
@@ -434,7 +426,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version].[byond_build]<br>"
 			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
@@ -555,7 +547,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !(is_mentor()) && !(is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -782,9 +774,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/log_client_to_db_connection_log()
 	if(!SSdbcore.shutting_down)
 		SSdbcore.FireAndForget({"
-			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
-			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
-		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
+			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`,`byond_version`,`byond_build`)
+			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid,:byond_version,:byond_build)
+		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id, "byond_version" = byond_version, "byond_build" = byond_build))
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
@@ -966,7 +958,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				string += ", "
 			string += "Mobile Hostspot IP"
 
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !(is_mentor()) && !(is_admin(src)))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
@@ -1184,6 +1176,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+	calculate_move_dir()
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

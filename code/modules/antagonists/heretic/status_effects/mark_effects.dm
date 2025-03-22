@@ -309,4 +309,4 @@ monkestation end */
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

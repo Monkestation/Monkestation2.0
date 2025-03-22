@@ -4264,10 +4264,6 @@
 "pz" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/card/id/advanced/old{
-	trim = /datum/id_trim/away/old/apc;
-	name = "Engineering Equipment Access"
-	},
 /obj/item/crowbar,
 /obj/item/stock_parts/cell/high,
 /obj/machinery/door/window/right/directional/east{
@@ -4276,6 +4272,7 @@
 	},
 /obj/item/paper/fluff/ruins/oldstation/apc_note,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/item/card/id/away/old/equipment,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "pK" = (
@@ -6227,7 +6224,7 @@
 "Ed" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/id/old,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "Eg" = (
@@ -6672,11 +6669,10 @@
 "Hr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
-/obj/item/card/id/advanced/old{
-	trim = /datum/id_trim/away/old/robo;
-	registered_name = "Ash Holm";
+/obj/item/card/id/away/old/robo{
+	assignment = "Charlie Station Roboticist";
 	name = "Ash Holm";
-	assignment = "Charlie Station Roboticist"
+	registered_name = "Ash Holm"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
@@ -8754,7 +8750,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/report,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/modular_computer/preset/command,
+/obj/machinery/modular_computer/preset/command/old,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "UV" = (
@@ -8882,6 +8878,12 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
+"VX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/oldpdapainter,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/bridge)
 "VZ" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -9309,14 +9311,12 @@
 /obj/item/reagent_containers/cup/bottle{
 	pixel_x = -4;
 	list_reagents = list(/datum/reagent/consumable/nutriment/peptides=30);
-	name = "Solution for Molly";
-	renamedByPlayer = 1
+	name = "Solution for Molly"
 	},
 /obj/item/reagent_containers/cup/bottle{
 	pixel_x = 4;
 	list_reagents = list(/datum/reagent/growthserum=30);
 	name = "Experimental solution";
-	renamedByPlayer = 1;
 	pixel_y = 8
 	},
 /obj/item/extrapolator,
@@ -13314,7 +13314,7 @@ aI
 ei
 aI
 aI
-bm
+VX
 zr
 zy
 OT
