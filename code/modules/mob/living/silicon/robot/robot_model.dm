@@ -760,6 +760,8 @@
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
 
+asdasdasd
+
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>You are an Enforcer and Upholder of your active lawset. \
