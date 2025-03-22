@@ -62,6 +62,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
+"O" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "T" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
@@ -140,19 +145,19 @@ M
 M
 i
 i
-i
+J
 M
 "}
 (9,1,1) = {"
 M
-J
+i
 U
 r
 M
 "}
 (10,1,1) = {"
 M
-a
+O
 V
 a
 M
