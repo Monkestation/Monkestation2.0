@@ -227,6 +227,10 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
+/obj/item/scalpel/borg
+	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
+	toolspeed= 0.5
+
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."

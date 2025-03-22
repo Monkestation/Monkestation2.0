@@ -676,7 +676,7 @@
 		/obj/item/hemostat/augment,
 		/obj/item/cautery/augment,
 		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/augment,
+		/obj/item/scalpel/borg,
 		/obj/item/circular_saw/augment, //monkestation edit end: Augmented tools
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,

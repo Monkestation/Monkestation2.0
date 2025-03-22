@@ -386,6 +386,18 @@
 	else
 		deactivate_sr()
 
+/obj/item/borg/upgrade/surgery
+	name = "Surgical Toolset Upgrade"
+	desc = "An upgrade to the Medical model cyborg's surgical tools, streamlining \
+		the surgical process."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
 /obj/item/borg/upgrade/hypospray
 	name = "medical cyborg hypospray advanced synthesiser"
 	desc = "An upgrade to the Medical model cyborg's hypospray, allowing it \
