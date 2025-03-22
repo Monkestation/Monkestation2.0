@@ -1,0 +1,4 @@
+author: "Absolucy, SmArtKar, Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "Fixed basic mobs not idling due to nearby ghosts."
