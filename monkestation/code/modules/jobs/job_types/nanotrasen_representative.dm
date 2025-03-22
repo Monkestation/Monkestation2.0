@@ -61,7 +61,7 @@
 /datum/outfit/job/nanotrasen_representative
 	name = "Nanotrasen Representative"
 	jobtype = /datum/job/nanotrasen_representative
-	id = /obj/item/card/id/advanced/centcom
+	id = /obj/item/card/id/advanced/centcom/lowrank
 	id_trim = /datum/id_trim/job/nanotrasen_representative
 	uniform = /obj/item/clothing/under/rank/centcom/nanotrasen_representative
 	suit = /obj/item/clothing/suit/armor/vest/nanotrasen_representative
