@@ -786,6 +786,10 @@
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
+		// MONKESTATION START
+		// Moved to monkestation/code/modules/admin/admin.dm
+		adminmoreinfo(subject)
+		/*
 		if(!ismob(subject))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
@@ -860,6 +864,8 @@
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
 		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
+		*/
+		// MONKESTATION END
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))

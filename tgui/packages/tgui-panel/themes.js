@@ -59,6 +59,8 @@ export const setClientTheme = (name) => {
       'report-issue.text-color': '#000000',
       'fullscreen-toggle.background-color': 'none',
       'fullscreen-toggle.text-color': '#000000',
+      'tickets.background-color': 'none',
+      'tickets.text-color': '#000000',
       // Status and verb tabs
       'output.background-color': 'none',
       'output.text-color': '#000000',
@@ -113,6 +115,8 @@ export const setClientTheme = (name) => {
       'report-issue.text-color': COLOR_DARK_TEXT,
       'fullscreen-toggle.background-color': '#494949',
       'fullscreen-toggle.text-color': COLOR_DARK_TEXT,
+      'tickets.background-color': '#494949',
+      'tickets.text-color': COLOR_DARK_TEXT,
       // Status and verb tabs
       'output.background-color': COLOR_DARK_BG_DARKER,
       'output.text-color': COLOR_DARK_TEXT,
