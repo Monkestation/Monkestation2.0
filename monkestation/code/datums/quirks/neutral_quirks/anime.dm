@@ -14,6 +14,7 @@
 
 /datum/quirk/anime/add(client/client_source)
 	var/mob/living/carbon/human/quirk_holder = src.quirk_holder
+	quirk_holder.nutrition = NUTRITION_LEVEL_FAT
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN_PRE, PROC_REF(on_species_gain))
 
 	var/datum/species/species = quirk_holder?.dna?.species
