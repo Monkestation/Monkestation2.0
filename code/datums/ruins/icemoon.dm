@@ -61,6 +61,12 @@
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
 
+/datum/map_template/ruin/icemoon/comms_station
+	name = "Abandoned Comms Station"
+	id = "comms_station"
+	description = "A comms outpost loaned by the builders of Crater Station to Nanotrasen's special projects division, relaying data to and from a far-off facility."
+	suffix = "icemoon_surface_comms_station.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -167,3 +173,9 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndicate
+	name = "Icemoon Syndicate Research Outpost"
+	id = "syndicate_icemoon"
+	description = "A lightly fortified joint outpost manned by various Syndicate organisations, responsible for research and development of various advanced technologies."
+	suffix = "icemoon_underground_syndicate.dmm"
