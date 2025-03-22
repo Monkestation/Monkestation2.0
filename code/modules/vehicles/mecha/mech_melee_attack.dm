@@ -42,7 +42,7 @@
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 	..()
-	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+	return take_damage(mecha_attacker.force * 2, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 2 (MS EDIT) so we can hit objs hard but not be overpowered against mobs.
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!can_be_reached())
@@ -70,12 +70,11 @@
 		var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
 		switch(mecha_attacker.damtype)
 			if(BRUTE)
-				if(mecha_attacker.force >= 20) // lightweight mechas like gygax
-					Knockdown(1 SECONDS)
-					src.throw_at(throwtarget, 3, 2, src)
-				else if(mecha_attacker.force >= 35) // durand and other heavy mechas
-					Knockdown(1.5 SECONDS)
-					src.throw_at(throwtarget, 5, 2, src) //one tile further than mushroom punch/psycho brawling
+				if(mecha_attacker.force >= 15) // lightweight mechas like gygax	- Monkestation edit - mech melee
+					step(src, get_dir(mecha_attacker.loc, src.loc))
+				else if(mecha_attacker.force >= 30) // durand and other heavy mechas
+					Knockdown(0.5 SECONDS)
+					src.throw_at(throwtarget, 3, 2, src)	//Monke edit end
 				selected_zone.receive_damage(dmg, 0, updating_health = TRUE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 			if(FIRE)

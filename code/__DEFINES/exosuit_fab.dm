@@ -31,10 +31,15 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
+//Monkestation edit - Sidewinder addition
+/// Module is compatible with Sidewinder models
+#define EXOSUIT_MODULE_SIDEWINDER (1<<11)
 
-/// Module is compatible with "Working" Exosuit models - Ripley and Clarke
-#define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)
-/// Module is compatible with "Combat" Exosuit models - Gygax, H.O.N.K, Durand and Phazon, or any Exosuit with an empty Concealed Weapon Bay
+/// Module is compatible with "Working" Exosuit models, mostly - Ripley, Clarke, and Sidewinder
+#define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE | EXOSUIT_MODULE_SIDEWINDER)
+/// Module is compatible with "Combat" Exosuit models that can mount guns - Gygax, H.O.N.K, Durand and Phazon, or any Exosuit with an empty Concealed Weapon Bay (except melee-only exosuit models)
 #define EXOSUIT_MODULE_COMBAT (EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_RETICENCE | EXOSUIT_MODULE_MARAUDER | EXOSUIT_MODULE_CONCEALED_WEP_BAY)
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
 #define EXOSUIT_MODULE_MEDICAL EXOSUIT_MODULE_ODYSSEUS
+/// Module is compatible with "Combat" Exosuit models that can mount melee weapons - Gygax, H.O.N.K, Durand and Phazon, Sidewinder, or any Exosuit with an empty Concealed Weapon Bay
+#define EXOSUIT_MODULE_MELEE (EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_RETICENCE | EXOSUIT_MODULE_MARAUDER | EXOSUIT_MODULE_SIDEWINDER | EXOSUIT_MODULE_CONCEALED_WEP_BAY)

@@ -178,6 +178,7 @@
 	else
 		M.equip_by_category[to_equip_slot] = src
 	chassis = M
+	on_attach()
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
@@ -203,6 +204,7 @@
 		chassis.equip_by_category[to_unequip_slot] = null
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
+	on_detach()
 	chassis = null
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
@@ -235,3 +237,11 @@
 /// Equipment returns its slowdown or speedboost.
 /obj/item/mecha_parts/mecha_equipment/proc/get_movedelay()
 	return movedelay
+
+/// Equipment does something directly to the mech when it is attached
+/obj/item/mecha_parts/mecha_equipment/proc/on_attach()
+	return
+
+/// Equipment does something directly to the mech when it is detached
+/obj/item/mecha_parts/mecha_equipment/proc/on_detach()
+	return

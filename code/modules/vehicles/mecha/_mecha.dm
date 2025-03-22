@@ -208,6 +208,40 @@
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
 
+	//Monkestation edit - Mech melee + Sidewinder + all mechs can mine!!!
+	/// Chance to block an attack with a melee weapon, reducing damage by 60%
+	var/deflect_chance = 0
+	/// Improved deflection for projectiles, completely blocking and deflecting them randomly
+	var/improved_deflection = FALSE
+	/// List of things stored in the cargo space of the mech
+	var/list/cargo
+	/// How many things the mech can carry in their Cargo Compartment
+	var/cargo_capacity = 0
+
+	/// Handles an internal ore box for mechs
+	var/obj/structure/ore_box/box
+
+/obj/vehicle/sealed/mecha/Move()
+	. = ..()
+	if(. && cargo_capacity)	//no cargo, no space for ores
+		collect_ore()
+
+/**
+ * Handles collecting ore.
+ *
+ * Checks for a hydraulic clamp or ore box manager and if it finds an ore box inside them puts ore in the ore box.
+ */
+/obj/vehicle/sealed/mecha/proc/collect_ore()
+	if(!box)
+		return
+	if(!(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in flat_equipment) && !(locate(/obj/item/mecha_parts/mecha_equipment/orebox_manager) in equip_by_category[MECHA_UTILITY]))
+		return
+	for(var/obj/item/stack/ore/ore in range(1, src))
+		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
+			ore.forceMove(box)
+
+	//Monke end edit
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10
@@ -303,6 +337,7 @@
 	QDEL_NULL(ui_view)
 	QDEL_NULL(trackers)
 	QDEL_NULL(chassis_camera)
+	QDEL_NULL(box)	//Monkestation edit
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -748,3 +783,32 @@
 	for(var/occupant in occupants)
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+//Monkestation edit - Mech melee
+/// Facing proc, does the same as the mob proc of the same name
+/obj/vehicle/sealed/mecha/proc/face_atom(atom/A)
+	if( !A || !x || !y || !A.x || !A.y )	//Do we have a target with a location and do we have a location?
+		return								//Note: we don't check for states and stuff because this is just for forcing facing. That can come later.
+	var/dx = A.x - x	//Gets the difference in x and y coordinates
+	var/dy = A.y - y
+	if(!dx && !dy) 		// Wall items are graphically shifted but on the floor
+		if(A.pixel_y > 16)
+			setDir(NORTH)
+		else if(A.pixel_y < -16)
+			setDir(SOUTH)
+		else if(A.pixel_x > 16)
+			setDir(EAST)
+		else if(A.pixel_x < -16)
+			setDir(WEST)
+		return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)
+			setDir(NORTH)
+		else
+			setDir(SOUTH)
+	else
+		if(dx > 0)
+			setDir(EAST)
+		else
+			setDir(WEST)
