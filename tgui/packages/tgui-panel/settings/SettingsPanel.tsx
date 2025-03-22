@@ -28,6 +28,7 @@ import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import {
   changeSettingsTab,
+  exportSettings,
   updateSettings,
   addHighlightSetting,
   removeHighlightSetting,
@@ -40,6 +41,7 @@ import {
   selectHighlightSettings,
   selectHighlightSettingById,
 } from './selectors';
+import { importChatSettings } from './settingsImExport';
 import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
 import { chatRenderer } from '../chat/renderer';
 
@@ -85,7 +87,7 @@ export const SettingsGeneral = (props, context) => {
     selectSettings,
   );
   const dispatch = useDispatch(context);
-  const [freeFont, setFreeFont] = useLocalState(context, 'freeFont', false);
+  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   return (
     <Section>
       <LabeledList>
@@ -206,6 +208,25 @@ export const SettingsGeneral = (props, context) => {
       </LabeledList>
       <Divider />
       <Stack fill>
+        <Stack.Item mt={0.15}>
+          <Button
+            icon="compact-disc"
+            tooltip="Export chat settings"
+            onClick={() => dispatch(exportSettings())}
+          >
+            Export settings
+          </Button>
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.File
+            accept=".json"
+            tooltip="Import chat settings"
+            icon="arrow-up-from-bracket"
+            onSelectFiles={(files) => importChatSettings(dispatch, files)}
+          >
+            Import settings
+          </Button.File>
+        </Stack.Item>
         <Stack.Item grow mt={0.15}>
           <Button
             content="Save chat log"
@@ -382,6 +403,7 @@ const TextHighlightSetting = (props, context) => {
       </Stack>
       <TextArea
         height="3em"
+        resize="vertical"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         onChange={(e, value) =>

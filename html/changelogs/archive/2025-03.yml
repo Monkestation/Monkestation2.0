@@ -434,5 +434,20 @@
   - bugfix: (Aylong) Fixed TGUI text inputs that allows only 1 symbol instead infinity.
   - map: Fixed some instances of old /tg/ hydroponics tray and soil in a few maps,
       replacing them with the proper Monke variants.
+  - bugfix: Fixed the regenerator component (i.e teratomas) sometimes not triggering.
+  Gw0sty:
+  - rscadd: Added Head of Command and Head of Science as alternative titles for Captain
+      and Research Director.
+  - code_imp: Research Tech Tree was split amongst several files instead of one very
+      long one.
+  Shoddd:
+  - rscadd: walkman in loadout
+  - bugfix: loadout satchels now work
   TheMrGlasses:
   - rscadd: Adds Harebells and Lilys to the MegaSeed Servitor
+2025-03-20:
+  Kashargul:
+  - rscadd: You can now import and export chat settings
+  dwasint:
+  - bugfix: after images now properly set their plane based on the parents plane cube
+      level.
