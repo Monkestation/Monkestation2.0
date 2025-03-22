@@ -229,7 +229,7 @@
 
 /obj/item/scalpel/borg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
-	toolspeed= 0.5
+	toolspeed= 0.5 // Added a borg scalpel for some different flavor text since, ya know borgs dont exactly have "Bones"
 
 /obj/item/circular_saw
 	name = "circular saw"

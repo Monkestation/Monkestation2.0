@@ -47,6 +47,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgicalprocessor",
+		"borg_upgrade_surgicaltools",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
