@@ -448,8 +448,8 @@
 		R.model.add_module(hemo, FALSE, TRUE)
 
 		var/obj/item/cautery/cautery = new (R.model)
-		R.model.basic_modules += cautero
-		R.model.add_module(cauter, FALSE, TRUE)
+		R.model.basic_modules += cautery
+		R.model.add_module(cautery, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray
 	name = "medical cyborg hypospray advanced synthesiser"
