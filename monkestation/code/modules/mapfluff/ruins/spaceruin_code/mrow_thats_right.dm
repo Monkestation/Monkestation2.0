@@ -101,6 +101,7 @@
 /datum/action/cooldown/spell/shapeshift/kitty/syndie
 	name = "SYNDICATE KITTY POWER!!"
 	desc = "Take on the shape of an kitty cat, clad in blood-red armor! Gain their powers at a loss of vitality."
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	possible_shapes = list(/mob/living/simple_animal/hostile/syndicat/super)
 
 /mob/living/simple_animal/hostile/syndicat/super
