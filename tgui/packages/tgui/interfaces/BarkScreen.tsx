@@ -4,74 +4,72 @@ import { Window } from '../layouts';
 
 type Data = {
   bark_groups: Record<string, [string, string][]>;
+  selected: string;
 };
 
 export const BarkScreen = (props) => {
   const { data, act } = useBackend<Data>();
 
   return (
-    <Window
-      title="Character Bark Sound"
-      width={300}
-      height={500}
-      theme="generic"
-    >
-      <Window.Content>
-        <Stack fill vertical>
-          {Object.keys(data.bark_groups).map((group_name, index) => (
-            <BarkGroup
-              key={index}
-              name={group_name}
-              barks={data.bark_groups[group_name]}
-            />
-          ))}
-        </Stack>
+    <Window title="Bark Sound" width={250} height={500} theme="generic">
+      <Window.Content scrollable>
+        {Object.keys(data.bark_groups).map((group_name, index) => (
+          <BarkGroup
+            key={index}
+            name={group_name}
+            barks={data.bark_groups[group_name]}
+            selected={data.selected}
+          />
+        ))}
       </Window.Content>
     </Window>
   );
 };
 
-const BarkGroup = (props: { name: string; barks: [string, string][] }) => {
+const BarkGroup = (props: {
+  name: string;
+  barks: [string, string][];
+  selected: string;
+}) => {
   return (
     <Box>
-      <Stack.Item>{props.name}</Stack.Item>
-      <Stack.Item>
+      <h3>{props.name}</h3>
+      <Box>
         {props.barks.map((bark, index) => (
-          <Bark key={index} name={bark} />
+          <Bark key={index} name={bark} selected={props.selected} />
         ))}
-      </Stack.Item>
+      </Box>
     </Box>
   );
 };
 
-const Bark = (props: { name: [string, string] }) => {
+const Bark = (props: { name: [string, string]; selected: string }) => {
   const { act } = useBackend<Data>();
 
   return (
-    <Box>
-      <Stack>
-        <Stack.Item>
-          <Button
-            onClick={() => {
-              act('select_item');
-            }}
-            width="100%"
-            height="100%"
-          >
-            {props.name[0]}
-          </Button>
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            onClick={() => {
-              act('play');
-            }}
-            icon="play"
-            width="100%"
-            height="100%"
-          />
-        </Stack.Item>
-      </Stack>
-    </Box>
+    <Stack style={{ margin: '5px 0px' }}>
+      <Stack.Item>
+        <Button
+          onClick={() => {
+            act('play', { selected: props.name[1] });
+          }}
+          icon="play"
+          width="100%"
+          height="100%"
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          onClick={() => {
+            act('select', { selected: props.name[1] });
+          }}
+          selected={props.name[1] === props.selected}
+          width="100%"
+          height="100%"
+        >
+          {props.name[0]}
+        </Button>
+      </Stack.Item>
+    </Stack>
   );
 };

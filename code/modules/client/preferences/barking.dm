@@ -64,6 +64,11 @@ GLOBAL_VAR_INIT(blooper_allowed, TRUE) // For administrators
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "blooper_speech"
 
+/// Returns data to be sent to users in the menu
+/datum/preference/choiced/blooper/compile_ui_data(mob/user, value)
+	var/datum/bark_voice/bark = GLOB.bark_list[value]
+	return bark.group + ": " + bark.name
+
 /datum/preference/choiced/blooper/init_possible_values()
 	return assoc_to_keys(GLOB.bark_list)
 
@@ -84,7 +89,7 @@ GLOBAL_VAR_INIT(blooper_allowed, TRUE) // For administrators
 	if(bark_screen)
 		bark_screen.ui_interact(usr)
 	else
-		var/datum/bark_screen/tgui = new(usr)
+		var/datum/bark_screen/tgui = new(src)
 		tgui.ui_interact(usr)
 	return TRUE
 

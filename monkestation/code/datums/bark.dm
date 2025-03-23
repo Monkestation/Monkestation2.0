@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 		bark.ask_beep = sound("goon/sounds/misc/talk/" + name + "_ask.ogg")
 		bark.exclaim_beep = sound("goon/sounds/misc/talk/" + name + "_exclaim.ogg")
 		bark.id = "goon/" + bark.name
+		bark.group = "Goonstation"
 		bark_list[bark.id] = bark
 		goon_barks[bark.name] = bark
 
@@ -75,6 +76,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 		bark.name = name
 		bark.talk = sound("monkestation/sound/voice/barks/" + name + ".ogg")
 		bark.id = "misc/" + bark.name
+		bark.group = "Miscellaneous"
 		bark_list[bark.id] = bark
 		misc_barks[bark.name] = bark
 
@@ -109,6 +111,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 /datum/bark_voice
 	var/name
 	var/id
+	var/group
 
 	var/sound/talk
 	var/sound/ask_beep = null

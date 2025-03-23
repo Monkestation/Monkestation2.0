@@ -5,7 +5,6 @@ import {
   Feature,
   FeatureChoiced,
   FeatureChoicedServerData,
-  FeatureDropdownInput,
   FeatureNumberInput,
   FeatureNumeric,
   FeatureToggle,
@@ -17,10 +16,6 @@ const FeatureBlooperDropdownInput = (
 ) => {
   return (
     <Stack>
-      <Stack.Item grow>
-        <FeatureDropdownInput {...props} />
-      </Stack.Item>
-
       <Stack.Item>
         <Button
           onClick={() => {
@@ -36,10 +31,11 @@ const FeatureBlooperDropdownInput = (
           onClick={() => {
             props.act('open_bark_screen');
           }}
-          icon="play"
           width="100%"
           height="100%"
-        />
+        >
+          {props.value}
+        </Button>
       </Stack.Item>
     </Stack>
   );
