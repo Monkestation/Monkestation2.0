@@ -1,13 +1,12 @@
 /atom/movable
 	// Text-to-bark sounds
-	var/vocal_bark_id = "goon/speak_1"
+	var/vocal_bark_id // TODO Remove?
 	var/datum/bark_voice/vocal_bark = null
 	var/vocal_pitch = 1
 	var/vocal_pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
-	var/vocal_volume = 250 //Baseline. This gets modified by yelling and other factors
+	var/vocal_volume = 50
 	var/vocal_speed = 4 //Lower values are faster, higher values are slower
-
-	var/vocal_current_bark = -1 //When barks are queued, this gets passed to the bark proc. If vocal_current_bark doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
+	var/vocal_bark_start_time = -1 //When barks are queued, this gets passed to the bark proc. If vocal_current_bark doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
 
 /// Sets the vocal bark for the atom, using the bark's ID
 /atom/movable/proc/set_bark(id)
@@ -21,13 +20,14 @@
 	return vocal_bark
 
 /atom/movable/proc/start_barking(message, list/hearers, range, talk_icon_state)
-	var/mob/mob_src = src
-
-	if(!istype(mob_src) || !mob_src.client)
-		return
-
 	var/is_yell = talk_icon_state == "2"
-	var/volume = vocal_volume * (is_yell ? 1.5 : 1)
+	var/volume = min(vocal_volume * (is_yell ? 1.5 : 1), 100)
+
+	/*TODO
+	if (is_whisper)
+		volume *= 0.5
+		range += 1
+	*/
 
 	if (!vocal_bark)
 		if (!vocal_bark_id)
@@ -63,27 +63,39 @@
 		for(var/mob/M in short_hearers)
 			M.playsound_local(src, speak_sound, 300, FALSE, 1, sound_range, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(range), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
+	sound_range = range + 1
+
 	// long
 	if (long_hearers.len)
 		long_bark(long_hearers, sound_range, volume, is_yell, LAZYLEN(message))
 
 /atom/movable/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len)
-	var/barks = min(round((message_len / vocal_speed)) + 1, BARK_MAX_BARKS)
+	var/num_barks = min(round((message_len / vocal_speed)) + 1, BARK_MAX_BARKS)
+	var/total_delay = 0
+	vocal_bark_start_time = world.time //this is juuuuust random enough to reliably be unique every time send_speech() is called, in most scenarios
 
-	var/total_delay
-	vocal_current_bark = world.time //this is juuuuust random enough to reliably be unique every time send_speech() is called, in most scenarios
-	for(var/i in 1 to barks)
+	for(var/i in 1 to num_barks)
 		if(total_delay > BARK_MAX_TIME)
 			break
-		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark, vocal_bark.talk), total_delay)
-		total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
+		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_bark_start_time, vocal_bark.talk), total_delay)
+		total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 	return total_delay
 
 /atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, sound/talk_sound)
-	if(queue_time && vocal_current_bark != queue_time)
+	if(queue_time && vocal_bark_start_time != queue_time)
 		return
 
-	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
+		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, use_reverb = FALSE, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
+
+///
+
+// /mob/living/carbon/human/Initialize(mapload)
+// 	. = ..()
+// 	// This gives a random vocal bark to a random created person
+// 	if(!client)
+// 		set_blooper(pick(GLOB.blooper_list))
+// 		blooper_pitch = BLOOPER_PITCH_RAND(gender)
+// 		blooper_pitch_range = BLOOPER_VARIANCE_RAND
+// 		blooper_speed = rand(BLOOPER_DEFAULT_MINSPEED, BLOOPER_DEFAULT_MAXSPEED)

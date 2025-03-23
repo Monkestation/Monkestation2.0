@@ -1,0 +1,19 @@
+[instruments]
+name = 'Instruments'
+path = 'sound/runtime/instruments/synthesis_samples'
+
+[instruments.'guitar/crisis_muted/C2.ogg']
+name = 'Muted String (Low)'
+
+[instruments.'guitar/crisis_muted/C3.ogg']
+name = 'Muted String (Medium)'
+
+[instruments.'guitar/crisis_muted/C4.ogg']
+name = 'Muted String (High)'
+
+[instruments.'guitar/crisis_muted/banjo/Cn3.ogg']
+name = 'Muted String (High)'
+
+['sound/items/toy_squeak/toysqueak1.ogg']
+name = "Squeaky"
+maxSpeed = 4

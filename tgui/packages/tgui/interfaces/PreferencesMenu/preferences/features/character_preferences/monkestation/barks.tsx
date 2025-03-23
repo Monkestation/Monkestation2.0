@@ -31,6 +31,16 @@ const FeatureBlooperDropdownInput = (
           height="100%"
         />
       </Stack.Item>
+      <Stack.Item>
+        <Button
+          onClick={() => {
+            props.act('open_bark_screen');
+          }}
+          icon="play"
+          width="100%"
+          height="100%"
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -49,9 +59,9 @@ export const blooper_speech: FeatureChoiced = {
 };
 
 export const blooper_speech_speed: FeatureNumeric = {
-  name: 'Character Voice Speed',
+  name: 'Character Voice Duration',
   description:
-    '[2 - 16] Lower number, faster speed. Higher number, slower voice.',
+    '[2 - 16] Lower number, faster speed. Higher number, slower speed.',
   component: FeatureNumberInput,
 };
 
