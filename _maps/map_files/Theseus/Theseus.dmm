@@ -4987,6 +4987,9 @@
 	charge = 5e+006
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "byH" = (
@@ -10505,7 +10508,6 @@
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "dgo" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -58641,12 +58643,12 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "rnG" = (
@@ -68829,13 +68831,11 @@
 /area/station/service/kitchen)
 "ujc" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 6
-	},
 /obj/machinery/power/terminal{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "ujf" = (
