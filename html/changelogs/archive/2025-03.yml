@@ -451,3 +451,31 @@
   dwasint:
   - bugfix: after images now properly set their plane based on the parents plane cube
       level.
+2025-03-23:
+  Absolucy, Melbert:
+  - refactor: Refactored bioware slightly (the stuff experimental surgeries gives
+      you). Report any weirdness
+  Absolucy, SmArtKar, Ben10Omintrix:
+  - bugfix: Fixed basic mobs not idling due to nearby ghosts.
+  BingusSS13:
+  - bugfix: Certain windows like plastitanium glass and titanium glass are no longer
+      colored automatically.
+  Killermankey:
+  - map: Removed the wooden boards from MetaStation's chemistry lab.
+  Marabout2:
+  - rscadd: Added a voucher to the brig physician with 4 different sets and an officer
+      only monitor (Made by Faustbyte)
+  RandomDudeFromTheRim:
+  - bugfix: You can no longer dupe loot by reviving certain mobs (like ash drakes)
+  Shoddd:
+  - rscadd: Fugitive locator for bounty hunters
+  - rscdel: Psyker bounter hunters now disabled
+  - balance: Pirate airlocks now use syndicate access
+  - balance: Greytide and skeleton pirate shuttle improvements
+  Singul0:
+  - rscadd: Walls now have atom integrity, being able to be attacked and destroyed
+      like other machineries and structures. they're a tough nut to crack though
+  - rscadd: Emitters can now tear down walls! (once upgraded)
+  ThePooba:
+  - rscadd: 5 new donator latejoin jobs for SPRING, Florist, easter bunny, news reporter,
+      spring cleaner, bird watcher, These jobs are just flavorful assistants
