@@ -430,8 +430,8 @@
 		for(var/advsurgtool in adv_surgical_tools)
 			for(advsurgtool in R.model.modules)
 				R.model.remove_module(advsurgtool, TRUE)
-		for(var/surgtool in surgical_tools)
-			surgtool = new (R.model)
+		for(var/surg_tool in surgical_tools)
+			surg_tool = new(R.model)
 			R.model.basic_modules += surgtool
 			R.model.add_module(surgtool, FALSE, TRUE)
 
