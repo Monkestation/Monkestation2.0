@@ -106,6 +106,7 @@
 #define ROLE_LIFEBRINGER "Lifebringer"
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
 #define ROLE_SKELETON "Skeleton"
+#define ROLE_PARTY_SKELETON "Party Skeleton" // Monkestation addition
 #define ROLE_SPACE_BAR_PATRON "Space Bar Patron"
 #define ROLE_SPACE_BARTENDER "Space Bartender"
 #define ROLE_SPACE_DOCTOR "Space Doctor"

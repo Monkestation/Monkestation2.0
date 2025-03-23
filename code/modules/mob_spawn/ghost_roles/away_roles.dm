@@ -40,3 +40,23 @@
 	. = ..()
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
 	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+/// Regarding the remote Island area
+/obj/effect/mob_spawn/ghost_role/human/skeleton/beach
+	name = "skeletal remains"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	mob_name = "skeleton"
+	prompt_name = "Party Pirate"
+	mob_species = /datum/species/skeleton
+	you_are_text = "Riding on the waves, you're here to show these folks on the Island how to PARTY!"
+	flavour_text = "Party hard and show them who's the disco boss."
+	spawner_job_path = /datum/job/skeleton/party
+	restricted_species = list(/datum/species/skeleton) //if you have a skelly species, on a halloween and this disabled gateway map spawns, I applaud you
+	loadout_enabled = FALSE
+	quirks_enabled = TRUE
+
+/obj/effect/mob_spawn/ghost_role/human/skeleton/special(mob/living/new_spawn)
+	. = ..()
+	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone...</b>")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
