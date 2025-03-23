@@ -230,6 +230,7 @@
 
 	to_buy.times++
 	uses -= to_buy.cost
+	gauntlet_flag = TRUE //Monkestation Edit
 	return TRUE
 
 /// Purchases a wizard loadout [loadout] for [wizard].
