@@ -432,8 +432,8 @@
 				R.model.remove_module(advsurgtool, TRUE)
 		for(var/surg_tool in surgical_tools)
 			surg_tool = new(R.model)
-			R.model.basic_modules += surgtool
-			R.model.add_module(surgtool, FALSE, TRUE)
+			R.model.basic_modules += surg_tool
+			R.model.add_module(surg_tool, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray
 	name = "medical cyborg hypospray advanced synthesiser"
