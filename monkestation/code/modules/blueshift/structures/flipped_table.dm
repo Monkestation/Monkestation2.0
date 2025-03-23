@@ -263,12 +263,12 @@
 
 /obj/structure/table/proc/cat_knock_stuff_off_table(mob/living/cat)
 	var/list/items = get_things_for_cat_to_knock_off(cat)
-	if(!length(items))
+	var/total_items = length(items)
+	if(!total_items)
 		cat.balloon_alert_to_viewers("nothing to knock off!")
 		return
 
 	cat.balloon_alert_to_viewers("knocking things off table...")
-	var/total_items = length(items)
 	var/datum/progressbar/progress = new(cat, total_items, src)
 	outer:
 		while(length(items))
