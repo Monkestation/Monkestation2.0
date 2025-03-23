@@ -12,12 +12,16 @@
 
 /obj/structure/flippedtable/Initialize(mapload)
 	. = ..()
-
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
-
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
+
+/obj/structure/flippedtable/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(can_right_table(user, check_incapacitated = FALSE))
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Flip table upright"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/flippedtable/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -47,17 +51,25 @@
 	if(direction == dir)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
+//prevent ghosts from unflipping tables but still allows admins to fuck around
+/obj/structure/flippedtable/proc/can_right_table(mob/user, check_incapacitated = TRUE)
+	if(QDELETED(src) || QDELETED(user))
+		return FALSE
+	if(user.can_hold_items())
+		return TRUE
+	if(is_admin(user.client))
+		return TRUE
+	if(check_incapacitated && user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/structure/flippedtable/CtrlShiftClick(mob/user)
-	if(!iscarbon(user) && !is_admin(user.client))
-		return
-	if(isobserver(user) && !is_admin(user.client))  //prevent ghosts from unflipping tables but still allows admins to fuck around
-		return
-	if(!user.CanReach(src))
+	if(!can_right_table(user) || DOING_INTERACTION_WITH_TARGET(user, src) || !user.CanReach(src))
 		return
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25))
-		var/obj/structure/table/unflipped_table = new table_type(src.loc)
-		unflipped_table.update_integrity(src.get_integrity())
+		var/obj/structure/table/unflipped_table = new table_type(loc)
+		unflipped_table.update_integrity(get_integrity())
 		if(flags_1 & HOLOGRAM_1) // no unflipping holographic tables into reality
 			var/area/station/holodeck/holo_area = get_area(unflipped_table)
 			if(!istype(holo_area))
@@ -67,32 +79,69 @@
 		if(custom_materials)
 			unflipped_table.set_custom_materials(custom_materials)
 		user.balloon_alert_to_viewers("table flipped upright")
-		playsound(src, 'sound/items/trayhit2.ogg', 100)
+		playsound(src, 'sound/items/trayhit2.ogg', vol = 100)
 		qdel(src)
 
+/mob/proc/can_flip_table(obj/structure/table/table, full_checks = TRUE)
+	if(QDELETED(src) || QDELETED(table))
+		return FALSE
+	if(!isturf(table.loc))
+		return FALSE
+	if(!table.can_flip)
+		return FALSE
+	if(is_admin(client))
+		return TRUE
+	return FALSE
+
+/mob/living/can_flip_table(obj/structure/table/table, full_checks = TRUE)
+	if(QDELETED(src) || QDELETED(table))
+		return FALSE
+	if(!isturf(table.loc))
+		return FALSE
+	if(!table.can_flip)
+		return FALSE
+	if(!iscat(src) && !can_hold_items())
+		return FALSE
+	if(full_checks)
+		if(TIMER_COOLDOWN_CHECK(src, REF(table)))
+			return FALSE
+		if(DOING_INTERACTION_WITH_TARGET(src, table))
+			return FALSE
+		if(incapacitated())
+			return FALSE
+		if(!CanReach(table))
+			return FALSE
+	return TRUE
+
+/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(user.can_flip_table(src, full_checks = FALSE))
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = iscat(user) ? "Knock things off table" : "Flip table"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/table/CtrlShiftClick(mob/user)
-	if(!iscarbon(user) && !is_admin(user.client))
+	if(!user.can_flip_table(src))
 		return
-	if(isobserver(user) && !is_admin(user.client))  //prevent ghosts from flipping tables but still allows admins to fuck around
-		return
-	if(!can_flip || !user.CanReach(src))
-		return
-	user.balloon_alert_to_viewers("flipping table...")
-	if(!do_after(user, max_integrity * 0.25))
-		return
+	TIMER_COOLDOWN_START(user, REF(src), 0.5 SECONDS)
+	if(iscat(user))
+		cat_knock_stuff_off_table(user)
+	else
+		user.balloon_alert_to_viewers("flipping table...")
+		if(do_after(user, round(max_integrity * 0.25, 0.5 SECONDS), src))
+			flip_table(user)
 
-	var/obj/structure/flippedtable/flipped_table = new flipped_table_type(src.loc)
-	flipped_table.name = "flipped [src.name]"
-	flipped_table.desc = "[src.desc]<br> It's been flipped on its side!"
-	flipped_table.icon_state = src.base_icon_state
+/obj/structure/table/proc/flip_table(mob/user)
+	var/obj/structure/flippedtable/flipped_table = new flipped_table_type(loc)
+	flipped_table.name = "flipped [initial(name)]"
+	flipped_table.desc = "[initial(desc)]<br>It's been flipped on its side!"
+	flipped_table.icon_state = base_icon_state
 	var/new_dir = get_dir(user, flipped_table)
-	flipped_table.dir = new_dir
+	flipped_table.setDir(new_dir)
 	if(new_dir == NORTH)
 		flipped_table.layer = BELOW_MOB_LAYER
-	flipped_table.max_integrity = src.max_integrity
-	flipped_table.update_integrity(src.get_integrity())
-	flipped_table.table_type = src.type
+	flipped_table.max_integrity = max_integrity
+	flipped_table.update_integrity(get_integrity())
+	flipped_table.table_type = type
 	if(istype(src, /obj/structure/table/greyscale)) //Greyscale tables need greyscale flags!
 		flipped_table.material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	if(flags_1 & HOLOGRAM_1) // no flipping holographic tables into reality
@@ -149,3 +198,80 @@
 
 /obj/structure/table/survival_pod
 	can_flip = FALSE
+
+// This code is prolly way too complex for literally just cats knocking shit off tables, but I'm too hyperfocused now to turn back ~Lucy
+
+/obj/structure/table/proc/can_cat_knock_off(mob/living/cat, atom/movable/thing)
+	var/static/list/valid_target_typecache = zebra_typecacheof(list(
+		/obj = TRUE,
+		/obj/effect = FALSE,
+		/obj/projectile = FALSE,
+		/mob/living = TRUE,
+	))
+	if(QDELETED(thing))
+		return FALSE
+	if(thing.loc != loc)
+		return FALSE
+	if(!is_type_in_typecache(thing, valid_target_typecache))
+		return FALSE
+	if(thing.anchored || thing.move_resist > cat.move_force)
+		return FALSE
+	if(thing.invisibility > SEE_INVISIBLE_LIVING)
+		return FALSE
+	if(thing.throwing || (thing.movement_type & (FLOATING|FLYING)))
+		return FALSE
+	return TRUE
+
+// silly thing so cats can dramatically knock things off of tables
+/obj/structure/table/proc/get_things_for_cat_to_knock_off(mob/living/cat)
+	. = list()
+	for(var/atom/movable/thing as anything in loc.contents)
+		if(can_cat_knock_off(cat, thing))
+			. += thing
+	shuffle_inplace(.) // ensure everything gets tossed off in a random order
+
+GLOBAL_VAR_INIT(__cat_velocity, 2)
+
+/obj/structure/table/proc/cat_knock_thing_off_table(mob/living/cat, atom/movable/thing)
+	if(QDELETED(thing) || QDELETED(cat) || thing.loc != loc)
+		return
+	var/fly_angle = get_angle(src, cat) + rand(-30, 30)
+	thing.AddComponent(/datum/component/movable_physics, \
+		physics_flags = MPHYSICS_QDEL_WHEN_NO_MOVEMENT, \
+		angle = fly_angle, \
+		horizontal_velocity = rand(2.5 * 100, 6 * 100) * GLOB.__cat_velocity * 0.01, \
+		vertical_velocity = rand(4 * 100, 4.5 * 100) * GLOB.__cat_velocity * 0.01, \
+		horizontal_friction = rand(0.24 * 100, 0.3 * 100) * 0.01, \
+		vertical_friction = 10 * 0.05, \
+		horizontal_conservation_of_momentum = 0.5, \
+		vertical_conservation_of_momentum = 0.5, \
+		z_floor = 0, \
+	)
+
+
+GLOBAL_VAR_INIT(__cat_time, 0.5)
+/obj/structure/table/proc/cat_knock_stuff_off_table(mob/living/cat)
+	var/list/items = get_things_for_cat_to_knock_off(cat)
+	if(!length(items))
+		cat.balloon_alert_to_viewers("nothing to knock off!")
+		return
+
+	cat.balloon_alert_to_viewers("knocking things off table...")
+	var/total_items = length(items)
+	var/datum/progressbar/progress = new(cat, total_items, src)
+	outer:
+		while(length(items))
+			// this looks overly complex, and prolly is tbh, but the point of this is to ensure we don't waste any time on anything that was moved/deleted/whatever while we were tossing something else
+			var/atom/movable/thing
+			while(QDELETED(thing) && !can_cat_knock_off(cat, thing))
+				if(!length(items))
+					break outer
+				thing = items[length(items)]
+				items.len--
+			if(!do_after(cat, GLOB.__cat_time SECONDS, src, progress = FALSE))
+				break
+			cat_knock_thing_off_table(cat, thing)
+			if(!QDELETED(thing))
+				cat.visible_message(span_warning("[cat] knocks [thing] off [src]!"))
+			progress.update(total_items - length(items))
+	progress.end_progress()
