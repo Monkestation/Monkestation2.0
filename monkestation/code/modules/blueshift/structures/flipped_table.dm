@@ -1,3 +1,14 @@
+/// How long the cooldown for being able to try to flip a single table is. This is meant to be an antispam measure.
+#define TABLE_FLIP_ANTISPAM_COOLDOWN (0.5 SECONDS)
+/// Multiplier for how long it takes to flip a table. (time = max_integrity * TABLE_FLIP_TIME_MULTIPLIER)
+#define TABLE_FLIP_TIME_MULTIPLIER 0.25
+/// Velocity multiplier for the objects knocked off of tables by cats.
+#define CAT_VELOCITY_MULTIPLIER 2
+/// How many degrees the angle of an item being knocked off of a table by a cat can vary.
+#define CAT_ANGLE_VARIANCE 15
+/// How long it takes a cat to knock a single item off a table.
+#define CAT_KNOCK_OFF_TIME (0.5 SECONDS)
+
 /obj/structure/flippedtable
 	name = "flipped table"
 	desc = "A flipped table."
@@ -67,7 +78,7 @@
 	if(!can_right_table(user) || DOING_INTERACTION_WITH_TARGET(user, src) || !user.CanReach(src))
 		return
 	user.balloon_alert_to_viewers("flipping table upright...")
-	if(do_after(user, max_integrity * 0.25))
+	if(do_after(user, max_integrity * TABLE_FLIP_TIME_MULTIPLIER))
 		var/obj/structure/table/unflipped_table = new table_type(loc)
 		unflipped_table.update_integrity(get_integrity())
 		if(flags_1 & HOLOGRAM_1) // no unflipping holographic tables into reality
@@ -122,12 +133,12 @@
 /obj/structure/table/CtrlShiftClick(mob/user)
 	if(!user.can_flip_table(src))
 		return
-	TIMER_COOLDOWN_START(user, REF(src), 0.5 SECONDS)
+	TIMER_COOLDOWN_START(user, REF(src), TABLE_FLIP_ANTISPAM_COOLDOWN)
 	if(iscat(user))
 		cat_knock_stuff_off_table(user)
 	else
 		user.balloon_alert_to_viewers("flipping table...")
-		if(do_after(user, round(max_integrity * 0.25, 0.5 SECONDS), src))
+		if(do_after(user, round(max_integrity * TABLE_FLIP_TIME_MULTIPLIER, 0.5 SECONDS), src))
 			flip_table(user)
 
 /obj/structure/table/proc/flip_table(mob/user)
@@ -230,17 +241,15 @@
 			. += thing
 	shuffle_inplace(.) // ensure everything gets tossed off in a random order
 
-GLOBAL_VAR_INIT(__cat_velocity, 2)
-
 /obj/structure/table/proc/cat_knock_thing_off_table(mob/living/cat, atom/movable/thing)
 	if(QDELETED(thing) || QDELETED(cat) || thing.loc != loc)
 		return
-	var/fly_angle = get_angle(src, cat) + rand(-30, 30)
+	var/fly_angle = get_angle(src, cat) + rand(-CAT_ANGLE_VARIANCE, CAT_ANGLE_VARIANCE)
 	thing.AddComponent(/datum/component/movable_physics, \
 		physics_flags = MPHYSICS_QDEL_WHEN_NO_MOVEMENT, \
 		angle = fly_angle, \
-		horizontal_velocity = rand(2.5 * 100, 6 * 100) * GLOB.__cat_velocity * 0.01, \
-		vertical_velocity = rand(4 * 100, 4.5 * 100) * GLOB.__cat_velocity * 0.01, \
+		horizontal_velocity = rand(2.5 * 100, 6 * 100) * CAT_VELOCITY_MULTIPLIER * 0.01, \
+		vertical_velocity = rand(4 * 100, 4.5 * 100) * CAT_VELOCITY_MULTIPLIER * 0.01, \
 		horizontal_friction = rand(0.24 * 100, 0.3 * 100) * 0.01, \
 		vertical_friction = 10 * 0.05, \
 		horizontal_conservation_of_momentum = 0.5, \
@@ -248,8 +257,6 @@ GLOBAL_VAR_INIT(__cat_velocity, 2)
 		z_floor = 0, \
 	)
 
-
-GLOBAL_VAR_INIT(__cat_time, 0.5)
 /obj/structure/table/proc/cat_knock_stuff_off_table(mob/living/cat)
 	var/list/items = get_things_for_cat_to_knock_off(cat)
 	if(!length(items))
@@ -268,10 +275,16 @@ GLOBAL_VAR_INIT(__cat_time, 0.5)
 					break outer
 				thing = items[length(items)]
 				items.len--
-			if(!do_after(cat, GLOB.__cat_time SECONDS, src, progress = FALSE))
+			if(!do_after(cat, CAT_KNOCK_OFF_TIME, src, progress = FALSE))
 				break
 			cat_knock_thing_off_table(cat, thing)
 			if(!QDELETED(thing))
 				cat.visible_message(span_warning("[cat] knocks [thing] off [src]!"))
 			progress.update(total_items - length(items))
 	progress.end_progress()
+
+#undef CAT_KNOCK_OFF_TIME
+#undef CAT_ANGLE_VARIANCE
+#undef CAT_VELOCITY_MULTIPLIER
+#undef TABLE_FLIP_TIME_MULTIPLIER
+#undef TABLE_FLIP_ANTISPAM_COOLDOWN
