@@ -65,9 +65,8 @@
 	data["bark_groups"] = list()
 	for (var/group in GLOB.bark_groups)
 		var/list/bark_names = list()
-		for (var/bark_name in GLOB.bark_groups[group])
-			var/datum/bark_voice/bark = GLOB.bark_groups[group][bark_name]
-			bark_names += list(list(bark_name, bark.id))
+		for (var/datum/bark_voice/bark in GLOB.bark_groups[group])
+			bark_names += list(list(bark.name, bark.id))
 		data["bark_groups"][group] = bark_names
 
 	return data

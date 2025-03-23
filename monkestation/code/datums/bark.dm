@@ -2,88 +2,125 @@ GLOBAL_LIST_EMPTY(bark_groups)
 GLOBAL_LIST_INIT(bark_list, gen_barks())
 
 /proc/gen_barks()
+	var/output = rustg_read_toml_file("monkestation/code/game/barks.toml")
+
 	var/list/bark_list = list()
-	var/list/goon_barks = list()
-	var/list/misc_barks = list()
 
-	for(var/path in subtypesof(/datum/bark_voice))
-		var/datum/bark_voice/bark = new path()
+	for (var/group_id in output)
+		var/group_obj = output[group_id]
+		var/group_name = group_obj["name"]
+		var/group_path = group_obj["path"]
+		var/list/group_barks = list()
 
-		bark_list[bark.name] = bark
+		if (!group_name)
+			stack_trace("Group " + group_id + " has no name")
+			continue
 
-	var/goon_sounds = list(
-		"blub",
-		"buwoo",
-		"cow",
-		"cyborg",
-		"lizard",
-		"pug",
-		"pugg",
-		"roach",
-		"skelly",
-		"speak_1",
-		"speak_2",
-		"speak_3",
-		"speak_4",
-	)
+		for (var/bark_name in group_obj)
+			if (bark_name == "name" || bark_name == "path")
+				continue
+			var/bark_obj = group_obj[bark_name]
+			var/datum/bark_voice/bark = new()
 
-	for (var/name in goon_sounds)
-		var/datum/bark_voice/bark = new
-		bark.name = name
-		bark.talk = sound("goon/sounds/misc/talk/" + name + ".ogg")
-		bark.ask_beep = sound("goon/sounds/misc/talk/" + name + "_ask.ogg")
-		bark.exclaim_beep = sound("goon/sounds/misc/talk/" + name + "_exclaim.ogg")
-		bark.id = "goon/" + bark.name
-		bark.group = "Goonstation"
-		bark_list[bark.id] = bark
-		goon_barks[bark.name] = bark
+			bark.id = group_name + "." + bark_name
+			bark.name = bark_name
+			bark.group = group_name
+			if (group_path)
+				bark.talk = sound(group_path + "/" + bark_obj["path"])
+			else
+				bark.talk = sound(bark_obj["path"])
+			if (!bark.talk)
+				stack_trace("Bark " + bark_name + " has no talk sound")
+				continue
 
-	var/other_sounds = list(
-		"caw",
-		"chirp",
-		"chitter",
-		"dont_starve/wilson",
-		"dont_starve/wolfgang",
-		"dont_starve/woodie",
-		"dont_starve/wurt",
-		"dont_starve/wx78",
-		"kazooie/birdwhistle",
-		"kazooie/birdwhistle2",
-		"kazooie/caw",
-		"kazooie/caw2",
-		"kazooie/caw3",
-		"kazooie/chitter1",
-		"kazooie/dwoop",
-		"kazooie/ehh",
-		"kazooie/ehh2",
-		"kazooie/ehh3",
-		"kazooie/ehh4",
-		"kazooie/ehh5",
-		"kazooie/faucet",
-		"kazooie/faucet2",
-		"kazooie/hoot",
-		"kazooie/ribbit",
-		"kazooie/tweet",
-		"kazooie/uhm",
-		"kazooie/wurble1",
-		"meow1",
-		"moth/mothchitter2",
-		"mothsqueak",
-	)
+			group_barks += bark
+			bark_list[bark.id] = bark
 
-	for (var/name in other_sounds)
-		var/datum/bark_voice/bark = new
-		bark.name = name
-		bark.talk = sound("monkestation/sound/voice/barks/" + name + ".ogg")
-		bark.id = "misc/" + bark.name
-		bark.group = "Miscellaneous"
-		bark_list[bark.id] = bark
-		misc_barks[bark.name] = bark
-
-	GLOB.bark_groups["Goonstation"] = goon_barks
-	GLOB.bark_groups["Miscellaneous"] = misc_barks
+		GLOB.bark_groups[group_name] = group_barks
 
 	return bark_list
+
+	// var/list/goon_barks = list()
+	// var/list/misc_barks = list()
+
+	// for(var/path in subtypesof(/datum/bark_voice))
+	// 	var/datum/bark_voice/bark = new path()
+
+	// 	bark_list[bark.name] = bark
+
+	// var/goon_sounds = list(
+	// 	"blub",
+	// 	"buwoo",
+	// 	"cow",
+	// 	"cyborg",
+	// 	"lizard",
+	// 	"pug",
+	// 	"pugg",
+	// 	"roach",
+	// 	"skelly",
+	// 	"speak_1",
+	// 	"speak_2",
+	// 	"speak_3",
+	// 	"speak_4",
+	// )
+
+	// for (var/name in goon_sounds)
+	// 	var/datum/bark_voice/bark = new
+	// 	bark.name = name
+	// 	bark.talk = sound("goon/sounds/misc/talk/" + name + ".ogg")
+	// 	bark.ask_beep = sound("goon/sounds/misc/talk/" + name + "_ask.ogg")
+	// 	bark.exclaim_beep = sound("goon/sounds/misc/talk/" + name + "_exclaim.ogg")
+	// 	bark.id = "goon/" + bark.name
+	// 	bark.group = "Goonstation"
+	// 	bark_list[bark.id] = bark
+	// 	goon_barks[bark.name] = bark
+
+	// var/other_sounds = list(
+	// 	"caw",
+	// 	"chirp",
+	// 	"chitter",
+	// 	"dont_starve/wilson",
+	// 	"dont_starve/wolfgang",
+	// 	"dont_starve/woodie",
+	// 	"dont_starve/wurt",
+	// 	"dont_starve/wx78",
+	// 	"kazooie/birdwhistle",
+	// 	"kazooie/birdwhistle2",
+	// 	"kazooie/caw",
+	// 	"kazooie/caw2",
+	// 	"kazooie/caw3",
+	// 	"kazooie/chitter1",
+	// 	"kazooie/dwoop",
+	// 	"kazooie/ehh",
+	// 	"kazooie/ehh2",
+	// 	"kazooie/ehh3",
+	// 	"kazooie/ehh4",
+	// 	"kazooie/ehh5",
+	// 	"kazooie/faucet",
+	// 	"kazooie/faucet2",
+	// 	"kazooie/hoot",
+	// 	"kazooie/ribbit",
+	// 	"kazooie/tweet",
+	// 	"kazooie/uhm",
+	// 	"kazooie/wurble1",
+	// 	"meow1",
+	// 	"moth/mothchitter2",
+	// 	"mothsqueak",
+	// )
+
+	// for (var/name in other_sounds)
+	// 	var/datum/bark_voice/bark = new
+	// 	bark.name = name
+	// 	bark.talk = sound("monkestation/sound/voice/barks/" + name + ".ogg")
+	// 	bark.id = "misc/" + bark.name
+	// 	bark.group = "Miscellaneous"
+	// 	bark_list[bark.id] = bark
+	// 	misc_barks[bark.name] = bark
+
+	// GLOB.bark_groups["Goonstation"] = goon_barks
+	// GLOB.bark_groups["Miscellaneous"] = misc_barks
+
+	// return bark_list
 
 //Datums for barks and bark accessories
 
