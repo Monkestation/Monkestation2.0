@@ -8,6 +8,10 @@
 #define CAT_ANGLE_VARIANCE 15
 /// How long it takes a cat to knock a single item off a table.
 #define CAT_KNOCK_OFF_TIME (0.5 SECONDS)
+/// The ID for the cat meow cooldown. This is so meows don't overlap when knocking things off of multiple tables.
+#define COOLDOWN_CAT_MEOW "cat_meow_cooldown"
+/// This should be slightly higher than the longest SFX_MEOW audio file, used for the aforementioned cooldown.
+#define MAX_CAT_MEOW_LENGTH (2 SECONDS)
 
 /obj/structure/flippedtable
 	name = "flipped table"
@@ -277,13 +281,17 @@
 				items.len--
 			if(!do_after(cat, CAT_KNOCK_OFF_TIME, src, progress = FALSE))
 				break
-			playsound(get_turf(cat), SFX_MEOW, vol = 20, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			if(!TIMER_COOLDOWN_CHECK(cat, COOLDOWN_CAT_MEOW))
+				playsound(get_turf(cat), SFX_MEOW, vol = 20, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MOB_SOUNDS)
+				TIMER_COOLDOWN_START(cat, COOLDOWN_CAT_MEOW, MAX_CAT_MEOW_LENGTH)
 			cat_knock_thing_off_table(cat, thing)
 			if(!QDELETED(thing))
 				cat.visible_message(span_warning("[cat] knocks [thing] off [src]!"))
 			progress.update(total_items - length(items))
 	progress.end_progress()
 
+#undef MAX_CAT_MEOW_LENGTH
+#undef COOLDOWN_CAT_MEOW
 #undef CAT_KNOCK_OFF_TIME
 #undef CAT_ANGLE_VARIANCE
 #undef CAT_VELOCITY_MULTIPLIER
