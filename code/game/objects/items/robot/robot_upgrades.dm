@@ -406,23 +406,23 @@
 
 			var/obj/item/circular_saw/augment/saw = new /obj/item/circular_saw/augment(R.model)
 			R.model.basic_modules += saw
-			R.model.add_module(saw, FALSE, TRUE)
+			R.model.add_module(saw, FALSE, FALSE)
 
 			var/obj/item/scalpel/augment/scalpel = new /obj/item/scalpel/borg(R.model)
 			R.model.basic_modules += scalpel
-			R.model.add_module(scalpel, FALSE, TRUE)
+			R.model.add_module(scalpel, FALSE, FALSE)
 
 			var/obj/item/cautery/augment/cautery = new /obj/item/cautery/augment(R.model)
 			R.model.basic_modules += cautery
-			R.model.add_module(cautery, FALSE, TRUE)
+			R.model.add_module(cautery, FALSE, FALSE)
 
 			var/obj/item/retractor/augment/retractor = new /obj/item/retractor/augment(R.model)
 			R.model.basic_modules += retractor
-			R.model.add_module(retractor, FALSE, TRUE)
+			R.model.add_module(retractor, FALSE, FALSE)
 
 			var/obj/item/hemostat/augment/hemostat = new /obj/item/hemostat/augment(R.model)
 			R.model.basic_modules += hemostat
-			R.model.add_module(hemostat, FALSE, TRUE)
+			R.model.add_module(hemostat, FALSE, FALSE)
 
 /obj/item/borg/upgrade/surgery/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
