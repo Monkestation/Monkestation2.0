@@ -394,8 +394,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
-	var/list/adv_surgical_tools = list( obj/item/circular_saw/augment, obj/item/scalpel/borg, obj/item/cautery/augment, obj/item/retractor/augment, obj/item/hemostat/augment/)
-	var/list/surgical_tools = list( obj/item/circular_saw/circular, obj/item/scalpel/scalp, obj/item/cautery, obj/item/retractor, obj/item/hemostat)
+	var/list/adv_surgical_tools = list( /obj/item/circular_saw/augment, /obj/item/scalpel/borg, /obj/item/cautery/augment, /obj/item/retractor/augment, /obj/item/hemostat/augment)
+	var/list/surgical_tools = list( /obj/item/circular_saw, /obj/item/scalpel, /obj/item/cautery, /obj/item/retractor, /obj/item/hemostat)
 
 /obj/item/borg/upgrade/surgery/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
