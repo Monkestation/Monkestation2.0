@@ -221,11 +221,10 @@
 		"ipc_arm_right",
 		"ipc_leg_left",
 		"ipc_leg_right",
-		"power_cord"
+		"power_cord",
+		"ipc_antennae",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-
 
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"

@@ -70,6 +70,7 @@
 		"limbdesign_ethereal",
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
+		"limbdesign_other",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
 	discount_experiments = list(
