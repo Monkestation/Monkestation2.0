@@ -277,6 +277,7 @@
 				items.len--
 			if(!do_after(cat, CAT_KNOCK_OFF_TIME, src, progress = FALSE))
 				break
+			playsound(get_turf(cat), SFX_MEOW, vol = 20, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			cat_knock_thing_off_table(cat, thing)
 			if(!QDELETED(thing))
 				cat.visible_message(span_warning("[cat] knocks [thing] off [src]!"))
