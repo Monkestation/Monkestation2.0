@@ -394,6 +394,7 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
+	var/list/adv_surgical_tools = list( /obj/item/circular_saw/augment, /obj/item/scalpel/borg, /obj/item/cautery/augment, /obj/item/retractor/augment, /obj/item/hemostat/augment)
 
 /obj/item/borg/upgrade/surgery/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -429,7 +430,7 @@
 			R.model.basic_modules += retractor
 			R.model.add_module(retractor, FALSE, TRUE)
 
-		var/obj/item/hemostat/augment/hemostat = new /obj/item/hemostat/augment(R.model)
+			var/obj/item/hemostat/augment/hemostat = new /obj/item/hemostat/augment(R.model)
 			R.model.basic_modules += hemostat
 			R.model.add_module(hemostat, FALSE, TRUE)
 
