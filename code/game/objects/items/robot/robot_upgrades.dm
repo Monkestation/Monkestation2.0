@@ -430,10 +430,26 @@
 		for(var/advsurgtool in adv_surgical_tools)
 			for(advsurgtool in R.model.modules)
 				R.model.remove_module(advsurgtool, TRUE)
-		for(var/surg_tool in surgical_tools)
-			var/obj/item/surgical_tools/surg_tool = new (R.model)
-			R.model.basic_modules += surg_tool
-			R.model.add_module(surg_tool, FALSE, TRUE)
+
+		var/obj/item/retractor/retractor = new (R.model)
+		R.model.basic_modules += retractor
+		R.model.add_module(retractor, FALSE, TRUE)
+
+		var/obj/item/scalpel/scalpel = new (R.model)
+		R.model.basic_modules += scalpel
+		R.model.add_module(scalpel, FALSE, TRUE)
+
+		var/obj/item/circular_saw/saw = new (R.model)
+		R.model.basic_modules += saw
+		R.model.add_module(saw, FALSE, TRUE)
+
+		var/obj/item/hemostat/hemo = new (R.model)
+		R.model.basic_modules += hemo
+		R.model.add_module(hemo, FALSE, TRUE)
+
+		var/obj/item/cautery/cautery = new (R.model)
+		R.model.basic_modules += cautero
+		R.model.add_module(cauter, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray
 	name = "medical cyborg hypospray advanced synthesiser"
