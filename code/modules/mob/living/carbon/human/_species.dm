@@ -1925,6 +1925,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part = new path()
 			if(istype(new_part, /obj/item/bodypart/leg) && is_digitigrade)
 				new_part:set_digitigrade(TRUE)
+			new_part.change_exempt_flags &= ~BP_BLOCK_CHANGE_SPECIES // monkestation edit: remove BP_BLOCK_CHANGE_SPECIES on "natural" bodyparts
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
