@@ -36,7 +36,7 @@
 	if (was_failing != (organ_flags & ORGAN_FAILING))
 		animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
+/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organtype)
 	. = ..()
 	animate_pulse()
 

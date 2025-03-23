@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added \"Lesser Strange Seeds\", variants of strange seeds with a wider limitation on reagents."
+  - balance: "Biogenerators can now only print lesser strange seeds. Other sources of strange seeds remain unchanged."
