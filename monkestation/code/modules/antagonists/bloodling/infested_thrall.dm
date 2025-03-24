@@ -14,7 +14,7 @@
 	var/master = null
 
 /datum/antagonist/changeling/bloodling_thrall/purchase_power(datum/action/changeling/sting_path)
-	if(istype(sting_path, /datum/action/changeling/fakedeath))
+	if(istype(sting_path, /datum/action/changeling/fakedeath) || istype(sting_path, /datum/action/changeling/headcrab))
 		to_chat(owner.current, span_warning("We are unable to evolve that ability"))
 		return FALSE
 	return ..()

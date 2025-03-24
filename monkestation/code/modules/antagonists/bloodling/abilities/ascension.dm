@@ -33,7 +33,7 @@
 		return FALSE
 
 	to_chat(our_mob, span_noticealien("You grow a chrysalis to begin the change..."))
-	priority_announce("ALERT: LEVEL 4 BIOHAZARD MORPHING IN [get_area(our_turf)]. STOP IT AT ALL COSTS.", "Biohazard")
+	priority_announce("ALERT: LEVEL 4 BIOHAZARD MORPHING IN [get_area_name(our_mob)]. STOP IT AT ALL COSTS.", "Biohazard")
 	playsound(our_turf, 'sound/effects/blobattack.ogg', 60)
 	our_mob.evolution(6)
 	return TRUE
@@ -160,11 +160,21 @@
 	canSmoothWith = SMOOTH_GROUP_FLOOR_BLOODLING
 	layer = HIGH_TURF_LAYER
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
+	var/mob/living/basic/bloodling/master
 
 /turf/open/misc/bloodling/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	for(var/datum/antagonist/antag in GLOB.antagonists)
+		if(!IS_BLOODLING(antag.owner.current))
+			continue
+		master = antag.owner.current
+		break
 
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
@@ -179,6 +189,19 @@
 	transform = translation
 
 	underlay_appearance.transform = transform
+
+/turf/open/misc/bloodling/proc/on_entered(datum/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+	if(!isliving(arrived))
+		return
+
+	var/mob/living/mob = arrived
+	if(!iscarbon(mob))
+		return
+
+	var/mob/living/carbon/carbon_mob = mob
+	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
+	thrall.set_master(master)
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'
