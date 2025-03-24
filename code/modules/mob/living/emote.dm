@@ -290,7 +290,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		// Alternative Laugh Hook
-		if(human_user.alternative_laughs.len)
+		if(LAZYLEN(human_user.alternative_laughs))
 			return pick(human_user.alternative_laughs)
 
 		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
