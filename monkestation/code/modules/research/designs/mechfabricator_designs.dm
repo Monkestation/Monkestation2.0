@@ -83,7 +83,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/ipc_part_leg_right
+/datum/design/ipc_part_atennae
 	name = "IPC Replacement Antennae"
 	id = "ipc_antennae"
 	build_type = MECHFAB
