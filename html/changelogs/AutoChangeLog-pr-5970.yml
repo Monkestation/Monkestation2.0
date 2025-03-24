@@ -1,0 +1,7 @@
+author: "Marabout2"
+delete-after: True
+changes:
+  - rscadd: "Added a detective slot and a second holster in the detective closet + detective spawn with a badge."
+  - rscadd: "Added Kim's gloves in the loadout, exclusive to the detective + spyglass got sechud."
+  - rscadd: ".45 caliber rubbers available in the security techfab"
+  - rscadd: "Ported from TG : https://github.com/tgstation/tgstation/pull/89221 which mean the forensic scanner got a new ui"
