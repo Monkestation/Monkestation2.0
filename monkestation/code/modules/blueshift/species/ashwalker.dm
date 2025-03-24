@@ -14,16 +14,19 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/ashwalker,
 	)
 	species_language_holder = /datum/language_holder/ashwalker
+	/// The aging component given by the species.
+	var/datum/component/ash_age/ash_age
 
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
 	. = ..()
 	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
-	carbon_target.AddComponent(/datum/component/ash_age)
+	ash_age = carbon_target.AddComponent(/datum/component/ash_age)
 	carbon_target.faction |= FACTION_ASHWALKER
 
 /datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/carbon_target)
 	. = ..()
 	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
+	QDEL_NULL(ash_age)
 	carbon_target.faction &= FACTION_ASHWALKER
 
 /datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
