@@ -27,7 +27,7 @@
 	. = ..()
 	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
 	QDEL_NULL(ash_age)
-	carbon_target.faction &= FACTION_ASHWALKER
+	carbon_target.faction -= FACTION_ASHWALKER
 
 /datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
 	SIGNAL_HANDLER
