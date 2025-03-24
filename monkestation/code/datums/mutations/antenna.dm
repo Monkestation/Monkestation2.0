@@ -7,7 +7,7 @@
 	if(owner && GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.update_mutations_overlay()
 
-	if(GET_MUTATION_POWER(src) == 1)
+	if(GET_MUTATION_POWER(src) == 1 || isnull(radio_weakref))
 		return
 
 	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
