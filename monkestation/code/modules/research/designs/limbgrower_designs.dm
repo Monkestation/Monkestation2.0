@@ -208,7 +208,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 15)
 	build_path = /obj/item/organ/external/horns/satyr_horns
-	category = list(SPECIES_SATYR)
+	category = list(SPECIES_SATYR, RND_CATEGORY_INITIAL)
 
 /datum/design/satyr_tail
 	name = "Satyr Tail"
@@ -224,14 +224,14 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/external/satyr_fluff
-	category = list(SPECIES_SATYR, RND_CATEGORY_INITIAL)
+	category = list(SPECIES_SATYR)
 
 /obj/item/disk/design_disk/limbs/other
 	name = "Misc. Organ Design Disk"
-	limb_designs = list(/datum/design/satyr_horns, /datum/design/floran_leaves, /datum/design/apid_wings, /datum/design/ornithid_tongue)
+	limb_designs = list(/datum/design/satyr_fluff, /datum/design/floran_leaves, /datum/design/apid_wings, /datum/design/ornithid_tongue)
 
 /datum/design/limb_disk/other
 	name = "Misc. Organ Design Disk"
-	desc = "Contains designs for organs for the limbgrower of all around the rim - Satyr horns, Floran Leaves, Apid Wings, Ornithid Tongues"
-	id = "limbdesign_ethereal"
+	desc = "Contains designs for organs for the limbgrower of all around the rim - Satyr Fluff, Floran Leaves, Apid Wings, Ornithid Tongues"
+	id = "limbdesign_other"
 	build_path = /obj/item/disk/design_disk/limbs/other
