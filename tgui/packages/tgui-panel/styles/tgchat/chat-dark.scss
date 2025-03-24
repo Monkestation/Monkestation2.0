@@ -177,11 +177,13 @@ a.popt {
   padding: 2px 0;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .filterMessages input {
 }
 
 .filterMessages label {
 }
+*/
 
 .icon-stack {
   height: 1em;
@@ -303,12 +305,14 @@ em {
   font-weight: bold;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .say,
 .emote,
 .infoplain,
 .oocplain,
 .warningplain {
 }
+*/
 
 .deadsay {
   color: #e2c1ff;
@@ -1360,3 +1364,30 @@ $border-width-px: $border-width * 1px;
   color: #0ea1e6;
   font-weight: bold;
 }
+
+// monkestation addition start: kbity
+.kbity {
+  background: linear-gradient(
+    90deg,
+    #ffb6c1,
+    #ff69b4,
+    #da70d6,
+    #ba55d3,
+    #ffb6c1
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: kbity_gradient 6s linear infinite;
+}
+
+@keyframes kbity_gradient {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+// monkestation addition end: kbity
