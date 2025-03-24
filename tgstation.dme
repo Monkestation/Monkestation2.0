@@ -8419,6 +8419,7 @@
 #include "monkestation\code\modules\surgery\organs\external\appendages\appendages.dm"
 #include "monkestation\code\modules\surgery\organs\external\chelicerae\chelicerae.dm"
 #include "monkestation\code\modules\surgery\organs\external\tail\clockworktail.dm"
+#include "monkestation\code\modules\surgery\organs\external\tail\satyrtail.dm"
 #include "monkestation\code\modules\surgery\organs\external\wings\functional_wings.dm"
 #include "monkestation\code\modules\surgery\organs\internal\brain.dm"
 #include "monkestation\code\modules\surgery\organs\internal\butts.dm"
