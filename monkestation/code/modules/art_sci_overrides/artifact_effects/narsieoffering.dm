@@ -8,7 +8,7 @@
 
 	valid_activators = list(/datum/artifact_activator/touch/carbon)
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	var/blood_to_take = 1
 
