@@ -19531,7 +19531,10 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "buJ" = (
-/obj/structure/falsewall/reinforced,
+/obj/structure/falsewall/reinforced{
+	desc = "Effectively impervious to conventional methods of destruction.";
+	name = "wall"
+	},
 /turf/open/floor/emissive_test/white,
 /area/centcom/central_command_areas/adminroom)
 "bwb" = (
