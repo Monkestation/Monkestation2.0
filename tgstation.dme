@@ -7634,6 +7634,7 @@
 #include "monkestation\code\modules\mech_comp\objects\messages\toggle.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\type_sensor.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\wifi_split.dm"
+#include "monkestation\code\modules\mech_comp\objects\messages\regex\_regex.dm"
 #include "monkestation\code\modules\mentor\__GLOBALVARS.dm"
 #include "monkestation\code\modules\mentor\ahelp_reject.dm"
 #include "monkestation\code\modules\mentor\client.dm"
