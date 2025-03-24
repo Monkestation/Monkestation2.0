@@ -79,7 +79,7 @@
 	name = "Ethereal Tail"
 	id = "ethereal_tail"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 15)
 	build_path = /obj/item/organ/external/tail
 	category = list(SPECIES_ETHEREAL, RND_CATEGORY_INITIAL)
 
@@ -87,7 +87,7 @@
 	name = "Ethereal Horns"
 	id = "ethereal_horns"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 10)
 	build_path = /obj/item/organ/external/ethereal_horns
 	category = list(SPECIES_ETHEREAL, RND_CATEGORY_INITIAL)
 
@@ -95,7 +95,7 @@
 	name = "Ethereal Eyes"
 	id = "ethereal_eyes"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 20)
 	build_path = /obj/item/organ/internal/eyes/ethereal
 	category = list(SPECIES_ETHEREAL, RND_CATEGORY_INITIAL)
 
@@ -104,7 +104,7 @@
 	name = "Phytoid Eyes"
 	id = "floran_eyes"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	reagents_list = list(/datum/reagent/plantnutriment/eznutriment = 20, /datum/reagent/water = 10)
 	build_path = /obj/item/organ/internal/eyes/floran
 	category = list(SPECIES_FLORAN, RND_CATEGORY_INITIAL)
 
@@ -112,7 +112,7 @@
 	name = "Floran Tongue"
 	id = "floran_tongue"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	reagents_list = list(/datum/reagent/plantnutriment/eznutriment = 20, /datum/reagent/water = 10)
 	build_path = /obj/item/organ/internal/tongue/floran
 	category = list(SPECIES_FLORAN, RND_CATEGORY_INITIAL)
 
@@ -120,7 +120,7 @@
 	name = "Floran Leaves"
 	id = "floran_leaf"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/plantnutriment/eznutriment = 10) // plant
+	reagents_list = list(/datum/reagent/plantnutriment/eznutriment = 20, /datum/reagent/water = 10) // plant
 	build_path = /obj/item/organ/external/floran_leaves
 	category = list(SPECIES_FLORAN)
 
