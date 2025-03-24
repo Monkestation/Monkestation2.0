@@ -25,7 +25,7 @@
 		"tele_shield",
 		"mag_autorifle_rub", //monkestation edit: autorifles
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/adv_weaponry

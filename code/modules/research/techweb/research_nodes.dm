@@ -56,7 +56,7 @@
 		"tele_station",
 		"teleconsole",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/micro_bluespace
