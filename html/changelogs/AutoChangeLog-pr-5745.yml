@@ -1,0 +1,17 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - rscadd: "Added Meson eyes, Barber's toolarms, Pathologist Hud's, Scientist huds, High intensity Photo Projector, and Arm Mounted tasers as a printable cybernetics."
+  - rscadd: "Explorers and Barbers now have roundstart cybernetics during a cybernetic revolution."
+  - rscadd: "Cyberlinks and toolarms now have colours/spirtes to help differentiate them at a glance (Sprites mainly from Paradise)"
+  - rscadd: "The box of cybernetics now has more gamba, rejoyce."
+  - rscadd: "Advanced limbs are now researchable, and printable"
+  - rscdel: "Deleted the pointless \"Sandevestian\" button from the gyrotron. It's just not a import sande from all appearances. And god help us if it was."
+  - qol: "Hud implants now have a message when you toggle them."
+  - balance: "hacked surgical arms are now Syndicate access"
+  - balance: "S.A.Y.A Shieldblade's now use Terran Access"
+  - balance: "Detectives, scientists, and pathologists now will have more job fitting cybernetics during a cybernetic revolution"
+  - balance: "Medical and Janitor gear has been touched up slightly."
+  - bugfix: "Suspicious auto surgeons, will now appear and act suspicious."
+  - bugfix: "Fidget spinners are now considered synthetic and won't rot. I don't want to consider the implications of the alternative being."
+  - bugfix: "Plasmaman Detectives will no longer perish for existing during a cybernetic revolution."

@@ -337,10 +337,10 @@
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != AI_WIRE_DISABLED) && !isAllPowerCut())
-
+/* MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
 /obj/machinery/door/airlock/proc/canAIHack()
 	return ((aiControlDisabled == AI_WIRE_DISABLED) && (!hackProof) && (!isAllPowerCut()));
-
+*/
 /obj/machinery/door/airlock/hasPower()
 	return ((!remaining_main_outage() || !remaining_backup_outage()) && !(machine_stat & NOPOWER))
 
@@ -715,12 +715,12 @@
 	return .
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-	if(!canAIControl(user))
-		if(canAIHack())
-			hack(user)
-			return
-		else
-			to_chat(user, span_warning("Airlock AI control has been blocked with a firewall. Unable to hack."))
+//	if(!canAIControl(user)) MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
+//		if(canAIHack())
+//			hack(user)
+//			return
+//		else
+//			to_chat(user, span_warning("Airlock AI control has been blocked with a firewall. Unable to hack."))
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("Unable to interface: Airlock is unresponsive."))
 		return
@@ -729,7 +729,7 @@
 		return
 
 	ui_interact(user)
-
+/* MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
 ///Performs basic checks to make sure we are still able to hack an airlock. If control is restored early through outside means, opens the airlock's control interface.
 /obj/machinery/door/airlock/proc/check_hacking(mob/user, success_message)
 	if(QDELETED(src))
@@ -785,7 +785,7 @@
 			return
 		if(user)
 			attack_ai(user) //bring up airlock dialog
-
+*/
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
 	if(isElectrified() && shock(user, 100))
 		return
@@ -1006,9 +1006,10 @@
 		if(panel_open)
 			attempt_wire_interaction(user)
 			return
-		else
+/*		else
 			attempt_hacking_interaction(user)
 			return
+*/
 
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))

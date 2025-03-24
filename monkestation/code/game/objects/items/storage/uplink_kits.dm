@@ -225,6 +225,19 @@
 	new /obj/item/book/granter/martial/the_tunnel_arts(src)
 	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
 
+/obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+
+/obj/item/storage/box/syndie_kit/esword/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+
+/obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+
 /obj/item/storage/box/syndie_kit/xray
 	name = "X-Ray Mutation Kit"
 	desc = "A box with a singular syndicate-grade X-Ray mutator and 3 oculine medipens."

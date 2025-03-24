@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Cats can now knock things off of tables with ctrl-shift-click, the same way people would flip tables."
+  - rscadd: "You can now force the Super (Syndie) Kitty Ears onto someone, after 8 seconds interrupted, if you want to do that to someone for some reason. Blame Ook."
+  - qol: "Added fancy text styling to some Super Kitty Ears flavor text."
+  - balance: "Transforming to/from cat form with the Super (Syndie) Kitty Ears is no longer affected by antimagic, nor does it actually matter if you can yell the \"MRR MRRRW!!\" or not."
