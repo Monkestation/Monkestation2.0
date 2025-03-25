@@ -395,24 +395,13 @@
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	var/list/adv_surgical_tools = list( /obj/item/circular_saw/augment, /obj/item/scalpel/borg, /obj/item/cautery/augment, /obj/item/retractor/augment, /obj/item/hemostat/augment)
-
+	var/list/surgical_tools = list( /obj/item/circular_saw, /obj/item/scalpel, /obj/item/cautery, /obj/item/retractor, /obj/item/hemostat)
 /obj/item/borg/upgrade/surgery/action(mob/living/silicon/robot/R, user = usr)
 	. = ..() //Tried to make all the tools into a list for compactness, that resulted in EVERYTHING being deleted in basic_module
 	if(.)
-		for(var/obj/item/cautery/caut in R.model.modules)
-			R.model.remove_module(caut, TRUE)
-
-		for(var/obj/item/scalpel/scalp in R.model.modules)
-			R.model.remove_module(scalp, TRUE)
-
-		for(var/obj/item/circular_saw/saw in R.model.modules)
-			R.model.remove_module(saw, TRUE)
-
-		for( var/obj/item/hemostat/hemo in R.model.modules)
-			R.model.remove_module(hemo, TRUE)
-
-		for( var/obj/item/retractor/retract in R.model.modules)
-			R.model.remove_module(retract, TRUE)
+		for(var/obj/item/module in R.model.modules)
+    		if(module.type in surgical_tools)
+       			 R.model.remove_module(module, TRUE)
 
 		var/obj/item/circular_saw/augment/saw = new /obj/item/circular_saw/augment(R.model)
 		R.model.basic_modules += saw
