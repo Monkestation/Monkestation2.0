@@ -365,6 +365,10 @@ SUBSYSTEM_DEF(garbage)
 	if(!istype(to_delete))
 		if(islist(to_delete))
 			stack_trace("List passed to qdel, this will cause an IMMEDIATE hard delete!")
+		else if(isnull(to_delete)) // it's null, don't bother
+			return
+		else
+			stack_trace("Non-datum value passed to qdel, might be worth investigating: [to_delete]")
 #ifndef DISABLE_DREAMLUAU
 		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
 #endif
