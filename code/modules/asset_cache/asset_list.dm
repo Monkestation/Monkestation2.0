@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 // LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 #ifdef UNIT_TESTS
-	if (I && icon_state && !(icon_state in icon_states(I))) // check the base icon prior to extracting the state we want
+	if (I && icon_state && !icon_exists(I, icon_state)) // check the base icon prior to extracting the state we want
 		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [I] into spritesheet [name] ([type])")
 		return
 #endif
