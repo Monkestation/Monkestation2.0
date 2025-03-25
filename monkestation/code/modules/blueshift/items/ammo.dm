@@ -1283,9 +1283,10 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "flechette"
 	damage = 6
-	wound_bonus = 8
-	bare_wound_bonus = 16
+	wound_bonus = 0
+	bare_wound_bonus = 30
 	sharpness = SHARP_EDGED //Did you knew flechettes fly sideways into people
+	weak_against_armour = TRUE // Specializes in ripping unarmored targets apart
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/flechette/Initialize(mapload)
 	. = ..()
