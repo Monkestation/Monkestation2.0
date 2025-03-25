@@ -10667,6 +10667,7 @@
 	dir = 1
 	},
 /obj/machinery/iv_drip,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "diT" = (
@@ -35167,8 +35168,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "liz" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "liI" = (
@@ -55992,7 +55993,6 @@
 	pixel_x = 22
 	},
 /obj/machinery/vending/wallmed/directional/south,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/surgery{
@@ -67502,7 +67502,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "vzR" = (
-/obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/machinery/button/door/directional/south{
 	id = "surgery";
@@ -74670,6 +74669,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/closet/secure_closet/medical2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "xMQ" = (
