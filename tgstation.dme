@@ -8151,6 +8151,7 @@
 #include "monkestation\code\modules\security\code\citationinator.dm"
 #include "monkestation\code\modules\security\code\holographic_handcuffs.dm"
 #include "monkestation\code\modules\security\code\officermonitor.dm"
+#include "monkestation\code\modules\security\code\undercover_id.dm"
 #include "monkestation\code\modules\security\code\weapons\lawbringer.dm"
 #include "monkestation\code\modules\security\code\weapons\paco.dm"
 #include "monkestation\code\modules\shelves\shelf.dm"
