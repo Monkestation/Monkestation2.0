@@ -21,7 +21,7 @@
 	name = "[GLOB.deity]'s sparring contract"
 
 /obj/item/sparring_contract/Destroy()
-	signed_by = null
+	signed_by.Cut()
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect?.existing_contract = null
 	return ..()
