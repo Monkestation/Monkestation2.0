@@ -4,6 +4,7 @@
 	base_icon_state = "fidgetappendix"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/bad_food = 10)
 	var/spinresetter = 0
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/internal/appendix/fidgetappendix/on_life(seconds_per_tick, times_fired)
 	..()

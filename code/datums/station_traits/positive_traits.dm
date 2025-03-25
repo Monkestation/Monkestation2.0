@@ -209,6 +209,7 @@
 	var/static/list/job_to_cybernetic = list(
 		/datum/job/assistant = /obj/item/organ/internal/cyberimp/leg/table_glider, /obj/item/organ/internal/cyberimp/leg/table_glider/l,// monkestation edit: The greytide begins...
 		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics, // monkestation edit: cybernetics overhaul (useful job stuff)
+		/datum/job/barber = /obj/item/organ/internal/cyberimp/arm/item_set/barber, // Monkestation addition:
 		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
 		/datum/job/blueshield = /obj/item/organ/internal/cyberimp/arm/ammo_counter, // monkestation edit: cybernetics for recently added job
@@ -224,7 +225,8 @@
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook, // monkestatoin edit: Give the toolarm some use, plus they should be cooking evenways!
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
-		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
+		/datum/job/detective = /obj/item/organ/internal/cyberimp/arm/item_set/detective, // Monkestation Edit: Dectives toolset.
+		/datum/job/explorer = /obj/item/organ/internal/eyes/robotic/meson, //Monkestation addition:
 		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun, //monkestation edit: Hard to keep gozilla down.
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
@@ -241,15 +243,15 @@
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector, // monkestation edit: cybernetics overhaul (useful job stuff)
-		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
+		/datum/job/scientist = /obj/item/organ/internal/cyberimp/eyes/fakehud/science, // monkestation edit: Science hud for the science lads.
 		/datum/job/security_assistant = /obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l, // monkestation edit: cybernetics for recently added job
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/signal_technician = /obj/item/organ/internal/cyberimp/arm/heater, // monkestation edit: Tcomms is cold
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
-		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
+		/datum/job/virologist = /obj/item/organ/internal/cyberimp/eyes/hud/pathology, // Monkestation edit: We made a hud! Get em to use it.
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
-		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: double trouble
+		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation addition: double trouble
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
