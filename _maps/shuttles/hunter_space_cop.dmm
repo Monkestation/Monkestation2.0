@@ -122,6 +122,10 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"Kn" = (
+/obj/machinery/fugitive_locator,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "Pq" = (
 /turf/template_noop,
 /area/template_noop)
@@ -221,7 +225,7 @@ ku
 ku
 RO
 Rz
-RO
+Kn
 ku
 ku
 "}
