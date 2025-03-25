@@ -400,8 +400,8 @@
 	. = ..() //Tried to make all the tools into a list for compactness, that resulted in EVERYTHING being deleted in basic_module
 	if(.)
 		for(var/obj/item/module in R.model.modules)
-    		if(module.type in surgical_tools)
-       		 R.model.remove_module(module, TRUE)
+    	if(module.type in surgical_tools)
+       	 R.model.remove_module(module, TRUE)
 
 		var/obj/item/circular_saw/augment/saw = new /obj/item/circular_saw/augment(R.model)
 		R.model.basic_modules += saw
