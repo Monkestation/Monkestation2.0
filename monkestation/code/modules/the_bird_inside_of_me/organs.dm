@@ -37,7 +37,7 @@
 /obj/item/organ/internal/tongue/ornithid/Remove(mob/living/carbon/tongue_owner, special)
 	. = ..()
 	sing?.Remove(tongue_owner)
-	song.stop_playing()
+	song?.stop_playing()
 	stop_sound_particles()
 
 /obj/item/organ/internal/tongue/ornithid/proc/start_sound_particles()
