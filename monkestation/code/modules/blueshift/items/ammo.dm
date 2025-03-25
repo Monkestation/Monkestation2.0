@@ -1284,7 +1284,7 @@
 	icon_state = "flechette"
 	damage = 6
 	wound_bonus = 3
-	bare_wound_bonus = 19
+	bare_wound_bonus = 14
 	sharpness = SHARP_EDGED //Did you knew flechettes fly sideways into people
 	weak_against_armour = TRUE // Specializes in ripping unarmored targets apart
 
