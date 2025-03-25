@@ -1482,17 +1482,22 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
 
+	var/file_string = "[file]"
 	// monkestation start: icon_exists cache
 #ifdef PRELOAD_ICON_EXISTS_CACHE
-	if(isfile(file) && !isnull(icon_states_cache["[file]"]?[state]))
+	if(isfile(file) && !isnull(icon_states_cache[file_string]?[state]))
 		return TRUE
 #endif
 	// monkestation end
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
-		for(var/istate in icon_states(file))
-			icon_states_cache[file][istate] = TRUE
+		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
+				icon_states_cache[file][istate] = TRUE
+		else // Otherwise, we have to use the slower BYOND proc
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
