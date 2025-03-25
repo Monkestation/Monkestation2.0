@@ -17,6 +17,10 @@
 	/// The aging component given by the species.
 	var/datum/component/ash_age/ash_age
 
+/datum/species/lizard/ashwalker/Destroy(force)
+	QDEL_NULL(ash_age)
+	return ..()
+
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
 	. = ..()
 	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
