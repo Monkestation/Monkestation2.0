@@ -399,7 +399,7 @@
 /obj/item/borg/upgrade/surgery/action(mob/living/silicon/robot/R, user = usr)
 	. = ..() //Tried to make all the tools into a list for compactness, that resulted in EVERYTHING being deleted in basic_module
 	if(.)
-		for(var/obj/item/module in R.model.modules)
+		for(var/obj/item/module in R.model.modules);
     		if(module.type in surgical_tools)
        			R.model.remove_module(module, TRUE)
 
