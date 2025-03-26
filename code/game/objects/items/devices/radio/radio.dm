@@ -345,6 +345,9 @@
 		return
 	else if(lossless)
 		signal.data["compression"] = 0
+	else if(istype(src, /obj/item/radio/headset) && !istype(src, /obj/item/radio/headset/syndicate) && istype(get_area(src), /area/station/maintenance))
+		signal.data["compression"] = rand(55, 85) // Higher compression or "corruption" due to maintenance shielding.
+		signal.data["unprocessable"] = TRUE // Prevents processors from processing the signal and removing the compression.
 	// monkestation end
 
 	// All radios make an attempt to use the subspace system first
