@@ -28,7 +28,7 @@
 
 /datum/experiment/scanning/random/money
 	name = "Computing Software Funding Salvage"
-	description = "Funding this quarter has been under, 'find' a bounty cube for us skip the middle man. The destructive analyzer can decyrpt the cube, don't expect to see it back however."
+	description = "Funding this quarter has been under, 'find' a bounty cube for us skip the middle man. The destructive analyzer can decrypt the cube, don't expect to see it back however."
 	exp_tag = "Computing Scan"
 	total_requirement = 1
 	possible_types = list(/obj/item/bounty_cube) // I imagine people will get in fights from stealing bounty cubes. And frankly? Good.
