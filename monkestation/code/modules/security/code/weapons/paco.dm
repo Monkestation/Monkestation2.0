@@ -87,6 +87,7 @@
 /obj/projectile/bullet/c35
 	name = ".35 Auto bullet"
 	damage = 20
+	wound_bonus = -5
 
 /obj/item/ammo_box/c35
 	name = "ammunition packet (.35 Auto)"
@@ -105,6 +106,7 @@
 	icon_state = "35r"
 	base_icon_state = "35r"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ammo_casing/c35/rubber
 	name = ".35 Auto rubber bullet casing"
@@ -117,7 +119,7 @@
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
 	damage = 4
-	stamina = 35 // Turns out 35 stamina damage is not good enough.
+	stamina = 50 // Turns out 35 stamina damage is not good enough.
 	sharpness = NONE
 	embedding = null
 

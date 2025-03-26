@@ -5,19 +5,15 @@
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
+	maximum_process_stat = SOFT_CRIT
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
+	no_process_traits = list(TRAIT_FEARLESS)
 
 /datum/quirk/claustrophobia/remove()
 	quirk_holder.clear_mood_event("claustrophobia")
 
 /datum/quirk/claustrophobia/process(seconds_per_tick)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
-		return
-
 	var/nick_spotted = FALSE
 
 	for(var/mob/living/carbon/human/possible_claus in view(5, quirk_holder))
@@ -45,7 +41,7 @@
 	if(istype(possible_saint_nick.back, /obj/item/storage/backpack/santabag))
 		return TRUE
 
-	if(istype(possible_saint_nick.head, /obj/item/clothing/head/costume/santa) || istype(possible_saint_nick.head,  /obj/item/clothing/head/helmet/space/santahat))
+	if(istype(possible_saint_nick.head, /obj/item/clothing/head/costume/santa) || istype(possible_saint_nick.head, /obj/item/clothing/head/helmet/space/santahat))
 		return TRUE
 
 	if(istype(possible_saint_nick.wear_suit, /obj/item/clothing/suit/space/santa))

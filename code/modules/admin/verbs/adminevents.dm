@@ -308,6 +308,23 @@
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+//MONKESTATION EDIT START
+/client/proc/toggle_junior_op()
+	set category = "Admin.Events"
+	set name = "Toggle Junior OP Spawning"
+	set popup_menu = FALSE
+	if(!check_rights(R_DEBUG))
+		return
+	for(var/obj/item/disk/nuclear/disky in GLOB.nuke_disk_list)
+		if(disky.can_trigger_junior_operative)
+			disky.can_trigger_junior_operative = FALSE
+		else
+			disky.can_trigger_junior_operative = TRUE
+		log_admin("[key_name(usr)] toggled [disky.can_trigger_junior_operative ? "on" : "off"] junior lone operative spawning on a nuke disk at [AREACOORD(disky)].")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] toggled [disky.can_trigger_junior_operative ? "on" : "off"] junior lone operative spawning on a nuke disk at [AREACOORD(disky)].")
+		SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Junior OP Spawning", "[disky.can_trigger_junior_operative]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+//MONKESTATION EDIT STOP
+
 /client/proc/admin_change_sec_level()
 	set category = "Admin.Events"
 	set name = "Set Security Level"
@@ -478,3 +495,22 @@
 	else
 		SScommunications.block_command_report++
 		message_admins("[usr] has delayed the roundstart command report.")
+
+//MONKESTATION EDIT START
+/client/proc/toggle_crew_cc_comms()
+	set category = "Admin.Events"
+	set name = "Toggle Crew CC Comms"
+	set popup_menu = FALSE
+	if(!check_rights(R_DEBUG))
+		return
+	var/toggle = tgui_alert(src, "Toggle Crew CC Comms", "Toggle", list("On", "Off"))
+	for(var/obj/item/encryptionkey/headset_cent/crew/key in GLOB.crew_cc_keys)
+		if(toggle == "On")
+			key.toggle_on()
+		if(toggle == "Off")
+			key.toggle_off()
+	log_admin("[key_name(usr)] toggled crew CC comms [toggle].")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] toggled crew CC comms [toggle].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Crew CC Comms", "[toggle]]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+//MONKESTATION EDIT STOP
+

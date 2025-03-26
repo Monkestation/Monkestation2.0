@@ -118,18 +118,23 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+	debilitating = TRUE
+	debilitate_mult = 3
 
 /obj/projectile/beam/disabler/weak
 	stamina = 15
+	debilitate_mult = 0.5
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
 	weak_against_armour = TRUE
+	debilitate_mult = 2
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	stamina = 35
+	stamina = 65 // MONKESTATION EDIT ORG: 30
+	debilitate_mult = 3.5 // MONKESTATION ADDITION
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -194,6 +199,7 @@
 	impact_light_intensity = 7
 	impact_light_outer_range = 2.5
 	impact_light_color_override = COLOR_LIME
+	range = 255 //come on, have some fun now! monkestation edit
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"

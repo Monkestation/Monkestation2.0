@@ -23,6 +23,7 @@ import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 import { setGlobalStore } from 'tgui/backend';
+import { websocketMiddleware } from './websocket';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -37,6 +38,7 @@ const store = configureStore({
   }),
   middleware: {
     pre: [
+      websocketMiddleware,
       chatMiddleware,
       pingMiddleware,
       telemetryMiddleware,
@@ -78,14 +80,8 @@ const setupApp = () => {
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Unhide the panel
-  Byond.winset('output', {
-    'is-visible': false,
-  });
-  Byond.winset('browseroutput', {
-    'is-visible': true,
-    'is-disabled': false,
-    pos: '0x0',
-    size: '0x0',
+  Byond.winset('legacy_output_selector', {
+    left: 'output_browser',
   });
 
   // Resize the panel to match the non-browser output

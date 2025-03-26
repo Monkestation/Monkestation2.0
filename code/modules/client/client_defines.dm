@@ -248,7 +248,7 @@
 	var/list/keys_held = list()
 	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
 	var/list/key_combos_held = list()
-	a/// The direction we WANT to move, based off our keybinds
+	/// The direction we WANT to move, based off our keybinds
 	/// Will be udpated to be the actual direction later on
 	var/intended_direction = NONE
 	/*
@@ -274,7 +274,3 @@
 
 	/// Does this client have typing indicators enabled?
 	var/typing_indicators = FALSE
-
-	/// Does this client's mob need to rebuild its plane masters after login?
-	/// This is currently only used so a client can switch between 515 and 516 without breaking their rendering.
-	var/rebuild_plane_masters = FALSE

@@ -116,32 +116,20 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	var/cooldown = 300
-	var/next_use = 0
-
-/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
-/obj/item/disk/surgery/irs
-	name = "Advanced Surgery Disk"
-	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
-	surgeries = list(
-		/datum/surgery/advanced/lobotomy,
-		/datum/surgery/advanced/bioware/vein_threading,
-		/datum/surgery/advanced/bioware/nerve_splicing,
-		/datum/surgery_step/heal/combo/upgraded,
-		/datum/surgery_step/pacify,
-		/datum/surgery_step/revive,
-	)
+	/// Cooldown on locating booty.
+	COOLDOWN_DECLARE(locate_cooldown)
 
 /obj/machinery/loot_locator/interact(mob/user)
-	if(world.time <= next_use)
-		to_chat(user,span_warning("[src] is recharging."))
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
 		return
-	next_use = world.time + cooldown
 	var/atom/movable/AM = find_random_loot()
 	if(!AM)
 		say("No valuables located. Try again later.")
 	else
 		say("Located: [AM.name] at [get_area_name(AM)]")
+
+	COOLDOWN_START(src, locate_cooldown, 10 SECONDS)
 
 /obj/machinery/loot_locator/proc/find_random_loot()
 	if(!GLOB.exports_list.len)
@@ -155,6 +143,19 @@
 		P = pick_n_take(possible_loot)
 		AM = P.find_loot()
 	return AM
+
+/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
+/obj/item/disk/surgery/irs
+	name = "Advanced Surgery Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	surgeries = list(
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/healing/combo/upgraded, // monkestation edit: Fixed surgeries
+		/datum/surgery/advanced/pacify, // monkestation edit: Fixed surgeries
+	)
+
 
 //Pad & Pad Terminal
 /obj/machinery/piratepad

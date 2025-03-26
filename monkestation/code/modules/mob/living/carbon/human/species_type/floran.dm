@@ -8,7 +8,8 @@
 		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_JUMPSUIT,
-		TRAIT_EASYDISMEMBER
+		TRAIT_EASYDISMEMBER,
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
@@ -46,7 +47,7 @@
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		if(light_amount > 0.3)
-			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
+			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.10 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
 			H.adjustToxLoss(-0.25 * seconds_per_tick)
 			H.adjustOxyLoss(-0.25 * seconds_per_tick)
 
@@ -78,12 +79,6 @@
 	var/list/to_add = list()
 
 	to_add += list(
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "fist-raised",
-			SPECIES_PERK_NAME = "Carnivore",
-			SPECIES_PERK_DESC = "As a vicious carnivore, your claws do more damage to your prey.",
-		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "sun",

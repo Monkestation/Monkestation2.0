@@ -8,6 +8,7 @@ $include resources.txt
 $include interviews.txt
 $include lua.txt
 $include auxtools.txt
+$include plexora.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -528,7 +529,7 @@ MOTD motd.txt
 ## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
 ## This should be disabled (through `CACHE_ASSETS 0`) on development,
 ## but enabled on production (the default).
-CACHE_ASSETS 1
+CACHE_ASSETS 0
 
 ## If this remains commented out, we will allow players to download their own preferences as a JSON file to do whatever they wish.
 ## This does require the game code to read (and only read) the /data folder where these files are stored, and then use the BYOND FTP Function to send the file to the client.

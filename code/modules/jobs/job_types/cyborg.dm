@@ -36,12 +36,14 @@
 
 /datum/job/cyborg/proc/get_random_open_turf_in_area()
 	var/list/turfs = get_area_turfs(/area/station/ai_monitored/turret_protected/ai_upload)
-	var/turf/open/target_turf = null
-	while(!target_turf)
-		var/turf/turf = pick(turfs)
-		if(!turf.density)
-			target_turf = turf
-	return target_turf
+	while(length(turfs))
+		var/turf/turf = pick_n_take(turfs)
+		if(!isfloorturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		return turf
+	stack_trace("Failed to find eligible spawn turf for a cyborg, using observer start landmark instead.")
+	var/obj/effect/landmark/observer_start/target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+	return get_turf(target)
 
 /datum/job/cyborg/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -50,10 +52,9 @@
 	spawned.gender = NEUTER
 	var/mob/living/silicon/robot/robot_spawn = spawned
 	robot_spawn.notify_ai(AI_NOTIFICATION_NEW_BORG)
-	robot_spawn.TryConnectToAI()
 	if(!robot_spawn.connected_ai) // Only log if there's no Master AI
 		robot_spawn.log_current_laws()
 	return TRUE
 
-/datum/job/cyborg/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>")
+/datum/job/cyborg/get_radio_information()
+	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"

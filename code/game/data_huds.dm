@@ -225,7 +225,9 @@ Medical HUD! Basic mode needs suit sensors on.
 
 	var/virus_threat = check_virus()
 	holder.pixel_y = get_cached_height() - world.icon_size
-	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
+	if(HAS_TRAIT(src, TRAIT_BLOB_ALLY)) //Monkestation edit: In the edge where case a blob host has a xeno in them. I think the fact they are a blob host is more important.
+		holder.icon_state = "hudill5"
+	else if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
@@ -335,13 +337,16 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
-
+	
+	crew_hud_set_crew_status()
+	
 	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	var/datum/record/crew/target = find_record(perp_name)
+	
 	if(!target || target.wanted_status == WANTED_NONE)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
@@ -569,3 +574,31 @@ Diagnostic HUDs!
 	return dimensions[CACHED_HEIGHT_INDEX]
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
+
+/***********************************************
+MONKE, crew hud for silicon.
+************************************************/
+
+/datum/atom_hud/data/human/crew_hud
+	hud_icons = list(CREW_HUD)
+
+/mob/living/carbon/human/proc/crew_hud_set_crew_status()
+	var/image/holder = hud_list[CREW_HUD]
+	holder.pixel_y = get_cached_height() - world.icon_size
+	var/crew_name = get_face_name(get_id_name(""))
+	
+	if(!crew_name || !GLOB.manifest || istype(wear_id?.GetID(), /obj/item/card/id/advanced/chameleon))
+		holder.icon_state = null
+		set_hud_image_inactive(CREW_HUD)
+		return
+
+	var/datum/record/crew/target = find_record(crew_name)
+
+	if(!target && !(crew_name == "Unknown"))
+		holder.icon_state = "hudnotcrew"
+		set_hud_image_active(CREW_HUD)
+		return
+	else
+		holder.icon_state = null
+		set_hud_image_inactive(CREW_HUD)
+		return

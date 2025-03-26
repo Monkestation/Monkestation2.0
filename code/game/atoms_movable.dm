@@ -111,23 +111,6 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
-	/// The world.time we started our last glide
-	var/last_glide_start = 0
-	/// The ammount of unaccounted accumulated error between our glide visuals and the world tickrate
-	var/accumulated_glide_error = 0
-	/// The amount of banked (accounted for) error between our visual and world glide rates
-	var/banked_glide_error = 0
-	/// The amount of error accounted for in the initial delay of our glide (based off GLOB.glide_size_multiplier)
-	var/built_in_glide_error = 0
-	/// The world.time at which we assume our next glide will end
-	var/glide_stopping_time = 0
-	/// We are currently tracking our glide animation
-	var/glide_tracking = FALSE
-	/// If we should use glide correction
-	var/use_correction = FALSE
-	var/mutable_appearance/glide_text
-	var/debug_glide = FALSE
-
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -136,7 +119,7 @@
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/Initialize(mapload)
+/atom/movable/Initialize(mapload, ...)
 	. = ..()
 #ifdef UNIT_TESTS
 	if(explosion_block && !HAS_TRAIT(src, TRAIT_BLOCKING_EXPLOSIVES))
@@ -230,13 +213,15 @@
 		move_packet = null
 
 	if(spatial_grid_key)
-		SSspatial_grid.force_remove_from_cell(src)
+		SSspatial_grid.force_remove_from_grid(src)
 
 	LAZYNULL(client_mobs_in_contents)
 
+#ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
+#endif
 
 	. = ..()
 
@@ -601,59 +586,15 @@
 	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-GLOBAL_LIST_EMPTY(gliding_atoms)
-
-/atom/movable/proc/set_glide_size(target = 8, mid_move = FALSE)
+/atom/movable/proc/set_glide_size(target = 8, recursed = FALSE)
 	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
-	// If we're mid move don't reset ourselves yeah?
-	if(!mid_move || !glide_tracking)
-		last_glide_start = world.time
-		glide_stopping_time = world.time + (world.icon_size / target) * world.tick_lag
-		accumulated_glide_error = 0
-		banked_glide_error = 0
-		built_in_glide_error = GLOB.glide_size_multi_error
-		update_glide_text()
-	if(!glide_tracking && use_correction)
-		GLOB.gliding_atoms += src
-		glide_tracking = TRUE
 
-	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.set_glide_size(target, mid_move = mid_move)
-
-/atom/movable/proc/update_glide_text()
-	if(!debug_glide)
-		return
-	cut_overlay(glide_text)
-	glide_text = mutable_appearance(offset_spokesman = src, plane = ABOVE_LIGHTING_PLANE)
-	glide_text.maptext = "GS: [glide_size]ppt\nMulti: [GLOB.glide_size_multiplier * 100]% \nBIE: [built_in_glide_error]ds \nErr: [accumulated_glide_error]ds"
-	glide_text.maptext_width = 500
-	glide_text.maptext_height = 500
-	glide_text.maptext_y = 32
-	add_overlay(glide_text)
-
-/atom/movable/proc/account_for_glide_error(error)
-	// Intentionally can go negative to handle being overoptimistic about glide rates
-	accumulated_glide_error += error - built_in_glide_error
-	if(abs(accumulated_glide_error) < world.tick_lag * 0.5)
-		update_glide_text()
-		return
-	// we're trying to account for random spikes in error while gliding
-	// So we're gonna use the known GAME tick we want to stop at,
-	// alongside how much time has visually past to work out
-	// exactly how fast we need to move to make up that distance
-	var/game_time_spent = (world.time - last_glide_start)
-	var/visual_time_spent = game_time_spent + accumulated_glide_error + built_in_glide_error * game_time_spent
-	var/distance_covered = glide_size * visual_time_spent
-	var/distance_remaining = world.icon_size - distance_covered
-	var/game_time_remaining = (glide_stopping_time - world.time)
-	built_in_glide_error += accumulated_glide_error / game_time_remaining
-	accumulated_glide_error = 0
-	set_glide_size(clamp((((distance_remaining) / max((game_time_remaining) / world.tick_lag, 1))), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE), mid_move = TRUE)
-
-	update_glide_text()
+	if(!recursed)
+		for(var/mob/buckled_mob as anything in buckled_mobs)
+			buckled_mob.set_glide_size(target, TRUE)
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
@@ -1031,8 +972,9 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+	var/already_hearing_sensitive = HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
+	if(already_hearing_sensitive) // If we were already hearing sensitive, we don't wanna be in important_recursive_contents twice, else we'll have potential issues like one radio sending the same message multiple times
 		return
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -1537,8 +1479,8 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
-	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
-	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
+	. += "<option value='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
+	. += "<option value='byond://?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
 
 
 /* Language procs
@@ -1546,7 +1488,8 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
-/atom/movable/proc/get_language_holder(get_minds = TRUE)
+/atom/movable/proc/get_language_holder(get_minds = TRUE) as /datum/language_holder
+	RETURN_TYPE(/datum/language_holder)
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder
