@@ -1482,7 +1482,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
 
-	/* var/file_string = "[file]" */
+	var/file_string = "[file]"
 	// monkestation start: icon_exists cache
 #ifdef PRELOAD_ICON_EXISTS_CACHE
 	if(isfile(file) && length(file_string) && !isnull(icon_states_cache[file_string]?[state]))
