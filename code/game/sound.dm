@@ -555,5 +555,18 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 				soundin = 'monkestation/sound/effects/hl2/button-fail.ogg'
 			if(SFX_LIGHTSWITCH)
 				soundin = 'monkestation/sound/effects/hl2/lightswitch.ogg'
+			if(SFX_MEOW)
+				if(prob(98))
+					soundin = pick(
+						'monkestation/sound/voice/feline/meow1.ogg',
+						'monkestation/sound/voice/feline/meow2.ogg',
+						'monkestation/sound/voice/feline/meow3.ogg',
+						'monkestation/sound/voice/feline/meow4.ogg',
+					)
+				else
+					soundin = pick(
+						'monkestation/sound/voice/feline/mggaow.ogg',
+						'monkestation/sound/voice/feline/funnymeow.ogg',
+					)
 			// monkestation end
 	return soundin

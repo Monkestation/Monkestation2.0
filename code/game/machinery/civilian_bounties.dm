@@ -106,8 +106,7 @@
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
 
-
-		usr.client.prefs.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "completed a bounty", respects_roundcap = TRUE)
+		usr.client?.prefs?.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "Completed a bounty", respects_roundcap = TRUE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)

@@ -91,6 +91,11 @@ GLOBAL_LIST_INIT(loadout_gloves, generate_loadout_items(/datum/loadout_item/glov
 	name = "Golden Wristlets"
 	item_path = /obj/item/clothing/gloves/wristlets
 
+/datum/loadout_item/gloves/kim
+
+	name = "Aerobic Gloves"
+	item_path = /obj/item/clothing/gloves/kim
+	restricted_roles = list(JOB_DETECTIVE)
 /*
 *	RINGS
 */
