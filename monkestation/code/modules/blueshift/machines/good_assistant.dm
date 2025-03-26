@@ -80,7 +80,7 @@
 			var/mob/living/living_user = user
 			card_used = living_user.get_idcard(TRUE)
 
-		if(!istype(card_used?.registered_account.account_job, /datum/job/assistant))
+		if(!istype(card_used?.registered_account?.account_job, /datum/job/assistant))
 			playsound(src, 'sound/machines/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
 			balloon_alert(user, "cannot redeem without valid assistant bank account!")
 			return
