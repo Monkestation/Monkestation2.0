@@ -310,7 +310,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = FALSE
-		set_light(l_outer_range = 0)
+		set_light(l_outer_range = 0, l_on = FALSE)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
