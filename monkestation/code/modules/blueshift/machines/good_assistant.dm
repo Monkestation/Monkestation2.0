@@ -72,7 +72,7 @@
 		var/amount_to_reward = punchcard.punches * GBP_PUNCH_REWARD
 		if(!punchcard.punches)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 100)
-			say("You can't redeem an unpunched card!")
+			balloon_alert(user, "cannot redeem unpunched card!")
 			return
 
 		var/obj/item/card/id/card_used
@@ -89,7 +89,7 @@
 
 		if(!card_used.registered_account || !istype(card_used.registered_account.account_job, /datum/job/assistant))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 100)
-			say("You cannot redeem a punchcard without a valid assistant bank account!")
+			balloon_alert(user, "cannot redeem without valid valid assistant bank account!")
 			return
 
 		if(punchcard.punches < punchcard.max_punches)
@@ -108,8 +108,8 @@
 		COOLDOWN_START(card_used, gbp_redeem_cooldown, 12 MINUTES)
 		user.temporarilyRemoveItemFromInventory(punchcard)
 		qdel(punchcard)
-		var/obj/item/storage/fancy/nugget_box/nuggies = new(get_turf(src))
-		var/obj/item/gbp_punchcard/replacement_card = new(get_turf(src))
+		var/obj/item/storage/fancy/nugget_box/nuggies = new(drop_location())
+		var/obj/item/gbp_punchcard/replacement_card = new(drop_location())
 		user.put_in_hands(nuggies)
 		user.put_in_hands(replacement_card)
 		return
