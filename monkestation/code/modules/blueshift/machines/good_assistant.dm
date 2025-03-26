@@ -80,17 +80,14 @@
 			var/mob/living/living_user = user
 			card_used = living_user.get_idcard(TRUE)
 
-		if(isnull(card_used))
+		if(!istype(card_used?.registered_account.account_job, /datum/job/assistant))
+			playsound(src, 'sound/machines/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
+			balloon_alert(user, "cannot redeem without valid assistant bank account!")
 			return
 
 		if(!COOLDOWN_FINISHED(card_used, gbp_redeem_cooldown))
 			var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(card_used, gbp_redeem_cooldown), round_seconds_to = 1)
 			balloon_alert(user, "try again in [time_left]!")
-			return
-
-		if(!card_used.registered_account || !istype(card_used.registered_account.account_job, /datum/job/assistant))
-			playsound(src, 'sound/machines/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
-			balloon_alert(user, "cannot redeem without valid assistant bank account!")
 			return
 
 		if(punchcard.punches < punchcard.max_punches)
