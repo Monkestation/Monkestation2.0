@@ -80,7 +80,7 @@
 			var/mob/living/living_user = user
 			card_used = living_user.get_idcard(TRUE)
 
-		if(QDELETED(card_used))
+		if(isnull(card_used))
 			return
 
 		if(!COOLDOWN_FINISHED(card_used, gbp_redeem_cooldown))
