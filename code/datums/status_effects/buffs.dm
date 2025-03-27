@@ -2,7 +2,7 @@
 
 /datum/status_effect/his_grace
 	id = "his_grace"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 4
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
@@ -86,7 +86,7 @@
 
 /datum/status_effect/cult_master
 	id = "The Cult Master"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
@@ -116,7 +116,7 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = -1 // monkestation edit
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
 /atom/movable/screen/alert/status_effect/blooddrunk
@@ -125,7 +125,7 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/blooddrunk/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.brute_mod *= 0.1
@@ -147,7 +147,7 @@
 		human_owner.physiology.oxy_mod *= 10
 		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal
@@ -211,7 +211,7 @@
 /datum/status_effect/hippocratic_oath
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 25
 	alert_type = null
 
@@ -398,7 +398,7 @@
 
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
-		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 		chainsaw.item_flags |= DROPDEL // monkestation addition
 		chainsaw.resistance_flags |= INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // monkestation addition
 		owner.put_in_hands(chainsaw, forced = TRUE)
@@ -423,6 +423,7 @@
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -475,7 +476,7 @@
 
 /datum/status_effect/nest_sustenance
 	id = "nest_sustenance"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
@@ -504,8 +505,8 @@
  */
 /datum/status_effect/blessing_of_insanity
 	id = "blessing_of_insanity"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blessing_of_insanity
 
 /atom/movable/screen/alert/status_effect/blessing_of_insanity
@@ -527,7 +528,7 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), id)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -545,4 +546,4 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), id)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))

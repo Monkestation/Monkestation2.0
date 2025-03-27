@@ -225,9 +225,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 
 /client/New(TopicData)
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, "", "browser-options=byondstorage,find")
-
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
 
@@ -236,6 +233,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -339,16 +339,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.player_details[ckey])
 		reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
-		var/old_version = player_details.byond_version
 		player_details.byond_version = byond_version
 		player_details.byond_build = byond_build
-
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-		if(old_version != byond_version)
-			rebuild_plane_masters = TRUE
-
 	else
 		player_details = new(ckey)
 		player_details.byond_version = byond_version
@@ -434,7 +426,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version].[byond_build]<br>"
 			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
@@ -460,7 +452,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_admin_verbs()
 		var/memo_message = get_message_output("memo")
 		if(memo_message)
-			to_chat(src, memo_message)
+			to_chat(src, memo_message, type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 		adminGreet()
 	if (mob && reconnecting)
 		var/stealth_admin = mob.client?.holder?.fakekey
@@ -479,7 +471,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/time_stamp = query_last_connected.item[1]
 		var/unread_notes = get_message_output("note", ckey, FALSE, time_stamp)
 		if(unread_notes)
-			to_chat(src, unread_notes)
+			to_chat(src, unread_notes, type = MESSAGE_TYPE_ADMINPM, confidential = TRUE)
 	qdel(query_last_connected)
 
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
@@ -517,7 +509,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
 			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
-	get_message_output("watchlist entry", ckey)
 	if(check_overwatch() && CONFIG_GET(flag/vpn_kick))
 		return
 	validate_key_in_db()
@@ -546,7 +537,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		convert_notes_sql(ckey)
 	var/user_messages = get_message_output("message", ckey)
 	if(user_messages)
-		to_chat(src, user_messages)
+		to_chat(src, user_messages, type = MESSAGE_TYPE_ADMINPM, confidential = TRUE)
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
@@ -556,7 +547,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !(is_mentor()) && !(is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -783,9 +774,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/log_client_to_db_connection_log()
 	if(!SSdbcore.shutting_down)
 		SSdbcore.FireAndForget({"
-			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
-			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
-		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
+			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`,`byond_version`,`byond_build`)
+			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid,:byond_version,:byond_build)
+		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id, "byond_version" = byond_version, "byond_build" = byond_build))
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
@@ -967,7 +958,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				string += ", "
 			string += "Mobile Hostspot IP"
 
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !(is_mentor()) && !(is_admin(src)))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 

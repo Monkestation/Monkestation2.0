@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_for_obstructed_atmospherics,
+	/client/proc/export_lighting_info, // monkestation addition
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -162,7 +163,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
 		dat += "[report.tag] ([report.original_path]) - <a href='byond://?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
 
-	usr << browse(dat, "window=map_reports")
+	usr << browse(HTML_SKELETON(dat), "window=map_reports")
 
 /client/proc/cmd_show_at_list()
 	set category = "Mapping"
@@ -177,7 +178,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
 
-	usr << browse(dat, "window=at_list")
+	usr << browse(HTML_SKELETON(dat), "window=at_list")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -374,7 +375,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
+	to_chat(src, boxed_message(messages.Join("")), confidential = TRUE)
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"

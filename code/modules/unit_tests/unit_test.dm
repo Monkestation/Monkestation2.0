@@ -220,6 +220,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
+	// The following are just generic, singular types.
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
@@ -255,6 +256,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
 		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		/obj/effect/transmission_beam, // monkestation addition: relies on the existence of a PTL
+		/obj/item/radio/entertainment/speakers/pda, // monkestation addition: should never exist outside of a modular computer
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -348,13 +351,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

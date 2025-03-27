@@ -215,6 +215,29 @@
 	new /obj/item/gun/ballistic/automatic/plastikov(src)
 	new /obj/item/ammo_box/magazine/plastikov9mm(src)
 
+/obj/item/storage/box/syndie_kit/khan_package
+	name = "Tunel Khans Khare Paccage"
+	desc = "It's a syndicate box written all over with gray crayon."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/khan_package/PopulateContents()
+	new /obj/item/book/granter/martial/the_tunnel_arts(src)
+	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
+
+/obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+
+/obj/item/storage/box/syndie_kit/esword/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+
+/obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC

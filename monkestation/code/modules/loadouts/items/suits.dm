@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.suit)
-			LAZYADD(outfit.backpack_contents, outfit.suit)
+			spawn_in_backpack(outfit, outfit.suit, equipper)
 		outfit.suit = item_path
 	else
 		outfit.suit = item_path
@@ -63,6 +63,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/white_dress
 	name = "White Dress"
 	item_path = /obj/item/clothing/suit/costume/whitedress
+
+/datum/loadout_item/suit/flowery
+	name = "Perfumed Dress Cover"
+	item_path = /obj/item/clothing/suit/jacket/gown
 
 /*
 *	LABCOATS
@@ -145,6 +149,14 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Gothic Coat"
 	item_path = /obj/item/clothing/suit/costume/gothcoat
 
+/datum/loadout_item/suit/butler
+	name = "Butler Coat"
+	item_path = /obj/item/clothing/suit/toggle/jacket/butler
+
+/datum/loadout_item/suit/silk
+	name = "Silk Coat"
+	item_path = /obj/item/clothing/suit/jacket/silk
+
 /*
 *	COSTUMES
 */
@@ -158,7 +170,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/toggle/owlwings/griffinwings
 
 /datum/loadout_item/suit/syndi
-	name = "Black And Red Space Suit Replica"
+	name = "Red Space Suit Replica"
 	item_path = /obj/item/clothing/suit/syndicatefake
 
 /datum/loadout_item/suit/bee

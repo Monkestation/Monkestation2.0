@@ -1,11 +1,9 @@
-#define WONDERLAND_TRAIT "wonderland"
-
 /obj/item/clothing/mask/cursed_rabbit
 	name = "Damned Rabbit Mask"
 	desc = "Slip into the wonderland."
-	icon =  'monkestation/icons/bloodsuckers/weapons.dmi'
+	icon =  'monkestation/icons/obj/items/monster_hunter.dmi'
 	icon_state = "rabbit_mask"
-	worn_icon = 'monkestation/icons/bloodsuckers/worn_mask.dmi'
+	worn_icon = 'monkestation/icons/mob/mask.dmi'
 	worn_icon_state = "rabbit_mask"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING | SNUG_FIT
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
@@ -40,22 +38,22 @@
 	user.remove_status_effect(/datum/status_effect/bnuuy_mask)
 	UnregisterSignal(user, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
 	user.lose_area_sensitivity(type)
-	REMOVE_TRAIT(src, TRAIT_NODROP, WONDERLAND_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
 
 /obj/item/clothing/mask/cursed_rabbit/proc/on_enter_area(mob/living/user, area/new_area)
 	SIGNAL_HANDLER
 	if(istype(new_area, /area/ruin/space/has_grav/wonderland))
-		ADD_TRAIT(src, TRAIT_NODROP, WONDERLAND_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, REF(src))
 
 /obj/item/clothing/mask/cursed_rabbit/proc/on_exit_area(mob/living/user, area/old_area)
 	SIGNAL_HANDLER
 	if(istype(old_area, /area/ruin/space/has_grav/wonderland))
-		REMOVE_TRAIT(src, TRAIT_NODROP, WONDERLAND_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
 
 /datum/status_effect/bnuuy_mask
 	id = "bnuuy_mask"
 	alert_type = null
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	var/datum/component/glitching_state/wondershift
 
 /datum/status_effect/bnuuy_mask/on_apply()
@@ -70,5 +68,3 @@
 
 /datum/status_effect/bnuuy_mask/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] out-of-place, as if [owner.p_they()] were partially detached from reality.")
-
-#undef WONDERLAND_TRAIT

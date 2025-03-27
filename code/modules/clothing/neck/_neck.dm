@@ -321,7 +321,7 @@
 					render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
-	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+	to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 ///////////
 //SCARVES//
@@ -495,3 +495,9 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/shawl
+	name = "silk shawl"
+	desc = "A delicate silk scarf with tiny sparkling fragments woven into the fabric."
+	icon_state = "starshawl"
+	icon = 'icons/obj/clothing/neck.dmi'

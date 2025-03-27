@@ -135,10 +135,12 @@ CREATE TABLE `connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NULL,
+  `round_id` int(11) unsigned DEFAULT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
+  `byond_version` varchar(8) DEFAULT NULL,
+  `byond_build` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

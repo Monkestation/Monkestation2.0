@@ -82,6 +82,10 @@
 		/datum/antagonist/changeling,
 		/datum/antagonist/cult,
 	)
+	/// Traits that don't get removed by Masquerade
+	var/static/list/always_traits = list(
+		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
+	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
 		TRAIT_NOBREATH,
@@ -136,6 +140,9 @@
 		on_hud_created()
 	else
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+
+	ensure_brain_nonvital(current_mob)
+
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
 	new /obj/structure/closet/crate/coffin(user_loc)
@@ -166,16 +173,13 @@
 	SIGNAL_HANDLER
 	var/datum/hud/bloodsucker_hud = owner.current.hud_used
 
-	blood_display = new /atom/movable/screen/bloodsucker/blood_counter()
-	blood_display.hud = bloodsucker_hud
+	blood_display = new /atom/movable/screen/bloodsucker/blood_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += blood_display
 
-	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter()
-	vamprank_display.hud = bloodsucker_hud
+	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
 
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter()
-	sunlight_display.hud = bloodsucker_hud
+	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += sunlight_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
@@ -229,6 +233,13 @@
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
+	if(!iscarbon(owner.current))
+		return
+	var/mob/living/carbon/carbon_owner = owner.current
+	var/obj/item/organ/internal/brain/not_vamp_brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(not_vamp_brain && (not_vamp_brain.decoy_override != initial(not_vamp_brain.decoy_override)))
+		not_vamp_brain.organ_flags |= ORGAN_VITAL
+		not_vamp_brain.decoy_override = FALSE
 	return ..()
 
 /datum/antagonist/bloodsucker/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -272,9 +283,8 @@
 		new_right_arm.unarmed_damage_high = old_right_arm_unarmed_damage_high
 
 	//Give Bloodsucker Traits
-	if(old_body)
-		old_body.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
-	new_body.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	old_body?.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
+	new_body.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 
 /datum/antagonist/bloodsucker/greet()
 	. = ..()
@@ -395,6 +405,19 @@
 
 	return report.Join("<br>")
 
+/// "Oh, well, that's step one. What about two through ten?"
+/// Beheading bloodsuckers is kinda buggy and results in them being dead-dead without actually being final deathed, which is NOT something that's desired.
+/// Just stake them. No shortcuts.
+/datum/antagonist/bloodsucker/proc/ensure_brain_nonvital(mob/living/mob_override)
+	var/mob/living/carbon/carbon_owner = mob_override || owner.current
+	if(!iscarbon(carbon_owner) || isoozeling(carbon_owner))
+		return
+	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		return
+	brain.organ_flags &= ~ORGAN_VITAL
+	brain.decoy_override = TRUE
+
 /datum/antagonist/bloodsucker/proc/give_starting_powers()
 	for(var/datum/action/cooldown/bloodsucker/all_powers as anything in all_bloodsucker_powers)
 		if(!(initial(all_powers.purchase_flags) & BLOODSUCKER_DEFAULT_POWER))
@@ -415,7 +438,7 @@
 		user_right_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
 		user_right_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
 	//Give Bloodsucker Traits
-	owner.current.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	//Clear Addictions
 	for(var/addiction_type in subtypesof(/datum/addiction))
 		owner.current.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
@@ -452,7 +475,7 @@
 		var/datum/species/user_species = user.dna.species
 		user_species.inherent_traits -= TRAIT_DRINKS_BLOOD
 	// Remove all bloodsucker traits
-	owner.current.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	// Update Health
 	owner.current.setMaxHealth(initial(owner.current.maxHealth))
 	// Language

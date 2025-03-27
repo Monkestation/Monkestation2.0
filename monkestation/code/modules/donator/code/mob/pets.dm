@@ -302,3 +302,22 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("TheSpecialSnowflake")
+
+/mob/living/basic/pet/babypukeko
+	name = "baby pukeko"
+	desc = "DAMN!!!!!!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	icon_living = "babypukeko"
+	icon_dead = "babypukeko-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/mob/living/basic/pet/babypukeko/tall
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	icon_living = "tallbabypukeko"
+	icon_dead = "tallbabypukeko-dead"
+	pixel_x = -96

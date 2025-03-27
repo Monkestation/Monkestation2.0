@@ -41,6 +41,7 @@
 		TRAIT_HAS_MARKINGS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
+	inherent_factions = list(FACTION_HIVE)
 
 	meat = /obj/item/food/meat/slab/human/mutant/apid
 
@@ -85,8 +86,7 @@
 	if(human_who_gained_species.hud_used)
 		var/datum/hud/hud_used = human_who_gained_species.hud_used
 
-		honeydisplay = new /atom/movable/screen/apid/honey()
-		honeydisplay.hud = hud_used
+		honeydisplay = new /atom/movable/screen/apid/honey(null, hud_used)
 		hud_used.infodisplay += honeydisplay
 		adjust_honeycount(0)
 		hud_used.show_hud(hud_used.hud_version)
@@ -119,8 +119,7 @@
 	if(H.hud_used)
 		var/datum/hud/hud_used = H.hud_used
 
-		honeydisplay = new /atom/movable/screen/apid/honey()
-		honeydisplay.hud = hud_used
+		honeydisplay = new /atom/movable/screen/apid/honey(null, hud_used)
 		hud_used.infodisplay += honeydisplay
 		adjust_honeycount(0)
 		hud_used.show_hud(hud_used.hud_version)
@@ -130,6 +129,13 @@
 
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
+
+/datum/species/apid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	if(chem.type == /datum/reagent/toxin/pestkiller)
+		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/apid/get_species_description()
 	return "Apids are a race of bipedal bees from the jungle planet of Saltu. Due to their large bodies, they have lost the ability to fly."
@@ -153,3 +159,38 @@
 		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
 		'monkestation/sound/voice/laugh/moth/mothsqueak.ogg',
 	)
+
+/datum/species/apid/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-bug",
+			SPECIES_PERK_NAME = "Bee",
+			SPECIES_PERK_DESC = "Other bees will not attack apids due to their similar biology.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-hive",
+			SPECIES_PERK_NAME = "Hiver",
+			SPECIES_PERK_DESC = "Apids can pollinate plants to raise their stats. \
+				As well as being able to create hives using their collected pollen.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fa-eye",
+			SPECIES_PERK_NAME = "Big Eyes",
+			SPECIES_PERK_DESC = "Apids can see better in the dark due to their eyes \
+				absorbing more light, but are kept down longer by flashes.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Insectoid Biology",
+			SPECIES_PERK_DESC = "Fly swatters will deal higher amounts of damage to a Apid.\
+				As well as being hurt by pest spray.",
+		),
+	)
+
+	return to_add

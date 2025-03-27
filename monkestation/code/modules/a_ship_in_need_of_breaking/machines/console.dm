@@ -12,9 +12,6 @@
 ///the currently used map template
 	var/datum/map_template/shipbreaker/template
 
-///List of ships to spawn.
-	var/list/possible_ships = list()
-
 ///subtypes of this (but not this itself) are loadable programs
 	var/ship_type = /datum/map_template/shipbreaker
 
@@ -27,6 +24,8 @@
 	var/ship_health = 0
 	///our initial turf count
 	var/turf_count = 0
+	var/ship_part = 0
+	var/total_turf = 0
 
 /obj/machinery/computer/shipbreaker/Initialize(mapload)
 	..()
@@ -37,16 +36,21 @@
 	if(!linked)
 		return
 	bottom_left = locate(linked.x, linked.y, src.z)
-	for(var/ship in subtypesof(ship_type))
-		var/datum/map_template/shipbreaker/s = new ship
-		possible_ships+= s
+
+/obj/machinery/computer/shipbreaker/Destroy()
+	bottom_left = null
+	linked = null
+	template = null
+	return ..()
 
 /obj/machinery/computer/shipbreaker/proc/spawn_ship()
 	area_clear_check()
 	if(!spawn_area_clear)
-		say("ERROR: SHIPBREAKING ZONE NOT CLEAR, PLEASE REMOVE ALL REMAINING SHIP PARTS")
+		say("ERROR: SHIPBREAKING ZONE NOT CLEAR, PLEASE REMOVE ALL REMAINING FLOORS, STRUCTURES, AND MACHINERY")
 		return
-	var/datum/map_template/shipbreaker/ship_to_spawn = pick(possible_ships)
+
+	var/random_ship = pick(SSmapping.shipbreaker_templates)
+	var/datum/map_template/shipbreaker/ship_to_spawn = SSmapping.shipbreaker_templates[random_ship]
 
 	ship_to_spawn.load(bottom_left)
 
@@ -55,11 +59,13 @@
 
 /obj/machinery/computer/shipbreaker/proc/area_clear_check()
 	for(var/turf/t in linked)
-		if(!isspaceturf(t))
+		if(!isgroundlessturf(t))
 			spawn_area_clear = FALSE
+			say("FLOORING OR WALL DETECTED")
 			return
 	for(var/obj/s in linked)
 		if(isstructure(s) || ismachinery(s))
+			say("MACHINE OR STRUCTURE DETECTED.")
 			spawn_area_clear = FALSE
 			return
 
@@ -67,8 +73,11 @@
 
 /obj/machinery/computer/shipbreaker/proc/clear_floor_plating()
 	for(var/turf/t in linked)
-		if(isfloorturf(t))
+		//if(isfloorturf(t))
+		//t.ScrapeAway()
+		if(isopenturf(t))
 			t.ScrapeAway()
+
 
 
 /obj/machinery/computer/shipbreaker/ui_interact(mob/user, datum/tgui/ui)
@@ -102,13 +111,18 @@
 
 /obj/machinery/computer/shipbreaker/proc/setup_health_tracker()
 	for(var/turf/turf in linked)
-		turf_count++
-		RegisterSignal(turf, COMSIG_TURF_DESTROY, PROC_REF(modify_health))
+		if(!isgroundlessturf(turf))
+			turf_count++
+			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health))
+	total_turf = turf_count
+	ship_part = (100 / turf_count)
 	ship_health = 100
 
 /obj/machinery/computer/shipbreaker/proc/modify_health(turf/source)
-	ship_health -= (1 / turf_count)
+	ship_health -= ((total_turf - turf_count) * ship_part)
 	ship_health = max(ship_health, 0)
+	if(ship_health < 1)
+		ship_health = 0
 
 
 /obj/machinery/computer/shipbreaker/proc/damage_ship()

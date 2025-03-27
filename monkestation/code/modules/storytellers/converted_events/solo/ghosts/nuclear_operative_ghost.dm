@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/nuclear_operative
 	name = "Nuclear Assault"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_datum = /datum/antagonist/nukeop
 	typepath = /datum/round_event/antagonist/solo/ghost/nuclear_operative
@@ -51,10 +51,7 @@
 	if(most_experienced == antag_mind)
 		return
 	var/mob/living/current_mob = antag_mind.current
-	var/list/items = current_mob.get_equipped_items(TRUE)
-	current_mob.unequip_everything()
-	for(var/obj/item/item as anything in items)
-		qdel(item)
+	current_mob.clear_inventory()
 
 	if(!most_experienced)
 		most_experienced = get_most_experienced(setup_minds, required_role)

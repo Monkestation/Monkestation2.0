@@ -23,7 +23,7 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 10,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/dna_vault
@@ -645,11 +645,17 @@
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		// monkestation start
+		/obj/machinery/vending/access/command = "Command Outfitting Station",
+		/obj/machinery/vending/barbervend = "Fab-O-Vend",
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
-		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
 		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
-		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
+		/obj/machinery/vending/imported/yangyu = "Fudobenda",
+		/obj/machinery/vending/mechcomp = "ThinkTronic MechComp Dispenser",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",
+		// monkestation end
+	)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -1249,6 +1255,14 @@
 	name = "Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/recycler
+	req_components = list(
+		/datum/stock_part/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/shipbreaker
+	name = "Shipbreaking Recycler"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/shipbreaker
 	req_components = list(
 		/datum/stock_part/manipulator = 1)
 	needs_anchored = FALSE
