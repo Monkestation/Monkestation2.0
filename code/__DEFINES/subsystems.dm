@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 26 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 27 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem

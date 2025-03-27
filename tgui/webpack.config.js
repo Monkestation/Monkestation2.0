@@ -145,7 +145,7 @@ module.exports = (env = {}, argv) => {
 
   // Development build specific options
   if (mode !== 'production') {
-    config.devtool = 'cheap-module-source-map';
+    config.devtool = 'inline-source-map';
   }
 
   // Development server specific options

@@ -604,3 +604,13 @@ MODERATE_POP_SCALE_PENALTY 30
 MAJOR_POP_SCALE_PENALTY 30
 ROLESET_POP_SCALE_PENALTY 30
 OBJECTIVES_POP_SCALE_PENALTY 30
+
+## Uncomment to prevent mechcomp interaction components from holding items.
+#DISABLE_MECHCOMP_INTERACTION_ITEMS
+
+## Uncomment to prevent mechcomp interaction components from using storage.
+#DISABLE_MECHCOMP_INTERACTION_STORAGE
+
+## Additional typepaths to prevent mechcomp interaction components from interacting with.
+#BLACKLIST_MECHCOMP_INTERACTION /obj/item/doohickey
+#BLACKLIST_MECHCOMP_INTERACTION /obj/item/thingymajig
