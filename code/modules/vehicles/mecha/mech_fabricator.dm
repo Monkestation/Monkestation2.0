@@ -161,6 +161,7 @@
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	update_use_power(ACTIVE_POWER_USE)
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
@@ -172,6 +173,7 @@
 	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /**
  * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
@@ -283,6 +285,7 @@
 		dispense_built_part(being_built)
 		if(process_queue)
 			build_next_in_queue(FALSE)
+		SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 		return TRUE
 
 /**
@@ -337,6 +340,7 @@
 	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>length(queue)))
 		return FALSE
 	queue.Cut(index,++index)
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 	return TRUE
 
 /**
@@ -462,6 +466,8 @@
 
 				add_to_queue(design)
 
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
+
 			if(params["now"])
 				if(process_queue)
 					return
@@ -470,6 +476,8 @@
 
 				if(!being_built)
 					begin_processing()
+
+				SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 			return
 
@@ -484,6 +492,8 @@
 			// Delete everything from queue
 			queue.Cut()
 
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
+
 			return
 
 		if("build_queue")
@@ -496,11 +506,15 @@
 			if(!being_built)
 				begin_processing()
 
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
+
 			return
 
 		if("stop_queue")
 			// Pause queue building. Also known as stop.
 			process_queue = FALSE
+
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 			return
 
@@ -513,6 +527,8 @@
 
 			// SAFETY: eject_sheets checks for valid mats
 			rmat.eject_sheets(material, amount)
+
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 			return
 
 	return FALSE
@@ -521,6 +537,7 @@
 	var/datum/material/M = id_inserted
 	add_overlay("fab-load-[M.name]")
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 10)
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

@@ -330,6 +330,7 @@
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
 
 	busy = TRUE
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 	if(production_animation)
 		flick(production_animation, src)
@@ -342,6 +343,7 @@
 	return TRUE
 
 /obj/machinery/rnd/production/proc/finalize_build()
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -355,6 +357,7 @@
 		return 0
 
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 	var/list/matlist = list()
 	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
