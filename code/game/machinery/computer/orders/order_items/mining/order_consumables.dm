@@ -18,11 +18,6 @@
 	desc = "For emergency magmatic burn relief."
 	cost_per_order = 700
 
-/datum/orderable_item/consumables/rescue_hook
-	item_path = /obj/item/fishing_hook/rescue
-	desc = "Rod not included."
-	cost_per_order = 500
-
 /datum/orderable_item/consumables/whiskey
 	item_path = /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	cost_per_order = 100
