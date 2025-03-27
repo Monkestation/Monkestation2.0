@@ -27,6 +27,9 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/obj/item/melee/trick_weapon/update_name(updates)
+	. = ..()
+	name = "[initial(name)] +[upgrade_level]"
 
 /obj/item/melee/trick_weapon/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
@@ -37,9 +40,9 @@
 
 /obj/item/melee/trick_weapon/proc/upgrade_weapon()
 	upgrade_level++
-	name = "[initial(name)] +[upgrade_level]"
 	var/current_base_force = enabled ? on_force : initial(force)
 	force = UPGRADED_VAL(current_base_force, upgrade_level)
+	update_name()
 
 /obj/item/melee/trick_weapon/attack(mob/target, mob/living/user, params) //our weapon does 25% less damage on non monsters
 	var/old_force = force
