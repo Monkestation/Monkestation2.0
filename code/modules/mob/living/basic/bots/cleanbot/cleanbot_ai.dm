@@ -72,7 +72,7 @@
 	action_cooldown = 3 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = view(search_range, controller.pawn) // monkestation edit: don't pre-filter with typecache, so we can check for TRAIT_TRASH_ITEM
+	var/list/found = oview(search_range, controller.pawn) // monkestation edit: don't pre-filter with typecache, so we can check for TRAIT_TRASH_ITEM
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item as anything in found)
 		// monkestation start: check for TRAIT_TRASH_ITEM
