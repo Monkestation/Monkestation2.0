@@ -32,19 +32,19 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/equipped(mob/living/user, slot)
 	. = ..()
 	if(isethereal(user) && (slot & ITEM_SLOT_NECK))
-		var/mob/living/carbon/human/ethereal = user
-		to_chat(ethereal, span_notice("Your light gently flickers out as you put [src] on."))
-		ethereal.dna.species.ethereal_light.set_light_on(FALSE)
-		ethereal.update_worn_oversuit()
-
+		var/datum/species/ethereal/wearer = user
+		to_chat(wearer, span_notice("Your light gently flickers out as you put [src] on."))
+		wearer.EMPeffect = TRUE
+		wearer.spec_updatehealth(wearer)
+/*
 /obj/item/clothing/suit/hooded/ethereal_raincoat/unequipped(mob/living/user, slot)
 	. = ..()
 	if(isethereal(user) && (slot & ITEM_SLOT_NECK))
-		var/mob/living/carbon/human/ethereal = user
-		to_chat(ethereal, span_notice("Your light gently flickers back as you take [src] off."))
-		ethereal.dna.species.ethereal_light.set_light_on(TRUE)
-		ethereal.update_worn_oversuit()
-
+		var/datum/species/ethereal/wearer = user
+		to_chat(wearer, span_notice("Your light gently flickers back as you take [src] off."))
+		wearer.EMPeffect = FALSE
+		wearer.spec_updatehealth(wearer)
+*/
 //MONKESTATION ADDITION END
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
