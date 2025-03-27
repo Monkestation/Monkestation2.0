@@ -232,10 +232,6 @@
 	name = "Poofy 2"
 	icon_state = "hair_poofy2"
 
-/datum/sprite_accessory/hair/monke/bunhead3
-	name = "Bunhead 3"
-	icon_state = "hair_bunhead3"
-
 /datum/sprite_accessory/hair/monke/rowbun
 	name = "Row Bun"
 	icon_state = "hair_rowbun"

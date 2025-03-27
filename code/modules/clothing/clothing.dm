@@ -60,8 +60,8 @@
 
 	//MonkeStation Edit Start
 	//Alternative Scream/Laugh Vars
-	var/list/alternative_screams = list()
-	var/list/alternative_laughs = list()
+	var/list/alternative_screams
+	var/list/alternative_laughs
 	//MonkeStation Edit End
 
 /obj/item/clothing/Initialize(mapload)
@@ -268,10 +268,10 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/wearer = user
-	if(alternative_screams.len)
-		wearer.alternative_screams -= alternative_screams
-	if(alternative_laughs.len)
-		wearer.alternative_laughs -= alternative_laughs
+	if(LAZYLEN(alternative_screams))
+		LAZYREMOVE(wearer.alternative_screams, alternative_screams)
+	if(LAZYLEN(alternative_laughs))
+		LAZYREMOVE(wearer.alternative_laughs, alternative_laughs)
 	//MonkeStation Edit End
 
 /obj/item/clothing/equipped(mob/living/user, slot)
@@ -294,10 +294,10 @@
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/wearer = user
-		if(alternative_screams.len)
-			wearer.alternative_screams.Add(alternative_screams)
-		if(alternative_laughs.len)
-			wearer.alternative_laughs.Add(alternative_laughs)
+		if(LAZYLEN(alternative_screams))
+			LAZYADD(wearer.alternative_screams, alternative_screams)
+		if(LAZYLEN(alternative_laughs))
+			LAZYADD(wearer.alternative_laughs, alternative_laughs)
 		//MonkeStation Edit End
 
 // If the item is a piece of clothing and is being worn, make sure it updates on the player

@@ -40,6 +40,10 @@ export class Window extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { suspended } = useBackend();
+    if (suspended) {
+      return;
+    }
     // prettier-ignore
     const shouldUpdateGeometry = (
       this.props.width !== prevProps.width

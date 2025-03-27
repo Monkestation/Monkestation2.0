@@ -82,6 +82,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "dI" = (
@@ -302,6 +303,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "pk" = (
@@ -465,6 +467,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ae" = (
@@ -525,6 +528,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ch" = (
