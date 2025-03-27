@@ -227,9 +227,9 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
-/obj/item/scalpel/borg
+/obj/item/scalpel/borg // Monke edit start:
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
-	toolspeed= 0.5 // Added a borg scalpel for some different flavor text since, ya know borgs dont exactly have "Bones"
+	toolspeed= 0.5 // Monke Edit end: Added a borg scalpel for some different flavor text since, ya know borgs dont exactly have "Bones"
 
 /obj/item/circular_saw
 	name = "circular saw"

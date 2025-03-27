@@ -672,12 +672,12 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
-		/obj/item/retractor,
+		/obj/item/retractor, //Monke edit start: remove augment tools
 		/obj/item/hemostat,
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
-		/obj/item/circular_saw,
+		/obj/item/circular_saw, //Monke edit end: remove augment tools
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
