@@ -72,7 +72,13 @@
 	icon_state = "45box"
 	ammo_type = /obj/item/ammo_casing/c45
 	max_ammo = 20
-
+/// Monkestation edit start
+/obj/item/ammo_box/c45/rubber
+	name = "ammo box (.45 rubber"
+	icon_state = "45box"
+	ammo_type = /obj/item/ammo_casing/c45
+	max_ammo = 20
+/// Monekstation edit end
 /obj/item/ammo_box/a40mm
 	name = "ammo box (40mm grenades)"
 	icon_state = "40mm"
