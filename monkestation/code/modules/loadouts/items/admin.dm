@@ -12,7 +12,7 @@
 
 /datum/loadout_item/neck/mentor_cloak/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only, override_items)
 	if(!visuals_only)
-		spawn_in_backpack(outfit, item_path, equipped)
+		spawn_in_backpack(outfit, item_path, equipper)
 
 /datum/loadout_item/under/miscellaneous/adminturtleneck
 	name = "CentCom Turtleneck"
