@@ -43,7 +43,7 @@
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
 	/// The turfs we can place a hololadder on.
-	var/turf/exit_turfs = list()
+	var/list/turf/exit_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -74,7 +74,7 @@
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
-	QDEL_NULL(exit_turfs)
+	exit_turfs.Cut()
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)

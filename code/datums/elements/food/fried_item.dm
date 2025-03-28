@@ -37,7 +37,7 @@
 			this_food.name = "\proper the physical manifestation of the very concept of fried foods"
 			this_food.desc = "A heavily-fried... something. Who can tell anymore?"
 
-	ADD_TRAIT(this_food, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
+	this_food.add_traits(list(TRAIT_FOOD_FRIED, TRAIT_MECHCOMP_INTERACTION_BANNED), ELEMENT_TRAIT(type)) // monkestation edit: also add TRAIT_MECHCOMP_INTERACTION_BANNED
 	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
@@ -47,6 +47,7 @@
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
 		foodtypes = FRIED, \
+		volume = this_food.reagents?.maximum_volume, \
 	)
 
 /datum/element/fried_item/Detach(atom/source, ...)
@@ -54,6 +55,6 @@
 		source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 	source.name = initial(source.name)
 	source.desc = initial(source.desc)
-	REMOVE_TRAIT(source, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
+	source.remove_traits(list(TRAIT_FOOD_FRIED, TRAIT_MECHCOMP_INTERACTION_BANNED), ELEMENT_TRAIT(type)) // monkestation edit: also add TRAIT_MECHCOMP_INTERACTION_BANNED
 	qdel(source.GetComponent(/datum/component/edible)) // Don't care if it was initially edible
 	return ..()

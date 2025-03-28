@@ -123,7 +123,7 @@
 
 /obj/projectile/beam/disabler/weak
 	stamina = 15
-	debilitate_mult = 1.5
+	debilitate_mult = 0.5
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
@@ -199,6 +199,7 @@
 	impact_light_intensity = 7
 	impact_light_outer_range = 2.5
 	impact_light_color_override = COLOR_LIME
+	range = 255 //come on, have some fun now! monkestation edit
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"

@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 /datum/preferences/proc/return_default_antag_rep()
 	if(!parent)
 		return 10
-	var/parent_ckey = ckey(parent_key)
 	if(!(parent_ckey in GLOB.blessed_ckeys))
 		return 10
 	return GLOB.blessed_ckeys[parent_ckey][2]
@@ -30,11 +29,9 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 /datum/preferences/proc/return_rep_multiplier()
 	if(!parent)
 		return 1
-	var/parent_ckey = ckey(parent_key)
 	if(!(parent_ckey in GLOB.blessed_ckeys))
 		return 1
 	return GLOB.blessed_ckeys[parent_ckey][1]
-
 
 ///give it a list of clients and the value aswell if it should be affected by multipliers and let er rip
 /proc/mass_adjust_antag_rep(list/clients, value, mulitplier = TRUE)

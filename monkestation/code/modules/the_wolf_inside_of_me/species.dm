@@ -11,7 +11,6 @@
 		TRAIT_PRIMITIVE,
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
-
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/werewolf
 	mutantears = /obj/item/organ/internal/ears/werewolf

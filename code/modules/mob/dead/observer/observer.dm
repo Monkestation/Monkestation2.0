@@ -443,7 +443,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	to_chat(src, span_ghostalert("<a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
+	to_chat(src, span_ghostalert("<a href='byond://?src=[REF(src)];reenter=1'>(Click to re-enter)</a>"))
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
@@ -944,6 +944,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
 	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+		return
+
+	if (chosen_target == usr)
 		return
 
 	do_observe(chosen_target)

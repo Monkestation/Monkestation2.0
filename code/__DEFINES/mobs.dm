@@ -114,7 +114,7 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra_moth" //Monkestation Addition
+#define SPECIES_TUNDRA "tundra" //Monkestation Addition
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -203,13 +203,6 @@
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
-
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
