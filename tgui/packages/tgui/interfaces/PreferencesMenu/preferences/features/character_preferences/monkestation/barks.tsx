@@ -11,7 +11,7 @@ import {
   FeatureValueProps,
 } from '../../base';
 
-const FeatureBlooperDropdownInput = (
+const FeatureBarkDropdownInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) => {
   return (
@@ -19,7 +19,7 @@ const FeatureBlooperDropdownInput = (
       <Stack.Item>
         <Button
           onClick={() => {
-            props.act('play_blooper');
+            props.act('play_bark');
           }}
           icon="play"
           width="100%"
@@ -41,7 +41,7 @@ const FeatureBlooperDropdownInput = (
   );
 };
 
-export const blooper_pitch_range: FeatureNumeric = {
+export const bark_pitch_range: FeatureNumeric = {
   name: 'Character Voice Range',
   description:
     '[0.1 - 0.8] Lower number, less range. Higher number, more range.',
@@ -49,32 +49,32 @@ export const blooper_pitch_range: FeatureNumeric = {
   component: FeatureNumberInput,
 };
 
-export const blooper_speech: FeatureChoiced = {
+export const bark_voice: FeatureChoiced = {
   name: 'Character Voice',
-  component: FeatureBlooperDropdownInput,
+  component: FeatureBarkDropdownInput,
 };
 
-export const blooper_speech_speed: FeatureNumeric = {
+export const bark_speech_speed: FeatureNumeric = {
   name: 'Character Voice Duration',
   description:
     '[2 - 16] Lower number, faster speed. Higher number, slower speed.',
   component: FeatureNumberInput,
 };
 
-export const blooper_speech_pitch: FeatureNumeric = {
+export const bark_speech_pitch: FeatureNumeric = {
   name: 'Character Voice Pitch',
   description:
     '[0.4 - 2] Lower number, deeper pitch. Higher number, higher pitch.',
   component: FeatureNumberInput,
 };
 
-export const hear_sound_blooper: FeatureToggle = {
+export const hear_sound_bark: FeatureToggle = {
   name: 'Enable Character Voice hearing',
   category: 'SOUND',
   component: CheckboxInput,
 };
 
-export const sound_blooper_volume: Feature<number> = {
+export const sound_bark_volume: Feature<number> = {
   name: 'Character Voice Volume',
   category: 'SOUND',
   description: 'The volume that the Vocal Barks sounds will play at.',

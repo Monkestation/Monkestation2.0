@@ -37,15 +37,6 @@
 		if("play")
 			usr.playsound_local(get_turf(usr), bark.talk, 300, FALSE, 1, 7, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(7), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
-
-// 	return TRUE
-
-// /// Select [path] item to [category_slot] slot.
-// /datum/bark_screen/proc/select_item(datum/store_item/selected_item)
-// 	if(selected_item.item_path in owner.prefs.inventory)
-// 		return //safety
-// 	selected_item.attempt_purchase(owner)
-
 /datum/bark_screen/ui_data(mob/user)
 	var/list/data = list()
 
@@ -55,17 +46,10 @@
 /datum/bark_screen/ui_static_data()
 	var/list/data = list()
 
-	// [name] is the name of the tab that contains all the corresponding contents.
-	// [title] is the name at the top of the list of corresponding contents.
-	// [contents] is a formatted list of all the possible items for that slot.
-	//  - [contents.path] is the path the singleton datum holds
-	//  - [contents.name] is the name of the singleton datum
-	//  - [contents.item_cost], the total cost of this item
-
 	data["bark_groups"] = list()
-	for (var/group in GLOB.bark_groups)
+	for (var/group in GLOB.bark_groups_visible)
 		var/list/bark_names = list()
-		for (var/datum/bark_voice/bark in GLOB.bark_groups[group])
+		for (var/datum/bark_voice/bark in GLOB.bark_groups_visible[group])
 			bark_names += list(list(bark.name, bark.id))
 		data["bark_groups"][group] = bark_names
 

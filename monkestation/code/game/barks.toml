@@ -35,10 +35,11 @@ name = 'Miscellaneous'
 [misc.Squeaky]
 path = 'sound/items/toysqueak1.ogg'
 max_speed = 4
+hidden = true
 
 [misc.Beep]
 path = 'sound/machines/terminal_select.ogg'
-max_pitch = 1 #Bringing the pitch higher just hurts your ears :<
+max_pitch = 0.7 #Bringing the pitch higher just hurts your ears :<
 max_speed = 4 #This soundbyte's too short for larger speeds to not sound awkward
 
 [misc."Synthetic (Grunt)"]
@@ -47,13 +48,16 @@ path = 'sound/misc/bloop.ogg'
 [misc."Synthetic (Normal)"]
 path = 'sound/machines/uplinkerror.ogg'
 max_speed = 4
+hidden = true
 
 [misc.Windy]
 path = 'sound/weapons/bulletflyby.ogg'
 max_pitch = 1.6
+hidden = true
 
 [misc.Brassy]
 path = 'sound/machines/clockcult/integration_cog_install.ogg'
+min_speed = 4
 
 # --------- Misc Animal Sounds ---------
 
@@ -72,6 +76,7 @@ allow_random = true
 [animal.Caw]
 path = 'caw.ogg'
 allow_random = true
+min_pitch = 0.5
 
 [animal.Chittery]
 path = 'mothchitter2.ogg'
@@ -152,12 +157,15 @@ exclaim_path='pugg_exclaim.ogg'
 
 [goon.Radio]
 path='radio.ogg'
+hidden = true
 
 [goon.Radio2]
 path='radio2.ogg'
+hidden = true
 
 [goon."Radio Ai"]
 path='radio_ai.ogg'
+hidden = true
 
 [goon.Roach]
 path='roach.ogg'

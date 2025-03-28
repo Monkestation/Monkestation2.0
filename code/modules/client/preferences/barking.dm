@@ -20,6 +20,9 @@
 /datum/preference/choiced/bark_voice/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_bark(value)
 
+/datum/preference/choiced/bark_voice/create_default_value()
+	return pick(GLOB.random_barks)
+
 /datum/preference_middleware/bark
 	/// Cooldown on requesting a bark preview.
 	COOLDOWN_DECLARE(bark_cooldown)

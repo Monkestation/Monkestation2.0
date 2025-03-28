@@ -1,6 +1,10 @@
+/// Barks which can be selected by players, split into groups
+GLOBAL_LIST_EMPTY(bark_groups_visible)
+/// All barks, split into groups
 GLOBAL_LIST_EMPTY(bark_groups_all)
-GLOBAL_LIST_EMPTY(bark_groups_player)
+/// Barks which can be picked randomly
 GLOBAL_LIST_EMPTY(random_barks)
+/// All barks
 GLOBAL_LIST_INIT(bark_list, gen_barks())
 
 /proc/gen_barks()
@@ -12,7 +16,8 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 		var/group_obj = output[group_id]
 		var/group_name = group_obj["name"]
 		var/group_path = group_obj["path"]
-		var/list/group_barks = list()
+		var/list/visible_barks = list()
+		var/list/all_barks = null
 
 		if (!group_name)
 			stack_trace("Group " + group_id + " has no name")
@@ -35,6 +40,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 				stack_trace("Bark " + bark_name + " has no talk sound")
 				continue
 
+			// Setup parameters
 			bark.max_pitch = bark_obj["max_pitch"]
 			bark.min_pitch = bark_obj["min_pitch"]
 			bark.max_speed = bark_obj["max_speed"]
@@ -42,18 +48,30 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 			if (bark.max_pitch == null)
 				bark.max_pitch = BARK_DEFAULT_MAXPITCH
 			if (bark.min_pitch == null)
-				bark.min_pitch = BARK_DEFAULT_MAXPITCH
+				bark.min_pitch = BARK_DEFAULT_MINPITCH
 			if (bark.max_speed == null)
 				bark.max_speed = BARK_DEFAULT_MAXSPEED
 			if (bark.min_speed == null)
 				bark.min_speed = BARK_DEFAULT_MINSPEED
 
-			group_barks += bark
+			// Add to the bark lists
 			bark_list[bark.id] = bark
 			if (bark_obj["allow_random"])
 				GLOB.random_barks += bark.id
+			// Add to the group lists
+			if (bark_obj["hidden"] && !all_barks)
+				all_barks = visible_barks.Copy()
+			if (!bark_obj["hidden"])
+				visible_barks += bark
+			if (all_barks)
+				all_barks += bark
 
-		GLOB.bark_groups[group_name] = group_barks
+		if (length(visible_barks))
+			GLOB.bark_groups_visible[group_name] = visible_barks
+		if (all_barks)
+			GLOB.bark_groups_all[group_name] = all_barks
+		else if (length(visible_barks))
+			GLOB.bark_groups_all[group_name] = visible_barks
 
 	return bark_list
 
@@ -147,3 +165,11 @@ GLOBAL_VAR_INIT(bark_allowed, TRUE) // For administrators
 		GLOB.bark_allowed = !GLOB.bark_allowed
 	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.bark_allowed ? "enabled" : "disabled"].</B></span>")
 
+/client/proc/cmd_debug_reload_barks()
+	set category = "Debug"
+	set name = "Reload Barks"
+
+	GLOB.bark_groups_visible = list()
+	GLOB.bark_groups_all = list()
+	GLOB.random_barks = list()
+	GLOB.bark_list = gen_barks()

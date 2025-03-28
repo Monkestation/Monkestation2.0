@@ -120,16 +120,16 @@
 	for(var/i in 1 to num_barks)
 		if(total_delay > BARK_MAX_TIME)
 			break
-		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), long_bark_start_time, talk), total_delay)
+		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), long_bark_start_time, voice.voice), total_delay)
 		total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 	return total_delay
 
-/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, sound/talk_sound)
+/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, /datum/bark_voice/bark)
 	if(queue_time && long_bark_start_time != queue_time)
 		return
 
-	pitch = clamp(pitch, BARK_DEFAULT_MINPITCH, BARK_DEFAULT_MAXPITCH)
+	pitch = clamp(pitch, bark.min_pitch, bark.max_pitch)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, use_reverb = FALSE, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = talk_sound, distance_multiplier = 1)
+		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, use_reverb = FALSE, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), sound_to_use = bark.talk, distance_multiplier = 1)
