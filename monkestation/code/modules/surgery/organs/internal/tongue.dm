@@ -351,9 +351,9 @@
 	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(stop_sound_particles))
 
 /obj/item/organ/internal/tongue/ornithid/Destroy()
-	. = ..()
 	QDEL_NULL(song)
 	UnregisterSignal(src, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END))
+	return ..()
 
 /obj/item/organ/internal/tongue/ornithid/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
@@ -363,14 +363,12 @@
 
 /obj/item/organ/internal/tongue/ornithid/Remove(mob/living/carbon/tongue_owner, special)
 	. = ..()
-	sing?.Remove	(tongue_owner)
-	song.stop_playing()
+	sing?.Remove(tongue_owner)
+	song?.stop_playing()
 	stop_sound_particles()
 
 /obj/item/organ/internal/tongue/ornithid/proc/start_sound_particles()
-	if(!music)
-		music = owner.AddComponent(/datum/component/particle_spewer/music_notes)
+	music ||= owner.AddComponent(/datum/component/particle_spewer/music_notes)
 
 /obj/item/organ/internal/tongue/ornithid/proc/stop_sound_particles()
-	qdel(owner?.GetComponent(/datum/component/particle_spewer/music_notes))
-	music = null
+	QDEL_NULL(music)
