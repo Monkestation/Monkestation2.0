@@ -17687,6 +17687,8 @@
 /obj/structure/sign/painting/library{
 	pixel_x = 32
 	},
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/floor/wood,
 /area/station/service/library)
 "bFH" = (
@@ -18017,9 +18019,14 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "bIa" = (
-/obj/structure/table/glass,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "bIb" = (
@@ -19317,11 +19324,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/mob/living/basic/rabbit/daisy,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
-	},
 /turf/open/floor/wood,
 /area/station/service/library/private)
 "bSO" = (
@@ -34521,12 +34523,8 @@
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/captain)
 "gni" = (
-/obj/structure/rack,
-/obj/item/storage/bag/plants,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/item/hatchet,
 /obj/machinery/firealarm/directional/west,
-/obj/effect/spawner/random/food_or_drink/cups,
+/obj/machinery/vending/barbervend,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "gnj" = (
@@ -52534,6 +52532,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"niZ" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/structure/railing/wooden_fencing/gate{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/obj/item/toy/plush/shark,
+/turf/open/floor/wood,
+/area/station/service/library)
 "njj" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -122163,8 +122174,8 @@ byN
 byN
 bDH
 byN
-vej
-byO
+byN
+niZ
 bKI
 bKH
 wnp

@@ -188,6 +188,16 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
+/obj/item/clothing/glasses/hud/security/sunglasses/normal /// Monkestation edit : Adding some substance to the detective role
+	name = "sunglasses"
+	desc = "N/A"
+	icon_state = "sun"
+	inhand_icon_state = "sunglasses"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+	dog_fashion = /datum/dog_fashion/head
+
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."

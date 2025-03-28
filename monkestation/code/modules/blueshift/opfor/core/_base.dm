@@ -86,9 +86,9 @@
 	mind_reference.opposing_force = null
 	mind_reference = null
 	SSopposing_force.remove_opfor(src)
+	admin_chat.Cut()
+	modification_log.Cut()
 	QDEL_LIST(objectives)
-	QDEL_LIST(admin_chat)
-	QDEL_LIST(modification_log)
 	QDEL_NULL(stat_button)
 	return ..()
 
