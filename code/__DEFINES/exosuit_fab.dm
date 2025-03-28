@@ -31,6 +31,8 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
+// Module is compatbile with makeshift models (locker mechs and such)
+#define EXOSUIT_MODULE_MAKESHIFT (1<<11) //monkestation edit
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)
