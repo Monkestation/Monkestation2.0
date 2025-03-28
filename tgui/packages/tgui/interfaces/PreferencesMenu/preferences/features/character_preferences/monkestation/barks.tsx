@@ -68,9 +68,10 @@ export const bark_speech_pitch: FeatureNumeric = {
   component: FeatureNumberInput,
 };
 
-export const hear_sound_bark: FeatureToggle = {
-  name: 'Enable Character Voice hearing',
+export const sound_short_barks: FeatureToggle = {
+  name: 'sound_short_barks',
   category: 'SOUND',
+  description: 'When enabled, hear sounds for command reports, notices, etc.',
   component: CheckboxInput,
 };
 

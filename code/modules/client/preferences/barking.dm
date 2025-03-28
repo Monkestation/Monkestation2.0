@@ -15,6 +15,7 @@
 		"open_bark_screen" = PROC_REF(open_bark_screen),
 	)
 	var/datum/bark_screen/bark_screen
+	var/atom/movable/barker
 
 /datum/preference_middleware/bark/proc/open_bark_screen(list/params, mob/user)
 	if(bark_screen)
@@ -27,11 +28,16 @@
 /datum/preference_middleware/bark/proc/play_bark(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, bark_cooldown))
 		return TRUE
-	user.voice.set_from_prefs(preferences)
-	var/total_delay = barker.long_bark(list(user), 7, 300, FALSE, 32)
-	QDEL_IN(barker, total_delay)
+	if (!barker)
+		barker = new()
+	barker.voice.set_from_prefs(preferences)
+	barker.long_bark(list(user), 7, 300, FALSE, 32)
 	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
 	return TRUE
+
+/datum/preference_middleware/bark/Destroy()
+	qdel(barker)
+	. = ..()
 
 /*
 	----- Bark Sound -----
@@ -73,7 +79,7 @@
 	target.voice.speed = value
 
 /datum/preference/numeric/bark_speech_speed/create_default_value()
-	return 4
+	return 6
 
 /*
 	----- Bark Pitch -----

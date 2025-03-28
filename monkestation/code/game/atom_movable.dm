@@ -3,7 +3,7 @@
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
 	var/volume = 50
-	var/speed = 4 //Lower values are faster, higher values are slower
+	var/speed = 6 //Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_bark(id)
 	bark = GLOB.bark_list[id]
@@ -26,15 +26,9 @@
 /datum/atom_voice/proc/randomise(atom/who)
 	set_bark(pick(GLOB.random_barks))
 	pitch = BARK_PITCH_RAND(who.gender)
-	pitch_range = BARK_VARIANCE_RAND
-	speed = rand(BARK_DEFAULT_MINSPEED, BARK_DEFAULT_MAXSPEED)
+	pitch_range = 0.2
+	speed = 6
 	volume = 50
-
-// target.vocal_bark = null
-// 	target.vocal_bark_id = pick(GLOB.bark_list)
-// 	target.vocal_speed = round((BARK_DEFAULT_MINSPEED + BARK_DEFAULT_MAXSPEED) / 2)
-// 	target.vocal_pitch = round((BARK_DEFAULT_MINPITCH + BARK_DEFAULT_MAXPITCH) / 2)
-// 	target.vocal_pitch_range = 0.2
 
 /atom/movable
 	/// Used for initialisation
@@ -89,11 +83,13 @@
 
 	// short
 	if (short_hearers.len)
-		var/speak_sound = bark.talk
+		var/speak_sound
 		if (talk_icon_state == "1")
 			speak_sound = bark.ask
 		else if (is_yell)
 			speak_sound = bark.exclaim
+		if (!speak_sound)
+			speak_sound = bark.talk
 		for(var/mob/M in short_hearers)
 			M.playsound_local(src, speak_sound, 300, FALSE, 1, sound_range, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(range), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 

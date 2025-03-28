@@ -39,8 +39,8 @@ hidden = true
 
 [misc.Beep]
 path = 'sound/machines/terminal_select.ogg'
-max_pitch = 0.7 #Bringing the pitch higher just hurts your ears :<
-max_speed = 4 #This soundbyte's too short for larger speeds to not sound awkward
+max_pitch = 0.7                             #Bringing the pitch higher just hurts your ears :<
+max_speed = 4                               #This soundbyte's too short for larger speeds to not sound awkward
 
 [misc."Synthetic (Grunt)"]
 path = 'sound/misc/bloop.ogg'
@@ -114,96 +114,111 @@ name = "Goonstation"
 path = 'goon\sounds\misc\talk'
 
 [goon.Blub]
-path='blub.ogg'
-ask_path='blub_ask.ogg'
-exclaim_path='blub_exclaim.ogg'
+path = 'blub.ogg'
+ask_path = 'blub_ask.ogg'
+exclaim_path = 'blub_exclaim.ogg'
+min_pitch = 0.6
 
 [goon."Bottalk 1"]
-path='bottalk_1.ogg'
+path = 'bottalk_1.ogg'
 min_speed = 3
 max_speed = 9
+min_pitch = 0.5
 
 [goon."Bottalk 2"]
-path='bottalk_2.ogg'
+path = 'bottalk_2.ogg'
+min_pitch = 0.9
 
 [goon."Bottalk 3"]
-path='bottalk_3.ogg'
+path = 'bottalk_3.ogg'
+min_pitch = 0.6
 
 [goon.Buwoo]
-path='buwoo.ogg'
-ask_path='buwoo_ask.ogg'
-exclaim_path='buwoo_exclaim.ogg'
+path = 'buwoo.ogg'
+ask_path = 'buwoo_ask.ogg'
+exclaim_path = 'buwoo_exclaim.ogg'
+min_pitch = 0.8
 
 [goon.Cow]
-path='cow.ogg'
-ask_path='cow_ask.ogg'
-exclaim_path='cow_exclaim.ogg'
+path = 'cow.ogg'
+ask_path = 'cow_ask.ogg'
+exclaim_path = 'cow_exclaim.ogg'
+min_pitch = 0.8
 
 [goon.Cyborg]
-path='cyborg.ogg'
-ask_path='cyborg_ask.ogg'
-exclaim_path='cyborg_exclaim.ogg'
+path = 'cyborg.ogg'
+ask_path = 'cyborg_ask.ogg'
+exclaim_path = 'cyborg_exclaim.ogg'
+min_pitch = 0.6
 
 [goon.Lizard]
-path='lizard.ogg'
-ask_path='lizard_ask.ogg'
-exclaim_path='lizard_exclaim.ogg'
+path = 'lizard.ogg'
+ask_path = 'lizard_ask.ogg'
+exclaim_path = 'lizard_exclaim.ogg'
+min_pitch = 0.6
 
 [goon.Pug]
-path='pug.ogg'
-ask_path='pug_ask.ogg'
-exclaim_path='pug_exclaim.ogg'
+path = 'pug.ogg'
+ask_path = 'pug_ask.ogg'
+exclaim_path = 'pug_exclaim.ogg'
+min_pitch = 0.7
 
 [goon.Pugg]
-path='pugg.ogg'
-ask_path='pugg_ask.ogg'
-exclaim_path='pugg_exclaim.ogg'
+path = 'pugg.ogg'
+ask_path = 'pugg_ask.ogg'
+exclaim_path = 'pugg_exclaim.ogg'
+min_pitch = 0.6
 
 [goon.Radio]
-path='radio.ogg'
+path = 'radio.ogg'
 hidden = true
 
 [goon.Radio2]
-path='radio2.ogg'
+path = 'radio2.ogg'
 hidden = true
 
 [goon."Radio Ai"]
-path='radio_ai.ogg'
+path = 'radio_ai.ogg'
 hidden = true
 
 [goon.Roach]
-path='roach.ogg'
-ask_path='roach_ask.ogg'
-exclaim_path='roach_exclaim.ogg'
+path = 'roach.ogg'
+ask_path = 'roach_ask.ogg'
+exclaim_path = 'roach_exclaim.ogg'
 
 [goon.Skelly]
-path='skelly.ogg'
-ask_path='skelly_ask.ogg'
-exclaim_path='skelly_exclaim.ogg'
+path = 'skelly.ogg'
+ask_path = 'skelly_ask.ogg'
+exclaim_path = 'skelly_exclaim.ogg'
+min_pitch = 0.6
 
 [goon."Speak 1"]
-path='speak_1.ogg'
-ask_path='speak_1_ask.ogg'
-exclaim_path='speak_1_exclaim.ogg'
+path = 'speak_1.ogg'
+ask_path = 'speak_1_ask.ogg'
+exclaim_path = 'speak_1_exclaim.ogg'
 allow_random = true
+min_pitch = 0.6
 
 [goon."Speak 2"]
-path='speak_2.ogg'
-ask_path='speak_2_ask.ogg'
-exclaim_path='speak_2_exclaim.ogg'
+path = 'speak_2.ogg'
+ask_path = 'speak_2_ask.ogg'
+exclaim_path = 'speak_2_exclaim.ogg'
 allow_random = true
+min_pitch = 0.5
 
 [goon."Speak 3"]
-path='speak_3.ogg'
-ask_path='speak_3_ask.ogg'
-exclaim_path='speak_3_exclaim.ogg'
+path = 'speak_3.ogg'
+ask_path = 'speak_3_ask.ogg'
+exclaim_path = 'speak_3_exclaim.ogg'
 allow_random = true
+min_pitch = 0.5
 
 [goon."Speak 4"]
-path='speak_4.ogg'
-ask_path='speak_4_ask.ogg'
-exclaim_path='speak_4_exclaim.ogg'
+path = 'speak_4.ogg'
+ask_path = 'speak_4_ask.ogg'
+exclaim_path = 'speak_4_exclaim.ogg'
 allow_random = true
+min_pitch = 0.6
 
 # Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
 # Rule of fun very much applies to this section. Audio design is extremely important for the above section, but down here? No gods, no masters, pure anarchy.

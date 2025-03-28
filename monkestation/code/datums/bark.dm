@@ -8,7 +8,6 @@ GLOBAL_LIST_EMPTY(random_barks)
 GLOBAL_LIST_INIT(bark_list, gen_barks())
 
 /proc/get_bark_sound(bark_obj, group_path, sound_name)
-	var/sound/sound
 	var/sound_path = bark_obj[sound_name]
 	if (!sound_path)
 		return null
