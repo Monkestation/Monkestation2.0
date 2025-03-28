@@ -83,3 +83,13 @@ Name = Coder
 Include = DEBUG VAREDIT SERVER SPAWN POLL
 Exclude = AUTOADMIN
 Edit =
+
+Name = Mentor
+Include = 
+Exclude = AUTOADMIN
+Edit =
+
+Name = Head Mentor
+Include = DEBUG VAREDIT SERVER SPAWN POLL
+Exclude = AUTOADMIN
+Edit =
