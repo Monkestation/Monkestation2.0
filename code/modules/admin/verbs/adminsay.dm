@@ -6,7 +6,7 @@ ADMIN_VERB(cmd_admin_say, R_NONE, "ASay", "Send a message to other admins", ADMI
 	SSplexora.relay_admin_say(user, message)
 
 	if(findtext(message, "@") || findtext(message, "#"))
-		var/list/link_results = check_asay_links(msg)
+		var/list/link_results = check_asay_links(message)
 		if(length(link_results))
 			message = link_results[ASAY_LINK_NEW_MESSAGE_INDEX]
 			link_results[ASAY_LINK_NEW_MESSAGE_INDEX] = null
