@@ -3,7 +3,7 @@
 	desc = "You feel like something wants to kill you..."
 	mob_trait = TRAIT_PARANOIA
 	value = -8
-	icon = FA_ICON_OPTIN_MONSTER
+	icon = FA_ICON_GHOST
 
 /datum/quirk/extra_sensory_paranoia/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
