@@ -479,3 +479,118 @@
   ThePooba:
   - rscadd: 5 new donator latejoin jobs for SPRING, Florist, easter bunny, news reporter,
       spring cleaner, bird watcher, These jobs are just flavorful assistants
+2025-03-24:
+  Absolucy:
+  - map: Theseus's gravity generator SMES no longer backfeeds.
+  - rscadd: Added "Lesser Strange Seeds", variants of strange seeds with a wider limitation
+      on reagents.
+  - balance: Biogenerators can now only print lesser strange seeds. Other sources
+      of strange seeds remain unchanged.
+  - rscadd: Cats can now knock things off of tables with ctrl-shift-click, the same
+      way people would flip tables.
+  - rscadd: You can now force the Super (Syndie) Kitty Ears onto someone, after 8
+      seconds interrupted, if you want to do that to someone for some reason. Blame
+      Ook.
+  - qol: Added fancy text styling to some Super Kitty Ears flavor text.
+  - balance: Transforming to/from cat form with the Super (Syndie) Kitty Ears is no
+      longer affected by antimagic, nor does it actually matter if you can yell the
+      "MRR MRRRW!!" or not.
+  - bugfix: Fixed not being able to scroll thru the slime market console and slime
+      pen controller UIs on BYOND 516.
+  Ceasefire2:
+  - admin: Added Ceasefire's office to CentCom
+  Gw0sty:
+  - rscadd: Added Meson eyes, Barber's toolarms, Pathologist Hud's, Scientist huds,
+      High intensity Photo Projector, and Arm Mounted tasers as a printable cybernetics.
+  - rscadd: Explorers and Barbers now have roundstart cybernetics during a cybernetic
+      revolution.
+  - rscadd: Cyberlinks and toolarms now have colours/spirtes to help differentiate
+      them at a glance (Sprites mainly from Paradise)
+  - rscadd: The box of cybernetics now has more gamba, rejoyce.
+  - rscadd: Advanced limbs are now researchable, and printable
+  - rscdel: Deleted the pointless "Sandevestian" button from the gyrotron. It's just
+      not a import sande from all appearances. And god help us if it was.
+  - qol: Hud implants now have a message when you toggle them.
+  - balance: hacked surgical arms are now Syndicate access
+  - balance: S.A.Y.A Shieldblade's now use Terran Access
+  - balance: Detectives, scientists, and pathologists now will have more job fitting
+      cybernetics during a cybernetic revolution
+  - balance: Medical and Janitor gear has been touched up slightly.
+  - bugfix: Suspicious auto surgeons, will now appear and act suspicious.
+  - bugfix: Fidget spinners are now considered synthetic and won't rot. I don't want
+      to consider the implications of the alternative being.
+  - bugfix: Plasmaman Detectives will no longer perish for existing during a cybernetic
+      revolution.
+  Marabout2:
+  - balance: rebalanced the kitten ears so they can't break free while being cuffed,
+      unconcious, with their hands blocked.
+  Shoddd:
+  - bugfix: elance recipe now has to be learned
+2025-03-25:
+  Marabout2:
+  - rscadd: Added a detective slot and a second holster in the detective closet +
+      detective spawn with a badge.
+  - rscadd: Added Kim's gloves in the loadout, exclusive to the detective + spyglass
+      got sechud.
+  - rscadd: .45 caliber rubbers available in the security techfab
+  - rscadd: 'Ported from TG : https://github.com/tgstation/tgstation/pull/89221 which
+      mean the forensic scanner got a new ui'
+2025-03-27:
+  Absolucy:
+  - bugfix: Fixed lights sometimes not properly updating when turned on or off.
+  - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
+  - bugfix: Fixed an edge-case where, if two heretics of different paths applied a
+      mark to the same person, the effects from the first mark (i.e moon path's pacifism)
+      would likely be permanent.
+  - code_imp: Slightly improved the code for the Cortex Imprint bioware.
+  - bugfix: Fixed an centcom ghost player escape exploit.
+  - bugfix: You will now be ejected from any jaunt (i.e bloodcrawl or shadow walk)
+      if you lose consciousness somehow during the jaunt.
+  - bugfix: The _ispath SDQL2/Lua wrapper can now be used to actually check if something
+      is a path.
+  - code_imp: Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts.
+  - bugfix: Probably fixed techfab/lathe/mechfab UIs not updating sometimes.
+  - bugfix: The animation from a xeno chestbursting out of someone is now properly
+      removed after they burst out.
+  - bugfix: You now must observe or join the game in order to buy or open a lootbox,
+      to prevent any potential issues or confusion where you pay for a lootbox but
+      don't get it.
+  - qol: The Good Assistants Point redeemer thingy can no longer be used to spam messages
+      or loud sounds.
+  - bugfix: (itsmeow) The tgui color picker is colorful again on BYOND 516.
+  - qol: (SmArtKar) If you have auto fit viewport enabled, it will trigger upon entering
+      or exiting fullscreen.
+  - rscadd: (jlsnow301) TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  - bugfix: (TiviPlus) fixed a case that could make untoggling fullscreen make your
+      window small.
+  - code_imp: (TiviPlus) Cleaned up some fullscreen and status bar toggle code to
+      function better.
+  - bugfix: (Holoo-1) Fixed white space when observing in auto observe mode
+  - refactor: (Kylerace) Tech disk uploading isnt super slow anymore (much harder
+      to crash spacetime with it)
+  - code_imp: (SmArtKar) Removed the 516 beta warning entirely.
+  - bugfix: (hry-gh) tgui windows closing should no longer cause sticky keys, especially
+      on BYOND 516.
+  - bugfix: (hry-gh) The audio player shouldn't blow up in weird circumstances anymore.
+  - rscadd: Re-added interaction components to the mechcomp vendor.
+  - bugfix: Fixed some further potential exploits with interaction components.
+  - code_imp: Cleaned up a lot of interaction component code.
+  - map: Added a mechcomp vendor to runtimestation.
+  - config: Added config options to disable interaction components holding items or
+      interacting with storage components.
+  - config: Added a config option to add more item types to the interaction component
+      blacklist.
+  Ben10Omintrix:
+  - code_imp: improved trick weapon code
+  Marabout2:
+  - bugfix: fixed the variant of the detective holster with the regular revolver.
+  ancient-engineer:
+  - image: modified the sink sprite so that it clings to the wall. I also did the
+      kitchen sink too.
+  flleeppyy:
+  - bugfix: allow mentors/admins through the interview system by default
+  - admin: '`Create Command Report` enhancements'
+  - code_imp: New `priority_announce` and `generate_unique_announcement_header` param,
+      `append_update` to append "Update" to command report titles.
+  - code_imp: Added optional `sanitize` (default is TRUE) param to `print_command_report`
+      and `SScommunications.send_message`

@@ -4,13 +4,11 @@
 
 /datum/song/organ/updateDialog(mob/user)
 	var/obj/item/organ/owner = parent
-	var/mob/living/musician = owner?.owner
-	ui_interact(musician)
+	ui_interact(owner?.owner)
 
 /datum/song/organ/should_stop_playing(obj/player)
 	var/obj/item/organ/owner = parent
-	var/mob/living/musician = owner?.owner
-	return musician?.stat >= UNCONSCIOUS
+	return owner?.owner?.stat >= UNCONSCIOUS
 
 /datum/song/organ/do_hearcheck()
 	var/obj/item/organ/player = parent
@@ -34,10 +32,8 @@
 /datum/action/innate/singing/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/internal/tongue/ornithid/music_maker = human.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(!istype(music_maker))
-		return
-	music_maker?.song.ui_interact(human)
-
+	if(istype(music_maker))
+		music_maker?.song?.ui_interact(human)
 
 /datum/component/particle_spewer/music_notes
 	icon_file = 'goon/icons/effects/particles.dmi'

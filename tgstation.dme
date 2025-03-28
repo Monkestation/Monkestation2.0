@@ -1,6 +1,11 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
+
+// This should always be the VERY FIRST THING. No exceptions. Read the file for more info, but basically, this needs to be here so that we can ensure specific code is always the very first thing to execute.
+#include "code\genesis_call.dme"
+// Again, DO NOT MOVE IT OR ALLOW ANY OTHER #include TO PRECEDE THE ONE ABOVE.
+
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -5946,7 +5951,6 @@
 #include "code\modules\wiremod\shell\shell_items.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
-#include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
@@ -6300,6 +6304,7 @@
 #include "monkestation\code\modules\admin\smites\smite.dm"
 #include "monkestation\code\modules\admin\smites\swisscheese.dm"
 #include "monkestation\code\modules\admin\smites\where_are_your_fingers.dm"
+#include "monkestation\code\modules\admin\verbs\commandreport.dm"
 #include "monkestation\code\modules\admin\verbs\diagnostics.dm"
 #include "monkestation\code\modules\admin\verbs\getlogs.dm"
 #include "monkestation\code\modules\admin\verbs\glowshrooms.dm"
@@ -7451,6 +7456,7 @@
 #include "monkestation\code\modules\ghost_players\job_helpers\injured_spawner.dm"
 #include "monkestation\code\modules\ghost_players\job_helpers\organ_printer.dm"
 #include "monkestation\code\modules\goonimizations\goon_keybinds.dm"
+#include "monkestation\code\modules\gunning_ing\recoil.dm"
 #include "monkestation\code\modules\guns\40mm_grenade.dm"
 #include "monkestation\code\modules\guns\china_lake.dm"
 #include "monkestation\code\modules\holomaps\areas.dm"
@@ -7634,6 +7640,7 @@
 #include "monkestation\code\modules\mech_comp\objects\messages\toggle.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\type_sensor.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\wifi_split.dm"
+#include "monkestation\code\modules\mech_comp\objects\messages\regex\_regex.dm"
 #include "monkestation\code\modules\mentor\__GLOBALVARS.dm"
 #include "monkestation\code\modules\mentor\ahelp_reject.dm"
 #include "monkestation\code\modules\mentor\client.dm"
@@ -8076,9 +8083,17 @@
 #include "monkestation\code\modules\ranching\satyr\accessories\sprites\tail.dm"
 #include "monkestation\code\modules\ranching\satyr\components\living_drunk.dm"
 #include "monkestation\code\modules\ranching\sheep\_base.dm"
+#include "monkestation\code\modules\random_rooms\room_base.dm"
 #include "monkestation\code\modules\random_rooms\showcase_map_modules.dm"
+#include "monkestation\code\modules\random_rooms\bars\boxstation.dm"
+#include "monkestation\code\modules\random_rooms\bars\icebox.dm"
 #include "monkestation\code\modules\random_rooms\bars\icebox_bar_modules.dm"
 #include "monkestation\code\modules\random_rooms\bars\tram_bar_modules.dm"
+#include "monkestation\code\modules\random_rooms\bars\tramstation.dm"
+#include "monkestation\code\modules\random_rooms\engines\boxstation.dm"
+#include "monkestation\code\modules\random_rooms\engines\kilostation.dm"
+#include "monkestation\code\modules\random_rooms\engines\metastation.dm"
+#include "monkestation\code\modules\random_rooms\engines\tramstation.dm"
 #include "monkestation\code\modules\reagents\_reagents.dm"
 #include "monkestation\code\modules\reagents\containers.dm"
 #include "monkestation\code\modules\reagents\misc.dm"
@@ -8149,9 +8164,11 @@
 #include "monkestation\code\modules\research\nanites\nanite_programs\utility.dm"
 #include "monkestation\code\modules\research\nanites\nanite_programs\weapon.dm"
 #include "monkestation\code\modules\research\techweb\all_nodes.dm"
+#include "monkestation\code\modules\research\techweb\cyborg_node.dm"
 #include "monkestation\code\modules\security\code\citationinator.dm"
 #include "monkestation\code\modules\security\code\holographic_handcuffs.dm"
 #include "monkestation\code\modules\security\code\officermonitor.dm"
+#include "monkestation\code\modules\security\code\undercover_id.dm"
 #include "monkestation\code\modules\security\code\weapons\lawbringer.dm"
 #include "monkestation\code\modules\security\code\weapons\paco.dm"
 #include "monkestation\code\modules\shelves\shelf.dm"
@@ -8708,13 +8725,4 @@
 #include "monkestation\code\modules\wiremod_chem\housing\_chem_housing.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\chemical_circuit.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\precursor_tank.dm"
-#include "monkestation\code\random_rooms\room_base.dm"
-#include "monkestation\code\random_rooms\bars\boxstation.dm"
-#include "monkestation\code\random_rooms\bars\icebox.dm"
-#include "monkestation\code\random_rooms\bars\tramstation.dm"
-#include "monkestation\code\random_rooms\engines\boxstation.dm"
-#include "monkestation\code\random_rooms\engines\kilostation.dm"
-#include "monkestation\code\random_rooms\engines\metastation.dm"
-#include "monkestation\code\random_rooms\engines\tramstation.dm"
-#include "monkestation\gunning_ing\recoil.dm"
 // END_INCLUDE
