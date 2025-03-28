@@ -78,3 +78,8 @@ GLOBAL_LIST_INIT(store_gloves, generate_store_items(/datum/store_item/gloves))
 	name = "Butler Gloves"
 	item_path = /obj/item/clothing/gloves/butler
 	item_cost = 5000
+
+/datum/loadout_item/gloves/kim
+	name = "Aerobic Gloves"
+	item_path = /obj/item/clothing/gloves/kim
+	item_cost = 5000
