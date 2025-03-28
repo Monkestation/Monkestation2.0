@@ -1,5 +1,6 @@
 /datum/player_panel_veth/ //required for tgui component
 	var/title = "Veth's Ultimate Player Panel"
+
 ADMIN_VERB(player_panel_veth, R_ADMIN, "Player Panel Veth", "Updated Player Panel with TGUI. Currently in testing.", ADMIN_CATEGORY_GAME)
 	var/datum/player_panel_veth/tgui = new(user.mob)
 	tgui.ui_interact(user.mob)
@@ -305,8 +306,11 @@ love, veth
 		if("ban")
 			if(!check_rights(R_BAN))
 				return
-			//usr.client.ban_panel()
-			SSblackbox.record_feedback("tally", "VUAP", 1, "Ban")
+			usr.client.holder.Topic(null, list(
+				"newbankey" = selected_mob.ckey,
+				"newbanip" = selected_mob.lastKnownIP,
+				"newbancid" = selected_mob.client.computer_id,
+				"admin_token" = usr.client.holder.href_token,))
 			return
 		if("prison")
 			usr.client.holder.Topic(null, list(
@@ -481,7 +485,7 @@ love, veth
 			SSblackbox.record_feedback("tally", "VUAP", 1, "GiveDisease")
 			return
 		if("cureAllDiseases")
-			if (istype(selected_mob, /mob/living))
+			if(istype(selected_mob, /mob/living))
 				var/mob/living/L = selected_mob
 				L.fully_heal(HEAL_NEGATIVE_DISEASES)
 			to_chat(usr, "Cured all negative diseases on [selected_mob.ckey].", confidential = TRUE)
