@@ -580,6 +580,8 @@
       interacting with storage components.
   - config: Added a config option to add more item types to the interaction component
       blacklist.
+  Ben10Omintrix:
+  - code_imp: improved trick weapon code
   Marabout2:
   - bugfix: fixed the variant of the detective holster with the regular revolver.
   ancient-engineer:
@@ -587,3 +589,15 @@
       kitchen sink too.
   flleeppyy:
   - bugfix: allow mentors/admins through the interview system by default
+  - admin: '`Create Command Report` enhancements'
+  - code_imp: New `priority_announce` and `generate_unique_announcement_header` param,
+      `append_update` to append "Update" to command report titles.
+  - code_imp: Added optional `sanitize` (default is TRUE) param to `print_command_report`
+      and `SScommunications.send_message`
+2025-03-28:
+  CannibalHunter:
+  - rscadd: Added "Strange Merchant Jacket" donator item.
+  adamsong:
+  - admin: grants admins access to member only features like changing their ghost
+  flleeppyy:
+  - admin: asay and msay is now bridged to the Discord via threads
