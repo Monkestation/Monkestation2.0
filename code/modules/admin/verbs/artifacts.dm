@@ -10,7 +10,7 @@ ADMIN_VERB(open_artifactpanel, R_ADMIN, "Artifact Panel", "Opens the artifact pa
 	user = to_user //AVD user is a client so this would be setting a client.
 
 /datum/artifactpanel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/artifactpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

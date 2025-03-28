@@ -26,4 +26,4 @@ ADMIN_VERB(check_players, R_ADMIN, "Check Players", "Spawns an amount of chosen 
 		ui.open()
 
 /datum/check_players/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)

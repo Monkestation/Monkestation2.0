@@ -136,7 +136,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, "Player Options Panel", "Pla
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
@@ -599,6 +599,6 @@ love, veth
 			return
 
 /datum/vuap_personal/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 
