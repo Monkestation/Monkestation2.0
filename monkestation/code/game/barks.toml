@@ -1,3 +1,7 @@
+# So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
+# Short instrument samples tend to sound surprisingly nice for barks, being able to be played in rapid succession without being outright obnoxious.
+# It isn't just instruments that work well here, however. Anything that works well as a stab? Short attack, no sustain, a decent amount of release? Also works extremely well for barks.
+
 # --------- Instrument Sounds ---------
 [instruments]
 name = 'Instruments'
@@ -5,15 +9,23 @@ path = 'sound/runtime/instruments/synthesis_samples'
 
 [instruments."Muted String (Low)"]
 path = 'guitar/crisis_muted/C2.ogg'
+allow_random = true
 
 [instruments."Muted String (Medium)"]
 path = 'guitar/crisis_muted/C3.ogg'
+allow_random = true
 
 [instruments."Muted String (High)"]
 path = 'guitar/crisis_muted/C4.ogg'
+allow_random = true
 
 # [instruments."Banjo (Medium)"]
 # path = 'guitar/crisis_muted/banjo/Cn3.ogg'
+# allow_random = true
+
+# [instruments."Banjo (High)"]
+# path = 'guitar/crisis_muted/banjo/Cn4.ogg'
+# allow_random = true
 
 # --------- Misc Sounds ---------
 
@@ -51,12 +63,15 @@ path = 'monkestation/sound/voice/barks/animal'
 
 [animal."Moth Squeak"]
 path = 'mothsqueak.ogg'
+allow_random = true
 
 [animal.Chirp]
 path = 'chirp.ogg'
+allow_random = true
 
 [animal.Caw]
 path = 'caw.ogg'
+allow_random = true
 
 [animal.chittery]
 path = 'mothchitter2.ogg'
@@ -158,18 +173,74 @@ exclaim_path='skelly_exclaim.ogg'
 path='speak_1.ogg'
 ask_path='speak_1_ask.ogg'
 exclaim_path='speak_1_exclaim.ogg'
+allow_random = true
 
 [goon."Speak 2"]
 path='speak_2.ogg'
 ask_path='speak_2_ask.ogg'
 exclaim_path='speak_2_exclaim.ogg'
+allow_random = true
 
 [goon."Speak 3"]
 path='speak_3.ogg'
 ask_path='speak_3_ask.ogg'
 exclaim_path='speak_3_exclaim.ogg'
+allow_random = true
 
 [goon."Speak 4"]
 path='speak_4.ogg'
 ask_path='speak_4_ask.ogg'
 exclaim_path='speak_4_exclaim.ogg'
+allow_random = true
+
+# Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
+# Rule of fun very much applies to this section. Audio design is extremely important for the above section, but down here? No gods, no masters, pure anarchy.
+# The min/max variables simply don't apply to these, as only chargen cares about them. As such, there's no need to define those.
+
+# /datum/bark/bikehorn
+# 	name = "Bikehorn"
+# 	id = "horn"
+# 	soundpath = 'sound/instruments/bikehorn/Cn4.ogg'
+# 	ignore = TRUE // This is an unusually quiet sound.
+
+# /datum/bark/bwoink
+# 	name = "Bwoink"
+# 	id = "bwoink"
+# 	soundpath = 'sound/effects/adminhelp.ogg'
+# 	ignore = TRUE // Emergent heart attack generation
+
+# /datum/bark/merp
+# 	name = "Merp"
+# 	id = "merp"
+# 	soundpath = 'modular_citadel/sound/voice/merp.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/bark
+# 	name = "Bark"
+# 	id = "bark"
+# 	soundpath = 'modular_citadel/sound/voice/bark1.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/nya
+# 	name = "Nya"
+# 	id = "nya"
+# 	soundpath = 'modular_citadel/sound/voice/nya.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/moff
+# 	name = "Moff"
+# 	id = "moff"
+# 	soundpath = 'modular_citadel/sound/voice/mothsqueak.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/weh
+# 	name = "Weh"
+# 	id = "weh"
+# 	soundpath = 'modular_citadel/sound/voice/weh.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/honk
+# 	name = "Annoying Honk"
+# 	id = "honk"
+# 	soundpath = 'sound/creatures/goose1.ogg'
+# 	ignore = TRUE

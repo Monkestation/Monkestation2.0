@@ -1,7 +1,7 @@
 /datum/bark_screen
-	var/datum/preference_middleware/blooper/owner
+	var/datum/preference_middleware/bark/owner
 
-/datum/bark_screen/New(datum/preference_middleware/blooper/user)
+/datum/bark_screen/New(datum/preference_middleware/bark/user)
 	// owner = CLIENT_FROM_VAR(user)
 	owner = user
 	// owner.bark_screen = src
@@ -29,7 +29,7 @@
 
 	switch(action)
 		if("select")
-			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/blooper], bark.id)
+			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/bark_voice], bark.id)
 			SStgui.update_uis(owner.preferences)
 			return TRUE
 
@@ -49,7 +49,7 @@
 /datum/bark_screen/ui_data(mob/user)
 	var/list/data = list()
 
-	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/blooper)
+	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/bark_voice)
 	return data
 
 /datum/bark_screen/ui_static_data()
