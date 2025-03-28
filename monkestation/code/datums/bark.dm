@@ -1,4 +1,5 @@
-GLOBAL_LIST_EMPTY(bark_groups)
+GLOBAL_LIST_EMPTY(bark_groups_all)
+GLOBAL_LIST_EMPTY(bark_groups_player)
 GLOBAL_LIST_EMPTY(random_barks)
 GLOBAL_LIST_INIT(bark_list, gen_barks())
 
@@ -23,9 +24,9 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 			var/bark_obj = group_obj[bark_name]
 			var/datum/bark_voice/bark = new()
 
-			bark.id = group_name + "." + bark_name
+			bark.id = group_id + "." + bark_name
 			bark.name = bark_name
-			bark.group = group_name
+			bark.group_name = group_name
 			if (group_path)
 				bark.talk = sound(group_path + "/" + bark_obj["path"])
 			else
@@ -59,7 +60,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 /datum/bark_voice
 	var/name
 	var/id
-	var/group
+	var/group_name
 
 	var/sound/talk
 	var/sound/ask_beep = null

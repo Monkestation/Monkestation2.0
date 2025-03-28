@@ -12,7 +12,7 @@
 /// Returns data to be sent to users in the menu
 /datum/preference/choiced/bark_voice/compile_ui_data(mob/user, value)
 	var/datum/bark_voice/bark = GLOB.bark_list[value]
-	return bark.group + ": " + bark.name
+	return bark.group_name + ": " + bark.name
 
 /datum/preference/choiced/bark_voice/init_possible_values()
 	return assoc_to_keys(GLOB.bark_list)

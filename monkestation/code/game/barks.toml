@@ -24,7 +24,7 @@ allow_random = true
 # allow_random = true
 
 # [instruments."Banjo (High)"]
-# path = 'guitar/crisis_muted/banjo/Cn4.ogg'
+# path = 'guitar/crisis_muted/banjo/Cn.ogg'
 # allow_random = true
 
 # --------- Misc Sounds ---------
@@ -73,7 +73,7 @@ allow_random = true
 path = 'caw.ogg'
 allow_random = true
 
-[animal.chittery]
+[animal.Chittery]
 path = 'mothchitter2.ogg'
 
 # --------- Don't Starve Sounds ---------
@@ -85,13 +85,13 @@ path = 'monkestation/sound/voice/barks/dont_starve'
 [dont_starve.Wilson]
 path = 'wilson.ogg'
 
-[dont_starve.woodie]
+[dont_starve.Woodie]
 path = 'woodie.ogg'
 
-[dont_starve.wurt]
+[dont_starve.Wurt]
 path = 'wurt.ogg'
 
-[dont_starve.wx78]
+[dont_starve.WX78]
 path = 'wx78.ogg'
 
 # --------- Kazooie Sounds ---------

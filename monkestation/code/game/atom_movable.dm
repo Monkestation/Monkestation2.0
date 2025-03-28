@@ -43,6 +43,13 @@
 	/// When barks are queued, this gets passed to the bark proc. If long_bark_start_time doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
 	var/long_bark_start_time = -1
 
+/atom/movable/New(loc, ...)
+	. = ..()
+	voice = new()
+	if (initial_bark_id)
+		voice.set_bark(initial_bark_id)
+		initial_bark_id = null
+
 /// Sets the vocal bark for the atom, using the bark's ID
 /atom/movable/proc/set_bark(id)
 	voice.set_bark(id)
@@ -100,10 +107,11 @@
 		long_bark(long_hearers, sound_range, volume, is_yell, atom_voice.speed, LAZYLEN(message))
 
 /atom/movable/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len)
-	var/vocal_speed = voice.speed
-	var/vocal_pitch = voice.pitch
 	var/vocal_pitch_range = voice.pitch_range
 	var/sound/talk = voice.voice.talk
+
+	var/vocal_speed = clamp(voice.speed, voice.voice.min_speed, voice.voice.max_speed)
+	var/vocal_pitch = clamp(voice.pitch, voice.voice.min_pitch, voice.voice.max_pitch)
 
 	var/num_barks = min(round((message_len / vocal_speed)) + 1, BARK_MAX_BARKS)
 	var/total_delay = 0
@@ -119,6 +127,8 @@
 /atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, sound/talk_sound)
 	if(queue_time && long_bark_start_time != queue_time)
 		return
+
+	pitch = clamp(pitch, BARK_DEFAULT_MINPITCH, BARK_DEFAULT_MAXPITCH)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
