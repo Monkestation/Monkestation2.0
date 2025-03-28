@@ -1,15 +1,15 @@
 /datum/atom_voice
-	var/datum/bark_voice/voice
+	var/datum/bark_sound/bark
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
 	var/volume = 50
 	var/speed = 4 //Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_bark(id)
-	voice = GLOB.bark_list[id]
+	bark = GLOB.bark_list[id]
 
 /datum/atom_voice/proc/copy_from(datum/atom_voice/other)
-	voice = other.voice
+	bark = other.bark
 	pitch = other.pitch
 	pitch_range = other.pitch_range
 	volume = other.volume
@@ -18,7 +18,7 @@
 /datum/atom_voice/proc/set_from_prefs(datum/preferences/prefs)
 	if (!prefs)
 		return
-	set_bark(prefs.read_preference(/datum/preference/choiced/bark_voice))
+	set_bark(prefs.read_preference(/datum/preference/choiced/bark_sound))
 	pitch = prefs.read_preference(/datum/preference/numeric/bark_speech_pitch)
 	speed = prefs.read_preference(/datum/preference/numeric/bark_speech_speed)
 	pitch_range = prefs.read_preference(/datum/preference/numeric/bark_pitch_range)
@@ -56,7 +56,7 @@
 
 /atom/movable/proc/start_barking(message, list/hearers, range, talk_icon_state)
 	var/datum/atom_voice/atom_voice = src.voice
-	var/datum/bark_voice/bark_voice = atom_voice.voice
+	var/datum/bark_sound/bark = atom_voice.bark
 	var/is_yell = talk_icon_state == "2"
 	var/volume = min(atom_voice.volume * (is_yell ? 1.5 : 1), 100)
 
@@ -89,14 +89,11 @@
 
 	// short
 	if (short_hearers.len)
-		var/ending = copytext_char(message, -1)
-		var/speak_sound
-		if (ending == "?")
-			speak_sound = bark_voice.ask_beep
-		else if (ending == "!")
-			speak_sound = bark_voice.exclaim_beep
-		if (speak_sound == null)
-			speak_sound = bark_voice.talk
+		var/speak_sound = bark.talk
+		if (talk_icon_state == "1")
+			speak_sound = bark.ask
+		else if (is_yell)
+			speak_sound = bark.exclaim
 		for(var/mob/M in short_hearers)
 			M.playsound_local(src, speak_sound, 300, FALSE, 1, sound_range, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(range), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
@@ -108,10 +105,9 @@
 
 /atom/movable/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len)
 	var/vocal_pitch_range = voice.pitch_range
-	var/sound/talk = voice.voice.talk
 
-	var/vocal_speed = clamp(voice.speed, voice.voice.min_speed, voice.voice.max_speed)
-	var/vocal_pitch = clamp(voice.pitch, voice.voice.min_pitch, voice.voice.max_pitch)
+	var/vocal_speed = clamp(voice.speed, voice.bark.min_speed, voice.bark.max_speed)
+	var/vocal_pitch = clamp(voice.pitch, voice.bark.min_pitch, voice.bark.max_pitch)
 
 	var/num_barks = min(round((message_len / vocal_speed)) + 1, BARK_MAX_BARKS)
 	var/total_delay = 0
@@ -120,11 +116,11 @@
 	for(var/i in 1 to num_barks)
 		if(total_delay > BARK_MAX_TIME)
 			break
-		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), long_bark_start_time, voice.voice), total_delay)
+		addtimer(CALLBACK(src, /atom/movable/proc/bark, hearers, sound_range, volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), long_bark_start_time, voice.bark), total_delay)
 		total_delay += rand(DS2TICKS((vocal_speed / BARK_SPEED_BASELINE)), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 	return total_delay
 
-/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, /datum/bark_voice/bark)
+/atom/movable/proc/bark(list/hearers, distance, volume, pitch, queue_time, datum/bark_sound/bark)
 	if(queue_time && long_bark_start_time != queue_time)
 		return
 

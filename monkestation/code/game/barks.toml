@@ -67,7 +67,7 @@ path = 'monkestation/sound/voice/barks/animal'
 
 [animal."Moth Squeak"]
 path = 'mothsqueak.ogg'
-allow_random = true
+hidden = true
 
 [animal.Chirp]
 path = 'chirp.ogg'
@@ -77,9 +77,13 @@ allow_random = true
 path = 'caw.ogg'
 allow_random = true
 min_pitch = 0.5
+max_pitch = 1.3
+min_speed = 6
 
 [animal.Chittery]
 path = 'mothchitter2.ogg'
+min_pitch = 1
+max_pitch = 1.3
 
 # --------- Don't Starve Sounds ---------
 

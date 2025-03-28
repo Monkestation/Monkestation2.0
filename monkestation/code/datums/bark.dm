@@ -7,6 +7,16 @@ GLOBAL_LIST_EMPTY(random_barks)
 /// All barks
 GLOBAL_LIST_INIT(bark_list, gen_barks())
 
+/proc/get_bark_sound(bark_obj, group_path, sound_name)
+	var/sound/sound
+	var/sound_path = bark_obj[sound_name]
+	if (!sound_path)
+		return null
+	if (group_path)
+		return sound(group_path + "/" + sound_path)
+	else
+		return sound(sound_path)
+
 /proc/gen_barks()
 	var/output = rustg_read_toml_file("monkestation/code/game/barks.toml")
 
@@ -27,15 +37,14 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 			if (bark_name == "name" || bark_name == "path")
 				continue
 			var/bark_obj = group_obj[bark_name]
-			var/datum/bark_voice/bark = new()
+			var/datum/bark_sound/bark = new()
 
 			bark.id = group_id + "." + bark_name
 			bark.name = bark_name
 			bark.group_name = group_name
-			if (group_path)
-				bark.talk = sound(group_path + "/" + bark_obj["path"])
-			else
-				bark.talk = sound(bark_obj["path"])
+			bark.talk = get_bark_sound(bark_obj, group_path, "path")
+			bark.ask = get_bark_sound(bark_obj, group_path, "ask")
+			bark.exclaim = get_bark_sound(bark_obj, group_path, "exclaim")
 			if (!bark.talk)
 				stack_trace("Bark " + bark_name + " has no talk sound")
 				continue
@@ -75,14 +84,15 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 
 	return bark_list
 
-/datum/bark_voice
+/// Thank you SPLURT, FluffySTG and Citadel
+/datum/bark_sound
 	var/name
 	var/id
 	var/group_name
 
 	var/sound/talk
-	var/sound/ask_beep = null
-	var/sound/exclaim_beep = null
+	var/sound/ask = null
+	var/sound/exclaim = null
 
 	var/max_pitch
 	var/min_pitch
@@ -173,3 +183,8 @@ GLOBAL_VAR_INIT(bark_allowed, TRUE) // For administrators
 	GLOB.bark_groups_all = list()
 	GLOB.random_barks = list()
 	GLOB.bark_list = gen_barks()
+
+/world/AVerbsServer()
+	. = ..()
+	. += /datum/admins/proc/togglebark
+	. += /client/proc/cmd_debug_reload_barks

@@ -1,27 +1,10 @@
-/datum/preference/toggle/short_barks
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "short_barks"
-	savefile_identifier = PREFERENCE_PLAYER
+/*
+	--------- Character Preferences ---------
+*/
 
-// #####
-/datum/preference/choiced/bark_voice
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "bark_voice"
-
-/// Returns data to be sent to users in the menu
-/datum/preference/choiced/bark_voice/compile_ui_data(mob/user, value)
-	var/datum/bark_voice/bark = GLOB.bark_list[value]
-	return bark.group_name + ": " + bark.name
-
-/datum/preference/choiced/bark_voice/init_possible_values()
-	return assoc_to_keys(GLOB.bark_list)
-
-/datum/preference/choiced/bark_voice/apply_to_human(mob/living/carbon/human/target, value)
-	target.set_bark(value)
-
-/datum/preference/choiced/bark_voice/create_default_value()
-	return pick(GLOB.random_barks)
+/*
+	----- Bark Middleware -----
+*/
 
 /datum/preference_middleware/bark
 	/// Cooldown on requesting a bark preview.
@@ -44,12 +27,39 @@
 /datum/preference_middleware/bark/proc/play_bark(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, bark_cooldown))
 		return TRUE
-	var/atom/movable/barker = new(get_turf(user))
-	barker.voice.set_from_prefs(preferences)
+	user.voice.set_from_prefs(preferences)
 	var/total_delay = barker.long_bark(list(user), 7, 300, FALSE, 32)
 	QDEL_IN(barker, total_delay)
 	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
 	return TRUE
+
+/*
+	----- Bark Sound -----
+*/
+
+/// Which sound does the player want to make
+/datum/preference/choiced/bark_sound
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "bark_sound"
+
+/// Returns data to be sent to users in the menu
+/datum/preference/choiced/bark_sound/compile_ui_data(mob/user, value)
+	var/datum/bark_sound/bark = GLOB.bark_list[value]
+	return bark.group_name + ": " + bark.name
+
+/datum/preference/choiced/bark_sound/init_possible_values()
+	return assoc_to_keys(GLOB.bark_list)
+
+/datum/preference/choiced/bark_sound/apply_to_human(mob/living/carbon/human/target, value)
+	target.set_bark(value)
+
+/datum/preference/choiced/bark_sound/create_default_value()
+	return pick(GLOB.random_barks)
+
+/*
+	----- Bark Speed / Duration -----
+*/
 
 /datum/preference/numeric/bark_speech_speed
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
@@ -63,7 +73,11 @@
 	target.voice.speed = value
 
 /datum/preference/numeric/bark_speech_speed/create_default_value()
-	return round((BARK_DEFAULT_MINSPEED + BARK_DEFAULT_MAXSPEED) / 2)
+	return 4
+
+/*
+	----- Bark Pitch -----
+*/
 
 /datum/preference/numeric/bark_speech_pitch
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
@@ -77,7 +91,11 @@
 	target.voice.pitch = value
 
 /datum/preference/numeric/bark_speech_pitch/create_default_value()
-	return round((BARK_DEFAULT_MINPITCH + BARK_DEFAULT_MAXPITCH) / 2)
+	return 1
+
+/*
+	----- Bark Pitch Varience -----
+*/
 
 /datum/preference/numeric/bark_pitch_range
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
@@ -93,14 +111,17 @@
 /datum/preference/numeric/bark_pitch_range/create_default_value()
 	return 0.2
 
-/// Can I hear everyone else's bloops?
-/datum/preference/toggle/hear_sound_bark
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "hear_sound_bark"
-	savefile_identifier = PREFERENCE_PLAYER
-	default_value = TRUE
+/*
+	--------- Game Preferences ---------
+*/
 
-/// Can I have a slider to adjust the volume of the barks?
+/// Should this player only hear a single bark
+/datum/preference/toggle/short_barks
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_short_barks"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/// How loud should the player hear barks
 /datum/preference/numeric/sound_bark_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_bark_volume"

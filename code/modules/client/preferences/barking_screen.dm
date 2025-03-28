@@ -21,7 +21,7 @@
 	if(.)
 		return
 
-	var/datum/bark_voice/bark
+	var/datum/bark_sound/bark
 	bark = GLOB.bark_list[params["selected"]]
 	if(!bark)
 		stack_trace("Failed to locate desired loadout item (path: [params["selected"]]) in the global list of loadout datums!")
@@ -29,7 +29,7 @@
 
 	switch(action)
 		if("select")
-			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/bark_voice], bark.id)
+			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/bark_sound], bark.id)
 			SStgui.update_uis(owner.preferences)
 			return TRUE
 
@@ -40,7 +40,7 @@
 /datum/bark_screen/ui_data(mob/user)
 	var/list/data = list()
 
-	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/bark_voice)
+	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/bark_sound)
 	return data
 
 /datum/bark_screen/ui_static_data()
@@ -49,7 +49,7 @@
 	data["bark_groups"] = list()
 	for (var/group in GLOB.bark_groups_visible)
 		var/list/bark_names = list()
-		for (var/datum/bark_voice/bark in GLOB.bark_groups_visible[group])
+		for (var/datum/bark_sound/bark in GLOB.bark_groups_visible[group])
 			bark_names += list(list(bark.name, bark.id))
 		data["bark_groups"][group] = bark_names
 

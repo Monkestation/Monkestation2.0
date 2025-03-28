@@ -49,7 +49,7 @@ export const bark_pitch_range: FeatureNumeric = {
   component: FeatureNumberInput,
 };
 
-export const bark_voice: FeatureChoiced = {
+export const bark_sound: FeatureChoiced = {
   name: 'Character Voice',
   component: FeatureBarkDropdownInput,
 };
