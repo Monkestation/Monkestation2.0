@@ -24,4 +24,4 @@
 	name = "CentCom Turtleneck Skirt"
 	requires_purchase = FALSE
 	admin_only = TRUE
-	item_path = obj/item/clothing/under/rank/centcom/officer_skirt
+	item_path = /obj/item/clothing/under/rank/centcom/officer_skirt
