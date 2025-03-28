@@ -20,10 +20,12 @@
 /datum/preference_middleware/bark/proc/open_bark_screen(list/params, mob/user)
 	if(bark_screen)
 		bark_screen.ui_interact(usr)
+		return TRUE
 	else
-		var/datum/bark_screen/tgui = new(src)
-		tgui.ui_interact(usr)
-	return TRUE
+		bark_screen = new(src)
+		bark_screen.ui_interact(usr)
+		return FALSE
+	// return TRUE
 
 /datum/preference_middleware/bark/proc/play_bark(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, bark_cooldown))
@@ -37,7 +39,7 @@
 
 /datum/preference_middleware/bark/Destroy()
 	qdel(barker)
-	. = ..()
+	return ..()
 
 /*
 	----- Bark Sound -----
@@ -49,13 +51,18 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "bark_sound"
 
-/// Returns data to be sent to users in the menu
 /datum/preference/choiced/bark_sound/compile_ui_data(mob/user, value)
 	var/datum/bark_sound/bark = GLOB.bark_list[value]
 	return bark.group_name + ": " + bark.name
 
 /datum/preference/choiced/bark_sound/init_possible_values()
 	return assoc_to_keys(GLOB.bark_list)
+
+/datum/preference/choiced/bark_sound/is_valid(value)
+	var/datum/bark_sound/bark = GLOB.bark_list[value]
+	if (!bark)
+		return FALSE
+	return !bark.hidden
 
 /datum/preference/choiced/bark_sound/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_bark(value)
@@ -127,7 +134,7 @@
 	savefile_key = "sound_short_barks"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// How loud should the player hear barks
+/// How loud should barks be for the player
 /datum/preference/numeric/sound_bark_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_bark_volume"

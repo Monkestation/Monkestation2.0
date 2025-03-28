@@ -71,6 +71,7 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 				all_barks = visible_barks.Copy()
 			if (!bark_obj["hidden"])
 				visible_barks += bark
+				bark.hidden = FALSE
 			if (all_barks)
 				all_barks += bark
 
@@ -97,6 +98,8 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 	var/min_pitch
 	var/max_speed
 	var/min_speed
+
+	var/hidden = TRUE
 
 /// Thank you SPLURT, FluffySTG and Citadel
 // /datum/bark

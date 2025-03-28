@@ -97,7 +97,7 @@
 
 	// long
 	if (long_hearers.len)
-		long_bark(long_hearers, sound_range, volume, is_yell, atom_voice.speed, LAZYLEN(message))
+		long_bark(long_hearers, sound_range, volume, is_yell, LAZYLEN(message))
 
 /atom/movable/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len)
 	var/vocal_pitch_range = voice.pitch_range
@@ -121,6 +121,10 @@
 		return
 
 	pitch = clamp(pitch, bark.min_pitch, bark.max_pitch)
+
+	if(HAS_TRAIT(src, TRAIT_HELIUM))
+		pitch *= 1.25
+		volume *= 0.75
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)

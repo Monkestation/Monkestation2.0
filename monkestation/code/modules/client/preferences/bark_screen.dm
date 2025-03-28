@@ -1,11 +1,8 @@
 /datum/bark_screen
 	var/datum/preference_middleware/bark/owner
 
-/datum/bark_screen/New(datum/preference_middleware/bark/user)
-	// owner = CLIENT_FROM_VAR(user)
-	owner = user
-	// owner.bark_screen = src
-	// custom_loadout = new()
+/datum/bark_screen/New(datum/preference_middleware/bark/owner)
+	src.owner = owner
 
 /datum/bark_screen/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -18,13 +15,16 @@
 
 /datum/bark_screen/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if (.)
 		return
 
 	var/datum/bark_sound/bark
 	bark = GLOB.bark_list[params["selected"]]
-	if(!bark)
-		stack_trace("Failed to locate desired loadout item (path: [params["selected"]]) in the global list of loadout datums!")
+	if (!bark)
+		stack_trace("Failed to locate desired bark sound (path: [params["selected"]]) in the global list of bark sounds!")
+		return
+
+	if (bark.hidden)
 		return
 
 	switch(action)
@@ -33,7 +33,6 @@
 			SStgui.update_uis(owner.preferences)
 			return TRUE
 
-		// Rotates the dummy left or right depending on params["dir"]
 		if("play")
 			usr.playsound_local(get_turf(usr), bark.talk, 300, FALSE, 1, 7, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(7), pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
