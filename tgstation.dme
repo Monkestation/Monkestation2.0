@@ -6140,6 +6140,7 @@
 #include "monkestation\code\game\machinery\trains\train_head.dm"
 #include "monkestation\code\game\machinery\trains\train_network.dm"
 #include "monkestation\code\game\mecha\makeshift\locker_mech.dm"
+#include "monkestation\code\game\mecha\makeshift\makeshift_ambulance.dm"
 #include "monkestation\code\game\mecha\makeshift\makeshift_tools.dm"
 #include "monkestation\code\game\objects\items.dm"
 #include "monkestation\code\game\objects\effects\countdown.dm"
