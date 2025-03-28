@@ -11,42 +11,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/ethereal_rainhood
 
-//MONKESTATION ADDITION START
-/obj/item/clothing/suit/hooded/ethereal_raincoat/AltClick(mob/user)
-	. = ..()
-	if(iscarbon(user))
-		var/mob/living/carbon/char = user
-		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))
-			to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
-			return
-		if(!user.is_holding(src))
-			to_chat(user, span_warning("You must be holding [src] in order to adjust it!"))
-			return
-		if(slot_flags & ITEM_SLOT_OCLOTHING)
-			slot_flags = ITEM_SLOT_NECK
-			user.visible_message(span_notice("[user] adjusts their [src] to be worn on the shoulders."), span_notice("You adjust your [src] to fit on your shoulders."))
-		else
-			slot_flags = initial(slot_flags)
-			user.visible_message(span_notice("[user] adjusts their [src] to be worn on their torso."), span_notice("You adjust your [src] to be worn on your torso."))
-
-/obj/item/clothing/suit/hooded/ethereal_raincoat/equipped(mob/living/user, slot)
-	. = ..()
-	if(isethereal(user) && (slot & ITEM_SLOT_NECK))
-		var/datum/species/ethereal/wearer = user
-		to_chat(wearer, span_notice("Your light gently flickers out as you put [src] on."))
-		wearer.EMPeffect = TRUE
-		wearer.spec_updatehealth(wearer)
-/*
-/obj/item/clothing/suit/hooded/ethereal_raincoat/unequipped(mob/living/user, slot)
-	. = ..()
-	if(isethereal(user) && (slot & ITEM_SLOT_NECK))
-		var/datum/species/ethereal/wearer = user
-		to_chat(wearer, span_notice("Your light gently flickers back as you take [src] off."))
-		wearer.EMPeffect = FALSE
-		wearer.spec_updatehealth(wearer)
-*/
-//MONKESTATION ADDITION END
-
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
