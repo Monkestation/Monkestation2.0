@@ -24,9 +24,9 @@
 #define TECHWEB_TIER_3_POINTS 120
 #define TECHWEB_TIER_4_POINTS 160
 #define TECHWEB_TIER_5_POINTS 200
-#define TECHWEB_TIER_6_POINTS 240
-#define TECHWEB_TIER_7_POINTS 320
-#define TECHWEB_DISCOUNT_MINOR 10
+#define TECHWEB_TIER_6_POINTS 240 // Monkestation Addition:
+#define TECHWEB_TIER_7_POINTS 320 // Monkestation Addition:
+#define TECHWEB_DISCOUNT_MINOR 10 // Monkestation Addition:
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 1
