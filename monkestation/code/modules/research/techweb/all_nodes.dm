@@ -221,7 +221,8 @@
 		"ipc_arm_right",
 		"ipc_leg_left",
 		"ipc_leg_right",
-		"power_cord"
+		"power_cord",
+		"ipc_core"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
