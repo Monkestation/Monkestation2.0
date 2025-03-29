@@ -12135,7 +12135,6 @@
 /area/space/nearstation)
 "gcK" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/lattice,
 /turf/closed/wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gdt" = (
@@ -22409,8 +22408,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lgO" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/skeleton/templar,
+/mob/living/basic/skeleton,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "lgX" = (
@@ -24529,6 +24527,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
+"mjw" = (
+/obj/effect/decal/cleanable/oil,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "mjW" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/glass,
@@ -32355,7 +32358,7 @@
 "qgz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/skeleton/templar,
+/mob/living/basic/skeleton,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "qgT" = (
@@ -33134,6 +33137,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
+"qBg" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "qBm" = (
 /obj/structure/rack,
 /obj/item/flashlight/lantern,
@@ -70510,7 +70518,7 @@ ghX
 ghX
 oKv
 fTZ
-bmn
+qBg
 bmn
 qgz
 bhv
@@ -70763,7 +70771,7 @@ oKv
 tLF
 tLF
 tLF
-tLF
+lgO
 tLF
 uuh
 fTZ
@@ -71536,7 +71544,7 @@ ghX
 ghX
 tLF
 bmn
-lgO
+bmn
 tLF
 tLF
 ghX
@@ -71793,7 +71801,7 @@ fTZ
 bmn
 gPD
 gPD
-bmn
+qBg
 ghX
 ghX
 ghX
@@ -72818,10 +72826,10 @@ ghX
 ghX
 ghX
 tLF
-tLF
+lgO
 gue
 ceI
-nvz
+mjw
 tLF
 eIs
 tNM
