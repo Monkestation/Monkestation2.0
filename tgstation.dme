@@ -7769,6 +7769,7 @@
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\goblin.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\ipc.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\lizardpeople.dm"
+#include "monkestation\code\modules\mob\living\carbon\human\species_type\monkeys.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\oozeling.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\plasmamen.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\satyr.dm"
