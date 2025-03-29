@@ -102,6 +102,8 @@
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control
 	name = "Syndicate Depot Shipbreaking Magnet Control"
 
+/area/ruin/space/has_grav/syndicate_depot/syndicate_containment
+	name = "Syndicate Depot Containment Area"
 
 //misc things; fluff, stun-capable turrets
 
