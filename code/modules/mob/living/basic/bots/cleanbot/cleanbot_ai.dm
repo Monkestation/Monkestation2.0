@@ -80,7 +80,7 @@
 		// monkestation start: check for TRAIT_TRASH_ITEM
 		if(QDELETED(found_item))
 			continue
-		if(!is_type_in_typecache(found_item, locate_paths) && (check_trash_trait && !HAS_TRAIT(found_item, TRAIT_TRASH_ITEM)))
+		if(!is_type_in_typecache(found_item, locate_paths) && (!check_trash_trait || !HAS_TRAIT(found_item, TRAIT_TRASH_ITEM)))
 			continue
 		// monkestation end
 		if(LAZYACCESS(ignore_list, REF(found_item)))
