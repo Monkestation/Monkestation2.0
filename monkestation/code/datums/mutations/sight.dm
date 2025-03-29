@@ -1,3 +1,6 @@
+/datum/mutation/human/xray
+	name = "Perfect X-ray Vision"
+
 /datum/mutation/human/laser_eyes
 	conflicts = list(/datum/mutation/human/laser_eyes/unstable, /datum/mutation/human/laser_eyes/unstable/syndicate)
 	power_coeff = 1
