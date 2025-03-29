@@ -40,3 +40,38 @@
 	. = ..()
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
 	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+/obj/effect/mob_spawn/ghost_role/human/away/snow_operative
+	name = "sleeper"
+	prompt_name = "a snow operative"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	faction = list(ROLE_SYNDICATE)
+	outfit = /datum/outfit/snowsyndie/away
+	you_are_text = "You are a syndicate operative, a respected engineer. Except something went wrong and you're crashlanded on a snow planet."
+	flavour_text = "You need to reestablish contact with command, how tho ? And what is that sound ? Nanotrasen..."
+
+/datum/outfit/snowsyndie/away
+	name = "Syndicate Snow Operative"
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
+	uniform = /obj/item/clothing/under/syndicate/coldres
+	ears = /obj/item/radio/headset/syndicate/alt
+	shoes = /obj/item/clothing/shoes/combat/coldres
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol
+
+	implants = list(/obj/item/implant/exile)
+
+/obj/effect/mob_spawn/ghost_role/human/party_skeleton
+	name = "skeletal remains"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	mob_name = "skeleton"
+	prompt_name = "A skeletal entertainer."
+	mob_species = /datum/species/skeleton
+	you_are_text = "Yarr, on my ship we party, I'm David John's D.J."
+	flavour_text = "Party hard, baby."
+	spawner_job_path = /datum/job/skeleton
+	restricted_species = list(/datum/species/skeleton)
+	loadout_enabled = FALSE
+	quirks_enabled = TRUE
