@@ -87,9 +87,32 @@
 		if(!isturf(loc))
 			return
 
+		//MONKESTATION ADDITION - type whitelist for storage items borgs CAN interact with
+		var/list/storage_whitelist = list(
+			/obj/machinery/oven,
+			/obj/item/plate,
+			/obj/machinery/griddle,
+			/obj/item/storage/bag/tray,
+		)
+
+		//get the ultimate container of an object. PLEASE tell me theres a better way to do this.
+		var/atom/last_container
+		var/atom/container = A.loc
+		while(container && container.loc)
+			last_container = container
+			container = container.loc
+		var/atom/ultimate_loc = last_container
+
+		var/bypass = FALSE
+
+		for(var/whitelisted_type in storage_whitelist)
+			if(istype(A.loc, whitelisted_type))
+				bypass = TRUE
+		//END OF ADDITION
+
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
-		if(isturf(A) || isturf(A.loc))
-			if(A.Adjacent(src)) // see adjacent.dm
+		if(isturf(A) || isturf(A.loc) || bypass) //MONKESTATION EDIT - Adds ' || bypass'
+			if(A.Adjacent(src) || ultimate_loc.Adjacent(src)) // see adjacent.dm //MONKESTATION EDIT - Adds ' || ultimate_loc.Adjacent(src)'
 				W.melee_attack_chain(src, A, params)
 				return
 			else
