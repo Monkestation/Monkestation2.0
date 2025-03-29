@@ -594,3 +594,16 @@
       `append_update` to append "Update" to command report titles.
   - code_imp: Added optional `sanitize` (default is TRUE) param to `print_command_report`
       and `SScommunications.send_message`
+2025-03-28:
+  CannibalHunter:
+  - rscadd: Added "Strange Merchant Jacket" donator item.
+  adamsong:
+  - admin: grants admins access to member only features like changing their ghost
+  flleeppyy:
+  - admin: asay and msay is now bridged to the Discord via threads
+2025-03-29:
+  Absolucy:
+  - bugfix: Fixed some more lists being cleared in an incorrect, potentially laggy
+      way.
+  BanementI:
+  - admin: Added Altjira XC's office.

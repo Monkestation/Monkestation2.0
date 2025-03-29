@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		load_path(parent_ckey)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
-		unlock_content = !!parent.IsByondMember()
+		unlock_content = !!parent.IsByondMember() || is_admin(parent)
 		// monke edit: more save slots
 		//if(unlock_content)
 		//	max_save_slots = 8
