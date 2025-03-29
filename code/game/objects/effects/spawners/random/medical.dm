@@ -154,7 +154,7 @@
 	name = "Syndicate Biohazard Spawner"
 	icon_state = "box_small"
 	loot = list(
-		/obj/item/storage/box/syndie_kit/space_dragon,
+		// /obj/item/storage/box/syndie_kit/space_dragon,
 		/obj/item/storage/box/syndie_kit/Tumor,
 		/obj/item/storage/box/syndie_kit/Xenomorph,
 	)

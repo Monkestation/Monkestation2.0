@@ -184,9 +184,7 @@
 	name = "Secure Pen Shutters"
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "ce" = (
@@ -381,6 +379,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
+"ei" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "ej" = (
 /turf/closed/mineral/random/stationside/asteroid,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
@@ -2024,7 +2025,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/sign/warning/secure_area/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4053,9 +4053,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"Sc" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "Se" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
@@ -8379,9 +8376,9 @@ sv
 sT
 Jt
 sR
-Sc
+ei
 Lq
-Sc
+ei
 SX
 dZ
 SX
@@ -8622,9 +8619,9 @@ sR
 PX
 oO
 sR
-Sc
+ei
 Lq
-Sc
+ei
 DQ
 DQ
 DQ
@@ -8782,7 +8779,7 @@ zl
 hq
 hq
 lH
-Sc
+ei
 tn
 XM
 vf
@@ -8863,7 +8860,7 @@ et
 et
 hq
 lH
-Sc
+ei
 vp
 cb
 hK
@@ -8944,14 +8941,14 @@ et
 et
 hq
 lH
-Sc
-Sc
+ei
+ei
 js
 Tr
 rG
 zc
 RT
-Sc
+ei
 DQ
 DQ
 DQ
@@ -9025,7 +9022,7 @@ et
 et
 hq
 lH
-Sc
+ei
 of
 lY
 lY
@@ -9033,7 +9030,7 @@ lY
 lY
 lY
 ZK
-Sc
+ei
 lH
 lH
 lH
@@ -9106,7 +9103,7 @@ et
 et
 hq
 lH
-Sc
+ei
 yO
 RL
 RL
@@ -9114,7 +9111,7 @@ RL
 RL
 RL
 LH
-Sc
+ei
 lH
 hq
 lH
@@ -9187,15 +9184,15 @@ et
 et
 hq
 lH
-Sc
-Sc
-Sc
-Sc
-Sc
-Sc
-Sc
-Sc
-Sc
+ei
+ei
+ei
+ei
+ei
+ei
+ei
+ei
+ei
 lH
 hq
 RB
