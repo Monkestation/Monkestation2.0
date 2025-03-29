@@ -21,7 +21,7 @@
 
 	///Have we been searched yet?
 	var/searched = FALSE
-	///how many more pieces of trash they be thrown out while digging
+	///how many more pieces of trash can be thrown out while digging
 	var/list/remaining_trash_throws = list()
 
 	var/trash_delay = 0.5 SECONDS
