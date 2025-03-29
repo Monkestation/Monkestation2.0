@@ -4625,6 +4625,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison/safe)
+"cxk" = (
+/obj/effect/decal/cleanable/oil,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "cxl" = (
 /obj/machinery/corral_corner{
 	mapping_id = "2"
@@ -5098,11 +5103,6 @@
 "cJY" = (
 /turf/closed/wall,
 /area/station/service/janitor)
-"cJZ" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/skeleton,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
 "cKp" = (
 /obj/machinery/door/airlock{
 	id_tag = "Dorm3";
@@ -30301,11 +30301,6 @@
 /obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/noslip,
 /area/station/commons/storage/primary)
-"pcO" = (
-/obj/effect/decal/cleanable/oil,
-/mob/living/basic/skeleton,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
 "pcT" = (
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/structure/disposalpipe/trunk,
@@ -39275,6 +39270,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/floor2/aft)
+"tzl" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "tzn" = (
 /obj/effect/turf_decal/tile/red/diagonal_edge,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70518,7 +70518,7 @@ ghX
 ghX
 oKv
 fTZ
-cJZ
+tzl
 bmn
 qgz
 bhv
@@ -71801,7 +71801,7 @@ fTZ
 bmn
 gPD
 gPD
-cJZ
+tzl
 ghX
 ghX
 ghX
@@ -72829,7 +72829,7 @@ tLF
 lgO
 gue
 ceI
-pcO
+cxk
 tLF
 eIs
 tNM
@@ -129791,11 +129791,11 @@ xyv
 sQk
 sQk
 buo
-qYe
-qYe
 buo
-qYe
-qYe
+buo
+buo
+buo
+buo
 buo
 buo
 dKL
