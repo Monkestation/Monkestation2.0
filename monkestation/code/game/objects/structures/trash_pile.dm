@@ -19,9 +19,9 @@
 	var/hide_person_time = 3 SECONDS
 	var/hide_item_time = 1 SECONDS
 
-	/// Associative list of ckeys to TRUE if they have searched it.
-	var/list/searched_by_ckeys = list()
-	/// Associative list of ckeys to how many more pieces of trash they can throw out while digging.
+	///Have we been searched yet?
+	var/searched = FALSE
+	///how many more pieces of trash they be thrown out while digging
 	var/list/remaining_trash_throws = list()
 
 	var/trash_delay = 0.5 SECONDS
@@ -108,7 +108,7 @@
 			balloon_alert(user, "found something!")
 			hidden.forceMove(drop_location())
 		return
-	if(searched_by_ckeys[user.ckey])
+	if(searched == TRUE)
 		balloon_alert(user, "empty...")
 		return
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
@@ -117,7 +117,7 @@
 		balloon_alert(user, "found [spawned_item]!")
 	else
 		balloon_alert(user, "found nothing...")
-	searched_by_ckeys[user.ckey] = TRUE
+	searched = TRUE
 
 /obj/structure/trash_pile/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user in contents)
@@ -174,21 +174,21 @@
 	if(QDELETED(src) || QDELETED(user)) //Check if valid.
 		return FALSE
 
-	var/ckey = user.ckey
-	if(searched_by_ckeys[ckey]) //Don't spawn trash!
+	var/trash_pile = src
+	if(searched == TRUE) //Don't spawn trash!
 		return TRUE
 
 	if(!user.CanReach(src)) //Distance check for TK fuckery
 		return FALSE
 
-	if(isnull(remaining_trash_throws[ckey]))
-		remaining_trash_throws[ckey] = MAXIMUM_TRASH_THROWS
-	else if(remaining_trash_throws[ckey] < 1)
+	if(isnull(remaining_trash_throws[trash_pile]))
+		remaining_trash_throws[trash_pile] = MAXIMUM_TRASH_THROWS
+	else if(remaining_trash_throws[trash_pile] < 1)
 		return TRUE
 
 	if(COOLDOWN_FINISHED(src, trash_cooldown))
 		COOLDOWN_START(src, trash_cooldown, trash_delay * 0.5 + rand() * trash_delay) // x0.5 to x1.5
-		remaining_trash_throws[ckey]--
+		remaining_trash_throws[trash_pile]--
 		var/item_to_spawn
 		if(prob(0.1))
 			item_to_spawn = pick(GLOB.oddity_loot - typesof(/obj/item/dice/d20/fate)) // die of fate are blacklisted bc it will be automatically rolled due to the throw, likely insta-RRing the user without any counter
