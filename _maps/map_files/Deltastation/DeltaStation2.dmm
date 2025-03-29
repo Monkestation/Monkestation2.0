@@ -102089,6 +102089,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"ykC" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/syndie_kit/space_dragon,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "ykE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -141655,7 +141660,7 @@ kOj
 aad
 diL
 cnW
-cQv
+ykC
 cQv
 kIe
 nfx
