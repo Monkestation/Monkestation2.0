@@ -16,7 +16,7 @@
 	range = MECHA_MELEE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
-	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
+	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_MELEE	//Monke edit - mech melee
 	movedelay = 0.2
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
