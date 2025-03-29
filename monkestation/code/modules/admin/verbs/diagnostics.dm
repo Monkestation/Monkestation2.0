@@ -9,6 +9,6 @@
 	if(confirm != "Yes")
 		return
 
-	load_mentors()
+	//load_mentors()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Mentors") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] manually reloaded mentors")

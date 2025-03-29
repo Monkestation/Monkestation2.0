@@ -8,8 +8,8 @@
 		for(var/client/mentor_clients in GLOB.mentors)
 			if(GLOB.deadmins[mentor_clients.ckey])
 				msg += "\t[mentor_clients] is a Deadmin"
-			else if(mentor_clients.mentor_datum.is_contributor)
-				msg += "\t[mentor_clients] is a Contributor"
+//			else if(mentor_clients.mentor_datum.is_contributor)
+//				msg += "\t[mentor_clients] is a Contributor"
 			else
 				msg += "\t[mentor_clients] is a Mentor"
 
@@ -31,9 +31,9 @@
 			if(GLOB.deadmins[mentor_clients.ckey])
 				continue
 
-			if(mentor_clients.mentor_datum.is_contributor)
-				msg += "\t[mentor_clients] is a Contributor\n"
-			else
-				msg += "\t[mentor_clients] is a Mentor\n"
+			//if(mentor_clients.mentor_datum.is_contributor)
+			//	msg += "\t[mentor_clients] is a Contributor\n"
+			//else
+			//	msg += "\t[mentor_clients] is a Mentor\n"
 
 	to_chat(src, msg)

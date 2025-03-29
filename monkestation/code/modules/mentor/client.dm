@@ -1,3 +1,4 @@
+/*
 /client
 	///If this is set, this person is a Mentor.
 	var/datum/mentors/mentor_datum
@@ -5,7 +6,8 @@
 /client/New()
 	. = ..()
 	mentor_datum_set()
-
+*/
+/*
 // Overwrites /client/Topic to return for mentor client procs
 /client/Topic(href, href_list, hsrc)
 	if(mentor_client_procs(href_list))
@@ -24,8 +26,8 @@
 		if(istype(followed_guy))
 			mentor_follow(followed_guy)
 		return TRUE
-
-
+*/
+/*
 /client/proc/mentor_datum_set(admin)
 	mentor_datum = GLOB.mentor_datums[ckey]
 	/// Admin with no mentor datum? let's fix that
@@ -40,7 +42,8 @@
 			cdatums += ckey(coder)
 		if(ckey in cdatums)
 			mentor_datum.is_contributor = TRUE
-
+*/
+/*
 ///Verifies if the client is considered a Mentor, AKA has a Mentor datum or is an Admin.
 /client/proc/is_mentor()
 	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
@@ -53,7 +56,7 @@
 /proc/rementor(client/owner)
 	if(owner.is_mentor())
 		owner.mentor_datum.not_active = FALSE
-
+*/
 /proc/raw_is_mentor(ckey)
 	. = FALSE
 	var/list/mentors = world.file2list("[global.config.directory]/mentors.txt")

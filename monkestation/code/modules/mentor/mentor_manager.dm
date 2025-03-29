@@ -47,8 +47,8 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 /datum/request_manager/mentor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// Only admins should be sending actions
 	var/client/mentor_client = usr.client
-	if(!mentor_client || !mentor_client.is_mentor())
-		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
+//	if(!mentor_client || !mentor_client.is_mentor())
+//		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? num2text(params["id"]) : null
@@ -61,12 +61,12 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 	switch(action)
 		if ("reply")
-			var/mob/M = request.owner?.mob
-			mentor_client.cmd_mentor_pm(M)
+			//var/mob/M = request.owner?.mob
+//			mentor_client.cmd_mentor_pm(M)
 			return TRUE
 		if ("follow")
-			var/mob/M = request.owner?.mob
-			mentor_client.mentor_follow(M)
+			//var/mob/M = request.owner?.mob
+//			mentor_client.mentor_follow(M)
 			return TRUE
 	return ..()
 

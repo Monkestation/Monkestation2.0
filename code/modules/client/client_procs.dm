@@ -561,7 +561,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	//if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_admin(src))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -955,8 +956,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	//if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_admin(src))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
@@ -1168,12 +1169,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+/*
 				if(MENTOR_CHANNEL)
 					if(mentor_datum)
 						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+						*/
 	calculate_move_dir()
 
 /client/proc/change_view(new_size)

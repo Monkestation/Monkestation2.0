@@ -1,4 +1,5 @@
 /// Takes input from /client/Topic and sends them a PM, fetching messages if needed. src is the sender and chosen_client is the target client
+/*
 /client/proc/cmd_mentor_pm(whom, msg)
 	var/client/chosen_client
 	if(ismob(whom))
@@ -192,3 +193,4 @@
 		"Contents" = msg,
 	)
 	return embed
+*/

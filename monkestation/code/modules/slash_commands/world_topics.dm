@@ -71,9 +71,9 @@
 	if(!retrieved)
 		logger.Log(LOG_CATEGORY_DEBUG, "NO MENTOR DATUM FOUND", input)
 		return
-	var/mob/M = retrieved.owner?.mob
-	webhook_mentor_pm(M, input["from"], id, input["reply_contents"])
-
+	//var/mob/M = retrieved.owner?.mob
+	//webhook_mentor_pm(M, input["from"], id, input["reply_contents"])
+/*
 /datum/world_topic/reply_mentor/proc/webhook_mentor_pm(mob/reply, from, id, msg)
 	if(!reply)
 		logger.Log(LOG_CATEGORY_DEBUG, "NO REPLIER FOUND")
@@ -102,3 +102,4 @@
 		if(!embed)
 			return
 		send2mentorchat_webhook(embed, from)
+*/

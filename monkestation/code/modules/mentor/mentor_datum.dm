@@ -1,3 +1,4 @@
+/*
 GLOBAL_LIST_EMPTY(mentor_datums)
 GLOBAL_PROTECT(mentor_datums)
 
@@ -60,7 +61,8 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /proc/MentorHrefToken(forceGlobal = FALSE)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
-
+	*/
+/*
 /proc/load_mentors()
 	GLOB.mentor_datums.Cut()
 	for(var/client/mentor_clients in GLOB.mentors)
@@ -74,3 +76,4 @@ GLOBAL_PROTECT(mentor_href_token)
 		if(findtextEx(line, "#", 1, 2))
 			continue
 		new /datum/mentors(line)
+*/

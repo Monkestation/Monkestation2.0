@@ -137,8 +137,8 @@
 
 /client/proc/create_ifriend(mob/living/friend_owner, seek_confirm = FALSE)
 	var/client/C = usr.client
-	if(!usr.client.is_mentor())
-		return
+//	if(!usr.client.is_mentor())
+//		return
 
 	if(istype(C.mob, /mob/camera/imaginary_friend))
 		var/mob/camera/imaginary_friend/IF = C.mob

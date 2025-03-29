@@ -14,7 +14,7 @@
 	var/datum/player_details/details = get_player_details(client)
 	if(!QDELETED(client?.prefs))
 		var/round_end_bonus = 75
-		
+
 		// Patreon Flat Roundend Bonus
 		if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
 			round_end_bonus += DONATOR_ROUNDEND_BONUS
@@ -33,8 +33,8 @@
 		// WHYYYYYY
 		if(QDELETED(client))
 			return
-		if(client?.is_mentor())
-			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
+//		if(client?.is_mentor())
+//			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
 		// WHYYYYYYYYYYYYYYYY
 		if(QDELETED(client))
 			return

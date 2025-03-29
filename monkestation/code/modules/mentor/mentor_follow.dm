@@ -1,3 +1,4 @@
+/*
 /client/proc/mentor_follow(mob/living/followed_guy) //TODO convert to AVD or merge with admins system
 	if(!is_mentor())
 		return
@@ -22,3 +23,4 @@
 	to_chat(GLOB.admins, span_adminooc("<span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(mentor_datum.following)]</span>"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 	log_mentor("[key_name(usr)] stopped following [key_name(mentor_datum.following)]")
 	mentor_datum.following = null
+*/

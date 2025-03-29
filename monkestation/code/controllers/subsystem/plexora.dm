@@ -974,8 +974,8 @@ SUBSYSTEM_DEF(plexora)
 /datum/world_topic/plx_sendmticketpm/Run(list/input)
 	//var/ticketid = input["ticket_id"]
 	var/target_ckey = input["ckey"]
-	var/sender = input["sender_ckey"]
-	var/message = input["message"]
+	//var/sender = input["sender_ckey"]
+	//var/message = input["message"]
 
 	var/client/recipient = disambiguate_client(ckey(target_ckey))
 
@@ -985,13 +985,13 @@ SUBSYSTEM_DEF(plexora)
 	// var/datum/request/request = GLOB.mentor_requests.requests_by_id[num2text(ticketid)]
 
 	SEND_SOUND(recipient, 'sound/items/bikehorn.ogg')
-	to_chat(recipient, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(sender, recipient, TRUE, FALSE, FALSE)]</b>: [message]</font>")
+	//to_chat(recipient, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(sender, recipient, TRUE, FALSE, FALSE)]</b>: [message]</font>")
 	for(var/client/honked_client as anything in GLOB.mentors | GLOB.admins)
 		if(QDELETED(honked_client) || honked_client == recipient)
 			continue
 		to_chat(honked_client,
 			type = MESSAGE_TYPE_MODCHAT,
-			html = "<B><font color='green'>Mentor PM: [key_name_mentor(sender, honked_client, FALSE, FALSE)]-&gt;[key_name_mentor(recipient, honked_client, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[message]</span></font>",
+			html = "", //"<B><font color='green'>Mentor PM: [key_name_mentor(sender, honked_client, FALSE, FALSE)]-&gt;[key_name_mentor(recipient, honked_client, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[message]</span></font>",
 			confidential = TRUE)
 
 /datum/world_topic/plx_relayadminsay
@@ -1048,12 +1048,12 @@ SUBSYSTEM_DEF(plexora)
 		msg = pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX]
 		pinged_mentor_clients -= ASAY_LINK_PINGED_ADMINS_INDEX
 
-	for(var/iter_ckey in pinged_mentor_clients)
-		var/client/iter_mentor_client = pinged_mentor_clients[iter_ckey]
-		if(!iter_mentor_client?.mentor_datum)
-			continue
-		window_flash(iter_mentor_client)
-		SEND_SOUND(iter_mentor_client.mob, sound('sound/misc/bloop.ogg'))
+	//for(var/iter_ckey in pinged_mentor_clients)
+	//	var/client/iter_mentor_client = pinged_mentor_clients[iter_ckey]
+	//	if(!iter_mentor_client?.mentor_datum)
+	//		continue
+	//	window_flash(iter_mentor_client)
+	//	SEND_SOUND(iter_mentor_client.mob, sound('sound/misc/bloop.ogg'))
 
 	log_mentor("MSAY(DISCORD): [sender] : [msg]")
 	msg = "<b><font color='#7544F0'><span class='prefix'>DISCORD:</span> <EM>[sender]</EM>: <span class='message linkify'>[msg]</span></font></b>"
