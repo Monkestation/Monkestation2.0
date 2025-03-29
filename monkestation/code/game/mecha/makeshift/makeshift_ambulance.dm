@@ -10,11 +10,11 @@
 	movedelay = 1.5
 	stepsound = 'sound/vehicles/carrev.ogg'
 	turnsound = 'sound/vehicles/carrev.ogg'
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
 	armor_type = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60) //Same armour as a locker (close enough to a portapotty no?)
 	internal_damage_threshold = 30 //Its got shitty durability
 	wreckage = null
-	mech_type = EXOSUIT_MODULE_MAKESHIFT | EXOSUIT_MODULE_MEDICAL
+	mech_type = EXOSUIT_MODULE_AMBULANCE
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -23,7 +23,7 @@
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
-		MECHA_UTILITY = 3,
+		MECHA_UTILITY = 2,
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 0,
 	)
