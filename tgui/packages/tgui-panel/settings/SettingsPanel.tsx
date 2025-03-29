@@ -487,7 +487,7 @@ const ExperimentalSettings = (props, context) => {
                 icon={'globe'}
                 color={'good'}
                 onClick={() => {
-                  dispatch(reconnectWebsocket());
+                  dispatch(reconnectWebsocket({}));
                 }}
               />
               <Button
@@ -496,7 +496,7 @@ const ExperimentalSettings = (props, context) => {
                 icon={'globe'}
                 color={'bad'}
                 onClick={() => {
-                  dispatch(disconnectWebsocket());
+                  dispatch(disconnectWebsocket({}));
                 }}
               />
             </LabeledList.Item>
