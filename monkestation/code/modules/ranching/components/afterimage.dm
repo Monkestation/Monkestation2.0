@@ -94,6 +94,7 @@
 /obj/effect/after_image/New(_loc, min_x = -3, max_x = 3, min_y = -3, max_y = 3, time_a = 0.5 SECONDS, time_b = 3 SECONDS, finalized_alpha = 100)
 	. = ..()
 	src.finalized_alpha = finalized_alpha
+	animate(src, pixel_x = 0, time = 1, loop = -1)
 	var/count = rand(5, 10)
 	for(var/number = 1 to count)
 		var/time = time_a + rand() * time_b
