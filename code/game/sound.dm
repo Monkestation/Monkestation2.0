@@ -1,92 +1,3 @@
-GLOBAL_LIST_INIT(used_sound_channels, list(
-	CHANNEL_MASTER_VOLUME,
-	CHANNEL_LOBBYMUSIC,
-	CHANNEL_ADMIN,
-	CHANNEL_VOX,
-	CHANNEL_JUKEBOX,
-	CHANNEL_HEARTBEAT,
-	CHANNEL_AMBIENCE,
-	CHANNEL_BUZZ,
-	CHANNEL_SOUND_EFFECTS,
-	CHANNEL_SOUND_FOOTSTEPS,
-	CHANNEL_WEATHER,
-	CHANNEL_MACHINERY,
-	CHANNEL_INSTRUMENTS,
-	CHANNEL_INSTRUMENTS_ROBOT,
-	CHANNEL_MOB_SOUNDS,
-	CHANNEL_PRUDE,
-	CHANNEL_SQUEAK,
-	CHANNEL_MOB_EMOTES,
-	CHANNEL_SILICON_EMOTES,
-))
-
-GLOBAL_LIST_INIT(proxy_sound_channels, list(
-	CHANNEL_SOUND_EFFECTS,
-	CHANNEL_SOUND_FOOTSTEPS,
-	CHANNEL_WEATHER,
-	CHANNEL_MACHINERY,
-	CHANNEL_INSTRUMENTS,
-	CHANNEL_INSTRUMENTS_ROBOT,
-	CHANNEL_MOB_SOUNDS,
-	CHANNEL_PRUDE,
-	CHANNEL_SQUEAK,
-	CHANNEL_MOB_EMOTES,
-	CHANNEL_SILICON_EMOTES,
-))
-
-GLOBAL_LIST_EMPTY(cached_mixer_channels)
-
-
-/proc/guess_mixer_channel(soundin)
-	var/sound_text_string
-	if(istype(soundin, /sound))
-		var/sound/bleh = soundin
-		sound_text_string = "[bleh.file]"
-	else
-		sound_text_string = "[soundin]"
-	if(GLOB.cached_mixer_channels[sound_text_string])
-		return GLOB.cached_mixer_channels[sound_text_string]
-	else if(findtext(sound_text_string, "effects/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else if(findtext(sound_text_string, "machines/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
-	else if(findtext(sound_text_string, "creatures/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "/ai/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
-	else if(findtext(sound_text_string, "chatter/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "items/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else if(findtext(sound_text_string, "weapons/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else
-		return FALSE
-
-///Default override for echo
-/sound
-	echo = list(
-		0, // Direct
-		0, // DirectHF
-		-10000, // Room, -10000 means no low frequency sound reverb
-		-10000, // RoomHF, -10000 means no high frequency sound reverb
-		0, // Obstruction
-		0, // ObstructionLFRatio
-		0, // Occlusion
-		0.25, // OcclusionLFRatio
-		1.5, // OcclusionRoomRatio
-		1.0, // OcclusionDirectRatio
-		0, // Exclusion
-		1.0, // ExclusionLFRatio
-		0, // OutsideVolumeHF
-		0, // DopplerFactor
-		0, // RolloffFactor
-		0, // RoomRolloffFactor
-		1.0, // AirAbsorptionFactor
-		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
-	)
-	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
-
 /**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
@@ -239,12 +150,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
 
-		if(turf_source != get_turf(src))
-			sound_to_use.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-		else
-			sound_to_use.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-
-		if(!use_reverb)
+		if(!use_reverb || sound_to_use.environment == SOUND_ENVIRONMENT_NONE)
+			sound_to_use.echo ||= new /list(18)
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
 
