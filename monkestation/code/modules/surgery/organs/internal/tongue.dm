@@ -71,23 +71,23 @@
 /obj/item/organ/internal/tongue/synth/get_laugh_sound()
 	if(owner.gender == FEMALE)
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg',
 			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
-		)		
+		)
 	if(owner.gender == MALE)
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
 			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
 		)
 	else
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg', 
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg', 
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg',
+			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg',
 			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
 		)
 
@@ -324,3 +324,51 @@
 			polyglot_voicebox.say_mod = "poofs"
 		if("Fly")
 			polyglot_voicebox.say_mod = "buzzes"
+
+/obj/item/organ/internal/tongue/ornithid
+	name = "avian tongue"
+	desc = "A seemingly normal looking tongue which causes ones voice to caw. However that works."
+	say_mod = "caws"
+	///Birds like these but they're still human-mutans, so they dislike the same stuff.
+	liked_foodtypes = VEGETABLES | FRUIT | NUTS | GRAIN
+	disliked_foodtypes = RAW | GORE | DAIRY
+
+	/// Our song datum.
+	var/datum/song/organ/song
+	/// How far away our song datum can be heard.
+	var/instrument_range = 12
+	///our music ability
+	var/datum/action/innate/singing/sing
+	///static list of instruments we can play
+	var/list/static/allowed_instrument_ids = list("mothscream", "honk", "violin", "guitar", "piano", "recorder", "banjo", "r3grand","r3harpsi","crharpsi","crgrand1","crbright1", "crichugan", "crihamgan")
+	///this is our spewer component
+	var/datum/component/particle_spewer/music_notes/music
+
+/obj/item/organ/internal/tongue/ornithid/Initialize(mapload)
+	. = ..()
+	song = new(src, allowed_instrument_ids, instrument_range)
+	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(start_sound_particles))
+	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(stop_sound_particles))
+
+/obj/item/organ/internal/tongue/ornithid/Destroy()
+	QDEL_NULL(song)
+	UnregisterSignal(src, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END))
+	return ..()
+
+/obj/item/organ/internal/tongue/ornithid/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+	. = ..()
+	if(QDELETED(sing))
+		sing = new
+	sing.Grant(tongue_owner)
+
+/obj/item/organ/internal/tongue/ornithid/Remove(mob/living/carbon/tongue_owner, special)
+	. = ..()
+	sing?.Remove(tongue_owner)
+	song?.stop_playing()
+	stop_sound_particles()
+
+/obj/item/organ/internal/tongue/ornithid/proc/start_sound_particles()
+	music ||= owner.AddComponent(/datum/component/particle_spewer/music_notes)
+
+/obj/item/organ/internal/tongue/ornithid/proc/stop_sound_particles()
+	QDEL_NULL(music)

@@ -2,6 +2,10 @@
 /obj/item/organ/external/wings/functional/arm_wings
 	name = "Arm Wings"
 	desc = "They're wings, that go on your arm. Get your chicken wings jokes out now."
+
+	icon_state = "arm_wings"
+	icon = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithidfeatures.dmi'
+
 	dna_block = DNA_ARM_WINGS_BLOCK
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional/arm_wings
 	preference = "feature_arm_wings"
