@@ -711,4 +711,4 @@
  * This flag represents the maximum chunk count the server is willing to receive.
  */
 /datum/config_entry/number/tgui_max_chunk_count
-	default = 10
+	default = 32
