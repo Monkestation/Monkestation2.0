@@ -20,8 +20,12 @@
 	. = ..()
 	timerid = QDEL_IN_STOPPABLE(src, lifespan)
 
-/obj/item/implant/tracking/c38/removed(mob/living/source, silent, special)
+/obj/item/implant/tracking/c38/removed(mob/living/source, silent, special, forced) //monkestation edit: adds forced
 	. = ..()
+//monkestation edit start
+	if(!.)
+		return
+//monkestation edit end
 	deltimer(timerid)
 	timerid = null
 
