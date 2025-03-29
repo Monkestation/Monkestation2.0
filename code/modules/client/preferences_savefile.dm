@@ -194,7 +194,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
-	var/parent_ckey = ckey(parent_key)
 	load_metacoins(parent_ckey)
 	load_inventory(parent_ckey)
 

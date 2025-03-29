@@ -119,3 +119,42 @@
 	id = "surgery_dna_recovery"
 	surgery = /datum/surgery/advanced/dna_recovery
 	research_icon_state = "surgery_head"
+
+/datum/design/cyberimp_meson
+	name = "Meson Eyes"
+	desc = "These cybernetic eyes will give you meson vision. Never wonder where the kitchen is again."
+	id = "ci-meson"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
+	build_path = /obj/item/organ/internal/eyes/robotic/meson
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_pathology_hud
+	name = "Pathology HUD Implant"
+	desc = "These cybernetic eyes will reveal all the pathogens around you. Germaphobes beware."
+	id = "ci-pathohud"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/pathology
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_science_hud
+	name = "Science HUD Implant"
+	desc = "These cybernetic eyes will reveal the molecular makeup of items upon inspection."
+	id = "ci-scihud"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/fakehud/science
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL

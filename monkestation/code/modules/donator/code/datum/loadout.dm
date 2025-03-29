@@ -720,7 +720,7 @@
 
 //TheSpecialSnowflake
 /datum/loadout_item/under/miscellaneous/turtleneck
-	name = "Colorable Turtleneck"
+	name = "Recolorable Turtleneck (Donator)"
 	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -762,5 +762,57 @@
 /datum/loadout_item/suit/jacket/formal_overcoat
 	name = "Formal Overcoat"
 	item_path = /obj/item/clothing/suit/jacket/formal_overcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Cobalt Velvet 235
+/datum/loadout_item/head/traumatic_veteran_cap
+	name = "Traumatic Veteran Cap"
+	item_path = /obj/item/clothing/head/costume/traumatic_veteran_cap
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/jacket/traumatic_veteran_jacket
+	name = "Traumatic Veteran Jacket"
+	item_path = /obj/item/clothing/suit/toggle/traumatic_veteran_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/jill_plushie
+	name = "Jill Plushie"
+	item_path = /obj/item/toy/plush/jill_plushie
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/babypukeko
+	name = "Pet Delivery Beacon - Baby Pukeko"
+	item_path = /obj/item/choice_beacon/pet/donator/babypukeko
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/datum/loadout_item/effects/babypukeko
+	ckeywhitelist = list("Cobalt Velvet 235")
+	name = "Baby Pukeko Transformation"
+	item_path = /obj/item/effect_granter/donator/babypukeko
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/tallbabypukeko
+	name = "Pet Delivery Beacon - Tall Baby Pukeko"
+	item_path = /obj/item/choice_beacon/pet/donator/tallbabypukeko
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/datum/loadout_item/effects/tallbabypukeko
+	ckeywhitelist = list("Cobalt Velvet 235")
+	name = "Tall Baby Pukeko Transformation"
+	item_path = /obj/item/effect_granter/donator/tallbabypukeko
+	requires_purchase = FALSE
+
+//Judgement_Bird
+/datum/loadout_item/suit/strange_merchant_jacket
+	name = "Strange Merchant Jacket"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/strange_merchant
 	donator_only = TRUE
 	requires_purchase = FALSE

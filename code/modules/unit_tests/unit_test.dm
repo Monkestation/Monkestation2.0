@@ -247,17 +247,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
-		///this instant starts a timer, and if its being instantly deleted it can cause issues
-		/obj/machinery/atm,
-		/datum/hotspot,
+		/obj/machinery/atm, // starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
-		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
-		/obj/effect/transmission_beam, // monkestation addition: relies on the existence of a PTL
-		/obj/item/radio/entertainment/speakers/pda, // monkestation addition: should never exist outside of a modular computer
+		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
+		/obj/effect/transmission_beam, // relies on the existence of a PTL
+		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
+		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		// monkestation end
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -328,14 +329,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
+
+	// monkestation start
 	///we need to use json_decode to run randoms properly
 	ignore += typesof(/obj/item/device/cassette_tape)
-	ignore += typesof(/datum/cassette/cassette_tape)
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
-	ignore += typesof(/datum/weather_event)
-	ignore += typesof(/datum/particle_weather)
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
+	// monkestation end
 
 	return ignore
 

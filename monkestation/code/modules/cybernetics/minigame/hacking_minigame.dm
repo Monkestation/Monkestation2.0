@@ -19,7 +19,9 @@
 	src.board_size = board_size
 
 /datum/hacking_minigame/Destroy(force)
-	QDEL_LIST(board)
+	for(var/list/section in board)
+		QDEL_LIST(section)
+	LAZYNULL(board)
 	return ..()
 
 /**

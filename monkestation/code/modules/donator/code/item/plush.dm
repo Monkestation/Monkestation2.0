@@ -162,3 +162,9 @@
 	desc = "A plushie of XSI. It's a robot!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "xsi"
+
+/obj/item/toy/plush/jill_plushie
+	name = "jill plush"
+	desc = "A plushie of Jill! It's handmade too!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "jill_plushie"

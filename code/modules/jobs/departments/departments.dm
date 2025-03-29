@@ -138,9 +138,16 @@
 	label_class = "spooktober"
 	ui_color = "#f05e16"
 
+/datum/job_department/spring
+	department_name = DEPARTMENT_SPRING
+	department_bitflags = DEPARTMENT_BITFLAG_SPRING
+	display_order = 11
+	label_class = "spring"
+	ui_color = "#75da83"
+
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
 
 /// Catch-all department for undefined jobs.
 /datum/job_department/undefined
-	display_order = 10
+	display_order = 12

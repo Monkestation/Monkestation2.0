@@ -120,3 +120,13 @@
 	name = "robot toy"
 	default_name = "robot toy"
 	donator_pet = /mob/living/basic/pet/robottoything
+
+/obj/item/choice_beacon/pet/donator/babypukeko
+	name = "baby pukeko"
+	default_name = "baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko
+
+/obj/item/choice_beacon/pet/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	default_name = "tall baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko/tall

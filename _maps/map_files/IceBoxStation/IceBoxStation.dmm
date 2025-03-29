@@ -14603,43 +14603,43 @@
 /turf/open/floor/plating,
 /area/station/medical/pathology)
 "ezF" = (
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
 /obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
 /turf/open/floor/glass,
 /area/station/service/library)
 "ezJ" = (
@@ -19955,11 +19955,14 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gnH" = (
-/obj/effect/spawner/random/structure/table_fancy,
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/sign/painting/large/library{
 	dir = 1
+	},
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/machinery/door/window{
+	name = "Secure Art Exhibition";
+	req_access = list("library")
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -20008,7 +20011,7 @@
 	name = "Daisy's bed"
 	},
 /mob/living/basic/rabbit/daisy,
-/turf/open/floor/wood,
+/turf/open/floor/carpet/green,
 /area/station/service/library)
 "goq" = (
 /obj/structure/statue/snow/snowman,
@@ -24800,6 +24803,7 @@
 "hUe" = (
 /obj/effect/landmark/start/hangover,
 /obj/machinery/status_display/evac/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/service/library)
 "hUi" = (
@@ -25952,10 +25956,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "inm" = (
-/obj/structure/table/wood,
 /obj/structure/cassette_rack/prefilled{
 	pixel_y = 8
 	},
+/obj/structure/table/wood,
 /turf/open/floor/glass,
 /area/station/service/library)
 "inw" = (
@@ -34306,13 +34310,19 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kVE" = (
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 32
+/obj/structure/railing/wooden_fencing{
+	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/spawner/random/structure/table_fancy,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/wood,
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/obj/structure/railing/wooden_fencing/gate{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/toy/plush/turnipplush,
+/turf/open/floor/carpet/green,
 /area/station/service/library)
 "kVM" = (
 /obj/structure/chair/sofa/corp/right{
@@ -53556,8 +53566,8 @@
 "qWd" = (
 /obj/structure/table/wood,
 /obj/item/radio/radio_mic{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_y = 8;
+	pixel_x = -3
 	},
 /turf/open/floor/glass,
 /area/station/service/library)
@@ -55789,6 +55799,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rGn" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/station/service/library)
 "rGq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57787,14 +57803,11 @@
 /area/station/command/gateway)
 "spW" = (
 /obj/effect/spawner/random/structure/table_fancy,
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Secure Art Exhibition";
-	req_access = list("library")
-	},
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood,
 /area/station/service/library)
 "sqg" = (
@@ -60890,7 +60903,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
 "ttv" = (
-/obj/structure/sign/painting/library{
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -252728,8 +252744,8 @@ lli
 aME
 kKL
 ttv
-poy
-poy
+prg
+prg
 hUe
 hUD
 hUD
@@ -252986,8 +253002,8 @@ uZn
 kKL
 gnH
 prg
-prg
-caY
+kVE
+rGn
 iQQ
 gBr
 oKE
@@ -253243,7 +253259,7 @@ uZn
 kKL
 xXU
 spW
-kVE
+poy
 goi
 iQQ
 inm
@@ -253503,9 +253519,9 @@ hUD
 hUD
 hUD
 hUD
-qWd
-ezF
 wgh
+ezF
+qWd
 hUD
 gEE
 gEE

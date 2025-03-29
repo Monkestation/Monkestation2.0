@@ -15642,7 +15642,7 @@
 /obj/machinery/newscaster/directional/south,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/garden/abandoned)
 "eVP" = (
@@ -18990,7 +18990,7 @@
 "fWu" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/garden/abandoned)
 "fWB" = (

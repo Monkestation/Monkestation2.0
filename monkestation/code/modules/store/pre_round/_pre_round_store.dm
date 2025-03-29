@@ -104,5 +104,5 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 			return
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
-	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, (-initial(bought_item.item_cost)), "Bought a [created_item] for [initial(bought_item.item_cost)] (Pre-round Store)", donator_multipler = FALSE)
+	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, (-initial(bought_item.item_cost)), "Bought a [created_item] for [initial(bought_item.item_cost)] (Pre-round Store)", donator_multiplier = FALSE)
 	QDEL_NULL(new_player_mob.client.readied_store)

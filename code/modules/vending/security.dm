@@ -82,6 +82,10 @@
 	name = "security assistant voucher"
 	icon_state = "security_voucher_assistant"
 
+/obj/item/security_voucher/brig_physician
+	name = "security brig physician voucher"
+	icon_state = "security_voucher_brig_physician"
+
 /obj/machinery/vending/security/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/security_voucher))
 		redeem_voucher(weapon, user)
@@ -99,6 +103,8 @@
 		voucher_set = /datum/voucher_set/security/utility
 	if(istype(voucher, /obj/item/security_voucher/assistant))
 		voucher_set = /datum/voucher_set/security/assistant
+	if(istype(voucher, /obj/item/security_voucher/brig_physician))
+		voucher_set = /datum/voucher_set/security/brig_physician
 	set_types = list()
 	for(var/datum/voucher_set/static_set as anything in subtypesof(voucher_set))
 		set_types[initial(static_set.name)] = new static_set

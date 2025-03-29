@@ -1,7 +1,6 @@
 // THIS IS A MONKESTATION UI FILE
 
 import { resolveAsset } from '../assets';
-import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -13,15 +12,7 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type BorerInformation = {
   ability: AbilityInfo[];
@@ -35,24 +26,6 @@ type AbilityInfo = {
 
 type Info = {
   objectives: Objective[];
-};
-
-const ObjectivePrintout = (props: any) => {
-  const { data } = useBackend<Info>();
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
 };
 
 export const AntagInfoBorer = (props: any) => {
@@ -104,6 +77,9 @@ export const AntagInfoBorer = (props: any) => {
 };
 
 const MainPage = () => {
+  const {
+    data: { objectives },
+  } = useBackend<Info>();
   return (
     <Stack vertical fill>
       <Stack.Item minHeight="14rem">
@@ -114,7 +90,7 @@ const MainPage = () => {
               to then settle in the brain.
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout />
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
           </Stack>
         </Section>
