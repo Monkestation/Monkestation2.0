@@ -720,7 +720,7 @@
 
 //TheSpecialSnowflake
 /datum/loadout_item/under/miscellaneous/turtleneck
-	name = "Colorable Turtleneck"
+	name = "Recolorable Turtleneck (Donator)"
 	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -808,4 +808,11 @@
 	ckeywhitelist = list("Cobalt Velvet 235")
 	name = "Tall Baby Pukeko Transformation"
 	item_path = /obj/item/effect_granter/donator/tallbabypukeko
+	requires_purchase = FALSE
+
+//Judgement_Bird
+/datum/loadout_item/suit/strange_merchant_jacket
+	name = "Strange Merchant Jacket"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	donator_only = TRUE
 	requires_purchase = FALSE

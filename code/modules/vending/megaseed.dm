@@ -64,6 +64,8 @@
 				/obj/item/seeds/poppy = 3,
 				/obj/item/seeds/rose = 3,
 				/obj/item/seeds/sunflower = 3,
+				/obj/item/seeds/harebell = 3,
+				/obj/item/seeds/poppy/lily = 3,
 			),
 		),
 

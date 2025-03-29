@@ -131,11 +131,11 @@
 	/// custom ringtone for this job
 	var/job_tone
 
-	/// Donar rank required for this job. Leave null for no requirement.
+	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
-	var/job_req_donar = null //MONKESTATION EDIT
+	var/job_req_donor = null //MONKESTATION EDIT
 	//donator bypass for holidays
-	var/job_donar_bypass = null //MONKESTATION EDIT
+	var/job_donor_bypass = null //MONKESTATION EDIT
 
 /datum/job/New()
 	. = ..()
@@ -396,6 +396,10 @@
 				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 			if(LSATCHEL)
 				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+			if(BSATCHEL)
+				back = /obj/item/storage/backpack/satchel/blackleather //Black Leather Satchel MONKESTATION
+			if(RSATCHEL)
+				back = /obj/item/storage/backpack/satchel/retro //Retro Satchel MONKESTATION
 			if(DSATCHEL)
 				back = satchel //Department satchel
 			if(DDUFFELBAG)

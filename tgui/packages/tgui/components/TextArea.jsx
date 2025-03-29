@@ -183,6 +183,7 @@ export class TextArea extends Component {
       scrollbar,
       noborder,
       displayedValue,
+      resize,
       ...boxProps
     } = this.props;
     // Box props
@@ -197,6 +198,11 @@ export class TextArea extends Component {
           className,
         ])}
         {...rest}
+        style={{
+          ...rest.style,
+          'min-height': resize && rest.height ? rest.height : '',
+          height: resize && rest.height ? 'max-content' : rest.height,
+        }}
       >
         {!!displayedValue && (
           <Box position="absolute" width="100%" height="100%" overflow="hidden">
@@ -231,6 +237,11 @@ export class TextArea extends Component {
           maxLength={maxLength}
           style={{
             color: displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
+            resize: resize,
+            position: resize !== 'none' && 'relative',
+            'min-height':
+              resize !== 'none' ? rest?.height || 'inherit' : 'inherit',
+            height: resize !== 'none' ? 'max-content' : 'inherit',
           }}
         />
       </Box>

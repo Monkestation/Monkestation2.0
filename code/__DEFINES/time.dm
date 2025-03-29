@@ -39,8 +39,12 @@
 #define PRIDE_WEEK "Pride Week"
 #define MOTH_WEEK "Moth Week"
 #define IAN_HOLIDAY "Ian's Birthday"
+//Season names for donator job stuff
+#define WINTER "Winter"
+#define SPRING "Spring"
+#define SUMMER "Summer"
+#define AUTUMN "Autumn"
 /*
-
 Days of the week to make it easier to reference them.
 
 When using time2text(), please use "DDD" to find the weekday. Refrain from using "Day"
