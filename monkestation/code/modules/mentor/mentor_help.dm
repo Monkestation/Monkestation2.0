@@ -56,7 +56,7 @@
 	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
 	request.begin_async()
 
-
+/*
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
@@ -170,3 +170,4 @@
 		. += " (<a href='byond://?_src_=mentor;mentor_follow=[REF(user)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .
+*/

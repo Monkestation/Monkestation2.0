@@ -1,5 +1,5 @@
 //Section for the Mentor Friend verb run test
-
+/*
 /client/proc/imaginary_friend()
 	set category = "Mentor"
 	set name = "Become Imaginary Friend"
@@ -55,7 +55,7 @@
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = usr
 	mentorfriend.unmentor()
-
+*/
 //Section for the Mentor Friend mob.
 /mob/camera/imaginary_friend/mentor
 	var/datum/action/innate/imaginary_leave/leave
@@ -137,8 +137,8 @@
 
 /client/proc/create_ifriend(mob/living/friend_owner, seek_confirm = FALSE)
 	var/client/C = usr.client
-	if(!usr.client.is_mentor())
-		return
+//	if(!usr.client.is_mentor())
+//		return
 
 	if(istype(C.mob, /mob/camera/imaginary_friend))
 		var/mob/camera/imaginary_friend/IF = C.mob
