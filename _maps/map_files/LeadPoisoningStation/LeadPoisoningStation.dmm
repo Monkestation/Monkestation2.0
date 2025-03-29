@@ -2026,7 +2026,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/science/xenobiology)
+/area/space/nearstation)
 "bcL" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -5098,6 +5098,11 @@
 "cJY" = (
 /turf/closed/wall,
 /area/station/service/janitor)
+"cJZ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "cKp" = (
 /obj/machinery/door/airlock{
 	id_tag = "Dorm3";
@@ -22693,7 +22698,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/science/xenobiology)
+/area/space/nearstation)
 "loa" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/shuttle/evac/airless,
@@ -24527,11 +24532,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
-"mjw" = (
-/obj/effect/decal/cleanable/oil,
-/mob/living/basic/skeleton,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
 "mjW" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/glass,
@@ -28472,7 +28472,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/station/science/xenobiology)
+/area/space/nearstation)
 "ofk" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/firealarm/directional/south,
@@ -30301,6 +30301,11 @@
 /obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/noslip,
 /area/station/commons/storage/primary)
+"pcO" = (
+/obj/effect/decal/cleanable/oil,
+/mob/living/basic/skeleton,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "pcT" = (
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/structure/disposalpipe/trunk,
@@ -33137,11 +33142,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
-"qBg" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/skeleton,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
 "qBm" = (
 /obj/structure/rack,
 /obj/item/flashlight/lantern,
@@ -70518,7 +70518,7 @@ ghX
 ghX
 oKv
 fTZ
-qBg
+cJZ
 bmn
 qgz
 bhv
@@ -71801,7 +71801,7 @@ fTZ
 bmn
 gPD
 gPD
-qBg
+cJZ
 ghX
 ghX
 ghX
@@ -72829,7 +72829,7 @@ tLF
 lgO
 gue
 ceI
-mjw
+pcO
 tLF
 eIs
 tNM
