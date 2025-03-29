@@ -6262,6 +6262,7 @@
 #include "monkestation\code\game\objects\structures\crates_lockers\closets\secure\nanotrasen_rep.dm"
 #include "monkestation\code\game\objects\structures\crates_lockers\closets\secure\security.dm"
 #include "monkestation\code\game\objects\structures\crates_lockers\crates\secure.dm"
+#include "monkestation\code\game\turfs\open\openspace.dm"
 #include "monkestation\code\game\turfs\open\water.dm"
 #include "monkestation\code\game\turfs\open\floor\misc_floor.dm"
 #include "monkestation\code\modules\_nightmare\nightmare_equipment.dm"

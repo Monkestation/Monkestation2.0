@@ -601,3 +601,9 @@
   - admin: grants admins access to member only features like changing their ghost
   flleeppyy:
   - admin: asay and msay is now bridged to the Discord via threads
+2025-03-29:
+  Absolucy:
+  - bugfix: Fixed some more lists being cleared in an incorrect, potentially laggy
+      way.
+  BanementI:
+  - admin: Added Altjira XC's office.
