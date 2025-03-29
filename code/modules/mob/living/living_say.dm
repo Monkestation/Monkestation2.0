@@ -352,11 +352,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/talk_icon_state = say_test(message_raw)
 
 	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		start_barking(message_raw, listening, message_range, talk_icon_state)
-	else
-		var/sound = pick(
-			'sound/misc/fingersnap1.ogg',
-			'sound/misc/fingersnap2.ogg')
+		start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering)
+	else if (!is_speaker_whispering)
+		var/sound
+		if (talk_icon_state == "2")
+			sound = pick('monkestation/code/modules/emotes/sound/claponce1.ogg',
+				'monkestation/code/modules/emotes/sound/claponce2.ogg')
+		else
+			sound = pick(
+				'sound/misc/fingersnap1.ogg',
+				'sound/misc/fingersnap2.ogg')
 
 		playsound(src, sound, 300, 1, message_range, falloff_exponent = 0, vary = FALSE, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 

@@ -4,219 +4,257 @@
 
 # --------- Instrument Sounds ---------
 [instruments]
-name = 'Instruments'
-path = 'sound/runtime/instruments/synthesis_samples'
+name = "Instruments"
+path = "sound/runtime/instruments/synthesis_samples"
 
-[instruments."Muted String (Low)"]
-path = 'guitar/crisis_muted/C2.ogg'
+[instruments.muted_string_low]
+name = "Muted String (Low)"
+path = "guitar/crisis_muted/C2.ogg"
 allow_random = true
 
-[instruments."Muted String (Medium)"]
-path = 'guitar/crisis_muted/C3.ogg'
+[instruments.muted_string_medium]
+name = "Muted String (Medium)"
+path = "guitar/crisis_muted/C3.ogg"
 allow_random = true
 
-[instruments."Muted String (High)"]
-path = 'guitar/crisis_muted/C4.ogg'
+[instruments.muted_string_high]
+name = "Muted String (High)"
+path = "guitar/crisis_muted/C4.ogg"
 allow_random = true
 
-# [instruments."Banjo (Medium)"]
-# path = 'guitar/crisis_muted/banjo/Cn3.ogg'
+# [instruments.banjo_medium]
+# name = "Banjo (Medium)"
+# path = "guitar/crisis_muted/banjo/Cn3.ogg"
 # allow_random = true
 
-# [instruments."Banjo (High)"]
-# path = 'guitar/crisis_muted/banjo/Cn.ogg'
+# [instruments.banjo_high]
+# name = "Banjo (High)"
+# path = "guitar/crisis_muted/banjo/Cn.ogg"
 # allow_random = true
 
 # --------- Misc Sounds ---------
 
 [misc]
-name = 'Miscellaneous'
+name = "Miscellaneous"
 
-[misc.Squeaky]
-path = 'sound/items/toysqueak1.ogg'
+[misc.squeaky]
+name = "Squeaky"
+path = "sound/items/toysqueak1.ogg"
 max_speed = 4
 hidden = true
 
-[misc.Beep]
-path = 'sound/machines/terminal_select.ogg'
+[misc.beep]
+name = "Beep"
+path = "sound/machines/terminal_select.ogg"
 max_pitch = 0.7                             #Bringing the pitch higher just hurts your ears :<
 max_speed = 4                               #This soundbyte's too short for larger speeds to not sound awkward
 
-[misc."Synthetic (Grunt)"]
+[misc.synthetic_grunt]
+name = "Synthetic (Grunt)"
 path = 'sound/misc/bloop.ogg'
 
-[misc."Synthetic (Normal)"]
-path = 'sound/machines/uplinkerror.ogg'
+[misc.synthetic_normal]
+name = "Synthetic (Normal)"
+path = "sound/machines/uplinkerror.ogg"
 max_speed = 4
 hidden = true
 
-[misc.Windy]
-path = 'sound/weapons/bulletflyby.ogg'
+[misc.windy]
+name = "Windy"
+path = "sound/weapons/bulletflyby.ogg"
 max_pitch = 1.6
 hidden = true
 
-[misc.Brassy]
-path = 'sound/machines/clockcult/integration_cog_install.ogg'
+[misc.brassy]
+name = "Brassy"
+path = "sound/machines/clockcult/integration_cog_install.ogg"
 min_speed = 4
 
 # --------- Misc Animal Sounds ---------
 
 [animal]
 name = "Animal"
-path = 'monkestation/sound/voice/barks/animal'
+path = "monkestation/sound/voice/barks/animal"
 
-[animal."Moth Squeak"]
-path = 'mothsqueak.ogg'
+[animal.moth_squeak]
+name = "Moth Squeak"
+path = "mothsqueak.ogg"
 hidden = true
 
-[animal.Chirp]
-path = 'chirp.ogg'
+[animal.chirp]
+name = "Chirp"
+path = "chirp.ogg"
 allow_random = true
 
-[animal.Caw]
-path = 'caw.ogg'
+[animal.caw]
+name = "Caw"
+path = "caw.ogg"
 allow_random = true
 min_pitch = 0.5
 max_pitch = 1.3
 min_speed = 6
 
-[animal.Chittery]
-path = 'mothchitter2.ogg'
+[animal.chittery]
+name = "Chittery"
+path = "mothchitter2.ogg"
 min_pitch = 1
 max_pitch = 1.3
 
-# --------- Don't Starve Sounds ---------
+# --------- Don"t Starve Sounds ---------
 
 [dont_starve]
 name = "Don't Starve"
-path = 'monkestation/sound/voice/barks/dont_starve'
+path = "monkestation/sound/voice/barks/dont_starve"
 
-[dont_starve.Wilson]
-path = 'wilson.ogg'
+[dont_starve.wilson]
+name = "Wilson"
+path = "wilson.ogg"
 
-[dont_starve.Woodie]
-path = 'woodie.ogg'
+[dont_starve.woodie]
+name = "Woodie"
+path = "woodie.ogg"
 
-[dont_starve.Wurt]
-path = 'wurt.ogg'
+[dont_starve.wurt]
+name = "Wurt"
+path = "wurt.ogg"
 
-[dont_starve.WX78]
-path = 'wx78.ogg'
+[dont_starve.wx78]
+name = "WX78"
+path = "wx78.ogg"
 
 # --------- Kazooie Sounds ---------
 [kazooie]
 name = "Kazooie"
-path = 'monkestation/sound/voice/barks/kazooie'
+path = "monkestation/sound/voice/barks/kazooie"
 
 # --------- Goonstation Sounds ---------
 [goon]
 name = "Goonstation"
-path = 'goon\sounds\misc\talk'
+path = "goon/sounds/misc/talk"
 
-[goon.Blub]
-path = 'blub.ogg'
-ask_path = 'blub_ask.ogg'
-exclaim_path = 'blub_exclaim.ogg'
+[goon.blub]
+name = "Blub"
+path = "blub.ogg"
+ask_path = "blub_ask.ogg"
+exclaim_path = "blub_exclaim.ogg"
 min_pitch = 0.6
 
-[goon."Bottalk 1"]
-path = 'bottalk_1.ogg'
+[goon.bottalk_1]
+name = "Bottalk 1"
+path = "bottalk_1.ogg"
 min_speed = 3
 max_speed = 9
 min_pitch = 0.5
 
-[goon."Bottalk 2"]
-path = 'bottalk_2.ogg'
+[goon.bottalk_2]
+name = "Bottalk 2"
+path = "bottalk_2.ogg"
 min_pitch = 0.9
 
-[goon."Bottalk 3"]
-path = 'bottalk_3.ogg'
+[goon.bottalk_3]
+name = "Bottalk 3"
+path = "bottalk_3.ogg"
 min_pitch = 0.6
 
-[goon.Buwoo]
-path = 'buwoo.ogg'
-ask_path = 'buwoo_ask.ogg'
-exclaim_path = 'buwoo_exclaim.ogg'
+[goon.buwoo]
+name = "Buwoo"
+path = "buwoo.ogg"
+ask_path = "buwoo_ask.ogg"
+exclaim_path = "buwoo_exclaim.ogg"
 min_pitch = 0.8
 
-[goon.Cow]
-path = 'cow.ogg'
-ask_path = 'cow_ask.ogg'
-exclaim_path = 'cow_exclaim.ogg'
+[goon.cow]
+name = "Cow"
+path = "cow.ogg"
+ask_path = "cow_ask.ogg"
+exclaim_path = "cow_exclaim.ogg"
 min_pitch = 0.8
 
-[goon.Cyborg]
-path = 'cyborg.ogg'
-ask_path = 'cyborg_ask.ogg'
-exclaim_path = 'cyborg_exclaim.ogg'
+[goon.cyborg]
+name = "Cyborg"
+path = "cyborg.ogg"
+ask_path = "cyborg_ask.ogg"
+exclaim_path = "cyborg_exclaim.ogg"
 min_pitch = 0.6
 
-[goon.Lizard]
-path = 'lizard.ogg'
-ask_path = 'lizard_ask.ogg'
-exclaim_path = 'lizard_exclaim.ogg'
+[goon.lizard]
+name = "Lizard"
+path = "lizard.ogg"
+ask_path = "lizard_ask.ogg"
+exclaim_path = "lizard_exclaim.ogg"
 min_pitch = 0.6
 
-[goon.Pug]
-path = 'pug.ogg'
-ask_path = 'pug_ask.ogg'
-exclaim_path = 'pug_exclaim.ogg'
+[goon.pug]
+name = "Pug"
+path = "pug.ogg"
+ask_path = "pug_ask.ogg"
+exclaim_path = "pug_exclaim.ogg"
 min_pitch = 0.7
 
-[goon.Pugg]
-path = 'pugg.ogg'
-ask_path = 'pugg_ask.ogg'
-exclaim_path = 'pugg_exclaim.ogg'
+[goon.pugg]
+name = "Pugg"
+path = "pugg.ogg"
+ask_path = "pugg_ask.ogg"
+exclaim_path = "pugg_exclaim.ogg"
 min_pitch = 0.6
 
-[goon.Radio]
-path = 'radio.ogg'
+[goon.radio]
+name = "Radio"
+path = "radio.ogg"
 hidden = true
 
-[goon.Radio2]
-path = 'radio2.ogg'
+[goon.radio2]
+name = "Radio2"
+path = "radio2.ogg"
 hidden = true
 
-[goon."Radio Ai"]
-path = 'radio_ai.ogg'
+[goon.radio_ai]
+name = "Radio Ai"
+path = "radio_ai.ogg"
 hidden = true
 
-[goon.Roach]
-path = 'roach.ogg'
-ask_path = 'roach_ask.ogg'
-exclaim_path = 'roach_exclaim.ogg'
+[goon.roach]
+name = "Roach"
+path = "roach.ogg"
+ask_path = "roach_ask.ogg"
+exclaim_path = "roach_exclaim.ogg"
 
-[goon.Skelly]
-path = 'skelly.ogg'
-ask_path = 'skelly_ask.ogg'
-exclaim_path = 'skelly_exclaim.ogg'
+[goon.skelly]
+name = "Skelly"
+path = "skelly.ogg"
+ask_path = "skelly_ask.ogg"
+exclaim_path = "skelly_exclaim.ogg"
 min_pitch = 0.6
 
-[goon."Speak 1"]
-path = 'speak_1.ogg'
-ask_path = 'speak_1_ask.ogg'
-exclaim_path = 'speak_1_exclaim.ogg'
+[goon.speak_1]
+name = "Speak 1"
+path = "speak_1.ogg"
+ask_path = "speak_1_ask.ogg"
+exclaim_path = "speak_1_exclaim.ogg"
 allow_random = true
 min_pitch = 0.6
 
-[goon."Speak 2"]
-path = 'speak_2.ogg'
-ask_path = 'speak_2_ask.ogg'
-exclaim_path = 'speak_2_exclaim.ogg'
+[goon.speak_2]
+name = "Speak 2"
+path = "speak_2.ogg"
+ask_path = "speak_2_ask.ogg"
+exclaim_path = "speak_2_exclaim.ogg"
 allow_random = true
 min_pitch = 0.5
 
-[goon."Speak 3"]
-path = 'speak_3.ogg'
-ask_path = 'speak_3_ask.ogg'
-exclaim_path = 'speak_3_exclaim.ogg'
+[goon.speak_3]
+name = "Speak 3"
+path = "speak_3.ogg"
+ask_path = "speak_3_ask.ogg"
+exclaim_path = "speak_3_exclaim.ogg"
 allow_random = true
 min_pitch = 0.5
 
-[goon."Speak 4"]
-path = 'speak_4.ogg'
-ask_path = 'speak_4_ask.ogg'
-exclaim_path = 'speak_4_exclaim.ogg'
+[goon.speak_4]
+name = "Speak 4"
+path = "speak_4.ogg"
+ask_path = "speak_4_ask.ogg"
+exclaim_path = "speak_4_exclaim.ogg"
 allow_random = true
 min_pitch = 0.6
 

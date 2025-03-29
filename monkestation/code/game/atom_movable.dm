@@ -48,7 +48,7 @@
 /atom/movable/proc/set_bark(id)
 	voice.set_bark(id)
 
-/atom/movable/proc/start_barking(message, list/hearers, range, talk_icon_state)
+/atom/movable/proc/start_barking(message, list/hearers, range, talk_icon_state, is_speaker_whispering)
 	var/datum/atom_voice/atom_voice = src.voice
 	var/datum/bark_sound/bark = atom_voice.bark
 	var/is_yell = talk_icon_state == "2"

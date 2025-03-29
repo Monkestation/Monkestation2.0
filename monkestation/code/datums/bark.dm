@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY(bark_groups_all)
 GLOBAL_LIST_EMPTY(random_barks)
 /// All barks
 GLOBAL_LIST_INIT(bark_list, gen_barks())
+/// Admin toggle
+GLOBAL_VAR_INIT(barking_enabled, TRUE)
 
 /proc/get_bark_sound(bark_obj, group_path, sound_name)
 	var/sound_path = bark_obj[sound_name]
@@ -32,20 +34,25 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 			stack_trace("Group " + group_id + " has no name")
 			continue
 
-		for (var/bark_name in group_obj)
-			if (bark_name == "name" || bark_name == "path")
+		for (var/bark_id in group_obj)
+			if (bark_id == "name" || bark_id == "path")
 				continue
-			var/bark_obj = group_obj[bark_name]
+			var/bark_obj = group_obj[bark_id]
 			var/datum/bark_sound/bark = new()
 
-			bark.id = group_id + "." + bark_name
-			bark.name = bark_name
+			bark.id = group_id + "." + bark_id
+			bark.name = bark_obj["name"]
 			bark.group_name = group_name
+
+			if (!bark.name)
+				stack_trace("Bark " + bark.name + " has no name")
+				continue
+
 			bark.talk = get_bark_sound(bark_obj, group_path, "path")
 			bark.ask = get_bark_sound(bark_obj, group_path, "ask")
 			bark.exclaim = get_bark_sound(bark_obj, group_path, "exclaim")
 			if (!bark.talk)
-				stack_trace("Bark " + bark_name + " has no talk sound")
+				stack_trace("Bark " + bark_id + " has no talk sound")
 				continue
 
 			// Setup parameters
@@ -135,8 +142,6 @@ GLOBAL_LIST_INIT(bark_list, gen_barks())
 	voice.set_from_prefs(client?.prefs)
 	. = ..()
 
-GLOBAL_VAR_INIT(bark_allowed, TRUE) // For administrators
-
 // Mechanics for Changelings
 /datum/changeling_profile
 	var/datum/atom_voice/voice
@@ -162,20 +167,13 @@ GLOBAL_VAR_INIT(bark_allowed, TRUE) // For administrators
 	set category = "Server"
 	set desc = "Toggle the annoying voices."
 	set name = "Toggle Character Voices"
-	toggle_bark()
+
+	GLOB.barking_enabled = !GLOB.barking_enabled
+	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.barking_enabled ? "enabled" : "disabled"].</B></span>")
+
 	log_admin("[key_name(usr)] toggled Voice Barks.")
 	message_admins("[key_name_admin(usr)] toggled Voice Barks.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.bark_allowed ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
-
-/proc/toggle_bark(toggle = null)
-	if(toggle != null)
-		if(toggle != GLOB.bark_allowed)
-			GLOB.bark_allowed = toggle
-		else
-			return
-	else
-		GLOB.bark_allowed = !GLOB.bark_allowed
-	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.bark_allowed ? "enabled" : "disabled"].</B></span>")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.barking_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_debug_reload_barks()
 	set category = "Debug"
