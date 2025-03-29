@@ -1,4 +1,0 @@
-author: "adamsong"
-delete-after: True
-changes:
-  - admin: "grants admins access to member only features like changing their ghost"
