@@ -66,13 +66,13 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
-		"medicalbed_emergency",
 		"femto_mani",
 		"quantum_keycard",
 		"swapper",
 		"triphasic_scanning",
 		"wormholeprojector",
-		"advanced_gps", // monkestation edit: advanced gps
+		"advanced_gps", // monkestation addition: advanced gps
+		"cargotele", // monkestation addition: Cargo tele shift
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)

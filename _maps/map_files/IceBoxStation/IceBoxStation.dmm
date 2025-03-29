@@ -18916,8 +18916,8 @@
 	},
 /obj/structure/sign/warning/chem_diamond/directional/west,
 /obj/machinery/light/directional/west,
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fWa" = (
@@ -25030,7 +25030,7 @@
 /area/icemoon/underground/explored)
 "hZs" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "hZQ" = (
@@ -45587,8 +45587,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "osq" = (
@@ -51171,8 +51171,8 @@
 /area/station/cargo/miningdock)
 "qht" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "qhy" = (
@@ -61796,8 +61796,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
-/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "tHe" = (
@@ -69744,8 +69744,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "wmG" = (
@@ -72617,7 +72617,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "xeT" = (
