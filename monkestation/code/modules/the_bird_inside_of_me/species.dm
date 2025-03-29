@@ -70,7 +70,6 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 
 /obj/item/bodypart/chest/ornithid
 	wing_types = /obj/item/organ/external/wings/functional/arm_wings
-	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/leg/left/ornithid
 	limb_id = SPECIES_ORNITHID
