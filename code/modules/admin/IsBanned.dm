@@ -8,7 +8,7 @@
 
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
 	if(key == 'RandomDudeFromTheRim')
-		message_admins(span_adminnotice("Moffer is back.")
+		message_admins(span_adminnotice("Moffer is back."))
 		return FALSE
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
