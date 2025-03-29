@@ -175,8 +175,8 @@ export const TechwebContent = (props) => {
                 </span>
               </LabeledList.Item>
               {Object.keys(points).map((k) => (
-                <LabeledList.Item key={k} label="Points">
-                  <b>{points[k]}</b>
+                <LabeledList.Item key={k}>
+                  <b>{k}</b>: {points[k]}
                   {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                 </LabeledList.Item>
               ))}
