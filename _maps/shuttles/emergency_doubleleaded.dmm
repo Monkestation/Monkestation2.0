@@ -1,0 +1,744 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape/brig)
+"at" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"eG" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/engine/plasma,
+/area/shuttle/escape)
+"eK" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"fd" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"fu" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/table/glass,
+/obj/item/surgery_tray,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"fW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"gu" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"gJ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/brig)
+"gO" = (
+/obj/structure/window/spawner/directional/south,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"hH" = (
+/obj/structure/table/optable,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"hO" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"iD" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"je" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"kt" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"lR" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"oh" = (
+/turf/template_noop,
+/area/template_noop)
+"op" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"pd" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/engine/plasma,
+/area/shuttle/escape)
+"pl" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"qh" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"qD" = (
+/obj/structure/guillotine,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"rb" = (
+/obj/machinery/iv_drip,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"rW" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"tF" = (
+/obj/structure/chair{
+	pixel_y = -2
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"tN" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"tZ" = (
+/obj/structure/foamedmetal,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"wZ" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ya" = (
+/obj/structure/chair/e_chair,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Bj" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"BY" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Cj" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"CL" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"CX" = (
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"DE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Ex" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Ez" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Fc" = (
+/turf/closed/wall,
+/area/shuttle/escape)
+"GZ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"HV" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Jp" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"KY" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Nj" = (
+/obj/structure/table/glass,
+/obj/structure/window/spawner/directional/west,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Nq" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ol" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Py" = (
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"PK" = (
+/obj/docking_port/mobile/emergency{
+	dir = 1;
+	name = "double leaded leadstation emergency shuttle"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"QT" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ru" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"St" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/trash,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Su" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"SN" = (
+/obj/machinery/power/shuttle_engine/large,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Ta" = (
+/obj/machinery/vending/wallmed/directional/south,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Tr" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Uf" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Vk" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"VA" = (
+/obj/machinery/stasis{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"VL" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Wq" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Xx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"XQ" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Zp" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ZK" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ZY" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+oh
+oh
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+"}
+(2,1,1) = {"
+oh
+Xx
+ai
+St
+Bj
+Ol
+St
+Xx
+je
+op
+SN
+"}
+(3,1,1) = {"
+Xx
+ai
+hO
+KY
+Ex
+Ex
+CX
+Xx
+je
+op
+op
+"}
+(4,1,1) = {"
+Xx
+Vk
+Vk
+Vk
+gJ
+Vk
+Vk
+Xx
+Xx
+Xx
+Xx
+"}
+(5,1,1) = {"
+Xx
+eK
+Uf
+GZ
+Uf
+GZ
+Uf
+CL
+HV
+pl
+Xx
+"}
+(6,1,1) = {"
+Xx
+kt
+Uf
+GZ
+Uf
+GZ
+Uf
+GZ
+Uf
+Uf
+Xx
+"}
+(7,1,1) = {"
+Xx
+BY
+Uf
+GZ
+Uf
+GZ
+Uf
+GZ
+Uf
+Uf
+rW
+"}
+(8,1,1) = {"
+Xx
+gu
+Uf
+Uf
+Uf
+Uf
+Uf
+Uf
+Uf
+at
+Xx
+"}
+(9,1,1) = {"
+Xx
+gu
+Uf
+Uf
+PK
+Uf
+Uf
+Uf
+Uf
+Uf
+rW
+"}
+(10,1,1) = {"
+Xx
+gu
+rb
+Nj
+fW
+fW
+fW
+fW
+fW
+Nq
+Xx
+"}
+(11,1,1) = {"
+Xx
+gu
+Uf
+VA
+fW
+Py
+Py
+Py
+fW
+fW
+Xx
+"}
+(12,1,1) = {"
+Xx
+Uf
+fW
+fW
+fW
+Su
+fW
+Py
+Py
+fW
+Fc
+"}
+(13,1,1) = {"
+Xx
+Uf
+fW
+Ru
+Ru
+wZ
+fW
+Py
+Py
+Py
+Fc
+"}
+(14,1,1) = {"
+Xx
+Uf
+fW
+wZ
+VL
+wZ
+fW
+Py
+Py
+Py
+Fc
+"}
+(15,1,1) = {"
+Xx
+qh
+fW
+wZ
+Wq
+wZ
+fW
+Py
+Py
+QT
+Fc
+"}
+(16,1,1) = {"
+Xx
+Uf
+fW
+wZ
+DE
+DE
+fW
+Py
+ya
+Py
+ZK
+"}
+(17,1,1) = {"
+Xx
+Uf
+fW
+Jp
+fW
+fW
+fW
+Py
+Py
+Py
+Fc
+"}
+(18,1,1) = {"
+Xx
+Uf
+Uf
+Uf
+Uf
+Uf
+fW
+Py
+qD
+Py
+Fc
+"}
+(19,1,1) = {"
+Xx
+ZY
+fd
+fd
+fd
+fd
+fW
+Py
+Py
+Py
+Fc
+"}
+(20,1,1) = {"
+Xx
+fW
+fW
+fW
+fW
+fW
+fW
+Py
+Py
+Py
+ZK
+"}
+(21,1,1) = {"
+Fc
+eG
+pd
+pd
+fW
+tN
+gO
+Py
+Py
+XQ
+Fc
+"}
+(22,1,1) = {"
+Fc
+pd
+pd
+fW
+fW
+hH
+Py
+Py
+Py
+XQ
+Fc
+"}
+(23,1,1) = {"
+fW
+fW
+fW
+fW
+fW
+fu
+iD
+Cj
+Py
+XQ
+Fc
+"}
+(24,1,1) = {"
+oh
+oh
+oh
+fW
+tF
+Py
+Py
+Cj
+Py
+XQ
+Fc
+"}
+(25,1,1) = {"
+oh
+oh
+oh
+fW
+tF
+Py
+Py
+Cj
+Py
+XQ
+Fc
+"}
+(26,1,1) = {"
+oh
+oh
+fW
+fW
+tF
+Py
+Py
+Cj
+Py
+XQ
+Fc
+"}
+(27,1,1) = {"
+tZ
+tZ
+tZ
+tF
+Zp
+tF
+Tr
+Fc
+Fc
+Fc
+Fc
+"}
+(28,1,1) = {"
+Fc
+tZ
+tF
+lR
+Py
+Zp
+QT
+Fc
+je
+op
+SN
+"}
+(29,1,1) = {"
+oh
+Fc
+Fc
+Ez
+Ez
+Zp
+Ta
+Fc
+je
+op
+op
+"}
+(30,1,1) = {"
+oh
+oh
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+"}
+(31,1,1) = {"
+oh
+oh
+oh
+oh
+oh
+oh
+oh
+oh
+oh
+oh
+oh
+"}
