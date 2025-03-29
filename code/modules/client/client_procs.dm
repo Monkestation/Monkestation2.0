@@ -280,6 +280,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
 		prefs.parent = src
+		prefs.load_savefile() // just to make sure we have the latest data
 		prefs.apply_all_client_preferences()
 	else
 		prefs = new /datum/preferences(src)
@@ -547,7 +548,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -602,26 +603,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(obj_window)
 		QDEL_NULL(obj_window)
 	if(holder)
-		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			var/cheesy_message = pick(
-				"I have no admins online!",\
-				"I'm all alone :(",\
-				"I'm feeling lonely :(",\
-				"I'm so lonely :(",\
-				"Why does nobody love me? :(",\
-				"I want a man :(",\
-				"Where has everyone gone?",\
-				"I need a hug :(",\
-				"Someone come hold me :(",\
-				"I need someone on me :(",\
-				"What happened? Where has everyone gone?",\
-				"Forever alone :("\
-			)
+		handle_admin_logout()
 
-			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
 	active_mousedown_item = null
@@ -774,9 +759,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/log_client_to_db_connection_log()
 	if(!SSdbcore.shutting_down)
 		SSdbcore.FireAndForget({"
-			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
-			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
-		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
+			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`,`byond_version`,`byond_build`)
+			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid,:byond_version,:byond_build)
+		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id, "byond_version" = byond_version, "byond_build" = byond_build))
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
@@ -958,7 +943,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				string += ", "
 			string += "Mobile Hostspot IP"
 
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
@@ -1176,6 +1161,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+	calculate_move_dir()
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1375,19 +1361,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	fullscreen = !fullscreen
 
-	if (fullscreen)
-		winset(usr, "mainwindow", "on-size=")
-		winset(usr, "mainwindow", "titlebar=false")
-		winset(usr, "mainwindow", "can-resize=false")
-		winset(usr, "mainwindow", "menu=")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "is-maximized=true")
-	else
-		winset(usr, "mainwindow", "menu=menu")
-		winset(usr, "mainwindow", "titlebar=true")
-		winset(usr, "mainwindow", "can-resize=true")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "on-size=attempt_auto_fit_viewport")
+	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
 	set name = "Toggle Status Bar"
@@ -1396,9 +1371,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	show_status_bar = !show_status_bar
 
 	if (show_status_bar)
-		winset(usr, "mapwindow.status_bar", "is-visible=true")
+		winset(src, "mapwindow.status_bar", "is-visible=true")
 	else
-		winset(usr, "mapwindow.status_bar", "is-visible=false")
+		winset(src, "mapwindow.status_bar", "is-visible=false")
 
 /// Clears the client's screen, aside from ones that opt out
 /client/proc/clear_screen()
@@ -1409,6 +1384,36 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				continue
 
 		screen -= object
+
+/// Handles any "fluff" or supplementary procedures related to an admin logout event. Should not have anything critically related cleaning up an admin's logout.
+/client/proc/handle_admin_logout()
+	adminGreet(logout = TRUE)
+	if(length(GLOB.admins) > 0 || !SSticker.IsRoundInProgress()) // We only want to report this stuff if we are currently playing.
+		return
+
+	var/list/message_to_send = list()
+	var/static/list/cheesy_messages = null
+
+	if (isnull(cheesy_messages))
+		cheesy_messages = list(
+			"Forever alone :(",
+			"I have no admins online!",
+			"I need a hug :(",
+			"I need someone on me :(",
+			"I want a man :(",
+			"I'm all alone :(",
+			"I'm feeling lonely :(",
+			"I'm so lonely :(",
+			"Someone come hold me :(",
+			"What happened? Where has everyone gone?",
+			"Where has everyone gone?",
+			"Why does nobody love me? :(",
+		)
+
+	message_to_send += pick(cheesy_messages)
+	message_to_send += "(No admins online)"
+
+	send2adminchat("Server", jointext(message_to_send, " "))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

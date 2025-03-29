@@ -1607,7 +1607,6 @@
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/safe,
 /obj/item/stack/telecrystal/five,
-/obj/item/stack/telecrystal/twenty,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/item/card/id/advanced/chameleon,
 /obj/item/card/id/advanced/chameleon,
