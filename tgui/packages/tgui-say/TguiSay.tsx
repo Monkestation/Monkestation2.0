@@ -39,6 +39,7 @@ export class TguiSay extends Component<{}, State> {
   private lightMode: boolean;
   private maxLength: number;
   private messages: typeof byondMessages;
+  private active: boolean;
   state: State;
 
   constructor(props: never) {
@@ -51,6 +52,7 @@ export class TguiSay extends Component<{}, State> {
     this.lightMode = false;
     this.maxLength = 1024;
     this.messages = byondMessages;
+    this.active = false;
     this.state = {
       buttonContent: '',
       size: WINDOW_SIZES.small,
@@ -140,6 +142,7 @@ export class TguiSay extends Component<{}, State> {
     this.chatHistory.reset();
     this.channelIterator.reset();
     this.currentPrefix = null;
+    this.active = false;
     windowClose();
   }
 
@@ -265,10 +268,18 @@ export class TguiSay extends Component<{}, State> {
     }, 0);
 
     const { channel } = data;
+    if (
+      this.active &&
+      this.channelIterator.isVisible() !==
+        this.channelIterator.isVisible(channel)
+    ) {
+      return;
+    }
     // Catches the case where the modal is already open
     if (this.channelIterator.isSay()) {
       this.channelIterator.set(channel);
     }
+    this.active = true;
     this.setState({ buttonContent: this.channelIterator.current() });
 
     windowOpen(this.channelIterator.current());

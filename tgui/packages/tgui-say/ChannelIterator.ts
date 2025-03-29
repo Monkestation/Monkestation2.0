@@ -55,8 +55,8 @@ export class ChannelIterator {
     return this.channels[this.index] === 'Say';
   }
 
-  public isVisible(): boolean {
-    return !this.quiet.includes(this.channels[this.index]);
+  public isVisible(channel?: Channel): boolean {
+    return !this.quiet.includes(channel || this.channels[this.index]);
   }
 
   public reset(): void {
