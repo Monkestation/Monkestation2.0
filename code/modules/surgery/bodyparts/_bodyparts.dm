@@ -656,11 +656,6 @@
 	if(burn)
 		set_burn_dam(round(max(burn_dam - burn, 0), DAMAGE_PRECISION))
 
-	if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING) && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED)) //monkestation edit
-		if(owner.health > 0)
-			owner.revive(0)
-			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
-
 	if(owner)
 		if(can_be_disabled)
 			update_disabled()
@@ -668,9 +663,11 @@
 			owner.updatehealth()
 
 		//monkestation edit start
-		if(owner.stat == DEAD && HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
-			if(!HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
-				owner.revive(FALSE)
+		if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
+			if(owner.stat == DEAD)
+				if(!HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
+					owner.revive(FALSE)
+			owner.cure_husk(0) // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
 		//monkestation edit end
 
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
