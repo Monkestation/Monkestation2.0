@@ -336,7 +336,8 @@ const encodedLengthBinarySearch = (haystack: string[], length: number) => {
 
 const chunkSplitter = {
   [Symbol.split]: (string: string) => {
-    const charSeq = string[Symbol.iterator]().toArray();
+    // TODO: get rid of the "as any" whenever we upgrade typescript
+    const charSeq = (string[Symbol.iterator]() as any).toArray();
     const length = charSeq.length;
     let chunks: string[] = [];
     let startIndex = 0;
