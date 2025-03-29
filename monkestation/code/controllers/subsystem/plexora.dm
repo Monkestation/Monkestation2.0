@@ -221,6 +221,22 @@ SUBSYSTEM_DEF(plexora)
 		var/list/json_body = json_decode(response.body)
 		return json_body["alive_likely"]
 
+
+/datum/controller/subsystem/plexora/proc/relay_mentor_say(client/user, message, prefix)
+	http_basicasync("relay_mentor_say", list(
+		"prefix" = prefix,
+		"key" = user.key,
+		"message" = message,
+		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+	))
+
+/datum/controller/subsystem/plexora/proc/relay_admin_say(client/user, message)
+	http_basicasync("relay_admin_say", list(
+		"key" = user.key,
+		"message" = message,
+		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+	))
+
 // note: recover_all_SS_and_recreate_master to force mc shit
 
 /datum/controller/subsystem/plexora/proc/mc_alert(alert, level = 5)
@@ -978,6 +994,76 @@ SUBSYSTEM_DEF(plexora)
 			html = "<B><font color='green'>Mentor PM: [key_name_mentor(sender, honked_client, FALSE, FALSE)]-&gt;[key_name_mentor(recipient, honked_client, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[message]</span></font>",
 			confidential = TRUE)
 
+/datum/world_topic/plx_relayadminsay
+	keyword = "PLX_relayadminsay"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_relayadminsay/Run(list/input)
+	var/sender = input["sender"]
+	var/msg = input["message"]
+
+	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	if(!msg)
+		return
+
+	if(findtext(msg, "@") || findtext(msg, "#"))
+		var/list/link_results = check_asay_links(msg)
+		if(length(link_results))
+			msg = link_results[ASAY_LINK_NEW_MESSAGE_INDEX]
+			link_results[ASAY_LINK_NEW_MESSAGE_INDEX] = null
+			var/list/pinged_admin_clients = link_results[ASAY_LINK_PINGED_ADMINS_INDEX]
+			for(var/iter_ckey in pinged_admin_clients)
+				var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
+				if(!iter_admin_client?.holder)
+					continue
+				window_flash(iter_admin_client)
+				SEND_SOUND(iter_admin_client.mob, sound('sound/misc/asay_ping.ogg'))
+
+	msg = keywords_lookup(msg)
+
+	// TODO: Load sender's color prefs? idk
+	msg = span_adminsay("[span_prefix("ADMIN (DISCORD):")] <EM>[sender]</EM>: <span class='message linkify'>[msg]</span>")
+
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINCHAT,
+		html = msg,
+		confidential = TRUE)
+
+	SSblackbox.record_feedback("tally", "admin_say_relay", 1, "Asay external") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/world_topic/plx_relaymentorsay
+	keyword = "PLX_relaymentorsay"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_relaymentorsay/Run(list/input)
+	var/sender = input["sender"]
+	var/msg = input["message"]
+
+	msg = emoji_parse(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	if(!msg)
+		return
+
+	var/list/pinged_mentor_clients = check_mentor_pings(msg)
+	if(length(pinged_mentor_clients) && pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX])
+		msg = pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX]
+		pinged_mentor_clients -= ASAY_LINK_PINGED_ADMINS_INDEX
+
+	for(var/iter_ckey in pinged_mentor_clients)
+		var/client/iter_mentor_client = pinged_mentor_clients[iter_ckey]
+		if(!iter_mentor_client?.mentor_datum)
+			continue
+		window_flash(iter_mentor_client)
+		SEND_SOUND(iter_mentor_client.mob, sound('sound/misc/bloop.ogg'))
+
+	log_mentor("MSAY(DISCORD): [sender] : [msg]")
+	msg = "<b><font color='#7544F0'><span class='prefix'>DISCORD:</span> <EM>[sender]</EM>: <span class='message linkify'>[msg]</span></font></b>"
+
+	to_chat(GLOB.admins | GLOB.mentors,
+		type = MESSAGE_TYPE_MODCHAT,
+		html = msg,
+		confidential = TRUE)
+
+	SSblackbox.record_feedback("tally", "mentor_say_relay", 1, "Msay external") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 #undef OLD_PLEXORA_CONFIG
 #undef AUTH_HEADER
 #undef TOPIC_EMITTER

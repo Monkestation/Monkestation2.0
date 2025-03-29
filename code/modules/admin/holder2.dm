@@ -71,6 +71,11 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
+	// monkestation edit: always try to give profiling + devtools without autoadmin
+	// (mostly so i can try to narrow down a tgui crash. and also figure out lagspikes while they're happening without the whole charade)
+	try_give_profiling()
+	try_give_devtools()
+	// monkestation end
 	if (force_active || (rank_flags() & R_AUTOADMIN))
 		activate()
 	else
@@ -409,9 +414,9 @@ GLOBAL_PROTECT(href_token)
 	return combined_flags
 
 /datum/admins/proc/try_give_devtools()
-	if(!(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+	if(isnull(owner) || !(rank_flags() & R_DEBUG) || owner.byond_version < 516)
 		return
-	winset(owner, null, "browser-options=byondstorage,find,refresh,devtools")
+	winset(owner, null, list("browser-options" = "+devtools"))
 
 /datum/admins/proc/try_give_profiling()
 	if (CONFIG_GET(flag/forbid_admin_profiling))
@@ -424,7 +429,7 @@ GLOBAL_PROTECT(href_token)
 		return
 
 	given_profiling = TRUE
-	world.SetConfig("APP/admin", owner.ckey, "role=admin")
+	world.SetConfig("APP/admin", owner?.ckey || target, "role=admin") // monkestation edit: allow this to be set when owner is null
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

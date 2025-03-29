@@ -163,7 +163,7 @@
 	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		if(length(human_user.alternative_screams))
+		if(LAZYLEN(human_user.alternative_screams))
 			return pick(human_user.alternative_screams)
 		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
 		. = tongue?.get_scream_sound()

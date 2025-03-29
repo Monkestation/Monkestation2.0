@@ -959,6 +959,11 @@
 "dV" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"dW" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/vending/mechcomp,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "dY" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/entry)
@@ -8318,7 +8323,7 @@ Ut
 cm
 cK
 by
-dB
+dW
 dx
 dl
 dl
