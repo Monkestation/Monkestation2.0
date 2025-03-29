@@ -37,6 +37,7 @@
 /obj/machinery/door/airlock/hydroponics{
 	name = "Hydroponics Backroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/space)
 "aS" = (
@@ -101,6 +102,7 @@
 "ch" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/space)
 "cr" = (
@@ -244,6 +246,8 @@
 "fc" = (
 /obj/structure/table/reinforced,
 /obj/item/stamp/head/ce,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/white/smooth_half,
 /area/space)
 "fh" = (
@@ -387,6 +391,8 @@
 	name = "Engineering Storage";
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron,
 /area/space)
 "hz" = (
@@ -503,6 +509,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron,
 /area/space)
 "kh" = (
@@ -646,6 +653,10 @@
 	layer = 2.8
 	},
 /turf/open/floor/iron/kitchen,
+/area/space)
+"nP" = (
+/obj/structure/sauna_oven,
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/space)
 "nV" = (
 /turf/closed/wall/mineral/wood/nonmetal,
@@ -806,6 +817,8 @@
 "sK" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/plating,
 /area/space)
 "sP" = (
@@ -814,6 +827,9 @@
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/dark,
+/area/space)
+"sQ" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
 /area/space)
 "sS" = (
 /obj/structure/railing{
@@ -996,6 +1012,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/space)
+"wS" = (
+/obj/machinery/gateway/away,
+/turf/open/floor/pod,
+/area/space)
 "wZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
@@ -1132,6 +1152,10 @@
 	name = "Bedroom 2"
 	},
 /turf/open/floor/wood,
+/area/space)
+"yZ" = (
+/obj/structure/broken_flooring/plating/directional/south,
+/turf/open/floor/plating/snowed,
 /area/space)
 "zp" = (
 /obj/structure/chair/sofa/middle/brown{
@@ -1289,6 +1313,11 @@
 	},
 /turf/open/floor/wood/large,
 /area/space)
+"Dw" = (
+/obj/structure/closet/body_bag,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/space)
 "Dy" = (
 /obj/machinery/chicken_grinder,
 /turf/open/floor/iron/dark,
@@ -1372,6 +1401,7 @@
 "Fh" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron,
 /area/space)
 "Fm" = (
@@ -1464,6 +1494,7 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/space)
 "If" = (
@@ -1485,6 +1516,10 @@
 "Ik" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/kitchen,
+/area/space)
+"In" = (
+/obj/structure/sauna_oven,
+/turf/open/floor/wood,
 /area/space)
 "Iw" = (
 /obj/structure/table/greyscale,
@@ -1564,9 +1599,7 @@
 /turf/open/floor/carpet/black,
 /area/space)
 "KO" = (
-/obj/structure/chair/office/light{
-	dir = 1
-	},
+/obj/effect/mob_spawn/ghost_role/human/away/snow_operative,
 /turf/open/floor/iron/white/smooth_large,
 /area/space)
 "Lb" = (
@@ -1592,6 +1625,7 @@
 /obj/machinery/door/airlock/service{
 	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/cafeteria,
 /area/space)
 "LY" = (
@@ -1651,6 +1685,7 @@
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/white/smooth_half,
 /area/space)
 "NK" = (
@@ -1708,6 +1743,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron,
 /area/space)
 "Ou" = (
@@ -1795,6 +1831,8 @@
 	id_tag = "CEdoor";
 	name = "Chief Engineer's Office"
 	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/white/smooth_large,
 /area/space)
 "Qn" = (
@@ -1843,6 +1881,9 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/kitchen,
 /area/space)
+"Re" = (
+/turf/open/floor/pod,
+/area/space)
 "Rf" = (
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/dark,
@@ -1871,6 +1912,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/space)
 "RQ" = (
@@ -1889,6 +1931,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
+/area/space)
+"RU" = (
+/obj/machinery/door/airlock/wood{
+	name = "Natural Sauna"
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/space)
 "RZ" = (
 /turf/open/floor/carpet/black,
@@ -2025,6 +2073,10 @@
 /obj/item/knife/butcher,
 /turf/open/floor/iron/kitchen,
 /area/space)
+"TX" = (
+/obj/structure/broken_flooring/plating/directional/west,
+/turf/open/floor/plating/snowed,
+/area/space)
 "Uf" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -2156,6 +2208,10 @@
 	name = "curtain"
 	},
 /turf/open/floor/plating,
+/area/space)
+"Wy" = (
+/obj/effect/landmark/awaystart,
+/turf/open/floor/wood,
 /area/space)
 "WI" = (
 /obj/effect/turf_decal/siding/dark,
@@ -2405,12 +2461,12 @@ iL
 iL
 iL
 iL
-iL
-iL
-iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
+sQ
+sQ
+sQ
 iL
 iL
 iL
@@ -2505,21 +2561,21 @@ iL
 (3,1,1) = {"
 iL
 iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
 ml
 ml
+nP
 ml
-ml
+sQ
+sQ
 iL
 iL
 iL
-iL
-iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
 ml
 ml
 ml
@@ -2607,7 +2663,7 @@ iL
 (4,1,1) = {"
 iL
 iL
-iL
+sQ
 ml
 ml
 ml
@@ -2615,13 +2671,13 @@ ml
 ml
 ml
 ml
-iL
-iL
-iL
+sQ
 iL
 iL
+sQ
+sQ
 ml
-ml
+RU
 ml
 ml
 ml
@@ -2708,22 +2764,22 @@ iL
 "}
 (5,1,1) = {"
 iL
-iL
-iL
+sQ
+sQ
+ml
+Re
+Re
+Re
 ml
 ml
 ml
+sQ
+sQ
+sQ
+sQ
 ml
 ml
-ml
-ml
-iL
-iL
-iL
-iL
-ml
-ml
-ml
+RU
 ml
 ml
 ml
@@ -2810,22 +2866,22 @@ iL
 "}
 (6,1,1) = {"
 iL
-iL
+sQ
+ml
+ml
+Re
+wS
+Re
+ml
+ml
+ml
+nP
+sQ
 ml
 ml
 ml
 ml
-ml
-ml
-ml
-ml
-ml
-iL
-ml
-ml
-ml
-ml
-iL
+sQ
 iL
 ml
 ml
@@ -2912,7 +2968,12 @@ iL
 "}
 (7,1,1) = {"
 iL
-iL
+sQ
+ml
+ml
+Re
+Re
+Re
 ml
 ml
 ml
@@ -2921,13 +2982,8 @@ ml
 ml
 ml
 ml
-ml
-ml
-ml
-ml
-ml
-iL
-iL
+sQ
+sQ
 iL
 ml
 ml
@@ -3014,7 +3070,8 @@ iL
 "}
 (8,1,1) = {"
 iL
-iL
+sQ
+nP
 ml
 ml
 ml
@@ -3027,8 +3084,7 @@ ml
 ml
 ml
 ml
-ml
-iL
+sQ
 iL
 iL
 ml
@@ -3116,7 +3172,7 @@ iL
 "}
 (9,1,1) = {"
 iL
-iL
+sQ
 ml
 ml
 ml
@@ -3129,8 +3185,8 @@ ml
 ml
 ml
 ml
-iL
-iL
+sQ
+sQ
 iL
 iL
 iL
@@ -3218,7 +3274,7 @@ iL
 "}
 (10,1,1) = {"
 iL
-iL
+sQ
 ml
 ml
 ml
@@ -3229,9 +3285,9 @@ ml
 ml
 ml
 ml
-ml
-iL
-iL
+nP
+sQ
+sQ
 iL
 iL
 iL
@@ -3320,7 +3376,7 @@ iL
 "}
 (11,1,1) = {"
 iL
-iL
+sQ
 ml
 ml
 ml
@@ -3332,8 +3388,8 @@ ml
 ml
 ml
 ml
-iL
-iL
+sQ
+sQ
 iL
 iL
 iL
@@ -3422,9 +3478,10 @@ iL
 "}
 (12,1,1) = {"
 iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
+nP
 ml
 ml
 ml
@@ -3434,8 +3491,7 @@ ml
 ml
 ml
 ml
-ml
-iL
+sQ
 iL
 iL
 iL
@@ -3526,18 +3582,18 @@ iL
 iL
 iL
 iL
-iL
-iL
+sQ
+sQ
 ml
 ml
 ml
 ml
-iL
+sQ
 ml
 ml
 ml
 ml
-iL
+sQ
 iL
 iL
 iL
@@ -3629,17 +3685,17 @@ iL
 iL
 iL
 iL
-iL
-iL
+sQ
+sQ
 ml
 ml
 ml
-iL
-iL
-iL
-ml
-iL
-iL
+sQ
+sQ
+sQ
+nP
+sQ
+sQ
 iL
 iL
 iL
@@ -3732,16 +3788,16 @@ iL
 iL
 iL
 iL
-iL
+sQ
 ml
 ml
+sQ
+sQ
 iL
-iL
-iL
-iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
+sQ
 iL
 iL
 iL
@@ -3834,10 +3890,10 @@ iL
 iL
 iL
 iL
-iL
+sQ
 ml
 ml
-iL
+sQ
 iL
 iL
 iL
@@ -3936,10 +3992,10 @@ iL
 iL
 iL
 iL
-iL
+sQ
 ml
 ml
-iL
+sQ
 iL
 iL
 iL
@@ -4038,10 +4094,10 @@ ml
 iL
 iL
 iL
-iL
+sQ
 ml
 ml
-iL
+sQ
 iL
 iL
 iL
@@ -4140,10 +4196,10 @@ ml
 iL
 iL
 iL
-iL
-iL
+sQ
+sQ
 ml
-ml
+RU
 ml
 ml
 ml
@@ -4172,7 +4228,7 @@ oC
 ml
 nV
 Bu
-Bu
+In
 Bu
 nV
 ml
@@ -4243,9 +4299,9 @@ ml
 iL
 iL
 iL
-iL
-iL
-iL
+sQ
+sQ
+sQ
 ml
 ml
 ml
@@ -5491,9 +5547,9 @@ Ou
 XR
 XR
 LS
-ml
-ml
-ml
+Dw
+Dw
+Dw
 ml
 oC
 oC
@@ -5695,9 +5751,9 @@ WN
 XR
 mI
 ml
-ml
-ml
-ml
+Dw
+Dw
+Dw
 ml
 oC
 oC
@@ -5899,9 +5955,9 @@ by
 by
 XI
 ml
-ml
-ml
-ml
+Dw
+Dw
+Dw
 ml
 oC
 oC
@@ -6780,9 +6836,9 @@ nV
 ee
 Xu
 Bu
-Bu
-Bu
-Bu
+Wy
+Wy
+Wy
 nV
 iL
 "}
@@ -6882,9 +6938,9 @@ nV
 Xu
 Xu
 Bu
-Bu
-Bu
-Bu
+Wy
+Wy
+Wy
 nV
 iL
 "}
@@ -6984,9 +7040,9 @@ Lb
 Bu
 Bu
 Bu
-Bu
-Bu
-Bu
+Wy
+Wy
+Wy
 nV
 iL
 "}
@@ -10575,13 +10631,13 @@ XI
 gK
 qN
 me
-XR
+yZ
 UT
 nC
 eC
 hW
 jF
-XR
+yZ
 XR
 XR
 ml
@@ -11290,7 +11346,7 @@ YW
 LT
 UT
 UT
-XR
+TX
 Iz
 Hd
 Vz
