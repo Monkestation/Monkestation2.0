@@ -535,3 +535,75 @@
   - rscadd: .45 caliber rubbers available in the security techfab
   - rscadd: 'Ported from TG : https://github.com/tgstation/tgstation/pull/89221 which
       mean the forensic scanner got a new ui'
+2025-03-27:
+  Absolucy:
+  - bugfix: Fixed lights sometimes not properly updating when turned on or off.
+  - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
+  - bugfix: Fixed an edge-case where, if two heretics of different paths applied a
+      mark to the same person, the effects from the first mark (i.e moon path's pacifism)
+      would likely be permanent.
+  - code_imp: Slightly improved the code for the Cortex Imprint bioware.
+  - bugfix: Fixed an centcom ghost player escape exploit.
+  - bugfix: You will now be ejected from any jaunt (i.e bloodcrawl or shadow walk)
+      if you lose consciousness somehow during the jaunt.
+  - bugfix: The _ispath SDQL2/Lua wrapper can now be used to actually check if something
+      is a path.
+  - code_imp: Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts.
+  - bugfix: Probably fixed techfab/lathe/mechfab UIs not updating sometimes.
+  - bugfix: The animation from a xeno chestbursting out of someone is now properly
+      removed after they burst out.
+  - bugfix: You now must observe or join the game in order to buy or open a lootbox,
+      to prevent any potential issues or confusion where you pay for a lootbox but
+      don't get it.
+  - qol: The Good Assistants Point redeemer thingy can no longer be used to spam messages
+      or loud sounds.
+  - bugfix: (itsmeow) The tgui color picker is colorful again on BYOND 516.
+  - qol: (SmArtKar) If you have auto fit viewport enabled, it will trigger upon entering
+      or exiting fullscreen.
+  - rscadd: (jlsnow301) TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  - bugfix: (TiviPlus) fixed a case that could make untoggling fullscreen make your
+      window small.
+  - code_imp: (TiviPlus) Cleaned up some fullscreen and status bar toggle code to
+      function better.
+  - bugfix: (Holoo-1) Fixed white space when observing in auto observe mode
+  - refactor: (Kylerace) Tech disk uploading isnt super slow anymore (much harder
+      to crash spacetime with it)
+  - code_imp: (SmArtKar) Removed the 516 beta warning entirely.
+  - bugfix: (hry-gh) tgui windows closing should no longer cause sticky keys, especially
+      on BYOND 516.
+  - bugfix: (hry-gh) The audio player shouldn't blow up in weird circumstances anymore.
+  - rscadd: Re-added interaction components to the mechcomp vendor.
+  - bugfix: Fixed some further potential exploits with interaction components.
+  - code_imp: Cleaned up a lot of interaction component code.
+  - map: Added a mechcomp vendor to runtimestation.
+  - config: Added config options to disable interaction components holding items or
+      interacting with storage components.
+  - config: Added a config option to add more item types to the interaction component
+      blacklist.
+  Ben10Omintrix:
+  - code_imp: improved trick weapon code
+  Marabout2:
+  - bugfix: fixed the variant of the detective holster with the regular revolver.
+  ancient-engineer:
+  - image: modified the sink sprite so that it clings to the wall. I also did the
+      kitchen sink too.
+  flleeppyy:
+  - bugfix: allow mentors/admins through the interview system by default
+  - admin: '`Create Command Report` enhancements'
+  - code_imp: New `priority_announce` and `generate_unique_announcement_header` param,
+      `append_update` to append "Update" to command report titles.
+  - code_imp: Added optional `sanitize` (default is TRUE) param to `print_command_report`
+      and `SScommunications.send_message`
+2025-03-28:
+  CannibalHunter:
+  - rscadd: Added "Strange Merchant Jacket" donator item.
+  adamsong:
+  - admin: grants admins access to member only features like changing their ghost
+  flleeppyy:
+  - admin: asay and msay is now bridged to the Discord via threads
+2025-03-29:
+  Absolucy:
+  - bugfix: Fixed some more lists being cleared in an incorrect, potentially laggy
+      way.
+  BanementI:
+  - admin: Added Altjira XC's office.

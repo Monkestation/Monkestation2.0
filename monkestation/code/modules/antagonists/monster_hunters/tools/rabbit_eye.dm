@@ -10,11 +10,7 @@
 	if(weapon.upgrade_level >= 3)
 		user.balloon_alert(user, "already fully upgraded!")
 		return
-	if(weapon.enabled)
-		user.balloon_alert(user, "weapon must be in base form!")
-		return
-	SEND_SIGNAL(weapon, COMSIG_WEAPON_UPGRADE)
-	weapon.name = "[weapon.base_name] +[weapon.upgrade_level]"
+	weapon.upgrade_weapon()
 	balloon_alert(user, "[src] crumbles away...")
 	playsound(src, 'monkestation/sound/effects/weaponsmithing.ogg', vol = 50)
 	qdel(src)
