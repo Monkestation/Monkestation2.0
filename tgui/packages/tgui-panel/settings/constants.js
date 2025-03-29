@@ -19,6 +19,10 @@ export const SETTINGS_TABS = [
     name: 'Chat Tabs',
   },
   {
+    id: 'statPanel',
+    name: 'Stat Panel',
+  },
+  {
     id: 'experimental',
     name: 'Experimental',
   },

@@ -18,9 +18,23 @@ import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 import { exportChatSettings } from './settingsImExport';
 
-const setGlobalFontSize = (fontSize) => {
+let setStatFontTimer;
+let statTabsTimer;
+
+const setGlobalFontSize = (fontSize, statFontSize, statLinked) => {
   document.documentElement.style.setProperty('font-size', fontSize + 'px');
   document.body.style.setProperty('font-size', fontSize + 'px');
+
+  // Used solution from theme.ts
+  clearInterval(setStatFontTimer);
+  Byond.command(
+    `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+  );
+  setStatFontTimer = setTimeout(() => {
+    Byond.command(
+      `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+    );
+  }, 1500);
 };
 
 const setGlobalFontFamily = (fontFamily) => {
@@ -28,6 +42,14 @@ const setGlobalFontFamily = (fontFamily) => {
 
   document.documentElement.style.setProperty('font-family', fontFamily);
   document.body.style.setProperty('font-family', fontFamily);
+};
+
+const setStatTabsStyle = (style) => {
+  clearInterval(statTabsTimer);
+  Byond.command(`.output statbrowser:set_tabs_style ${style}`);
+  statTabsTimer = setTimeout(() => {
+    Byond.command(`.output statbrowser:set_tabs_style ${style}`);
+  }, 1500);
 };
 
 export const settingsMiddleware = (store) => {
@@ -61,8 +83,14 @@ export const settingsMiddleware = (store) => {
       // Pass action to get an updated state
       next(action);
       const settings = selectSettings(store.getState());
+      // Update stat panel settings
+      setStatTabsStyle(settings.statTabsStyle);
       // Update global UI font size
-      setGlobalFontSize(settings.fontSize);
+      setGlobalFontSize(
+        settings.fontSize,
+        settings.statFontSize,
+        settings.statLinked,
+      );
       setGlobalFontFamily(settings.fontFamily);
       // Save settings to the web storage
       storage.set('panel-settings', settings);
