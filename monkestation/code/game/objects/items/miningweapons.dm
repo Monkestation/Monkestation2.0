@@ -35,6 +35,7 @@
 	overrides_main = TRUE
 	overrides_twohandrequired = TRUE
 	override_twohandedsprite = TRUE
+	force_wielded = 15
 
 /obj/item/kinetic_crusher/machete/Initialize(mapload)
 	. = ..()
@@ -79,10 +80,11 @@
 	overrides_main = TRUE
 	overrides_twohandrequired = FALSE
 	override_twohandedsprite = TRUE
+	force_wielded = 15
 
 /obj/item/kinetic_crusher/spear/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=15)
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=force_wielded)
 	AddComponent(/datum/component/butchering, \
 		speed = 6 SECONDS, \
 		effectiveness = 90, \
@@ -127,10 +129,11 @@
 	overrides_main = TRUE
 	overrides_twohandrequired = FALSE
 	override_twohandedsprite = TRUE
+	force_wielded = 20
 
 /obj/item/kinetic_crusher/hammer/Initialize(mapload)
 		. = ..()
-		AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+		AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=force_wielded)
 
 /obj/item/kinetic_crusher/hammer/attack(mob/living/target, mob/living/user)
 	var/relative_direction = get_cardinal_dir(src, target)
@@ -180,6 +183,7 @@
 	overrides_main = TRUE
 	overrides_twohandrequired = TRUE
 	override_twohandedsprite = TRUE
+	force_wielded = 5
 
 /obj/item/kinetic_crusher/claw/Initialize(mapload)
 	. = ..()
