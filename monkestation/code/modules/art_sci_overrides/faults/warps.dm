@@ -2,7 +2,7 @@
 	name = "Warping Fault"
 	trigger_chance = 12
 	visible_message = "warps space sending everyone away."
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR
 	weight = ARTIFACT_UNCOMMON
 
 /datum/artifact_fault/warp/on_trigger()

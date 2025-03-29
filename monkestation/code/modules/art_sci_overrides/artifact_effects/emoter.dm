@@ -9,7 +9,7 @@
 		/datum/artifact_activator/range/force
 	)
 
-	research_value = 150
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	var/cooldown_time //cooldown AFTER the shield lowers
 	var/radius

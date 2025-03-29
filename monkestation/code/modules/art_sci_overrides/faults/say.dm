@@ -4,7 +4,7 @@
 /datum/artifact_fault/speech
 	name = "Talkative Fault"
 	trigger_chance = 25
-	research_value = 50
+	research_value = TECHWEB_DISCOUNT_MINOR / 4
 	/// Cooldown to prevent constant chat spam.
 	COOLDOWN_DECLARE(spam_cooldown)
 

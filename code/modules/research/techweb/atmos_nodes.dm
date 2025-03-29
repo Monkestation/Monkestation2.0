@@ -13,8 +13,8 @@
 		"searingtool",
 		"adv_fire_extinguisher",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
@@ -30,7 +30,7 @@
 		"rpd_upgrade_unwrench",
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_rcd_upgrade
 	id = "adv_rcd_upgrade"
@@ -43,5 +43,5 @@
 		"bluespace_travel",
 		"rcd_upgrade",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/two = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/hard/two = TECHWEB_TIER_2_POINTS)

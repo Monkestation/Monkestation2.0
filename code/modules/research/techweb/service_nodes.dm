@@ -15,9 +15,8 @@
 		"paint_remover",
 		"spraybottle",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 3000) //75% discount for scanning some trash, seems fair right?
-
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
 /datum/techweb_node/comptech
 	id = "comptech"
 	display_name = "Computer Consoles"
@@ -36,7 +35,7 @@
 		"seccamera",
 		"security_photobooth",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"
@@ -47,7 +46,7 @@
 		"bounty_pad",
 		"bounty_pad_control",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -62,7 +61,7 @@
 		"secdata",
 		"vendor",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
@@ -74,8 +73,8 @@
 		"arcade_orion",
 		"slotmachine",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250)
-	discount_experiments = list(/datum/experiment/physical/arcade_winner = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/physical/arcade_winner = TECHWEB_TIER_1_POINTS)
 
 // Kitchen root node
 /datum/techweb_node/bio_process
@@ -104,8 +103,8 @@
 		"slimevac",
 
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology = TECHWEB_TIER_2_POINTS) //Big discount to reinforce doing it.
 
 // Fishing root node
 /datum/techweb_node/fishing
@@ -118,5 +117,5 @@
 		"stabilized_hook",
 		"fish_analyzer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)

@@ -9,7 +9,7 @@
 	)
 	COOLDOWN_DECLARE(surgery_cooldown)
 
-	research_value = 1250
+	research_value = TECHWEB_DISCOUNT_MINOR *2
 
 	examine_discovered = span_warning("It appears to be some sort of automated surgery device")
 

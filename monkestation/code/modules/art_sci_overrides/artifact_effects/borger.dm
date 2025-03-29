@@ -7,7 +7,7 @@
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon
 	)
-	research_value = 2500
+	research_value = TECHWEB_DISCOUNT_MINOR * 4
 	examine_hint = span_bolddanger("It is vaguely forboding, <i>touching this might be a bad idea...</i>")
 	examine_discovered = span_bolddanger("It will turn a random limb robotic if touched, <i>touching this might be a bad idea...</i>")
 	/// The time between each limb replacement

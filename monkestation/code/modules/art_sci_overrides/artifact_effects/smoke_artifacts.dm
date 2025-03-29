@@ -4,7 +4,7 @@
 	activation_message = "starts spewing out colorful smoke!"
 	deactivation_message = "becomes silent."
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer for coloring things")
 

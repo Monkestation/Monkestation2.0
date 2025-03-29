@@ -3,7 +3,7 @@
 	trigger_chance = 10
 	visible_message = "starts rapidly heating up while covering everything around it in something that seems to be oil."
 
-	research_value = 200
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	weight = ARTIFACT_UNCOMMON
 

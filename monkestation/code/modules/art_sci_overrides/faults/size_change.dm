@@ -3,7 +3,7 @@
 	trigger_chance = 13
 	visible_message = "starts to shrink."
 
-	research_value = 200
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 /datum/artifact_fault/shrink/on_trigger()
 	our_artifact.holder.transform = matrix(our_artifact.holder.transform, 0.9, 0.9, MATRIX_SCALE)
