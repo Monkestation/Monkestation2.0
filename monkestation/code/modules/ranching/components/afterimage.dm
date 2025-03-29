@@ -88,9 +88,10 @@
 /obj/effect/after_image
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
+	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 	var/finalized_alpha = 100
 	var/active = FALSE
-	var/last_appearance
+	var/last_appearance_ref
 
 /obj/effect/after_image/New(_loc, min_x = -3, max_x = 3, min_y = -3, max_y = 3, time_a = 0.5 SECONDS, time_b = 3 SECONDS, finalized_alpha = 100)
 	. = ..()
@@ -104,7 +105,7 @@
 		animate(time = time, easing = pick(LINEAR_EASING, SINE_EASING, CIRCULAR_EASING, CUBIC_EASING), pixel_x = pixel_x, pixel_y = pixel_y, loop = -1)
 
 /obj/effect/after_image/Destroy()
-	last_appearance = null
+	last_appearance_ref = null
 	active = FALSE
 	return ..()
 
@@ -112,11 +113,13 @@
 	if(!active)
 		return
 	set_glide_size(parent.glide_size)
-	if(last_appearance != parent.appearance)
-		last_appearance = parent.appearance
+	var/parent_appearance_ref = ref(parent.appearance)
+	if(last_appearance_ref != parent_appearance_ref)
+		last_appearance_ref = parent_appearance_ref
 		appearance = copy_appearance_filter_overlays(parent.appearance)
 		name = ""
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		transform = matrix()
 		alpha = (alpha / 255.0) * finalized_alpha
 		SET_PLANE_EXPLICIT(src, initial(parent.plane), parent)
 	var/atom/target_loc = loc_override ? loc_override : parent.loc
