@@ -266,10 +266,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"cU" = (
-/obj/item/storage/box/syndie_kit/space_dragon,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/control_room)
 "db" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
@@ -637,11 +633,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/security)
-"gP" = (
-/obj/item/organ/internal/body_egg/alien_embryo,
-/obj/item/organ/internal/alien/hivenode,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/control_room)
 "gQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1448,10 +1439,6 @@
 	pixel_y = 20
 	},
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/syndicate_depot/control_room)
-"oX" = (
-/obj/item/paper,
-/turf/open/floor/circuit/green,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "pc" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -2749,10 +2736,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"CC" = (
-/obj/item/organ/internal/zombie_infection/nodamage,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/control_room)
 "CD" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -3504,6 +3487,7 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "LH" = (
 /obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/circuit/green,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "LS" = (
@@ -4632,6 +4616,7 @@
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "XT" = (
 /obj/machinery/light/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "XU" = (
@@ -4819,7 +4804,6 @@
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "ZK" = (
 /obj/structure/table/reinforced/rglass,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "ZM" = (
@@ -9040,9 +9024,9 @@ Se
 of
 lY
 lY
-CC
-gP
-cU
+lY
+lY
+lY
 ZK
 Se
 lH
@@ -9121,9 +9105,9 @@ Se
 yO
 RL
 RL
-oX
-oX
-oX
+RL
+RL
+RL
 LH
 Se
 lH
