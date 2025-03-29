@@ -267,7 +267,15 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "cU" = (
-/obj/item/storage/box/syndie_kit/space_dragon,
+	var/n = 5
+
+    if (n < 0)
+        /obj/item/storage/box/syndie_kit/space_dragon,
+    else if (n > 0)
+        /obj/item/organ/internal/zombie_infection/nodamage,
+    else
+        /obj/item/organ/internal/body_egg/alien_embryo,
+		/obj/item/organ/internal/alien/hivenode,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "db" = (
@@ -638,8 +646,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/security)
 "gP" = (
-/obj/item/organ/internal/body_egg/alien_embryo,
-/obj/item/organ/internal/alien/hivenode,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "gQ" = (
@@ -2750,7 +2756,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
 "CC" = (
-/obj/item/organ/internal/zombie_infection/nodamage,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "CD" = (
