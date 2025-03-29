@@ -336,7 +336,8 @@
 		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
+	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
+	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
