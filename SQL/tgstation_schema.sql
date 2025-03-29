@@ -644,14 +644,19 @@ DELIMITER ;
 -- Table structure for table `discord_links`
 --
 DROP TABLE IF EXISTS `discord_links`;
+-- Dumping structure for table monkestation.discord_links
 CREATE TABLE `discord_links` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`ckey` VARCHAR(32) NOT NULL,
-	`discord_id` BIGINT(20) DEFAULT NULL,
-	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`one_time_token` VARCHAR(100) NOT NULL,
-  	`valid` BOOLEAN NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `discord_id` bigint(20) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `one_time_token` varchar(100) NOT NULL,
+  `valid` tinyint(1) NOT NULL DEFAULT 0,
+  `cached_state` tinyint(3) unsigned DEFAULT NULL,
+  `cached_timestamp` timestamp NULL DEFAULT NULL,
+  `cached_username` tinytext DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB;
 
 --

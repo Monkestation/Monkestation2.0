@@ -225,6 +225,13 @@
 			if(!M.client)
 				to_chat(usr, span_danger("Error: [M] no longer has a client!"), confidential = TRUE)
 				return
+			//MONKESTATION EDIT START -buh
+			var/reason = input(usr, "Kick reason? (Empty for none)", "Kicking [key_name(M)]") as null|text
+			if(!M.client)
+				to_chat(usr, span_danger("Error: [M] no longer has a client!"), confidential = TRUE)
+				return
+			//MONKESTATION EDIT END
+
 			//MONKESTATION EDIT START - Kicking players has been moved to a proc
 			/*
 			to_chat(M, span_danger("You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"]."), confidential = TRUE)
@@ -232,7 +239,7 @@
 			message_admins(span_adminnotice("[key_name_admin(usr)] kicked [key_name_admin(M)]."))
 			qdel(M.client)
 			*/ //MONKESTATION EDIT ORIGINAL
-			kick_client(M.client)
+			kick_client(M.client, reason)
 			//MONKESTATION EDIT END
 
 	else if(href_list["addmessage"])
@@ -1703,18 +1710,6 @@
 			return
 		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
 		button.force_war()
-
-	else if (href_list["interview"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/interview/I = locate(href_list["interview"])
-		if (I)
-			I.ui_interact(usr)
-
-	else if (href_list["interview_man"])
-		if(!check_rights(R_ADMIN))
-			return
-		GLOB.interviews.ui_interact(usr)
 
 	else if(href_list["tag_datum"])
 		if(!check_rights(R_ADMIN))

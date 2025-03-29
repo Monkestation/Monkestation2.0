@@ -5,7 +5,6 @@ $include dbconfig.txt
 $include comms.txt
 $include logging.txt
 $include resources.txt
-$include interviews.txt
 $include lua.txt
 $include auxtools.txt
 $include plexora.txt
@@ -167,6 +166,9 @@ CHECK_RANDOMIZER
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 # SERVER ss13.example.com:2506
 
+## discord invite
+DISCORDURL https://discord.monkestation.com
+
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
@@ -298,10 +300,6 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
-
-## Uncomment to enable the interview system for players who are below the living hour requirement instead of explicitly blocking them from the server
-## Note this requires the PANIC_BUNKER to be enabled to do anything.
-#PANIC_BUNKER_INTERVIEW
 
 ## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
 #PANIC_BUNKER_LIVING 90
@@ -495,6 +493,8 @@ DEFAULT_VIEW_SQUARE 15x15
 ##See above, but for non-urgent mhelps
 #REGULAR_MENTORHELP_WEBHOOK_URL
 
+#EXTREMELY_URGENT_WEBHOOK_URL
+
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300
 
@@ -517,6 +517,7 @@ URGENT_AHELP_COOLDOWN 300
 
 ## The name of the webhook
 #ADMINHELP_WEBHOOK_NAME
+
 
 ## Sets an MOTD of the server.
 ## You can use this multiple times, and the MOTDs will be appended in order.

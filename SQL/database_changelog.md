@@ -2,19 +2,31 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.27; The query to update the schema revision table is:
+The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
 
+-----------------------------------------------------
+Version 5.28 27 March 2025, by Flleeppyy
+Discord link changes
+
+```sql
+ALTER TABLE `discord_links`
+ADD COLUMN `cached_state` TINYINT(3) UNSIGNED DEFAULT NULL,
+ADD COLUMN `cached_timestamp` TIMESTAMP NULL DEFAULT NULL,
+ADD COLUMN `cached_username` TINYTEXT DEFAULT NULL,
+MODIFY COLUMN `valid` TINYINT(1) NOT NULL DEFAULT 0,
+ADD UNIQUE KEY `ckey` (`ckey`);
+```
 -----------------------------------------------------
 Version 5.27 16 March 2025, by Flleeppyy
 Add `byond_build` and `byond_version` to the `connection_log` table.

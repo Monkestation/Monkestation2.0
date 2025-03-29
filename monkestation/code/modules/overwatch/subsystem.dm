@@ -8,11 +8,6 @@ SUBSYSTEM_DEF(overwatch)
 	var/is_active = FALSE
 	var/error_counter = 0
 
-	///accounts younger than this in days are interviewed
-	var/minimum_player_age = 7
-	///max number of active non role bans to be considered for interview
-	var/max_ban_count = 2
-
 	var/list/tgui_panel_asn_data = list()
 	var/list/tgui_panel_wl_data = list()
 
@@ -160,14 +155,6 @@ SUBSYSTEM_DEF(overwatch)
 	if(C.ip_info.is_loaded)
 		if(!C.ip_info.ip_proxy && !C.ip_info.ip_hosting)
 			return TRUE
-		return FALSE
-
-	if(FetchPlayerAge(C) <= minimum_player_age)
-		log_access("[C.ckey]'s account is under the minimum player age, adding into the interview queue")
-		return FALSE
-
-	if(CheckActiveBans(C))
-		log_access("[C.ckey] has 2 or more active perma bans and has been added to the interview queue.")
 		return FALSE
 
 	log_access("Overwatch failed to load info for [C.ckey].")
@@ -389,6 +376,8 @@ SUBSYSTEM_DEF(overwatch)
 		qdel(C)
 		return
 
+// No place in the code uses this function anymore but it will be kept here for future use.
+// Would be nice to see this implemented in the player panel - Flleeppyy
 /datum/controller/subsystem/overwatch/proc/FetchPlayerAge(client/C, connection_data)
 	var/cached_player_age = C.set_client_age_from_db(connection_data) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1)
@@ -405,41 +394,6 @@ SUBSYSTEM_DEF(overwatch)
 				cached_player_age = text2num(query_datediff.item[1])
 			qdel(query_datediff)
 	return cached_player_age
-
-/datum/controller/subsystem/overwatch/proc/CheckActiveBans(client/C)
-	if(C.ckey in GLOB.interviews.approved_ckeys) // if these are already approved no point querying as they will be allowed regardless
-		return
-	var/living_minutes = C.get_exp_living(TRUE)
-	if(living_minutes >= 30)
-		return
-
-	if(!CONFIG_GET(string/centcom_ban_db))
-		return
-
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[C.ckey]", "", "")
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	var/list/bans
-	if(response.errored)
-		return
-	if(response.status_code != 200)
-		return
-	if(response.body == "[]")
-		return
-	var/active_ban_count = 0
-	bans = json_decode(response.body)
-	for(var/list/ban in bans)
-		if(ban["type"] != "Server")
-			continue
-		if(!ban["active"])
-			continue
-		active_ban_count++
-
-	if(active_ban_count >= max_ban_count)
-		return TRUE
-	return FALSE
 
 /client/proc/Overwatch_toggle()
 	set category = "Server"
