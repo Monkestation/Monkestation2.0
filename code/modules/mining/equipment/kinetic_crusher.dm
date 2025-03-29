@@ -34,7 +34,7 @@
 	var/overrides_twohandrequired = FALSE //Do we have the fumble on one handed attack attempt?
 	var/override_markeffect = FALSE //Do we have the default affect on detonating a mark?
 	var/override_twohandedsprite = FALSE //ENABLE THIS FOR ALL NEW CRUSHER VARIENTS OR ELSE IT WILL BREAK
-	var/force_wielded = 20 // MONKESTATION ADDITION
+	var/force_wielded = 20 // MONKESTATION ADDITION used by one handed crushers with wendigo claw
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
