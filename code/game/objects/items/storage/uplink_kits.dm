@@ -800,6 +800,15 @@
 		/obj/item/organ/internal/alien/hivenode = 1,
 	), src)
 
+/obj/item/storage/box/syndie_kit/Tumor/
+	name = "Romerol Tumor"
+	desc = "Contains a Romerol Tumor"
+
+/obj/item/storage/box/syndie_kit/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/organ/internal/zombie_infection/nodamage = 1,
+	), src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
