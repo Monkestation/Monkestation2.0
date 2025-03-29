@@ -790,6 +790,16 @@
 		/obj/item/food/grown/apple = 1,
 	), src)
 
+/obj/item/storage/box/syndie_kit/Xenomorph
+	name = "Xenomorph Kit"
+	desc = "Contains everything you'll need to create the perfect organism under your control"
+
+/obj/item/storage/box/syndie_kit/Xenomorph/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/organ/internal/body_egg/alien_embryo = 1,
+		/obj/item/organ/internal/alien/hivenode = 1,
+	), src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

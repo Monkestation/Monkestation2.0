@@ -4819,6 +4819,7 @@
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "ZK" = (
 /obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "ZM" = (
