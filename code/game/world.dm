@@ -149,7 +149,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	// First possible sleep()
 	InitTgs()
-	SSmetrics.world_init_time = REALTIMEOFDAY
+	SSelastic.world_init_time = REALTIMEOFDAY // monkestation addition: SSelastic
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	ConfigLoaded()
