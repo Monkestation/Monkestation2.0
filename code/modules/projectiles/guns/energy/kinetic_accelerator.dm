@@ -127,7 +127,7 @@
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
-			return ..()
+		return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -356,7 +356,7 @@
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-			KA.recharge_time = get_recharge_time(KA)
+		KA.recharge_time = get_recharge_time(KA)
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	..()
