@@ -3937,7 +3937,13 @@
 	},
 /area/centcom/central_command_areas/hall)
 "akJ" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/chair/wood/wings{
+	pixel_x = 11;
+	pixel_y = -2
+	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "akK" = (
@@ -7787,7 +7793,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
 "auY" = (
-/obj/structure/table/wood/poker,
+/obj/structure/chair/wood/wings,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "auZ" = (
@@ -8522,7 +8528,9 @@
 /area/centcom/central_command_areas/admin)
 "awZ" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/table/wood,
+/obj/item/instrument/piano_synth/headphones,
+/obj/item/instrument/piano_synth/headphones,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "axb" = (
@@ -11831,6 +11839,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aFR" = (
@@ -11923,11 +11933,11 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "aGg" = (
-/obj/structure/table/wood/poker,
-/obj/item/flashlight/lamp/green{
-	pixel_y = 8;
-	pixel_x = 16
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
 	},
+/obj/structure/table/wood,
+/obj/structure/cassette_rack/prefilled,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aGh" = (
@@ -14574,6 +14584,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/cassette/mailbox,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aNp" = (
@@ -23525,6 +23536,14 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"iTY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/arcade)
 "iUK" = (
 /obj/machinery/button/door/directional/east{
 	name = "IPC Repair Shutters";
@@ -25271,6 +25290,31 @@
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"mPL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/cassette_tape/blank{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/arcade)
 "mQh" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/red,
@@ -66605,8 +66649,8 @@ aPq
 aEf
 aHv
 aYf
-aYf
-akR
+akJ
+iTY
 aFR
 aaa
 aaa
@@ -66861,9 +66905,9 @@ aZg
 ayL
 aPq
 aPq
-akJ
-aGg
-awZ
+aPq
+aPq
+mPL
 aFR
 aaa
 aaa
@@ -67118,7 +67162,7 @@ aKA
 ayL
 aPq
 aPq
-akJ
+aPq
 auY
 awZ
 aFR
@@ -67376,7 +67420,7 @@ asp
 asp
 asp
 aNo
-asp
+aGg
 aFQ
 aFR
 aaa
