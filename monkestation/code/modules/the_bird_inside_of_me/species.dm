@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 		BODY_ZONE_HEAD = /obj/item/bodypart/head, // just because they are still *partially* human, or otherwise human resembling
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ornithid,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ornithid,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ornithid,
 	)
 	species_pain_mod = 1.20 // Fuck it, this will fill a niche that isn't implemented yet.
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -67,6 +67,10 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/chest/ornithid
+	wing_types = /obj/item/organ/external/wings/functional/arm_wings
+	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/leg/left/ornithid
 	limb_id = SPECIES_ORNITHID
