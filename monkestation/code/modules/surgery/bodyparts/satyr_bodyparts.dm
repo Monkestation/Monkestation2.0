@@ -8,8 +8,7 @@
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
 	is_dimorphic = TRUE
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
-
+	
 /obj/item/bodypart/arm/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR

@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/chest/ornithid
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	wing_types = /obj/item/organ/external/wings/functional/arm_wings
 
 /obj/item/bodypart/leg/left/ornithid
 	limb_id = SPECIES_ORNITHID
