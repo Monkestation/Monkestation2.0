@@ -67,6 +67,20 @@
 	id = "surgery_heal_robot_upgrade_femto"
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/robot_toxheal
+	name = "Clear Corrosive Buildup (Repair Toxins)"
+	desc = "A procedure that removes corrosion and chemical buildup on mechanical components inside of a deactivated synthetic chassis."
+	surgery = /datum/surgery/robot_tox_clean
+	id = "surgery_heal_robot_toxin"
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/robot_oxyheal
+	name = "Clean Components of Debris (Repair Suffocation)"
+	desc = "A procedure that clears the debris from ventilation and temperature regulation systems in a mechanical chassis."
+	surgery = /datum/surgery/robot_oxy_clean
+	id = "surgery_heal_robot_oxy"
+	research_icon_state = "surgery_chest"
+
 /datum/design/cyberimp_sprinter
 	name = "Vacuole ligament system"
 	desc = "Mechicanical servos in ones leg that increases their natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
