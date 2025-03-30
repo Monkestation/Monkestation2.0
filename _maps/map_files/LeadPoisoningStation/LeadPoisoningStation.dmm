@@ -20316,6 +20316,7 @@
 	pixel_y = 27
 	},
 /obj/structure/closet/firecloset,
+/obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central)
 "kcm" = (
