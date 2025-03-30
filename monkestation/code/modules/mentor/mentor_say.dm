@@ -6,9 +6,20 @@
 		to_chat(src, span_danger("Error: Only mentors and administrators may use this command."), confidential = TRUE)
 		return
 
-	msg = emoji_parse(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return
+
+	var/prefix = "MENTOR"
+	var/prefix_color = "#E236D8"
+	if(mentor_datum?.is_contributor)
+		prefix = "CONTRIB"
+		prefix_color = "#16ABF9"
+	else if(check_rights_for(src, R_ADMIN, 0))
+		prefix = "STAFF"
+		prefix_color = "#8A2BE2"
+
+	SSplexora.relay_mentor_say(src, msg, prefix)
 
 	var/list/pinged_mentor_clients = check_mentor_pings(msg)
 	if(length(pinged_mentor_clients) && pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX])
@@ -24,12 +35,7 @@
 
 	log_mentor("MSAY: [key_name(src)] : [msg]")
 	msg = keywords_lookup(msg)
-	if(mentor_datum?.is_contributor)
-		msg = "<b><font color = #16abf9><span class='prefix'>CONTRIB:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
-	else if(check_rights_for(src, R_ADMIN, 0))
-		msg = "<b><font color = #8A2BE2><span class='prefix'>STAFF:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
-	else
-		msg = "<b><font color = #E236D8><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
+	msg = "<b><font color = '[prefix_color]'><span class='prefix'>[prefix]:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
 
 	to_chat(GLOB.admins | GLOB.mentors,
 		type = MESSAGE_TYPE_MODCHAT,

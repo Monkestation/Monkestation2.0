@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some various minor bugs and errors."
+  - bugfix: "(Sealed101, Melbert) The colossus's finale attack is now 100x more lethal, because it was firing 100x fewer projectiles than intended, although it starts after a half-second delay."

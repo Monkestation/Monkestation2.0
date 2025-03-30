@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - code_imp: "(nikothedude) TGUI input datums can now accept custom ui_states."
-  - bugfix: "(Ghommie) Fixed the tgui text input trimming the last character of the input if it hits the maximum length."
-  - bugfix: "(itsmeow) Fixed TGUI assets and icons sometimes not showing up until you refreshed the page on 516 clients."
-  - bugfix: "(Aylong) Fixed TGUI text inputs that allows only 1 symbol instead infinity."

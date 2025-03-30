@@ -133,9 +133,13 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	H.hardset_dna(ui, mutation_index, null, clonename, blood_type, mrace, features)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
+		return NONE
+	if(H.mob_biotypes & MOB_ROBOTIC) // MONKESTATION ADDITION - no cloning robots.
 		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
@@ -154,10 +158,6 @@
 		current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
-
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
-
-	H.hardset_dna(ui, mutation_index, null, clonename, blood_type, mrace, features)
 
 	if(!HAS_TRAIT(H, TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
 		if(efficiency > 2)

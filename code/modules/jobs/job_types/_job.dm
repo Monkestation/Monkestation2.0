@@ -131,11 +131,11 @@
 	/// custom ringtone for this job
 	var/job_tone
 
-	/// Donar rank required for this job. Leave null for no requirement.
+	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
-	var/job_req_donar = null //MONKESTATION EDIT
+	var/job_req_donor = null //MONKESTATION EDIT
 	//donator bypass for holidays
-	var/job_donar_bypass = null //MONKESTATION EDIT
+	var/job_donor_bypass = null //MONKESTATION EDIT
 
 /datum/job/New()
 	. = ..()

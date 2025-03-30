@@ -13417,16 +13417,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
-"eRv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "chem_lockdown";
-	name = "Chemistry Shutters"
-	},
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating,
-/area/station/medical/chemistry)
 "eRx" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/directional/east,
@@ -21994,15 +21984,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"hPA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chem_lockdown";
-	name = "Chemistry Shutters"
-	},
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating,
-/area/station/medical/chemistry)
 "hPM" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -24986,7 +24967,6 @@
 	name = "Chemistry Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
 "iMs" = (
@@ -45479,7 +45459,6 @@
 	id = "chem_lockdown";
 	name = "Chemistry Shutters"
 	},
-/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
 "pJY" = (
@@ -49273,7 +49252,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
-/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "qWR" = (
@@ -68338,7 +68316,6 @@
 	name = "Chemistry Desk";
 	req_access = list("plumbing")
 	},
-/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "xCS" = (
@@ -93561,10 +93538,10 @@ pKP
 pKP
 bqX
 bqX
-eRv
 yfg
-eRv
-eRv
+yfg
+yfg
+yfg
 yfg
 bqX
 iMr
@@ -93829,7 +93806,7 @@ oqk
 xZB
 hIJ
 vhb
-hPA
+lrZ
 kiz
 unN
 iwc

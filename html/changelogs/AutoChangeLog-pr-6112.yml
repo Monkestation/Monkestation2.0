@@ -1,0 +1,6 @@
+author: "Absolucy, dwasint"
+delete-after: True
+changes:
+  - bugfix: "Fixed afterimage effects (i.e from the damned rabbit mask) not working."
+  - bugfix: "Fixed afterimage effects potentially being very laggy client-side while holding a light."
+  - bugfix: "Fixed afterimage effects not properly rotating when the parent did, such as when the parent was lying down."
