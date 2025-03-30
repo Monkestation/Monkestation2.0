@@ -61,16 +61,3 @@
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 
 	implants = list(/obj/item/implant/exile)
-
-/obj/effect/mob_spawn/ghost_role/human/party_skeleton
-	name = "skeletal remains"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	mob_name = "skeleton"
-	prompt_name = "A skeletal entertainer."
-	mob_species = /datum/species/skeleton
-	you_are_text = "Yarr, on my ship we party, I'm David John's D.J."
-	flavour_text = "Party hard, baby."
-	restricted_species = list(/datum/species/skeleton)
-	loadout_enabled = FALSE
-	quirks_enabled = TRUE
