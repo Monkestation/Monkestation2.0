@@ -255,6 +255,13 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"et" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/space)
 "eB" = (
 /obj/structure/chair/sofa/corner/brown{
 	dir = 8
@@ -9717,7 +9724,7 @@ fh
 fh
 ch
 fh
-ch
+et
 ml
 ml
 ml
