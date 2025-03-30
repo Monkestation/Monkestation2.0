@@ -605,5 +605,23 @@
   Absolucy:
   - bugfix: Fixed some more lists being cleared in an incorrect, potentially laggy
       way.
+  - bugfix: Cleanbots no longer get eternally stuck trying to clean broken bottles.
+  - bugfix: Cleaner slimes now properly target other types of trash (used ammo, used
+      mutation syringes, emptied drink bottles, burnt matches, etc) again.
   BanementI:
   - admin: Added Altjira XC's office.
+  Marabout2:
+  - rscadd: Added Kim gloves to the loadout store
+  Shoddd:
+  - bugfix: polyglot now incompat with foreigner
+  - balance: Depot Safe TC lowered from 25 to 5
+  - bugfix: heretic summons now consume their parts
+  - bugfix: pkas can no longer have infinite cooldowns
+  - bugfix: wendigo trophy no longer sets damage to 40 regardless of crusher
+  - balance: crushers can only mark lavaland mobs
+  - rscadd: Lisp Quirk
+  - balance: the heroic laser musket now appears in the black market less
+2025-03-30:
+  TheMrGlasses:
+  - balance: Changed the requirements to properly eat the death sandwich to be more
+      reference accurate.
