@@ -802,11 +802,12 @@
 
 /obj/item/storage/box/syndie_kit/Tumor/
 	name = "Romerol Tumor"
-	desc = "Contains a Romerol Tumor"
+	desc = "Contains a Romerol Tumor and some romerol"
 
 /obj/item/storage/box/syndie_kit/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/organ/internal/zombie_infection/nodamage = 1,
+		/obj/item/reagent_containers/cup/bottle/romerol = 1,
 	), src)
 
 #undef KIT_RECON
