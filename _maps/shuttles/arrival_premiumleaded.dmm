@@ -53,9 +53,6 @@
 "J" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/table,
-/obj/item/paper{
-	default_raw_text = "Hello, we are sorry to inform you but we did not have enough money to make a proper dock, please launch yourself out of the shuttle. Arrivals is straight ahead! Please leave this paper for others to read."
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "M" = (
@@ -72,16 +69,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/arrival)
-"U" = (
-/obj/machinery/disposal/delivery_chute{
-	dir = 8;
-	name = "Not Corpse Chute"
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "V" = (
 /obj/docking_port/mobile/arrivals,
@@ -151,7 +138,7 @@ M
 (9,1,1) = {"
 M
 i
-U
+i
 r
 M
 "}
