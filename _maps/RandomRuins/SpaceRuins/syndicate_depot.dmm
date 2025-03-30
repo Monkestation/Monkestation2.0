@@ -439,7 +439,6 @@
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "fa" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
@@ -897,7 +896,6 @@
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "js" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "jv" = (
@@ -955,7 +953,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "jI" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
@@ -1005,9 +1002,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "ki" = (
-/obj/effect/turf_decal/trimline/blue/end{
-	dir = 8
-	},
 /obj/structure/sign/warning/secure_area/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -1015,7 +1009,10 @@
 /obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
-/turf/open/floor/iron/textured,
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "kl" = (
 /obj/effect/turf_decal/sand/plating,
@@ -1936,13 +1933,12 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "ud" = (
-/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/secure_area/directional/south,
 /obj/structure/cable,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "uf" = (
@@ -2008,8 +2004,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "vf" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "vj" = (
@@ -2020,13 +2018,12 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "vp" = (
-/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/sign/warning/secure_area/directional/north,
 /obj/structure/cable,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "vu" = (
@@ -2114,11 +2111,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "wq" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
-	name = "Secure Creature Pen";
-	req_access = list("research")
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenosecure";
 	name = "Secure Pen Shutters"
@@ -2127,6 +2119,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/liquid_barrier,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/window/brigdoor/left/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "wt" = (
@@ -2503,7 +2496,6 @@
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
 "zA" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -2882,28 +2874,11 @@
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
-"Em" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "Eq" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"EB" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Secure Creature Pen";
-	req_access = list("research")
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "EJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3458,11 +3433,11 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/research/glass{
-	name = "Containment"
-	},
 /obj/machinery/duct,
-/turf/open/floor/catwalk_floor/iron_smooth,
+/obj/machinery/door/airlock/vault{
+	name = "Vault Door"
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "LD" = (
 /obj/effect/turf_decal/stripes/line,
@@ -3670,6 +3645,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/warning/xeno_mining/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "NB" = (
@@ -4042,10 +4018,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"RT" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "RX" = (
 /obj/structure/chair/stool{
 	dir = 8
@@ -4806,6 +4778,10 @@
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "ZK" = (
 /obj/structure/table/reinforced/rglass,
+/obj/item/storage/backpack/duffelbag/syndie/surgery{
+	pixel_x = -2;
+	pixel_y = 16
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/syndicate_containment)
 "ZM" = (
@@ -8703,7 +8679,7 @@ sR
 fa
 aO
 aO
-Em
+aO
 aO
 XT
 DQ
@@ -8783,7 +8759,7 @@ ei
 tn
 XM
 vf
-EB
+rG
 zA
 UJ
 fo
@@ -8947,7 +8923,7 @@ js
 Tr
 rG
 zc
-RT
+lY
 ei
 DQ
 DQ
