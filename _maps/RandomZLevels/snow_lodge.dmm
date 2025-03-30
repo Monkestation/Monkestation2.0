@@ -179,6 +179,16 @@
 /obj/structure/fake_stairs/directional/east,
 /turf/open/floor/iron,
 /area/space)
+"dB" = (
+/obj/machinery/power/apc/worn_out/directional/east,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/railing/wooden_fencing,
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood/tile,
+/area/space)
 "dN" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
@@ -379,6 +389,16 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"hs" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/winterboots/ice_boots,
+/obj/item/clothing/shoes/winterboots/ice_boots,
+/obj/item/clothing/shoes/winterboots/ice_boots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/open/floor/wood,
+/area/space)
 "hu" = (
 /obj/structure/bookcase/random/reference,
 /obj/effect/turf_decal/siding/brown,
@@ -507,6 +527,13 @@
 /area/space)
 "jR" = (
 /turf/open/floor/iron,
+/area/space)
+"jX" = (
+/obj/structure/cable,
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/space)
 "kb" = (
 /obj/machinery/door/airlock/hatch,
@@ -664,6 +691,9 @@
 /obj/structure/railing,
 /turf/open/floor/wood,
 /area/space)
+"of" = (
+/turf/open/floor/wood/tile,
+/area/space)
 "oh" = (
 /turf/open/floor/iron/white/smooth_large,
 /area/space)
@@ -709,6 +739,14 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/space)
+"pl" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating/snowed/cavern,
+/area/space)
 "pN" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet/black,
@@ -738,6 +776,10 @@
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating/snowed,
+/area/space)
+"qD" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
 /area/space)
 "qM" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -783,6 +825,12 @@
 "rK" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /turf/open/floor/plating/snowed,
+/area/space)
+"rO" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/space)
 "rU" = (
 /obj/effect/turf_decal{
@@ -937,6 +985,12 @@
 	name = "Bar"
 	},
 /turf/open/floor/wood,
+/area/space)
+"vD" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
 /area/space)
 "vF" = (
 /obj/structure/railing/corner/end{
@@ -1123,6 +1177,16 @@
 /obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark,
 /area/space)
+"yw" = (
+/obj/structure/railing/wooden_fencing,
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/space)
 "yK" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses{
@@ -1147,6 +1211,12 @@
 	name = "Bedroom 2"
 	},
 /turf/open/floor/wood,
+/area/space)
+"za" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/space)
 "zp" = (
 /obj/structure/chair/sofa/middle/brown{
@@ -1183,6 +1253,11 @@
 	layer = 2.8
 	},
 /turf/open/floor/wood,
+/area/space)
+"Ak" = (
+/obj/effect/spawner/random/bedsheet,
+/obj/structure/bed,
+/turf/open/floor/wood/tile,
 /area/space)
 "An" = (
 /obj/machinery/griddle,
@@ -1223,6 +1298,10 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/space)
+"Bk" = (
+/obj/structure/fence/corner,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/space)
 "Bl" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen,
@@ -1243,6 +1322,10 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
+/area/space)
+"BP" = (
+/obj/structure/railing/wooden_fencing,
+/turf/open/floor/wood/tile,
 /area/space)
 "Cc" = (
 /obj/structure/cable,
@@ -1342,6 +1425,10 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/iron/kitchen,
+/area/space)
+"Ed" = (
+/obj/structure/cable,
+/turf/open/floor/plating/snowed/cavern,
 /area/space)
 "Ee" = (
 /obj/machinery/vending/hydroseeds,
@@ -1456,6 +1543,10 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron,
 /area/space)
+"HH" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/space)
 "HK" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
@@ -1529,6 +1620,19 @@
 /obj/structure/chair/sofa/corp/right,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/kitchen,
+/area/space)
+"IE" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"IG" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/carpet,
 /area/space)
 "IT" = (
 /obj/structure/broken_flooring/side/directional,
@@ -1649,6 +1753,9 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
+/area/space)
+"MM" = (
+/turf/open/floor/plating/snowed/cavern,
 /area/space)
 "MO" = (
 /obj/structure/table,
@@ -1888,6 +1995,10 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/kitchen,
 /area/space)
+"QP" = (
+/obj/structure/cable,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/space)
 "Rf" = (
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/dark,
@@ -1958,7 +2069,9 @@
 /turf/open/floor/iron,
 /area/space)
 "Sn" = (
-/obj/effect/landmark/awaystart,
+/obj/structure/chair/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/space)
 "Sv" = (
@@ -2285,6 +2398,10 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/space)
+"YN" = (
+/obj/structure/fence/door/opened,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/space)
 "YR" = (
 /turf/open/lava/plasma/virtual_domain,
 /area/space)
@@ -2345,6 +2462,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/space)
+"ZW" = (
+/obj/structure/fake_stairs/wood/directional/west,
+/turf/open/floor/wood,
 /area/space)
 "ZX" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -5266,7 +5387,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 oC
 oC
 oC
@@ -6598,7 +6719,7 @@ FH
 FH
 ml
 ml
-ml
+Mp
 ml
 oC
 oC
@@ -6700,7 +6821,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 ml
 oC
 oC
@@ -6731,7 +6852,7 @@ ml
 ml
 ml
 nV
-Xu
+IG
 Xu
 Bu
 Bu
@@ -6802,7 +6923,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 ml
 oC
 oC
@@ -6838,7 +6959,7 @@ Xu
 Bu
 Sn
 Sn
-Sn
+Bu
 nV
 iL
 "}
@@ -6935,12 +7056,12 @@ ml
 AA
 AA
 nV
+vD
 Xu
-Xu
-Bu
-Sn
-Sn
-Sn
+qD
+XJ
+XJ
+qj
 nV
 iL
 "}
@@ -7039,10 +7160,10 @@ ml
 Lb
 Bu
 Bu
-Bu
-Sn
-Sn
-Sn
+qD
+XJ
+XJ
+qj
 nV
 iL
 "}
@@ -7139,11 +7260,11 @@ AA
 AA
 ml
 nV
+ZW
+yw
 Bu
-Bu
-Bu
-Bu
-Bu
+xX
+xX
 Bu
 nV
 iL
@@ -7241,8 +7362,8 @@ ml
 ml
 ml
 nV
-Bu
-Bu
+of
+BP
 Bu
 Bu
 Bu
@@ -7343,12 +7464,12 @@ ml
 ml
 ml
 nV
+Ak
+dB
+HH
 Bu
-Bu
-Bu
-Bu
-Bu
-Bu
+hs
+hs
 nV
 iL
 "}
@@ -7447,7 +7568,7 @@ ml
 nV
 nV
 nV
-xO
+IE
 nV
 xO
 nV
@@ -7549,11 +7670,11 @@ ml
 ml
 ml
 ml
-ml
-ml
-ml
-ml
-ml
+QP
+jX
+Ed
+Ed
+pl
 iL
 "}
 (52,1,1) = {"
@@ -7652,10 +7773,10 @@ ml
 ml
 ml
 ml
-ml
-ml
-ml
-ml
+YN
+AA
+MM
+MM
 iL
 "}
 (53,1,1) = {"
@@ -7754,10 +7875,10 @@ ml
 ml
 ml
 ml
+rO
 ml
-ml
-ml
-ml
+MM
+AA
 iL
 "}
 (54,1,1) = {"
@@ -7856,10 +7977,10 @@ ml
 ml
 ml
 ml
-ml
-ml
-ml
-ml
+Bk
+za
+za
+za
 iL
 "}
 (55,1,1) = {"
@@ -8639,7 +8760,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 oC
 oC
 lq
@@ -8944,7 +9065,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 oC
 oC
 oC
@@ -9046,7 +9167,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 oC
 oC
 oC
@@ -9249,7 +9370,7 @@ oC
 ml
 ml
 FH
-ml
+Mp
 ml
 ml
 oC
@@ -9766,7 +9887,7 @@ oC
 oC
 oC
 oC
-ml
+Mp
 oC
 oC
 oC
@@ -9969,7 +10090,7 @@ FH
 FH
 FH
 FH
-ml
+Mp
 ml
 oC
 oC
