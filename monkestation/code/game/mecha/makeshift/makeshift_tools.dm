@@ -21,7 +21,7 @@
 	icon_state = "mecha_mounted_stretcher"
 	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
 	inject_amount = 0
-	mech_flags = EXOSUIT_MODULE_MAKESHIFT & EXOSUIT_MODULE_MEDICAL  //TODO: test this shit works or not
+	mech_flags = EXOSUIT_MODULE_AMBULANCE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/makeshift
 	name = "harm alarm horn"
