@@ -71,7 +71,6 @@
 	mob_species = /datum/species/skeleton
 	you_are_text = "Yarr, on my ship we party, I'm David John's D.J."
 	flavour_text = "Party hard, baby."
-	spawner_job_path = /datum/job/skeleton
 	restricted_species = list(/datum/species/skeleton)
 	loadout_enabled = FALSE
 	quirks_enabled = TRUE
