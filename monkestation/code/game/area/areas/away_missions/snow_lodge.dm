@@ -69,7 +69,7 @@
 /area/awaymission/lodge/sauna
 	name = "Lodge Sauna"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/syndicate_jails
