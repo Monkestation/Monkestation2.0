@@ -4,13 +4,13 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "ag" = (
 /obj/structure/railing/corner/end{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "ak" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
@@ -18,84 +18,101 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"an" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_kitchen)
 "ao" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge)
+"au" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"ay" = (
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge)
 "az" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "aB" = (
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "aD" = (
 /obj/machinery/door/airlock/hydroponics{
 	name = "Hydroponics Backroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "aS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/bar)
 "aZ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "bb" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/chair/sofa/corp/right{
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "bn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
 "bs" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"bv" = (
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/lodge/exit)
 "by" = (
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "bB" = (
 /obj/machinery/oven/range,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "bF" = (
 /obj/structure/hedge/opaque,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "bH" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/sign/poster/contraband/free_key/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "bN" = (
 /obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "bQ" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -103,23 +120,34 @@
 	},
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating/snowed/cavern,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"bV" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "bY" = (
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "ch" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"ci" = (
+/turf/open/floor/iron/stairs/old,
+/area/awaymission/lodge/random_cabin_1)
 "cl" = (
 /turf/open/floor/pod,
-/area/space)
+/area/awaymission/lodge/exit)
+"co" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "cr" = (
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "cs" = (
 /obj/structure/railing{
 	dir = 1
@@ -131,12 +159,12 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
 "ct" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "cu" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -145,7 +173,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "cv" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 1
@@ -153,76 +181,105 @@
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "cx" = (
 /obj/effect/turf_decal/loading_area,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "cz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
+"cL" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/carpet,
+/area/awaymission/lodge/bedroom_1)
 "cM" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "cS" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"cW" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "db" = (
 /obj/structure/chair/pew/left{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "dd" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
+"dl" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge)
 "dn" = (
 /obj/structure/rack/shelf,
 /turf/open/floor/iron/dark/smooth_large,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"dr" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "ds" = (
 /obj/structure/fake_stairs/directional/east,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "du" = (
 /turf/open/floor/plating/snowed/cavern,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"dv" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/lodge/syndicate_kitchen)
 "dw" = (
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "dA" = (
 /obj/structure/rack,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_entrance)
 "dG" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "dJ" = (
 /obj/machinery/light/warm/dim/directional/south,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_1)
 "dN" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge)
 "dS" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"dT" = (
+/turf/open/floor/wood/tile,
+/area/awaymission/lodge/random_cabin_1)
 "dW" = (
 /obj/structure/bed{
 	dir = 4
@@ -231,11 +288,26 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"ed" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "ee" = (
 /obj/structure/fireplace,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
+"ei" = (
+/obj/structure/chair/wood{
+	dir = 4;
+	layer = 2.8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"ej" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/lodge/syndicate_jails)
 "ek" = (
 /obj/structure/table/wood,
 /obj/item/food/pizza/donkpocket,
@@ -244,7 +316,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "es" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
@@ -254,20 +326,26 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "et" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"ew" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_2)
+"ez" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/bedroom_2)
 "eB" = (
 /obj/structure/chair/sofa/corner/brown{
 	dir = 8
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "eC" = (
 /obj/structure/window/spawner/directional/west,
 /obj/effect/turf_decal/siding/wood{
@@ -279,39 +357,55 @@
 	layer = 2.8
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "eI" = (
 /obj/machinery/door/airlock/wood{
 	name = "Bedroom 1"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bedroom_1)
+"eN" = (
+/obj/structure/toilet{
+	pixel_y = 16
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_2)
 "eO" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bedroom_1)
+"eX" = (
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge/snowmountain)
+"eY" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/sauna)
 "fc" = (
 /obj/structure/table/reinforced,
 /obj/item/stamp/head/ce,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "fg" = (
 /obj/structure/fence{
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "fh" = (
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "fi" = (
 /obj/structure/chair/pew{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
+"fj" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/lodge_entrance)
 "fq" = (
 /obj/structure/railing{
 	dir = 8
@@ -320,62 +414,74 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "fr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "fu" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "fy" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "fz" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"fA" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/turf/open/floor/plating,
+/area/awaymission/lodge/bar)
 "fG" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "fH" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "fI" = (
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "fK" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "gd" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
+"gi" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/snowmountain)
 "gj" = (
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"gk" = (
+/turf/open/floor/carpet,
+/area/awaymission/lodge/bedroom_2)
 "gJ" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -383,19 +489,24 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "gK" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "gP" = (
 /obj/machinery/computer/old{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"gV" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/awaymission/lodge/lodge_halls)
 "gX" = (
 /obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /obj/item/storage/box/ingredients/vegetarian,
@@ -421,15 +532,17 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "gZ" = (
 /obj/machinery/light/warm/dim/directional/south,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "hb" = (
 /obj/structure/chair/office/light,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/white/smooth_large,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "hh" = (
 /obj/structure/railing{
 	dir = 1
@@ -438,38 +551,38 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "hi" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "hl" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "hm" = (
 /obj/structure/sign/departments/engineering/directional/south,
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "hu" = (
 /obj/structure/bookcase/random/reference,
 /obj/effect/turf_decal/siding/brown,
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "hv" = (
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "hy" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage";
@@ -477,14 +590,15 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "hz" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "hB" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -492,69 +606,84 @@
 	},
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "hD" = (
 /obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "hH" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"hK" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_1)
+"hQ" = (
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/lodge/syndicate_jails)
 "hR" = (
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "hS" = (
 /obj/structure/mirror/directional/south,
 /obj/structure/sink/kitchen/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "hW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "id" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "iy" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow/corner,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"iz" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "iE" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "iF" = (
 /obj/machinery/door/airlock/bathroom,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "iL" = (
 /turf/closed/indestructible/rock/snow/ice,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "iX" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "iY" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "jb" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -562,12 +691,25 @@
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"je" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/snowmountain)
 "ji" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
+"jl" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "jr" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -578,35 +720,45 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "jF" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "jG" = (
 /obj/structure/chair/pew/right,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "jH" = (
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "jO" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"jP" = (
+/obj/machinery/light/warm/dim/directional/north,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
 "jR" = (
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge)
 "jS" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
+"jY" = (
+/obj/structure/chair/office/light,
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "kb" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
@@ -614,7 +766,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"kf" = (
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge/syndicate_halls)
 "kh" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
@@ -629,7 +784,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "ki" = (
 /obj/structure/railing{
 	dir = 8
@@ -638,100 +793,128 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "kj" = (
 /obj/structure/chair/pew/left,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "kx" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "kD" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "kF" = (
 /obj/structure/table,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"kN" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "kP" = (
 /obj/structure/table/reinforced,
+/obj/machinery/splicer{
+	pixel_x = 2;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"kQ" = (
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/lodge/syndicate_botany)
 "kW" = (
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "la" = (
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 1
 	},
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "lh" = (
 /obj/effect/turf_decal/siding/brown/corner,
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "lq" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"lr" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_1)
 "lz" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow/ice,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "lB" = (
 /obj/structure/chair/pew,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "lG" = (
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
+"lK" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/lodge/syndicate_jails)
 "lO" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "lS" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "lU" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "me" = (
 /obj/structure/table,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "ml" = (
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "mv" = (
 /obj/structure/broken_flooring/pile,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"mB" = (
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/awaymission/lodge/syndicate_halls)
 "mF" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "mI" = (
 /obj/structure/broken_flooring/pile,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "mN" = (
 /obj/structure/table/greyscale,
 /obj/item/food/pizza/vegetable{
@@ -739,11 +922,14 @@
 	pixel_y = 12
 	},
 /turf/open/floor/iron/sepia,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"mU" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/kitchen)
 "mY" = (
 /obj/structure/chair/sofa/left/brown,
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "ng" = (
 /obj/structure/table,
 /obj/item/clothing/suit/apron/chef,
@@ -751,13 +937,14 @@
 	pixel_x = -3
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "nv" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "nC" = (
 /obj/structure/window/spawner/directional/west,
 /obj/effect/turf_decal/siding/wood{
@@ -768,45 +955,57 @@
 	layer = 2.8
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"nF" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
 "nV" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/space)
+/area/awaymission/lodge/random_cabin_3)
 "nX" = (
 /obj/structure/railing,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "oh" = (
 /turf/open/floor/iron/white/smooth_large,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "ol" = (
 /obj/structure/table,
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "oo" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"oq" = (
+/obj/machinery/bookbinder,
+/obj/effect/turf_decal/siding/wood/end,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
 "ot" = (
 /obj/structure/toilet{
 	pixel_y = 10
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_2)
 "oy" = (
 /obj/structure/broken_flooring{
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "oC" = (
 /turf/open/cliff/snowrock{
 	name = "Icy cliff"
 	},
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"oD" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/lodge_halls)
 "oH" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Jail Cell"
@@ -814,71 +1013,100 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "pa" = (
 /obj/structure/chair/sofa/corner/brown{
 	dir = 4
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "pd" = (
 /obj/effect/turf_decal/siding/dark/corner,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"pi" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
+"pq" = (
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/kitchen)
 "pD" = (
 /obj/structure/chair/pew/right{
 	dir = 1;
 	name = "Jury"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
+"pF" = (
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge/syndicate_jails)
+"pL" = (
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge/syndicate_kitchen)
 "pN" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
 "pQ" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/black/engie,
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /turf/open/floor/iron/white/smooth_large,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "pU" = (
 /obj/structure/chair/office,
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "pX" = (
 /obj/machinery/power/smes,
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "pY" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
+"qf" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/lodge/syndicate_jails)
 "qj" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "qr" = (
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"qJ" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/turf/open/floor/plating,
+/area/awaymission/lodge/bedroom_1)
 "qM" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/space)
+/area/awaymission/lodge/exit)
 "qN" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/dark,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"qV" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_2)
 "ri" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -888,62 +1116,81 @@
 	name = "Radiation Shutters"
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "rj" = (
 /obj/structure/cable,
 /obj/structure/fence{
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"rm" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "rp" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_3)
+"rt" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/lodge_entrance)
 "rv" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "rz" = (
 /obj/structure/toilet{
 	pixel_y = 16
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/bedroom_1)
 "rC" = (
 /obj/structure/chair/office,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "rG" = (
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "rH" = (
 /turf/open/floor/glass,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "rI" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "rK" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"rM" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/awaymission/lodge/syndicate_halls)
+"rN" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
 "rU" = (
 /obj/effect/turf_decal{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "rZ" = (
 /obj/structure/table/greyscale,
 /obj/machinery/coffeemaker{
@@ -954,22 +1201,55 @@
 	pixel_x = 7
 	},
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "sm" = (
 /obj/machinery/biogenerator,
-/obj/machinery/splicer{
-	pixel_x = 2;
-	pixel_y = 13
-	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"sw" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/random_cabin_1)
+"sx" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/folder,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 16;
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
+"sG" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_1)
+"sI" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/machinery/light/warm/dim/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "sJ" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "sK" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
@@ -977,14 +1257,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge)
 "sP" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "sS" = (
 /obj/structure/railing{
 	dir = 8
@@ -995,7 +1275,7 @@
 /turf/open/floor/iron/stairs/old{
 	dir = 1
 	},
-/area/space)
+/area/awaymission/lodge/bar)
 "sY" = (
 /obj/structure/table,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -1004,23 +1284,27 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "to" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"tv" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "ty" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "tz" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/north,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_2)
 "tA" = (
 /obj/structure/easel,
 /obj/item/canvas/twentythree_nineteen,
@@ -1028,7 +1312,7 @@
 /obj/item/canvas/twentythree_nineteen,
 /obj/effect/turf_decal/siding/wood/end,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "tD" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/machinery/computer/atmos_alert{
@@ -1036,15 +1320,15 @@
 	},
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "tH" = (
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "tK" = (
 /obj/structure/chair/sofa/middle/brown,
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "tR" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/mayonnaise,
@@ -1055,16 +1339,55 @@
 /obj/item/food/meat/cutlet/penguin,
 /obj/item/food/meat/rawcutlet/bear,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "tT" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/random/double,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/bedroom_1)
+"tV" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_1)
+"tY" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/starting_cabin)
+"tZ" = (
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
+"ub" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "ud" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge)
+"uh" = (
+/turf/open/floor/carpet,
+/area/awaymission/lodge/bedroom_1)
+"uo" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
 "us" = (
 /obj/structure/railing{
 	dir = 4
@@ -1075,61 +1398,80 @@
 /turf/open/floor/iron/stairs/old{
 	dir = 1
 	},
-/area/space)
+/area/awaymission/lodge/bar)
 "uv" = (
 /obj/machinery/smartfridge/food,
 /turf/open/space/basic,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"uE" = (
+/turf/open/floor/plating,
+/area/awaymission/lodge/snowmountain)
 "uI" = (
 /obj/effect/turf_decal/siding/dark_green,
 /obj/effect/turf_decal/siding/dark_green/corner{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "uK" = (
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "uW" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge)
 "uZ" = (
 /obj/structure/broken_flooring,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge)
+"va" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_1)
+"vg" = (
+/turf/open/floor/plating/snowed,
+/area/awaymission/lodge/syndicate_mess)
 "vk" = (
 /obj/structure/fake_stairs/wood/directional/west,
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
+"vt" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/awaymission/lodge/starting_cabin)
 "vu" = (
 /obj/machinery/door/airlock/hydroponics{
 	name = "Bar"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/kitchen)
+"vx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/syndicate_mess)
 "vF" = (
 /obj/structure/railing/corner/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "vK" = (
 /obj/machinery/power/port_gen/pacman/super,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "vT" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 4
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "vV" = (
 /obj/structure/table,
 /obj/item/plate/oven_tray,
@@ -1146,14 +1488,18 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "wc" = (
 /obj/structure/table,
 /obj/item/gun/ballistic/revolver/syndicate,
 /obj/item/ammo_box/a357,
 /obj/item/ammo_box/a357,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"we" = (
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
 "wg" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
@@ -1161,11 +1507,14 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "wi" = (
 /obj/effect/turf_decal/siding/dark_green,
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"wk" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_engibay)
 "wl" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
@@ -1173,17 +1522,17 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "wq" = (
 /obj/structure/table,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "wy" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "wA" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -1191,24 +1540,32 @@
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"wX" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/starting_cabin)
 "wZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "xk" = (
 /obj/machinery/gibber,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/kitchen)
+"xl" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/awaymission/lodge/bedroom_1)
 "xm" = (
 /obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_1)
 "xq" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
@@ -1217,36 +1574,37 @@
 	},
 /obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "xu" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "xw" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "xA" = (
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "xB" = (
 /obj/machinery/bookbinder,
 /obj/effect/turf_decal/siding/wood/end,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "xC" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 9
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "xE" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -1256,12 +1614,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "xG" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/iron/sepia,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "xN" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -1270,25 +1628,25 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "xO" = (
 /obj/structure/window/reinforced/fulltile/ice{
 	name = "frozen window"
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "xV" = (
 /obj/machinery/computer/old{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "xX" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "ya" = (
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/siding/yellow{
@@ -1296,7 +1654,7 @@
 	},
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "yd" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
@@ -1304,20 +1662,28 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"ye" = (
+/turf/open/floor/iron/kitchen,
+/area/awaymission/lodge/syndicate_mess)
 "yj" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
+"ys" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/bar)
 "yt" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "yK" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses{
@@ -1328,33 +1694,38 @@
 /obj/item/storage/fancy/egg_box,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "yP" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge)
 "yU" = (
 /obj/machinery/door/window{
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_3)
 "yV" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/side,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "yX" = (
 /obj/machinery/door/airlock/wood{
 	name = "Bedroom 2"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
+"zm" = (
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/random_cabin_1)
 "zp" = (
 /obj/structure/chair/sofa/middle/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "zv" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
@@ -1363,19 +1734,22 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "zH" = (
 /obj/machinery/door/airlock/bathroom,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"zQ" = (
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/lodge/syndicate_halls)
 "zR" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/sauna)
 "Ab" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
@@ -1384,38 +1758,41 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Af" = (
 /obj/structure/chair/wood{
 	dir = 4;
 	layer = 2.8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
+"Ai" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/sauna)
 "An" = (
 /obj/machinery/griddle,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "AA" = (
 /turf/open/floor/plating/snowed/smoothed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "AC" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "AK" = (
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "AR" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "AW" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
@@ -1424,75 +1801,105 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "AZ" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "Bl" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "Bn" = (
 /obj/structure/sauna_oven,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/exit)
 "Bo" = (
 /obj/effect/turf_decal,
 /turf/open/floor/iron/dark/smooth_large,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Bu" = (
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "BA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
+"BK" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"BL" = (
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/random_cabin_3)
 "BU" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /mob/living/basic/trooper/syndicate/melee/sword,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
+"BV" = (
+/obj/structure/table,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
+"BY" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/awaymission/lodge/syndicate_halls)
 "Cc" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Ch" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/dark/corner,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "Co" = (
 /obj/structure/hedge/opaque,
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Cp" = (
 /obj/effect/turf_decal{
 	dir = 5
 	},
 /obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Cs" = (
 /obj/structure/closet/body_bag,
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "CE" = (
 /obj/effect/turf_decal/siding/dark_green/end{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "CH" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 8
@@ -1500,77 +1907,80 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "CI" = (
 /obj/structure/broken_flooring/plating/directional/south,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "CL" = (
 /obj/machinery/light/warm/dim/directional/south,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "CP" = (
 /obj/effect/turf_decal{
 	dir = 6
 	},
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "CQ" = (
 /obj/effect/turf_decal{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Dj" = (
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 9
 	},
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
+"Dk" = (
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_1)
 "Dl" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Ds" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Dt" = (
 /obj/effect/turf_decal/siding/dark_green/end{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Dy" = (
 /obj/machinery/chicken_grinder,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "DK" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "DM" = (
 /obj/structure/fireplace,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "DO" = (
 /obj/machinery/processor,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "Eb" = (
 /turf/open/floor/iron/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Ec" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "Ee" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Eg" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
@@ -1579,7 +1989,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "El" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -1587,7 +1997,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Eq" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -1595,58 +2005,81 @@
 /obj/effect/landmark/awaystart,
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Er" = (
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Et" = (
 /obj/effect/turf_decal{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "EC" = (
 /obj/structure/cable,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "EI" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"EK" = (
+/turf/open/floor/plating,
+/area/awaymission/lodge/syndicate_jails)
 "EM" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
 /obj/machinery/autolathe,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"EO" = (
+/obj/machinery/light/warm/dim/directional/east,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"EU" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"EV" = (
+/turf/open/floor/iron/kitchen,
+/area/awaymission/lodge/kitchen)
+"EX" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_2)
 "EZ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/snowed/cavern,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Fd" = (
 /obj/structure/railing/corner/end{
 	dir = 1
 	},
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Ff" = (
 /obj/structure/chair/plastic{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "Fh" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Fm" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
@@ -1655,29 +2088,59 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"Fr" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "Fu" = (
 /obj/structure/chair/plastic{
 	dir = 8
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Fv" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "FH" = (
 /turf/open/floor/iron/stairs,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"FY" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bar)
+"Ge" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
+"Gm" = (
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_2)
+"Go" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_mess)
 "Gr" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/random_cabin_3)
 "Gv" = (
 /obj/structure/table/wood/fancy,
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/space)
+/area/awaymission/lodge/bar)
+"Gy" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/turf/open/floor/plating,
+/area/awaymission/lodge/bedroom_2)
+"GH" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/iron/dark,
+/area/awaymission/lodge/syndicate_jails)
 "GK" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -1686,7 +2149,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"GN" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/bar)
 "Hd" = (
 /obj/structure/table,
 /obj/item/plate,
@@ -1699,16 +2168,29 @@
 	pixel_y = 11
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"He" = (
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/lodge/syndicate_mess)
 "Hg" = (
 /obj/effect/spawner/random/bedsheet,
 /obj/structure/bed,
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Hk" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"Hl" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_2)
+"Hr" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"Hx" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/snowmountain)
 "HK" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
@@ -1722,13 +2204,13 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "HQ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "HU" = (
 /obj/structure/bed{
 	dir = 4
@@ -1738,10 +2220,13 @@
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "HW" = (
 /turf/open/floor/iron/dark/textured,
-/area/space)
+/area/awaymission/lodge)
+"HZ" = (
+/turf/open/floor/carpet,
+/area/awaymission/lodge/syndicate_halls)
 "Id" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
@@ -1749,11 +2234,11 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Ie" = (
 /obj/structure/sauna_oven,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "If" = (
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/siding/yellow{
@@ -1761,42 +2246,53 @@
 	},
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Ig" = (
 /obj/structure/table/greyscale,
 /turf/open/floor/iron/sepia,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Ij" = (
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "Ik" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "In" = (
 /mob/living/basic/trooper/syndicate/ranged/smg,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
+"Io" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_1)
+"It" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bar)
 "Iv" = (
 /obj/structure/cable,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Iw" = (
 /obj/structure/table/greyscale,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron/sepia,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Iz" = (
 /obj/structure/chair/sofa/corp/right,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "IT" = (
 /obj/structure/broken_flooring/side/directional,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "IZ" = (
 /obj/structure/table,
 /obj/item/folder,
@@ -1811,42 +2307,60 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "Jb" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
+"Jg" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/lodge)
 "Ji" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating/snowed/smoothed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "JE" = (
 /obj/machinery/door/airlock/wood{
 	name = "Sauna"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/sauna)
 "JG" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "JM" = (
 /obj/structure/broken_flooring/plating,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge)
+"JQ" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_3)
 "Kh" = (
 /obj/effect/turf_decal{
 	dir = 10
 	},
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
+"Kj" = (
+/obj/structure/closet/secure_closet/bar,
+/obj/item/gun/ballistic/shotgun/automatic,
+/obj/effect/spawner/random/armory/rubbershot,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "Ky" = (
 /obj/effect/turf_decal/siding/dark_green/corner,
 /obj/effect/turf_decal/siding/dark_green/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Kz" = (
 /obj/structure/railing{
 	dir = 1
@@ -1858,69 +2372,86 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
+"KA" = (
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
+"KI" = (
+/obj/machinery/holopad,
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_1)
 "KO" = (
 /obj/effect/mob_spawn/ghost_role/human/away/snow_operative,
 /turf/open/floor/iron/white/smooth_large,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "Lb" = (
 /obj/machinery/door/airlock/wood/glass{
 	name = "Cabin"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
+"Lr" = (
+/obj/machinery/door/airlock/material{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_1)
 "Lu" = (
 /obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Lz" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "LS" = (
 /obj/structure/broken_flooring/singular,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "LT" = (
 /obj/machinery/door/airlock/service{
 	name = "Kitchen"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "LW" = (
 /obj/structure/broken_flooring/plating/directional/west,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "LY" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Me" = (
 /obj/structure/fence/corner,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Mm" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_1)
 "Mp" = (
 /turf/open/misc/ice,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"MA" = (
+/turf/open/floor/plating/snowed/smoothed,
+/area/awaymission/lodge)
 "MB" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "MJ" = (
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "MO" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -1936,21 +2467,22 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "MQ" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "MV" = (
 /obj/effect/turf_decal/siding/dark_green/end,
+/obj/structure/cable,
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Nj" = (
 /obj/structure/chair/wood{
 	dir = 2
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "Nn" = (
 /obj/structure/table/reinforced,
 /obj/item/computer_disk/engineering,
@@ -1962,42 +2494,49 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "NA" = (
 /obj/machinery/gateway/away,
 /turf/open/floor/pod,
-/area/space)
+/area/awaymission/lodge/exit)
+"NB" = (
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bedroom_1)
+"ND" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_halls)
 "NK" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "NL" = (
 /obj/effect/turf_decal,
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "NS" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "NW" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "NX" = (
 /obj/machinery/door/airlock/bathroom,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "Od" = (
 /obj/machinery/vending/hydronutrients,
 /obj/machinery/light/warm/dim/directional/south,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Og" = (
 /obj/structure/railing{
 	dir = 1
@@ -2006,21 +2545,21 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
 "Oi" = (
 /obj/machinery/door/airlock/material{
 	name = "Bathroom"
 	},
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_1)
 "Oj" = (
 /obj/structure/fence/door/opened,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Op" = (
 /obj/structure/sign/departments/engineering/directional/south,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge)
 "Ot" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Bay";
@@ -2029,20 +2568,20 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge)
 "Ou" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "Oz" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "OJ" = (
 /obj/effect/turf_decal/siding/brown/corner{
 	dir = 8
@@ -2050,7 +2589,14 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
+"OL" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
 "ON" = (
 /obj/machinery/power/apc/worn_out/directional/east,
 /obj/structure/cable,
@@ -2060,7 +2606,16 @@
 /obj/structure/railing/wooden_fencing,
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
+"OY" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/random_cabin_3)
+"OZ" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_1)
 "Ph" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
 	layer = 2.9
@@ -2070,11 +2625,23 @@
 	id = 6
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"Pi" = (
+/obj/machinery/light/warm/dim/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/lodge/syndicate_mess)
+"Pn" = (
+/obj/machinery/door/airlock/material{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/random_cabin_2)
 "Po" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/random_cabin_1)
 "Pq" = (
 /obj/structure/chair/wood{
 	dir = 4;
@@ -2082,21 +2649,21 @@
 	},
 /mob/living/basic/trooper/syndicate/melee/sword,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "Pu" = (
 /obj/structure/chair/plastic,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Px" = (
 /obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "Pz" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
 "PO" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -2105,19 +2672,19 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "PT" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "PU" = (
 /obj/machinery/computer/apc_control{
 	dir = 1
 	},
 /turf/open/floor/iron/white/smooth_half,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "PV" = (
 /obj/structure/railing{
 	dir = 4
@@ -2126,7 +2693,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/bar)
 "PY" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
@@ -2136,7 +2703,11 @@
 	},
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"PZ" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
 "Qg" = (
 /obj/machinery/door/airlock/ce{
 	id_tag = "CEdoor";
@@ -2144,8 +2715,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_ce)
 "Qn" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 5
@@ -2153,13 +2725,13 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Qr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "Qs" = (
 /obj/structure/closet/secure_closet/freezer/meat/all_access,
 /obj/item/food/meat/slab/chicken,
@@ -2176,47 +2748,59 @@
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/slab/human/mutant/fly,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"Qz" = (
+/turf/open/floor/carpet,
+/area/awaymission/lodge/random_cabin_3)
+"QF" = (
+/turf/open/floor/iron,
+/area/awaymission/lodge)
 "QG" = (
 /obj/structure/chair/plastic{
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "QH" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "QL" = (
 /obj/structure/chair/sofa/corp/left,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"QU" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/bedroom_1)
 "QZ" = (
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Rd" = (
 /mob/living/basic/trooper/syndicate/ranged/shotgun,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "Rf" = (
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "Rw" = (
 /obj/effect/turf_decal{
 	dir = 9
 	},
 /obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"RA" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/lodge_halls)
 "RB" = (
 /obj/effect/turf_decal{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "RE" = (
 /obj/structure/bed/double{
 	dir = 4
@@ -2225,11 +2809,11 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
 "RJ" = (
 /obj/machinery/composters,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "RO" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	dir = 4
@@ -2238,7 +2822,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "RQ" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -2248,35 +2832,35 @@
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
 "RR" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "RZ" = (
 /turf/open/floor/carpet/black,
-/area/space)
+/area/awaymission/lodge/bar)
 "Sc" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "Sf" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Sk" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Sn" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -2284,7 +2868,7 @@
 /obj/effect/landmark/awaystart,
 /obj/machinery/light/warm/dim/directional/south,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Sp" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
@@ -2294,22 +2878,22 @@
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Sv" = (
 /obj/machinery/door/airlock/glass_large,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark/textured,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "Sy" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "SA" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "SC" = (
 /obj/structure/table,
 /obj/item/chisel{
@@ -2330,24 +2914,24 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "SE" = (
 /obj/machinery/power/shuttle_engine/large,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "SF" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
 /obj/structure/closet/firecloset/wall/directional/east,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "SK" = (
 /obj/structure/flippedtable{
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "SL" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -2355,14 +2939,30 @@
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"SW" = (
+/obj/machinery/light/warm/dim/directional/west,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_1)
+"Te" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/effect/turf_decal/siding/wood/end,
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
 "Tf" = (
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/bedroom_2)
 "Ti" = (
 /turf/open/floor/iron/dark/smooth_large,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Tu" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -2370,7 +2970,7 @@
 /obj/effect/turf_decal/siding/yellow,
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Ty" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -2378,12 +2978,12 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "TA" = (
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "TB" = (
 /obj/machinery/door/airlock/engineering,
 /obj/structure/cable,
@@ -2391,25 +2991,25 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "TG" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "TH" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "TK" = (
 /obj/machinery/door/airlock/wood{
 	name = "Lodge"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/lodge_entrance)
 "TQ" = (
 /obj/structure/table,
 /obj/item/knife{
@@ -2417,7 +3017,7 @@
 	},
 /obj/item/knife/butcher,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "Uf" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -2425,56 +3025,77 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"Ul" = (
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/random_cabin_2)
 "Uo" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Uu" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
+"Uw" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/lodge/bar)
 "Ux" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"UA" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/lodge/syndicate_kitchen)
 "UE" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge)
 "UF" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "UG" = (
 /obj/structure/fake_stairs/directional/west,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "UO" = (
 /obj/structure/table,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "UP" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
 	name = "HoochMaster Deluxe"
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/bar)
+"US" = (
+/obj/machinery/door/airlock/material{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_2)
 "UT" = (
+/obj/structure/cable,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
 "UY" = (
 /obj/machinery/vending/dinnerware{
 	pixel_x = 3;
@@ -2483,24 +3104,24 @@
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "UZ" = (
 /obj/machinery/computer/old{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Vh" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
-/area/space)
+/area/awaymission/lodge/lodge_halls)
 "Vl" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Vo" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/winterboots/ice_boots,
@@ -2510,23 +3131,30 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "Vq" = (
 /obj/structure/broken_flooring/side/directional/west,
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "Vr" = (
 /obj/machinery/grill,
 /obj/machinery/light/warm/dim/directional/west,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
+"Vs" = (
+/turf/open/floor/iron/freezer,
+/area/awaymission/lodge/bedroom_1)
 "Vz" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/syndicate_mess)
+"VE" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/awaymission/lodge/syndicate_jails)
 "VI" = (
 /obj/structure/railing{
 	dir = 4
@@ -2535,15 +3163,18 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "VK" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
+"VT" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/awaymission/lodge/random_cabin_2)
 "VX" = (
 /obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/kitchen,
-/area/space)
+/area/awaymission/lodge/kitchen)
 "VY" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -2551,7 +3182,7 @@
 	},
 /obj/machinery/light/warm/dim/directional/north,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "Wi" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/curtain/cloth/fancy/mechanical{
@@ -2561,20 +3192,24 @@
 	name = "curtain"
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
+"Wk" = (
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/lodge/starting_cabin)
 "WI" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "WK" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "WN" = (
 /obj/effect/turf_decal/siding/brown/corner{
 	dir = 1
@@ -2582,22 +3217,22 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "WX" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/sepia,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "WZ" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/freezer,
-/area/space)
+/area/awaymission/lodge/random_cabin_3)
 "Xa" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Xo" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2605,75 +3240,101 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/sauna)
 "Xp" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Xu" = (
 /turf/open/floor/carpet,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "XE" = (
 /obj/structure/chair/wood,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "XI" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "XJ" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "XO" = (
 /obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable,
 /turf/open/space/basic,
-/area/space)
+/area/awaymission/lodge/syndicate_jails)
 "XR" = (
 /turf/open/floor/plating/snowed,
-/area/space)
+/area/awaymission/lodge/snowmountain)
 "Yb" = (
 /obj/effect/turf_decal/siding/dark_green,
 /obj/effect/turf_decal/siding/dark_green/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Yf" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Yj" = (
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 5
 	},
 /turf/open/floor/wood/large,
-/area/space)
+/area/awaymission/lodge/syndicate_botany)
 "Yk" = (
 /obj/structure/window/reinforced/fulltile/ice{
 	name = "frozen window"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "YA" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "YG" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
+"YJ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/awaymission/lodge/syndicate_jails)
 "YR" = (
 /turf/open/lava/plasma/virtual_domain,
-/area/space)
+/area/awaymission/lodge/snowmountain)
+"YT" = (
+/obj/structure/table,
+/obj/item/chisel{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/storage/crayons{
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/lodge/random_cabin_3)
 "YW" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -2682,19 +3343,23 @@
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/space)
+/area/awaymission/lodge/syndicate_kitchen)
 "Zc" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge)
+"Zp" = (
+/turf/open/floor/iron,
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "Zr" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Zs" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
@@ -2704,18 +3369,18 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/lodge/syndicate_engibay)
 "Zz" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/siding/brown,
 /turf/open/floor/iron/herringbone,
-/area/space)
+/area/awaymission/lodge/syndicate_halls)
 "ZB" = (
 /obj/machinery/door/airlock/wood{
 	name = "Natural Sauna"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
-/area/space)
+/area/awaymission/lodge/exit)
 "ZQ" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
@@ -2725,30 +3390,30 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/reinforced,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "ZR" = (
 /obj/structure/railing/wooden_fencing,
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/starting_cabin)
 "ZV" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "ZX" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow/corner,
 /turf/open/floor/iron,
-/area/space)
+/area/awaymission/lodge/syndicate_engiebay_control_room)
 "ZY" = (
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/space)
+/area/awaymission/lodge/sauna)
 
 (1,1,1) = {"
 iL
@@ -2960,10 +3625,10 @@ iL
 qM
 qM
 qM
-ml
-ml
+bv
+bv
 Bn
-ml
+bv
 qM
 qM
 iL
@@ -2986,34 +3651,34 @@ oC
 oC
 oC
 ml
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
+QU
+QU
+QU
+QU
+QU
+QU
+RA
+RA
+mU
+mU
+mU
+mU
+mU
+mU
+mU
+mU
+mU
+mU
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
 ml
 ml
 oC
@@ -3060,19 +3725,19 @@ iL
 iL
 iL
 qM
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 iL
 iL
 qM
 qM
-ml
+bv
 ZB
 ml
 ml
@@ -3088,35 +3753,35 @@ oC
 oC
 oC
 ml
-nV
+QU
 rz
-ji
-Tf
-jS
-nV
-Bu
-Bu
-nV
+OZ
+Vs
+hK
+QU
+oD
+oD
+mU
 xk
 tR
 DO
-nV
+mU
 Sy
 QH
 Vr
 Ik
-nV
+mU
 MQ
 xq
-lG
+Uw
 UP
-nV
+ys
 tH
 Bu
 Bu
 Bu
-nV
-nV
+ys
+ys
 ml
 oC
 oC
@@ -3162,19 +3827,19 @@ iL
 iL
 qM
 qM
-ml
+bv
 cl
 cl
 cl
-ml
-ml
-ml
+bv
+bv
+bv
 qM
 qM
 qM
 qM
-ml
-ml
+bv
+bv
 ZB
 ml
 ml
@@ -3190,24 +3855,24 @@ oC
 oC
 oC
 ml
-nV
-nV
-Oi
-nV
-nV
-nV
-Bu
-Bu
-nV
+QU
+QU
+Lr
+QU
+QU
+QU
+oD
+oD
+mU
 iX
-Tf
-Tf
+pq
+pq
 NS
-UT
-UT
-UT
+EV
+EV
+EV
 Bl
-nV
+mU
 RQ
 Bu
 Bu
@@ -3218,7 +3883,7 @@ Bu
 PT
 sS
 aS
-xO
+fA
 ml
 oC
 oC
@@ -3263,20 +3928,20 @@ iL
 (6,1,1) = {"
 iL
 qM
-ml
-ml
+bv
+bv
 cl
 NA
 cl
-ml
-ml
-ml
+bv
+bv
+bv
 Bn
 qM
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
 qM
 iL
 ml
@@ -3292,24 +3957,24 @@ oC
 oC
 oC
 ml
-xO
-lG
-Bu
-Bu
+qJ
+tV
+va
+va
 eO
-nV
-Bu
-Bu
-nV
-nV
-nV
-nV
-nV
+QU
+oD
+oD
+mU
+mU
+mU
+mU
+mU
 VX
-UT
-UT
+EV
+EV
 dd
-nV
+mU
 kh
 Bu
 MQ
@@ -3320,7 +3985,7 @@ Bu
 cs
 cz
 RZ
-xO
+fA
 ml
 oC
 oC
@@ -3365,19 +4030,19 @@ iL
 (7,1,1) = {"
 iL
 qM
-ml
-ml
+bv
+bv
 cl
 cl
 cl
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 qM
 iL
@@ -3394,23 +4059,23 @@ oC
 oC
 oC
 ml
-xO
-Xu
-Xu
-Xu
-gZ
-nV
-Bu
-Bu
-Po
-Bu
+qJ
+uh
+uh
+uh
+NB
+QU
+oD
+oD
+gV
+oD
 lG
-Bu
-nV
+oD
+RA
 Ec
-UT
-UT
-UT
+EV
+EV
+EV
 vu
 Bu
 Bu
@@ -3422,7 +4087,7 @@ Bu
 Og
 pN
 RZ
-xO
+fA
 ml
 oC
 oC
@@ -3468,18 +4133,18 @@ iL
 iL
 qM
 Bn
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 iL
 iL
@@ -3496,24 +4161,24 @@ oC
 oC
 oC
 ml
-xO
-Pz
+qJ
+xl
 tT
-pY
-Bu
+cL
+va
 eI
-Bu
-Bu
-nV
-Bu
-Bu
-Bu
-nV
+oD
+oD
+RA
+oD
+oD
+oD
+RA
 AZ
 TQ
-UT
+EV
 Jb
-nV
+mU
 uK
 Bu
 Bu
@@ -3524,7 +4189,7 @@ Bu
 Kz
 bn
 RZ
-xO
+fA
 ml
 oC
 oC
@@ -3569,18 +4234,18 @@ iL
 (9,1,1) = {"
 iL
 qM
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 qM
 iL
@@ -3598,35 +4263,35 @@ oC
 oC
 oC
 ml
-nV
-nV
-nV
-nV
-nV
-nV
-Bu
-Bu
-nV
+ez
+ez
+ez
+ez
+ez
+ez
+oD
+oD
+RA
 DM
-Bu
+oD
 gZ
-nV
-nV
-nV
+RA
+mU
+mU
 vu
-nV
-nV
-nV
+mU
+mU
+ys
 NW
 Gv
 Gv
-nV
+ys
 tH
 Bu
 yj
 us
 PV
-xO
+fA
 ml
 oC
 oC
@@ -3671,16 +4336,16 @@ iL
 (10,1,1) = {"
 iL
 qM
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 Bn
 qM
 qM
@@ -3700,24 +4365,24 @@ oC
 oC
 oC
 ml
-xO
+Gy
 Pz
 RE
 pY
-Bu
+ew
 yX
-Bu
-Bu
-nV
-Bu
-Bu
-Bu
-nV
+oD
+oD
+RA
+oD
+oD
+oD
+RA
 mF
 Vh
 hW
 bF
-nV
+RA
 Bu
 az
 az
@@ -3728,7 +4393,7 @@ Af
 Bu
 Af
 Pq
-xO
+fA
 ml
 oC
 oC
@@ -3773,17 +4438,17 @@ iL
 (11,1,1) = {"
 iL
 qM
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 qM
 iL
@@ -3802,24 +4467,24 @@ oC
 oC
 oC
 ml
-xO
-Xu
-Xu
-Xu
-gZ
-nV
-Bu
-Bu
-nV
-nV
-nV
-Po
-nV
+Gy
+gk
+gk
+gk
+Gm
+ez
+oD
+oD
+RA
+RA
+RA
+gV
+RA
 BA
 BA
-Bu
-Bu
-nV
+oD
+oD
+RA
 Bu
 Bu
 Bu
@@ -3828,9 +4493,9 @@ Bu
 Bu
 MQ
 Bu
-XJ
-XJ
-xO
+FY
+FY
+fA
 ml
 oC
 oC
@@ -3878,15 +4543,15 @@ qM
 qM
 qM
 Bn
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
+bv
 qM
 iL
 iL
@@ -3904,24 +4569,24 @@ oC
 oC
 oC
 ml
-xO
-rG
-Bu
-Bu
-eO
-nV
-Bu
-Bu
-Bu
+Gy
+qV
+ew
+ew
+EX
+ez
+oD
+oD
+oD
 In
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
 Bu
 Bu
 Bu
@@ -3930,9 +4595,9 @@ Bu
 Bu
 BU
 Bu
-XJ
-XJ
-xO
+FY
+FY
+fA
 ml
 oC
 oC
@@ -3980,15 +4645,15 @@ iL
 iL
 qM
 qM
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
 qM
-ml
-ml
-ml
-ml
+bv
+bv
+bv
+bv
 qM
 iL
 iL
@@ -4006,24 +4671,24 @@ oC
 oC
 oC
 ml
-nV
-nV
-Oi
-nV
-nV
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
+ez
+ez
+US
+ez
+ez
+ez
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
 Bu
 Bu
 Bu
@@ -4034,7 +4699,7 @@ Bu
 Bu
 xX
 xX
-xO
+fA
 ml
 oC
 oC
@@ -4083,9 +4748,9 @@ iL
 iL
 qM
 qM
-ml
-ml
-ml
+bv
+bv
+bv
 qM
 qM
 qM
@@ -4108,35 +4773,35 @@ oC
 oC
 oC
 ml
-nV
-rz
+ez
+eN
 ji
 Tf
 jS
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+ez
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+RA
 Nj
 MQ
-qj
+GN
 Bu
-rG
-qj
+It
+GN
 MQ
-qj
-rG
-nV
-nV
+GN
+It
+ys
+ys
 ml
 oC
 oC
@@ -4185,8 +4850,8 @@ iL
 iL
 iL
 qM
-ml
-ml
+bv
+bv
 qM
 qM
 iL
@@ -4210,34 +4875,34 @@ oC
 oC
 oC
 ml
-nV
-nV
-nV
-nV
-nV
-nV
+ez
+ez
+ez
+ez
+ez
+ez
 JE
-nV
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
-xO
-xO
-xO
-nV
-nV
-xO
-xO
-xO
-nV
-nV
+eY
+RA
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+RA
+fA
+fA
+fA
+ys
+ys
+fA
+fA
+fA
+ys
+ys
 ml
 ml
 oC
@@ -4287,8 +4952,8 @@ iL
 iL
 iL
 qM
-ml
-ml
+bv
+bv
 qM
 iL
 iL
@@ -4316,20 +4981,20 @@ ml
 ml
 ml
 ml
-nV
+eY
 kj
 zR
 db
-nV
-nV
-Bu
+eY
+RA
+oD
 rG
-Bu
-Bu
-Bu
+oD
+oD
+oD
 rG
-Bu
-nV
+oD
+RA
 ml
 ml
 ml
@@ -4389,8 +5054,8 @@ iL
 iL
 iL
 qM
-ml
-ml
+bv
+bv
 qM
 iL
 iL
@@ -4418,20 +5083,20 @@ oC
 oC
 oC
 ml
-nV
+eY
 lB
 Xo
 fi
-nV
-nV
-nV
-nV
-nV
+eY
+RA
+RA
+rt
+rt
 TK
 TK
-nV
-nV
-nV
+rt
+rt
+RA
 ml
 ml
 ml
@@ -4491,8 +5156,8 @@ iL
 iL
 iL
 qM
-ml
-ml
+bv
+bv
 qM
 iL
 iL
@@ -4520,19 +5185,19 @@ oC
 oC
 oC
 ml
-nV
+eY
 jG
 ZY
 pD
-nV
+eY
 ml
 ml
-nV
+rt
 dA
-Bu
-Bu
+fj
+fj
 dA
-nV
+rt
 ml
 ml
 oC
@@ -4594,7 +5259,7 @@ iL
 iL
 qM
 qM
-ml
+bv
 ZB
 ml
 LY
@@ -4603,8 +5268,8 @@ ml
 AA
 XR
 IT
-Yf
-Yf
+VE
+VE
 ml
 ml
 ml
@@ -4622,19 +5287,19 @@ oC
 oC
 oC
 ml
-nV
-Bu
+eY
+Ai
 Ie
-Bu
-nV
+Ai
+eY
 ml
 ml
-nV
+rt
 dA
-Bu
-Bu
+fj
+fj
 dA
-nV
+rt
 ml
 ml
 oC
@@ -4706,16 +5371,16 @@ XR
 JG
 UO
 Ff
-Yf
-XI
-XI
-XI
+VE
+YJ
+YJ
+YJ
 ml
 ml
 ml
-XI
-XI
-XI
+YJ
+YJ
+YJ
 ml
 ml
 ml
@@ -4724,19 +5389,19 @@ oC
 oC
 oC
 ml
-nV
-nV
-nV
-nV
-nV
+eY
+eY
+eY
+eY
+eY
 LY
 ml
-nV
-nV
+rt
+rt
 TK
 TK
-nV
-nV
+rt
+rt
 ml
 oC
 oC
@@ -4805,21 +5470,21 @@ ml
 ml
 XR
 rK
-fh
-fh
-fh
-fh
-fh
-fh
-XI
-XI
-XI
-XI
-XI
-fh
-fh
-XI
-XI
+EK
+EK
+EK
+EK
+EK
+EK
+YJ
+YJ
+YJ
+YJ
+YJ
+EK
+EK
+YJ
+YJ
 ml
 LY
 oC
@@ -4906,21 +5571,21 @@ ml
 ml
 AA
 XR
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
+EK
+EK
+EK
+EK
+EK
+EK
+lK
+ej
+ej
+ej
+ej
+ej
+ej
+ej
+ej
 XO
 ml
 ml
@@ -5008,22 +5673,22 @@ ml
 ml
 ml
 XR
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
 ml
 ml
 oC
@@ -5110,22 +5775,22 @@ ml
 ml
 AA
 XR
-XI
+YJ
 by
-by
+GH
 iF
 Ux
-XI
+YJ
 by
-by
+GH
 NX
 Ux
-XI
+YJ
 by
-by
+GH
 iF
 Ux
-XI
+YJ
 ml
 ml
 ml
@@ -5212,22 +5877,22 @@ ml
 AA
 XR
 XR
-XI
+YJ
 by
 hS
-XI
-XI
-XI
+YJ
+YJ
+YJ
 by
 hS
-XI
-XI
-XI
+YJ
+YJ
+YJ
 by
 hS
-XI
-XI
-XI
+YJ
+YJ
+YJ
 ml
 ml
 ml
@@ -5314,22 +5979,22 @@ ml
 AA
 XR
 XR
-XI
+YJ
 by
 by
 dW
 HU
-XI
+YJ
 by
 by
 dW
 HU
-XI
+YJ
 by
 by
 dW
 HU
-XI
+YJ
 ml
 ml
 ml
@@ -5416,22 +6081,22 @@ ml
 AA
 XR
 XR
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 ml
 ml
 ml
@@ -5518,22 +6183,22 @@ ml
 ml
 AA
 XR
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 ml
 ml
 ml
@@ -5620,22 +6285,22 @@ ml
 ml
 XR
 Lu
-XI
+ND
 TA
 hv
 hv
 hv
+rM
 hv
 hv
 hv
 hv
-hv
-hv
+rM
 hv
 hv
 hv
 AK
-XI
+ND
 ml
 ml
 ml
@@ -5722,7 +6387,7 @@ ml
 ml
 XR
 XR
-XI
+ND
 aB
 pa
 lS
@@ -5737,7 +6402,7 @@ vT
 vT
 oy
 yV
-XI
+ND
 ml
 ml
 ml
@@ -5828,18 +6493,18 @@ Sv
 aB
 tK
 ek
-Xu
+HZ
 VK
 fy
 Zz
-Xu
+HZ
 sY
 xB
-Xu
-Xu
-XR
+HZ
+HZ
+kf
 mI
-ml
+zQ
 ml
 mv
 ml
@@ -5930,18 +6595,18 @@ Sc
 aB
 mY
 VK
-Xu
+HZ
 VK
 zp
 Zz
-Xu
+HZ
 IZ
 DK
-Xu
-Xu
+HZ
+HZ
 Ou
-XR
-XR
+kf
+kf
 LS
 Cs
 Cs
@@ -6028,7 +6693,7 @@ ml
 XR
 XR
 XR
-XI
+ND
 aB
 bY
 bY
@@ -6036,14 +6701,14 @@ bY
 ty
 eB
 hu
-Xu
+HZ
 MO
 SC
 tA
-Xu
+HZ
 Ou
-XR
-ml
+kf
+zQ
 ml
 ml
 ml
@@ -6130,21 +6795,21 @@ ml
 XR
 AA
 XR
-XI
+ND
 Ij
 MJ
 MJ
 MJ
-MJ
+mB
 MJ
 OJ
 CH
 CH
-CH
+BY
 CH
 CH
 WN
-XR
+kf
 mI
 ml
 Cs
@@ -6232,22 +6897,22 @@ ml
 ml
 ml
 AA
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 oH
 Wi
 Wi
 Wi
-XI
+YJ
 ml
 ml
 ml
@@ -6334,22 +6999,22 @@ ml
 ml
 ml
 AA
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 by
 by
 by
 by
-XI
+YJ
 ml
 Cs
 Cs
@@ -6436,22 +7101,22 @@ ml
 ml
 ml
 ml
-XI
+YJ
 by
 by
 to
 wZ
-XI
+YJ
 by
 by
 to
 wZ
-XI
+YJ
 by
 by
 to
 dG
-XR
+pF
 ml
 ml
 ml
@@ -6538,22 +7203,22 @@ ml
 ml
 ml
 ml
-XI
+YJ
 by
 hS
-XI
-XI
-XI
+YJ
+YJ
+YJ
 by
 hS
-XI
-XI
-XI
+YJ
+YJ
+YJ
 by
 hS
-XI
-XR
-XR
+YJ
+pF
+pF
 ml
 ml
 ml
@@ -6640,22 +7305,22 @@ ml
 ml
 ml
 ml
-XI
+YJ
 by
-by
+qf
 iF
 Ux
-XI
+YJ
 by
-by
+qf
 iF
 Ux
-XI
+YJ
 by
-by
+qf
 zH
 Vq
-ml
+hQ
 ml
 oC
 oC
@@ -6742,22 +7407,22 @@ ml
 ml
 ml
 ml
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XR
-XR
-ml
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+pF
+pF
+hQ
 oC
 oC
 oC
@@ -7024,14 +7689,14 @@ ml
 ml
 ml
 ml
-nV
-nV
+wX
+wX
 xO
 xO
 xO
-nV
-nV
-nV
+wX
+wX
+wX
 iL
 "}
 (43,1,1) = {"
@@ -7126,14 +7791,14 @@ ml
 ml
 ml
 ml
-nV
+wX
 gd
 Xu
-Bu
-Bu
-eO
-eO
-nV
+tY
+tY
+vt
+vt
+wX
 iL
 "}
 (44,1,1) = {"
@@ -7228,14 +7893,14 @@ ml
 ml
 ml
 ml
-nV
+wX
 ee
 Xu
-Bu
+tY
 fG
 fG
-Bu
-nV
+tY
+wX
 iL
 "}
 (45,1,1) = {"
@@ -7330,14 +7995,14 @@ AA
 ml
 AA
 AA
-nV
+wX
 Eq
 Xu
 XE
 XJ
 XJ
 Sn
-nV
+wX
 iL
 "}
 (46,1,1) = {"
@@ -7433,13 +8098,13 @@ AA
 AA
 ml
 Lb
-Bu
-Bu
+tY
+tY
 XE
 XJ
 XJ
 qj
-nV
+wX
 iL
 "}
 (47,1,1) = {"
@@ -7534,14 +8199,14 @@ ml
 AA
 AA
 ml
-nV
+wX
 vk
 Sp
-Bu
+tY
 YA
 YA
-gZ
-nV
+Wk
+wX
 iL
 "}
 (48,1,1) = {"
@@ -7636,14 +8301,14 @@ ml
 ml
 ml
 ml
-nV
+wX
 QZ
 ZR
-Bu
-Bu
-Bu
-Bu
-nV
+tY
+tY
+tY
+tY
+wX
 iL
 "}
 (49,1,1) = {"
@@ -7738,14 +8403,14 @@ ml
 ml
 ml
 ml
-nV
+wX
 Hg
 ON
 iY
 Co
 Vo
 Vo
-nV
+wX
 iL
 "}
 (50,1,1) = {"
@@ -7764,7 +8429,7 @@ ml
 AA
 XR
 XR
-mI
+eX
 XR
 ml
 ml
@@ -7840,14 +8505,14 @@ ml
 ml
 ml
 ml
-nV
-nV
-nV
+wX
+wX
+wX
 Yk
-nV
+wX
 xO
-nV
-nV
+wX
+wX
 iL
 "}
 (51,1,1) = {"
@@ -7861,29 +8526,29 @@ ml
 AA
 XR
 XR
-XI
-AA
-AA
+dl
+MA
+MA
 JM
-XR
-XR
+ay
+ay
 uZ
 jR
-XI
-XI
+dl
+dl
 Bo
-fh
-fh
-fh
+uE
+uE
+uE
 CQ
 rU
 Ti
-XI
-XI
-XI
-XI
-fh
-fh
+gi
+gi
+gi
+gi
+uE
+uE
 ml
 ml
 oC
@@ -7963,37 +8628,37 @@ ml
 XR
 AA
 AA
-XI
-XR
+dl
+ay
 HW
-XI
+dl
 UE
 UE
 uW
 jR
 Zc
-XI
+dl
 Ti
 rU
 rU
 rU
 dn
 dn
-XI
-XI
-fh
-fh
-fh
-fh
-XI
-XI
+gi
+gi
+uE
+uE
+uE
+uE
+wk
+wk
 RO
-XI
-XI
-XI
-XI
-XI
-XI
+wk
+wk
+wk
+wk
+wk
+wk
 ml
 ml
 ml
@@ -8065,29 +8730,29 @@ ml
 AA
 XR
 Ds
-XI
+dl
 HW
 HW
-XI
+dl
 dN
 dN
 ao
 jR
-jR
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-fh
-fh
-XI
-XI
-XI
-XI
+QF
+dl
+gi
+gi
+gi
+gi
+gi
+gi
+gi
+uE
+uE
+wk
+wk
+wk
+wk
 fh
 fh
 Xp
@@ -8167,34 +8832,34 @@ ml
 XR
 XR
 Ji
-XI
+dl
 HW
 HW
-XI
+dl
 ud
 ud
 yP
 jR
-jR
+QF
 sK
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-XI
-XI
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+wk
+wk
 gP
 jH
 Fd
 fh
 fz
-XI
-XI
-XI
+wk
+wk
+wk
 fh
 fh
 fh
@@ -8268,26 +8933,26 @@ ml
 XR
 Eb
 AA
-XI
-XI
+dl
+dl
 Ot
 Ot
-XI
-XI
-XI
-XI
+dl
+dl
+dr
+dr
 hy
-XI
-XI
-XI
-XI
-XI
-RO
-XI
-XI
-XI
-XI
-XI
+dr
+dr
+dr
+dr
+dr
+ub
+dr
+dr
+dr
+wk
+wk
 jH
 pU
 UZ
@@ -8370,19 +9035,19 @@ XR
 XR
 Eb
 XR
-XI
-jR
-jR
-jR
-jR
-jR
-XI
+dl
+QF
+QF
+QF
+QF
+QF
+dr
 iy
 gJ
 jr
 xE
 AR
-XI
+dr
 HK
 ZV
 ri
@@ -8470,23 +9135,23 @@ ml
 XR
 ml
 XR
-XI
+gi
 XR
-XI
-jR
-jR
-jR
-jR
-jR
-XI
+dl
+QF
+QF
+QF
+QF
+QF
+dr
 bH
 Ig
 Iw
 Uf
-XI
-XI
+dr
+dr
 hi
-jR
+Zp
 rC
 jO
 Ph
@@ -8572,20 +9237,20 @@ ml
 ml
 ml
 ml
-XI
-fh
-XI
-jR
-jR
-jR
-jR
-jR
-XI
-Tu
+gi
+uE
+dl
+QF
+QF
+QF
+QF
+QF
+dr
+sI
 Ig
 mN
 Uf
-XI
+dr
 Uu
 Hk
 cM
@@ -8602,8 +9267,8 @@ Fm
 PO
 Fm
 Fm
-XI
-XI
+wk
+wk
 AA
 AA
 XR
@@ -8674,26 +9339,26 @@ XR
 XR
 ml
 ml
-XI
-fh
-XI
-jR
-jR
-jR
-jR
+gi
+uE
+dl
+QF
+QF
+QF
+QF
 Op
-XI
+dr
 SL
 WK
 WK
 El
-XI
+dr
 hB
-jR
+Zp
 Rw
-XI
-XI
-XI
+dr
+dr
+dr
 Kh
 hH
 xA
@@ -8776,10 +9441,10 @@ ml
 XR
 ml
 ml
-XI
-fh
-XI
-jR
+gi
+uE
+dl
+Jg
 jR
 jR
 jR
@@ -8802,9 +9467,9 @@ xA
 Et
 fh
 pX
-XI
-XI
-XI
+wk
+wk
+wk
 fh
 fh
 fh
@@ -8878,26 +9543,26 @@ ml
 ml
 XR
 ml
-XI
-fh
-XI
-XI
+gi
+uE
+kN
+kN
 Qg
 hz
 hz
 hm
-XI
+dr
 ZX
 TH
 TH
 Sk
-XI
+dr
 hB
 Dl
 Cp
-XI
-XI
-XI
+dr
+dr
+dr
 CP
 rv
 kD
@@ -8937,7 +9602,7 @@ ml
 oC
 oC
 ki
-yj
+je
 FH
 FH
 FH
@@ -8980,20 +9645,20 @@ XR
 ml
 XR
 ml
-XI
-fh
-XI
+gi
+uE
+kN
 rZ
-oh
+rm
 oh
 oh
 pQ
-XI
+dr
 MB
 xG
 xG
 Uo
-XI
+dr
 Oz
 RR
 aZ
@@ -9010,8 +9675,8 @@ AW
 xN
 AW
 AW
-XI
-XI
+wk
+wk
 ml
 ml
 XR
@@ -9082,21 +9747,21 @@ ml
 ml
 ml
 XR
-XI
-fh
-XI
+gi
+uE
+kN
 bN
-hb
+jY
 fc
 oh
 PU
-XI
+dr
 Tu
 WX
 WX
 Uo
-XI
-XI
+dr
+dr
 Ty
 Er
 rC
@@ -9184,21 +9849,21 @@ ml
 ml
 XR
 XR
-XI
-fh
-XI
+gi
+uE
+kN
 bN
 hb
 Nn
 KO
 Px
-XI
+dr
 GK
 cu
 cu
 rI
 SA
-XI
+dr
 EM
 NK
 SF
@@ -9288,26 +9953,26 @@ ml
 XR
 AA
 XR
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-RO
-XI
-XI
-XI
-XI
-XI
+kN
+kN
+kN
+kN
+kN
+kN
+dr
+dr
+dr
+dr
+dr
+dr
+dr
+dr
+ub
+dr
+dr
+dr
+wk
+wk
 jH
 pU
 UZ
@@ -9392,33 +10057,33 @@ XR
 XR
 XR
 XR
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
 Id
-fh
-fh
-fh
-fh
-fh
-fh
-XI
-XI
+uE
+uE
+uE
+uE
+uE
+uE
+wk
+wk
 xV
 dw
 vF
 Cc
 fz
-XI
-XI
-XI
+wk
+wk
+wk
 fh
 fh
 fh
@@ -9495,27 +10160,27 @@ XR
 AA
 XR
 AA
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-XI
-XI
-XI
-XI
-XI
-XI
-fh
-fh
-XI
-XI
-XI
-XI
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+uE
+gi
+gi
+gi
+gi
+gi
+gi
+uE
+uE
+wk
+wk
+wk
+wk
 Cc
 iE
 Zr
@@ -9597,35 +10262,35 @@ XR
 XR
 XR
 XR
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
+gi
+gi
+gi
+gi
+gi
+gi
+gi
+gi
+gi
+gi
 oC
 oC
 oC
 oC
-XI
-XI
-fh
-fh
-fh
-fh
-XI
-XI
+gi
+gi
+uE
+uE
+uE
+uE
+wk
+wk
 RO
-XI
-XI
-XI
-XI
-XI
-XI
+wk
+wk
+wk
+wk
+wk
+wk
 ml
 ml
 ml
@@ -9714,16 +10379,16 @@ oC
 oC
 oC
 oC
-XI
-XI
-XI
-XI
-fh
-fh
-fh
-fh
+gi
+gi
+gi
+gi
+uE
+uE
+uE
+uE
 ch
-fh
+uE
 et
 ml
 ml
@@ -9819,14 +10484,14 @@ oC
 oC
 oC
 oC
-XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
+gi
+gi
+gi
+gi
+gi
+gi
+gi
+gi
 ml
 ml
 ml
@@ -10750,13 +11415,13 @@ oC
 ml
 ml
 ml
-nV
-nV
-nV
-nV
-nV
-nV
-nV
+sw
+sw
+sw
+sw
+sw
+sw
+sw
 ml
 ml
 ml
@@ -10852,14 +11517,14 @@ ml
 ml
 ml
 ml
-nV
-Tf
+sw
+zm
 xm
-nV
-Bu
-Bu
-nV
-nV
+sw
+cW
+Hr
+sw
+sw
 ml
 ml
 ml
@@ -10919,21 +11584,21 @@ XI
 XI
 XI
 XI
-XI
-XI
-XI
-XI
-XI
-XI
-XR
-XR
-XR
-XI
-XI
-XI
-ml
-XR
-XR
+an
+an
+an
+an
+an
+an
+vg
+vg
+vg
+Go
+Go
+Go
+He
+vg
+vg
 XR
 ml
 ml
@@ -10954,14 +11619,14 @@ ml
 ml
 ml
 ml
-nV
+sw
 Mm
 dJ
-nV
-rG
-Bu
-Bu
-nV
+sw
+co
+Hr
+Hr
+sw
 ml
 ml
 ml
@@ -11023,19 +11688,19 @@ kP
 XI
 gX
 Qs
-XI
+an
 gK
-qN
+dv
 me
 CI
-UT
+ye
 nC
 eC
 fr
 jF
 CI
-XR
-XR
+vg
+vg
 ml
 ml
 ml
@@ -11053,19 +11718,19 @@ oC
 oC
 ml
 ml
-nV
-nV
-nV
-nV
-nV
+sw
+sw
+sw
+sw
+sw
 Oi
-nV
-nV
+sw
+sw
 Po
-nV
-nV
-nV
-nV
+sw
+sw
+sw
+sw
 ml
 ml
 ml
@@ -11075,13 +11740,13 @@ ml
 ml
 ml
 ml
-nV
-nV
-nV
-nV
-nV
-nV
-nV
+VT
+VT
+VT
+VT
+VT
+VT
+VT
 ml
 ml
 ml
@@ -11125,19 +11790,19 @@ RJ
 XI
 kW
 YG
-XI
+an
 oo
 qN
 wc
 fu
-UT
+ye
 Hd
 ol
-hW
+vx
 wq
 wq
-XR
-XR
+vg
+vg
 AA
 ml
 ml
@@ -11155,36 +11820,36 @@ oC
 ml
 ml
 ml
-nV
-Bu
-lG
-Bu
-Bu
-Bu
-lG
-Bu
-Bu
-Bu
-lG
-Bu
-nV
-nV
+sw
+Fr
+SW
+Hr
+Hr
+Hr
+tv
+Hr
+Hr
+Hr
+Po
+Hr
+sw
+sw
 ml
 ml
 ml
 ml
-nV
-nV
-nV
-nV
-nV
-Bu
-Bu
-lG
-Bu
-Bu
-nV
-nV
+VT
+VT
+VT
+VT
+VT
+Ge
+Ge
+nF
+Ge
+Ge
+VT
+VT
 ml
 ml
 ml
@@ -11226,20 +11891,20 @@ Yb
 sm
 XI
 Rf
-XI
-XI
+an
+an
 cr
 qN
 me
 fK
-UT
+ye
 bb
 yd
 Qr
 HQ
 HQ
 HQ
-XR
+vg
 ml
 ml
 ml
@@ -11249,7 +11914,7 @@ ml
 oC
 oC
 lq
-Bu
+Hx
 FH
 FH
 FH
@@ -11257,36 +11922,36 @@ ml
 ml
 ml
 ml
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+sw
+dT
+ci
+Hr
+Hr
+au
+Hr
+au
+Hr
+Hr
+sw
+Hr
+Kj
+sw
 ml
 ml
 ml
 ml
-nV
+VT
 ot
-Tf
-Oi
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+Ul
+Pn
+Ge
+Ge
+Ge
+Ge
+Ge
+Ge
+rN
+VT
 ml
 ml
 ml
@@ -11334,14 +11999,14 @@ jb
 xu
 me
 fK
-UT
-UT
-UT
-UT
-UT
-UT
+ye
+ye
+ye
+ye
+ye
+ye
 CL
-XI
+Go
 ml
 ml
 ml
@@ -11359,36 +12024,36 @@ ml
 ml
 ml
 ml
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+sw
+Dk
+Io
+Dk
+Hr
+EU
+Hr
+EU
+Hr
+ed
+EU
+Hr
+Hr
+sw
 ml
 ml
 ml
 ml
-nV
-Tf
-Tf
-nV
-tH
-Bu
-Bu
-Bu
-Bu
-Bu
-gZ
-nV
+VT
+Ul
+Ul
+VT
+jP
+Ge
+Ge
+Ge
+Ge
+Ge
+we
+VT
 ml
 ml
 ml
@@ -11436,14 +12101,14 @@ Ch
 EI
 me
 fK
-UT
+ye
 Iz
 Hd
 Vz
 Iz
 Hd
 Vz
-XI
+Go
 ml
 ml
 ml
@@ -11461,36 +12126,36 @@ ml
 ml
 ml
 ml
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+sw
+Dk
+KI
+sG
+Hr
+jl
+Hr
+jl
+Hr
+ed
+EU
+Hr
+bV
+sw
 ml
 ml
 ml
 ml
-nV
-Tf
+VT
+Ul
 tz
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+VT
+Ge
+Ge
+Ge
+Ge
+Ge
+Ge
+Ge
+VT
 ml
 ml
 ml
@@ -11538,14 +12203,14 @@ qN
 me
 me
 fK
-UT
+ye
 QL
 kF
 dS
 QL
 kF
 dS
-XI
+Go
 ml
 ml
 ml
@@ -11563,36 +12228,36 @@ oC
 ml
 ml
 ml
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
+sw
+Dk
+lr
+Dk
+Hr
+ei
+Hr
+au
+Hr
+ed
+EU
+Hr
+EU
+sw
 ml
 ml
 LY
 ml
-nV
-nV
-nV
-nV
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-nV
-nV
+VT
+VT
+VT
+VT
+VT
+Ge
+Ge
+Ge
+Ge
+Ge
+VT
+VT
 ml
 ml
 ml
@@ -11646,8 +12311,8 @@ UT
 UT
 UT
 UT
-CL
-XI
+Pi
+Go
 ml
 ml
 ml
@@ -11665,20 +12330,20 @@ oC
 ml
 ml
 ml
-nV
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-Bu
-rG
-Bu
-Bu
-nV
+sw
+dT
+ci
+Hr
+Hr
+EU
+Hr
+EU
+Hr
+ed
+EU
+BK
+OL
+sw
 ml
 ml
 ml
@@ -11687,13 +12352,13 @@ ml
 ml
 ml
 ml
-nV
-nV
-nV
-Po
-nV
-nV
-nV
+VT
+VT
+VT
+Hl
+VT
+VT
+VT
 ml
 ml
 ml
@@ -11741,7 +12406,7 @@ sP
 YW
 LT
 UT
-UT
+ye
 LW
 Iz
 Hd
@@ -11749,7 +12414,7 @@ Vz
 Iz
 Hd
 Vz
-XI
+Go
 ml
 ml
 ml
@@ -11767,20 +12432,20 @@ oC
 ml
 ml
 ml
-nV
-Bu
-rG
-Bu
-Bu
-Bu
-rG
-Bu
-Bu
-Bu
-nV
-nV
-nV
-nV
+sw
+iz
+EO
+Hr
+Hr
+jl
+co
+jl
+Hr
+Hr
+sw
+sw
+sw
+sw
 ml
 ml
 ml
@@ -11833,25 +12498,25 @@ iL
 ml
 XR
 ml
-ml
+kQ
 Dy
 Ee
 XI
 yK
 zv
 id
-xu
+UA
 uv
-XR
-XR
-XR
+vg
+vg
+vg
 QL
 SK
 dS
 QL
 kF
 dS
-XI
+Go
 ml
 ml
 ml
@@ -11869,17 +12534,17 @@ oC
 oC
 ml
 ml
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
-nV
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
 Po
-nV
+sw
 ml
 ml
 ml
@@ -11939,21 +12604,21 @@ XI
 XI
 XI
 XI
-XI
-XR
-XR
-XI
-XI
-XI
-XR
-XR
-XR
-XR
-XI
-XI
-XI
-XI
-XI
+an
+pL
+pL
+an
+an
+Go
+vg
+vg
+vg
+vg
+Go
+Go
+Go
+Go
+Go
 ml
 ml
 ml
@@ -12103,7 +12768,7 @@ ml
 nV
 nV
 nV
-Po
+pi
 nV
 nV
 nV
@@ -12203,12 +12868,12 @@ ml
 ml
 ml
 nV
-Bu
-Bu
-Bu
-Bu
+BV
+oq
+Qz
+KA
 WZ
-jS
+OY
 nV
 ml
 ml
@@ -12305,12 +12970,12 @@ ml
 ml
 ml
 nV
-tH
-Bu
-Bu
-Bu
+sx
+JQ
+Qz
+KA
 yU
-Tf
+BL
 nV
 ml
 ml
@@ -12407,10 +13072,10 @@ ml
 ml
 ml
 nV
-Bu
-Bu
-Bu
-Bu
+uo
+YT
+Te
+KA
 Gr
 rp
 nV
@@ -12510,10 +13175,10 @@ ml
 ml
 nV
 nV
-Bu
-rG
-Bu
-Bu
+KA
+PZ
+KA
+tZ
 nV
 nV
 ml
