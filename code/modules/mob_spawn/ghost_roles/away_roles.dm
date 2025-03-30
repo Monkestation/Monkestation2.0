@@ -61,3 +61,22 @@
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 
 	implants = list(/obj/item/implant/exile)
+
+/obj/effect/mob_spawn/ghost_role/human/away/party_pirates
+	name = "sleeper"
+	prompt_name = "Party hard, my friend."
+	icon = 'icons/obj/machines/sleeper.dmi'
+	outfit = /datum/outfit/remote_island/entertaining_pirate
+	you_are_text = "I like to party, we all like to party. I'm a party goer."
+	flavour_text = "Party hard, baby."
+
+/datum/outfit/snowsyndie/away
+	name = "Syndicate Snow Operative"
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
+	uniform = /obj/item/clothing/under/syndicate/coldres
+	ears = /obj/item/radio/headset/syndicate/alt
+	shoes = /obj/item/clothing/shoes/combat/coldres
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol
+
+	implants = list(/obj/item/implant/exile)
