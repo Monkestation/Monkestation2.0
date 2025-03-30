@@ -33,37 +33,37 @@
 /area/awaymission/lodge/lodge_entrance
 	name = "Lodge Entrance"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/lodge_halls
 	name = "Lodge Halls"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/bedroom_1
 	name = "Lodge First Bedroom"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/bedroom_2
 	name = "Lodge Second Bedroom"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/kitchen
 	name = "Lodge Kitchen"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/bar
 	name = "Lodge Bar"
 	icon_state = "away"
-	requires_power = FAKE
+	requires_power = FALSE
 	static_lighting = TRUE
 
 /area/awaymission/lodge/sauna
