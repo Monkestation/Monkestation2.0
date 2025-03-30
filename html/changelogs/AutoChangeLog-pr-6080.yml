@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Cleaner slimes now properly target other types of trash (used ammo, used mutation syringes, emptied drink bottles, burnt matches, etc) again."
