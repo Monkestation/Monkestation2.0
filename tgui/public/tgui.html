@@ -118,19 +118,19 @@
             return;
           }
 
-        // Perform a standard call via location.href
-        if (url.length < 2048) {
-          location.href = 'byond://' + url;
-          return;
-        }
-        if (Byond.TRIDENT !== null) {
-          // Send an HTTP request to DreamSeeker's HTTP server.
-          // Allows sending much bigger payloads.
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', url);
-          xhr.send();
-        }
-      };
+          // Perform a standard call via location.href
+          if (url.length < 2048) {
+            location.href = 'byond://' + url;
+            return;
+          }
+          if (Byond.TRIDENT !== null) {
+            // Send an HTTP request to DreamSeeker's HTTP server.
+            // Allows sending much bigger payloads.
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.send();
+          }
+        };
 
         Byond.callAsync = function (path, params) {
           if (!window.Promise) {
