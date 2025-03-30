@@ -24163,7 +24163,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fIj" = (
@@ -29596,7 +29595,6 @@
 	req_access = list("command")
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gVB" = (
@@ -45753,11 +45751,6 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/station/service/library/lounge)
-"kKe" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "kKf" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/radiation,
@@ -46227,12 +46220,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/workout)
-"kQj" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "kQr" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /obj/effect/turf_decal/bot,
@@ -50496,13 +50483,6 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/carpet/stellar,
 /area/station/security/prison/toilet)
-"lOR" = (
-/obj/structure/cable,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "lOW" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -82079,7 +82059,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/spawner/random/engineering/tracking_beacon,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "twC" = (
@@ -98397,13 +98376,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
-"xqy" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "xqC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
@@ -100209,7 +100181,6 @@
 "xLs" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/medical/Syndicate_Biohazard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "xLE" = (
@@ -102118,11 +102089,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"ykC" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/box/syndie_kit/space_dragon,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "ykE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -140405,7 +140371,7 @@ aaa
 wyH
 xrI
 pnV
-xqy
+bsC
 fIg
 hdZ
 pgB
@@ -140661,9 +140627,9 @@ kOj
 aad
 diL
 nYn
-kKe
-kKe
-lOR
+cQv
+cQv
+kIe
 nza
 giF
 nae
@@ -140919,7 +140885,7 @@ aaa
 wyH
 aod
 jgq
-kKe
+cQv
 gVx
 adC
 moV
@@ -141175,9 +141141,9 @@ xms
 aaa
 wyH
 tms
-kQj
+drj
 tww
-lOR
+kIe
 xgP
 uWl
 iDG
@@ -141434,7 +141400,7 @@ wyH
 eTF
 jgq
 xLs
-lOR
+kIe
 qBY
 wIe
 goc
@@ -141689,7 +141655,7 @@ kOj
 aad
 diL
 cnW
-ykC
+cQv
 cQv
 kIe
 nfx
