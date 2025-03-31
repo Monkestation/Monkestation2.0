@@ -62,6 +62,10 @@
 	dir = 10
 	},
 /area/awaymission/beach)
+"cj" = (
+/obj/structure/marker_beacon/olive,
+/turf/open/water/beach,
+/area/awaymission/beach)
 "cl" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -977,6 +981,16 @@
 /area/awaymission/beach)
 "Fc" = (
 /obj/structure/flora/bush/stalky/style_random,
+/turf/open/indestructible/binary{
+	density = 1;
+	desc = "I can't move through this.";
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "water";
+	name = "deep ocean water"
+	},
+/area/awaymission/beach)
+"Fj" = (
+/obj/structure/marker_beacon/olive,
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
@@ -3712,8 +3726,8 @@ EE
 RK
 xN
 xN
+cj
 xN
-JZ
 JZ
 JZ
 JZ
@@ -3917,8 +3931,8 @@ xN
 xN
 xN
 JZ
-JZ
-JZ
+xN
+xN
 JZ
 JZ
 xN
@@ -4020,7 +4034,7 @@ xN
 xN
 JZ
 JZ
-JZ
+xN
 JZ
 JZ
 JZ
@@ -4122,8 +4136,8 @@ xN
 xN
 JZ
 JZ
-JZ
-JZ
+xN
+xN
 JZ
 JZ
 JZ
@@ -4217,7 +4231,7 @@ xN
 xN
 xN
 xN
-xN
+cj
 xN
 xN
 xN
@@ -4225,8 +4239,8 @@ xN
 xN
 JZ
 JZ
-JZ
-JZ
+xN
+xN
 JZ
 JZ
 xN
@@ -4328,8 +4342,8 @@ xN
 xN
 JZ
 JZ
-JZ
-JZ
+cj
+xN
 JZ
 JZ
 xN
@@ -4422,17 +4436,17 @@ xN
 xN
 xN
 xN
-JZ
 xN
 xN
 xN
 xN
 xN
 xN
-JZ
-JZ
+xN
 JZ
 JZ
+xN
+xN
 JZ
 xN
 JZ
@@ -4524,7 +4538,6 @@ xN
 xN
 xN
 xN
-JZ
 xN
 xN
 xN
@@ -4532,9 +4545,10 @@ xN
 xN
 xN
 xN
-JZ
 xN
 JZ
+xN
+xN
 xN
 xN
 xN
@@ -4626,7 +4640,6 @@ JZ
 JZ
 JZ
 JZ
-JZ
 xN
 xN
 xN
@@ -4634,10 +4647,11 @@ xN
 xN
 xN
 xN
-JZ
-JZ
+xN
 JZ
 JZ
+xN
+xN
 JZ
 xN
 JZ
@@ -4728,19 +4742,19 @@ JZ
 JZ
 JZ
 JZ
+xN
+xN
+xN
+xN
+xN
+xN
+xN
+xN
+xN
 JZ
 xN
 xN
 xN
-xN
-xN
-xN
-xN
-xN
-JZ
-JZ
-JZ
-JZ
 xN
 JZ
 JZ
@@ -4831,6 +4845,7 @@ JZ
 JZ
 JZ
 JZ
+cj
 xN
 xN
 xN
@@ -4841,8 +4856,7 @@ xN
 xN
 xN
 xN
-xN
-xN
+cj
 xN
 JZ
 JZ
@@ -4933,10 +4947,10 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
 xN
 xN
 xN
@@ -5035,10 +5049,10 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
 xN
 xN
 vW
@@ -5137,11 +5151,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 xN
 xN
 xN
@@ -5239,11 +5253,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 xN
 xN
 xN
@@ -5341,11 +5355,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 xN
 xN
 xN
@@ -5444,10 +5458,6 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
 xN
 xN
 xN
@@ -5457,8 +5467,12 @@ xN
 xN
 xN
 xN
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
+Fj
 JZ
 Av
 dt
@@ -5546,10 +5560,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+cj
 xN
 xN
 xN
@@ -5559,7 +5574,6 @@ xN
 xN
 xN
 xN
-JZ
 Av
 dt
 vw
@@ -5648,10 +5662,10 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
 xN
 xN
 xN
@@ -5751,11 +5765,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 JZ
 JZ
 JZ
@@ -5853,12 +5867,12 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
+xN
 JZ
 JZ
 JZ
@@ -5955,14 +5969,14 @@ JZ
 JZ
 JZ
 JZ
+xN
+xN
+xN
+xN
+xN
+xN
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+Fj
 JZ
 tr
 EE
@@ -6058,11 +6072,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 JZ
 JZ
 Av
@@ -6160,11 +6174,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 JZ
 JZ
 tr
@@ -6263,11 +6277,11 @@ JZ
 JZ
 JZ
 JZ
-JZ
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
+xN
 JZ
 tr
 EE
@@ -6366,10 +6380,10 @@ JZ
 xN
 xN
 xN
-JZ
-JZ
-JZ
-JZ
+xN
+xN
+xN
+xN
 JZ
 tr
 EE
@@ -6470,8 +6484,8 @@ xN
 xN
 xN
 xN
-JZ
-JZ
+xN
+xN
 JZ
 tr
 EE
@@ -6574,7 +6588,7 @@ xN
 xN
 xN
 xN
-JZ
+xN
 tr
 EE
 Gq
