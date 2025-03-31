@@ -60,15 +60,24 @@
 		ui = new(user, src, "TicketPanel")
 		ui.open()
 
+/datum/admin_help/proc/hide_key(key, is_admin)
+	if(is_admin)
+		return key
+	var/datum/admins/holder = GLOB.admin_datums[ckey(key)]
+	if(holder && holder.fakekey)
+		return "Administrator"
+	return key
+
 /datum/admin_help/ui_data(mob/user)
 	. = list()
 	var/is_admin = !!user.client.holder
 	.["is_admin"] = is_admin
-	.["name"] = name
+	.["name"] = html_decode(name)
 	.["id"] = id
-	.["admin"] = handling_admin_ckey
+	.["admin"] = hide_key(handling_admin_ckey, is_admin)
 	.["is_resolved"] = state != AHELP_ACTIVE
 	.["initiator_key_name"] = initiator_key_name
+	.["opened_at"] = "Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 
 	var/mob/initiator_mob = initiator && initiator.mob
 	var/datum/mind/initiator_mind = initiator_mob && initiator_mob.mind
@@ -94,9 +103,9 @@
 		var/list/log_data = list()
 		log_data["text"] = is_admin ? log.text : log.player_text
 		log_data["time"] = log.gametime
-		log_data["ckey"] = log.user
+		log_data["ckey"] = hide_key(log.user, is_admin)
 		.["log"] += list(log_data)
-		.["related_tickets"] = list()
+	.["related_tickets"] = list()
 
 	if(is_admin)
 		var/list/related_tickets = GLOB.ahelp_tickets.TicketsByCKey(initiator_ckey)
@@ -148,7 +157,9 @@
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
 				return
-			usr.client.holder.show_player_panel(ticket.initiator.mob)
+			usr.client.VUAP_selected_mob = ticket.initiator.mob
+			usr.client.selectedPlayerCkey = ticket.initiator_ckey
+			usr.client.holder.vuap_open()
 			return
 		if("VV")
 			if(!ticket.initiator)
