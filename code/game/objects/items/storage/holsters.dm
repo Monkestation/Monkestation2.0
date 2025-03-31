@@ -118,7 +118,7 @@
 		/obj/item/ammo_box/c38 = 2,
 	), src)
 
-/obj/item/storage/belt/holster/detectivebis/full/PopulateContents()
+/obj/item/storage/belt/holster/detective/bis/full/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/gun/ballistic/revolver/c38 = 1,
 		/obj/item/ammo_box/c38 = 2,
