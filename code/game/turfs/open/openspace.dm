@@ -183,6 +183,11 @@
 	//I wonder if I should error here
 	if(!T)
 		return
+	// MONKESTATION ADDITION START: Don't fucking bust open the station from the ceiling lmao.
+	if(istype(T.loc, /area/station) && protect_station)
+		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		return
+	// MONKESTATION ADDITION END
 	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
