@@ -162,13 +162,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		else
 			tram_part.is_operational = TRUE
 
-//Monkestation edit: For maps that have trams with only two destinations
-/obj/machinery/computer/tram_controls/two_sided
-	icon = 'monkestation/icons/obj/computer.dmi'
-	base_icon_state = "two_side_tram_"
-	icon_screen = "two_side_tram_East Wing_idle"
-//Monkestation edit: End
-
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"
 
