@@ -320,7 +320,7 @@
 		freq = frequency
 		channel = null
 
-	// monkestation start: prevent non-radio mics from broadcasting over the radioc hannel
+	// monkestation start: prevent non-radio mics from broadcasting over the radio channel
 	if(freq == FREQ_RADIO && !radio_host)
 		return
 	// monkestation end
