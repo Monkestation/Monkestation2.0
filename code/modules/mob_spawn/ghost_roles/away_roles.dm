@@ -62,23 +62,4 @@
 
 	implants = list(/obj/item/implant/exile)
 
-/obj/effect/mob_spawn/ghost_role/human/away/party_pirates
-	name = "Party Pirates"
-	prompt_name = "Party hard, my friend."
-	icon = 'icons/obj/machines/sleeper.dmi'
-	outfit = /datum/outfit/remote_island/entertaining_pirate
-	you_are_text = "I like to party, we all like to party. I'm a party goer."
-	flavour_text = "Party hard, baby."
 
-/datum/outfit/remote_island/entertaining_pirate
-
-	name = "Pirate"
-	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/pirate
-	uniform = /obj/item/clothing/under/costume/pirate
-	suit = /obj/item/clothing/suit/costume/pirate
-	ears = /obj/item/radio/headset/syndicate
-	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/costume/pirate/bandana
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	implants = list(/obj/item/implant/exile)
