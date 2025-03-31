@@ -645,3 +645,10 @@
   - rscadd: Two new IPC surgeries have been added to resolve Toxin and Oxygen damage
       on dead IPCs!
   - bugfix: Clone pods can no longer create MOB_ROBOTIC bodies
+2025-03-31:
+  Absolucy:
+  - rscadd: You can now attach an internals tank to Vims if they don't have one already.
+  - qol: You can no longer use empty tanks (or any tank with pressure below the habitable
+      threshold) for a Vim.
+  - bugfix: Fixed freerange radios/intercoms being able to broadcast over the radio
+      frequency.
