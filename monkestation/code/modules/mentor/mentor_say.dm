@@ -71,14 +71,6 @@
 		mentors_to_ping[ASAY_LINK_PINGED_ADMINS_INDEX] = jointext(msglist, " ")
 		return mentors_to_ping
 
-///Gives both Mentors & Admins all Mentor verb
-/client/proc/add_mentor_verbs()
-	if(mentor_datum || holder)
-		add_verb(src, GLOB.mentor_verbs)
-
-/client/proc/remove_mentor_verbs()
-	remove_verb(src, GLOB.mentor_verbs)
-
 /// Verb for opening the requests manager panel
 /client/proc/toggle_mentor_states()
 	set name = "Toggle Mentor State"

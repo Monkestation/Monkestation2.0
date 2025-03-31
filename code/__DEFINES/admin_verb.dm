@@ -53,10 +53,8 @@ _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_categor
 #define ADMIN_VERB_VISIBILITY(verb_path_name, verb_visibility) /datum/admin_verb/##verb_path_name/visibility_flag = ##verb_visibility
 
 // These are put here to prevent the "procedure override precedes definition" error.
-/*
-/datum/admin_verb/proc/__avd_get_verb_path()
+/datum/admin_verb/proc/__avd_get_verb_path() //I have yet to figure out what this is used for.
 	CRASH("__avd_get_verb_path not defined. use the macro")
-*/
 /datum/admin_verb/proc/__avd_do_verb(...)
 	CRASH("__avd_do_verb not defined. use the macro")
 /datum/admin_verb/proc/__avd_check_should_exist()

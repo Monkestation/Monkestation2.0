@@ -1,5 +1,6 @@
 //Section for the Mentor Friend verb run test
 /*
+
 /client/proc/imaginary_friend()
 	set category = "Mentor"
 	set name = "Become Imaginary Friend"

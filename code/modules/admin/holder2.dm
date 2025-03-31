@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(admin_datums)
-GLOBAL_PROTECT(admin_datums)
+//GLOBAL_PROTECT(admin_datums)
 GLOBAL_LIST_EMPTY(protected_admins)
-GLOBAL_PROTECT(protected_admins)
+//GLOBAL_PROTECT(protected_admins)
 
 GLOBAL_VAR_INIT(href_token, GenerateToken())
 GLOBAL_PROTECT(href_token)
@@ -98,14 +98,9 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
-	/*
-	if(owner)
-		rementor(owner)
-		*/
 	plane_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
-
 
 /datum/admins/proc/deactivate()
 	if(IsAdminAdvancedProcCall())
@@ -117,9 +112,6 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
 
-	// MONKESTATION REMOVAL
-	//if(owner)
-	//	dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -171,8 +163,6 @@ GLOBAL_PROTECT(href_token)
 	owner.init_verbs() //re-initialize the verb list
 	owner.update_special_keybinds()
 	GLOB.admins |= client
-//	if(!owner.mentor_datum)
-//		owner.mentor_datum_set()
 
 	try_give_profiling()
 	try_give_devtools()
@@ -187,9 +177,6 @@ GLOBAL_PROTECT(href_token)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
-		GLOB.mentors -= owner
-//		owner.mentor_datum?.owner = null
-//		owner.mentor_datum = null
 		owner = null
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.

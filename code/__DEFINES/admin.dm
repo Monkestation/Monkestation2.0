@@ -40,10 +40,12 @@
 #define R_SPAWN (1<<12)
 #define R_AUTOADMIN (1<<13)
 #define R_DBRANKS (1<<14)
+#define R_MENTOR (1<<15) // MONKE EDIT
+#define R_HEADMENTOR (1<<16) // MONKE EDIT
 
 #define R_DEFAULT R_AUTOADMIN
 
-#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_EVERYTHING (1<<17)-1 //the sum of all other rank permissions, used for +EVERYTHING MONKE EDIT
 
 #define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
@@ -175,6 +177,10 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 /// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
 /// Only pass it a string key, the verb being used.
 #define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)
+
+/// MONKE EDIT Used in the logging uses of mentor verbs. Similar to admin.
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_MENTOR_VERB(the_verb) SSblackbox.record_feedback("tally", "mentor_verb", 1, the_verb)
 
 //Monke edit for port servers
 #define MRP2_PORT		3122

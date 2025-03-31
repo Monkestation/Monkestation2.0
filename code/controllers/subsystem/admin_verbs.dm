@@ -13,16 +13,30 @@ SUBSYSTEM_DEF(admin_verbs)
 	/// A list of all admins that are pending initialization of this SS.
 	var/list/admins_pending_subsytem_init = list()
 
+	//MONKE EDIT START All mentor related verb lists.
+	/// A list of all mentor verbs indexed by their type.
+	var/list/datum/mentor_verb/mentor_verbs_by_type = list()
+	/// A list of all mentor verbs indexed by their visibility flag.
+	var/list/list/datum/mentor_verb/mentor_verbs_by_visibility_flag = list()
+	/// A map of all assosciated admins and their visibility flags.
+	var/list/mentor_visibility_flags = list()
+	/// A list of all mentor that are pending initialization of this SS.
+	var/list/mentors_pending_subsytem_init = list()
+	//MONKE EDIT END
+
 /datum/controller/subsystem/admin_verbs/Initialize()
 	setup_verb_list()
 	process_pending_admins()
+	process_pending_mentors() // Always process mentors second in most systems including here.
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/admin_verbs/Recover()
 	admin_verbs_by_type = SSadmin_verbs.admin_verbs_by_type
+	mentor_verbs_by_type = SSadmin_verbs.mentor_verbs_by_type // MONKE EDIT
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
-	return "[..()] | V: [length(admin_verbs_by_type)]"
+	//init_stage <= Master.init_stage_completed
+	return "[..()] | V: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
 
 /datum/controller/subsystem/admin_verbs/proc/process_pending_admins()
 	var/list/pending_admins = admins_pending_subsytem_init
@@ -44,6 +58,22 @@ SUBSYSTEM_DEF(admin_verbs)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
 			admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] |= list(verb_singleton)
+
+	//MONKE EDIT START loading mentor verbs
+	if(length(mentor_verbs_by_type))
+		CRASH("Attempting to setup mentor verbs twice!")
+	for(var/datum/mentor_verb/verb_type as anything in subtypesof(/datum/mentor_verb))
+		var/datum/mentor_verb/verb_singleton = new verb_type
+		if(!verb_singleton.__avd_check_should_exist())
+			qdel(verb_singleton, force = TRUE)
+			continue
+
+		mentor_verbs_by_type[verb_type] = verb_singleton
+		if(verb_singleton.visibility_flag)
+			if(!(verb_singleton.visibility_flag in mentor_verbs_by_visibility_flag))
+				mentor_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
+			mentor_verbs_by_visibility_flag[verb_singleton.visibility_flag] |= list(verb_singleton)
+	//MONKE EDIT END
 
 /datum/controller/subsystem/admin_verbs/proc/get_valid_verbs_for_admin(client/admin)
 	if(isnull(admin.holder))
@@ -148,3 +178,86 @@ SUBSYSTEM_DEF(admin_verbs)
 	for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
 		admin_verbs_by_type[verb_type].unassign_from_client(admin)
 	admin_visibility_flags -= list(admin.ckey)
+
+/datum/controller/subsystem/admin_verbs/proc/process_pending_mentors()
+	var/list/pending_mentors = mentors_pending_subsytem_init
+	mentors_pending_subsytem_init = null
+	for(var/mentor_ckey in pending_mentors)
+		assosciate_mentor(GLOB.directory[mentor_ckey])
+
+/datum/controller/subsystem/admin_verbs/proc/verify_mentor_visibility(client/mentor, datum/mentor_verb/verb_singleton)
+	var/needed_flag = verb_singleton.visibility_flag
+	return !needed_flag || (needed_flag in mentor_visibility_flags[mentor.ckey])
+
+/*
+/datum/controller/subsystem/admin_verbs/proc/update_visibility_flag(client/admin, flag, state)
+	if(state)
+		admin_visibility_flags[admin.ckey] |= list(flag)
+		assosciate_admin(admin)
+		return
+
+	admin_visibility_flags[admin.ckey] -= list(flag)
+	// they lost the flag, iterate over verbs with that flag and yoink em
+	for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
+		verb_singleton.unassign_from_client(admin)
+	admin.init_verbs()
+*/
+
+/datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_mentor_verb(client/mentor, datum/mentor_verb/verb_type, ...)
+
+/datum/controller/subsystem/admin_verbs/proc/get_valid_verbs_for_mentor(client/mentor)
+	if(isnull(mentor.mentor_datum))
+		CRASH("Holder containing mentor datums was empty. Is [mentor] a valid client or mentor?")
+
+	var/list/has_permission = list()
+	for(var/permission_flag in GLOB.bitflags)
+		if(mentor.mentor_datum.check_for_rights(permission_flag))
+			has_permission["[permission_flag]"] = TRUE
+
+	var/list/valid_verbs = list()
+	for(var/datum/mentor_verb/verb_type as anything in mentor_verbs_by_type)
+		var/datum/mentor_verb/verb_singleton = mentor_verbs_by_type[verb_type]
+		if(!verify_mentor_visibility(mentor, verb_singleton))
+			continue
+
+		var/verb_permissions = verb_singleton.permissions
+		if(verb_permissions == R_NONE)
+			valid_verbs |= list(verb_singleton)
+		else for(var/permission_flag in bitfield_to_list(verb_permissions))
+			if(!has_permission["[permission_flag]"])
+				continue
+			valid_verbs |= list(verb_singleton)
+
+	return valid_verbs
+
+/**
+ * Assosciates and/or resyncs a mentor with their accessible mentor verbs.
+ */
+/datum/controller/subsystem/admin_verbs/proc/assosciate_mentor(client/mentor)
+	if(IsAdminAdvancedProcCall())
+		return
+
+	if(!isnull(mentors_pending_subsytem_init)) // if the list exists we are still initializing
+		to_chat(mentor, span_big(span_green("Admin Verbs are still initializing. Please wait and you will be automatically assigned your verbs when it is complete.")))
+		mentors_pending_subsytem_init |= list(mentor.ckey)
+		return
+
+	// refresh their verbs
+	mentor_visibility_flags[mentor.ckey] ||= list()
+	for(var/datum/mentor_verb/verb_singleton as anything in get_valid_verbs_for_mentor(mentor))
+		verb_singleton.assign_to_client(mentor)
+	mentor.init_verbs()
+
+/**
+ * Unassosciates a mentor from their mentor verbs.
+ * Goes over all mentor verbs because we don't know which ones are assigned to the mentor's mob without a bunch of extra bookkeeping.
+ * This might be a performance issue in the future if we have a lot of mentor verbs.
+ */
+/datum/controller/subsystem/admin_verbs/proc/deassosciate_mentor(client/mentor)
+	if(IsAdminAdvancedProcCall())
+		return
+
+	UnregisterSignal(mentor, COMSIG_CLIENT_MOB_LOGIN) // What is the implications of this?
+	for(var/datum/mentor_verb/verb_type as anything in mentor_verbs_by_type)
+		mentor_verbs_by_type[verb_type].unassign_from_client(mentor)
+	mentor_visibility_flags -= list(mentor.ckey)

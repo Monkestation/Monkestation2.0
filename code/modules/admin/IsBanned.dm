@@ -34,8 +34,8 @@
 	if (GLOB.admin_datums[ckey] || GLOB.deadmins[ckey] || (ckey in GLOB.protected_admins))
 		admin = TRUE
 
-	if (raw_is_mentor(ckey))
-		mentor = TRUE
+	//if (raw_is_mentor(ckey))
+	//	mentor = TRUE
 
 	if (get_patreon_rank(ckey) > 0)
 		supporter = TRUE

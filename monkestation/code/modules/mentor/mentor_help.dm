@@ -116,58 +116,5 @@
 			send2mentorchat_webhook(embed, key)
 	return
 
-/proc/key_name_mentor(whom, include_link = null, include_name = TRUE, include_follow = TRUE, char_name_only = TRUE)
-	var/mob/user
-	var/client/chosen_client
-	var/key
-	var/ckey
-	if(!whom)
-		return "*null*"
 
-	if(istype(whom, /client))
-		chosen_client = whom
-		user = chosen_client.mob
-		key = chosen_client.key
-		ckey = chosen_client.ckey
-	else if(ismob(whom))
-		user = whom
-		chosen_client = user.client
-		key = user.key
-		ckey = user.ckey
-	else if(istext(whom))
-		key = whom
-		ckey = ckey(whom)
-		chosen_client = GLOB.directory[ckey]
-		if(chosen_client)
-			user = chosen_client.mob
-	else if(findtext(whom, "Discord"))
-		return "<a href='byond://?_src_=mentor;mentor_msg=[whom];[MentorHrefToken(TRUE)]'>"
-	else
-		return "*invalid*"
-
-	. = ""
-
-	if(!ckey)
-		include_link = null
-
-	if(key)
-		if(include_link != null)
-			. += "<a href='byond://?_src_=mentor;mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
-
-		if(chosen_client && chosen_client.holder && chosen_client.holder.fakekey)
-			. += "Administrator"
-		else
-			. += key
-		if(!chosen_client)
-			. += "\[DC\]"
-
-		if(include_link != null)
-			. += "</a>"
-	else
-		. += "*no key*"
-
-	if(include_follow)
-		. += " (<a href='byond://?_src_=mentor;mentor_follow=[REF(user)];[MentorHrefToken(TRUE)]'>F</a>)"
-
-	return .
 */
