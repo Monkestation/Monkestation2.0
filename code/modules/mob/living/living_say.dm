@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering)
 	else if (!is_speaker_whispering)
 		var/sound/sound = pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
-		short_bark(listening, message_range + 1, 100, 0, sound)
+		short_bark(listening, message_range + 1, 100, 0, sound, get_or_init_voice())
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
