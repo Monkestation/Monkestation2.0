@@ -1961,6 +1961,7 @@
 	c_tag = "Dormitory - Hall 2 Port";
 	dir = 8
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/dorms)
 "baP" = (
@@ -22768,6 +22769,7 @@
 "loI" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "loR" = (
@@ -26238,6 +26240,11 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/security/office)
+"mZB" = (
+/obj/structure/cable,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "mZM" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/chicken/golden,
@@ -38587,6 +38594,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
+"teu" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/floor2/aft)
 "teM" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /turf/closed/wall/r_wall,
@@ -44567,6 +44579,7 @@
 "wbD" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/station_map/engineering/directional/south,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "wbE" = (
@@ -86824,7 +86837,7 @@ sQL
 dOm
 dOm
 goG
-cdR
+mZB
 ncb
 ncb
 ncb
@@ -136904,7 +136917,7 @@ xUd
 kLr
 dmZ
 kcm
-uuQ
+rIg
 iut
 iut
 iut
@@ -152108,7 +152121,7 @@ ega
 jGG
 jGG
 jGG
-ikR
+teu
 rEC
 rEC
 uWY
@@ -158815,7 +158828,7 @@ skq
 mWy
 oja
 oja
-oja
+hFF
 cTp
 xyv
 xyv
