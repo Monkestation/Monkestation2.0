@@ -1,0 +1,8 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - rscadd: "Added several experiments for research."
+  - balance: "Cargo teleporters now require miniaturised blue space."
+  - balance: "Emergency medical beds now require advanced biotech"
+  - balance: "Less comfortable, and portable medical beds have been provided to the stations instead of emergancy medical beds."
+  - bugfix: "Emergency medical beds are no longer coated with a diamond/blue space mix blanket."

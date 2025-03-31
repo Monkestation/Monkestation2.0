@@ -30,8 +30,6 @@
 /datum/status_effect/void_chill/on_apply()
 	if(issilicon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
-	owner.update_icon(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()

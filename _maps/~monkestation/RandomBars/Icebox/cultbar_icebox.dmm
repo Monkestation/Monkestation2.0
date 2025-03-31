@@ -277,7 +277,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -294,7 +294,7 @@
 /obj/structure/chair/sofa/middle/maroon{
 	name = "old bloody sofa"
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -313,7 +313,7 @@
 /turf/template_noop,
 /area/template_noop)
 "qy" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -334,7 +334,7 @@
 /area/station/service/bar/backroom)
 "rj" = (
 /obj/structure/destructible/cult/item_dispenser/forge,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -889,7 +889,7 @@
 /turf/open/floor/cult,
 /area/station/service/bar)
 "RL" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/cult,
 /area/station/service/bar)
