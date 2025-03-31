@@ -46,8 +46,9 @@ export const TicketListView = (props, context) => {
 
   const filterTicket = function (ticket) {
     if (filter_type === 'ALL') return true;
-    if (filter_type === 'MY TICKETS' && ticket.admin_key === data.user_key)
+    if (filter_type === 'MY TICKETS' && ticket.admin_key === data.user_key) {
       return true;
+    }
     if (filter_type === 'UNCLAIMED' && !ticket.admin_key) return true;
     return false;
   };

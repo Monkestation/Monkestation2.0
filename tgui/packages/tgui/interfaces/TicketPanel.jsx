@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Button, Input, Box, Flex } from '../components';
+import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
 
@@ -53,7 +53,12 @@ export const TicketPanel = (props, context) => {
     ],
     [
       {
-        name: 'Administer',
+        name: 'Notes',
+        act: 'Notes',
+        icon: 'paperclip',
+      },
+      {
+        name: 'Claim',
         act: 'Administer',
         icon: 'folder-open',
       },
@@ -118,6 +123,8 @@ export const TicketPanel = (props, context) => {
               <span class={data.is_resolved ? 'color-good' : 'color-bad'}>
                 Is{data.is_resolved ? '' : ' not'} resolved
               </span>
+              <br />
+              { data.opened_at }
             </span>
             <Section level="2" m="-5px">
               Job: <b>{data.role}</b> <br />
@@ -179,12 +186,13 @@ export const TicketMessages = (props, context) => {
             </Box>
           ) || '',
       )}
-      <Input
+      <TextArea
         fluid
         placeholder="Message to send"
         selfclear
         value={message}
         className="replybox"
+        resize="vertical"
         onChange={(e, value) => {
           if (e.keyCode === KEY_ENTER) {
             setMessage('');
