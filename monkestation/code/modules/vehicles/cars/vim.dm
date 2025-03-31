@@ -10,7 +10,7 @@
 		. += span_notice("You could attach an oxygen tank, to make it spaceworthy.")
 
 /obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
-	new /obj/effect/decal/cleanable/robot_debris/limb(drop_location()) // monkestation edit: drop the robot arm on destruction
+	new /obj/effect/decal/cleanable/robot_debris/limb(drop_location())
 	tank?.forceMove(drop_location())
 	tank = null
 	return ..()
