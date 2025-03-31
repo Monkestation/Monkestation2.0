@@ -18732,7 +18732,7 @@
 /area/station/service/library)
 "bOi" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/computer/slime_market,
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 4
@@ -23114,7 +23114,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cDo" = (
@@ -26596,7 +26596,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cXQ" = (
@@ -56684,7 +56684,7 @@
 "oKB" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},

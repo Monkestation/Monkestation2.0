@@ -13401,7 +13401,7 @@
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "ddW" = (
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "dea" = (
@@ -18060,7 +18060,7 @@
 /obj/machinery/light/neon_lining{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/security/bitden)
 "emB" = (
@@ -24271,7 +24271,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "fJh" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -36917,7 +36917,7 @@
 /area/station/hallway/secondary/entry)
 "iIi" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
 "iIj" = (
@@ -43424,7 +43424,7 @@
 /obj/effect/turf_decal/tile/hot_pink{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/toilet)
 "kgf" = (
@@ -58612,7 +58612,7 @@
 "nPg" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
@@ -60270,7 +60270,7 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "ojP" = (
@@ -64980,7 +64980,7 @@
 /area/station/engineering/atmos/hfr_room)
 "psU" = (
 /obj/machinery/growing/soil,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
@@ -78207,7 +78207,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "szY" = (
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
@@ -98003,7 +98003,7 @@
 /obj/item/bedsheet/centcom/double,
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xkU" = (
