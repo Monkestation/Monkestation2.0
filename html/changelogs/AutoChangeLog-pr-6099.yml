@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Forcefully reconnecting or disconnecting the chatbox websocket now properly works."
