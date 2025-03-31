@@ -65,6 +65,8 @@
 #define TRAIT_CANT_SIGN_SPELLS	"cant_sign_spells"
 /// You have special interactions with bloodsuckers and the occult.
 #define TRAIT_OCCULTIST			"occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE	"unborgable"
 
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
