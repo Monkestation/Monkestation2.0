@@ -124,7 +124,7 @@ export const TicketPanel = (props, context) => {
                 Is{data.is_resolved ? '' : ' not'} resolved
               </span>
               <br />
-              { data.opened_at }
+              {data.opened_at}
             </span>
             <Section level="2" m="-5px">
               Job: <b>{data.role}</b> <br />
