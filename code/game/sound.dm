@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_SQUEAK,
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
+	CHANNEL_BARKS,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -32,6 +33,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_SQUEAK,
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
+	CHANNEL_BARKS,
 ))
 
 GLOBAL_LIST_EMPTY(cached_mixer_channels)
@@ -168,6 +170,20 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
 		sound_to_use.volume *= 0
 
+	if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
+		var/used_channel = 0
+		if(channel in GLOB.used_sound_channels)
+			used_channel = channel
+			mixer_channel = channel
+		else
+			used_channel = mixer_channel
+		if("[used_channel]" in client.prefs.channel_volume)
+			sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
+	else if(!mixer_channel)
+		mixer_channel = guess_mixer_channel(soundin)
+		if("[mixer_channel]" in client.prefs.channel_volume)
+			sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+
 	if(vary)
 		if(frequency)
 			sound_to_use.frequency = frequency
@@ -203,21 +219,6 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
-			var/used_channel = 0
-			if(channel in GLOB.used_sound_channels)
-				used_channel = channel
-				mixer_channel = channel
-			else
-				used_channel = mixer_channel
-			if("[used_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
-
-		else if(!mixer_channel)
-			mixer_channel = guess_mixer_channel(soundin)
-			if("[mixer_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
-
 		if(sound_to_use.volume <= 0)
 			return //No sound
 
@@ -247,6 +248,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		if(!use_reverb)
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
+	else if(sound_to_use.volume <= 0)
+		return //No sound
 
 	SEND_SOUND(src, sound_to_use)
 

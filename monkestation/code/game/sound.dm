@@ -119,3 +119,5 @@
 			return "Mob Emotes"
 		if(CHANNEL_SILICON_EMOTES)
 			return "Silicon Emotes"
+		if(CHANNEL_BARKS)
+			return "Barks"

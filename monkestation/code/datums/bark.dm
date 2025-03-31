@@ -27,7 +27,9 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 		var/group_obj = output[group_id]
 		var/group_name = group_obj["name"]
 		var/group_path = group_obj["path"]
+		// Alls barks in this group which do not have `hidden = true`
 		var/list/visible_barks = list()
+		// All barks in this group, is only created if needed
 		var/list/all_barks = null
 
 		if (!group_name)
@@ -133,11 +135,14 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
 	// This gives a random vocal bark to a random created person
-	if(!client)
+	if(!client && !voice)
+		voice = new()
 		voice.randomise(src)
 
 // we let borgs have some bark too
 /mob/living/silicon/Login()
+	if (!voice)
+		voice = new()
 	// This is the only found function that updates the client for borgs.
 	voice.set_from_prefs(client?.prefs)
 	. = ..()
@@ -150,10 +155,10 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 	. = ..()
 	var/datum/changeling_profile/new_profile = .
 	new_profile.voice = new()
-	new_profile.voice.copy_from(target.voice)
+	new_profile.voice.copy_from(target.get_or_init_voice())
 
 /datum/antagonist/changeling/transform(mob/living/carbon/human/user, datum/changeling_profile/chosen_profile)
-	user.voice.copy_from(chosen_profile.voice)
+	user.get_or_init_voice().copy_from(chosen_profile.voice)
 
 
 /datum/smite/normalbark
@@ -161,12 +166,12 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 
 /datum/smite/normalbark/effect(client/user, mob/living/carbon/human/target)
 	. = ..()
-	target.voice.randomise(target)
+	target.get_or_init_voice().randomise(target)
 
 /datum/admins/proc/togglebark()
 	set category = "Server"
-	set desc = "Toggle the annoying voices."
-	set name = "Toggle Character Voices"
+	set desc = "Toggles atom talk sounds."
+	set name = "Toggle Barks"
 
 	GLOB.barking_enabled = !GLOB.barking_enabled
 	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.barking_enabled ? "enabled" : "disabled"].</B></span>")

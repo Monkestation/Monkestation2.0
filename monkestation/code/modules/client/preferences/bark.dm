@@ -32,8 +32,9 @@
 		return TRUE
 	if (!barker)
 		barker = new()
+		barker.voice = new()
 	barker.voice.set_from_prefs(preferences)
-	barker.long_bark(list(user), 7, 300, FALSE, 32)
+	barker.long_bark(list(user), 7, 100, FALSE, 32)
 	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
 	return TRUE
 
@@ -133,12 +134,3 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_short_barks"
 	savefile_identifier = PREFERENCE_PLAYER
-
-/// How loud should barks be for the player
-/datum/preference/numeric/sound_bark_volume
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_bark_volume"
-	savefile_identifier = PREFERENCE_PLAYER
-	minimum = 0
-	maximum = 60
-	step = 5

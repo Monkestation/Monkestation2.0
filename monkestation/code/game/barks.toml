@@ -89,7 +89,6 @@ allow_random = true
 [animal.caw]
 name = "Caw"
 path = "caw.ogg"
-allow_random = true
 min_pitch = 0.5
 max_pitch = 1.3
 min_speed = 6
@@ -137,7 +136,7 @@ name = "Blub"
 path = "blub.ogg"
 ask_path = "blub_ask.ogg"
 exclaim_path = "blub_exclaim.ogg"
-min_pitch = 0.6
+min_pitch = 0.7
 
 [goon.bottalk_1]
 name = "Bottalk 1"
