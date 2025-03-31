@@ -2831,6 +2831,11 @@
 /obj/item/storage/pill_bottle/potassiodide,
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison/safe)
+"byV" = (
+/obj/structure/cable,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "bzd" = (
 /obj/effect/spawner/random/medical,
 /turf/open/floor/wood,
@@ -2845,6 +2850,11 @@
 /obj/structure/lattice,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"bzC" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/floor2/aft)
 "bzD" = (
 /obj/structure/frame/machine/secured,
 /turf/open/floor/plating,
@@ -26240,11 +26250,6 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/security/office)
-"mZB" = (
-/obj/structure/cable,
-/obj/structure/closet/firecloset,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central/aft)
 "mZM" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/chicken/golden,
@@ -32276,6 +32281,7 @@
 /area/station/medical/medbay/lobby)
 "qbC" = (
 /obj/machinery/firealarm/directional/south,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "qbF" = (
@@ -34572,6 +34578,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rhX" = (
@@ -38236,6 +38243,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/stone,
 /area/station/service/hydroponics)
 "sUM" = (
@@ -38594,11 +38602,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
-"teu" = (
-/obj/structure/window/spawner/directional/north,
-/obj/structure/closet/firecloset,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/floor2/aft)
 "teM" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /turf/closed/wall/r_wall,
@@ -86837,7 +86840,7 @@ sQL
 dOm
 dOm
 goG
-mZB
+byV
 ncb
 ncb
 ncb
@@ -141273,7 +141276,7 @@ ogu
 fUA
 pzf
 adJ
-uuQ
+rIg
 uBg
 iGC
 hAh
@@ -152121,7 +152124,7 @@ ega
 jGG
 jGG
 jGG
-teu
+bzC
 rEC
 rEC
 uWY
