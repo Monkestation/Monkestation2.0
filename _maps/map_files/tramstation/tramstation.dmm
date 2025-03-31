@@ -19329,7 +19329,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "eYi" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /mob/living/basic/chicken/brown,
 /obj/machinery/egg_incubator,
 /obj/structure/railing{

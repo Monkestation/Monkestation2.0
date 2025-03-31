@@ -210,7 +210,7 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/commons/lounge)
 "mT" = (
@@ -533,7 +533,7 @@
 /area/station/service/bar)
 "CF" = (
 /obj/machinery/restaurant_portal/bar,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atm/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)

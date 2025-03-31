@@ -325,12 +325,12 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
+		crusher.AddComponent(/datum/component/two_handed, force_wielded=crusher.force_wielded * 2) //MONKESTATION EDIT c.force_wielded
 
 /obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
+		crusher.AddComponent(/datum/component/two_handed, force_wielded=crusher.force_wielded) //MONKESTATION EDIT c.force_wielded
 
 /obj/item/wendigo_skull
 	name = "wendigo skull"
