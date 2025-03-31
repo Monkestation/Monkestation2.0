@@ -248,7 +248,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	// MONKESTATION END
 
 	if(is_bwoink)
-		AddInteraction(msg, ckey = usr.client?.ckey) // Monkestation edit: datum ticket interactions
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent, usr.ckey) // monkestation edit: PLEXORA
 	else
