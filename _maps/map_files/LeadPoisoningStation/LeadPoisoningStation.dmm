@@ -13347,6 +13347,11 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
+"gLd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "gLe" = (
 /obj/machinery/station_map/engineering/directional/north,
 /obj/structure/window/spawner/directional/west,
@@ -48602,6 +48607,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/lobby)
+"ydt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/station/maintenance/starboard/upper)
 "ydX" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -156453,7 +156463,7 @@ pfb
 pfb
 pfb
 eiX
-jDK
+ydt
 des
 gyJ
 gyJ
@@ -160586,7 +160596,7 @@ sIC
 sIC
 tvr
 row
-klG
+gLd
 klG
 nNU
 ukl
