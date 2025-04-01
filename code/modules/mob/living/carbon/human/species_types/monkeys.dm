@@ -63,6 +63,7 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
+	human_who_gained_species.transform = human_who_gained_species.transform.Translate(-16, 0)
 	if(give_monkey_species_effects)
 		passtable_on(human_who_gained_species, SPECIES_TRAIT)
 		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
@@ -71,6 +72,7 @@
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
+	C.transform = C.transform.Translate(16, 0)
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
 		C.dna.remove_mutation(/datum/mutation/human/race)

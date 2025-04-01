@@ -88,7 +88,7 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
-	speed_modifier = -0.05
+	speed_modifier = -0.5
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 
@@ -109,6 +109,6 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
-	speed_modifier = -0.05
+	speed_modifier = -0.5
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
