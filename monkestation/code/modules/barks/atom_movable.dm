@@ -6,7 +6,7 @@
 /atom/movable/proc/initial_bark_id()
 	return null
 
-/atom/movable/proc/get_or_init_voice()
+/atom/movable/proc/get_voice()
 	RETURN_TYPE(/datum/atom_voice/)
 	if (voice)
 		return voice

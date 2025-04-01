@@ -30,8 +30,6 @@
 	speed = 6
 	volume = 50
 
-//
-
 /datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, /atom/movable/speaker)
 	var/datum/bark_sound/bark = bark
 	if (!bark)
@@ -47,24 +45,22 @@
 
 	var/list/short_hearers = null
 	var/list/long_hearers = null
+	var/cant_long_bark = !speaker.can_long_bark()
 
-	if (speaker.can_long_bark())
-		for(var/mob/hearer in hearers)
-			if(!hearer.client)
-				continue
-			if(hearer.client.prefs.read_preference(/datum/preference/toggle/short_barks))
-				LAZYADD(short_hearers, hearer)
-			else
-				LAZYADD(long_hearers, hearer)
-	else
-		short_hearers = hearers
+	for(var/atom/movable/hearer in hearers)
+		if(!hearer.client)
+			continue
+		if(cant_long_bark || hearer.client.prefs.read_preference(/datum/preference/toggle/short_barks))
+			LAZYADD(short_hearers, hearer)
+		else
+			LAZYADD(long_hearers, hearer)
 
 	if (LAZYLEN(short_hearers))
 		var/speak_sound
-		if (talk_icon_state == "1")
-			speak_sound = bark.ask
-		else if (is_yell)
+		if (is_yell)
 			speak_sound = bark.exclaim
+		else if (talk_icon_state == "1")
+			speak_sound = bark.ask
 		if (!speak_sound)
 			speak_sound = bark.talk
 		short_bark(short_hearers, sound_range, volume, 0, speak_sound, speaker)
@@ -74,16 +70,15 @@
 
 /datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, /atom/movable/speaker)
 	var/vocal_speed = clamp(speed, bark.min_speed, bark.max_speed)
-
-	var/num_barks = min(round((message_len / vocal_speed)) + 1, 24)
-	var/total_delay = 0
-	speaker.long_bark_start_time = world.time //this is juuuuust random enough to reliably be unique every time send_speech() is called, in most scenarios
-
 	// Any bark speeds below this feature higher bark density, any speeds above feature lower bark density. Keeps barking length consistent
 	var/bark_speed_baseline = 4
 	var/base_duration = vocal_speed / bark_speed_baseline
 
-	for (var/i in 1 to num_barks)
+	var/num_barks = min(round((message_len / vocal_speed)), 24)
+	var/total_delay = 0
+	speaker.long_bark_start_time = world.time //this is juuuuust random enough to reliably be unique every time send_speech() is called, in most scenarios
+
+	for (var/i in 0 to num_barks)
 		if (total_delay > (1.5 SECONDS))
 			break
 		addtimer(CALLBACK(src, /datum/atom_voice/proc/short_bark, hearers, sound_range, volume, speaker.long_bark_start_time, bark.talk, speaker), total_delay)
@@ -94,7 +89,7 @@
 	if(queue_time && speaker.long_bark_start_time != queue_time)
 		return
 
-	pitch = rand(((pitch * 100) - (pitch_range * 50)), ((pitch * 100) + (pitch_range * 50))) / 100
+	pitch = pitch + (rand(pitch_range * -50, pitch_range * 50) / 100)
 	pitch = clamp(pitch, bark.min_pitch, bark.max_pitch)
 
 	if(HAS_TRAIT(speaker, TRAIT_HELIUM))

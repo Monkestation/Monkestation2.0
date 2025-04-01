@@ -27,10 +27,10 @@
 	. = ..()
 	var/datum/changeling_profile/new_profile = .
 	new_profile.voice = new()
-	new_profile.voice.copy_from(target.get_or_init_voice())
+	new_profile.voice.copy_from(target.get_voice())
 
 /datum/antagonist/changeling/transform(mob/living/carbon/human/user, datum/changeling_profile/chosen_profile)
-	user.get_or_init_voice().copy_from(chosen_profile.voice)
+	user.get_voice().copy_from(chosen_profile.voice)
 
 /*
 	---- Admin Tools ----
@@ -41,7 +41,7 @@
 
 /datum/smite/normalbark/effect(client/user, mob/living/carbon/human/target)
 	. = ..()
-	target.get_or_init_voice().randomise(target)
+	target.get_voice().randomise(target)
 
 /datum/admins/proc/togglebark()
 	set category = "Server"

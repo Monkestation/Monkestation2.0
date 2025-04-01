@@ -347,15 +347,17 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		whisper_range = EAVESDROP_EXTRA_RANGE
 		is_speaker_whispering = TRUE
 
-	var/list/listening = get_hearers_in_view(message_range + whisper_range, source, get_or_init_voice())
+	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
 
+	// monkestation edit start
 	var/talk_icon_state = say_test(message_raw)
 
 	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		get_or_init_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
+		get_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
 	else if (!is_speaker_whispering)
 		var/sound/sound = pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
-		get_or_init_voice().short_bark(listening, message_range + 1, 100, 0, sound, src)
+		get_voice().short_bark(listening, message_range + 1, 100, 0, sound, src)
+	// monkestation edit end
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
@@ -387,6 +389,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
+	// var/talk_icon_state = say_test(message_raw) monkestation removal
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)

@@ -6694,7 +6694,7 @@
 #include "monkestation\code\modules\barks\atom_movable.dm"
 #include "monkestation\code\modules\barks\atom_voice.dm"
 #include "monkestation\code\modules\barks\bark_sound.dm"
-#include "monkestation\code\modules\barks\intergration.dm"
+#include "monkestation\code\modules\barks\integration.dm"
 #include "monkestation\code\modules\bitrunners\code\ability_disks.dm"
 #include "monkestation\code\modules\bitrunners\code\combat_gear_disks.dm"
 #include "monkestation\code\modules\blood_datum\blood.dm"

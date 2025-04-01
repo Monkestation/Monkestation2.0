@@ -77,13 +77,18 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
+	// monkestation edit start
+	/* original
+	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+	*/
 	var/list/hearers = get_hearers_in_view(range, source)
+	get_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
 	for(var/atom/movable/hearing_movable as anything in hearers)
+	// monkestation edit end
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
 		hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range)
-	get_or_init_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE, visible_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.

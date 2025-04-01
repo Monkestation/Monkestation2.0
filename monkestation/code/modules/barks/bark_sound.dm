@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 		return sound(sound_path)
 
 /proc/gen_barks()
-	var/output = rustg_read_toml_file("monkestation/code/game/barks.toml")
+	var/output = rustg_read_toml_file("config/monkestation/bark_sounds.toml")
 
 	var/list/bark_list = list()
 

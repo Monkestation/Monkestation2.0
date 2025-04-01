@@ -164,6 +164,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
+
+	// monkestation edit start
 	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
 		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
 
@@ -183,6 +185,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		mixer_channel = guess_mixer_channel(soundin)
 		if("[mixer_channel]" in client.prefs.channel_volume)
 			sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+	// monkestation edit end
 
 	if(vary)
 		if(frequency)
