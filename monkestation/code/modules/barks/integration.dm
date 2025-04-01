@@ -30,6 +30,7 @@
 	new_profile.voice.copy_from(target.get_voice())
 
 /datum/antagonist/changeling/transform(mob/living/carbon/human/user, datum/changeling_profile/chosen_profile)
+	. = ..()
 	user.get_voice().copy_from(chosen_profile.voice)
 
 /*

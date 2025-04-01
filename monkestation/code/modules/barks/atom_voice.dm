@@ -2,7 +2,7 @@
 	var/datum/bark_sound/bark
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
-	var/volume = 100
+	var/base_volume = 100
 	var/speed = 6 //Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_bark(id)
@@ -12,7 +12,7 @@
 	bark = other.bark
 	pitch = other.pitch
 	pitch_range = other.pitch_range
-	volume = other.volume
+	base_volume = other.base_volume
 	speed = other.speed
 
 /datum/atom_voice/proc/set_from_prefs(datum/preferences/prefs)
@@ -28,15 +28,17 @@
 	pitch = ((who.gender == MALE ? rand(60, 120) : (who.gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
 	pitch_range = 0.2
 	speed = 6
-	volume = 50
+	base_volume = 100
 
-/datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, /atom/movable/speaker)
-	var/datum/bark_sound/bark = bark
-	if (!bark)
+/datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, atom/movable/test)
+	if (!bark || !GLOB.barking_enabled)
+		return
+	var/len = LAZYLEN(message)
+	if (!len)
 		return
 
 	var/is_yell = talk_icon_state == "2"
-	var/volume = min(volume * (is_yell ? 1.5 : 1), 200)
+	var/volume = min(base_volume * (is_yell ? 1.5 : 1), 200)
 	var/sound_range = message_range + 1
 
 	if (is_speaker_whispering)
@@ -45,9 +47,9 @@
 
 	var/list/short_hearers = null
 	var/list/long_hearers = null
-	var/cant_long_bark = !speaker.can_long_bark()
+	var/cant_long_bark = !test.can_long_bark()
 
-	for(var/atom/movable/hearer in hearers)
+	for(var/mob/hearer in hearers)
 		if(!hearer.client)
 			continue
 		if(cant_long_bark || hearer.client.prefs.read_preference(/datum/preference/toggle/short_barks))
@@ -63,12 +65,12 @@
 			speak_sound = bark.ask
 		if (!speak_sound)
 			speak_sound = bark.talk
-		short_bark(short_hearers, sound_range, volume, 0, speak_sound, speaker)
+		short_bark(short_hearers, sound_range, volume, 0, speak_sound, test)
 
 	if (LAZYLEN(long_hearers))
-		long_bark(long_hearers, sound_range, volume, is_yell, LAZYLEN(message), speaker)
+		long_bark(long_hearers, sound_range, volume, is_yell, len, test)
 
-/datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, /atom/movable/speaker)
+/datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, atom/movable/speaker)
 	var/vocal_speed = clamp(speed, bark.min_speed, bark.max_speed)
 	// Any bark speeds below this feature higher bark density, any speeds above feature lower bark density. Keeps barking length consistent
 	var/bark_speed_baseline = 4
@@ -85,23 +87,23 @@
 		total_delay += (DS2TICKS(base_duration) + rand(DS2TICKS(base_duration * (is_yell ? 0.5 : 1)))) TICKS
 	return total_delay
 
-/datum/atom_voice/proc/short_bark(list/hearers, distance, volume, queue_time, sound/sound_to_use, /atom/movable/speaker)
+/datum/atom_voice/proc/short_bark(list/hearers, distance, volume, queue_time, sound/sound_to_use, atom/movable/speaker)
 	if(queue_time && speaker.long_bark_start_time != queue_time)
 		return
 
-	pitch = pitch + (rand(pitch_range * -50, pitch_range * 50) / 100)
-	pitch = clamp(pitch, bark.min_pitch, bark.max_pitch)
+	var/vocal_pitch = pitch + (rand(pitch_range * -50, pitch_range * 50) / 100)
+	vocal_pitch = clamp(vocal_pitch, bark.min_pitch, bark.max_pitch)
 
 	if(HAS_TRAIT(speaker, TRAIT_HELIUM))
-		pitch *= 2
-		volume *= 0.75
+		vocal_pitch *= 2
+		volume *= 0.9
 
 	// At lower ranges, we want the exponent to be below 1 so that whispers don't sound too awkward. At higher ranges, we want the exponent fairly high to make yelling less obnoxious
 	var/falloff_exponent = distance / 7
 
 	var/turf/turf = get_turf(speaker)
 	for(var/mob/hearer in hearers)
-		hearer.playsound_local(turf, vol = volume, vary = TRUE, frequency = pitch,
+		hearer.playsound_local(turf, vol = volume, vary = TRUE, frequency = vocal_pitch,
 			max_distance = distance, falloff_distance = 0, use_reverb = FALSE,
 			falloff_exponent = falloff_exponent, sound_to_use = sound_to_use,
 			distance_multiplier = 1, mixer_channel = CHANNEL_BARKS)

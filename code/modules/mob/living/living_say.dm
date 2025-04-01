@@ -352,11 +352,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	// monkestation edit start
 	var/talk_icon_state = say_test(message_raw)
 
-	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		get_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
-	else if (!is_speaker_whispering)
-		var/sound/sound = pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
-		get_voice().short_bark(listening, message_range + 1, 100, 0, sound, src)
+	if (!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			get_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
+		else if (!is_speaker_whispering)
+			var/sound/sound = sound(pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg'))
+			get_voice().short_bark(listening, message_range + 1, 100, 0, sound, src)
 	// monkestation edit end
 
 	if(client) //client is so that ghosts don't have to listen to mice
