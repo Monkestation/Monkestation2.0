@@ -35,11 +35,12 @@
 	log_admin("[key_name(src)] re-mentored themselves.")
 	BLACKBOX_LOG_MENTOR_VERB("Rementor")
 
-/*
-/client/New()
-	. = ..()
-	mentor_datum_set()
-*/
+MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)
+	user.mentor_datum.deactivate()
+	to_chat(user, span_interface("You are now a unmentored player."), confidential = TRUE)
+	log_admin("[key_name(user)] dementored themselves.")
+	message_admins("[key_name_mentor(user)] dementored themselves.")
+	BLACKBOX_LOG_MENTOR_VERB("Dementor")
 /*
 // Overwrites /client/Topic to return for mentor client procs
 /client/Topic(href, href_list, hsrc)
@@ -82,7 +83,6 @@
 	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
 		return TRUE
 */
-
 
 /*
 /proc/raw_is_mentor(ckey)

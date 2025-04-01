@@ -106,7 +106,7 @@ GLOBAL_PROTECT(mentor_href_token)
 //	remove_verb(client, /client/proc/admin_2fa_verify) // Mentors dont 2fa I think
 
 	owner = client
-	owner.holder = src
+	owner.mentor_datum = src
 	owner.add_mentor_verbs()
 	remove_verb(owner, /client/proc/rementor)
 	owner.init_verbs() //re-initialize the verb list

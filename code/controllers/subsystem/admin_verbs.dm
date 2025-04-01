@@ -189,21 +189,48 @@ SUBSYSTEM_DEF(admin_verbs)
 	var/needed_flag = verb_singleton.visibility_flag
 	return !needed_flag || (needed_flag in mentor_visibility_flags[mentor.ckey])
 
-/*
-/datum/controller/subsystem/admin_verbs/proc/update_visibility_flag(client/admin, flag, state)
+/datum/controller/subsystem/admin_verbs/proc/update_mentor_visibility_flag(client/mentor, flag, state)
 	if(state)
-		admin_visibility_flags[admin.ckey] |= list(flag)
-		assosciate_admin(admin)
+		mentor_visibility_flags[mentor.ckey] |= list(flag)
+		assosciate_mentor(mentor)
 		return
 
-	admin_visibility_flags[admin.ckey] -= list(flag)
+	mentor_visibility_flags[mentor.ckey] -= list(flag)
 	// they lost the flag, iterate over verbs with that flag and yoink em
-	for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
-		verb_singleton.unassign_from_client(admin)
-	admin.init_verbs()
-*/
+	for(var/datum/mentor_verb/verb_singleton as anything in mentor_verbs_by_visibility_flag[flag])
+		verb_singleton.unassign_from_client(mentor)
+	mentor.init_verbs()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_mentor_verb(client/mentor, datum/mentor_verb/verb_type, ...)
+	if(IsAdminAdvancedProcCall())
+		message_admins("PERMISSION ELEVATION: [key_name_admin(mentor)] attempted to dynamically invoke mentor verb '[verb_type]'.")
+		return
+
+	if(ismob(mentor))
+		var/mob/mob = mentor
+		mentor = mob.client
+
+	if(!ispath(verb_type, /datum/mentor_verb) || verb_type == /datum/mentor_verb)
+		CRASH("Attempted to dynamically invoke mentor verb with invalid typepath '[verb_type]'.")
+	if(isnull(mentor.mentor_datum))
+		CRASH("Attempted to dynamically invoke mentor verb '[verb_type]' with a non-mentor.")
+
+	var/list/verb_args = args.Copy()
+	verb_args.Cut(2, 3)
+	var/datum/mentor_verb/verb_singleton = mentor_verbs_by_type[verb_type] // this cannot be typed because we need to use `:`
+	if(isnull(verb_singleton))
+		CRASH("Attempted to dynamically invoke mentor verb '[verb_type]' that doesn't exist.")
+
+	if(!mentor.mentor_datum.check_for_rights(verb_singleton.permissions))
+		to_chat(mentor, span_adminnotice("You lack the permissions to do this."))
+		return
+
+	var/old_usr = usr
+	usr = mentor.mob
+	// THE MACRO ENSURES THIS EXISTS. IF IT EVER DOESNT EXIST SOMEONE DIDNT USE THE DAMN MACRO!
+	verb_singleton.__avd_do_verb(arglist(verb_args))
+	usr = old_usr
+	SSblackbox.record_feedback("tally", "dynamic_mentor_verb_invocation", 1, "[verb_type]")
 
 /datum/controller/subsystem/admin_verbs/proc/get_valid_verbs_for_mentor(client/mentor)
 	if(isnull(mentor.mentor_datum))
@@ -238,7 +265,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		return
 
 	if(!isnull(mentors_pending_subsytem_init)) // if the list exists we are still initializing
-		to_chat(mentor, span_big(span_green("Admin Verbs are still initializing. Please wait and you will be automatically assigned your verbs when it is complete.")))
+		to_chat(mentor, span_big(span_green("Mentor Verbs are still initializing. Please wait and you will be automatically assigned your verbs when it is complete.")))
 		mentors_pending_subsytem_init |= list(mentor.ckey)
 		return
 

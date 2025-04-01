@@ -2,6 +2,7 @@
 //This is in attempt to merge the mentor system with the AVD system. If done right it should
 //mimic how admin verbs are read, applied and saved while still keeping mentors its seperate thing.
 //This should be used for all ranks that shouldnt have the ability to affect deeper game components and mechanics
+//Maybe things like community manager or give some special donator rank a verb.
 GLOBAL_LIST_EMPTY(mentor_ranks) //list of all mentor_rank datums
 GLOBAL_PROTECT(mentor_ranks)
 
@@ -137,75 +138,51 @@ GLOBAL_PROTECT(mentor_ranks)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
 				to_chat(world, "Updating.")
-				//continue // make a sync with mentor ranks proc
-				//sync_ranks_with_db()
-	//load ranks from backup file
-	if(dbfail)
-		var/backup_file = file2text("data/mentors_backup.json")
-		if(backup_file == null)
-			log_world("Unable to locate admins backup file.")
-			return FALSE
-/*
-//load our rank - > rights associations
-/proc/load_admin_ranks(dbfail, no_update)
-	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
-		if(CONFIG_GET(flag/load_legacy_ranks_only))
-			if(!no_update)
-				sync_ranks_with_db()
+				//sync_ranks_with_db() // make a sync with mentor ranks proc
 		else
-			var/datum/db_query/query_load_admin_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
-			if(!query_load_admin_ranks.Execute())
-				message_admins("Error loading admin ranks from database. Loading from backup.")
-				log_sql("Error loading admin ranks from database. Loading from backup.")
+			var/datum/db_query/query_load_mentor_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("mentor_ranks")]")
+			if(!query_load_mentor_ranks.Execute())
+				message_admins("Error loading mentor ranks from database. Loading from backup.")
+				log_sql("Error loading mentor ranks from database. Loading from backup.")
 				dbfail = 1
 			else
-				while(query_load_admin_ranks.NextRow())
+				while(query_load_mentor_ranks.NextRow())
 					var/skip
-					var/rank_name = query_load_admin_ranks.item[1]
-					for(var/datum/admin_rank/R in GLOB.admin_ranks)
+					var/rank_name = query_load_mentor_ranks.item[1]
+					for(var/datum/mentor_rank/R in GLOB.mentor_ranks)
 						if(R.name == rank_name) //this rank was already loaded from txt override
 							skip = 1
 							break
 					if(!skip)
-						var/rank_flags = text2num(query_load_admin_ranks.item[2])
-						var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
-						var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
-						var/datum/admin_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
+						var/rank_flags = text2num(query_load_mentor_ranks.item[2])
+						var/rank_exclude_flags = text2num(query_load_mentor_ranks.item[3])
+						var/rank_can_edit_flags = text2num(query_load_mentor_ranks.item[4])
+						var/datum/mentor_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
 						if(!R)
 							continue
-						GLOB.admin_ranks += R
-			qdel(query_load_admin_ranks)
+						GLOB.mentor_ranks += R
+			qdel(query_load_mentor_ranks)
 	//load ranks from backup file
 	if(dbfail)
-		var/backup_file = file2text("data/admins_backup.json")
+		var/backup_file = file2text("data/mentors_backup.json")
 		if(backup_file == null)
-			log_world("Unable to locate admins backup file.")
+			log_world("Unable to locate mentors backup file.")
 			return FALSE
 		var/list/json = json_decode(backup_file)
 		for(var/J in json["ranks"])
 			var/skip
-			for(var/datum/admin_rank/R in GLOB.admin_ranks)
+			for(var/datum/mentor_rank/R in GLOB.mentor_ranks)
 				if(R.name == "[J]") //this rank was already loaded from txt override
 					skip = TRUE
 			if(skip)
 				continue
-			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
+			var/datum/mentor_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
 			if(!R)
 				continue
-			GLOB.admin_ranks += R
+			GLOB.mentor_ranks += R
 		return json
-	#ifdef TESTING
-	var/msg = "Permission Sets Built:\n"
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		msg += "\t[R.name]"
-		var/rights = rights2text(R.rights,"\n\t\t")
-		if(rights)
-			msg += "\t\t[rights]\n"
-	testing(msg)
-	#endif
-*/
 
-/// Converts a rank name (such as "Coder+Moth") into a list of /datum/admin_rank
+/// Converts a rank name (such as "Coder+Moth") into a list of /datum/mentor_rank
 /proc/mentor_ranks_from_rank_name(rank_name)
 	var/list/rank_names = splittext(rank_name, "+")
 	var/list/ranks = list()
@@ -249,7 +226,7 @@ GLOBAL_PROTECT(mentor_ranks)
 	var/list/rank_names = list()
 	for(var/datum/mentor_rank/Rank in GLOB.mentor_ranks)
 		rank_names[Rank.name] = Rank
-	//ckeys listed in admins.txt are always made admins before sql loading is attempted
+	//ckeys listed in mentors.txt are always made mentors before sql loading is attempted
 	var/mentors_text = file2text("[global.config.directory]/mentors.txt")
 	var/regex/mentors_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
 

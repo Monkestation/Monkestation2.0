@@ -47,3 +47,6 @@ _MENTOR_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_catego
 	CRASH("__avd_do_verb not defined. use the macro")
 /datum/mentor_verb/proc/__avd_check_should_exist()
 	return TRUE
+
+// Mentor verb categories
+#define MENTOR_CATEGORY_MAIN "Mentor"

@@ -338,7 +338,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		player_details.byond_build = byond_build
 		GLOB.player_details[ckey] = player_details
 
-
 	. = ..() //calls mob.Login()
 
 	// Admin Verbs need the client's mob to exist. Must be after ..()
@@ -358,6 +357,20 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autoadmin_ranks, ckey)
+
+	//MONKE EDIT START
+	// Mentor Verbs need the client's mob to exist. Must be after ..()
+	//var/connecting_mentor = FALSE //because de-mentored mentors connecting should be treated like mentors. Might not be needed as of 3/31/25
+	//Mentor Authorisation
+	var/datum/mentors/mentor_datum = GLOB.mentor_datums[ckey]
+	if (!isnull(mentor_datum))
+		mentor_datum.associate(src)
+	//	connecting_mentor = TRUE
+	else if(GLOB.dementors[ckey])
+		add_verb(src, /client/proc/rementor)
+	//	connecting_mentor = TRUE
+	//if(CONFIG_GET(flag/automentor)) //Can be added but not really needed.
+	//MONKE EDIT END
 
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
 		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
