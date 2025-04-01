@@ -7762,6 +7762,7 @@
 #include "monkestation\code\modules\mob\living\carbon\human\lizard_gags.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\worn_overlays.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\monkey\dukeman.dm"
+#include "monkestation\code\modules\mob\living\carbon\human\monkey\monkey.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\abductors.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\android.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\arachnid.dm"
