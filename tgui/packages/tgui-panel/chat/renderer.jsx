@@ -168,9 +168,6 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = findNearestScrollableParent(this.rootNode);
     this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setTimeout(() => {
-      this.scrollToBottom();
-    });
     // Flush the queue
     this.tryFlushQueue();
   }
@@ -178,6 +175,9 @@ class ChatRenderer {
   onStateLoaded() {
     this.loaded = true;
     this.tryFlushQueue();
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 250);
   }
 
   tryFlushQueue() {
