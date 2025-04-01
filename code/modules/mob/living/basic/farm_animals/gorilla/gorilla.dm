@@ -6,9 +6,9 @@
  * They make a lot of noise and punch limbs off unconscious folks
  */
 /mob/living/basic/gorilla
-	name = "Gorilla"
-	desc = "A ground-dwelling, predominantly herbivorous ape which usually inhabits the forests of central Africa but today is quite far away from there."
-	icon = 'icons/mob/simple/gorilla.dmi'
+	name = "Evil Toyota Corolla"
+	desc = "JESUS FUCKING CHRIST RUN AWAY"
+	icon = 'icons/mob/simple/gorilla_two.dmi'
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
@@ -22,18 +22,19 @@
 	response_disarm_simple = "challenge"
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
-	speed = 0.5
-	melee_damage_lower = 15
-	melee_damage_upper = 18
+	speed = 0
+	melee_damage_lower = 25
+	melee_damage_upper = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
-	obj_damage = 20
-	attack_verb_continuous = "pummels"
-	attack_verb_simple = "pummel"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	obj_damage = 30
+	attack_verb_continuous = "crushes"
+	attack_verb_simple = "crush"
+	attack_sound = 'sound/effects/meteorimpact.ogg'
 	unique_name = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
+	color = "#FF0000"
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
@@ -65,16 +66,10 @@
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, gorilla_food)
 
-/mob/living/basic/gorilla/update_overlays()
-	. = ..()
-	if (is_holding_items())
-		. += "standing_overlay"
-
 /mob/living/basic/gorilla/update_icon_state()
 	. = ..()
 	if (stat == DEAD)
 		return
-	icon_state = is_holding_items() ? "standing" : "crawling"
 
 /mob/living/basic/gorilla/update_held_items()
 	. = ..()
@@ -119,7 +114,7 @@
 /// Gorillas are slower when carrying something
 /datum/movespeed_modifier/gorilla_standing
 	blacklisted_movetypes = (FLYING|FLOATING)
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = 1
 
 /// A smaller gorilla summoned via magic
 /mob/living/basic/gorilla/lesser
