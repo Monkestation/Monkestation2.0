@@ -18,7 +18,7 @@
 /datum/preference/choiced/monkey_tail/init_possible_values()
 	var/list/values = list()
 
-	var/icon/monkey_chest = icon('monkestation/icons/mob/species/monkey/bodyparts.dmi', "monkey_chest")
+	var/icon/monkey_chest = icon('monkestation/icons/mob/species/monkey/bodyparts_toyota.dmi', "monkey_chest")
 
 	for (var/tail_name in GLOB.tails_list_monkey)
 		var/datum/sprite_accessory/tails/monkey/tail = GLOB.tails_list_monkey[tail_name]
