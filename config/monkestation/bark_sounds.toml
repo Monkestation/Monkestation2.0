@@ -121,11 +121,6 @@ path = "wurt.ogg"
 name = "WX78"
 path = "wx78.ogg"
 
-# --------- Kazooie Sounds ---------
-[kazooie]
-name = "Kazooie"
-path = "monkestation/sound/voice/barks/kazooie"
-
 # --------- Goonstation Sounds ---------
 [goon]
 name = "Goonstation"

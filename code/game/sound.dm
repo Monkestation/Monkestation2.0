@@ -251,8 +251,10 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		if(!use_reverb)
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
+	// monkestation edit start
 	else if(sound_to_use.volume <= 0)
 		return //No sound
+	// monkestation edit end
 
 	SEND_SOUND(src, sound_to_use)
 
