@@ -113,7 +113,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie, radio_host))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -292,8 +292,6 @@
 	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
 		return
 	//MONKESTATION EDIT STOP
-	if(channel == FREQ_RADIO && !radio_host)
-		return
 
 	if(use_command)
 		spans |= SPAN_COMMAND
@@ -321,6 +319,11 @@
 	else
 		freq = frequency
 		channel = null
+
+	// monkestation start: prevent non-radio mics from broadcasting over the radio channel
+	if(freq == FREQ_RADIO && !radio_host)
+		return
+	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
 	if(is_within_radio_jammer_range(src) && !syndie)
@@ -468,7 +471,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, syndie, radio_host))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE

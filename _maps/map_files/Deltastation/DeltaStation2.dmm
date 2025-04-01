@@ -13401,7 +13401,7 @@
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "ddW" = (
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "dea" = (
@@ -14832,9 +14832,9 @@
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "dxo" = (
-/obj/structure/bed/medical/emergency,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "dxr" = (
@@ -18060,7 +18060,7 @@
 /obj/machinery/light/neon_lining{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/security/bitden)
 "emB" = (
@@ -23465,13 +23465,13 @@
 /area/station/hallway/primary/central/fore)
 "fym" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner{
 	dir = 1
 	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pathology)
 "fyt" = (
@@ -24271,7 +24271,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "fJh" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -31590,8 +31590,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "huR" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "huS" = (
@@ -36917,7 +36917,7 @@
 /area/station/hallway/secondary/entry)
 "iIi" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
 "iIj" = (
@@ -43424,7 +43424,7 @@
 /obj/effect/turf_decal/tile/hot_pink{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/toilet)
 "kgf" = (
@@ -51413,10 +51413,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "mbA" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/directional/south,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "mbR" = (
@@ -58612,7 +58612,7 @@
 "nPg" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
@@ -60270,7 +60270,7 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "ojP" = (
@@ -62601,10 +62601,12 @@
 /area/station/commons/locker)
 "oOz" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/bed/medical/emergency,
 /obj/item/restraints/handcuffs,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -64980,7 +64982,7 @@
 /area/station/engineering/atmos/hfr_room)
 "psU" = (
 /obj/machinery/growing/soil,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
@@ -68376,8 +68378,8 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
 "qgp" = (
-/obj/structure/bed/medical/emergency,
 /obj/item/bot_assembly/medbot,
+/obj/structure/bed/medical,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "qgx" = (
@@ -78207,7 +78209,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "szY" = (
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
@@ -86068,8 +86070,10 @@
 /area/station/science/lab)
 "uue" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/surgery/theatre)
 "uuf" = (
@@ -89674,12 +89678,14 @@
 /area/station/engineering/transit_tube)
 "vnB" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Operating Room";
 	name = "medbay camera";
 	network = list("ss13","medbay")
+	},
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/medical/surgery/theatre)
@@ -98003,7 +98009,7 @@
 /obj/item/bedsheet/centcom/double,
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xkU" = (

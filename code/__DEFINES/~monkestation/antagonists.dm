@@ -1,5 +1,5 @@
 // Monster Hunter stuff
-#define upgraded_val(x,y) ( CEILING((x * (1.07 ** y)), 1) )
+#define UPGRADED_VAL(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
 
 ///Whether a mob is a Monster Hunter

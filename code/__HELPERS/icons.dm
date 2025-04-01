@@ -1484,13 +1484,20 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	// monkestation start: icon_exists cache
 #ifdef PRELOAD_ICON_EXISTS_CACHE
-	if(isfile(file) && !isnull(icon_states_cache["[file]"]?[state]))
+	var/file_string = "[file]"
+	if(isfile(file) && length(file_string) && !isnull(icon_states_cache[file_string]?[state]))
 		return TRUE
 #endif
 	// monkestation end
 
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
+/* commented out until i figure out why this is borked
+		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
+				icon_states_cache[file][istate] = TRUE
+		else // Otherwise, we have to use the slower BYOND proc
+*/
 		for(var/istate in icon_states(file))
 			icon_states_cache[file][istate] = TRUE
 
@@ -1527,6 +1534,8 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
+/// Strips all underlays on a different plane from an appearance.
+/// Returns the stripped appearance.
 /proc/strip_appearance_underlays(mutable_appearance/appearance)
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
@@ -1535,3 +1544,36 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
+
+/**
+ * Copies the passed /appearance, returns a /mutable_appearance
+ *
+ * Filters out certain overlays from the copy, depending on their planes
+ * Prevents stuff like lighting from being copied to the new appearance
+ */
+/proc/copy_appearance_filter_overlays(appearance_to_copy)
+	var/mutable_appearance/copy = new(appearance_to_copy)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+
+	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	var/list/overlays_to_keep = list()
+	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
+		if(isnull(special_overlay))
+			continue
+		var/mutable_appearance/real = new()
+		real.appearance = special_overlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			overlays_to_keep += real
+	copy.overlays = overlays_to_keep
+
+	var/list/underlays_to_keep = list()
+	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
+		if(isnull(special_underlay))
+			continue
+		var/mutable_appearance/real = new()
+		real.appearance = special_underlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			underlays_to_keep += real
+	copy.underlays = underlays_to_keep
+
+	return copy

@@ -2498,7 +2498,7 @@
 /area/station/hallway/primary/central/fore)
 "aMJ" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "aMU" = (
@@ -2713,7 +2713,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_blue,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /obj/structure/railing,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/central/fore)
@@ -4097,7 +4097,7 @@
 "bkT" = (
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/warm/directional/west,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "bla" = (
@@ -8672,7 +8672,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -41501,9 +41501,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_blue,
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
+/obj/structure/bed/medical,
 /obj/structure/railing,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/central)
@@ -46354,9 +46352,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_blue,
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/central)
 "nAZ" = (
@@ -49639,7 +49635,7 @@
 	},
 /obj/effect/turf_decal/bot_blue,
 /obj/machinery/airalarm/directional/west,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /obj/structure/railing,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/central/fore)
@@ -55629,7 +55625,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "qru" = (
@@ -64745,7 +64741,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tdJ" = (
@@ -71755,7 +71751,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/bed/medical/emergency{
+/obj/structure/bed/medical/anchored{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -76859,7 +76855,7 @@
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/treatment_center)
 "wFp" = (

@@ -111,7 +111,7 @@
 		refresh_servers()
 		for(var/obj/machinery/telecomms/server/server as anything in servers)
 			server.rawcode = "def process_signal(sig){ return sig;" // bare minimum
-		qdel(compiler_output)
+		compiler_output.Cut()
 		compiler_output = compile_all(usr)
 		var/message = "[key_name_admin(usr)] has completelly cleared the NTSL console of code and re-compiled as an admin, this should only be done in severe rule infractions."
 		message_admins(message)
@@ -138,9 +138,9 @@
 				message_admins("[key_name_admin(usr)] attempted compiling NTSL without being logged in.") // tell admins that someone tried a javascript injection
 				return
 			for(var/obj/machinery/telecomms/server/server as anything in servers)
-				if(storedcode && istext(storedcode))
+				if(istext(storedcode))
 					server.rawcode = storedcode
-			qdel(compiler_output)
+			compiler_output.Cut()
 			compiler_output = compile_all(usr)
 			return TRUE
 		if("set_network")
