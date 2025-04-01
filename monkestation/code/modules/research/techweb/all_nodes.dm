@@ -208,12 +208,12 @@
 	design_ids = list("linked_surgery")
 	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-	discount_experiments = list(/datum/experiment/scanning/random/serverlink = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/serverlink = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/linked_surgery/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/ipc_parts
 	id = "ipc_parts"
@@ -377,37 +377,37 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
 
 /datum/techweb_node/explosive_weapons
-	discount_experiments = list(/datum/experiment/scanning/random/casing = 1500)
+	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/ai_basic
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 500)
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR)
 
 /datum/techweb_node/ai_adv
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = 2000)
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR * 3)
 
 /datum/techweb_node/robotics
-	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/adv_bots
-	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = 1500)
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/datatheory
-	discount_experiments = list(/datum/experiment/scanning/random/money = 1500)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/comptech
-	discount_experiments = list(/datum/experiment/scanning/random/money = 1000)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/mod_advanced
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/mod_engineering
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/mod_medical
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/mod_security
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/mod_entertainment
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = 1000)
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)

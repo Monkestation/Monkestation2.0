@@ -11,11 +11,6 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)
 
-/datum/techweb_node/ntlink_low/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 750)
-
 /datum/techweb_node/ntlink_high
 	id = "ntlink_high"
 	display_name = "Advanced Cybernetic Application"
@@ -46,11 +41,6 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/job_approved_item_set/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/security_authorized_implants
 	id = "job_itemsets-sec"
