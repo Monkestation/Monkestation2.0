@@ -30,3 +30,18 @@
 	mech_flags = EXOSUIT_MODULE_AMBULANCE
 	honk_range = 1 //only directly besides, are affected
 	tactile_message = "HARM ALARM"
+
+//trashtank
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
+	name = "pipegun breech"
+	desc = "A pipegun that is fitted to be mounted to a tank turret, it seems haphazardly built from scrap"
+	icon_state = "mecha_pipegun"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 6
+	projectiles_cache = 6
+	projectiles_cache_max = 24
+	projectiles_per_shot = 1
+	projectile_delay = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PIPEGUN

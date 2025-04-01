@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/working/trash_tank
+/obj/vehicle/sealed/mecha/trash_tank
 	desc = "A trashcart that seems to be repurposed as the basis of a tank hull. with a turret and an electric engine strapped into it. It's a miracle it's even working"
 	name = "trash tank"
 	icon = 'monkestation/icons/mecha/makeshift_mechs.dmi'
