@@ -65,6 +65,7 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, gorilla_food)
+	transform = transform.Translate(-16, 0)
 
 /mob/living/basic/gorilla/update_icon_state()
 	. = ..()
