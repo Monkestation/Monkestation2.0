@@ -47,20 +47,40 @@
 	ammo_type = MECHA_AMMO_PIPEGUN
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
 
+/obj/projectile/bullet/pellet/shotgun_improvised/tank
+	tile_dropoff = 0 //its a peashooter that fires with bullets the size of pellets, but don't do this now...
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
 	name = "peashooter breech"
 	desc = "Something that can be charitably called a \" Peashooter \" that is fitted to be mounted to a tank turret, it seems haphazardly built from scrap"
 	icon_state = "mecha_peashooter"
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
-	projectiles = 30
-	projectiles_cache = 30
-	projectiles_cache_max = 60
+	projectiles = 15
+	projectiles_cache = 15
+	projectiles_cache_max = 30
 	projectiles_per_shot = 3
-	variance = 6
-	randomspread = 1
 	projectile_delay = 0.2 SECONDS
 	equip_cooldown = 1 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_PEASHOOTER
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade
+	name = "Trash Tank Armor Plating"
+	desc = "A jumble of whatever scrap that someone can scrounge up that is able to beef up a trash tank somewhat."
+	icon_state = "tank_armor"
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade/can_attach(obj/vehicle/sealed/mecha/trash_tank/tank, attach_right = FALSE, mob/user)
+	if(tank.type != /obj/vehicle/sealed/mecha/trash_tank)
+		to_chat(user, span_warning("This armor plating can only be installed to a trash tank"))
+		return FALSE
+	if(!(tank.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(user, span_warning("[tank] must have maintenance protocols active in order to allow this conversion kit."))
+		return FALSE
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade/attach(obj/vehicle/sealed/mecha/trash_tank/tank, attach_right = FALSE)
+	tank.upgrade()
+	playsound(get_turf(tank),'sound/items/ratchet.ogg',50,TRUE)

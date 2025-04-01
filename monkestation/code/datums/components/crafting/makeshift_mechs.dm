@@ -44,9 +44,97 @@
 		/obj/item/stack/sheet/cloth = 10,
 		/obj/item/stock_parts/cell = 2,
 		/obj/item/stock_parts/manipulator = 4,
-		/obj/item/light/tube,
-		/obj/item/toy/crayon/spraycan,
+		/obj/item/light/tube = 1,
+		/obj/item/toy/crayon/spraycan = 1,
 		)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
+	time = 5 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/makeshift_sleeper
+	name = "Makeshift Sleeper Module"
+	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
+	reqs = list(/obj/item/stock_parts/cell = 1,
+		/obj/item/stack/sheet/cloth = 5,
+		/obj/item/stack/rods = 10,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 5 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/harm_alarm
+	name = "Harm Alarm Horn Module"
+	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
+	reqs = list(/obj/item/stack/sheet/iron = 2,
+			/obj/item/stack/cable_coil = 15,
+			/obj/item/stock_parts/manipulator = 1,
+		)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 5 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/scrap_tank
+	name = "Trash Tank"
+	result = /obj/vehicle/sealed/mecha/trash_tank
+	reqs = list(/obj/item/flashlight = 1,
+			/obj/item/tank/internals/plasma = 2,
+			/obj/item/tank/internals/oxygen = 8,
+			/obj/item/stack/cable_coil = 60,
+			/obj/item/camera = 1,
+			/obj/item/storage/toolbox = 5,
+			/obj/machinery/disposal/bin = 1,
+			/obj/item/pipe = 4,
+			/obj/item/chair = 1,
+			/obj/item/stack/sheet/cloth = 10,
+			/obj/item/stack/conveyor = 5,
+			/obj/item/stock_parts/cell = 1,
+		)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 20 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/harm_alarm
+	name = "Pipegun mantlet"
+	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
+	reqs = list(/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sheet/glass = 4,
+		/obj/item/storage/toolbox = 1,
+		)
+	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
+	time = 5 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/harm_alarm
+	name = "Pipeshooter mantlet"
+	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
+	reqs = list(/obj/item/pipe = 2,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/extinguisher = 1,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sheet/glass = 4,
+		/obj/item/tank/internals/oxygen = 8,
+		)
+	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 5 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/harm_alarm
+	name = "Trash Tank Armor Plating"
+	result = /obj/item/mecha_parts/mecha_equipment/tankupgrade
+	reqs = list(/obj/structure/disposalpipe = 2,
+		/obj/item/pipe = 20,
+		/obj/item/stack/sheet/mineral/wood = 15,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/storage/toolbox = 2,
+		/obj/item/tank/internals/oxygen = 3,
+		/obj/item/chair = 2,
+		)
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_CROWBAR)
+	time = 5 SECONDS
 	category = CAT_ROBOT

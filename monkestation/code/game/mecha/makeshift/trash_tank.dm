@@ -24,5 +24,13 @@
 	max_equip_by_category = list(
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 0,
-		MECHA_ARMOR = 1,
+		MECHA_ARMOR = 0,
 	)
+
+/obj/vehicle/sealed/mecha/trash_tank/proc/upgrade()
+	name = "up-armoured trash tank"
+	icon_state = "trash_tank-armoured"
+	base_icon_state = "trash_tank-armoured"
+	update_appearance()
+
+	armor_type = list(melee = 60, bullet = 40, laser = 40, energy = 20, bomb = 20, bio = 0, rad = 0, fire = 70, acid = 60)
