@@ -16,6 +16,25 @@ INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
 In any query remember to add a prefix to the table names if you use one.
 
 -----------------------------------------------------
+Version 5.28 31 March 2025, by Siro
+Add `mentor` and `mentor_ranks` tables.
+
+```sql
+CREATE TABLE `mentor` (
+  `ckey` varchar(32) NOT NULL,
+  `rank` varchar(32) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mentor_ranks` (
+  `rank` varchar(32) NOT NULL,
+  `flags` smallint(5) unsigned NOT NULL,
+  `exclude_flags` smallint(5) unsigned NOT NULL,
+  `can_edit_flags` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`rank`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+-----------------------------------------------------
 Version 5.27 16 March 2025, by Flleeppyy
 Add `byond_build` and `byond_version` to the `connection_log` table.
 

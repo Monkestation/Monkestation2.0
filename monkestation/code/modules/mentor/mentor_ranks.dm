@@ -118,8 +118,6 @@ GLOBAL_PROTECT(mentor_ranks)
 	GLOB.dementors.Cut()
 	//load text from file and process each entry
 	var/ranks_text = file2text("[global.config.directory]/mentor_ranks.txt")
-	if (!ranks_text || ranks_text == "") // If file is missing or empty, use fallback defaults for two ranks
-		ranks_text = "Name = Mentor\nInclude = MENTOR\nExclude =\nEdit = \n\nName = Head_Mentor\nInclude = @ HEADMENTOR\nExclude = \nEdit =\n"
 	var/datum/mentor_rank/previous_rank
 	var/regex/mentor_ranks_regex = new(@"^Name\s*=\s*(.+?)\s*\n+Include\s*=\s*([\l @]*?)\s*\n+Exclude\s*=\s*([\l @]*?)\s*\n+Edit\s*=\s*([\l @]*?)\s*\n*$", "gm")
 	while(mentor_ranks_regex.Find(ranks_text))

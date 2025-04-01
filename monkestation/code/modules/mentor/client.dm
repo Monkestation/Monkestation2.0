@@ -37,7 +37,7 @@
 
 MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)
 	user.mentor_datum.deactivate()
-	to_chat(user, span_interface("You are now a unmentored player."), confidential = TRUE)
+	to_chat(user, span_interface("You are now an unmentored player."), confidential = TRUE)
 	log_admin("[key_name(user)] dementored themselves.")
 	message_admins("[key_name_mentor(user)] dementored themselves.")
 	BLACKBOX_LOG_MENTOR_VERB("Dementor")
