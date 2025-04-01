@@ -184,6 +184,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/toggleaban,
 	/datum/admins/proc/toggleAI,
+	/datum/admins/proc/togglebark, // monkestation addition
 // Client procs
 	/client/proc/adminchangemap,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
@@ -200,6 +201,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/toggle_random_events,
 	/client/proc/Overwatch_ASN_panel,
 	/client/proc/Overwatch_WhitelistPanel,
+	/client/proc/reload_bark_sounds_file, // monkestation addition
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)

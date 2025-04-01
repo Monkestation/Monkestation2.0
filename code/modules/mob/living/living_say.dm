@@ -352,10 +352,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/talk_icon_state = say_test(message_raw)
 
 	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering)
+		get_or_init_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
 	else if (!is_speaker_whispering)
 		var/sound/sound = pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
-		short_bark(listening, message_range + 1, 100, 0, sound, get_or_init_voice())
+		get_or_init_voice().short_bark(listening, message_range + 1, 100, 0, sound, src)
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)

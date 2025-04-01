@@ -34,7 +34,7 @@
 		barker = new()
 		barker.voice = new()
 	barker.voice.set_from_prefs(preferences)
-	barker.long_bark(list(user), 7, 100, FALSE, 32)
+	barker.voice.long_bark(list(user), 7, 100, FALSE, 32, barker)
 	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
 	return TRUE
 
