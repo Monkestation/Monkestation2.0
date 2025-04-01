@@ -37,7 +37,7 @@
 
 /datum/crafting_recipe/ambulance
 	name = "Porta Potty Ambulance"
-	result = /obj/vehicle/sealed/mecha/working/makeshift_ambulance
+	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
 	reqs = list(/obj/item/stack/sheet/iron = 30,
 		/obj/item/chair = 2,
 		/obj/item/stack/cable_coil = 15,

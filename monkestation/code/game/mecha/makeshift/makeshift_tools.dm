@@ -34,14 +34,33 @@
 //trashtank
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
 	name = "pipegun breech"
-	desc = "A pipegun that is fitted to be mounted to a tank turret, it seems haphazardly built from scrap"
+	desc = "A pipegun that is fitted to be mounted to a tank turret, the actual gun seems haphazardly tacked on with scrap"
 	icon_state = "mecha_pipegun"
 	equip_cooldown = 10
-	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
-	projectiles = 6
-	projectiles_cache = 6
+	projectile = /obj/projectile/bullet/a762/surplus
+	projectiles = 8
+	projectiles_cache = 8
 	projectiles_cache_max = 24
 	projectiles_per_shot = 1
-	projectile_delay = 1
+	projectile_delay = 0.5 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_PIPEGUN
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
+	name = "peashooter breech"
+	desc = "Something that can be charitably called a \" Peashooter \" that is fitted to be mounted to a tank turret, it seems haphazardly built from scrap"
+	icon_state = "mecha_peashooter"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 30
+	projectiles_cache = 30
+	projectiles_cache_max = 60
+	projectiles_per_shot = 3
+	variance = 6
+	randomspread = 1
+	projectile_delay = 0.2 SECONDS
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
