@@ -1,7 +1,7 @@
 /datum/species/monkey/spec_death(gibbed, mob/living/carbon/human/H)
 	. = ..()
 	if (gibbed && H)
-		explosion(H, heavy_impact_range = 2, light_impact_range = 4) // Smol boom.
+		explosion(H, heavy_impact_range = 1, light_impact_range = 3) // Smol boom.
 	else if (!QDELETED(H) && H.stat == DEAD && H.getBruteLoss() + H.getFireLoss() >= 100) // Xenobio will live. FOR NOW.
 		INVOKE_ASYNC(src, PROC_REF(oh_no_how_could_this_happen), H)
 
@@ -16,7 +16,7 @@
 		return
 
 	if (!QDELETED(explosive_idiot))
-		explosion(explosive_idiot, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8) // BIG BOOM.
+		explosion(explosive_idiot, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6) // BIG BOOM.
 
 /datum/species/monkey/proc/beep_loop(repeats, interval, volume, mob/living/carbon/human/explosive_idiot)
 	for (var/i in 1 to repeats)
