@@ -29,8 +29,6 @@ const logger = createLogger('chatRenderer');
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
 const SCROLL_TRACKING_TOLERANCE = 24;
-// How long after init to reset scrolling to fix it.
-const SCROLL_FIX_TIMEOUT = 500;
 
 // List of injectable component names to the actual type
 export const TGUI_CHAT_COMPONENTS = {
@@ -150,11 +148,6 @@ class ChatRenderer {
         this.scrollToBottom();
       }
     };
-    setTimeout(() => {
-      logger.debug('fixing tracking');
-      this.scrollTracking = true;
-      this.scrollToBottom();
-    }, SCROLL_FIX_TIMEOUT);
     // Periodic message pruning
     setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
   }
