@@ -95,8 +95,8 @@
 	time = 20 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/harm_alarm
-	name = "Pipegun mantlet"
+/datum/crafting_recipe/pipegun_breech
+	name = "Pipegun breech"
 	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
 	reqs = list(/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
 		/obj/item/stack/cable_coil = 10,
@@ -108,8 +108,8 @@
 	time = 5 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/harm_alarm
-	name = "Pipeshooter mantlet"
+/datum/crafting_recipe/peashooter_breech
+	name = "Pipeshooter breech"
 	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
 	reqs = list(/obj/item/pipe = 2,
 		/obj/item/stock_parts/manipulator = 1,
@@ -123,7 +123,7 @@
 	time = 5 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/harm_alarm
+/datum/crafting_recipe/tank_armor_plating
 	name = "Trash Tank Armor Plating"
 	result = /obj/item/mecha_parts/mecha_equipment/tankupgrade
 	reqs = list(/obj/structure/disposalpipe = 2,
