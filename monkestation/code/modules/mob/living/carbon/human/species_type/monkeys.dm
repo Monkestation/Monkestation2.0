@@ -16,7 +16,7 @@
 		return
 
 	if (!QDELETED(explosive_idiot))
-		explosion(explosive_idiot, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6) // BIG BOOM.
+		explosion(explosive_idiot, heavy_impact_range = 3, light_impact_range = 6) // BIG BOOM.
 
 /datum/species/monkey/proc/beep_loop(repeats, interval, volume, mob/living/carbon/human/explosive_idiot)
 	for (var/i in 1 to repeats)
