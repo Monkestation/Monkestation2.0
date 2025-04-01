@@ -7384,6 +7384,7 @@
 #include "monkestation\code\modules\events\ghost_role\drifting_contractor.dm"
 #include "monkestation\code\modules\events\holiday\vday.dm"
 #include "monkestation\code\modules\events\wizard\summon_gifts.dm"
+#include "monkestation\code\modules\experisci\experiment\experiments.dm"
 #include "monkestation\code\modules\factory_type_beat\boulder.dm"
 #include "monkestation\code\modules\factory_type_beat\circuits.dm"
 #include "monkestation\code\modules\factory_type_beat\debug.dm"

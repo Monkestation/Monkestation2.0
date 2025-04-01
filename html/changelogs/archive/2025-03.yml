@@ -666,3 +666,15 @@
       text
   - bugfix: Forcefully reconnecting or disconnecting the chatbox websocket now properly
       works.
+  Absolucy, Y0SH1M4S73R:
+  - code_imp: Any tgui message that would be too big to send to the server is now
+      split into chunks and sent in sequence. This fixes several issues, such as...
+  - bugfix: It is once again possible to save large amounts of text on paper at once.
+  Gw0sty:
+  - rscadd: Added several experiments for research.
+  - balance: Cargo teleporters now require miniaturised blue space.
+  - balance: Emergency medical beds now require advanced biotech
+  - balance: Less comfortable, and portable medical beds have been provided to the
+      stations instead of emergancy medical beds.
+  - bugfix: Emergency medical beds are no longer coated with a diamond/blue space
+      mix blanket.

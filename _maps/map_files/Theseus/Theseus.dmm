@@ -37081,10 +37081,10 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("ss13, Cell 1")
 	},
-/obj/structure/bed/medical/emergency{
-	dir = 1
-	},
 /obj/item/radio/intercom/prison/directional/south,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/psychology)
 "kYc" = (
@@ -56538,9 +56538,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("ss13, Cell 2")
 	},
-/obj/structure/bed/medical/emergency{
-	dir = 8
-	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/psychology)
 "qIa" = (
@@ -66650,9 +66648,7 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
-/obj/structure/bed/medical/emergency{
-	dir = 8
-	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

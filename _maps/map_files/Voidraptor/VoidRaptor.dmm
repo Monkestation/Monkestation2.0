@@ -6052,13 +6052,13 @@
 /turf/open/floor/iron/textured_edge,
 /area/station/cargo/storage)
 "bNs" = (
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/box/blue,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/pathology)
 "bNu" = (
@@ -6772,13 +6772,13 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "cad" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/bot,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -7128,7 +7128,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/education)
 "cfH" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -7139,6 +7138,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/bot,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -12266,13 +12266,13 @@
 /area/station/maintenance/port/fore)
 "dDR" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/duct,
 /obj/effect/turf_decal/box/blue,
 /obj/item/bedsheet/medical,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/treatment_center)
 "dEb" = (
@@ -21308,15 +21308,13 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "giB" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/medical/emergency{
-	dir = 8
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/duct,
 /obj/effect/turf_decal/box/blue,
 /obj/item/bedsheet/medical{
 	dir = 4
 	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/freezer,
 /area/station/medical/treatment_center)
 "giC" = (
@@ -23720,11 +23718,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/greater)
 "gQm" = (
@@ -24468,9 +24466,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "haq" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/landmark/event_spawn,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
 "has" = (
@@ -34544,7 +34544,7 @@
 /area/station/commons/vacant_room/office)
 "jLi" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -52033,7 +52033,6 @@
 	},
 /area/station/hallway/primary/aft)
 "oDz" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -52042,6 +52041,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -52575,15 +52575,15 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/science/ordnance_maint)
 "oLN" = (
-/obj/structure/bed/medical/emergency{
-	dir = 4
-	},
 /obj/machinery/iv_drip,
 /obj/item/bedsheet/medical,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/effect/turf_decal/box/blue,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/pathology)
 "oLS" = (
@@ -57047,8 +57047,8 @@
 /turf/closed/wall,
 /area/station/maintenance/aft/upper)
 "pUJ" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
 "pUM" = (
