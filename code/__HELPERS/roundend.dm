@@ -229,6 +229,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	popcount = gather_roundend_feedback()
 
+	var/list/rewards = calculate_rewards() // monkestation edit: immediately calculate everyones rewards
+
 	for(var/client/C in GLOB.clients)
 		C?.playtitlemusic(40)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
@@ -301,7 +303,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
 	refund_cassette()
-	distribute_rewards()
+	batch_update_metacoins(rewards)
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
