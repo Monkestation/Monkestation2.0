@@ -50,7 +50,11 @@ export class DeleteCharacterPopup extends Component<
           </Stack.Item>
 
           <Stack.Item maxWidth="300px">
-            <Box>{`You're about to delete ${data.character_preferences.names[data.name_to_use]} forever. Are you sure you want to do this?`}</Box>
+            <Box>
+              {`You're about to delete `}
+              <b>{data.character_preferences.names[data.name_to_use]}</b>{' '}
+              {`forever. Are you sure you want to do this?`}
+            </Box>
           </Stack.Item>
 
           <Stack.Item>

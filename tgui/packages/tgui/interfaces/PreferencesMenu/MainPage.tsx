@@ -46,6 +46,8 @@ const CharacterControls = (props: {
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
+  canDeleteCharacter: boolean;
+  handleDeleteCharacter: () => void;
 }) => {
   return (
     <Stack>
@@ -77,6 +79,18 @@ const CharacterControls = (props: {
           />
         </Stack.Item>
       )}
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleDeleteCharacter}
+          fontSize="22px"
+          icon="trash"
+          color="red"
+          tooltip="Delete character"
+          tooltipPosition="top"
+          disabled={!props.canDeleteCharacter}
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -661,6 +675,14 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true
                       }
+                      canDeleteCharacter={
+                        Object.values(data.character_profiles).filter(
+                          (name) => name,
+                        ).length > 1
+                      }
+                      handleDeleteCharacter={() =>
+                        setDeleteCharacterPopupOpen(true)
+                      }
                     />
                   </Stack.Item>
 
@@ -736,21 +758,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     act={act}
                     randomizations={getRandomization(nonContextualPreferences)}
                     preferences={nonContextualPreferences}
-                  >
-                    <Box my={0.5}>
-                      <Button
-                        color="red"
-                        disabled={
-                          Object.values(data.character_profiles).filter(
-                            (name) => name,
-                          ).length < 2
-                        } // check if existing chars more than one
-                        onClick={() => setDeleteCharacterPopupOpen(true)}
-                      >
-                        Delete Character
-                      </Button>
-                    </Box>
-                  </PreferenceList>
+                  />
                 </Stack>
               </Stack.Item>
             </Stack>
