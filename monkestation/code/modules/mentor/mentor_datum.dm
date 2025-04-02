@@ -19,7 +19,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	var/dementored
 	//var/mob/following
 	/// Are we a Contributor?
-	//var/is_contributor = FALSE
+	var/is_contributor = FALSE
 
 /datum/mentors/New(list/datum/mentor_rank/ranks, ckey, force_active = FALSE, protected) // Set this back to false after testing
 	if(IsAdminAdvancedProcCall())

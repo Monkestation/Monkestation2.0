@@ -180,6 +180,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	admin_visibility_flags -= list(admin.ckey)
 
 /datum/controller/subsystem/admin_verbs/proc/process_pending_mentors()
+	load_contrib_status() //By the time we reach here mentor datums are already created. Give them their special flag.
 	var/list/pending_mentors = mentors_pending_subsytem_init
 	mentors_pending_subsytem_init = null
 	for(var/mentor_ckey in pending_mentors)

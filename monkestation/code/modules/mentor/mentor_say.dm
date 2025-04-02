@@ -8,7 +8,7 @@ MENTOR_VERB(cmd_mentor_say, R_MENTOR, "Mentorsay", "Send a message to other ment
 	if(check_rights_for(user, R_ADMIN, 0))
 		prefix = "STAFF"
 		prefix_color = "#8A2BE2"
-	else if(user.mentor_datum.check_for_rights(R_HEADMENTOR)) // Check for contrib some how
+	else if(user.mentor_datum.is_contributor)
 		prefix = "CONTRIB"
 		prefix_color = "#16ABF9"
 

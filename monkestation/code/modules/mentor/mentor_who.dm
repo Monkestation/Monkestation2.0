@@ -1,4 +1,4 @@
-/client/verb/mentorwho() //TODO convert to AVD or merge with admins system
+/client/verb/mentorwho()
 	set category = "Mentor"
 	set name = "Mentorwho"
 
@@ -6,22 +6,25 @@
 	//Admin version
 	if(holder)
 		for(var/client/mentor_clients in GLOB.mentors)
+			msg += "\t[mentor_clients] is a "
+
 			if(GLOB.deadmins[mentor_clients.ckey])
-				msg += "\t[mentor_clients] is a Deadmin"
-//			else if(mentor_clients.mentor_datum.is_contributor)
-//				msg += "\t[mentor_clients] is a Contributor"
-			else
-				msg += "\t[mentor_clients] is a Mentor"
+				msg += "Deadmin "
+			if(mentor_clients.mentor_datum.check_for_rights(R_MENTOR))
+				if(mentor_clients.mentor_datum.check_for_rights(R_HEADMENTOR))
+					msg += "Head Mentor "
+				else
+					msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : "Mentor "
 
 			if(isobserver(mentor_clients.mob))
-				msg += " - Observing"
+				msg += "- Observing"
 			else if(isnewplayer(mentor_clients.mob))
-				msg += " - Lobby"
+				msg += "- Lobby"
 			else
-				msg += " - Playing"
+				msg += "- Playing"
 
 			if(mentor_clients.is_afk())
-				msg += " (AFK)"
+				msg += "(AFK)"
 
 			msg += "\n"
 
@@ -31,9 +34,7 @@
 			if(GLOB.deadmins[mentor_clients.ckey])
 				continue
 
-			//if(mentor_clients.mentor_datum.is_contributor)
-			//	msg += "\t[mentor_clients] is a Contributor\n"
-			//else
-			//	msg += "\t[mentor_clients] is a Mentor\n"
+			if(mentor_clients.mentor_datum.check_for_rights(R_MENTOR))
+				msg += mentor_clients.mentor_datum.is_contributor ? "\t[mentor_clients] is a Mentor\n" : "\t[mentor_clients] is a Mentor\n"
 
 	to_chat(src, msg)
