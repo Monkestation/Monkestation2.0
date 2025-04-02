@@ -96,7 +96,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/pipegun_breech
-	name = "Pipegun breech"
+	name = "Pipegun Breech"
 	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
 	reqs = list(/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
 		/obj/item/stack/cable_coil = 10,
@@ -109,7 +109,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/peashooter_breech
-	name = "Pipeshooter breech"
+	name = "Peahooter Breech"
 	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
 	reqs = list(/obj/item/pipe = 2,
 		/obj/item/stock_parts/manipulator = 1,
@@ -117,7 +117,6 @@
 		/obj/item/extinguisher = 1,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/sheet/glass = 4,
-		/obj/item/tank/internals/oxygen = 8,
 		)
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 5 SECONDS
@@ -128,13 +127,32 @@
 	result = /obj/item/mecha_parts/mecha_equipment/tankupgrade
 	reqs = list(/obj/item/pipe = 20,
 		/obj/item/stack/sheet/mineral/wood = 15,
-		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/sheet/iron = 15,
 		/obj/item/stack/cable_coil = 20,
 		/obj/item/storage/toolbox = 2,
 		/obj/item/tank/internals/oxygen = 3,
 		/obj/item/chair = 2,
 		)
-	structures = list(/obj/structure/disposalpipe = CRAFTING_STRUCTURE_CONSUME)
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_CROWBAR)
 	time = 5 SECONDS
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/pipegun_tank_ammo
+	name = "Trash Tank Pipegun Ammobox"
+	result = /obj/item/mecha_ammo/makeshift
+	reqs = list(
+		/datum/reagent/fuel = 50,
+		/obj/item/stack/sheet/iron = 30,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 0.5 SECONDS
+
+/datum/crafting_recipe/pipegun_tank_ammo
+	name = "Trash Tank Peashooter Ammobox"
+	result = /obj/item/mecha_ammo/makeshift/peashooter
+	reqs = list(
+		/datum/reagent/fuel = 30,
+		/obj/item/stack/sheet/iron = 20,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 0.5 SECONDS

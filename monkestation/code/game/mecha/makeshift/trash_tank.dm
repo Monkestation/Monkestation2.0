@@ -6,6 +6,7 @@
 	base_icon_state = "trash_tank"
 	silicon_icon_state = "null"
 	max_integrity = 200
+	force = 20
 	movedelay = 1.5
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
