@@ -2,15 +2,10 @@
 #define REQUEST_MENTORHELP "request_mentorhelp"
 
 /// Verb for opening the requests manager panel
-/*
-/client/proc/mentor_requests() //TODO convert to AVD or merge with admins system
-	set name = "Mentor Manager"
-	set desc = "Open the mentor manager panel to view all requests during this round"
-	set category = "Mentor"
+MENTOR_VERB(mentor_requests, R_MENTOR, "Mentor Manager", "Open the mentor manager panel to view all requests during this round.", MENTOR_CATEGORY_MAIN)
+	BLACKBOX_LOG_MENTOR_VERB("Mentor Manager")
+	GLOB.mentor_requests.ui_interact(user.mob)
 
-	SSblackbox.record_feedback("tally", "mentor_verb", 1, "Mentor Manager") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	GLOB.mentor_requests.ui_interact(usr)
-*/
 GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 /datum/request_manager/mentor/ui_state(mob/user)
@@ -47,8 +42,8 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 /datum/request_manager/mentor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// Only admins should be sending actions
 	var/client/mentor_client = usr.client
-//	if(!mentor_client || !mentor_client.is_mentor())
-//		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
+	if(!mentor_client || !mentor_client?.mentor_datum?.check_for_rights(R_MENTOR))
+		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? num2text(params["id"]) : null
