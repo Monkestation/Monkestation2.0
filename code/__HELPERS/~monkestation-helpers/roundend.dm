@@ -28,7 +28,7 @@
 		if(!amount || !reason)
 			continue
 		total_monkecoins += amount
-		reasons += span_rose(span_bold("[amount] Monkecoins deposited to your account! Reason: [reward[2]]"))
+		reasons += span_rose(span_bold("[amount] Monkecoins deposited to your account! Reason: [reason]"))
 	if(!total_monkecoins)
 		return
 	client?.prefs?.metacoins += total_monkecoins
