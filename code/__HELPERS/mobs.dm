@@ -692,8 +692,6 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!key)
 		return
 	for(var/mob/mob as anything in GLOB.mob_list)
-		if(QDELETED(mob))
-			continue
 		if(mob.ckey == key)
 			return mob
 
