@@ -22,7 +22,7 @@
 		role_name_text = JOB_CYBORG,
 	)
 	if(chosen_one)
-		to_chat(src, span_warning("Your mob has been taken over by a ghost, due to being otherwise unborgabke."))
+		to_chat(src, span_warning("Your mob has been taken over by a ghost, due to being otherwise unborgable."))
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace unborgable player.")
 		log_game("[key_name(chosen_one)] has taken control of ([key_name(src)]) to replace unborgable player.")
 		ghostize(can_reenter_corpse = FALSE)
