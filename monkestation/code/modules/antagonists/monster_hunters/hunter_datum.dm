@@ -297,12 +297,7 @@
 	update_static_data_for_all_viewers()
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
-	var/list/possible_targets = list()
-	for(var/datum/antagonist/victim as anything in GLOB.antagonists)
-		if(QDELETED(victim?.owner?.current) || victim.owner.current.stat == DEAD || victim.owner == owner)
-			continue
-		if(is_type_in_typecache(victim, GLOB.monster_hunter_prey_antags))
-			possible_targets += victim.owner
+	var/list/possible_targets = get_all_monster_hunter_prey(include_dead = FALSE)
 
 	for(var/i in 1 to 3) //we get 3 targets
 		if(!length(possible_targets))
