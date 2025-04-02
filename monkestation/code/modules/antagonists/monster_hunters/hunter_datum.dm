@@ -59,6 +59,7 @@
 	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
 
 /datum/antagonist/monsterhunter/on_gain()
+	owner.special_role = ROLE_MONSTERHUNTER
 	//Give Hunter Objective
 	if(give_objectives)
 		find_monster_targets()
@@ -90,6 +91,7 @@
 	locator?.hunter = null
 	locator = null
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
+	owner.special_role = null
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
