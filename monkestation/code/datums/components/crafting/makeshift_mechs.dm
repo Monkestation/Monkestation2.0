@@ -84,13 +84,13 @@
 			/obj/item/stack/cable_coil = 60,
 			/obj/item/camera = 1,
 			/obj/item/storage/toolbox = 5,
-			/obj/machinery/disposal/bin = 1,
 			/obj/item/pipe = 4,
 			/obj/item/chair = 1,
 			/obj/item/stack/sheet/cloth = 10,
 			/obj/item/stack/conveyor = 5,
 			/obj/item/stock_parts/cell = 1,
 		)
+	machinery = list(/obj/machinery/disposal/bin = CRAFTING_MACHINERY_CONSUME)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 20 SECONDS
 	category = CAT_ROBOT
@@ -126,8 +126,7 @@
 /datum/crafting_recipe/tank_armor_plating
 	name = "Trash Tank Armor Plating"
 	result = /obj/item/mecha_parts/mecha_equipment/tankupgrade
-	reqs = list(/obj/structure/disposalpipe = 2,
-		/obj/item/pipe = 20,
+	reqs = list(/obj/item/pipe = 20,
 		/obj/item/stack/sheet/mineral/wood = 15,
 		/obj/item/stack/sheet/iron = 5,
 		/obj/item/stack/cable_coil = 20,
@@ -135,6 +134,7 @@
 		/obj/item/tank/internals/oxygen = 3,
 		/obj/item/chair = 2,
 		)
+	structures = list(/obj/structure/disposalpipe = CRAFTING_STRUCTURE_CONSUME)
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_CROWBAR)
 	time = 5 SECONDS
 	category = CAT_ROBOT
