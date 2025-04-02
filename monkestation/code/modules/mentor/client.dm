@@ -41,12 +41,15 @@ MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CAT
 	log_admin("[key_name(user)] dementored themselves.")
 	message_admins("[key_name_mentor(user)] dementored themselves.")
 	BLACKBOX_LOG_MENTOR_VERB("Dementor")
-/*
+
 // Overwrites /client/Topic to return for mentor client procs
 /client/Topic(href, href_list, hsrc)
-	if(mentor_client_procs(href_list))
-		return
+	//if(mentor_client_procs(href_list))
+	//	return
 	return ..()
+
+/*
+
 
 /client/proc/mentor_client_procs(href_list)
 	if(href_list["mentor_msg"])
@@ -78,10 +81,7 @@ MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CAT
 			mentor_datum.is_contributor = TRUE
 */
 /*
-///Verifies if the client is considered a Mentor, AKA has a Mentor datum or is an Admin.
-/client/proc/is_mentor()
-	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
-		return TRUE
+
 */
 
 /*

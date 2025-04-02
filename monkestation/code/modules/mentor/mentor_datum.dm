@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(mentor_datums)
 GLOBAL_PROTECT(mentor_datums)
+GLOBAL_LIST_EMPTY(protected_mentors) // These appear to be anyone loaded from the config files
+GLOBAL_PROTECT(protected_mentors)
 
 GLOBAL_VAR_INIT(mentor_href_token, GenerateToken())
 GLOBAL_PROTECT(mentor_href_token)
@@ -38,7 +40,9 @@ GLOBAL_PROTECT(mentor_href_token)
 	name = "[ckey]'s mentor datum ([join_mentor_ranks(ranks)])"
 	src.ranks = ranks
 	href_token = GenerateToken()
-	if(force_active)
+	if(protected)
+		GLOB.protected_mentors[target] = src
+	if(force_active || (rank_flags() & R_AUTOMENTOR))
 		activate()
 	else
 		deactivate()
@@ -138,6 +142,10 @@ GLOBAL_PROTECT(mentor_href_token)
 		combined_flags |= rank.rights
 
 	return combined_flags
+
+/// Get the rank name of the mentor
+/datum/mentors/proc/rank_names()
+	return join_mentor_ranks(ranks)
 
 /proc/key_name_mentor(whom, include_link = null, include_name = TRUE, include_follow = TRUE, char_name_only = TRUE)
 	var/mob/user

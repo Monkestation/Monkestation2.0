@@ -6,8 +6,8 @@
 GLOBAL_LIST_EMPTY(mentor_ranks) //list of all mentor_rank datums
 GLOBAL_PROTECT(mentor_ranks)
 
-//GLOBAL_LIST_EMPTY(protected_ranks) //admin ranks loaded from txt
-//GLOBAL_PROTECT(protected_ranks)
+GLOBAL_LIST_EMPTY(protected_mentor_ranks) //admin ranks loaded from txt
+GLOBAL_PROTECT(protected_mentor_ranks)
 
 /datum/mentor_rank
 	var/name = "NoRank"
@@ -87,6 +87,8 @@ GLOBAL_PROTECT(mentor_ranks)
 				flag = R_HEADMENTOR
 			if("MENTOR")
 				flag = R_MENTOR
+			if("AUTOMENTOR")
+				flag = R_AUTOMENTOR
 			if("@")
 				if(previous_rank)
 					switch(group_count)
@@ -108,13 +110,25 @@ GLOBAL_PROTECT(mentor_ranks)
 			if(3)
 				can_edit_rights |= flag
 
+/proc/sync_mentor_ranks_with_db()
+	set waitfor = FALSE
+
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		return
+
+	var/list/sql_ranks = list()
+	for(var/datum/mentor_rank/R in GLOB.protected_mentor_ranks)
+		sql_ranks += list(list("rank" = R.name, "flags" = R.include_rights, "exclude_flags" = R.exclude_rights, "can_edit_flags" = R.can_edit_rights))
+	SSdbcore.MassInsert(format_table_name("mentor_ranks"), sql_ranks, duplicate_key = TRUE)
+
 //load our rank - > rights associations
 /proc/load_mentor_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
 	GLOB.mentor_ranks.Cut()
-	//GLOB.protected_ranks.Cut()
+	GLOB.protected_mentor_ranks.Cut()
 	GLOB.dementors.Cut()
 	//load text from file and process each entry
 	var/ranks_text = file2text("[global.config.directory]/mentor_ranks.txt")
@@ -130,13 +144,12 @@ GLOBAL_PROTECT(mentor_ranks)
 				Rank.process_keyword(i, count, previous_rank)
 			count++
 		GLOB.mentor_ranks += Rank
-		//GLOB.protected_ranks += R
+		GLOB.protected_mentor_ranks += Rank
 		previous_rank = Rank
 	if(!CONFIG_GET(flag/mentor_legacy_system) || dbfail)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
-				to_chat(world, "Updating.")
-				//sync_ranks_with_db() // make a sync with mentor ranks proc
+				sync_mentor_ranks_with_db() // make a sync with mentor ranks proc
 		else
 			var/datum/db_query/query_load_mentor_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("mentor_ranks")]")
 			if(!query_load_mentor_ranks.Execute())

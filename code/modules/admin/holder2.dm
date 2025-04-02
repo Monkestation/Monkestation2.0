@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(admin_datums)
-//GLOBAL_PROTECT(admin_datums)
+GLOBAL_PROTECT(admin_datums)
 GLOBAL_LIST_EMPTY(protected_admins)
-//GLOBAL_PROTECT(protected_admins)
+GLOBAL_PROTECT(protected_admins)
 
 GLOBAL_VAR_INIT(href_token, GenerateToken())
 GLOBAL_PROTECT(href_token)

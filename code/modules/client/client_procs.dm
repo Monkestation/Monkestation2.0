@@ -358,8 +358,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			else
 				new /datum/admins(autoadmin_ranks, ckey)
 
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		new /datum/admins(list(localhost_rank), ckey, 1, 1)
+
 	//MONKE EDIT START
-	// Mentor Verbs need the client's mob to exist. Must be after ..()
+	// Mentor Verbs need the client's mob to exist. Must be after ..() and admin_datum setups. A lot of checks require admins to load first.
 	//var/connecting_mentor = FALSE //because de-mentored mentors connecting should be treated like mentors. Might not be needed as of 3/31/25
 	//Mentor Authorisation
 	var/datum/mentors/mentor_datum = GLOB.mentor_datums[ckey]
@@ -370,11 +374,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/rementor)
 	//	connecting_mentor = TRUE
 	//if(CONFIG_GET(flag/automentor)) //Can be added but not really needed.
+	//If an admin for some reason doesn't have a mentor datum create a deactivated one for them and assign.
+	if((GLOB.admin_datums[ckey] || GLOB.deadmins[ckey]) && !(GLOB.mentor_datums[ckey] || GLOB.dementors[ckey]))
+		var/datum/admins/some_admin = GLOB.admin_datums[ckey] || GLOB.deadmins[ckey]
+		if(some_admin.check_for_rights(NONE))
+			new /datum/mentors(mentor_ranks_from_rank_name("Staff Assigned Mentor"), ckey)
 	//MONKE EDIT END
-
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
-		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-		new /datum/admins(list(localhost_rank), ckey, 1, 1)
 
 	if (length(GLOB.stickybanadminexemptions))
 		GLOB.stickybanadminexemptions -= ckey
