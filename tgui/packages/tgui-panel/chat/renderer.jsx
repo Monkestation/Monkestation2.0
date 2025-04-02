@@ -177,9 +177,9 @@ class ChatRenderer {
     this.tryFlushQueue();
   }
 
-  tryFlushQueue(doArchive = false) {
+  tryFlushQueue() {
     if (this.isReady() && this.queue.length > 0) {
-      this.processBatch(this.queue, { doArchive: doArchive });
+      this.processBatch(this.queue);
       this.queue = [];
       this.scrollToBottom();
     }
