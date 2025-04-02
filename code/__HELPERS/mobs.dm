@@ -691,8 +691,9 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
-	var/list/mobs = sort_mobs()
-	for(var/mob/mob in mobs)
+	for(var/mob/mob as anything in GLOB.mob_list)
+		if(QDELETED(mob))
+			continue
 		if(mob.ckey == key)
 			return mob
 
