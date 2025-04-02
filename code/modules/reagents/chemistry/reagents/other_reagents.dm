@@ -1479,10 +1479,6 @@
 
 /datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	// monkestation start: TRAIT_UNBORGABLE
-	if(HAS_MIND_TRAIT(exposed_mob, TRAIT_UNBORGABLE))
-		return
-	// monkestation end
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.infect_disease_predefined(DISEASE_ROBOT, TRUE, "[ROUND_TIME()] Nanomachine Infections [key_name(exposed_mob)]")
 
