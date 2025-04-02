@@ -147,7 +147,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	time = 0.5 SECONDS
 
-/datum/crafting_recipe/pipegun_tank_ammo
+/datum/crafting_recipe/peashooter_tank_ammo
 	name = "Trash Tank Peashooter Ammobox"
 	result = /obj/item/mecha_ammo/makeshift/peashooter
 	reqs = list(
