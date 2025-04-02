@@ -1,42 +1,14 @@
 /datum/controller/subsystem/ticker/proc/save_tokens()
 	rustg_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
 
-/datum/controller/subsystem/ticker/proc/calculate_rewards()
+/datum/controller/subsystem/ticker/proc/distribute_rewards()
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
 	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
 	var/added_xp = round(25 + (minute ** 0.85))
-	. = list()
 	for(var/client/client as anything in GLOB.clients)
-		handle_rewards_for_client(client, added_xp, .)
-	rustg_file_write(json_encode(.), "[GLOB.log_directory]/roundend_rewards.json") // remove this before full merge, this is just to make sure if this doesn't work, we can use this to give everyone their missed rewards
+		distribute_rewards_to_client(client, added_xp)
 
-/datum/controller/subsystem/ticker/proc/handle_rewards_for_client(client/client, added_xp, list/rewards_list)
-	var/ckey = client?.ckey
-	if(!ckey)
-		return
-	var/list/rewards = calculate_rewards_for_client(client, added_xp)
-	if(!length(rewards))
-		return
-	var/total_monkecoins = 0
-	var/list/reasons = list()
-	for(var/list/reward as anything in rewards)
-		if(length(reward) != 2)
-			stack_trace("wtf, reward length wasn't 2")
-			continue
-		var/amount = reward[1]
-		var/reason = reward[2]
-		if(!amount || !reason)
-			continue
-		total_monkecoins += amount
-		reasons += span_rose(span_bold("[amount] Monkecoins deposited to your account! Reason: [reason]"))
-	if(!total_monkecoins)
-		return
-	client?.prefs?.metacoins += total_monkecoins
-	to_chat(client, jointext(reasons, "\n"), type = MESSAGE_TYPE_INFO)
-	rewards_list[ckey] = total_monkecoins
-
-/datum/controller/subsystem/ticker/proc/calculate_rewards_for_client(client/client, added_xp)
-	. = list()
+/datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(client/client, added_xp)
 	if(!istype(client) || QDELING(client))
 		return
 	var/datum/player_details/details = get_player_details(client)
@@ -51,18 +23,18 @@
 		if((details?.twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1)))
 			round_end_bonus += DONATOR_ROUNDEND_BONUS
 
-		. += list(list(round_end_bonus, "Played a Round"))
+		client?.prefs?.adjust_metacoins(client?.ckey, round_end_bonus, "Played a Round")
 
 		if(world.port == MRP2_PORT)
-			. += list(list(500, "Monkey 2 Seeding Subsidies"))
+			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Monkey 2 Seeding Subsidies")
 		var/special_bonus = details?.roundend_monkecoin_bonus
 		if(special_bonus)
-			. += list(list(special_bonus, "Special Bonus"))
+			client?.prefs?.adjust_metacoins(client?.ckey, special_bonus, "Special Bonus")
 		// WHYYYYYY
 		if(QDELETED(client))
 			return
 		if(client?.is_mentor())
-			. += list(list(500, "Mentor Bonus"))
+			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
 		// WHYYYYYYYYYYYYYYYY
 		if(QDELETED(client))
 			return
@@ -82,7 +54,7 @@
 				continue
 			total_payout += listed_challenge.challenge_payout
 		if(total_payout)
-			. += list(list(total_payout, "Challenge Rewards"))
+			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards")
 
 /datum/controller/subsystem/ticker/proc/refund_cassette()
 	if(!length(GLOB.cassette_reviews))
@@ -111,40 +83,3 @@
 				message_admins("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
 				log_admin("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
 			qdel(review)
-
-/proc/batch_update_metacoins(list/batch)
-	if(!length(batch))
-		return TRUE
-
-	var/join_query = ""
-	var/list/params = list()
-
-	var/i = 1
-	for(var/ckey in batch)
-		var/amount = batch[ckey]
-		if(!ckey || !amount)
-			continue
-		if(i > 1)
-			join_query += " UNION ALL "
-		i += 1
-
-		join_query += "SELECT :ckey[i] AS ckey, :amount[i] AS amount"
-		params["ckey[i]"] = ckey
-		params["amount[i]"] = amount
-
-	var/datum/db_query/query_batch_metacoins = SSdbcore.NewQuery(
-		"UPDATE [format_table_name("player")] AS p JOIN ([join_query]) AS u ON p.ckey = u.ckey SET p.metacoins = p.metacoins + u.amount",
-		params
-	)
-	if(!query_batch_metacoins.Execute())
-		QDEL_NULL(query_batch_metacoins)
-		stack_trace("Batch updating metacoins failed, we're doing it manually!")
-		for(var/ckey in batch)
-			var/client/client = GLOB.directory[ckey]
-			if(!client)
-				continue
-			var/amount = batch[ckey]
-			client?.prefs?.adjust_metacoins(ckey, amount, reason = "Normal roundend monkecoin update failed, doing it manually", announces = FALSE, donator_multiplier = FALSE)
-		return FALSE
-	qdel(query_batch_metacoins)
-	return TRUE
