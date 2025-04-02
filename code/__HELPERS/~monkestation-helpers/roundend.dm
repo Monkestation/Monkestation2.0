@@ -19,22 +19,14 @@
 		return
 	var/total_monkecoins = 0
 	var/list/reasons = list()
-	// donator_multiplier was true before, so i'm keeping it like this for consistency's sake, unless someone says not to
-	var/multiplier = 1
-	var/datum/player_details/details = client?.player_details || get_player_details(ckey)
-	switch(details?.patreon?.access_rank)
-		if(ACCESS_COMMAND_RANK)
-			multiplier = 1.5
-		if(ACCESS_TRAITOR_RANK)
-			multiplier = 2
-		if(ACCESS_NUKIE_RANK)
-			multiplier = 3
 	for(var/list/reward as anything in rewards)
 		if(length(reward) != 2)
 			stack_trace("wtf, reward length wasn't 2")
 			continue
-		var/amount = reward[1] * multiplier
+		var/amount = reward[1]
 		var/reason = reward[2]
+		if(!amount || !reason)
+			continue
 		total_monkecoins += amount
 		reasons += span_rose(span_bold("[amount] Monkecoins deposited to your account! Reason: [reason]"))
 	if(!total_monkecoins)
