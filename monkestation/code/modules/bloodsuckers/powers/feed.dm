@@ -28,6 +28,8 @@
 	var/started_alive = TRUE
 	///Are we feeding with passive grab or not?
 	var/silent_feed = TRUE
+	///Have we notified you already that you are at maximum blood?
+	var/notified_overfeeding = FALSE
 
 /datum/action/cooldown/bloodsucker/feed/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -67,6 +69,7 @@
 	blood_taken = 0
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, FEED_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_MUTE, FEED_TRAIT)
+	notified_overfeeding = initial(notified_overfeeding)
 	return ..()
 
 /datum/action/cooldown/bloodsucker/feed/ActivatePower(trigger_flags)
@@ -185,10 +188,9 @@
 			owner.balloon_alert(owner, "your victim's blood is at an unsafe level.")
 		warning_target_bloodvol = feed_target.blood_volume
 
-	if(bloodsuckerdatum_power.bloodsucker_blood_volume >= bloodsuckerdatum_power.max_blood_volume)
-		user.balloon_alert(owner, "full on blood!")
-		DeactivatePower()
-		return PROCESS_KILL
+	if(bloodsuckerdatum_power.GetBloodVolume() >= bloodsuckerdatum_power.max_blood_volume && !notified_overfeeding)
+		user.balloon_alert(owner, "full on blood! Anything more we drink now will be burnt on quicker healing")
+		notified_overfeeding = TRUE
 	if(feed_target.blood_volume <= 0)
 		user.balloon_alert(owner, "no blood left!")
 		DeactivatePower()
