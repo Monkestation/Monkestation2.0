@@ -190,4 +190,4 @@
 			continue
 		. += chosen_bodypart.burn_dam
 
-#undefine BLOOD_LEVEL_GAIN_MAX
+#undef BLOOD_LEVEL_GAIN_MAX
