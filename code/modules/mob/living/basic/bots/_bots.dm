@@ -548,10 +548,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
-	if(length(initial_access))
-		if(QDELETED(access_card))
-			access_card = new /obj/item/card/id/advanced/simple_bot(src)
-		access_card.set_access(initial_access)
+	if(QDELETED(access_card))
+		access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	access_card.set_access(initial_access)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()

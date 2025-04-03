@@ -4,7 +4,6 @@
 	admin_only = TRUE
 	item_path = /obj/item/clothing/neck/admincloak
 
-
 /datum/loadout_item/neck/mentor_cloak
 	name = "Mentor Cloak"
 	requires_purchase = FALSE
@@ -14,3 +13,15 @@
 /datum/loadout_item/neck/mentor_cloak/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only, override_items)
 	if(!visuals_only)
 		spawn_in_backpack(outfit, item_path, equipper)
+
+/datum/loadout_item/under/miscellaneous/adminturtleneck
+	name = "CentCom Turtleneck"
+	requires_purchase = FALSE
+	admin_only = TRUE
+	item_path = /obj/item/clothing/under/rank/centcom/officer
+
+/datum/loadout_item/under/miscellaneous/adminturtleneckskirt
+	name = "CentCom Turtleneck Skirt"
+	requires_purchase = FALSE
+	admin_only = TRUE
+	item_path = /obj/item/clothing/under/rank/centcom/officer_skirt

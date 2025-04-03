@@ -4,16 +4,32 @@
 	display_name = "Cybernetic Application"
 	description = "Creation of NT-secure basic cyberlinks for low-grade cybernetic augmentation"
 	prereq_ids = list("adv_biotech","adv_biotech", "datatheory")
-	design_ids = list("ci-nt_low", "ci-set-connector", "nif_standard")
+	design_ids = list(
+		"ci-nt_low",
+		"ci-set-connector",
+		"nif_standard")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
+/datum/techweb_node/ntlink_low/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 750)
 
 /datum/techweb_node/ntlink_high
 	id = "ntlink_high"
 	display_name = "Advanced Cybernetic Application"
 	description = "Creation of NT-secure advanced cyberlinks for high-grade cybernetic augmentation"
 	prereq_ids = list("ntlink_low", "adv_cyber_implants","high_efficiency")
-	design_ids = list("ci-nt_high", "ci-tg", "ci-cyberconnector")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	design_ids = list(
+		"ci-nt_high",
+		"ci-tg",
+		"ci-cyberconnector")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+
+/datum/techweb_node/ntlink_high/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/job_approved_item_set
 	id = "job_itemsets"
@@ -28,8 +44,15 @@
 		"ci-set-atmospherics",
 		"ci-set-botany",
 		"ci-set-mining",
+		"ci-set-barber",
+		"ci-set-flash",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/job_approved_item_set/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/security_authorized_implants
 	id = "job_itemsets-sec"
@@ -39,5 +62,11 @@
 	design_ids = list(
 		"ci-set-mantis",
 		"ci-set-combat",
+		"ci-set-taser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+
+/datum/techweb_node/security_authorized_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
