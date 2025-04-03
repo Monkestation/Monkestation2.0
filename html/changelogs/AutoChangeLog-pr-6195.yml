@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Fixed a window on top of a windoor (which prevented interacting with the windoor) in the Icebox library."

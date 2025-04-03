@@ -25,3 +25,17 @@
 	requires_purchase = FALSE
 	admin_only = TRUE
 	item_path = /obj/item/clothing/under/rank/centcom/officer_skirt
+
+// Sprungle's loadout
+
+/datum/loadout_item/mask/sprungle_mask
+	name = "Porcelain Facemask"
+	requires_purchase = FALSE
+	ckeywhitelist = list("speebusdageebus", "plejek")
+	item_path = /obj/item/clothing/mask/sprungle
+
+/datum/loadout_item/mask/sprungle_golden_mask
+	name = "Golden Facemask"
+	requires_purchase = FALSE
+	ckeywhitelist = list("speebusdageebus", "plejek")
+	item_path = /obj/item/clothing/mask/sprungle/personal

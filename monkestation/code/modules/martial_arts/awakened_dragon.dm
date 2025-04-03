@@ -54,7 +54,7 @@
 	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
-	stamina_damage = 50
+	stamina_damage = -50
 	. = ..(attacker, defender, set_damage = FALSE)
 	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
