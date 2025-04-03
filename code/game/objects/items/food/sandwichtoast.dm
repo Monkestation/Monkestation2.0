@@ -242,7 +242,7 @@
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	bite_consumption = 100 //You either eat it right once or you die, this also prevents people from mass feeding others
 	foodtypes = GRAIN | MEAT
-	food_buffs = STATUS_EFFECT_DEATH_KWON_DO
+	food_buffs = null
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
 /obj/item/food/sandwich/death/Initialize(mapload)
@@ -266,16 +266,12 @@
 		return
 		//Its funnier that if you eat it wrong you just fucking explode.
 	consumer.gib(FALSE, TRUE, TRUE)
-	balloon_alert_to_viewers(consumer, "ate it wrong!!!")
+	to_chat(balloon_alert_to_viewers(consumer, "ate it wrong!!!"))
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
 * If you don't, you explode.
 */
-/obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
-	// If you like it, you're eating it right.
-	if(check_liked(consumer) == FOOD_LIKED)
-		return
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
