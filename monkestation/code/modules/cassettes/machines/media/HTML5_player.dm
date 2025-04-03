@@ -26,7 +26,7 @@ function SetVolume(volume, balance) {
 </script>
 </head>
 <body>
-	<audio id="player"></audio>
+	<audio id="player" crossOrigin="anonymous"></audio>
 </body>
 </html>
 "}
