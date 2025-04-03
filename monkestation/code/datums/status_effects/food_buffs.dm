@@ -361,3 +361,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
 		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_MINER, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/food/death_sandwich
+	name = "Ate it right!"
+	desc = "You have earned the right to use death-kwon-do."
+	icon_state = "death_sandwich"
