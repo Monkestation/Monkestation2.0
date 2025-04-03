@@ -266,15 +266,16 @@
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
-* If you don't, you contract a deadly disease.
+* If you don't, you explode.
 */
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
 	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
-	//Its funnier that if you eat it wrong you just fucking explode.
-	consumer.gib(FALSE)
-	balloon_alert(consumer, "ate it wrong!!!")
+	else
+		//Its funnier that if you eat it wrong you just fucking explode.
+		consumer.gib(FALSE, TRUE, TRUE)
+		balloon_alert(consumer, "ate it wrong!!!")
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
