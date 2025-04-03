@@ -72,6 +72,9 @@ ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, "Player Options Panel", "Pla
 		if("refresh")
 			ui.send_update()
 			return
+		if("oldPP")
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/playerpanel) //logs/rightscheck inside the proc
+			return
 		if("checkPlayers")
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_players) //logs/rightscheck inside the proc
 			return

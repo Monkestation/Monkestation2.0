@@ -1,5 +1,4 @@
 /// Takes input from /client/Topic and sends them a PM, fetching messages if needed. src is the sender and chosen_client is the target client
-/*
 /client/proc/cmd_mentor_pm(whom, msg)
 	var/client/chosen_client
 	if(ismob(whom))
@@ -102,8 +101,8 @@
 				mentorhelp(msg)
 				return
 
-		/// Neither party is a mentor, they shouldn't be PMing!
-		if(!chosen_client.is_mentor() && !is_mentor())
+		/// Neither party is a mentor, and the chosen client doesnt have mentor rights, they shouldn't be PMing!
+		if(!chosen_client?.mentor_datum?.check_for_rights(R_MENTOR) && !is_mentor())
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
@@ -114,7 +113,7 @@
 
 	msg = emoji_parse(msg)
 	chosen_client << 'sound/items/bikehorn.ogg'
-	if(chosen_client.is_mentor())
+	if(is_mentor(chosen_client))
 		if(is_mentor())
 			/// Both are Mentors
 			to_chat(chosen_client,
@@ -137,7 +136,6 @@
 				confidential = TRUE)
 			var/datum/request/request = GLOB.mentor_requests.requests[chosen_client.ckey][length(GLOB.mentor_requests.requests[chosen_client.ckey])]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
-
 	else
 		if(is_mentor())
 			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.
@@ -148,8 +146,6 @@
 				confidential = TRUE)
 			var/datum/request/request = GLOB.mentor_requests.requests[chosen_client.ckey][length(GLOB.mentor_requests.requests[chosen_client.ckey])]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
-
-
 
 	var/id = "None"
 
@@ -162,7 +158,7 @@
 		if(request)
 			id = "[request.id]"
 
-	if(is_mentor() && chosen_client.is_mentor())
+	if(is_mentor() && is_mentor(chosen_client))
 		id = "Both Mentors, ID Retrival may be wrong: [id]"
 
 	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
@@ -180,7 +176,7 @@
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<B><font color='green'>Mentor PM: [key_name_mentor(src, honked_clients, FALSE, FALSE)]-&gt;[key_name_mentor(chosen_client, honked_clients, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[msg]</span></font>",
 				confidential = TRUE)
-*/
+
 /proc/format_mhelp_embed_simple(msg, id, ckey)
 	if(!msg)
 		return

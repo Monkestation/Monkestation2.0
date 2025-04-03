@@ -56,8 +56,8 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 	switch(action)
 		if ("reply")
-			//var/mob/M = request.owner?.mob
-//			mentor_client.cmd_mentor_pm(M)
+			var/mob/M = request.owner?.mob
+			mentor_client.cmd_mentor_pm(M)
 			return TRUE
 		if ("follow")
 			//var/mob/M = request.owner?.mob

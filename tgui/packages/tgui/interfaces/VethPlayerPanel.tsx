@@ -74,6 +74,11 @@ export const VethPlayerPanel = (_props) => {
               <Grid.Column>
                 <Button
                   fluid
+                  content="Old PP"
+                  onClick={() => handleAction('oldPP')}
+                />
+                <Button
+                  fluid
                   content="Check Antags"
                   onClick={() => handleAction('checkAntags')}
                 />

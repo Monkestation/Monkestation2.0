@@ -44,17 +44,16 @@ MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CAT
 
 // Overwrites /client/Topic to return for mentor client procs
 /client/Topic(href, href_list, hsrc)
-	//if(mentor_client_procs(href_list))
-	//	return
+	if(mentor_client_procs(href_list))
+		return
 	return ..()
-/*
 
-*/
-/*
 /client/proc/mentor_client_procs(href_list)
 	if(href_list["mentor_msg"])
 		cmd_mentor_pm(href_list["mentor_msg"],null)
 		return TRUE
+/*
+
 
 	/// Mentor Follow
 	if(href_list["mentor_follow"])
