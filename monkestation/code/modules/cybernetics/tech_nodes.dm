@@ -17,7 +17,7 @@
 	description = "Creation of NT-secure advanced cyberlinks for high-grade cybernetic augmentation"
 	prereq_ids = list("ntlink_low", "adv_cyber_implants","high_efficiency")
 	design_ids = list("ci-nt_high", "ci-tg", "ci-cyberconnector")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/job_approved_item_set
 	id = "job_itemsets"
