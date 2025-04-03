@@ -19955,7 +19955,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gnH" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/sign/painting/large/library{
 	dir = 1
 	},
