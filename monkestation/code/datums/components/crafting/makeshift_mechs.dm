@@ -53,7 +53,7 @@
 
 /datum/crafting_recipe/makeshift_sleeper
 	name = "Makeshift Sleeper Module"
-	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
+	result = /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
 	reqs = list(/obj/item/stock_parts/cell = 1,
 		/obj/item/stack/sheet/cloth = 5,
 		/obj/item/stack/rods = 10,
@@ -66,7 +66,7 @@
 
 /datum/crafting_recipe/harm_alarm
 	name = "Harm Alarm Horn Module"
-	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
+	result = /obj/item/mecha_parts/mecha_equipment/weapon/honker/makeshift
 	reqs = list(/obj/item/stack/sheet/iron = 2,
 			/obj/item/stack/cable_coil = 15,
 			/obj/item/stock_parts/manipulator = 1,
