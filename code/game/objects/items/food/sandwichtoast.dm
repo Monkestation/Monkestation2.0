@@ -274,7 +274,7 @@
 		return
 	//Its funnier that if you eat it wrong you just fucking explode.
 	balloon_alert(consumer, "ate it wrong!!!")
-	consumer.gib(/* no_brain = */ FALSE)
+	consumer.gib(TRUE)
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
