@@ -7481,6 +7481,7 @@
 #include "monkestation\code\modules\hydroponics\mutations\infusions.dm"
 #include "monkestation\code\modules\hydroponics\seeds\coconut.dm"
 #include "monkestation\code\modules\indicators\ssd_indicator.dm"
+#include "monkestation\code\modules\industrial_lift\tram\tram_machinery.dm"
 #include "monkestation\code\modules\job_xp\job_xp_menu.dm"
 #include "monkestation\code\modules\job_xp\milestones\_milestones.dm"
 #include "monkestation\code\modules\job_xp\milestones\botany_milestones.dm"
