@@ -661,7 +661,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/icebox_bar)

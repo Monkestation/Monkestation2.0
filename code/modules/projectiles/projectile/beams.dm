@@ -199,6 +199,7 @@
 	impact_light_intensity = 7
 	impact_light_outer_range = 2.5
 	impact_light_color_override = COLOR_LIME
+	range = 255 //come on, have some fun now! monkestation edit
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"

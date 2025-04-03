@@ -1,7 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - rscadd: "Fugitive locator for bounty hunters"
-  - rscdel: "Psyker bounter hunters now disabled"
-  - balance: "Pirate airlocks now use syndicate access"
-  - balance: "Greytide and skeleton pirate shuttle improvements"

@@ -34,14 +34,10 @@
 	ornithid.Blend(eyes, ICON_OVERLAY)
 
 	for (var/name in sprite_accessories)
-
 		var/icon/final_icon = icon(ornithid)
-
-
 		final_icon.Crop(11, 20, 23, 32)
 		final_icon.Scale(32, 32)
 		final_icon.Blend(COLOR_BLUE_GRAY, ICON_MULTIPLY)
-
 		values[name] = final_icon
 
 	return values
