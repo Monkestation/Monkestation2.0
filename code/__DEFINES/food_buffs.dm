@@ -1,5 +1,7 @@
 ///FOOD DEFINES
 
+#define STATUS_EFFECT_DEATH_KWON_DO /datum/status_effect/food/death_kwon_do
+
 #define STATUS_EFFECT_FOOD_STAM_TINY /datum/status_effect/food/stamina_increase
 
 #define STATUS_EFFECT_FOOD_STAM_MEDIUM /datum/status_effect/food/stamina_increase/t2

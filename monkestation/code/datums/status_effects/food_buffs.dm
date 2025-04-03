@@ -316,9 +316,10 @@
 		var/mob/living/carbon/user = owner
 		user.stamina.regen_rate += regen_increase
 
-/datum/status_effect/food/death_sandwich
+/datum/status_effect/food/death_kwon_do
 	id = "death_kwon_do"
 	alert_type = /atom/movable/screeen/alert/status_effect/food/death_kwon_do
+	var/liked = FALSE
 
 /atom/movable/screen/alert/status_effect/food/death_kwon_do
 	name = "Ate it right!"
