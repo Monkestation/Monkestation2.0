@@ -266,7 +266,7 @@
 		return
 		//Its funnier that if you eat it wrong you just fucking explode.
 	consumer.gib(FALSE, TRUE, TRUE)
-	balloon_alert(consumer, "ate it wrong!!!")
+	balloon_alert_to_viewers(consumer, "ate it wrong!!!")
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
