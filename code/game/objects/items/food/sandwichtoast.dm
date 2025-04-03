@@ -241,7 +241,7 @@
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	foodtypes = GRAIN | MEAT
-	food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
+	food_buffs = NULL
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
 /obj/item/food/sandwich/death/Initialize(mapload)
@@ -251,7 +251,7 @@
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
 ///Eat it right, or you die.
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
@@ -259,6 +259,9 @@
 		return FOOD_LIKED
 	return FOOD_ALLERGIC
 
+/obj/item/food/sandwich/death/proc/on_consume(mob/living/carbon/human/consumer)
+	if(check_liked(consumer) == FOOD_LIKED)
+		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
