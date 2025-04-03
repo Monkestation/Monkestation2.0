@@ -253,9 +253,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
-			if(!is_funmin)
-				return
-			holder.anon_names()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb/anon_names)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
 		if("onlyone")
 			if(!is_funmin)

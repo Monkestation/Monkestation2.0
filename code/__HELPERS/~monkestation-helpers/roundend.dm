@@ -33,8 +33,8 @@
 		// WHYYYYYY
 		if(QDELETED(client))
 			return
-//		if(client?.is_mentor())
-//			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
+		if(is_mentor(client)) // Generalized check. Considering checking for R_MENTOR
+			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
 		// WHYYYYYYYYYYYYYYYY
 		if(QDELETED(client))
 			return

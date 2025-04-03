@@ -64,16 +64,3 @@ MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CAT
 			mentor_follow(followed_guy)
 		return TRUE
 */
-
-/*
-/proc/raw_is_mentor(ckey)
-	. = FALSE
-	var/list/mentors = world.file2list("[global.config.directory]/mentors.txt")
-	for(var/mentor in mentors)
-		if(!length(mentor))
-			continue
-		if(findtextEx(mentor, "#", 1, 2))
-			continue
-		if (ckey == ckey(mentor))
-			return TRUE
-*/

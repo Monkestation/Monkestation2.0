@@ -411,7 +411,7 @@ ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experienc
 
 	var/datum/skill_panel/SP = new(user, target_mind)
 	SP.ui_interact(user.mob)
-	//BLACKBOX_LOG_ADMIN_VERB("Skil Panel") //MONKE EDIT should we have this?
+	BLACKBOX_LOG_ADMIN_VERB("Skil Panel") //MONKE EDIT
 
 ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
 	if(!SSlag_switch.initialized)
@@ -436,4 +436,4 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 	dat += "Disable footsteps: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
-	//BLACKBOX_LOG_ADMIN_VERB("Lag Switch Panel") //MONKE EDIT should we have this?
+	BLACKBOX_LOG_ADMIN_VERB("Lag Switch Panel") //MONKE EDIT
