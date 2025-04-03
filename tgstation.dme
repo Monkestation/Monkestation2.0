@@ -6133,6 +6133,7 @@
 #include "monkestation\code\game\machinery\computer\crew.dm"
 #include "monkestation\code\game\machinery\computer\telescreen.dm"
 #include "monkestation\code\game\machinery\computer\orders\order_veggies.dm"
+#include "monkestation\code\game\machinery\computer\orders\order_items\mining\order_consumables.dm"
 #include "monkestation\code\game\machinery\doors\airlock.dm"
 #include "monkestation\code\game\machinery\doors\firedoor.dm"
 #include "monkestation\code\game\machinery\trains\train_cart.dm"
