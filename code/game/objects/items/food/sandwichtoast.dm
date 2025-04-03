@@ -241,7 +241,7 @@
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	foodtypes = GRAIN | MEAT
-	food_buffs = NULL
+	food_buffs = null
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
 /obj/item/food/sandwich/death/Initialize(mapload)
