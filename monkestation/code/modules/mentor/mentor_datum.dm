@@ -157,7 +157,6 @@ GLOBAL_PROTECT(mentor_href_token)
 		user = chosen_client.mob
 		key = chosen_client.key
 		ckey = chosen_client.ckey
-/*
 	else if(ismob(whom))
 		user = whom
 		chosen_client = user.client
@@ -169,7 +168,6 @@ GLOBAL_PROTECT(mentor_href_token)
 		chosen_client = GLOB.directory[ckey]
 		if(chosen_client)
 			user = chosen_client.mob
-*/
 	else if(findtext(whom, "Discord"))
 		return "<a href='byond://?_src_=mentor;mentor_msg=[whom];[MentorHrefToken(TRUE)]'>"
 	else
@@ -200,6 +198,19 @@ GLOBAL_PROTECT(mentor_href_token)
 		. += " (<a href='byond://?_src_=mentor;mentor_follow=[REF(user)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .
+
+/datum/mentors/proc/CheckMentorHREF(href, href_list)
+	var/auth = href_list["mentor_token"]
+	. = auth && (auth == href_token || auth == GLOB.mentor_href_token)
+	if(.)
+		return
+	var/msg = !auth ? "no" : "a bad"
+	message_admins("[key_name_admin(usr)] clicked an href with [msg] authorization key!")
+	if(CONFIG_GET(flag/debug_admin_hrefs))
+		message_admins("Debug mode enabled, call not blocked. Please ask your coders to review this round's logs.")
+		log_world("UAH: [href]")
+		return TRUE
+	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
 
 /proc/RawMentorHrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.mentor_href_token
