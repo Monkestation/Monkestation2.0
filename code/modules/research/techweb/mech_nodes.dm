@@ -224,7 +224,7 @@
 	id = "med_mech_tools"
 	display_name = "Medical Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_biotechm, mecha_odysseus")
+	prereq_ids = list("adv_biotech", "mecha_odysseus")
 	design_ids = list(
 		"mech_medi_beam",
 		"mech_sleeper",
