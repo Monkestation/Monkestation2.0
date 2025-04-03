@@ -322,7 +322,7 @@
 	var/liked = FALSE
 
 /atom/movable/screen/alert/status_effect/food/death_kwon_do
-	icon = 'monkestation/icons/hud/screem_alert.dmi'
+	icon = 'monkestation/icons/hud/screen_alert.dmi'
 	name = "Ate it right!"
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
