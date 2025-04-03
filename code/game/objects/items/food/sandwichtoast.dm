@@ -252,7 +252,7 @@
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
 ///Eat it right, or you die.
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
