@@ -60,8 +60,7 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 			mentor_client.cmd_mentor_pm(M)
 			return TRUE
 		if ("follow")
-			//var/mob/M = request.owner?.mob
-//			mentor_client.mentor_follow(M)
+			SSadmin_verbs.dynamic_invoke_mentor_verb(usr, /datum/mentor_verb/mentor_follow, request.owner?.mob)
 			return TRUE
 	return ..()
 

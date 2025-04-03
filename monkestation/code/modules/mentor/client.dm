@@ -52,14 +52,8 @@ MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CAT
 	if(href_list["mentor_msg"])
 		cmd_mentor_pm(href_list["mentor_msg"],null)
 		return TRUE
-/*
-
 
 	/// Mentor Follow
 	if(href_list["mentor_follow"])
-		var/mob/living/followed_guy = locate(href_list["mentor_follow"])
-
-		if(istype(followed_guy))
-			mentor_follow(followed_guy)
+		SSadmin_verbs.dynamic_invoke_mentor_verb(usr, /datum/mentor_verb/mentor_follow, locate(href_list["mentor_follow"]))
 		return TRUE
-*/

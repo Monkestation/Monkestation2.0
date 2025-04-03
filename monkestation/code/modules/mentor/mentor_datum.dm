@@ -17,7 +17,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	var/href_token
 
 	var/dementored
-	//var/mob/following
+
 	/// Are we a Contributor?
 	var/is_contributor = FALSE
 
