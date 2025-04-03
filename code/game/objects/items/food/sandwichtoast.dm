@@ -250,8 +250,9 @@
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
+	if(check_liked() == FOOD_LIKED)//Monkestation edit start:
+		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
-
 ///Eat it right, or you die.
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
@@ -267,7 +268,6 @@
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
 	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
-		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit:New status effect if you eat it right
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
 	balloon_alert(consumer, "ate it wrong!")
