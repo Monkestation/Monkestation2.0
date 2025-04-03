@@ -7240,6 +7240,7 @@
 #include "monkestation\code\modules\clothing\head\misc.dm"
 #include "monkestation\code\modules\clothing\head\wig.dm"
 #include "monkestation\code\modules\clothing\jobs\brig_physician.dm"
+#include "monkestation\code\modules\clothing\masks\costume.dm"
 #include "monkestation\code\modules\clothing\masks\gas_filter.dm"
 #include "monkestation\code\modules\clothing\masks\gasmask.dm"
 #include "monkestation\code\modules\clothing\masks\misc.dm"
