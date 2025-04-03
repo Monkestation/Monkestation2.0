@@ -75,7 +75,6 @@
 	webhook_mentor_pm(M, input["from"], id, input["reply_contents"])
 
 /datum/world_topic/reply_mentor/proc/webhook_mentor_pm(mob/reply, from, id, msg)
-/*
 	if(!reply)
 		logger.Log(LOG_CATEGORY_DEBUG, "NO REPLIER FOUND")
 		return
@@ -103,4 +102,3 @@
 		if(!embed)
 			return
 		send2mentorchat_webhook(embed, from)
-*/

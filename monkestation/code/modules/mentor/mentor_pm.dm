@@ -180,7 +180,7 @@
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<B><font color='green'>Mentor PM: [key_name_mentor(src, honked_clients, FALSE, FALSE)]-&gt;[key_name_mentor(chosen_client, honked_clients, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[msg]</span></font>",
 				confidential = TRUE)
-
+*/
 /proc/format_mhelp_embed_simple(msg, id, ckey)
 	if(!msg)
 		return
@@ -193,4 +193,3 @@
 		"Contents" = msg,
 	)
 	return embed
-*/
