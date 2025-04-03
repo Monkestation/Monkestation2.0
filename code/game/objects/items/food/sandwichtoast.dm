@@ -235,13 +235,14 @@
 	desc = "Eat it right, or you die!"
 	icon_state = "death_sandwich"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 8,
-		/datum/reagent/consumable/nutriment/protein = 14,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
+	bite_consumption_mod = 100
 	foodtypes = GRAIN | MEAT
-	food_buffs = null
+	food_buffs = STATUS_EFFECT_DEATH_KWON_DO
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
 /obj/item/food/sandwich/death/Initialize(mapload)
@@ -271,9 +272,9 @@
 	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
-	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
-	balloon_alert(consumer, "ate it wrong!")
-	consumer.infect_disease_predefined(DISEASE_SANDWICH, TRUE) //Monkestation Edit: Pathology (drinking anacea is still the only cure)
+	//Its funnier that if you eat it wrong you just fucking explode.
+	balloon_alert(consumer, "ate it wrong!!!")
+	consumer.gib(/* no_brain = */ FALSE)
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
