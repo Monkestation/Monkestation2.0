@@ -59,8 +59,6 @@ MENTOR_VERB(cmd_mentor_say, R_MENTOR, "Mentorsay", "Send a message to other ment
 		mentors_to_ping[ASAY_LINK_PINGED_ADMINS_INDEX] = jointext(msglist, " ")
 		return mentors_to_ping
 
-/*
 /client/proc/get_mentor_say()
 	var/msg = input(src, null, "msay \"text\"") as text|null
-	cmd_mentor_say(msg)
-*/
+	SSadmin_verbs.dynamic_invoke_mentor_verb(src, /datum/mentor_verb/cmd_mentor_say, msg)

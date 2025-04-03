@@ -64,7 +64,6 @@ GLOBAL_PROTECT(mentor_href_token)
 	GLOB.dementors -= target
 	GLOB.mentor_datums[target] = src
 	dementored = FALSE
-	//plane_debug = new(src) //DO we need? Mostly likely no.
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
@@ -76,7 +75,6 @@ GLOBAL_PROTECT(mentor_href_token)
 		return
 	GLOB.dementors[target] = src
 	GLOB.mentor_datums -= target
-	//QDEL_NULL(plane_debug)
 
 	dementored = TRUE
 
@@ -85,8 +83,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	if (!isnull(client))
 		disassociate()
 		add_verb(client, /client/proc/rementor)
-		//client.disable_combo_hud()
-		//client.update_special_keybinds()
+		client.update_special_keybinds()
 
 /datum/mentors/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())
@@ -114,7 +111,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	owner.add_mentor_verbs()
 	remove_verb(owner, /client/proc/rementor)
 	owner.init_verbs() //re-initialize the verb list
-	//owner.update_special_keybinds()
+	owner.update_special_keybinds()
 	GLOB.mentors |= client
 
 /datum/mentors/proc/disassociate()
@@ -187,8 +184,8 @@ GLOBAL_PROTECT(mentor_href_token)
 		if(include_link != null)
 			. += "<a href='byond://?_src_=mentor;mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
 
-		//if(chosen_client && chosen_client.holder && chosen_client.holder.fakekey)
-		//	. += "Administrator"
+		if(chosen_client && chosen_client.holder && chosen_client.holder.fakekey)
+			. += "Administrator"
 		else
 			. += key
 		if(!chosen_client)

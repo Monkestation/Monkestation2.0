@@ -1187,14 +1187,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
-/*
 				if(MENTOR_CHANNEL)
-					if(mentor_datum)
+					if(mentor_datum?.check_for_rights(R_MENTOR))
 						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
-						*/
 	calculate_move_dir()
 
 /client/proc/change_view(new_size)
