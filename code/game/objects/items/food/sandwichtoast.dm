@@ -263,6 +263,10 @@
 /obj/item/food/sandwich/death/proc/on_consume(mob/living/carbon/human/consumer)
 	if(check_liked(consumer) == FOOD_LIKED)
 		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
+		return
+		//Its funnier that if you eat it wrong you just fucking explode.
+	consumer.gib(FALSE, TRUE, TRUE)
+	balloon_alert(consumer, "ate it wrong!!!")
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
@@ -272,10 +276,6 @@
 	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
-	else
-		//Its funnier that if you eat it wrong you just fucking explode.
-		consumer.gib(FALSE, TRUE, TRUE)
-		balloon_alert(consumer, "ate it wrong!!!")
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
