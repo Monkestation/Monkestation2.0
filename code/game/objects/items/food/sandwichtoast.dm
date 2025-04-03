@@ -267,7 +267,7 @@
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
 	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
-		food_buffs = STATUS_EFFECT_DEATH_SANDWICH //Monkestation Edit:New status effect if you eat it right
+		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit:New status effect if you eat it right
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
 	balloon_alert(consumer, "ate it wrong!")

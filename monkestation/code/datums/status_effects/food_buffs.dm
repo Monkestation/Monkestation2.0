@@ -316,7 +316,11 @@
 		var/mob/living/carbon/user = owner
 		user.stamina.regen_rate += regen_increase
 
-/atom/movable/screen/alert/status_effect/food/death_sandwich
+/datum/status_effect/food/death_sandwich
+	id = "death_kwon_do"
+	alert_type = /atom/movable/screeen/alert/status_effect/food/death_kwon_do
+
+/atom/movable/screen/alert/status_effect/food/death_kwon_do
 	name = "Ate it right!"
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
