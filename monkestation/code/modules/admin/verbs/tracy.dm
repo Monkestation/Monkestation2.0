@@ -4,7 +4,7 @@
 	set category = "Debug"
 	if(!check_rights_for(src, R_DEBUG))
 		return
-#ifndef OPENDREAM
+#ifndef OPENDREAM_REAL
 	if(!fexists(TRACY_DLL_PATH))
 		to_chat(src, span_danger("byond-tracy library ([TRACY_DLL_PATH]) not present!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
 		return
@@ -24,7 +24,7 @@
 	set category = "Debug"
 	if(!check_rights_for(src, R_DEBUG))
 		return
-#ifndef OPENDREAM
+#ifndef OPENDREAM_REAL
 	if(Tracy.enabled)
 		to_chat(src, span_warning("byond-tracy is already running!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
 		return
