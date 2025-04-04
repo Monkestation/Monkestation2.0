@@ -1,4 +1,4 @@
-/client/proc/cmd_mass_modify_object_variables(atom/A, var_name)
+/client/proc/cmd_mass_modify_object_variables(atom/A, var_name) // TODO Convert to AVD
 	set category = "Debug"
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
