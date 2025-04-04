@@ -340,21 +340,3 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
-
-/**
-* Returns the metrics for the subsystem.
-*
-* This can be overriden on subtypes for variables that could affect tick usage
-* Example: ATs on SSair
-*/
-
-/datum/controller/subsystem/proc/get_metrics()
-	SHOULD_CALL_PARENT(TRUE)
-	var/list/out = list()
-	out["relation_id_SS"] = "[ss_id]-[time_stamp()]-[rand(100, 10000)]" // since we insert custom into its own table we want to add a relational id to fetch from the custom data and the subsystem
-	out["cost"] = cost
-	out["tick_usage"] = tick_usage
-	out["avg_iter_count"] = avg_iter_count
-	out["avg_drift"] = avg_drift
-	out["custom"] = list() // Override as needed on child
-	return out

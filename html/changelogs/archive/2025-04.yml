@@ -32,10 +32,18 @@
   - code_imp: The protection from revenant blight after being cured is now a trait,
       rather than a status effect
   - rscdel: Removed the TEG and SM-TEG from Box Station's random engine rotation.
+  - code_imp: Heavily optimized code related to the roundend process.
+  - refactor: Refactored some code related to initialization.
+  - code_imp: Runtime errors will now print to the chat while debugging.
+  Absolucy, Gaxeer:
+  - bugfix: Round time in stat panel and ESC menu will show actual time since the
+      round start, not the world time.
   Absolucy, Kashargul:
   - bugfix: confirm buttons on the chat window
   - bugfix: scroll tracking failing on large display counts when large messages blocks
       where received
+  Absolucy, Vishenka0704, Mothblocks:
+  - qol: You can now delete your characters in preferences.
   Gw0sty:
   - rscadd: Cassettes can be made on central command
   - map: Icebox surgery is more spacious

@@ -17,6 +17,7 @@ import {
   PreferencesMenuData,
   RandomSetting,
 } from './data';
+import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { RandomizationButton } from './RandomizationButton';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -30,6 +31,7 @@ import {
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
+import { InfernoNode } from 'inferno';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
@@ -44,6 +46,8 @@ const CharacterControls = (props: {
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
+  canDeleteCharacter: boolean;
+  handleDeleteCharacter: () => void;
 }) => {
   return (
     <Stack>
@@ -75,6 +79,18 @@ const CharacterControls = (props: {
           />
         </Stack.Item>
       )}
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleDeleteCharacter}
+          fontSize="22px"
+          icon="trash"
+          color="red"
+          tooltip="Delete character"
+          tooltipPosition="top"
+          disabled={!props.canDeleteCharacter}
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -468,6 +484,7 @@ const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
+  children?: InfernoNode;
 }) => {
   return (
     <Stack.Item
@@ -524,6 +541,7 @@ const PreferenceList = (props: {
           },
         )}
       </LabeledList>
+      {props.children}
     </Stack.Item>
   );
 };
@@ -533,6 +551,10 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
     string | null
   >('currentClothingMenu', null);
+  const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] = useLocalState(
+    'deleteCharacterPopupOpen',
+    false,
+  );
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     'multiNameInputOpen',
     false,
@@ -633,6 +655,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
               />
             )}
 
+            {deleteCharacterPopupOpen && (
+              <DeleteCharacterPopup
+                close={() => setDeleteCharacterPopupOpen(false)}
+              />
+            )}
+
             <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
               <Stack.Item fill>
                 <Stack vertical fill>
@@ -646,6 +674,14 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                       setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true
+                      }
+                      canDeleteCharacter={
+                        Object.values(data.character_profiles).filter(
+                          (name) => name,
+                        ).length > 1
+                      }
+                      handleDeleteCharacter={() =>
+                        setDeleteCharacterPopupOpen(true)
                       }
                     />
                   </Stack.Item>
