@@ -230,7 +230,7 @@
 		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun, //monkestation edit: Hard to keep gozilla down.
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
-		/datum/job/gorilla = /obj/item/organ/internal/cyberimp/arm/muscle, // monkestation edit: monke strong
+		/datum/job/gorilla = /obj/item/organ/internal/cyberimp/arm/strongarm, // monkestation edit: monke strong
 		/datum/job/head_of_personnel = /obj/item/organ/internal/cyberimp/eyes/hud/security, // monkestation edit:
 		/datum/job/head_of_security = /obj/item/organ/internal/cyberimp/arm/item_set/combat, // monkestation edit: cybernetics overhaul (no more validhunt eyes, instead you get a shoddy stunprod in your arm)
 		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor, // monkestation edit: cybernetics overhaul (useful job stuff)
