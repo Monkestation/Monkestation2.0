@@ -153,6 +153,3 @@ MENTOR_VERB(end_imaginary_friendship, R_MENTOR, "End Imaginary Friendship", "Bre
 	if(href_list["mentor_friend"])
 		var/mob/M = locate(href_list["mentor_friend"])
 		create_ifriend(M, TRUE)
-
-//for Mentor Chat Messages
-
