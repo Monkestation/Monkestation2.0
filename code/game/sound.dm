@@ -139,12 +139,14 @@
 			else
 				used_channel = mixer_channel
 			if("[used_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
+				var/volume_multiplier = (client.prefs.channel_volume["[used_channel]"] * 0.01)
+				sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
 		else if(!mixer_channel)
 			mixer_channel = guess_mixer_channel(soundin)
 			if("[mixer_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+				var/volume_multiplier = (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+				sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
 		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
 			return //No sound
