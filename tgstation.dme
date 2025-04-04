@@ -6563,6 +6563,7 @@
 #include "monkestation\code\modules\antagonists\nukeop\equipment\nuclear_bomb\bee_nuke.dm"
 #include "monkestation\code\modules\antagonists\obsessed\obsessed.dm"
 #include "monkestation\code\modules\antagonists\pirate\pirate_outfits.dm"
+#include "monkestation\code\modules\antagonists\revenant\revenant_antag.dm"
 #include "monkestation\code\modules\antagonists\space_ninja\space_ninja.dm"
 #include "monkestation\code\modules\antagonists\teratoma\teratoma.dm"
 #include "monkestation\code\modules\antagonists\traitor\traitor_objective.dm"
