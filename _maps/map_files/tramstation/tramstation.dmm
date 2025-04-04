@@ -34964,7 +34964,7 @@
 /area/station/maintenance/starboard/lesser)
 "jVp" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid/airless,
+/turf/open/misc/asteroid,
 /area/station/asteroid)
 "jVw" = (
 /turf/open/floor/iron/white,
@@ -42394,11 +42394,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
-"mhG" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/grass,
-/area/station/asteroid/tram/pet)
 "mhQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -47011,11 +47006,6 @@
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/service)
-"nGR" = (
-/mob/living/basic/butterfly/lavaland,
-/obj/structure/cable,
-/turf/open/floor/grass,
-/area/station/asteroid/tram/pet)
 "nGX" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -55079,6 +55069,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/station/asteroid/tram/pet)
 "qjw" = (
@@ -55400,7 +55391,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/asteroid/tram/pet)
 "qoX" = (
@@ -131374,7 +131364,7 @@ qPe
 uuK
 uNZ
 qxm
-aac
+abM
 oys
 oys
 oys
@@ -131631,7 +131621,7 @@ ruy
 opy
 jYY
 qxm
-aac
+abM
 jVp
 aak
 aaa
@@ -131888,8 +131878,8 @@ ldg
 sYP
 ecO
 qxm
-aac
-aac
+abM
+abM
 aak
 aaa
 aaa
@@ -132145,9 +132135,9 @@ pAf
 oAw
 eqw
 qxm
-aac
-aac
-aac
+abM
+abM
+abM
 aaa
 aaa
 aaa
@@ -132402,7 +132392,7 @@ rGx
 pzs
 lEo
 qxm
-aac
+abM
 aaa
 aaa
 aaa
@@ -132659,7 +132649,7 @@ lFH
 eHL
 aAj
 qxm
-aac
+abM
 aaa
 aaa
 aaa
@@ -132916,8 +132906,8 @@ iMf
 ruy
 ecO
 qxm
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133173,8 +133163,8 @@ asR
 asR
 qxm
 qxm
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133430,8 +133420,8 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133687,7 +133677,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+abM
 aaa
 aaa
 aaa
@@ -133944,7 +133934,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+abM
 aaa
 aaa
 aaa
@@ -134201,8 +134191,8 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -134458,9 +134448,9 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+abM
+abM
+abM
 aaa
 aaa
 aaa
@@ -185353,8 +185343,8 @@ sJF
 xTG
 fCF
 xTG
-nGR
-mhG
+gcr
+xTG
 fCF
 xTG
 xip

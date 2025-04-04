@@ -19,6 +19,7 @@
 	weight = 10
 	station_name = "Box Station"
 
+/*
 /datum/map_template/random_room/random_engines/box_teg
 	name = "Box TEG Engine"
 	room_id = "box_teg"
@@ -38,3 +39,4 @@
 	template_width = 29
 	weight = 6
 	station_name = "Box Station"
+*/
