@@ -8,6 +8,10 @@
 	encode_info = AUGMENT_NT_LOWLEVEL
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
+	/// Organ slot that the implant occupies for the right arm
+	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
+	/// Organ slot that the implant occupies for the left arm
+	var/left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_AUG
 
 /obj/item/organ/internal/cyberimp/arm/Initialize(mapload)
 	. = ..()
@@ -58,9 +62,9 @@
 /obj/item/organ/internal/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
-			slot = ORGAN_SLOT_LEFT_ARM_AUG
+			slot = left_arm_organ_slot
 		if(BODY_ZONE_R_ARM)
-			slot = ORGAN_SLOT_RIGHT_ARM_AUG
+			slot = right_arm_organ_slot
 		else
 			CRASH("Invalid zone for [type]")
 
