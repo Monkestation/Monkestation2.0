@@ -7,7 +7,7 @@ ADMIN_VERB(player_panel_veth, R_ADMIN, "Player Panel Veth", "Updated Player Pane
 	to_chat(src, span_interface("VUAP has been opened!"), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("VUAP")
 
-ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, "Player Options Panel", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
+ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, "Open TGUI PP", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
 	var/client/targetclient = target.client
 	if(!length(targetclient.ckey) || targetclient.ckey[1] == "@")
 		var/mob/player = target
