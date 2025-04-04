@@ -722,23 +722,6 @@ CREATE TABLE `tutorial_completions` (
   UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
 
 --
--- Table structure for table `metric_data`
---
-DROP TABLE IF EXISTS `metric_data`;
-CREATE TABLE `metric_data` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`datetime` datetime NOT NULL,
-	`cpu` decimal(20,10) unsigned DEFAULT NULL,
-	`maptick` decimal(20,10) unsigned DEFAULT NULL,
-	`elapsed_processed` int(15) unsigned DEFAULT NULL,
-	`elapsed_real` int(15) unsigned DEFAULT NULL,
-	`client_count` int(15) unsigned DEFAULT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`relational_id` varchar(255) DEFAULT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
 -- Table structure for table `overwatch_asn_ban`
 --
 DROP TABLE IF EXISTS `overwatch_asn_ban`;
