@@ -21,6 +21,7 @@
 	desc = "A dressed-up leather sheath featuring a brass tip. It has a large pocket clip right in the center, for ease of carrying an otherwise burdensome knife."
 	icon = 'monkestation/code/modules/blueshift/icons/bowiepocket.dmi'
 	icon_state = "bowiesheath"
+	icon_state_preview = "bowiesheathe-knife"
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE

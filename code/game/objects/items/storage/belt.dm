@@ -795,6 +795,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
+	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY

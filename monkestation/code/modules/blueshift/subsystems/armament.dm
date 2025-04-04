@@ -98,8 +98,6 @@ SUBSYSTEM_DEF(armaments)
 	var/cost = 0
 	/// Defines what slot we will try to equip this item to.
 	var/slot_to_equip = ITEM_SLOT_HANDS
-	/// Our cached image.
-	var/cached_base64
 	/// The maximum amount of this item that can be equipped.
 	var/max_purchase = 1
 	/// Do we have magazines for purchase?
@@ -110,13 +108,10 @@ SUBSYSTEM_DEF(armaments)
 	var/restricted = FALSE
 
 /datum/armament_entry/proc/setup()
-	var/obj/item/test_item = new item_type()
-	if(istype(test_item, /obj/item/gun/ballistic))
-		var/obj/item/gun/ballistic/ballistic_test = test_item
-		if(!ballistic_test.internal_magazine)
-			magazine = ballistic_test.spawn_magazine_type
-	cached_base64 = icon2base64(getFlatIcon(test_item, no_anim = TRUE))
-	qdel(test_item)
+	if(ispath(item_type, /obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/ballistic_type = item_type
+		if(!ballistic_type::internal_magazine)
+			magazine = ballistic_type::spawn_magazine_type
 
 /// This proc handles how the item should be equipped to the player. This needs to return either TRUE or FALSE, TRUE being that it was able to equip the item.
 /datum/armament_entry/proc/equip_to_human(mob/living/carbon/human/equipping_human, obj/item/item_to_equip)
