@@ -85,11 +85,15 @@
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
+	// monkestation start: mixer channels
 	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
 		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
+			return
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-		sound_to_use.volume *= 0
+		return
+	// monkestation end
 
 	if(vary)
 		if(frequency)
