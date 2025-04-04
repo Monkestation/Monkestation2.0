@@ -350,7 +350,7 @@
 	///even INVOCATION_NONE should go through this because the signal might change that
 	invocation()
 	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
+		playsound(owner, sound, 50, vary = TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()

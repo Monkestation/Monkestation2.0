@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(polling)
 			var/sfx_volume = candidate_mob.client?.prefs?.channel_volume["[CHANNEL_SOUND_EFFECTS]"]
 			if(!isnull(sfx_volume))
 				volume *= sfx_volume * 0.01
-			SEND_SOUND(candidate_mob, sound('sound/misc/prompt.ogg', volume = volume))
+			send_sound_without_reverb(candidate_mob, sound('sound/misc/prompt.ogg', volume = volume))
 			// monkestation end
 			var/surrounding_icon
 			if(surrounding_image)

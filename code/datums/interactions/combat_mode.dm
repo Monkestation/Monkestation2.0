@@ -35,9 +35,9 @@
 
 	if(old_state != combat_mode && (owner.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
 		if(combat_mode)
-			SEND_SOUND(owner, sound('sound/misc/ui_togglecombat.ogg', volume = 25))
+			send_sound_without_reverb(owner, sound('sound/misc/ui_togglecombat.ogg', volume = 25))
 		else
-			SEND_SOUND(owner, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25))
+			send_sound_without_reverb(owner, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25))
 
 	update_istate(owner.mob, null)
 	UI?.update_icon_state()
@@ -52,6 +52,6 @@
 		return
 
 	if(combat_mode)
-		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
+		send_sound_without_reverb(owner, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
 	else
-		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above
+		send_sound_without_reverb(owner, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above

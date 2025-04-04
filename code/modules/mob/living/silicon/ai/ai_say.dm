@@ -152,6 +152,11 @@
 		var/sound_file = GLOB.vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
+		// monkestation start: ensure vox speech doesn't reverb
+		voice.echo ||= new /list(18)
+		voice.echo[3] = -10000
+		voice.echo[4] = -10000
+		// monkestation end
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)

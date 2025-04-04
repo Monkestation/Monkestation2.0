@@ -54,7 +54,7 @@
 			for(var/mob/target in players)
 				to_chat(target, finalized_announcement)
 				if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(target, sound(sound_override))
+					send_sound_without_reverb(target, sound(sound_override)) // monkestation edit: send_sound_without_reverb
 		else
 			to_chat(world, finalized_announcement)
 
@@ -63,7 +63,7 @@
 
 			for(var/mob/player in GLOB.player_list)
 				if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(player, sound(sound_override))
+					send_sound_without_reverb(player, sound(sound_override)) // monkestation edit: send_sound_without_reverb
 
 /**
  * Inserts a span styled message into an alert box div

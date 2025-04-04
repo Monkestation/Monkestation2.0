@@ -433,7 +433,7 @@
 			SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 
 		//always play non-admin recipients the adminhelp sound
-		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
+		send_sound_without_reverb(recipient, sound('sound/effects/adminhelp.ogg')) // monkestation edit: send_sound_without_reverb
 		return TRUE
 
 	// Ok if we're here, either this message is for an admin, or someone somehow figured out how to send a new message as a player

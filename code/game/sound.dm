@@ -1,92 +1,3 @@
-GLOBAL_LIST_INIT(used_sound_channels, list(
-	CHANNEL_MASTER_VOLUME,
-	CHANNEL_LOBBYMUSIC,
-	CHANNEL_ADMIN,
-	CHANNEL_VOX,
-	CHANNEL_JUKEBOX,
-	CHANNEL_HEARTBEAT,
-	CHANNEL_AMBIENCE,
-	CHANNEL_BUZZ,
-	CHANNEL_SOUND_EFFECTS,
-	CHANNEL_SOUND_FOOTSTEPS,
-	CHANNEL_WEATHER,
-	CHANNEL_MACHINERY,
-	CHANNEL_INSTRUMENTS,
-	CHANNEL_INSTRUMENTS_ROBOT,
-	CHANNEL_MOB_SOUNDS,
-	CHANNEL_PRUDE,
-	CHANNEL_SQUEAK,
-	CHANNEL_MOB_EMOTES,
-	CHANNEL_SILICON_EMOTES,
-))
-
-GLOBAL_LIST_INIT(proxy_sound_channels, list(
-	CHANNEL_SOUND_EFFECTS,
-	CHANNEL_SOUND_FOOTSTEPS,
-	CHANNEL_WEATHER,
-	CHANNEL_MACHINERY,
-	CHANNEL_INSTRUMENTS,
-	CHANNEL_INSTRUMENTS_ROBOT,
-	CHANNEL_MOB_SOUNDS,
-	CHANNEL_PRUDE,
-	CHANNEL_SQUEAK,
-	CHANNEL_MOB_EMOTES,
-	CHANNEL_SILICON_EMOTES,
-))
-
-GLOBAL_LIST_EMPTY(cached_mixer_channels)
-
-
-/proc/guess_mixer_channel(soundin)
-	var/sound_text_string
-	if(istype(soundin, /sound))
-		var/sound/bleh = soundin
-		sound_text_string = "[bleh.file]"
-	else
-		sound_text_string = "[soundin]"
-	if(GLOB.cached_mixer_channels[sound_text_string])
-		return GLOB.cached_mixer_channels[sound_text_string]
-	else if(findtext(sound_text_string, "effects/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else if(findtext(sound_text_string, "machines/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
-	else if(findtext(sound_text_string, "creatures/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "/ai/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
-	else if(findtext(sound_text_string, "chatter/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "items/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else if(findtext(sound_text_string, "weapons/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
-	else
-		return FALSE
-
-///Default override for echo
-/sound
-	echo = list(
-		0, // Direct
-		0, // DirectHF
-		-10000, // Room, -10000 means no low frequency sound reverb
-		-10000, // RoomHF, -10000 means no high frequency sound reverb
-		0, // Obstruction
-		0, // ObstructionLFRatio
-		0, // Occlusion
-		0.25, // OcclusionLFRatio
-		1.5, // OcclusionRoomRatio
-		1.0, // OcclusionDirectRatio
-		0, // Exclusion
-		1.0, // ExclusionLFRatio
-		0, // OutsideVolumeHF
-		0, // DopplerFactor
-		0, // RolloffFactor
-		0, // RoomRolloffFactor
-		1.0, // AirAbsorptionFactor
-		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
-	)
-	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
-
 /**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
@@ -109,13 +20,18 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(islist(soundin))
 		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
 
-	var/turf/turf_source = get_turf(source)
-
-	if (!turf_source || !soundin || !vol)
-		return
+	if(!soundin)
+		CRASH("playsound(): no soundin passed")
 
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
+
+	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		CRASH("playsound(): volume below SOUND_AUDIBLE_VOLUME_MIN. [vol] < [SOUND_AUDIBLE_VOLUME_MIN]")
+
+	var/turf/turf_source = get_turf(source)
+	if (!turf_source)
+		return
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -123,34 +39,41 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
-	. = list()//output everything that successfully heard the sound
+	if(vary && !frequency)
+		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
+
+	var/list/listeners
 
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 	var/turf/below_turf = GET_TURF_BELOW(turf_source)
 
-	if(ignore_walls)
+	var/audible_distance = falloff_exponent ? CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(vol, maxdistance, falloff_distance, falloff_exponent) : maxdistance
 
+	if(ignore_walls)
+		listeners = get_hearers_in_range(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		if(above_turf && istransparentturf(above_turf))
-			listeners += SSmobs.clients_by_zlevel[above_turf.z]
+			listeners += get_hearers_in_range(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += SSmobs.clients_by_zlevel[below_turf.z]
+			listeners += get_hearers_in_range(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(maxdistance, turf_source)
+		listeners = get_hearers_in_view(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(maxdistance, above_turf)
+			listeners += get_hearers_in_view(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(maxdistance, below_turf)
+			listeners += get_hearers_in_view(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/listening_ghost as anything in SSmobs.dead_players_by_zlevel[source_z])
+			if(get_dist(listening_ghost, turf_source) <= audible_distance)
+				listeners += listening_ghost
 
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= maxdistance)
-			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
-			. += listening_mob
+	for(var/mob/listening_mob in listeners)//had nulls sneak in here, hence the typecheck
+		listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
+
+	return listeners
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, mixer_channel = 0)
 	if(!client || !can_hear())
@@ -162,11 +85,14 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
+	// monkestation start: mixer channels
 	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
-		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+		var/volume_multiplier = (client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+		sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-		sound_to_use.volume *= 0
+		return
+	// monkestation end
 
 	if(vary)
 		if(frequency)
@@ -174,15 +100,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		else
 			sound_to_use.frequency = get_rand_frequency()
 
+	var/distance = 0
+
 	if(isturf(turf_source))
 		var/turf/turf_loc = get_turf(src)
 
 		//sound volume falloff with distance
-		var/distance = get_dist(turf_loc, turf_source) * distance_multiplier
+		distance = get_dist(turf_loc, turf_source) * distance_multiplier
 
-		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff. MONKESTATION EDIT
-			sound_to_use.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * sound_to_use.volume
-			//https://www.desmos.com/calculator/sqdfl8ipgf
+		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff.
+			sound_to_use.volume -= CALCULATE_SOUND_VOLUME(vol, distance, max_distance, falloff_distance, falloff_exponent)
 
 		if(pressure_affected)
 			//Atmosphere affects sound
@@ -211,14 +138,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			else
 				used_channel = mixer_channel
 			if("[used_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
+				var/volume_multiplier = (client.prefs.channel_volume["[used_channel]"] * 0.01)
+				sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
 		else if(!mixer_channel)
 			mixer_channel = guess_mixer_channel(soundin)
 			if("[mixer_channel]" in client.prefs.channel_volume)
-				sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+				var/volume_multiplier = (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
+				sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
-		if(sound_to_use.volume <= 0)
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
 			return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
@@ -239,14 +168,13 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
 
-		if(turf_source != get_turf(src))
-			sound_to_use.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-		else
-			sound_to_use.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-
-		if(!use_reverb)
+		if(!use_reverb || sound_to_use.environment == SOUND_ENVIRONMENT_NONE)
+			sound_to_use.echo ||= new /list(18)
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
+
+	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
+		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
 	SEND_SOUND(src, sound_to_use)
 

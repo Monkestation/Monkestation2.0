@@ -83,7 +83,7 @@
 	for(var/client/honked_clients in GLOB.mentors | GLOB.admins)
 		if(QDELETED(honked_clients?.mentor_datum) || honked_clients?.mentor_datum?.not_active)
 			continue
-		SEND_SOUND(honked_clients, sound('sound/items/bikehorn.ogg'))
+		send_sound_without_reverb(honked_clients, sound('sound/items/bikehorn.ogg'))
 		if(!isobserver(honked_clients.mob))
 			to_chat(honked_clients,
 					type = MESSAGE_TYPE_MODCHAT,

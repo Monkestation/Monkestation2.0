@@ -4,4 +4,4 @@
 
 /datum/smite/fake_bwoink/effect(client/user, mob/living/target)
 	. = ..()
-	SEND_SOUND(target, 'sound/effects/adminhelp.ogg')
+	send_sound_without_reverb(target, 'sound/effects/adminhelp.ogg') // monkestation edit: send_sound_without_reverb
