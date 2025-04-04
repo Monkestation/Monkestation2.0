@@ -149,7 +149,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	// First possible sleep()
 	InitTgs()
-	SSmetrics.world_init_time = REALTIMEOFDAY
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	ConfigLoaded()

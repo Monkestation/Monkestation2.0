@@ -7671,8 +7671,6 @@
 #include "monkestation\code\modules\meteor_shield\meteor_shield_proxy.dm"
 #include "monkestation\code\modules\meteor_shield\meteor_shield_zap.dm"
 #include "monkestation\code\modules\meteors\meteor_dark_matteor.dm"
-#include "monkestation\code\modules\metrics\metric_subsystem.dm"
-#include "monkestation\code\modules\metrics\subsystem_analytics\generics.dm"
 #include "monkestation\code\modules\microfusion\code\cargo_stuff.dm"
 #include "monkestation\code\modules\microfusion\code\gun_types.dm"
 #include "monkestation\code\modules\microfusion\code\microfusion_cell.dm"
