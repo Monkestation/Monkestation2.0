@@ -31841,6 +31841,9 @@
 /obj/machinery/computer/records/medical/laptop,
 /obj/machinery/firealarm/directional/north,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "jbf" = (
@@ -40377,6 +40380,7 @@
 	c_tag = "Armory - Interior"
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/dragnet_beacon,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "lrc" = (
@@ -65616,6 +65620,9 @@
 	pixel_x = 7;
 	pixel_y = 14
 	},
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "soY" = (
@@ -86254,6 +86261,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball{
+	icon_state = "case_carwo"
+	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "xXg" = (
