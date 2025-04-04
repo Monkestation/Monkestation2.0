@@ -1,7 +1,7 @@
 GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
 SUBSYSTEM_DEF(admin_verbs)
-	name = "Admin Verbs"
+	name = "Admin/Mentor Verbs" // MONKE EDIT
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_ADMIN_VERBS
 	/// A list of all admin verbs indexed by their type.
@@ -35,8 +35,12 @@ SUBSYSTEM_DEF(admin_verbs)
 	mentor_verbs_by_type = SSadmin_verbs.mentor_verbs_by_type // MONKE EDIT
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
-	//init_stage <= Master.init_stage_completed
-	return "[..()] | V: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
+//MONKE EDIT START Having it report offline is confusing. So if it initialized it initialized.
+	. = ..()
+	if(initialized)
+		. = "Initialized | V: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
+	return .
+//MONKE EDIT END
 
 /datum/controller/subsystem/admin_verbs/proc/process_pending_admins()
 	var/list/pending_admins = admins_pending_subsytem_init

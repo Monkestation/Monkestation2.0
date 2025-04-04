@@ -121,8 +121,8 @@ MENTOR_VERB(end_imaginary_friendship, R_MENTOR, "End Imaginary Friendship", "Bre
 
 /client/proc/create_ifriend(mob/living/friend_owner, seek_confirm = FALSE)
 	var/client/C = usr.client
-//	if(!usr.client.is_mentor())
-//		return
+	if(!C.mentor_datum?.check_for_rights(R_MENTOR))
+		return
 
 	if(istype(C.mob, /mob/camera/imaginary_friend))
 		var/mob/camera/imaginary_friend/IF = C.mob
