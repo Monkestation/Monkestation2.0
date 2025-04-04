@@ -184,3 +184,17 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			return "Mob Emotes"
 		if(CHANNEL_SILICON_EMOTES)
 			return "Silicon Emotes"
+
+/// Basically SEND_SOUND but without any sort of reverb or environment.
+/proc/send_sound_without_reverb(target, sound/sound_to_use, vol)
+	if(!target || !sound_to_use)
+		return
+	if(!istype(sound_to_use, /sound))
+		sound_to_use = sound(sound_to_use)
+	if(!isnull(vol))
+		sound_to_use.volume = vol
+	sound_to_use.environment = SOUND_ENVIRONMENT_NONE
+	sound_to_use.echo ||= new /list(18)
+	sound_to_use.echo[3] = -10000
+	sound_to_use.echo[4] = -10000
+	SEND_SOUND(target, sound_to_use)

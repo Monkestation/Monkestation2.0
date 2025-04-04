@@ -27,7 +27,7 @@
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
+		send_sound_without_reverb(initiator, sound('sound/effects/adminhelp.ogg'))
 
 		to_chat(initiator, "<font color='red' size='4'><b>- MentorHelp Question! -</b></font>")
 		to_chat(initiator, "<font color='red'>This question is about <b>game mechanics</b>, so should be asked in <b>Mentorhelp</b> instead. To do so, use the <b>Mentorhelp</b> verb under the <b>Mentor<b> tab on the upper right of your screen.</font>")
