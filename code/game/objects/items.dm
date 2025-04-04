@@ -840,7 +840,7 @@
 				else
 					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
 			else
-				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+				playsound(hit_atom, 'sound/weapons/throwtap.ogg', SOUND_AUDIBLE_VOLUME_MIN, volume, -1)
 
 	else if(drop_sound)
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
