@@ -31,7 +31,7 @@
 		"suppressor",
 		"super_pointy_tape",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	hidden = TRUE
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
@@ -49,4 +49,4 @@
 	design_ids = list(
 		"desynchronizer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

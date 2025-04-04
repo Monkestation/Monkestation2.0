@@ -7,6 +7,7 @@
 		"adv_capacitor",
 		"adv_matter_bin",
 		"adv_scanning",
+		"airlock_board_offstation", //MONKESTATION ADDITION - old airlock board for charlie station
 		"airalarm_electronics",
 		"airlock_board",
 		"anomaly_refinery",
@@ -29,7 +30,6 @@
 		"high_micro_laser",
 		"mesons",
 		"nano_mani",
-		"airlock_board_offstation", //MONKESTATION ADDITION - old airlock board for charlie station
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -54,8 +54,8 @@
 		"teg",
 		"teg-circ",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -81,10 +81,10 @@
 		"bolter_wrench",
 		"multi_cell_charger", //Monkestation addition
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_6_POINTS)
 	discount_experiments = list(
-		/datum/experiment/scanning/random/material/medium/one = 4000,
-		/datum/experiment/ordnance/gaseous/bz = 10000,
+		/datum/experiment/scanning/random/material/medium/one = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/ordnance/gaseous/bz = TECHWEB_TIER_4_POINTS,
 	)
 
 /datum/techweb_node/telecomms
@@ -92,7 +92,7 @@
 	display_name = "Telecommunications Technology"
 	description = "Subspace transmission technology for near-instant communications devices."
 	prereq_ids = list("comptech", "bluespace_basic")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	design_ids = list(
 		"comm_monitor",
 		"comm_server",
@@ -132,7 +132,7 @@
 		"holopad",
 		"vendatray",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/emp_adv
 	id = "emp_adv"
@@ -142,8 +142,8 @@
 	design_ids = list(
 		"ultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = 1500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
@@ -153,10 +153,10 @@
 	design_ids = list(
 		"quadultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_6_POINTS)
 	discount_experiments = list(
-		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000,
-		/datum/experiment/ordnance/gaseous/noblium = 10000,
+		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_4_POINTS,
 	)
 
 /datum/techweb_node/high_efficiency
@@ -168,8 +168,8 @@
 		"pico_mani",
 		"super_matter_bin",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/adv_power
 	id = "adv_power"
@@ -191,8 +191,8 @@
 		"modular_shield_charger",
 		"modular_shield_well",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"
@@ -206,7 +206,7 @@
 		"pathology_goggles", // monkestation addition
 		"security_hud",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/nvg_tech
 	id = "NVGtech"
@@ -223,4 +223,4 @@
 		"security_hud_night",
 		"mech_light_amplification",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

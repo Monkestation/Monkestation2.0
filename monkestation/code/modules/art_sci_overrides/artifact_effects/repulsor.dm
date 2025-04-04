@@ -10,7 +10,7 @@
 	var/cooldown_time
 	COOLDOWN_DECLARE(cooldown)
 
-	research_value = 1000
+	research_value = TECHWEB_DISCOUNT_MINOR * 2
 
 	examine_discovered = span_warning("It appears to be some object mover")
 

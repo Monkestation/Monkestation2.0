@@ -8,7 +8,7 @@
 
 	artifact_size = ARTIFACT_SIZE_LARGE
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 /datum/artifact_effect/lamp/setup()
 	var/power

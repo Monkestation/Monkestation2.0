@@ -18,4 +18,4 @@
 		/*"borg_upgrade_rename",
 		"borg_upgrade_restart",*/
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

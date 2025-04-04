@@ -158,7 +158,7 @@
 	design_ids = list(
 		"conveysorter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /obj/item/conveyor_sorter/improved
 	name = "improved conveyor sorter lister"
@@ -198,4 +198,4 @@
 	design_ids = list(
 		"conveyor_sorter_improved",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

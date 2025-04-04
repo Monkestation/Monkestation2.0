@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list() //typecache style type = TRUE list
