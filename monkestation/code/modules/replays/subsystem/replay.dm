@@ -251,9 +251,9 @@ SUBSYSTEM_DEF(demo)
 		for(var/z = 1 to length(marked_turfs_by_z))
 			var/list/z_marked_turfs = marked_turfs_by_z[z]
 			for(var/idx in 1 to map_size)
-				if(!z_marked_turfs[idx])
+				if(isnull(z_marked_turfs[idx]))
 					continue
-				z_marked_turfs[idx] = FALSE
+				z_marked_turfs[idx] = null
 				INDEX_TO_XY(idx, x, y, maxx)
 				var/turf/turf = locate(x, y, z)
 				if(isnull(turf))
