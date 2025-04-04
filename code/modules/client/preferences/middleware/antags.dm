@@ -123,7 +123,8 @@
 		ROLE_CORTICAL_BORER = /datum/antagonist/cortical_borer,
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
 		ROLE_SLASHER = /datum/antagonist/slasher,
-		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man
+		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man,
+		ROLE_BLOODLING = /datum/antagonist/bloodling
 	)
 
 	var/list/antagonists = non_ruleset_antagonists.Copy()
