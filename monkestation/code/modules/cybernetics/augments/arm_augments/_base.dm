@@ -50,7 +50,7 @@
 	UnregisterSignal(hand, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_BODYPART_REMOVED))
 	hand = null
 
-/obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self()
+/obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 /obj/item/organ/internal/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
