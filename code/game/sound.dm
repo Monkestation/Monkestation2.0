@@ -87,9 +87,8 @@
 	sound_to_use.volume = vol
 	// monkestation start: mixer channels
 	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
-		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
-			return
+		var/volume_multiplier = (client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+		sound_to_use.volume = max(sound_to_use.volume * volume_multiplier, SOUND_AUDIBLE_VOLUME_MIN)
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
 		return
