@@ -68,3 +68,14 @@
 	cost = 16
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
+
+/datum/uplink_item/reinforcements/Xenomorph_Friend
+	name = "Xenomorph Reinforcements"
+	desc = "Through years of research (And glorious combat) we have discovered how to domesticate the fearsome xenomorph. \
+			First, implant the hive node into yourself using the provided autosurgeon. Next, place the embryo into the autosurgeon \
+			and implant a living victim with it. You can use the provided monkey cube, just add water and it will grow into a full monkey.  \
+			Wait about 5 minutes, and the larva will burst from the monkey. The larva instantly imprints on the first person it sees, considering them the queen. \
+			Make sure this is you. "
+	cost = 10
+	item = /obj/item/storage/box/syndie_kit/Xenomorph_Friend
+	purchasable_from = UPLINK_NUKE_OPS
