@@ -1,5 +1,5 @@
 GLOBAL_VAR(dj_broadcast)
-GLOBAL_VAR(dj_booth)
+GLOBAL_DATUM(dj_booth, /obj/machinery/cassette/dj_station)
 
 
 /obj/item/clothing/ears
@@ -40,9 +40,10 @@ GLOBAL_VAR(dj_booth)
 	register_context()
 
 /obj/machinery/cassette/dj_station/Destroy()
-	. = ..()
-	GLOB.dj_booth = null
+	if(GLOB.dj_booth == src)
+		GLOB.dj_booth = null
 	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/machinery/cassette/dj_station/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

@@ -5,17 +5,15 @@
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = TRUE
 
-/datum/preference/toggle/hear_music/apply_to_client(client/client, value)
-	. = ..()
-	if(istype(client, /datum/client_interface))
+/datum/preference/toggle/hear_music/apply_to_client_updated(client/client, value)
+	if(QDELETED(GLOB.dj_booth) || isnewplayer(client.mob) || !SSticker.HasRoundStarted())
 		return
-	if(client.media)
-		if(!value)
-			var/area/A = get_area(client.mob)
-			if(!A)
-				return
-			var/obj/machinery/media/M = A.media_source
-			if(M && M.playing)
-				client.media.stop_music()
-
-		client.media.update_music()
+	if(value)
+		if(GLOB.dj_booth.broadcasting && !(client in GLOB.dj_booth.active_listeners))
+			GLOB.dj_booth.active_listeners |= client
+			INVOKE_ASYNC(GLOB.dj_booth, TYPE_PROC_REF(/obj/machinery/cassette/dj_station, start_playing), list(client))
+	else
+		if(client in GLOB.dj_booth.active_listeners)
+			GLOB.dj_booth.active_listeners -= client
+			GLOB.youtube_exempt["dj-station"] -= client
+			client.tgui_panel?.stop_music()

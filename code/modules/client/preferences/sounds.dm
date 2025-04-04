@@ -53,6 +53,15 @@
 /datum/preference/toggle/sound_jukebox/apply_to_client_updated(client/client, value)
 	if (!value)
 		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
+	// monkestation start: media manager
+	var/datum/media_manager/media = client?.media
+	if(QDELETED(media) || media.lobby_music)
+		return
+	if(value)
+		media.update_music()
+	else
+		media.stop_music()
+	// monkestation end
 
 /// Controls hearing lobby music
 /datum/preference/toggle/sound_lobby
@@ -61,10 +70,12 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
-	if (value && isnewplayer(client.mob))
+	// monkestation start: media manager
+	if(value && isnewplayer(client.mob))
 		client.playtitlemusic()
-	else
+	else if(client.media?.lobby_music)
 		client.media.stop_music()
+	// monkestation end
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
