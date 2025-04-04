@@ -129,12 +129,17 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
+    this.lastScrollHeight = 0;
     this.handleScroll = (type) => {
       const node = this.scrollNode;
+      if (!node) {
+        return;
+      }
       const height = node.scrollHeight;
       const bottom = node.scrollTop + node.offsetHeight;
       const scrollTracking =
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE;
+        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE ||
+        this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
         this.events.emit('scrollTrackingChanged', scrollTracking);
@@ -163,12 +168,6 @@ class ChatRenderer {
     else {
       this.rootNode = node;
     }
-    // Find scrollable parent
-    this.scrollNode = findNearestScrollableParent(this.rootNode);
-    this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setTimeout(() => {
-      this.scrollToBottom();
-    });
     // Flush the queue
     this.tryFlushQueue();
   }
@@ -182,6 +181,7 @@ class ChatRenderer {
     if (this.isReady() && this.queue.length > 0) {
       this.processBatch(this.queue);
       this.queue = [];
+      this.scrollToBottom();
     }
   }
 
@@ -281,6 +281,7 @@ class ChatRenderer {
   }
 
   scrollToBottom() {
+    this.tryFindScrollable();
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
     this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
@@ -315,20 +316,30 @@ class ChatRenderer {
   getCombinableMessage(predicate, now, from, to) {
     for (let i = from; i >= to; i--) {
       const message = this.visibleMessages[i];
-      // prettier-ignore
-      const matches = (
+
+      const matches =
         // Is not an internal message
-        !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
+        !message.type.startsWith(MESSAGE_TYPE_INTERNAL) &&
         // Text payload must fully match
-        && isSameMessage(message, predicate)
+        isSameMessage(message, predicate) &&
         // Must land within the specified time window
-        && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
-      );
+        now < message.createdAt + COMBINE_MAX_TIME_WINDOW;
       if (matches) {
         return message;
       }
     }
     return null;
+  }
+
+  tryFindScrollable() {
+    // Find scrollable parent
+    if (this.rootNode) {
+      if (!this.scrollNode || this.scrollNode.scrollHeight === undefined) {
+        this.scrollNode = findNearestScrollableParent(this.rootNode);
+        this.scrollNode.addEventListener('scroll', this.handleScroll);
+        logger.debug(`reset scrollNode to ${this.scrollNode}`);
+      }
+    }
   }
 
   processBatch(batch, options = {}) {
@@ -342,6 +353,10 @@ class ChatRenderer {
         this.queue = [...this.queue, ...batch];
       }
       return;
+    }
+    // Store last scroll position
+    if (this.scrollNode) {
+      this.lastScrollHeight = this.scrollNode.scrollHeight;
     }
     // Insert messages
     const fragment = document.createDocumentFragment();
@@ -461,11 +476,13 @@ class ChatRenderer {
       if (!message.type) {
         // IE8: Does not support querySelector on elements that
         // are not yet in the document.
-        // prettier-ignore
-        const typeDef = !Byond.IS_LTE_IE8 && MESSAGE_TYPES
-          .find(typeDef => (
-            typeDef.selector && node.querySelector(typeDef.selector)
-          ));
+
+        const typeDef =
+          !Byond.IS_LTE_IE8 &&
+          MESSAGE_TYPES.find(
+            (typeDef) =>
+              typeDef.selector && node.querySelector(typeDef.selector),
+          );
         message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
@@ -520,10 +537,10 @@ class ChatRenderer {
           message.node = 'pruned';
         }
         // Remove pruned messages from the message array
-        // prettier-ignore
-        this.messages = this.messages.filter(message => (
-          message.node !== 'pruned'
-        ));
+
+        this.messages = this.messages.filter(
+          (message) => message.node !== 'pruned',
+        );
         logger.log(`pruned ${fromIndex} visible messages`);
       }
     }
@@ -613,19 +630,22 @@ class ChatRenderer {
       }
     }
     // Create a page
-    // prettier-ignore
-    const pageHtml = '<!doctype html>\n'
-      + '<html>\n'
-      + '<head>\n'
-      + '<title>SS13 Chat Log</title>\n'
-      + '<style>\n' + cssText + '</style>\n'
-      + '</head>\n'
-      + '<body>\n'
-      + '<div class="Chat">\n'
-      + messagesHtml
-      + '</div>\n'
-      + '</body>\n'
-      + '</html>\n';
+
+    const pageHtml =
+      '<!doctype html>\n' +
+      '<html>\n' +
+      '<head>\n' +
+      '<title>SS13 Chat Log</title>\n' +
+      '<style>\n' +
+      cssText +
+      '</style>\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '<div class="Chat">\n' +
+      messagesHtml +
+      '</div>\n' +
+      '</body>\n' +
+      '</html>\n';
     // Create and send a nice blob
     const blob = new Blob([pageHtml], { type: 'text/plain' });
     const timestamp = new Date()

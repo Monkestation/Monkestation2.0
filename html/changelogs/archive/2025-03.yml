@@ -526,3 +526,155 @@
       unconcious, with their hands blocked.
   Shoddd:
   - bugfix: elance recipe now has to be learned
+2025-03-25:
+  Marabout2:
+  - rscadd: Added a detective slot and a second holster in the detective closet +
+      detective spawn with a badge.
+  - rscadd: Added Kim's gloves in the loadout, exclusive to the detective + spyglass
+      got sechud.
+  - rscadd: .45 caliber rubbers available in the security techfab
+  - rscadd: 'Ported from TG : https://github.com/tgstation/tgstation/pull/89221 which
+      mean the forensic scanner got a new ui'
+2025-03-27:
+  Absolucy:
+  - bugfix: Fixed lights sometimes not properly updating when turned on or off.
+  - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
+  - bugfix: Fixed an edge-case where, if two heretics of different paths applied a
+      mark to the same person, the effects from the first mark (i.e moon path's pacifism)
+      would likely be permanent.
+  - code_imp: Slightly improved the code for the Cortex Imprint bioware.
+  - bugfix: Fixed an centcom ghost player escape exploit.
+  - bugfix: You will now be ejected from any jaunt (i.e bloodcrawl or shadow walk)
+      if you lose consciousness somehow during the jaunt.
+  - bugfix: The _ispath SDQL2/Lua wrapper can now be used to actually check if something
+      is a path.
+  - code_imp: Added the _is_type_in_typecache wrapper, for SDQL2 / Lua scripts.
+  - bugfix: Probably fixed techfab/lathe/mechfab UIs not updating sometimes.
+  - bugfix: The animation from a xeno chestbursting out of someone is now properly
+      removed after they burst out.
+  - bugfix: You now must observe or join the game in order to buy or open a lootbox,
+      to prevent any potential issues or confusion where you pay for a lootbox but
+      don't get it.
+  - qol: The Good Assistants Point redeemer thingy can no longer be used to spam messages
+      or loud sounds.
+  - bugfix: (itsmeow) The tgui color picker is colorful again on BYOND 516.
+  - qol: (SmArtKar) If you have auto fit viewport enabled, it will trigger upon entering
+      or exiting fullscreen.
+  - rscadd: (jlsnow301) TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  - bugfix: (TiviPlus) fixed a case that could make untoggling fullscreen make your
+      window small.
+  - code_imp: (TiviPlus) Cleaned up some fullscreen and status bar toggle code to
+      function better.
+  - bugfix: (Holoo-1) Fixed white space when observing in auto observe mode
+  - refactor: (Kylerace) Tech disk uploading isnt super slow anymore (much harder
+      to crash spacetime with it)
+  - code_imp: (SmArtKar) Removed the 516 beta warning entirely.
+  - bugfix: (hry-gh) tgui windows closing should no longer cause sticky keys, especially
+      on BYOND 516.
+  - bugfix: (hry-gh) The audio player shouldn't blow up in weird circumstances anymore.
+  - rscadd: Re-added interaction components to the mechcomp vendor.
+  - bugfix: Fixed some further potential exploits with interaction components.
+  - code_imp: Cleaned up a lot of interaction component code.
+  - map: Added a mechcomp vendor to runtimestation.
+  - config: Added config options to disable interaction components holding items or
+      interacting with storage components.
+  - config: Added a config option to add more item types to the interaction component
+      blacklist.
+  Ben10Omintrix:
+  - code_imp: improved trick weapon code
+  Marabout2:
+  - bugfix: fixed the variant of the detective holster with the regular revolver.
+  ancient-engineer:
+  - image: modified the sink sprite so that it clings to the wall. I also did the
+      kitchen sink too.
+  flleeppyy:
+  - bugfix: allow mentors/admins through the interview system by default
+  - admin: '`Create Command Report` enhancements'
+  - code_imp: New `priority_announce` and `generate_unique_announcement_header` param,
+      `append_update` to append "Update" to command report titles.
+  - code_imp: Added optional `sanitize` (default is TRUE) param to `print_command_report`
+      and `SScommunications.send_message`
+2025-03-28:
+  CannibalHunter:
+  - rscadd: Added "Strange Merchant Jacket" donator item.
+  adamsong:
+  - admin: grants admins access to member only features like changing their ghost
+  flleeppyy:
+  - admin: asay and msay is now bridged to the Discord via threads
+2025-03-29:
+  Absolucy:
+  - bugfix: Fixed some more lists being cleared in an incorrect, potentially laggy
+      way.
+  - bugfix: Cleanbots no longer get eternally stuck trying to clean broken bottles.
+  - bugfix: Cleaner slimes now properly target other types of trash (used ammo, used
+      mutation syringes, emptied drink bottles, burnt matches, etc) again.
+  BanementI:
+  - admin: Added Altjira XC's office.
+  Marabout2:
+  - rscadd: Added Kim gloves to the loadout store
+  Shoddd:
+  - bugfix: polyglot now incompat with foreigner
+  - balance: Depot Safe TC lowered from 25 to 5
+  - bugfix: heretic summons now consume their parts
+  - bugfix: pkas can no longer have infinite cooldowns
+  - bugfix: wendigo trophy no longer sets damage to 40 regardless of crusher
+  - balance: crushers can only mark lavaland mobs
+  - rscadd: Lisp Quirk
+  - balance: the heroic laser musket now appears in the black market less
+2025-03-30:
+  Absolucy:
+  - bugfix: Fixed some various minor bugs and errors.
+  - bugfix: (Sealed101, Melbert) The colossus's finale attack is now 100x more lethal,
+      because it was firing 100x fewer projectiles than intended, although it starts
+      after a half-second delay.
+  - bugfix: The shuttle now takes 10 minutes to arrive on Yellow and Amber alert as
+      intended, rather than being a free redcall.
+  Absolucy, dwasint:
+  - bugfix: Fixed afterimage effects (i.e from the damned rabbit mask) not working.
+  - bugfix: Fixed afterimage effects potentially being very laggy client-side while
+      holding a light.
+  - bugfix: Fixed afterimage effects not properly rotating when the parent did, such
+      as when the parent was lying down.
+  Gw0sty:
+  - qol: Research nodes can be queued, one per player. RDs can place their node at
+      the beginning of the queue.
+  TheMrGlasses:
+  - balance: Changed the requirements to properly eat the death sandwich to be more
+      reference accurate.
+  Ziiro:
+  - rscadd: Two new IPC surgeries have been added to resolve Toxin and Oxygen damage
+      on dead IPCs!
+  - bugfix: Clone pods can no longer create MOB_ROBOTIC bodies
+2025-03-31:
+  Absolucy:
+  - rscadd: You can now attach an internals tank to Vims if they don't have one already.
+  - qol: You can no longer use empty tanks (or any tank with pressure below the habitable
+      threshold) for a Vim.
+  - bugfix: Fixed freerange radios/intercoms being able to broadcast over the radio
+      frequency.
+  - map: Fixed a lot of cameras that were improperly mapped in, resulting in them
+      not showing up on camera consoles.
+  - rscadd: Stat Panel now scales like a chat, depends on the font size. Defaults
+      from the chat font size, but you can separate it.
+  - refactor: (Aylong) Refactored Stat Panel styles and Byond skin theme applying.
+      Stat Panel now looks more like a tgui.
+  - qol: (Aylong) Sidebar has lost its bulging white lines. And top right buttons
+      now flat.
+  - code_imp: (TiviPlus) Made it easier to set custom orders for stat panel tabs in
+      code
+  - bugfix: (TiviPlus) Fixed stat panel turf list menu clicks only working on the
+      text
+  - bugfix: Forcefully reconnecting or disconnecting the chatbox websocket now properly
+      works.
+  Absolucy, Y0SH1M4S73R:
+  - code_imp: Any tgui message that would be too big to send to the server is now
+      split into chunks and sent in sequence. This fixes several issues, such as...
+  - bugfix: It is once again possible to save large amounts of text on paper at once.
+  Gw0sty:
+  - rscadd: Added several experiments for research.
+  - balance: Cargo teleporters now require miniaturised blue space.
+  - balance: Emergency medical beds now require advanced biotech
+  - balance: Less comfortable, and portable medical beds have been provided to the
+      stations instead of emergancy medical beds.
+  - bugfix: Emergency medical beds are no longer coated with a diamond/blue space
+      mix blanket.

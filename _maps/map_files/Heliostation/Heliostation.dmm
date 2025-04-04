@@ -1767,11 +1767,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/visit)
 "ain" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/item/clothing/suit/jacket/straight_jacket,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/freezer,
 /area/station/security/medical)
 "aio" = (
@@ -5472,10 +5472,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/virology/isolation)
 "aGN" = (
@@ -6633,7 +6633,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology/isolation)
 "aLP" = (
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "aLR" = (
@@ -18732,7 +18732,7 @@
 /area/station/service/library)
 "bOi" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/computer/slime_market,
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 4
@@ -23114,7 +23114,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cDo" = (
@@ -26596,7 +26596,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cXQ" = (
@@ -37329,7 +37329,7 @@
 	},
 /obj/structure/curtain/cloth,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "hpY" = (
@@ -45209,7 +45209,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "kok" = (
@@ -56684,7 +56684,7 @@
 "oKB" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -78402,8 +78402,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
 "xjy" = (
-/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xjL" = (
@@ -119587,7 +119587,7 @@ aYK
 aYK
 qAt
 dfl
-dfl
+xjy
 aYK
 aYK
 jwE
@@ -119842,7 +119842,7 @@ aYK
 pGO
 aYK
 egh
-xjy
+dfl
 vYA
 qvF
 dfl

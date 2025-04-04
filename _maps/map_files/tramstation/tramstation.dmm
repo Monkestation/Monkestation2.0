@@ -2537,11 +2537,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "aka" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "akb" = (
@@ -13637,7 +13637,6 @@
 /area/station/cargo/miningdock)
 "djJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/medical/emergency,
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medical - Lobby";
@@ -13645,6 +13644,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "djL" = (
@@ -19329,7 +19329,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "eYi" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /mob/living/basic/chicken/brown,
 /obj/machinery/egg_incubator,
 /obj/structure/railing{
@@ -26829,11 +26829,11 @@
 /area/station/maintenance/department/cargo)
 "hvt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "hvC" = (
@@ -34964,7 +34964,7 @@
 /area/station/maintenance/starboard/lesser)
 "jVp" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid/airless,
+/turf/open/misc/asteroid,
 /area/station/asteroid)
 "jVw" = (
 /turf/open/floor/iron/white,
@@ -42394,11 +42394,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
-"mhG" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/grass,
-/area/station/asteroid/tram/pet)
 "mhQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -43342,11 +43337,11 @@
 /area/station/commons/fitness/recreation/entertainment)
 "myA" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "myB" = (
@@ -47011,11 +47006,6 @@
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/service)
-"nGR" = (
-/mob/living/basic/butterfly/lavaland,
-/obj/structure/cable,
-/turf/open/floor/grass,
-/area/station/asteroid/tram/pet)
 "nGX" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -55079,6 +55069,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/station/asteroid/tram/pet)
 "qjw" = (
@@ -55400,7 +55391,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/asteroid/tram/pet)
 "qoX" = (
@@ -69524,9 +69514,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "uGL" = (
-/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/bed/medical/anchored{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -72299,7 +72291,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "vuO" = (
-/obj/structure/bed/medical/emergency,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/security/execution/education)
 "vuT" = (
@@ -131370,7 +131364,7 @@ qPe
 uuK
 uNZ
 qxm
-aac
+abM
 oys
 oys
 oys
@@ -131627,7 +131621,7 @@ ruy
 opy
 jYY
 qxm
-aac
+abM
 jVp
 aak
 aaa
@@ -131884,8 +131878,8 @@ ldg
 sYP
 ecO
 qxm
-aac
-aac
+abM
+abM
 aak
 aaa
 aaa
@@ -132141,9 +132135,9 @@ pAf
 oAw
 eqw
 qxm
-aac
-aac
-aac
+abM
+abM
+abM
 aaa
 aaa
 aaa
@@ -132398,7 +132392,7 @@ rGx
 pzs
 lEo
 qxm
-aac
+abM
 aaa
 aaa
 aaa
@@ -132655,7 +132649,7 @@ lFH
 eHL
 aAj
 qxm
-aac
+abM
 aaa
 aaa
 aaa
@@ -132912,8 +132906,8 @@ iMf
 ruy
 ecO
 qxm
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133169,8 +133163,8 @@ asR
 asR
 qxm
 qxm
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133426,8 +133420,8 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -133683,7 +133677,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+abM
 aaa
 aaa
 aaa
@@ -133940,7 +133934,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+abM
 aaa
 aaa
 aaa
@@ -134197,8 +134191,8 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
+abM
+abM
 aaa
 aaa
 aaa
@@ -134454,9 +134448,9 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+abM
+abM
+abM
 aaa
 aaa
 aaa
@@ -185349,8 +185343,8 @@ sJF
 xTG
 fCF
 xTG
-nGR
-mhG
+gcr
+xTG
 fCF
 xTG
 xip

@@ -64,6 +64,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
+	new /obj/item/fishing_hook/rescue(src) //Monkestation Edit
 
 
 /obj/structure/closet/secure_closet/miner/populate_contents_immediate()
