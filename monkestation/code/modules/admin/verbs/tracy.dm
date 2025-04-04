@@ -2,7 +2,7 @@
 	set name = "Toggle Tracy Next Round"
 	set desc = "Toggle running the byond-tracy profiler next round"
 	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
+	if(!check_rights(R_DEBUG))
 		return
 #ifndef OPENDREAM_REAL
 	if(!fexists(TRACY_DLL_PATH))
@@ -22,7 +22,7 @@
 	set name = "Run Tracy Now"
 	set desc = "Start running the byond-tracy profiler immediately."
 	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
+	if(!check_rights(R_DEBUG))
 		return
 #ifndef OPENDREAM_REAL
 	if(Tracy.enabled)
