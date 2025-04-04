@@ -176,6 +176,7 @@
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE "/Service Modules"
 
 #define RND_CATEGORY_CYBERNETICS "/Cybernetics"
+#define RND_CATEGORY_CYBERNETICS_IPC "/IPC Components" //Monkestation addition
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_1 "/Tier 1 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_2 "/Tier 2 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_3 "/Tier 3 Cybernetic Organs"
