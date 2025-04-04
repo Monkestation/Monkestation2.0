@@ -123,7 +123,7 @@
 	var/turf/location = get_turf(new_location)
 	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(src)] to [isnull(new_location) ? "nullspace" : ADMIN_VERBOSEJMP(location)]"
 	message_admins(msg)
-	admin_ticket_log(src, msg)
+	admin_ticket_log(src,  "[key_name(usr)] teleported [src] to [isnull(new_location) ? "nullspace" : location]") // MONKESTATION EDIT - tgui tickets
 	return ..()
 
 
@@ -146,10 +146,13 @@
 
 	if(!M)
 		return
-	log_admin("[key_name(usr)] teleported [key_name(M)]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(usr)] teleported [key_name(M)]"
+	log_admin(log_msg)
 	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(M)]"
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
+	// MONKESTATION EDIT END
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.forceMove(M.loc)
@@ -172,10 +175,13 @@
 		return
 	var/list/turfs = get_area_turfs(target_area)
 	if(length(turfs) && jumper.forceMove(pick(turfs)))
-		log_admin("[key_name(usr)] teleported [key_name(jumper)] to [AREACOORD(jumper)]")
+		// MONKESTATION EDIT START - tgui tickets
+		var/log_msg = "[key_name(usr)] teleported [key_name(jumper)] to [AREACOORD(jumper)]"
+		log_admin(log_msg)
 		var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(jumper)] to [AREACOORD(jumper)]"
 		message_admins(msg)
-		admin_ticket_log(jumper, msg)
+		admin_ticket_log(jumper, log_msg)
+		// MONKESTATION EDIT END
 	else
 		to_chat(src, "Failed to move mob to a valid location.", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
