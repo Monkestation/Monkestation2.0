@@ -3,10 +3,7 @@
 /datum/hud/new_player/New(mob/owner)
 	..()
 
-	if(!owner || !owner.client)
-		return
-
-	if (owner.client.interviewee)
+	if(!owner || !owner.client || owner.client.not_discord_verified)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
@@ -62,7 +59,7 @@
 	if(owner != REF(usr))
 		return
 
-	if(!usr.client || usr.client.interviewee)
+	if(!usr.client || usr.client.not_discord_verified)
 		return
 
 	. = ..()
@@ -77,7 +74,7 @@
 	if(owner != REF(usr))
 		return
 
-	if(!usr.client || usr.client.interviewee)
+	if(!usr.client || usr.client.not_discord_verified)
 		return
 
 	. = ..()
@@ -88,7 +85,7 @@
 	if(owner != REF(usr))
 		return
 
-	if(!usr.client || usr.client.interviewee)
+	if(!usr.client || usr.client.not_discord_verified)
 		return
 
 	. = ..()
@@ -178,7 +175,7 @@
 			if(!new_client.readied_store)
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(verification_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
@@ -212,7 +209,7 @@
 		to_chat(hud.mymob, span_boldwarning("The round is either not ready, or has already finished..."))
 		return
 
-	if(hud.mymob.client?.check_overwatch())
+	if(hud.mymob.client?.check_overwatch() || hud.mymob.client?.not_discord_verified)
 		to_chat(hud.mymob, span_warning("Kindly wait until your connection has been authenticated before joining"))
 		message_admins("[hud.mymob.key] tried to use the Join button but failed the overwatch check.")
 		return
@@ -479,7 +476,7 @@
 	switch(port)
 		if(HRP_PORT) //HRP
 			screen_loc = "TOP:-32,CENTER:+215"
-		if(MRP_PORT) //MRP
+		if(MRP1_PORT) //MRP
 			screen_loc = "TOP:-65,CENTER:+215"
 		if(MRP2_PORT) //MRP2
 			screen_loc = "TOP:-98,CENTER:+215"
@@ -540,7 +537,7 @@
 	screen_loc = "TOP:-77,CENTER:+173"
 	enabled = TRUE
 	server_name = "Medium-Rare Roleplay (MRP)"
-	server_port = MRP_PORT
+	server_port = MRP1_PORT
 
 //MRP 2 MONKE (MEDIUM WELL)
 /atom/movable/screen/lobby/button/server/mrp2

@@ -1,5 +1,5 @@
 /mob/dead/observer/Login()
-	if(interview_safety(src, "observing"))
+	if(verification_safety(src, "observing"))
 		qdel(client)
 		return FALSE
 	. = ..()

@@ -35,6 +35,9 @@
 /datum/config_entry/string/issue_slug
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/discordurl
+	default = "https://discord.monkestation.com/"
+
 /datum/config_entry/flag/looc_enabled
 
 /datum/config_entry/flag/log_storyteller
@@ -83,6 +86,8 @@
 	. = ..()
 	if(.)
 		config_entry_value *= 600 // documented as minutes
+
+/datum/config_entry/flag/require_discord_verification
 
 /datum/config_entry/flag/plexora_enabled
 

@@ -163,15 +163,8 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 /// A value for /datum/admins/cached_feedback_link to indicate empty, rather than unobtained
 #define NO_FEEDBACK_LINK "no_feedback_link"
 
-/// State when an interview has been approved
-#define INTERVIEW_APPROVED "interview_approved"
-/// State when an interview as been denied
-#define INTERVIEW_DENIED "interview_denied"
-/// State when an interview has had no action on it yet
-#define INTERVIEW_PENDING "interview_pending"
-
 //Monke edit for port servers
 #define MRP2_PORT		3122
-#define MRP_PORT		3121
+#define MRP1_PORT		3121
 #define HRP_PORT		1342
 #define VANDERLIN_PORT	1541

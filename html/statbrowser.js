@@ -24,7 +24,6 @@ var spell_tabs = [];
 var verb_tabs = [];
 var verbs = [["", ""]]; // list with a list inside
 var tickets = [];
-var interviewManager = { status: "", interviews: [] };
 var sdql2 = [];
 var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
@@ -251,7 +250,6 @@ function tab_change(tab) {
 		draw_debug();
 	} else if (tab == "Tickets") {
 		draw_tickets();
-		draw_interviews();
 	} else if (tab == "SDQL2") {
 		draw_sdql2();
 	} else if (tab == turfname) {
@@ -405,13 +403,6 @@ function remove_sdql2() {
 	checkStatusTab();
 }
 
-function remove_interviews() {
-	if (tickets) {
-		tickets = [];
-	}
-	checkStatusTab();
-}
-
 function iconError(e) {
 	if(current_tab != turfname) {
 		return;
@@ -556,56 +547,6 @@ function draw_tickets() {
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
-		table.appendChild(tr);
-	}
-	document.getElementById("statcontent").appendChild(table);
-}
-
-function draw_interviews() {
-	var body = document.createElement("div");
-	var header = document.createElement("h3");
-	header.textContent = "Interviews";
-	body.appendChild(header);
-	var manDiv = document.createElement("div");
-	manDiv.className = "interview_panel_controls"
-	var manLink = document.createElement("a");
-	manLink.textContent = "Open Interview Manager Panel";
-	manLink.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
-	manDiv.appendChild(manLink);
-	body.appendChild(manDiv);
-
-	// List interview stats
-	var statsDiv = document.createElement("table");
-	statsDiv.className = "interview_panel_stats";
-	for (var key in interviewManager.status) {
-		var d = document.createElement("div");
-		var tr = document.createElement("tr");
-		var stat_name = document.createElement("td");
-		var stat_text = document.createElement("td");
-		stat_name.textContent = key;
-		stat_text.textContent = interviewManager.status[key];
-		tr.appendChild(stat_name);
-		tr.appendChild(stat_text);
-		statsDiv.appendChild(tr);
-	}
-	body.appendChild(statsDiv);
-	document.getElementById("statcontent").appendChild(body);
-
-	// List interviews if any are open
-	var table = document.createElement("table");
-	table.className = "interview_panel_table";
-	if (!interviewManager) {
-		return;
-	}
-	for (var i = 0; i < interviewManager.interviews.length; i++) {
-		var part = interviewManager.interviews[i];
-		var tr = document.createElement("tr");
-		var td = document.createElement("td");
-		var a = document.createElement("a");
-		a.textContent = part["status"];
-		a.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
-		td.appendChild(a);
-		tr.appendChild(td);
 		table.appendChild(tr);
 	}
 	document.getElementById("statcontent").appendChild(table);
@@ -949,20 +890,12 @@ Byond.subscribeTo('remove_admin_tabs', function () {
 	remove_mc();
 	remove_tickets();
 	remove_sdql2();
-	remove_interviews();
 });
 
 Byond.subscribeTo('update_listedturf', function (TC) {
 	turfcontents = TC;
 	if (current_tab == turfname) {
 		draw_listedturf();
-	}
-});
-
-Byond.subscribeTo('update_interviews', function (I) {
-	interviewManager = I;
-	if (current_tab == "Tickets") {
-		draw_interviews();
 	}
 });
 
