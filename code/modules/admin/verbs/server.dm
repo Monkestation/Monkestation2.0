@@ -129,7 +129,7 @@ ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world re
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(1800)
 		to_chat(world, "<span class='infoplain'><b>The game will start in 180 seconds.</b></span>")
-		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		send_sound_without_reverb(world, sound('sound/ai/default/attention.ogg')) // monkestation edit: send_sound_without_reverb
 		message_admins("<font color='blue'>[usr.key] has cancelled immediate game start. Game will start in 180 seconds.</font>")
 		log_admin("[usr.key] has cancelled immediate game start.")
 	else
@@ -223,7 +223,7 @@ ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world re
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
 			to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
-			SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+			send_sound_without_reverb(world, sound('sound/ai/default/attention.ogg')) // monkestation edit: send_sound_without_reverb
 			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

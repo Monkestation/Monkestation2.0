@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(vote)
 		generated_actions += voting_action
 
 		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
-			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit
+			send_sound_without_reverb(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit: send_sound_without_reverb
 
 	return TRUE
 
