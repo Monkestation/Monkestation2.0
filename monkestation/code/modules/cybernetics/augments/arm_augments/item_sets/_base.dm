@@ -102,6 +102,9 @@
 	if(Retract())
 		return COMSIG_KB_ACTIVATED
 
+/obj/item/organ/internal/cyberimp/arm/item_set/on_item_attack_self()
+	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
+
 /obj/item/organ/internal/cyberimp/arm/item_set/proc/Retract(mob/living/carbon/passover)
 	var/mob/living/carbon/user = owner
 	if(passover)
