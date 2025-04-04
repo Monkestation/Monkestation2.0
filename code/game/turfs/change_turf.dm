@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
-	SSdemo.marked_turfs?[new_turf] = TRUE // Monkestation Edit: REPLAYS
+	MARK_SINGLE_TURF(new_turf) // monkestation edit: replays
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.

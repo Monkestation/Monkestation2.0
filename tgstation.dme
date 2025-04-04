@@ -467,6 +467,7 @@
 #include "code\__DEFINES\~monkestation\power.dm"
 #include "code\__DEFINES\~monkestation\projectiles.dm"
 #include "code\__DEFINES\~monkestation\quirk_costs.dm"
+#include "code\__DEFINES\~monkestation\replays.dm"
 #include "code\__DEFINES\~monkestation\robots.dm"
 #include "code\__DEFINES\~monkestation\skills.dm"
 #include "code\__DEFINES\~monkestation\slimes.dm"

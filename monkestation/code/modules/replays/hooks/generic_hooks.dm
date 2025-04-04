@@ -22,7 +22,7 @@
 
 /turf/setDir()
 	. = ..()
-	SSdemo.marked_turfs?[src] = TRUE
+	MARK_SINGLE_TURF(src)
 
 /atom/movable/setDir()
 	. = ..()

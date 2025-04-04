@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(demo)
 
 	var/list/marked_dirty = list()
 	var/list/marked_new = list()
-	var/list/marked_turfs = list()
+	var/list/marked_turfs_by_z = list()
 	var/list/del_list = list()
 
 	var/last_written_time = null
@@ -38,6 +38,9 @@ SUBSYSTEM_DEF(demo)
 		disable()
 #endif
 
+/datum/controller/subsystem/demo/PreInit()
+	update_map_xyz()
+
 /datum/controller/subsystem/demo/Initialize()
 	if(disabled)
 		return SS_INIT_NO_NEED
@@ -47,26 +50,35 @@ SUBSYSTEM_DEF(demo)
 	if(GLOB.revdata)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "commit [GLOB.revdata.originmastercommit || GLOB.revdata.commit]\n")
 
+	var/list/marked_new = src.marked_new
+	var/list/marked_dirty = src.marked_dirty
+	var/list/marked_turfs_by_z = src.marked_turfs_by_z
+
+	var/maxx = world.maxx
+	var/maxy = world.maxy
+	var/maxz = world.maxz
+
 	// write a "snapshot" of the world at this point.
 	// start with turfs
 	log_world("Writing turfs...")
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "init [world.maxx] [world.maxy] [world.maxz]\n")
-	marked_turfs.len = 0
-	for(var/z in 1 to world.maxz)
+
+	rustg_time_reset("demos")
+	for(var/z in 1 to maxz)
 		var/row_list = list()
 		var/last_appearance
 		var/rle_count = 1
-		for(var/turf/T as anything in Z_TURFS(z))
-			T.demo_last_appearance = T.appearance
+		for(var/turf/turf as anything in Z_TURFS(z))
+			turf.demo_last_appearance = turf.appearance
 			var/this_appearance
 			// space turfs are difficult to RLE otherwise, because they all
 			// have different appearances despite being the same thing.
-			if(T.type == /turf/open/space || T.type == /turf/open/space/basic)
+			if(turf.type == /turf/open/space || turf.type == /turf/open/space/basic)
 				this_appearance = "s" // save the bytes
-			else if(istype(T, /turf/open/space/transit))
-				this_appearance = "t[T.dir]"
+			else if(istype(turf, /turf/open/space/transit))
+				this_appearance = "t[turf.dir]"
 			else
-				this_appearance = T.appearance
+				this_appearance = turf.appearance
 			if(this_appearance == last_appearance)
 				rle_count++
 			else
@@ -82,12 +94,18 @@ SUBSYSTEM_DEF(demo)
 		if(rle_count > 1)
 			row_list += rle_count
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
+		marked_turfs_by_z[z] = new /list(maxx * maxy) // completely clear the list as a whole
+
+	var/time = round(rustg_time_milliseconds("demos") / 1000, 0.01)
+	log_world("Turfs took [DisplayTimeText(time)]")
+
 	CHECK_TICK
+
 	// then do objects
 	log_world("Writing objects")
 	marked_new.len = 0
 	marked_dirty.len = 0
-	for(var/z in 1 to world.maxz)
+	for(var/z in 1 to maxz)
 		var/spacing = 0
 		var/row_list = list()
 		for(var/turf/T as anything in Z_TURFS(z))
@@ -126,6 +144,8 @@ SUBSYSTEM_DEF(demo)
 
 /datum/controller/subsystem/demo/Recover()
 	flags |= SS_NO_INIT
+	marked_turfs_by_z = SSdemo.marked_turfs_by_z // marked_turfs can be a very hot path, always ensure it's valid to prevent needing extra checks
+	update_map_xyz()
 	if(SSdemo.disabled)
 		disable()
 		return
@@ -136,7 +156,6 @@ SUBSYSTEM_DEF(demo)
 	name_cache = SSdemo.name_cache
 	marked_dirty = SSdemo.marked_dirty
 	marked_new = SSdemo.marked_new
-	marked_turfs = SSdemo.marked_turfs
 	del_list = SSdemo.del_list
 	last_written_time = SSdemo.last_written_time
 	last_chat_message = SSdemo.last_chat_message
@@ -146,12 +165,11 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/fire()
 	var/list/marked_new = src.marked_new
 	var/list/marked_dirty = src.marked_dirty
-	var/list/marked_turfs = src.marked_turfs
+	var/list/marked_turfs_by_z = src.marked_turfs_by_z
 	var/marked_new_len = length(marked_new)
 	var/marked_dirty_len = length(marked_dirty)
-	var/marked_turfs_len = length(marked_turfs)
 	var/del_list_len = length(del_list)
-	if(!marked_new_len && !marked_dirty_len && !marked_turfs_len && !del_list_len)
+	if(!marked_new_len && !marked_dirty_len && !del_list_len)
 		return // nothing to do
 
 	// last_queued = marked_new_len + marked_dirty_len + marked_turfs_len
@@ -226,17 +244,29 @@ SUBSYSTEM_DEF(demo)
 		return
 
 	var/list/turf_updates = list()
-	while(length(marked_turfs))
-		// last_completed++
-		var/turf/T = marked_turfs[length(marked_turfs)]
-		marked_turfs.len--
-		if(isnull(T))
-			continue
-		var/appearance = T.appearance
-		var/demo_last_appearance = T.demo_last_appearance
-		if(appearance != demo_last_appearance)
-			turf_updates += "([T.x],[T.y],[T.z])=[encode_appearance(appearance, demo_last_appearance)]"
-			T.demo_last_appearance = appearance
+	var/maxx = world.maxx
+	var/maxy = world.maxy
+	var/map_size = maxx * maxy
+	outer:
+		for(var/z = 1 to length(marked_turfs_by_z))
+			var/list/z_marked_turfs = marked_turfs_by_z[z]
+			for(var/idx in 1 to map_size)
+				if(!z_marked_turfs[idx])
+					continue
+				z_marked_turfs[idx] = FALSE
+				INDEX_TO_XY(idx, x, y, maxx)
+				var/turf/turf = locate(x, y, z)
+				if(isnull(turf))
+					stack_trace("turf at [x],[y],[z] somehow null")
+					continue
+				var/appearance = turf.appearance
+				var/demo_last_appearance = turf.demo_last_appearance
+				if(appearance != demo_last_appearance)
+					turf_updates += "([x],[y],[z])=[encode_appearance(appearance, demo_last_appearance)]"
+					turf.demo_last_appearance = appearance
+				if(MC_TICK_CHECK)
+					canceled = TRUE
+					break outer
 			if(MC_TICK_CHECK)
 				canceled = TRUE
 				break
@@ -247,7 +277,6 @@ SUBSYSTEM_DEF(demo)
 
 /datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"
-	msg += "Trf:[length(marked_turfs)]|"
 	msg += "New:[length(marked_new)]|"
 	msg += "Upd:[length(marked_dirty)]|"
 	msg += "Del:[length(del_list)]"
@@ -255,16 +284,15 @@ SUBSYSTEM_DEF(demo)
 	return ..()
 
 /datum/controller/subsystem/demo/proc/disable()
+	update_map_xyz() // marked_turfs can be a very hot path, always ensure it's valid to prevent needing extra checks
 	flags |= SS_NO_INIT|SS_NO_FIRE
 	can_fire = FALSE
-	disabled = TRUE
 	pre_init_lines = null
 	icon_cache = null
 	icon_state_caches = null
 	name_cache = null
 	marked_dirty = null
 	marked_new = null
-	marked_turfs = null
 	del_list = null
 
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
@@ -476,17 +504,19 @@ SUBSYSTEM_DEF(demo)
 		return
 	if(!isturf(turf))
 		return
-	marked_turfs[turf] = TRUE
+	marked_turfs_by_z[turf.z][XY_TO_INDEX(turf.x, turf.y, world.maxx)] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_multiple_turfs(list/turf/turf_list)
 	if(disabled)
 		return
 	if(!islist(turf_list))
 		return
-	for(var/turf in turf_list)
+	var/maxx = world.maxx
+	var/list/marked_turfs_by_z = src.marked_turfs_by_z
+	for(var/turf/turf as anything in turf_list)
 		if(!isturf(turf))
 			continue
-		marked_turfs[turf] = TRUE
+		marked_turfs_by_z[turf.z][XY_TO_INDEX(turf.x, turf.y, maxx)] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/atom)
 	if(disabled)
@@ -546,3 +576,12 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= destroyed
 	if(initialized)
 		del_list[ref(destroyed)] = TRUE
+
+/datum/controller/subsystem/demo/proc/update_map_xyz()
+	var/list/marked_turfs_by_z = src.marked_turfs_by_z
+	var/map_size = world.maxx * world.maxy
+	var/maxz = world.maxz
+	marked_turfs_by_z.len = maxz
+	for(var/z = 1 to maxz)
+		if(length(marked_turfs_by_z[z]) != map_size)
+			marked_turfs_by_z[z] = new /list(map_size)

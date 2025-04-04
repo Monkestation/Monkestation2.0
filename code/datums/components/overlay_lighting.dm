@@ -168,9 +168,12 @@
 
 ///Clears the affected_turfs lazylist, removing from its contents the effects of being near the light.
 /datum/component/overlay_lighting/proc/clean_old_turfs()
-	var/list/marked_turfs = SSdemo.marked_turfs
+	var/list/marked_turfs_by_z = SSdemo.marked_turfs_by_z
+	var/maxx = world.maxx
+	var/z
 	for(var/turf/lit_turf as anything in affected_turfs)
-		marked_turfs?[lit_turf] = TRUE
+		z ||= lit_turf.z
+		MARK_TURF_CACHED(lit_turf, marked_turfs_by_z, maxx, z) // monkestation edit: replays
 		lit_turf.dynamic_lumcount -= lum_power
 	affected_turfs = null
 
@@ -180,10 +183,13 @@
 	if(!current_holder)
 		return
 	. = list()
-	var/list/marked_turfs = SSdemo.marked_turfs
-	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
+	var/turf/holder_turf = get_turf(current_holder)
+	var/z = holder_turf.z
+	var/list/marked_turfs_by_z = SSdemo.marked_turfs_by_z
+	var/maxx = world.maxx
+	for(var/turf/lit_turf in view(lumcount_range, holder_turf))
 		lit_turf.dynamic_lumcount += lum_power
-		marked_turfs?[lit_turf] = TRUE
+		MARK_TURF_CACHED(lit_turf, marked_turfs_by_z, maxx, z) // monkestation edit: replays
 		. += lit_turf
 	if(length(.))
 		affected_turfs = .

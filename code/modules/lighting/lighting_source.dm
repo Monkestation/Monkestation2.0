@@ -195,7 +195,10 @@
 /datum/light_source/proc/remove_lum()
 	SETUP_CORNERS_REMOVAL_CACHE(src)
 	applied = FALSE
-	var/list/marked_turfs = SSdemo.marked_turfs
+	// monkestation start: replays
+	var/list/marked_turfs_by_z = SSdemo.marked_turfs_by_z
+	var/maxx = world.maxx
+	// monkestation end
 	for (var/datum/lighting_corner/corner as anything in effect_str)
 		if(isnull(corner))
 			continue
@@ -203,11 +206,10 @@
 		LAZYREMOVE(corner.affecting, src)
 
 		// monkestation start: REPLAYS
-		if(!isnull(marked_turfs))
-			marked_turfs[corner.master_NE] = TRUE
-			marked_turfs[corner.master_SE] = TRUE
-			marked_turfs[corner.master_SW] = TRUE
-			marked_turfs[corner.master_NW] = TRUE
+		MARK_TURF_CACHED(corner.master_NE, marked_turfs_by_z, maxx, corner.master_NE.z)
+		MARK_TURF_CACHED(corner.master_SE, marked_turfs_by_z, maxx, corner.master_SE.z)
+		MARK_TURF_CACHED(corner.master_SW, marked_turfs_by_z, maxx, corner.master_SW.z)
+		MARK_TURF_CACHED(corner.master_NW, marked_turfs_by_z, maxx, corner.master_NW.z)
 		// monkestation end: REPLAYS
 
 	effect_str = null
@@ -322,7 +324,10 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
-	var/list/marked_turfs = SSdemo.marked_turfs
+	// monkestation start: replays
+	var/list/marked_turfs_by_z = SSdemo.marked_turfs_by_z
+	var/maxx = world.maxx
+	// monkestation end
 
 	if (source_turf)
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
@@ -339,7 +344,7 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+				MARK_TURF_CACHED(T, marked_turfs_by_z, maxx, T.z) // monkestation edit: replays
 		else
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
@@ -351,7 +356,7 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+				MARK_TURF_CACHED(T, marked_turfs_by_z, maxx, T.z) // monkestation edit: replays
 
 				var/turf/below = GET_TURF_BELOW(T)
 				var/turf/previous = T
@@ -373,7 +378,7 @@
 					corners[below.lighting_corner_SE] = 0
 					corners[below.lighting_corner_SW] = 0
 					corners[below.lighting_corner_NW] = 0
-					marked_turfs?[below] = TRUE // Monkestation Edit: REPLAYS
+					MARK_TURF_CACHED(below, marked_turfs_by_z, maxx, below.z) // monkestation edit: replays
 					// ANNND then we add the one below it
 					previous = below
 					below = GET_TURF_BELOW(below)
@@ -390,7 +395,7 @@
 					corners[above.lighting_corner_SE] = 0
 					corners[above.lighting_corner_SW] = 0
 					corners[above.lighting_corner_NW] = 0
-					marked_turfs?[above] = TRUE // Monkestation Edit: REPLAYS
+					MARK_TURF_CACHED(above, marked_turfs_by_z, maxx, above.z) // monkestation edit: replays
 					above = GET_TURF_ABOVE(above)
 
 		source_turf.luminosity = oldlum

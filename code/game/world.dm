@@ -463,6 +463,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 			locate(maxx, maxy, zlevel))
 
 		global_area.turfs_by_zlevel[zlevel] += to_add
+	SSdemo.update_map_xyz() // monkestation edit: replays
 
 /world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
 	if(new_maxy <= maxy)
@@ -478,11 +479,13 @@ GLOBAL_PROTECT(tracy_init_reason)
 			locate(1, old_maxy + 1, 1),
 			locate(maxx, maxy, map_load_z_cutoff))
 		global_area.turfs_by_zlevel[zlevel] += to_add
+	SSdemo.update_map_xyz() // monkestation edit: replays
 
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
 	SSai_controllers.on_max_z_changed()
+	SSdemo.update_map_xyz() // monkestation edit: replays
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)

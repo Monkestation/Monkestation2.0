@@ -24,7 +24,8 @@
 		} \
 	} \
 	if(isturf(changed_on)) { \
-		SSdemo.marked_turfs?[changed_on] = TRUE; \
+		var/_maxx = world.maxx; \
+		SSdemo.marked_turfs_by_z[changed_on.z][XY_TO_INDEX(changed_on.x, changed_on.y, _maxx)] = TRUE; \
 	} else if(isobj(changed_on) || ismob(changed_on)) { \
 		SSdemo.mark_dirty(changed_on); \
 	}
