@@ -11,7 +11,7 @@
 	name = "Plumage"
 	desc = "Some feathers to ruffle. Seems the person who lost this definitely had theirs."
 	preference = "feature_avian_ears"
-
+	icon_state = "plumage"
 	icon = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithidfeatures.dmi'
 
 	dna_block = DNA_AVIAN_EARS_BLOCK // putting this as a reminder to future c*ders, this used to be part of ears.

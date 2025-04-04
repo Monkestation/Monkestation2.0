@@ -4179,6 +4179,13 @@
 /obj/structure/ghost_critter_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"bpA" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start/captain,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "bpD" = (
 /obj/machinery/newscaster/directional/south,
 /obj/structure/closet/firecloset,
@@ -27367,6 +27374,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "iLK" = (
@@ -55457,6 +55465,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "rAZ" = (
@@ -57601,6 +57610,7 @@
 	pixel_x = 29;
 	pixel_y = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "smL" = (
@@ -62280,6 +62290,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "tOO" = (
@@ -239397,7 +239408,7 @@ tEd
 lpM
 eEC
 uEm
-iTd
+bpA
 iTd
 wwB
 mBX
