@@ -63,7 +63,6 @@ SUBSYSTEM_DEF(demo)
 	log_world("Writing turfs...")
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "init [world.maxx] [world.maxy] [world.maxz]\n")
 
-	rustg_time_reset("demos")
 	for(var/z in 1 to maxz)
 		var/row_list = list()
 		var/last_appearance
@@ -95,9 +94,6 @@ SUBSYSTEM_DEF(demo)
 			row_list += rle_count
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
 		marked_turfs_by_z[z] = new /list(maxx * maxy) // completely clear the list as a whole
-
-	var/time = round(rustg_time_milliseconds("demos") / 1000, 0.01)
-	log_world("Turfs took [DisplayTimeText(time)]")
 
 	CHECK_TICK
 
