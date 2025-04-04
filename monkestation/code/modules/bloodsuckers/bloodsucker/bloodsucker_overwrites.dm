@@ -54,6 +54,8 @@
 	if(bloodsuckerdatum)
 		. += ""
 		. += "Blood Drank: [bloodsuckerdatum.total_blood_drank]"
+		. += "Maximum blood: [bloodsuckerdatum.max_blood_volume]"
+		. += "Blood Thickening: [bloodsuckerdatum.blood_level_gain] / [bloodsuckerdatum.get_level_cost()]"
 
 /datum/outfit/bloodsucker_outfit
 	name = "Bloodsucker outfit (Preview only)"
