@@ -804,6 +804,11 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		// Monkestation edit start: Cooking
+		/obj/item/kitchen/rollingpin,
+		/obj/item/knife/borg,
+		/obj/item/borg/apparatus/cooking,
+		// Monkestation edit end
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
@@ -816,7 +821,7 @@
 		/obj/item/scissors,
 		/obj/item/hairbrush/comb,
 		/obj/item/dyespray,
-		// Monestation edit end
+		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,
@@ -828,6 +833,12 @@
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		// Monkestation edit start: Botany
+		/obj/item/storage/bag/plants,
+		/obj/item/plant_analyzer,
+		/obj/item/shovel/spade,
+		/obj/item/cultivator,
+		// Monkestation edit end
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -851,6 +862,20 @@
 	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
 	if(enzyme)
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+
+//MONKESTATION ADDITION - lets service borgs craft
+/obj/item/robot_model/service/rebuild_modules()
+	..()
+	var/mob/living/silicon/robot/cyborg = loc
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+/obj/item/robot_model/service/remove_module(obj/item/removed_module, delete_after)
+	..()
+	var/mob/living/silicon/robot/cyborg = loc
+	cyborg.RemoveComponentSource(/datum/component/personal_crafting/borg)
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
