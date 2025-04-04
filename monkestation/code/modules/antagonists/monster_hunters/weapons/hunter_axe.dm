@@ -1,6 +1,7 @@
 /obj/item/melee/trick_weapon/hunter_axe
 	name = "Hunter's Axe"
 	desc = "A brute's tool of choice."
+	ui_desc = "A simple axe for hunters that lean towards barbarian tactics, can transform into a double bladed axe."
 	icon_state = "hunteraxe"
 	base_icon_state = "hunteraxe"
 	w_class = WEIGHT_CLASS_SMALL

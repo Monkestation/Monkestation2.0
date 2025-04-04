@@ -12,6 +12,8 @@
 	var/enabled = FALSE
 	///force we apply when thrown while active
 	var/active_thrown_force
+	/// The description that appears in the monster hunter UI for choosing one.
+	var/ui_desc
 
 /obj/item/melee/trick_weapon/Initialize(mapload)
 	. = ..()
