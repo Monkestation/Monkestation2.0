@@ -25,3 +25,52 @@
 	requires_purchase = FALSE
 	admin_only = TRUE
 	item_path = /obj/item/clothing/under/rank/centcom/officer_skirt
+
+// Abraxis's loadout
+
+/datum/loadout_item/head/cent_admiral_hat  //
+	name = "Centcom Admiral's Campaign hat"
+	item_path = /obj/item/clothing/head/hats/warden/drill/centcom_admiral
+	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	requires_purchase = FALSE
+	ckeywhitelist = list("Plejek", "abraxis12gaming")
+
+/datum/loadout_item/suit/cent_admiral_jacket  //
+	name = "Centcom Admiral's Coat"
+	item_path = /obj/item/clothing/suit/armor/centcom_admiral
+	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	requires_purchase = FALSE
+	ckeywhitelist = list("Plejek", "abraxis12gaming")
+
+/datum/loadout_item/under/miscellaneous/cent_admiral  //
+	name = "Centcom Admiral's Uniform"
+	item_path = /obj/item/clothing/under/rank/centcom/admiral
+	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	requires_purchase = FALSE
+	ckeywhitelist = list("Plejek", "abraxis12gaming")
+
+/datum/loadout_item/gloves/cent_admiral //
+	name = "Centcom Admiral's Gloves"
+	item_path = /obj/item/clothing/gloves/admiral
+	requires_purchase = FALSE
+	ckeywhitelist = list("Plejek", "abraxis12gaming")
+
+/datum/loadout_item/shoes/cent_admiral  //
+	name = "Centcom Admiral's Shoes"
+	item_path = /obj/item/clothing/shoes/admiral
+	requires_purchase = FALSE
+	ckeywhitelist = list("Plejek", "abraxis12gaming")
+
+// Sprungle's loadout
+
+/datum/loadout_item/mask/sprungle_mask
+	name = "Porcelain Facemask"
+	requires_purchase = FALSE
+	ckeywhitelist = list("speebusdageebus", "plejek")
+	item_path = /obj/item/clothing/mask/sprungle
+
+/datum/loadout_item/mask/sprungle_golden_mask
+	name = "Golden Facemask"
+	requires_purchase = FALSE
+	ckeywhitelist = list("speebusdageebus", "plejek")
+	item_path = /obj/item/clothing/mask/sprungle/personal
