@@ -57,4 +57,5 @@
 //monke edit start
 #define MECHA_AMMO_PIPEGUN "Improvised shell"
 #define MECHA_AMMO_PEASHOOTER "Peashooter bullet"
+#define MECHA_AMMO_ISG "IED grenades"
 //monke edit end

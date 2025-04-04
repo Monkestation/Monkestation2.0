@@ -39,7 +39,7 @@
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/a762/surplus
 	projectiles = 8
-	projectiles_cache = 8
+	projectiles_cache = 0
 	projectiles_cache_max = 24
 	projectiles_per_shot = 1
 	projectile_delay = 0.5 SECONDS
@@ -57,7 +57,7 @@
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
 	projectiles = 15
-	projectiles_cache = 15
+	projectiles_cache = 0
 	projectiles_cache_max = 30
 	projectiles_per_shot = 3
 	projectile_delay = 0.2 SECONDS
@@ -67,7 +67,7 @@
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
 
 /obj/item/mecha_parts/mecha_equipment/tankupgrade
-	name = "Trash Tank Armor Plating"
+	name = "trash tank armor plating"
 	desc = "A jumble of whatever scrap that someone can scrounge up that is able to beef up a trash tank somewhat."
 	icon_state = "tank_armor"
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
@@ -84,3 +84,25 @@
 /obj/item/mecha_parts/mecha_equipment/tankupgrade/attach(obj/vehicle/sealed/mecha/trash_tank/tank, attach_right = FALSE)
 	tank.upgrade()
 	playsound(get_turf(tank),'sound/items/ratchet.ogg',50,TRUE)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/infantry_support_gun
+	name = "infantry support gun breech"
+	desc = "an improvised mantlet fitted to launch IED's torwards enemies."
+	icon_state = "mecha_supportgun"
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ISG
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+	var/det_time = 3 SECONDS
+	equip_cooldown = 60
+	projectile = /obj/item/grenade/iedcasing/spawned
+	missile_speed = 1.5
+	projectiles = 1
+	projectiles_cache = 0
+	projectiles_cache_max = 6
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/infantry_support_gun/proj_init(obj/item/grenade/flashbang/F, mob/user)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)

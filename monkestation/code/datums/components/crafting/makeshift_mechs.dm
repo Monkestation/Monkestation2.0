@@ -140,8 +140,7 @@
 /datum/crafting_recipe/pipegun_tank_ammo
 	name = "Trash Tank Pipegun Ammobox"
 	result = /obj/item/mecha_ammo/makeshift
-	reqs = list(
-		/datum/reagent/fuel = 50,
+	reqs = list(/datum/reagent/fuel = 50,
 		/obj/item/stack/sheet/iron = 30,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
@@ -150,9 +149,30 @@
 /datum/crafting_recipe/peashooter_tank_ammo
 	name = "Trash Tank Peashooter Ammobox"
 	result = /obj/item/mecha_ammo/makeshift/peashooter
-	reqs = list(
-		/datum/reagent/fuel = 30,
+	reqs = list(/datum/reagent/fuel = 30,
 		/obj/item/stack/sheet/iron = 20,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 0.5 SECONDS
+
+/datum/crafting_recipe/isg_tank
+	name = "Infantry Support Gun Mantlet"
+	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/infantry_support_gun
+	reqs = list(/obj/item/pipe = 4,
+		/obj/item/tank/internals/oxygen = 2,
+		/obj/item/assembly/igniter = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/sheet/plasteel = 10,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_WRENCH, TOOL_WIRECUTTER)
+	time = 5 SECONDS
+
+/datum/crafting_recipe/isg_tank_ammo
+	name = "Infantry Support Gun Ammo"
+	result = /obj/item/mecha_ammo/makeshift/isg
+	reqs = list(/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/grenade/iedcasing = 3
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_WIRECUTTER)
 	time = 0.5 SECONDS
