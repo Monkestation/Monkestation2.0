@@ -21,8 +21,10 @@
 ///Ranks the Bloodsucker up, called by Sol.
 /datum/antagonist/bloodsucker/proc/sol_rank_up(atom/source)
 	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, PROC_REF(RankUp))
+	if(bloodsucker_level < 3)
+		INVOKE_ASYNC(src, PROC_REF(RankUp))
+	else
+		to_chat(owner.current, span_announce("You have already got as powerful as you can through surviving Sol."))
 
 ///Called when Sol is near starting.
 /datum/antagonist/bloodsucker/proc/sol_near_start(atom/source)
