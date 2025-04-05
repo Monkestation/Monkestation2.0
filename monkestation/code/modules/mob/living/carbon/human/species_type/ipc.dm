@@ -184,19 +184,19 @@
 		return
 	if(!ishuman(owner))
 		return
-	var/mob/living/carbon/human/H = owner
-	H.dna.features["ipc_screen"] = screen_choice
-	H.eye_color_left = sanitize_hexcolor(color_choice)
-	H.update_body()
+	var/mob/living/carbon/human/screen_owner = owner
+	screen_owner.dna.features["ipc_screen"] = screen_choice
+	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
+	screen_owner.update_body()
 
-/datum/species/ipc/spec_revival(mob/living/carbon/human/H)
-	H.notify_ghost_cloning("You have been repaired!")
-	H.grab_ghost()
-	H.dna.features["ipc_screen"] = "BSOD"
-	H.update_body()
-	playsound(H, 'monkestation/sound/voice/dialup.ogg', 25)
-	H.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
-	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), H) //We have to hand this off to not stall the revive() on the sleep()s.
+/datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
+	revived_ipc.notify_ghost_cloning("You have been repaired!")
+	revived_ipc.grab_ghost()
+	revived_ipc.dna.features["ipc_screen"] = "BSOD"
+	revived_ipc.update_body()
+	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
+	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
+	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
 
 /datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
