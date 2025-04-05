@@ -667,7 +667,7 @@
 			if(owner.stat == DEAD)
 				if(!HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
 					owner.revive(FALSE)
-			owner.cure_husk(0) // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+			owner.cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
 		//monkestation edit end
 
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))

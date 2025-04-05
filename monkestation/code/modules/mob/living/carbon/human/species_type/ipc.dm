@@ -157,10 +157,9 @@
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
 	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
 		return
-	else
-		saved_screen = change_screen // remember the old screen in case of revival
-		switch_to_screen(transformer, screen_name)
-		addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
+	saved_screen = change_screen // remember the old screen in case of revival
+	switch_to_screen(transformer, screen_name)
+	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
@@ -198,7 +197,6 @@
 	playsound(H, 'monkestation/sound/voice/dialup.ogg', 25)
 	H.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
 	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), H) //We have to hand this off to not stall the revive() on the sleep()s.
-	return
 
 /datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
