@@ -1575,7 +1575,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	construction_time = 5 SECONDS
-	build_path = /obj/item/clothing/neck/link_scryer
+	build_path = /obj/item/clothing/neck/link_scryer/auto_link // monkestation edit: auto_link subtype
 	category = list(
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)
