@@ -1,0 +1,71 @@
+2025-04-02:
+  Addust:
+  - rscadd: Rayne Corp, Toyota, and Johnson & Co Architecture have gotten together
+      to make some cursed new gun
+  - rscadd: If you discover a Screaming Hilux pistol, do not fire it without wielding
+      it and acquiring ear protection.
+  - rscadd: You have been warned.
+  Ice-Type:
+  - bugfix: Sleeping carp and awakened dragon now apply stamina damage properly again!
+      :)
+2025-04-03:
+  Gw0sty:
+  - rscadd: Adds holiday checks for events that aren't too spammy in their nature
+2025-04-04:
+  Absolucy:
+  - balance: Kindle is now dodged/countered by martial arts, consistent with the mansus
+      grasp and blood cult stun.
+  - map: Fixed a window on top of a windoor (which prevented interacting with the
+      windoor) in the Icebox library.
+  - rscadd: Added a new neutral quirk, "Unborgable". It's exactly what it says on
+      the tin, and prevents your brain from being used for a cyborg or AI, for better
+      or worse.
+  - bugfix: Jukebox and lobby screen music should now play on BYOND 516. Jukeboxes
+      won't have directional audio, however.
+  - qol: Cats can now knock things off reinforced tables.
+  - bugfix: The effects of revenant blight shouldn't be much weaker than intended
+      anymore.
+  - balance: Revenant blight now makes people easier to wound.
+  - balance: Revenants can now drain stamcritted people.
+  - balance: Revenant blight now drains sanity.
+  - rscadd: Revenant blight victims in the final stage will be soft spoken.
+  - code_imp: The protection from revenant blight after being cured is now a trait,
+      rather than a status effect
+  - rscdel: Removed the TEG and SM-TEG from Box Station's random engine rotation.
+  - code_imp: Heavily optimized code related to the roundend process.
+  - refactor: Refactored some code related to initialization.
+  - code_imp: Runtime errors will now print to the chat while debugging.
+  Absolucy, Gaxeer:
+  - bugfix: Round time in stat panel and ESC menu will show actual time since the
+      round start, not the world time.
+  Absolucy, Kashargul:
+  - bugfix: confirm buttons on the chat window
+  - bugfix: scroll tracking failing on large display counts when large messages blocks
+      where received
+  Absolucy, Vishenka0704, Mothblocks:
+  - qol: You can now delete your characters in preferences.
+  Gw0sty:
+  - rscadd: Cassettes can be made on central command
+  - map: Icebox surgery is more spacious
+  - map: Tramstation no longer has a spaced sealed area in its rock
+  - bugfix: Tramstation pet sanctuary apc is no longer disconnected roundstart
+  RandomDudeFromTheRim:
+  - bugfix: fixed the syndicate magboot confusion
+  The-Hotline-System:
+  - rscadd: Added Sprungle's ominous porcelain, and golden masks.
+  - rscadd: Added the CentCom Admiral clothes for Abraxis.
+  TheMrGlasses:
+  - rscadd: Adds an upgrade for better medical borg surgical tools.
+  - rscadd: Adds rescue hooks to the medical vendor, mining lockers, and mining vendor.
+  - balance: Changes the price of rescue hooks to a more reasonable 300 credits.
+  Wisemonster:
+  - rscdel: Removed the stolen CC clothes from the nanotrasen reps closet.
+2025-04-05:
+  Absolucy:
+  - refactor: The cargo imports console and assault op armaments uplink now use a
+      more efficient method of displaying icons.
+  Absolucy, hry-gh:
+  - bugfix: fix chat fixed?
+  Absolucy, timothymtorres:
+  - qol: Add more glasses to the nearsighted pref menu with icons.
+  - qol: Add UI preference menus for AI hologram and status displays.

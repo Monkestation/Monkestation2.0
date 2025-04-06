@@ -237,6 +237,7 @@
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	START_PROCESSING(SSobj, src)
 	return air_contents
 

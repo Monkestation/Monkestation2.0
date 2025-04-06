@@ -47,6 +47,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgicalprocessor",
+		"borg_upgrade_surgicaltools", //Monke edit: Might need to move this one to the same research node as cybernetic surgical toolset for balance.
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -98,7 +99,10 @@
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
+		"ci-meson", // monkestation addition
 		"ci-nutriment",
+		"ci-pathohud", // monkestation addition
+		"ci-scihud", // monkestastion addition
 		"ci-sechud",
 		"ci-welding",
 	)

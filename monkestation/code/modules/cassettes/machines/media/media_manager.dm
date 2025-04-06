@@ -122,7 +122,7 @@
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
-	playerstyle = PLAYER_WMP_HTML
+	playerstyle = owner.byond_version >= 516 ? PLAYER_HTML5_HTML : PLAYER_WMP_HTML // i beg of ye, someone convert the html5 player to use a proper audio library with positional audio support
 	owner << browse(null, "window=[WINDOW_ID]")
 	owner << browse(playerstyle, "window=[WINDOW_ID]")
 	send_update()

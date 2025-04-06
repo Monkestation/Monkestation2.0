@@ -131,11 +131,11 @@
 	/// custom ringtone for this job
 	var/job_tone
 
-	/// Donar rank required for this job. Leave null for no requirement.
+	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
-	var/job_req_donar = null //MONKESTATION EDIT
+	var/job_req_donor = null //MONKESTATION EDIT
 	//donator bypass for holidays
-	var/job_donar_bypass = null //MONKESTATION EDIT
+	var/job_donor_bypass = null //MONKESTATION EDIT
 
 /datum/job/New()
 	. = ..()
@@ -627,7 +627,8 @@
 		return
 	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
 	set_core_display_icon(null, player_client)
-
+	apply_pref_emote_display(player_client)
+	apply_pref_hologram_display(player_client)
 
 /mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
 	if(mmi)

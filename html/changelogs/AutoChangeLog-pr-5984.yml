@@ -1,4 +1,0 @@
-author: "dwasint"
-delete-after: True
-changes:
-  - bugfix: "after images now properly set their plane based on the parents plane cube level."

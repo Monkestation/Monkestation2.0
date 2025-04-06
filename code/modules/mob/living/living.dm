@@ -1421,7 +1421,7 @@
 	)
 
 	// If we weren't passed one, pick a default one
-	what_to_randomize ||= pick(possible_results)
+	what_to_randomize ||= pick(HAS_MIND_TRAIT(src, TRAIT_UNBORGABLE) ? (possible_results - WABBAJACK_ROBOT) : possible_results) // monkestation start: TRAIT_UNBORGABLE
 
 	switch(what_to_randomize)
 		if(WABBAJACK_MONKEY)
