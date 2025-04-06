@@ -57,3 +57,6 @@
 
 /obj/effect/abstract/chasm_storage
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+
+/obj/structure/disposalholder
+	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
