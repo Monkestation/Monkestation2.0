@@ -38,7 +38,7 @@
 
 /datum/looping_sound/wumpa
 	mid_sounds = list('monkestation/code/modules/donator/sounds/wumpa.ogg' = 1)
-	mid_length = 31
+	mid_length = 3.1 SECONDS
 	volume = 1
 	extra_range = 3
 	falloff_exponent = 100
