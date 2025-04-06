@@ -44,7 +44,7 @@
 
 /mob/living/carbon/human/proc/on_fat(datum/source)
 	SIGNAL_HANDLER
-	hud_used?.hunger?.update_appearance()
+	hud_used?.hunger?.update_hunger_bar()
 	mob_mood?.update_nutrition_moodlets()
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
@@ -61,5 +61,5 @@
 		overeatduration = 0
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
 	else
-		hud_used?.hunger?.update_appearance()
+		hud_used?.hunger?.update_hunger_bar()
 		mob_mood?.update_nutrition_moodlets()

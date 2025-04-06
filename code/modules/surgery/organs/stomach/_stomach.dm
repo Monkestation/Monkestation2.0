@@ -248,14 +248,14 @@
 
 /obj/item/organ/internal/stomach/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	receiver.hud_used?.hunger?.update_appearance()
+	receiver.hud_used?.hunger?.update_hunger_bar()
 
 /obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
-	stomach_owner.hud_used?.hunger?.update_appearance()
+	stomach_owner.hud_used?.hunger?.update_hunger_bar()
 	return ..()
 
 /obj/item/organ/internal/stomach/bone
