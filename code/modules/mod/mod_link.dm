@@ -121,7 +121,12 @@
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
+	// monkestation start: actually use the voice/name of the speaker
+	var/old_name = mod_link.visual.name
+	mod_link.visual.name = speaker.GetVoice()
 	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.name = old_name
+	// monkestation end
 
 /obj/item/mod/control/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -296,7 +301,12 @@
 	. = ..()
 	if(speaker != loc)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 3)
+	// monkestation start: actually use the voice/name of the speaker
+	var/old_name = mod_link.visual.name
+	mod_link.visual.name = speaker.GetVoice()
+	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.name = old_name
+	// monkestation end
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
