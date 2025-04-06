@@ -22,7 +22,7 @@
 
 	if (!process_mode)
 		signal.data["compression"] = 100 // even more compressed signal
-	else if (signal.data["compression"] && !signal.data["unprocessable"])
+	else if (signal.data["compression"] && !signal.data["unprocessable"]) // MONKE EDIT
 		signal.data["compression"] = 0 // uncompress subspace signal
 
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
