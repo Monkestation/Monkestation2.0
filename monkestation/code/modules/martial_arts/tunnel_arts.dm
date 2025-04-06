@@ -110,7 +110,7 @@
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), defender.loc), sounds DECISECONDS, TIMER_DELETE_ME)
 
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
-	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
+	defender.apply_damage(25, attacker.get_attack_type(), affecting, blocked = def_check)
 
 	if(!defender.mind || defender.stat != CONSCIOUS || prob(50))
 		return TRUE

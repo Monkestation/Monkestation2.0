@@ -2,7 +2,7 @@
 	name = "The Awakened Dragon"
 	id = MARTIALART_AWAKENEDDRAGON
 	help_verb = /mob/living/proc/awakened_dragon_help
-	deflect_cooldown = 0.4
+	//deflect_cooldown = 0
 	deflect_stamcost = 10
 	log_name = "Awakened Dragon"
 	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS, TRAIT_BATON_RESISTANCE)
@@ -22,6 +22,24 @@
 	var/original_name
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
+
+/datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
+	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
+	//	return FALSE
+	if(!can_use(carp_user))
+		return FALSE
+	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
+		return FALSE
+	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
+		return FALSE
+	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return FALSE
+	var/datum/dna/dna = carp_user.has_dna()
+	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return FALSE
+	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
+		return FALSE
+	return TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()

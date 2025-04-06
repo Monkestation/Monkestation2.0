@@ -51,10 +51,10 @@
 		return TRUE
 	return FALSE
 
-///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
+///Gnashing Teeth: Harm Harm, consistent 25 force punch on every second harm punch
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/attacker, mob/living/defender, set_damage = TRUE)
 	if(set_damage)
-		damage = 30
+		damage = 25
 		wounding = 0
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
@@ -186,7 +186,7 @@
 		)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"), type = MESSAGE_TYPE_COMBAT)
 
-	defender.apply_damage(rand(15,25), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND, blocked = def_check)
+	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND, blocked = def_check)
 	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "punched ([log_name]])") //monke edit
 	return MARTIAL_ATTACK_SUCCESS
