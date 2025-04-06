@@ -15,6 +15,7 @@ type ByondOpen = {
 type ByondProps = {
   maxLength: number;
   lightMode: BooleanLike;
+  scale: BooleanLike;
 };
 
 type State = {
@@ -39,6 +40,7 @@ export class TguiSay extends Component<{}, State> {
   private lightMode: boolean;
   private maxLength: number;
   private messages: typeof byondMessages;
+  private scale: boolean;
   private position: [number, number];
   private isDragging: boolean;
   state: State;
@@ -53,6 +55,7 @@ export class TguiSay extends Component<{}, State> {
     this.lightMode = false;
     this.maxLength = 1024;
     this.messages = byondMessages;
+    this.scale = true;
     this.position = [window.screenX, window.screenY];
     this.isDragging = false;
     this.state = {
@@ -170,7 +173,7 @@ export class TguiSay extends Component<{}, State> {
     this.chatHistory.reset();
     this.channelIterator.reset();
     this.currentPrefix = null;
-    windowClose();
+    windowClose(this.scale);
   }
 
   handleEnter() {
@@ -299,7 +302,7 @@ export class TguiSay extends Component<{}, State> {
     }
     this.setState({ buttonContent: this.channelIterator.current() });
 
-    windowOpen(this.channelIterator.current());
+    windowOpen(this.channelIterator.current(), this.scale);
 
     const input = this.innerRef.current;
     setTimeout(() => {
@@ -308,9 +311,10 @@ export class TguiSay extends Component<{}, State> {
   };
 
   handleProps = (data: ByondProps) => {
-    const { maxLength, lightMode } = data;
+    const { maxLength, lightMode, scale } = data;
     this.maxLength = maxLength;
     this.lightMode = !!lightMode;
+    this.scale = !!scale;
   };
 
   reset() {
@@ -334,7 +338,7 @@ export class TguiSay extends Component<{}, State> {
 
     if (this.state.size !== newSize) {
       this.setState({ size: newSize });
-      windowSet(newSize);
+      windowSet(newSize, this.scale);
     }
   }
 
@@ -359,7 +363,13 @@ export class TguiSay extends Component<{}, State> {
         <Dragzone position="top" theme={theme} />
         <div className="center" $HasKeyedChildren>
           <Dragzone position="left" theme={theme} />
-          <div className="input" $HasKeyedChildren>
+          <div
+            className="input"
+            style={{
+              zoom: this.scale ? '' : `${100 / window.devicePixelRatio}%`,
+            }}
+            $HasKeyedChildren
+          >
             <button
               className={`button button-${theme}`}
               onMouseDown={this.handleButtonClick}
