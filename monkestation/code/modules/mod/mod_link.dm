@@ -5,11 +5,17 @@
 	return ..() && verify_mod_caller(loc)
 
 /proc/verify_mod_caller(mob/living/link_caller)
+	if(isnull(link_caller.loc))
+		return FALSE
+	if(istype(link_caller, /mob/living/carbon/human/dummy))
+		return FALSE
 	if(SSticker.current_state == GAME_STATE_FINISHED)
 		return TRUE
 	if(istype(link_caller, /mob/living/carbon/human/ghost))
 		return FALSE
 	var/area/area = get_area(link_caller)
+	if(isnull(area))
+		return FALSE
 	if(area.area_flags & GHOST_AREA)
 		return FALSE
 	return TRUE
