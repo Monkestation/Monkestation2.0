@@ -205,7 +205,8 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 		if(iter_count >= ENQUEUE_SANITY && GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__ENABLE_ENQUEUE_SANITY)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
 			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			stack_trace("enqueue() entered an infinite loop, ending queue.")
+			message_admins("SS:[name] surpassed safe enqueue count ([ENQUEUE_SANITY]), ending queue.")
+			stack_trace("SS:[name] surpassed safe enqueue count ([ENQUEUE_SANITY]), ending queue.")
 			if(GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SANITY)
 				Recreate_MC()
 			return FALSE
@@ -274,6 +275,7 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 
 	if (queue_next == src || queue_prev == src)
 		// Log the error for debugging
+		message_admins("SS:[name] had self-reference in queue. Fixed.")
 		stack_trace("SS:[name] had self-reference in queue. Fixed.")
 		return FALSE
 	return TRUE

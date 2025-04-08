@@ -1,7 +1,7 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins,
+	to_chat_immediate(GLOB.admins,
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
 		confidential = TRUE)
@@ -11,14 +11,14 @@
 		var/datum/admins/D = GLOB.admin_datums[admin.ckey]
 		if(D.check_for_rights(R_BAN))
 			msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-			to_chat(admin,
+			to_chat_immediate(admin,
 				type = MESSAGE_TYPE_ADMINLOG,
 				html = msg,
 				confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins,
+	to_chat_immediate(GLOB.admins,
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
 		confidential = TRUE)
