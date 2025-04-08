@@ -324,7 +324,7 @@
 
 	var/static/alpha_filter
 	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
-		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters.dmi', "window-bg"))
+		alpha_filter = filter(type="alpha", icon = icon('icons/obj/atmospherics/stationary_canisters.dmi', "window-bg"))
 
 	var/list/new_underlays = list()
 	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
