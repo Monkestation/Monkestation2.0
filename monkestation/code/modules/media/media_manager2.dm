@@ -1,11 +1,12 @@
 //#define MEDIA_WINDOW_ID "mediapanel2meow"
-#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), "media2:[name]")
+#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? "media2:[name]" : "media2.browser:[name]")
 
 /client
 	var/datum/media_manager2/media2
 
 /datum/media_manager2
 	var/client/owner
+	var/is_browser = FALSE
 	var/static/base_html
 
 /datum/media_manager2/New(client/owner)
@@ -34,6 +35,7 @@
 	var/html = replacetextEx(base_html, "media:href", REF(src))
 	//owner << browse(null, "window=media2")
 	owner << browse(html, "window=media2;size=300x300;can_minimize=0")
+	is_browser = winexists(owner, "media2") == "BROWSER"
 
 /datum/media_manager2/proc/init_base_html()
 	get_asset_datum(/datum/asset/simple/media_manager2)
@@ -81,7 +83,7 @@
 	set name = "MM2: Set URL"
 	set category = "MM2"
 
-	var/url = trimtext(tgui_input_text(src, "Set URL", "Media Manager 2", encode = FALSE))
+	var/url = trimtext(tgui_input_text(src, "Set URL", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
 	if(url)
 		media2.set_url(url)
 		message_admins("mm2: url set to [url]")

@@ -1,8 +1,3 @@
-window.onerror = function(message, source, line, col, error) {
-	window.location.href = `byond://?src=media:href;media_error=1;message=${encodeURIComponent(message)};source=${encodeURIComponent(source)};line=${encodeURIComponent(line)};col=${encodeURIComponent(col)};error=${encodeURIComponent(error)}`;
-	return true;
-};
-
 const { SpatialAudioPlayer } = wasm_bindgen;
 
 function topic(params) {
@@ -10,7 +5,7 @@ function topic(params) {
 	let url = "byond://?src=media:href";
 	if (params) {
 		for (const key in params) {
-			if (hasOwn.call(params, key)) {
+			if (Object.hasOwn(params, key)) {
 				let value = params[key];
 				if (value === null || value === undefined) {
 					value = "";
@@ -30,35 +25,44 @@ var player = null;
 async function setup() {
 	await wasm_bindgen("media_player.wasm");
 	player = new SpatialAudioPlayer();
-	window.location.href = "byond://?src=media:href;ready=1";
-	topic({"ready": 2});
+	topic({"ready": 1, "meow": 1});
 }
 
-setup();
+window.onerror = function(message, source, line, col, error) {
+	window.location.href = `byond://?src=media:href;media_error=1;message=${encodeURIComponent(message)};source=${encodeURIComponent(source)};line=${encodeURIComponent(line)};col=${encodeURIComponent(col)};error=${encodeURIComponent(error)}`;
+	return true;
+};
 
-function set_url(url) {
+document.onreadystatechange = function () {
+	if (document.readyState !== 'complete') return;
+	setup();
+};
+
+window.set_url = (url) => {
+	console.log("js set_url 1");
 	player.set_url(url);
+	console.log("js set_url 2");
 }
 
-function set_position(x, y) {
+window.set_position = (x, y) => {
 	player.set_position(x, y);
 }
 
-function set_time(time) {
+window.set_time = (time) => {
 	player.set_time(time);
 }
 
-function play(url) {
+window.play = (url) => {
 	if (url) {
 		player.set_url(url);
 	}
 	player.play();
 }
 
-function pause() {
+window.pause = () => {
 	player.pause();
 }
 
-function stop() {
+window.stop = () => {
 	player.stop();
 }
