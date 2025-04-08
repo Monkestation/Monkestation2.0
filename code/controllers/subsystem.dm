@@ -202,11 +202,10 @@
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
-			/* enqueue_log.Cut() */
-			Recreate_MC()
-			return
+			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
+			stack_trace("enqueue() entered an infinite loop, ending queue.")
+			queue_next = null
+			return FALSE
 
 
 		queue_node_priority = queue_node.queued_priority
@@ -239,10 +238,10 @@
 			if (queue_node_priority < SS_priority)
 				break
 
-	if(iter_count > 0)
+	/* if(iter_count > 0)
 		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
 		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
-		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
+		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift */
 
 	queued_time = world.time
 	queued_priority = SS_priority
@@ -273,6 +272,7 @@
 	if (queue_next == src || queue_prev == src)
 		// Log the error for debugging
 		stack_trace("SS:[name] had self-reference in queue. Fixed.")
+		queue_next = null
 		return FALSE
 	return TRUE
 
