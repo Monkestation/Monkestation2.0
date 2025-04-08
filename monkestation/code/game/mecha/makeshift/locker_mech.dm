@@ -8,7 +8,7 @@
 	max_integrity = 100 //its made of scraps
 	lights_power = 5
 	movedelay = 2 //Same speed as a ripley, for now.
-	armor_type = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60) //Same armour as a locker
+	armor_type = /datum/armor/scrap_vehicles //Same armour as a locker
 	internal_damage_threshold = 30 //Its got shitty durability
 	wreckage = null
 	mech_type = EXOSUIT_MODULE_MAKESHIFT
@@ -26,3 +26,11 @@
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 0,
 	)
+
+/datum/armor/scrap_vehicles
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 70
+	acid = 60

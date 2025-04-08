@@ -11,7 +11,7 @@
 	stepsound = 'sound/vehicles/carrev.ogg'
 	turnsound = 'sound/vehicles/carrev.ogg'
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
-	armor_type = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60) //Same armour as a locker (close enough to a portapotty no?)
+	armor_type = /datum/armor/scrap_vehicles //Same armour as a locker (close enough to a portapotty no?)
 	internal_damage_threshold = 30 //Its got shitty durability
 	wreckage = null
 	mech_type = EXOSUIT_MODULE_AMBULANCE
