@@ -41,11 +41,21 @@
 		START_PROCESSING(SSprocessing, src)
 	else
 		STOP_PROCESSING(SSprocessing, src)
+	if(istype(owner.current?.loc, /obj/item/mmi))
+		RegisterSignal(our_mob.loc, COMSIG_ATOM_EXAMINE, PROC_REF(on_mmi_examine))
 
 /datum/antagonist/teratoma/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
 	REMOVE_TRAIT(our_mob, TRAIT_EVIL, type)
+	UnregisterSignal(our_mob.loc, COMSIG_ATOM_EXAMINE)
+
+/datum/antagonist/teratoma/proc/on_mmi_examine(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if(!istype(owner.current?.loc, /obj/item/mmi) || source != owner.current.loc)
+		UnregisterSignal(source, COMSIG_ATOM_EXAMINE) // we got moved out of the MMI, just unregister the signal
+		return
+	. += span_warning("There is a small red warning light blinking on it.")
 
 /datum/antagonist/teratoma/process(seconds_per_tick)
 	if(QDELETED(src) || QDELETED(owner?.current))
