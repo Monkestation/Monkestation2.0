@@ -124,7 +124,7 @@
 	// monkestation start: actually use the voice/name of the speaker
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
 	// monkestation end
 
@@ -304,7 +304,7 @@
 	// monkestation start: actually use the voice/name of the speaker
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
 	// monkestation end
 
