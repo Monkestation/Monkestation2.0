@@ -3470,7 +3470,9 @@
 	},
 /obj/structure/closet/l3closet,
 /obj/effect/turf_decal/bot,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -48103,6 +48105,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
+"ocN" = (
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/iron/white/textured_edge{
+	dir = 8
+	},
+/area/station/medical/medbay/central)
 "odr" = (
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
@@ -51385,6 +51402,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "pdA" = (
@@ -112245,7 +112266,7 @@ rxo
 rxo
 qjM
 mth
-bBX
+ocN
 ftY
 cOO
 vRf
