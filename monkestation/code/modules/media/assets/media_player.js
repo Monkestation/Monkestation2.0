@@ -1,20 +1,10 @@
 const { SpatialAudioPlayer } = wasm_bindgen;
 
-function topic(params) {
+function topic(type, params) {
 	// Build the URL
-	let url = "byond://?src=media:href";
+	let url = `byond://?src=media:href;type=${encodeURIComponent(type)}`;
 	if (params) {
-		for (const key in params) {
-			if (Object.hasOwn(params, key)) {
-				let value = params[key];
-				if (value === null || value === undefined) {
-					value = "";
-				} else if (typeof value === "boolean") {
-					value = + value;
-				}
-				url += `;${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-			}
-		}
+		url += `;params=${encodeURIComponent(JSON.stringify(params))}`
 	}
 	location.href = url;
 }
@@ -25,44 +15,64 @@ var player = null;
 async function setup() {
 	await wasm_bindgen("media_player.wasm");
 	player = new SpatialAudioPlayer();
-	topic({"ready": 1, "meow": 1});
+	topic("ready");
 }
 
 window.onerror = function(message, source, line, col, error) {
-	window.location.href = `byond://?src=media:href;media_error=1;message=${encodeURIComponent(message)};source=${encodeURIComponent(source)};line=${encodeURIComponent(line)};col=${encodeURIComponent(col)};error=${encodeURIComponent(error)}`;
+	topic("error", {
+		"message": message,
+		"source": source,
+		"line": line,
+		"col": col,
+		"error": error,
+	})
 	return true;
 };
 
-document.onreadystatechange = function () {
-	if (document.readyState !== 'complete') return;
-	setup();
+window.onunhandledrejection = function(error) {
+	let msg = 'UnhandledRejection';
+	if (error.reason) {
+		msg += ': ' + (error.reason.message || error.reason.description || error.reason);
+		if (error.reason.stack) {
+			error.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+		}
+	}
+	window.onerror(msg, null, null, null, error.reason);
 };
 
-window.set_url = (url) => {
-	console.log("js set_url 1");
+document.onreadystatechange = function() {
+	if (document.readyState === 'complete') {
+		setup();
+	}
+};
+
+window.set_url = function(url) {
 	player.set_url(url);
-	console.log("js set_url 2");
 }
 
-window.set_position = (x, y) => {
+window.set_position = function (x, y) {
 	player.set_position(x, y);
 }
 
-window.set_time = (time) => {
+window.set_time = function(time) {
 	player.set_time(time);
 }
 
-window.play = (url) => {
+window.set_volume = function(volume) {
+	player.set_volume(volume);
+}
+
+window.play = function(url) {
 	if (url) {
 		player.set_url(url);
 	}
 	player.play();
 }
 
-window.pause = () => {
+window.pause = function() {
 	player.pause();
 }
 
-window.stop = () => {
+window.stop = function() {
 	player.stop();
 }

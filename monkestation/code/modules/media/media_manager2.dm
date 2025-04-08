@@ -1,5 +1,21 @@
-//#define MEDIA_WINDOW_ID "mediapanel2meow"
-#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? ("media2:" + name) : ("media2.browser:" + name))
+#define MEDIA_WINDOW_ID "outputwindow.mediapanel2"
+#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? (MEDIA_WINDOW_ID + ":" + name) : (MEDIA_WINDOW_ID + ".browser:" + name))
+#define WAIT_UNTIL_READY \
+	if(QDELETED(src)) { \
+		return; \
+	}; \
+	if(isnull(ready)) { \
+		var/__end_time = REALTIMEOFDAY + (5 SECONDS); \
+		while(isnull(ready) && (REALTIMEOFDAY < __end_time)) { \
+			stoplag(); \
+			if(QDELETED(src)) { \
+				return; \
+			}; \
+		}; \
+		if(isnull(ready)) { \
+			return; \
+		}; \
+	};
 
 /client
 	var/datum/media_manager2/media2
@@ -7,75 +23,87 @@
 /datum/media_manager2
 	var/client/owner
 	var/is_browser = FALSE
+	var/ready = null
 	var/static/base_html
 
 /datum/media_manager2/New(client/owner)
 	src.owner = owner
 	if(isnull(base_html))
 		init_base_html()
-	send()
-	addtimer(CALLBACK(src, PROC_REF(open)), 2 SECONDS)
+	open()
 
 /datum/media_manager2/Destroy(force)
+	close()
 	owner = null
 	return ..()
 
-/datum/media_manager2/proc/send()
+/datum/media_manager2/proc/open()
 	set waitfor = FALSE
-	sleep(0.5 SECONDS)
 	if(get_asset_datum(/datum/asset/simple/media_manager2).send(owner))
 		to_chat(owner, span_notice("Assets were sent!"))
 	else
 		to_chat(owner, span_warning("Assets were NOT sent!"))
-
-/datum/media_manager2/proc/open()
-	set waitfor = FALSE
-	if(QDELETED(src))
-		return
 	var/html = replacetextEx(base_html, "media:href", REF(src))
-	//owner << browse(null, "window=media2")
-	owner << browse(html, "window=media2;size=300x300;can_minimize=0")
-	is_browser = winexists(owner, "media2") == "BROWSER"
+	close()
+	owner << browse(html, "window=" + MEDIA_WINDOW_ID)
+	is_browser = winexists(owner, MEDIA_WINDOW_ID) == "BROWSER"
+
+/datum/media_manager2/proc/close()
+	if(!isnull(owner))
+		owner << browse(null, "window=" + MEDIA_WINDOW_ID)
+	ready = null
 
 /datum/media_manager2/proc/init_base_html()
-	get_asset_datum(/datum/asset/simple/media_manager2)
+	get_asset_datum(/datum/asset/simple/media_manager2) // ensure that asset datum is loaded
 	var/js = replacetextEx(file2text("monkestation/code/modules/media/assets/media_player.js"), "media_player.wasm", SSassets.transport.get_asset_url("media_player.wasm"))
 	base_html = file2text("monkestation/code/modules/media/assets/media_player.html")
 	base_html = replacetextEx(base_html, "<!-- media:wasm -->", "<script type='text/javascript' src='[SSassets.transport.get_asset_url("media_player_wasm.js")]'></script>")
 	base_html = replacetextEx(base_html, "<!-- media:main -->", "<script type='text/javascript'>[js]</script>")
 
 /datum/media_manager2/proc/set_url(url)
-	if(!QDELETED(src))
-		MEDIA_CALL("set_url", url)
+	WAIT_UNTIL_READY
+	MEDIA_CALL("set_url", url)
 
 /datum/media_manager2/proc/set_position(x = 0, y = 0)
-	if(!QDELETED(src))
-		MEDIA_CALL("set_position", x, y)
+	WAIT_UNTIL_READY
+	MEDIA_CALL("set_position", x, y)
 
-/datum/media_manager2/proc/set_time(time)
-	if(!QDELETED(src))
-		MEDIA_CALL("set_time", time)
+/datum/media_manager2/proc/set_time(time = 0)
+	WAIT_UNTIL_READY
+	MEDIA_CALL("set_time", time)
+
+/datum/media_manager2/proc/set_volume(volume = 1)
+	WAIT_UNTIL_READY
+	MEDIA_CALL("set_volume", volume)
 
 /datum/media_manager2/proc/play(url)
-	if(!QDELETED(src))
-		MEDIA_CALL("play", url)
+	WAIT_UNTIL_READY
+	MEDIA_CALL("play", url)
 
 /datum/media_manager2/proc/pause()
-	if(!QDELETED(src))
+	if(!isnull(ready)) // don't even bother waiting if we're not ready, bc that means there's nothing TO pause
 		MEDIA_CALL("pause")
 
 /datum/media_manager2/proc/stop()
-	if(!QDELETED(src))
+	if(!isnull(ready)) // don't even bother waiting if we're not ready, bc that means there's nothing TO stop
 		MEDIA_CALL("stop")
 
 /datum/media_manager2/Topic(href, list/href_list)
 	. = ..()
-	if(href_list["ready"])
-		message_admins("mm2 ready for [key_name(owner)]")
-		log_world("mm2 ready for [key_name(owner)]")
-	else if(href_list["media_error"])
-		message_admins("mm2 error: [href_list["media_error"]]")
-		stack_trace(href_list["media_error"])
+	var/message_type = href_list["type"]
+	if(!message_type)
+		return
+	var/list/params = isnull(href_list["params"]) ? list() : json_decode(href_list["params"]);
+	if(QDELETED(src))
+		return
+	switch(message_type)
+		if("ready")
+			ready = TRUE
+			message_admins("mm2 ready for [key_name(owner)]")
+			log_world("mm2 ready for [key_name(owner)]")
+		if("error")
+			message_admins("mm2 error: [params["message"]]")
+			stack_trace(params["message"])
 	message_admins("mm2 topic: [json_encode(href_list, JSON_PRETTY_PRINT)]")
 	log_world("mm2 topic: [json_encode(href_list, JSON_PRETTY_PRINT)]")
 
@@ -126,4 +154,25 @@
 	media2.set_time(time)
 	message_admins("mm2: set time to [time]")
 
-//#undef MEDIA_WINDOW_ID
+/client/verb/mm2_reload_all()
+	set name = "MM2: Reload Base HTML/JS"
+	set category = "MM2"
+
+	reload_all_mm2()
+	message_admins("mm2: reloaded all")
+
+/proc/reload_all_mm2()
+	var/did_re_init = FALSE
+	for(var/client/client in GLOB.clients)
+		var/datum/media_manager2/mm2 = client?.media2
+		if(QDELETED(mm2))
+			continue
+		if(!did_re_init)
+			mm2.base_html = null
+			mm2.init_base_html()
+			did_re_init = TRUE
+		mm2.open()
+
+#undef WAIT_UNTIL_READY
+#undef MEDIA_CALL
+#undef MEDIA_WINDOW_ID
