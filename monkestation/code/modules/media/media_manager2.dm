@@ -1,5 +1,5 @@
 //#define MEDIA_WINDOW_ID "mediapanel2meow"
-#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? "media2:[name]" : "media2.browser:[name]")
+#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? ("media2:" + name) : ("media2.browser:" + name))
 
 /client
 	var/datum/media_manager2/media2
