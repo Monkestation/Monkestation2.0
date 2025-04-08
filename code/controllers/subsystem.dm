@@ -106,8 +106,7 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
-	var/avg_iter_count = 0
-	var/avg_drift = 0
+	var/avg_enqueue_time
 	/* var/list/enqueue_log = list() */
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
@@ -200,13 +199,15 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 	var/iter_count = 0
 
 	/* enqueue_log.Cut() */
+	var/starting_tick_usage = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY && GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__ENABLE_ENQUEUE_SANITY)
+			var/tick_usage = TICK_USAGE_TO_MS(starting_tick_usage)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
 			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			message_admins("SS:[name] surpassed safe enqueue count ([ENQUEUE_SANITY]), ending queue.")
-			stack_trace("SS:[name] surpassed safe enqueue count ([ENQUEUE_SANITY]), ending queue.")
+			message_admins("SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue.")
+			stack_trace("SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue.")
 			if(GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SANITY)
 				Recreate_MC()
 			return FALSE
@@ -242,10 +243,9 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 			if (queue_node_priority < SS_priority)
 				break
 
-	/* if(iter_count > 0)
-		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
-		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
-		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift */
+	var/tick_usage = TICK_USAGE_TO_MS(starting_tick_usage)
+	if(tick_usage > 0)
+		avg_enqueue_time = isnull(avg_enqueue_time) ? tick_usage : ((avg_enqueue_time + tick_usage) * 0.5)
 
 	queued_time = world.time
 	queued_priority = SS_priority
@@ -275,8 +275,8 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 
 	if (queue_next == src || queue_prev == src)
 		// Log the error for debugging
-		message_admins("SS:[name] had self-reference in queue. Fixed.")
-		stack_trace("SS:[name] had self-reference in queue. Fixed.")
+		message_admins("SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)")
+		stack_trace("SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)")
 		return FALSE
 	return TRUE
 
