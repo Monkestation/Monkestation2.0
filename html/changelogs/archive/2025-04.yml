@@ -69,3 +69,22 @@
   Absolucy, timothymtorres:
   - qol: Add more glasses to the nearsighted pref menu with icons.
   - qol: Add UI preference menus for AI hologram and status displays.
+2025-04-06:
+  Absolucy:
+  - bugfix: Fixed some edge cases where player worn icons wouldn't update properly...
+      such as blades being hidden when equipping to a void cloak.
+  - bugfix: Fixed the civilian bounty console UI not extending to the entire screen
+      width on BYOND 516.
+  - bugfix: (JohnFulpWillard) Clients joining a round twice as a crewmember (via admins
+      or otherwise) no longer break security/medical record consoles permanently.
+  - bugfix: (Aylong) Fixed small character preview, color matrix preview, mech preview,
+      and other previews with uses ByondUI map.
+  - bugfix: (JohnFulpWillard) Users on 515 no longer have 2 scrollwheels on the experiscanner.
+  - rscdel: (JohnFulpWillard) The stat panel only shows the scrollwheel when there's
+      something to scroll to.
+  - bugfix: (jlsnow301) TGUI Say should focus on its initial open, once more
+  - bugfix: (hry-gh) Certain songs trying to play would crash the chat, it no longer
+      does.
+  - bugfix: Replay subsystem initialization should no longer seemingly freeze the
+      server for players waiting in the lobby.
+  - bugfix: Fixed plague rats appearing twice on the roundend report.
