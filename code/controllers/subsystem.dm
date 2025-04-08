@@ -210,7 +210,7 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 			var/tick_usage = TICK_USAGE_TO_MS(starting_tick_usage)
 			var/msg = "SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue."
 #ifdef ENABLE_ENQUEUE_LOGGING
-			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
 #endif
 			SSplexora.mc_alert(msg)
 			message_admins(msg)
