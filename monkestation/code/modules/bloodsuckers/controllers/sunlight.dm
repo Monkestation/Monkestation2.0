@@ -25,6 +25,11 @@ SUBSYSTEM_DEF(sunlight)
 	///If Bloodsucker levels for the night has been given out yet.
 	var/issued_XP = FALSE
 
+/datum/controller/subsystem/sunlight/Recover()
+	sunlight_active = SSsunlight.sunlight_active
+	time_til_cycle = SSsunlight.time_til_cycle
+	issued_XP = SSsunlight.issued_XP
+
 /datum/controller/subsystem/sunlight/fire(resumed = FALSE)
 	time_til_cycle--
 	if(sunlight_active)
