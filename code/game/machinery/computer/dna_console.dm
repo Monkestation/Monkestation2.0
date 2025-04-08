@@ -1771,7 +1771,7 @@
 	if(!scanner_operational())
 		return FALSE
 
-	if(!connected_scanner.occupant)
+	if(!isliving(connected_scanner.occupant) || QDELING(connected_scanner.occupant))
 		return FALSE
 
 	scanner_occupant = connected_scanner.occupant
