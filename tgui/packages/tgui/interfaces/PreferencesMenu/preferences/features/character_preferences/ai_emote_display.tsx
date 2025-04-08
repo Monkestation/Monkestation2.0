@@ -1,12 +1,12 @@
 import {
-  FeatureChoiced,
-  FeatureChoicedServerData,
   FeatureIconnedDropdownInput,
   FeatureValueProps,
+  FeatureChoicedServerData,
+  FeatureChoiced,
 } from '../base';
 
-export const glasses: FeatureChoiced = {
-  name: 'Glasses',
+export const preferred_ai_emote_display: FeatureChoiced = {
+  name: 'AI Emote Display',
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
   ) => {
