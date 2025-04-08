@@ -566,6 +566,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	media.open()
 	media.update_music()
 
+	media2 = new(src)
+
 	fully_created = TRUE
 
 //////////////
@@ -585,6 +587,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	QDEL_NULL(media2) // monkestation edit: destroy this first so we don't try to send anything during any part of del
 	if(mob)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_join = mob.client?.prefs?.read_preference(/datum/preference/toggle/broadcast_login_logout)
