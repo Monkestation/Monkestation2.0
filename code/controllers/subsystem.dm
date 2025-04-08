@@ -270,6 +270,12 @@
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
 
+	if (queue_next == src || queue_prev == src)
+		// Log the error for debugging
+		stack_trace("SS:[name] had self-reference in queue. Fixed.")
+		return FALSE
+	return TRUE
+
 
 /datum/controller/subsystem/proc/dequeue()
 	if (queue_next)

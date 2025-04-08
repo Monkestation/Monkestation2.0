@@ -615,7 +615,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			SS.postponed_fires--
 			SS.update_nextfire()
 			continue
-		SS.enqueue()
+		if(!SS.enqueue())
+			return FALSE
 	. = 1
 
 
