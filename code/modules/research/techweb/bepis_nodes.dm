@@ -9,7 +9,7 @@
 		"bright_helmet",
 		"rld_mini",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -22,7 +22,7 @@
 		"mauna_mug",
 		"rolling_table",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -35,7 +35,7 @@
 		"eng_gloves",
 		"lava_rods",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -48,7 +48,7 @@
 		"pin_explorer",
 		"stun_boomerang",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -61,7 +61,7 @@
 	design_ids = list(
 		"hypnochair",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -73,7 +73,7 @@
 		"pointy_tape",
 		"super_sticky_tape",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -86,7 +86,7 @@
 		"tackle_dolphin",
 		"tackle_rocket",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -99,6 +99,6 @@
 		"mod_disposal",
 		"mod_joint_torsion",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE

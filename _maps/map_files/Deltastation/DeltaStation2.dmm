@@ -50770,18 +50770,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "lRH" = (
-/obj/structure/closet/crate/science{
-	anchored = 1
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/north{
 	department = "Robotics";
@@ -50789,6 +50777,7 @@
 	receive_ore_updates = 1;
 	supplies_requestable = 1
 	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "lRI" = (
