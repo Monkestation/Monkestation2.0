@@ -107,7 +107,9 @@
 	var/datum/controller/subsystem/queue_prev
 
 	var/avg_enqueue_time
-	/* var/list/enqueue_log = list() */
+#ifdef ENABLE_ENQUEUE_LOGGING
+	var/list/enqueue_log = list()
+#endif
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -198,16 +200,21 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 
 	var/iter_count = 0
 
-	/* enqueue_log.Cut() */
+#ifdef ENABLE_ENQUEUE_LOGGING
+	enqueue_log.Cut()
+#endif
 	var/starting_tick_usage = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY && GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__ENABLE_ENQUEUE_SANITY)
 			var/tick_usage = TICK_USAGE_TO_MS(starting_tick_usage)
-			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			message_admins("SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue.")
-			stack_trace("SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue.")
+			var/msg = "SS:[name] exceeded safe enqueue iterations ([ENQUEUE_SANITY] iterations took [tick_usage] ms, while the average was [avg_enqueue_time] ms), ending queue."
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
+#endif
+			SSplexora.mc_alert(msg)
+			message_admins(msg)
+			stack_trace(msg)
 			if(GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SANITY)
 				Recreate_MC()
 			return FALSE
@@ -216,12 +223,14 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		/* enqueue_log["[iter_count]"] = list(
+#ifdef ENABLE_ENQUEUE_LOGGING
+		enqueue_log["[iter_count]"] = list(
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
 			"flags" = queue_node_flags,
-		) */
+		)
+#endif
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
@@ -275,8 +284,13 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 
 	if (queue_next == src || queue_prev == src)
 		// Log the error for debugging
-		message_admins("SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)")
-		stack_trace("SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)")
+		var/msg = "SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)"
+#ifdef ENABLE_ENQUEUE_LOGGING
+		log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
+#endif
+		SSplexora.mc_alert(msg)
+		message_admins(msg)
+		stack_trace(msg)
 		return FALSE
 	return TRUE
 
