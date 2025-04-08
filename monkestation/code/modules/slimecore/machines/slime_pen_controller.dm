@@ -187,7 +187,6 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		return
 	if(linked_oozesucker(multitool.buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
 		balloon_alert_to_viewers("linked sucker")
-		multitool.buffer.balloon_alert_to_viewers("linked to controller")
 		to_chat(user, span_notice("You link the [multitool.buffer] to the [src]."))
 		return TRUE
 
@@ -212,6 +211,7 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		linked_sucker = target
 		target.linked_controller = src
 		RegisterSignal(linked_sucker, COMSIG_QDELETING, PROC_REF(clear_sucker_data))
+		target.balloon_alert_to_viewers("linked to controller")
 		return TRUE
 	return
 
