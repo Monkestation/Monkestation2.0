@@ -1,0 +1,10 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "(Hatterhat) The strong-arm implant's punches now respect armor."
+  - spellcheck: "(Hatterhat) While using an arm with the strong-arm implant to punch people, you no longer kick them; your implant's in your arm, after all!"
+  - balance: "(necromanceranne) Strongarm implants now utilize the attacking limb's unarmed potential to determine damage and potential armor penetration. It also does additional stamina damage (1.5x punch damage)"
+  - balance: "(necromanceranne) Strong-arm implants go on cooldown when activated, but deal more overall lethal damage on a single blow."
+  - balance: "(necromanceranne) The strong-arm implant does additional damage to fauna and some other dangerous mobs."
+  - qol: "(necromanceranne) You can pair toolset arm implants with the strong-arm implants."
+  - balance: "(necromanceranne) Having a strongarm implant installed into each arm now allows you to pry open doors."

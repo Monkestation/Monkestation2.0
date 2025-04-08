@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Ported a lot of MODlink-related content, mainly scryers, from tgstation. You can see more info in the adjacent changelogs!"
+  - rscadd: "Added MODlink scryers as a loadout option (under neck items)"

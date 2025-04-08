@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Going through your past few messages in tgui-say using the arrow keys now works on BYOND 516 again."
