@@ -203,10 +203,6 @@
 		if(iter_count >= ENQUEUE_SANITY)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
 			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			if (queue_next == src)
-				queue_next = null
-			if (queue_prev == src)
-				queue_prev = null
 			stack_trace("enqueue() entered an infinite loop, ending queue.")
 			return FALSE
 
@@ -273,11 +269,6 @@
 		queue_node.queue_prev = src
 
 	if (queue_next == src || queue_prev == src)
-		// Self-reference detected, fix it
-		if (queue_next == src)
-			queue_next = null
-		if (queue_prev == src)
-			queue_prev = null
 		// Log the error for debugging
 		stack_trace("SS:[name] had self-reference in queue. Fixed.")
 		return FALSE
