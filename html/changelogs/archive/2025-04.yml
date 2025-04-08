@@ -88,3 +88,78 @@
   - bugfix: Replay subsystem initialization should no longer seemingly freeze the
       server for players waiting in the lobby.
   - bugfix: Fixed plague rats appearing twice on the roundend report.
+2025-04-08:
+  Absolucy:
+  - rscadd: Ported a lot of MODlink-related content, mainly scryers, from tgstation.
+      You can see more info in the adjacent changelogs!
+  - rscadd: Added MODlink scryers as a loadout option (under neck items)
+  - bugfix: Going through your past few messages in tgui-say using the arrow keys
+      now works on BYOND 516 again.
+  - balance: (Hatterhat) The strong-arm implant's punches now respect armor.
+  - spellcheck: (Hatterhat) While using an arm with the strong-arm implant to punch
+      people, you no longer kick them; your implant's in your arm, after all!
+  - balance: (necromanceranne) Strongarm implants now utilize the attacking limb's
+      unarmed potential to determine damage and potential armor penetration. It also
+      does additional stamina damage (1.5x punch damage)
+  - balance: (necromanceranne) Strong-arm implants go on cooldown when activated,
+      but deal more overall lethal damage on a single blow.
+  - balance: (necromanceranne) The strong-arm implant does additional damage to fauna
+      and some other dangerous mobs.
+  - qol: (necromanceranne) You can pair toolset arm implants with the strong-arm implants.
+  - balance: (necromanceranne) Having a strongarm implant installed into each arm
+      now allows you to pry open doors.
+  - bugfix: You can now use hypernob crystals, durathread reinforcement, and fire/lava/pressure-proofing
+      potions on clothing with storage, i.e jackboots, by clicking on it while in
+      combat mode.
+  CRITAWAKETS:
+  - balance: The bluespace MOD storage can now hold bulky storage items (backpacks,
+      toolbelts) just like the bag of holding.
+  Fikou:
+  - bugfix: fixes multitools possibly randomly losing their buffer
+  - bugfix: fixes modlinks checking battery charge without a battery and working without
+      charge
+  - qol: modlink stuff is a bit more explained
+  - bugfix: modlinks printed from rnd no longer start with a frequency (remember to
+      copy it from another one with a multitool buffer, robotics starts with 2 NT
+      frequency linked ones)
+  Fikou, Armhulen, Sheets (+rep for Mothblocks and Potato):
+  - bugfix: RD MODsuit outfit (admin only) no longer has a beret that blocks the activation
+      of the suit
+  - bugfix: The beret used by death squad officers no longer is blocked from being
+      put on a hat stabilizer module
+  - admin: Admins can now Shear matrices of objects in Modify Transform
+  - admin: Admins now have access to Test Matrices in the VV dropdown, an all-in-one
+      tool for editing transforms.
+  - rscadd: MODLink system, available through scryers (from RnD and Charlie Station)
+      and through MODsuits. Lets you call people with holographs!
+  Guillaume Prata:
+  - balance: The Atmospheric MODsuit now comes pre equipped with the quick carry module.
+      Go save some lives!
+  Jacquerel:
+  - rscadd: pAIs can be inserted into MODsuits and can control suit modules (but are
+      not capable of moving the suit).
+  - bugfix: AIs/pAIs in MODsuits can properly pin actions
+  MTandi:
+  - qol: Solar control console now shows power generation history
+  - refactor: Refactored MOD Suit UI
+  - qol: Added options to hide detailed vitals and DNA data to the MOD status module
+  - qol: Made MOD Ion Jetpack Module have stabilizers enabled by default
+  SyncIt21:
+  - bugfix: jetpack modules work on mod suits again
+  - bugfix: jetpack cyber implants also work
+  - refactor: removed `get_mover` callback, user is retrieved during activation
+  - refactor: timestop module on `on_module_triggered()` accepts user as 2nd param
+  - bugfix: finishing & closing the turbine core rotor part will now connect itself
+      to the cable beneath it allowing it to share its produced power with everyone.
+  - bugfix: turbine's now give detailed balloon alerts if you have a missing component,
+      or something is not aligned correctly during turbine construction
+  - bugfix: turbine's will not produce power in vaccume
+  - bugfix: turbine's won't function if any of it's components are damaged or misaligned
+      after linking or during processing
+  carlarctg:
+  - rscadd: Centcom's janitorial department has gotten tired of scooping up discarded
+      scarves from the floor and has instead assigned MODlink scryers to some stations'
+      crew in an attempt to spice up the disposal team's jobs.
+  stonetear:
+  - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
+      stowing a captain jetpack into your modsuit.

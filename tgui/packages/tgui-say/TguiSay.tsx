@@ -83,10 +83,10 @@ export class TguiSay extends Component<{}, State> {
     Byond.subscribeTo('open', this.handleOpen);
   }
 
-  handleArrowKeys(direction: KEY.Up | KEY.Down) {
+  handleArrowKeys(direction: KEY.Up | KEY.Down | KEY.ArrowUp | KEY.ArrowDown) {
     const currentValue = this.innerRef.current?.value;
 
-    if (direction === KEY.Up) {
+    if (direction === KEY.Up || direction === KEY.ArrowUp) {
       if (this.chatHistory.isAtLatest() && currentValue) {
         // Save current message to temp history if at the most recent message
         this.chatHistory.saveTemp(currentValue);
@@ -263,6 +263,8 @@ export class TguiSay extends Component<{}, State> {
     switch (event.key) {
       case KEY.Up:
       case KEY.Down:
+      case KEY.ArrowUp:
+      case KEY.ArrowDown:
         event.preventDefault();
         this.handleArrowKeys(event.key);
         break;
