@@ -312,7 +312,11 @@
 		return
 	new_character.key = key //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	new_character?.client?.media2?.stop()
+	if(new_character.client?.byond_version >= 516)
+		new_character.client?.media2?.stop()
+	else if(new_character.client?.media)
+		new_character.client.media.lobby_music = FALSE
+		new_character.client.media.stop_music()
 
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)

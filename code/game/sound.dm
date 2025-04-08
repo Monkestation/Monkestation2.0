@@ -277,8 +277,15 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(QDELETED(media2)) ///media is set on creation thats weird
-		media2 = new(src)
+	if(byond_version >= 516)
+		if(QDELETED(media2)) ///media is set on creation thats weird
+			media2 = new(src)
+	else
+		if(!media) ///media is set on creation thats weird
+			media = new /datum/media_manager(src)
+			media.open()
+			media.update_music()
+		media.lobby_music = TRUE
 
 	if(!length(SSmedia_tracks.lobby_tracks))
 		return
@@ -293,10 +300,14 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		SSmedia_tracks.first_lobby_play = FALSE
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
-	media2.stop()
-	media2.set_volume(vol) // this makes it easier if we modify volume later on
-	media2.set_position(0, 0)
-	media2.play(T.url)
+	if(byond_version >= 516)
+		media2.stop()
+		media2.set_volume(vol) // this makes it easier if we modify volume later on
+		media2.set_position(0, 0)
+		media2.play(T.url)
+	else
+		media.push_music(T.url, world.time, 1)
+		media.update_volume(vol) // this makes it easier if we modify volume later on
 	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
 
 /proc/get_rand_frequency()

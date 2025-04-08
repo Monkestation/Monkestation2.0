@@ -566,7 +566,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	media.open()
 	media.update_music()
 
-	media2 = new(src)
+	if(byond_version >= 516)
+		media2 = new(src)
 
 	fully_created = TRUE
 

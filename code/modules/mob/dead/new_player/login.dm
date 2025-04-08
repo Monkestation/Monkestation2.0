@@ -53,6 +53,8 @@
 		client.media = new /datum/media_manager(client)
 		client.media.open()
 		client.media.update_music()
+	if(client.byond_version >= 516 && !client.media2)
+		client.media2 = new(client)
 
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
