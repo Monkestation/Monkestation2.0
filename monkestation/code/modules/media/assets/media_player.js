@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Zlib
 const { SpatialAudioPlayer } = wasm_bindgen;
 
 function topic(type, params) {
@@ -52,6 +53,14 @@ window.set_url = function(url) {
 
 window.set_position = function (x, y) {
 	player.set_position(x, y);
+}
+
+window.set_ref_distance = function (distance) {
+	player.set_ref_distance(distance);
+}
+
+window.set_max_distance = function (distance) {
+	player.set_max_distance(distance);
 }
 
 window.set_time = function(time) {
