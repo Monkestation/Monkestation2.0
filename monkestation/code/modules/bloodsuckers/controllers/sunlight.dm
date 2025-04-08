@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(sunlight)
 	var/issued_XP = FALSE
 
 /datum/controller/subsystem/sunlight/Recover()
+	can_fire = SSsunlight.can_fire
 	sunlight_active = SSsunlight.sunlight_active
 	time_til_cycle = SSsunlight.time_til_cycle
 	issued_XP = SSsunlight.issued_XP
