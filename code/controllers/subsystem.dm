@@ -286,7 +286,7 @@ GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__RESTART_ON_ENQUEUE_SA
 		// Log the error for debugging
 		var/msg = "SS:[name] had self-reference in queue, hopefully fixed now (time = [tick_usage] ms, average = [avg_enqueue_time] ms)"
 #ifdef ENABLE_ENQUEUE_LOGGING
-		log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
+		log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
 #endif
 		SSplexora.mc_alert(msg)
 		message_admins(msg)
