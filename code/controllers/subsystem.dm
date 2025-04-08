@@ -184,6 +184,7 @@
 	else
 		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
 
+GLOBAL_VAR_INIT(___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__ENABLE_ENQUEUE_SANITY, TRUE)
 
 ///Queue it to run.
 /// (we loop thru a linked list until we get to the end or find the right point)
@@ -200,7 +201,7 @@
 	/* enqueue_log.Cut() */
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
-		if(iter_count >= ENQUEUE_SANITY)
+		if(iter_count >= ENQUEUE_SANITY && GLOB.___DO_NOT_TOUCH_THIS_UNLESS_YOURE_A_CODER__ENABLE_ENQUEUE_SANITY)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
 			//SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
 			stack_trace("enqueue() entered an infinite loop, ending queue.")
