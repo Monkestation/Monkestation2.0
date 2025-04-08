@@ -564,7 +564,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MORBID "morbid"
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
-/* #define TRAIT_IN_CALL "in_call" */
+#define TRAIT_IN_CALL "in_call"
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
