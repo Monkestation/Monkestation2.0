@@ -7690,7 +7690,6 @@
 #include "monkestation\code\modules\microfusion\code\projectiles.dm"
 #include "monkestation\code\modules\mining\accelerators\_wastes_pin.dm"
 #include "monkestation\code\modules\mining\accelerators\admin.dm"
-#include "monkestation\code\modules\mining\accelerators\grenade.dm"
 #include "monkestation\code\modules\mining\accelerators\pistol.dm"
 #include "monkestation\code\modules\mining\accelerators\railgun.dm"
 #include "monkestation\code\modules\mining\accelerators\repeater.dm"
