@@ -853,6 +853,7 @@
 /area/shuttle/hunter)
 "Sx" = (
 /obj/machinery/light/directional/south,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "Th" = (

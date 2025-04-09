@@ -101,7 +101,7 @@
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
+		modded_time = (time * tool.toolspeed) //Monkestation edit, allows borgs to have better surgery speed
 	else if(HAS_TRAIT(user, TRAIT_PERFECT_SURGEON))
 		modded_time = min(round(time * 0.75, 5), modded_time) // monke edit: perfect surgeon will always be at least 25% faster than normal
 

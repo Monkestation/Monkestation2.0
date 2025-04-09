@@ -177,16 +177,11 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "lx" = (
-/obj/structure/table,
 /obj/effect/turf_decal/siding/red{
 	dir = 10
 	},
 /obj/machinery/light/small/directional/east,
-/obj/item/storage/fancy/cigarettes/cigars,
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 2
-	},
-/obj/item/lighter,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "lS" = (

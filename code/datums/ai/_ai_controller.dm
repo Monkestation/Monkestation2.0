@@ -169,7 +169,7 @@ multiple modular subtrees with behaviors
 		return FALSE
 
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		if(locate(/mob/living) in grid.client_contents)
 			return FALSE
 	return TRUE
 
@@ -179,8 +179,11 @@ multiple modular subtrees with behaviors
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
-/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
+/datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
+
+	if (!(locate(/mob/living) in target_list))
+		return
 
 	if(ai_status == AI_STATUS_IDLE)
 		set_ai_status(AI_STATUS_ON)
@@ -240,7 +243,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(new_turf)
 		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
+		var/new_level_clients = length(SSmobs.clients_by_zlevel[new_turf.z]) // monkestation edit: x.len -> length(x)
 		if(new_level_clients)
 			set_ai_status(AI_STATUS_IDLE)
 		else
