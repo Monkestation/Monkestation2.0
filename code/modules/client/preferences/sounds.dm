@@ -61,8 +61,12 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
-	if (value && isnewplayer(client.mob))
+	if(!isnewplayer(client?.mob))
+		return
+	if (value)
 		client.playtitlemusic()
+	else if(client.byond_version >= 516)
+		client.media2.stop()
 	else
 		client.media.stop_music()
 

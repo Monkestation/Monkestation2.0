@@ -1,13 +1,16 @@
 ///sound volume handling here
 
-/client/verb/open_volume_mixer()
+/datum/verbs/menu/Preferences/verb/open_volume_mixer()
 	set category = "OOC"
 	set name = "Volume Mixer"
-	set desc = "Opens the volume mixer UI"
+	set desc = "Open Volume Mixer"
 
+	var/datum/preferences/prefs = usr?.client?.prefs
+	if(QDELETED(prefs))
+		return
 	if(!prefs.pref_mixer)
 		prefs.pref_mixer = new
-	prefs.pref_mixer.open_ui(src.mob)
+	prefs.pref_mixer.open_ui(usr)
 
 /datum/ui_module/volume_mixer/proc/open_ui(mob/user)
 	ui_interact(user)
@@ -69,7 +72,17 @@
 /datum/ui_module/volume_mixer/proc/set_channel_volume(channel, vol, mob/user)
 	if((channel == CHANNEL_LOBBYMUSIC) || (channel == CHANNEL_MASTER_VOLUME))
 		if(isnewplayer(user))
-			user.client.media.update_volume((vol))
+			var/client/client = user.client
+			var/new_lobby_volume = 1
+			var/list/channels = client?.prefs?.channel_volume
+			if("[CHANNEL_LOBBYMUSIC]" in channels)
+				new_lobby_volume = channels["[CHANNEL_LOBBYMUSIC]"]
+			if("[CHANNEL_MASTER_VOLUME]" in channels)
+				new_lobby_volume *= (channels["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+			if(client?.byond_version >= 516)
+				client?.media2?.set_volume(new_lobby_volume)
+			else
+				client?.media?.update_volume(new_lobby_volume * 0.01)
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE
