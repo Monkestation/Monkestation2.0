@@ -15,7 +15,7 @@ const ELEMENTS_TO_ADJUST = [
 
 const DEFAULT_BUTTON_FONT_SIZE = 4;
 
-export async function setDisplayScaling() {
+export const setDisplayScaling = async () => {
   if (window.devicePixelRatio === 1) {
     return;
   }
@@ -28,7 +28,7 @@ export async function setDisplayScaling() {
   }
 
   Byond.winset(null, newSizes);
-}
+};
 
 const PANE_SPLITTERS = [
   'info_button_child',
@@ -36,7 +36,7 @@ const PANE_SPLITTERS = [
   'output_input_child',
 ];
 
-export function setEditPaneSplitters(editing: boolean) {
+export const setEditPaneSplitters = (editing: boolean) => {
   const toSet: { [element: string]: any } = {};
 
   for (const pane of PANE_SPLITTERS) {
@@ -44,4 +44,4 @@ export function setEditPaneSplitters(editing: boolean) {
   }
 
   Byond.winset(null, toSet);
-}
+};
