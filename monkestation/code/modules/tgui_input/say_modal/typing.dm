@@ -34,6 +34,7 @@
 
 /** Removes any indicators and marks the mob as not speaking IC. */
 /mob/remove_all_indicators()
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 
