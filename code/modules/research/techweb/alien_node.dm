@@ -25,7 +25,7 @@
 	design_ids = list(
 		"alienalloy",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	hidden = TRUE
 
 /datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
@@ -67,8 +67,8 @@
 		// Monkestation edit End: Removing Alien tools from biotech
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_4_POINTS)
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi
@@ -99,5 +99,5 @@
 		/obj/item/wrench/abductor,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE

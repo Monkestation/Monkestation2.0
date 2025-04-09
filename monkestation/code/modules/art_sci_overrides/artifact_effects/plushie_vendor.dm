@@ -8,7 +8,7 @@
 	activation_message = "summons a toy of some kind!"
 
 	type_name = "Toy Vender Effect"
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	var/static/list/obj/item/toy/plush/plushies = list()
 
