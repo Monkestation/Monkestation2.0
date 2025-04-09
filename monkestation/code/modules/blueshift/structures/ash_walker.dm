@@ -205,13 +205,13 @@
 		if(!is_species(select_mob, /datum/species/lizard/ashwalker))
 			continue
 		to_chat(select_mob, span_boldwarning("A target has died, the curse has been lifted!"))
-	Destroy()
+	qdel(src)
 
 /datum/component/ash_cursed/proc/do_move()
 	SIGNAL_HANDLER
 	var/turf/human_turf = get_turf(human_target)
 	if(!is_mining_level(human_turf.z))
-		Destroy()
+		qdel(src)
 		for(var/mob/select_mob in GLOB.player_list)
 			if(!is_species(select_mob, /datum/species/lizard/ashwalker))
 				continue
@@ -921,7 +921,7 @@
 	if(attacking_item.tool_behaviour == TOOL_SHOVEL || attacking_item.tool_behaviour == TOOL_KNIFE)
 		var/turf/src_turf = get_turf(src)
 		src_turf.balloon_alert_to_viewers("the plant crumbles!")
-		Destroy()
+		qdel(src)
 		return
 
 	//if its sinew, lower the cooldown
