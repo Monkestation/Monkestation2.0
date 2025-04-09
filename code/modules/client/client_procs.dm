@@ -1424,6 +1424,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
+	if(byond_version < 516) // why won't you update
+		return
 	window_scaling = text2num(winget(src, null, "dpi"))
 
 	debug_admins("scalies: [window_scaling]")

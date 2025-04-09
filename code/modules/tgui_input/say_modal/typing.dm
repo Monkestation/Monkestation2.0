@@ -65,7 +65,7 @@
 	client.stop_typing()
 
 /// Overrides for overlay creation
-/mob/living/create_thinking_indicator() // monkestation edit: LOOC thinking indicators
+/mob/living/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	var/bubble_icon = client?.tgui_say?.initial_channel == LOOC_CHANNEL ? "looc" : src.bubble_icon // monkestation edit: LOOC thinking indicators
@@ -79,7 +79,7 @@
 	cut_overlay(active_thinking_indicator)
 	active_thinking_indicator = null
 
-/mob/living/create_typing_indicator() // monkestation edit: LOOC thinking indicators
+/mob/living/create_typing_indicator()
 	if(active_typing_indicator || active_thinking_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	var/bubble_icon = client?.tgui_say?.initial_channel == LOOC_CHANNEL ? "looc" : src.bubble_icon // monkestation edit: LOOC thinking indicators
