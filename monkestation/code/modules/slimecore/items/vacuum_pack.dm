@@ -332,7 +332,7 @@
 			animation_matrix.Scale(0.5)
 			animation_matrix.Translate((user.x - target.x) * 32, (user.y - target.y) * 32)
 			animate(target, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, transform = animation_matrix, flags = ANIMATION_PARALLEL)
-			sleep(8)
+			sleep(0.8 SECONDS)
 			user.visible_message(span_warning("[user] sucks [target] into their [pack]!"), span_notice("You successfully suck [target] into your [src] and recycle it."))
 			qdel(target)
 			playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
