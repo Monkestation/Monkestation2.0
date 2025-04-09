@@ -211,6 +211,3 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-
-	/// Whether invisimin is enabled on this mob
-	var/invisimin = FALSE
