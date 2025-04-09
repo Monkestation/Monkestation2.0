@@ -29,7 +29,7 @@
 	)
 	return embed
 
-/client/verb/mentorhelp(msg as text)
+/client/verb/mentorhelp(message as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
 
