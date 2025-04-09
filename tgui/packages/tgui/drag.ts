@@ -131,21 +131,23 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Convert size from css-pixels to display-pixels
-  if (options.scale && size) {
+  if ((options.scale || Byond.TRIDENT) && size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
 
-  if (!options.scale) {
-    // @ts-expect-error
-    document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
-    document.documentElement.style.setProperty(
-      '--scaling-amount',
-      window.devicePixelRatio.toString(),
-    );
-  } else {
-    // @ts-expect-error
-    document.body.style.zoom = '';
-    document.documentElement.style.setProperty('--scaling-amount', null);
+  if (!Byond.TRIDENT) {
+    if (!options.scale) {
+      // @ts-expect-error
+      document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+      document.documentElement.style.setProperty(
+        '--scaling-amount',
+        window.devicePixelRatio.toString(),
+      );
+    } else {
+      // @ts-expect-error
+      document.body.style.zoom = '';
+      document.documentElement.style.setProperty('--scaling-amount', null);
+    }
   }
 
   // Wait until screen offset gets resolved
