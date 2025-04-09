@@ -57,15 +57,13 @@
 	target.fully_replace_character_name(titled_name, original_name)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
-	damage = 60
-	wounding = 5
+	damage = 55
 	. = ..(attacker, defender, set_damage = FALSE)
 	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender, set_damage)
-	damage = 45
+	damage = 40
 	kick_speed = 5
-	wounding = 5
 	zone = BODY_ZONE_HEAD
 	zone_message = "head"
 	. = ..(attacker, defender, set_damage = FALSE)
