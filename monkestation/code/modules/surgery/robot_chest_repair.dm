@@ -53,7 +53,7 @@
 
 /datum/surgery_step/add_plating/fullbody
 	time = 3 SECONDS
-	ironamount = 15
+	ironamount = 5
 
 /datum/surgery_step/add_plating/fullbody/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
