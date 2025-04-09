@@ -18,6 +18,8 @@ import {
   MESSAGE_TYPES,
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
+  RENDERER_RELOAD_WAIT,
+  RENDERER_RELOAD_WAIT_TRIDENT,
 } from './constants';
 import { render } from 'inferno';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
@@ -665,3 +667,12 @@ if (!window.__chatRenderer__) {
 
 /** @type {ChatRenderer} */
 export const chatRenderer = window.__chatRenderer__;
+
+setTimeout(
+  () => {
+    if (!chatRenderer.isReady()) {
+      location.reload();
+    }
+  },
+  Byond.TRIDENT ? RENDERER_RELOAD_WAIT_TRIDENT : RENDERER_RELOAD_WAIT,
+);

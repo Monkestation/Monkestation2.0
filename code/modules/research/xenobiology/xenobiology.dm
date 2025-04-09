@@ -908,6 +908,11 @@
 	resistance_flags = FIRE_PROOF
 	var/uses = 3
 
+// monkestation start: allow using on storage items via right clicking or combat mode
+/obj/item/slimepotion/fireproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+// monkestation end
+
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/clothing, mob/user, proximity)
 	. = ..()
 	if(!proximity)
