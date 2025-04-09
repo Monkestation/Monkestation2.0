@@ -104,6 +104,14 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
+	elem "commandbar_spy"
+		type = BROWSER
+		pos = 0,0
+		size = 200x200
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-visible = false
+		saved-params = ""
 
 window "mapwindow"
 	elem "mapwindow"
@@ -193,7 +201,7 @@ window "infowindow"
 		anchor1 = 43,0
 		anchor2 = 57,0
 		saved-params = "is-checked"
-		text = "Discord" 
+		text = "Discord"
 		command = "forum"
 	elem "github"
 		type = BUTTON

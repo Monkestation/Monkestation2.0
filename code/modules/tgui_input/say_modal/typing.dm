@@ -38,48 +38,37 @@
 
 /** Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
 /datum/tgui_say/proc/start_thinking()
-	if(!window_open || !client.typing_indicators)
+	if(!window_open)
 		return FALSE
-	/// Special exemptions
-	if(isabductor(client.mob) && !HAS_TRAIT(client.mob, TRAIT_SIGN_LANG)) // monkestation edit: abductor signing
-		return FALSE
-	ADD_TRAIT(client.mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
-	client.mob.create_thinking_indicator(initial_channel) // monkestation edit: initial_channel
+	return client.start_thinking(initial_channel) // monkestation edit: LOOC thinking indicators
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_say/proc/stop_thinking()
-	client.mob?.remove_all_indicators()
+	return client.stop_thinking()
 
 /**
  * Handles the user typing. After a brief period of inactivity,
  * signals the client mob to revert to the "thinking" icon.
  */
 /datum/tgui_say/proc/start_typing()
-	var/mob/client_mob = client.mob
-	client_mob.remove_thinking_indicator()
-	if(!window_open || !client.typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
+	if(!window_open)
 		return FALSE
-	client_mob.create_typing_indicator(initial_channel) // monkestation edit: initial_channel
-	addtimer(CALLBACK(src, PROC_REF(stop_typing)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+	return client.start_typing(initial_channel) // monkestation edit: LOOC thinking indicators
 
 /**
- * Callback to remove the typing indicator after a brief period of inactivity.
+ * Remove the typing indicator after a brief period of inactivity or during say events.
  * If the user was typing IC, the thinking indicator is shown.
  */
 /datum/tgui_say/proc/stop_typing()
-	if(isnull(client?.mob))
+	if(!window_open)
 		return FALSE
-	var/mob/client_mob = client.mob
-	client_mob.remove_typing_indicator()
-	if(!window_open || !client.typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
-		return FALSE
-	client_mob.create_thinking_indicator(initial_channel) // monkestation edit: initial_channel
+	client.stop_typing()
 
-/* monkestation removal
 /// Overrides for overlay creation
-/mob/living/create_thinking_indicator()
+/mob/living/create_thinking_indicator(channel) // monkestation edit: LOOC thinking indicators
 	if(active_thinking_indicator || active_typing_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
+	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon // monkestation edit: LOOC thinking indicators
 	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
 	add_overlay(active_thinking_indicator)
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
@@ -90,9 +79,10 @@
 	cut_overlay(active_thinking_indicator)
 	active_thinking_indicator = null
 
-/mob/living/create_typing_indicator()
+/mob/living/create_typing_indicator(channel) // monkestation edit: LOOC thinking indicators
 	if(active_typing_indicator || active_thinking_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
+	var/bubble_icon = channel == LOOC_CHANNEL ? "looc" : src.bubble_icon // monkestation edit: LOOC thinking indicators
 	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
 	add_overlay(active_typing_indicator)
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
@@ -107,4 +97,4 @@
 	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
-*/
+
