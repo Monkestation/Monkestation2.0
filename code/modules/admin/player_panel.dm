@@ -282,7 +282,7 @@
 			var/M_key = html_encode(M.key)
 			var/previous_names = ""
 			if(M_key)
-				var/datum/player_details/P = GLOB.player_details[ckey(M_key)]
+				var/datum/persistent_client/P = GLOB.persistent_clients_by_ckey[ckey(M_key)]
 				if(P)
 					previous_names = P.played_names.Join(",")
 			previous_names = html_encode(previous_names)
