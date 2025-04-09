@@ -238,6 +238,17 @@
 	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
 	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
 
+/obj/item/storage/box/syndie_kit/Xenomorph_Friend
+	name = "Xenomorph Domestication Kit"
+	desc = "Contains everything you'll need to create and control the perfect organism"
+
+/obj/item/storage/box/syndie_kit/Xenomorph_Friend/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/organ/internal/body_egg/neutered_alien_embryo = 1,
+		/obj/item/autosurgeon/organ/syndicate/hivenode = 1,
+		/obj/item/food/monkeycube = 1,
+	), src)
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC

@@ -52,6 +52,27 @@
 	objective.owner = owner
 	objectives += objective
 
+//MONKEYSTATION EDIT BEGIN
+/datum/antagonist/xeno/neutered
+	name = "\improper neutered Xenomorph"
+
+/datum/antagonist/neutered_xeno/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/xeno/neutered/forge_objectives()
+	var/datum/objective/imprint_queen/objective = new
+	objective.owner = owner
+	objectives += objective
+	..()
+
+/datum/objective/imprint_queen
+
+/datum/objective/imprint_queen/New()
+	explanation_text = "The first living person you see is your Queen. Follow their orders at all costs."
+
+//MONKEYSTATION EDIT END
+
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
 	///Our associated antagonist team for captive xenomorphs
@@ -98,6 +119,8 @@
 
 /datum/objective/advance_hive/check_completion()
 	return owner.current.stat != DEAD
+
+
 
 ///Captive Xenomorphs team
 /datum/team/xeno/captive
@@ -156,13 +179,15 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
+		if(HAS_TRAIT(src, TRAIT_NEUTERED)) //Monkeystation edit, if the xeno doesnt have a queen
+			mind.add_antag_datum(/datum/antagonist/xeno/neutered) //Monkeystation edit, for a neutered type
 		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
 
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
+	mind.special_role = ROLE_ALIEN
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()
