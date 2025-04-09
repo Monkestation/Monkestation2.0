@@ -13,6 +13,16 @@
 	prefs.pref_mixer.open_ui(usr)
 
 /datum/ui_module/volume_mixer/proc/open_ui(mob/user)
+	var/needs_save = FALSE
+	var/datum/preferences/prefs = user?.client?.prefs
+	if(QDELETED(prefs))
+		return
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(prefs.channel_volume["[channel]"]))
+			prefs.channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		prefs.save_preferences()
 	ui_interact(user)
 
 /datum/ui_module/volume_mixer/ui_interact(mob/user, datum/tgui/ui)
@@ -23,21 +33,15 @@
 		ui.open()
 
 /datum/ui_module/volume_mixer/ui_data(mob/user)
-	var/list/data = list()
-
 	var/list/channels = list()
+	var/list/channel_volume = user.client.prefs.channel_volume
 	for(var/channel in GLOB.used_sound_channels)
-		if(!user.client.prefs.channel_volume["[channel]"])
-			user.client.prefs.channel_volume["[channel]"] = 50
-			user.client.prefs.save_preferences()
 		channels += list(list(
 			"num" = channel,
 			"name" = get_channel_name(channel),
-			"volume" = user.client.prefs.channel_volume["[channel]"]
+			"volume" = channel_volume["[channel]"]
 		))
-	data["channels"] = channels
-
-	return data
+	return list("channels" = channels)
 
 
 /datum/ui_module/volume_mixer/ui_act(action, list/params)
