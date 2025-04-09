@@ -805,8 +805,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		// Monkestation edit start: Cooking
-		/obj/item/kitchen/rollingpin,
-		/obj/item/knife/borg,
+		/obj/item/knife/kitchen/silicon,
 		/obj/item/borg/apparatus/cooking,
 		// Monkestation edit end
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
@@ -869,6 +868,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
 	if(cyborg.client)
 		crafting.create_mob_button(cyborg, cyborg.client)
 
